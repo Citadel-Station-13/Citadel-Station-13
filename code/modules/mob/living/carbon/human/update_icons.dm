@@ -79,7 +79,8 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-/mob/living/carbon/human/proc/update_body()
+//mob/living/carbon/human/proc/update_body()
+/mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
 	update_body_parts()

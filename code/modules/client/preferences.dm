@@ -109,7 +109,8 @@ var/list/preferences_datums = list()
 	var/current_tab = 0
 
 		// OOC Metadata:
-	var/metadata = ""
+	//var/metadata = ""
+	var/flavor_text = ""
 
 	var/unlock_content = 0
 

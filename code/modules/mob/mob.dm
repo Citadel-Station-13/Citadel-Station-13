@@ -109,6 +109,18 @@ var/next_mob_id = 0
 						continue
 		M.show_message(msg,1,blind_message,2)
 
+/mob/proc/get_top_level_mob()
+	if(istype(src.loc,/mob)&&src.loc!=src)
+		var/mob/M=src.loc
+		return M.get_top_level_mob()
+	return src
+
+proc/get_top_level_mob(var/mob/S)
+	if(istype(S.loc,/mob)&&S.loc!=S)
+		var/mob/M=S.loc
+		return M.get_top_level_mob()
+	return S
+
 // Show a message to all player mobs who sees this atom
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
@@ -437,6 +449,31 @@ var/next_mob_id = 0
 	if (popup)
 		memory()
 
+/mob/proc/update_flavor_text()
+	set src in usr
+	if(usr != src)
+		usr << "No."
+	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
+
+	if(msg != null)
+		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+		msg = html_encode(msg)
+
+		flavor_text = msg
+
+/mob/proc/warn_flavor_changed()
+	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
+		src << "<h2 class='alert'>OOC Warning:</h2>"
+		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
+
+/mob/proc/print_flavor_text()
+	if (flavor_text && flavor_text != "")
+		var/msg = replacetext(flavor_text, "\n", " ")
+		if(lentext(msg) <= 40)
+			return "\blue [msg]"
+		else
+			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -512,6 +549,13 @@ var/next_mob_id = 0
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
+
+	if(href_list["flavor_more"])
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
+		onclose(usr, "[name]")
+
+	if(href_list["flavor_change"])
+		update_flavor_text()
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))

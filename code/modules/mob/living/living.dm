@@ -537,7 +537,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/proc/update_damage_overlays()
 	return
-
+/*
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
 	set category = "OOC"
@@ -552,6 +552,7 @@ Sorry Giacom. Please don't be mad :(
 		src << "OOC Metadata is not supported by this server!"
 
 	return
+*/
 
 /mob/living/Move(atom/newloc, direct)
 	if (buckled && buckled.loc != newloc) //not updating position

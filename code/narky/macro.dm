@@ -143,7 +143,7 @@ var/const/SIZEPLAY_HUGE=5
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/shrinkray)
 	origin_tech = "combat=1;magnets=2"
 	clumsy_check = 0
-	var/charge_tick = 0
+	charge_tick = 0
 
 	//special_check(var/mob/living/carbon/human/M)
 		//return 1
