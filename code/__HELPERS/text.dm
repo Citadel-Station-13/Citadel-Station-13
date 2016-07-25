@@ -469,3 +469,18 @@ var/list/rot13_lookup = list()
 			t_out += char
 
 	return t_out
+
+//Used in preferences' SetFlavorText and human's set_flavor verb
+//Previews a string of len or less length
+
+/proc/copytext_preserve_html(var/text, var/first, var/last)
+	return html_encode(copytext(html_decode(text), first, last))
+
+proc/TextPreview(var/string,var/len=40)
+	if(lentext(string) <= len)
+		if(!lentext(string))
+			return "\[...\]"
+		else
+			return string
+	else
+		return "[copytext(string, 1, 37)]..."
