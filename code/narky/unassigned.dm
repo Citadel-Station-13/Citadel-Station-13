@@ -1035,9 +1035,6 @@ var/const/VORE_SIZEDIFF_ANY=5
 		else
 			src.visible_message("<span class='danger'>[helper] has fed [prey] to [src]!</span>")
 
-	for(var/obj/item/weapon/grab/G in prey.grabbed_by)
-		qdel(G)
-
 	if(helper==src)
 		vore_admins("[src] has eaten [prey]. via [method].",src,prey)
 	else if(helper==prey)

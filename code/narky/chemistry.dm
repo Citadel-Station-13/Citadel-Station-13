@@ -41,7 +41,7 @@ datum
 				..()
 				return
 
-			reaction_turf(var/turf/simulated/T, var/volume)
+			reaction_turf(var/turf/open/T, var/volume)
 				if(!istype(T)) return
 				//var/datum/reagent/semen/self = src
 				src = null
@@ -73,7 +73,7 @@ datum
 				..()
 				return
 
-			reaction_turf(var/turf/simulated/T, var/volume)
+			reaction_turf(var/turf/open/T, var/volume)
 				if(!istype(T)) return
 				//var/datum/reagent/femjuice/self = src
 				src = null
@@ -90,7 +90,7 @@ datum
 
 		milk
 			data = list("adjective"=null, "type"=null, "digested"=null, "digested_DNA"=null, "digested_type"=null, "donor_DNA"=null)
-			reaction_turf(var/turf/simulated/T, var/volume)
+			reaction_turf(var/turf/open/T, var/volume)
 				if(!istype(T)) return
 				//var/datum/reagent/milk/self = src
 				src = null
@@ -633,7 +633,7 @@ datum
 														"<span class='userdanger'>[M] throws up!</span>")
 							playsound(M.loc, 'sound/effects/splat.ogg', 50, 1)
 							var/turf/location = M.loc
-							if(istype(location, /turf/simulated))
+							if(istype(location, /turf/open))
 								location.add_vomit_floor(M)
 							M.nutrition -= 50
 							M.adjustToxLoss(-1)
