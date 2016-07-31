@@ -4,6 +4,7 @@
 	var/tf_gender=NEUTER
 	var/tf_egg=0
 	proc/apply_transform(var/mob/living/targ)
+		return //THIS SHIT IS FUBAR -CACTUS
 		var/old_name=targ.real_name
 		var/new_gender=tf_gender==NEUTER ? targ.gender : tf_gender
 		var/transformation_happened=new_gender==targ.gender ? 0 : 1
@@ -20,7 +21,8 @@
 			if(istype(new_mob))
 				new_mob.a_intent = "harm"
 				//new_mob.universal_speak = 1
-				new_mob.languages |= HUMAN
+				new_mob.languages_spoken = 1
+				new_mob.languages_understood = 1
 				new_mob.vore_banned_methods=targ.vore_banned_methods
 				new_mob.vore_ability=targ.vore_ability
 				if(targ.mind)
@@ -186,8 +188,8 @@
 
 	status_flags = CANPUSH
 
-	//universal_speak = 1
-	languages = HUMAN
+	languages_spoken = 1
+	languages_understood = 1
 
 	canmove = 0
 
@@ -234,15 +236,7 @@
 					return
 				if (!(status_flags & CANPUSH))
 					return
-
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
-
-				M.put_in_active_hand(G)
-
-				G.synch()
-
 				LAssailant = M
-
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.eye_blind )))
 						O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)

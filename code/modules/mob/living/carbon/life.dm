@@ -282,6 +282,7 @@
 
 
 /mob/living/carbon/handle_stomach()
+/*
 	set waitfor = 0
 	for(var/mob/living/M in stomach_contents)
 		if(M.loc != src)
@@ -297,7 +298,7 @@
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
 				nutrition += 10
-
+*/
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()

@@ -963,7 +963,7 @@ var/list/preferences_datums = list()
 						eye_color = sanitize_hexcolor(new_eyes)
 
 				if("species")
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in kpcode_race_getlist(ckey)
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in kpcode_race_getlist(user.ckey)
 					if(result)
 						var/newtype = species_list[result]
 						pref_species = new newtype()
