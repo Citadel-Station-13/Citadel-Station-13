@@ -16,7 +16,7 @@ datum
 			generic="abductor"
 			adjective="spooky"
 			restricted=2
-		ailurus
+	/*	ailurus
 			name="red panda"
 			id="ailurus"
 			generic="ailurus"
@@ -29,7 +29,7 @@ datum
 			generic="xeno"
 			adjective="phallic"
 			tail=1
-		/* armadillo
+		armadillo
 			name="armadillo"
 			id="armadillo"
 			say_mod = "drawls"
@@ -37,7 +37,7 @@ datum
 			adjective = "protected"
 			tail=1
 			attack_verb = "noms"
-			attack_sound = 'sound/weapons/bite.ogg' */
+			attack_sound = 'sound/weapons/bite.ogg'
 			attack_verb = "nom" // apparently attack verbs are just the verb, no S. shrug
 			attack_sound = 'sound/weapons/bite.ogg'
 		anubis
@@ -159,7 +159,7 @@ datum
 			id="fennec"
 			generic="vulpine"
 			adjective="foxy"
-			tail=1
+			tail=1 */
 		fox
 			name="fox"
 			id="fox"
@@ -167,7 +167,7 @@ datum
 			adjective="foxy" // open and shut with this one, huh
 			tail=1
 			taur=1
-		glowfen
+	/*	glowfen
 			name="glowfen"
 			id="glowfen"
 			generic="vulpine"
@@ -403,7 +403,7 @@ datum
 			id="squirrel"
 			generic="rodent"
 			adjective="nutty"
-			tail=1
+			tail=1 */
 		tajaran
 			name="tajaran"
 			id="tajaran"
@@ -413,7 +413,14 @@ datum
 			taur=1
 			attack_verb = "claw"
 			attack_sound = 'sound/weapons/bladeslice.ogg'
-		turtle
+		toucan
+			name="toucan"
+			id="toucan"
+			generic="bird"
+			adjective="colorful"
+			tail=1
+			attack_verb = "pecks"
+	/*	turtle
 			name="turtle"
 			id="turtle"
 			generic="reptile"
@@ -441,7 +448,7 @@ datum
 			id="zig"
 			generic="pokémon"
 			adjective="curious"
-			tail=1
+			tail=1 */
 
 
 /*
@@ -520,7 +527,7 @@ datum
 			generic="plasmaman"
 			adjective="toxic"
 			restricted=2 // but if you do want the world to burn then please, by all means
-		pepsiman
+	/*	pepsiman
 			//name="PEPSI MAAAAAN"
 			id="PEPSIMAAAN"
 			generic="beverage"
@@ -549,7 +556,7 @@ datum
 			generic="amphibian"
 			adjective="fishy"
 			tail=0
-			eyes="jelleyes"
+			eyes="jelleyes"I/ */
 /*var/list/kpcode_race_list
 
 proc/kpcode_race_genlist()
