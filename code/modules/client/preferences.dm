@@ -45,7 +45,7 @@ var/list/preferences_datums = list()
 	var/mutant_tail = "none"
 	var/mutant_wing = "none"
 	var/wingcolor = "FFF"
-	var/special_color[COLOUR_LIST_SIZE]
+	//var/special_color[COLOUR_LIST_SIZE]
 	//var/special_color_one = null
 	//var/special_color_two = null
 	var/vore_banned_methods = 0
@@ -216,7 +216,7 @@ var/list/preferences_datums = list()
 				if(!kpcode_cantaur(pref_species.id))
 					dat += " (not available for [pref_species.id])"
 				dat += "<BR>"
-				if(special_color[1])
+				/*if(special_color[1])
 					dat += "<span style='border:1px solid #161616; background-color: #[special_color[1]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=special_color;which=1;task=input'>Primary</a><BR>"
 				else
 					dat += "<a href='?_src_=prefs;preference=special_color;which=1;task=input'>Primary?</a><BR>"
@@ -227,7 +227,7 @@ var/list/preferences_datums = list()
 				if(special_color[3])
 					dat += "<span style='border:1px solid #161616; background-color: #[special_color[3]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=special_color;which=3;task=input'>Tertiary</a><BR>"
 				else
-					dat += "<a href='?_src_=prefs;preference=special_color;which=3;task=input'>Tertiary?</a><BR>"
+					dat += "<a href='?_src_=prefs;preference=special_color;which=3;task=input'>Tertiary?</a><BR>"*/
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
@@ -289,7 +289,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			/*if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
+			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
 				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
 
@@ -384,7 +384,7 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-			dat += "</tr></table>"*/
+			dat += "</tr></table>"
 
 
 		if (1) // Game Preferences
@@ -996,7 +996,7 @@ var/list/preferences_datums = list()
 					if(new_wingcolor)
 						wingcolor = sanitize_hexcolor(new_wingcolor)
 
-				if("special_color")
+				/*if("special_color")
 					var/index_tc=href_list["which"]
 					switch(alert("Use a special colour for #[index_tc]?","Character Preference","Yes","No","Cancel"))
 						if("Yes")
@@ -1004,7 +1004,7 @@ var/list/preferences_datums = list()
 							if(new_color)
 								special_color[text2num(index_tc)] = sanitize_hexcolor(new_color)
 						if("No")
-							special_color[text2num(index_tc)]=null
+							special_color[text2num(index_tc)]=null*/
 
 				if("character_size")
 					var/new_size = input(user, "Choose your character's size:", "Character Preference")  in list("huge", "large", "normal", "small", "tiny")
@@ -1276,12 +1276,12 @@ var/list/preferences_datums = list()
 
 	if(mutant_tail != "none" && config.mutant_races)
 		character.dna.mutanttail = mutant_tail
-	if(mutant_wing != "none" && config.mutant_races)
+	/*(if(mutant_wing != "none" && config.mutant_races)
 		character.dna.mutantwing = mutant_wing
-		character.dna.wingcolor=wingcolor
+		character.dna.wingcolor=wingcolor*/
 	if(be_taur)
 		character.dna.taur=1
-	character.dna.special_color = special_color
+	//character.dna.special_color = special_color
 	character.dna.cock=p_cock
 	character.dna.vagina=p_vagina
 
