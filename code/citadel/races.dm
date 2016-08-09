@@ -242,7 +242,7 @@ datum
 			generic="leporid"
 			adjective="hoppy"
 			tail=1
-			attack_verb = "kick"
+			attack_verb = "kick" */
 		lizard
 			name="lizard"
 			id="lizard"
@@ -250,7 +250,8 @@ datum
 			adjective="scaled"
 			taur="naga"
 			tail=1
-		murid // i have no idea what this is
+			restricted=2
+	/*	murid // i have no idea what this is
 			name="murid"
 			id="murid"
 			say_mod = "squeaks"
