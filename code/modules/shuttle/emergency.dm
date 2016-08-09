@@ -326,6 +326,12 @@
 				timer = world.time
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
+
+			if(time_left <= 50 && sound_played) //4 seconds left:Hyperspace trip completed. - should sync up with the landing
+				sound_played = 1 //Only rev them up once.
+				for(var/area/shuttle/escape/E in world)
+					E << 'sound/effects/hyperspace_end.ogg'
+
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
 				for(var/A in SSshuttle.mobile)
