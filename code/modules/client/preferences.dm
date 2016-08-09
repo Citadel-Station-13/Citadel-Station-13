@@ -1019,7 +1019,7 @@ var/list/preferences_datums = list()
 				if("be_taur")
 					be_taur = !be_taur
 
-				/*if("tail_lizard")
+				if("tail_lizard")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
 					if(new_tail)
@@ -1071,7 +1071,7 @@ var/list/preferences_datums = list()
 					var/new_body_markings
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 					if(new_body_markings)
-						features["body_markings"] = new_body_markings*/
+						features["body_markings"] = new_body_markings
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones

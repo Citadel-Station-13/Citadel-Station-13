@@ -50,7 +50,7 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Lizardperson"
-	id = "lizardperson"
+	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
