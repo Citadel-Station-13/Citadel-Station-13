@@ -120,8 +120,6 @@ Thus, the two variables affect pump operation are set in New():
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
-			message_admins("Pump manipulated by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-			log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -137,9 +135,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("A pump was set to [target_pressure] kPa by [key_name(usr)]", [loc.loc], "atmos")
-				message_admins("A pump was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-				log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()

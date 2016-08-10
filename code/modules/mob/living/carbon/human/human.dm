@@ -695,7 +695,7 @@
 					threatcount += 2
 
 	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/syndicate) || istype(head, /obj/item/clothing/head/culthood) || istype(head, /obj/item/clothing/head/helmet/space/cult))
+	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/syndicate) || istype(head, /obj/item/clothing/head/culthood))
 		threatcount += 5
 
 	//Check for nonhuman scum

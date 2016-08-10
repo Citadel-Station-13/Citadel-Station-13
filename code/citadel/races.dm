@@ -16,21 +16,23 @@ datum
 			generic="abductor"
 			adjective="spooky"
 			restricted=2
-	/*	ailurus
-			name="red panda"
+		ailurus
+			//name="red panda"
 			id="ailurus"
 			generic="ailurus"
 			adjective="cuddly"
 			tail=1
+			restricted=2
 		alien
-			name="alien"
+			//name="alien"
 			id="alien"
 			say_mod="hisses"
 			generic="xeno"
 			adjective="phallic"
 			tail=1
+			restricted=2
 		armadillo
-			name="armadillo"
+			//name="armadillo"
 			id="armadillo"
 			say_mod = "drawls"
 			generic = "cingulate" // Superorder Xenarthra, Order Cingulata
@@ -40,15 +42,17 @@ datum
 			attack_sound = 'sound/weapons/bite.ogg'
 			attack_verb = "nom" // apparently attack verbs are just the verb, no S. shrug
 			attack_sound = 'sound/weapons/bite.ogg'
+			restricted=2
 		anubis
-			name="anubis"
+			//name="anubis"
 			id="anubis"
 			say_mod = "intones"
 			generic="jackal" // mmm...jackal or canine? i'll leave it for now
 			adjective="cold"
 			attack_verb = "claw"
+			restricted=2
 		beaver
-			name="beaver"
+			//name="beaver"
 			id="beaver"
 			say_mod = "chitters"
 			generic="rodent"
@@ -56,8 +60,9 @@ datum
 			tail=1
 			attack_verb = "tailslap"
 			attack_sound = 'sound/items/dodgeball.ogg'
+			restricted=2
 		beholder
-			name="beholder"
+			//name="beholder"
 			id="beholder"
 			say_mod = "jibbers"
 			generic="body part"
@@ -65,19 +70,21 @@ datum
 			tail=0
 			attack_verb = "visually assault"
 			attack_sound = 'sound/magic/MM_Hit.ogg' // MAGIC MISSILE! MAGIC MISSILE!
+			restricted=2
 		boar
-			name="boar"
+			//name="boar"
 			id="boar"
 			generic="pig"
 			adjective="wild and curly"
 			tail=1
+			restricted=2
 		capra
-			name="caprine"
+			//name="caprine"
 			id="capra"
 			generic="goat"
 			adjective="irritable"
 		carp
-			name="carp"
+			//name="carp"
 			id="carp"
 			say_mod = "glubs"
 			generic = "abomination"
@@ -86,51 +93,58 @@ datum
 			eyes = "carpeyes"
 			attack_verb = "nom"
 			attack_sound = 'sound/weapons/bite.ogg'
+			restricted=2
 		corgi
-			name="corgi"
+			//name="corgi"
 			id="corgi"
 			say_mod ="yaps"
 			generic="canine"
 			adjective="corgalicious"
 			tail=1
+			restricted=2
 		corvid
-			name="corvid"
+			//name="corvid"
 			id="corvid"
 			say_mod = "caws"
 			generic="bird"
 			adjective="mask-piercing"
 			tail=1
 			attack_verb = "whack"
+			restricted=2
 		cow
-			name="cow"
+			//name="cow"
 			id="cow"
 			say_mod = "moos"
 			generic="bovine"
 			adjective="wise"
 			tail=1
 			taur=1
+			restricted=2
 		coyote
-			name="coyote"
+			//name="coyote"
 			id="coyote"
 			say_mod = "yips"
 			generic="canine"
 			adjective="mangy"
 			tail=1
+			restricted=2
 		crocodile
-			name="crocodile"
+			//name="crocodile"
 			id="croc"
 			generic="water reptile"
 			adjective="scaled"
 			tail=1
+			restricted=2
 		dalmatian
-			name="dalmatian"
+			//name="dalmatian"
 			id="dalmatian"
 			say_mod = "ruffs"
 			generic="canine"
 			adjective="spotty"
 			tail=1
+			restricted=2
 		deer
-			name="deer"
+			//name="deer"
 			id="deer"
 			say_mod = "grunts"
 			generic = "cervid"
@@ -138,28 +152,32 @@ datum
 			tail=1 // that's better
 			attack_verb = "gore"
 			attack_sound = 'sound/weapons/bladeslice.ogg'
+			restricted=2
 		drake
-			name="drake"
+			//name="drake"
 			id="drake"
 			say_mod = "growls"
 			generic = "reptile"
 			adjective = "frilly"
 			tail=1 // i'd use lizard tails but drakes have frills included on the icons
 			taur=1
+			restricted=2
 		drider
-			name="drider"
+			//name="drider"
 			id="drider"
 			generic="humanoid"
 			adjective="big and hairy"
 			taur=1
 			tail=1
 			eyes="spidereyes"
+			restricted=2
 		fennec
-			name="fennec"
+			//name="fennec"
 			id="fennec"
 			generic="vulpine"
 			adjective="foxy"
-			tail=1 */
+			tail=1
+			restricted=2
 		fox
 			name="fox"
 			id="fox"
@@ -167,40 +185,44 @@ datum
 			adjective="foxy" // open and shut with this one, huh
 			tail=1
 			taur=1
-	/*	glowfen
-			name="glowfen"
+		glowfen
+			//name="glowfen"
 			id="glowfen"
 			generic="vulpine"
 			adjective="glowing"
 			tail=1
+			restricted=2
 		gremlin
-			name="gremlin"
+			//name="gremlin"
 			id="gremlin"
 			generic="creature"
 			tail=1
 			attack_verb = "thwack"
 		gria
-			name="gria"
+			//name="gria"
 			id="gria"
 			generic="reptile"
 			adjective="scaled"
 			tail=1
 			attack_verb = "claw"
 			attack_sound = 'sound/weapons/bladeslice.ogg'
+			restricted=2
 		hawk
-			name="hawk"
+			//name="hawk"
 			id="hawk"
 			say_mod = "chirps"
 			generic="bird"
 			adjective="feathery"
 			tail=1
 			attack_verb = "whack"
+			restricted=2
 		hippo
-			name="hippo"
+			//name="hippo"
 			id="hippo"
 			generic="hippo"
 			adjective="buoyant"
 			tail=1
+			restricted=2
 		husky
 			name="husky"
 			id="husky"
@@ -210,91 +232,102 @@ datum
 			tail=1
 			taur=1
 		jackalope
-			name="jackalope"
+			//name="jackalope"
 			id="jackalope"
 			generic="leporid"
 			adjective="hoppy and horny" //hue
 			attack_verb = "kick"
 			tail=1
+			restricted=2
 		jelly
-			name="jelly"
+			//name="jelly"
 			id="jelly"
 			generic="jelly"
 			adjective="jelly"
 		kangaroo
-			name="kangaroo"
+			//name="kangaroo"
 			id="kangaroo"
 			generic="marsupial"
 			adjective="bouncy"
 			tail=1
 			attack_verb = "kick"
+			restricted=2
 		lab
-			name="lab"
+			//name="lab"
 			id="lab"
 			say_mod = "yaps"
 			generic="canine"
 			adjective="sleek"
 			tail=1
 			taur=1
+			restricted=2
 		leporid
-			name="leporid"
+			//name="leporid"
 			id="leporid"
 			generic="leporid"
 			adjective="hoppy"
 			tail=1
 			attack_verb = "kick"
+			restricted=2
 		lizard
-			name="lizard"
+			//name="lizard"
 			id="lizard"
 			generic="reptile"
 			adjective="scaled"
 			taur="naga"
 			tail=1
+			restricted=2
 
 		murid // i have no idea what this is
-			name="murid"
+			//name="murid"
 			id="murid"
 			say_mod = "squeaks"
 			generic="rodent"
 			adjective="squeaky"
 			tail=1
+			restricted=2
 		moth
-			name="moth"
+			//name="moth"
 			id="moth"
 			generic="insect"
 			adjective="fluttery"
 			eyes="motheyes" // this SHOULD work after i've updated human_face.dmi -- iska
+			restricted=2
 		mushman
-			name="mushroom"
+			//name="mushroom"
 			id="fung"
 			generic="fungi"
 			adjective="sporey"
 			say_mod = "mushes"
 			tail=0
+			restricted=2
 		naga
-			name="naga"
+			//name="naga"
 			id="naga"
 			generic="humanoid"
 			adjective="noodly"
 			taur=1
 			tail=1
+			restricted=2
 		otter
-			name="otter"
+			//name="otter"
 			id="otter"
 			say_mod = "squeaks"
 			generic="mustelid"
 			adjective="slim"
 			tail=1
+			restricted=2
 		otusian
-			name="otusian"
+			//name="otusian"
 			id="otie"
 			say_mod ="growls"
 			generic="feline-canine"
 			adjective="chunky" // ??? are otusians fat????
 			tail=1
 			taur=1
+			restricted=2
 		panther
-			name="panther"
+			//name="panther"
 			id="panther"
 			generic="feline"
 			adjective="furry"
@@ -302,19 +335,22 @@ datum
 			taur=1
 			attack_verb = "claw"
 			attack_sound = 'sound/weapons/bladeslice.ogg'
+			restricted=2
 		pig
-			name="pig"
+			//name="pig"
 			id="pig"
 			generic="pig"
 			adjective="curly"
 			tail=1
+			restricted=2
 		plant
 			generic="plant"
 			adjective="leafy"
+			restricted=2
 		plant/pod
 			restricted=1
 		porcupine
-			name="porcupine"
+			//name="porcupine"
 			id="porcupine"
 			say_mod = "snuffles"
 			generic = "rodent"
@@ -322,8 +358,9 @@ datum
 			tail=1
 			attack_verb = "quill-whack"
 			attack_sound = 'sound/weapons/slash.ogg'
+			restricted=2
 		possum
-			name="possum"
+			//name="possum"
 			id="possum"
 			say_mod = "chitters"
 			generic = "marsupial"
@@ -331,67 +368,77 @@ datum
 			tail=1
 			attack_verb = "nom"
 			attack_sound = 'sound/weapons/bite.ogg'
+			restricted=2
 		raccoon
-			name="raccoon"
+			//name="raccoon"
 			id="raccoon"
 			say_mod="churrs"
 			generic="procyonid" // Family Procyonidae
 			adjective="stripy"
 			tail=1
+			restricted=2
 		roorat
-			name="kangaroo rat"
+			//name="kangaroo rat"
 			id="roorat"
 			generic="Heteromyidae" // ...marsupial rat?  Have you tried a google search?  They're a real thing.
 			adjective="bouncy"
 			tail=1
 			attack_verb = "kick"
+			restricted=2
 		saltman
-			name="salt"
+			//name="salt"
 			id="salt"
 			generic="NaCl"
 			adjective="salty"
 			restricted=2
+			restricted=2
 		seaslug
-			name="sea slug"
+			//name="sea slug"
 			id="seaslug"
 			generic="slug"
 			adjective="salty"
 			tail=1
 			attack_verb = "smack"
+			restricted=2
 		shark
-			name="shark"
+			//name="shark"
 			id="shark"
 			generic="selachimorph" // Superorder Selachimorpha
 			adjective="fishy"
 			tail=1
+			restricted=2
 		shepherd
-			name="shepherd"
+			//name="shepherd"
 			id="shepherd"
 			say_mod = "barks"
 			generic="canine"
 			adjective="happy"
 			tail=1
 			taur=1
+			restricted=2
 		skunk
-			name="skunk"
+			//name="skunk"
 			id="skunk"
 			say_mod = "snuffles"
 			generic="mephit"
 			adjective="stinky"
 			tail=1
+			restricted=2
 		slime
-			name="slime"
+			//name="slime"
 			id="slime"
 			generic="slime"
 			adjective="slimy"
+			restricted=2
 		smilodon
-			name="smilodon"
+			//name="smilodon"
 			id="smilodon"
 			generic="smilodon"
 			adjective="toothy"
 			tail=1
+			restricted=2
 		snarby
-			name="snarby"
+			//name="snarby"
 			id="snarby"
 			generic="beast"
 			adjective="snippy and snarly"
@@ -399,12 +446,14 @@ datum
 			attack_verb = "chomp"
 			attack_sound = 'sound/weapons/bite.ogg'
 			eyes = "snarbyeyes"
+			restricted=2
 		squirrel
-			name="squirrel"
+			//name="squirrel"
 			id="squirrel"
 			generic="rodent"
 			adjective="nutty"
-			tail=1 */
+			tail=1
+			restricted=2
 		tajaran
 			name="tajaran"
 			id="tajaran"
@@ -422,13 +471,13 @@ datum
 			tail=1
 			attack_verb = "pecks"
 	/*	turtle
-			name="turtle"
+			//name="turtle"
 			id="turtle"
 			generic="reptile"
 			adjective="hard-shelled"
 			tail=1
 		ursine
-			name="bear"
+			//name="bear"
 			id="ursine"
 			generic="ursine"
 			adjective="husky"
@@ -437,7 +486,7 @@ datum
 			attack_verb = "claw"
 			attack_sound = 'sound/weapons/bladeslice.ogg'
 		wolf
-			name="wolf"
+			//name="wolf"
 			id="wolf"
 			say_mod = "howls"
 			generic="canine"
@@ -445,7 +494,7 @@ datum
 			tail=1
 			taur=1
 		zig
-			name="zig"
+			//name="zig"
 			id="zig"
 			generic="pokémon"
 			adjective="curious"
@@ -528,14 +577,14 @@ datum
 			generic="plasmaman"
 			adjective="toxic"
 			restricted=2 // but if you do want the world to burn then please, by all means
-	/*	pepsiman
+		pepsiman
 			//name="PEPSI MAAAAAN"
 			id="PEPSIMAAAN"
 			generic="beverage"
 			adjective="refreshing"
 			restricted=2 // don't want half the station to be running around with soda cans on their heads
 		cutebold
-			name="cutebold"
+			//name="cutebold"
 			id="cutebold"
 			say_mod = "yips"
 			generic = "kobo"
@@ -544,21 +593,22 @@ datum
 			attack_verb = "nom"
 			attack_sound = 'sound/weapons/bite.ogg'
 		pony // of the "my little" variety
-			name="pony"
+			//name="pony"
 			id="pony"
 			generic="equine"
 			adjective="little"
 			tail=1
 			attack_verb= "kick"
 		hylotl
-			name="hylotl"
+			//name="hylotl"
 			id="hylotl"
 			say_mod = "glubs"
 			generic="amphibian"
 			adjective="fishy"
 			tail=0
-			eyes="jelleyes"I/ */
-/*var/list/kpcode_race_list
+			eyes="jelleyes"
+/*
+var/list/kpcode_race_list
 
 proc/kpcode_race_genlist()
 	if(!kpcode_race_list)
@@ -566,8 +616,9 @@ proc/kpcode_race_genlist()
 		kpcode_race_list = new/list()
 		for(var/path in paths)
 			var/datum/species/D = new path()
-			if(D.name!="undefined")
-				kpcode_race_list[D.name] = D*/
+			if(D.//name!="undefined")
+				kpcode_race_list[D.//name] = D
+				*/
 
 proc/kpcode_race_getlist(var/restrict=0)
 	var/list/race_options = list()
