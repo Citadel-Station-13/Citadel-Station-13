@@ -272,13 +272,13 @@ datum
 			attack_verb = "kick"
 			restricted=2
 		lizard
-			//name="lizard"
+			name="lizard"
 			id="lizard"
 			generic="reptile"
 			adjective="scaled"
 			taur="naga"
 			tail=1
-			restricted=2
+
 
 		murid // i have no idea what this is
 			//name="murid"
@@ -750,7 +750,7 @@ var/list/mutant_tails = list(
 	"kangaroo"="kangaroo",
 	"kangaroo"="kangaroo",
 	"pony"="pony",
-//	"lizard"="lizard",
+	"lizard"="lizard",
 	"cyborg"="cyborg")
 
 var/list/mutant_wings = list(
