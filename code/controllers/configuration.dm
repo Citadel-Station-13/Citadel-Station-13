@@ -1,4 +1,4 @@
-//Configuraton defines //TODO: Move all yes/no switches into bitflags
+f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 //Used by jobs_have_maint_access
 #define ASSISTANTS_HAVE_MAINT_ACCESS 1
