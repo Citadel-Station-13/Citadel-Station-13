@@ -212,7 +212,7 @@ var/list/preferences_datums = list()
 			if(config.mutant_races)
 				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
 				dat += "<b>Human Tail:</b><a href='?_src_=prefs;preference=mutant_tail;task=input'>[mutant_tail]</a><BR>"
-				dat += "<b>Taur:</b><a href='?_src_=prefs;preference=be_taur;task=input'>[be_taur ? "Yes" : "No"]</a>"
+				dat += "<b>Taur (Disabled):</b><a href='?_src_=prefs;preference=be_taur;task=input'>[be_taur ? "Yes" : "No"]</a>"
 				if(!kpcode_cantaur(pref_species.id))
 					dat += " (not available for [pref_species.id])"
 				dat += "<BR>"
@@ -1016,8 +1016,8 @@ var/list/preferences_datums = list()
 					VP.target=src
 					VP.ShowChoices(user)
 
-				if("be_taur")
-					be_taur = !be_taur
+				//if("be_taur")
+				//	be_taur = !be_taur
 
 				if("tail_lizard")
 					var/new_tail
@@ -1279,8 +1279,8 @@ var/list/preferences_datums = list()
 	/*(if(mutant_wing != "none" && config.mutant_races)
 		character.dna.mutantwing = mutant_wing
 		character.dna.wingcolor=wingcolor*/
-	if(be_taur)
-		character.dna.taur=1
+	//if(be_taur)
+	//	character.dna.taur=1
 	//character.dna.special_color = special_color
 	character.dna.cock=p_cock
 	character.dna.vagina=p_vagina

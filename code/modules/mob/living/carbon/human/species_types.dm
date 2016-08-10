@@ -53,6 +53,7 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
+	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
