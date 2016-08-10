@@ -695,21 +695,22 @@
 					threatcount += 2
 
 	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
-		threatcount += 2
+	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/syndicate) || istype(head, /obj/item/clothing/head/culthood) || istype(head, /obj/item/clothing/head/helmet/space/cult))
+		threatcount += 5
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && dna.species.id != "human")
-		threatcount += 1
+		threatcount += 0
 
-	//mindshield implants imply trustworthyness
+	//Loyalty implants imply trustworthyness
 	if(isloyal(src))
 		threatcount -= 1
 
-	//Agent cards lower threatlevel.
+	//Agent cards lower threatlevel, but only just enough to avoid dresscode violations.
 	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 5
+		threatcount -= 2
 
+	return threatcount
 	return threatcount
 
 
