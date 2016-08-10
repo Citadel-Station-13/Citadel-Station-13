@@ -61,7 +61,7 @@
 	var/darksight = 2
 
 	// species flags. these can be found in flags.dm
-	var/list/specflags = list()
+	var/list/specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 
 	var/attack_verb = "punch"	// punch-specific attack verb
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
