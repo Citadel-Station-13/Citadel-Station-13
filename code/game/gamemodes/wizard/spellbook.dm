@@ -103,12 +103,12 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
 	log_name = "MM"
 	category = "Defensive"
-
+/*
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
 	log_name = "DG"
-
+*/
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
@@ -259,7 +259,7 @@
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
-
+/*
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -278,7 +278,7 @@
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
-
+*/
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
