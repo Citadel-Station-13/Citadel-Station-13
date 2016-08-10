@@ -83,6 +83,7 @@ datum
 			id="capra"
 			generic="goat"
 			adjective="irritable"
+			restricted=2
 		carp
 			//name="carp"
 			id="carp"
@@ -198,6 +199,7 @@ datum
 			generic="creature"
 			tail=1
 			attack_verb = "thwack"
+			restricted=2
 		gria
 			//name="gria"
 			id="gria"
@@ -592,6 +594,7 @@ datum
 			tail=1
 			attack_verb = "nom"
 			attack_sound = 'sound/weapons/bite.ogg'
+			restricted=2
 		pony // of the "my little" variety
 			//name="pony"
 			id="pony"
@@ -599,6 +602,7 @@ datum
 			adjective="little"
 			tail=1
 			attack_verb= "kick"
+			restricted=2
 		hylotl
 			//name="hylotl"
 			id="hylotl"
@@ -607,6 +611,7 @@ datum
 			adjective="fishy"
 			tail=0
 			eyes="jelleyes"
+			restricted=2
 /*
 var/list/kpcode_race_list
 
