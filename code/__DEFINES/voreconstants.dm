@@ -46,7 +46,7 @@ var/global/list/death_sounds = list(
 #define isrodent(A) (is_species(A, /datum/species/rodent))
 #define isherbivorous(A) (is_species(A, /datum/species/herbivorous))
 #define isexotic(A) (is_species(A, /datum/species/exotic))
-
+/*
 var/list/canine_species = list (
 anubis,
 corgi,
@@ -147,4 +147,4 @@ var/global/list/wings_list = list()
 
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_DEBUGLOGS)
-			C << "DEBUG: [text]"
+			C << "DEBUG: [text]" */
