@@ -4,9 +4,9 @@
 #ifdef PUTONHUB
 	hub_password = "kMZy3U5jJHSiBQjr"
 #else
-	hub_password = "SORRYNOPASSWORD"
+	hub_password = "kMZy3U5jJHSiBQjr"
 #endif
-	name = "/tg/ Station 13"
+	name = "Citadel Station 13"
 
 /*
 This is for any host that would like their server to appear on the main SS13 hub.
