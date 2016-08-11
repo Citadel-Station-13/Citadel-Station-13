@@ -1405,3 +1405,21 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+//WOLF//
+/datum/sprite_accessory/ears/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	hasinner = 1
+
+/datum/sprite_accessory/tails/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
+/datum/sprite_accessory/tails_animated/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
+//coming soon:
+
+//FOX//
