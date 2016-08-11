@@ -1336,22 +1336,6 @@ var/const/VORE_SIZEDIFF_ANY=5
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = 0
 
-/obj/item/clothing/under/maid/narky
-	name = "narky outfit"
-	desc = "How cute~"
-	icon_state = "narkymaid"
-	item_state = "narkymaid"
-	item_color = "narkymaid"
-
-/obj/item/clothing/under/diaper
-	name = "space diaper"
-	desc = "Oh, my."
-	icon_state = "diaper"
-	item_state = "diaper"
-	item_color = "diaper"
-	body_parts_covered = GROIN
-	fitted = 0
-
 /obj/item/clothing/under/schoolgirl/red
 	icon_state = "schoolgirlred"
 	item_state = "schoolgirlred"
@@ -1374,94 +1358,12 @@ var/const/VORE_SIZEDIFF_ANY=5
 	desc = "Foxcom Special Edition"
 	icon_state = "pooj"
 
-/obj/item/clothing/shoes/sandal/pavi
-	desc = "A pair of rather amazing, purple sandals"
-	name = "pavi sandals"
-	icon_state = "pavi"
-
-/obj/item/clothing/suit/narkycuff
-	name = "cuffs"
-	desc = "For when a Narky feels stylish or kinky."
-	icon_state = "narkycuff"
-	item_state = "narkycuff"
-	gender=PLURAL
-	body_parts_covered = ARMS
-	allowed = list(/obj/item/weapon/gun/energy/laser/sizeray)
-
-/obj/item/clothing/shoes/narkyanklet
-	name = "anklets"
-	desc = "For when a Narky wants to tie people to his paws without string."
-	icon_state = "narkyanklet"
-	item_state = "narkyanklet"
-	body_parts_covered = LEGS
-
-/obj/item/weapon/storage/backpack/kittypack
-	name = "kitty backpack"
-	desc = "Mr. Noodles!"
-	icon_state = "kittypack"
-	item_state = "kittypack"
-
-
 //Sppoky stuffs!
 /obj/item/clothing/suit/costume/spooky_spook
 	name = "spooky ghost costume"
 	desc = "It's a g-g-gg-ggg-g-g-g-BEDSHEET!"
 	icon_state = "spooky_spook"
 	item_state = "spooky_spook"
-
-/obj/item/clothing/suit/costume/narky_fursuit
-	name = "\improper Narky fursuit"
-	desc = "Dress up like a Narky! Narky is terrified of these."
-	icon_state = "narky_fursuit"
-	item_state = "narky_fursuit"
-	allowed = list(/obj/item/weapon/gun/energy/laser/sizeray)
-
-/obj/item/clothing/head/costume/narky_fursuit
-	name = "\improper Narky fursuit head"
-	desc = "Dress up like a Narky! Narky is terrified of these."
-	icon_state = "narky_fursuit"
-
-/obj/item/clothing/suit/costume/clone
-	name = "sharpshooter costume"
-	desc = "Best shot at the academy!"
-	icon_state = "clone"
-	item_state = "clone"
-
-/obj/item/clothing/head/costume/clone
-	name = "sharpshooter helmet"
-	desc = "Best shot at the academy!"
-	icon_state = "clone"
-
-/obj/item/clothing/suit/costume/batman
-	name = "\improper Dark West costume"
-	desc = "You're not safe, and neither is this bomb."
-	icon_state = "batman"
-	item_state = "batman"
-
-/obj/item/clothing/head/costume/batman
-	name = "\improper Dark West mask"
-	desc = "You're not safe, and neither is this bomb."
-	icon_state = "batman"
-
-/obj/item/clothing/under/costume/spiderman
-	name = "\improper Human Spider costume"
-	desc = "Does whatever he does."
-	icon_state = "spiderman"
-	item_state = "spiderman"
-	item_color = "spiderman"
-
-/obj/item/clothing/mask/costume/spiderman
-	name = "\improper Human Spider mask"
-	desc = "Does whatever he does."
-	icon_state = "spiderman"
-	item_state = "spiderman"
-
-/obj/item/clothing/under/costume/zeerust
-	name = "zeerust captain costume"
-	desc = "In a game of chess, you must never let your opponent see your pieces."
-	icon_state = "zeerust"
-	item_state = "zeerust"
-	item_color = "zeerust"
 
 
 /obj/structure/sign/portrait
