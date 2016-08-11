@@ -206,7 +206,7 @@ var/const/VORE_SIZEDIFF_ANY=5
 					owner.nutrition+=400
 					digestion_count+=1
 					//owner.updateappearance
-					owner.update_body()
+					//owner.update_body()
 					continue //hopefully won't break much
 				if(oxygen)
 					M.oxyloss=0//Temp fix
@@ -307,7 +307,7 @@ var/const/VORE_SIZEDIFF_ANY=5
 				if(istype(A, /obj/item/weapon/reagent_containers/food/snacks))
 					qdel(A)
 		//owner.updateappearance()
-		owner.update_body()
+		//owner.update_body()
 		return 1
 
 	proc/add(var/mob/living/addit)
@@ -322,7 +322,7 @@ var/const/VORE_SIZEDIFF_ANY=5
 		if(M)
 			M.last_organ_in=src
 		//updateappearance(owner)
-		owner.update_body()
+		//owner.update_body()
 	proc/flavour_text(var/source, var/mob/living/prey, var/extra_info=0)
 		if(extra_info==VORE_EXTRA_FULLTOUR&&(remembered_bans&VORE_EXTRA_FULLTOUR))
 			extra_info=0
@@ -476,7 +476,7 @@ var/const/VORE_SIZEDIFF_ANY=5
 			mprey.vore_transform_index=0
 			mprey.vore_transfer_index=0
 		//updateappearance(owner)
-		owner.update_body()
+		//owner.update_body()
 
 /*	proc/refresh_list()
 		for(var/mob/living/M in contents)
@@ -1799,7 +1799,7 @@ var/list/traitor_test_list = null
 		var/mob/living/carbon/human/humz=src
 		humz.underwear_active=!humz.underwear_active
 		//updateappearance(src)
-		src.update_body()
+		//src.update_body()
 	else
 		src<<"Humans only."
 
@@ -2008,6 +2008,7 @@ var/list/traitor_test_list = null
 
 /mob/proc/kpcode_mob_offset()
 	return
+	/*
 /mob/proc/update_body()
 	if(istype(src,/mob/living/carbon/human))
 		//updateappearance(mutcolor_update=0)
@@ -2015,7 +2016,7 @@ var/list/traitor_test_list = null
 	/*if(istype(src,/mob/living/carbon)) //Endless loop for nonhuman mobs. base proc is /human only so nonhumans would get stuck with this being their only option.
 		//updateappearance(mutcolor_update=0)
 		src.update_body()*/
-
+*/
 /mob/living/kpcode_mob_offset()
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H=src
