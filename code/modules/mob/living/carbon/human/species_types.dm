@@ -6,7 +6,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	//specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -919,6 +919,7 @@ SYNDICATE BLACK OPS
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1
+	roundstart = 0
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -1052,3 +1053,29 @@ SYNDICATE BLACK OPS
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+
+//CANINE//
+/datum/species/wolf
+	name = "Wolf"
+	id = "wolf"
+	say_mod = "howls"
+	default_color = "4B4B4B"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
+
+//FELINE//
+
+//AVIAN//
+
+//RODENT//
+
+//HERBIVOROUS//
+
+//EXOTIC//
