@@ -56,6 +56,11 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+//	var/generic="something"
+//	var/adjective="unknown"
+//	var/restricted=0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
+//	var/tail=0
+//	var/taur=0
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
