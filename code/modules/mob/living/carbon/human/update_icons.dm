@@ -4,10 +4,8 @@
 /* Keep these comments up-to-date if you -insist- on hurting my code-baby ;_;
 This system allows you to update individual mob-overlays, without regenerating them all each time.
 When we generate overlays we generate the standing version and then rotate the mob as necessary..
-
 As of the time of writing there are 20 layers within this list. Please try to keep this from increasing. //22 and counting, good job guys
 	var/overlays_standing[20]		//For the standing stance
-
 Most of the time we only wish to update one overlay:
 	e.g. - we dropped the fireaxe out of our left hand and need to remove its icon from our mob
 	e.g.2 - our hair colour has changed, so we need to update our hair icons on our mob
@@ -15,28 +13,21 @@ In these cases, instead of updating every overlay using the old behaviour (regen
 the appropriate update_X proc.
 	e.g. - update_l_hand()
 	e.g.2 - update_hair()
-
 Note: Recent changes by aranclanos+carn:
 	update_icons() no longer needs to be called.
 	the system is easier to use. update_icons() should not be called unless you absolutely -know- you need it.
 	IN ALL OTHER CASES it's better to just call the specific update_X procs.
-
 Note: The defines for layer numbers is now kept exclusvely in __DEFINES/misc.dm instead of being defined there,
 	then redefined and undefiend everywhere else. If you need to change the layering of sprites (or add a new layer)
 	that's where you should start.
-
 All of this means that this code is more maintainable, faster and still fairly easy to use.
-
 There are several things that need to be remembered:
 >	Whenever we do something that should cause an overlay to update (which doesn't use standard procs
 	( i.e. you do something like l_hand = /obj/item/something new(src), rather than using the helper procs)
 	You will need to call the relevant update_inv_* proc
-
 	All of these are named after the variable they update from. They are defined at the mob/ level like
 	update_clothing was, so you won't cause undefined proc runtimes with usr.update_inv_wear_id() if the usr is a
 	slime etc. Instead, it'll just return without doing any work. So no harm in calling it for slimes and such.
-
-
 >	There are also these special cases:
 		update_damage_overlays()	//handles damage overlays for brute/burn damage
 		update_body()				//Handles updating your mob's body layer and mutant bodyparts
@@ -44,8 +35,6 @@ There are several things that need to be remembered:
 									//NOTE: update_mutantrace() is now merged into this!
 		update_hair()				//Handles updating your hair overlay (used to be update_face, but mouth and
 									eyes were merged into update_body())
-
-
 */
 
 //DAMAGE OVERLAYS
@@ -79,58 +68,10 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-//mob/living/carbon/human/proc/update_body()
-/mob/living/carbon/human/update_body()
+/mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
 	update_body_parts()
-
-	//Tail code
-	remove_overlay(TAIL_LAYER)
-	var/list/t_standing	= list()
-	//var/icon/chk=new/icon('icons/mob/tail.dmi')
-	//var/list/available_states=chk.IconStates()
-
-	var/wing = dna ? dna.mutantwing : null
-	if(wing&&wing!="none"&&!dna.taur)
-		var/image/wing_s = image("icon" = 'icons/mob/wing.dmi', "icon_state" = "[wing]", "layer" = -TAIL_LAYER)
-		wing_s.color = "#" + dna.wingcolor
-		t_standing	+= wing_s
-
-	var/race = dna ? dna.mutantrace() : null
-	if(race&&kpcode_hastail(race) &&!dna.taur) //Temp taur fix
-		t_standing+=generate_colour_icon('icons/mob/tail.dmi',"[kpcode_hastail(race)]",dna.special_color,add_layer=-TAIL_LAYER)
-		/*var/list/standingt = list()
-		standingt += image("icon"='icons/mob/tail.dmi', "icon_state"="[race]", "layer"=-TAIL_LAYER)
-		if(dna.special_color_one)
-			if(available_states.Find("[race]_1"))
-				var/image/standingt_one	= image("icon"='icons/mob/tail.dmi', "icon_state"="[race]_1", "layer"=-TAIL_LAYER)
-				var/new_color = "#" + dna.special_color_one
-				standingt_one.color = new_color
-				standingt += standingt_one
-		overlays_standing[TAIL_LAYER]	= standingt*/
-	else
-		if(!race||race=="human")
-			var/tail = dna ? dna.mutanttail : null
-			if(tail&&kpcode_hastail(tail) &&!dna.taur) //Temp taur fix
-				t_standing+=generate_colour_icon('icons/mob/tail.dmi',"[kpcode_hastail(tail)]",dna.special_color,add_layer=-TAIL_LAYER,human=hair_color)
-				/*var/list/standingt = list()
-				standingt += image("icon"='icons/mob/tail.dmi', "icon_state"="[kpcode_hastail(tail)]", "pixel_y"=kpcode_tail_offset(tail), "layer"=-TAIL_LAYER) //may need a +(pixel_y/2)
-				var/image/standingt_one	= image("icon"='icons/mob/tail.dmi', "icon_state"="[kpcode_hastail(tail)]_1", "pixel_y"=kpcode_tail_offset(tail), "layer"=-TAIL_LAYER)
-				var/new_color = "#" + hair_color
-				standingt_one.color = new_color
-				standingt += standingt_one
-				overlays_standing[TAIL_LAYER]	= standingt*/
-
-	if(dna&&dna.taur)
-		t_standing+=generate_colour_icon('icons/mob/special/taur.dmi',"[kpcode_cantaur(dna.mutantrace())]_tail",dna.special_color,offset_x=-16,add_layer=-TAIL_LAYER)
-		if(src.vore_womb_datum.has_people()||src.vore_stomach_datum.has_people())
-			t_standing+=generate_colour_icon('icons/mob/special/taur.dmi',"[kpcode_cantaur(dna.mutantrace())]_tail_f",dna.special_color,offset_x=-16,add_layer=-TAIL_LAYER)
-
-	if(t_standing.len)
-		overlays_standing[TAIL_LAYER] =t_standing
-
-	apply_overlay(TAIL_LAYER)
 
 /mob/living/carbon/human/update_fire()
 	..("Standing")
@@ -536,23 +477,15 @@ covers:
  centering large images
  layering images on custom layers
  building images from custom icon files
-
 By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
-
 state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
 so it's specified as an argument instead.
-
 default_layer: The layer to draw this on if no other layer is specified
-
 default_icon_file: The icon file to draw states from if no other icon file is specified
-
 isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
 in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
-
 femalueuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
 generate/load female uniform sprites matching all previously decided variables
-
-
 */
 /obj/item/proc/build_worn_icon(var/state = "", var/default_layer = 0, var/default_icon_file = null, var/isinhands = FALSE, var/femaleuniform = NO_FEMALE_UNIFORM)
 
