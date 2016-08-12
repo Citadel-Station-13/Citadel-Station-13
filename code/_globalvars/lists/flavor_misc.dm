@@ -34,6 +34,9 @@ var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()
 var/global/list/r_wings_list = list()
 
+	//Mammal Specific Mutant Human Bits
+var/global/list/mam_body_markings_list = list()
+
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
 
