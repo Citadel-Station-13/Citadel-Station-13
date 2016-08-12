@@ -30,7 +30,7 @@ proc/kpcode_race_getlist(var/restrict=0)
 		if(!R.restricted||R.restricted==restrict)
 			race_options[r_id]=kpcode_race_get(r_id)
 	return race_options
-/*
+
 proc/kpcode_race_get(var/name="human")
 	name=kpcode_race_san(name)
 	if(!name||name=="") name="human"
@@ -40,7 +40,7 @@ proc/kpcode_race_get(var/name="human")
 		return return_this
 	else
 		return kpcode_race_get()
-
+/*
 proc/kpcode_race_san(var/input)
 	if(!input)input="human"
 	if(istype(input,/datum/species))
