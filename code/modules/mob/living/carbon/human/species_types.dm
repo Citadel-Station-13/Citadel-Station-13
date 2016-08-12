@@ -1059,19 +1059,50 @@ SYNDICATE BLACK OPS
 /datum/species/wolf
 	name = "Wolf"
 	id = "wolf"
-	say_mod = "howls"
 	default_color = "4B4B4B"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
+	mutant_bodyparts = list("tail_human", "ears", "wings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human
 
+/datum/species/wolf/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+/datum/species/fox
+	name = "Fox"
+	id = "fox"
+	default_color = "FF7414"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Fox", "ears" = "Fox", "wings" = "None")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/datum/species/fox/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 //FELINE//
+/datum/species/tajaran
+	name = "Tajaran"
+	id = "tajaran"
+	default_color = "BCAC9B"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("tail_human", "ears", "wings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Tajaran", "ears" = "Tajaran", "wings" = "None")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
 
+/datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 //AVIAN//
 
 //RODENT//
