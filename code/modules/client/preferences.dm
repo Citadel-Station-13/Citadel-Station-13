@@ -211,10 +211,6 @@ var/list/preferences_datums = list()
 
 			if(config.mutant_races)
 				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
-				dat += "<b>Human Tail:</b><a href='?_src_=prefs;preference=mutant_tail;task=input'>[mutant_tail]</a><BR>"
-				dat += "<b>Taur (Disabled):</b><a href='?_src_=prefs;preference=be_taur;task=input'>[be_taur ? "Yes" : "No"]</a>"
-				if(!kpcode_cantaur(pref_species.id))
-					dat += " (not available for [pref_species.id])"
 				dat += "<BR>"
 			else
 				dat += "<b>Species:</b> Human<BR>"
@@ -224,8 +220,7 @@ var/list/preferences_datums = list()
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
 
-			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
-			dat += "<b>Vore Preferences:</b> <a href='?_src_=prefs;preference=vore_panel;task=input'>Open</a><BR>"
+//			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
 			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 			if(lentext(flavor_text) <= 40)
 				if(!lentext(flavor_text))
@@ -1004,46 +999,6 @@ var/list/preferences_datums = list()
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
-
-				if("mutant_tail")
-					var/new_mutant_tail = input(user, "Choose your character's tail:", "Character Preference")  as null|anything in mutant_tails
-					if(new_mutant_tail)
-						mutant_tail = new_mutant_tail
-
-				if("mutant_wing")
-					var/new_mutant_wing = input(user, "Choose your character's wings:", "Character Preference")  as null|anything in mutant_wings
-					if(new_mutant_wing)
-						mutant_wing = new_mutant_wing
-
-				if("wingcolor")
-					var/new_wingcolor = input(user, "Choose your character's wing color:", "Character Preference") as color|null
-					if(new_wingcolor)
-						wingcolor = sanitize_hexcolor(new_wingcolor)
-
-				/*if("special_color")
-					var/index_tc=href_list["which"]
-					switch(alert("Use a special colour for #[index_tc]?","Character Preference","Yes","No","Cancel"))
-						if("Yes")
-							var/new_color = input(user, "Choose colour #[index_tc]:", "Character Preference") as null|color
-							if(new_color)
-								special_color[text2num(index_tc)] = sanitize_hexcolor(new_color)
-						if("No")
-							special_color[text2num(index_tc)]=null*/
-
-				if("character_size")
-					var/new_size = input(user, "Choose your character's size:", "Character Preference")  in list("huge", "large", "normal", "small", "tiny")
-					if(new_size)
-						character_size=new_size
-
-				if("vore_panel")
-					var/obj/vore_preferences/VP=new()
-					VP.target=src
-					VP.ShowChoices(user)
-
-				//if("be_taur")
-				//	be_taur = !be_taur
-
-
 				if("tail_lizard")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
@@ -1304,30 +1259,6 @@ var/list/preferences_datums = list()
 
 	character.gender = gender
 	character.age = age
-
-	if(mutant_tail != "none" && config.mutant_races)
-		character.dna.mutanttail = mutant_tail
-	/*(if(mutant_wing != "none" && config.mutant_races)
-		character.dna.mutantwing = mutant_wing
-		character.dna.wingcolor=wingcolor*/
-	//if(be_taur)
-	//	character.dna.taur=1
-	//character.dna.special_color = special_color
-	character.dna.cock=p_cock
-	character.dna.vagina=p_vagina
-
-	character.vore_banned_methods=vore_banned_methods
-	character.vore_extra_bans=vore_extra_bans
-	character.vore_ability=vore_ability
-	if(character_size!="normal")
-		if(character_size=="small")
-			character.sizeplay_set(SIZEPLAY_MICRO)
-		else if(character_size=="tiny")
-			character.sizeplay_set(SIZEPLAY_TINY)
-		else if(character_size=="large")
-			character.sizeplay_set(SIZEPLAY_MACRO)
-		else
-			character.sizeplay_set(SIZEPLAY_HUGE)
 
 	character.eye_color = eye_color
 	character.hair_color = hair_color
