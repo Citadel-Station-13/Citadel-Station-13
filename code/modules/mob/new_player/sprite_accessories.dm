@@ -1438,6 +1438,8 @@
 /datum/sprite_accessory/mam_body_markings/lbelly
 	name = "Light Belly"
 	icon_state = "mam_lbelly"
+	gender_specific = 1
 /datum/sprite_accessory/mam_body_markings/dbelly
 	name = "Dark Belly"
 	icon_state = "mam_dbelly"
+	gender_specific = 1
