@@ -298,7 +298,7 @@
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
-
+	/*
 	//Custom Code
 	if(H.dna&&H.dna.taur&&!kpcode_cantaur(id))H.dna.taur=0//VERY BAD TEMP FIX
 
@@ -337,9 +337,11 @@
 		if(H.vore_womb_datum.has_people()||H.vore_stomach_datum.has_people())
 			taur_state+="_f"
 		standing += generate_colour_icon('icons/mob/special/taur.dmi',"[taur_state]",H.dna.special_color,offset_x=-16,add_layer=-BODY_LAYER)
+	*/
+	if(standing.len)
+		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -368,7 +370,6 @@
 	if("tail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
-
 
 	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -446,6 +447,8 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
+				if("mam_body_markings")
+					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")

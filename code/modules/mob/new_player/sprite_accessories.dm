@@ -1411,15 +1411,33 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	hasinner = 1
-
+	color_src = HAIR
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
+//The static and wagging sprites can be toggled on and off with 'say "*wag"'
 /datum/sprite_accessory/tails_animated/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
-//coming soon:
-
 //FOX//
+/datum/sprite_accessory/ears/fox
+	name = "Fox"
+	icon_state = "fox"
+	hasinner = 0
+/datum/sprite_accessory/tails/human/fox
+	name = "Fox"
+	icon_state = "fox"
+/datum/sprite_accessory/tails_animated/human/fox
+	name = "Fox"
+	icon_state = "fox"
+
+//Mammal Body Markings
+/datum/sprite_accessory/mam_body_markings/none
+	name = "None"
+	icon_state = ""
+/datum/sprite_accessory/mam_body_markings/lbelly
+	name = "Light Belly"
+	icon_state = "mam_lbelly"
+/datum/sprite_accessory/mam_body_markings/dbelly
+	name = "Dark Belly"
+	icon_state = "mam_dbelly"

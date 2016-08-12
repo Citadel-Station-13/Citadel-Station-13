@@ -562,6 +562,8 @@ var/global/list/limb_icon_cache = list()
 		. += "-coloured-[dna.species.fixed_mut_color]"
 	else if(dna.features["mcolor"])
 		. += "-coloured-[dna.features["mcolor"]]"
+	else if(dna.features["mcolor"] && dna.species.use_skintones)
+		. += "-coloured-[skin_tone]"
 	else
 		. += "-not_coloured"
 

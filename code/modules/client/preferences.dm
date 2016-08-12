@@ -83,7 +83,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -216,18 +216,6 @@ var/list/preferences_datums = list()
 				if(!kpcode_cantaur(pref_species.id))
 					dat += " (not available for [pref_species.id])"
 				dat += "<BR>"
-				/*if(special_color[1])
-					dat += "<span style='border:1px solid #161616; background-color: #[special_color[1]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=special_color;which=1;task=input'>Primary</a><BR>"
-				else
-					dat += "<a href='?_src_=prefs;preference=special_color;which=1;task=input'>Primary?</a><BR>"
-				if(special_color[2])
-					dat += "<span style='border:1px solid #161616; background-color: #[special_color[2]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=special_color;which=2;task=input'>Secondary</a><BR>"
-				else
-					dat += "<a href='?_src_=prefs;preference=special_color;which=2;task=input'>Secondary?</a><BR>"
-				if(special_color[3])
-					dat += "<span style='border:1px solid #161616; background-color: #[special_color[3]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=special_color;which=3;task=input'>Tertiary</a><BR>"
-				else
-					dat += "<a href='?_src_=prefs;preference=special_color;which=3;task=input'>Tertiary?</a><BR>"*/
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
@@ -238,11 +226,6 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
 			dat += "<b>Vore Preferences:</b> <a href='?_src_=prefs;preference=vore_panel;task=input'>Open</a><BR>"
-			/*dat += "<h3>Wings</h3>"
-
-			dat += "<a href='?_src_=prefs;preference=mutant_wing;task=input'>[mutant_wing]</a><BR>"
-			dat += "<span style='border: 1px solid #161616; background-color: #[wingcolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wingcolor;task=input'>Change</a><BR>"*/
-
 			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 			if(lentext(flavor_text) <= 40)
 				if(!lentext(flavor_text))
@@ -361,6 +344,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Body Markings</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("mam_body_markings" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Mammal Body Markings</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -1106,13 +1098,19 @@ var/list/preferences_datums = list()
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
 
+				if("mam_body_markings")
+					var/new_mam_body_markings
+					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in mam_body_markings_list
+					if(new_mam_body_markings)
+						features["mam_body_markings"] = new_mam_body_markings
+
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
+					var/new_ooccolor = input(user, "Choose your OOC color:", "Game Preference") as color|null
 					if(new_ooccolor)
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 

@@ -7,8 +7,8 @@
 	id = "human"
 	default_color = "FFFFFF"
 	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	mutant_bodyparts = list("tail_human", "ears")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -57,7 +57,7 @@
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
-	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	default_features = list("mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1056,23 +1056,35 @@ SYNDICATE BLACK OPS
 
 
 //CANINE//
-/datum/species/wolf
+datum/species/canid
+	name = "Canid"
+	id = "canid"
+	default_color = "4B4B4B"
+	roundstart = 1
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("tail_human", "ears", "snout", "mam_body_markings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+
+/datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+/datum/species/canid/wolf
 	name = "Wolf"
 	id = "wolf"
 	default_color = "4B4B4B"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("tail_human", "ears", "wings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None",  "snout" = "Round")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
-/datum/species/wolf/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		H.endTailWag()
-
-/datum/species/fox
+/datum/species/canid/fox
 	name = "Fox"
 	id = "fox"
 	default_color = "FF7414"
@@ -1084,18 +1096,16 @@ SYNDICATE BLACK OPS
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
-/datum/species/fox/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		H.endTailWag()
 //FELINE//
+/*
 /datum/species/tajaran
 	name = "Tajaran"
 	id = "tajaran"
 	default_color = "BCAC9B"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Tajaran", "ears" = "Tajaran", "wings" = "None")
+	mutant_bodyparts = list("tail_human", "ears", "wings", "mam_body_markings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Tajaran", "ears" = "Tajaran", "wings" = "None", "mam_body_markings" = "Light Belly")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1103,6 +1113,7 @@ SYNDICATE BLACK OPS
 /datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+*/
 //AVIAN//
 
 //RODENT//
