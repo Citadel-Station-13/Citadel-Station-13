@@ -83,7 +83,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -294,15 +294,19 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			/*if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
+			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
 				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
 
 					dat += "<td valign='top' width='21%'>"
 
-					dat += "<h3>Alien/Mutant Color</h3>"
+					dat += "<h3>Alien/Mutant Colors</h3>"
 
 					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+
+					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+
+					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
 					dat += "</td>"
 
@@ -387,7 +391,7 @@ var/list/preferences_datums = list()
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
-					dat += "</td>"*/
+					dat += "</td>"
 
 			dat += "</tr></table>"
 
@@ -976,18 +980,41 @@ var/list/preferences_datums = list()
 						//	mutant_color = pref_species.default_color
 
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's primary alien/mutant color:", "Character Preference") as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
+				if("mutant_color2")
+					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
+					if(new_mutantcolor)
+						var/temp_hsv = RGBtoHSV(new_mutantcolor)
+						if(new_mutantcolor == "#000000")
+							features["mcolor2"] = pref_species.default_color
+						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+				if("mutant_color3")
+					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference") as color|null
+					if(new_mutantcolor)
+						var/temp_hsv = RGBtoHSV(new_mutantcolor)
+						if(new_mutantcolor == "#000000")
+							features["mcolor3"] = pref_species.default_color
+						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+
 				if("mutant_tail")
-					var/new_mutant_tail = input(user, "Choose your character's tail for when they are human:", "Character Preference")  as null|anything in mutant_tails
+					var/new_mutant_tail = input(user, "Choose your character's tail:", "Character Preference")  as null|anything in mutant_tails
 					if(new_mutant_tail)
 						mutant_tail = new_mutant_tail
 
@@ -997,7 +1024,7 @@ var/list/preferences_datums = list()
 						mutant_wing = new_mutant_wing
 
 				if("wingcolor")
-					var/new_wingcolor = input(user, "Choose your character's wing colour:", "Character Preference") as color|null
+					var/new_wingcolor = input(user, "Choose your character's wing color:", "Character Preference") as color|null
 					if(new_wingcolor)
 						wingcolor = sanitize_hexcolor(new_wingcolor)
 
@@ -1024,7 +1051,7 @@ var/list/preferences_datums = list()
 				//if("be_taur")
 				//	be_taur = !be_taur
 
-				/*
+
 				if("tail_lizard")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
@@ -1078,7 +1105,6 @@ var/list/preferences_datums = list()
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
-						*/
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
