@@ -908,6 +908,7 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
+	restricted = 2
 
 /datum/species/angel
 	name = "Angel"
@@ -919,7 +920,7 @@ SYNDICATE BLACK OPS
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1
-	roundstart = 0
+	restricted = 2
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -1063,7 +1064,7 @@ datum/species/canid
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("tail_human", "ears", "snout", "mam_body_markings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None", "mam_body_markings" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1088,7 +1089,6 @@ datum/species/canid
 	name = "Fox"
 	id = "fox"
 	default_color = "FF7414"
-	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("tail_human", "ears", "wings")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Fox", "ears" = "Fox", "wings" = "None")
