@@ -298,46 +298,6 @@
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
-	/*
-	//Custom Code
-	if(H.dna&&H.dna.taur&&!kpcode_cantaur(id))H.dna.taur=0//VERY BAD TEMP FIX
-
-	if(H.underwear&&H.underwear!="Nude"&&H.underwear_active&& (!H.dna||!H.dna.taur) )
-		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
-		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
-
-	else if((!H.dna || !H.dna.taur) && (!H.wear_suit || !(H.wear_suit.flags_inv&HIDEJUMPSUIT)) && (!H.w_uniform||!(H.w_uniform.body_parts_covered&GROIN)) )
-		if(H.dna&&H.dna.cock)
-			//cock codes here
-			var/list/cock=H.dna.cock
-			var/cock_mod=0
-			var/cock_type=cock["type"]
-			if(cock["has"]==H.dna.COCK_NORMAL)cock_mod="n"
-			else if(cock["has"]==H.dna.COCK_HYPER)cock_mod="h"
-			else if(cock["has"]==H.dna.COCK_DOUBLE)cock_mod="d"
-			if(cock_mod)
-				var/icon/chk=new/icon('icons/mob/cock.dmi')
-				var/list/available_states=chk.IconStates()
-				if(available_states.Find("[cock_type]_c_[cock_mod]"))
-					var/image/cockimtmp	= image("icon"='icons/mob/cock.dmi', "icon_state"="[cock_type]_c_[cock_mod]", "layer"=-BODY_LAYER)
-					var/new_color = "#" + cock["color"]
-					cockimtmp.color = new_color
-					standing += cockimtmp
-				if(available_states.Find("[cock_type]_s_[cock_mod]"))
-					var/image/cockimtmp	= image("icon"='icons/mob/cock.dmi', "icon_state"="[cock_type]_s_[cock_mod]", "layer"=-BODY_LAYER)
-					if(H.dna.special_color[2])
-						var/new_color = "#" + H.dna.special_color[2]
-						cockimtmp.color = new_color
-					standing += cockimtmp
-
-	if(H.dna&&H.dna.taur)
-
-		var/taur_state="[kpcode_cantaur(H.dna.mutantrace())]_overlay"
-		if(H.vore_womb_datum.has_people()||H.vore_stomach_datum.has_people())
-			taur_state+="_f"
-		standing += generate_colour_icon('icons/mob/special/taur.dmi',"[taur_state]",H.dna.special_color,offset_x=-16,add_layer=-BODY_LAYER)
-	*/
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -370,6 +330,7 @@
 	if("tail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
+
 
 	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -447,8 +408,6 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
-				if("mam_body_markings")
-					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")

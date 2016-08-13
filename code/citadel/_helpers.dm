@@ -40,7 +40,7 @@ proc/kpcode_race_get(var/name="human")
 		return return_this
 	else
 		return kpcode_race_get()
-/*
+
 proc/kpcode_race_san(var/input)
 	if(!input)input="human"
 	if(istype(input,/datum/species))
@@ -53,7 +53,7 @@ proc/kpcode_race_restricted(var/name="human")
 		var/datum/species/D=kpcode_race_get(name)
 		return D.restricted
 	return 2
-
+/*
 proc/kpcode_race_tail(var/name="human")
 	name=kpcode_race_san(name)
 	if(kpcode_race_get(name))
