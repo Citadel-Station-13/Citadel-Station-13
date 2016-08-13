@@ -23,24 +23,23 @@
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-#define MUTATIONS_LAYER			27		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		26		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODYPARTS_LAYER			25		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			24		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_LAYER				23		//underwear, undershirts, socks, eyes, lips(makeup)
-#define FRONT_MUTATIONS_LAYER	22		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define DAMAGE_LAYER			21		//damage indicators (cuts and burns)
-#define UNIFORM_LAYER			20
-#define ID_LAYER				19
-#define SHOES_LAYER				18
-#define GLOVES_LAYER			17
-#define EARS_LAYER				16
-#define SUIT_LAYER				15
-#define GLASSES_LAYER			14
-#define BELT_LAYER				13		//Possible make this an overlay of somethign required to wear a belt?
-#define SUIT_STORE_LAYER		12
-#define BACK_LAYER				11
-#define TAIL_LAYER				10
+#define MUTATIONS_LAYER			26		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		25		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define BODYPARTS_LAYER			24		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			23		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define BODY_LAYER				22		//underwear, undershirts, socks, eyes, lips(makeup)
+#define FRONT_MUTATIONS_LAYER	21		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
+#define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
+#define UNIFORM_LAYER			19
+#define ID_LAYER				18
+#define SHOES_LAYER				17
+#define GLOVES_LAYER			16
+#define EARS_LAYER				15
+#define SUIT_LAYER				14
+#define GLASSES_LAYER			13
+#define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
+#define SUIT_STORE_LAYER		11
+#define BACK_LAYER				10
 #define HAIR_LAYER				9		//TODO: make part of head layer?
 #define FACEMASK_LAYER			8
 #define HEAD_LAYER				7
@@ -50,7 +49,7 @@
 #define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			27		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -146,6 +145,7 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
+#define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
 #define CLICK_CD_RESIST 20
@@ -255,6 +255,8 @@
 #define MAT_URANIUM		"$uranium"
 #define MAT_PLASMA		"$plasma"
 #define MAT_BANANIUM	"$bananium"
+#define MAT_TITANIUM	"$titanium"
+#define MAT_BIOMASS		"$biomass"
 
 
 //check_target_facings() return defines
@@ -303,6 +305,9 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_TEXT		"TEXT"
 #define POLLTYPE_RATING		"NUMVAL"
 #define POLLTYPE_MULTI		"MULTICHOICE"
+#define POLLTYPE_IRV		"IRV"
+
+
 
 //lighting area defines
 #define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
@@ -312,6 +317,9 @@ var/list/bloody_footprints_cache = list()
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
+
+//Gets the turf this atom inhabits
+#define get_turf(A) (get_step(A, 0))
 
 //Bot types
 #define SEC_BOT				1	// Secutritrons (Beepsky) and ED-209s
@@ -459,3 +467,28 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define debug_world(msg) if (Debug2) world << "DEBUG: [msg]"
 #define debug_admins(msg) if (Debug2) admins << "DEBUG: [msg]"
 #define debug_world_log(msg) if (Debug2) world.log << "DEBUG: [msg]"
+
+#define COORD(A) "([A.x],[A.y],[A.z])"
+#define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}
+
+// Inventory depth: limits how many nested storage items you can access directly.
+// 1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
+#define INVENTORY_DEPTH		3
+#define STORAGE_VIEW_DEPTH	2
+
+
+
+// Medal names
+
+#define BOSS_KILL_MEDAL "Killer"
+
+#define ALL_KILL_MEDAL "Exterminator"	//Killing all of x type
+
+// Score names
+
+#define LEGION_SCORE "Legion Killed"
+#define COLOSSUS_SCORE "Colossus Killed"
+#define BUBBLEGUM_SCORE "Bubblegum Killed"
+#define DRAKE_SCORE "Drakes Killed"
+#define BOSS_SCORE "Bosses Killed"
+#define TENDRIL_CLEAR_SCORE "Tendrils Killed"
