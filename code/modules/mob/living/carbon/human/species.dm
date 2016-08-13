@@ -408,6 +408,8 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
+				if("mam_body_markings")
+					S = body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
