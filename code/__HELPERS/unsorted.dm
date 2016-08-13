@@ -720,29 +720,16 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	else
 		return zone
 
-
-//Gets the turf this atom inhabits
-
-/proc/get_turf(atom/A)
-	if (!istype(A))
-		return
-	for(A, A && !isturf(A), A=A.loc); //semicolon is for the empty statement
-	return A
-
-
 /*
-
  Gets the turf this atom's *ICON* appears to inhabit
  It takes into account:
  * Pixel_x/y
  * Matrix x/y
-
  NOTE: if your atom has non-standard bounds then this proc
  will handle it, but:
  * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
  (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
  * if the bounds are odd, the true middle turf of the atom is returned
-
 */
 
 /proc/get_turf_pixel(atom/movable/AM)
@@ -1015,7 +1002,6 @@ var/list/WALLITEMS_INVERSE = list(
 
 /*
 rough example of the "cone" made by the 3 dirs checked
-
  B
   \
    \
@@ -1031,7 +1017,6 @@ B --><-- A
     /
    /
  B
-
 */
 
 
@@ -1410,3 +1395,10 @@ proc/pick_closest_path(value)
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
+
+/proc/random_nukecode()
+	var/val = rand(0, 99999)
+	var/str = "[val]"
+	while(length(str) < 5)
+		str = "0" + str
+	. = str
