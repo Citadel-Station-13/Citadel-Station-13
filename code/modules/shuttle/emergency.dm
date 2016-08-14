@@ -182,6 +182,7 @@
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/end_sound_played = 0 //so it doesn't loop annoyingly
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -299,7 +300,7 @@
 
 		if(SHUTTLE_DOCKED)
 
-			if(time_left <= 50 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
+			if(time_left <= 60 && !sound_played) //4 seconds left:REV UP THOSE ENGINES BOYS. - should sync up with the launch
 				sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_begin.ogg'
@@ -327,8 +328,8 @@
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 		if(SHUTTLE_ESCAPE)
 
-			if(time_left <= 50 && sound_played) //4 seconds left:Hyperspace trip completed. - should sync up with the landing
-				sound_played = 1 //Only rev them up once.
+			if(time_left <= 50 && !end_sound_played) //4 seconds left:Hyperspace trip completed. - should sync up with the landing
+				end_sound_played = 1 //Only rev them up once.
 				for(var/area/shuttle/escape/E in world)
 					E << 'sound/effects/hyperspace_end.ogg'
 
@@ -343,8 +344,8 @@
 							continue //Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
 
 				//now move the actual emergency shuttle to centcomm
-				for(var/area/shuttle/escape/E in world)
-					E << 'sound/effects/hyperspace_end.ogg'
+			//	for(var/area/shuttle/escape/E in world)
+			//		E << 'sound/effects/hyperspace_end.ogg'
 				dock(SSshuttle.getDock("emergency_away"))
 				mode = SHUTTLE_ENDGAME
 				timer = 0

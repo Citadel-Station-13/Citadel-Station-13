@@ -289,7 +289,7 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
+			/*if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
 				if((MUTCOLORS in pref_species.specflags) || (MUTCOLORS_PARTSONLY in pref_species.specflags))
 
@@ -382,7 +382,7 @@ var/list/preferences_datums = list()
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
-					dat += "</td>"
+					dat += "</td>"*/
 
 			dat += "</tr></table>"
 
@@ -1019,6 +1019,7 @@ var/list/preferences_datums = list()
 				//if("be_taur")
 				//	be_taur = !be_taur
 
+				/*
 				if("tail_lizard")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
@@ -1072,6 +1073,7 @@ var/list/preferences_datums = list()
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
+						*/
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones

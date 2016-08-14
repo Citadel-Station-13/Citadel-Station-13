@@ -278,8 +278,6 @@ datum
 			adjective="scaled"
 			taur="naga"
 			tail=1
-
-
 		murid // i have no idea what this is
 			//name="murid"
 			id="murid"
@@ -556,16 +554,9 @@ datum
 			adjective="rocky"
 			restricted=2
 		zombie
-			//name="zombie"
+			//name = "High Functioning Zombie"
 			id="zombie"
-			generic="undead"
-			adjective="rotten"
-			restricted=2
-		cosmetic_zombie // considering renaming to zombie/cosmetic
-			//name="zombie"
-			id="zombie"
-			generic="undead"
-			adjective="particularly rotten"
+			say_mod="moans"
 			restricted=2
 		plasmaman
 			//name="Plasmabone"
@@ -611,6 +602,19 @@ datum
 			adjective="fishy"
 			tail=0
 			eyes="jelleyes"
+			restricted=2
+		synth
+			//name = "Synth" //inherited from the real species, for health scanners and things
+			id = "synth"
+			say_mod = "beep boops" //inherited from a user's real species
+			restricted=2
+		synth/military
+			//name = "Military Synth"
+			id = "military_synth"
+			restricted=2
+		corporate
+			//name = "Corporate Agent"
+			id = "agent"
 			restricted=2
 /*
 var/list/kpcode_race_list

@@ -413,6 +413,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
+	/*
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
@@ -421,7 +422,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
-	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
+	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)*/
+
+	mutant_tail 	= sanitize_text(mutant_tail, initial(mutant_tail))
+	mutant_wing 	= sanitize_text(mutant_wing, initial(mutant_wing))
+	wingcolor		= sanitize_hexcolor(wingcolor, 3, 0)
+	character_size 	= sanitize_text(character_size, initial(character_size))
+//	mutant_color	= sanitize_hexcolor(mutant_color, 3, 0)
 
 	vore_ability=sanitize_vore_list(vore_ability)
 	if(isnull(vore_banned_methods))vore_banned_methods=0
