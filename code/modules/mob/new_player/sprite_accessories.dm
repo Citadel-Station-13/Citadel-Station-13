@@ -1125,6 +1125,7 @@
 
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = MUTCOLORS2
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -1407,39 +1408,52 @@
 	icon_state = "aqua"
 
 //WOLF//
-/datum/sprite_accessory/ears/wolf
+/datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	hasinner = 1
-	color_src = HAIR
-/datum/sprite_accessory/tails/human/wolf
+
+/datum/sprite_accessory/mam_tails/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-//The static and wagging sprites can be toggled on and off with 'say "*wag"'
-/datum/sprite_accessory/tails_animated/human/wolf
+
+/datum/sprite_accessory/mam_tails_animated/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+
+/datum/sprite_accessory/snouts/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
 //FOX//
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = 0
+
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
 	icon_state = "fox"
+
 /datum/sprite_accessory/tails_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
 
+/datum/sprite_accessory/snouts/fox
+	name = "Fox"
+	icon_state = "fox"
+
 //Mammal Body Markings
+/datum/sprite_accessory/mam_body_markings
+		name = "None"
+	icon_state = "none"
+	color_src = MUTCOLORS2
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
-	icon_state = ""
-/datum/sprite_accessory/mam_body_markings/lbelly
-	name = "Light Belly"
-	icon_state = "mam_lbelly"
+	icon_state = "none"
+
+/datum/sprite_accessory/mam_body_markings/belly
+	name = "Belly"
+	icon_state = "mam_belly"
 	gender_specific = 1
-/datum/sprite_accessory/mam_body_markings/dbelly
-	name = "Dark Belly"
-	icon_state = "mam_dbelly"
-	gender_specific = 1
+	color_src = MUTCOLORS2

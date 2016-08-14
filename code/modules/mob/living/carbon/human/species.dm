@@ -56,6 +56,8 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color2 = ""
+	var/fixed_mut_color3 = ""
 	var/generic="something"
 	var/adjective="unknown"
 	var/restricted=0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
@@ -394,6 +396,10 @@
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
+				if("mam_tail")
+					S = mam_tails_list[H.dna.features["mam_tail"]]
+				if("mam_waggingtail")
+					S.= mam_tails_animated_list[H.dna.features["mam_tail"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
@@ -409,7 +415,7 @@
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
 				if("mam_body_markings")
-					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
+					S. = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
@@ -445,6 +451,16 @@
 								I.color = "#[fixed_mut_color]"
 							else
 								I.color = "#[H.dna.features["mcolor"]]"
+						if(MUTCOLORS2)
+							if(fixed_mut_color2)
+								I.color = "#[fixed_mut_color2]"
+							else
+								I.color = "#[H.dna.features["mcolor2"]]"
+						if(MUTCOLORS3)
+							if(fixed_mut_color3)
+								I.color = "#[fixed_mut_color3]"
+							else
+								I.color = "#[H.dna.features["mcolor3"]]"
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								I.color = "#[H.dna.features["mcolor"]]"

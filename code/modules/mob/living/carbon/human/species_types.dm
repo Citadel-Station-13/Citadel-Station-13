@@ -6,7 +6,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	specflags = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -1063,8 +1063,8 @@ datum/species/canid
 	default_color = "4B4B4B"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "snout", "mam_body_markings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None", "mam_body_markings" = "None")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "snout", "mam_body_markings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "Wolf", "mam_ears" = "Wolf", "wings" = "None", "mam_body_markings" = "Belly")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1072,7 +1072,7 @@ datum/species/canid
 /datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-
+/*
 /datum/species/canid/wolf
 	name = "Wolf"
 	id = "wolf"
@@ -1097,7 +1097,7 @@ datum/species/canid
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 
 //FELINE//
-/*
+
 /datum/species/tajaran
 	name = "Tajaran"
 	id = "tajaran"

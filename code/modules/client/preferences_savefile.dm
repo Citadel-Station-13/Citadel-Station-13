@@ -310,22 +310,22 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["features["mcolor3"]"]	<< "#FFF"
 
 	//Character
-	S["Flavor_Text"]			>> flavor_text
-	S["real_name"]			>> real_name
-	S["name_is_always_random"] >> be_random_name
-	S["body_is_always_random"] >> be_random_body
-	S["gender"]				>> gender
-	S["age"]				>> age
-	S["hair_color"]			>> hair_color
-	S["facial_hair_color"]	>> facial_hair_color
-	S["eye_color"]			>> eye_color
-	S["skin_tone"]			>> skin_tone
-	S["hair_style_name"]	>> hair_style
-	S["facial_style_name"]	>> facial_hair_style
-	S["underwear"]			>> underwear
-	S["undershirt"]			>> undershirt
-	S["socks"]				>> socks
-	S["backbag"]			>> backbag
+	S["Flavor_Text"]					>> flavor_text
+	S["real_name"]						>> real_name
+	S["name_is_always_random"]  		>> be_random_name
+	S["body_is_always_random"]  		>> be_random_body
+	S["gender"]							>> gender
+	S["age"]							>> age
+	S["hair_color"]						>> hair_color
+	S["facial_hair_color"]				>> facial_hair_color
+	S["eye_color"]						>> eye_color
+	S["skin_tone"]						>> skin_tone
+	S["hair_style_name"]				>> hair_style
+	S["facial_style_name"]				>> facial_hair_style
+	S["underwear"]						>> underwear
+	S["undershirt"]						>> undershirt
+	S["socks"]							>> socks
+	S["backbag"]						>> backbag
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -335,7 +335,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
-	S["feature_mammal_body_markings"]	>> features["mam_body_markings"]
+	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
+	S["feature_mam_tail"]				>> features["mam_tail"]
+	S["feature_mam_ears"]				>> features["mam_ears"]
+	S["feature_mam_tails_animated"]		>> features["mam_tails_animated"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"

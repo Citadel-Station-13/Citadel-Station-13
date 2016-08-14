@@ -41,13 +41,6 @@ var/list/preferences_datums = list()
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 
-	//vore code
-	var/mutant_tail = "none"
-	var/mutant_wing = "none"
-	var/wingcolor = "FFF"
-	//var/special_color[COLOUR_LIST_SIZE]
-	//var/special_color_one = null
-	//var/special_color_two = null
 	var/vore_banned_methods = 0
 	var/vore_extra_bans = 65535
 	var/list/vore_ability = list(
@@ -83,7 +76,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None")
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tails_animated" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -1011,6 +1004,12 @@ var/list/preferences_datums = list()
 					if(new_tail)
 						features["tail_human"] = new_tail
 
+				if("mam_tail")
+					var/new_tail
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
+					if(new_tail)
+						features["mam_tail"] = new_tail
+
 				if("snout")
 					var/new_snout
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -1022,6 +1021,12 @@ var/list/preferences_datums = list()
 					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
 					if(new_horns)
 						features["horns"] = new_horns
+
+				if("mam_ears")
+					var/new_ears
+					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in mam_ears_list
+					if(new_ears)
+						features["mam_ears"] = new_ears
 
 				if("ears")
 					var/new_ears
