@@ -338,7 +338,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
-	S["feature_mam_tails_animated"]		>> features["mam_tails_animated"]
+	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"

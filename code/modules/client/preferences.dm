@@ -76,7 +76,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tails_animated" = "None")
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -341,6 +341,24 @@ var/list/preferences_datums = list()
 					dat += "<h3>Mammal Body Markings</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("mam_tail" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Tail</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("mam_ears" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Ears</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
 
 					dat += "</td>"
 

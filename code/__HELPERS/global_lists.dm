@@ -32,7 +32,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tail_animated, mam_tails_animated_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

@@ -1230,6 +1230,8 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
+/datum/sprite_accessory/tails/human
+	color_src = HAIR
 /datum/sprite_accessory/tails/human/none
 	name = "None"
 	icon_state = "none"
@@ -1435,7 +1437,7 @@
 	name = "Fox"
 	icon_state = "fox"
 
-/datum/sprite_accessory/tails_animated/human/fox
+/datum/sprite_accessory/tail_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
 
@@ -1445,15 +1447,25 @@
 
 //Mammal Body Markings
 /datum/sprite_accessory/mam_body_markings
-		name = "None"
+	name = "None"
 	icon_state = "none"
 	color_src = MUTCOLORS2
+
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
 	icon_state = "none"
 
 /datum/sprite_accessory/mam_body_markings/belly
 	name = "Belly"
-	icon_state = "mam_belly"
+	icon_state = "belly"
 	gender_specific = 1
-	color_src = MUTCOLORS2
+
+/datum/sprite_accessory/mam_body_markings/handsfeet
+	name = "Hands & Feet"
+	icon_state = "handsfeet"
+	color_src = MUTCOLORS3
+
+/datum/sprite_accessory/mam_body_markings/bellyhandsfeet
+	name = "Belly,Hands,Feet"
+	icon_state = "bellyhandsfeet"
+	gender_specific = 1

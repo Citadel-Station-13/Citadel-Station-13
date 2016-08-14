@@ -8,7 +8,7 @@
 	default_color = "FFFFFF"
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	default_features = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -166,6 +166,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
+	restricted = 2
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -193,6 +194,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	restricted = 2
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -1063,8 +1065,8 @@ datum/species/canid
 	default_color = "4B4B4B"
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "snout", "mam_body_markings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_tail" = "Wolf", "mam_ears" = "Wolf", "wings" = "None", "mam_body_markings" = "Belly")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "Wolf", "mam_ears" = "Wolf", "mam_body_markings" = "Belly")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

@@ -333,12 +333,21 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
 
-
 	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
+
+	if("mam_tail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "mam_tail"
+
+	if("mam_waggingtail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "mam_waggingtail"
+		else if ("mam_tail" in mutant_bodyparts)
+			bodyparts_to_add -= "mam_waggingtail"
 
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
