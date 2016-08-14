@@ -231,12 +231,17 @@ var/list/preferences_datums = list()
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
+			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
+			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
+			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
+
 			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
 			dat += "<b>Vore Preferences:</b> <a href='?_src_=prefs;preference=vore_panel;task=input'>Open</a><BR>"
-			dat += "<h3>Wings</h3>"
+			/*dat += "<h3>Wings</h3>"
 
 			dat += "<a href='?_src_=prefs;preference=mutant_wing;task=input'>[mutant_wing]</a><BR>"
-			dat += "<span style='border: 1px solid #161616; background-color: #[wingcolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wingcolor;task=input'>Change</a><BR>"
+			dat += "<span style='border: 1px solid #161616; background-color: #[wingcolor];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=wingcolor;task=input'>Change</a><BR>"*/
 
 			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 			if(lentext(flavor_text) <= 40)
