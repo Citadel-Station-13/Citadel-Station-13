@@ -46,8 +46,6 @@
 			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][tie_msg]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform][tie_msg].\n"
-		else
-			msg += "[t_He] [t_is] wearing \icon[w_uniform] \a [w_uniform][tie_msg].\n"
 		if(vore_insuit_datum.has_people())
 			msg += "<span class='warning'>There is a person-shaped bulge under the fabric!</span>\n"
 			insuit_handled=1
