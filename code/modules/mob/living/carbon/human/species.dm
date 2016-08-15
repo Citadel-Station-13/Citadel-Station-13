@@ -303,6 +303,9 @@
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
+	if(standing.len)
+		H.overlays_standing[BODY_LAYER] = standing
+
 	H.apply_overlay(BODY_LAYER)
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
