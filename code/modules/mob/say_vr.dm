@@ -56,12 +56,12 @@
 				M.show_message(message, m_type)
 		var/list/subtle = hearers(1,src)
 		for(var/I in subtle)
-			if(isobj(I))
+			/*if(isobj(I)) //micros in hand
 				spawn(0)
 					if(I) //It's possible that it could be deleted in the meantime.
 						var/obj/O = I
-						O.see_emote(src, message, 2)
-			else if(ismob(I))
+						I.show_message(src, message, 2) */
+			if(ismob(I))
 				var/mob/M = I
 				M.show_message(message, 2)
 

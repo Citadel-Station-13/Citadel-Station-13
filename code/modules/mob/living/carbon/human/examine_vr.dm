@@ -6,7 +6,7 @@
 	var/t_his 	= "its"
 	var/t_is 	= "is"
 	var/t_has 	= "has"
-	switch(identifying_gender)
+	switch(gender)
 		if(MALE)
 			t_He 	= "He"
 			t_his 	= "his"

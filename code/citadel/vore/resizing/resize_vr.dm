@@ -113,21 +113,21 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
 		now_pushing = 0
 		if(src.get_effective_size() > tmob.get_effective_size())
-			var/mob/living/carbon/human/M = src
+//			var/mob/living/carbon/human/M = src
 //			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 //				src << "You carefully slither around [tmob]."
 //				tmob << "[src]'s huge tail slithers past beside you!"
 //			else
-				src << "You carefully step over [tmob]."
-				tmob << "[src] steps over you carefully!"
+			src << "You carefully step over [tmob]."
+			tmob << "[src] steps over you carefully!"
 		if(tmob.get_effective_size() > src.get_effective_size())
-			var/mob/living/carbon/human/M = tmob
+//			var/mob/living/carbon/human/M = tmob
 //			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 //				src << "You jump over [tmob]'s thick tail."
 //				tmob << "[src] bounds over your tail."
 //			else
-				src << "You run between [tmob]'s legs."
-				tmob << "[src] runs between your legs."
+			src << "You run between [tmob]'s legs."
+			tmob << "[src] runs between your legs."
 		return 1
 
 /**
@@ -147,29 +147,28 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 			src.forceMove(tmob.loc)
 			tmob.Stun(4)
 
-			var/mob/living/carbon/human/M = src
+//			var/mob/living/carbon/human/M = src
 //			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 //				src << "You carefully squish [tmob] under your tail!"
 //				tmob << "[src] pins you under their tail!"
 //			else
-				src << "You pin [tmob] beneath your foot!"
-				tmob << "[src] pins you beneath their foot!"
+			src << "You pin [tmob] beneath your foot!"
+			tmob << "[src] pins you beneath their foot!"
 		return 1
 
 	if(src.a_intent == "harm" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
 			now_pushing = 0
 			src.forceMove(tmob.loc)
-			tmob.AdjustBrute(1)
 			tmob.adjustStaminaLoss(34)
 
-			var/mob/living/carbon/human/M = src
+//			var/mob/living/carbon/human/M = src
 //			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 	//			src << "You steamroller over [tmob] with your heavy tail!"
 //				tmob << "[src] ploughs you down mercilessly with their heavy tail!"
 	//		else
-				src << "You bring your foot down heavily upon [tmob]!"
-				tmob << "[src] steps carelessly on your body!"
+			src << "You bring your foot down heavily upon [tmob]!"
+			tmob << "[src] steps carelessly on your body!"
 		return 1
 /*
 	if(src.a_intent == "grab" && src.canmove && !src.buckled)

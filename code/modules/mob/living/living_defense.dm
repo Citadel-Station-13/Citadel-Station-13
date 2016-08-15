@@ -216,7 +216,7 @@
 		var/mob/living/target
 		if(pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && isliving(pulling))
 			target = pulling
-			user.vore_initiate(target,user)
+			user.vore_attackby(target,user)
 	if(anchored)
 		return 0
 	if(!user.pulling || user.pulling != src)

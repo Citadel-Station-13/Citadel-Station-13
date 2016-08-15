@@ -303,16 +303,16 @@
 	var/strsound = struggle_sounds[strpick]
 	playsound(R.loc, strsound, 50, 1)
 
-/datum/belly/relaymove(var/mob/living/R)
+/datum/belly/proc/relaymove(var/mob/living/R)
 	var/struggle_outer_message = pick(struggle_messages_outside)
 	var/struggle_user_message = pick(struggle_messages_inside)
 	var/strpick = pick(struggle_sounds)
 	var/strsound = struggle_sounds[strpick]
 
-	if (!(R in internal_contents) || recent_struggle)
+	if(!(R in internal_contents) || recent_struggle)
 		return  // User is not in this belly, or struggle too soon.
 
-	if (R in internal_contents && R.a_intent == "help")
+	if(R in internal_contents && R.a_intent == "help")
 		recent_struggle = 1
 		spawn(30)
 			recent_struggle = 0
@@ -334,8 +334,8 @@
 
 		playsound(R.loc, strsound, 50, 1)
 
-	else (!(R in internal_contents && R.a_intent == "help"))
-		integrity-=15
+	else if(!(R in internal_contents && R.a_intent == "help"))
+		integrity -= 15
 		recent_struggle = 1
 		spawn(15) // there's a want to get out, so faster
 			recent_struggle = 0

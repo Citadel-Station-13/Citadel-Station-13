@@ -22,10 +22,10 @@ The proc you're attemping should return nonzero values on success.
 
 		return result
 
-	catch(var/exception/e)
-	//	error("attempt_vr runtimed when calling [procname] on [callon].")
+	catch
+		log_admin("attempt_vr runtimed when calling [procname] on [callon].")
 	//	error("attempt_vr catch: [e] on [e.file]:[e.line]")
-		return 0
+//		return 0
 
 /*
 This is the _vr version of calling hooks.
@@ -52,11 +52,11 @@ The hooks you're calling should return nonzero values on success.
 		var/status = 1
 		for(var/P in typesof("[hook_path]/proc"))
 			if(!call(caller, P)(arglist(args)))
-			//	error("hook_vr: Hook '[P]' failed or runtimed.")
+		//		error("hook_vr: Hook '[P]' failed or runtimed.")
 				status = 0
 
 		return status
 
-	catch(var/exception/e)
-	//	error("hook_vr itself failed or runtimed. Exception below.")
-	//	error("hook_vr catch: [e] on [e.file]:[e.line]")
+	catch
+		log_admin("hook_vr itself failed or runtimed. Exception below.")
+//		error("hook_vr catch: [e] on [e.file]:[e.line]")

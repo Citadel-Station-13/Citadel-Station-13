@@ -33,11 +33,28 @@
 	var/dat
 
 	if (is_vore_predator(user.loc))
+		var/mob/living/eater = user.loc
 		var/datum/belly/inside_belly
 
 		//This big block here figures out where the prey is
 		inside_belly = check_belly(user)
 
+		if(inside_belly)
+			dat += "<font color = 'green'>You are currently inside</font> <font color = 'yellow'>[eater]'s</font> <font color = 'red'>[inside_belly]</font>!<br><br>"
+
+			if(inside_belly.inside_flavor)
+				dat += "[inside_belly.inside_flavor]<br><br>"
+
+			if (inside_belly.internal_contents.len > 1)
+				dat += "You can see the following around you:<br>"
+				for (var/atom/movable/O in inside_belly.internal_contents)
+					if(istype(O,/mob/living))
+						var/mob/living/M = O
+						//That's just you
+						if(M == user)
+							continue
+					//Anything else
+					dat += "<a href='?src=\ref[src];outsidepick=\ref[O];outsidebelly=\ref[inside_belly]'>[O]</a>"
 	else
 		dat += "You aren't inside anyone."
 
@@ -146,10 +163,6 @@
 					M.examine(user)
 
 				if("Help Out") //Help the inside-mob out
-					if(user.stat || user.absorbed || M.absorbed)
-						user << "<span class='warning'>You can't do that in your state!</span>"
-						return 1
-
 					user << "<font color='green'>You begin to push [M] to freedom!</font>"
 					M << "[usr] begins to push you to freedom!"
 					M.loc << "<span class='warning'>Someone is trying to escape from inside you!</span>"

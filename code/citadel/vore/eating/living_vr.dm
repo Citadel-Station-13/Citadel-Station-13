@@ -18,7 +18,7 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+					M << "<span class='warning'>ERROR: You seem to have saved prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -54,17 +54,6 @@
 	//Return 1 to hook-caller
 	return 1
 
-// Relay move for struggle stuff.
-
-
-/mob/living/relaymove(var/mob/user, direction)
-	if(!istype(user,/mob/living))
-		return ..()
-	var/mob/living/prey=user
-	if(prey in M.vore_organs)
-		var/datum/vore_organ/VO=prey.get_last_organ_in()
-		if(VO)
-			VO.relaymove(prey,direction)
 //
 // Handle being clicked, perhaps with something to devour
 //
@@ -73,50 +62,43 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_initiate(mob/user, mob/living/M)
+/mob/living/proc/vore_attackby(mob/living/user, mob/M)
 	var/mob/affecting = null
 	var/mob/assailant = null
+	if(!affecting)
+		return
+
 	if((ishuman(user) && !issilicon(affecting)) || (isalien(user) && !issilicon(affecting)))
 		var/mob/living/attacker = user  // Typecast to human
 
-			// If you click yourself...
-		if(M == assailant)
-			if (is_vore_predator(user))
-				if(istype(user, /mob/living/simple_animal))
-					if(!do_mob(user, affecting, 50)) return
-				else if(istype(user, /mob/living/carbon/human))
-					if(!do_mob(user, affecting, 100)) return
-				// Feed what you're holding (affecting) to yourself (user)
-				if (user.feed_grabbed_to_self(user, affecting))
+
+		if((M == assailant) && (is_vore_predator(src)))
+			if(user.feed_grabbed_to_self(user, affecting, 100))
+				return 1
 			else
 				user.visible_message("<span class='notice'>You can't eat this.</span>")
 				log_attack("[attacker] attempted to feed [affecting] to [user] ([user.type]) but it is not predator-capable")
 
-			// If you click your target...
-		if(M == affecting)
-			if (is_vore_predator(affecting))
-				if(istype(user, /mob/living/simple_animal))
-					if(!do_mob(user, affecting, 50)) return
-				else if(istype(user, /mob/living/carbon/human))
-					if(!do_mob(user, affecting, 100)) return
-				// Feed yourself (user) to what you're holding (affecting)!
-				if (user.feed_self_to_grabbed(user, affecting))
+						// If you click yourself...
+
+		///// If grab clicked on grabbed
+		else if((M == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
+			if (attacker.feed_self_to_grabbed(attacker, affecting, 100))
+				return 1
 			else
 				user.visible_message("<span class='notice'>[affecting] can't eat that</span>")
 				log_attack("[attacker] attempted to feed [user] to [affecting] ([affecting.type]) but it is not predator-capable")
 
-			// If you click someone else...
-		else
-			// Feed what you're holding (affecting) to what you clicked (M)
-			if (is_vore_predator(M))
-				if(istype(user, /mob/living/simple_animal))
-					if(!do_mob(user, affecting, 50)) return
-				else if(istype(user, /mob/living/carbon/human))
-					if(!do_mob(user, affecting, 100)) return
-				if (user.feed_grabbed_to_other(user, affecting, M))
+
+
+		///// If grab clicked on anyone else
+		else if((src != affecting) && (src != assailant) && (is_vore_predator(M)))
+			if (attacker.feed_grabbed_to_other(attacker, affecting, src))
+				return 1
 			else
 				user.visible_message("<span class='notice'>[M] can't eat that.</span>")
 				log_attack("[attacker] attempted to feed [affecting] to [M] ([M.type]) but it is not predator-capable")
+
 //End vore code.
 /*
 	//Handle case: /obj/item/weapon/holder
