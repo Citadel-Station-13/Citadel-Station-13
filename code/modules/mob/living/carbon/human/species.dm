@@ -333,6 +333,9 @@
 			taur_state+="_f"
 		standing += generate_colour_icon('icons/mob/special/taur.dmi',"[taur_state]",H.dna.special_color,offset_x=-16,add_layer=-BODY_LAYER)
 
+	if(standing.len)
+		H.overlays_standing[BODY_LAYER] = standing
+
 	H.apply_overlay(BODY_LAYER)
 
 
