@@ -1480,12 +1480,14 @@
 	icon_state = "belly"
 	gender_specific = 1
 
+/*
 /datum/sprite_accessory/mam_body_markings/handsfeet
 	name = "Hands & Feet"
 	icon_state = "handsfeet"
 	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
-	name = "Belly,Hands,Feet"
+	name = "Belly, Hands, & Feet"
 	icon_state = "bellyhandsfeet"
 	gender_specific = 1
+*/
