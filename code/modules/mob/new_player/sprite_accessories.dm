@@ -1409,6 +1409,19 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
+/datum/sprite_accessory/ears/fox
+	name = "Fox"
+	icon_state = "fox"
+	hasinner = 0
+
+/datum/sprite_accessory/tails/human/fox
+	name = "Fox"
+	icon_state = "fox"
+
+/datum/sprite_accessory/tail_animated/human/fox
+	name = "Fox"
+	icon_state = "fox"
+
 //Mammal Bodyparts
 /datum/sprite_accessory/mam_ears
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -1418,7 +1431,7 @@
 
 /datum/sprite_accessory/mam_tails_animated
 	icon = 'icons/mob/mam_bodyparts.dmi'
-
+//Wolf
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
@@ -1435,29 +1448,28 @@
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-/*
-/datum/sprite_accessory/ears/fox
+//Fox
+/datum/sprite_accessory/mam_ears/fox
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = 0
 
-/datum/sprite_accessory/tails/human/fox
+/datum/sprite_accessory/mam_tails/fox
 	name = "Fox"
 	icon_state = "fox"
 
-/datum/sprite_accessory/tail_animated/human/fox
+/datum/sprite_accessory/mam_tails_animated/fox
 	name = "Fox"
 	icon_state = "fox"
 
 /datum/sprite_accessory/snouts/fox
 	name = "Fox"
 	icon_state = "fox"
-*/
-//Mammal Body Markings
+
+//Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings
-	name = "None"
-	icon_state = "none"
 	color_src = MUTCOLORS2
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
