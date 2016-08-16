@@ -352,6 +352,10 @@
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
 
+	if("mam_ears" in mutant_bodyparts)
+		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "mam_ears"
+
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "spines"
@@ -427,7 +431,7 @@
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
 				if("mam_body_markings")
-					S. = mam_body_markings_list[H.dna.features["mam_body_markings"]]
+					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
@@ -437,9 +441,9 @@
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
+			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
 				bodypart = "waggingtail"
 
 
