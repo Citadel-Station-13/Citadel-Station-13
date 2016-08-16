@@ -412,10 +412,6 @@
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
-				if("mam_tail")
-					S = mam_tails_list[H.dna.features["mam_tail"]]
-				if("mam_waggingtail")
-					S.= mam_tails_animated_list[H.dna.features["mam_tail"]]
 				if("spines")
 					S = spines_list[H.dna.features["spines"]]
 				if("waggingspines")
@@ -430,12 +426,19 @@
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
-				if("mam_body_markings")
-					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("wings")
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
+				//mammal bodyparts
+				if("mam_tail")
+					S = mam_tails_list[H.dna.features["mam_tail"]]
+				if("mam_waggingtail")
+					S.= mam_tails_animated_list[H.dna.features["mam_tail"]]
+				if("mam_body_markings")
+					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
+				if("mam_ears")
+					S = mam_ears_list[H.dna.features["mam_ears"]]
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -446,6 +449,8 @@
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
 				bodypart = "waggingtail"
 
+			if(bodypart == "mam_ears")
+				bodypart = "ears"
 
 			var/icon_string
 
