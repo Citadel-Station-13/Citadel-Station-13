@@ -292,7 +292,7 @@
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
-	hair_alpha = 150
+	hair_alpha = 192
 	ignored_by = list(/mob/living/simple_animal/slime)
 	burnmod = 0.5
 	coldmod = 2
@@ -532,7 +532,7 @@
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
+	punchstunthreshold = 12 //about 15% chance to stun
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	sexes = 1
@@ -543,6 +543,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	restricted = 2
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -633,6 +634,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	restricted = 2
 
 /*
  ZOMBIES
@@ -649,6 +651,7 @@
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
+	restricted = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -695,6 +698,7 @@
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	restricted = 2
 
 /datum/species/abductor
 	name = "Abductor"
@@ -707,6 +711,7 @@
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
+	restricted = 2
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -781,6 +786,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+	restricted = 2
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -790,6 +796,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
+	restricted = 2
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -1063,7 +1070,6 @@ datum/species/canid
 	name = "Canid"
 	id = "canid"
 	default_color = "4B4B4B"
-	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "Wolf", "mam_ears" = "Wolf", "mam_body_markings" = "Belly")
@@ -1074,40 +1080,16 @@ datum/species/canid
 /datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-/*
-/datum/species/canid/wolf
-	name = "Wolf"
-	id = "wolf"
-	default_color = "4B4B4B"
-	roundstart = 1
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "wings") //Most mammal species will use the 'tail_human' and 'ears'. For exotic species and birds, consider making and using a different type to avoid monstrocities.
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Wolf", "ears" = "Wolf", "wings" = "None",  "snout" = "Round")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-
-/datum/species/canid/fox
-	name = "Fox"
-	id = "fox"
-	default_color = "FF7414"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Fox", "ears" = "Fox", "wings" = "None")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
 
 //FELINE//
 
 /datum/species/tajaran
-	name = "Tajaran"
-	id = "tajaran"
+	name = "Felid"
+	id = "felid"
 	default_color = "BCAC9B"
-	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("tail_human", "ears", "wings", "mam_body_markings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_human" = "Tajaran", "ears" = "Tajaran", "wings" = "None", "mam_body_markings" = "Light Belly")
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "None", "mam_tail" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1115,7 +1097,7 @@ datum/species/canid
 /datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
-*/
+
 //AVIAN//
 
 //RODENT//
