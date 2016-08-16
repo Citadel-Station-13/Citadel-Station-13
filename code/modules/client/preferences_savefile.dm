@@ -411,6 +411,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
 	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
+	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
+	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -462,6 +464,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
 	S["feature_lizard_body_markings"]	<< features["body_markings"]
+	S["feature_mam_body_markings"]		<< features["mam_body_markings"]
+	S["feature_mam_tail"]				<< features["mam_tail"]
+	S["feature_mam_ears"]				<< features["mam_ears"]
+	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]
