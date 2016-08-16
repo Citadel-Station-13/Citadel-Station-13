@@ -280,7 +280,7 @@ var/list/preferences_datums = list()
 					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
 					dat += "</td>"
-
+//lizard bodyparts
 				if("tail_lizard" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
@@ -334,7 +334,7 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
-
+//mammal bodyparts
 				if("mam_body_markings" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
