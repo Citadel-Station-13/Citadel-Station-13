@@ -1409,7 +1409,16 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
-//WOLF//
+//Mammal Bodyparts
+/datum/sprite_accessory/mam_ears
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
@@ -1426,8 +1435,7 @@
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
-//FOX//
+/*
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
@@ -1444,7 +1452,7 @@
 /datum/sprite_accessory/snouts/fox
 	name = "Fox"
 	icon_state = "fox"
-
+*/
 //Mammal Body Markings
 /datum/sprite_accessory/mam_body_markings
 	name = "None"
