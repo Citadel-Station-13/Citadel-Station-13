@@ -60,7 +60,9 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
+	var/extra = 0 //Used for extra overlays on top of the bodypart that may be seperate colors. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra_color_src = MUTCOLORS2
 //////////////////////
 // Hair Definitions //
 //////////////////////
@@ -1458,11 +1460,13 @@
 	name = "Fox"
 	icon_state = "fox"
 	extra = 1
+	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_tails_animated/fox
 	name = "Fox"
 	icon_state = "fox"
 	extra = 1
+	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/snouts/fox
 	name = "Fox"
