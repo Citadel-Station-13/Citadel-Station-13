@@ -448,7 +448,6 @@
 				bodypart = "tail"
 			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
 				bodypart = "waggingtail"
-
 			if(bodypart == "mam_ears")
 				bodypart = "ears"
 
@@ -493,6 +492,7 @@
 							I.color = "#[H.eye_color]"
 				else
 					I.color = forced_colour
+
 			standing += I
 
 			if(S.hasinner)
@@ -506,6 +506,44 @@
 				if(S.center)
 					I = center_image(I,S.dimension_x,S.dimension_y)
 
+				standing += I
+
+			if(S.extra)
+				if(S.gender_specific)
+					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layer]"
+				else
+					icon_string = "m_[bodypart]_extra_[S.icon_state]_[layer]"
+
+				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+				if(S.center)
+					I = center_image(I,S.dimension_x,S.dimension_y)
+
+				switch(S.extra_color_src)
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						I.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						I.color = "#[H.eye_color]"
 				standing += I
 
 		H.overlays_standing[layer] = standing.Copy()

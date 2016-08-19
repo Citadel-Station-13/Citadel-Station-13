@@ -60,7 +60,7 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
-
+	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
 //////////////////////
 // Hair Definitions //
 //////////////////////
@@ -1457,10 +1457,12 @@
 /datum/sprite_accessory/mam_tails/fox
 	name = "Fox"
 	icon_state = "fox"
+	extra = 1
 
 /datum/sprite_accessory/mam_tails_animated/fox
 	name = "Fox"
 	icon_state = "fox"
+	extra = 1
 
 /datum/sprite_accessory/snouts/fox
 	name = "Fox"

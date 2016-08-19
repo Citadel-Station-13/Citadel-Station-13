@@ -316,10 +316,6 @@
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-		slime_split = new
-		slime_split.Grant(C)
-		swap_body = new
-		swap_body.Grant(C)
 
 		if(!bodies || !bodies.len)
 			bodies = list(C)
