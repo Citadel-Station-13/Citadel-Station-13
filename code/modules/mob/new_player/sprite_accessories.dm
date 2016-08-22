@@ -1433,6 +1433,11 @@
 
 /datum/sprite_accessory/mam_tails_animated
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/snouts/lcanid
+	name = "Long, Canid"
+	icon_state = "lcanid"
+
 //Wolf
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
@@ -1444,10 +1449,6 @@
 	icon_state = "wolf"
 
 /datum/sprite_accessory/mam_tails_animated/wolf
-	name = "Wolf"
-	icon_state = "wolf"
-
-/datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 //Fox
@@ -1468,9 +1469,25 @@
 	extra = 1
 	extra_color_src = MUTCOLORS2
 
-/datum/sprite_accessory/snouts/fox
-	name = "Fox"
-	icon_state = "fox"
+//Lab
+/datum/sprite_accessory/mam_ears/lab
+	name = "Dog, Long"
+	icon_state = "lab"
+	hasinner = 0
+
+/datum/sprite_accessory/mam_tails/lab
+	name = "Lab"
+	icon_state = "lab"
+
+/datum/sprite_accessory/mam_tails_animated/lab
+	name = "Lab"
+	icon_state = "lab"
+
+//Husky
+/datum/sprite_accessory/mam_tails/husky
+	name = "Husky"
+	icon_state = "husky"
+	extra = 1
 
 //Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings
@@ -1485,15 +1502,11 @@
 	name = "Belly"
 	icon_state = "belly"
 	gender_specific = 1
-
 /*
-/datum/sprite_accessory/mam_body_markings/handsfeet
-	name = "Hands & Feet"
-	icon_state = "handsfeet"
-	color_src = MUTCOLORS3
-
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
 	name = "Belly, Hands, & Feet"
 	icon_state = "bellyhandsfeet"
 	gender_specific = 1
+	extra = 1
+	extra_color_src = MUTCOLORS3
 */
