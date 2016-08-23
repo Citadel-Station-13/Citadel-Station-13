@@ -14,6 +14,9 @@
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
 
+/obj/effect/decal/cleanable/xenoblood/can_bloodcrawl_in()
+	return 1
+
 /obj/effect/decal/cleanable/xenoblood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
@@ -37,6 +40,9 @@
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")
 
+/obj/effect/decal/cleanable/xsplatter/can_bloodcrawl_in()
+	return 1
+
 /obj/effect/decal/cleanable/xenoblood/xgibs
 	name = "xeno gibs"
 	desc = "Gnarly..."
@@ -44,6 +50,10 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xgib1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
+
+/obj/effect/decal/cleanable/xgibs/can_bloodcrawl_in()
+	return 1
+
 
 /obj/effect/decal/cleanable/xenoblood/xgibs/ex_act()
 	return
@@ -67,3 +77,15 @@
 	icon_state = "xtracks"
 	random_icon_states = null
 	blood_DNA = list("UNKNOWN DNA" = "X*")
+
+/obj/effect/decal/cleanable/xdrip
+	name = "drips of blood"
+	desc = "It's green."
+	gender = PLURAL
+	icon_state = "1"
+	random_icon_states = list("xdrip1","xdrip2","xdrip3","xdrip4","xdrip5")
+	bloodiness = 0
+	var/drips = 1
+
+/obj/effect/decal/cleanable/xdrip/can_bloodcrawl_in()
+	return 1
