@@ -69,6 +69,10 @@
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
+/datum/sprite_accessory/hair/bald //Moved to the top so we can all stop scrolling all the way down.
+	name = "Bald"
+	icon_state = null
+
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
 	icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
@@ -393,10 +397,6 @@
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
 	icon_state = "hair_e"
-
-/datum/sprite_accessory/hair/bald
-	name = "Bald"
-	icon_state = null
 
 /datum/sprite_accessory/hair/parted
 	name = "Side Part"
@@ -1233,7 +1233,7 @@
 	icon_state = "aqua"
 
 /datum/sprite_accessory/tails/human
-	color_src = HAIR
+
 /datum/sprite_accessory/tails/human/none
 	name = "None"
 	icon_state = "none"
@@ -1245,12 +1245,10 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	color_src = HAIR
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1309,7 +1307,6 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = 1
-	color_src = HAIR
 
 /datum/sprite_accessory/wings/none
 	name = "None"

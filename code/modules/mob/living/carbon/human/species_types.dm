@@ -6,7 +6,7 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
+	specflags = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
 	default_features = list("tail_human" = "None", "ears" = "None", "wings" = "None")
 	use_skintones = 1
@@ -783,6 +783,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 	restricted = 2
+	roundstart = 0
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -1061,25 +1062,26 @@ SYNDICATE BLACK OPS
 		H.CloseWings()
 
 
-//CANINE//
+//CANID//
 datum/species/canid
 	name = "Canid"
 	id = "canid"
 	default_color = "4B4B4B"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "Wolf", "mam_ears" = "Wolf", "mam_body_markings" = "Belly")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
 
 /datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
-//FELINE//
+//FELID//
 
-/datum/species/tajaran
+/datum/species/felid
 	name = "Felid"
 	id = "felid"
 	default_color = "BCAC9B"
@@ -1089,15 +1091,52 @@ datum/species/canid
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 0 //no sprites yet
 
 /datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
 //AVIAN//
-
-//RODENT//
+/datum/species/ave
+	name = "Avian"
+	id = "avian"
+	default_color = "BCAC9B"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("beak", "wings", "avian_tail")
+	default_features = list("beak" = "None", "wings" = "None")
+	attack_verb = "peck"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 0 //no sprites yet
 
 //HERBIVOROUS//
 
 //EXOTIC//
+/datum/species/xeno
+	name = "Xenomorph"
+	id = "xeno"
+	default_color = "BCAC9B"
+	say_mod = "hisses"
+	eyes = "eyes_xeno"
+	specflags = list(NOGUNS,MUTCOLORS)
+	mutant_bodyparts = list("xeno_head", "dorsal_tubes")
+	default_features = list("xeno_head" = "None", "dorsal_tubes" = "None")
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	burnmod = 1.5
+	heatmod = 1.5
+	safe_toxins_max = 9999999
+	exotic_blood = "xblood"
+	exotic_damage_overlay = "xeno"
+	roundstart = 1
+	no_equip = list(slot_glasses, slot_back) //MY EYES, THEY'RE GONE
+
+/datum/reagent/toxin/acid/xenoblood
+	name = "acid blood"
+	id = "xblood"
+	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
+	color = "#66CC00"
+	toxpwr = 1
+	acidpwr = 12

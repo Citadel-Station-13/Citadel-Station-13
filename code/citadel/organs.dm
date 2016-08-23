@@ -10,3 +10,38 @@
 	var/obj/S = ..()
 	S.reagents.add_reagent("sacid", 2)
 	return S
+
+/obj/item/organ/penis
+	name = "penis"
+	icon_state = "penis"
+	zone = "groin"
+	slot = "penis"
+	w_class = 3
+	var/subtype = "human"
+	var/size = "normal"
+	var/testicles
+
+/obj/item/organ/testicles
+	name = "testicles"
+	icon_state = "testicles"
+	zone = "groin"
+	slot = "testicles"
+	w_class = 3
+	var/size = "normal"
+
+/obj/item/organ/vagina
+	name = "vagina"
+	icon_state = "vagina"
+	zone = "groin"
+	slot = "vagina"
+	w_class = 3
+	var/subtype = "human"
+	var/ovaries
+
+/obj/item/organ/ovaries
+	name = "ovaries"
+	icon_state = "ovaries"
+	zone = "groin"
+	slot = "ovaries"
+	w_class = 3
+	var/subtype = "human"
