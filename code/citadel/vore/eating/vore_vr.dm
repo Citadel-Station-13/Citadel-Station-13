@@ -25,7 +25,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 /datum/configuration
 	var/items_survive_digestion = 1		//For configuring if the important_items survive digestion
-
+/*
 //
 // The datum type bolted onto normal preferences datums for storing Virgo stuff
 //
@@ -54,8 +54,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
-		load_vore(C)
-
+		load_vore_preferences(C)
+*/
 //
 //	Check if an object is capable of eating things, based on vore_organs
 //
@@ -79,10 +79,10 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	return 0
 
-//
+/*
 // Save/Load Vore Preferences
 //
-/datum/vore_preferences/proc/load_vore()
+/datum/preferences/proc/load_vore()
 	if(!client || !client_ckey) return 0 //No client, how can we save?
 
 	slot = client.prefs.default_slot
@@ -109,7 +109,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	return 1
 
-/datum/vore_preferences/proc/save_vore()
+/datum/preferences/proc/save_vore()
 	if(!path)				return 0
 	if(!slot)				return 0
 	var/savefile/S = new /savefile(path)
@@ -120,3 +120,4 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	S["belly_prefs"] << belly_prefs
 
 	return 1
+*/

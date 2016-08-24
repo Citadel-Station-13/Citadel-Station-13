@@ -211,12 +211,11 @@
 /mob/living/acid_act(acidpwr, toxpwr, acid_volume)
 	take_organ_damage(min(10*toxpwr, acid_volume * toxpwr))
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
+/mob/living/proc/grabbedby(mob/living/carbon/user, mob/living/target, supress_message = 0)
 	if(user == src)
-		var/mob/living/target
 		if(pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && isliving(pulling))
 			target = pulling
-			user.vore_attackby(target,user)
+			vore_attack(pulling)
 	if(anchored)
 		return 0
 	if(!user.pulling || user.pulling != src)

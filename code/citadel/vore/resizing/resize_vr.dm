@@ -160,7 +160,8 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
 			now_pushing = 0
 			src.forceMove(tmob.loc)
-			tmob.adjustStaminaLoss(34)
+			tmob.adjustStaminaLoss(15)
+			tmob.adjustBruteLoss(2)
 
 //			var/mob/living/carbon/human/M = src
 //			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))

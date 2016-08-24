@@ -434,9 +434,9 @@
 
 	if(href_list["saveprefs"])
 		if(!user.save_vore_prefs())
-			user << "<span class='warning'>ERROR: Virgo-specific preferences failed to save!</span>"
+			user << "<span class='warning'>ERROR: Preferences failed to save!</span>"
 		else
-			user << "<span class='notice'>Virgo-specific preferences saved!</span>"
+			user << "<span class='notice'>Preferences saved!</span>"
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable. Don't abuse this button by toggling it back and forth to extend a scene or whatever, or you'll make the admins cry. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
@@ -448,10 +448,10 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
+	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.digestable = user.digestable
+		if(user.client.prefs)
+			user.client.prefs.digestable = user.digestable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

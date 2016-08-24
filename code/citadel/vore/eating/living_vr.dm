@@ -16,12 +16,12 @@
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-			if(M.client && M.client.prefs_vr)
-				if(!M.copy_from_prefs_vr())
+		/*	if(M.client && M.client.prefs)
+				if(!M.load_vore_preferences)
 					M << "<span class='warning'>ERROR: You seem to have saved prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
-					M.vore_selected = M.vore_organs[1]
+					M.vore_selected = M.vore_organs[1] */
 
 			if(!M.vore_organs || !M.vore_organs.len)
 				if(!M.vore_organs)
@@ -62,7 +62,7 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attackby(mob/living/user, mob/M)
+/mob/living/proc/vore_attack(mob/living/user, mob/M)
 	var/mob/affecting = null
 	var/mob/assailant = null
 	if(!affecting)
@@ -72,7 +72,7 @@
 		var/mob/living/attacker = user  // Typecast to human
 
 
-		if((M == assailant) && (is_vore_predator(src)))
+		if((user == assailant) && (is_vore_predator(src)))
 			if(user.feed_grabbed_to_self(user, affecting, 100))
 				return 1
 			else
@@ -82,7 +82,7 @@
 						// If you click yourself...
 
 		///// If grab clicked on grabbed
-		else if((M == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
+		else if((user == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
 			if (attacker.feed_self_to_grabbed(attacker, affecting, 100))
 				return 1
 			else
@@ -172,7 +172,7 @@
 				if(M.loc != src)
 					B.internal_contents -= M
 					log_attack("Had to remove [M] from belly [B] in [src]")
-
+/*
 //
 //	Verb for saving vore preferences to save file
 //
@@ -226,6 +226,31 @@
 		src.vore_organs[Bp.name] = Bp.copy(src)
 
 	return 1
+*/
+//
+//	Verb for saving vore preferences to save file
+//
+/mob/living/proc/save_vore_prefs()
+	set name = "Save Vore Prefs"
+	set category = "Vore"
+
+	var/result = 0
+
+	if(client.prefs)
+		result = client.prefs.save_vore_preferences()
+	else
+		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>"
+		log_admin("[src] tried to save vore prefs but lacks a client.prefs var.")
+
+	return result
+
+//
+//	Proc for applying vore preferences, given bellies
+//
+/mob/living/proc/apply_vore_prefs(var/list/bellies)
+	if(!bellies || bellies.len == 0)
+		log_admin("Tried to apply bellies to [src] and failed.")
+
 
 //
 // OOC Escape code for pref-breaking or AFK preds
@@ -313,6 +338,7 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
+	stop_pulling()
 	playsound(user, belly_target.vore_sound, 100, 1)
 
 	// Actually shove prey into the belly.
