@@ -7,7 +7,7 @@
 	name = "alien"
 	voice_name = "alien"
 	icon = 'icons/mob/alien.dmi'
-	gender = NEUTER
+	gender = FEMALE
 	dna = null
 	faction = list("alien")
 	ventcrawler = 2

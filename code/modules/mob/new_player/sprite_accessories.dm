@@ -60,12 +60,18 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
-
+	var/extra = 0 //Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
+	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra_color_src = MUTCOLORS2 //The color source for the extra overlay.
 //////////////////////
 // Hair Definitions //
 //////////////////////
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
+
+/datum/sprite_accessory/hair/bald //Moved to the top so we can all stop scrolling all the way down.
+	name = "Bald"
+	icon_state = null
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
@@ -391,10 +397,6 @@
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"
 	icon_state = "hair_e"
-
-/datum/sprite_accessory/hair/bald
-	name = "Bald"
-	icon_state = null
 
 /datum/sprite_accessory/hair/parted
 	name = "Side Part"
@@ -1125,6 +1127,7 @@
 
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
+	color_src = MUTCOLORS2
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
@@ -1229,6 +1232,8 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
+/datum/sprite_accessory/tails/human
+
 /datum/sprite_accessory/tails/human/none
 	name = "None"
 	icon_state = "none"
@@ -1240,12 +1245,10 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/cat
 	name = "Cat"
 	icon_state = "cat"
-	color_src = HAIR
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1304,7 +1307,6 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = 1
-	color_src = HAIR
 
 /datum/sprite_accessory/wings/none
 	name = "None"
@@ -1405,3 +1407,216 @@
 /datum/sprite_accessory/spines_animated/aqautic
 	name = "Aquatic"
 	icon_state = "aqua"
+
+//Human Ears/Tails
+
+/datum/sprite_accessory/ears/fox
+	name = "Fox"
+	icon_state = "fox"
+	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/fox
+	name = "Fox"
+	icon_state = "fox"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/tails_animated/human/fox
+	name = "Fox"
+	icon_state = "fox"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/tails/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/lab
+	name = "Dog, Floppy"
+	icon_state = "lab"
+	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/tails_animated/human/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+//Mammal Bodyparts
+/datum/sprite_accessory/mam_ears
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+//Snouts
+/datum/sprite_accessory/snouts/lcanid
+	name = "Long, Thin"
+	icon_state = "lcanid"
+
+/datum/sprite_accessory/snouts/scanid
+	name = "Short, Thin"
+	icon_state = "scanid"
+
+//Cat, Big
+/datum/sprite_accessory/mam_ears/catbig
+	name = "Cat, Big"
+	icon_state = "cat"
+	hasinner = 1
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+
+/datum/sprite_accessory/mam_tails_animated/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+
+//Wolf
+/datum/sprite_accessory/mam_ears/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	hasinner = 1
+
+/datum/sprite_accessory/mam_tails/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
+/datum/sprite_accessory/mam_tails_animated/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
+//Fox
+/datum/sprite_accessory/mam_ears/fox
+	name = "Fox"
+	icon_state = "fox"
+	hasinner = 0
+
+/datum/sprite_accessory/mam_tails/fox
+	name = "Fox"
+	icon_state = "fox"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+
+/datum/sprite_accessory/mam_tails_animated/fox
+	name = "Fox"
+	icon_state = "fox"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+
+//Fennec
+/datum/sprite_accessory/mam_ears/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	hasinner = 1
+
+/datum/sprite_accessory/mam_tails/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+
+/datum/sprite_accessory/mam_tails_animated/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+
+//Lab
+/datum/sprite_accessory/mam_ears/lab
+	name = "Dog, Long"
+	icon_state = "lab"
+	hasinner = 0
+
+/datum/sprite_accessory/mam_tails/lab
+	name = "Lab"
+	icon_state = "lab"
+
+/datum/sprite_accessory/mam_tails_animated/lab
+	name = "Lab"
+	icon_state = "lab"
+
+//Husky
+/datum/sprite_accessory/mam_tails/husky
+	name = "Husky"
+	icon_state = "husky"
+	extra = 1
+
+//Mammal Specific Body Markings
+/datum/sprite_accessory/mam_body_markings
+	color_src = MUTCOLORS2
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_body_markings/none
+	name = "None"
+	icon_state = "none"
+
+/datum/sprite_accessory/mam_body_markings/belly
+	name = "Belly"
+	icon_state = "belly"
+	gender_specific = 1
+/*
+/datum/sprite_accessory/mam_body_markings/bellyhandsfeet
+	name = "Belly, Hands, & Feet"
+	icon_state = "bellyhandsfeet"
+	gender_specific = 1
+	extra = 1
+	extra_color_src = MUTCOLORS3
+*/
+
+//Exotic Bodyparts
+/*
+/datum/sprite_accessory/xeno_dorsal
+	locked = 1
+	name = "Dorsal Tubes"
+	icon_state "dortubes"
+/datum/sprite_accessory/tails/xeno
+	locked = 1
+	name = "Xenomorph Tail"
+	icon_state = "xenotail"
+*/
