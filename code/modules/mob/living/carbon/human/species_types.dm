@@ -263,17 +263,17 @@
 		H << "<span class='notice'>You feel intact enough as it is.</span>"
 		return
 	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
-	if(H.blood_volume >= 100*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
+	if(H.blood_volume >= 150*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 100*limbs_to_heal.len
+		H.blood_volume -= 150*limbs_to_heal.len
 		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
 		return
-	else if(H.blood_volume >= 100)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+100)
+	else if(H.blood_volume >= 150)//We can partially heal some limbs
+		while(H.blood_volume >= BLOOD_VOLUME_OKAY+150)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
-			H.blood_volume -= 100
+			H.blood_volume -= 150
 		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
 		return
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
