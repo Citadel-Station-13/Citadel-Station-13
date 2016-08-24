@@ -56,6 +56,13 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/exotic_damage_overlay = ""
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color2 = ""
+	var/fixed_mut_color3 = ""
+	var/generic = "something"
+	var/adjective = "unknown"
+	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
+//	var/tail=0
+//	var/taur=0
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -293,51 +300,13 @@
 		var/datum/sprite_accessory/socks/U3 = socks_list[H.socks]
 		if(U3)
 			standing	+= image("icon"=U3.icon, "icon_state"="[U3.icon_state]_s", "layer"=-BODY_LAYER)
-
-	//Custom Code
-	if(H.dna&&H.dna.taur&&!kpcode_cantaur(id))H.dna.taur=0//VERY BAD TEMP FIX
-
-	if(H.underwear&&H.underwear!="Nude"&&H.underwear_active&& (!H.dna||!H.dna.taur) )
-		var/datum/sprite_accessory/underwear/U = underwear_list[H.underwear]
-		if(U)
-			standing	+= image("icon"=U.icon, "icon_state"="[U.icon_state]_s", "layer"=-BODY_LAYER)
-
-	else if((!H.dna || !H.dna.taur) && (!H.wear_suit || !(H.wear_suit.flags_inv&HIDEJUMPSUIT)) && (!H.w_uniform||!(H.w_uniform.body_parts_covered&GROIN)) )
-		if(H.dna&&H.dna.cock)
-			//cock codes here
-			var/list/cock=H.dna.cock
-			var/cock_mod=0
-			var/cock_type=cock["type"]
-			if(cock["has"]==H.dna.COCK_NORMAL)cock_mod="n"
-			else if(cock["has"]==H.dna.COCK_HYPER)cock_mod="h"
-			else if(cock["has"]==H.dna.COCK_DOUBLE)cock_mod="d"
-			if(cock_mod)
-				var/icon/chk=new/icon('icons/mob/cock.dmi')
-				var/list/available_states=chk.IconStates()
-				if(available_states.Find("[cock_type]_c_[cock_mod]"))
-					var/image/cockimtmp	= image("icon"='icons/mob/cock.dmi', "icon_state"="[cock_type]_c_[cock_mod]", "layer"=-BODY_LAYER)
-					var/new_color = "#" + cock["color"]
-					cockimtmp.color = new_color
-					standing += cockimtmp
-				if(available_states.Find("[cock_type]_s_[cock_mod]"))
-					var/image/cockimtmp	= image("icon"='icons/mob/cock.dmi', "icon_state"="[cock_type]_s_[cock_mod]", "layer"=-BODY_LAYER)
-					if(H.dna.special_color[2])
-						var/new_color = "#" + H.dna.special_color[2]
-						cockimtmp.color = new_color
-					standing += cockimtmp
-
-	if(H.dna&&H.dna.taur)
-
-		var/taur_state="[kpcode_cantaur(H.dna.mutantrace())]_overlay"
-		if(H.vore_womb_datum.has_people()||H.vore_stomach_datum.has_people())
-			taur_state+="_f"
-		standing += generate_colour_icon('icons/mob/special/taur.dmi',"[taur_state]",H.dna.special_color,offset_x=-16,add_layer=-BODY_LAYER)
+	if(standing.len)
+		H.overlays_standing[BODY_LAYER] = standing
 
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
 	H.apply_overlay(BODY_LAYER)
-
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
@@ -367,12 +336,25 @@
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "tail_human"
 
-
 	if("waggingtail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "waggingtail_human"
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
+
+	if("mam_tail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "mam_tail"
+
+	if("mam_waggingtail" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "mam_waggingtail"
+		else if ("mam_tail" in mutant_bodyparts)
+			bodyparts_to_add -= "mam_waggingtail"
+
+	if("mam_ears" in mutant_bodyparts)
+		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "mam_ears"
 
 	if("spines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -448,16 +430,26 @@
 					S = wings_list[H.dna.features["wings"]]
 				if("wingsopen")
 					S = wings_open_list[H.dna.features["wings"]]
+				//mammal bodyparts
+				if("mam_tail")
+					S = mam_tails_list[H.dna.features["mam_tail"]]
+				if("mam_waggingtail")
+					S.= mam_tails_animated_list[H.dna.features["mam_tail"]]
+				if("mam_body_markings")
+					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
+				if("mam_ears")
+					S = mam_ears_list[H.dna.features["mam_ears"]]
 
 			if(!S || S.icon_state == "none")
 				continue
 
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
-			if(bodypart == "tail_lizard" || bodypart == "tail_human")
+			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail")
 				bodypart = "tail"
-			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human")
+			else if(bodypart == "waggingtail_lizard" || bodypart == "waggingtail_human" || bodypart == "mam_waggingtail")
 				bodypart = "waggingtail"
-
+			if(bodypart == "mam_ears")
+				bodypart = "ears"
 
 			var/icon_string
 
@@ -479,6 +471,16 @@
 								I.color = "#[fixed_mut_color]"
 							else
 								I.color = "#[H.dna.features["mcolor"]]"
+						if(MUTCOLORS2)
+							if(fixed_mut_color2)
+								I.color = "#[fixed_mut_color2]"
+							else
+								I.color = "#[H.dna.features["mcolor2"]]"
+						if(MUTCOLORS3)
+							if(fixed_mut_color3)
+								I.color = "#[fixed_mut_color3]"
+							else
+								I.color = "#[H.dna.features["mcolor3"]]"
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								I.color = "#[H.dna.features["mcolor"]]"
@@ -490,6 +492,7 @@
 							I.color = "#[H.eye_color]"
 				else
 					I.color = forced_colour
+
 			standing += I
 
 			if(S.hasinner)
@@ -503,6 +506,44 @@
 				if(S.center)
 					I = center_image(I,S.dimension_x,S.dimension_y)
 
+				standing += I
+
+			if(S.extra)
+				if(S.gender_specific)
+					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layer]"
+				else
+					icon_string = "m_[bodypart]_extra_[S.icon_state]_[layer]"
+
+				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+				if(S.center)
+					I = center_image(I,S.dimension_x,S.dimension_y)
+
+				switch(S.extra_color_src)
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						I.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						I.color = "#[H.eye_color]"
 				standing += I
 
 		H.overlays_standing[layer] = standing.Copy()
