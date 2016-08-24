@@ -145,6 +145,9 @@
 	walltype = "shuttle"
 	smooth = SMOOTH_FALSE
 
+/turf/closed/wall/shuttle/proc/update_icon()
+	..()
+
 /turf/closed/wall/shuttle/smooth
 	name = "wall"
 	icon = 'icons/turf/walls/shuttle_wall.dmi'

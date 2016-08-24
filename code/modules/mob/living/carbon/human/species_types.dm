@@ -6,9 +6,9 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	//specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
+	specflags = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears")
+	default_features = list("tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -57,7 +57,7 @@
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
 	mutant_organs = list(/obj/item/organ/tongue/lizard)
-	default_features = list("mcolor" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
+	default_features = list("mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -166,6 +166,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
+	restricted = 2
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -193,6 +194,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
+	restricted = 2
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -261,17 +263,17 @@
 		H << "<span class='notice'>You feel intact enough as it is.</span>"
 		return
 	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
-	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
+	if(H.blood_volume >= 150*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 40*limbs_to_heal.len
+		H.blood_volume -= 150*limbs_to_heal.len
 		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
 		return
-	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+	else if(H.blood_volume >= 150)//We can partially heal some limbs
+		while(H.blood_volume >= BLOOD_VOLUME_OKAY+150)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
+			H.blood_volume -= 150
 		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
 		return
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
@@ -281,7 +283,7 @@
 */
 
 /datum/species/jelly/slime
-	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
+	// Humans mutated by slime mutagen, produced from green slimes. They are not targeted by slimes.
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
@@ -290,14 +292,15 @@
 	say_mod = "says"
 	eyes = "eyes"
 	hair_color = "mutcolor"
-	hair_alpha = 150
+	hair_alpha = 192
 	ignored_by = list(/mob/living/simple_animal/slime)
-	burnmod = 0.5
+	burnmod = 0.9
 	coldmod = 2
-	heatmod = 0.5
+	heatmod = 0.9
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
+	roundstart = 1
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
@@ -314,11 +317,6 @@
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-		slime_split = new
-		slime_split.Grant(C)
-		swap_body = new
-		swap_body.Grant(C)
-
 		if(!bodies || !bodies.len)
 			bodies = list(C)
 		else
@@ -530,7 +528,7 @@
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
+	punchstunthreshold = 12 //about 15% chance to stun
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	sexes = 1
@@ -541,6 +539,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	restricted = 2
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -631,6 +630,7 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	restricted = 2
 
 /*
  ZOMBIES
@@ -647,6 +647,7 @@
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
+	restricted = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -693,6 +694,7 @@
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
+	restricted = 2
 
 /datum/species/abductor
 	name = "Abductor"
@@ -705,6 +707,7 @@
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
+	restricted = 2
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -779,6 +782,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
+	restricted = 2
+	roundstart = 0
 
 /datum/species/synth/military
 	name = "Military Synth"
@@ -788,6 +793,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
+	restricted = 2
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -908,6 +914,7 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
+	restricted = 2
 
 /datum/species/angel
 	name = "Angel"
@@ -919,6 +926,7 @@ SYNDICATE BLACK OPS
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1
+	restricted = 2
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -1052,3 +1060,101 @@ SYNDICATE BLACK OPS
 		override_float = 0
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
+
+
+//CANID//
+datum/species/canid
+	name = "Canid"
+	id = "canid"
+	default_color = "4B4B4B"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
+
+/datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+//FELID//
+
+/datum/species/felid
+	name = "Felid"
+	id = "felid"
+	default_color = "BCAC9B"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+
+/datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+//AVIAN//
+/datum/species/ave
+	name = "Avian"
+	id = "avian"
+	default_color = "BCAC9B"
+	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("beak", "wings", "avian_tail")
+	default_features = list("beak" = "None", "wings" = "None")
+	attack_verb = "peck"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 0 //no sprites yet
+	blacklisted = 1
+
+//HERBIVOROUS//
+
+//EXOTIC//
+/datum/species/xeno
+	name = "Xenomorph"
+	id = "xeno"
+	default_color = "BCAC9B"
+	say_mod = "hisses"
+	eyes = "eyes_xeno"
+	specflags = list(NOGUNS,MUTCOLORS)
+	mutant_bodyparts = list("xeno_head", "dorsal_tubes")
+	default_features = list("xeno_head" = "None", "dorsal_tubes" = "None")
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	burnmod = 1.5
+	heatmod = 1.5
+	safe_toxins_max = 9999999
+	exotic_blood = "xblood"
+	exotic_damage_overlay = "xeno"
+	roundstart = 0 //wip
+	blacklisted = 1 //so xenobio can't steal the broken races
+	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+
+/datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
+	if(istype(C.gib_type, XG))
+		return
+	else
+		C.gib_type = XG
+/datum/species/xeno/on_species_loss(mob/living/carbon/C)
+	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
+	var/obj/effect/decal/cleanable/blood/gibs/HG
+	if(istype(C.gib_type, XG))
+		C.gib_type = HG
+	else
+		return
+
+/datum/reagent/toxin/acid/xenoblood
+	name = "acid blood"
+	id = "xblood"
+	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
+	color = "#66CC00"
+	toxpwr = 0.5
+	acidpwr = 12
