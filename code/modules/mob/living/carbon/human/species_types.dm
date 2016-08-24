@@ -1134,6 +1134,8 @@ datum/species/canid
 	roundstart = 0 //wip
 	blacklisted = 1
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
@@ -1141,6 +1143,13 @@ datum/species/canid
 		return
 	else
 		C.gib_type = XG
+/datum/species/xeno/on_species_loss(mob/living/carbon/C)
+	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
+	var/obj/effect/decal/cleanable/blood/gibs/HG
+	if(istype(C.gib_type, XG))
+		C.gib_type = HG
+	else
+		return
 
 /datum/reagent/toxin/acid/xenoblood
 	name = "acid blood"
