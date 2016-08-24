@@ -360,7 +360,7 @@
 "gV" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
 "gW" = (/obj/machinery/status_display,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
 "gX" = (/obj/structure/table,/obj/item/weapon/storage/lockbox,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)
-"gY" = (/obj/structure/table,/obj/item/weapon/gun/projectile/minigun,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)
+"gY" = (/obj/structure/table,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)
 "gZ" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)
 "ha" = (/obj/structure/table,/obj/item/weapon/clipboard,/obj/item/weapon/pen,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)
 "hb" = (/obj/structure/table,/obj/item/weapon/paper_bin,/turf/open/floor/plasteel/shuttle,/area/centcom/evac)

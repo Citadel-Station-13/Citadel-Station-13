@@ -317,7 +317,6 @@
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-
 		if(!bodies || !bodies.len)
 			bodies = list(C)
 		else
@@ -1088,11 +1087,11 @@ datum/species/canid
 	default_color = "BCAC9B"
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "None", "mam_tail" = "None")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 0 //no sprites yet
+	roundstart = 1 //no sprites yet
 
 /datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -1131,13 +1130,20 @@ datum/species/canid
 	safe_toxins_max = 9999999
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
-	roundstart = 1
-	no_equip = list(slot_glasses, slot_back) //MY EYES, THEY'RE GONE
+	roundstart = 0 //wip
+	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
+
+/datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
+	if(istype(C.gib_type, XG))
+		return
+	else
+		C.gib_type = XG
 
 /datum/reagent/toxin/acid/xenoblood
 	name = "acid blood"
 	id = "xblood"
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
-	toxpwr = 1
+	toxpwr = 0.5
 	acidpwr = 12

@@ -1413,13 +1413,48 @@
 	icon_state = "fox"
 	hasinner = 0
 
+/datum/sprite_accessory/ears/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	hasinner = 0
+
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
 	icon_state = "fox"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
 
 /datum/sprite_accessory/tail_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/tails/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tail_animated/human/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	hasinner = 1
+
+/datum/sprite_accessory/tails/human/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tail_animated/human/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 //Mammal Bodyparts
 /datum/sprite_accessory/mam_ears
@@ -1432,8 +1467,26 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/snouts/lcanid
-	name = "Long, Canid"
+	name = "Long, Thin"
 	icon_state = "lcanid"
+
+/datum/sprite_accessory/snouts/scanid
+	name = "Short, Thin"
+	icon_state = "scanid"
+
+//Cat, Big
+/datum/sprite_accessory/mam_ears/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+	hasinner = 1
+
+/datum/sprite_accessory/mam_tails/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
+
+/datum/sprite_accessory/mam_tails_animated/catbig
+	name = "Cat, Big"
+	icon_state = "catbig"
 
 //Wolf
 /datum/sprite_accessory/mam_ears/wolf
@@ -1448,6 +1501,7 @@
 /datum/sprite_accessory/mam_tails_animated/wolf
 	name = "Wolf"
 	icon_state = "wolf"
+
 //Fox
 /datum/sprite_accessory/mam_ears/fox
 	name = "Fox"
@@ -1465,6 +1519,20 @@
 	icon_state = "fox"
 	extra = 1
 	extra_color_src = MUTCOLORS2
+
+//Fennec
+/datum/sprite_accessory/mam_ears/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	hasinner = 1
+
+/datum/sprite_accessory/mam_tails/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+
+/datum/sprite_accessory/mam_tails_animated/fennec
+	name = "Fennec"
+	icon_state = "fennec"
 
 //Lab
 /datum/sprite_accessory/mam_ears/lab
