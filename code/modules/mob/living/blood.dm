@@ -230,7 +230,7 @@
 		// Only a certain number of drips (or one large splatter) can be on a given turf.
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.dna.species == "xeno")
+			if(H.dna.species.id == "xeno")
 				var/obj/effect/decal/cleanable/xdrip/xdrop = locate() in T
 				if(xdrop)
 					if(xdrop.drips < 3)
@@ -240,7 +240,7 @@
 						return
 					else
 						temp_blood_DNA = list()
-						temp_blood_DNA |= xdrop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+						temp_blood_DNA |= xdrop.blood_DNA.Copy()
 						qdel(xdrop)//the drip is replaced by a bigger splatter
 				else
 					xdrop = new(T)
@@ -268,7 +268,7 @@
 	if(!B)
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.dna.species == "xeno")
+			if(H.dna.species.id == "xeno")
 				B = new /obj/effect/decal/cleanable/xenoblood(T)
 			else
 				B = new /obj/effect/decal/cleanable/blood/splatter(T)

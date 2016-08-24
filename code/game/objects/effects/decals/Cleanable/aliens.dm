@@ -10,7 +10,7 @@
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	var/list/viruses = list()
-	blood_DNA = list("UNKNOWN DNA" = "X*")
+	blood_DNA = list()
 	bloodiness = MAX_SHOE_BLOODINESS
 	blood_state = BLOOD_STATE_XENO
 
@@ -82,10 +82,12 @@
 	name = "drips of blood"
 	desc = "It's green."
 	gender = PLURAL
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "1"
 	random_icon_states = list("xdrip1","xdrip2","xdrip3","xdrip4","xdrip5")
 	bloodiness = 0
 	var/drips = 1
+	blood_DNA = list()
 
 /obj/effect/decal/cleanable/xdrip/can_bloodcrawl_in()
 	return 1
