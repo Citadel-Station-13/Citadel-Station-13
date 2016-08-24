@@ -283,7 +283,7 @@
 */
 
 /datum/species/jelly/slime
-	// Humans mutated by slime mutagen, produced from green slimes. They are not targetted by slimes.
+	// Humans mutated by slime mutagen, produced from green slimes. They are not targeted by slimes.
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
