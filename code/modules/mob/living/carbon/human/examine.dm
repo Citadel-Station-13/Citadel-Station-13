@@ -246,7 +246,22 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
-
+/*
+	if( (vore_womb_datum.has_people()||vore_stomach_datum.has_people()) && !(slot_w_uniform in obscured) )
+		msg += "It seems [t_his] belly is shifting around slighty.\n"
+	if( (vore_breast_datum.has_people()||vore_breast_datum.digestion_count) && !(slot_w_uniform in obscured) )
+		msg += "It seems [t_his] breasts are heavy with milk.\n"
+	if( !(slot_w_uniform in obscured) && (!w_uniform||!(w_uniform.body_parts_covered&GROIN)) )
+		if(vore_cock_datum.has_people()||vore_cock_datum.digestion_count)
+			msg += "It looks like [t_his] cock is full.\n"
+		if(vore_balls_datum.has_people()||vore_balls_datum.digestion_count)
+			msg += "It looks like [t_his] balls are full.\n"
+	if(vore_tail_datum.has_people())
+		msg += "[t_He] has a bulge in [t_his] tail."
+		if(vore_tail_datum.transfer_factor)
+			msg += " It moves slowly toward the base."
+		msg += "\n"
+*/
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
 
@@ -341,6 +356,8 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+
+	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span>"
 
