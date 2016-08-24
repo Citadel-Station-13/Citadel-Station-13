@@ -1408,15 +1408,19 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
+//Human Ears/Tails
+
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
 	icon_state = "fox"
 	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/fox
 	name = "Fox"
@@ -1424,7 +1428,7 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
-/datum/sprite_accessory/tail_animated/human/fox
+/datum/sprite_accessory/tails_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -1435,25 +1439,34 @@
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-/datum/sprite_accessory/tail_animated/human/wolf
+/datum/sprite_accessory/tails_animated/human/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/ears/catbig
-	name = "Cat, Big"
-	icon_state = "catbig"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-	hasinner = 1
 
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-/datum/sprite_accessory/tail_animated/human/catbig
+/datum/sprite_accessory/tails_animated/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/fennec
+	name = "Fennec"
+	icon_state = "fennec"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/fennec
+	name = "Fennec"
+	icon_state = "fennec"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 //Mammal Bodyparts
@@ -1466,6 +1479,7 @@
 /datum/sprite_accessory/mam_tails_animated
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+//Snouts
 /datum/sprite_accessory/snouts/lcanid
 	name = "Long, Thin"
 	icon_state = "lcanid"
@@ -1477,8 +1491,9 @@
 //Cat, Big
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
-	icon_state = "catbig"
+	icon_state = "cat"
 	hasinner = 1
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
