@@ -60,9 +60,9 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
-	var/extra = 0 //Used for extra overlays on top of the bodypart that may be seperate colors. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
+	var/extra = 0 //Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
-	var/extra_color_src = MUTCOLORS2
+	var/extra_color_src = MUTCOLORS2 //The color source for the extra overlay.
 //////////////////////
 // Hair Definitions //
 //////////////////////
@@ -1469,6 +1469,24 @@
 	icon_state = "fennec"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/lab
+	name = "Dog, Floppy"
+	icon_state = "lab"
+	hasinner = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/tails_animated/human/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
 //Mammal Bodyparts
 /datum/sprite_accessory/mam_ears
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -1589,4 +1607,16 @@
 	gender_specific = 1
 	extra = 1
 	extra_color_src = MUTCOLORS3
+*/
+
+//Exotic Bodyparts
+/*
+/datum/sprite_accessory/xeno_dorsal
+	locked = 1
+	name = "Dorsal Tubes"
+	icon_state "dortubes"
+/datum/sprite_accessory/tails/xeno
+	locked = 1
+	name = "Xenomorph Tail"
+	icon_state = "xenotail"
 */

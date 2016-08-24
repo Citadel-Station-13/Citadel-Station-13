@@ -1132,7 +1132,7 @@ datum/species/canid
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
 	roundstart = 0 //wip
-	blacklisted = 1
+	blacklisted = 1 //so xenobio can't steal the broken races
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
