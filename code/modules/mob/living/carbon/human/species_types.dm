@@ -8,7 +8,7 @@
 	default_color = "FFFFFF"
 	specflags = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears")
-	default_features = list("tail_human" = "None", "ears" = "None", "wings" = "None")
+	default_features = list("tail_human" = "None", "ears" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -263,17 +263,17 @@
 		H << "<span class='notice'>You feel intact enough as it is.</span>"
 		return
 	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
-	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
+	if(H.blood_volume >= 100*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 40*limbs_to_heal.len
+		H.blood_volume -= 100*limbs_to_heal.len
 		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
 		return
-	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+	else if(H.blood_volume >= 100)//We can partially heal some limbs
+		while(H.blood_volume >= BLOOD_VOLUME_OKAY+100)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
+			H.blood_volume -= 100
 		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
 		return
 	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
@@ -294,9 +294,9 @@
 	hair_color = "mutcolor"
 	hair_alpha = 192
 	ignored_by = list(/mob/living/simple_animal/slime)
-	burnmod = 0.5
+	burnmod = 0.9
 	coldmod = 2
-	heatmod = 0.5
+	heatmod = 0.9
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
@@ -1109,6 +1109,7 @@ datum/species/canid
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 0 //no sprites yet
+	blacklisted = 1
 
 //HERBIVOROUS//
 
@@ -1131,6 +1132,7 @@ datum/species/canid
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
 	roundstart = 0 //wip
+	blacklisted = 1
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)

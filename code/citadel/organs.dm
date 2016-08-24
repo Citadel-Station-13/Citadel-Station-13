@@ -17,7 +17,7 @@
 	zone = "groin"
 	slot = "penis"
 	w_class = 3
-	var/subtype = "human"
+	var/shape = "human"
 	var/size = "normal"
 	var/testicles
 
@@ -35,13 +35,13 @@
 	zone = "groin"
 	slot = "vagina"
 	w_class = 3
-	var/subtype = "human"
+	var/shape = "human"
 	var/ovaries
 
-/obj/item/organ/ovaries
-	name = "ovaries"
-	icon_state = "ovaries"
+/obj/item/organ/womb
+	name = "womb"
+	icon_state = "womb"
 	zone = "groin"
-	slot = "ovaries"
+	slot = "womb"
 	w_class = 3
-	var/subtype = "human"
+
