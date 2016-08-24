@@ -52,3 +52,6 @@
 
 /area/ruin/powered/authorship
 	name = "Authorship"
+
+/area/ruin/powered/lavaland_viking_ship
+	name = "Viking Longship"
