@@ -5,17 +5,13 @@
 "e" = (/obj/structure/alien/weeds,/obj/structure/alien/egg,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaycontent/a7{name = "The Egg"})
 
 (1,1,1) = {"
-aaaaaaaaaaaaa
-aaabbbbbbbaaa
-aabbbbbbbbbaa
-abbbbcccbbbba
-abbbcccccbbba
-abbccdddccbba
-abbccdedccbba
-abbccdddccbba
-abbbcccccbbba
-abbbbcccbbbba
-aabbbbbbbbbaa
-aaabbbbbbbaaa
-aaaaaaaaaaaaa
+aabbbbbaa
+abbcccbba
+bbcccccbb
+bccdddccb
+bccdedccb
+bccdddccb
+bbcccccbb
+abbcccbba
+aabbbbbaa
 "}
