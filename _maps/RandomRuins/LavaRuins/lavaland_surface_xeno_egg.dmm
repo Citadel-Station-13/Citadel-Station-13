@@ -1,0 +1,21 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/template_noop)
+"c" = (/obj/structure/alien/weeds,/obj/structure/alien/resin/wall,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaycontent/a7{name = "The Egg"})
+"d" = (/obj/structure/alien/weeds,/obj/structure/alien/resin/membrane,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaycontent/a7{name = "The Egg"})
+"e" = (/obj/structure/alien/weeds,/obj/structure/alien/egg,/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/awaycontent/a7{name = "The Egg"})
+
+(1,1,1) = {"
+aaaaaaaaaaaaa
+aaabbbbbbbaaa
+aabbbbbbbbbaa
+abbbbcccbbbba
+abbbcccccbbba
+abbccdddccbba
+abbccdedccbba
+abbccdddccbba
+abbbcccccbbba
+abbbbcccbbbba
+aabbbbbbbbbaa
+aaabbbbbbbaaa
+aaaaaaaaaaaaa
+"}
