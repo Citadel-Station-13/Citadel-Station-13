@@ -456,6 +456,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]			<< backbag
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
+	S["feature_mcolor2"]					<< features["mcolor2"]
+	S["feature_mcolor3"]					<< features["mcolor3"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
 	S["feature_human_tail"]				<< features["tail_human"]
 	S["feature_lizard_snout"]			<< features["snout"]
