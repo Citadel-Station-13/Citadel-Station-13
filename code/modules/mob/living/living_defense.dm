@@ -214,7 +214,7 @@
 /mob/living/proc/grabbedby(mob/living/carbon/user, mob/living/target, supress_message = 0)
 	if(user == src)
 		if(pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && isliving(pulling))
-			vore_attack(target)
+			src.vore_attack()
 	if(anchored)
 		return 0
 	if(!user.pulling || user.pulling != src)

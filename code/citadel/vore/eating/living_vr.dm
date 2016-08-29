@@ -68,43 +68,41 @@
 	if(!affecting)
 		return
 
-	if((ishuman(user) && !issilicon(affecting)) || (isalien(user) && !issilicon(affecting)))
-		var/mob/living/attacker = user  // Typecast to human
+	var/mob/living/attacker = user  // Typecast to human
 
+		// If you click yourself...
 
-		if((user == assailant) && (is_vore_predator(src)))
-			if(!(is_vore_predator(user)))
-				user.visible_message("<span class='notice'>You can't eat this.</span>")
-				log_attack("[attacker] attempted to feed [affecting] to [user] ([user.type]) but it is not predator-capable")
-				return
+	if((user == assailant) && (is_vore_predator(user)))
+		if(!(is_vore_predator(user)))
+			user.visible_message("<span class='notice'>You can't eat this.</span>")
+			log_attack("[attacker] attempted to feed [affecting] to [user] ([user.type]) but it is not predator-capable")
+			return
+		else
+			var/belly = user.vore_selected
+			return perform_the_nom(user, prey, user, belly)
 
-			else
-				var/belly = user.vore_selected
-				return perform_the_nom(user, prey, user, belly)
-
-						// If you click yourself...
 
 		///// If grab clicked on grabbed
-		else if((user == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
-			if(!(is_vore_predator(affecting)))
-				user.visible_message("<span class='notice'>[affecting] can't eat that</span>")
-				log_attack("[attacker] attempted to feed [user] to [affecting] ([affecting.type]) but it is not predator-capable")
-				return
+	else if((user == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
+		if(!(is_vore_predator(affecting)))
+			user.visible_message("<span class='notice'>[affecting] can't eat that</span>")
+			log_attack("[attacker] attempted to feed [user] to [affecting] ([affecting.type]) but it is not predator-capable")
+			return
 
-			else
-				var/belly = input("Choose Belly") in pred.vore_organs
-				return perform_the_nom(user, user, pred, belly)
+		else
+			var/belly = input("Choose Belly") in pred.vore_organs
+			return perform_the_nom(user, user, pred, belly)
 
 
 
 		///// If grab clicked on anyone else
-		else if((src != affecting) && (src != assailant) && (is_vore_predator(M)))
-			if(!(is_vore_predator(M)))
-				user.visible_message("<span class='notice'>[M] can't eat that.</span>")
-				log_attack("[attacker] attempted to feed [affecting] to [M] ([M.type]) but it is not predator-capable")
-			else
-				var/belly = input("Choose Belly") in pred.vore_organs
-				return perform_the_nom(user, prey, pred, belly)
+	else if((src != affecting) && (src != assailant) && (is_vore_predator(M)))
+		if(!(is_vore_predator(M)))
+			user.visible_message("<span class='notice'>[M] can't eat that.</span>")
+			log_attack("[attacker] attempted to feed [affecting] to [M] ([M.type]) but it is not predator-capable")
+		else
+			var/belly = input("Choose Belly") in pred.vore_organs
+			return perform_the_nom(user, prey, pred, belly)
 
 
 //End vore code.
