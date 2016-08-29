@@ -62,20 +62,25 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attack(mob/living/user, mob/M, var/mob/living/prey, var/mob/living/pred)
-	var/mob/affecting = null
-	var/mob/assailant = null
-	if(!affecting)
+//mob/living/grabbedby(mob/living/carbon/user, supress_message = 0)
+//	if(user == src && pulling && grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling))
+//		vore_attack(pulling, devour_time = 100)
+//	else
+//		..()
+
+/mob/living/proc/vore_attack(mob/living/user, mob/M, var/mob/living/prey, var/mob/living/pred, devour_time = 100)
+
+	if(!do_mob(src, user, devour_time))
 		return
 
-	var/mob/living/attacker = user  // Typecast to human
+	var/mob/attacker = user  // Typecast to human
 
 		// If you click yourself...
 
-	if((user == assailant) && (is_vore_predator(user)))
+	if((user == attacker) && (src != prey) && (is_vore_predator(user)))
 		if(!(is_vore_predator(user)))
 			user.visible_message("<span class='notice'>You can't eat this.</span>")
-			log_attack("[attacker] attempted to feed [affecting] to [user] ([user.type]) but it is not predator-capable")
+			log_attack("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
 			return
 		else
 			var/belly = user.vore_selected
@@ -83,10 +88,10 @@
 
 
 		///// If grab clicked on grabbed
-	else if((user == affecting) && (attacker.a_intent == "grab") && (is_vore_predator(affecting)))
-		if(!(is_vore_predator(affecting)))
-			user.visible_message("<span class='notice'>[affecting] can't eat that</span>")
-			log_attack("[attacker] attempted to feed [user] to [affecting] ([affecting.type]) but it is not predator-capable")
+	else if((user == pred) && (src != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
+		if(!(is_vore_predator(pred)))
+			user.visible_message("<span class='notice'>[pred] can't eat that</span>")
+			log_attack("[attacker] attempted to feed themselves to [pred] ([pred.type]) but it is not predator-capable")
 			return
 
 		else
@@ -96,10 +101,10 @@
 
 
 		///// If grab clicked on anyone else
-	else if((src != affecting) && (src != assailant) && (is_vore_predator(M)))
+	else if((src != attacker) && (src != prey) && (is_vore_predator(M)))
 		if(!(is_vore_predator(M)))
 			user.visible_message("<span class='notice'>[M] can't eat that.</span>")
-			log_attack("[attacker] attempted to feed [affecting] to [M] ([M.type]) but it is not predator-capable")
+			log_attack("[attacker] attempted to feed [prey] to [M] ([M.type]) but it is not predator-capable")
 		else
 			var/belly = input("Choose Belly") in pred.vore_organs
 			return perform_the_nom(user, prey, pred, belly)
@@ -339,7 +344,7 @@
 	if (!do_mob(user, prey))
 		return 0; // User is not able to act upon prey
 	*/
-	if(!do_after(user, swallow_time))
+	if(!do_mob(user, swallow_time))
 		return 0 // Prey escpaed (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
