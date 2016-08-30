@@ -1677,14 +1677,19 @@
 */
 
 //Exotic Bodyparts
-/*
-/datum/sprite_accessory/xeno_dorsal
+/datum/sprite_accessory/exotic
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+/datum/sprite_accessory/tails/exotic
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+/datum/sprite_accessory/ears/exotic
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+
+/datum/sprite_accessory/exotic/xeno_dorsal
 	locked = 1
 	name = "Dorsal Tubes"
 	icon_state "dortubes"
 
-/datum/sprite_accessory/tails/xeno
+/datum/sprite_accessory/tails/exotic/xeno
 	locked = 1
 	name = "Xenomorph Tail"
 	icon_state = "xenotail"
-*/

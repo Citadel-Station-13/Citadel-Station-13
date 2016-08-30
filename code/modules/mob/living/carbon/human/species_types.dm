@@ -3,6 +3,7 @@
 */
 
 /datum/species/human
+	roundstart = 1
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
@@ -94,6 +95,7 @@
 
 /datum/species/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
+	roundstart = 1
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
@@ -539,7 +541,6 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
-	restricted = 2
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -1133,13 +1134,14 @@ datum/species/canid
 	safe_toxins_max = 999999999
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
-	roundstart = 0 //wip
-	blacklisted = 1 //so xenobio can't steal the broken races
+	roundstart = 1
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+	tox_breath_dam_min = -5
+	tox_breath_dam_max = 0
 	whitelisted = 1
-	whitelist = list("talkingcactus")
+	whitelist = list("talkingcactus") //testing whitelisting
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()

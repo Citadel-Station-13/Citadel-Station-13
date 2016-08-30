@@ -1,4 +1,4 @@
-//THIS FOLDER CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
+//THIS FILE CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
 ////////////////////////////////////////////////////////////////////
 
 var/const/SIZEPLAY_TINY=1
@@ -23,14 +23,21 @@ var/const/SIZEPLAY_HUGE=5
 	var/matrix/mtrx=new()
 	return mtrx.Scale(0.5)
 
-proc/kpcode_race_getlist(var/restrict=0)
-	var/list/race_options = list()
-	for(var/r_id in species_list)
-		var/datum/species/R = kpcode_race_get(r_id)
-		if(!R.restricted||R.restricted==restrict)
-			race_options[r_id]=kpcode_race_get(r_id)
-	return race_options
+proc/get_racelist(var/mob/user)
+	for(var/spath in subtypesof(/datum/species))
+		var/datum/species/S = new spath()
+		if(S.blacklisted)
+			continue
+		else if(S.whitelisted)
+			if(user.key in S.whitelist || user.client in admins)
+				whitelisted_species_list[S.id] = S.type
+			else
+				continue
+		else if(!S.whitelisted && !S.blacklisted && S.roundstart)
+			whitelisted_species_list[S.id] = S.type
+	return whitelisted_species_list
 
+/*
 proc/kpcode_race_get(var/name="human")
 	name=kpcode_race_san(name)
 	if(!name||name=="") name="human"
@@ -53,7 +60,7 @@ proc/kpcode_race_restricted(var/name="human")
 		var/datum/species/D=kpcode_race_get(name)
 		return D.restricted
 	return 2
-/*
+
 proc/kpcode_race_tail(var/name="human")
 	name=kpcode_race_san(name)
 	if(kpcode_race_get(name))
