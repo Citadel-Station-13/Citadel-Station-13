@@ -595,6 +595,7 @@
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
+	eyes = "flyeyes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
@@ -1113,22 +1114,23 @@ datum/species/canid
 
 //HERBIVOROUS//
 
-//EXOTIC//
+//EXOTIC//These races will likely include lots of downsides and upsides.//
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
 	default_color = "BCAC9B"
 	say_mod = "hisses"
-	eyes = "eyes_xeno"
+	eyes = "xenoeyes"
+	mutant_organs = list(/obj/item/organ/tongue/alien)
 	specflags = list(NOGUNS,MUTCOLORS)
-	mutant_bodyparts = list("xeno_head", "dorsal_tubes")
-	default_features = list("xeno_head" = "None", "dorsal_tubes" = "None")
+	mutant_bodyparts = list("xeno_head", "xeno_dorsal", "xeno_tail")
+	default_features = list("xeno_head" = "Hunter", "xeno_dorsal" = "None", "xeno_tail" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	burnmod = 1.5
-	heatmod = 1.5
-	safe_toxins_max = 9999999
+	burnmod = 1.75
+	heatmod = 1.75
+	safe_toxins_max = 999999999
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
 	roundstart = 0 //wip
@@ -1136,14 +1138,19 @@ datum/species/canid
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+	whitelisted = 1
+	whitelist = list("talkingcactus")
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
 	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
 	if(istype(C.gib_type, XG))
 		return
 	else
 		C.gib_type = XG
+
 /datum/species/xeno/on_species_loss(mob/living/carbon/C)
+	..()
 	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
 	var/obj/effect/decal/cleanable/blood/gibs/HG
 	if(istype(C.gib_type, XG))
@@ -1156,5 +1163,5 @@ datum/species/canid
 	id = "xblood"
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
-	toxpwr = 0.5
+	toxpwr = 0
 	acidpwr = 12
