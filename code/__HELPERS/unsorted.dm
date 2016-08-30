@@ -544,6 +544,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			if(current.opacity)
 				return 0
 			for(var/thing in current)
+				var/atom/A = thing
 				if(A.opacity)
 					return 0
 			current = get_step_towards(current, target_turf)
