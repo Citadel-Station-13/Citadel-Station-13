@@ -61,8 +61,8 @@
 	var/generic = "something"
 	var/adjective = "unknown"
 	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
-//	var/tail=0
-//	var/taur=0
+	var/whitelisted = 0 		//Is this species restricted to certain players?
+	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted. ex: list("ckey1", "ckey2", "ckey3")
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -102,6 +102,11 @@
 	// PROCS //
 	///////////
 
+mob/living/carbon/human/proc/get_species()
+	if(has_dna())
+		return dna.species.id
+	else
+		return
 
 /datum/species/New()
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
@@ -495,7 +500,7 @@
 
 			standing += I
 
-			if(S.hasinner)
+			if(S.hasinner) //apply the inner ear sprite
 				if(S.gender_specific)
 					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layer]"
 				else
@@ -508,7 +513,7 @@
 
 				standing += I
 
-			if(S.extra)
+			if(S.extra) //apply the extra overlay, if there is one
 				if(S.gender_specific)
 					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layer]"
 				else
@@ -519,7 +524,7 @@
 				if(S.center)
 					I = center_image(I,S.dimension_x,S.dimension_y)
 
-				switch(S.extra_color_src)
+				switch(S.extra_color_src) //change the color of the extra overlay
 					if(MUTCOLORS)
 						if(fixed_mut_color)
 							I.color = "#[fixed_mut_color]"
