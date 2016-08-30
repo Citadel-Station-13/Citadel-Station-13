@@ -60,9 +60,10 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/center = FALSE	//Should we center the sprite?
-	var/extra = 0 //Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
+	var/extra = 0 											//Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
-	var/extra_color_src = MUTCOLORS2 //The color source for the extra overlay.
+	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
+
 //////////////////////
 // Hair Definitions //
 //////////////////////
@@ -1487,6 +1488,39 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
+/datum/sprite_accessory/ears/murid
+	name = "Murid"
+	icon_state = "murid"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/murid
+	name = "Murid"
+	icon_state = "murid"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/murid
+	name = "Murid"
+	icon_state = "murid"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+	hasinner= 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails/human/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 //Mammal Bodyparts
 /datum/sprite_accessory/mam_ears
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -1571,7 +1605,6 @@
 /datum/sprite_accessory/mam_ears/lab
 	name = "Dog, Long"
 	icon_state = "lab"
-	hasinner = 0
 
 /datum/sprite_accessory/mam_tails/lab
 	name = "Lab"
@@ -1586,6 +1619,40 @@
 	name = "Husky"
 	icon_state = "husky"
 	extra = 1
+
+/datum/sprite_accessory/mam_tails_animated/husky
+	name = "Husky"
+	icon_state = "husky"
+	extra = 1
+
+//Murid
+/datum/sprite_accessory/mam_ears/murid
+	name = "Murid"
+	icon_state = "murid"
+
+/datum/sprite_accessory/mam_tails/murid
+	name = "Murid"
+	icon_state = "murid"
+	color_src = 0
+
+/datum/sprite_accessory/mam_tails_animated/murid
+	name = "Murid"
+	icon_state = "murid"
+	color_src = 0
+
+//Squirrel
+/datum/sprite_accessory/mam_ears/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+	hasinner= 1
+
+/datum/sprite_accessory/mam_tails/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
+
+/datum/sprite_accessory/mam_tails_animated/squirrel
+	name = "Squirrel"
+	icon_state = "squirrel"
 
 //Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings
@@ -1615,6 +1682,7 @@
 	locked = 1
 	name = "Dorsal Tubes"
 	icon_state "dortubes"
+
 /datum/sprite_accessory/tails/xeno
 	locked = 1
 	name = "Xenomorph Tail"
