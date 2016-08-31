@@ -6,14 +6,14 @@
 
 //
 // Simple nom proc for if you get ckey'd into a simple_animal mob! Avoids grabs.
-//
+/*
 /mob/living/proc/animal_nom(var/mob/living/T in oview(1))
 	set name = "Animal Nom"
 	set category = "Vore"
 	set desc = "Since you can't grab, you get a verb!"
 
 	feed_grabbed_to_self(src,T)
-
+*/
 //
 // Simple proc for animals to have their digestion toggled on/off externally
 //

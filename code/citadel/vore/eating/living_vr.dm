@@ -80,7 +80,7 @@
 	if((user == attacker) && (src != prey) && (is_vore_predator(user)))
 		if(!(is_vore_predator(user)))
 			user.visible_message("<span class='notice'>You can't eat this.</span>")
-			log_attack("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
+			message_admins("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
 			return
 		else
 			var/belly = user.vore_selected
@@ -91,20 +91,18 @@
 	else if((user == pred) && (src != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
 		if(!(is_vore_predator(pred)))
 			user.visible_message("<span class='notice'>[pred] can't eat that</span>")
-			log_attack("[attacker] attempted to feed themselves to [pred] ([pred.type]) but it is not predator-capable")
+			message_admins("[attacker] attempted to feed themselves to [pred] ([pred.type]) but it is not predator-capable")
 			return
 
 		else
 			var/belly = input("Choose Belly") in pred.vore_organs
 			return perform_the_nom(user, user, pred, belly)
 
-
-
 		///// If grab clicked on anyone else
 	else if((src != attacker) && (src != prey) && (is_vore_predator(M)))
 		if(!(is_vore_predator(M)))
 			user.visible_message("<span class='notice'>[M] can't eat that.</span>")
-			log_attack("[attacker] attempted to feed [prey] to [M] ([M.type]) but it is not predator-capable")
+			message_admins("[attacker] attempted to feed [prey] to [M] ([M.type]) but it is not predator-capable")
 		else
 			var/belly = input("Choose Belly") in pred.vore_organs
 			return perform_the_nom(user, prey, pred, belly)
@@ -292,7 +290,7 @@
 
 //
 // Eating procs depending on who clicked what
-//
+/*
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
 	var/belly = user.vore_selected
 	return perform_the_nom(user, prey, user, belly)
@@ -312,7 +310,7 @@
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
-
+*/
 //
 // Master vore proc that actually does vore procedures
 //
@@ -340,21 +338,18 @@
 
 	// Now give the prey time to escape... return if they did
 	var/swallow_time = istype(prey, /mob/living/carbon/human) ? belly_target.human_prey_swallow_time : belly_target.nonhuman_prey_swallow_time
-	/* POLARISTODO - Unnecessary?
-	if (!do_mob(user, prey))
-		return 0; // User is not able to act upon prey
-	*/
+
 	if(!do_mob(user, swallow_time))
 		return 0 // Prey escpaed (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	stop_pulling()
 	playsound(user, belly_target.vore_sound, 100, 1)
 
 	// Actually shove prey into the belly.
 	belly_target.nom_mob(prey, user)
 	user.update_icons()
+	stop_pulling()
 
 	// Inform Admins
 	if (pred == user)
