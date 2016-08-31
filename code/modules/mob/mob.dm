@@ -467,7 +467,7 @@ proc/get_top_level_mob(var/mob/S)
 		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
 
 /mob/proc/print_flavor_text()
-	if (flavor_text && flavor_text != "")
+	if(flavor_text && flavor_text != "")
 		var/msg = replacetext(flavor_text, "\n", " ")
 		if(lentext(msg) <= 40)
 			return "\blue [msg]"

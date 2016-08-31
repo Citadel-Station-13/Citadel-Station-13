@@ -1287,6 +1287,7 @@ var/list/preferences_datums = list()
 
 	character.real_name = real_name
 	character.name = character.real_name
+	character.flavor_text = flavor_text
 
 	character.gender = gender
 	character.age = age
@@ -1301,7 +1302,6 @@ var/list/preferences_datums = list()
 	character.underwear = underwear
 	character.undershirt = undershirt
 	character.socks = socks
-
 	character.backbag = backbag
 
 	character.dna.features = features.Copy()
