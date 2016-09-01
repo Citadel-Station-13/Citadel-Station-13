@@ -318,7 +318,7 @@
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
-	cost = 5500
+	cost = 3500
 	contains = list(/obj/item/weapon/gun/energy/gun,
 					/obj/item/weapon/gun/energy/gun)
 	crate_name = "energy gun crate"
@@ -341,7 +341,7 @@
 
 /datum/supply_pack/security/armory/wt550
 	name = "WT-550 Auto Rifle Crate"
-	cost = 5500
+	cost = 3500
 	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
 					/obj/item/weapon/gun/projectile/automatic/wt550)
 	crate_name = "auto rifle crate"
@@ -357,7 +357,7 @@
 
 /datum/supply_pack/security/armory/mindshield
 	name = "mindshield implants Crate"
-	cost = 4000
+	cost = 3000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
 
@@ -390,7 +390,7 @@
 
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
-	cost = 25000
+	cost = 2500
 	contains = list(/obj/item/weapon/storage/box/firingpins,
 					/obj/item/weapon/storage/box/firingpins)
 	crate_name = "firing pins crate"
