@@ -1687,7 +1687,7 @@
 /datum/sprite_accessory/exotic/xeno_dorsal
 	locked = 1
 	name = "Dorsal Tubes"
-	icon_state "dortubes"
+	icon_state = "dortubes"
 
 /datum/sprite_accessory/tails/exotic/xeno
 	locked = 1

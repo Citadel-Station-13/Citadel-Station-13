@@ -687,6 +687,8 @@
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
 	if(!istype(C))
 		return
+	if(C.dna && C.dna.species.id == "xeno")
+		return
 	reac_volume = round(reac_volume,0.1)
 	if(method == INGEST)
 		C.adjustBruteLoss(min(6*toxpwr, reac_volume * toxpwr))

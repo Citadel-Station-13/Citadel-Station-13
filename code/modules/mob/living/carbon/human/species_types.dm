@@ -1119,11 +1119,10 @@ datum/species/canid
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
-	default_color = "BCAC9B"
 	say_mod = "hisses"
 	eyes = "xenoeyes"
 	mutant_organs = list(/obj/item/organ/tongue/alien)
-	specflags = list(NOGUNS,MUTCOLORS)
+	specflags = list(NOGUNS)
 	mutant_bodyparts = list("xeno_head", "xeno_dorsal", "xeno_tail")
 	default_features = list("xeno_head" = "Hunter", "xeno_dorsal" = "None", "xeno_tail" = "None")
 	attack_verb = "slash"
@@ -1131,7 +1130,6 @@ datum/species/canid
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.75
 	heatmod = 1.75
-	safe_toxins_max = 999999999
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
 	roundstart = 1
