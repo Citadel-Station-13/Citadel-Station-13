@@ -16,12 +16,12 @@
 "ap" = (/obj/structure/flora/rock/icy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
 "aq" = (/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
 "ar" = (/obj/machinery/door/airlock/wood,/turf/open/floor/plating{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
-"as" = (/obj/structure/fans,/turf/closed/wall/mineral/wood,/area/ruin/powered/snow_biodome)
-"at" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"au" = (/obj/structure/bed,/obj/item/weapon/bedsheet/blue,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"av" = (/obj/structure/bookcase/random,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"aw" = (/obj/structure/table/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
-"ax" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"as" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"at" = (/obj/structure/bed,/obj/item/weapon/bedsheet/blue,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"au" = (/obj/structure/bookcase/random,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"av" = (/obj/structure/table/wood,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"aw" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/food/snacks/beans,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
+"ax" = (/obj/structure/fans,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
 "ay" = (/obj/structure/closet/crate/trashcart,/obj/item/trash/semki,/obj/item/trash/candy,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
 "az" = (/obj/structure/flora/tree/pine,/turf/open/floor/plating/asteroid/snow{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/snow_biodome)
 "aA" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "floor"},/area/ruin/powered/snow_biodome)
@@ -61,7 +61,7 @@
 "bi" = (/obj/machinery/computer/monitor,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
 "bj" = (/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
 "bk" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
-"bl" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; name = "bridge"},/area/ruin/powered/snow_biodome)
+"bl" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/lava/smooth; initial_gas_mix = "TEMP=180"; name = "bridge"},/area/ruin/powered/snow_biodome)
 "bm" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/ruin/powered/snow_biodome)
 "bn" = (/obj/item/clothing/mask/balaclava,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
 "bo" = (/obj/structure/table,/obj/item/weapon/storage/fancy/cigarettes/cigpack_carp,/turf/open/floor/pod/dark,/area/ruin/powered/snow_biodome)
@@ -73,12 +73,12 @@
 aaaaaaaaaaaaaaaaaaababababababababababababaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaababababacadaeafaeagahabaiajababababaaaaaaaaaaaa
 aaaaaaaaabababakabafafafafalafahafamafafanabakabababaaaaaaaa
-aaaaaaababaoapakababaqaraqaqaqasaqaqaqaqababakakapababaaaaaa
-aaaaababaoaoakakakakaqatauaqavawaxavavaqayakazakakakababaaaa
-aaaaabakaoaoaoakazakaqatauaqataAawatataqakakakaBakakakabaaaa
-aaababaCakaoaoakakakaqaDaqaEataAaFaGaHaqakaIaJakakazakababaa
-aaabakakaIaoaoaoakakaqatatataHatatatataqakakakakakakakakabaa
-aaabakakakakaoaoaoakaKaLatataMaMatataNaqakapakaCakakakakabaa
+aaaaaaababaoapakababaqaraqaqaqaqaqaqaqaqababakakapababaaaaaa
+aaaaababaoaoakakakakaqasataqauavawauaxaqayakazakakakababaaaa
+aaaaabakaoaoaoakazakaqasataqasaAavasasaqakakakaBakakakabaaaa
+aaababaCakaoaoakakakaqaDaqaEasaAaFaGaHaqakaIaJakakazakababaa
+aaabakakaIaoaoaoakakaqasasasaHasasasasaqakakakakakakakakabaa
+aaabakakakakaoaoaoakaKaLasasaMaMasasaNaqakapakaCakakakakabaa
 aaabakakakaIakaoaoakaqaqaqaqaOaPaqaqaqaqakakakakaQakakakabaa
 ababababakakakaoaoakakakakakapakakaRakakakakakakakakabababab
 abaSaSaTazakakakaoaoaoazakakakakaIakakakakakakakakakaTaUaVab
