@@ -69,8 +69,9 @@
 //		..()
 
 /mob/living/proc/vore_attack(mob/living/user, mob/M, var/mob/living/prey, var/mob/living/pred, devour_time = 100)
-
+	world << "vore_attack triggered"
 	if(!do_mob(src, user, devour_time))
+		world << "!do_mob passed"
 		return
 
 	var/mob/attacker = user  // Typecast to human
@@ -82,10 +83,10 @@
 			user.visible_message("<span class='notice'>You can't eat this.</span>")
 			message_admins("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
 			return
-		else
-			var/belly = user.vore_selected
-			return perform_the_nom(user, prey, user, belly)
 
+		var/belly = user.vore_selected
+		world << "nom check"
+		return perform_the_nom(user, prey, user, belly)
 
 		///// If grab clicked on grabbed
 	else if((user == pred) && (src != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
@@ -94,19 +95,17 @@
 			message_admins("[attacker] attempted to feed themselves to [pred] ([pred.type]) but it is not predator-capable")
 			return
 
-		else
-			var/belly = input("Choose Belly") in pred.vore_organs
-			return perform_the_nom(user, user, pred, belly)
+		var/belly = input("Choose Belly") in pred.vore_organs
+		return perform_the_nom(user, user, pred, belly)
 
 		///// If grab clicked on anyone else
 	else if((src != attacker) && (src != prey) && (is_vore_predator(M)))
 		if(!(is_vore_predator(M)))
 			user.visible_message("<span class='notice'>[M] can't eat that.</span>")
 			message_admins("[attacker] attempted to feed [prey] to [M] ([M.type]) but it is not predator-capable")
-		else
-			var/belly = input("Choose Belly") in pred.vore_organs
-			return perform_the_nom(user, prey, pred, belly)
 
+		var/belly = input("Choose Belly") in pred.vore_organs
+		return perform_the_nom(user, prey, pred, belly)
 
 //End vore code.
 /*
@@ -319,7 +318,7 @@
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
 		return
-
+	world << "perform the nom triggered"
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
