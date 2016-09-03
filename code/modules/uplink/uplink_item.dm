@@ -835,6 +835,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 75
 
+/datum/uplink_item/device_tools/selfdestruct_firingpin
+	name = "self-destruct firing pin"
+	desc = "This pin will detonate the weapon it is put into upon trying to use it"
+	item = /obj/item/device/firing_pin/trick
+	cost = 4
+
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
