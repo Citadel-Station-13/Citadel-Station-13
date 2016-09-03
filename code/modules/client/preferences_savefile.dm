@@ -348,7 +348,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["features["mcolor3"]"]	<< "#FFF"
 
 	//Character
-	S["Flavor_Text"]					>> flavor_text
 	S["real_name"]						>> real_name
 	S["name_is_always_random"]  		>> be_random_name
 	S["body_is_always_random"]  		>> be_random_body
@@ -364,6 +363,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]						>> undershirt
 	S["socks"]							>> socks
 	S["backbag"]						>> backbag
+	S["flavor_text"]					>> flavor_text
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -476,24 +476,26 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
-	S["Flavor_Text"]			>> flavor_text
-	S["real_name"]			<< real_name
-	S["name_is_always_random"] << be_random_name
-	S["body_is_always_random"] << be_random_body
-	S["gender"]				<< gender
-	S["age"]				<< age
-	S["hair_color"]			<< hair_color
-	S["facial_hair_color"]	<< facial_hair_color
-	S["eye_color"]			<< eye_color
-	S["skin_tone"]			<< skin_tone
-	S["hair_style_name"]	<< hair_style
-	S["facial_style_name"]	<< facial_hair_style
-	S["underwear"]			<< underwear
-	S["undershirt"]			<< undershirt
-	S["socks"]				<< socks
-	S["backbag"]			<< backbag
-	S["species"]			<< pref_species.id
+	S["real_name"]				<< real_name
+	S["name_is_always_random"]  << be_random_name
+	S["body_is_always_random"]  << be_random_body
+	S["gender"]					<< gender
+	S["age"]					<< age
+	S["hair_color"]				<< hair_color
+	S["facial_hair_color"]		<< facial_hair_color
+	S["eye_color"]				<< eye_color
+	S["skin_tone"]				<< skin_tone
+	S["hair_style_name"]		<< hair_style
+	S["facial_style_name"]		<< facial_hair_style
+	S["underwear"]				<< underwear
+	S["undershirt"]				<< undershirt
+	S["socks"]					<< socks
+	S["backbag"]				<< backbag
+	S["flavor_text"]			<< flavor_text
+	S["species"]				<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
+	S["feature_mcolor2"]				<< features["mcolor2"]
+	S["feature_mcolor3"]				<< features["mcolor3"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
 	S["feature_human_tail"]				<< features["tail_human"]
 	S["feature_lizard_snout"]			<< features["snout"]

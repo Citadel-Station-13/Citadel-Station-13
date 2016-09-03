@@ -1296,6 +1296,7 @@ var/list/preferences_datums = list()
 
 	character.real_name = real_name
 	character.name = character.real_name
+	character.flavor_text = flavor_text
 
 	if(!length(belly_prefs))
 		var/datum/belly/B = new /datum/belly(src)
@@ -1327,7 +1328,6 @@ var/list/preferences_datums = list()
 	character.underwear = underwear
 	character.undershirt = undershirt
 	character.socks = socks
-
 	character.backbag = backbag
 
 	character.dna.features = features.Copy()
