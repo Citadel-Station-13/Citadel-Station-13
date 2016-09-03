@@ -205,7 +205,7 @@
 
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
-	cost = 3500
+	cost = 1500
 	contains = list(/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser)
@@ -244,7 +244,7 @@
 
 /datum/supply_pack/security/armory/riothelmets
 	name = "Riot Helmets Crate"
-	cost = 4500
+	cost = 1500
 	contains = list(/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/head/helmet/riot)
@@ -252,7 +252,7 @@
 
 /datum/supply_pack/security/armory/riotarmor
 	name = "Riot Armor Crate"
-	cost = 4500
+	cost = 1500
 	contains = list(/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot)
@@ -260,7 +260,7 @@
 
 /datum/supply_pack/security/armory/riotshields
 	name = "Riot Shields Crate"
-	cost = 4500
+	cost = 2000
 	contains = list(/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot)
@@ -268,7 +268,7 @@
 
 /datum/supply_pack/security/armory/bulletarmor
 	name = "Bulletproof Armor Crate"
-	cost = 2500
+	cost = 1500
 	contains = list(/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
@@ -276,7 +276,7 @@
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
-	cost = 20000
+	cost = 6000
 	contains = list(/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/head/helmet/swat/nanotrasen,
 					/obj/item/clothing/suit/space/swat,
@@ -299,7 +299,7 @@
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
-	cost = 2500
+	cost = 2000
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof)
 	crate_name = "reflector vest crate"
@@ -318,7 +318,7 @@
 
 /datum/supply_pack/security/armory/energy
 	name = "Energy Guns Crate"
-	cost = 3500
+	cost = 2500
 	contains = list(/obj/item/weapon/gun/energy/gun,
 					/obj/item/weapon/gun/energy/gun)
 	crate_name = "energy gun crate"
@@ -357,7 +357,7 @@
 
 /datum/supply_pack/security/armory/mindshield
 	name = "mindshield implants Crate"
-	cost = 3000
+	cost = 4000
 	contains = list(/obj/item/weapon/storage/lockbox/loyalty)
 	crate_name = "mindshield implant crate"
 
@@ -390,7 +390,7 @@
 
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
-	cost = 2500
+	cost = 1000
 	contains = list(/obj/item/weapon/storage/box/firingpins,
 					/obj/item/weapon/storage/box/firingpins)
 	crate_name = "firing pins crate"
