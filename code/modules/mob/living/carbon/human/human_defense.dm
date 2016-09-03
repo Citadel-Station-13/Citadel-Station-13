@@ -370,7 +370,7 @@
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
 	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && iscarbon(pulling))
-		vore_attack(pulling)
+		vore_attack()
 		world << "vore attack grab triggered"
 	else
 		world << "vore attack grab not triggered"

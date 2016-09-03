@@ -70,12 +70,14 @@
 	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
 	var/mob/attacker = user  // Typecast to human
+	prey = null
+	pred = null
 	var/swallow_time = istype(prey, /mob/living/carbon/human) ? belly_target.human_prey_swallow_time : belly_target.nonhuman_prey_swallow_time
 
 		// If you click yourself...
 
-	if((user == attacker) && (attacker != prey) && (is_vore_predator(user)))
-		if(!(is_vore_predator(user)))
+	if((src == attacker) && (is_vore_predator(src)))
+		if(!is_vore_predator(src))
 			world << "self nom check failed"
 			user.visible_message("<span class='notice'>You can't eat this.</span>")
 			message_admins("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
@@ -90,6 +92,7 @@
 			user.visible_message(attempt_msg)
 
 			if(!do_mob(user, swallow_time))
+				world << "!do_mob triggered"
 				return 0 // Prey escpaed (or user disabled) before timer expired.
 
 			// If we got this far, nom successful! Announce it!
@@ -111,7 +114,7 @@
 			return 1
 
 		///// If grab clicked on grabbed
-	else if((user == pred) && (pred != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
+	if((src == pred) && (pred != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
 		if(!(is_vore_predator(pred)))
 			world << "feed nom check failed"
 			user.visible_message("<span class='notice'>[pred] can't eat that</span>")
@@ -125,6 +128,7 @@
 			success_msg = text("<span class='warning'>[attacker] manages to make [pred] [belly_target.vore_verb] [attacker] into their [belly_target.name]!</span>")
 
 			if(!do_mob(user, swallow_time))
+				world << "!do_mob triggered"
 				return 0 // Prey escpaed (or user disabled) before timer expired.
 
 			// If we got this far, nom successful! Announce it!
@@ -144,13 +148,14 @@
 
 		///// If grab clicked on anyone else
 	else if((src != attacker) && (src != prey) && (is_vore_predator(pred)))
-		if(!(is_vore_predator(pred)))
+		if(!is_vore_predator(pred))
 			world << "feed other nom check failed"
 			user.visible_message("<span class='notice'>[pred] can't eat that.</span>")
 			message_admins("[attacker] attempted to feed [prey] to [pred] ([pred.type]) but it is not predator-capable")
 		else
 			world << "feed to other nom check"
 			if(!do_mob(user, swallow_time))
+				world << "!do_mob triggered"
 				return 0 // Prey escpaed (or user disabled) before timer expired.
 
 			attempt_msg = text("<span class='warning'>[attacker] is attempting to make [pred] [belly_target.vore_verb] [prey] into their [belly_target.name]!</span>")
