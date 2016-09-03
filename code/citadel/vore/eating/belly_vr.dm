@@ -14,7 +14,7 @@
 	var/vore_sound = 'sound/vore/gulp.ogg'	// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
-	var/nonhuman_prey_swallow_time = 30		// Time in deciseconds to swallow anything else
+	var/nonhuman_prey_swallow_time = 100		// Time in deciseconds to swallow anything else
 	var/emoteTime = 600						// How long between stomach emotes at prey
 	var/digest_brute = 1					// Brute damage per tick in digestion mode
 	var/digest_burn = 1						// Burn damage per tick in digestion mode
@@ -137,15 +137,15 @@
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
-/datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
-	if (prey.buckled)
-		prey.buckled.unbuckle_mob()
+/datum/belly/proc/nom_mob(var/atom/movable/M)
+//	if (prey.buckled)
+//		prey.buckled.unbuckle_mob()
 
-	prey.forceMove(owner)
-	internal_contents |= prey
+	M.forceMove(src)
+	internal_contents |= M
 
 	if(inside_flavor)
-		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
+		M << "<span class='notice'><B>[inside_flavor]</B></span>"
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,

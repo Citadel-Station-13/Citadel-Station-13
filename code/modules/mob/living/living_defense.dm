@@ -213,9 +213,9 @@
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, mob/living/target, supress_message = 0)
 
-	if(grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling) && user.zone_selected == "mouth")
-		src.vore_attack(src, devour_time = 100)
-		return
+//	if(grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling) && user.zone_selected == "mouth")
+//		src.vore_attack(src, devour_time = 100)
+//		return
 
 	if(anchored)
 		return 0
