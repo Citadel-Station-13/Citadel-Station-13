@@ -115,12 +115,12 @@
 /mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 100)
 	//Sanity
 	world << "perform the nom triggered"
-	/*
+
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
 		return
 	world << "perform the nom passed sanity check"
-	*/
+
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
@@ -147,8 +147,8 @@
 	playsound(user, belly_target.vore_sound, 100, 1)
 
 	// Actually shove prey into the belly.
-	belly_target.nom_mob(src, user)
-	user.update_icons()
+	belly_target.nom_mob(prey, user)
+//	user.update_icons()
 	stop_pulling()
 
 	// Inform Admins

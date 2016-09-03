@@ -137,15 +137,15 @@
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
-/datum/belly/proc/nom_mob(var/atom/movable/M)
+/datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
 //	if (prey.buckled)
 //		prey.buckled.unbuckle_mob()
 
-	M.forceMove(src)
-	internal_contents |= M
+	prey.loc = owner
+	internal_contents |= prey
 
 	if(inside_flavor)
-		M << "<span class='notice'><B>[inside_flavor]</B></span>"
+		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
