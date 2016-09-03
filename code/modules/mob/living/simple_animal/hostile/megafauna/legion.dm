@@ -28,6 +28,7 @@
 	vision_range = 13
 	aggro_vision_range = 18
 	idle_vision_range = 13
+	mouse_opacity = 1
 
 /mob/living/simple_animal/hostile/megafauna/legion/New()
 	..()
