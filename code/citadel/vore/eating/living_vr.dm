@@ -62,51 +62,174 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-//mob/living/grabbedby(mob/living/carbon/user, supress_message = 0)
-//	if(user == src && pulling && grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling))
-//		vore_attack(pulling, devour_time = 100)
-//	else
-//		..()
-
-/mob/living/proc/vore_attack(mob/living/user, mob/M, var/mob/living/prey, var/mob/living/pred, devour_time = 100)
+/mob/living/proc/vore_attack(mob/living/M, var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly)
 	world << "vore_attack triggered"
-	if(!do_mob(src, user, devour_time))
-		world << "!do_mob passed"
-		return
+
+	var/datum/belly/belly_target = pred.vore_organs[belly]
+	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
+	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
 
 	var/mob/attacker = user  // Typecast to human
+	var/swallow_time = istype(prey, /mob/living/carbon/human) ? belly_target.human_prey_swallow_time : belly_target.nonhuman_prey_swallow_time
 
 		// If you click yourself...
 
-	if((user == attacker) && (src != prey) && (is_vore_predator(user)))
+	if((user == attacker) && (attacker != prey) && (is_vore_predator(user)))
 		if(!(is_vore_predator(user)))
+			world << "self nom check failed"
 			user.visible_message("<span class='notice'>You can't eat this.</span>")
 			message_admins("[attacker] attempted to feed [prey] to their ([user.type]) but it is not predator-capable")
 			return
 
-		var/belly = user.vore_selected
-		world << "nom check"
-		return perform_the_nom(user, prey, user, belly)
+		else
+			world << "self nom check"
+
+			attempt_msg = text("<span class='warning'>[attacker] is attemping to [belly_target.vore_verb] [prey] into their [belly_target.name]!</span>")
+			success_msg = text("<span class='warning'>[attacker] manages to [belly_target.vore_verb] [prey] into their [belly_target.name]!</span>")
+
+			user.visible_message(attempt_msg)
+
+			if(!do_mob(user, swallow_time))
+				return 0 // Prey escpaed (or user disabled) before timer expired.
+
+			// If we got this far, nom successful! Announce it!
+			user.visible_message(success_msg)
+			playsound(user, belly_target.vore_sound, 100, 1)
+
+			// Actually shove prey into the belly.
+			belly_target.nom_mob(prey, user)
+			user.update_icons()
+			stop_pulling()
+
+			// Inform Admins
+			if (prey == !client && stat != DEAD)
+				message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+				log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
+			else
+				message_admins("[key_name(pred)] ate [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+				log_attack("[key_name(pred)] ate [key_name(prey)]")
+			return 1
 
 		///// If grab clicked on grabbed
-	else if((user == pred) && (src != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
+	else if((user == pred) && (pred != attacker) && (attacker.a_intent == "grab") && (is_vore_predator(pred)))
 		if(!(is_vore_predator(pred)))
+			world << "feed nom check failed"
 			user.visible_message("<span class='notice'>[pred] can't eat that</span>")
 			message_admins("[attacker] attempted to feed themselves to [pred] ([pred.type]) but it is not predator-capable")
 			return
 
-		var/belly = input("Choose Belly") in pred.vore_organs
-		return perform_the_nom(user, user, pred, belly)
+		else
+			world << "feed nom check"
+
+			attempt_msg = text("<span class='warning'>[attacker] is attempting to make [pred] [belly_target.vore_verb] [attacker] into their [belly_target.name]!</span>")
+			success_msg = text("<span class='warning'>[attacker] manages to make [pred] [belly_target.vore_verb] [attacker] into their [belly_target.name]!</span>")
+
+			if(!do_mob(user, swallow_time))
+				return 0 // Prey escpaed (or user disabled) before timer expired.
+
+			// If we got this far, nom successful! Announce it!
+			user.visible_message(success_msg)
+			playsound(user, belly_target.vore_sound, 100, 1)
+
+			// Actually shove prey into the belly.
+			belly_target.nom_mob(prey, pred)
+			user.update_icons()
+			stop_pulling()
+
+			// Inform Admins
+
+			message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+			log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
+			return 1
 
 		///// If grab clicked on anyone else
-	else if((src != attacker) && (src != prey) && (is_vore_predator(M)))
-		if(!(is_vore_predator(M)))
-			user.visible_message("<span class='notice'>[M] can't eat that.</span>")
-			message_admins("[attacker] attempted to feed [prey] to [M] ([M.type]) but it is not predator-capable")
+	else if((src != attacker) && (src != prey) && (is_vore_predator(pred)))
+		if(!(is_vore_predator(pred)))
+			world << "feed other nom check failed"
+			user.visible_message("<span class='notice'>[pred] can't eat that.</span>")
+			message_admins("[attacker] attempted to feed [prey] to [pred] ([pred.type]) but it is not predator-capable")
+		else
+			world << "feed to other nom check"
+			if(!do_mob(user, swallow_time))
+				return 0 // Prey escpaed (or user disabled) before timer expired.
 
-		var/belly = input("Choose Belly") in pred.vore_organs
-		return perform_the_nom(user, prey, pred, belly)
+			attempt_msg = text("<span class='warning'>[attacker] is attempting to make [pred] [belly_target.vore_verb] [prey] into their [belly_target.name]!</span>")
+			success_msg = text("<span class='warning'>[attacker] manages to make [pred] [belly_target.vore_verb] [prey] into their [belly_target.name]!</span>")
 
+			if(!do_mob(user, swallow_time))
+				return 0 // Prey escpaed (or user disabled) before timer expired.
+
+			// If we got this far, nom successful! Announce it!
+			user.visible_message(success_msg)
+			playsound(user, belly_target.vore_sound, 100, 1)
+
+		// Actually shove prey into the belly.
+			belly_target.nom_mob(prey, pred)
+			user.update_icons()
+			stop_pulling()
+
+			// Inform Admins
+			if (prey == !client && stat != DEAD)
+				message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+				log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
+			else
+				message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+				log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
+			return 1
+
+/*
+// Master vore proc that actually does vore procedures
+//
+/mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly)
+	//Sanity
+	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
+		return
+	world << "perform the nom triggered"
+	// The belly selected at the time of noms
+	var/datum/belly/belly_target = pred.vore_organs[belly]
+	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
+	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
+
+	// Prepare messages
+	if(user == pred) //Feeding someone to yourself
+		attempt_msg = text("<span class='warning'>[] is attemping to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+	else //Feeding someone to another person
+		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+
+	// Announce that we start the attempt!
+	user.visible_message(attempt_msg)
+
+	// Now give the prey time to escape... return if they did
+	var/swallow_time = istype(prey, /mob/living/carbon/human) ? belly_target.human_prey_swallow_time : belly_target.nonhuman_prey_swallow_time
+
+	if(!do_mob(user, swallow_time))
+		return 0 // Prey escpaed (or user disabled) before timer expired.
+
+	// If we got this far, nom successful! Announce it!
+	user.visible_message(success_msg)
+	playsound(user, belly_target.vore_sound, 100, 1)
+
+	// Actually shove prey into the belly.
+	belly_target.nom_mob(prey, user)
+	user.update_icons()
+	stop_pulling()
+
+	// Inform Admins
+	if (pred == user)
+		message_admins("[key_name(pred)] ate [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		log_attack("[key_name(pred)] ate [key_name(prey)]")
+	else if (prey == !client && stat != DEAD)
+		message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
+	else
+		message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
+	return 1
+
+*/
 //End vore code.
 /*
 	//Handle case: /obj/item/weapon/holder
@@ -310,54 +433,3 @@
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 */
-//
-// Master vore proc that actually does vore procedures
-//
-/mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly)
-	//Sanity
-	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
-		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
-		return
-	world << "perform the nom triggered"
-	// The belly selected at the time of noms
-	var/datum/belly/belly_target = pred.vore_organs[belly]
-	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
-	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
-
-	// Prepare messages
-	if(user == pred) //Feeding someone to yourself
-		attempt_msg = text("<span class='warning'>[] is attemping to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-	else //Feeding someone to another person
-		attempt_msg = text("<span class='warning'>[] is attempting to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-		success_msg = text("<span class='warning'>[] manages to make [] [] [] into their []!</span>",user,pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
-
-	// Announce that we start the attempt!
-	user.visible_message(attempt_msg)
-
-	// Now give the prey time to escape... return if they did
-	var/swallow_time = istype(prey, /mob/living/carbon/human) ? belly_target.human_prey_swallow_time : belly_target.nonhuman_prey_swallow_time
-
-	if(!do_mob(user, swallow_time))
-		return 0 // Prey escpaed (or user disabled) before timer expired.
-
-	// If we got this far, nom successful! Announce it!
-	user.visible_message(success_msg)
-	playsound(user, belly_target.vore_sound, 100, 1)
-
-	// Actually shove prey into the belly.
-	belly_target.nom_mob(prey, user)
-	user.update_icons()
-	stop_pulling()
-
-	// Inform Admins
-	if (pred == user)
-		message_admins("[key_name(pred)] ate [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
-		log_attack("[key_name(pred)] ate [key_name(prey)]")
-	else if (prey == !client && stat != DEAD)
-		message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
-		log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
-	else
-		message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
-		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
-	return 1
