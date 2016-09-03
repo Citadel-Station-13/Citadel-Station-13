@@ -1,13 +1,11 @@
 /*
 	Telekinesis
-
 	This needs more thinking out, but I might as well.
 */
 var/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
-
 	By default, emulate the user's unarmed attack
 */
 /atom/proc/attack_tk(mob/user)
@@ -19,7 +17,6 @@ var/const/tk_maxrange = 15
 /*
 	This is similar to item attack_self, but applies to anything
 	that you can grab with a telekinetic grab.
-
 	It is used for manipulating things at range, for example, opening and closing closets.
 	There are not a lot of defaults at this time, add more where appropriate.
 */
@@ -57,7 +54,6 @@ var/const/tk_maxrange = 15
 
 /*
 	TK Grab Item (the workhorse of old TK)
-
 	* If you have not grabbed something, do a normal tk attack
 	* If you have something, throw it at the target.  If it is already adjacent, do a normal attackby()
 	* If you click what you are holding, or attack_self(), do an attack_self_tk() on it.
@@ -121,15 +117,16 @@ var/const/tk_maxrange = 15
 		focus_object(target, user)
 		return
 
-	if(focus.anchored)
+	if(focus.anchored || !isturf(focus.loc))
 		qdel(src)
+		return
 
 	if(target == focus)
 		target.attack_self_tk(user)
 		return // todo: something like attack_self not laden with assumptions inherent to attack_self
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
+	if(!isturf(target) && istype(focus,/obj/item) && target.Adjacent(focus))
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
@@ -139,7 +136,6 @@ var/const/tk_maxrange = 15
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
-	return
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -155,7 +151,7 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))
+	if(!isobj(target))
 		return//Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)
@@ -217,5 +213,4 @@ var/const/tk_maxrange = 15
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
-
 */
