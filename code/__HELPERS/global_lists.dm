@@ -34,8 +34,16 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
-	//avian bodyparts
-	//exotic bodyparts
+	//avian bodyparts (i swear this isn't starbound)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/avian, avian_tails_animated_list)
+	//exotic bodyparts (for all the other freakshows)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/exotic, exotic_tails_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/exotic, exotic_tails_animated_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears/exotic, exotic_ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, exotic_head_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/exotic/back, exotic_back_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

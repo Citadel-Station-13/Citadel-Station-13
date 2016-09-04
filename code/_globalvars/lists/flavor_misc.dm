@@ -33,12 +33,17 @@ var/global/list/ears_list = list()
 var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()
 var/global/list/r_wings_list = list()
-
-	//Mammal Specific Mutant Human Bits
+	//Mammal Species
 var/global/list/mam_body_markings_list = list()
 var/global/list/mam_ears_list = list()
 var/global/list/mam_tails_list = list()
 var/global/list/mam_tails_animated_list = list()
+	//Exotic Species
+var/global/list/exotic_tails_list
+var/global/list/exotic_tails_animated_list
+var/global/list/exotic_ears_list
+var/global/list/exotic_head_list
+var/global/list/exotic_back_list
 
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things

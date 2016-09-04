@@ -1115,7 +1115,8 @@ datum/species/canid
 
 //HERBIVOROUS//
 
-//EXOTIC//These races will likely include lots of downsides and upsides.//
+//EXOTIC//
+//These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
@@ -1123,8 +1124,8 @@ datum/species/canid
 	eyes = "xenoeyes"
 	mutant_organs = list(/obj/item/organ/tongue/alien)
 	specflags = list(NOGUNS)
-	mutant_bodyparts = list("xeno_head", "xeno_dorsal", "xeno_tail")
-	default_features = list("xeno_head" = "Hunter", "xeno_dorsal" = "None", "xeno_tail" = "None")
+	mutant_bodyparts = list("xenohead", "xenodorsal", "xenotail")
+	default_features = list("xenohead" = "Hunter", "xenodorsal" = "Dorsal Tubes", "xenotail" = "Xenomorph")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'

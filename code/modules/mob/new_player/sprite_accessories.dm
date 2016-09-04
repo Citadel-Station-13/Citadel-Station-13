@@ -1679,17 +1679,47 @@
 //Exotic Bodyparts
 /datum/sprite_accessory/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
+	locked = 1
+/datum/sprite_accessory/exotic/back/xeno/none
+	name = "None"
+	icon_state = "none"
 /datum/sprite_accessory/tails/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
+	locked = 1
+/datum/sprite_accessory/tails/exotic/none
+	name = "None"
+	icon_state = "none"
+/datum/sprite_accessory/tails_animated/exotic
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	locked = 1
+/datum/sprite_accessory/tails_animated/exotic/none
+	name = "None"
+	icon_state = "none"
 /datum/sprite_accessory/ears/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-
-/datum/sprite_accessory/exotic/xeno_dorsal
 	locked = 1
+
+/datum/sprite_accessory/exotic/back/xeno/dorsal
 	name = "Dorsal Tubes"
 	icon_state = "dortubes"
 
 /datum/sprite_accessory/tails/exotic/xeno
-	locked = 1
 	name = "Xenomorph Tail"
 	icon_state = "xenotail"
+
+/datum/sprite_accessory/xeno_head
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	name = "Hunter"
+	icon_state = "hunter"
+
+/datum/sprite_accessory/xeno_head/hunter
+	name = "Hunter"
+	icon_state = "hunter"
+
+/datum/sprite_accessory/xeno_head/drone
+	name = "Drone"
+	icon_state = "drone"
+
+/datum/sprite_accessory/xeno_head/sentinel
+	name = "Sentinel"
+	icon_state = "sentinel"

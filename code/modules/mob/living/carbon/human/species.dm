@@ -62,7 +62,7 @@
 	var/adjective = "unknown"
 	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
 	var/whitelisted = 0 		//Is this species restricted to certain players?
-	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted. ex: list("ckey1", "ckey2", "ckey3")
+	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "PooPfAce666", "SeeALiggerPullTheTrigger") Spaces+captilization can either be included or ignored.
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -356,6 +356,10 @@ mob/living/carbon/human/proc/get_species()
 			bodyparts_to_add -= "mam_waggingtail"
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
+
+	if("tail_exotic" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_exotic"
 
 	if("mam_ears" in mutant_bodyparts)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
