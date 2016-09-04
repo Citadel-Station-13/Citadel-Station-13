@@ -65,26 +65,30 @@
 /mob/living/proc/vore_attack(var/mob/living/prey, var/mob/living/user=src)
 	if(prey==user)return
 	world << "vore_attack triggered"
-	/*
+
 	if(prey == src && user.zone_selected == "mouth") //you click your target
 		if(!is_vore_predator(prey))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
 			world << "Pred check failed"
+
 		world << "Feed to grabbed triggered"
-		feed_self_to_grabbed(user) */
+		feed_self_to_grabbed(user)
+
 	if( user == src ) //you click yourself
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>You aren't voracious enough.</span>"
 			world << "Pred check failed"
+
 		world << "Feed to self triggered"
 		feed_grabbed_to_self(prey, user)
-		/*
+
 	else // click someone other than you/prey
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
 			world << "Pred check failed"
+
 		world << "Feed to other triggered"
-		feed_grabbed_to_other(user) */
+		feed_grabbed_to_other(user)
 //
 // Eating procs depending on who clicked what
 //
@@ -99,7 +103,7 @@
 		belly = input("Choose Belly") in pred.vore_organs
 	else
 		belly = pred.vore_selected
-	return perform_the_nom(user, prey, pred, belly)
+	return perform_the_nom(user, prey, pred, belly)*/
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
 	world << "Feed to grabbed proc called"
@@ -109,7 +113,7 @@
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
 	world << "feed to other proc called"
 	var/belly = input("Choose Belly") in pred.vore_organs
-	return perform_the_nom(user, prey, pred, belly) */
+	return perform_the_nom(user, prey, pred, belly)
 
 //
 // Master vore proc that actually does vore procedures
@@ -117,7 +121,7 @@
 /mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 100)
 	//Sanity
 	world << "perform the nom triggered"
-
+// Current code stops here. Reason is the targeted mob 'Prey' is not being marked as, y'know, prey.
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
 		world << "failed sanity check"
