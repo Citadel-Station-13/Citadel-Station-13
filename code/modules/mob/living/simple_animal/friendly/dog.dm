@@ -501,7 +501,7 @@
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Life()
 	..()
 
-	make_babies()
+//	make_babies()
 
 	if(!stat && !resting && !buckled)
 		if(prob(1))

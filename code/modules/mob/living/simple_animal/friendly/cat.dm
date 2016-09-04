@@ -80,18 +80,18 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
-	var/list/family = list()
-	var/cats_deployed = 0
-	var/memory_saved = 0
+//	var/list/family = list()
+//	var/cats_deployed = 0
+//	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
 		icon_dead = "original_dead"
-	Read_Memory()
+//	Read_Memory()
 	..()
-
+/*
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
@@ -131,7 +131,7 @@
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
-
+*/
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
 	gold_core_spawnable = 0
@@ -174,7 +174,7 @@
 
 	..()
 
-	make_babies()
+//	make_babies()
 
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
