@@ -367,13 +367,15 @@
 					skipcatch = 1 //can't catch the now embedded item
 
 	return ..()
-/* Disabling this for now so it doesn't get in the way. -Cactus
+
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (disabilities & FAT) && ismonkey(pulling))
-		devour_mob(pulling)
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && iscarbon(pulling))
+		vore_attack()
+		world << "vore attack grab triggered"
 	else
+		world << "vore attack grab not triggered"
 		..()
-*/
+
 /mob/living/carbon/human/grippedby(mob/living/user)
 	if(w_uniform)
 		w_uniform.add_fingerprint(user)

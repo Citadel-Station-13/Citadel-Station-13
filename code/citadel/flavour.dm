@@ -1,1 +1,0 @@
-//proc/vore_start_normal(var/method,var/mob/living/pred, var/mob/living/prey, var/headfirst=1)

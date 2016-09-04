@@ -186,6 +186,16 @@
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
+	if(H.client.prefs)
+		H.vore_organs = H.client.prefs.belly_prefs.Copy()
+		for(var/I in H.vore_organs)
+			var/datum/belly/B = H.vore_organs[I]
+			B.owner = H
+			B.internal_contents = list()
+			B.digest_mode = DM_HOLD
+
+//		H.flavor_text = R.flavor.Copy()
+
 	if(grab_ghost_when == CLONER_FRESH_CLONE)
 		clonemind.transfer_to(H)
 		H.ckey = ckey
