@@ -74,6 +74,8 @@
 		user << "<span class='notice'>It appears to be broken.</span>"
 	else if(secure && !opened)
 		user << "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
+	if(trap && in_range(user, src))
+		user << "<span class='warning'>Something seems to be wired to the inside of the closet!</span>"
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -279,6 +281,28 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
+	else if(istype(W, /obj/item/weapon/wirecutters) && !opened && trap)
+		user << "<span class='notice'>You begin attempting to disarm the booby trap...</span>"
+		visible_message("<span class='warning'>[user] begins attempting to disarm the booby trap.</span>")
+		if(do_after(user, 80, target = src))
+			if(prob(75))
+				user << "<span class='notice'>You disarm the booby trap, destroying it in the process.</span>"
+				visible_message("<span class='notice'>[user] disarms the booby trap!</span>")
+				trap = null
+
+			else
+				user << "<span class='warning'>You accidentally bump the sensor and set off the booby trap!</span>"
+				visible_message("<span class='warning'>[user] fails to disarm the booby trap!</span>")
+				visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+				trap.loc = get_turf(src)
+				trap.blow()
+				trap = null
+				for(var/mob/living/carbon/human/H in orange(2,src))
+					H.Paralyse(8)
+					H.adjust_fire_stacks(1)
+					H.IgniteMob()
+					qdel(src)
+
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)

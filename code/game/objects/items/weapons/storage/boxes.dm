@@ -39,17 +39,7 @@
 
 /obj/item/weapon/storage/box/attackby(obj/item/C, mob/user, params)
 
-	if(istype(C, /obj/item/device/boobytrap))
-		if(trap)
-			user << "<span class='warning'>There's already a booby trap hooked up to this box!</span>"
-			return ..()
-		user << "<span class='warning'>You apply [C]. Next time someone opens the box, it will explode.</span>"
-		C.loc = src
-		trap = C
-		qdel(C)
-		return ..()
-
-	if(trap)
+	if(!istype(C, /obj/item/device/boobytrap) && trap && !istype(C, /obj/item/weapon/wirecutters))
 		visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
 		trap.loc = get_turf(src)
 		trap.blow()
@@ -59,7 +49,40 @@
 			H.adjust_fire_stacks(1)
 			H.IgniteMob()
 		qdel(src)
-		return ..()
+
+	if(istype(C, /obj/item/device/boobytrap))
+		if(trap)
+			user << "<span class='warning'>There's already a booby trap hooked up to this box!</span>"
+			return
+		user << "<span class='warning'>You apply [C]. Next time someone opens the box, it will explode.</span>"
+		C.loc = src
+		trap = C
+		qdel(C)
+		user.drop_item()
+
+	if(istype(C, /obj/item/weapon/wirecutters) && trap)
+		user << "<span class='notice'>You begin attempting to disarm the booby trap...</span>"
+		visible_message("<span class='warning'>[user] begins attempting to disarm the booby trap.</span>")
+		if(do_after(user, 80, target = src))
+			if(prob(75))
+				user << "<span class='notice'>You disarm the booby trap, destroying it in the process.</span>"
+				visible_message("<span class='notice'>[user] disarms the booby trap!</span>")
+				trap = null
+
+			else
+				user << "<span class='warning'>You accidentally bump the sensor and set off the booby trap!</span>"
+				visible_message("<span class='warning'>[user] fails to disarm the booby trap!</span>")
+				visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+				trap.loc = get_turf(src)
+				trap.blow()
+				trap = null
+				for(var/mob/living/carbon/human/H in orange(2,src))
+					H.Paralyse(8)
+					H.adjust_fire_stacks(1)
+					H.IgniteMob()
+					qdel(src)
+	else
+		..()
 
 /obj/item/weapon/storage/box/MouseDrop(atom/over_object)
 	if(iscarbon(usr) || isdrone(usr))
@@ -82,9 +105,7 @@
 					H.adjust_fire_stacks(1)
 					H.IgniteMob()
 				qdel(src)
-
-			return ..()
-		return ..()
+			..()
 
 /obj/item/weapon/storage/box/attack_hand(mob/user)
 	..()
