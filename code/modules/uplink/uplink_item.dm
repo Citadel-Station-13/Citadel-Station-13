@@ -627,9 +627,10 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/stealthy_weapons/boobytrap
 	name = "Booby Trap"
 	desc = "A small explosive device that can be attached to boxes or closets. \
-			The next person to open the box or closet will trigger an explosion, destroying it and knocking them down."
+			The next person to open the box or closet will trigger an explosion \
+			that knocks them down and destroys the boobytrapped object."
 	item = /obj/item/device/boobytrap
-	cost = 3
+	cost = 4
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear)
 
