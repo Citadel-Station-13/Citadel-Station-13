@@ -27,7 +27,79 @@
 	item_state = "syringe_kit"
 	burn_state = FLAMMABLE
 	var/foldable = /obj/item/stack/sheet/cardboard
+	var/obj/item/device/boobytrap/trap = null
 
+/obj/item/weapon/storage/box/examine(mob/user)
+	..()
+
+	if(trap && in_range(user, src))
+		user << "<span class='warning'>Something seems to be wired to the inside of the box!</span>"
+		return
+
+
+/obj/item/weapon/storage/box/attackby(obj/item/C, mob/user, params)
+
+	if(istype(C, /obj/item/device/boobytrap))
+		if(trap)
+			user << "<span class='warning'>There's already a booby trap hooked up to this box!</span>"
+			return ..()
+		user << "<span class='warning'>You apply [C]. Next time someone opens the box, it will explode.</span>"
+		C.loc = src
+		trap = C
+		qdel(C)
+		return ..()
+
+	if(trap)
+		visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+		trap.loc = get_turf(src)
+		trap.blow()
+		trap = null
+		for(var/mob/living/carbon/human/H in orange(2,src))
+			H.Paralyse(8)
+			H.adjust_fire_stacks(1)
+			H.IgniteMob()
+		qdel(src)
+		return ..()
+
+/obj/item/weapon/storage/box/MouseDrop(atom/over_object)
+	if(iscarbon(usr) || isdrone(usr))
+		var/mob/M = usr
+
+		if(!over_object)
+			return
+
+		if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+			return
+
+		if(over_object == M && Adjacent(M))
+			if(trap)
+				visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+				trap.loc = get_turf(src)
+				trap.blow()
+				trap = null
+				for(var/mob/living/carbon/human/H in orange(2,src))
+					H.Paralyse(8)
+					H.adjust_fire_stacks(1)
+					H.IgniteMob()
+				qdel(src)
+
+			return ..()
+		return ..()
+
+/obj/item/weapon/storage/box/attack_hand(mob/user)
+	..()
+
+	if(trap)
+		visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+		trap.loc = get_turf(src)
+		trap.blow()
+		trap = null
+		for(var/mob/living/carbon/human/H in orange(2,src))
+			H.Paralyse(8)
+			H.adjust_fire_stacks(1)
+			H.IgniteMob()
+		qdel(src)
+		return ..()
 
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()
