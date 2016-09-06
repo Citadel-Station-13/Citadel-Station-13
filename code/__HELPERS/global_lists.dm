@@ -42,7 +42,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/exotic, exotic_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/exotic, exotic_tails_animated_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears/exotic, exotic_ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, exotic_head_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/exotic/back, exotic_back_list)
 
 	//Species

@@ -1711,6 +1711,7 @@
 	icon = 'icons/mob/exotic_bodyparts.dmi'
 	name = "Hunter"
 	icon_state = "hunter"
+	color_src = 0
 
 /datum/sprite_accessory/xeno_head/hunter
 	name = "Hunter"

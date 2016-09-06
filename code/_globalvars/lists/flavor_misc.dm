@@ -44,6 +44,8 @@ var/global/list/exotic_tails_animated_list
 var/global/list/exotic_ears_list
 var/global/list/exotic_head_list
 var/global/list/exotic_back_list
+		//xenomorph mutants
+var/global/list/xeno_head_list
 
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things

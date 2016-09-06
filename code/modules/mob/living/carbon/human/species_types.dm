@@ -304,6 +304,14 @@
 	var/datum/action/innate/swap_body/swap_body
 	roundstart = 1
 
+/datum/species/jelly/slime/slimecoon
+	name = "Slime Racoon"
+	id = "slimecoon"
+	whitelisted = 1
+	whitelist = list("chronoflux")
+	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
+	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")
+
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
