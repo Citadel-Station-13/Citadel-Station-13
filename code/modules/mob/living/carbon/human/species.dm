@@ -26,7 +26,7 @@
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
-	var/eyes = "eyes"	// which eyes the race uses. at the moment, the only types of eyes are "eyes" (regular eyes) and "jelleyes" (three eyes)
+	var/eyes = "eyes"	// which eyes the race uses(icon_state). "eyes" are for normal humans and most other races, check human_face.dmi for others
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -58,11 +58,8 @@
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
-	var/generic = "something"
-	var/adjective = "unknown"
 	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
 	var/whitelisted = 0 		//Is this species restricted to certain players?
-	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "PooPfAce666", "SeeALiggerPullTheTrigger") Spaces+captilization can either be included or ignored.
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -327,15 +324,8 @@ mob/living/carbon/human/proc/get_species()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if("tail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "tail_lizard"
-
-	if("waggingtail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "waggingtail_lizard"
-		else if ("tail_lizard" in mutant_bodyparts)
-			bodyparts_to_add -= "waggingtail_lizard"
+	//At this point, the game will decide which bodyparts it will render on the sprite of the player; depending on clothing worn, DNA, and other factors.
+	//This helps eliminate clipping with certain clothing types, as well as providing a means to effectively hide your species identity from other players.
 
 	if("tail_human" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -347,6 +337,24 @@ mob/living/carbon/human/proc/get_species()
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
 
+	if("ears" in mutant_bodyparts)
+		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "ears"
+
+	//Race specific bodyparts:
+
+	//Xenos
+	if("xenodorsal" in mutant_bodyparts)
+		if(!H.dna.features["xenodorsal"] || H.dna.features["xenodorsal"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
+			bodyparts_to_add -= "xenodorsal"
+	if("xenohead" in mutant_bodyparts)//This is an overlay for different castes using different head crests
+		if(!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
+			bodyparts_to_add -= "xenohead"
+	if("xenotail" in mutant_bodyparts)
+		if(!H.dna.features["xenotail"] || H.dna.features["xenotail"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "xenotail"
+
+	//Canids/Felids
 	if("mam_tail" in mutant_bodyparts)
 		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
 			bodyparts_to_add -= "mam_tail"
@@ -357,17 +365,31 @@ mob/living/carbon/human/proc/get_species()
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
 
-	if("tail_exotic" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "tail_exotic"
-
 	if("mam_ears" in mutant_bodyparts)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
 			bodyparts_to_add -= "mam_ears"
 
-	if("spines" in mutant_bodyparts)
-		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "spines"
+	//Angels
+	if("wings" in mutant_bodyparts)//Will likely define these as "angelwings" later so we can have cosmetic wings.
+		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
+			bodyparts_to_add -= "wings"
+
+	if("wings_open" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "wings_open"
+		else if ("wings" in mutant_bodyparts)
+			bodyparts_to_add -= "wings_open"
+
+	//Lizards
+	if("tail_lizard" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "tail_lizard"
+
+	if("waggingtail_lizard" in mutant_bodyparts)
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "waggingtail_lizard"
+		else if ("tail_lizard" in mutant_bodyparts)
+			bodyparts_to_add -= "waggingtail_lizard"
 
 	if("waggingspines" in mutant_bodyparts)
 		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
@@ -387,19 +409,9 @@ mob/living/carbon/human/proc/get_species()
 		if(!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
 			bodyparts_to_add -= "horns"
 
-	if("ears" in mutant_bodyparts)
-		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
-			bodyparts_to_add -= "ears"
-
-	if("wings" in mutant_bodyparts)
-		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
-			bodyparts_to_add -= "wings"
-
-	if("wings_open" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
-			bodyparts_to_add -= "wings_open"
-		else if ("wings" in mutant_bodyparts)
-			bodyparts_to_add -= "wings_open"
+	if("spines" in mutant_bodyparts)
+		if(!H.dna.features["spines"] || H.dna.features["spines"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+			bodyparts_to_add -= "spines"
 
 
 	if(!bodyparts_to_add)
@@ -413,33 +425,16 @@ mob/living/carbon/human/proc/get_species()
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/S
 			switch(bodypart)
-				if("tail_lizard")
-					S = tails_list_lizard[H.dna.features["tail_lizard"]]
-				if("waggingtail_lizard")
-					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("tail_human")
 					S = tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
 					S.= animated_tails_list_human[H.dna.features["tail_human"]]
-				if("spines")
-					S = spines_list[H.dna.features["spines"]]
-				if("waggingspines")
-					S.= animated_spines_list[H.dna.features["spines"]]
-				if("snout")
-					S = snouts_list[H.dna.features["snout"]]
-				if("frills")
-					S = frills_list[H.dna.features["frills"]]
-				if("horns")
-					S = horns_list[H.dna.features["horns"]]
 				if("ears")
 					S = ears_list[H.dna.features["ears"]]
 				if("body_markings")
 					S = body_markings_list[H.dna.features["body_markings"]]
-				if("wings")
-					S = wings_list[H.dna.features["wings"]]
-				if("wingsopen")
-					S = wings_open_list[H.dna.features["wings"]]
-				//mammal bodyparts
+
+				//Mammal Bodyparts (Canid/Felid, others maybe in the future)
 				if("mam_tail")
 					S = mam_tails_list[H.dna.features["mam_tail"]]
 				if("mam_waggingtail")
@@ -448,6 +443,37 @@ mob/living/carbon/human/proc/get_species()
 					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("mam_ears")
 					S = mam_ears_list[H.dna.features["mam_ears"]]
+
+				//Lizard Bodyparts
+				if("tail_lizard")
+					S = tails_list_lizard[H.dna.features["tail_lizard"]]
+				if("waggingtail_lizard")
+					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
+				if("spines")
+					S = spines_list[H.dna.features["spines"]]
+				if("waggingspines")
+					S.= animated_spines_list[H.dna.features["spines"]]
+				if("snout")//This is shared between lizard and mammals currently.(9/8/16)
+					S = snouts_list[H.dna.features["snout"]]
+				if("frills")
+					S = frills_list[H.dna.features["frills"]]
+				if("horns")
+					S = horns_list[H.dna.features["horns"]]
+
+				//Xeno Bodyparts
+				if("xenodorsal")
+				if("xenohead")
+					S = xeno_head_list[H.dna.features["xenohead"]]
+				if("xenotail")
+					var/datum/sprite_accessory/tails/exotic/xeno/xtail
+					S = xtail
+
+				//Angel Bodyparts
+				if("wings")
+					S = wings_list[H.dna.features["wings"]]
+				if("wingsopen")
+					S = wings_open_list[H.dna.features["wings"]]
+
 
 			if(!S || S.icon_state == "none")
 				continue
@@ -459,6 +485,10 @@ mob/living/carbon/human/proc/get_species()
 				bodypart = "waggingtail"
 			if(bodypart == "mam_ears")
 				bodypart = "ears"
+			if(bodypart == "xenohead")
+				bodypart = "xhead"
+			if(bodypart == "xenotail")
+				bodypart = "tail"
 
 			var/icon_string
 

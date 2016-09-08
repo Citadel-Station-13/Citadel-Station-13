@@ -1679,25 +1679,24 @@
 //Exotic Bodyparts
 /datum/sprite_accessory/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-	locked = 1
+	color_src = 0
 /datum/sprite_accessory/exotic/back/xeno/none
 	name = "None"
 	icon_state = "none"
 /datum/sprite_accessory/tails/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-	locked = 1
+	color_src = 0
 /datum/sprite_accessory/tails/exotic/none
 	name = "None"
 	icon_state = "none"
 /datum/sprite_accessory/tails_animated/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-	locked = 1
+	color_src = 0
 /datum/sprite_accessory/tails_animated/exotic/none
 	name = "None"
 	icon_state = "none"
 /datum/sprite_accessory/ears/exotic
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-	locked = 1
 
 /datum/sprite_accessory/exotic/back/xeno/dorsal
 	name = "Dorsal Tubes"

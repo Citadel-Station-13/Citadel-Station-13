@@ -305,10 +305,13 @@
 	roundstart = 1
 
 /datum/species/jelly/slime/slimecoon
+	//Donator species for ChronoFlux.
 	name = "Slime Racoon"
 	id = "slimecoon"
+	roundstart = 0
 	whitelisted = 1
 	whitelist = list("chronoflux")
+	blacklisted = 1
 	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
 	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")
 
@@ -1108,7 +1111,7 @@ datum/species/canid
 		H.endTailWag()
 
 //AVIAN//
-/datum/species/ave
+/datum/species/avian
 	name = "Avian"
 	id = "avian"
 	default_color = "BCAC9B"
@@ -1129,9 +1132,9 @@ datum/species/canid
 	name = "Xenomorph"
 	id = "xeno"
 	say_mod = "hisses"
-	eyes = "xenoeyes"
+	eyes = "none"
+	specflags = list()
 	mutant_organs = list(/obj/item/organ/tongue/alien)
-	specflags = list(NOGUNS)
 	mutant_bodyparts = list("xenohead", "xenodorsal", "xenotail")
 	default_features = list("xenohead" = "Hunter", "xenodorsal" = "Dorsal Tubes", "xenotail" = "Xenomorph")
 	attack_verb = "slash"
@@ -1139,14 +1142,14 @@ datum/species/canid
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.75
 	heatmod = 1.75
+	darksight = 4 //Just above slimes
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
-	roundstart = 1
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
-	tox_breath_dam_min = -5
-	tox_breath_dam_max = 0
+	safe_toxins_max = 32 //Too much of anything is bad.
+	roundstart = 1
 	whitelisted = 1
 	whitelist = list("talkingcactus") //testing whitelisting
 
