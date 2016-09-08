@@ -108,6 +108,11 @@
 	name = "\improper Ripley wreckage"
 	icon_state = "ripley-broken"
 
+/obj/structure/mecha_wreckage/tiger
+	name = "\improper Tiger wreckage"
+	icon = 'icons/mecha/tank.dmi'
+	icon_state = "tiger-broken"
+
 /obj/structure/mecha_wreckage/ripley/New()
 	..()
 	var/list/parts = list(/obj/item/mecha_parts/part/ripley_torso,
