@@ -60,6 +60,7 @@
 	var/fixed_mut_color3 = ""
 	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
 	var/whitelisted = 0 		//Is this species restricted to certain players?
+	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key.
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -462,6 +463,8 @@ mob/living/carbon/human/proc/get_species()
 
 				//Xeno Bodyparts
 				if("xenodorsal")
+					var/datum/sprite_accessory/exotic/back/xeno/dorsal/xdors
+					S = xdors
 				if("xenohead")
 					S = xeno_head_list[H.dna.features["xenohead"]]
 				if("xenotail")
