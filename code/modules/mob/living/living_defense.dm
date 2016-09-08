@@ -214,7 +214,7 @@
 /mob/living/proc/grabbedby(mob/living/carbon/user, mob/living/target, supress_message = 0)
 
 //	if(grab_state >= GRAB_AGGRESSIVE && !pulling.anchored && iscarbon(pulling) && user.zone_selected == "mouth")
-//		src.vore_attack(src, devour_time = 100)
+//		src.vore_attack(src, devour_time = 100) //It would be better to define it on this level instead of human_defense.dm, but you'd probably need to do more work down the line. ex: xeno devour code
 //		return
 
 	if(anchored)

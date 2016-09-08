@@ -62,40 +62,34 @@
 
 			// Critical adjustments due to TG grab changes - Poojawa
 
-/mob/living/proc/vore_attack(var/mob/living/prey, var/mob/living/user=src)
-	if(prey==user)return
-	world << "vore_attack triggered"
-
+/mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey)
+	if(!user)
+		return
+	if(!prey)
+		return
+	if(prey==user)
+		return
 	if(prey == src && user.zone_selected == "mouth") //you click your target
 		if(!is_vore_predator(prey))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
-			world << "Pred check failed"
-
-		world << "Feed to grabbed triggered"
 		feed_self_to_grabbed(user)
 
 	if( user == src ) //you click yourself
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>You aren't voracious enough.</span>"
-			world << "Pred check failed"
-
-		world << "Feed to self triggered"
 		feed_grabbed_to_self(prey, user)
 
 	else // click someone other than you/prey
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
-			world << "Pred check failed"
-
-		world << "Feed to other triggered"
+			return
 		feed_grabbed_to_other(user)
 //
 // Eating procs depending on who clicked what
 //
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
 	var/belly = user.vore_selected
-	world << "feed to self proc called"
-	return perform_the_nom(user, prey, user, belly)
+	return perform_the_nom(prey, user, prey, belly)
 /*
 /mob/living/proc/eat_held_mob(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
 	var/belly
@@ -106,28 +100,23 @@
 	return perform_the_nom(user, prey, pred, belly)*/
 
 /mob/living/proc/feed_self_to_grabbed(var/mob/living/user, var/mob/living/pred)
-	world << "Feed to grabbed proc called"
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	world << "feed to other proc called"
+	return//disabled until further notice
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
 //
 // Master vore proc that actually does vore procedures
 //
+
 /mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 100)
 	//Sanity
-	world << "perform the nom triggered"
-// Current code stops here. Reason is the targeted mob 'Prey' is not being marked as, y'know, prey.
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
-		world << "failed sanity check"
 		return
-	world << "perform the nom passed sanity check"
-
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]
 	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
