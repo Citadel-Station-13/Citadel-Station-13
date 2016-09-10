@@ -846,7 +846,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 75
 
 /datum/uplink_item/device_tools/selfdestruct_firingpin
-	name = "self-destruct firing pin"
+	name = "Trick Firing Pin"
 	desc = "This pin will detonate the weapon it is put into upon trying to use it"
 	item = /obj/item/device/firing_pin/trick
 	cost = 4
@@ -873,6 +873,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/magboots/syndie
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/thermitespray
+	name = "Thermite Kit"
+	desc = "A boxed zippo and 50u spray bottle filled with thermite, specially designed for spraying walls. \
+			50u is enough thermite to spray 5 walls."
+	item = /obj/item/weapon/storage/box/syndie_kit/thermite
+	cost = 3
 
 /datum/uplink_item/device_tools/c4
 	name = "Composition C-4"
