@@ -37,13 +37,12 @@
 	//avian bodyparts (i swear this isn't starbound)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)
-//	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/avian, avian_tails_animated_list)
-	//exotic bodyparts (for all the other freakshows)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/exotic, exotic_tails_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/exotic, exotic_tails_animated_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears/exotic, exotic_ears_list)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_wings, avian_wings_list)
+//  init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_open_wings, avian_open_wings_list)
+	//xeno parts (hiss?)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/exotic/back, exotic_back_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

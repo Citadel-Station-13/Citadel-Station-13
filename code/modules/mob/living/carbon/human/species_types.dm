@@ -168,7 +168,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
-	restricted = 2
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -196,7 +195,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	restricted = 2
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -643,7 +641,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
-	restricted = 2
 
 /*
  ZOMBIES
@@ -660,7 +657,6 @@
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
-	restricted = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -707,7 +703,6 @@
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	restricted = 2
 
 /datum/species/abductor
 	name = "Abductor"
@@ -720,7 +715,6 @@
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
-	restricted = 2
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -795,7 +789,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
-	restricted = 2
 	roundstart = 0
 
 /datum/species/synth/military
@@ -806,7 +799,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
-	restricted = 2
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -927,7 +919,6 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
-	restricted = 2
 
 /datum/species/angel
 	name = "Angel"
@@ -939,7 +930,6 @@ SYNDICATE BLACK OPS
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1
-	restricted = 2
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -1136,7 +1126,7 @@ datum/species/canid
 	specflags = list()
 	mutant_organs = list(/obj/item/organ/tongue/alien)
 	mutant_bodyparts = list("xenohead", "xenodorsal", "xenotail")
-	default_features = list("xenohead" = "Hunter", "xenodorsal" = "Dorsal Tubes", "xenotail" = "Xenomorph")
+	default_features = list("xenohead" = "Hunter", "xenodorsal" = "Dorsal Tubes", "xenotail" = "Xenomorph Tail")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1175,5 +1165,5 @@ datum/species/canid
 	id = "xblood"
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
-	toxpwr = 0
+	toxpwr = 1
 	acidpwr = 12

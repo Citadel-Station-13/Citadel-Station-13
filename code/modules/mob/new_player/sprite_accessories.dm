@@ -1420,7 +1420,7 @@
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	hasinner = 0
+	hasinner = 1
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/fox
@@ -1524,12 +1524,18 @@
 //Mammal Bodyparts
 /datum/sprite_accessory/mam_ears
 	icon = 'icons/mob/mam_bodyparts.dmi'
+/datum/sprite_accessory/mam_ears/none
+	name = "None"
 
 /datum/sprite_accessory/mam_tails
 	icon = 'icons/mob/mam_bodyparts.dmi'
+/datum/sprite_accessory/mam_tails/none
+	name = "None"
 
 /datum/sprite_accessory/mam_tails_animated
 	icon = 'icons/mob/mam_bodyparts.dmi'
+/datum/sprite_accessory/mam_tails_animated/none
+	name = "None"
 
 //Snouts
 /datum/sprite_accessory/snouts/lcanid
@@ -1676,41 +1682,37 @@
 	extra_color_src = MUTCOLORS3
 */
 
-//Exotic Bodyparts
-/datum/sprite_accessory/exotic
+//Xeno Dorsal Tubes
+/datum/sprite_accessory/xeno_dorsal
 	icon = 'icons/mob/exotic_bodyparts.dmi'
 	color_src = 0
-/datum/sprite_accessory/exotic/back/xeno/none
-	name = "None"
-	icon_state = "none"
-/datum/sprite_accessory/tails/exotic
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	color_src = 0
-/datum/sprite_accessory/tails/exotic/none
-	name = "None"
-	icon_state = "none"
-/datum/sprite_accessory/tails_animated/exotic
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	color_src = 0
-/datum/sprite_accessory/tails_animated/exotic/none
-	name = "None"
-	icon_state = "none"
-/datum/sprite_accessory/ears/exotic
-	icon = 'icons/mob/exotic_bodyparts.dmi'
 
-/datum/sprite_accessory/exotic/back/xeno/dorsal
+/datum/sprite_accessory/xeno_dorsal/none
+	name = "None"
+
+/datum/sprite_accessory/xeno_dorsal/normal
 	name = "Dorsal Tubes"
 	icon_state = "dortubes"
 
-/datum/sprite_accessory/tails/exotic/xeno
+//Xeno Tail
+/datum/sprite_accessory/xeno_tail
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	color_src = 0
+
+/datum/sprite_accessory/xeno_tail/none
+	name = "None"
+
+/datum/sprite_accessory/xeno_tail/normal
 	name = "Xenomorph Tail"
 	icon_state = "xenotail"
 
+//Xeno Caste Heads
 /datum/sprite_accessory/xeno_head
 	icon = 'icons/mob/exotic_bodyparts.dmi'
-	name = "Hunter"
-	icon_state = "hunter"
 	color_src = 0
+
+/datum/sprite_accessory/xeno_head/none
+	name = "None"
 
 /datum/sprite_accessory/xeno_head/hunter
 	name = "Hunter"

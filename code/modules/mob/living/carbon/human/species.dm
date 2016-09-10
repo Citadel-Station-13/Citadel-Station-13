@@ -26,7 +26,7 @@
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
-	var/eyes = "eyes"	// which eyes the race uses(icon_state). "eyes" are for normal humans and most other races, check human_face.dmi for others
+	var/eyes = "eyes"	// which eyes the race uses(the icon state). "eyes" are for normal humans and most other races, check human_face.dmi to make new ones
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -58,7 +58,6 @@
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
-	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key.
 
@@ -152,6 +151,7 @@ mob/living/carbon/human/proc/get_species()
 	if((NOBLOOD in specflags) && heart)
 		heart.Remove(C)
 		qdel(heart)
+
 	else if((!(NOBLOOD in specflags)) && (!heart))
 		heart = new()
 		heart.Insert(C)
@@ -159,6 +159,7 @@ mob/living/carbon/human/proc/get_species()
 	if((NOBREATH in specflags) && lungs)
 		lungs.Remove(C)
 		qdel(lungs)
+
 	else if((!(NOBREATH in specflags)) && (!lungs))
 		lungs = new()
 		lungs.Insert(C)
@@ -166,6 +167,7 @@ mob/living/carbon/human/proc/get_species()
 	if((NOHUNGER in specflags) && appendix)
 		appendix.Remove(C)
 		qdel(appendix)
+
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
 		appendix.Insert(C)
@@ -176,7 +178,6 @@ mob/living/carbon/human/proc/get_species()
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
@@ -341,9 +342,7 @@ mob/living/carbon/human/proc/get_species()
 	if("ears" in mutant_bodyparts)
 		if(!H.dna.features["ears"] || H.dna.features["ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == ORGAN_ROBOTIC)
 			bodyparts_to_add -= "ears"
-
 	//Race specific bodyparts:
-
 	//Xenos
 	if("xenodorsal" in mutant_bodyparts)
 		if(!H.dna.features["xenodorsal"] || H.dna.features["xenodorsal"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
@@ -463,13 +462,11 @@ mob/living/carbon/human/proc/get_species()
 
 				//Xeno Bodyparts
 				if("xenodorsal")
-					var/datum/sprite_accessory/exotic/back/xeno/dorsal/xdors
-					S = xdors
+					S = xeno_dorsal_list[H.dna.features["xenodorsal"]]
 				if("xenohead")
 					S = xeno_head_list[H.dna.features["xenohead"]]
 				if("xenotail")
-					var/datum/sprite_accessory/tails/exotic/xeno/xtail
-					S = xtail
+					S = xeno_tail_list[H.dna.features["xenotail"]]
 
 				//Angel Bodyparts
 				if("wings")
