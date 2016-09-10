@@ -187,10 +187,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[slot]"
 
 	S["digestable"] >> digestable
+	S["devourable"] >> devourable
 	S["belly_prefs"] >> belly_prefs
 
 	if(isnull(digestable))
 		digestable = 1
+	if(isnull(devourable))
+		devourable = 1
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
@@ -205,6 +208,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[default_slot]"
 
 	S["digestable"] << digestable
+	S["devourable"] << devourable
 	S["belly_prefs"] << belly_prefs
 
 	return 1

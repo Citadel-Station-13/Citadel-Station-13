@@ -4,6 +4,7 @@
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/recent_struggle = 0
+	var/devourable = 1					// Can the mob be vored at all?
 //
 // Hook for generic creation of stuff on new creatures
 //
@@ -116,6 +117,9 @@
 	//Sanity
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
+		return
+	if (!prey.devourable)
+		user << "This can't be eaten!"
 		return
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]

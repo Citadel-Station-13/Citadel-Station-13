@@ -107,6 +107,7 @@ var/list/preferences_datums = list()
 
 		// Vore prefs
 	var/digestable = 1
+	var/devourable = 1
 	var/list/belly_prefs = list()
 
 	var/unlock_content = 0
@@ -1314,6 +1315,7 @@ var/list/preferences_datums = list()
 		B.owner = character
 
 	character.digestable = digestable
+	character.devourable = devourable
 
 	character.gender = gender
 	character.age = age
