@@ -46,6 +46,8 @@
 	if(loc)
 		environment = loc.return_air()
 
+	if(ismob(loc))	return
+
 	var/datum/gas_mixture/breath
 
 	if(health <= config.health_threshold_crit || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))

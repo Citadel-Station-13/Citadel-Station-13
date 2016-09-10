@@ -46,9 +46,9 @@
 	name = "Telescopic Riot Shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
 	id = "tele_shield"
-	req_tech = list("combat" = 4, "materials" = 3, "engineering" = 4)
+	req_tech = list("combat" = 5, "materials" = 4, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000, MAT_SILVER = 300)
+	materials = list(MAT_METAL = 4000, MAT_GLASS = 5000, MAT_SILVER = 3000)
 	build_path = /obj/item/weapon/shield/riot/tele
 	category = list("Weapons")
 
@@ -198,6 +198,8 @@
 	category = list("Weapons")
 
 //WT550 Mags
+// Literally cancer - Poojawa
+/*
 
 /datum/design/mag_oldsmg
 	name = "WT-550 Auto Gun Magazine (4.6x30mm)"
@@ -229,7 +231,7 @@
 	id = "mag_oldsmg_tx"
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 600, MAT_URANIUM = 2000)
 	build_path = /obj/item/ammo_box/magazine/wt550m9/wttx
-
+*/
 /datum/design/stunshell
 	name = "Stun Shell"
 	desc = "A stunning shell for a shotgun."
