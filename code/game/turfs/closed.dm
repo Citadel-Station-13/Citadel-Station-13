@@ -24,14 +24,12 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = "title"
+	icon_state = "title_1"
 	layer = FLY_LAYER
-	var/titlescreen = TITLESCREEN
 
 /turf/closed/indestructible/splashscreen/New()
 	..()
-	if(titlescreen)
-		icon_state = titlescreen
+	icon_state = "title_[rand(1,9)]"
 
 /turf/closed/indestructible/riveted
 	icon_state = "riveted"
