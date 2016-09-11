@@ -2,6 +2,7 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "0"
 	name = "\proper space"
+	desc = "A vast, cold, and lonely place."
 	intact = 0
 
 	temperature = TCMB
