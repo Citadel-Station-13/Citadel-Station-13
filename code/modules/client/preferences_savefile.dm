@@ -182,9 +182,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 1
 
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
-
-	S.cd = "/character[slot]"
+	if(!S)
+		return 0
+	S.cd = "/"
 
 	S["digestable"] >> digestable
 	S["devourable"] >> devourable

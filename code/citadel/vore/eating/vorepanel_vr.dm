@@ -12,7 +12,7 @@
 
 	var/dat = picker_holder.gen_vui(src)
 
-	picker_holder.popup = new(src, "insidePanel","Inside!", 400, 600, picker_holder)
+	picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
 
@@ -454,6 +454,9 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
+		if(user.client.prefs)
+			user.client.prefs.digestable = user.digestable
+
 	if(href_list["toggledvor"])
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
 		switch(choice)
@@ -467,7 +470,7 @@
 	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
 
 		if(user.client.prefs)
-			user.client.prefs.digestable = user.digestable
+			user.client.prefs.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

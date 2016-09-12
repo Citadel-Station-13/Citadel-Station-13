@@ -25,7 +25,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 /datum/configuration
 	var/items_survive_digestion = 1		//For configuring if the important_items survive digestion
-/*
+
 //
 // The datum type bolted onto normal preferences datums for storing Virgo stuff
 //
@@ -42,6 +42,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /datum/vore_preferences
 	//Actual preferences
 	var/digestable = 1
+	var/devourable = 1
 	var/list/belly_prefs = list()
 
 	//Mechanically required
@@ -55,7 +56,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		client = C
 		client_ckey = C.ckey
 		load_vore_preferences(C)
-*/
+
 //
 //	Check if an object is capable of eating things, based on vore_organs
 //
@@ -79,45 +80,43 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	return 0
 
-/*
+//
 // Save/Load Vore Preferences
 //
-/datum/preferences/proc/load_vore()
-	if(!client || !client_ckey) return 0 //No client, how can we save?
-
-	slot = client.prefs.default_slot
-
-	path = client.prefs.path
-
+/datum/vore_preferences/proc/load_vore_preferences(slot)
 	if(!path) return 0 //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
-		save_vore() //Make the file first
+		save_vore_preferences() //Make the file first
 		return 1
 
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
-
-	S.cd = "/character[slot]"
+	if(!S)
+		return 0
+	S.cd = "/"
 
 	S["digestable"] >> digestable
+	S["devourable"] >> devourable
 	S["belly_prefs"] >> belly_prefs
 
 	if(isnull(digestable))
 		digestable = 1
+	if(isnull(devourable))
+		devourable = 1
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
 	return 1
 
-/datum/preferences/proc/save_vore()
-	if(!path)				return 0
-	if(!slot)				return 0
+/datum/vore_preferences/proc/save_vore_preferences()
+	if(!path)
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
-	S.cd = "/character[slot]"
+	if(!S)
+		return 0
+	S.cd = "/"
 
 	S["digestable"] << digestable
+	S["devourable"] << devourable
 	S["belly_prefs"] << belly_prefs
 
 	return 1
-*/
