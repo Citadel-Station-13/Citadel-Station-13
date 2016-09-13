@@ -12,9 +12,6 @@
 				M << "<span class='notice'>[pick(EL)]</span>"
 			src.emotePend = 0
 
-//////////////////////////////Integrity regeneration ////////////////
-	integrity=min(integrity+8,100)
-
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)
 		return //Pretty boring, huh

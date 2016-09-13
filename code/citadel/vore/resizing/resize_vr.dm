@@ -3,8 +3,8 @@
 var/const/RESIZE_HUGE = 2
 var/const/RESIZE_BIG = 1.5
 var/const/RESIZE_NORMAL = 1
-var/const/RESIZE_SMALL = 0.5
-var/const/RESIZE_TINY = 0.25
+var/const/RESIZE_SMALL = 0.85
+var/const/RESIZE_TINY = 0.50
 
 //average
 var/const/RESIZE_A_HUGEBIG = (RESIZE_HUGE + RESIZE_BIG) / 2
@@ -58,11 +58,10 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 	animate(src, transform = resize, time = 5) //Animate the player resizing
 	size_multiplier = new_size //Change size_multiplier so that other items can interact with them
 
-/**
+/*
  * Verb proc for a command that lets players change their size OOCly.
  * Ace was here! Redid this a little so we'd use math for shrinking characters. This is the old code.
- */
- /*
+
 /mob/living/proc/set_size()
 	set name = "Set Character Size"
 	set category = "Vore"
@@ -82,10 +81,10 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 	M.verbs += /mob/living/proc/set_size
 	return 1
 
-/**
+
  * Attempt to scoop up this mob up into M's hands, if the size difference is large enough.
  * @return false if normal code should continue, 1 to prevent normal code.
- */
+
 /mob/living/proc/attempt_to_scoop(var/mob/living/carbon/human/M)
 	if(!istype(M))
 		return 0;
@@ -99,7 +98,7 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 		else
 			return 0; // Unable to scoop, let other code run
 */
-/**
+/*
  * Handle bumping into someone with helping intent.
  * Called from /mob/living/Bump() in the 'brohugs all around' section.
  * @return false if normal code should continue, 1 to prevent normal code.
@@ -110,22 +109,24 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 		// Both small! Go ahead and
 		now_pushing = 0
 		return 1
-	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
+	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
 		now_pushing = 0
+		src.forceMove(tmob.loc)
+
 		if(src.get_effective_size() > tmob.get_effective_size())
-//			var/mob/living/carbon/human/M = src
-//			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-//				src << "You carefully slither around [tmob]."
-//				tmob << "[src]'s huge tail slithers past beside you!"
-//			else
+/*			var/mob/living/carbon/human/tmob = src
+			if(istype(tmob) && istype(tmob.tail_style, /datum/sprite_accessory/tail/taur/naga))
+				src << "You carefully slither around [tmob]."
+				M << "[src]'s huge tail slithers past beside you!"
+			else */
 			src << "You carefully step over [tmob]."
 			tmob << "[src] steps over you carefully!"
 		if(tmob.get_effective_size() > src.get_effective_size())
-//			var/mob/living/carbon/human/M = tmob
-//			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-//				src << "You jump over [tmob]'s thick tail."
-//				tmob << "[src] bounds over your tail."
-//			else
+/*			var/mob/living/carbon/human/M = M
+			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
+				src << "You jump over [M]'s thick tail."
+				M << "[src] bounds over your tail."
+			else */
 			src << "You run between [tmob]'s legs."
 			tmob << "[src] runs between your legs."
 		return 1
@@ -142,54 +143,55 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 
 	if(src.a_intent == "disarm" && src.canmove && !src.buckled)
 		// If bigger than them by at least 0.75, move onto them and print message.
-		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
+		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
 			now_pushing = 0
 			src.forceMove(tmob.loc)
 			tmob.Stun(4)
-
-//			var/mob/living/carbon/human/M = src
-//			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-//				src << "You carefully squish [tmob] under your tail!"
-//				tmob << "[src] pins you under their tail!"
-//			else
+/*
+			var/mob/living/carbon/human/H = src
+			if(istype(H) && istype(H.tail_style, /datum/sprite_accessory/tail/taur/naga))
+				src << "You carefully squish [tmob] under your tail!"
+				tmob << "[src] pins you under their tail!"
+			else */
 			src << "You pin [tmob] beneath your foot!"
 			tmob << "[src] pins you beneath their foot!"
 		return 1
 
 	if(src.a_intent == "harm" && src.canmove && !src.buckled)
-		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
+		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
 			now_pushing = 0
 			src.forceMove(tmob.loc)
-			tmob.adjustStaminaLoss(15)
+			tmob.adjustStaminaLoss(35)
 			tmob.adjustBruteLoss(2)
-
-//			var/mob/living/carbon/human/M = src
-//			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-	//			src << "You steamroller over [tmob] with your heavy tail!"
-//				tmob << "[src] ploughs you down mercilessly with their heavy tail!"
-	//		else
+/*			var/mob/living/carbon/human/M = src
+			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
+				src << "You steamroller over [tmob] with your heavy tail!"
+				tmob << "[src] ploughs you down mercilessly with their heavy tail!"
+			else */
 			src << "You bring your foot down heavily upon [tmob]!"
 			tmob << "[src] steps carelessly on your body!"
 		return 1
-/*
+
+ // until I figure out grabbing micros with the godawful pull code...
 	if(src.a_intent == "grab" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
 			now_pushing = 0
+			tmob.adjustStaminaLoss(15)
 			src.forceMove(tmob.loc)
-
+/*
 			var/mob/living/carbon/human/M = src
 			if(istype(M) && !M.shoes)
 				// User is a human (capable of scooping) and not wearing shoes! Scoop into foot slot!
 				equip_to_slot_if_possible(tmob.get_scooped(M), slot_shoes, 0, 1)
-//				if(istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-//					src << "You wrap up [tmob] with your powerful tail!"
-//					tmob << "[src] binds you with their powerful tail!"
-//				else
+				if(istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
+					src << "You wrap up [tmob] with your powerful tail!"
+					tmob << "[src] binds you with their powerful tail!"
+				else
 				src << "You clench your toes around [tmob]'s body!"
 				tmob << "[src] grabs your body with their toes!"
-//			else if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
-//				src << "You carefully squish [tmob] under your tail!"
-//				tmob << "[src] pins you under their tail!"
+			else if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
+				src << "You carefully squish [tmob] under your tail!"
+				tmob << "[src] pins you under their tail!"
 			else
 				src << "You pin [tmob] beneath your foot!"
 				tmob << "[src] pins you beneath their foot!"

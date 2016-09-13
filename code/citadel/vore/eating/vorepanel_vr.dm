@@ -141,9 +141,9 @@
 
 	switch(user.devourable)
 		if(1)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Devourable</a>"
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable</a>"
 		if(0)
-			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Devourable</span></a>"
+			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable</span></a>"
 
 	//Returns the dat html to the vore_look
 	return dat

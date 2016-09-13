@@ -171,49 +171,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			else
 				backbag = DBACKPACK
 
-
-//
-// Save/Load Vore Preferences
-//
-/datum/preferences/proc/load_vore_preferences(slot)
-	if(!path) return 0 //Path couldn't be set?
-	if(!fexists(path)) //Never saved before
-		save_vore_preferences() //Make the file first
-		return 1
-
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return 0
-	S.cd = "/"
-
-	S["digestable"] >> digestable
-	S["devourable"] >> devourable
-	S["belly_prefs"] >> belly_prefs
-
-	if(isnull(digestable))
-		digestable = 1
-	if(isnull(devourable))
-		devourable = 1
-	if(isnull(belly_prefs))
-		belly_prefs = list()
-
-	return 1
-
-/datum/preferences/proc/save_vore_preferences()
-	if(!path)
-		return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return 0
-	S.cd = "/character[default_slot]"
-
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
-
-	return 1
-
-
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -532,8 +489,49 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_low"]		<< job_engsec_low
 
 	return 1
+/*
+//
+// Save/Load Vore Preferences
+//
+/datum/preferences/proc/load_vore_preferences(slot)
+	if(!path)
+		return 0
+	if(!fexists(path))
+		return 0
 
+	var/savefile/S = new /savefile(path)
+	if(!S)
+		return 0
+	S.cd = "/"
 
+	S["digestable"] >> digestable
+	S["devourable"] >> devourable
+	S["belly_prefs"] >> belly_prefs
+
+	if(isnull(digestable))
+		digestable = 1
+	if(isnull(devourable))
+		devourable = 1
+	if(isnull(belly_prefs))
+		belly_prefs = list()
+
+	return 1
+
+/datum/preferences/proc/save_vore_preferences()
+	if(!path)
+		return 0
+
+	var/savefile/S = new /savefile(path)
+	if(!S)
+		return 0
+	S.cd = "/"
+
+	S["digestable"] << digestable
+	S["devourable"] << devourable
+	S["belly_prefs"] << belly_prefs
+
+	return 1
+*/
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
 /*

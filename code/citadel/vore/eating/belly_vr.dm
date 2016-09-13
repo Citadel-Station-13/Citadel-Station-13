@@ -20,7 +20,6 @@
 	var/digest_burn = 1						// Burn damage per tick in digestion mode
 	var/digest_tickrate = 3					// Modulus this of air controller tick number to iterate gurgles on
 	var/immutable = 0						// Prevents this belly from being deleted
-	var/integrity = 100						// Gut 'health' weakened by non help intent stuggles
 	var/escapable = 1						// Belly can be resisted out of at any time
 	var/escapetime = 100						// Deciseconds, how long to escape this belly
 
@@ -142,7 +141,7 @@
 //		prey.buckled.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.loc = owner
+	prey.forceMove(owner.loc)
 	internal_contents |= prey
 
 	if(inside_flavor)
@@ -255,7 +254,7 @@
 // Recursive method - To recursively scan thru someone's inventory for digestable/indigestable.
 /datum/belly/proc/_handle_digested_item(var/obj/item/W)
 	W.forceMove(owner)
-	internal_contents.Add(W)
+	internal_contents += W
 
 /datum/belly/proc/_is_digestable(var/obj/item/I)
 	return 1

@@ -83,7 +83,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // Save/Load Vore Preferences
 //
-/datum/vore_preferences/proc/load_vore_preferences(slot)
+/datum/vore_preferences/proc/load_vore_preferences()
 	if(!path) return 0 //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore_preferences() //Make the file first
