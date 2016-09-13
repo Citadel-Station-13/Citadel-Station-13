@@ -138,6 +138,7 @@
 #include "code\citadel\vore\eating\vorehooks_vr.dm"
 #include "code\citadel\vore\eating\vorepanel_vr.dm"
 #include "code\citadel\vore\resizing\resize_vr.dm"
+#include "code\citadel\vore\resizing\sizegun_vr.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\controller.dm"
