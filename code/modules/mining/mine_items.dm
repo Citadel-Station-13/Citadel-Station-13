@@ -492,3 +492,144 @@
 	anchored = 1
 	layer = BELOW_MOB_LAYER
 	density = 0
+
+//////////////////////
+////MOTION TRACKER////
+//////////////////////
+
+/obj/item/device/t_scanner/motionTracker
+	name = "motion tracker"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "tracker"
+	desc = "A nifty handheld motion tracker. Requires meson scanners to function properly."
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	var/cooldown = 35
+	var/on_cooldown = 0
+	var/range = 7
+	var/meson = FALSE
+	var/obj/item/weapon/stock_parts/cell/cell = new
+	var/cellcharge
+	var/cellmaxcharge
+	var/soundDetect = 'sound/effects/trackFull.ogg'
+	var/soundNoDetect = 'sound/effects/trackHalf.ogg'
+	var/soundToggle = 'sound/effects/switch.ogg'
+	var/powerReq = 10
+	origin_tech = "engineering=3;magnets=4"
+
+/obj/item/device/t_scanner/motionTracker/New()
+	cellcharge = cell.charge
+	cellmaxcharge = cell.maxcharge
+	updateicon()
+
+/obj/item/device/t_scanner/motionTracker/process()
+	updateicon()
+	if(!on)
+		SSobj.processing.Remove(src)
+		return
+	if(cell.charge > powerReq)
+		scan()
+	cell.charge -= powerReq
+	if(cell.charge < powerReq)
+		playsound(get_turf(src),'sound/machines/twobeep.ogg', 15, 0 , -5)
+		on = 0
+		SSobj.processing.Remove(src)
+		if(cell.charge <= 0)
+			cell.charge = 0
+	cellcharge = cell.charge
+	cellmaxcharge = cell.maxcharge
+	cell.updateicon()
+
+/obj/item/device/t_scanner/motionTracker/attack_self(mob/user)
+	updateicon()
+	if(!cell)
+		user << text("<span class='warning'>[src] has no power supply.</span>")
+		return
+	playsound(get_turf(src), soundToggle, 100, 0, -5)
+	if(cell.charge < powerReq)
+		user << text("<span class='warning'>The power light on [src] flashes.</span>")
+		return
+	else if(cell.charge > powerReq)
+		on = !on
+		if(on)
+			user << text("<span class='notice'>You turn on [src].</span>")
+			SSobj.processing |= src
+		if(!on)
+			user << text("<span class='notice'>You turn off [src].</span>")
+
+/obj/item/device/t_scanner/motionTracker/proc/updateicon()
+	var/chargeFull = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerFull")
+	var/chargeHalf = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerHalf")
+	var/chargeLow = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerLow")
+	var/chargeEmpty = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerEmpty")
+	if(cell && cellcharge)
+		if(cell && cell.charge < (cell.maxcharge/5))
+			overlays = chargeLow
+		else if(cell && cell.charge < (cell.maxcharge/2))
+			overlays = chargeHalf
+		else if(cell && cell.charge > (cell.maxcharge/2))
+			overlays = chargeFull
+	if(!cellcharge || !cell)
+		overlays = chargeEmpty
+	..()
+/obj/item/device/t_scanner/motionTracker/scan(mob/living/carbon/user)
+	if(!on_cooldown)
+		on_cooldown = 1
+		spawn(cooldown)
+			on_cooldown = 0
+		var/turf/t = get_turf(src)
+		var/list/mobs = recursive_mob_check(t, 1,0,0)
+		if(!mobs.len)
+			return
+		motionTrackScan(mobs, range)
+
+
+/obj/item/device/t_scanner/motionTracker/proc/motionTrackScan(var/list/mobs, var/range)
+	var/mobsfar = 0
+	for(var/turf/T in range(7, get_turf(src)) )
+		for(var/mob/O in T.contents)
+			var/mob/living/L = locate() in T
+			if(L && (get_turf(L) != get_turf(src)) && !L.stat)
+				flick_blip(O.loc)
+				mobsfar = 1
+	if(mobsfar)
+		playsound(get_turf(src),'sound/effects/trackFull.ogg', 15, 0, -5)
+	if(!mobsfar)
+		playsound(get_turf(src),'sound/effects/trackHalf.ogg', 10, 0, -5)
+
+
+/obj/item/device/t_scanner/motionTracker/proc/flick_blip(turf/T)
+	var/image/B = image('icons/obj/mining.dmi', T, icon_state = "blip")
+	var/list/nearby = list()
+	for(var/mob/M in viewers(T))
+		if(M.client)
+			nearby |= M.client
+			flick_overlay(B,nearby, 8)
+
+/obj/item/device/t_scanner/motionTracker/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/screwdriver) && cell)
+		user << text("<span class='notice'>You detach [cell] from [src].</span>")
+		cell.loc = get_turf(src)
+		src.cell = null
+		cellcharge = 0
+		cellmaxcharge = 0
+		updateicon()
+		cell.updateicon()
+		return
+	else if(istype(I, /obj/item/weapon/stock_parts/cell) && !cell)
+		if(!cell)
+			I.loc = src
+			cell = I
+			cellcharge = cell.charge
+			cellmaxcharge = cell.maxcharge
+			user << text("<span class='notice'>You install [cell] into [src].</span>")
+			updateicon()
+			return
+		if(cell)
+			user << text("<span class='notice'>[src] already has a power supply installed.</span>")
+	else
+		..()
+
+/obj/item/device/t_scanner/motionTracker/examine(mob/user)
+	..()
+	user << text("<span class='notice'>[src] has [cellcharge]/[cellmaxcharge] charge remaining.</span>")
