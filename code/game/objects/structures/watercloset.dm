@@ -136,7 +136,6 @@
 		else
 			if(ishuman(user))
 				user.put_in_hands(hiddenitem)
-
 			else
 				hiddenitem.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
