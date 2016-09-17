@@ -322,6 +322,36 @@
 	else
 		..()
 
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/tank_barrel
+	name = "\improper tank barrel"
+	desc = "A weapon for armored tanks. Shoots highly explosive shells."
+	icon_state = "tank_tankbarrel"
+	origin_tech = "combat=5;materials=4;engineering=4"
+	projectile = /obj/item/tankshell
+	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	projectiles = 8
+	projectile_energy_cost = 1000
+	equip_cooldown = 60
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/tank_barrel/proj_init(var/obj/item/tankshell/M)
+	M.primed = 1
+	var/turf/T = get_turf(src)
+	message_admins("[key_name(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) fired a [src] in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
+	log_game("[key_name(chassis.occupant)] fired a [src] ([T.x],[T.y],[T.z])")
+
+/obj/item/tankshell
+	icon = 'icons/obj/grenade.dmi'
+	icon_state = "tankshell"
+	var/primed = null
+	throwforce = 15
+
+/obj/item/tankshell/throw_impact(atom/hit_atom)
+	if(primed)
+		explosion(hit_atom, 1, 0, 2, 2, 0)
+		qdel(src)
+	else
+		..()
+
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	name = "\improper SGL-6 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed flashbangs."

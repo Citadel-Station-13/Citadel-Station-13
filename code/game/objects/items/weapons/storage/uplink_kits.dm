@@ -283,3 +283,8 @@
 	for(var/i in 1 to 3)
 		new/obj/item/cardboard_cutout/adaptive(src)
 	new/obj/item/toy/crayon/rainbow(src)
+
+/obj/item/weapon/storage/box/syndie_kit/thermite/New()
+	..()
+	new /obj/item/weapon/reagent_containers/spray/thermite(src)
+	new /obj/item/weapon/lighter(src)
