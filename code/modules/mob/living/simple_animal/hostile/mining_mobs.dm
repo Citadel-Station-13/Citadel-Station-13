@@ -15,6 +15,7 @@
 	var/icon_aggro = null // for swapping to when we get aggressive
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_MINIMUM
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -264,7 +265,7 @@
 	else
 		feedback_add_details("hivelord_core", "[type]|stabilizer")
 
-		
+
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
@@ -660,7 +661,6 @@
 	move_to_delay = 6
 	transform *= 2
 	environment_smash = 2
-	mob_size = MOB_SIZE_LARGE
 	speed = 1
 	addtimer(src, "Deflate", 100)
 

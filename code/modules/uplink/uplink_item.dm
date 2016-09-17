@@ -624,6 +624,16 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/boobytrap
+	name = "Booby Trap"
+	desc = "A small explosive device that can be attached to boxes or closets. \
+			The next person to open the box or closet will trigger an explosion \
+			that knocks them down and destroys the boobytrapped object."
+	item = /obj/item/device/boobytrap
+	cost = 4
+	surplus = 10
+	exclude_modes = list(/datum/game_mode/nuclear)
+
 // Stealth Items
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
@@ -797,7 +807,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Military Belt"
 	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
-	cost = 3
+	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medkit
@@ -835,6 +845,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 75
 
+/datum/uplink_item/device_tools/selfdestruct_firingpin
+	name = "Trick Firing Pin"
+	desc = "This pin will detonate the weapon it is put into upon trying to use it"
+	item = /obj/item/device/firing_pin/trick
+	cost = 4
+
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector"
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its \
@@ -857,6 +873,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/clothing/shoes/magboots/syndie
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/device_tools/thermitespray
+	name = "Thermite Kit"
+	desc = "A boxed zippo and 50u spray bottle filled with thermite, specially designed for spraying walls. \
+			50u is enough thermite to spray 5 walls."
+	item = /obj/item/weapon/storage/box/syndie_kit/thermite
+	cost = 3
 
 /datum/uplink_item/device_tools/c4
 	name = "Composition C-4"
