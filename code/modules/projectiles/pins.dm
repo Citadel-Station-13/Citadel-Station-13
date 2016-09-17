@@ -117,6 +117,8 @@
 	selfdestruct = 1
 	force_replace = 1
 
+/obj/item/device/firing_pin/trick/pin_auth(mob/living/user)
+	return 0
 
 // Honk pin, clown's joke item.
 // Can replace other pins. Replace a pin in cap's laser for extra fun!
