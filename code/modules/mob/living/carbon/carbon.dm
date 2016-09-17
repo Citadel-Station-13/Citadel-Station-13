@@ -624,6 +624,9 @@
 
 /mob/living/carbon/proc/get_total_tint()
 	. = 0
+
+	if(ismob(loc))
+		. += 3
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/HT = head
 		. += HT.tint

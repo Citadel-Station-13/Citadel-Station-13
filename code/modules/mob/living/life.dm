@@ -25,6 +25,9 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
+		// Vore code for belly processes
+		handle_internal_contents()
+
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment

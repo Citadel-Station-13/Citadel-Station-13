@@ -151,8 +151,14 @@ Sorry Giacom. Please don't be mad :(
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
+			// In case of micros, we don't swap positions; instead occupying the same square!
+			if (handle_micro_bump_helping(M)) return
+
 			now_pushing = 0
 			return 1
+
+	// Handle grabbing, stomping, and such of micros!
+	if(handle_micro_bump_other(M)) return
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -658,6 +664,9 @@ Sorry Giacom. Please don't be mad :(
 		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
 		resist_grab()
 		return
+
+	if(attempt_vr(src,"vore_process_resist",args))
+		return TRUE
 
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
