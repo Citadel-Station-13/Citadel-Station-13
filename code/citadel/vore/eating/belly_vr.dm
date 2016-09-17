@@ -30,6 +30,7 @@
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
 	var/tmp/emotePend = 0						// If there's already a spawned thing counting for the next emote
 	var/tmp/recent_struggle = 0					// Flag to prevent struggle emote spam
+	var/tmp/recent_gurgle = 0
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/datum/gas_mixture/air_contents = new() // Belly Air stuff
 
@@ -137,11 +138,11 @@
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
 /datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
-//	if (prey.buckled)
-//		prey.buckled.unbuckle_mob()
+//	if (prey.anchored)
+//		prey.anchored.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.forceMove(owner.loc)
+	prey.forceMove(owner)
 	internal_contents |= prey
 
 	if(inside_flavor)

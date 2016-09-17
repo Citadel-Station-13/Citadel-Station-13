@@ -26,7 +26,7 @@
 		handle_random_events()
 
 		// Vore code for belly processes
-		attempt_vr(src,"handle_internal_contents",args)
+		handle_internal_contents()
 
 		. = 1
 

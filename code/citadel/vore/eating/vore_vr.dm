@@ -30,7 +30,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 // The datum type bolted onto normal preferences datums for storing Virgo stuff
 //
 /client
-	var/datum/vore_preferences/prefs_vr
+	var/datum/vore_preferences/prefs_vr = null
 
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
@@ -55,7 +55,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(istype(C))
 		client = C
 		client_ckey = C.ckey
-		load_vore_preferences(C)
+		load_vore(C)
 
 //
 //	Check if an object is capable of eating things, based on vore_organs
@@ -83,16 +83,19 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // Save/Load Vore Preferences
 //
-/datum/vore_preferences/proc/load_vore_preferences()
-	if(!path) return 0 //Path couldn't be set?
-	if(!fexists(path)) //Never saved before
-		save_vore_preferences() //Make the file first
-		return 1
+/datum/vore_preferences/proc/load_vore(filename="preferences_vr.sav")
+	if(!client || !client_ckey) return 0 //No client, how can we save?
+	if(!path)
+		path = "data/player_saves/[copytext(client_ckey,1,2)]/[client_ckey]/[filename]"
+		if(!path) return 0 //Path couldn't be set?
 
 	var/savefile/S = new /savefile(path)
-	if(!S)
-		return 0
+	if(!S) return 0 //Savefile object couldn't be created?
+
 	S.cd = "/"
+	if(!slot)
+		slot = client.prefs.default_slot
+	S.cd = "/character[slot]"
 
 	S["digestable"] >> digestable
 	S["devourable"] >> devourable
@@ -107,7 +110,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	return 1
 
-/datum/vore_preferences/proc/save_vore_preferences()
+/datum/vore_preferences/proc/save_vore()
 	if(!path)
 		return 0
 	var/savefile/S = new /savefile(path)
@@ -118,5 +121,68 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	S["digestable"] << digestable
 	S["devourable"] << devourable
 	S["belly_prefs"] << belly_prefs
+
+	return 1
+
+//
+//	Verb for saving vore preferences to save file
+//
+
+//
+//	Verb for saving vore preferences to save file
+//
+/mob/living/proc/save_vore_prefs()
+	set name = "Save Vore Prefs"
+	set category = "Vore"
+
+	var/result = 0
+
+	if(client.prefs_vr)
+		result = client.prefs_vr.save_vore()
+	else
+		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
+
+	return result
+
+/mob/living/proc/apply_vore_prefs()
+	if(!(client || client.prefs_vr))
+		return 0
+	if(!client.prefs_vr.load_vore())
+		return 0
+	if(!copy_from_prefs_vr())
+		return 0
+
+	return 1
+
+/mob/living/proc/copy_to_prefs_vr()
+	if(!client || !client.prefs_vr)
+		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
+		return 0
+
+	var/datum/vore_preferences/P = client.prefs_vr
+
+	P.devourable = src.devourable
+	P.digestable = src.digestable
+	P.belly_prefs = src.vore_organs
+
+	return 1
+
+//
+//	Proc for applying vore preferences, given bellies
+//
+/mob/living/proc/copy_from_prefs_vr()
+	if(!client || !client.prefs_vr)
+		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
+		return 0
+
+	var/datum/vore_preferences/P = client.prefs_vr
+
+	src.devourable = P.devourable
+	src.digestable = P.digestable
+	src.vore_organs = list()
+
+	for(var/I in P.belly_prefs)
+		var/datum/belly/Bp = P.belly_prefs[I]
+		src.vore_organs[Bp.name] = Bp.copy(src)
 
 	return 1

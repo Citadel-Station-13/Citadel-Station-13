@@ -12,13 +12,19 @@
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
 
+	if(M.client && M.client.prefs_vr)
+		M.vore_organs = M.client.prefs_vr.belly_prefs
+		M.vore_selected = M.vore_organs[1]
+		M.digestable = M.client.prefs_vr.digestable
+		M.devourable = M.client.prefs_vr.devourable
+
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-			if(M.client && M.client.prefs)
-				if(!M.load_vore_preferences)
+			if(M.client && M.client.prefs_vr)
+				if(!M.copy_from_prefs_vr())
 					M << "<span class='warning'>ERROR: You seem to have saved prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
@@ -237,62 +243,6 @@
 				if(M.loc != src)
 					B.internal_contents -= M
 					log_attack("Had to remove [M] from belly [B] in [src]")
-
-
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return 0
-	if(!copy_to_prefs_vr())
-		return 0
-	if(!client.prefs_vr.save_vore())
-		return 0
-
-	return 1
-
-/mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return 0
-	if(!client.prefs_vr.load_vore())
-		return 0
-	if(!copy_from_prefs_vr())
-		return 0
-
-	return 1
-
-/mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return 0
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	P.digestable = src.digestable
-	P.belly_prefs = src.vore_organs
-
-	return 1
-
-//
-//	Proc for applying vore preferences, given bellies
-//
-/mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return 0
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	src.digestable = P.digestable
-	src.vore_organs = list()
-
-	for(var/I in P.belly_prefs)
-		var/datum/belly/Bp = P.belly_prefs[I]
-		src.vore_organs[Bp.name] = Bp.copy(src)
-
-	return 1
-
 //
 // OOC Escape code for pref-breaking or AFK preds
 //

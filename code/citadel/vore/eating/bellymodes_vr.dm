@@ -59,6 +59,7 @@
 				M.adjustBruteLoss(1)
 				M.adjustFireLoss(1)
 				owner.nutrition += 10
+				recent_gurgle = world.time + 3
 		return
 
 //////////////////////////// DM_DIGESTF ////////////////////////////
@@ -104,6 +105,7 @@
 				M.adjustBruteLoss(2)
 				M.adjustFireLoss(3)
 				owner.nutrition += 10
+				recent_gurgle = world.time + 3
 		return
 
 ///////////////////////////// DM_HEAL /////////////////////////////
@@ -121,4 +123,5 @@
 					owner.nutrition -= 2
 					if(M.nutrition <= 400)
 						M.nutrition += 1
+					recent_gurgle = world.time + 3
 		return
