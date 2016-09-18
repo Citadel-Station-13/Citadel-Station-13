@@ -383,6 +383,25 @@
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 10, bio = 100, rad = 50)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 
+	//Captain hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/captain
+	name = "captain's hardsuit helmet"
+	desc = "An advanced, armoured helmet for travel and combat in a hazardous, low pressure environment. Feels extra cozy."
+	icon_state = "hardsuit0-captain"
+	item_state = "captain_helm"
+	item_color = "captain"
+	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	flash_protect = 1
+
+/obj/item/clothing/suit/space/hardsuit/captain
+	name = "captain's hardsuit"
+	desc = "An advanced, Nanotrasen exclusive, heavily armoured hardsuit that protects against hazardous, low pressure environments. Warm, sexy, and stylish."
+	icon_state = "hardsuit-captain"
+	item_state = "captain_hardsuit"
+	allowed = list(/obj/item/weapon/tank/internals, /obj/item/device/flashlight,/obj/item/weapon/gun/energy, /obj/item/weapon/gun/projectile, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/weapon/melee/baton,/obj/item/weapon/restraints/handcuffs)
+	armor = list(melee = 40, bullet = 50, laser = 50, energy = 25, bomb = 50, bio = 100, rad = 50)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/captain
+
 	//Research Director hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/rd
 	name = "prototype hardsuit helmet"

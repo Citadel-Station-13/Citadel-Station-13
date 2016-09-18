@@ -29,6 +29,7 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
+	var/obj/item/device/boobytrap/trap = null
 
 /obj/structure/closet/New()
 	..()
@@ -73,6 +74,8 @@
 		user << "<span class='notice'>It appears to be broken.</span>"
 	else if(secure && !opened)
 		user << "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
+	if(trap && in_range(user, src))
+		user << "<span class='warning'>Something seems to be wired to the inside of the closet!</span>"
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -130,6 +133,17 @@
 	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
+	if(trap)
+		visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+		trap.loc = get_turf(src)
+		trap.blow()
+		trap = null
+		for(var/mob/living/carbon/human/H in orange(2,src))
+			H.Paralyse(8)
+			H.adjust_fire_stacks(1)
+			H.IgniteMob()
+		qdel(src)
+		return ..()
 	return 1
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
@@ -213,9 +227,20 @@
 		qdel(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
+
 	if(user in src)
 		return
 	if(opened)
+		if(istype(W, /obj/item/device/boobytrap))
+			if(trap)
+				user << "<span class='warning'>There's already a booby trap hooked up to this closet!</span>"
+				..()
+			user << "<span class='warning'>You apply [W]. Next time someone opens the closet, it will explode.</span>"
+			W.loc = src
+			trap = W
+			qdel(W)
+			..()
+
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
@@ -237,6 +262,10 @@
 		else if(user.drop_item())
 			W.forceMove(loc)
 			return 1
+	if(!opened && istype(W, /obj/item/device/boobytrap))
+		user << "<span class='warning'>You must open the closet first!</span>"
+		..()
+
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
@@ -252,10 +281,33 @@
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
+	else if(istype(W, /obj/item/weapon/wirecutters) && !opened && trap)
+		user << "<span class='notice'>You begin attempting to disarm the booby trap...</span>"
+		visible_message("<span class='warning'>[user] begins attempting to disarm the booby trap.</span>")
+		if(do_after(user, 80, target = src))
+			if(prob(75))
+				user << "<span class='notice'>You disarm the booby trap, destroying it in the process.</span>"
+				visible_message("<span class='notice'>[user] disarms the booby trap!</span>")
+				trap = null
+
+			else
+				user << "<span class='warning'>You accidentally bump the sensor and set off the booby trap!</span>"
+				visible_message("<span class='warning'>[user] fails to disarm the booby trap!</span>")
+				visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+				trap.loc = get_turf(src)
+				trap.blow()
+				trap = null
+				for(var/mob/living/carbon/human/H in orange(2,src))
+					H.Paralyse(8)
+					H.adjust_fire_stacks(1)
+					H.IgniteMob()
+					qdel(src)
+
 	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
+
 	else
 		return ..()
 
