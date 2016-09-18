@@ -140,7 +140,7 @@
 				new /obj/effect/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
+				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish, /datum/disease/transformation/xeno)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))

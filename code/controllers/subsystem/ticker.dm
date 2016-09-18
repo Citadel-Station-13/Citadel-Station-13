@@ -36,6 +36,7 @@ var/datum/subsystem/ticker/ticker
 
 	var/triai = 0							//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
+	var/modevoted = 0						//Have we sent a vote for the gamemode?
 	var/selected_tip						// What will be the tip of the day?
 
 	var/timeLeft = 1200						//pregame timer
@@ -87,6 +88,10 @@ var/datum/subsystem/ticker/ticker
 			if(timeLeft < 0)
 				return
 			timeLeft -= wait
+
+			if(timeLeft <= 1200 && !modevoted) //Vote for the round type
+				send_gamemode_vote()
+				modevoted = TRUE
 
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round()
@@ -545,3 +550,7 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+/datum/subsystem/ticker/proc/send_gamemode_vote(var/)
+	SSvote.initiate_vote("roundtype","server")
+
