@@ -374,8 +374,8 @@
 
 	if(!can_be_inserted(W, 0 , user))
 		return
-
-	handle_item_insertion(W, 0 , user)
+	if(!istype(W, /obj/item/device/boobytrap))
+		handle_item_insertion(W, 0 , user)
 
 
 /obj/item/weapon/storage/attack_hand(mob/user)
