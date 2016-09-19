@@ -111,7 +111,14 @@
 	icon_state = "firing_pin_pindi"
 	req_implant = /obj/item/weapon/implant/weapons_auth
 
+/obj/item/device/firing_pin/trick
+	name = "self-destruct firing pin"
+	desc = "This pin will detonate the weapon it is put into upon trying to use it"
+	selfdestruct = 1
+	force_replace = 1
 
+/obj/item/device/firing_pin/trick/pin_auth(mob/living/user)
+	return 0
 
 // Honk pin, clown's joke item.
 // Can replace other pins. Replace a pin in cap's laser for extra fun!
