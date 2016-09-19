@@ -361,7 +361,7 @@
 	say_mod = "hisses"
 
 /obj/item/organ/tongue/alien/TongueSpeech(var/message)
-	playsound(owner, "hiss", 25, 1, 1)
+	playsound(owner, "hiss", 15, 1, 1)
 	return message
 
 /obj/item/organ/tongue/bone
@@ -433,3 +433,13 @@
 	if(inflamed)
 		S.reagents.add_reagent("????", 5)
 	return S
+
+/obj/item/organ/tongue/yautja
+	name = "yautja tongue"
+	desc = "You're having a hard time even deciding if this is a tongue or not."
+	icon_state = "tongue"
+	say_mod = "clicks"
+
+/obj/item/organ/tongue/yautja/TongueSpeech(var/message)
+	playsound(owner, "predsay", 50, 0, 1)
+	return message

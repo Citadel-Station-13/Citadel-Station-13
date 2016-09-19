@@ -1161,6 +1161,7 @@ datum/species/canid
 	name = "Yautja"
 	id = "pred"
 	say_mod = "clicks"
+	mutant_organs = list(/obj/item/organ/tongue/yautja)
 	specflags = list(EYECOLOR)
 	blacklisted = 1
 	roundstart = 1
@@ -1168,19 +1169,21 @@ datum/species/canid
 	whitelist = list("talkingcactus")
 
 /datum/species/octopus
+	blacklisted = 1
 /datum/species/carp
+	blacklisted = 1
 /datum/species/horse
+	blacklisted = 1
 
 ///////////////////
 //DONATOR SPECIES//
 ///////////////////
 
+//ChronoFlux: Slimecoon
 /datum/species/jelly/slime/slimecoon
-	//Donator species for ChronoFlux.
 	name = "Slime Racoon"
 	id = "slimecoon"
 	limbs_id = "slime"
-	roundstart = 0
 	whitelisted = 1
 	whitelist = list("chronoflux")
 	blacklisted = 1

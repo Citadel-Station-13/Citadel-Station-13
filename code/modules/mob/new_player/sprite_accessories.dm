@@ -1725,3 +1725,17 @@
 /datum/sprite_accessory/xeno_head/sentinel
 	name = "Sentinel"
 	icon_state = "sentinel"
+
+//Slimecoon Parts
+/datum/sprite_accessory/slimecoon_ears
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	name = "Slimecoon Ears"
+	icon_state = "slimecoon"
+/datum/sprite_accessory/slimecoon_tail
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	name = "Slimecoon Tail"
+	icon_state = "slimecoon"
+/datum/sprite_accessory/slimecoon_snout
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	name = "Hunter"
+	icon_state = "slimecoon"
