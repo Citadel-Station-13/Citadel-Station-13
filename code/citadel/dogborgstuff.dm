@@ -289,7 +289,7 @@
 	...()
 	var/mob/living/silicon/robot.R = user
 	if(R.cell.charge < 1000)
-		user_visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
+		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
 		return
 	if(src.cooldown == 0)
 		R.cell.charge = R.cell.charge - 1000
