@@ -319,6 +319,14 @@
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
 
+/datum/crafting_recipe/headlamp
+	name = "Headlamp"
+	result = /obj/item/clothing/head/hardhat/headlamp
+	time = 30
+	reqs = list(/obj/item/stack/cable_coil = 15,
+			 	/obj/item/device/flashlight = 1)
+	category = CAT_MISC
+
 
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"

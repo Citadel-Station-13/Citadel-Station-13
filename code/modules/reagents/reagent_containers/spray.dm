@@ -211,3 +211,23 @@
 	item_state = "plantbgone"
 	volume = 100
 	list_reagents = list("plantbgone" = 100)
+
+/obj/item/weapon/reagent_containers/spray/thermite
+	name = "Thermite Spray"
+	desc = "A 50u spray bottle loaded with thermite, for melting walls. "
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "thermitespray"
+	item_state = "thermitespray"
+	volume = 50
+	list_reagents = list("thermite" = 50)
+
+/obj/item/weapon/reagent_containers/spray/thermite/afterattack(atom/A as mob|obj, mob/user)
+	if(istype(A, /turf/closed/wall))
+		if(reagents.get_reagent_amount("thermite") >= 10)
+			user.visible_message("<span class='notice'>You spray the thermite on [A].</span>")
+			reagents.reaction(A, TOUCH)
+			reagents.remove_reagent("thermite", 10)
+		else
+			user.visible_message("<span class='warning'>You don't have enough thermite left!</span>")
+			return
+	else return ..()
