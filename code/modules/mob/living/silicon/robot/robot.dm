@@ -166,7 +166,7 @@
 	if(module)
 		return
 
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service")
+	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor", "Service", "Loader", "Security K-9 Unit", "MediHound", "Borgi")
 	if(!config.forbid_peaceborg)
 		modulelist += "Peacekeeper"
 	if(!config.forbid_secborg)
@@ -264,6 +264,40 @@
 			modtype = "Jan"
 			feedback_inc("cyborg_janitor",1)
 
+		if("Loader")
+			module = new /obj/item/weapon/robot_module/loader(src)
+			hands.icon_state = "loader"
+			icon_state = "loaderborg"
+			animation_length = 29
+			modtype = "Loader"
+			feedback_inc("cyborg_loader",1)
+
+		if("Security K-9 Unit")
+			module = new /obj/item/weapon/robot_module/k9(src)
+			icon = 'icons/mob/widerobot.dmi'
+			icon_state = "k9"
+			hands.icon_state = "k9"
+			animation_length = 37
+			modtype = "Security K-9 Unit"
+			feedback_inc("cyborg_k9",1)
+
+		if("MediHound")
+			module = new /obj/item/weapon/robot_module/medihound(src)
+			icon = 'icons/mob/widerobot.dmi'
+			icon_state = "medihound"
+			hands.icon_state = "medihound"
+			animation_length = 35
+			modtype = "MediHound"
+			feedback_inc("cyborg_medihound",1)
+
+		if("Borgi")
+			module = new /obj/item/weapon/robot_module/borgi(src)
+			hands.icon_state = "borgi"
+			icon_state = "borgi"
+			animation_length = 37
+			modtype = "Borgi"
+			feedback_inc("cyborg_borgi",1)
+
 	transform_animation(animation_length)
 
 	notify_ai(2)
@@ -281,6 +315,14 @@
 	flick(icon_state, src)
 	sleep(animation_length+1)
 	notransform = 0
+	if(icon_state == "k9") //use for wide sprites
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		return
+	if(icon_state == "medihound") //use for wide sprites
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		return
 	icon = 'icons/mob/robots.dmi'
 
 /mob/living/silicon/robot/proc/updatename()
@@ -833,6 +875,14 @@
 				add_overlay("eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]")
 			if("syndie_bloodhound")
 				add_overlay("eyes-syndie_bloodhound")
+			if("loaderborg")
+				add_overlay("eyes-loaderborg")
+			if("k9")
+				add_overlay("eyes-k9")
+			if("medihound")
+				add_overlay("eyes-medihound")
+			if("borgi")
+				add_overlay("eyes-borgi")
 			else
 				add_overlay("eyes")
 				state_name = "serviceborg"
