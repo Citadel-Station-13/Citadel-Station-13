@@ -1704,7 +1704,7 @@
 
 /datum/sprite_accessory/xeno_tail/normal
 	name = "Xenomorph Tail"
-	icon_state = "xenotail"
+	icon_state = "xeno"
 
 //Xeno Caste Heads
 /datum/sprite_accessory/xeno_head

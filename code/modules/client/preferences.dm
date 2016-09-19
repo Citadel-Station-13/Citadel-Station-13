@@ -1136,10 +1136,8 @@ var/list/preferences_datums = list()
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
-					world << "xenohead input requested"
 					var/new_head
 					new_head = input(user, "Choose your character's caste:", "Character Preference") as null|anything in xeno_head_list
-					world <<"xenohead input received"
 					if(new_head)
 						features["xenohead"] = new_head
 

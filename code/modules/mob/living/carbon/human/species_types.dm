@@ -302,17 +302,6 @@
 	var/datum/action/innate/swap_body/swap_body
 	roundstart = 1
 
-/datum/species/jelly/slime/slimecoon
-	//Donator species for ChronoFlux.
-	name = "Slime Racoon"
-	id = "slimecoon"
-	roundstart = 0
-	whitelisted = 1
-	whitelist = list("chronoflux")
-	blacklisted = 1
-	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
-	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")
-
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
@@ -1126,7 +1115,7 @@ datum/species/canid
 	specflags = list()
 	mutant_organs = list(/obj/item/organ/tongue/alien)
 	mutant_bodyparts = list("xenohead", "xenodorsal", "xenotail")
-	default_features = list("xenohead" = "Hunter", "xenodorsal" = "Dorsal Tubes", "xenotail" = "Xenomorph Tail")
+	default_features = list("xenohead"="Hunter", "xenodorsal"="Dorsal Tubes", "xenotail"="Xenomorph Tail")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1165,5 +1154,35 @@ datum/species/canid
 	id = "xblood"
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
-	toxpwr = 1
+	toxpwr = 0
 	acidpwr = 12
+
+/datum/species/yautja
+	name = "Yautja"
+	id = "pred"
+	say_mod = "clicks"
+	specflags = list(EYECOLOR)
+	blacklisted = 1
+	roundstart = 1
+	whitelist = 1
+	whitelist = list("talkingcactus")
+
+/datum/species/octopus
+/datum/species/carp
+/datum/species/horse
+
+///////////////////
+//DONATOR SPECIES//
+///////////////////
+
+/datum/species/jelly/slime/slimecoon
+	//Donator species for ChronoFlux.
+	name = "Slime Racoon"
+	id = "slimecoon"
+	limbs_id = "slime"
+	roundstart = 0
+	whitelisted = 1
+	whitelist = list("chronoflux")
+	blacklisted = 1
+	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
+	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")

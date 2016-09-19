@@ -42,16 +42,16 @@ var/global/list/mam_tails_list = list()
 var/global/list/mam_tails_animated_list = list()
 
 	//Exotic Species
-var/global/list/exotic_tails_list
-var/global/list/exotic_tails_animated_list
-var/global/list/exotic_ears_list
-var/global/list/exotic_head_list
-var/global/list/exotic_back_list
+var/global/list/exotic_tails_list = list()
+var/global/list/exotic_tails_animated_list = list()
+var/global/list/exotic_ears_list = list()
+var/global/list/exotic_head_list = list()
+var/global/list/exotic_back_list = list()
 
-		//xenomorph mutants
-var/global/list/xeno_head_list
-var/global/list/xeno_tail_list
-var/global/list/xeno_dorsal_list
+	//Xenomorph Species
+var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
+var/global/list/xeno_tail_list = list()
+var/global/list/xeno_dorsal_list = list()
 
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
