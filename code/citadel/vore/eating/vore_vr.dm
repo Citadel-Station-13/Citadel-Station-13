@@ -83,18 +83,22 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //
 // Save/Load Vore Preferences
 //
-/datum/vore_preferences/proc/load_vore(filename="preferences_vr.sav")
-	if(!client || !client_ckey) return 0 //No client, how can we save?
+
+/datum/vore_preferences/proc/load_path(ckey,filename="preferences_vr.sav")
+	if(!ckey)
+		return
+	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
+
+/datum/vore_preferences/proc/load_vore()
 	if(!path)
-		path = "data/player_saves/[copytext(client_ckey,1,2)]/[client_ckey]/[filename]"
-		if(!path) return 0 //Path couldn't be set?
-
+		return 0
+	if(!fexists(path))
+		return 0
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
-
+	if(!S)
+		return 0
 	S.cd = "/"
-	if(!slot)
-		slot = client.prefs.default_slot
+
 	S.cd = "/character[slot]"
 
 	S["digestable"] >> digestable
@@ -124,9 +128,6 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	return 1
 
-//
-//	Verb for saving vore preferences to save file
-//
 
 //
 //	Verb for saving vore preferences to save file
