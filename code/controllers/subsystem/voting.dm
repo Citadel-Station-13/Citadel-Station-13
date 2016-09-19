@@ -121,6 +121,13 @@ var/datum/subsystem/vote/SSvote
 						restart = 1
 					else
 						master_mode = .
+			if("roundtype")
+				if (ticker && ticker.mode)
+					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
+				master_mode = .
+				log_admin("Mode has been voted for and switched to: [master_mode].")
+				world << "<span class='adminnotice'><b>The mode is now: [master_mode]</b></span>"
+				world.save_mode(master_mode)
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in admins)
@@ -169,6 +176,9 @@ var/datum/subsystem/vote/SSvote
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
+			if("roundtype")
+				choices.Add("secret")
+				choices.Add("extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
