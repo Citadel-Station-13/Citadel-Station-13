@@ -159,7 +159,7 @@ var/datum/subsystem/ticker/ticker
 		if(!can_continue)
 			qdel(mode)
 			mode = null
-			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
+			world << "<B>Error setting up [master_mode]. It's likely that there are no available antagonists for the selected mode.</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
 	else
