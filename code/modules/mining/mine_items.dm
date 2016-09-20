@@ -533,6 +533,7 @@
 	if(cell.charge < powerReq)
 		playsound(get_turf(src),'sound/machines/twobeep.ogg', 15, 0 , -5)
 		on = 0
+		updateicon()
 		SSobj.processing.Remove(src)
 		if(cell.charge <= 0)
 			cell.charge = 0
@@ -558,19 +559,15 @@
 			user << text("<span class='notice'>You turn off [src].</span>")
 
 /obj/item/device/t_scanner/motionTracker/proc/updateicon()
-	var/chargeFull = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerFull")
-	var/chargeHalf = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerHalf")
-	var/chargeLow = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerLow")
-	var/chargeEmpty = image('icons/obj/mining.dmi', loc = src, icon_state = "trackerLightPowerEmpty")
 	if(cell && cellcharge)
 		if(cell && cell.charge < (cell.maxcharge/5))
-			overlays = chargeLow
+			icon_state = "trackerLow"
 		else if(cell && cell.charge < (cell.maxcharge/2))
-			overlays = chargeHalf
+			icon_state = "trackerHalf"
 		else if(cell && cell.charge > (cell.maxcharge/2))
-			overlays = chargeFull
+			icon_state = "trackerFull"
 	if(!cellcharge || !cell)
-		overlays = chargeEmpty
+		icon_state = "trackerEmpty"
 	..()
 /obj/item/device/t_scanner/motionTracker/scan(mob/living/carbon/user)
 	if(!on_cooldown)
@@ -618,7 +615,7 @@
 		return
 	else if(istype(I, /obj/item/weapon/stock_parts/cell) && !cell)
 		if(!cell)
-			I.loc = src
+			I.loc = src.contents
 			cell = I
 			cellcharge = cell.charge
 			cellmaxcharge = cell.maxcharge
@@ -632,4 +629,7 @@
 
 /obj/item/device/t_scanner/motionTracker/examine(mob/user)
 	..()
-	user << text("<span class='notice'>[src] has [cellcharge]/[cellmaxcharge] charge remaining.</span>")
+	if(cell)
+		user << text("<span class='notice'>[src] has [cellcharge]/[cellmaxcharge] charge remaining.</span>")
+	else
+		user << text("<span class='notice'>[src] has no power supply installed.</span>")

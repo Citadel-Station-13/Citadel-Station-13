@@ -21,6 +21,7 @@
 		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
 		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core			 ,                     					400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
+		new /datum/data/mining_equipment("Motion Tracker",		/obj/item/device/t_scanner/motionTracker	 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
@@ -159,33 +160,38 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Medivac Kit", "Extraction Kit", "Crusher Kit")
+	var/items = list("Crusher Kit", "Extraction Kit", "Hunter Kit", "Medivac Kit", "Mining Drone", "Resonator and Advanced Scanner", "Survival Capsule and Explorer's Webbing")//Alphabetical, please.
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
 		return
-	switch(selection)
-		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
-		if("Resonator and Advanced Scanner")
-			new /obj/item/weapon/resonator(src.loc)
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
-		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+	switch(selection)//Alphabetical, please.
+		if("Crusher Kit")
+			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
+			new /obj/item/weapon/storage/belt/mining/alt(loc)
+			new /obj/item/weapon/extinguisher/mini(loc)
+		if("Extraction Kit")
+			new /obj/item/stack/sheet/metal/five(loc)
+			new /obj/item/weapon/extraction_pack(loc)
+			new /obj/item/fulton_core(loc)
+		if("Hunter Kit")
+			new /obj/item/weapon/storage/belt/mining(loc)
+			new /obj/item/device/t_scanner/motionTracker(loc)
+			new /obj/item/weapon/stock_parts/cell/high/plus(loc)
+			new /obj/item/weapon/screwdriver(loc)
 		if("Medivac Kit")
 			new /obj/item/stack/sheet/metal/five(loc)
 			new /obj/item/fulton_core(loc)
 			new /obj/item/weapon/extraction_pack/medivac(loc)
 			new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(loc)
-		if("Extraction Kit")
-			new /obj/item/stack/sheet/metal/five(loc)
-			new /obj/item/weapon/extraction_pack(loc)
-			new /obj/item/fulton_core(loc)
-		if("Crusher Kit")
-			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
-			new /obj/item/weapon/storage/belt/mining/alt(loc)
-			new /obj/item/weapon/extinguisher/mini(loc)
+		if("Mining Drone")
+			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
+			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+		if("Resonator and Advanced Scanner")
+			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+		if("Survival Capsule and Explorer's Webbing")
+			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
