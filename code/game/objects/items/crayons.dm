@@ -38,7 +38,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint", "madworld1", "madworld2")
 
 	var/list/all_drawables
 
