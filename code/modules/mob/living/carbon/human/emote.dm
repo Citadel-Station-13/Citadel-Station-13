@@ -259,6 +259,19 @@
 				message = "<B>[src]</B> raises a hand."
 			m_type = 1
 
+		if ("roar","roars")
+			if (miming)
+				message = "<B>[src]</B> appears to roar!"
+			else
+				if(!muzzled && has_dna())
+					m_type = 2
+					message = "<B>[src]</B> roars!"
+					switch(dna.species.id)
+						if("pred")
+							playsound(get_turf(src), "predroar", 50, 0, 1)
+				else
+					..(act)
+
 		if ("salute","salutes")
 			if (!src.buckled)
 				var/M = null
@@ -279,7 +292,24 @@
 			if (miming)
 				message = "<B>[src]</B> acts out a scream!"
 			else
-				..(act)
+				if(has_dna())
+					var/DNA = dna.species.id
+					switch(DNA) //Visit sound.dm for a list of all the soundin bundles (alienscreech, etc).
+						if("alien")
+							playsound(get_turf(src), "alienscreech", 50, 0, 5)
+						if("moth")
+							playsound(get_turf(src), "mothscream", 50, 1, 5)
+						if("drake")
+							playsound(get_turf(src), "drakescream", 50, 0, 5)
+						if("avian")
+							playsound(get_turf(src), "birdscream", 50, 0, 5)
+						else
+							if(gender == MALE)
+								playsound(get_turf(src), "malescream", 50, 0, 5)
+							if(gender == FEMALE)
+								playsound(get_turf(src), "femscream", 50, 0, 5)
+				else
+					..(act)
 
 		if ("shiver","shivers")
 			message = "<B>[src]</B> shivers."
@@ -342,7 +372,13 @@
 				src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
 
 		if ("help") //This can stay at the bottom.
-			src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn"
+			if(has_dna(src))
+				switch(dna.species.id)//Set lists of emotes for specific species. Not the best way to do this, but the easiest considering they'll share most emotes.
+					if("pred")
+						src << "Help for yautja emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, <b>roar</b>, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn"
+
+					else
+						src << "Help for human emotes. You can use these emotes with say \"*emote\":\n\naflap, airguitar, blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough, cry, custom, dance, dap, deathgasp, drool, eyebrow, faint, flap, frown, gasp, giggle, glare-(none)/mob, grin, groan, grumble, handshake, hug-(none)/mob, jump, laugh, look-(none)/mob, me, moan, mumble, nod, pale, point-(atom), raise, salute, scream, shake, shiver, shrug, sigh, signal-#1-10, sit, smile, sneeze, sniff, snore, stare-(none)/mob, sulk, sway, tremble, twitch, twitch_s, wave, whimper, wink, wings, wag, yawn"
 
 		else
 			..(act)

@@ -59,8 +59,9 @@
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
-	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key.
-
+	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
+	var/lang_spoken = HUMAN
+	var/lang_understood = HUMAN
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
 

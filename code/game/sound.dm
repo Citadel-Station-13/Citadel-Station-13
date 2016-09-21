@@ -133,7 +133,7 @@
 			if ("birdscream")
 				soundin = pick('sound/voice/scream/bird1.ogg', 'sound/voice/scream/bird2.ogg')
 			if ("mothscream")
-				soundin = pick('sound/voice/scream/moth1')
+				soundin = pick('sound/voice/scream/moth1.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

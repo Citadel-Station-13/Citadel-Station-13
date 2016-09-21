@@ -437,7 +437,7 @@
 /obj/item/organ/tongue/yautja
 	name = "yautja tongue"
 	desc = "You're having a hard time even deciding if this is a tongue or not."
-	icon_state = "tongue"
+	icon_state = "tongueyautja"
 	say_mod = "clicks"
 
 /obj/item/organ/tongue/yautja/TongueSpeech(var/message)

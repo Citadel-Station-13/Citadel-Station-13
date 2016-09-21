@@ -1114,8 +1114,12 @@ datum/species/canid
 	eyes = "none"
 	specflags = list()
 	mutant_organs = list(/obj/item/organ/tongue/alien)
-	mutant_bodyparts = list("xenohead", "xenodorsal", "xenotail")
-	default_features = list("xenohead"="Hunter", "xenodorsal"="Dorsal Tubes", "xenotail"="Xenomorph Tail")
+	mutant_bodyparts = list("xenohead",
+							"xenodorsal",
+							"xenotail")
+	default_features = list("xenohead"="Hunter",
+							"xenodorsal"="Dorsal Tubes",
+							"xenotail"="Xenomorph Tail")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -1161,12 +1165,26 @@ datum/species/canid
 	name = "Yautja"
 	id = "pred"
 	say_mod = "clicks"
+	eyes = "predeyes"
 	mutant_organs = list(/obj/item/organ/tongue/yautja)
 	specflags = list(EYECOLOR)
+	punchdamagelow = 4
+	punchdamagehigh = 14
+	punchstunthreshold = 13
 	blacklisted = 1
 	roundstart = 1
 	whitelist = 1
 	whitelist = list("talkingcactus")
+
+/datum/species/yautja/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	C.languages_spoken = YAUTJA
+	C.languages_understood = HUMAN|YAUTJA|ALIEN
+	..()
+
+/datum/species/yautja/on_species_loss(mob/living/carbon/C)
+	C.languages_spoken = HUMAN
+	C.languages_understood = HUMAN
+	..()
 
 /datum/species/octopus
 	blacklisted = 1
@@ -1181,7 +1199,7 @@ datum/species/canid
 
 //ChronoFlux: Slimecoon
 /datum/species/jelly/slime/slimecoon
-	name = "Slime Racoon"
+	name = "Slime Raccoon"
 	id = "slimecoon"
 	limbs_id = "slime"
 	whitelisted = 1
