@@ -607,23 +607,25 @@
 	if(istype(I, /obj/item/weapon/screwdriver) && cell)
 		user << text("<span class='notice'>You detach [cell] from [src].</span>")
 		cell.loc = get_turf(src)
-		src.cell = null
+		cell = null
 		cellcharge = 0
 		cellmaxcharge = 0
 		updateicon()
 		cell.updateicon()
-		return
-	else if(istype(I, /obj/item/weapon/stock_parts/cell) && !cell)
-		if(!cell)
-			I.loc = src.contents
-			cell = I
-			cellcharge = cell.charge
-			cellmaxcharge = cell.maxcharge
-			user << text("<span class='notice'>You install [cell] into [src].</span>")
-			updateicon()
-			return
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(cell)
 			user << text("<span class='notice'>[src] already has a power supply installed.</span>")
+		else
+			if(!user.drop_item())//This is dumb. You should be able to move a held object without having to drop it.
+				return
+			I.loc = src
+			cell = I
+			user.visible_message(\
+				"[user.name] has inserted the power cell into [src.name].",\
+				"<span class='notice'>You install [cell.name] into [src]</span>")
+			cellcharge = cell.charge
+			cellmaxcharge = cell.maxcharge
+			updateicon()
 	else
 		..()
 
