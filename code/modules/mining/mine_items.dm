@@ -524,7 +524,8 @@
 
 /obj/item/device/t_scanner/motionTracker/process()
 	updateicon()
-	if(!on)
+	if(!on || !cell)
+		on = 0
 		SSobj.processing.Remove(src)
 		return
 	if(cell.charge > powerReq)
@@ -542,6 +543,7 @@
 	cell.updateicon()
 
 /obj/item/device/t_scanner/motionTracker/attack_self(mob/user)
+	add_fingerprint(usr)
 	updateicon()
 	if(!cell)
 		user << text("<span class='warning'>[src] has no power supply.</span>")
