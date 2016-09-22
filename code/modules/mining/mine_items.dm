@@ -533,10 +533,10 @@
 	if(cell.charge < powerReq)
 		playsound(get_turf(src),'sound/machines/twobeep.ogg', 15, 0 , -5)
 		on = 0
-		updateicon()
 		SSobj.processing.Remove(src)
-		if(cell.charge <= 0)
+		if(cell.charge <= 0)//In the event we have negative energy, somehow.
 			cell.charge = 0
+		updateicon()
 	cellcharge = cell.charge
 	cellmaxcharge = cell.maxcharge
 	cell.updateicon()
@@ -566,7 +566,7 @@
 			icon_state = "trackerHalf"
 		else if(cell && cell.charge > (cell.maxcharge/2))
 			icon_state = "trackerFull"
-	if(!cellcharge || !cell)
+	if(!cellcharge || !cell || cellcharge < powerReq)
 		icon_state = "trackerEmpty"
 	..()
 /obj/item/device/t_scanner/motionTracker/scan(mob/living/carbon/user)
@@ -610,6 +610,8 @@
 		cell = null
 		cellcharge = 0
 		cellmaxcharge = 0
+		if(on)
+			on = 0
 		updateicon()
 		cell.updateicon()
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
