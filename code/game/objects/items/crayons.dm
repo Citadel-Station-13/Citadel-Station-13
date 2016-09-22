@@ -369,6 +369,8 @@
 		cost = 5
 	. = use_charges(cost)
 	var/fraction = min(1, . / reagents.maximum_volume)
+	if(!affected_turfs.len)
+		return
 	fraction /= affected_turfs.len
 	for(var/t in affected_turfs)
 		reagents.reaction(t, TOUCH, fraction * volume_multiplier)
