@@ -295,10 +295,11 @@
 				message = "<B>[src]</B> acts out a scream!"
 			else
 				if(has_dna())
-					var/DNA = dna.species.id
-					switch(DNA) //Visit sound.dm for a list of all the soundin bundles (alienscreech, etc).
+					switch(dna.species.id) //Visit sound.dm to see and add more 'soundin' options. (alienscreech, malescream, femscream, etc)
 						if("xeno")
 							playsound(get_turf(src), "alienscreech", 50, 0, 5)
+						if("pred")
+							playsound(get_turf(src), "predroar", 50, 0, 5)
 						if("moth")
 							playsound(get_turf(src), "mothscream", 50, 1, 5)
 						if("lizard" || "drake")
@@ -310,8 +311,7 @@
 								playsound(get_turf(src), "malescream", 50, 0, 5)
 							if(gender == FEMALE)
 								playsound(get_turf(src), "femscream", 50, 0, 5)
-				else
-					..(act)
+				..(act)
 
 		if ("shiver","shivers")
 			message = "<B>[src]</B> shivers."

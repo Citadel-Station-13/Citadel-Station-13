@@ -1168,6 +1168,8 @@ datum/species/canid
 	eyes = "predeyes"
 	mutant_organs = list(/obj/item/organ/tongue/yautja)
 	specflags = list(EYECOLOR)
+	lang_spoken = HUMAN
+	lang_understood = HUMAN|YAUTJA|ALIEN
 	punchdamagelow = 4
 	punchdamagehigh = 14
 	punchstunthreshold = 13
@@ -1176,15 +1178,28 @@ datum/species/canid
 	whitelist = 1
 	whitelist = list("talkingcactus")
 
+/*Handled in species.dm
 /datum/species/yautja/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	C.languages_spoken = YAUTJA
-	C.languages_understood = HUMAN|YAUTJA|ALIEN
+	C.languages_spoken = lang_spoken
+	C.languages_understood = lang_understood
 	..()
 
 /datum/species/yautja/on_species_loss(mob/living/carbon/C)
-	C.languages_spoken = HUMAN
-	C.languages_understood = HUMAN
 	..()
+*/
+
+/datum/outfit/yautja_basic
+	name = "Yautja, Basic"
+
+	uniform = /obj/item/clothing/under/chainshirt
+	suit = /obj/item/clothing/suit/armor/yautja_fake
+	shoes = /obj/item/clothing/shoes/yautja_fake
+	mask = /obj/item/clothing/mask/gas/yautja_fake
+
+/datum/species/yautja/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/yautja_basic/O = new /datum/outfit/yautja_basic//Just basic gear. Doesn't include anything that gives any meaningful advantage.
+	H.equipOutfit(O, visualsOnly)
+	return 0
 
 /datum/species/octopus
 	blacklisted = 1

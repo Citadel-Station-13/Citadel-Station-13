@@ -396,4 +396,14 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 
+/obj/item/clothing/suit/armor/yautja_fake
+	icon_state = "yautjahalfarmor"
+	item_state = "yautjahalfarmor"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
+/obj/item/clothing/suit/armor/yautja_half
+	icon_state = "yautjahalfarmor"
+	item_state = "yautjahalfarmor"
+/obj/item/clothing/suit/armor/yautja_full
+	icon_state = "yautjahalfarmor"
+	item_state = "yautjahalfarmor"

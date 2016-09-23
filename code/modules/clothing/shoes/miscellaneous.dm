@@ -162,3 +162,10 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	can_hold_items = 1
+
+/obj/item/clothing/shoes/yautja_fake
+	name = "clan greaves"
+	desc = "A pair of armored, perfectly balanced boots. Perfect for running through the jungle or the central primary hallway."
+	icon_state = "yautjaboots"
+	item_state = "yautjaboots"
+	can_hold_items = 1

@@ -169,3 +169,30 @@
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
+
+/obj/item/clothing/mask/gas/yautja_fake
+	name = "ceremonial mask"
+	desc = "A beautifully designed metallic face mask. This one appears to be mostly decorative."
+	icon_state = "pred_mask"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
+	item_state = "pred_mask"
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	burn_state = LAVA_PROOF
+
+/obj/item/clothing/mask/gas/yautja_fake/New()
+	icon_state = "[icon_state][pick(1,2,3,4)]"
+	item_state = icon_state
+
+/obj/item/clothing/mask/gas/yautja
+	name = "clan mask"
+	desc = "A beautifully designed metallic face mask. Both decorative and functional."
+	icon_state = "pred_mask"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
+	item_state = "pred_mask"
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	burn_state = LAVA_PROOF
+	armor = list(melee = 50, bullet = 50, laser = 50,energy = 50, bomb = 50, bio = 80, rad = 50)
+
+/obj/item/clothing/mask/gas/yautja/New()
+	icon_state = "[initial(icon_state)][pick(1,2,3,4)]"
+	item_state = icon_state

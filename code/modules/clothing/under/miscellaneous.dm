@@ -574,3 +574,13 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/chainshirt
+	name = "chain mesh"
+	desc = "A set of very fine chainlink in a meshwork for comfort and utility."
+	body_parts_covered = CHEST|GROIN
+	icon_state = "mesh_shirt"
+	item_color = "mesh_shirt"
+	item_state = "mesh_shirt"
+	can_adjust = 0
+	burn_state = FIRE_PROOF

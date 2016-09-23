@@ -180,6 +180,9 @@ mob/living/carbon/human/proc/get_species()
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
 
+	C.languages_spoken = lang_spoken
+	C.languages_understood = lang_understood
+
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
