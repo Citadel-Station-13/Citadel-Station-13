@@ -402,6 +402,8 @@
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
+
 
 /obj/item/clothing/suit/armor/yautja_half
 	name = "clan half-breastplate"
@@ -409,6 +411,7 @@
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
 	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 5)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals, /obj/item/weapon/resonator, /obj/item/device/mining_scanner, /obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/weapon/pickaxe)
 
 /obj/item/clothing/suit/armor/yautja_full
 	name = "clan breastplate"
@@ -416,3 +419,10 @@
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 0, rad = 15)
+	allowed = list(/obj/item/device/flashlight,
+				   /obj/item/weapon/tank/internals,
+				   /obj/item/weapon/resonator,
+				   /obj/item/device/mining_scanner,
+				   /obj/item/device/t_scanner/adv_mining_scanner,
+				   /obj/item/weapon/gun/energy/kinetic_accelerator,
+				   /obj/item/weapon/pickaxe)
