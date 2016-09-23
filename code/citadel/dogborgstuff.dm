@@ -286,7 +286,6 @@
 	wielded = 1
 
 /obj/item/weapon/twohanded/shockpaddles/hound/attack(mob/M, mob/user)
-	...()
 	var/mob/living/silicon/robot.R = user
 	if(R.cell.charge < 1000)
 		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
