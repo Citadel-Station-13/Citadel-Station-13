@@ -136,6 +136,10 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
+	if(check_rights(R_BAN))
+		if(ahelp_count(0) > 0)
+			list_ahelps(src, 0)
+
 	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
