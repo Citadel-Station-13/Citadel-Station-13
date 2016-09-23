@@ -397,13 +397,22 @@
 	item_state = "knight_templar"
 
 /obj/item/clothing/suit/armor/yautja_fake
+	name = "ceremonial breastplate"
+	desc = "Half of an aging, ceremonial breastplate. Its usefulness as armor are long gone."
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/armor/yautja_half
+	name = "clan half-breastplate"
+	desc = "Half of an armored breastplate. This type is used by most clans for combat among blooded."
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 5)
+
 /obj/item/clothing/suit/armor/yautja_full
+	name = "clan breastplate"
+	desc = "An armored breastplate. This type is used by most clans for combat among elders."
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 0, rad = 15)
