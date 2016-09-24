@@ -1168,7 +1168,7 @@ datum/species/canid
 	eyes = "predeyes"
 	mutant_organs = list(/obj/item/organ/tongue/yautja)
 	specflags = list(EYECOLOR)
-	lang_spoken = HUMAN
+	lang_spoken = YAUTJA
 	lang_understood = HUMAN|YAUTJA|ALIEN
 	punchdamagelow = 4
 	punchdamagehigh = 14
