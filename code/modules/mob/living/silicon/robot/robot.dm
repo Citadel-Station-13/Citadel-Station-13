@@ -899,6 +899,11 @@
 
 	update_fire()
 
+	if(laser == 1)
+		overlays += "laser"
+	if(disabler == 1)
+		overlays += "disabler"
+
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
 		pick_module()
