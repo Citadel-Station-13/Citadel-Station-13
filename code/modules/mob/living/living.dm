@@ -817,12 +817,14 @@ Sorry Giacom. Please don't be mad :(
 			adjust_fire_stacks(1)
 			IgniteMob()
 
-/atom/movable/proc/do_attack_animation(atom/A, end_pixel_y)
+/atom/movable/proc/do_attack_animation(atom/A, final_pixel_y, final_pixel_x)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
+	if(!final_pixel_y)
+		final_pixel_y = initial(pixel_y)
+
+	if(!final_pixel_x)
+		final_pixel_x = initial(pixel_x) //lol copypasta
 
 	var/direction = get_dir(src, A)
 	if(direction & NORTH)
@@ -836,8 +838,8 @@ Sorry Giacom. Please don't be mad :(
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
+	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2) //Why reset when you can just reverse? 99% less shit-breaking.
 
 /mob/living/do_attack_animation(atom/A)
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
