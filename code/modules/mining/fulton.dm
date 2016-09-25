@@ -10,13 +10,9 @@ var/list/total_extraction_beacons = list()
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
 	var/can_use_indoors
-	var/safe_for_living_creatures = 0
+	var/safe_for_living_creatures = 1
 
-/obj/item/weapon/extraction_pack/medivac
-	name = "fulton medivac extraction pack"
-	desc = "A specialized extraction balloon capable of safely extracting living targets."
-	uses_left = 1
-	safe_for_living_creatures = 1
+
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()
@@ -64,7 +60,7 @@ var/list/total_extraction_beacons = list()
 		if(A.anchored)
 			return
 		user << "<span class='notice'>You start attaching the pack to [A]...</span>"
-		if(do_after(user,50,target=A))
+		if(do_after(user,10,target=A))
 			user << "<span class='notice'>You attach the pack to [A] and activate it.</span>"
 			uses_left--
 			if(uses_left <= 0)
@@ -141,14 +137,14 @@ var/list/total_extraction_beacons = list()
 
 /obj/item/fulton_core
 	name = "extraction beacon signaller"
-	desc = "Emits a signal which fulton recovery devices can lock on to. Craft with metal to create a beacon."
+	desc = "Emits a signal which fulton recovery devices can lock on to."
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "subspace_amplifier"
 
 /datum/crafting_recipe/fulton
 	name = "Fulton Recovery Beacon"
 	result = /obj/structure/extraction_point
-	reqs = list(/obj/item/fulton_core = 1, /obj/item/stack/sheet/metal = 5)
+	reqs = list(/obj/item/fulton_core = 1)
 	time = 15
 	category = CAT_MISC
 
