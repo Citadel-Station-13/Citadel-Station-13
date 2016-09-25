@@ -153,8 +153,6 @@
 		else*/
 		msg += "[t_He] [t_is] wearing \icon[wear_id] \a [wear_id].\n"
 
-	msg += attempt_vr(src,"examine_bellies",args)
-
 	//Jitters
 	switch(jitteriness)
 		if(300 to INFINITY)
@@ -280,6 +278,10 @@
 				msg += "[t_He] looks like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] is a shitfaced, slobbering wreck.\n"
+
+	for (var/I in src.vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		msg += B.get_examine_msg()
 
 	msg += "</span>"
 
