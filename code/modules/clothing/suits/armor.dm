@@ -402,7 +402,11 @@
 	icon_state = "yautjahalfarmor"
 	item_state = "yautjahalfarmor"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = TRUE
 	burn_state = FIRE_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,
 				   /obj/item/weapon/tank/internals,
 				   /obj/item/weapon/resonator,
@@ -414,10 +418,14 @@
 /obj/item/clothing/suit/armor/yautja
 	name = "clan breastplate"
 	desc = "An armored breastplate. This type is used by most clans for combat among elders."
-	icon_state = "yautjahalfarmor"
-	item_state = "yautjahalfarmor"
+	icon_state = "yautjafullarmor"
+	item_state = "yautjafullarmor"
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 0, rad = 15)
+	unacidable = TRUE
 	burn_state = FIRE_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,
 				   /obj/item/weapon/tank/internals,
 				   /obj/item/weapon/resonator,

@@ -575,12 +575,21 @@
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
 
-/obj/item/clothing/under/chainshirt
-	name = "chain mesh"
-	desc = "A set of very fine chainlink in a meshwork for comfort and utility."
+/obj/item/clothing/under/mesh
+	name = "mesh suit"
+	desc = "A mesh of strong fabric worn underneath normal clothing and armor."
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	icon_state = "mesh_suit"
+	item_color = "mesh_suit"
+	item_state = "mesh_suit"
+	can_adjust = FALSE
+	burn_state = FIRE_PROOF
+	unacidable = TRUE
+
+/obj/item/clothing/under/mesh/top
+	name = "mesh shirt"
+	desc = "A mesh of strong fabric worn underneath normal clothing and armor."
 	body_parts_covered = CHEST|GROIN
 	icon_state = "mesh_shirt"
 	item_color = "mesh_shirt"
 	item_state = "mesh_shirt"
-	can_adjust = 0
-	burn_state = FIRE_PROOF

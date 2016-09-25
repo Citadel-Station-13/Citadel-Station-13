@@ -178,10 +178,41 @@
 	item_state = "pred_mask"
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	burn_state = LAVA_PROOF
+	var/list/options = list()
+	var/current_skin = ""
 
 /obj/item/clothing/mask/gas/yautja_fake/New()
-	icon_state = "[icon_state][pick(1,2,3,4)]"
-	item_state = icon_state
+	options["Jawbone"] = "jaw"
+	options["Plain"]   = "plain"
+	options["Horned"]  = "horn"
+	options["Winged"]  = "wing"
+	options["Cancel"]  = null
+
+/obj/item/clothing/mask/gas/yautja_fake/examine(mob/user)
+	..()
+	if(!current_skin)
+		user << "<span class='notice'>Alt-click [src.name] to reskin it.</span>"
+
+/obj/item/clothing/mask/gas/yautja_fake/proc/reskin_mask(mob/M)
+	var/choice = input(M,"Warning, you can only reskin your mask once!","Reskin Mask") in options
+
+	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(options[choice] == null)
+			return
+		current_skin = options[choice]
+		icon_state = "[initial(icon_state)]_[current_skin]"
+		item_state = "[initial(item_state)]_[current_skin]"
+		M << "Your mask is now skinned as \"[choice]\"."
+		update_icon()
+		M.regenerate_icons()
+
+/obj/item/clothing/mask/gas/yautja_fake/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!current_skin && loc == user)
+		reskin_mask(user)
 
 /obj/item/clothing/mask/gas/yautja
 	name = "clan mask"
@@ -192,7 +223,38 @@
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	burn_state = LAVA_PROOF
 	armor = list(melee = 50, bullet = 50, laser = 50,energy = 50, bomb = 50, bio = 80, rad = 50)
+	var/list/options = list()
+	var/current_skin = ""
 
 /obj/item/clothing/mask/gas/yautja/New()
-	icon_state = "[initial(icon_state)][pick(1,2,3,4)]"
-	item_state = icon_state
+	options["Jawbone"] = "jaw"
+	options["Plain"]   = "plain"
+	options["Horned"]  = "horn"
+	options["Winged"]  = "wing"
+	options["Cancel"]  = null
+
+/obj/item/clothing/mask/gas/yautja/proc/reskin_mask(mob/M)
+	var/choice = input(M,"Warning, you can only reskin your mask once!","Reskin Mask") in options
+
+	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(options[choice] == null)
+			return
+		current_skin = options[choice]
+		icon_state = "[initial(icon_state)]_[current_skin]"
+		item_state = "[initial(item_state)]_[current_skin]"
+		M << "Your mask is now skinned as \"[choice]\"."
+		update_icon()
+		M.regenerate_icons()
+
+/obj/item/clothing/mask/gas/yautja/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!current_skin && loc == user)
+		reskin_mask(user)
+
+/obj/item/clothing/mask/gas/yautja/examine(mob/user)
+	..()
+	if(!current_skin)
+		user << "<span class='notice'>Alt-click [src.name] to reskin it.</span>"
