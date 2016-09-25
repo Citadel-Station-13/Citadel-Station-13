@@ -83,25 +83,49 @@
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
+	var/ref_mob = "\ref[mob]"
+	for(var/datum/adminticket/T in admintickets)
+		if(T.permckey == src.ckey && T.resolved == "No")
+			if(alert(usr,"You already have an adminhelp open, would you like to bump it?", "Bump Adminhelp", "Yes", "No") == "Yes")
+				T.logs += "[src.ckey] has bumped this adminhelp!"
+				if(T.admin == "N/A")
+					usr << "<b>Due to the fact your Adminhelp had no assigned admin, admins have been pinged.</b>"
+					message_admins("[src.ckey] has bumped their adminhelp #[T.ID], still no assigned admin!")
+					msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[T];resolve=\ref[T]'>R</a>):</b> [T.msg]</span>"
+					for(var/client/X in admins)
+						if(X.prefs.toggles & SOUND_ADMINHELP)
+							X << 'sound/effects/adminhelp.ogg'
+						X << msg
+				else
+					usr << "<b>Admins have been notified.</b>"
+					message_admins("[src.ckey] has bumped their adminhelp #[T.ID].")
+				src.verbs -= /client/verb/adminhelp
+				adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+				return
+			usr << "<b>Thank you for your patience.</b>"
+			return
+
+	src.verbs -= /client/verb/adminhelp
+	adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+
 	//clean the input msg
-	if(!msg)
-		return
+	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
 
-	//remove our adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, FALSE) //2 minute cooldown of admin helps
-
 	msg = keywords_lookup(msg)
 
-	if(!mob)
-		return						//this doesn't happen
+	if(!mob)	return						//this doesn't happen
 
-	var/ref_mob = "\ref[mob]"
-	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>):</b> [msg]</span>"
+	createticket(src, msg, src.ckey, mob)
+	var/datum/adminticket/ticket
+
+	for(var/datum/adminticket/T in admintickets)
+		if(T.permckey == src.ckey)
+			ticket = T
+
+	msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
@@ -113,6 +137,7 @@
 
 	//show it to the person adminhelping too
 	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
