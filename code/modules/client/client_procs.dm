@@ -136,7 +136,7 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
-	if(check_rights(R_BAN))
+	if(check_rights(R_ADMIN))
 		if(ahelp_count(0) > 0)
 			list_ahelps(src, 0)
 
