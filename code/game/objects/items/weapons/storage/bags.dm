@@ -115,6 +115,12 @@
 	can_hold = list(/obj/item/weapon/reagent_containers/food/snacks/grown,/obj/item/seeds,/obj/item/weapon/grown)
 	burn_state = FLAMMABLE
 
+/obj/item/weapon/storage/bag/plants/holding // Now botany can crash the server too
+	name = "plant bag of holding"
+	icon_state = "plantbag_holding"
+	storage_slots = INFINITY
+	max_combined_w_class = INFINITY
+
 ////////
 
 /obj/item/weapon/storage/bag/plants/portaseeder
