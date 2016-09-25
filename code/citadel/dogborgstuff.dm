@@ -286,7 +286,6 @@
 	wielded = 1
 
 /obj/item/weapon/twohanded/shockpaddles/hound/attack(mob/M, mob/user)
-	...()
 	var/mob/living/silicon/robot.R = user
 	if(R.cell.charge < 1000)
 		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
@@ -441,16 +440,19 @@
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
 	popup.open()
+	return
 
 /obj/item/weapon/dogborg/sleeper/Topic(href, href_list)
 	if(..() || usr == patient)
 		return
 	usr.set_machine(src)
 	if(href_list["refresh"])
-		updateUsrDialog()
+		src.updateUsrDialog()
+		sleeperUI(usr)
 		return
 	if(href_list["eject"])
 		go_out()
+		sleeperUI(usr)
 		return
 	if(patient && patient.stat != DEAD)
 		if(href_list["inject"] == "epinephrine" || patient.health > min_health)
@@ -459,7 +461,9 @@
 			usr << "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>"
 	else
 		usr << "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>"
-	updateUsrDialog()
+	src.updateUsrDialog()
+	sleeperUI(usr) //Needs a callback to boop the page to refresh.
+	return
 
 /obj/item/weapon/dogborg/sleeper/proc/inject_chem(mob/user, chem)
 	if(patient && patient.reagents)
