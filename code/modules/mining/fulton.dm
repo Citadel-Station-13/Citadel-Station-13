@@ -10,13 +10,8 @@ var/list/total_extraction_beacons = list()
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
 	var/can_use_indoors
-	var/safe_for_living_creatures = 0
+	var/safe_for_living_creatures = 1
 
-/obj/item/weapon/extraction_pack/medivac
-	name = "fulton medivac extraction pack"
-	desc = "A specialized extraction balloon capable of safely extracting living targets."
-	uses_left = 1
-	safe_for_living_creatures = 1
 
 /obj/item/weapon/extraction_pack/examine()
 	. = ..()
