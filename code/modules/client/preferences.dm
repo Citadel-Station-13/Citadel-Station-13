@@ -23,34 +23,32 @@ datum/preferences
 	var/UI_style_alpha = 255
 
 	//character preferences
+		//character preferences
 	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we are a random name every round
+	var/be_random_name = 0				//whether we'll have a random name every round
+	var/be_random_body = 0				//whether we'll have a random body every round
+	var/gender = MALE					//gender of character (well duh)
 	var/age = 30						//age of character
-	var/spawnpoint = "Arrivals Shuttle" //where this character will spawn (0-2).
-	var/b_type = "A+"					//blood type (not-chooseable)
-	var/backbag = 2						//backpack type
-	var/pdachoice = 1					//PDA type
-	var/h_style = "Bald"				//Hair type
-	var/r_hair = 0						//Hair color
-	var/g_hair = 0						//Hair color
-	var/b_hair = 0						//Hair color
-	var/f_style = "Shaved"				//Face hair type
-	var/r_facial = 0					//Face hair color
-	var/g_facial = 0					//Face hair color
-	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin tone
-	var/r_skin = 0						//Skin color
-	var/g_skin = 0						//Skin color
-	var/b_skin = 0						//Skin color
-	var/r_eyes = 0						//Eye color
-	var/g_eyes = 0						//Eye color
-	var/b_eyes = 0						//Eye color
-	var/species = "Human"               //Species datum to use.
-	var/species_preview                 //Used for the species selection window.
-	var/list/alternate_languages = list() //Secondary language(s)
-	var/list/language_prefixes = list() //Kanguage prefix keys
+	var/underwear = "Nude"				//underwear type
+	var/undershirt = "Nude"				//undershirt type
+	var/socks = "Nude"					//socks type
+	var/backbag = DBACKPACK				//backpack type
+	var/hair_style = "Bald"				//Hair type
+	var/hair_color = "000"				//Hair color
+	var/facial_hair_style = "Shaved"	//Face hair type
+	var/facial_hair_color = "000"		//Facial hair color
+	var/skin_tone = "caucasian1"		//Skin color
+	var/eye_color = "000"				//Eye color
+	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None")
+
 	var/list/gear						//Custom/fluff item loadout.
 
+	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+		//Mob preview
+	var/icon/preview_icon = null
+
+/* // snowflake tbd
 		//Some faction information.
 	var/home_system = "Unset"           //System of birth.
 	var/citizenship = "None"            //Current home system.
@@ -58,7 +56,7 @@ datum/preferences
 	var/religion = "None"               //Religious association.
 	var/antag_faction = "None"			//Antag associated faction.
 	var/antag_vis = "Hidden"			//How visible antag association is to others.
-
+*/
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -78,15 +76,15 @@ datum/preferences
 	//Keeps track of preferrence for not getting any wanted jobs
 	var/alternate_option = 0
 
-	var/used_skillpoints = 0
-	var/skill_specialization = null
-	var/list/skills = list() // skills can range from 0 to 3
+//	var/used_skillpoints = 0
+//	var/skill_specialization = null
+//	var/list/skills = list() // skills can range from 0 to 3
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
 	// will probably not be able to do this for head and torso ;)
-	var/list/organ_data = list()
-	var/list/rlimb_data = list()
-	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
+//	var/list/organ_data = list()
+//	var/list/rlimb_data = list()
+//	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/list/flavor_texts = list()
 	var/list/flavour_texts_robot = list()
@@ -97,7 +95,7 @@ datum/preferences
 	var/exploit_record = ""
 	var/disabilities = 0
 
-	var/nanotrasen_relation = "Neutral"
+//	var/nanotrasen_relation = "Neutral"
 
 	var/uplinklocation = "PDA"
 
@@ -109,13 +107,17 @@ datum/preferences
 	var/client_ckey = null
 
 	// Communicator identity data
-	var/communicator_visibility = 0
+//	var/communicator_visibility = 0
 
 	var/datum/category_collection/player_setup_collection/player_setup
 	var/datum/browser/panel
 
 /datum/preferences/New(client/C)
 	player_setup = new(src)
+	custom_names["ai"] = pick(ai_names)
+	custom_names["cyborg"] = pick(ai_names)
+	custom_names["clown"] = pick(clown_names)
+	custom_names["mime"] = pick(mime_names)
 	set_biological_gender(pick(MALE, FEMALE))
 	real_name = random_name(identifying_gender,species)
 	b_type = RANDOM_BLOOD_TYPE
@@ -130,7 +132,7 @@ datum/preferences
 			if(load_preferences())
 				if(load_character())
 					return
-
+/*
 /datum/preferences/proc/ZeroSkills(var/forced = 0)
 	for(var/V in SKILLS) for(var/datum/skill/S in SKILLS[V])
 		if(!skills.Find(S.ID) || forced)
@@ -182,7 +184,7 @@ datum/preferences
 			return "Genius"
 		if(24 to 1000)
 			return "God"
-
+*/
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)	return
 
@@ -237,14 +239,14 @@ datum/preferences
 	else if(href_list["reload"])
 		load_preferences()
 		load_character()
-		sanitize_preferences()
+		attempt_vr(client.prefs_vr,"load_vore","")
 	else if(href_list["load"])
 		if(!IsGuestKey(usr.key))
 			open_load_dialog(usr)
 			return 1
 	else if(href_list["changeslot"])
 		load_character(text2num(href_list["changeslot"]))
-		sanitize_preferences()
+		attempt_vr(client.prefs_vr,"load_vore","")
 		close_load_dialog(usr)
 	else
 		return 0
@@ -262,7 +264,7 @@ datum/preferences
 	if(be_random_name)
 		real_name = random_name(identifying_gender,species)
 
-	// Ask the preferences datums to apply their own settings to the new mob 
+	// Ask the preferences datums to apply their own settings to the new mob
 	player_setup.copy_to_mob(character)
 
 	if(icon_updates)

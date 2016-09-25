@@ -1,8 +1,8 @@
-#define TOPIC_NOACTION 0
-#define TOPIC_HANDLED 1
-#define TOPIC_REFRESH 2
-#define TOPIC_UPDATE_PREVIEW 4
-#define TOPIC_REFRESH_UPDATE_PREVIEW (TOPIC_REFRESH|TOPIC_UPDATE_PREVIEW)
+#define TOIC_NOACTION 0
+#define TOIC_HANDLED 1
+#define TOIC_REFRESH 2
+#define TOIC_UPDATE_PREVIEW 4
+#define TOIC_REFRESH_UPDATE_PREVIEW (TOIC_REFRESH|TOIC_UPDATE_PREVIEW)
 
 #define PREF_FBP_CYBORG "cyborg"
 #define PREF_FBP_POSI "posi"
@@ -93,7 +93,7 @@
 	if(selected_category)
 		return selected_category.content(user)
 
-/datum/category_collection/player_setup_collection/Topic(var/href,var/list/href_list)
+/datum/category_collection/player_setup_collection/ToIc(var/href,var/list/href_list)
 	if(..())
 		return 1
 	var/mob/user = usr
@@ -119,52 +119,52 @@
 	return sort_order
 
 /datum/category_group/player_setup_category/proc/sanitize_setup()
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.sanitize_preferences()
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.sanitize_character()
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.sanitize_preferences()
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.sanitize_character()
 
 /datum/category_group/player_setup_category/proc/load_character(var/savefile/S)
 	// Load all data, then sanitize it.
 	// Need due to, for example, the 01_basic module relying on species having been loaded to sanitize correctly but that isn't loaded until module 03_body.
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.load_character(S)
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.load_character(S)
 
 /datum/category_group/player_setup_category/proc/save_character(var/savefile/S)
 	// Sanitize all data, then save it
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.sanitize_character()
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.save_character(S)
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.sanitize_character()
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.save_character(S)
 
 /datum/category_group/player_setup_category/proc/load_preferences(var/savefile/S)
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.load_preferences(S)
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.load_preferences(S)
 
 /datum/category_group/player_setup_category/proc/save_preferences(var/savefile/S)
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.sanitize_preferences()
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.save_preferences(S)
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.sanitize_preferences()
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.save_preferences(S)
 
 /datum/category_group/player_setup_category/proc/copy_to_mob(var/mob/living/carbon/human/C)
-	for(var/datum/category_item/player_setup_item/PI in items)
-		PI.copy_to_mob(C)
+	for(var/datum/category_item/player_setup_item/I in items)
+		I.copy_to_mob(C)
 
 /datum/category_group/player_setup_category/proc/content(var/mob/user)
 	. = "<table style='width:100%'><tr style='vertical-align:top'><td style='width:50%'>"
 	var/current = 0
 	var/halfway = items.len / 2
-	for(var/datum/category_item/player_setup_item/PI in items)
+	for(var/datum/category_item/player_setup_item/I in items)
 		if(halfway && current++ >= halfway)
 			halfway = 0
 			. += "</td><td></td><td style='width:50%'>"
-		. += "[PI.content(user)]<br>"
+		. += "[I.content(user)]<br>"
 	. += "</td></tr></table>"
 
 /datum/category_group/player_setup_category/occupation_preferences/content(var/mob/user)
-	for(var/datum/category_item/player_setup_item/PI in items)
-		. += "[PI.content(user)]<br>"
+	for(var/datum/category_item/player_setup_item/I in items)
+		. += "[I.content(user)]<br>"
 
 /**********************
 * Category Item Setup *
@@ -224,24 +224,24 @@
 /datum/category_item/player_setup_item/proc/sanitize_preferences()
 	return
 
-/datum/category_item/player_setup_item/Topic(var/href,var/list/href_list)
+/datum/category_item/player_setup_item/ToIc(var/href,var/list/href_list)
 	if(..())
 		return 1
 	var/mob/pref_mob = preference_mob()
 	if(!pref_mob || !pref_mob.client)
 		return 1
 
-	. = OnTopic(href, href_list, usr)
-	if(. & TOPIC_UPDATE_PREVIEW)
+	. = OnToIc(href, href_list, usr)
+	if(. & TOIC_UPDATE_PREVIEW)
 		pref_mob.client.prefs.preview_icon = null
-	if(. & TOPIC_REFRESH)
+	if(. & TOIC_REFRESH)
 		pref_mob.client.prefs.ShowChoices(usr)
 
-/datum/category_item/player_setup_item/CanUseTopic(var/mob/user)
+/datum/category_item/player_setup_item/CanUseToIc(var/mob/user)
 	return 1
 
-/datum/category_item/player_setup_item/proc/OnTopic(var/href,var/list/href_list, var/mob/user)
-	return TOPIC_NOACTION
+/datum/category_item/player_setup_item/proc/OnToIc(var/href,var/list/href_list, var/mob/user)
+	return TOIC_NOACTION
 
 /datum/category_item/player_setup_item/proc/preference_mob()
 	if(!pref.client)

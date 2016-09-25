@@ -40,25 +40,6 @@ var/list/preferences_datums = list()
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
-
-	var/vore_banned_methods = 0
-	var/vore_extra_bans = 65535
-	var/list/vore_ability = list(
-	"1"=2,
-	"2"=0,
-	"4"=0,
-	"8"=0,
-	"16"=0,
-	"32"=0,
-	"64"=1,
-	"128"=0,
-	"256"=2) //BAAAAD way to do this
-	var/character_size="normal"
-	var/be_taur=0
-
-	var/list/p_cock=list("has"=0,"type"="human","color"="900","sheath"="FFF")
-	var/p_vagina=0
-
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round
@@ -107,6 +88,7 @@ var/list/preferences_datums = list()
 
 		// Vore prefs
 	var/digestable = 1
+
 	var/list/belly_prefs = list()
 
 	var/unlock_content = 0
