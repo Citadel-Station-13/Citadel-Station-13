@@ -131,7 +131,11 @@
 #include "code\citadel\_helpers.dm"
 #include "code\citadel\dogborgs.dm"
 #include "code\citadel\dogborgstuff.dm"
+<<<<<<< HEAD
 #include "code\citadel\organs.dm"
+=======
+#include "code\citadel\pokemon.dm"
+>>>>>>> refs/remotes/Citadel-Station-13/master
 #include "code\citadel\vore\hook-defs_vr.dm"
 #include "code\citadel\vore\trycatch_vr.dm"
 #include "code\citadel\vore\eating\belly_vr.dm"
@@ -888,6 +892,7 @@
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
+#include "code\modules\admin\verbs\listahelps.dm"
 #include "code\modules\admin\verbs\machine_upgrade.dm"
 #include "code\modules\admin\verbs\manipulate_organs.dm"
 #include "code\modules\admin\verbs\map_template_loadverb.dm"
