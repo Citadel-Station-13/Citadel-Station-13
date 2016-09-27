@@ -930,3 +930,13 @@
 	new /obj/item/weapon/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/weapon/circuitboard/machine/circuit_imprinter(src)
 	new /obj/item/weapon/circuitboard/computer/rdconsole(src)
+
+/obj/item/weapon/storage/box/medipens/utility1
+	name = "survival value kit"
+	desc = "A box with several survival medipens for the economical miner."
+	icon_state = "syringe"
+
+/obj/item/weapon/storage/box/medipens/utility1/New()
+	..()
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
