@@ -1,7 +1,7 @@
 var/list/total_extraction_beacons = list()
 
 /obj/item/weapon/extraction_pack
-	name = "fulton material extraction pack"
+	name = "fulton extraction pack"
 	desc = "A balloon that can be used to extract creatures or objects to a Fulton Recovery Beacon. Anything not bolted down can be moved. Link the pack to a beacon by using the pack in hand."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
