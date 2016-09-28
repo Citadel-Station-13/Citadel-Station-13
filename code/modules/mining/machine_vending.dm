@@ -15,6 +15,7 @@
 		new /datum/data/mining_equipment("Absinthe",            /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    		150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200),
+		new /datum/data/mining_equipment("Survival knife",      /obj/item/weapon/kitchen/knife/combat/survival,                          300),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
@@ -31,10 +32,12 @@
 		new /datum/data/mining_equipment("Kinetic Crusher", 	/obj/item/weapon/twohanded/required/mining_hammer,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
+		new /datum/data/mining_equipment("whetstone",           /obj/item/weapon/sharpener,                                             1000),
 		new /datum/data/mining_equipment("Survival bundle",		/obj/item/weapon/storage/box/medipens/utility1,	 				  		1000),
 		new /datum/data/mining_equipment("Fulton Pack",         /obj/item/weapon/extraction_pack,                                    	1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
+		new /datum/data/mining_equipment("Equipment package",   /obj/item/weapon/storage/box/survival_box/New,                        1500),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								2000),
 		new /datum/data/mining_equipment("Space Cash",    		/obj/item/stack/spacecash/c1000,                    			  		2000),
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining,				            2000),
@@ -48,7 +51,6 @@
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
 		)
-
 /datum/data/mining_equipment/
 	var/equipment_name = "generic"
 	var/equipment_path = null
