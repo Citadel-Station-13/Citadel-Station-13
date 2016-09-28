@@ -1539,12 +1539,22 @@
 
 //Snouts
 /datum/sprite_accessory/snouts/lcanid
-	name = "Long, Thin"
+	name = "Fox, Long"
 	icon_state = "lcanid"
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	extra = 1
 
 /datum/sprite_accessory/snouts/scanid
-	name = "Short, Thin"
+	name = "Fox, Short"
 	icon_state = "scanid"
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/snouts/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	icon = 'icons/mob/mutant_bodyparts.dmi'
+	extra = 1
 
 //Cat, Big
 /datum/sprite_accessory/mam_ears/catbig
