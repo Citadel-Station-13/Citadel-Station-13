@@ -131,11 +131,8 @@
 #include "code\citadel\_helpers.dm"
 #include "code\citadel\dogborgs.dm"
 #include "code\citadel\dogborgstuff.dm"
-<<<<<<< HEAD
 #include "code\citadel\organs.dm"
-=======
 #include "code\citadel\pokemon.dm"
->>>>>>> refs/remotes/Citadel-Station-13/master
 #include "code\citadel\vore\hook-defs_vr.dm"
 #include "code\citadel\vore\trycatch_vr.dm"
 #include "code\citadel\vore\eating\belly_vr.dm"
