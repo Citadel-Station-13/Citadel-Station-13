@@ -374,7 +374,7 @@ mob/living/carbon/human/proc/get_species()
 			bodyparts_to_add -= "mam_ears"
 
 	//Angels
-	if("wings" in mutant_bodyparts)//Will likely define these as "angelwings" later so we can have cosmetic wings.
+	if("wings" in mutant_bodyparts)//Will likely define these as "angel_wings" later so we can have cosmetic wings for other species.
 		if(!H.dna.features["wings"] || H.dna.features["wings"] == "None" || (H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT)))
 			bodyparts_to_add -= "wings"
 

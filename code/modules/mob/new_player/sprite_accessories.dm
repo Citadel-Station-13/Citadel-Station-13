@@ -1717,6 +1717,7 @@
 	icon_state = "xeno"
 
 //Xeno Caste Heads
+//unused as of October 3, 2016
 /datum/sprite_accessory/xeno_head
 	icon = 'icons/mob/exotic_bodyparts.dmi'
 	color_src = 0
