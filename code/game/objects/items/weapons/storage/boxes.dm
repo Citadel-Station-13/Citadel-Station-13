@@ -941,18 +941,3 @@
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
 
-/obj/item/weapon/storage/box/survival_box/New()
-	name = "Survival package"
-	desc = "A box containing a variety of useful items for surviving the wilderness"
-	icon_state = "box of doom"
-
-/obj/item/weapon/storage/box/survival_box/New()
-	...()
-	new /obj/item/weapon/kitchen/knife/combat/survival
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
-	new /obj/item/weapon/survivalcapsule
-	new /obj/item/weapon/kitchen/knife/combat/survival
-	new /obj/item/weapon/sharpener
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
-	new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
-	new /obj/item/weapon/survivalcapsule
