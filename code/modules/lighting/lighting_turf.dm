@@ -34,7 +34,7 @@
 
 	var/area/A = loc
 	if (A.dynamic_lighting)
-		getFromPool(/atom/movable/lighting_overlay, src)
+		GetFromPool(/atom/movable/lighting_overlay, src)
 
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.

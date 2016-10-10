@@ -17,7 +17,7 @@
 	create_all_lighting_overlays()
 	create_all_lighting_corners()
 
-/datum/lightingsub/doWork()
+/datum/lightingsub/lighting/doWork()
 	// Counters
 	var/light_updates   = 0
 	var/corner_updates  = 0

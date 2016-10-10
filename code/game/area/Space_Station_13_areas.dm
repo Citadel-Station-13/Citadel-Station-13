@@ -237,7 +237,7 @@ var/list/teleportlocs = list()
 
 /area/asteroid/artifactroom/New()
 	..()
-	SetDynamicLighting()
+	dynamic_lighting = TRUE
 
 /area/planet/clown
 	name = "Clown Planet"

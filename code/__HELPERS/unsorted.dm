@@ -359,6 +359,42 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	return moblist
 
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.forceMove(center)
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.forceMove(null)
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+	flags = INVULNERABLE
+
+// Finds ALL mobs on turfs in line of sight. Similar to "in dview", but catches mobs that are not on a turf (e.g. inside a locker or such).
+/proc/get_all_mobs_in_dview(var/turf/T, var/range = world.view, var/list/ignore_types = list())
+	. = list()
+	var/list/can_see = dview(range, T)
+	for(var/mob/M in can_see)
+		if(is_type_in_list(M, ignore_types))
+			continue
+		. += M
+	for(var/mob/M in mob_list) //Got the ones in vision, now let's go for the ones not on a turf.
+		if(M.z == 0) //Mobs not on a turf will have XYZ = 0,0,0. They also won't show up in dview() so we're not checking anything twice.
+			if(is_type_in_list(M, ignore_types))
+				continue
+			if(get_turf(M) in can_see) //Checking the mob's turf now, since those are it's "true" coordinates (plus dview() did pick up on turfs, so we can check using that).
+				. += M
+
 //E = MC^2
 /proc/convert2energy(M)
 	var/E = M*(SPEED_OF_LIGHT_SQ)
