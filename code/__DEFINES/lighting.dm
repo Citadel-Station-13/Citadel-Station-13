@@ -3,7 +3,7 @@
 
 #ifndef LIGHTING_INSTANT_UPDATES
 #define LIGHTING_INTERVAL       5    // Frequency, in 1/10ths of a second, of the lighting process.
-#include "..\controllers\Processes\lighting.dm"
+#include "../controllers/subsystem/lighting.dm"
 #endif
 
 #define LIGHTING_FALLOFF        1 // type of falloff to use for lighting; 1 for circular, 2 for square
@@ -66,3 +66,8 @@
 #define LIGHT_COLOR_SLIME_LAMP "#AFC84B" //Weird color, between yellow and green, very slimy. rgb(175, 200, 75)
 #define LIGHT_COLOR_TUNGSTEN   "#FAE1AF" //Extremely diluted yellow, close to skin color (for some reason). rgb(250, 225, 175)
 #define LIGHT_COLOR_HALOGEN    "#F0FAFA" //Barely visible cyan-ish hue, as the doctor prescribed. rgb(240, 250, 250)
+
+#define FOR_DVIEW(type, range, center, invis_flags) \
+	dview_mob.forceMove(center);           \
+	dview_mob.see_invisible = invis_flags; \
+	for(type in view(range, dview_mob))

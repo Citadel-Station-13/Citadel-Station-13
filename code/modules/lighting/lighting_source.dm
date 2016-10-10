@@ -208,24 +208,6 @@
 	applied_lum_g = lum_g
 	applied_lum_b = lum_b
 
-	FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
-		for (var/datum/lighting_corner/C in T.get_corners())
-			if (effect_str.Find(C))
-				continue
-
-			C.affecting += src
-
-			if (!C.active)
-				continue
-
-			APPLY_CORNER(C)
-
-		if (!T.affecting_lights)
-			T.affecting_lights = list()
-
-		T.affecting_lights += src
-		affecting_turfs    += T
-
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
 

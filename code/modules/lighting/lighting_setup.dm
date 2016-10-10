@@ -15,7 +15,7 @@
 		if (!A.dynamic_lighting)
 			continue
 
-		getFromPool(/atom/movable/lighting_overlay, T, TRUE)
+		GetFromPool(/atom/movable/lighting_overlay, T, TRUE)
 
 /proc/create_all_lighting_corners()
 	for (var/zlevel = 1 to world.maxz)
@@ -25,7 +25,7 @@
 
 /proc/create_lighting_corners_zlevel(var/zlevel)
 	for (var/turf/T in block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel)))
-		if (istype(T, /turf/space)) // Don't generate corners, do it later during ChangeTurf when needed.
+		if (istype(T, /turf/open/space)) // Don't generate corners, do it later during ChangeTurf when needed.
 			continue
 
 		T.lighting_corners_initialised = TRUE

@@ -12,17 +12,12 @@
 /var/list/lighting_update_corners_old   = list()    // List of lighting corners  currently being updated.
 /var/list/lighting_update_overlays_old  = list()    // List of lighting overlays currently being updated.
 
-
-/datum/controller/process/lighting
-	schedule_interval = LIGHTING_INTERVAL
-
-/datum/controller/process/lighting/setup()
-	name = "lighting"
+/datum/lightingsub/lighting/New()
 
 	create_all_lighting_overlays()
 	create_all_lighting_corners()
 
-/datum/controller/process/lighting/doWork()
+/datum/lightingsub/doWork()
 	// Counters
 	var/light_updates   = 0
 	var/corner_updates  = 0
@@ -48,8 +43,6 @@
 		L.needs_update = FALSE
 
 		light_updates++
-
-		scheck()
 
 	lighting_update_corners_old = lighting_update_corners //Same as above.
 	lighting_update_corners = list()
@@ -77,7 +70,6 @@
 		O.update_overlay()
 		O.needs_update = 0
 		overlay_updates++
-		scheck()
 
 #undef MAX_LIGHT_UPDATES_PER_WORK
 #undef MAX_CORNER_UPDATES_PER_WORK
