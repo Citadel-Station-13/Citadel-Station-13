@@ -1,116 +1,84 @@
-var/datum/subsystem/lighting/SSlighting
+// Solves problems with lighting updates lagging shit
+// Max constraints on number of updates per doWork():
+#define MAX_LIGHT_UPDATES_PER_WORK   100
+#define MAX_CORNER_UPDATES_PER_WORK  1000
+#define MAX_OVERLAY_UPDATES_PER_WORK 2000
 
-#define SSLIGHTING_LIGHTS 1
-#define SSLIGHTING_TURFS 2
+/var/list/lighting_update_lights    = list()    // List of lighting sources  queued for update.
+/var/list/lighting_update_corners   = list()    // List of lighting corners  queued for update.
+/var/list/lighting_update_overlays  = list()    // List of lighting overlays queued for update.
 
-/datum/subsystem/lighting
-	name = "Lighting"
-	init_order = 1
-	wait = 1
-	flags = SS_POST_FIRE_TIMING
-	priority = 40
-	display_order = 5
-
-	var/list/changed_lights = list()		//list of all datum/light_source that need updating
-	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
-	var/list/changed_turfs = list()			//list of all turfs which may have a different light level
-	var/changed_turfs_workload = 0			//stats on the largest number of turfs changed (max changed_turfs.len)
+/var/list/lighting_update_lights_old    = list()    // List of lighting sources  currently being updated.
+/var/list/lighting_update_corners_old   = list()    // List of lighting corners  currently being updated.
+/var/list/lighting_update_overlays_old  = list()    // List of lighting overlays currently being updated.
 
 
-/datum/subsystem/lighting/New()
-	NEW_SS_GLOBAL(SSlighting)
-	return ..()
+/datum/controller/process/lighting
+	schedule_interval = LIGHTING_INTERVAL
 
+/datum/controller/process/lighting/setup()
+	name = "lighting"
 
-/datum/subsystem/lighting/stat_entry()
-	..("L:[round(changed_lights_workload,1)]|T:[round(changed_turfs_workload,1)]")
+	create_all_lighting_overlays()
+	create_all_lighting_corners()
 
+/datum/controller/process/lighting/doWork()
+	// Counters
+	var/light_updates   = 0
+	var/corner_updates  = 0
+	var/overlay_updates = 0
 
-//Workhorse of lighting. It cycles through each light that needs updating. It updates their
-//effects and then processes every turf in the queue, updating their lighting object's appearance
-//Any light that returns 1 in check() deletes itself
-//By using queues we are ensuring we don't perform more updates than are necessary
-/datum/subsystem/lighting/fire(resumed = 0)
-	var/ticklimit = CURRENT_TICKLIMIT
-	//split our tick allotment in half so we don't spend it all on lightshift checks
-	CURRENT_TICKLIMIT = world.tick_usage + ((ticklimit-world.tick_usage)/2)
+	lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
+	lighting_update_lights = list()
+	for(var/datum/light_source/L in lighting_update_lights_old)
+		if(light_updates >= MAX_LIGHT_UPDATES_PER_WORK)
+			lighting_update_lights += L
+			continue // DON'T break, we're adding stuff back into the update queue.
 
-	var/list/changed_lights = src.changed_lights
-	if (!resumed)
-		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
-	var/i = 1
-	while (i <= changed_lights.len)
-		var/datum/light_source/LS = changed_lights[i++]
-		LS.check()
-		if (MC_TICK_CHECK)
-			break
-	if (i > 1)
-		changed_lights.Cut(1,i)
+		if(L.check() || L.destroyed || L.force_update)
+			L.remove_lum()
+			if(!L.destroyed)
+				L.apply_lum()
 
-	CURRENT_TICKLIMIT = ticklimit
-	var/list/changed_turfs = src.changed_turfs
-	if (!resumed)
-		changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
-	i = 1
-	while (i <= changed_turfs.len)
-		var/turf/T = changed_turfs[i++]
-		if(T.lighting_changed)
-			T.redraw_lighting()
-		if (MC_TICK_CHECK)
-			break
-	if (i > 1)
-		changed_turfs.Cut(1,i)
+		else if(L.vis_update)	//We smartly update only tiles that became (in) visible to use.
+			L.smart_vis_update()
 
-//same as above except it attempts to shift ALL turfs in the world regardless of lighting_changed status
-/datum/subsystem/lighting/Initialize(timeofday)
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-	if (config.starlight)
-		for(var/area/A in world)
-			if (A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT)
-				A.luminosity = 0
+		L.vis_update   = FALSE
+		L.force_update = FALSE
+		L.needs_update = FALSE
 
-	for(var/thing in changed_lights)
-		var/datum/light_source/LS = thing
-		LS.check()
-	changed_lights.Cut()
+		light_updates++
 
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		T.init_lighting()
-	changed_turfs.Cut()
+		scheck()
 
-	..()
+	lighting_update_corners_old = lighting_update_corners //Same as above.
+	lighting_update_corners = list()
+	for(var/A in lighting_update_corners_old)
+		if(corner_updates >= MAX_CORNER_UPDATES_PER_WORK)
+			lighting_update_corners += A
+			continue // DON'T break, we're adding stuff back into the update queue.
 
-//Used to strip valid information from an existing instance and transfer it to the replacement. i.e. when a crash occurs
-//It works by using spawn(-1) to transfer the data, if there is a runtime the data does not get transfered but the loop
-//does not crash
-/datum/subsystem/lighting/Recover()
-	if(!istype(SSlighting.changed_turfs))
-		SSlighting.changed_turfs = list()
-	if(!istype(SSlighting.changed_lights))
-		SSlighting.changed_lights = list()
+		var/datum/lighting_corner/C = A
 
-	for(var/thing in SSlighting.changed_lights)
-		var/datum/light_source/LS = thing
-		spawn(-1)			//so we don't crash the loop (inefficient)
-			LS.check()
+		C.update_overlays()
 
-	for(var/thing in changed_turfs)
-		var/turf/T = thing
-		if(T.lighting_changed)
-			spawn(-1)
-				T.redraw_lighting()
+		C.needs_update = FALSE
 
-	var/msg = "## DEBUG: [time2text(world.timeofday)] [name] subsystem restarted. Reports:\n"
-	for(var/varname in SSlighting.vars)
-		switch(varname)
-			if("tag","bestF","type","parent_type","vars")
-				continue
-			else
-				var/varval1 = SSlighting.vars[varname]
-				var/varval2 = vars[varname]
-				if(istype(varval1,/list))
-					varval1 = "/list([length(varval1)])"
-					varval2 = "/list([length(varval2)])"
-				msg += "\t [varname] = [varval1] -> [varval2]\n"
-	world.log << msg
+		corner_updates++
+
+	lighting_update_overlays_old = lighting_update_overlays //Same as above.
+	lighting_update_overlays = list()
+
+	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
+		if(overlay_updates >= MAX_OVERLAY_UPDATES_PER_WORK)
+			lighting_update_overlays += O
+			continue // DON'T break, we're adding stuff back into the update queue.
+
+		O.update_overlay()
+		O.needs_update = 0
+		overlay_updates++
+		scheck()
+
+#undef MAX_LIGHT_UPDATES_PER_WORK
+#undef MAX_CORNER_UPDATES_PER_WORK
+#undef MAX_OVERLAY_UPDATES_PER_WORK
