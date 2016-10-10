@@ -150,7 +150,7 @@
 			// Lack of light hurts non-mushrooms
 			if(isturf(loc))
 				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.lighting_lumcount
+				var/lightAmt = currentTurf.get_lumcount()
 				if(myseed.plant_type == PLANT_MUSHROOM)
 					if(lightAmt < 2)
 						adjustHealth(-1 / rating)

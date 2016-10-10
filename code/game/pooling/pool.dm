@@ -151,8 +151,7 @@ var/list/pooledvariables = list()
 		GlobalPool[D.type] = list()
 
 	D.Destroy()
-	D.resetVariables()
-	D.disposed = 1 //Set to stop processing while pooled
+	D.ResetVars()
 
 	#ifdef DEBUG_DATUM_POOL
 	if(D in GlobalPool[D.type])

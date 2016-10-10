@@ -235,13 +235,13 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		return 0
 	operating = 1
 	do_animate("opening")
-	SetOpacity(0)
+	set_opacity(0)
 	sleep(5)
 	density = 0
 	sleep(5)
 	layer = OPEN_DOOR_LAYER
 	update_icon()
-	SetOpacity(0)
+	set_opacity(0)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -270,7 +270,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 	sleep(5)
 	update_icon()
 	if(visible && !glass)
-		SetOpacity(1)
+		set_opacity(1)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

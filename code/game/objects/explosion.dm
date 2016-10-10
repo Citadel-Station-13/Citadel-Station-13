@@ -66,7 +66,7 @@
 
 	//postpone processing for a bit
 	var/postponeCycles = max(round(devastation_range/8),1)
-	//SSlighting.postpone(postponeCycles) [NEEDS FIX AAAHHH]
+	SSlighting.postpone(postponeCycles)
 	SSmachine.postpone(postponeCycles)
 
 	if(heavy_impact_range > 1)

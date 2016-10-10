@@ -12,12 +12,20 @@
 /var/list/lighting_update_corners_old   = list()    // List of lighting corners  currently being updated.
 /var/list/lighting_update_overlays_old  = list()    // List of lighting overlays currently being updated.
 
-/datum/lightingsub/lighting/New()
+/datum/subsystem/lighting
+	name = "lighting"
+	init_order = 5
+	wait = 50
+	display_order = 100
+	priority = 50
 
+
+/datum/subsystem/lighting/New()
 	create_all_lighting_overlays()
 	create_all_lighting_corners()
+	NEW_SS_GLOBAL(SSlighting)
 
-/datum/lightingsub/lighting/doWork()
+/datum/subsystem/lighting/fire()
 	// Counters
 	var/light_updates   = 0
 	var/corner_updates  = 0
