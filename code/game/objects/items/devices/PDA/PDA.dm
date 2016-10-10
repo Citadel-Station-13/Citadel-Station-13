@@ -54,23 +54,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/pickup(mob/user)
 	..()
 	if(fon)
-		SetLuminosity(0)
-		user.AddLuminosity(f_lum)
+		set_light(0)
+		user.add_light(f_lum)
 
 /obj/item/device/pda/dropped(mob/user)
 	..()
 	if(fon)
-		user.AddLuminosity(-f_lum)
-		SetLuminosity(f_lum)
+		user.add_light(-f_lum)
+		set_light(f_lum)
 
 /obj/item/device/pda/New()
 	..()
 	if(fon)
 		if(!isturf(loc))
-			loc.AddLuminosity(f_lum)
-			SetLuminosity(0)
+			loc.add_light(f_lum)
+			set_light(0)
 		else
-			SetLuminosity(f_lum)
+			set_light(f_lum)
 	PDAs += src
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
@@ -344,15 +344,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				if(fon)
 					fon = 0
 					if(src in U.contents)
-						U.AddLuminosity(-f_lum)
+						U.add_light(-f_lum)
 					else
-						SetLuminosity(0)
+						set_light(0)
 				else
 					fon = 1
 					if(src in U.contents)
-						U.AddLuminosity(f_lum)
+						U.add_light(f_lum)
 					else
-						SetLuminosity(f_lum)
+						set_light(f_lum)
 			if("Medical Scan")
 				if(scanmode == 1)
 					scanmode = 0

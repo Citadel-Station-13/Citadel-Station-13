@@ -110,7 +110,7 @@
 	for(var/obj/effect/spacevine/SV in src)
 		qdel(SV)
 	..()
-	UpdateAffectingLights()
+	reconsider_lights()
 
 /datum/spacevine_mutation/space_covering/on_grow(obj/effect/spacevine/holder)
 	if(istype(holder.loc, /turf/open/space))
@@ -144,7 +144,7 @@
 
 /datum/spacevine_mutation/light/on_grow(obj/effect/spacevine/holder)
 	if(holder.energy)
-		holder.SetLuminosity(severity, 3)
+		holder.set_light(severity, 3)
 
 /datum/spacevine_mutation/toxicity
 	name = "toxic"

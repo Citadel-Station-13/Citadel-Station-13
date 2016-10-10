@@ -14,7 +14,7 @@
 /obj/effect/anomaly/New()
 	..()
 	poi_list |= src
-	SetLuminosity(initial(luminosity))
+	set_light(initial(luminosity))
 	aSignal = new(src)
 	aSignal.code = rand(1,100)
 

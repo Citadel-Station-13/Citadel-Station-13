@@ -146,7 +146,7 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	SetLuminosity(0)
+	set_light(0)
 	SSair.hotspots -= src
 	DestroyTurf()
 	if(istype(loc, /turf))

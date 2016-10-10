@@ -620,7 +620,7 @@ var/list/VVckey_edit = list("key", "ckey")
 			if(variable=="luminosity")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
-				O.SetLuminosity(var_new)
+				O.set_light(var_new)
 			else if(variable=="stat")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return

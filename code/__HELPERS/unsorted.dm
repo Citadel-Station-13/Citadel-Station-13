@@ -378,7 +378,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	density = 0
 	see_in_dark = 1e6
 	anchored = 1
-	flags = INVULNERABLE
 
 // Finds ALL mobs on turfs in line of sight. Similar to "in dview", but catches mobs that are not on a turf (e.g. inside a locker or such).
 /proc/get_all_mobs_in_dview(var/turf/T, var/range = world.view, var/list/ignore_types = list())

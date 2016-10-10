@@ -52,9 +52,9 @@
 			if(istype(t, /turf/open/space))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			set_light(4,1)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)

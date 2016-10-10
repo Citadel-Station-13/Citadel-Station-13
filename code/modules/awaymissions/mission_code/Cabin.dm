@@ -54,10 +54,10 @@
 
 /obj/structure/fireplace/proc/toggleFireplace()
 	if(active)
-		SetLuminosity(8)
+		set_light(8)
 		icon_state = "fireplace-active"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "fireplace"
 
 /obj/structure/fireplace/extinguish()

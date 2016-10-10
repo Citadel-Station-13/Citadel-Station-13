@@ -83,7 +83,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -274,7 +274,7 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
@@ -385,9 +385,9 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		src.set_light(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		src.set_light(0)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/P)
 	. = ..()

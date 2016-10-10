@@ -584,8 +584,8 @@
 
 /obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
 	..()
-	user.AddLuminosity(luminosity)
+	user.add_light(luminosity)
 
 /obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
 	..()
-	user.AddLuminosity(-luminosity)
+	user.add_light(-luminosity)
