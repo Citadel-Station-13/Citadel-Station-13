@@ -4,6 +4,8 @@
 #define MAX_CORNER_UPDATES_PER_WORK  1000
 #define MAX_OVERLAY_UPDATES_PER_WORK 2000
 
+var/datum/subsystem/lighting/SSlighting
+
 /var/list/lighting_update_lights    = list()    // List of lighting sources  queued for update.
 /var/list/lighting_update_corners   = list()    // List of lighting corners  queued for update.
 /var/list/lighting_update_overlays  = list()    // List of lighting overlays queued for update.
