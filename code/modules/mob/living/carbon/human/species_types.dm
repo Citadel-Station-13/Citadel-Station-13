@@ -1133,8 +1133,8 @@ datum/species/canid
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	safe_toxins_max = 32 //Too much of anything is bad.
 	roundstart = 1
-	whitelisted = 1
-	whitelist = list("talkingcactus") //testing whitelisting
+//	whitelisted = 1
+//	whitelist = list("talkingcactus") //testing whitelisting
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -1175,7 +1175,7 @@ datum/species/canid
 	punchdamagehigh = 14
 	punchstunthreshold = 13
 	blacklisted = 1
-	roundstart = 1
+	roundstart = 0
 	whitelist = 1
 	whitelist = list("talkingcactus")
 
