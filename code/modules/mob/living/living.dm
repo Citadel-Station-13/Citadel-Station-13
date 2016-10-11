@@ -640,10 +640,25 @@ Sorry Giacom. Please don't be mad :(
 	..()
 
 /mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/species = H.dna.species.id
+		if(species == "xeno") //Here we can define custom blood trails for different species; copy+paste the xenos species to add new ones.
+			if(getBruteLoss() < 300)
+				return pick (list("xltrails_1", "xltrails2"))
+			else
+				return pick (list("xttrails_1", "xttrails2"))
+		else
+			if(getBruteLoss() < 300)
+				return pick("ltrails_1", "ltrails_2")
+			else
+				return pick("trails_1", "trails_2")
+
 	else
-		return pick("trails_1", "trails_2")
+		if(getBruteLoss() < 300)
+			return pick("ltrails_1", "ltrails_2")
+		else
+			return pick("trails_1", "trails_2")
 
 /mob/living/verb/resist()
 	set name = "Resist"
