@@ -377,6 +377,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
 	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
+	//Xeno features
+	S["feature_xeno_tail"]				>> features["xenotail"]
+	S["feature_xeno_dors"]				>> features["xenodorsal"]
+	S["feature_xeno_head"]				>> features["xenohead"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -451,6 +455,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
 	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
 	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
+	//Xeno features
+	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
+	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
+	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -508,6 +516,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				<< features["mam_tail"]
 	S["feature_mam_ears"]				<< features["mam_ears"]
 	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
+	//Xeno features
+	S["feature_xeno_tail"]				<< features["xenotail"]
+	S["feature_xeno_dors"]				<< features["xenodorsal"]
+	S["feature_xeno_head"]				<< features["xenohead"]
+
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]

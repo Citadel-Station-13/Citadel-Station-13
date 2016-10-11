@@ -94,6 +94,8 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
 		var/obj/item/clothing/mask/MFP = src.wear_mask
 		number += MFP.flash_protect
+	if(istype(src.dna.species, /datum/species/xeno))		//Xenos don't have eyes.
+		number += 2											//So give them protection from flashes.
 	return number
 
 /mob/living/carbon/human/check_ear_prot()
