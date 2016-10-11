@@ -33,7 +33,7 @@
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
 		new /datum/data/mining_equipment("whetstone",           /obj/item/weapon/sharpener,                                             1000),
-		new /datum/data/mining_equipment("Survival Medipen Bundle",		/obj/item/weapon/storage/box/medipens/utility1,	 				1500),
+		new /datum/data/mining_equipment("Survival Medipen Bundle",		/obj/item/weapon/storage/box/medipens/utility1,	 				2000),
 		new /datum/data/mining_equipment("Fulton Pack",         /obj/item/weapon/extraction_pack,                                    	1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
