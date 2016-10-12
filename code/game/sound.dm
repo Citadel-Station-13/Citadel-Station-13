@@ -117,6 +117,23 @@
 				soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 			if ("ricochet")
 				soundin = pick(	'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+			if ("predsay")
+				soundin = pick('sound/voice/pred/predsay1.ogg', 'sound/voice/pred/predsay2.ogg', 'sound/voice/pred/predsay3.ogg')
+			if ("predroar")
+				soundin = pick('sound/voice/pred/predroar1.ogg', 'sound/voice/pred/predroar2.ogg')
+			if ("alienscreech")
+				soundin = pick('sound/alien/Voice/screech1.ogg', 'sound/alien/Voice/screech2.ogg', 'sound/alien/Voice/screech3.ogg', 'sound/alien/Voice/screech4.ogg')
+			//Scream emote sounds
+			if ("malescream")
+				soundin = pick('sound/voice/scream/scream_m1.ogg', 'sound/voice/scream/scream_m2.ogg')
+			if ("femscream")
+				soundin = pick('sound/voice/scream/scream_f1.ogg', 'sound/voice/scream/scream_f2.ogg', 'sound/voice/scream/scream_f3.ogg')
+			if ("drakescream")
+				soundin = pick('sound/voice/scream/drake1.ogg', 'sound/voice/scream/drake2.ogg')
+			if ("birdscream")
+				soundin = pick('sound/voice/scream/bird1.ogg', 'sound/voice/scream/bird2.ogg')
+			if ("mothscream")
+				soundin = pick('sound/voice/scream/moth1.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
