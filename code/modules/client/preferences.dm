@@ -110,7 +110,8 @@ var/list/preferences_datums = list()
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
-			return
+			if(load_vore_preferences())
+				return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)

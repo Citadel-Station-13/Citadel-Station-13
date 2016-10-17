@@ -490,6 +490,40 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return 1
 
+/datum/preferences/proc/load_vore_preferences(slot)
+	if(!path)				return 0
+	if(!fexists(path))		return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+	if(!slot)	slot = default_slot
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	if(slot != default_slot)
+		default_slot = slot
+		S["default_slot"] << slot
+	S.cd = "/character[slot]"
+
+	S["belly_prefs"]	>> belly_prefs
+	S["digestable"]	>> digestable
+
+	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
+
+	if(!belly_prefs)
+		belly_prefs = list()
+
+	return 1
+
+/datum/preferences/proc/save_vore_preferences()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/character[default_slot]"
+
+	S["belly_prefs"]	<< belly_prefs
+	S["digestable"]	<< digestable
+
+	return 1
+
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
 /*
