@@ -197,3 +197,9 @@
 	desc = "Pretty much what you'd expect..."
 	icon_state = "ratburger"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
+	name = "bacon burger"
+	desc = "The perfect combination of all things American."
+	icon_state = "baconburger"
+	bonus_reagents = list("nutriment" = 8, "vitamin" = 1)
