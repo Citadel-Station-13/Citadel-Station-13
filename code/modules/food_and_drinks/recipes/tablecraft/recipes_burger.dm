@@ -263,4 +263,4 @@
 	)
 
 	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
-	category = CAT_BURGER
+	category = CAT_FOOD

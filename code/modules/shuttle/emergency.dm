@@ -326,7 +326,15 @@
 				launch_status = ENDGAME_LAUNCHED
 				timer = world.time
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
+				for(var/mob/Player in mob_list)
+					if(!istype(Player,/mob/living/silicon)) || if(!istype(Player,/mob/living/simple_animal))
+						if(Player.mind)
+							if(Player.stat != DEAD && !isbrain(Player))
+								if(Player.z != 2)
+									Player << sound('sound/ambience/deserted.ogg', repeat = 0, wait = 0, volume = 50, channel = 1)
+
 		if(SHUTTLE_ESCAPE)
+
 
 			if(time_left <= 50 && !end_sound_played) //4 seconds left:Hyperspace trip completed. - should sync up with the landing
 				end_sound_played = 1 //Only rev them up once.
