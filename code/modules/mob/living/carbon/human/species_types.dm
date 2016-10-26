@@ -522,7 +522,7 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "golem"
-	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NOAROUSAL)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
@@ -628,7 +628,7 @@
 	blacklisted = 1
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT,NOAROUSAL)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
 
 /*
@@ -643,7 +643,7 @@
 	sexes = 0
 	blacklisted = 1
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
+	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER,NOAROUSAL)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
 
@@ -699,7 +699,7 @@
 	darksight = 3
 	say_mod = "gibbers"
 	sexes = 0
-	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS)
+	specflags = list(NOBLOOD,NOBREATH,VIRUSIMMUNE,NOGUNS,NOAROUSAL)
 	mutant_organs = list(/obj/item/organ/tongue/abductor)
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
@@ -713,7 +713,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
-	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER)
+	specflags = list(NOBLOOD,RADIMMUNE,NOTRANSSTING,VIRUSIMMUNE,NOHUNGER,NOAROUSAL)
 	safe_oxygen_min = 0 //We don't breath this
 	safe_toxins_min = 16 //We breath THIS!
 	safe_toxins_max = 0
@@ -763,7 +763,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	id = "synth"
 	say_mod = "beep boops" //inherited from a user's real species
 	sexes = 0
-	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //all of these + whatever we inherit from the real species
+	specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER,NOAROUSAL) //all of these + whatever we inherit from the real species
 	safe_oxygen_min = 0
 	safe_toxins_min = 0
 	safe_toxins_max = 0
@@ -775,7 +775,7 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = null
 	exotic_damage_overlay = "synth"
 	limbs_id = "synth"
-	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
+	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER,NOAROUSAL) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
 	roundstart = 0
@@ -906,7 +906,7 @@ SYNDICATE BLACK OPS
 	attack_sound = "sound/weapons/resonator_blast.ogg"
 	blacklisted = 1
 	use_skintones = 0
-	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
+	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER,NOAROUSAL)
 	sexes = 0
 
 /datum/species/angel
@@ -1191,11 +1191,17 @@ datum/species/canid
 	H.equipOutfit(O, visualsOnly)
 	return 0
 
-/datum/species/octopus
+/datum/species/cephalopod
+	name = "Cephalopod"
+	id = "cephalopod"
 	blacklisted = 1
-/datum/species/carp
+/datum/species/fish
+	name = "Fish"
+	id = "fish"
 	blacklisted = 1
-/datum/species/horse
+/datum/species/equid
+	name = "Equid"
+	id = "equid"
 	blacklisted = 1
 
 ///////////////////

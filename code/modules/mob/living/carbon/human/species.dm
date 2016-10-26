@@ -65,6 +65,9 @@
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
 
+	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
+	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relived
+
 	// species flags. these can be found in flags.dm
 	var/list/specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
 
@@ -110,7 +113,6 @@ mob/living/carbon/human/proc/get_species()
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	..()
-
 
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)

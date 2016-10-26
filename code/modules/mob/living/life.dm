@@ -24,6 +24,8 @@
 
 		//Random events (vomiting etc)
 		handle_random_events()
+	if(canbearoused)
+		handle_arousal()
 
 		. = 1
 
@@ -47,6 +49,8 @@
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
 
+/mob/living/proc/handle_arousal()
+	return
 
 /mob/living/proc/handle_breathing()
 	return

@@ -1,5 +1,6 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
+	canbearoused = 1
 
 /mob/living/carbon/New()
 	create_reagents(1000)

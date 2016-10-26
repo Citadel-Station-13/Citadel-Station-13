@@ -375,6 +375,16 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_stamina)
 		update_stamina()
 
+/mob/living/proc/getArousalLoss()
+	return arousalloss
+
+/mob/living/proc/adjustArousalLoss(amount, updating_arousal=1)
+	if(status_flags & GODMODE)
+		return 0
+	arousalloss = Clamp(arousalloss + amount, 0, 100)
+//	if(updating_arousal)
+//		updatearousal()
+
 /mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
@@ -394,7 +404,7 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='notice'>You are already sleeping.</span>"
 		return
 	else
-		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+		if(alert(src, "Are you sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(20) //Short nap
 	update_canmove()
 
@@ -1061,3 +1071,8 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form!</span>"
+
+/mob/living/proc/update_arousal()
+	return
+
+/mob/living/carbon/update_stamina()

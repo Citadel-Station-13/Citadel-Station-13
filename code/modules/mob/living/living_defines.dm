@@ -18,6 +18,8 @@
 	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
 	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this.
+	var/arousalloss = 0		//How aroused the mob is.
+	var/canbearoused = 0	//Mob-level disabler for arousal.
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for

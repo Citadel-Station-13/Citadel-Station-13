@@ -25,11 +25,13 @@
 			adjustCloneLoss(damage * blocked)
 		if(STAMINA)
 			adjustStaminaLoss(damage * blocked)
+		if(AROUSAL)
+			adjustArousalLoss(damage * blocked)
 	updatehealth()
 	return 1
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0, arousal = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -44,6 +46,8 @@
 		apply_damage(clone, CLONE, def_zone, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, def_zone, blocked)
+	if(arousal)
+		apply_damage(arousal, AROUSAL, def_zone, blocked)
 	return 1
 
 
