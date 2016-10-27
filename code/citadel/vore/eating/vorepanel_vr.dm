@@ -439,10 +439,11 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!user.save_vore_prefs())
-			user << "<span class='warning'>ERROR: Preferences failed to save!</span>"
+		if(user.save_vore_prefs())
+			user << "<span class='notice'>Saved belly preferences.</span>"
 		else
-			user << "<span class='notice'>Preferences saved!</span>"
+			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
+			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable. Don't abuse this button by toggling it back and forth to extend a scene or whatever, or you'll make the admins cry. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")

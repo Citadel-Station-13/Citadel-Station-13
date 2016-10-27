@@ -142,8 +142,13 @@
 //		prey.anchored.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.forceMove(owner)
-	internal_contents |= prey
+	prey.loc = owner
+
+	var/datum/belly/B = check_belly(owner)
+	if(B)
+		B.internal_contents += prey
+
+//	internal_contents += prey
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -241,9 +246,8 @@
 				subprey << "As [M] melts away around you, you find yourself in [owner]'s [name]"
 
 	//Drop all items into the belly.
-	if (config.items_survive_digestion)
-		for (var/obj/item/W in M)
-			_handle_digested_item(W)
+	for (var/obj/item/W in M)
+		_handle_digested_item(W)
 
 	//Reagent transfer
 	if(M.reagents && istype(M.reagents,/datum/reagents))

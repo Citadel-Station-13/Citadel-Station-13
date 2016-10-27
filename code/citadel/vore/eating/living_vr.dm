@@ -8,6 +8,7 @@
 //
 // Hook for generic creation of stuff on new creatures
 //
+/*
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
@@ -60,7 +61,7 @@
 
 	//Return 1 to hook-caller
 	return 1
-
+*/
 //
 // Handle being clicked, perhaps with something to devour
 //
