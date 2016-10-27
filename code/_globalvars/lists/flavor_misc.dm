@@ -16,6 +16,7 @@ var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Socks
 var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
+
 	//Lizard Bits (all datum lists indexed by name)
 var/global/list/body_markings_list = list()
 var/global/list/tails_list_lizard = list()
@@ -34,11 +35,23 @@ var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()
 var/global/list/r_wings_list = list()
 
-	//Mammal Specific Mutant Human Bits
+	//Mammal Species
 var/global/list/mam_body_markings_list = list()
 var/global/list/mam_ears_list = list()
 var/global/list/mam_tails_list = list()
 var/global/list/mam_tails_animated_list = list()
+
+	//Exotic Species
+var/global/list/exotic_tails_list = list()
+var/global/list/exotic_tails_animated_list = list()
+var/global/list/exotic_ears_list = list()
+var/global/list/exotic_head_list = list()
+var/global/list/exotic_back_list = list()
+
+	//Xenomorph Species
+var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
+var/global/list/xeno_tail_list = list()
+var/global/list/xeno_dorsal_list = list()
 
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things

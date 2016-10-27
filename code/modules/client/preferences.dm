@@ -63,7 +63,11 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None")
+	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth",
+		"tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None",
+		"wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
+		"mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
+		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -322,7 +326,7 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
-//mammal bodyparts
+//Mammal bodyparts
 				if("mam_body_markings" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
@@ -347,6 +351,34 @@ var/list/preferences_datums = list()
 					dat += "<h3>Ears</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
+
+					dat += "</td>"
+
+//Xeno Bodyparts
+				if("xenohead" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Head/Caste</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("xenotail" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Tail</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("xenodorsal" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Dorsal Tubes</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -959,18 +991,18 @@ var/list/preferences_datums = list()
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in get_racelist(user)
 
 					if(result)
 						var/newtype = roundstart_species[result]
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor"] = pref_species.default_color
-						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor2"] = pref_species.default_color
-						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
+						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.specflags) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
 							features["mcolor3"] = pref_species.default_color
 
 				if("mutant_color")
@@ -1023,7 +1055,13 @@ var/list/preferences_datums = list()
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
 					if(new_tail)
 						features["mam_tail"] = new_tail
-
+/*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
+				if("mam_snout")
+					var/new_snout
+					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in mam_snouts_list
+					if(new_snout)
+						features["snout"] = new_snout
+*/
 				if("snout")
 					var/new_snout
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -1077,6 +1115,25 @@ var/list/preferences_datums = list()
 					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in mam_body_markings_list
 					if(new_mam_body_markings)
 						features["mam_body_markings"] = new_mam_body_markings
+
+				//Xeno Bodyparts
+				if("xenohead")//Head or caste type
+					var/new_head
+					new_head = input(user, "Choose your character's caste:", "Character Preference") as null|anything in xeno_head_list
+					if(new_head)
+						features["xenohead"] = new_head
+
+				if("xenotail")//Currently one one type, more maybe later if someone sprites them. Might include animated variants in the future.
+					var/new_tail
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in xeno_tail_list
+					if(new_tail)
+						features["xenotail"] = new_tail
+
+				if("xenodorsal")
+					var/new_dors
+					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in xeno_dorsal_list
+					if(new_dors)
+						features["xenodorsal"] = new_dors
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
