@@ -327,7 +327,7 @@
 				timer = world.time
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 				for(var/mob/Player in mob_list)
-					if(!istype(Player,/mob/living/silicon)) || if(!istype(Player,/mob/living/simple_animal))
+					if(!istype(Player,/mob/living/silicon || /mob/living/simple_animal))
 						if(Player.mind)
 							if(Player.stat != DEAD && !isbrain(Player))
 								if(Player.z != 2)
