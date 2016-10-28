@@ -1,8 +1,0 @@
-{
-  "cmd": "dm.exe",
-  "args": [ "E:/Github/Citadel-Station-13/tgstation.dme" ],
-  "sh": false,
-  "errorMatch": [
-      "\n(?<file>[\\\\\/0-9a-zA-Z\\._]+):(?<line>\\d+).*"
-  ]
-}
