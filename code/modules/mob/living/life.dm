@@ -24,8 +24,8 @@
 
 		//Random events (vomiting etc)
 		handle_random_events()
-	if(canbearoused)
-		handle_arousal()
+		if(canbearoused)
+			handle_arousal()
 
 		. = 1
 

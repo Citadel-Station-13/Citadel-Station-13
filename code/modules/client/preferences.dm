@@ -41,24 +41,6 @@ var/list/preferences_datums = list()
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 
-	var/vore_banned_methods = 0
-	var/vore_extra_bans = 65535
-	var/list/vore_ability = list(
-	"1"=2,
-	"2"=0,
-	"4"=0,
-	"8"=0,
-	"16"=0,
-	"32"=0,
-	"64"=1,
-	"128"=0,
-	"256"=2) //BAAAAD way to do this
-	var/character_size="normal"
-	var/be_taur=0
-
-	var/list/p_cock=list("has"=0,"type"="human","color"="900","sheath"="FFF")
-	var/p_vagina=0
-
 	//character preferences
 	var/real_name						//our character's name
 	var/be_random_name = 0				//whether we'll have a random name every round
@@ -76,11 +58,42 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth",
-		"tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None",
-		"wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
-		"mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None")
+	var/list/features = list(
+		"mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF",
+		//cock features
+		"has_cock"			= FALSE,
+		"cock_type"			= "human",
+		"cock_size"			= COCK_SIZE_NORMAL,
+		"cock_color"		= "ffe0bd",
+		"has_sheath"		= FALSE,
+		"sheath_color"		= "ffcd94",
+		//balls features
+		"has_balls" 		= FALSE,
+		"balls_color" 		= "ffe0bd",
+		"balls_size" 		= BALLS_SIZE_NORMAL,
+		"balls_fluid" 		= "semen",
+		//breast features
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= "ffe0bd",
+		"breasts_size" 		= BREASTS_SIZE_C,
+		"breasts_fluid" 	= "milk",
+		//mutant features
+		"tail_lizard" 		= "Smooth",
+		"tail_human" 		= "None",
+		"snout" 			= "Round",
+		"horns" 			= "None",
+		"ears" 				= "None",
+		"wings" 			= "None",
+		"frills" 			= "None",
+		"spines" 			= "None",
+		"body_markings" 	= "None",
+		"mam_body_markings" = "None",
+		"mam_ears" 			= "None",
+		"mam_tail" 			= "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" 		= "None",
+		"xenohead" 			= "None",
+		"xenotail" 			= "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview

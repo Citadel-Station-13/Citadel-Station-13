@@ -45,6 +45,7 @@
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
+	var/obj/screen/arousal
 
 /datum/hud/New(mob/owner)
 	mymob = owner

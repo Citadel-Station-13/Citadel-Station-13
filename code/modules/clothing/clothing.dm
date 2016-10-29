@@ -208,7 +208,7 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	var/blood_state = BLOOD_STATE_NOT_BLOODY
-	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_SEMEN = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	var/can_hold_items = 0//if set to 1, the shoe can hold knives and edaggers
 	var/obj/held_item
 	var/list/valid_held_items = list(/obj/item/weapon/kitchen/knife, /obj/item/weapon/pen, /obj/item/weapon/switchblade, /obj/item/weapon/scalpel, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/dnainjector)//can hold both regular pens and energy daggers. made for your every-day tactical librarians/murderers.

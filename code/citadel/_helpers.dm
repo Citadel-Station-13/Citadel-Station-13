@@ -1,12 +1,5 @@
-//THIS FILE CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
+//THIS FILE CONTAINS CONSTANTS, PROCS, AND OTHER THINGS//
 ////////////////////////////////////////////////////////////////////
-
-var/const/SIZEPLAY_TINY=1
-var/const/SIZEPLAY_MICRO=2
-var/const/SIZEPLAY_NORMAL=3
-var/const/SIZEPLAY_MACRO=4
-var/const/SIZEPLAY_HUGE=5
-
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)
@@ -27,8 +20,9 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
 		var/list/wlist = S.whitelist
-		if(S.whitelisted && (wlist.Find(user.ckey) || wlist.Find(user.key) || user.client.holder))  //If your ckey is on the species whitelist or you're an admin:
-			whitelisted_species_list[S.id] = S.type 											//Add the species to their available species list.
-		else if(!S.whitelisted && S.roundstart)														//Normal roundstart species will be handled here.
+		if(user.client)//runtime prevention
+			if(S.whitelisted && (wlist.Find(user.ckey) || wlist.Find(user.key) || user.client.holder))  //If your ckey is on the species whitelist or you're an admin:
+				whitelisted_species_list[S.id] = S.type 											//Add the species to their available species list.
+		if(!S.whitelisted && S.roundstart)														//Normal roundstart species will be handled here.
 			whitelisted_species_list[S.id] = S.type
 	return whitelisted_species_list

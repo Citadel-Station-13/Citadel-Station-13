@@ -74,7 +74,9 @@
 		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
 		L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
 		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-
+		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+		L[DNA_COCK_BLOCK] = construct_block(cock_types_list.Find(features["cock_type"]), cock_types_list.len)
+		L[DNA_COCK_COLOR_BLOCK] = sanitize_hexcolor(features["cock_color"])
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
 			. += L[i]
@@ -124,6 +126,8 @@
 			setblock(uni_identity, blocknumber, construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len))
+		if(DNA_COCK_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(cock_types_list.Find(features["cock_type"]), cock_types_list.len))
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -229,7 +233,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(get_racelist(src))
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
@@ -246,6 +250,7 @@ mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutat
 	skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
 	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
 	facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+	hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 	hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
 	if(icon_update)
 		update_body()

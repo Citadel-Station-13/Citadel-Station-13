@@ -66,7 +66,7 @@
 	var/darksight = 2
 
 	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
-	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relived
+	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relieved
 
 	// species flags. these can be found in flags.dm
 	var/list/specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS)
@@ -939,6 +939,9 @@ mob/living/carbon/human/proc/get_species()
 		H.see_invisible = H.see_override
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
+	return 0
+
+/datum/species/proc/update_arousal_hud(mob/living/carbon/human/H)
 	return 0
 
 /datum/species/proc/handle_mutations_and_radiation(mob/living/carbon/human/H)

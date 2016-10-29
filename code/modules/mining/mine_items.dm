@@ -599,6 +599,7 @@
 
 /obj/item/device/t_scanner/motionTracker/proc/flick_blip(turf/T)
 	var/image/B = image('icons/obj/mining.dmi', T, icon_state = "blip")
+	B.mouse_opacity = 0
 	var/list/nearby = list()
 	for(var/mob/M in viewers(T))
 		if(M.client)

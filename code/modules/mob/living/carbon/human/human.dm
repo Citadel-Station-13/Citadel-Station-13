@@ -16,6 +16,7 @@
 /mob/living/carbon/human/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/mob_masturbate
 
 	//initialize limbs first
 	bodyparts = newlist(/obj/item/bodypart/chest, /obj/item/bodypart/head, /obj/item/bodypart/l_arm,
@@ -1002,6 +1003,54 @@
 					hud_used.healthdoll.add_overlay(image('icons/mob/screen_gen.dmi',"[t]6"))
 			else
 				hud_used.healthdoll.icon_state = "healthdoll_DEAD"
+
+/mob/living/carbon/human/update_arousal_hud()
+	if(!client || !hud_used)
+		return 0
+	if(dna.species.update_arousal_hud())
+		return 0
+	if(!canbearoused)
+		hud_used.arousal.icon_state = "arousal0"
+		return 0
+	else
+		if(hud_used.arousal)
+			if(stat == DEAD)
+				hud_used.arousal.icon_state = "arousal0"
+				return 1
+			if(getArousalLoss() == max_arousal)
+				hud_used.arousal.icon_state = "arousal100"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 90)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal90"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 80)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal80"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 70)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal70"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 60)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal60"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 50)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal50"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 40)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal40"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 30)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal30"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 20)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal10"
+				return 1
+			if(getArousalLoss() >= (max_arousal / 100) * 10)//M O D U L A R ,   W O W
+				hud_used.arousal.icon_state = "arousal10"
+				return 1
+			else
+				hud_used.arousal.icon_state = "arousal0"
+
+
 
 /mob/living/carbon/human/fully_heal(admin_revive = 0)
 	CHECK_DNA_AND_SPECIES(src)

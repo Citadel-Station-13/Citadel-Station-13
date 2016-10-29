@@ -56,6 +56,60 @@ var/global/list/xeno_dorsal_list = list()
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
 
+
+//Vertical Lists are easier to read. Citadel Code ahead.
+//dick stuff
+var/global/list/cock_types_list = list(
+	"None" 		= "none",
+	"Human" 	= "human",
+	"Knotted" 	= "knotted",
+	"Flared" 	= "flared"
+	)
+
+var/global/list/cock_functions_list = list(
+	"Penis" 		= "penis",
+	"Ovipositor"	= "ovi"
+	)
+
+var/global/list/cock_size_list = list(
+	"Small" = COCK_SIZE_SMALL,
+	"Average" = COCK_SIZE_NORMAL,
+	"Large" = COCK_SIZE_BIG		//We don't have sprites for anything bigger than this, so avoid going higher without doing the sprite work.
+	)
+
+//balls stuff
+var/global/list/balls_size_list = list(
+	"Small" 	= BALLS_SIZE_SMALL,
+	"Average" 	= BALLS_SIZE_NORMAL,
+	"Large"		= BALLS_SIZE_BIG
+	)
+
+var/global/list/balls_fluid_list = list(
+	"Semen" = "semen",
+	"Honey" = "honey"
+	)
+
+//breast stuff
+var/global/list/breasts_size_list = list(
+	"A"		= BREASTS_SIZE_A,
+	"B"		= BREASTS_SIZE_B,
+	"C"		= BREASTS_SIZE_C,
+	"D"		= BREASTS_SIZE_D,
+	"DD"	= BREASTS_SIZE_DD,
+	"E"		= BREASTS_SIZE_E,
+	"EE"	= BREASTS_SIZE_EE,
+	"F"		= BREASTS_SIZE_F,
+	"FF"	= BREASTS_SIZE_FF,
+	"G"		= BREASTS_SIZE_G,
+	"GG"	= BREASTS_SIZE_GG,
+	"H"		= BREASTS_SIZE_H,
+	"HH"	= BREASTS_SIZE_HH
+	)
+
+var/global/list/breasts_fluid_list = list(
+	"Breast Milk" = "milk",
+	"Honey" = "honey"
+	)
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"

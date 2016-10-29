@@ -517,3 +517,40 @@
 	result = "royal_bee_jelly"
 	required_reagents = list("mutagen" = 10, "honey" = 40)
 	result_amount = 5
+
+/datum/chemical_reaction/aphro
+	name = "crocin"
+	id = "aphro"
+	result = "aphro"
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "water" = 1)
+	result_amount = 6
+	required_temp = 400
+	mix_message = "The mixture boils off a pink vapor..."//The water boils off, leaving the crocin
+
+/datum/chemical_reaction/aphroplus
+	name = "crocin"
+	id = "aphro+"
+	result = "aphro+"
+	required_reagents = list("aphro" = 6, "phenol" = 1)
+//	required_catalysts = list("silver" = 1)//I'm unsure about this.
+	result_amount = 1
+	required_temp = 400
+	mix_message = "The mixture rapidly condenses and darkens in color..."
+
+/datum/chemical_reaction/anaphro
+	name = "camphor"
+	id = "anaphro"
+	result = "anaphro"
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "sulfur" = 1)
+	result_amount = 6
+	required_temp = 400
+	mix_message = "The mixture boils off a yellow, smelly vapor..."//Sulfur burns off, leaving the camphor
+
+/datum/chemical_reaction/anaphroplus
+	name = "pentacamphor"
+	id = "anaphro+"
+	result = "anaphro+"
+	required_reagents = list("anaphro" = 5, "acetone" = 1)
+	result_amount = 1
+	required_temp = 300
+	mix_message = "The mixture thickens and heats up slighty..."//Silver bonds the camphor
