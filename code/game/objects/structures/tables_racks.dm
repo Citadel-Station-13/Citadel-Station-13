@@ -227,7 +227,7 @@
 		return
 	if(disassembling)
 		user << "<span class='notice'>You start disassembling [src]...</span>"
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			new frame(src.loc)
 			for(var/i = 1, i <= buildstackamount, i++)
@@ -235,7 +235,7 @@
 			qdel(src)
 	else
 		user << "<span class='notice'>You start deconstructing [src]...</span>"
-		playsound(src.loc, I.usesound, 50, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			table_destroy()
@@ -610,4 +610,3 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		return
-
