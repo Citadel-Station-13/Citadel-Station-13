@@ -1,4 +1,3 @@
-
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
@@ -44,4 +43,3 @@
 	zone = "groin"
 	slot = "womb"
 	w_class = 3
-
