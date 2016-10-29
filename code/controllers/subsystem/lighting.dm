@@ -16,14 +16,16 @@ var/datum/subsystem/lighting/SSlighting
 
 /datum/subsystem/lighting
 	name = "lighting"
-	init_order = 5
-	wait = 50
-	display_order = 100
-	priority = 50
+	init_order = 1
+	wait = 5
+	display_order = 5
+	priority = 40
+	flags = SS_POST_FIRE_TIMING
 
 
 /datum/subsystem/lighting/New()
 	NEW_SS_GLOBAL(SSlighting)
+	return ..()
 
 /datum/subsystem/lighting/Initialize()
 	create_all_lighting_overlays()
