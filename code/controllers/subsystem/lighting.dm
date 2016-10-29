@@ -23,9 +23,11 @@ var/datum/subsystem/lighting/SSlighting
 
 
 /datum/subsystem/lighting/New()
+	NEW_SS_GLOBAL(SSlighting)
+
+/datum/subsystem/lighting/Initialize()
 	create_all_lighting_overlays()
 	create_all_lighting_corners()
-	NEW_SS_GLOBAL(SSlighting)
 
 /datum/subsystem/lighting/fire()
 	// Counters
