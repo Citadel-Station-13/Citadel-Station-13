@@ -29,6 +29,7 @@
 
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
+		world.log << "DEBUG: Starlight update called"
 
 
 // Builds a lighting overlay for us, but only if our area is dynamic.
@@ -41,6 +42,7 @@
 		GetFromPool(/atom/movable/lighting_overlay, src)
 		for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
+			world.log << "DEBUG: Starlight update called"
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
