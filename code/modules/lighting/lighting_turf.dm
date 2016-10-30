@@ -21,7 +21,6 @@
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
-	world.log << "DEBUG: lighting_clear_overlay called"
 	if (lighting_overlay)
 		returnToPool(lighting_overlay)
 
@@ -30,21 +29,15 @@
 
 	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
-		world.log << "DEBUG: Starlight update called"
-
 
 // Builds a lighting overlay for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
-	world.log << "DEBUG: lighting_build_overlay called"
 	if (lighting_overlay)
 		return
 
 	var/area/A = loc
 	if (A.dynamic_lighting)
 		GetFromPool(/atom/movable/lighting_overlay, src)
-		for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
-			S.update_starlight()
-			world.log << "DEBUG: Starlight update called"
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
@@ -108,9 +101,26 @@
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
+	var/old_opacity = opacity
+	var/old_dynamic_lighting = dynamic_lighting
+	var/old_affecting_lights = affecting_lights
+	var/old_lighting_overlay = lighting_overlay
+	var/old_corners = corners
+
 	for(var/obj/effect/decal/cleanable/decal in src.contents)
 		qdel(decal)
 
 	. = ..() //At this point the turf has changed
 
-	reconsider_lights()
+	lighting_corners_initialised = TRUE
+	recalc_atom_opacity()
+	lighting_overlay = old_lighting_overlay
+	affecting_lights = old_affecting_lights
+	corners = old_corners
+	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
+		reconsider_lights()
+	if(dynamic_lighting != old_dynamic_lighting)
+		if(dynamic_lighting)
+			lighting_build_overlay()
+		else
+			lighting_clear_overlay()

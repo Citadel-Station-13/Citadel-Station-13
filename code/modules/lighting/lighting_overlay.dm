@@ -31,6 +31,9 @@
 
 	update_overlay()
 
+	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		S.update_starlight()
+
 /atom/movable/lighting_overlay/Destroy()
 	global.all_lighting_overlays    -= src
 	global.lighting_update_overlays -= src
