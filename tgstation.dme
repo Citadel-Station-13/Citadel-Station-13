@@ -134,6 +134,7 @@
 #include "code\citadel\dogborgs.dm"
 #include "code\citadel\dogborgstuff.dm"
 #include "code\citadel\organs.dm"
+#include "code\citadel\overlays.dm"
 #include "code\citadel\pokemon.dm"
 #include "code\citadel\vore\hook-defs_vr.dm"
 #include "code\citadel\vore\trycatch_vr.dm"
