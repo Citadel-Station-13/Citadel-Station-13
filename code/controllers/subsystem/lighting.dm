@@ -1,8 +1,5 @@
 // Solves problems with lighting updates lagging shit
 // Max constraints on number of updates per doWork():
-#define MAX_LIGHT_UPDATES_PER_WORK   100
-#define MAX_CORNER_UPDATES_PER_WORK  1000
-#define MAX_OVERLAY_UPDATES_PER_WORK 2000
 
 var/datum/subsystem/lighting/SSlighting
 
@@ -17,7 +14,7 @@ var/datum/subsystem/lighting/SSlighting
 /datum/subsystem/lighting
 	name = "lighting"
 	init_order = 1
-	wait = 5
+	wait = 2
 	display_order = 5
 	priority = 40
 	flags = SS_POST_FIRE_TIMING
@@ -32,18 +29,10 @@ var/datum/subsystem/lighting/SSlighting
 	create_all_lighting_corners()
 
 /datum/subsystem/lighting/fire()
-	// Counters
-	var/light_updates   = 0
-	var/corner_updates  = 0
-	var/overlay_updates = 0
 
 	lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
 	lighting_update_lights = list()
 	for(var/datum/light_source/L in lighting_update_lights_old)
-		if(light_updates >= MAX_LIGHT_UPDATES_PER_WORK)
-			lighting_update_lights += L
-			continue // DON'T break, we're adding stuff back into the update queue.
-
 		if(L.check() || L.destroyed || L.force_update)
 			L.remove_lum()
 			if(!L.destroyed)
@@ -56,35 +45,16 @@ var/datum/subsystem/lighting/SSlighting
 		L.force_update = FALSE
 		L.needs_update = FALSE
 
-		light_updates++
-
 	lighting_update_corners_old = lighting_update_corners //Same as above.
 	lighting_update_corners = list()
 	for(var/A in lighting_update_corners_old)
-		if(corner_updates >= MAX_CORNER_UPDATES_PER_WORK)
-			lighting_update_corners += A
-			continue // DON'T break, we're adding stuff back into the update queue.
-
 		var/datum/lighting_corner/C = A
-
 		C.update_overlays()
-
 		C.needs_update = FALSE
-
-		corner_updates++
 
 	lighting_update_overlays_old = lighting_update_overlays //Same as above.
 	lighting_update_overlays = list()
 
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
-		if(overlay_updates >= MAX_OVERLAY_UPDATES_PER_WORK)
-			lighting_update_overlays += O
-			continue // DON'T break, we're adding stuff back into the update queue.
-
 		O.update_overlay()
 		O.needs_update = 0
-		overlay_updates++
-
-#undef MAX_LIGHT_UPDATES_PER_WORK
-#undef MAX_CORNER_UPDATES_PER_WORK
-#undef MAX_OVERLAY_UPDATES_PER_WORK

@@ -109,7 +109,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.add_light(3)
+		src.set_light(light_range + 3)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -119,7 +119,7 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.add_light(-3)
+		src.set_light(light_range - 3)
 		clear_alert("fire")
 		update_fire()
 

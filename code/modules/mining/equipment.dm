@@ -511,6 +511,9 @@
 	var/atom/mark = null
 	var/marked_image = null
 
+/obj/item/weapon/twohanded/required/mining_hammer/New()
+	set_light(luminosity)
+
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
@@ -581,11 +584,3 @@
 		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-
-/obj/item/weapon/twohanded/required/mining_hammer/pickup(mob/user)
-	..()
-	user.add_light(luminosity)
-
-/obj/item/weapon/twohanded/required/mining_hammer/dropped(mob/user)
-	..()
-	user.add_light(-luminosity)

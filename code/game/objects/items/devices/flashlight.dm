@@ -16,24 +16,18 @@
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		src.set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		src.set_light(0)
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.add_light(brightness_on)
-		else if(isturf(loc))
-			set_light(brightness_on)
+		src.set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		if(loc == user)
-			user.add_light(-brightness_on)
-		else if(isturf(loc))
-			set_light(0)
+		src.set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -84,21 +78,6 @@
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
-
-
-/obj/item/device/flashlight/pickup(mob/user)
-	..()
-	if(on)
-		user.add_light(brightness_on)
-		set_light(0)
-
-
-/obj/item/device/flashlight/dropped(mob/user)
-	..()
-	if(on)
-		user.add_light(-brightness_on)
-		set_light(brightness_on)
-
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -277,7 +256,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=ï¿½1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

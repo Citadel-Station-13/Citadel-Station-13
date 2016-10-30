@@ -298,37 +298,13 @@
 /obj/item/clothing/head/helmet/proc/update_helmlight(mob/user = null)
 	if(F)
 		if(F.on)
-			if(loc == user)
-				user.add_light(F.brightness_on)
-			else if(isturf(loc))
-				set_light(F.brightness_on)
+			set_light(F.brightness_on)
 		else
-			if(loc == user)
-				user.add_light(-F.brightness_on)
-			else if(isturf(loc))
-				set_light(0)
+			set_light(0)
 		update_icon()
 
 	else
-		if(loc == user)
-			user.add_light(-5)
-		else if(isturf(loc))
-			set_light(0)
+		set_light(0)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-
-/obj/item/clothing/head/helmet/pickup(mob/user)
-	..()
-	if(F)
-		if(F.on)
-			user.add_light(F.brightness_on)
-			set_light(0)
-
-
-/obj/item/clothing/head/helmet/dropped(mob/user)
-	..()
-	if(F)
-		if(F.on)
-			user.add_light(-F.brightness_on)
-			set_light(F.brightness_on)

@@ -30,23 +30,11 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/hardhat/pickup(mob/user)
-	..()
-	if(on)
-		user.add_light(brightness_on)
-		set_light(0)
-
-/obj/item/clothing/head/hardhat/dropped(mob/user)
-	..()
-	if(on)
-		user.add_light(-brightness_on)
-		set_light(brightness_on)
-
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
-	user.add_light(brightness_on)
+	set_light(brightness_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
-	user.add_light(-brightness_on)
+	set_light(0)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"
