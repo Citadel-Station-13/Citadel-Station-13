@@ -27,6 +27,10 @@
 	for (var/datum/lighting_corner/C in corners)
 		C.update_active()
 
+	for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		S.update_starlight()
+
+
 // Builds a lighting overlay for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
 	if (lighting_overlay)
@@ -35,7 +39,8 @@
 	var/area/A = loc
 	if (A.dynamic_lighting)
 		GetFromPool(/atom/movable/lighting_overlay, src)
-
+		for(var/turf/open/space/S in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+			S.update_starlight()
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
@@ -94,3 +99,14 @@
 		return null // Since this proc gets used in a for loop, null won't be looped though.
 
 	return corners
+
+/turf/ChangeTurf(path)
+	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
+		return ..()
+
+	for(var/obj/effect/decal/cleanable/decal in src.contents)
+		qdel(decal)
+
+	. = ..() //At this point the turf has changed
+
+	reconsider_lights()

@@ -1,5 +1,5 @@
 /*
-BS12 object based lighting system
+BS12 object based lighting system from VG, ported to TG by Unusual Crow with plenty of help from PJB.
 */
 
 /*

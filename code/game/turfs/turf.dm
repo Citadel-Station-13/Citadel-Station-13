@@ -148,6 +148,7 @@
 		W.AfterChange()
 	W.blueprint_data = old_blueprint_data
 	return W
+    
 
 /turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
