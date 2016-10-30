@@ -236,10 +236,10 @@
 		anchored = !anchored
 		if(anchored)
 			user.visible_message("[user] wrenches the solar assembly into place.", "<span class='notice'>You wrench the solar assembly into place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 		else
 			user.visible_message("[user] unwrenches the solar assembly from its place.", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -438,7 +438,7 @@
 
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 20/I.toolspeed, target = src))
 			if (src.stat & BROKEN)
 				user << "<span class='notice'>The broken glass falls out.</span>"
