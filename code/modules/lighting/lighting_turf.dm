@@ -21,6 +21,7 @@
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
+	world.log << "DEBUG: lighting_clear_overlay called"
 	if (lighting_overlay)
 		returnToPool(lighting_overlay)
 
@@ -34,6 +35,7 @@
 
 // Builds a lighting overlay for us, but only if our area is dynamic.
 /turf/proc/lighting_build_overlay()
+	world.log << "DEBUG: lighting_build_overlay called"
 	if (lighting_overlay)
 		return
 
