@@ -74,6 +74,7 @@
 #define MUTCOLORS2			23
 #define MUTCOLORS3			24
 #define NOAROUSAL			25//Stops all arousal effects
+#define NOGENITALS			26//Self explanitory
 
 #define FLYING	65536
 

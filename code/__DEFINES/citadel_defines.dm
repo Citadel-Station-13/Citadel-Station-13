@@ -5,11 +5,17 @@
 #define COCK_SIZE_BIGGER	4
 #define COCK_SIZE_BIGGEST	5
 
+#define COCK_SIZE_MIN		1
+#define COCK_SIZE_MAX		5
+
 #define BALLS_SIZE_SMALL	1
 #define BALLS_SIZE_NORMAL	2
 #define BALLS_SIZE_BIG		3
 #define BALLS_SIZE_BIGGER	4
 #define BALLS_SIZE_BIGGEST	5
+
+#define BALLS_SIZE_MIN		1
+#define BALLS_SIZE_MAX		5
 
 #define DEFAULT_CUM_RATE	1
 #define DEFAULT_CUM_MULT	1

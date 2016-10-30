@@ -59,14 +59,13 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 
 //Vertical Lists are easier to read. Citadel Code ahead.
 //dick stuff
-var/global/list/cock_types_list = list(
-	"None" 		= "none",
+var/global/list/cock_shapes_list = list(
 	"Human" 	= "human",
 	"Knotted" 	= "knotted",
 	"Flared" 	= "flared"
 	)
 
-var/global/list/cock_functions_list = list(
+var/global/list/cock_types_list = list(
 	"Penis" 		= "penis",
 	"Ovipositor"	= "ovi"
 	)

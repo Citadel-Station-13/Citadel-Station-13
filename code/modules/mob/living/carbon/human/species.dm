@@ -552,6 +552,8 @@ mob/living/carbon/human/proc/get_species()
 							I.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
 							I.color = "#[H.eye_color]"
+						if("cock_color")
+							I.color = "#[H.dna.features["cock_color"]]"
 				else
 					I.color = forced_colour
 

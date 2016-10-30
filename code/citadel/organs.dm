@@ -29,7 +29,7 @@
 	zone = "groin"
 	slot = "penis"
 	w_class = 3
-	var/shape = "human"
+	var/shape = "knotted"
 	var/size = 3
 	var/obj/item/organ/testicles/balls
 

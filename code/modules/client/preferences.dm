@@ -62,7 +62,7 @@ var/list/preferences_datums = list()
 		"mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF",
 		//cock features
 		"has_cock"			= FALSE,
-		"cock_type"			= "human",
+		"cock_shape"		= "human",
 		"cock_size"			= COCK_SIZE_NORMAL,
 		"cock_color"		= "ffe0bd",
 		"has_sheath"		= FALSE,
