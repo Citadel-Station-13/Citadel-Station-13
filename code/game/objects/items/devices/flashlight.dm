@@ -16,18 +16,18 @@
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		src.set_light(brightness_on)
+		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		src.set_light(0)
+		set_light(0)
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		src.set_light(brightness_on)
+		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		src.set_light(0)
+		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
