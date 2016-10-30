@@ -14,6 +14,7 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
+	light_power = 0.25
 
 
 /turf/open/space/New()
@@ -52,7 +53,7 @@
 			if(istype(t, /turf/open/space))
 				//let's NOT update this that much pls
 				continue
-			set_light(4,1)
+			set_light(2)
 			return
 		set_light(0)
 
