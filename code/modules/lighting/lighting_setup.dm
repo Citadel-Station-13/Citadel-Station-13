@@ -3,7 +3,6 @@
 /proc/create_all_lighting_overlays()
 	for (var/zlevel = 1 to world.maxz)
 		create_lighting_overlays_zlevel(zlevel)
-	world.log << "DEBUG: create_all_lighting_overlays has been called"
 
 /proc/create_lighting_overlays_zlevel(var/zlevel)
 	ASSERT(zlevel)
