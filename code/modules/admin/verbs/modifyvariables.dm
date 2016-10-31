@@ -607,6 +607,17 @@ var/list/VVckey_edit = list("key", "ckey")
 			var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
 			if(var_new==null) return
 
+			if(variable == "light_color")
+				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
+				if(var_new==null)
+					return
+				O.set_light(l_color = var_new)
+			else
+				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
+				if(var_new==null)
+					return
+				O.vars[variable] = var_new
+
 			if(findtext(var_new,"\["))
 				var/process_vars = alert(usr,"\[] detected in string, process as variables?","Process Variables?","Yes","No")
 				if(process_vars == "Yes")
@@ -617,10 +628,18 @@ var/list/VVckey_edit = list("key", "ckey")
 			O.vars[variable] = var_new
 
 		if("num")
-			if(variable=="luminosity")
+			if(variable=="light_range")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
+				if(var_new == null)
+					return
 				O.set_light(var_new)
+
+			else if(variable=="light_power")
+				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
+				if(var_new == null)
+					return
+				O.set_light(l_power = var_new)
+
 			else if(variable=="stat")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
