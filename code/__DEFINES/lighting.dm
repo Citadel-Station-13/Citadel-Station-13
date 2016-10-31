@@ -1,3 +1,9 @@
+#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
+#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
+#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
+#define IS_DYNAMIC_LIGHTING(A) ( A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.dynamic_lighting )
+
+
 //Bay lighting engine shit, not in /code/modules/lighting because BYOND is being shit about it
 #define LIGHTING_INTERVAL       5 // frequency, in 1/10ths of a second, of the lighting process
 

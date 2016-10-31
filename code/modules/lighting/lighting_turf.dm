@@ -1,5 +1,5 @@
 /turf
-	var/dynamic_lighting = TRUE
+	var/dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	luminosity           = 1
 
 	var/tmp/lighting_corners_initialised = FALSE
@@ -36,7 +36,7 @@
 		return
 
 	var/area/A = loc
-	if (A.dynamic_lighting)
+	if (IS_DYNAMIC_LIGHTING(A))
 		GetFromPool(/atom/movable/lighting_overlay, src)
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
@@ -85,7 +85,7 @@
 
 /turf/change_area(var/area/old_area, var/area/new_area)
 	if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if (new_area.dynamic_lighting)
+		if (IS_DYNAMIC_LIGHTING(new_area))
 			lighting_build_overlay()
 
 		else
@@ -120,7 +120,7 @@
 	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
 		reconsider_lights()
 	if(dynamic_lighting != old_dynamic_lighting)
-		if(dynamic_lighting)
+		if(IS_DYNAMIC_LIGHTING(src))
 			lighting_build_overlay()
 		else
 			lighting_clear_overlay()
@@ -132,4 +132,4 @@
 			if (corners[i]) // Already have a corner on this direction.
 				continue
 
-			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])	
+			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])

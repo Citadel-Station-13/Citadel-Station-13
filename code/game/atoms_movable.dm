@@ -82,8 +82,6 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	for (var/datum/light_source/L in src.light_sources) // Cycle through the light sources on this atom and tell them to update.
-		L.source_atom.update_light()
 	return 1
 
 /atom/movable/Destroy()
