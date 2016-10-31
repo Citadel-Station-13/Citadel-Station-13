@@ -608,14 +608,8 @@ var/list/VVckey_edit = list("key", "ckey")
 			if(var_new==null) return
 
 			if(variable == "light_color")
-				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
-				if(var_new==null)
-					return
 				O.set_light(l_color = var_new)
 			else
-				var/var_new = input("Enter new text:","Text",O.vars[variable]) as null|message
-				if(var_new==null)
-					return
 				O.vars[variable] = var_new
 
 			if(findtext(var_new,"\["))
