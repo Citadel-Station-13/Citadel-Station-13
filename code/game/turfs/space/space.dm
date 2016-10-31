@@ -15,6 +15,7 @@
 
 	var/global/datum/gas_mixture/space/space_gas = new
 	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
 /turf/open/space/New()

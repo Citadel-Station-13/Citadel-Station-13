@@ -1,5 +1,5 @@
 /turf
-	var/dynamic_lighting = TRUE
+	var/dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 	luminosity           = 1
 
 	var/tmp/lighting_corners_initialised = FALSE
@@ -22,7 +22,8 @@
 
 /turf/proc/lighting_clear_overlay()
 	if (lighting_overlay)
-		returnToPool(lighting_overlay)
+		qdel(lighting_overlay, TRUE)
+		lighting_overlay = null
 
 	for (var/datum/lighting_corner/C in corners)
 		C.update_active()
@@ -36,8 +37,8 @@
 		return
 
 	var/area/A = loc
-	if (A.dynamic_lighting)
-		GetFromPool(/atom/movable/lighting_overlay, src)
+	if (IS_DYNAMIC_LIGHTING(A))
+		PoolOrNew(/atom/movable/lighting_overlay, src)
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
@@ -85,7 +86,7 @@
 
 /turf/change_area(var/area/old_area, var/area/new_area)
 	if (new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if (new_area.dynamic_lighting)
+		if (IS_DYNAMIC_LIGHTING(new_area))
 			lighting_build_overlay()
 
 		else
@@ -100,6 +101,17 @@
 /turf/ChangeTurf(path)
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
+
+	if (!lighting_corners_initialised && global.lighting_corners_initialised)
+		if (!corners)
+			corners = list(null, null, null, null)
+
+		for (var/i = 1 to 4)
+			if (corners[i]) // Already have a corner on this direction.
+				continue
+
+			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+
 
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
@@ -120,16 +132,7 @@
 	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting))
 		reconsider_lights()
 	if(dynamic_lighting != old_dynamic_lighting)
-		if(dynamic_lighting)
+		if(IS_DYNAMIC_LIGHTING(src))
 			lighting_build_overlay()
 		else
 			lighting_clear_overlay()
-	if (!lighting_corners_initialised && global.lighting_corners_initialised)
-		if (!corners)
-			corners = list(null, null, null, null)
-
-		for (var/i = 1 to 4)
-			if (corners[i]) // Already have a corner on this direction.
-				continue
-
-			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])	

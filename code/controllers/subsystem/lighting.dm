@@ -25,6 +25,11 @@ var/datum/subsystem/lighting/SSlighting
 	return ..()
 
 /datum/subsystem/lighting/Initialize()
+	if (config.starlight)
+		for(var/area/A in world)
+			if (A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT)
+				A.luminosity = 0
+
 	create_all_lighting_overlays()
 	create_all_lighting_corners()
 

@@ -19,9 +19,10 @@
 	user.update_inv_head()	//so our mob-overlays update
 
 	if(on)
-		set_light(0)
-	else
 		set_light(brightness_on)
+	else
+		set_light(0)
+
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()

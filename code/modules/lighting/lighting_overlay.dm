@@ -15,7 +15,6 @@
 	blend_mode       = BLEND_MULTIPLY
 
 	var/needs_update = FALSE
-	var/wa = FALSE
 
 /atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
 	. = ..()
@@ -34,7 +33,7 @@
 
 	update_overlay()
 
-/atom/movable/lighting_overlay/Destroy()
+/atom/movable/lighting_overlay/Destroy(var/force)
 	global.all_lighting_overlays    -= src
 	global.lighting_update_overlays -= src
 
@@ -44,7 +43,14 @@
 
 	T.luminosity = 1
 
-	..()
+	if (force)
+		..()
+		return QDEL_HINT_PUTINPOOL
+
+	else
+		return QDEL_HINT_LETMELIVE
+
+
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc
@@ -55,7 +61,7 @@
 		else
 			warning("A lighting overlay realised it was in nullspace in update_overlay() and got pooled!")
 
-		returnToPool(src)
+		qdel(src, TRUE)
 
 	var/list/L = src.color:Copy() // For some dumb reason BYOND won't allow me to use [] on a colour matrix directly.
 	var/max    = 0
@@ -84,9 +90,6 @@
 
 		else if (mx < LIGHTING_SOFT_THRESHOLD)
 			. = 0 // 0 means soft lighting.
-
-		if (wa)
-			world << "[.] [mx] [max] "
 
 		max = max(max, mx)
 
@@ -120,3 +123,8 @@
 /atom/movable/lighting_overlay/forceMove(atom/destination, var/harderforce = 0)
 	if(harderforce)
 		. = ..()
+
+/atom/movable/lighting_overlay/ResetVars()
+	color = LIGHTING_BASE_MATRIX
+
+	..("color")

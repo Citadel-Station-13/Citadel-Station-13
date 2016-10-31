@@ -62,10 +62,18 @@
 	destroyed = TRUE
 	force_update()
 	if (source_atom)
+		if (source_atom.light == src)
+			source_atom.light = null
+
 		source_atom.light_sources -= src
 
 	if (top_atom)
 		top_atom.light_sources    -= src
+
+// Fuck supporting force.
+/datum/light_source/Destroy(var/force)
+	destroy()
+	return QDEL_HINT_IWILLGC
 
 #ifdef LIGHTING_INSTANT_UPDATES
 /datum/light_source/proc/effect_update()
