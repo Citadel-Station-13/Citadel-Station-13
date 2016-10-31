@@ -64,17 +64,17 @@ var/list/preferences_datums = list()
 		"has_cock"			= FALSE,
 		"cock_shape"		= "human",
 		"cock_size"			= COCK_SIZE_NORMAL,
-		"cock_color"		= "ffe0bd",
+		"cock_color"		= "fff",
 		"has_sheath"		= FALSE,
-		"sheath_color"		= "ffcd94",
+		"sheath_color"		= "fff",
 		//balls features
 		"has_balls" 		= FALSE,
-		"balls_color" 		= "ffe0bd",
+		"balls_color" 		= "fff",
 		"balls_size" 		= BALLS_SIZE_NORMAL,
 		"balls_fluid" 		= "semen",
 		//breast features
 		"has_breasts" 		= FALSE,
-		"breasts_color" 	= "ffe0bd",
+		"breasts_color" 	= "fff",
 		"breasts_size" 		= BREASTS_SIZE_C,
 		"breasts_fluid" 	= "milk",
 		//mutant features
@@ -91,9 +91,9 @@ var/list/preferences_datums = list()
 		"mam_ears" 			= "None",
 		"mam_tail" 			= "None",
 		"mam_tail_animated" = "None",
-		"xenodorsal" 		= "None",
-		"xenohead" 			= "None",
-		"xenotail" 			= "None")
+		"xenohead"			="Hunter",
+		"xenodorsal"		="Dorsal Tubes",
+		"xenotail"			="Xenomorph Tail")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -1408,6 +1408,8 @@ var/list/preferences_datums = list()
 	else
 		chosen_species = /datum/species/human
 	character.set_species(chosen_species, icon_update=0)
+	character.update_sex_organs()//Checks your DNA to see if you lack any organs that are set in your dna.features list.
+
 
 	if(icon_updates)
 		character.update_body()

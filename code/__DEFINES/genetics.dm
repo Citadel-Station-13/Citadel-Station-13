@@ -57,7 +57,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		24
+#define DNA_UNI_IDENTITY_BLOCKS		29
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -87,7 +87,6 @@
 #define DNA_MAM_EARS_BLOCK			27
 #define DNA_MAM_BODYMARKINGS_BLOCK	28
 #define DNA_MAM_SNOUT_BLOCK			29
-
 
 #define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32

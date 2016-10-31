@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	return pick(socks_list)
 
-/proc/random_features()
+/proc/random_features(var/gender="", var/has_cock=FALSE, var/has_balls=FALSE, var/has_vag=FALSE, var/has_breasts=FALSE)
 	if(!tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
 	if(!tails_list_lizard.len)
@@ -66,7 +66,13 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	if(!wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-
+	switch(gender)//might incorporate this one day
+		if(MALE)
+			has_cock = TRUE
+			has_balls = TRUE
+		if(FEMALE)
+			has_vag = TRUE
+			has_breasts = TRUE
 	//For now we will always return none for tail_human and ears.
 	return(list(
 		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -84,25 +90,25 @@
 		"mam_body_markings" = pick(mam_body_markings_list),
 		"mam_ears" 			= pick(mam_ears_list),
 		"mam_tail" 			= pick(mam_tails_list),
-		"mam_tail_animated" = pick(),
+		"mam_tail_animated" = "None",
 		"xenohead"			="Hunter",
 		"xenodorsal"		="Dorsal Tubes",
-		"xenotail"			="Xenomorph Tail"
+		"xenotail"			="Xenomorph Tail",
 		//cock features
-		"has_cock"			= FALSE,
+		"has_cock"			= has_cock,
 		"cock_shape"		= "human",
 		"cock_size"			= COCK_SIZE_NORMAL,
-		"cock_color"		= "ffe0bd",
+		"cock_color"		= "fff",
 		"has_sheath"		= FALSE,
-		"sheath_color"		= "ffcd94",
+		"sheath_color"		= "fff",
 		//balls features
-		"has_balls" 		= FALSE,
-		"balls_color" 		= "ffe0bd",
+		"has_balls" 		= has_balls,
+		"balls_color" 		= "fff",
 		"balls_size" 		= BALLS_SIZE_NORMAL,
 		"balls_fluid" 		= "semen",
 		//breast features
-		"has_breasts" 		= FALSE,
-		"breasts_color" 	= "ffe0bd",
+		"has_breasts" 		= has_breasts,
+		"breasts_color" 	= "fff",
 		"breasts_size" 		= BREASTS_SIZE_C,
 		"breasts_fluid" 	= "milk"
 		))

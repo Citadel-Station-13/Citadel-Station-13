@@ -204,6 +204,11 @@
 	blood_state = BLOOD_STATE_SEMEN
 	bloodiness = MAX_SHOE_BLOODINESS
 
+/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
+	if (S.blood_DNA)
+		blood_DNA |= S.blood_DNA.Copy()
+	..()
+
 /obj/effect/decal/cleanable/femcum
 	name = "female ejaculate"
 	desc = null
@@ -216,6 +221,11 @@
 	blood_DNA = list()
 	blood_state = null
 	bloodiness = null
+
+/obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
+	if (F.blood_DNA)
+		blood_DNA |= F.blood_DNA.Copy()
+	..()
 
 /obj/effect/decal/cleanable/milk
 	name = "milk"

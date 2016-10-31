@@ -1,4 +1,5 @@
 //Preferences stuff
+//ALL OF THESE LISTS ARE GENERATED IN global_lists.dm
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/hair_styles_male_list = list()		//stores only hair names
@@ -59,36 +60,30 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 
 //Vertical Lists are easier to read. Citadel Code ahead.
 //dick stuff
-var/global/list/cock_shapes_list = list(
-	"Human" 	= "human",
-	"Knotted" 	= "knotted",
-	"Flared" 	= "flared"
-	)
-
-var/global/list/cock_types_list = list(
-	"Penis" 		= "penis",
-	"Ovipositor"	= "ovi"
-	)
-
+var/global/list/cock_shapes_list = list()
 var/global/list/cock_size_list = list(
-	"Small" = COCK_SIZE_SMALL,
-	"Average" = COCK_SIZE_NORMAL,
-	"Large" = COCK_SIZE_BIG		//We don't have sprites for anything bigger than this, so avoid going higher without doing the sprite work.
+	COCK_SIZE_SMALL,
+	COCK_SIZE_NORMAL,
+	COCK_SIZE_BIG
 	)
 
 //balls stuff
+var/global/list/balls_list = list()
 var/global/list/balls_size_list = list(
-	"Small" 	= BALLS_SIZE_SMALL,
-	"Average" 	= BALLS_SIZE_NORMAL,
-	"Large"		= BALLS_SIZE_BIG
+	BALLS_SIZE_SMALL,
+	BALLS_SIZE_NORMAL,
+	BALLS_SIZE_BIG
 	)
-
 var/global/list/balls_fluid_list = list(
-	"Semen" = "semen",
-	"Honey" = "honey"
+	"semen",
+	"honey"
 	)
 
+//ovipositor stuff
+var/global/list/ovi_shapes_list = list()
 //breast stuff
+var/global/list/breasts_size_list = list()
+/*generated automatically in global_lists.dm
 var/global/list/breasts_size_list = list(
 	"A"		= BREASTS_SIZE_A,
 	"B"		= BREASTS_SIZE_B,
@@ -104,10 +99,10 @@ var/global/list/breasts_size_list = list(
 	"H"		= BREASTS_SIZE_H,
 	"HH"	= BREASTS_SIZE_HH
 	)
-
+*/
 var/global/list/breasts_fluid_list = list(
-	"Breast Milk" = "milk",
-	"Honey" = "honey"
+	"milk",
+	"honey"
 	)
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
