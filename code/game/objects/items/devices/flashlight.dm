@@ -14,14 +14,9 @@
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		set_light(0)
+	update_brightness()
 
-/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -30,11 +25,8 @@
 		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return 0
 	on = !on
-	update_brightness(user)
+	update_brightness()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -192,13 +184,9 @@ obj/item/device/flashlight/lamp/bananalamp
 	on = 0
 	force = initial(src.force)
 	damtype = initial(src.damtype)
-	if(ismob(loc))
-		var/mob/U = loc
-		update_brightness(U)
-	else
-		update_brightness(null)
+	update_brightness()
 
-/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness()
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"

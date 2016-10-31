@@ -122,3 +122,10 @@
 				T.lighting_overlay.needs_update = TRUE
 				lighting_update_overlays += T.lighting_overlay
 			#endif
+
+
+/datum/lighting_corner/Destroy(var/force)
+	if(force)
+		CRASH("Nope you're not deleting me!")
+
+	return QDEL_HINT_LETMELIVE
