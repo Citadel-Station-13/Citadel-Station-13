@@ -15,7 +15,7 @@
 #define KNOT_SIZE_BIGGER	5
 #define KNOT_SIZE_BIGGEST	6
 
-#define KN0T_SIZE_MIN		2
+#define KNOT_SIZE_MIN		2
 #define KNOT_SIZE_MAX		6
 
 #define BALLS_SIZE_SMALL	1

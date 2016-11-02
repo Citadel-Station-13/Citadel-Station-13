@@ -31,7 +31,7 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 //////////////////////
 //SEXUAL ORGAN PROCS//
 //////////////////////
-//force=TRUE will update the organ and set their DNA appropriately. FALSE will only update it if their DNA supports it.
+//force=TRUE will add the organ and set their DNA appropriately. FALSE will only update it if their DNA supports it.
 /mob/living/carbon/human/proc/update_sex_organs(doall=TRUE,penis=FALSE,balls=FALSE,ovi=FALSE,eggsack=FALSE,breasts=FALSE,vagina=FALSE,womb=FALSE)//This proc checks your DNA to see if you need to grow any organs. Will be used with DNA injectors, chems, and the DNA consoles.
 	switch(doall)
 		if(TRUE)

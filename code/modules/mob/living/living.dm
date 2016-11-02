@@ -404,7 +404,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/proc/mob_masturbate()//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
 	set name = "Masturbate"
 	set category = "IC"
-	if(canbearoused)
+	if(canbearoused && !restrained() && !stat)
 		if(mb_cd_timer <= world.time)
 			//start the cooldown even if it fails
 			mb_cd_timer = world.time + mb_cd_length
@@ -413,6 +413,15 @@ Sorry Giacom. Please don't be mad :(
 				if(do_after(src, 100, target = src))
 					src << "<span class='lovebold'>You have relieved yourself.</span>"
 					setArousalLoss(min_arousal)
+					switch(gender)
+						if(MALE)
+							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
+							for(var/obj/effect/decal/cleanable/semen/S in loc)
+								S.add_mob_blood(src)
+						if(FEMALE)
+							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
+							for(var/obj/effect/decal/cleanable/femcum/FC in loc)
+								FC.add_mob_blood(src)
 			else
 				src << "<span class='notice'>You aren't aroused enough for that.</span>"
 

@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	return pick(socks_list)
 
-/proc/random_features(var/gender="", var/has_cock=FALSE, var/has_balls=FALSE, var/has_vag=FALSE, var/has_breasts=FALSE)
+/proc/random_features(gender="", has_cock=FALSE, has_balls=FALSE, has_ovi=FALSE, has_eggsack=FALSE, has_vag=FALSE, has_breasts=FALSE)
 	if(!tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
 	if(!tails_list_lizard.len)
@@ -75,9 +75,9 @@
 			has_breasts = TRUE
 	//For now we will always return none for tail_human and ears.
 	return(list(
-		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
-		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"mcolor" = "f00",
+		"mcolor2" = "0f0",
+		"mcolor3" = "00f",
 		"tail_lizard" = pick(tails_list_lizard),
 		"tail_human" = "None",
 		"wings" = "None",
@@ -103,9 +103,24 @@
 		"sheath_color"		= "fff",
 		//balls features
 		"has_balls" 		= has_balls,
+		"balls_internal" 	= FALSE,
 		"balls_color" 		= "fff",
 		"balls_size" 		= BALLS_SIZE_NORMAL,
 		"balls_fluid" 		= "semen",
+		//ovi features
+		"has_ovi"			= has_ovi,
+		"ovi_shape"			= "knotted",
+		"ovi_size"			= COCK_SIZE_NORMAL,
+		"ovi_color"			= "fff",
+		"has_sheath"		= TRUE,
+		"sheath_color"		= "fff",
+		//eggsack features
+		"has_eggsack" 		= has_eggsack,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= "fff",
+		"eggsack_size" 		= BALLS_SIZE_NORMAL,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
 		//breast features
 		"has_breasts" 		= has_breasts,
 		"breasts_color" 	= "fff",

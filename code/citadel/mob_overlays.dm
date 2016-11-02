@@ -40,7 +40,7 @@
 
 /datum/sprite_accessory/penis/barbed
 	icon_state = "barbed"
-	name = "Feline"
+	name = "Barbed"
 
 /datum/sprite_accessory/penis/barbknot
 	icon_state = "barbknot"

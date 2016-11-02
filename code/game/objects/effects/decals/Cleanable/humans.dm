@@ -187,7 +187,7 @@
 	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
-	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_SEMEN) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
 
@@ -200,9 +200,13 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
-	blood_DNA = list()
+	var/DNA = list()
 	blood_state = BLOOD_STATE_SEMEN
 	bloodiness = MAX_SHOE_BLOODINESS
+
+/obj/effect/decal/cleanable/semen/New()
+	..()
+	dir = pick(NORTH,SOUTH,EAST,WEST)
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
 	if (S.blood_DNA)
@@ -221,6 +225,10 @@
 	blood_DNA = list()
 	blood_state = null
 	bloodiness = null
+
+/obj/effect/decal/cleanable/femcum/New()
+	..()
+	dir = pick(NORTH,SOUTH,EAST,WEST)
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
 	if (F.blood_DNA)
