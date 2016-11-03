@@ -479,7 +479,6 @@
 		anchored = 1
 		density = 1
 		unacidable = 1
-		luminosity = 3
 		var/needs_power = 0
 		var/active = 1
 		var/delay = 5
@@ -497,6 +496,7 @@
 	for(var/mob/living/L in get_turf(src.loc))
 		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]'s organs!</span>")
 		L.gib()
+	set_light(3,1,LIGHT_COLOR_BLUE)
 
 /obj/machinery/shieldwall/attack_hand(mob/user)
 	return

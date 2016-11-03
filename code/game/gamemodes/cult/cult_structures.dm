@@ -65,7 +65,9 @@
 	name = "daemon forge"
 	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
 	icon_state = "forge"
-	luminosity = 3
+
+/obj/structure/cult/forge/New()
+	set_light(2,2,LIGHT_COLOR_FIRE)
 
 /obj/structure/cult/forge/attack_hand(mob/living/user)
 	if(!iscultist(user))

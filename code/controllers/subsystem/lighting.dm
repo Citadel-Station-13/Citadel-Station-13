@@ -31,7 +31,6 @@ var/datum/subsystem/lighting/SSlighting
 				A.luminosity = 0
 
 	create_all_lighting_overlays()
-	create_all_lighting_corners()
 
 /datum/subsystem/lighting/fire()
 
