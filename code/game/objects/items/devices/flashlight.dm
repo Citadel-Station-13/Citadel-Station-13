@@ -242,6 +242,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+	light_color = LIGHT_COLOR_SLIME_LAMP
 
 /obj/item/device/flashlight/emp
 	origin_tech = "magnets=3;syndicate=�1"
