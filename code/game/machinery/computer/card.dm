@@ -19,6 +19,7 @@ var/time_last_changed_position = 0
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
+	light_color = LIGHT_COLOR_BLUE
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -505,6 +506,7 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/minor/hos
 	target_dept = 2
 	icon_screen = "idhos"
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/card/minor/cmo
 	target_dept = 3
@@ -513,7 +515,9 @@ var/time_last_changed_position = 0
 /obj/machinery/computer/card/minor/rd
 	target_dept = 4
 	icon_screen = "idrd"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/card/minor/ce
 	target_dept = 5
 	icon_screen = "idce"
+	light_color = LIGHT_COLOR_ORANGE

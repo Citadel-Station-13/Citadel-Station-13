@@ -7,6 +7,9 @@
 	var/timing = 0
 	var/time = 30
 	var/range = 4
+	light_color = LIGHT_COLOR_GREEN
+	light_power_on = 0.5
+	light_range_on = 1
 
 
 /obj/machinery/computer/pod/initialize()

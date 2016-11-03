@@ -15,6 +15,10 @@
 	var/computer_health = 25
 	var/clockwork = FALSE
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+
 /obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
 	..(location)
 	if(C && istype(C))
@@ -82,15 +86,13 @@
 	add_overlay(icon_keyboard)
 	if(stat & BROKEN)
 		add_overlay("[icon_state]_broken")
+		set_light(l_color = LIGHT_COLOR_BLUE)
 	else
 		add_overlay(icon_screen)
+		set_light(l_color = initial(light_color))
 
 /obj/machinery/computer/power_change()
 	..()
-	if(stat & NOPOWER)
-		set_light(0)
-	else
-		set_light(brightness_on)
 	update_icon()
 	return
 

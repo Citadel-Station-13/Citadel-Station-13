@@ -56,7 +56,10 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	var/priority = -1 ; //Priority of the message being sent
 	var/obj/item/device/radio/Radio
 	var/emergency //If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
-	luminosity = 0
+	use_auto_lights = 1
+	light_power_on = 0.5
+	light_range_on = 1
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/requests_console/power_change()
 	..()
