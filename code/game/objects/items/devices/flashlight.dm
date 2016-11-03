@@ -164,6 +164,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	var/on_damage = 7
 	var/produce_heat = 1500
 	heat = 1000
+	light_color = LIGHT_COLOR_FLARE
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -229,6 +230,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	light_color = LIGHT_COLOR_FIRE
 
 
 /obj/item/device/flashlight/slime
