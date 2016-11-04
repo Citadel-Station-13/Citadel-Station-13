@@ -31,11 +31,6 @@ var/datum/subsystem/lighting/SSlighting
 	create_all_lighting_overlays()
 
 /datum/subsystem/lighting/fire()
-	// Counters
-	var/light_updates   = 0
-	var/corner_updates  = 0
-	var/overlay_updates = 0
-
 	lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
 	lighting_update_lights = list()
 	for(var/datum/light_source/L in lighting_update_lights_old)
@@ -53,8 +48,6 @@ var/datum/subsystem/lighting/SSlighting
 		L.needs_update = FALSE
 
 		light_updates++
-
-		scheck()
 
 	lighting_update_corners_old = lighting_update_corners //Same as above.
 	lighting_update_corners = list()
@@ -74,4 +67,3 @@ var/datum/subsystem/lighting/SSlighting
 		O.update_overlay()
 		O.needs_update = 0
 		overlay_updates++
-		scheck()

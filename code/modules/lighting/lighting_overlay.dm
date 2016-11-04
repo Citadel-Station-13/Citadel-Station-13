@@ -4,11 +4,9 @@
 	name          = ""
 
 	anchored      = TRUE
-	ignoreinvert  = TRUE
 
 	icon             = LIGHTING_ICON
 	color            = LIGHTING_BASE_MATRIX
-	plane            = LIGHTING_PLANE
 	mouse_opacity    = 0
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
@@ -94,12 +92,6 @@
 /atom/movable/lighting_overlay/ex_act(severity)
 	return 0
 
-/atom/movable/lighting_overlay/shuttle_act()
-	return 0
-
-/atom/movable/lighting_overlay/can_shuttle_move()
-	return 0
-
 /atom/movable/lighting_overlay/singularity_act()
 	return
 
@@ -114,7 +106,7 @@
 	if(harderforce)
 		. = ..()
 
-/atom/movable/lighting_overlay/resetVariables(...)
+/atom/movable/lighting_overlay/ResetVars
 	color = LIGHTING_BASE_MATRIX
 
-	return ..("color")
+	..("color")
