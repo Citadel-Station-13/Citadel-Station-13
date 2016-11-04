@@ -901,8 +901,10 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
+		I.color = l_hand.color
 	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
+		I.color = r_hand.color
 	else // Attacked with a fist?
 		return
 

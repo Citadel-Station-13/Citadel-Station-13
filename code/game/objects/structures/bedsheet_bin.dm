@@ -58,6 +58,10 @@ LINEN BINS
 	icon_state = "sheetorange"
 	item_color = "orange"
 
+/obj/item/weapon/bedsheet/pink
+	icon_state = "sheetpink"
+	item_color = "pink"
+
 /obj/item/weapon/bedsheet/purple
 	icon_state = "sheetpurple"
 	item_color = "purple"
@@ -177,6 +181,10 @@ LINEN BINS
 /obj/item/weapon/bedsheet/ian
 	icon_state = "sheetian"
 	item_color = "ian"
+
+/obj/item/weapon/bedsheet/love
+	icon_state = "sheetlove"
+	item_color = "love"
 
 /obj/item/weapon/bedsheet/random
 	icon_state = "sheetrainbow"
