@@ -213,8 +213,8 @@
 	list_reagents = list("plantbgone" = 100)
 
 /obj/item/weapon/reagent_containers/spray/thermite
-	name = "Thermite Spray"
-	desc = "A 50u spray bottle loaded with thermite, for melting walls. "
+	name = "thermite spray bottle"
+	desc = "A 50u spray bottle loaded with thermite for melting walls. "
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "thermitespray"
 	item_state = "thermitespray"
