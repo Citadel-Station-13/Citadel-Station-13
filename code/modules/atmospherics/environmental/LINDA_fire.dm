@@ -50,6 +50,8 @@
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	layer = ABOVE_OPEN_TURF_LAYER
+	luminosity = 3
+
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	var/just_spawned = 1
@@ -61,7 +63,6 @@
 	perform_exposure()
 	setDir(pick(cardinal))
 	air_update_turf()
-	set_light(3,2,LIGHT_COLOR_FIRE)
 
 
 /obj/effect/hotspot/proc/perform_exposure()

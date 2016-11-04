@@ -1,5 +1,5 @@
 /*
-BS12 object based lighting system from VGstation, ported to Citadel station by Unusual Crow with plenty of help from PJB.
+BS12 object based lighting system from VG, ported to TG by Unusual Crow with plenty of help from PJB.
 */
 
 /*

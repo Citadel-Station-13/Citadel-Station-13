@@ -62,10 +62,18 @@
 	destroyed = TRUE
 	force_update()
 	if (source_atom)
+		if (source_atom.light == src)
+			source_atom.light = null
+
 		source_atom.light_sources -= src
 
 	if (top_atom)
 		top_atom.light_sources    -= src
+
+// Fuck supporting force.
+/datum/light_source/Destroy(var/force)
+	destroy()
+	return QDEL_HINT_IWILLGC
 
 #ifdef LIGHTING_INSTANT_UPDATES
 /datum/light_source/proc/effect_update()
@@ -201,37 +209,30 @@
 #define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 
 /datum/light_source/proc/apply_lum()
-	var/static/update_gen = 1
-	applied = 1
+    applied = 1
 
-	// Keep track of the last applied lum values so that the lighting can be reversed
-	applied_lum_r = lum_r
-	applied_lum_g = lum_g
-	applied_lum_b = lum_b
+    // Keep track of the last applied lum values so that the lighting can be reversed
+    applied_lum_r = lum_r
+    applied_lum_g = lum_g
+    applied_lum_b = lum_b
 
-	FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
-		if (!T.lighting_corners_initialised)
-			T.generate_missing_corners()
+    FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
+        for (var/datum/lighting_corner/C in T.get_corners())
+            if (effect_str.Find(C))
+                continue
 
-		for (var/datum/lighting_corner/C in T.get_corners())
-			if (C.update_gen == update_gen)
-				continue
+            C.affecting += src
 
-			C.update_gen = update_gen
-			C.affecting += src
+            if (!C.active)
+                continue
 
-			if (!C.active)
-				continue
+            APPLY_CORNER(C)
 
-			APPLY_CORNER(C)
+        if (!T.affecting_lights)
+            T.affecting_lights = list()
 
-		if (!T.affecting_lights)
-			T.affecting_lights = list()
-
-		T.affecting_lights += src
-		affecting_turfs    += T
-
-	update_gen++
+        T.affecting_lights += src
+        affecting_turfs    += T
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
@@ -261,8 +262,6 @@
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
 	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)
-		if (!T.lighting_corners_initialised)
-			T.generate_missing_corners()
 		corners |= T.get_corners()
 		turfs   += T
 

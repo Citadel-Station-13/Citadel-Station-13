@@ -38,9 +38,6 @@
 
 	var/area/A = loc
 	if (IS_DYNAMIC_LIGHTING(A))
-		if (!lighting_corners_initialised)
-			generate_missing_corners()
-
 		PoolOrNew(/atom/movable/lighting_overlay, src)
 		for (var/datum/lighting_corner/C in corners)
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
@@ -101,22 +98,11 @@
 
 	return corners
 
-/turf/proc/generate_missing_corners()
-	lighting_corners_initialised = TRUE
-	if (!corners)
-		corners = list(null, null, null, null)
-
-	for(var/i = 1 to 4)
-		if(corners[i])
-			continue
-
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
-
 /turf/ChangeTurf(path)
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
-	if (!lighting_corners_initialised)
+	if (!lighting_corners_initialised && global.lighting_corners_initialised)
 		if (!corners)
 			corners = list(null, null, null, null)
 

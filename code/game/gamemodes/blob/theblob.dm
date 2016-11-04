@@ -2,6 +2,7 @@
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
+	luminosity = 1
 	desc = "A thick wall of writhing tendrils."
 	density = 0 //this being 0 causes two bugs, being able to attack blob tiles behind other blobs and being unable to move on blob tiles in no gravity, but turning it to 1 causes the blob mobs to be unable to path through blobs, which is probably worse.
 	opacity = 0
@@ -30,7 +31,6 @@
 	if(atmosblock)
 		air_update_turf(1)
 	return
-	set_light(1,0.5,overmind.blob_reagent_datum.color)
 
 /obj/effect/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -335,6 +335,7 @@
 /obj/effect/blob/normal
 	name = "normal blob"
 	icon_state = "blob"
+	luminosity = 0
 	health = 21
 	maxhealth = 25
 	health_regen = 1
