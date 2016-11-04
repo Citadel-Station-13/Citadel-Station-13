@@ -1,5 +1,3 @@
-// Solves problems with lighting updates lagging shit
-// Max constraints on number of updates per doWork():
 
 var/datum/subsystem/lighting/SSlighting
 
@@ -31,13 +29,17 @@ var/datum/subsystem/lighting/SSlighting
 				A.luminosity = 0
 
 	create_all_lighting_overlays()
-	create_all_lighting_corners()
 
 /datum/subsystem/lighting/fire()
+	// Counters
+	var/light_updates   = 0
+	var/corner_updates  = 0
+	var/overlay_updates = 0
 
 	lighting_update_lights_old = lighting_update_lights //We use a different list so any additions to the update lists during a delay from scheck() don't cause things to be cut from the list without being updated.
 	lighting_update_lights = list()
 	for(var/datum/light_source/L in lighting_update_lights_old)
+
 		if(L.check() || L.destroyed || L.force_update)
 			L.remove_lum()
 			if(!L.destroyed)
@@ -50,12 +52,20 @@ var/datum/subsystem/lighting/SSlighting
 		L.force_update = FALSE
 		L.needs_update = FALSE
 
+		light_updates++
+
+		scheck()
+
 	lighting_update_corners_old = lighting_update_corners //Same as above.
 	lighting_update_corners = list()
 	for(var/A in lighting_update_corners_old)
 		var/datum/lighting_corner/C = A
+
 		C.update_overlays()
+
 		C.needs_update = FALSE
+
+		corner_updates++
 
 	lighting_update_overlays_old = lighting_update_overlays //Same as above.
 	lighting_update_overlays = list()
@@ -63,3 +73,5 @@ var/datum/subsystem/lighting/SSlighting
 	for(var/atom/movable/lighting_overlay/O in lighting_update_overlays_old)
 		O.update_overlay()
 		O.needs_update = 0
+		overlay_updates++
+		scheck()

@@ -1,3 +1,4 @@
+
 /atom
 	var/light_power = 1 // Intensity of the light.
 	var/light_range = 0 // Range in tiles of the light.
@@ -7,25 +8,28 @@
 	var/tmp/list/light_sources       // Any light sources that are "inside" of us, for example, if src here was a mob that's carrying a flashlight, that flashlight's light source would be part of this list.
 
 // The proc you should always use to set the light of this atom.
-/atom/proc/set_light(var/l_range, var/l_power, var/l_color)
+// Nonesensical value for l_color default, so we can detect if it gets set to null.
+#define NONSENSICAL_VALUE -99999
+/atom/proc/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
 	if (l_power != null)
 		light_power = l_power
 
 	if (l_range != null)
 		light_range = l_range
 
-	if (l_color != null)
+	if (l_color != NONSENSICAL_VALUE)
 		light_color = l_color
 
 	update_light()
+
+#undef NONSENSICAL_VALUE
 
 // Will update the light (duh).
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
 	set waitfor = FALSE
-
-	if (!global.lighting_corners_initialised)
-		sleep(20)
+	if (gcDestroyed)
+		return
 
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
 		if(light)
@@ -71,13 +75,27 @@
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
 /atom/proc/set_opacity(var/new_opacity)
-	var/old_opacity = opacity
+	if (new_opacity == opacity)
+		return
+
 	opacity = new_opacity
 	var/turf/T = loc
-	if (old_opacity != new_opacity && istype(T))
-		T.reconsider_lights()
+	if (!isturf(T))
+		return
 
-/atom/movable/Moved(atom/OldLoc, Dir)
+	if (new_opacity == TRUE)
+		T.has_opaque_atom = TRUE
+		T.reconsider_lights()
+	else
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
+
+
+// This code makes the light be queued for update when it is moved.
+// Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
+/atom/movable/Moved(atom/OldLoc, Dir) //Implemented here because forceMove() doesn't call Move()
 	. = ..()
 	for (var/datum/light_source/L in src.light_sources) // Cycle through the light sources on this atom and tell them to update.
 		L.source_atom.update_light()
