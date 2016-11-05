@@ -106,7 +106,7 @@
 	if(harderforce)
 		. = ..()
 
-/atom/movable/lighting_overlay/ResetVars
+/atom/movable/lighting_overlay/ResetVars()
 	color = LIGHTING_BASE_MATRIX
 
 	..("color")

@@ -2,6 +2,7 @@
 	for (var/zlevel = 1 to world.maxz)
 		create_lighting_overlays_zlevel(zlevel)
 
+
 /proc/create_lighting_overlays_zlevel(var/zlevel)
 	ASSERT(zlevel)
 

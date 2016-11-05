@@ -117,7 +117,7 @@
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
-	if (!lighting_corners_initialised && global.lighting_corners_initialised)
+	if (!lighting_corners_initialised)
 		if (!corners)
 			corners = list(null, null, null, null)
 
