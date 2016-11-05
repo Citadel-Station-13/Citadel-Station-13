@@ -83,27 +83,13 @@ var/global/list/balls_fluid_list = list(
 var/global/list/ovi_shapes_list = list()
 //breast stuff
 var/global/list/breasts_size_list = list()
-/*generated automatically in global_lists.dm
-var/global/list/breasts_size_list = list(
-	"A"		= BREASTS_SIZE_A,
-	"B"		= BREASTS_SIZE_B,
-	"C"		= BREASTS_SIZE_C,
-	"D"		= BREASTS_SIZE_D,
-	"DD"	= BREASTS_SIZE_DD,
-	"E"		= BREASTS_SIZE_E,
-	"EE"	= BREASTS_SIZE_EE,
-	"F"		= BREASTS_SIZE_F,
-	"FF"	= BREASTS_SIZE_FF,
-	"G"		= BREASTS_SIZE_G,
-	"GG"	= BREASTS_SIZE_GG,
-	"H"		= BREASTS_SIZE_H,
-	"HH"	= BREASTS_SIZE_HH
-	)
-*/
+//generated automatically in global_lists.dm
+
 var/global/list/breasts_fluid_list = list(
 	"milk",
 	"honey"
 	)
+
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"

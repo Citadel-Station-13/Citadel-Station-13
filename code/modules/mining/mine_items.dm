@@ -497,7 +497,7 @@
 ////MOTION TRACKER////
 //////////////////////
 
-/obj/item/device/t_scanner/motionTracker
+/obj/item/device/t_scanner/motiontracker
 	name = "motion tracker"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "tracker"
@@ -517,12 +517,12 @@
 	var/powerReq = 10
 	origin_tech = "engineering=3;magnets=4"
 
-/obj/item/device/t_scanner/motionTracker/New()
+/obj/item/device/t_scanner/motiontracker/New()
 	cellcharge = cell.charge
 	cellmaxcharge = cell.maxcharge
 	updateicon()
 
-/obj/item/device/t_scanner/motionTracker/process()
+/obj/item/device/t_scanner/motiontracker/process()
 	updateicon()
 	if(!on || !cell)
 		on = 0
@@ -542,7 +542,7 @@
 	cellmaxcharge = cell.maxcharge
 	cell.updateicon()
 
-/obj/item/device/t_scanner/motionTracker/attack_self(mob/user)
+/obj/item/device/t_scanner/motiontracker/attack_self(mob/user)
 	add_fingerprint(usr)
 	updateicon()
 	if(!cell)
@@ -560,7 +560,7 @@
 		if(!on)
 			user << text("<span class='notice'>You turn off [src].</span>")
 
-/obj/item/device/t_scanner/motionTracker/proc/updateicon()
+/obj/item/device/t_scanner/motiontracker/proc/updateicon()
 	if(cell && cellcharge)
 		if(cell && cell.charge < (cell.maxcharge/5))
 			icon_state = "trackerLow"
@@ -571,7 +571,7 @@
 	if(!cellcharge || !cell || cellcharge < powerReq)
 		icon_state = "trackerEmpty"
 	..()
-/obj/item/device/t_scanner/motionTracker/scan(mob/living/carbon/user)
+/obj/item/device/t_scanner/motiontracker/scan(mob/living/carbon/user)
 	if(!on_cooldown)
 		on_cooldown = 1
 		spawn(cooldown)
@@ -583,7 +583,7 @@
 		motionTrackScan(mobs, range)
 
 
-/obj/item/device/t_scanner/motionTracker/proc/motionTrackScan(var/list/mobs, var/range)
+/obj/item/device/t_scanner/motiontracker/proc/motionTrackScan(var/list/mobs, var/range)
 	var/mobsfar = 0
 	for(var/turf/T in range(7, get_turf(src)) )
 		for(var/mob/O in T.contents)
@@ -597,7 +597,7 @@
 		playsound(get_turf(src),'sound/effects/trackHalf.ogg', 10, 0, -5)
 
 
-/obj/item/device/t_scanner/motionTracker/proc/flick_blip(turf/T)
+/obj/item/device/t_scanner/motiontracker/proc/flick_blip(turf/T)
 	var/image/B = image('icons/obj/mining.dmi', T, icon_state = "blip")
 	B.mouse_opacity = 0
 	B.layer = ABOVE_OPEN_TURF_LAYER
@@ -607,9 +607,10 @@
 			nearby |= M.client
 			flick_overlay(B,nearby, 8)
 
-/obj/item/device/t_scanner/motionTracker/attackby(obj/item/I, mob/user, params)
+/obj/item/device/t_scanner/motiontracker/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver) && cell)
 		user << text("<span class='notice'>You detach [cell] from [src].</span>")
+		cell.updateicon()
 		cell.loc = get_turf(src)
 		cell = null
 		cellcharge = 0
@@ -617,7 +618,6 @@
 		if(on)
 			on = 0
 		updateicon()
-		cell.updateicon()
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(cell)
 			user << text("<span class='notice'>[src] already has a power supply installed.</span>")
@@ -635,7 +635,7 @@
 	else
 		..()
 
-/obj/item/device/t_scanner/motionTracker/examine(mob/user)
+/obj/item/device/t_scanner/motiontracker/examine(mob/user)
 	..()
 	if(cell)
 		user << text("<span class='notice'>[src] has [cellcharge]/[cellmaxcharge] charge remaining.</span>")
