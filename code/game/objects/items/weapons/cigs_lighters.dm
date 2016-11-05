@@ -188,6 +188,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
+	update_brightness()
 	if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
@@ -223,6 +224,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
 
+/obj/item/clothing/mask/cigarette/proc/update_brightness()
+	if(lit)
+		set_light(1)
+	else
+		set_light(0)
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(reagents.total_volume)
@@ -245,6 +251,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
+		lit = 0
+		update_brightness()
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
@@ -259,6 +267,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
 		new /obj/effect/decal/cleanable/ash(user.loc)
+		update_brightness()
 		qdel(src)
 	return ..()
 
