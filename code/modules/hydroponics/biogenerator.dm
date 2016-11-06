@@ -7,6 +7,10 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 40
+	use_auto_lights = 1
+	light_power_on = 2
+	light_range_on = 3
+	light_color = LIGHT_COLOR_BLUE
 	var/processing = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/points = 0

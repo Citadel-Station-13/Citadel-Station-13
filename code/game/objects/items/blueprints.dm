@@ -213,12 +213,12 @@
 			turfs -= key
 	if(A)
 		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
 	else
 		A = new
 		A.setup(str)
 		A.contents += turfs
-		A.SetDynamicLighting()
+		A.set_dynamic_lighting()
 	A.has_gravity = old_gravity
 	interact()
 	return 1

@@ -9,6 +9,11 @@ var/list/announcement_systems = list()
 	icon_state = "AAS_On"
 	var/obj/item/device/radio/headset/radio
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 2
+	light_color = LIGHT_COLOR_BLUE
+
 	verb_say = "coldly states"
 	verb_ask = "queries"
 	verb_exclaim = "alarms"

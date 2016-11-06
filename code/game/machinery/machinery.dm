@@ -120,6 +120,10 @@ Class Procs:
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
 
+	var/light_range_on = 0
+	var/light_power_on = 0
+	var/use_auto_lights = 0
+
 /obj/machinery/New()
 	..()
 	machines += src
