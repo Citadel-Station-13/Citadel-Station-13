@@ -655,9 +655,9 @@
 		if(actually_paints)
 			target.color = paint_color
 			if(color_hex2num(paint_color) < 255)
-				target.SetOpacity(255)
+				target.set_opacity(255)
 			else
-				target.SetOpacity(initial(target.opacity))
+				target.set_opacity(initial(target.opacity))
 		. = use_charges(2)
 		var/fraction = min(1, . / reagents.maximum_volume)
 		reagents.reaction(target, TOUCH, fraction * volume_multiplier)

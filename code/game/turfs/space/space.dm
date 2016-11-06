@@ -14,6 +14,8 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
 /turf/open/space/New()
@@ -52,9 +54,9 @@
 			if(istype(t, /turf/open/space))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			set_light(2)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)

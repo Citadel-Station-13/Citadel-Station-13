@@ -13,6 +13,10 @@
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_HALOGEN
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
@@ -23,6 +27,7 @@
 		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
 		list("omnizine")
 	)
+
 
 /obj/machinery/sleeper/New()
 	..()

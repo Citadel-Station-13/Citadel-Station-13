@@ -4,14 +4,14 @@
 	icon_state = "away"
 	requires_power = 0
 	luminosity = 1
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/cabin
 	name = "Cabin"
 	icon_state = "away2"
 	requires_power = 1
 	luminosity = 0
-	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+	dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
 
 /area/awaymission/snowforest/lumbermill
 	name = "Lumbermill"
@@ -54,10 +54,10 @@
 
 /obj/structure/fireplace/proc/toggleFireplace()
 	if(active)
-		SetLuminosity(8)
+		set_light(8)
 		icon_state = "fireplace-active"
 	else
-		SetLuminosity(0)
+		set_light(0)
 		icon_state = "fireplace"
 
 /obj/structure/fireplace/extinguish()

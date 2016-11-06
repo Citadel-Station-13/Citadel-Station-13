@@ -7,6 +7,8 @@
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 	clockwork = TRUE //it'd look weird
+	light_color = LIGHT_COLOR_GREEN
+	light_range_on = 2
 
 /obj/machinery/computer/stockexchange/New()
 	..()

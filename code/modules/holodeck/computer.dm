@@ -25,6 +25,7 @@
 	var/area/holodeck/program
 	var/area/holodeck/last_program
 	var/area/offline_program = /area/holodeck/rec_center/offline
+	light_color = LIGHT_COLOR_CYAN
 
 	var/list/program_cache = list()
 	var/list/emag_programs = list()
