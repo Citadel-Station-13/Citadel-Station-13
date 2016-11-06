@@ -22,9 +22,9 @@
 
 	var/needs_update = FALSE
 
-	var/cache_r  = 0
-	var/cache_g  = 0
-	var/cache_b  = 0
+	var/cache_r  = LIGHTING_SOFT_THRESHOLD
+	var/cache_g  = LIGHTING_SOFT_THRESHOLD
+	var/cache_b  = LIGHTING_SOFT_THRESHOLD
 	var/cache_mx = 0
 
 	var/update_gen = 0
@@ -133,5 +133,5 @@
 /datum/lighting_corner/Destroy(var/force)
 	if(force)
 		CRASH("Nope you're not deleting me!")
-		
+
 	return QDEL_HINT_LETMELIVE
