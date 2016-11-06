@@ -57,6 +57,7 @@
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
 	no_destination_swap = 1
+	light_color = LIGHT_COLOR_CYAN
 
 /*********************Pickaxe & Drills**************************/
 

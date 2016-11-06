@@ -14,33 +14,19 @@
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		SetLuminosity(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		SetLuminosity(0)
+	update_brightness()
 
-/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.AddLuminosity(brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		if(loc == user)
-			user.AddLuminosity(-brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return 0
 	on = !on
-	update_brightness(user)
+	update_brightness()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -84,21 +70,6 @@
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
-
-
-/obj/item/device/flashlight/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-
-/obj/item/device/flashlight/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -193,6 +164,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	var/on_damage = 7
 	var/produce_heat = 1500
 	heat = 1000
+	light_color = LIGHT_COLOR_FLARE
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
@@ -213,13 +185,9 @@ obj/item/device/flashlight/lamp/bananalamp
 	on = 0
 	force = initial(src.force)
 	damtype = initial(src.damtype)
-	if(ismob(loc))
-		var/mob/U = loc
-		update_brightness(U)
-	else
-		update_brightness(null)
+	update_brightness()
 
-/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness()
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -262,6 +230,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	light_color = LIGHT_COLOR_FIRE
 
 
 /obj/item/device/flashlight/slime
@@ -275,9 +244,10 @@ obj/item/device/flashlight/lamp/bananalamp
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+	light_color = LIGHT_COLOR_SLIME_LAMP
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=ï¿½1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

@@ -26,6 +26,11 @@
 	var/uv_super = FALSE
 	var/uv_cycles = 6
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_ORANGE
+
 /obj/machinery/suit_storage_unit/standard_unit
 	suit_type = /obj/item/clothing/suit/space/eva
 	helmet_type = /obj/item/clothing/head/helmet/space/eva

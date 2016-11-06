@@ -28,6 +28,7 @@
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio()

@@ -8,6 +8,7 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
+	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -197,4 +198,3 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
-

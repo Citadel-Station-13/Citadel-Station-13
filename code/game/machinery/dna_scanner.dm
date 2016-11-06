@@ -12,6 +12,10 @@
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 2
+	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/dna_scannernew/New()
 	..()
