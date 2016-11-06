@@ -357,3 +357,44 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
 	prefs.save_preferences()
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/verb/toggle_space_parallax()
+	set name = "Toggle Space Parallax"
+	set category = "Preferences"
+	set desc = "Toggle the parallax effect of space turfs."
+	prefs.space_parallax = !prefs.space_parallax
+
+	prefs.save_preferences()
+
+	if(!prefs.space_parallax)
+		src << "Space parallax is now deactivated."
+	else
+		src << "Space parallax is now activated."
+
+	if(mob && mob.hud_used)
+		mob.hud_used.update_parallax_and_dust()
+
+/client/verb/toggle_space_dust()
+	set name = "Toggle Space Dust"
+	set category = "Preferences"
+	set desc = "Toggle the presence of dust on space turfs."
+	prefs.space_dust = !prefs.space_dust
+
+	prefs.save_preferences()
+
+	if(!prefs.space_dust)
+		src << "Space dust is now deactivated."
+	else
+		src << "Space dust is now activated."
+
+	if(mob && mob.hud_used)
+		mob.hud_used.update_parallax_and_dust()
+
+/client/verb/toggle_parallax_speed()
+	set name = "Change Parallax Speed"
+	set category = "Preferences"
+	set desc = "Change the speed at which parallax moves."
+
+	prefs.parallax_speed = min(max(input(usr, "Enter a number between 0 and 5 included (default=2)","Parallax Speed Preferences",prefs.parallax_speed),0),5)
+
+	prefs.save_preferences()

@@ -5,6 +5,8 @@
 	desc = "A vast, cold, and lonely place."
 	intact = 0
 
+	plane = PLANE_SPACE_BACKGROUND
+
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -21,6 +23,10 @@
 /turf/open/space/New()
 	update_icon()
 	air = space_gas
+	var/image/I = image('icons/turf/space_parallax1.dmi',"[icon_state]")
+	I.plane = PLANE_SPACE_DUST
+	I.alpha = 80
+	overlays += I
 
 /turf/open/space/Destroy(force)
 	if(force)

@@ -20,3 +20,13 @@ var/map_ready = 0
 	However, using lots of spawn() has a severe performance impact, and often results in spaghetti-code
 	map_ready will be set to 1 when world/New() is called (which happens just after the map is instanced)
 */
+
+//SPACE PARALLAX
+var/parallax_initialized = 0
+var/space_color = "#050505"
+var/list/space_parallax_0[9]
+var/list/space_parallax_1[9]
+var/list/space_parallax_2[9]
+var/list/space_parallax_dust_0[9]
+var/list/space_parallax_dust_1[9]
+var/list/space_parallax_dust_2[9]

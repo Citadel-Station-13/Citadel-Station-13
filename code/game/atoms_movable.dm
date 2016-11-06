@@ -69,6 +69,8 @@
 		last_move = 0
 		return
 
+	move_parallax(loc)
+
 	if(.)
 		Moved(oldloc, direct)
 
@@ -132,8 +134,15 @@
 				continue
 			AM.Crossed(src)
 		Moved(oldloc, 0)
+		move_parallax(destination)
 		return 1
 	return 0
+
+/atom/movable/proc/move_parallax(atom/destination)
+	spawn()
+		for(var/client/C in clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax()
 
 /mob/living/forceMove(atom/destination)
 	stop_pulling()

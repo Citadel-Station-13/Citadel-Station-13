@@ -484,3 +484,12 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define DRAKE_SCORE "Drakes Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
+
+
+
+//New planes stuff, currently only used by Space Parallax
+#define PLANE_BASE 0
+#define PLANE_SPACE_PARALLAX -5
+#define PLANE_SPACE_DUST -7
+#define PLANE_SPACE_PARALLAX_DUST -8
+#define PLANE_SPACE_BACKGROUND -10
