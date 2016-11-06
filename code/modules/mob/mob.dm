@@ -102,12 +102,7 @@ var/next_mob_id = 0
 					msg = blind_message
 				else
 					continue
-			else if(T.lighting_object)
-				if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity)
-					if(blind_message) //if the light object is dark and not invisible to us, we see blind_message/nothing
-						msg = blind_message
-					else
-						continue
+
 		M.show_message(msg,1,blind_message,2)
 
 /mob/proc/get_top_level_mob()
@@ -140,12 +135,7 @@ proc/get_top_level_mob(var/mob/S)
 				msg = blind_message
 			else
 				continue
-		else if(T.lighting_object)
-			if(T.lighting_object.invisibility <= M.see_invisible && !T.lighting_object.luminosity) //the light object is dark and not invisible to us
-				if(blind_message)
-					msg = blind_message
-				else
-					continue
+
 		M.show_message(msg,1,blind_message,2)
 
 // Show a message to all mobs in earshot of this one

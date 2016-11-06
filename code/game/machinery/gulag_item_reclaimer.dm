@@ -12,6 +12,10 @@
 	var/list/stored_items = list()
 	var/obj/item/weapon/card/id/prisoner/inserted_id = null
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/gulag_item_reclaimer/Destroy()
 	for(var/i in contents)

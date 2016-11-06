@@ -549,9 +549,9 @@
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
 	if(!luminosity)
-		SetLuminosity(3)
+		set_light(3)
 	else
-		SetLuminosity(0)
+		set_light(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
 	var/message = input(src, "Announce to other swarmers", "Swarmer contact")

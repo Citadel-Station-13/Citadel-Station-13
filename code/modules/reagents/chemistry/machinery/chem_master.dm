@@ -14,6 +14,10 @@
 	var/screen = "home"
 	var/analyzeVars[0]
 	var/useramount = 30 // Last used amount
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 2
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/chem_master/New()
 	create_reagents(100)

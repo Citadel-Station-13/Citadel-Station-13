@@ -148,6 +148,7 @@
 		W.AfterChange()
 	W.blueprint_data = old_blueprint_data
 	return W
+    
 
 /turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
 	levelupdate()
@@ -316,7 +317,7 @@
 
 	T0.ChangeTurf(turf_type)
 
-	T0.redraw_lighting()
+	T0.reconsider_lights()
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)

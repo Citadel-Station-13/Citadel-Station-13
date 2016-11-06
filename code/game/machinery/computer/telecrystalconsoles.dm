@@ -9,6 +9,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_keyboard = "tcstation_key"
 	icon_screen = "syndie"
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
+	light_color = LIGHT_COLOR_RED
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker

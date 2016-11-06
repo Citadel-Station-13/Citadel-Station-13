@@ -188,6 +188,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = 'sound/items/welder.ogg'
 	damtype = "fire"
 	force = 4
+	update_brightness()
 	if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
 		var/datum/effect_system/reagents_explosion/e = new()
 		e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
@@ -223,6 +224,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
 
+/obj/item/clothing/mask/cigarette/proc/update_brightness()
+	if(lit)
+		set_light(1)
+	else
+		set_light(0)
 
 /obj/item/clothing/mask/cigarette/proc/handle_reagents()
 	if(reagents.total_volume)
@@ -245,6 +251,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	smoketime--
 	if(smoketime < 1)
 		new type_butt(location)
+		lit = 0
+		update_brightness()
 		if(ismob(loc))
 			M << "<span class='notice'>Your [name] goes out.</span>"
 			M.unEquip(src, 1)	//un-equip it so the overlays can update //Force the un-equip so the overlays update
@@ -259,6 +267,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
 		new /obj/effect/decal/cleanable/ash(user.loc)
+		update_brightness()
 		qdel(src)
 	return ..()
 
@@ -511,7 +520,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					user.apply_damage(5, BURN, hitzone)
 					user.visible_message("<span class='warning'>After a few attempts, [user] manages to light [src] - they however burn their finger in the process.</span>", "<span class='warning'>You burn yourself while lighting the lighter!</span>")
 
-			user.AddLuminosity(1)
+			set_light(1)
 			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
@@ -523,7 +532,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing. Wow.", "<span class='notice'>You quietly shut off [src] without even looking at what you're doing. Wow.</span>")
 			else
 				user.visible_message("[user] quietly shuts off [src].", "<span class='notice'>You quietly shut off [src].")
-			user.AddLuminosity(-1)
+			set_light(0)
 			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()
@@ -551,22 +560,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/turf/location = get_turf(src)
 	if(location)
 		location.hotspot_expose(700, 5)
-	return
-
-/obj/item/weapon/lighter/pickup(mob/user)
-	..()
-	if(lit)
-		SetLuminosity(0)
-		user.AddLuminosity(1)
-	return
-
-
-/obj/item/weapon/lighter/dropped(mob/user)
-	..()
-	if(lit)
-		if(user)
-			user.AddLuminosity(-1)
-		SetLuminosity(1)
 	return
 
 /obj/item/weapon/lighter/is_hot()
