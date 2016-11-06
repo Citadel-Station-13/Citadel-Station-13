@@ -8,7 +8,9 @@
 	force = 0
 	throwforce = 0
 	var/success_chance = 25
-	var/pokemon
+	var/mob/living/simple_animal/pokemon/stored_pokemon
+	var/mob/living/simple_animal/pokemon/linked_pokemon
+	var/mob/living/carbon/owner
 /obj/item/pokeball/great
 	name = "great ball"
 	icon_state = "pokeball_great"
@@ -23,45 +25,7 @@
 	success_chance = 100
 /* //WIP
 /obj/item/pokeball/throw_impact(atom/hit_atom)
-	if(ispokemon(hit_atom))
-		var/mob/living/simple_animal/pokemon/pmon = hit_atom
-		var/initial_success_chance = success_chance
-		pmon.resize = 0.1
-		pmon.color = "RED"
-		pmon.canmove = 0
-		sleep(15)
-		if(pmon.pokeball == src)
-			pmon.loc = src
-			pokemon = pmon
-
-			return 1
-		if(pmon.pokeball && pmon.pokeball !=src)
-			return ..()
-		var/bonus_chance = ((pmon.maxHealth - pmon.health) / 2)
-		if(bonus_chance > 100)
-			bonus_chance = 100
-		success_chance = (success_chance + bonus_chance)
-		if(success_chance > 100)
-			success_chance = 100
-		if(success_chance < 0)//just in case
-			success_chance  = 0
-		sleep(15)
-		if(prob(success_chance))
-			visible_message("<span class='warning'>[src] shakes...</span>")
-		else
-			escape()
-		sleep(15)
-		if(prob(success_chance))
-			visible_message("<span class='warning'>[src] shakes...</span>")
-		else
-			escape()
-		sleep(15)
-		if(prob(success_chance))
-			visible_message("<span class='warning'>[src] shakes...</span>")
-		else
-			escape()
-	else
-		..()
+	..()
 /obj/item/pokeball/proc/capture(mob/living/simple_animal/pokemon/pmon, mob/living/user)
 
 /obj/item/pokeball/proc/escape(mob/living/simple_animal/pokemon/pmon, mob/living/user)
