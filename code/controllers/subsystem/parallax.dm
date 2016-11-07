@@ -9,4 +9,4 @@ var/datum/subsystem/parallax/SSparallax
     NEW_SS_GLOBAL(SSparallax)
 
 /datum/subsystem/parallax/Initialize()
-    cachespaceparallax()
+    create_global_parallax_icons()
