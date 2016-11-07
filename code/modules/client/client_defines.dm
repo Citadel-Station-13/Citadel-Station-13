@@ -52,3 +52,13 @@
 
 	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
 	var/var_edited = 0
+
+		////////////
+		//PARALLAX//
+		////////////
+	var/updating_parallax = 0
+	var/list/parallax = list()
+	var/list/parallax_offset = list()
+	var/turf/previous_turf = null
+	var/obj/screen/plane_master/parallax_master/parallax_master = null
+	var/obj/screen/plane_master/parallax_dustmaster/parallax_dustmaster = null
