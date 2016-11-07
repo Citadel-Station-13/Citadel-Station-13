@@ -2,8 +2,6 @@
 	icon = 'icons/turf/floors.dmi'
 	level = 1
 
-	plane = PLANE_BASE
-
 	var/intact = 1
 	var/baseturf = /turf/open/space
 
@@ -150,7 +148,7 @@
 		W.AfterChange()
 	W.blueprint_data = old_blueprint_data
 	return W
-
+    
 
 /turf/proc/AfterChange() //called after a turf has been replaced in ChangeTurf()
 	levelupdate()

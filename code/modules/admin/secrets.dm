@@ -64,7 +64,6 @@
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];secrets=spacecolor'>Set the color of parallaxed space</A><BR>
 			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
 			<A href='?src=\ref[src];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
@@ -374,21 +373,6 @@
 			message_admins("<span class='boldannounce'>[key_name_admin(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]</span>")
 			log_admin("[key_name(usr)] changed the bomb cap to [MAX_EX_DEVESTATION_RANGE], [MAX_EX_HEAVY_RANGE], [MAX_EX_LIGHT_RANGE]")
 
-		if("spacecolor")
-			feedback_inc("admin_secrets_fun_used",1)
-			feedback_add_details("admin_secrets_fun_used","SpaceColor")
-
-			var/newcolor  = input("Set the color of space. This will only affect players with parallax enabled. (default=#050505)","Space Color") as null|text
-
-			if(newcolor)
-				space_color = newcolor
-
-			for(var/mob/M in player_list)
-				if(M.hud_used)
-					M.hud_used.update_parallax()
-
-			message_admins("[key_name_admin(usr)] changed the color of space. Space is now [newcolor].")
-			log_admin("[key_name_admin(usr)] changed the color of space. Space is now [newcolor].")
 
 		if("lightsout")
 			if(!check_rights(R_FUN))

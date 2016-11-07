@@ -27,9 +27,6 @@ var/list/preferences_datums = list()
 
 
 	var/UI_style = "Midnight"
-	var/space_parallax = 1
-	var/space_dust = 1
-	var/parallax_speed = 2
 	var/hotkeys = FALSE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
@@ -438,9 +435,6 @@ var/list/preferences_datums = list()
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<h2>General Settings</h2>"
-			dat += "<b>Space Parallax:</b> <a href='?_src_=prefs;preference=parallax'><b>[space_parallax ? "Enabled" : "Disabled"]</b></a><br>"
-			dat += "<b>Parallax Speed:</b> <a href='?_src_=prefs;preference=p_speed'><b>[parallax_speed]</b></a><br>"
-			dat += "<b>Space Dust:</b> <a href='?_src_=prefs;preference=dust'><b>[space_dust ? "Yes" : "No"]</b></a><br>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
@@ -1283,15 +1277,6 @@ var/list/preferences_datums = list()
 
 				if("name")
 					be_random_name = !be_random_name
-
-				if("parallax")
-					space_parallax = !space_parallax
-
-				if("dust")
-					space_dust = !space_dust
-
-				if("p_speed")
-					parallax_speed = min(max(input(user, "Enter a number between 0 and 5 included (default=2)","Parallax Speed Preferences",parallax_speed),0),5)
 
 				if("all")
 					be_random_body = !be_random_body

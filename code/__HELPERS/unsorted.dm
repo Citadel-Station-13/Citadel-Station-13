@@ -1438,11 +1438,3 @@ proc/pick_closest_path(value)
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
-
-/atom/proc/get_mobs_in_contents() //returns mobs recursively inside the atom
-	. = list()
-	for(var/atom/A in contents)
-		. += A.get_mobs_in_contents()
-
-/mob/get_mobs_in_contents()
-	. = ..() + src

@@ -2,7 +2,6 @@
 	icon_state = "black"
 	dir = SOUTH
 	baseturf = /turf/open/space/transit
-	plane = PLANE_BASE
 
 /turf/open/space/transit/horizontal
 	dir = WEST
