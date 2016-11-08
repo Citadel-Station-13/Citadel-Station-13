@@ -237,6 +237,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
+	S["space_parallax"] 	>> space_parallax
+	S["space_dust"] 		>> space_dust
+	S["parallax_speed"] 	>> parallax_speed
 
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
@@ -270,6 +273,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	space_parallax  = sanitize_integer(space_parallax, 0, 1, initial(space_parallax))
+	space_dust      = sanitize_integer(space_dust, 0, 1, initial(space_dust))
+	parallax_speed  = sanitize_integer(parallax_speed, 0, 5, initial(parallax_speed))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -306,6 +312,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["space_parallax"] 	<< space_parallax
+	S["space_dust"] 		<< space_dust
+	S["parallax_speed"] 	<< parallax_speed
 
 	return 1
 
