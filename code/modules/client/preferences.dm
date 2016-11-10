@@ -454,8 +454,9 @@ var/list/preferences_datums = list()
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Space Parallax:</b> <a href='?_src_=prefs;preference=parallax'>[space_parallax ? "Enabled" : "Disabled"]</a><br>"
-			dat += "<b>Parallax Speed:</b> <a href='?_src_=prefs;preference=p_speed'>[parallax_speed]</a><br>"
-			dat += "<b>Space Dust:</b> <a href='?_src_=prefs;preference=dust'>[space_dust ? "Yes" : "No"]</a><br>"
+			if(space_parallax)
+				dat += "<b>Parallax Speed:</b> <a href='?_src_=prefs;preference=p_speed'>[parallax_speed]</a><br>"
+				dat += "<b>Space Dust:</b> <a href='?_src_=prefs;preference=dust'>[space_dust ? "Yes" : "No"]</a><br>"
 			if(config.allow_Metadata)
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
