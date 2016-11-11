@@ -116,7 +116,7 @@
 	icon = 'icons/mob/ovipositors.dmi'
 	icon_state = null
 	name = "Ovipositor"			//the preview name of the accessory
-	gender_specific = 0	//Might be needed somewhere down the list.
+	gender_specific = 0			//Might be needed somewhere down the list.
 	color_src = "cock_color"
 	locked = 0
 

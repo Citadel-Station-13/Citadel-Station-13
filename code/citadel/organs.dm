@@ -22,16 +22,37 @@
 	color = null
 	var/mob/living/carbon/human/holder
 	var/shape = "human"
-	var/size = COCK_SIZE_NORMAL
+	var/size = COCK_SIZE_NORMAL 				//arbitrary value derived from length for sprites and shit.
+	var/length = 6								//inches
+	var/girth  = 0
+	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//0.73; check citadel_defines.dm
 	var/obj/item/organ/testicles/balls
 
 /obj/item/organ/penis/New()
 	..()
+	update()
+
+/obj/item/organ/penis/proc/update()//master update proc for this organ, will probably duplicate it for each one
+	update_size()
 	update_appearance()
+
+/obj/item/organ/penis/proc/update_size()
+	switch(length)
+		if(-INFINITY to 3)
+			size = COCK_SIZE_SMALL
+		if(4 to 8)
+			size = COCK_SIZE_NORMAL
+		if(9 to 11)
+			size = COCK_SIZE_BIG
+		if(12 to 14)
+			size = COCK_SIZE_BIGGER
+		if(15 to INFINITY)
+			size = COCK_SIZE_BIGGEST
+	girth = (length * girth_ratio)
 
 /obj/item/organ/penis/proc/update_appearance()
 	var/string = "penis_[shape]_[size]"
-	icon_state = string
+	icon_state = sanitize_text(string)
 	name = "[shape] penis"
 
 /obj/item/organ/testicles

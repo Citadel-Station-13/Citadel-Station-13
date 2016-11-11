@@ -91,13 +91,6 @@ var/global/list/breasts_fluid_list = list(
 	)
 
 	//Backpacks
-#define GBACKPACK "Grey Backpack"
-#define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
-#define LSATCHEL "Leather Satchel"
-#define DBACKPACK "Department Backpack"
-#define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()

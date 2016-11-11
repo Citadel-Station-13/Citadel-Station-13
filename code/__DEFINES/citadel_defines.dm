@@ -1,23 +1,25 @@
 //Global defines for most of the unmentionables.
 //Be sure to update the min/max of these if you do change them.
-#define COCK_SIZE_SMALL 	1
-#define COCK_SIZE_NORMAL 	2
-#define COCK_SIZE_BIG 		3
-#define COCK_SIZE_BIGGER	4
-#define COCK_SIZE_BIGGEST	5
+#define COCK_SIZE_BASE		3 //length in inches which is multiplied by the values below to estimate length and to generate a sprite for the mob
+#define COCK_SIZE_SMALL 	1	//3"
+#define COCK_SIZE_NORMAL 	2	//6"
+#define COCK_SIZE_BIG 		3	//9"
+#define COCK_SIZE_BIGGER	4	//12"
+#define COCK_SIZE_BIGGEST	5	//15"
 
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_MAX		3//we don't have sprites for anything bigger than 3 right now
 
-#define KNOT_SIZE_SMALL 	2
-#define KNOT_SIZE_NORMAL 	3
-#define KNOT_SIZE_BIG 		4
-#define KNOT_SIZE_BIGGER	5
-#define KNOT_SIZE_BIGGEST	6
+#define COCK_GIRTH_RATIO_MAX		1
+#define COCK_GIRTH_RATIO_DEF		0.73
+#define COCK_GIRTH_RATIO_MIN		0.5
 
-#define KNOT_SIZE_MIN		2
-#define KNOT_SIZE_MAX		6
+#define KNOT_GIRTH_RATIO_MAX		3
+#define KNOT_GIRTH_RATIO_DEF		2.1
+#define KNOT_GIRTH_RATIO_MIN		1.25
 
+#define BALLS_VOLUME_BASE	50
+#define BALLS_VOLUME_MULT	1
 #define BALLS_SIZE_SMALL	1
 #define BALLS_SIZE_NORMAL	2
 #define BALLS_SIZE_BIG		3
@@ -34,6 +36,9 @@
 #define EGG_SIZE_NORMAL		2
 #define EGG_SIZE_BIG		3
 
+#define BREASTS_VOLUME_BASE	50	//base volume for the reagents in the breasts, multiplied by the size then multiplier. 50u for A cups, 850u for HH cups.
+#define BREASTS_VOLUME_MULT	1	//global multiplier for breast volume.
+#define BREASTS_SIZE_FLAT	0
 #define BREASTS_SIZE_A		1
 #define BREASTS_SIZE_AA		1.5
 #define BREASTS_SIZE_B		2

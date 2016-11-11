@@ -391,6 +391,16 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_arousal)
 		updatearousal()
 
+/mob/living/proc/getPercentAroused()
+	return ((100 / max_arousal) * arousalloss)
+
+/mob/living/proc/isPercentAroused(percentage)//returns true if the mob's arousal (measured in a percent of 100) is greater than the arg percentage.
+	if(!isnum(percentage))
+		return FALSE
+	if(getPercentAroused() >= percentage)
+		return TRUE
+
+
 /mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 

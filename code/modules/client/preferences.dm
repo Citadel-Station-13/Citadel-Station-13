@@ -58,32 +58,15 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list(
-		"mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF",
-		//cock features
-		"has_cock"			= FALSE,
-		"cock_shape"		= "human",
-		"cock_size"			= COCK_SIZE_NORMAL,
-		"cock_color"		= "fff",
-		"has_sheath"		= FALSE,
-		"sheath_color"		= "fff",
-		//balls features
-		"has_balls" 		= FALSE,
-		"balls_color" 		= "fff",
-		"balls_size" 		= BALLS_SIZE_NORMAL,
-		"balls_fluid" 		= "semen",
-		//breast features
-		"has_breasts" 		= FALSE,
-		"breasts_color" 	= "fff",
-		"breasts_size" 		= BREASTS_SIZE_C,
-		"breasts_fluid" 	= "milk",
-		//mutant features
-		"tail_lizard" 		= "Smooth",
+	var/list/features = list("mcolor" = "f00",
+		"mcolor2" 			= "0f0",
+		"mcolor3" 			= "00f",
+		"tail_lizard"		= "None",
 		"tail_human" 		= "None",
-		"snout" 			= "Round",
+		"wings" 			= "None",
+		"snout" 			= "None",
 		"horns" 			= "None",
 		"ears" 				= "None",
-		"wings" 			= "None",
 		"frills" 			= "None",
 		"spines" 			= "None",
 		"body_markings" 	= "None",
@@ -91,9 +74,36 @@ var/list/preferences_datums = list()
 		"mam_ears" 			= "None",
 		"mam_tail" 			= "None",
 		"mam_tail_animated" = "None",
-		"xenohead"			="Hunter",
-		"xenodorsal"		="Dorsal Tubes",
-		"xenotail"			="Xenomorph Tail")
+		"xenohead"			= "Hunter",
+		"xenodorsal"		= "Dorsal Tubes",
+		"xenotail"			= "Xenomorph Tail",
+		"has_cock"			= FALSE,
+		"cock_shape"		= "human",
+		"cock_size"			= COCK_SIZE_NORMAL,
+		"cock_color"		= "fff",
+		"has_sheath"		= FALSE,
+		"sheath_color"		= "fff",
+		"has_balls" 		= FALSE,
+		"balls_internal" 	= FALSE,
+		"balls_color" 		= "fff",
+		"balls_size" 		= BALLS_SIZE_NORMAL,
+		"balls_fluid" 		= "semen",
+		"has_ovi"			= FALSE,
+		"ovi_shape"			= "knotted",
+		"ovi_size"			= COCK_SIZE_NORMAL,
+		"ovi_color"			= "fff",
+		"has_sheath"		= TRUE,
+		"sheath_color"		= "fff",
+		"has_eggsack" 		= FALSE,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= "fff",
+		"eggsack_size" 		= BALLS_SIZE_NORMAL,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= "fff",
+		"breasts_size" 		= BREASTS_SIZE_C,
+		"breasts_fluid" 	= "milk")//check mobs.dm for this list
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -443,7 +453,7 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 			dat += "</tr></table>"
 			if(NOGENITALS in pref_species.specflags)
-				dat += "<h2>[pref_species.name] does not support genitals!</h2>"
+				dat += "<h2>Your species ([pref_species.name]) does not support genitals!</h2>"
 			else
 				dat += "<h2>Genitals</h2>"
 
@@ -451,20 +461,20 @@ var/list/preferences_datums = list()
 
 				dat += "<td valign='top' width='7%'>"
 				dat += "<h3>Penis</h3>"
-				dat += "<a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] ? "Has a penis" : "Doesn't have a penis"]</a><BR>"
+				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_cock"] == TRUE)
+					//start cock
 					if(pref_species.use_skintones)
-						dat += "<h3>Penis Color</h3><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span><BR>"
+						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 					else
-						dat += "<h3>Penis Color</h3><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
-				dat += "</td>"
-				if(features["has_cock"] == TRUE)
-					dat += "<td valign='top' width='7%'>"
-					dat += "<a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Has testicles" : "Doesn't have testicles"]</a><BR>"
-				if(features["has_balls"] == TRUE)
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
-					dat += "</td>"
+						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+						//start balls
+						dat += "<h3>Testicles</h3>"
+					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_balls"] == TRUE)
+						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
 
+				dat += "</td>"
 				dat += "</tr></table>"
 
 
@@ -1245,12 +1255,6 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
-				//Genitals prefs
-				if("has_cock")
-					if(features["has_cock"] >= 1)//TRUE/FALSE weren't working for some reason, let's try straight up numbers
-						features["has_cock"] = 0
-					else
-						features["has_cock"] = 1
 
 				if("cock_color")
 					var/new_cockcolor = input(user, "Choose your character's penis color:", "Character Preference") as color|null
@@ -1262,13 +1266,6 @@ var/list/preferences_datums = list()
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-				if("has_balls")
-					if(features["has_balls"] == TRUE)
-						features["has_balls"] = FALSE
-					else if(features["has_balls"] == FALSE)
-						features["has_balls"] = TRUE
-					else
-						features["has_balls"] = FALSE
 
 				if("balls_color")
 					var/new_ballscolor = input(user, "Choose your character's testical color:", "Character Preference") as color|null
@@ -1300,6 +1297,23 @@ var/list/preferences_datums = list()
 
 		else
 			switch(href_list["preference"])
+				if("has_cock")
+					var/newcock = FALSE
+					switch(features["has_cock"])
+						if(TRUE)
+							newcock = FALSE
+						if(FALSE)
+							newcock = TRUE
+					features["has_cock"] = newcock
+				if("has_balls")
+					if("has_balls")
+					var/newballs = FALSE
+					switch(features["has_balls"])
+						if(TRUE)
+							newballs = FALSE
+						if(FALSE)
+							newballs = TRUE
+					features["has_balls"] = newballs
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
