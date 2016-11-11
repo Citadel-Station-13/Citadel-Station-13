@@ -69,6 +69,8 @@
 		last_move = 0
 		return
 
+	update_client_hook(loc)
+
 	if(.)
 		Moved(oldloc, direct)
 
@@ -132,6 +134,9 @@
 				continue
 			AM.Crossed(src)
 		Moved(oldloc, 0)
+
+		update_client_hook(destination)
+
 		return 1
 	return 0
 
@@ -152,12 +157,25 @@
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
 
-
 /mob/living/silicon/pai/forceMove(atom/destination)
 	if(card)
 		card.forceMove(destination)
 	else //something went very wrong.
 		CRASH("pAI without card")
+
+/atom/movable/proc/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax_values()
+
+/mob/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax_values()
+	else if(client && hud_used)
+		hud_used.update_parallax_values()
 
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space

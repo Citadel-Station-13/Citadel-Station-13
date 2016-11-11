@@ -1438,3 +1438,11 @@ proc/pick_closest_path(value)
 	while(length(str) < 5)
 		str = "0" + str
 	. = str
+
+/proc/trange(var/Dist = 0, var/turf/Center = null)
+	if (isnull(Center))
+		return
+
+	var/turf/x1y1 = locate(((Center.x - Dist) < 1 ? 1 : Center.x - Dist), ((Center.y - Dist) < 1 ? 1 : Center.y - Dist), Center.z)
+	var/turf/x2y2 = locate(((Center.x + Dist) > world.maxx ? world.maxx : Center.x + Dist), ((Center.y + Dist) > world.maxy ? world.maxy : Center.y + Dist), Center.z)
+	return block(x1y1, x2y2)
