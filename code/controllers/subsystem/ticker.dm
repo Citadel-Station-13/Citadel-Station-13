@@ -55,7 +55,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title1.ogg' = 31, 'sound/ambience/title2.ogg' = 31, 'sound/ambience/title3.ogg' = 31, 'sound/ambience/title4.ogg' = 31, 'sound/ambience/title5.ogg' = 31, 'sound/ambience/title6.ogg' = 31, 'sound/ambience/clown.ogg' = 7)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title1.ogg' = 31, 'sound/ambience/title2.ogg' = 31, 'sound/ambience/title3.ogg' = 31, 'sound/ambience/title4.ogg' = 31, 'sound/ambience/title5.ogg' = 31, 'sound/ambience/title6.ogg' = 31, 'sound/ambience/title7.ogg' = 31, 'sound/ambience/clown.ogg' = 4)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -553,4 +553,3 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/proc/send_gamemode_vote(var/)
 	SSvote.initiate_vote("roundtype","server")
-
