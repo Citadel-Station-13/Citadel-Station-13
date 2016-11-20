@@ -24,7 +24,7 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	icon = 'icons/misc/fullscreen.dmi'
-	icon_state = pick("title1", "title2", "title3", 
+	icon_state = pick("title1", "title2", "title3", "title4". "title5") 
 	layer = FLY_LAYER
 
 
