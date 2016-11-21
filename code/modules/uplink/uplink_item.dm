@@ -509,6 +509,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/mecha/combat/marauder/mauler/loaded
 	cost = 140
 
+/datum/uplink_item/support/syndrone
+	name="syndrone"
+	desc="A drone that when summoned will be able to listen to carry out your orders, or just sow destruction (results may vary)"
+	item = /obj/item/drone_shell/syndrone
+	cost = 15
+	surplus = 25
+
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy and Inconspicuous Weapons"
