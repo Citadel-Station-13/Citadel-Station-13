@@ -210,7 +210,6 @@
 
 	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
-		playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
