@@ -31,6 +31,7 @@
 			W.forceMove(src)
 			id = W
 			user << "<span class='notice'>You insert [W].</span>"
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			return
 		else
 			user << "<span class='notice'>There's an ID inserted already.</span>"
@@ -83,13 +84,16 @@
 	if(..())
 		return
 	if(!allowed(usr))
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		usr << "<span class='warning'>Access denied.</span>"
 		return
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("scan_beacon")
 			beacon = findbeacon()
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("handle_id")
 			if(id)
 				if(!usr.get_active_hand())
@@ -107,6 +111,7 @@
 					id = I
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
+			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
@@ -114,18 +119,23 @@
 			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				usr << "The teleporter is locked"
 				return
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			teleporter.toggle_open()
 		if("teleporter_lock")
 			if(teleporter.state_open)
 				usr << "Close the teleporter before locking!"
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				return
 			teleporter.locked = !teleporter.locked
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
 			addtimer(src, "teleport", 5, FALSE, usr)
+			playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()

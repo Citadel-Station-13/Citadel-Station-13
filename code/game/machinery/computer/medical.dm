@@ -28,6 +28,7 @@
 		O.loc = src
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		return ..()
 
@@ -209,6 +210,7 @@
 
 	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
+		playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
@@ -230,6 +232,7 @@
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -250,6 +253,7 @@
 				src.authenticated = 1
 				src.rank = "AI"
 				src.screen = 1
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else if(IsAdminGhost(usr))
 				src.active1 = null
 				src.active2 = null
@@ -263,6 +267,7 @@
 					src.authenticated = src.scan.registered_name
 					src.rank = src.scan.assignment
 					src.screen = 1
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if(src.authenticated)
 
 			if(href_list["screen"])

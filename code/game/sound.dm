@@ -123,10 +123,6 @@
 				soundin = pick('sound/voice/pred/predroar1.ogg', 'sound/voice/pred/predroar2.ogg')
 			if ("alienscreech")
 				soundin = pick('sound/alien/Voice/screech1.ogg', 'sound/alien/Voice/screech2.ogg', 'sound/alien/Voice/screech3.ogg', 'sound/alien/Voice/screech4.ogg')
-			if ("terminal_type")
-				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
-							'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
-							'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
 			//Scream emote sounds
 			if ("malescream")
 				soundin = pick('sound/voice/scream/scream_m1.ogg', 'sound/voice/scream/scream_m2.ogg')

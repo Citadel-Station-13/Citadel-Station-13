@@ -70,7 +70,7 @@
 		if(!(user in watchers))
 			user.unset_machine() // no usable camera on the network, we disconnect the user from the computer.
 			return
-	playsound(src, 'sound/machines/displaying.ogg', 25, 0)
+	playsound(src, 'sound/machines/terminal_displaying.ogg', 25, 0)
 	use_camera_console(user)
 
 /obj/machinery/computer/security/proc/use_camera_console(mob/user)
@@ -116,7 +116,7 @@
 		watchers[user] = C
 		use_power(50)
 		addtimer(src, "use_camera_console", 5, FALSE, user)
-		playsound(src, 'sound/machines/select.ogg', 25, 0)
+		playsound(src, 'sound/machines/terminal_select.ogg', 25, 0)
 	else
 		user.unset_machine()
 
