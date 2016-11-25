@@ -54,3 +54,21 @@
 			user << "<span class='danger'>Access Denied.</span>"
 	else
 		return ..()
+
+/obj/structure/closet/secure_closet/personal/verb/verb_resetlock()//personal locker ownership reset.
+	set src in oview(1)
+	set category = "Object"
+	set name = "Reset Lock"
+
+	if(opened)
+		if(src.broken)
+			usr << "<span class='danger'>It appears to be broken.</span>"
+			return
+		else
+			registered_name = null
+			usr << "<span class='danger'>You successfully reset the lock.</span>"
+			src.desc = "The lock appears to be reset"
+			add_fingerprint(usr)
+			return
+	else
+		usr << "<span class='danger'>The locker must be open!</span>"
