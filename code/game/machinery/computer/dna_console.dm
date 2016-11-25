@@ -347,7 +347,7 @@
 		if("setstrength")
 			if(!num)
 				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
-				playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0))
+				playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(num)
 				radstrength = Wrap(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
