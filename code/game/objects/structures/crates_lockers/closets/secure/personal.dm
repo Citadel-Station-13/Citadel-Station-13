@@ -61,14 +61,13 @@
 	set name = "Reset Lock"
 
 	if(opened)
-		if(src.broken)
-			usr << "<span class='danger'>It appears to be broken.</span>"
+		if(broken)
+			usr << "<span class='danger'>The lock appears to be broken.</span>"
 			return
 		else
 			registered_name = null
 			usr << "<span class='danger'>You successfully reset the lock.</span>"
-			src.desc = "The lock appears to be reset"
+			desc = initial(desc)
 			add_fingerprint(usr)
-			return
 	else
-		usr << "<span class='danger'>The locker must be open!</span>"
+		usr << "<span class='danger'>The [src.name] must be open!</span>"
