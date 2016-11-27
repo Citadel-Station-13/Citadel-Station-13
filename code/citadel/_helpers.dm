@@ -32,7 +32,7 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 //SEXUAL ORGAN PROCS//
 //////////////////////
 //force=TRUE will add the organ and set their DNA appropriately. FALSE will only update it if their DNA supports it.
-/mob/living/carbon/human/proc/update_sex_organs(doall=TRUE,penis=FALSE,balls=FALSE,ovi=FALSE,eggsack=FALSE,breasts=FALSE,vagina=FALSE,womb=FALSE)//This proc checks your DNA to see if you need to grow any organs. Will be used with DNA injectors, chems, and the DNA consoles.
+/mob/living/carbon/human/proc/update_sex_organs(doall=TRUE,penis=FALSE,balls=FALSE,ovi=FALSE,eggsack=FALSE,breasts=FALSE,vagina=FALSE,womb=FALSE)//gives you your organs at roundstart
 	switch(doall)
 		if(TRUE)
 			update_penis()
@@ -58,37 +58,40 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 			if(womb)
 				update_womb()
 
-/mob/living/carbon/human/proc/update_penis(force=FALSE,size,shape,balls=FALSE)
+/mob/living/carbon/human/proc/update_penis()
 	if(!has_dna())
 		return FALSE
 	if(NOGENITALS in dna.species.specflags)
 		return FALSE
-	if(dna.features["has_cock"] == FALSE)
-		switch(force)
-			if(FALSE)
-				return FALSE
-			if(TRUE)
-				dna.features["has_cock"] = TRUE
 	if(!getorganslot("penis"))
-		internal_organs_slot["penis"] += new /obj/item/organ/penis
-	var/obj/item/organ/penis/P = getorganslot("penis")
-	if(P)
-		internal_organs += P
-		if(dna.species.use_skintones)
-			P.color = skintone2hex(skin_tone)
-		else
-			P.color = dna.features["cock_color"]
-		if(size)
-			P.size = sanitize_integer(size, COCK_SIZE_MIN, COCK_SIZE_MAX, COCK_SIZE_NORMAL)
-		else
-			P.size = dna.features["cock_size"]
-		if(shape && istext(shape))
-			P.shape = shape
-		else
-			P.shape = dna.features["cock_shape"]
-		P.update_appearance()
+		var/obj/item/organ/genital/penis/P = new
+		P.Insert(src)
+		if(P)
+			if(dna.species.use_skintones)
+				P.color = skintone2hex(skin_tone)
+			else
+				P.color = dna.features["cock_color"]
+			P.length 			= dna.features["cock_length"]
+			P.girth_ratio 		= dna.features["cock_girth_ratio"]
+			P.shape 			= dna.features["cock_shape"]
+			P.update()
 
 /mob/living/carbon/human/proc/update_balls(force=FALSE)
+	if(!has_dna())
+		return FALSE
+	if(NOGENITALS in dna.species.specflags)
+		return FALSE
+	if(!getorganslot("testicles"))
+		var/obj/item/organ/testicles/T = new
+		T.Insert(src)
+		if(T)
+			if(dna.species.use_skintones)
+				T.color = skintone2hex(skin_tone)
+			else
+				T.color = dna.features["balls_color"]
+			T.size		= dna.features[""]
+			T. = dna.features[""]
+
 /mob/living/carbon/human/proc/update_ovipositor(force=FALSE)
 /mob/living/carbon/human/proc/update_eggsack(force=FALSE)
 /mob/living/carbon/human/proc/update_breasts(force=FALSE)

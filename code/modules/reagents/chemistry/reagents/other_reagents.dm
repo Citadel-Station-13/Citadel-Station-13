@@ -110,14 +110,13 @@
 
 /datum/reagent/water/reaction_turf(turf/open/T, reac_volume)
 	if (!istype(T)) return
-//	var/CT = cooling_temperature
+	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
 		T.MakeSlippery(min_wet_time = 10, wet_time_to_add = reac_volume*1.5)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
-	/*fuck off, steam wouldn't put out a fire
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/open/space))
 		if(T.air)
@@ -125,7 +124,6 @@
 			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),0)
 			G.react()
 			qdel(hotspot)
-	*/
 	return
 /*
  *	Water reaction to an object

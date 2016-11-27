@@ -58,52 +58,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "f00",
-		"mcolor2" 			= "0f0",
-		"mcolor3" 			= "00f",
-		"tail_lizard"		= "None",
-		"tail_human" 		= "None",
-		"wings" 			= "None",
-		"snout" 			= "None",
-		"horns" 			= "None",
-		"ears" 				= "None",
-		"frills" 			= "None",
-		"spines" 			= "None",
-		"body_markings" 	= "None",
-		"mam_body_markings" = "None",
-		"mam_ears" 			= "None",
-		"mam_tail" 			= "None",
-		"mam_tail_animated" = "None",
-		"xenohead"			= "Hunter",
-		"xenodorsal"		= "Dorsal Tubes",
-		"xenotail"			= "Xenomorph Tail",
-		"has_cock"			= FALSE,
-		"cock_shape"		= "human",
-		"cock_size"			= COCK_SIZE_NORMAL,
-		"cock_color"		= "fff",
-		"has_sheath"		= FALSE,
-		"sheath_color"		= "fff",
-		"has_balls" 		= FALSE,
-		"balls_internal" 	= FALSE,
-		"balls_color" 		= "fff",
-		"balls_size" 		= BALLS_SIZE_NORMAL,
-		"balls_fluid" 		= "semen",
-		"has_ovi"			= FALSE,
-		"ovi_shape"			= "knotted",
-		"ovi_size"			= COCK_SIZE_NORMAL,
-		"ovi_color"			= "fff",
-		"has_sheath"		= TRUE,
-		"sheath_color"		= "fff",
-		"has_eggsack" 		= FALSE,
-		"eggsack_internal" 	= TRUE,
-		"eggsack_color" 	= "fff",
-		"eggsack_size" 		= BALLS_SIZE_NORMAL,
-		"eggsack_egg_color" = "fff",
-		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
-		"has_breasts" 		= FALSE,
-		"breasts_color" 	= "fff",
-		"breasts_size" 		= BREASTS_SIZE_C,
-		"breasts_fluid" 	= "milk")//check mobs.dm for this list
+	var/list/features = list()//mobs.dm for this list
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -1315,7 +1270,6 @@ var/list/preferences_datums = list()
 							newcock = TRUE
 					features["has_cock"] = newcock
 				if("has_balls")
-					if("has_balls")
 					var/newballs = FALSE
 					switch(features["has_balls"])
 						if(TRUE)
@@ -1323,6 +1277,14 @@ var/list/preferences_datums = list()
 						if(FALSE)
 							newballs = TRUE
 					features["has_balls"] = newballs
+				if("balls_internal")
+					switch(features["balls_internal"])
+						if(TRUE)
+							features["balls_internal"] = FALSE
+						if(FALSE)
+							features["balls_internal"] = TRUE
+						else
+							features["balls_internal"] = FALSE
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC

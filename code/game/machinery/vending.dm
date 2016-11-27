@@ -1006,9 +1006,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_delay = 10
 	vend_reply = "Have fun, you shameless pervert!"
-	products = list(/obj/item/weapon/dildo/random=5,/obj/item/weapon/dildo/plain=5,/obj/item/weapon/dildo/knotted=5,/obj/item/weapon/dildo/human=5,/obj/item/weapon/onahole/random=5,/obj/item/clothing/under/maid=5,/obj/item/weapon/restraints/handcuffs/fake/kinky=5)
+	products = list(/obj/item/weapon/dildo/random=5,/obj/item/weapon/dildo/plain=5,/obj/item/weapon/dildo/knotted=5,/obj/item/weapon/dildo/human=5,/obj/item/weapon/onahole/random=5,/obj/item/clothing/under/maid=5)
 	contraband = list()
-	premium = list(/obj/item/weapon/dildo/custom=10)
+	premium = list(/obj/item/weapon/dildo/custom=10,/obj/item/weapon/restraints/handcuffs/fake/kinky=5)
 	refill_canister = /obj/item/weapon/vending_refill/kink
 
 #undef STANDARD_CHARGE

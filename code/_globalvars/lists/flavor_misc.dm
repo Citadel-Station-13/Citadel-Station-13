@@ -70,9 +70,9 @@ var/global/list/cock_size_list = list(
 //balls stuff
 var/global/list/balls_list = list()
 var/global/list/balls_size_list = list(
-	BALLS_SIZE_SMALL,
-	BALLS_SIZE_NORMAL,
-	BALLS_SIZE_BIG
+	"Small (1/2 inch)" 	= 0.5,//diameter
+	"Normal (1 inch)"	= 1,
+	"Big (3 inches)"	= 3
 	)
 var/global/list/balls_fluid_list = list(
 	"semen",

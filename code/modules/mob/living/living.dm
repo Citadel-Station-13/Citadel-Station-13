@@ -426,12 +426,8 @@ Sorry Giacom. Please don't be mad :(
 					switch(gender)
 						if(MALE)
 							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
-							for(var/obj/effect/decal/cleanable/semen/S in loc)
-								S.add_mob_blood(src)
 						if(FEMALE)
 							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
-							for(var/obj/effect/decal/cleanable/femcum/FC in loc)
-								FC.add_mob_blood(src)
 			else
 				src << "<span class='notice'>You aren't aroused enough for that.</span>"
 

@@ -200,17 +200,16 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
-	var/DNA = list()
 	blood_state = BLOOD_STATE_SEMEN
 	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/semen/New()
+	dir = pick(1,2,4,8)
 	..()
-	dir = pick(NORTH,SOUTH,EAST,WEST)
 
 /obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-	if (S.blood_DNA)
-		blood_DNA |= S.blood_DNA.Copy()
+	if(S.reagent_DNA["semen"])
+		reagent_DNA["semen"] |= S.reagent_DNA["semen"]
 	..()
 
 /obj/effect/decal/cleanable/femcum
@@ -227,8 +226,8 @@
 	bloodiness = null
 
 /obj/effect/decal/cleanable/femcum/New()
+	dir = pick(1,2,4,8)
 	..()
-	dir = pick(NORTH,SOUTH,EAST,WEST)
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
 	if (F.blood_DNA)
@@ -244,6 +243,5 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "milk1"
 	random_icon_states = list("milk1", "milk2", "milk3", "milk4")
-	blood_DNA = list()
 	blood_state = null
 	bloodiness = null

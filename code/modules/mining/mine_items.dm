@@ -44,6 +44,7 @@
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
 	new /obj/item/weapon/storage/bag/ore(src)
 	new /obj/item/weapon/gun/energy/kinetic_accelerator(src)
+	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/weapon/survivalcapsule(src)
 

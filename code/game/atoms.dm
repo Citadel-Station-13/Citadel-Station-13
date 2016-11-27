@@ -5,7 +5,15 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
-	var/list/blood_DNA
+	var/list/blood_DNA = list()//maybe we can phase this out eventually
+	var/list/reagent_DNA = list(
+		"semen"	 	= list(),
+		"femcum" 	= list(),
+		"blood"		= list(),
+		"milk"		= list(),
+		"honey"		= list(),
+		"other"		= list()
+		)
 
 	///Chemistry.
 	var/datum/reagents/reagents = null
