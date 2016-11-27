@@ -41,6 +41,8 @@
 	M.update_action_buttons()
 
 /datum/action/proc/Remove(mob/M)
+	if(!M)
+		return
 	if(M.client)
 		M.client.screen -= button
 	button.moved = FALSE //so the button appears in its normal position when given to another owner.
