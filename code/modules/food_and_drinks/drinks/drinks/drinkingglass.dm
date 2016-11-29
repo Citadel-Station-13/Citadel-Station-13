@@ -535,7 +535,7 @@
 			name = txt
 			desc = "This drink is called [txt]. Wonder what's in it..."
 
-
+..()
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
 //  The format for shots is the exact same as iconstates for the drinking glass, except you use a shot glass instead.  //
