@@ -90,6 +90,7 @@
 		"mam_body_markings" = pick(mam_body_markings_list),
 		"mam_ears" 			= pick(mam_ears_list),
 		"mam_tail" 			= pick(mam_tails_list),
+		"gen_use_skintone"	= FALSE,
 		"mam_tail_animated" = "None",
 		"xenohead"			="Hunter",
 		"xenodorsal"		="Dorsal Tubes",
@@ -114,8 +115,6 @@
 		"ovi_shape"			= "knotted",
 		"ovi_size"			= COCK_SIZE_NORMAL,
 		"ovi_color"			= "fff",
-		"has_sheath"		= TRUE,
-		"sheath_color"		= "fff",
 		"has_eggsack" 		= FALSE,
 		"eggsack_internal" 	= TRUE,
 		"eggsack_color" 	= "fff",
@@ -124,7 +123,7 @@
 		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= "fff",
-		"breasts_size" 		= BREASTS_SIZE_C,
+		"breasts_size" 		= pick(breasts_size_list),
 		"breasts_fluid" 	= "milk"
 		))
 

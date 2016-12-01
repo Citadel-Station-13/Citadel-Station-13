@@ -13,7 +13,7 @@
 /obj/item/organ/genital
 	var/shape = "human"
 	var/sensitivity = 1
-	var/list/gen_flags = list()
+	var/list/genital_flags = list()
 
 /obj/item/organ/genital/penis
 	name = "penis"
@@ -59,6 +59,9 @@
 	var/string = "penis_[shape]_[size]"
 	icon_state = sanitize_text(string)
 	name = "[shape] penis"
+	if(owner)
+		if(owner.has_dna())
+			color = owner.dna.features["cock_color"]
 
 /obj/item/organ/testicles
 	name = "testicles"
@@ -80,7 +83,8 @@
 
 /obj/item/organ/testicles/New()
 	..()
-	reagents.maximum_volume = balls_volume
+	if(reagents)
+		reagents.maximum_volume = balls_volume
 
 /obj/item/organ/testicles/on_life()
 	..()

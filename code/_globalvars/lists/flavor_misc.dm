@@ -61,6 +61,7 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 //Vertical Lists are easier to read. Citadel Code ahead.
 //dick stuff
 var/global/list/cock_shapes_list = list()
+
 var/global/list/cock_size_list = list(
 	COCK_SIZE_SMALL,
 	COCK_SIZE_NORMAL,
@@ -74,6 +75,7 @@ var/global/list/balls_size_list = list(
 	"Normal (1 inch)"	= 1,
 	"Big (3 inches)"	= 3
 	)
+
 var/global/list/balls_fluid_list = list(
 	"semen",
 	"honey"

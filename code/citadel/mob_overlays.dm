@@ -38,6 +38,10 @@
 	icon_state = "flared"
 	name = "Flared"
 
+/datum/sprite_accessory/penis/blunt
+	icon_state = "blunt"
+	name = "blunt"
+
 /datum/sprite_accessory/penis/barbed
 	icon_state = "barbed"
 	name = "Barbed"

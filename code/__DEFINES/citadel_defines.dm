@@ -11,7 +11,7 @@
 #define COCK_SIZE_MIN		1
 #define COCK_SIZE_MAX		5
 
-#define COCK_GIRTH_RATIO_MAX		1
+#define COCK_GIRTH_RATIO_MAX		1.25
 #define COCK_GIRTH_RATIO_DEF		0.75
 #define COCK_GIRTH_RATIO_MIN		0.5
 

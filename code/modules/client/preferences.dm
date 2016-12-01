@@ -60,7 +60,13 @@ var/list/preferences_datums = list()
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list()//mobs.dm for this list
 
+		//Genitals+arousal prefs
+//	var/genitals_use_skintone 	= FALSE//Humans and such which use skintones will transfer the color to their dicks and shit(MOVED TO FEATURES LIST SO IT CAN BE INCORPORATED INTO DNA LATER)
+	var/arousable 				= TRUE //Allows players to disable arousal from the character creation screen if they so choose
+
+		//Custom names
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -80,7 +86,7 @@ var/list/preferences_datums = list()
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
+		// 0 = character settings, 1 = game preferences, 3 = loadout(eventually)
 	var/current_tab = 0
 
 		// OOC Metadata:
@@ -411,31 +417,67 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
+
 			dat += "</tr></table>"
+
+
+
+
 			if(NOGENITALS in pref_species.specflags)
 				dat += "<h2>Your species ([pref_species.name]) does not support genitals!</h2>"
 			else
 				dat += "<h2>Genitals</h2>"
 
-				dat += "<table width='100%'><tr><td width='24%' valign='top'>"
+				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
 
-				dat += "<td valign='top' width='7%'>"
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Options</h3>"
+				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=genitals_color_source'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+				if(pref_species.use_skintones)
+					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["gen_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
 				dat += "<h3>Penis</h3>"
+
 				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_cock"] == TRUE)
 					//start cock
-					if(pref_species.use_skintones)
+					if(pref_species.use_skintones && features["gen_use_skintone"] == TRUE)
 						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 					else
 						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
-						//start balls
-						dat += "<h3>Testicles</h3>"
+					//start balls
+					dat += "<h3>Testicles</h3>"
 					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
 					if(features["has_balls"] == TRUE)
 						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
 
 				dat += "</td>"
-				dat += "</tr></table>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Ovipositor</h3>"
+
+				dat += "<b>Has Ovi:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_ovi"])
+					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a><BR>"
+
+					dat += "<h3>Eggsack</h3>"
+
+					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_eggsack"] == TRUE)
+						dat += "<b>Eggsack Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
+
+				dat += "</td>"
+
+
+				dat += "</td></tr></table>"
 
 
 		if (1) // Game Preferences
@@ -1220,6 +1262,22 @@ var/list/preferences_datums = list()
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
 
+				if ("preferred_map")
+					var/maplist = list()
+					var/default = "Default"
+					if (config.defaultmap)
+						default += " ([config.defaultmap.friendlyname])"
+					for (var/M in config.maplist)
+						var/datum/votablemap/VM = config.maplist[M]
+						var/friendlyname = "[VM.friendlyname] "
+						if (VM.voteweight <= 0)
+							friendlyname += " (disabled)"
+						maplist[friendlyname] = VM.name
+					maplist[default] = null
+					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
+					if (pickedmap)
+						preferred_map = maplist[pickedmap]
+
 				if("cock_color")
 					var/new_cockcolor = input(user, "Choose your character's penis color:", "Character Preference") as color|null
 					if(new_cockcolor)
@@ -1242,49 +1300,104 @@ var/list/preferences_datums = list()
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
-				if ("preferred_map")
-					var/maplist = list()
-					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.friendlyname])"
-					for (var/M in config.maplist)
-						var/datum/votablemap/VM = config.maplist[M]
-						var/friendlyname = "[VM.friendlyname] "
-						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.name
-					maplist[default] = null
-					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
-					if (pickedmap)
-						preferred_map = maplist[pickedmap]
+				if("egg_size")
+					var/new_size
+					var/list/egg_sizes = list("1\"" = 1, "2\"" = 2, "3\"" = 3)
+					new_size = input(user, "Choose the size of your eggs:", "Egg Size") as null|anything in egg_sizes
+					if(new_size)
+						features["eggsack_egg_size"] = new_size
+
+				if("egg_color")
+					var/new_egg_color = input(user, "Choose your character's egg color:", "Character Preference") as color|null
+					if(new_egg_color)
+						var/temp_hsv = RGBtoHSV(new_egg_color)
+						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+
 
 
 		else
 			switch(href_list["preference"])
 				if("has_cock")
-					var/newcock = FALSE
 					switch(features["has_cock"])
 						if(TRUE)
-							newcock = FALSE
+							features["has_cock"] = FALSE
 						if(FALSE)
-							newcock = TRUE
-					features["has_cock"] = newcock
+							features["has_cock"] = TRUE
+							features["has_ovi"] = FALSE
+							features["has_eggsack"] = FALSE
+						else
+							features["has_cock"] = FALSE
+							features["has_ovi"] = FALSE
+
+				if("has_ovi")
+					switch(features["has_ovi"])
+						if(TRUE)
+							features["has_ovi"] = FALSE
+						if(FALSE)
+							features["has_ovi"] = TRUE
+							features["has_cock"] = FALSE
+							features["has_balls"] = FALSE
+						else
+							features["has_ovi"] = FALSE
+							features["has_cock"] = FALSE
+
 				if("has_balls")
-					var/newballs = FALSE
 					switch(features["has_balls"])
 						if(TRUE)
-							newballs = FALSE
+							features["has_balls"] = FALSE
 						if(FALSE)
-							newballs = TRUE
-					features["has_balls"] = newballs
+							features["has_balls"] = TRUE
+							features["has_eggsack"] = FALSE
+						else//if it's anything but those two then something went wrong, reset both of them
+							features["has_balls"] = FALSE
+							features["has_eggsack"] = FALSE
+
+				if("has_eggsack")
+					switch(features["has_eggsack"])
+						if(TRUE)
+							features["has_eggsack"] = FALSE
+						if(FALSE)
+							features["has_eggsack"] = TRUE
+							features["has_balls"] = FALSE
+						else//if it's anything but those two then something went wrong, reset both of them
+							features["has_eggsack"] = FALSE
+							features["has_balls"] = FALSE
+
 				if("balls_internal")
 					switch(features["balls_internal"])
 						if(TRUE)
 							features["balls_internal"] = FALSE
 						if(FALSE)
 							features["balls_internal"] = TRUE
+							features["eggsack_internal"] = FALSE
 						else
 							features["balls_internal"] = FALSE
+							features["eggsack_internal"] = FALSE
+
+				if("eggsack_internal")
+					switch(features["eggsack_internal"])
+						if(TRUE)
+							features["eggsack_internal"] = FALSE
+						if(FALSE)
+							features["eggsack_internal"] = TRUE
+							features["balls_internal"] = FALSE
+						else
+							features["eggsack_internal"] = FALSE
+							features["balls_internal"] = FALSE
+
+				if("has_breasts")
+					switch(features["has_breasts"])
+						if(TRUE)
+							features["has_breasts"] = FALSE
+						if(FALSE)
+							features["has_breasts"] = TRUE
+						else
+							features["has_breasts"] = FALSE
+
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
