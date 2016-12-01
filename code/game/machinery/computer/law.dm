@@ -11,17 +11,21 @@
 			return
 		if(!current)
 			user << "<span class='caution'>You haven't selected anything to transmit laws to!</span>"
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			return
 		if(!can_upload_to(current))
 			user << "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly."
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			current = null
 			return
 		var/turf/currentloc = get_turf(current)
 		if(currentloc && user.z != currentloc.z)
 			user << "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!"
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			current = null
 			return
 		M.install(current.laws, user)
+		playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
 	else
 		return ..()
 
@@ -43,8 +47,10 @@
 
 	if (!src.current)
 		user << "<span class='caution'>No active AIs detected!</span>"
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 	else
 		user << "[src.current.name] selected for law changes."
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -67,8 +73,10 @@
 
 	if(!src.current)
 		user << "<span class='caution'>No active unslaved cyborgs detected!</span>"
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 	else
 		user << "[src.current.name] selected for law changes."
+		playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !isrobot(B))
