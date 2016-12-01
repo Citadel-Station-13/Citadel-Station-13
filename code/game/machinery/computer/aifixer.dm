@@ -83,6 +83,8 @@
 	if(..())
 		return
 	if(href_list["fix"])
+		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
+		playsound(src, 'sound/machines/terminal_processing.ogg', 25, 0)
 		active = 1
 		while (occupier.health < 100)
 			occupier.adjustOxyLoss(-1, 0)

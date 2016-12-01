@@ -41,6 +41,7 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(!emagged)
 		if(!isnull(src.linkedServer))
+			playsound(src, 'sound/machines/terminal_emagged.ogg', 50, 0)
 			emagged = 1
 			screen = 2
 			spark_system.set_up(5, 0, src)
@@ -53,7 +54,8 @@
 			addtimer(src, "UnmagConsole", time)
 			message = rebootmsg
 		else
-			user << "<span class='notice'>A no server error appears on the screen.</span>"
+			user << "<span class='notice'>A 'no server' error appears on the screen.</span>"
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 /obj/machinery/computer/message_monitor/initialize()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
@@ -253,75 +255,98 @@
 		if (href_list["auth"])
 			if(!linkedServer || linkedServer.stat & (NOPOWER|BROKEN))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					auth = 0
 					screen = 0
 				else
 					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							auth = 1
+							playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 						else
 							message = incorrectkey
+							playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 		//Turn the server on/off.
 		if (href_list["active"])
 			if(auth) linkedServer.active = !linkedServer.active
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+
 		//Find a server
 		if (href_list["find"])
 			if(message_servers && message_servers.len > 1)
 				src.linkedServer = input(usr,"Please select a server.", "Select a server.", null) as null|anything in message_servers
 				message = "<span class='alert'>NOTICE: Server selected.</span>"
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else if(message_servers && message_servers.len > 0)
 				linkedServer = message_servers[1]
 				message =  "<span class='notice'>NOTICE: Only Single Server Detected - Server selected.</span>"
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 		//View the logs - KEY REQUIRED
 		if (href_list["view"])
 			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					src.screen = 1
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		//Clears the logs - KEY REQUIRED
 		if (href_list["clear"])
 			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					src.linkedServer.pda_msgs = list()
 					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
+
 		//Clears the request console logs - KEY REQUIRED
 		if (href_list["clearr"])
 			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					src.linkedServer.rc_msgs = list()
 					message = "<span class='notice'>NOTICE: Logs cleared.</span>"
+					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 		//Change the password - KEY REQUIRED
 		if (href_list["pass"])
 			if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+					playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 					if(dkey && dkey != "")
 						if(src.linkedServer.decryptkey == dkey)
 							var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+							playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 							if(length(newkey) <= 3)
 								message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
+								playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 							else if(length(newkey) > 16)
 								message = "<span class='notice'>NOTICE: Decryption key too long!</span>"
+								playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 							else if(newkey && newkey != "")
 								src.linkedServer.decryptkey = newkey
 							message = "<span class='notice'>NOTICE: Decryption key set.</span>"
+							playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 						else
 							message = incorrectkey
+							playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 		//Hack the Console to get the password
 		if (href_list["hack"])
@@ -332,46 +357,56 @@
 				spawn(100*length(src.linkedServer.decryptkey))
 					if(src && src.linkedServer && usr)
 						BruteForce(usr)
+						playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
 		//Delete the log.
 		if (href_list["delete"])
 			//Are they on the view logs screen?
 			if(screen == 1)
 				if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 					message = noserver
+					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				else //if(istype(href_list["delete"], /datum/data_pda_msg))
 					src.linkedServer.pda_msgs -= locate(href_list["delete"])
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
+					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 		//Delete the request console log.
 		if (href_list["deleter"])
 			//Are they on the view logs screen?
 			if(screen == 4)
 				if(!linkedServer || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 					message = noserver
+					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				else //if(istype(href_list["delete"], /datum/data_pda_msg))
 					src.linkedServer.rc_msgs -= locate(href_list["deleter"])
 					message = "<span class='notice'>NOTICE: Log Deleted!</span>"
+					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 		//Create a custom message
 		if (href_list["msg"])
 			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					src.screen = 3
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		//Fake messaging selection - KEY REQUIRED
 		if (href_list["select"])
 			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
 				screen = 0
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				switch(href_list["select"])
 
 					//Reset
 					if("Reset")
 						ResetMessage()
+						playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 					//Select Your Name
 					if("Sender")
 						customsender 	= stripped_input(usr, "Please enter the sender's name.")
+						playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 
 					//Select Receiver
 					if("Recepient")
@@ -379,16 +414,20 @@
 						var/list/obj/item/device/pda/sendPDAs = get_viewable_pdas()
 						if(PDAs && PDAs.len > 0)
 							customrecepient = input(usr, "Select a PDA from the list.") as null|anything in sortNames(sendPDAs)
+							playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 						else
 							customrecepient = null
+							playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 					//Enter custom job
 					if("RecJob")
 						customjob	 	= stripped_input(usr, "Please enter the sender's job.")
+						playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 
 					//Enter message
 					if("Message")
 						custommessage	= stripped_input(usr, "Please enter your message.")
+						playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 
 					//Send message
 					if("Send")
@@ -399,10 +438,12 @@
 						if(isnull(customrecepient))
 							message = "<span class='notice'>NOTICE: No recepient selected!</span>"
 							return src.attack_hand(usr)
+							playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 						if(isnull(custommessage) || custommessage == "")
 							message = "<span class='notice'>NOTICE: No message entered!</span>"
 							return src.attack_hand(usr)
+							playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 						var/obj/item/device/pda/PDARec = null
 						for (var/obj/item/device/pda/P in get_viewable_pdas())
@@ -436,14 +477,17 @@
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 						//Finally..
 						ResetMessage()
+						playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["viewr"])
 			if(src.linkedServer == null || (src.linkedServer.stat & (NOPOWER|BROKEN)))
 				message = noserver
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else
 				if(auth)
 					src.screen = 4
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		if (href_list["back"])
 			src.screen = 0
