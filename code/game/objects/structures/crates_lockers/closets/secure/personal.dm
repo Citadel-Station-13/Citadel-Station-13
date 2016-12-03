@@ -70,4 +70,4 @@
 			desc = initial(desc)
 			add_fingerprint(usr)
 	else
-		usr << "<span class='danger'>\The [src.name] must be open!</span>"
+		usr << "<span class='danger'>\the [src.name] must be open!</span>"
