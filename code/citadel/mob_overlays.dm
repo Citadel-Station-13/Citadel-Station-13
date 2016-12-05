@@ -28,7 +28,6 @@
 /datum/sprite_accessory/penis/human
 	icon_state = "human"
 	name = "Human"
-	color_src = "cock_color"
 
 /datum/sprite_accessory/penis/knotted
 	icon_state = "knotted"
@@ -50,6 +49,9 @@
 	icon_state = "barbknot"
 	name = "Barbed, Knotted"
 
+/datum/sprite_accessory/penis/tapered
+	icon_state = "tapered"
+	name = "Tapered"
 
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts

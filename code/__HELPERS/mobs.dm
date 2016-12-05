@@ -73,7 +73,6 @@
 		if(FEMALE)
 			has_vag = TRUE
 			has_breasts = TRUE
-	//For now we will always return none for tail_human and ears.
 	return(list(
 		"mcolor" 			= "f00",
 		"mcolor2" 			= "0f0",
@@ -124,7 +123,18 @@
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= "fff",
 		"breasts_size" 		= pick(breasts_size_list),
-		"breasts_fluid" 	= "milk"
+		"breasts_fluid" 	= "milk",
+		"has_vag"			= FALSE,
+		"vag_color"			= "fff",
+		"vag_tightness" 	= VAG_NORMAL,
+		"vag_clits"			= 1,
+		"vag_clit_diam"		= 0.25,
+		"vag_clit_len"		= 0.25,
+		"has_womb"			= FALSE,
+		"womb_cum_rate"		= CUM_RATE,
+		"womb_cum_mult"		= CUM_RATE_MULT,
+		"womb_efficiency"	= CUM_EFFICIENCY,
+		"womb_fluid" 		= "femcum"
 		))
 
 /proc/random_hair_style(gender)

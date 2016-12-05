@@ -1,4 +1,4 @@
-//Here are the organs and their subsequent functions that Citadel uses.
+//Here are the organs and their functions.
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
@@ -10,6 +10,7 @@
 	var/obj/S = ..()
 	S.reagents.add_reagent("sacid", 2)
 	return S
+
 /obj/item/organ/genital
 	var/shape = "human"
 	var/sensitivity = 1
@@ -120,20 +121,20 @@
 	var/size = 3
 	var/length = 6								//inches
 	var/girth  = 0
-	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//0.73; check citadel_defines.dm
+	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//citadel_defines.dm for these defines
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
 	var/list/oviflags = list()
 
 	var/obj/item/organ/eggsack/linked_eggsack
 
 /obj/item/organ/eggsack
-	name = "egg sack"
-	desc = "An egg producing reproductive organ."
-	icon_state = "egg_sack"
-	icon = 'icons/obj/ovipositor.dmi'
-	zone = "groin"
-	slot = "testicles"
-	w_class = 3
+	name 			= "egg sack"
+	desc 			= "An egg producing reproductive organ."
+	icon_state 		= "egg_sack"
+	icon 			= 'icons/obj/ovipositor.dmi'
+	zone 			= "groin"
+	slot 			= "testicles"
+	w_class 		= 3
 	var/internal = TRUE
 	var/egg_size = EGG_SIZE_NORMAL
 	var/cum_mult = CUM_RATE_MULT
@@ -142,26 +143,27 @@
 	var/obj/item/organ/ovipositor/linked_ovi
 
 /obj/item/organ/genital/vagina
-	name = "vagina"
-	desc = "A female reproductive organ."
-	icon_state = "vagina"
-	zone = "groin"
-	slot = "vagina"
-	w_class = 3
+	name 					= "vagina"
+	desc 					= "A female reproductive organ."
+	icon_state 				= "vagina"
+	zone 					= "groin"
+	slot 					= "vagina"
+	w_class 				= 3
 	var/wetness				= 1
 	var/tightness 			= VAG_NORMAL
-	var/capacity_length		= 8
+	var/capacity_length		= 8//D   E   P   T   H
 	var/capacity_girth		= 8
 	var/clits				= 1
-	var/clit_size 			= 0.25
+	var/clit_diam 			= 0.25
+	var/clit_len			= 0.25
 	var/obj/item/organ/womb/linked_womb
 
 /obj/item/organ/womb
-	name = "womb"
-	desc = "A female reproductive organ."
-	icon_state = "womb"
-	zone = "groin"
-	slot = "womb"
+	name 			= "womb"
+	desc 			= "A female reproductive organ."
+	icon_state 		= "womb"
+	zone 			= "groin"
+	slot 			= "womb"
 	w_class = 3
 	var/cum_mult 			= CUM_RATE_MULT
 	var/cum_rate 			= CUM_RATE

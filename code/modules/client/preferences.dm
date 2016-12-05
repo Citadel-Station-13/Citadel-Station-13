@@ -447,9 +447,9 @@ var/list/preferences_datums = list()
 				if(features["has_cock"] == TRUE)
 					//start cock
 					if(pref_species.use_skintones && features["gen_use_skintone"] == TRUE)
-						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 					else
-						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
 					//start balls
 					dat += "<h3>Testicles</h3>"
 					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
@@ -470,9 +470,37 @@ var/list/preferences_datums = list()
 
 					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
 					if(features["has_eggsack"] == TRUE)
-						dat += "<b>Eggsack Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
 						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a><BR>"
 						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Vagina</h3>"
+
+				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_vag"])
+					dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+
+					//dat += "<h3>Clitoris</h3>"
+					//dat += "<b>Clit Diameter:</b><a href='?_src_=prefs;preference=clit_diam;task=input'>[features["vag_clit_diam"]]\"</a><BR>"
+					//dat += "<b>Clit Length:</b><a href='?_src_=prefs;preference=clit_len;task=input'>[features["vag_clit_len"]]\"</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Breasts</h3>"
+
+				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_breasts"])
+					if(pref_species.use_skintones)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
+					dat += "<b>Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
 
 				dat += "</td>"
 
