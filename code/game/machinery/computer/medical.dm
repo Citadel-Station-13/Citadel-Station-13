@@ -28,6 +28,7 @@
 		O.loc = src
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		return ..()
 
@@ -230,6 +231,7 @@
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -250,6 +252,7 @@
 				src.authenticated = 1
 				src.rank = "AI"
 				src.screen = 1
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else if(IsAdminGhost(usr))
 				src.active1 = null
 				src.active2 = null
@@ -263,6 +266,7 @@
 					src.authenticated = src.scan.registered_name
 					src.rank = src.scan.assignment
 					src.screen = 1
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if(src.authenticated)
 
 			if(href_list["screen"])

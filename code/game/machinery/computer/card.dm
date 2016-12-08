@@ -54,17 +54,20 @@ var/time_last_changed_position = 0
 					return
 				idcard.loc = src
 				scan = idcard
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
 				if(!usr.drop_item())
 					return
 				idcard.loc = src
 				modify = idcard
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
 				if(!usr.drop_item())
 					return
 				idcard.loc = src
 				modify = idcard
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		return ..()
 
@@ -312,6 +315,7 @@ var/time_last_changed_position = 0
 				modify.update_label()
 				modify.loc = loc
 				modify.verb_pickup()
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				modify = null
 				region_access = null
 				head_subordinates = null
@@ -320,6 +324,7 @@ var/time_last_changed_position = 0
 				if (istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 					I.loc = src
 					modify = I
 			authenticated = 0
@@ -328,12 +333,14 @@ var/time_last_changed_position = 0
 			if (scan)
 				scan.loc = src.loc
 				scan.verb_pickup()
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_hand()
 				if (istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 					I.loc = src
 					scan = I
 			authenticated = 0
@@ -349,6 +356,7 @@ var/time_last_changed_position = 0
 							authenticated = 1
 						else
 							authenticated = 2
+						playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 
 					else
 						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
@@ -375,6 +383,7 @@ var/time_last_changed_position = 0
 			region_access = null
 			head_subordinates = null
 			authenticated = 0
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("access")
 			if(href_list["allowed"])
 				if(authenticated)
@@ -384,6 +393,7 @@ var/time_last_changed_position = 0
 						modify.access -= access_type
 						if(access_allowed == 1)
 							modify.access += access_type
+						playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if ("assign")
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
@@ -409,9 +419,12 @@ var/time_last_changed_position = 0
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
 					modify.assignment = t1
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+
 		if ("demote")
 			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")
 				modify.assignment = "Unassigned"
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else
 				usr << "<span class='error'>You are not authorized to demote this position.</span>"
 		if ("reg")
@@ -422,6 +435,7 @@ var/time_last_changed_position = 0
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
 						modify.registered_name = newName
+						playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					else
 						usr << "<span class='error'>Invalid name entered.</span>"
 						return
@@ -431,6 +445,7 @@ var/time_last_changed_position = 0
 		if("return")
 			//DISPLAY MAIN MENU
 			mode = 3;
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
@@ -445,6 +460,7 @@ var/time_last_changed_position = 0
 					time_last_changed_position = world.time / 10
 				j.total_positions++
 				opened_positions[edit_job_target]++
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
@@ -460,6 +476,7 @@ var/time_last_changed_position = 0
 					time_last_changed_position = world.time / 10
 				j.total_positions--
 				opened_positions[edit_job_target]--
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		if ("print")
 			if (!( printing ))
@@ -472,6 +489,8 @@ var/time_last_changed_position = 0
 				P.info = t1
 				P.name = "paper- 'Crew Manifest'"
 				printing = null
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+
 	if (modify)
 		modify.update_label()
 	updateUsrDialog()
