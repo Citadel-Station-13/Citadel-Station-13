@@ -71,7 +71,7 @@
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
 							skip_shake = 1
 
-					if(!explosion_shake_message_cooldown && devastation_range > 1 && !skip_shake)
+					if(!explosion_shake_message_cooldown && devastation_range > 0 && !skip_shake)
 						M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
 						explosion_shake_message_cooldown = 1
 						spawn(50)
