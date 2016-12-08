@@ -43,6 +43,8 @@
 	// Calculate far explosion sound range. Only allow the sound effect for heavy/devastating explosions.
 	// 3/7/14 will calculate to 80 + 35
 
+	var/skip_shake = 0 //Will not shake screen
+	var/explosion_shake_message_cooldown = 0 //Will not display shaking-related messages
 	var/far_dist = 0
 	far_dist += heavy_impact_range * 5
 	far_dist += devastation_range * 20
@@ -70,7 +72,7 @@
 							skip_shake = 1
 
 					if(!explosion_shake_message_cooldown && devastation_range > 1 && !skip_shake)
-						to_chat(M, "<span class='danger'>You feel the station's structure shaking all around you.</span>")
+						M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
 						explosion_shake_message_cooldown = 1
 						spawn(50)
 							explosion_shake_message_cooldown = 0
