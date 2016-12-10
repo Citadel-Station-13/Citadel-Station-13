@@ -287,6 +287,19 @@
 	cost = 1
 	category = "Mobility"
 
+/datum/spellbook_entry/item/firebird
+	name = "Chariot"
+	desc = "A majestic, flaming chariot that can move in space. \
+		Warning: You cannot use your teleportation scroll with the chariot. \
+		It is recommended that you summon it once you have left your lair."
+	item_path = /obj/vehicle/firebird
+	log_name = "FB"
+	category = "Mobility"
+/datum/spellbook_entry/item/firebird/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/key/firebird(get_turf(user)) //key is needed to drive the firebird
+
 /datum/spellbook_entry/item/staffhealing
 	name = "Staff of Healing"
 	desc = "An altruistic staff that can heal the lame and raise the dead."
