@@ -149,9 +149,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		else
 			if (user.a_intent != "harm")
 				if(istype(src, /turf/open/floor/wood))
-					user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+					user << "<span class='danger'>You forcefully pry off [src.name], destroying it in the process.</span>"
 				else
-					user << "<span class='danger'>You remove the floor tile.</span>"
+					user << "<span class='danger'>You remove [src.name].</span>"
 					builtin_tile.loc = src
 			else
 				return
