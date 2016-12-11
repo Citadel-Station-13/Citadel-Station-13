@@ -145,72 +145,60 @@
 	icon = "maltesefalcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
 
-
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
 	desc = "Ian's bar of choice."
-
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
 	desc = "A great dining experience for both security members and assistants."
 
-
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
 	desc = "Where people go that'd rather not be called by their name."
-
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
 	desc = "Don't drink and swim."
 
-
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
 	desc = "Willy sure moved up in the world from clown to bartender."
-
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great."
 
-
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
 	desc = "Fine drinks while listening to some fine tunes."
-
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
 	desc = "This bar isn't actually located in outer space."
 
-
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
-
 
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
 	icon = "thegreytide"
 	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
 
-
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
-
 
 /datum/barsign/thenest
 	name = "The Nest"
@@ -279,6 +267,20 @@
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
 
+/datum/barsign/thenumberone
+	name = "The Number One"
+	icon = "thenumberone"
+	desc = "Known for the bartender's trickery, this place is going down in history."
+
+/datum/barsign/thesnowflake
+	name = "The Snowflake"
+	icon = "thesnowflake"
+	desc = "The drinks around here always seem to be overly unique."
+
+/datum/barsign/thehalflife
+	name = "The Half-Life"
+	icon = "thehalflife"
+	desc = "They say it's dedicated to a brave scientist who killed a hundred xenos with only a crowbar."
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -306,4 +308,3 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
-
