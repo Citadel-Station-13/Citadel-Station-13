@@ -715,7 +715,7 @@
 "nM" = (/turf/open/floor/plating/airless/warnplate{dir = 9},/area/syndicate_mothership)
 "nN" = (/turf/closed/indestructible/fakeglass{color = "#008000"},/area/wizard_station)
 "nO" = (/obj/structure/cult/talisman{desc = "A altar dedicated to the Wizard's Federation"},/obj/item/weapon/kitchen/knife/ritual,/turf/open/floor/engine/cult,/area/wizard_station)
-"nP" = (/obj/effect/mob_spawn/human/corpse/russian/ranged/trooper,/obj/effect/decal/cleanable/blood,/turf/open/floor/engine/cult,/area/wizard_station)
+"nP" = (/obj/effect/mob_spawn/human/corpse/russian,/turf/open/floor/engine/cult,/area/wizard_station)
 "nQ" = (/obj/structure/chair/wood/wings{icon_state = "wooden_chair_wings"; dir = 1},/turf/open/floor/engine/cult,/area/wizard_station)
 "nR" = (/obj/item/weapon/broken_bottle,/turf/open/floor/engine/cult,/area/wizard_station)
 "nS" = (/turf/open/floor/plating/airless/warnplate{dir = 1},/area/syndicate_mothership)
