@@ -789,7 +789,7 @@
 "pi" = (/obj/structure/closet/wardrobe/pjs,/turf/open/floor/engine/cult,/area/wizard_station)
 "pj" = (/obj/structure/mecha_wreckage/ripley,/obj/effect/decal/cleanable/oil,/turf/open/floor/engine/cult,/area/wizard_station)
 "pk" = (/obj/structure/closet/crate,/obj/item/weapon/coin/uranium,/obj/effect/spawner/lootdrop/gambling,/obj/item/weapon/lipstick/random,/obj/item/weapon/c_tube,/turf/open/floor/engine/cult,/area/wizard_station)
-"pl" = (/obj/structure/closet/crate,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/crowbar,/obj/item/weapon/wrench,/obj/item/weapon/weldingtool,/obj/effect/decal/cleanable/cobweb{icon_state = "cobweb2"},/turf/open/floor/engine/cult,/area/wizard_station)
+"pl" = (/obj/structure/closet/crate,/obj/item/weapon/storage/box/donkpockets,/obj/item/weapon/crowbar,/obj/item/weapon/wrench,/obj/item/weapon/weldingtool,/turf/open/floor/engine/cult,/area/wizard_station)
 "pm" = (/obj/structure/rack,/obj/item/weapon/staff/broom,/obj/item/clothing/head/wizard/marisa,/obj/item/clothing/suit/wizrobe/marisa,/obj/item/clothing/shoes/sandal/marisa,/turf/open/floor/engine/cult,/area/wizard_station)
 "pn" = (/turf/closed/indestructible/riveted,/area/tdome/tdomeadmin)
 "po" = (/obj/machinery/computer/security/telescreen{pixel_y = -32},/turf/open/floor/plasteel/redyellow,/area/tdome/tdomeadmin)
