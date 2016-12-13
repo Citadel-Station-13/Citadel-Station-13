@@ -25,8 +25,26 @@
 	..()
 	setDir(move_dir)
 
+/obj/effect/overlay/temp/firebird_firetrail
+	icon_state = "nothing"
+	layer = BELOW_MOB_LAYER
+	duration = 2
+	randomdir = 0
+
+/obj/effect/overlay/temp/firebird_firetrail/New(loc,move_dir)
+	..()
+	setDir(move_dir)
+	new /obj/effect/hotspot(get_turf(src))
+
+/obj/effect/overlay/temp/firebird_firetrail/Destroy()
+	..()
+	for(var/obj/effect/hotspot/H in loc)
+		qdel(H)
+	return ..()
+
 /obj/vehicle/firebird/Move(newloc,move_dir)
 	if(has_buckled_mobs())
+		PoolOrNew(/obj/effect/overlay/temp/firebird_firetrail,list(loc,move_dir))
 		PoolOrNew(/obj/effect/overlay/temp/firebird_trail,list(loc,move_dir))
 	. = ..()
 

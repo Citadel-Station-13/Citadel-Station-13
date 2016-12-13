@@ -295,6 +295,7 @@
 	item_path = /obj/vehicle/firebird
 	log_name = "FB"
 	category = "Mobility"
+
 /datum/spellbook_entry/item/firebird/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
