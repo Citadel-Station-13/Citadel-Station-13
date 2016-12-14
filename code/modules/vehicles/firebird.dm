@@ -28,13 +28,18 @@
 /obj/effect/overlay/temp/firebird_firetrail
 	icon_state = "nothing"
 	layer = BELOW_MOB_LAYER
-	duration = 2
+	duration = 5
 	randomdir = 0
+
+/obj/effect/overlay/temp/firebird_firetrail/proc/IgniteTile()
+	if(locate(/obj/vehicle/firebird in get_turf(src)))
+		return
+	new /obj/effect/hotspot(get_turf(src))
 
 /obj/effect/overlay/temp/firebird_firetrail/New(loc,move_dir)
 	..()
 	setDir(move_dir)
-	new /obj/effect/hotspot(get_turf(src))
+	addtimer(src, "IgniteTile", 3)
 
 /obj/effect/overlay/temp/firebird_firetrail/Destroy()
 	..()
