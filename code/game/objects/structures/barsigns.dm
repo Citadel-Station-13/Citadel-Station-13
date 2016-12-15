@@ -282,6 +282,16 @@
 	icon = "thehalflife"
 	desc = "They say it's dedicated to a brave scientist who killed a hundred xenos with only a crowbar."
 
+/datum/barsign/topmen
+	name = "Top Men"
+	icon = "topmen"
+	desc = "They've got top men working here right now. Top. Men."
+
+/datum/barsign/thesun
+	name = "The Sun"
+	icon = "thesun"
+	desc = "The hottest bar in the galaxy!"
+
 /datum/barsign/hiddensigns
 	hidden = 1
 
