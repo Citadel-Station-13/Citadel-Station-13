@@ -38,10 +38,9 @@
 		addtimer(src, "reset_cooldown", 100)
 
 /datum/action/firebird_boost/IsAvailable()
-	if(..())
-		if(cooldown = TRUE)
-			return 0
-		return 1
+	if(cooldown = TRUE)
+		return 0
+	return ..()
 
 /datum/action/firebird_boost/proc/deactivate_boost(mob/living/carbon/human/H)
 	boosting = FALSE
