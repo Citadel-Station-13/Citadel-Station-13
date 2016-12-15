@@ -26,6 +26,7 @@
 	var/cooldown = FALSE //whether cooldown is active
 
 /datum/action/firebird_boost/Trigger(mob/living/carbon/human/H)
+	..()
 	if(!H.buckled)
 		return
 	var/obj/vehicle/firebird/buckled_obj
@@ -36,11 +37,9 @@
 		buckled_obj.boostactive = TRUE
 		addtimer(src, "deactivate_boost", 20)
 		addtimer(src, "reset_cooldown", 100)
+		world << "Trigger success."
 
-/datum/action/firebird_boost/IsAvailable()
-	if(cooldown = TRUE)
-		return 0
-	return ..()
+	world << "Triggered."
 
 /datum/action/firebird_boost/proc/deactivate_boost(mob/living/carbon/human/H)
 	boosting = FALSE
