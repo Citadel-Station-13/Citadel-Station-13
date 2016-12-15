@@ -100,9 +100,12 @@
 
 	if(keycheck(user))
 		vehiclerunning = TRUE
+		if(world.time < next_vehicle_move || !isturf(loc))
+			return
 		if(spacemove = FALSE)
-			if(!Process_Spacemove(direction) || world.time < next_vehicle_move || !isturf(loc))
+			if(!Process_Spacemove(direction))
 				return
+
 		next_vehicle_move = world.time + vehicle_move_delay
 
 		step(src, direction)

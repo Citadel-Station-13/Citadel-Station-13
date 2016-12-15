@@ -10,45 +10,58 @@
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "wizmobile"
 	keytype = /obj/item/key/firebird
-	vehicle_move_delay = 0
+	vehicle_move_delay = 1.5
 	layer = LYING_MOB_LAYER
 	spacemove = TRUE
 	var/playingrunningsound = FALSE //for engine loop
 	var/boostactive = FALSE
-	var/datum/action/firebird_boost/F
+	var/datum/action/innate/firebird_boost/F
 
-/datum/action/firebird_boost
+/datum/action/innate/firebird_boost
 	name = "Speed Boost"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUNNED
 	button_icon_state = "firebird_boost"
 	background_icon_state = "bg_spell"
 	var/boosting = FALSE //whether boost is active
-	var/cooldown = FALSE //whether cooldown is active
+	var/recharging = FALSE //whether cooldown is active
 
-/datum/action/firebird_boost/Trigger(mob/living/carbon/human/H)
-	..()
-	if(!H.buckled)
-		return
+/datum/action/innate/firebird_boost/Activate()
 	var/obj/vehicle/firebird/buckled_obj
-	buckled_obj = H.buckled
-	if(cooldown = FALSE)
+	buckled_obj = owner.buckled
+	if(!recharging)
 		boosting = TRUE
-		cooldown = TRUE
+		recharging = TRUE
+		UpdateButtonIcon()
 		buckled_obj.boostactive = TRUE
-		addtimer(src, "deactivate_boost", 20)
-		addtimer(src, "reset_cooldown", 100)
-		world << "Trigger success."
+		buckled_obj.vehicle_move_delay = 0
+		addtimer(src, "deactivate_boost", 30)
+		addtimer(src, "reset_cooldown", 200)
+		playsound(buckled_obj, 'sound/items/fultext_launch.wav', 50, 1)
+	else
+		owner << "<span class='notice'>It's still recharging.</span>"
 
-	world << "Triggered."
-
-/datum/action/firebird_boost/proc/deactivate_boost(mob/living/carbon/human/H)
+/datum/action/innate/firebird_boost/proc/deactivate_boost()
 	boosting = FALSE
+	UpdateButtonIcon()
 	var/obj/vehicle/firebird/buckled_obj
-	buckled_obj = H.buckled
+	buckled_obj = owner.buckled
 	buckled_obj.boostactive = FALSE
+	buckled_obj.vehicle_move_delay = 1.5
 
-/datum/action/firebird_boost/proc/reset_cooldown()
-	cooldown = FALSE
+/datum/action/innate/firebird_boost/proc/reset_cooldown()
+	recharging = FALSE
+	UpdateButtonIcon()
+
+/datum/action/innate/firebird_boost/IsAvailable()
+	if(recharging)
+		return 0
+	if(check_flags & AB_CHECK_STUNNED)
+		if(owner.stunned || owner.weakened)
+			return 0
+	if(check_flags & AB_CHECK_CONSCIOUS)
+		if(owner.stat)
+			return 0
+	return 1
 
 /obj/vehicle/firebird/user_buckle_mob(mob/living/M, mob/user)
 	..()
@@ -77,13 +90,10 @@
 	duration = 5
 	randomdir = 0
 
-/obj/effect/overlay/temp/firebird_firetrail/proc/IgniteTile()
-	new /obj/effect/hotspot(get_turf(src))
-
 /obj/effect/overlay/temp/firebird_firetrail/New(loc,move_dir)
 	..()
 	setDir(move_dir)
-	addtimer(src, "IgniteTile", 3)
+	new /obj/effect/hotspot(get_turf(src))
 
 /obj/effect/overlay/temp/firebird_firetrail/Destroy()
 	..()
@@ -95,7 +105,8 @@
 	var/turf/oldLoc = loc
 	. = ..()
 	if(has_buckled_mobs() && oldLoc != loc)
-		PoolOrNew(/obj/effect/overlay/temp/firebird_trail,list(oldLoc,move_dir))
+		if(!boostactive)
+			PoolOrNew(/obj/effect/overlay/temp/firebird_trail,list(oldLoc,move_dir))
 		if(boostactive)
 			PoolOrNew(/obj/effect/overlay/temp/firebird_firetrail,list(oldLoc,move_dir))
 
