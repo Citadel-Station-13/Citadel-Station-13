@@ -21,9 +21,13 @@
 		L.vis_update()
 
 /turf/proc/lighting_clear_overlay()
+	if (fuckfuckfuck)
+		world.log << "clear"
 	if (lighting_overlay)
 		qdel(lighting_overlay, TRUE)
 		lighting_overlay = null
+		if (fuckfuckfuck)
+			world.log << "huh"
 
 	for (var/datum/lighting_corner/C in corners)
 		C.update_active()
@@ -127,6 +131,8 @@
 
 			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
 
+	if (fuckfuckfuck)
+		world.log << "pre-change [lighting_overlay]"
 
 	var/old_opacity = opacity
 	var/old_dynamic_lighting = dynamic_lighting
@@ -151,3 +157,9 @@
 			lighting_build_overlay()
 		else
 			lighting_clear_overlay()
+
+var/fuckfuckfuck = FALSE
+
+/client/verb/fuckfuckfuckfuck()
+	fuckfuckfuck = !fuckfuckfuck
+	usr << fuckfuckfuck
