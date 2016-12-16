@@ -38,9 +38,6 @@
 		global.lighting_update_overlays     -= src
 		global.lighting_update_overlays_old -= src
 
-		if(fuckfuckfuck)
-			world.log << "rip"
-
 		var/turf/T   = loc
 		if (istype(T))
 			T.lighting_overlay = null
