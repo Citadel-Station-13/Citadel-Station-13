@@ -56,8 +56,13 @@
 	//Suffocate
 	if(losebreath > 0)
 		losebreath--
+		if(losebreath >= 3) //can't talk from lack of air
+			silent = max(silent, 2)
 		if(prob(10))
 			emote("gasp")
+		if(pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube"))
+			stuttering = max(stuttering, 6) //stutter from being strangled
+			losebreath = min(losebreath + 2, 3) //go up to 3 while being strangled
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
