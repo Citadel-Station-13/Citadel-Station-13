@@ -115,3 +115,22 @@
 	for(var/i in 1 to 4)
 		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
+
+/obj/structure/closet/crate/shard
+	desc = "A reinforced metal box designed to protect its contents from any contaminants."
+	name = "supermatter shard crate"
+	icon_state = "largemetal"
+
+/obj/structure/closet/crate/shard/New()
+	new /obj/machinery/power/supermatter_shard(src)
+
+/obj/structure/closet/crate/shard/can_close()
+	for(var/obj/machinery/power/supermatter_shard/S in loc)
+		if(S.damage) //This is what I like to call predicting the metagame
+			return 0
+	return ..()
+
+/obj/structure/closet/crate/shard/CanPass(atom/movable/mover, turf/target, height=1.5)
+	if(istype(mover,/obj/machinery/power/supermatter_shard))
+		return 1
+	. = ..()

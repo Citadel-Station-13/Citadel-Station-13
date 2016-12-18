@@ -651,6 +651,14 @@ var/list/teleportlocs = list()
 	name = "Gravity Generator Room"
 	icon_state = "blue"
 
+/area/engine/supermatter_room
+	name = "Supermatter Room"
+	icon_state = "supermatter"
+
+/area/engine/engineering_auxillary
+	name = "Auxillary Engineering"
+	icon_state = "engiaux"
+
 //Solars
 
 /area/solar
