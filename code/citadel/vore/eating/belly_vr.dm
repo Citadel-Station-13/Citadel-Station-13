@@ -142,7 +142,7 @@
 //		prey.anchored.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.loc = owner
+	prey.loc = user
 
 	var/datum/belly/B = check_belly(owner)
 	if(B)

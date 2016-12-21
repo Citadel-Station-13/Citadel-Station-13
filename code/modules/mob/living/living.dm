@@ -714,8 +714,7 @@ Sorry Giacom. Please don't be mad :(
 
 	// climbing out of a gut
 	else if(ismob(loc))
-		var/living/M = loc
-		M.vore_process_resist(src)
+		vore_process_resist(src)
 		return
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
