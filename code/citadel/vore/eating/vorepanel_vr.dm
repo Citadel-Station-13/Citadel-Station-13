@@ -305,6 +305,7 @@
 
 		var/datum/belly/NB = new(user)
 		NB.name = new_name
+		NB.owner = user //might be the thing we all needed.
 		user.vore_organs[new_name] = NB
 		selected = NB
 

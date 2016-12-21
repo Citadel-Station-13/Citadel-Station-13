@@ -118,10 +118,10 @@
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)
 				if(owner.nutrition > 90 && (M.health < M.maxHealth))
-					M.adjustBruteLoss(-2)
-					M.adjustFireLoss(-2)
-					owner.nutrition -= 2
-					if(M.nutrition <= 400)
+					M.adjustBruteLoss(-1)
+					M.adjustFireLoss(-1)
+					owner.nutrition -= 10
+					if(M.nutrition <= 400)			// somehow prey is fed idk
 						M.nutrition += 1
-					recent_gurgle = world.time + 3
+					recent_gurgle = world.time + 10  //super slooow heals.
 		return

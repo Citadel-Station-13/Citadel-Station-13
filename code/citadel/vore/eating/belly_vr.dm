@@ -30,7 +30,7 @@
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
 	var/tmp/emotePend = 0						// If there's already a spawned thing counting for the next emote
 	var/tmp/recent_struggle = 0					// Flag to prevent struggle emote spam
-	var/tmp/recent_gurgle = 0
+	var/tmp/recent_gurgle = 0					// Digestion timer
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/datum/gas_mixture/air_contents = new() // Belly Air stuff
 

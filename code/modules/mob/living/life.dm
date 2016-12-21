@@ -25,9 +25,6 @@
 		//Random events (vomiting etc)
 		handle_random_events()
 
-		// Vore code for belly processes
-		handle_internal_contents()
-
 		. = 1
 
 	//Handle temperature/pressure differences between body and environment
@@ -38,6 +35,9 @@
 
 	//stuff in the stomach
 	handle_stomach()
+
+	// Vore code for belly processes
+	handle_internal_contents()
 
 	update_gravity(mob_has_gravity())
 

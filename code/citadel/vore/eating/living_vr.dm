@@ -2,9 +2,11 @@
 /mob/living
 	var/digestable = 1					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
-	var/list/vore_organs = list()		// List of vore containers inside a mob
+//	var/list/vore_organs = list()		// List of vore containers inside a mob
+	var/vore_organs[0]				// sanity for vore setup??
 	var/recent_struggle = 0
 	var/devourable = 1					// Can the mob be vored at all?
+	var/tmp/recent_gurgle = 0
 //
 // Hook for generic creation of stuff on new creatures
 //
@@ -228,15 +230,16 @@
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(SSair.times_fired%3 != 1)
-		return //The accursed timer
+	if(recent_gurgle > world.time)
+		return
 
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		if(B.internal_contents.len)
 			B.process_Life() //AKA 'do bellymodes_vr.dm'
 
-	if(SSair.times_fired%3 != 1) return //Occasionally do supercleanups.
+	if(recent_gurgle > world.time) return //Occasionally do supercleanups.
+
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		if(B.internal_contents.len)
