@@ -97,8 +97,6 @@
 			T.reconsider_lights()
 
 
-// This code makes the light be queued for update when it is moved.
-// Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
 /atom/movable/Moved(atom/OldLoc, Dir) //Implemented here because forceMove() doesn't call Move()
 	. = ..()
 	for (var/datum/light_source/L in src.light_sources) // Cycle through the light sources on this atom and tell them to update.
