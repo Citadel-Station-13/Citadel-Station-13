@@ -64,9 +64,11 @@
 	if (source_atom)
 		if (source_atom.light == src)
 			source_atom.light = null
-		source_atom.light_sources -= src
 
-	if (top_atom)
+		if (source_atom.light_sources)
+			source_atom.light_sources -= src
+
+	if (top_atom && top_atom.light_sources)
 		top_atom.light_sources    -= src
 
 // Fuck supporting force.

@@ -32,6 +32,7 @@
 /obj/machinery/computer/robotics/interact(mob/user)
 	if (src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 	user.set_machine(src)
 	var/dat
@@ -89,6 +90,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					if(R.syndicate && R.emagged)
 						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 						if(R.connected_ai)
@@ -102,6 +104,7 @@
 						R.self_destruct()
 		else
 			usr << "<span class='danger'>Access Denied.</span>"
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
@@ -109,6 +112,7 @@
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.lockcharge)

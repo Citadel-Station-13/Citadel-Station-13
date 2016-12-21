@@ -18,12 +18,12 @@
 	dynamic_lighting = new_dynamic_lighting
 
 	if (IS_DYNAMIC_LIGHTING(src))
-		for (var/turf/T in (area_contents()))
+		for (var/turf/T in area_contents(src))
 			if (IS_DYNAMIC_LIGHTING(T))
 				T.lighting_build_overlay()
 
 	else
-		for (var/turf/T in (area_contents()))
+		for (var/turf/T in area_contents(src))
 			if (T.lighting_overlay)
 				T.lighting_clear_overlay()
 
