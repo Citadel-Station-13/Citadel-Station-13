@@ -189,7 +189,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 	var/health = 60
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
-	luminosity = 0
+	use_auto_lights = 1
+	light_power_on = 0.5
+	light_range_on = 1
+	light_color = LIGHT_COLOR_GREEN
 	anchored = 1
 	var/hitstaken = 0 //TO BE REMOVED, no longer used,  the var is present in a map var edit which must be removed.
 

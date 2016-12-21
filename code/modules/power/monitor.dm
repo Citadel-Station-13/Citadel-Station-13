@@ -7,6 +7,7 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/weapon/circuitboard/computer/powermonitor
+	light_color = LIGHT_COLOR_ORANGE
 
 	var/obj/structure/cable/attached
 

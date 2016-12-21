@@ -237,6 +237,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
+	S["space_parallax"] 	>> space_parallax
+	S["space_dust"] 		>> space_dust
+	S["parallax_speed"] 	>> parallax_speed
 
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
@@ -270,6 +273,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	space_parallax  = sanitize_integer(space_parallax, 0, 1, initial(space_parallax))
+	space_dust      = sanitize_integer(space_dust, 0, 1, initial(space_dust))
+	parallax_speed  = sanitize_integer(parallax_speed, 0, 5, initial(parallax_speed))
 	ghost_form		= sanitize_inlist(ghost_form, ghost_forms, initial(ghost_form))
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
@@ -306,6 +312,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ignoring"]			<< ignoring
 	S["ghost_hud"]			<< ghost_hud
 	S["inquisitive_ghost"]	<< inquisitive_ghost
+	S["space_parallax"] 	<< space_parallax
+	S["space_dust"] 		<< space_dust
+	S["parallax_speed"] 	<< parallax_speed
 
 	return 1
 
@@ -377,6 +386,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
 	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
+	//Xeno features
+	S["feature_xeno_tail"]				>> features["xenotail"]
+	S["feature_xeno_dors"]				>> features["xenodorsal"]
+	S["feature_xeno_head"]				>> features["xenohead"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -451,6 +464,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
 	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
 	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
+	//Xeno features
+	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
+	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
+	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 
 	userandomjob	= sanitize_integer(userandomjob, 0, 1, initial(userandomjob))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -508,6 +525,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				<< features["mam_tail"]
 	S["feature_mam_ears"]				<< features["mam_ears"]
 	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
+	//Xeno features
+	S["feature_xeno_tail"]				<< features["xenotail"]
+	S["feature_xeno_dors"]				<< features["xenodorsal"]
+	S["feature_xeno_head"]				<< features["xenohead"]
+
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]

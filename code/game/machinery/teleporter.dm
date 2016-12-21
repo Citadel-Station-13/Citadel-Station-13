@@ -4,6 +4,7 @@
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/weapon/circuitboard/computer/teleporter
+	light_color = LIGHT_COLOR_BLUE
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null

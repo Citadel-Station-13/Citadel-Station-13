@@ -870,7 +870,7 @@ var/list/airlock_overlays = list()
 		beingcrowbarred = 0
 	if(panel_open && charge)
 		user << "<span class='notice'>You carefully start removing [charge] from [src]...</span>"
-		playsound(get_turf(src), 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(get_turf(src), I.usesound, 50, 1)
 		if(!do_after(user, 150/I.toolspeed, target = src))
 			user << "<span class='warning'>You slip and [charge] detonates!</span>"
 			charge.ex_act(1)
@@ -882,7 +882,7 @@ var/list/airlock_overlays = list()
 		charge = null
 		return
 	if( beingcrowbarred && (density && welded && !operating && src.panel_open && (!hasPower()) && !src.locked) )
-		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		playsound(src.loc, I.usesound, 100, 1)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", \
 							 "<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
 		if(do_after(user,40/I.toolspeed, target = src))
@@ -937,6 +937,31 @@ var/list/airlock_overlays = list()
 				else
 					close(2)
 
+	if(istype(I, /obj/item/weapon/crowbar/power))
+		if(isElectrified())
+			shock(user,100)//it's like sticking a forck in a power socket
+			return
+
+		if(!density)//already open
+			return
+
+		if(locked)
+			user << "<span class='warning'>The bolts are down, it won't budge!</span>"
+			return
+
+		if(welded)
+			user << "<span class='warning'>It's welded, it won't budge!</span>"
+			return
+
+		var/time_to_open = 5
+		if(hasPower())
+			time_to_open = 50
+			playsound(src, 'sound/machines/airlock_alien_prying.ogg',100,1) //is it aliens or just the CE being a dick?
+			if(do_after(user, time_to_open,target = src))
+				open(2)
+				if(density && !open(2))
+					user << "<span class='warning'>Despite your attempts, the [src] refuses to open.</span>"
+
 /obj/machinery/door/airlock/plasma/attackby(obj/item/C, mob/user, params)
 	if(C.is_hot() > 300)//If the temperature of the object is over 300, then ignite
 		message_admins("Plasma airlock ignited by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
@@ -986,13 +1011,13 @@ var/list/airlock_overlays = list()
 		return 0
 	operating = 1
 	update_icon(AIRLOCK_OPENING, 1)
-	src.SetOpacity(0)
+	src.set_opacity(0)
 	sleep(5)
 	src.density = 0
 	sleep(9)
 	src.layer = OPEN_DOOR_LAYER
 	update_icon(AIRLOCK_OPEN, 1)
-	SetOpacity(0)
+	set_opacity(0)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()
@@ -1035,7 +1060,7 @@ var/list/airlock_overlays = list()
 	sleep(9)
 	update_icon(AIRLOCK_CLOSED, 1)
 	if(visible && !glass)
-		SetOpacity(1)
+		set_opacity(1)
 	operating = 0
 	air_update_turf(1)
 	update_freelook_sight()

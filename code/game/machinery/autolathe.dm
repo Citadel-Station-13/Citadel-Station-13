@@ -8,6 +8,11 @@
 	icon_state = "autolathe"
 	density = 1
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_CYAN
+
 	var/operating = 0
 	anchored = 1
 	var/list/L = list()

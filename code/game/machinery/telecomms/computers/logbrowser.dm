@@ -16,6 +16,8 @@
 	req_access = list(access_tcomsat)
 	circuit = /obj/item/weapon/circuitboard/computer/comm_server
 
+	light_color = LIGHT_COLOR_GREEN
+
 /obj/machinery/computer/telecomms/server/attack_hand(mob/user)
 	if(..())
 		return
