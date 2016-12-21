@@ -14,9 +14,6 @@
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)
-	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
-		return
 	on = !on
 	icon_state = "hardhat[on]_[item_color]"
 	item_state = "hardhat[on]_[item_color]"
@@ -30,23 +27,11 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/clothing/head/hardhat/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-/obj/item/clothing/head/hardhat/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
 /obj/item/clothing/head/hardhat/proc/turn_on(mob/user)
-	user.AddLuminosity(brightness_on)
+	set_light(brightness_on)
 
 /obj/item/clothing/head/hardhat/proc/turn_off(mob/user)
-	user.AddLuminosity(-brightness_on)
+	set_light(0)
 
 /obj/item/clothing/head/hardhat/orange
 	icon_state = "hardhat0_orange"

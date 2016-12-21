@@ -337,7 +337,7 @@ Auto Patrol[]"},
 			target = C
 			oldtarget_name = C.name
 			speak("Level [threatlevel] infraction alert!")
-			playsound(loc, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/EDPlaceholder.ogg'), 50, 0)
+			playsound(loc, pick('sound/voice/ed209_growl.ogg', 'sound/voice/ed209_20seconds.ogg'), 50, 0)
 			visible_message("<b>[src]</b> points at [C.name]!")
 			mode = BOT_HUNT
 			spawn(0)

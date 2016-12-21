@@ -179,6 +179,7 @@
 	mymob.update_action_buttons(1)
 	reorganize_alerts()
 	mymob.reload_fullscreen()
+	update_parallax_existence()
 
 
 /datum/hud/human/show_hud(version = 0)
@@ -205,4 +206,3 @@
 		usr << "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>"
 	else
 		usr << "<span class ='warning'>This mob type does not use a HUD.</span>"
-

@@ -574,6 +574,17 @@ for(var/t in test_times)
 	var/B = hex2num(copytext(A,6,0))
 	return R+G+B
 
+//get just one color
+/proc/GetRedPart(A)
+	return hex2num(copytext(A,2,4))
+
+/proc/GetGreenPart(A)
+	return hex2num(copytext(A,4,6))
+
+/proc/GetBluePart(A)
+	return hex2num(copytext(A,6,0))
+
+
 //Converts a positive interger to its roman numeral equivilent. Ignores any decimals.
 //Numbers over 3999 will display with extra "M"s (don't tell the Romans) and can get comically long, so be careful.
 /proc/num2roman(A)

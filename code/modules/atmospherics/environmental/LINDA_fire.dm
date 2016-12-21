@@ -59,6 +59,7 @@
 
 /obj/effect/hotspot/New()
 	..()
+	set_light(3,1,LIGHT_COLOR_FIRE)
 	SSair.hotspots += src
 	perform_exposure()
 	setDir(pick(cardinal))
@@ -146,7 +147,6 @@
 	return 1
 
 /obj/effect/hotspot/Destroy()
-	SetLuminosity(0)
 	SSair.hotspots -= src
 	DestroyTurf()
 	if(istype(loc, /turf))

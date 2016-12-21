@@ -7,6 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
@@ -82,6 +83,8 @@
 	if(..())
 		return
 	if(href_list["fix"])
+		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
+		playsound(src, 'sound/machines/terminal_processing.ogg', 25, 0)
 		active = 1
 		while (occupier.health < 100)
 			occupier.adjustOxyLoss(-1, 0)

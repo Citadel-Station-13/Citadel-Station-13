@@ -22,6 +22,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	light_color = LIGHT_COLOR_RED
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
@@ -32,8 +33,10 @@
 			O.loc = src
 			scan = O
 			user << "<span class='notice'>You insert [O].</span>"
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			user << "<span class='warning'>There's already an ID card in the console.</span>"
+			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 	else
 		return ..()
 
@@ -43,6 +46,7 @@
 		return
 	if(src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 	var/dat
 
@@ -313,6 +317,7 @@ What a mess.*/
 				screen = null
 				active1 = null
 				active2 = null
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Log In")
 				if(istype(usr, /mob/living/silicon))
@@ -322,6 +327,7 @@ What a mess.*/
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
+					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 				else if(IsAdminGhost(usr))
 					active1 = null
 					active2 = null
@@ -335,17 +341,20 @@ What a mess.*/
 						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
+						playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 //RECORD FUNCTIONS
 			if("Record Maintenance")
 				screen = 2
 				active1 = null
 				active2 = null
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Browse Record")
 				var/datum/data/record/R = locate(href_list["d_rec"])
 				var/S = locate(href_list["d_rec"])
 				if(!( data_core.general.Find(R) ))
 					temp = "Record Not Found!"
+					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				else
 					for(var/datum/data/record/E in data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
@@ -353,6 +362,7 @@ What a mess.*/
 					active1 = R
 					active2 = S
 					screen = 3
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 
 			if("Print Record")
@@ -460,10 +470,12 @@ What a mess.*/
 					qdel(R)
 				data_core.security.Cut()
 				temp = "All Security records deleted."
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Add Entry")
 				if(!( istype(active2, /datum/data/record) ))
 					return
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				var/a2 = active2
 				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
@@ -712,6 +724,7 @@ What a mess.*/
 					if("Delete Record (ALL) Execute")
 						if(active1)
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
+							playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									data_core.medical -= R

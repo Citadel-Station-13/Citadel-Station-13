@@ -215,7 +215,9 @@
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
 	var/processing = 0
-	luminosity = 1
+	light_range = 2
+	light_power = 0.75
+	light_color = "#c48a18"
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"

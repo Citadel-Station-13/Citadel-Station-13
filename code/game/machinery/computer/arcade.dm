@@ -5,6 +5,8 @@
 	icon_keyboard = null
 	icon_screen = "invaders"
 	clockwork = TRUE //it'd look weird
+	light_color = LIGHT_COLOR_GREEN
+	light_range_on = 2
 	var/list/prizes = list(
 		/obj/item/weapon/storage/box/snappops					= 2,
 		/obj/item/toy/talking/AI								= 2,

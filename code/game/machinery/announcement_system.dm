@@ -9,6 +9,11 @@ var/list/announcement_systems = list()
 	icon_state = "AAS_On"
 	var/obj/item/device/radio/headset/radio
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 2
+	light_color = LIGHT_COLOR_BLUE
+
 	verb_say = "coldly states"
 	verb_ask = "queries"
 	verb_exclaim = "alarms"
@@ -78,7 +83,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, P.usesound, 50, 1)
 		panel_open = !panel_open
 		user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>"
 		update_icon()
