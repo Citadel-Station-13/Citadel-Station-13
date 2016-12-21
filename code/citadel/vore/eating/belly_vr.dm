@@ -104,8 +104,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/datum/belly/proc/release_all_contents(mob/owner)
-	check_belly(owner)
+/datum/belly/proc/release_all_contents()
 	for (var/atom/movable/M in internal_contents)
 		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
 		internal_contents -= M  // Remove from the belly contents
