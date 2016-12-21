@@ -355,7 +355,49 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["features["mcolor2"]"]	<< "#FFF"
 	if(!S["features["mcolor3"]"] || S["features["mcolor3"]"] == "#000")
 		S["features["mcolor3"]"]	<< "#FFF"
-
+/*STORING THIS HERE SO I CAN READ IT
+		"has_cock"			= FALSE,
+		"cock_shape"		= "human",
+		"cock_length"		= (COCK_SIZE_NORMAL * COCK_SIZE_BASE),
+		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
+		"cock_color"		= "fff",
+		"has_sheath"		= FALSE,
+		"sheath_color"		= "fff",
+		"has_balls" 		= FALSE,
+		"balls_internal" 	= FALSE,
+		"balls_color" 		= "fff",
+		"balls_amount"		= 2,
+		"balls_size"		= BALLS_SACK_SIZE_DEF,
+		"balls_cum_rate"	= CUM_RATE,
+		"balls_cum_mult"	= CUM_RATE_MULT,
+		"balls_efficiency"	= CUM_EFFICIENCY,
+		"balls_fluid" 		= "semen",
+		"has_ovi"			= FALSE,
+		"ovi_shape"			= "knotted",
+		"ovi_size"			= COCK_SIZE_NORMAL,
+		"ovi_color"			= "fff",
+		"has_eggsack" 		= FALSE,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= "fff",
+		"eggsack_size" 		= BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= "fff",
+		"breasts_size" 		= pick(breasts_size_list),
+		"breasts_fluid" 	= "milk",
+		"has_vag"			= FALSE,
+		"vag_color"			= "fff",
+		"vag_tightness" 	= VAG_NORMAL,
+		"vag_clits"			= 1,
+		"vag_clit_diam"		= 0.25,
+		"vag_clit_len"		= 0.25,
+		"has_womb"			= FALSE,
+		"womb_cum_rate"		= CUM_RATE,
+		"womb_cum_mult"		= CUM_RATE_MULT,
+		"womb_efficiency"	= CUM_EFFICIENCY,
+		"womb_fluid" 		= "femcum"
+*/
 	//Character
 	S["real_name"]						>> real_name
 	S["name_is_always_random"]  		>> be_random_name
@@ -394,7 +436,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_has_cock"]				>> features["has_cock"]
 	S["feature_cock_shape"]				>> features["cock_shape"]
 	S["feature_cock_color"]				>> features["cock_color"]
-	S["feature_cock_size"]				>> features["cock_size"]
+	S["feature_cock_length"]			>> features["cock_length"]
+	S["feature_cock_girth"]			>> features["cock_girth"]
 	S["feature_has_sheath"]				>> features["sheath_color"]
 	//balls features
 	S["feature_has_balls"]				>> features["has_cock"]
@@ -406,6 +449,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_breasts_size"]			>> features["breasts_size"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
+	//vagina features
+	S["feature_has_vag"]			>> features["has_vag"]
+	S["feature_vag_color"]			>> features["vag_color"]
 //	S["feature_"]			>> features[""]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"

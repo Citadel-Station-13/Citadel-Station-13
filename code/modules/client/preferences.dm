@@ -42,23 +42,23 @@ var/list/preferences_datums = list()
 	var/preferred_map = null
 
 	//character preferences
-	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we'll have a random name every round
-	var/be_random_body = 0				//whether we'll have a random body every round
-	var/gender = MALE					//gender of character (well duh)
-	var/age = 30						//age of character
-	var/underwear = "Nude"				//underwear type
-	var/undershirt = "Nude"				//undershirt type
-	var/socks = "Nude"					//socks type
-	var/backbag = DBACKPACK				//backpack type
-	var/hair_style = "Bald"				//Hair type
-	var/hair_color = "000"				//Hair color
-	var/facial_hair_style = "Shaved"	//Face hair type
-	var/facial_hair_color = "000"		//Facial hair color
-	var/skin_tone = "caucasian1"		//Skin color
-	var/eye_color = "000"				//Eye color
+	var/real_name												//our character's name
+	var/be_random_name = 0										//whether we'll have a random name every round
+	var/be_random_body = 0										//whether we'll have a random body every round
+	var/gender = MALE											//gender of character (well duh)
+	var/age = 30												//age of character
+	var/underwear = "Nude"										//underwear type
+	var/undershirt = "Nude"										//undershirt type
+	var/socks = "Nude"											//socks type
+	var/backbag = DBACKPACK										//backpack type
+	var/hair_style = "Bald"										//Hair type
+	var/hair_color = "000"										//Hair color
+	var/facial_hair_style = "Shaved"							//Face hair type
+	var/facial_hair_color = "000"								//Facial hair color
+	var/skin_tone = "caucasian1"								//Skin color
+	var/eye_color = "000"										//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list()//mobs.dm for this list
+	var/list/features = list()									//mobs.dm for this list
 
 		//Genitals+arousal prefs
 //	var/genitals_use_skintone 	= FALSE//Humans and such which use skintones will transfer the color to their dicks and shit(MOVED TO FEATURES LIST SO IT CAN BE INCORPORATED INTO DNA LATER)
@@ -433,7 +433,7 @@ var/list/preferences_datums = list()
 				dat += "<td valign='top' width='20%'>"
 
 				dat += "<h3>Options</h3>"
-				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=genitals_color_source'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 				if(pref_species.use_skintones)
 					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["gen_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
 
@@ -496,10 +496,10 @@ var/list/preferences_datums = list()
 
 				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_breasts"])
-					if(pref_species.use_skintones)
-						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-					else
-						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
+//					if(pref_species.use_skintones)
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+//					else
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
 					dat += "<b>Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
 
 				dat += "</td>"
@@ -1330,8 +1330,8 @@ var/list/preferences_datums = list()
 
 				if("egg_size")
 					var/new_size
-					var/list/egg_sizes = list("1\"" = 1, "2\"" = 2, "3\"" = 3)
-					new_size = input(user, "Choose the size of your eggs:", "Egg Size") as null|anything in egg_sizes
+					var/list/egg_sizes = list(1,2,3)
+					new_size = input(user, "Choose the diameter of your eggs in inches:", "Egg Size") as null|anything in egg_sizes
 					if(new_size)
 						features["eggsack_egg_size"] = new_size
 
@@ -1343,12 +1343,35 @@ var/list/preferences_datums = list()
 							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-
-
-
+				if("breasts_size")
+					var/new_size
+					new_size = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in breasts_size_list
+					if(new_size)
+						features["breasts_size"] = new_dors
 
 		else
 			switch(href_list["preference"])
+				if("arousable")
+					arousable != arousable
+
+				if("genitals_color_source")
+					switch(features["gen_use_skintone"])
+						if(TRUE)
+							features["gen_use_skintone"] = FALSE
+						if(FALSE)
+							features["gen_use_skintone"] = TRUE
+						else
+							features["gen_use_skintone"] = FALSE
+
+				if("has_vag")
+					switch(features["has_vag"])
+						if(TRUE)
+							features["has_vag"] = FALSE
+						if(FALSE)
+							features["has_vag"] = TRUE
+						else
+							features["has_vag"] = FALSE
+
 				if("has_cock")
 					switch(features["has_cock"])
 						if(TRUE)
@@ -1380,7 +1403,7 @@ var/list/preferences_datums = list()
 						if(FALSE)
 							features["has_balls"] = TRUE
 							features["has_eggsack"] = FALSE
-						else//if it's anything but those two then something went wrong, reset both of them
+						else
 							features["has_balls"] = FALSE
 							features["has_eggsack"] = FALSE
 
@@ -1391,7 +1414,7 @@ var/list/preferences_datums = list()
 						if(FALSE)
 							features["has_eggsack"] = TRUE
 							features["has_balls"] = FALSE
-						else//if it's anything but those two then something went wrong, reset both of them
+						else
 							features["has_eggsack"] = FALSE
 							features["has_balls"] = FALSE
 
