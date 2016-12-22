@@ -4,11 +4,6 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
 
-	use_auto_lights = 1
-	light_power_on = 2
-	light_range_on = 2
-	light_color = LIGHT_COLOR_RED
-
 	use_power = 0
 	anchored = 1
 	density = 1
@@ -27,6 +22,7 @@
 
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
+
 	else if (!insisting)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insisting++
@@ -50,11 +46,8 @@
 		hijack.owner = user.mind
 		user.mind.objectives += hijack
 
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in user.mind.objectives)
-			user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
-			obj_count++
-
+		user.mind.announce_objectives()
+		
 		user << "You have a very bad feeling about this."
 
 	return
