@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 /obj/machinery/computer/secure_data//TODO:SANITY
 	name = "security records console"
@@ -22,7 +22,6 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
-	light_color = LIGHT_COLOR_RED
 
 
 /obj/machinery/computer/secure_data/attackby(obj/item/O, mob/user, params)
@@ -33,10 +32,8 @@
 			O.loc = src
 			scan = O
 			user << "<span class='notice'>You insert [O].</span>"
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			user << "<span class='warning'>There's already an ID card in the console.</span>"
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 	else
 		return ..()
 
@@ -46,7 +43,6 @@
 		return
 	if(src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 	var/dat
 
@@ -64,7 +60,7 @@
 					dat += {"
 
 		<head>
-			<script src="libraries.min.js"></script>
+			<script src="jquery.min.js"></script>
 			<script type='text/javascript'>
 
 				function updateSearch(){
@@ -254,8 +250,6 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	//user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
-	//onclose(user, "secure_rec")
 	var/datum/browser/popup = new(user, "secure_rec", "Security Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -273,7 +267,7 @@ What a mess.*/
 		active1 = null
 	if(!( data_core.security.Find(active2) ))
 		active2 = null
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
+	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		switch(href_list["choice"])
 // SORTING!
@@ -299,13 +293,13 @@ What a mess.*/
 
 			if("Confirm Identity")
 				if(scan)
-					if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
+					if(ishuman(usr) && !usr.get_active_held_item())
 						usr.put_in_hands(scan)
 					else
 						scan.loc = get_turf(src)
 					scan = null
 				else
-					var/obj/item/I = usr.get_active_hand()
+					var/obj/item/I = usr.get_active_held_item()
 					if(istype(I, /obj/item/weapon/card/id))
 						if(!usr.drop_item())
 							return
@@ -317,17 +311,15 @@ What a mess.*/
 				screen = null
 				active1 = null
 				active2 = null
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Log In")
-				if(istype(usr, /mob/living/silicon))
+				if(issilicon(usr))
 					var/mob/living/silicon/borg = usr
 					active1 = null
 					active2 = null
 					authenticated = borg.name
 					rank = "AI"
 					screen = 1
-					playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 				else if(IsAdminGhost(usr))
 					active1 = null
 					active2 = null
@@ -341,20 +333,17 @@ What a mess.*/
 						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
-						playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
 //RECORD FUNCTIONS
 			if("Record Maintenance")
 				screen = 2
 				active1 = null
 				active2 = null
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Browse Record")
 				var/datum/data/record/R = locate(href_list["d_rec"])
 				var/S = locate(href_list["d_rec"])
 				if(!( data_core.general.Find(R) ))
 					temp = "Record Not Found!"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				else
 					for(var/datum/data/record/E in data_core.security)
 						if((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
@@ -362,7 +351,6 @@ What a mess.*/
 					active1 = R
 					active2 = S
 					screen = 3
-					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 
 			if("Print Record")
@@ -470,12 +458,10 @@ What a mess.*/
 					qdel(R)
 				data_core.security.Cut()
 				temp = "All Security records deleted."
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 			if("Add Entry")
 				if(!( istype(active2, /datum/data/record) ))
 					return
-				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				var/a2 = active2
 				var/t1 = stripped_multiline_input("Add Comment:", "Secure. records", null, null)
 				if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
@@ -483,7 +469,7 @@ What a mess.*/
 				var/counter = 1
 				while(active2.fields[text("com_[]", counter)])
 					counter++
-				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
+				active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
 
 			if("Delete Record (ALL)")
 				if(active1)
@@ -724,7 +710,6 @@ What a mess.*/
 					if("Delete Record (ALL) Execute")
 						if(active1)
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
-							playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 							for(var/datum/data/record/R in data_core.medical)
 								if((R.fields["name"] == active1.fields["name"] || R.fields["id"] == active1.fields["id"]))
 									data_core.medical -= R
@@ -747,14 +732,14 @@ What a mess.*/
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null
-	if(istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/mob/living/silicon/tempAI = user
 		var/datum/picture/selection = tempAI.GetPhoto()
 		if(selection)
 			P = new()
 			P.photocreate(selection.fields["icon"], selection.fields["img"], selection.fields["desc"])
-	else if(istype(user.get_active_hand(), /obj/item/weapon/photo))
-		P = user.get_active_hand()
+	else if(istype(user.get_active_held_item(), /obj/item/weapon/photo))
+		P = user.get_active_held_item()
 	return P
 
 /obj/machinery/computer/secure_data/emp_act(severity)

@@ -61,23 +61,24 @@
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
-#define DNA_EYE_COLOR_TWO_BLOCK		4
-#define DNA_EYE_COLOR_SWITCH_BLOCK	5
-#define DNA_EYE_COLOR_BLOCK			6
-#define DNA_GENDER_BLOCK			7
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	8
-#define DNA_HAIR_STYLE_BLOCK		9
-#define DNA_COLOR_ONE_BLOCK			10
-#define DNA_COLOR_TWO_BLOCK			11
-#define DNA_COLOR_THR_BLOCK			12
-#define DNA_COLOR_SWITCH_BLOCK		13
+#define DNA_EYE_COLOR_BLOCK			4
+#define DNA_GENDER_BLOCK			5
+#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
+#define DNA_HAIR_STYLE_BLOCK		7
+#define DNA_EYE_COLOR_TWO_BLOCK		8
+#define DNA_EYE_COLOR_SWITCH_BLOCK	9
+#define DNA_EYE_COLOR_BLOCK			10
+#define DNA_COLOR_ONE_BLOCK			11
+#define DNA_COLOR_TWO_BLOCK			12
+#define DNA_COLOR_THR_BLOCK			13
+#define DNA_COLOR_SWITCH_BLOCK		14
 #define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				14
-#define DNA_MUTANTRACE_BLOCK		15
-#define DNA_MUTANTTAIL_BLOCK		16
-#define DNA_MUTANTWING_BLOCK		17
-#define DNA_WINGCOLOR_BLOCK			18
-#define DNA_TAUR_BLOCK				19
+#define DNA_COCK_BLOCK				15
+#define DNA_MUTANTRACE_BLOCK		16
+#define DNA_MUTANTTAIL_BLOCK		17
+#define DNA_MUTANTWING_BLOCK		18
+#define DNA_WINGCOLOR_BLOCK			19
+//#define DNA_TAUR_BLOCK				20 //Taurs will be tails for now, easier - Pooj
 
 #define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32
@@ -96,6 +97,14 @@
 //Organ stuff, It's here because "Genetics" is the most relevant file for organs and bodyparts
 #define ORGAN_ORGANIC   1
 #define ORGAN_ROBOTIC   2
+
+#define BODYPART_ORGANIC   1
+#define BODYPART_ROBOTIC   2
+
+#define MONKEY_BODYPART "monkey"
+#define ALIEN_BODYPART "alien"
+#define LARVA_BODYPART "larva"
+#define DEVIL_BODYPART "devil"
 
 //Nutrition levels for humans. No idea where else to put it
 #define NUTRITION_LEVEL_FAT 600
@@ -116,3 +125,32 @@
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
+
+//species traits for mutantraces
+#define MUTCOLORS		1
+#define HAIR			2
+#define FACEHAIR		3
+#define EYECOLOR		4
+#define LIPS			5
+#define RESISTHOT		6
+#define RESISTCOLD		7
+#define RESISTPRESSURE  8
+#define RADIMMUNE		9
+#define NOBREATH		10
+#define NOGUNS			11
+#define NOBLOOD			12
+#define NOFIRE			13
+#define VIRUSIMMUNE		14
+#define PIERCEIMMUNE	15
+#define NOTRANSSTING	16
+#define MUTCOLORS_PARTSONLY	17	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
+#define NODISMEMBER		18
+#define NOHUNGER		19
+#define NOCRITDAMAGE	20
+#define NOZOMBIE		21
+#define EASYDISMEMBER	22
+#define EASYLIMBATTACHMENT 23
+#define TOXINLOVER		24
+#define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
+#define MUTCOLORS2		26
+#define MUTCOLORS3		27

@@ -5,7 +5,6 @@
 	shuttleId = "laborcamp"
 	possible_destinations = "laborcamp_home;laborcamp_away"
 	req_access = list(access_brig)
-	light_color = LIGHT_COLOR_CYAN
 
 
 /obj/machinery/computer/shuttle/labor/one_way
