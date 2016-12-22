@@ -194,7 +194,11 @@
 	"Medical" = /obj/item/weapon/robot_module/medical, \
 	"Miner" = /obj/item/weapon/robot_module/miner, \
 	"Janitor" = /obj/item/weapon/robot_module/janitor, \
-	"Service" = /obj/item/weapon/robot_module/butler)
+	"Service" = /obj/item/weapon/robot_module/butler, \
+	"Loader" = /obj/item/weapon/robot_module/loader, \
+	"Security K-9 Unit" = /obj/item/weapon/robot_module/k9, \
+	 "MediHound" = /obj/item/weapon/robot_module/medihound, \
+	  "Borgi" = /obj/item/weapon/robot_module/borgi)
 	if(!config.forbid_peaceborg)
 		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
@@ -585,6 +589,11 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
+
+	if(laser == 1)
+		add_overlay("laser")
+	if(disabler == 1)
+		add_overlay("disabler")
 
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
