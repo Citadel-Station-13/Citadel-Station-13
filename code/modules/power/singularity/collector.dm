@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
@@ -10,6 +10,9 @@ var/global/list/rad_collectors = list()
 	density = 1
 	req_access = list(access_engine_equip)
 //	use_power = 0
+	obj_integrity = 350
+	max_integrity = 350
+	integrity_failure = 80
 	var/obj/item/weapon/tank/internals/plasma/loaded_tank = null
 	var/last_power = 0
 	var/active = 0
@@ -78,14 +81,14 @@ var/global/list/rad_collectors = list()
 			user << "<span class='warning'>Remove the plasma tank first!</span>"
 			return 1
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 1
 			user.visible_message("[user.name] secures the [src.name].", \
 				"<span class='notice'>You secure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			connect_to_network()
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(src.loc, W.usesound, 75, 1)
 			anchored = 0
 			user.visible_message("[user.name] unsecures the [src.name].", \
 				"<span class='notice'>You unsecure the external bolts.</span>", \
@@ -105,12 +108,10 @@ var/global/list/rad_collectors = list()
 		return ..()
 
 
-/obj/machinery/power/rad_collector/ex_act(severity, target)
-	switch(severity)
-		if(2, 3)
-			eject()
-	return ..()
-
+/obj/machinery/power/rad_collector/obj_break(damage_flag)
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+		eject()
+		stat |= BROKEN
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
@@ -119,6 +120,7 @@ var/global/list/rad_collectors = list()
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
+	Z.plane = initial(Z.plane)
 	src.loaded_tank = null
 	if(active)
 		toggle_power()
@@ -155,4 +157,3 @@ var/global/list/rad_collectors = list()
 		flick("ca_deactive", src)
 	update_icons()
 	return
-
