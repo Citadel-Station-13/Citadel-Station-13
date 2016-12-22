@@ -1570,13 +1570,13 @@
 	name = "Fox"
 	icon_state = "fox"
 	extra = 1
-	extra_color_src = MUTCOLORS2
+//	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_tails_animated/fox
 	name = "Fox"
 	icon_state = "fox"
 	extra = 1
-	extra_color_src = MUTCOLORS2
+//	extra_color_src = MUTCOLORS2
 
 //Fennec
 /datum/sprite_accessory/mam_ears/fennec
