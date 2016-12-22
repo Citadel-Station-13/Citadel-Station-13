@@ -8,7 +8,6 @@
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
-	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/atmos_alert/initialize()
 	..()

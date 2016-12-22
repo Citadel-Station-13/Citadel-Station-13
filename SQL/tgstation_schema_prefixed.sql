@@ -261,6 +261,7 @@ CREATE TABLE `SS13_poll_question` (
   `createdby_ckey` varchar(45) NULL DEFAULT NULL,
   `createdby_ip` varchar(45) NULL DEFAULT NULL,
   `for_trialmin` varchar(45) NULL DEFAULT NULL,
+  `dontshow` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -355,6 +356,7 @@ CREATE TABLE `SS13_notes` (
   `last_editor` varchar(32),
   `edits` text,
   `server` varchar(50) NOT NULL,
+  `secret` tinyint(1) NOT NULL DEFAULT  '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

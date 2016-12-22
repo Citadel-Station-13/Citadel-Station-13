@@ -4,13 +4,16 @@
 	var/throwforce_on = 20
 	var/icon_state_on = "axe1"
 	var/list/attack_verb_on = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	w_class = 2
-	var/w_class_on = 4
+	w_class = WEIGHT_CLASS_SMALL
+	var/w_class_on = WEIGHT_CLASS_BULKY
 	heat = 3500
+	obj_integrity = 200
+	max_integrity = 200
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
+	resistance_flags = FIRE_PROOF
 
 /obj/item/weapon/melee/energy/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is slitting \his stomach open with [src]! It looks like \he's trying to commit seppuku.</span>", \
-						"<span class='suicide'>[user] is falling on [src]! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message("<span class='suicide'>[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/add_blood(list/blood_dna)
@@ -30,8 +33,8 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3
-	w_class_on = 5
+	w_class = WEIGHT_CLASS_NORMAL
+	w_class_on = WEIGHT_CLASS_HUGE
 	flags = CONDUCT
 	armour_penetration = 100
 	origin_tech = "combat=4;magnets=3"
@@ -39,7 +42,7 @@
 	attack_verb_on = list()
 
 /obj/item/weapon/melee/energy/axe/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] swings the [src.name] towards \his head! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] swings [src] towards [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/melee/energy/sword
@@ -63,6 +66,16 @@
 	if(item_color == null)
 		item_color = pick("red", "blue", "green", "purple")
 
+/obj/item/weapon/melee/energy/sword/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/weapon/melee/energy/sword/process()
+	if(active)
+		open_flame()
+	else
+		STOP_PROCESSING(SSobj, src)
+
 /obj/item/weapon/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
 	if(active)
 		return ..()
@@ -71,7 +84,7 @@
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>"
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5,5)
 	active = !active
 	if (active)
 		force = force_on
@@ -87,6 +100,7 @@
 		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] is now active.</span>"
+		START_PROCESSING(SSobj, src)
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -98,10 +112,25 @@
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		user << "<span class='notice'>[src] can now be concealed.</span>"
+		STOP_PROCESSING(SSobj, src)
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
+
+/obj/item/weapon/melee/energy/ignition_effect(atom/A, mob/user)
+	if(!active)
+		return ""
+
+	var/in_mouth = ""
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(C.wear_mask == src)
+			in_mouth = ", barely missing their nose"
+	. = "<span class='warning'>[user] swings their \
+		[src][in_mouth]. They light [A] in the process.</span>"
+	playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	add_fingerprint(user)
 
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 50
@@ -128,7 +157,7 @@
 	icon_state_on = "esaw_1"
 	hitcost = 75 //Costs more than a standard cyborg esword
 	item_color = null
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	sharpness = IS_SHARP
 
 /obj/item/weapon/melee/energy/sword/cyborg/saw/New()
@@ -176,32 +205,11 @@
 
 			if(active)
 				icon_state = "swordrainbow"
-				// Updating overlays, copied from welder code.
-				// I tried calling attack_self twice, which looked cool, except it somehow didn't update the overlays!!
-				if(user.r_hand == src)
-					user.update_inv_r_hand(0)
-				else if(user.l_hand == src)
-					user.update_inv_l_hand(0)
+				user.update_inv_hands()
 		else
 			user << "<span class='warning'>It's already fabulous!</span>"
 	else
 		return ..()
-
-/obj/item/weapon/twohanded/attackby(obj/item/weapon/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/melee/energy/sword/saber))
-		switch(alert(user, "You feel like the sword might be a bit more dangerous to yourself than to others if you do this.", "Combine?", "Proceed", "Abort"))
-			if("Abort" || !in_range(src, user) || !src || !W || user.incapacitated())
-				return
-		user << "<span class='notice'>You attach the energy sword to the double \
-			bladed energy sword, making a single triple-bladed weapon! \
-			You're a genius!</span>"
-		var/obj/item/weapon/trisword/newSaber = new(user.loc)
-		user.unEquip(W)
-		user.unEquip(src)
-		qdel(W)
-		qdel(src)
-		user.put_in_hands(newSaber)
-		return
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -222,8 +230,9 @@
 	throwforce = 1//Throwing or dropping the item deletes it.
 	throw_speed = 3
 	throw_range = 1
-	w_class = 4//So you can't hide it in your pocket or some such.
+	w_class = WEIGHT_CLASS_BULKY//So you can't hide it in your pocket or some such.
 	var/datum/effect_system/spark_spread/spark_system
+	sharpness = IS_SHARP
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/weapon/melee/energy/blade/New()
@@ -233,71 +242,12 @@
 
 /obj/item/weapon/melee/energy/blade/dropped()
 	..()
-	qdel(src)
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
 
-/* Triple Esword! [joke weapon] */
-/obj/item/weapon/trisword
-	name = "triple-bladed energy sword"
-	desc = "Wow, an energy sword with THREE blades! This must be a REALLY good weapon."
-	force = 3
-	throwforce = 5
-	w_class = 2
-	icon_state = "trisaber_off"
-	item_state = "sword0"
-	var/progress = 0
-	var/on = 0
-
-/obj/item/weapon/trisword/attack_self(mob/living/carbon/user)
-	if(on || progress > 5)
-		return
-	if(progress == 0)
-		user << "<span class='notice'>You extend the... Hey, wait a second, how do you turn this thing on?</span>"
-		progress = 1
-		return
-	if(progress == 1)
-		user << "<span class='notice'>No, seriously, what the fuck? Does this thing even have a button on it?</span>"
-		progress = 2
-		return
-	if(progress == 2)
-		user << "<span class='danger'>Okay, you're getting sick of this. You mash random panels on [src], trying to find a way to activate it.</span>"
-		progress = 3
-		return
-	if(progress == 3)
-		user << "<span class='danger'>God dammit, how the fuck do you turn this shit on?</span>"
-		progress = 4
-		return
-	if(progress == 4)
-		user << "<span class='notice'>You find what feels like a button on [src]! Now you just need to press it.</span>"
-		progress = 5
-		return
-	if(progress == 5)
-		user << "<span class='userdanger'>The third blade on [src] extends straight into your gut! God fucking dammit.</span>"
-		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
-		playsound(user, 'sound/weapons/blade1.ogg', 35, 1)
-		on = 1
-		icon_state = "trisaber"
-		if(!remove_item_from_storage(user))
-			user.unEquip(src)
-		user.adjustBruteLoss(110)
-
-/obj/item/weapon/trisword/dropped()
-	..()
-	if(!on)
-		progress = 0
-
-/obj/item/weapon/trisword/attack_hand(mob/living/carbon/user)
-	if(on)
-		user << "<span class='userdanger'>You try to pick up [src], but accidentally grab one of the blades, and quickly drop the whole thing out of pain.</span>"
-		user.adjustBruteLoss(15)
-		playsound(user, 'sound/weapons/blade1.ogg', 35, 1)
-	else
-		..()
-
-/obj/item/weapon/trisword/attack_tk(mob/living/carbon/user)
-	user << "<span class='danger'>You try to comprehend \the [src].</span>"
-	user << "<span class='userdanger'>Your head hurts.</span>"
-	user.adjustBrainLoss(50)
-	user.confused += 15
+/obj/item/weapon/melee/energy/blade/hardlight
+	name = "hardlight blade"
+	desc = "An extremely sharp blade made out of hard light. Packs quite a punch."
+	icon_state = "lightblade"
+	item_state = "lightblade"

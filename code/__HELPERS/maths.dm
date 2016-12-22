@@ -21,7 +21,6 @@ var/list/sqrtTable = list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 
 	return -round(-x / y) * y
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
-#define CLAMP01(x)	(Clamp(x,0,1))
 
 // cotangent
 /proc/Cot(x)

@@ -55,7 +55,7 @@ STI KALY - blind
 
 
 /datum/disease/wizarditis/proc/spawn_wizard_clothes(chance = 0)
-	if(istype(affected_mob, /mob/living/carbon/human))
+	if(ishuman(affected_mob))
 		var/mob/living/carbon/human/H = affected_mob
 		if(prob(chance))
 			if(!istype(H.head, /obj/item/clothing/head/wizard))
@@ -70,20 +70,17 @@ STI KALY - blind
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), slot_wear_suit)
 			return
 		if(prob(chance))
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
 				if(!H.unEquip(H.shoes))
 					qdel(H.shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), slot_shoes)
 			return
 	else
 		var/mob/living/carbon/H = affected_mob
 		if(prob(chance))
-			if(!istype(H.r_hand, /obj/item/weapon/staff))
-				H.drop_r_hand()
-				H.put_in_r_hand( new /obj/item/weapon/staff(H) )
-			return
-	return
-
+			var/obj/item/weapon/staff/S = new(H)
+			if(!H.put_in_hands(S))
+				qdel(S)
 
 
 /datum/disease/wizarditis/proc/teleport()

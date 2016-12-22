@@ -11,7 +11,7 @@
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_norm(src)
+		new /obj/item/weapon/storage/backpack/satchel(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/patient
@@ -25,13 +25,14 @@
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
 
 /obj/structure/closet/secure_closet/personal/cabinet/New()
 	..()
 	contents = list()
-	new /obj/item/weapon/storage/backpack/satchel/withwallet( src )
+	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
@@ -54,20 +55,3 @@
 			user << "<span class='danger'>Access Denied.</span>"
 	else
 		return ..()
-
-/obj/structure/closet/secure_closet/personal/verb/verb_resetlock()//personal locker ownership reset.
-	set src in oview(1)
-	set category = "Object"
-	set name = "Reset Lock"
-
-	if(opened)
-		if(broken)
-			usr << "<span class='danger'>The lock appears to be broken.</span>"
-			return
-		else
-			registered_name = null
-			usr << "<span class='danger'>You successfully reset the lock.</span>"
-			desc = initial(desc)
-			add_fingerprint(usr)
-	else
-		usr << "<span class='danger'>\the [src.name] must be open!</span>"
