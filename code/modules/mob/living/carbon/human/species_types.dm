@@ -57,7 +57,7 @@
 	roundstart = 1
 	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings")
-	mutant_organs = list(/obj/item/organ/tongue/lizard)
+	//mutant_organs = list(/obj/item/organ/tongue/lizard) (No more hissing)
 	default_features = list("mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0", "tail" = "Smooth", "snout" = "Round", "horns" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -1203,6 +1203,7 @@ datum/species/canid
 ///////////////////
 
 //ChronoFlux: Slimecoon
+/*
 /datum/species/jelly/slime/slimecoon
 	name = "Slime Raccoon"
 	id = "slimecoon"
@@ -1211,4 +1212,4 @@ datum/species/canid
 	whitelist = list("chronoflux")
 	blacklisted = 1
 	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
-	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")
+	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
