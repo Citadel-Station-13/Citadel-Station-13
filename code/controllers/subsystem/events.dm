@@ -59,6 +59,14 @@ var/datum/subsystem/events/SSevent
 /datum/subsystem/events/proc/reschedule()
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
+	if(world.time > 108000) //3 hours
+		frequency_lower=1000
+		frequency_upper=1500
+		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
+			SSshuttle.emergency.request(null, 1.5)
+			log_game("Round time limit reached. Shuttle has been auto-called.")
+			message_admins("Round time limit reached. Shuttle called.")
+
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/subsystem/events/proc/spawnEvent()
 	if(!config.allow_random_events)
