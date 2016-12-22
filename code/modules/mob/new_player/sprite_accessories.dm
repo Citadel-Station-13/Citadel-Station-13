@@ -60,7 +60,6 @@
 	var/dimension_x = 32
 	var/dimension_y = 32
 	var/extra = 0
-	var/extra_color_src = Null
 	var/center = FALSE	//Should we center the sprite?
 
 //////////////////////

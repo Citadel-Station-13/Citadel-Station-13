@@ -29,6 +29,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
+
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
