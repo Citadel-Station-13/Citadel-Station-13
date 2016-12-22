@@ -15,6 +15,7 @@
 		new /datum/data/mining_equipment("Absinthe",            /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium,100),
 		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                    		150),
 		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						          		200),
+		new /datum/data/mining_equipment("Survival knife",      /obj/item/weapon/kitchen/knife/combat/survival,                          300),
 		new /datum/data/mining_equipment("Laser Pointer",       /obj/item/device/laser_pointer, 				                   		300),
 		new /datum/data/mining_equipment("Alien Toy",           /obj/item/clothing/mask/facehugger/toy, 		                   		300),
 		new /datum/data/mining_equipment("Advanced Scanner",	/obj/item/device/t_scanner/adv_mining_scanner,                     		800),
@@ -24,14 +25,15 @@
 		new /datum/data/mining_equipment("Motion Tracker",		/obj/item/device/t_scanner/motionTracker	 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
-		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			500),
+		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			600),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/weapon/storage/firstaid/brute,						   		600),
 		new /datum/data/mining_equipment("Tracking Implant Kit",/obj/item/weapon/storage/box/minertracker,                              600),
 		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,										750),
 		new /datum/data/mining_equipment("Kinetic Crusher", 	/obj/item/weapon/twohanded/required/mining_hammer,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
-		new /datum/data/mining_equipment("Medivac Balloon",     /obj/item/weapon/extraction_pack/medivac,                               800),
+		new /datum/data/mining_equipment("whetstone",           /obj/item/weapon/sharpener,                                             1000),
+		new /datum/data/mining_equipment("Survival Medipen Bundle",		/obj/item/weapon/storage/box/medipens/utility1,	 				2000),
 		new /datum/data/mining_equipment("Fulton Pack",         /obj/item/weapon/extraction_pack,                                    	1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		1000),
@@ -48,7 +50,6 @@
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,      			   	   		600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",    /obj/item/slimepotion/sentience/mining,      			   	      		1000),
 		)
-
 /datum/data/mining_equipment/
 	var/equipment_name = "generic"
 	var/equipment_path = null
@@ -160,7 +161,7 @@
 	return ..()
 
 /obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
-	var/items = list("Crusher Kit", "Extraction Kit", "Hunter Kit", "Medivac Kit", "Mining Drone", "Resonator and Advanced Scanner", "Survival Capsule and Explorer's Webbing")//Alphabetical, please.
+	var/items = list("Crusher Kit", "Extract and Rescue Kit", "Hunter Kit", "Mining Drone", "Resonator and Advanced Scanner", "Survival Capsule and Explorer's Webbing")//Alphabetical, please.
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
 	if(!selection || !Adjacent(redeemer) || qdeleted(voucher) || voucher.loc != redeemer)
@@ -170,20 +171,16 @@
 			new /obj/item/weapon/twohanded/required/mining_hammer(loc)
 			new /obj/item/weapon/storage/belt/mining/alt(loc)
 			new /obj/item/weapon/extinguisher/mini(loc)
-		if("Extraction Kit")
+		if("Extract and Rescue Kit")
 			new /obj/item/stack/sheet/metal/five(loc)
 			new /obj/item/weapon/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
+			new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(loc)
 		if("Hunter Kit")
 			new /obj/item/weapon/storage/belt/mining(loc)
 			new /obj/item/device/t_scanner/motionTracker(loc)
 			new /obj/item/weapon/stock_parts/cell/high/plus(loc)
 			new /obj/item/weapon/screwdriver(loc)
-		if("Medivac Kit")
-			new /obj/item/stack/sheet/metal/five(loc)
-			new /obj/item/fulton_core(loc)
-			new /obj/item/weapon/extraction_pack/medivac(loc)
-			new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(loc)
 			new /obj/item/weapon/weldingtool/hugetank(loc)

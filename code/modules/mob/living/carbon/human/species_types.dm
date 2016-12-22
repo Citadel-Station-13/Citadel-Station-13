@@ -3,6 +3,7 @@
 */
 
 /datum/species/human
+	roundstart = 1
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
@@ -94,6 +95,7 @@
 
 /datum/species/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
+	roundstart = 1
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
@@ -166,7 +168,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	specflags = list(NOBREATH,NOBLOOD,RADIMMUNE,VIRUSIMMUNE)
 	dangerous_existence = 1
-	restricted = 2
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/light_amount = 0
@@ -194,7 +195,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	exotic_blood = "slimejelly"
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	restricted = 2
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
@@ -539,7 +539,6 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
-	restricted = 2
 
 /datum/species/golem/random
 	name = "Random Golem"
@@ -595,6 +594,7 @@
 	name = "Human?"
 	id = "fly"
 	say_mod = "buzzes"
+	eyes = "flyeyes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 
@@ -630,7 +630,6 @@
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
-	restricted = 2
 
 /*
  ZOMBIES
@@ -647,7 +646,6 @@
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
-	restricted = 2
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -694,7 +692,6 @@
 	sexes = 0
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
-	restricted = 2
 
 /datum/species/abductor
 	name = "Abductor"
@@ -707,7 +704,6 @@
 	var/scientist = 0 // vars to not pollute spieces list with castes
 	var/agent = 0
 	var/team = 1
-	restricted = 2
 
 var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_state"="plasmaman")
 
@@ -782,7 +778,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NODISMEMBER,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
-	restricted = 2
 	roundstart = 0
 
 /datum/species/synth/military
@@ -793,7 +788,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun
 	disguise_fail_health = 50
-	restricted = 2
 
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
@@ -914,7 +908,6 @@ SYNDICATE BLACK OPS
 	use_skintones = 0
 	specflags = list(RADIMMUNE,VIRUSIMMUNE,NOBLOOD,PIERCEIMMUNE,EYECOLOR,NODISMEMBER,NOHUNGER)
 	sexes = 0
-	restricted = 2
 
 /datum/species/angel
 	name = "Angel"
@@ -926,7 +919,6 @@ SYNDICATE BLACK OPS
 	use_skintones = 1
 	no_equip = list(slot_back)
 	blacklisted = 1
-	restricted = 2
 	limbs_id = "human"
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
@@ -1098,7 +1090,7 @@ datum/species/canid
 		H.endTailWag()
 
 //AVIAN//
-/datum/species/ave
+/datum/species/avian
 	name = "Avian"
 	id = "avian"
 	default_color = "BCAC9B"
@@ -1114,36 +1106,46 @@ datum/species/canid
 //HERBIVOROUS//
 
 //EXOTIC//
+//These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
-	default_color = "BCAC9B"
 	say_mod = "hisses"
-	eyes = "eyes_xeno"
-	specflags = list(NOGUNS,MUTCOLORS)
-	mutant_bodyparts = list("xeno_head", "dorsal_tubes")
-	default_features = list("xeno_head" = "None", "dorsal_tubes" = "None")
+	eyes = "none"
+	specflags = list()
+	mutant_organs = list(/obj/item/organ/tongue/alien)
+	mutant_bodyparts = list("xenohead",
+							"xenodorsal",
+							"xenotail")
+	default_features = list("xenohead"="Hunter",
+							"xenodorsal"="Dorsal Tubes",
+							"xenotail"="Xenomorph Tail")
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	burnmod = 1.5
-	heatmod = 1.5
-	safe_toxins_max = 9999999
+	burnmod = 1.75
+	heatmod = 1.75
+	darksight = 4 //Just above slimes
 	exotic_blood = "xblood"
 	exotic_damage_overlay = "xeno"
-	roundstart = 0 //wip
-	blacklisted = 1 //so xenobio can't steal the broken races
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+	safe_toxins_max = 32 //Too much of anything is bad.
+	roundstart = 1
+//	whitelisted = 1
+//	whitelist = list("talkingcactus") //testing whitelisting
 
 /datum/species/xeno/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
 	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
 	if(istype(C.gib_type, XG))
 		return
 	else
 		C.gib_type = XG
+
 /datum/species/xeno/on_species_loss(mob/living/carbon/C)
+	..()
 	var/obj/effect/decal/cleanable/xenoblood/xgibs/XG
 	var/obj/effect/decal/cleanable/blood/gibs/HG
 	if(istype(C.gib_type, XG))
@@ -1156,5 +1158,57 @@ datum/species/canid
 	id = "xblood"
 	description = "A highly corrosive substance, it is capable of burning through most natural or man-made materials in short order."
 	color = "#66CC00"
-	toxpwr = 0.5
+	toxpwr = 0
 	acidpwr = 12
+
+/datum/species/yautja
+	name = "Yautja"
+	id = "pred"
+	say_mod = "clicks"
+	eyes = "predeyes"
+	mutant_organs = list(/obj/item/organ/tongue/yautja)
+	specflags = list(EYECOLOR)
+	lang_spoken = YAUTJA
+	lang_understood = HUMAN|YAUTJA|ALIEN
+	no_equip = list(slot_head)
+	punchdamagelow = 4
+	punchdamagehigh = 14
+	punchstunthreshold = 13
+	blacklisted = 1
+	roundstart = 0
+	whitelist = 1
+	whitelist = list("talkingcactus")
+
+/datum/outfit/yautja_basic
+	name = "Yautja, Basic"
+	uniform = /obj/item/clothing/under/mesh
+	suit = /obj/item/clothing/suit/armor/yautja_fake
+	shoes = /obj/item/clothing/shoes/yautja_fake
+	mask = /obj/item/clothing/mask/gas/yautja_fake
+
+/datum/species/yautja/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
+	var/datum/outfit/yautja_basic/O = new /datum/outfit/yautja_basic//Just basic gear. Doesn't include anything that gives any meaningful advantage.
+	H.equipOutfit(O, visualsOnly)
+	return 0
+
+/datum/species/octopus
+	blacklisted = 1
+/datum/species/carp
+	blacklisted = 1
+/datum/species/horse
+	blacklisted = 1
+
+///////////////////
+//DONATOR SPECIES//
+///////////////////
+
+//ChronoFlux: Slimecoon
+/datum/species/jelly/slime/slimecoon
+	name = "Slime Raccoon"
+	id = "slimecoon"
+	limbs_id = "slime"
+	whitelisted = 1
+	whitelist = list("chronoflux")
+	blacklisted = 1
+	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
+	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")

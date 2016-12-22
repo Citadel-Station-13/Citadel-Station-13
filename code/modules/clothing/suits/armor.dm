@@ -396,4 +396,49 @@
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
 
+/obj/item/clothing/suit/armor/yautja_fake
+	name = "ceremonial breastplate"
+	desc = "Half of an aging, ceremonial breastplate. Its usefulness as armor are long gone."
+	icon_state = "yautjahalfarmor"
+	item_state = "yautjahalfarmor"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = TRUE
+	burn_state = FIRE_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/device/flashlight,
+				   /obj/item/weapon/tank/internals,
+				   /obj/item/weapon/resonator,
+				   /obj/item/device/mining_scanner,
+				   /obj/item/device/t_scanner/adv_mining_scanner,
+				   /obj/item/weapon/gun/energy/kinetic_accelerator,
+				   /obj/item/weapon/pickaxe)
 
+/obj/item/clothing/suit/armor/yautja
+	name = "clan breastplate"
+	desc = "An armored breastplate. This type is used by most clans for combat among elders."
+	icon_state = "yautjafullarmor"
+	item_state = "yautjafullarmor"
+	armor = list(melee = 50, bullet = 50, laser = 50, energy = 50, bomb = 50, bio = 0, rad = 15)
+	unacidable = TRUE
+	burn_state = FIRE_PROOF
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	cold_protection = CHEST|GROIN|LEGS|ARMS
+	heat_protection = CHEST|GROIN|LEGS|ARMS
+	allowed = list(/obj/item/device/flashlight,
+				   /obj/item/weapon/tank/internals,
+				   /obj/item/weapon/resonator,
+				   /obj/item/device/mining_scanner,
+				   /obj/item/device/t_scanner/adv_mining_scanner,
+				   /obj/item/weapon/gun,
+				   /obj/item/weapon/pickaxe,
+				   /obj/item/weapon/melee,
+				   /obj/item/weapon/kitchen/knife)
+
+/obj/item/clothing/suit/armor/yautja/half
+	name = "clan half-breastplate"
+	desc = "Half of an armored breastplate. This type is used by most clans for combat among blooded."
+	icon_state = "yautjahalfarmor"
+	item_state = "yautjahalfarmor"
+	armor = list(melee = 30, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 5)
