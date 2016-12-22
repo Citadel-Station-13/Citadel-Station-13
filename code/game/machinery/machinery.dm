@@ -120,6 +120,10 @@ Class Procs:
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
 
+	var/light_range_on = 0
+	var/light_power_on = 0
+	var/use_auto_lights = 0
+
 /obj/machinery/New()
 	..()
 	machines += src
@@ -338,7 +342,7 @@ Class Procs:
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
 	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, C.usesound, 50, 1)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 		return 1
@@ -347,7 +351,7 @@ Class Procs:
 	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		deconstruction()
-		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(loc, C.usesound, 50, 1)
 		var/obj/structure/frame/machine/M = new /obj/structure/frame/machine(loc)
 		transfer_fingerprints_to(M)
 		M.state = 2
@@ -358,7 +362,7 @@ Class Procs:
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
 	if(istype(S) &&  !(flags & NODECONSTRUCT))
-		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
 			panel_open = 1
 			icon_state = icon_state_open
@@ -372,7 +376,7 @@ Class Procs:
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
 	if(panel_open && istype(W))
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		setDir(turn(dir,-90))
 		user << "<span class='notice'>You rotate [src].</span>"
 		return 1
@@ -381,7 +385,7 @@ Class Procs:
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>"
-		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, W.usesound, 50, 1)
 		if(do_after(user, time/W.toolspeed, target = src))
 			user << "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>"
 			anchored = !anchored

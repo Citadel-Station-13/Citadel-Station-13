@@ -29,7 +29,9 @@
 	if(!has_left_hand())
 		return 0
 	if(!l_hand)
-		W.loc = src		//TODO: move to equipped?
+		var/atom/old_loc = W.loc
+		W.loc = src  //TODO: move to equipped?
+		W.Moved(old_loc, 0) // MSO told me to do this!
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
 		W.equipped(src,slot_l_hand)
@@ -49,7 +51,9 @@
 	if(!has_right_hand())
 		return 0
 	if(!r_hand)
+		var/atom/old_loc = W.loc
 		W.loc = src
+		W.Moved(old_loc, 0) // MSO told me to do this!
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
 		W.equipped(src,slot_r_hand)
@@ -95,7 +99,9 @@
 	else if(put_in_inactive_hand(W))
 		return 1
 	else
+		var/atom/old_loc = W.loc
 		W.loc = get_turf(src)
+		W.Moved(old_loc, 0) // MSO told me to do this!
 		W.layer = initial(W.layer)
 		W.dropped(src)
 		return 0
@@ -157,6 +163,7 @@
 		if(client)
 			client.screen -= I
 		I.loc = loc
+		I.Moved(src, 0) // MSO told me to do this!
 		I.dropped(src)
 		if(I)
 			I.layer = initial(I.layer)

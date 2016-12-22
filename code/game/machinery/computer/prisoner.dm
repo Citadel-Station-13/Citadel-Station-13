@@ -12,6 +12,7 @@
 	var/screen = 0 // 0 - No Access Denied, 1 - Access allowed
 	var/obj/item/weapon/card/id/prisoner/inserted_id
 	circuit = /obj/item/weapon/circuitboard/computer/prisoner
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/prisoner/attack_hand(mob/user)
 	if(..())
@@ -99,16 +100,21 @@
 						return
 					I.loc = src
 					inserted_id = I
+					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				else usr << "<span class='danger'>No valid ID.</span>"
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
 						inserted_id.loc = get_turf(src)
 						inserted_id.verb_pickup()
 						inserted_id = null
+						playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 					if("reset")
 						inserted_id.points = 0
+						playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					if("setgoal")
+						playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 						var/num = round(input(usr, "Choose prisoner's goal:", "Input an Integer", null) as num|null)
 						if(num >= 0)
 							num = min(num,1000) //Cap the quota to the equivilent of 10 minutes.
@@ -132,8 +138,10 @@
 				screen = !screen
 			else
 				usr << "Unauthorized Access."
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 		else if(href_list["warn"])
+			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
 			if(!warning) return
 			var/obj/item/weapon/implant/I = locate(href_list["warn"])
@@ -145,5 +153,3 @@
 		src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
-
-

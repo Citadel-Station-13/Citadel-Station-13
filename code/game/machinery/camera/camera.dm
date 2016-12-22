@@ -83,7 +83,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -126,7 +126,7 @@
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/attackby(obj/W, mob/living/user, params)
+/obj/machinery/camera/attackby(obj/item/W, mob/living/user, params)
 	var/msg = "<span class='notice'>You attach [W] into the assembly's inner circuits.</span>"
 	var/msg2 = "<span class='notice'>[src] already has that upgrade!</span>"
 
@@ -134,7 +134,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		user << "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>"
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src.loc, W.usesound, 50, 1)
 		return
 
 	if(panel_open)
@@ -274,7 +274,7 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
@@ -385,9 +385,9 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		src.set_light(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		src.set_light(0)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/P)
 	. = ..()

@@ -25,7 +25,7 @@
 	if(ticker)
 		cameranet.updateVisibility(src)
 	if(opacity)
-		UpdateAffectingLights()
+		update_light()
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()

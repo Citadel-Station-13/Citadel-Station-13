@@ -5,6 +5,8 @@
 	desc = "A vast, cold, and lonely place."
 	intact = 0
 
+	plane = PLANE_SPACE_BACKGROUND
+
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 700000
@@ -14,11 +16,18 @@
 	var/destination_y
 
 	var/global/datum/gas_mixture/space/space_gas = new
+	light_power = 0.25
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
 
 /turf/open/space/New()
 	update_icon()
 	air = space_gas
+	var/image/I = image('icons/turf/space_parallax1.dmi',"[icon_state]")
+	I.plane = PLANE_SPACE_DUST
+	I.alpha = 80
+	I.blend_mode = BLEND_ADD
+	overlays += I
 
 /turf/open/space/Destroy(force)
 	if(force)
@@ -52,9 +61,9 @@
 			if(istype(t, /turf/open/space))
 				//let's NOT update this that much pls
 				continue
-			SetLuminosity(4,1)
+			set_light(2)
 			return
-		SetLuminosity(0)
+		set_light(0)
 
 /turf/open/space/attack_paw(mob/user)
 	return src.attack_hand(user)

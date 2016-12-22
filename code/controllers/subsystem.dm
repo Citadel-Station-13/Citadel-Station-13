@@ -161,4 +161,3 @@
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
 	..()
-
