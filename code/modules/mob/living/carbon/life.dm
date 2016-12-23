@@ -4,23 +4,24 @@
 
 	if (notransform)
 		return
-	if(!loc)
-		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	if(..())
-		. = 1
-
+	if(..()) //not dead
 		handle_blood()
 
-		for(var/obj/item/organ/O in internal_organs)
+	if(stat != DEAD)
+		for(var/V in internal_organs)
+			var/obj/item/organ/O = V
 			O.on_life()
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+
+	if(stat != DEAD)
+		return 1
 
 ///////////////
 // BREATHING //
@@ -42,15 +43,15 @@
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
+	if(ismob(loc))	return
+
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
 
-	if(ismob(loc))	return
-
 	var/datum/gas_mixture/breath
 
-	if(health <= config.health_threshold_crit || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
+	if(health <= HEALTH_THRESHOLD_CRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate
@@ -284,7 +285,6 @@
 
 
 /mob/living/carbon/handle_stomach()
-/*
 	set waitfor = 0
 	for(var/mob/living/M in stomach_contents)
 		if(M.loc != src)
@@ -300,7 +300,7 @@
 				if(!(M.status_flags & GODMODE))
 					M.adjustBruteLoss(5)
 				nutrition += 10
-*/
+
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
@@ -314,7 +314,7 @@
 	if(sleeping)
 		handle_dreams()
 		AdjustSleeping(-1)
-		if(prob(10) && health>config.health_threshold_crit)
+		if(prob(10) && health>HEALTH_THRESHOLD_CRIT)
 			emote("snore")
 
 	var/restingpwr = 1 + 4 * resting
@@ -389,8 +389,6 @@
 	var/body_temperature_difference = 310.15 - bodytemperature
 	switch(bodytemperature)
 		if(-INFINITY to 260.15) //260.15 is 310.15 - 50, the temperature where you start to feel effects.
-			if(nutrition >= 2) //If we are very, very cold we'll use up quite a bit of nutriment to heat us up.
-				nutrition -= 2
 			bodytemperature += max((body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR), BODYTEMP_AUTORECOVERY_MINIMUM)
 		if(260.15 to 310.15)
 			bodytemperature += max(body_temperature_difference * metabolism_efficiency / BODYTEMP_AUTORECOVERY_DIVISOR, min(body_temperature_difference, BODYTEMP_AUTORECOVERY_MINIMUM/4))

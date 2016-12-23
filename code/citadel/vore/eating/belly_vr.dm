@@ -148,7 +148,7 @@
 	if(B)
 		B.internal_contents += prey
 
-//	internal_contents += prey
+	internal_contents |= prey
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"

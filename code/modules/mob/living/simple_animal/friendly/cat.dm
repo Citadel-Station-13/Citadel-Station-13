@@ -14,7 +14,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	minbodytemp = 200
@@ -56,6 +56,7 @@
 /mob/living/simple_animal/pet/cat/original
 	name = "Batsy"
 	desc = "The product of alien DNA and bored geneticists."
+	gender = FEMALE
 	icon_state = "original"
 	icon_living = "original"
 	icon_dead = "original_dead"
@@ -66,7 +67,6 @@
 	icon_state = "kitten"
 	icon_living = "kitten"
 	icon_dead = "kitten_dead"
-	gender = NEUTER
 	density = 0
 	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
@@ -80,24 +80,31 @@
 	icon_dead = "cat_dead"
 	gender = FEMALE
 	gold_core_spawnable = 0
-//	var/list/family = list()
-//	var/cats_deployed = 0
-//	var/memory_saved = 0
+	var/list/family = list()//var restored from savefile, has count of each child type
+	var/list/children = list()//Actual mob instances of children
+	var/cats_deployed = 0
+	var/memory_saved = 0
 
 /mob/living/simple_animal/pet/cat/Runtime/New()
 	if(prob(5))
 		icon_state = "original"
 		icon_living = "original"
 		icon_dead = "original_dead"
-//	Read_Memory()
+	Read_Memory()
 	..()
-/*
+
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
 	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
 	..()
+
+/mob/living/simple_animal/pet/cat/Runtime/make_babies()
+	var/mob/baby = ..()
+	if(baby)
+		children += baby
+		return baby
 
 /mob/living/simple_animal/pet/cat/Runtime/death()
 	if(!memory_saved)
@@ -115,7 +122,7 @@
 	var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
 	family = list()
 	if(!dead)
-		for(var/mob/living/simple_animal/pet/cat/C in mob_list)
+		for(var/mob/living/simple_animal/pet/cat/kitten/C in children)
 			if(istype(C,type) || C.stat || !C.z || !C.butcher_results) //That last one is a work around for hologram cats
 				continue
 			if(C.type in family)
@@ -131,9 +138,10 @@
 		if(family[cat_type] > 0)
 			for(var/i in 1 to min(family[cat_type],100)) //Limits to about 500 cats, you wouldn't think this would be needed (BUT IT IS)
 				new cat_type(loc)
-*/
+
 /mob/living/simple_animal/pet/cat/Proc
 	name = "Proc"
+	gender = MALE
 	gold_core_spawnable = 0
 
 /mob/living/simple_animal/pet/cat/Life()
@@ -174,7 +182,7 @@
 
 	..()
 
-//	make_babies()
+	make_babies()
 
 	if(!stat && !resting && !buckled)
 		turns_since_scan++
@@ -221,6 +229,7 @@
 	icon_dead = "cak_dead"
 	health = 50
 	maxHealth = 50
+	gender = FEMALE
 	harm_intent_damage = 10
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/weapon/reagent_containers/food/snacks/cakeslice/birthday = 3,  \
 	/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 2)
@@ -259,6 +268,6 @@
 
 /mob/living/simple_animal/pet/cat/cak/attack_hand(mob/living/L)
 	..()
-	if(L.a_intent == "harm" && L.reagents && !stat)
+	if(L.a_intent == INTENT_HARM && L.reagents && !stat)
 		L.reagents.add_reagent("nutriment", 0.4)
 		L.reagents.add_reagent("vitamin", 0.4)

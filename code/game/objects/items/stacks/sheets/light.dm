@@ -4,7 +4,7 @@
 	desc = "A glass tile, which is wired, somehow."
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "glass_wire"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -29,7 +29,7 @@
 		var/obj/item/stack/sheet/metal/M = O
 		if (M.use(1))
 			use(1)
-			var/obj/item/stack/tile/light/L = new (user.loc)
+			var/obj/item/L = PoolOrNew(/obj/item/stack/tile/light, user.loc)
 			user << "<span class='notice'>You make a light tile.</span>"
 			L.add_fingerprint(user)
 		else
