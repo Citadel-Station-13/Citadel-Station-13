@@ -104,7 +104,7 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/datum/belly/proc/release_all_contents()
+/datum/belly/proc/release_all_contents(var/mob/owner)
 	for (var/atom/movable/M in internal_contents)
 		M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 		internal_contents -= M  // Remove from the belly contents
@@ -113,25 +113,32 @@
 		if(B)
 			B.internal_contents += M
 
-	owner.visible_message("<span class='warning'>[owner.name] expels everything from their [lowertext(name)]!</span>")
-	return 1
+//	owner.visible_message("<span class='warning'>[owner] expels everything from their [lowertext(name)]!</span>")
+	return
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-/datum/belly/proc/release_specific_contents(var/atom/movable/M, var/mob/owner)
-	if (!(M in internal_contents))
+/datum/belly/proc/release_specific_contents(var/atom/movable/A, var/mob/prey, var/mob/owner, mob/living/carbon/user)
+	var/turf/T = get_turf(user)
+	if (!(A in internal_contents))
 		return 0 // They weren't in this belly anyway
+	world << "Contents confirmed"
+//	user.internal_contents -= A  // Remove from the belly contents
+//	world << "contents removed"
+	A.forceMove(T)  // Move the belly contents into the same location as belly's owner.
+	world << "force moving to turf"
 
-	M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
-	src.internal_contents -= M  // Remove from the belly contents
+//	var/turf/T = get_turf(src)
+//	for(var/atom/movable/AM in src)
+//		AM.forceMove(T)
 
-	var/datum/belly/B = check_belly(owner)
-	if(B)
-		B.internal_contents += M
-
-	owner.visible_message("<span class='warning'>[owner.name] expels [M.name] from their [lowertext(name)]!</span>")
-	owner.update_icons()
+//	var/datum/belly/B = check_belly(owner)
+//	if(B)
+//		B.internal_contents += M
+//	world << "belly check finished"
+//	user.visible_message("<span class='warning'>[owner] expels [A] from their [lowertext(name)]!</span>")
+//	owner.update_icons()
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
@@ -238,7 +245,7 @@
 			for (var/mob/subprey in belly.internal_contents)
 				subprey.forceMove(owner)
 				internal_contents += subprey
-				subprey << "As [M] melts away around you, you find yourself in [owner]'s [name]"
+				subprey << "<span class='userdanger'>As [M] melts away around you, you find yourself in [owner]'s [name].</span>"
 
 	//Drop all items into the belly.
 	for (var/obj/item/W in M)
