@@ -8,11 +8,12 @@
 	anchored = TRUE
 	density = FALSE
 	opacity = 0
+	var/deconstructible = TRUE
 
 /obj/structure/fluff/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/weapon/wrench))
+	if(istype(I, /obj/item/weapon/wrench) && deconstructible)
 		user.visible_message("<span class='notice'>[user] starts disassembling [src]...</span>", "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(user, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(user, I.usesound, 50, 1)
 		if(!do_after(user, 50, target = src))
 			return 0
 		user.visible_message("<span class='notice'>[user] disassembles [src]!</span>", "<span class='notice'>You break down [src] into scrap metal.</span>")
@@ -37,7 +38,7 @@
 
 /obj/structure/fluff/empty_sleeper/nanotrasen
 	name = "broken hypersleep chamber"
-	desc = "A NanoTrasen hypersleep chamber - this one appears broken. \
+	desc = "A Nanotrasen hypersleep chamber - this one appears broken. \
 		There are exposed bolts for easy disassembly using a wrench."
 	icon_state = "sleeper-o"
 
@@ -52,6 +53,110 @@
 
 /obj/structure/fluff/broken_flooring
 	name = "broken tiling"
-	desc = "A segment of broken flooring"
+	desc = "A segment of broken flooring."
 	icon = 'icons/obj/brokentiling.dmi'
 	icon_state = "corner"
+
+/obj/structure/fluff/drake_statue //Ash drake status spawn on either side of the necropolis gate in lavaland.
+	name = "drake statue"
+	desc = "A towering basalt sculpture of a proud and regal drake. Its eyes are six glowing gemstones."
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "drake_statue"
+	pixel_x = -16
+	density = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/drake_statue/falling //A variety of statue in disrepair; parts are broken off and a gemstone is missing
+	desc = "A towering basalt sculpture of a drake. Cracks run down its surface and parts of it have fallen off."
+	icon_state = "drake_statue_falling"
+
+
+/obj/structure/fluff/bus
+	name = "bus"
+	desc = "GO TO SCHOOL. READ A BOOK."
+	icon = 'icons/obj/bus.dmi'
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
+
+/obj/structure/fluff/bus/dense
+	name = "bus"
+	icon_state = "backwall"
+
+/obj/structure/fluff/bus/passable
+	name = "bus"
+	icon_state = "frontwalltop"
+	density = 0
+	layer = ABOVE_ALL_MOB_LAYER //except for the stairs tile, which should be set to OBJ_LAYER aka 3.
+
+
+/obj/structure/fluff/bus/passable/seat
+	name = "seat"
+	desc = "Buckle up! ...What do you mean, there's no seatbelts?!"
+	icon_state = "backseat"
+	pixel_y = 17
+	layer = OBJ_LAYER
+
+
+/obj/structure/fluff/bus/passable/seat/driver
+	name = "driver's seat"
+	desc = "Space Jesus is my copilot."
+	icon_state = "driverseat"
+
+/obj/structure/fluff/bus/passable/seat/driver/attack_hand(mob/user)
+	playsound(src.loc, 'sound/items/carhorn.ogg', 50, 1)
+
+/obj/structure/fluff/paper
+	name = "dense lining of papers"
+	desc = "A lining of paper scattered across the bottom of a wall."
+	icon = 'icons/obj/fluff.dmi'
+	icon_state = "paper"
+	deconstructible = FALSE
+
+/obj/structure/fluff/paper/corner
+	icon_state = "papercorner"
+
+/obj/structure/fluff/paper/stack
+	name = "dense stack of papers"
+	desc = "A stack of various papers, childish scribbles scattered across each page."
+	icon_state = "paperstack"
+
+
+/obj/structure/fluff/divine
+	name = "Miracle"
+	icon = 'icons/obj/hand_of_god_structures.dmi'
+	anchored = 1
+	density = 1
+
+/obj/structure/fluff/divine/nexus
+	name = "nexus"
+	desc = "It anchors a deity to this world. It radiates an unusual aura. It looks well protected from explosive shock."
+	icon_state = "nexus"
+
+/obj/structure/fluff/divine/conduit
+	name = "conduit"
+	desc = "It allows a deity to extend their reach.  Their powers are just as potent near a conduit as a nexus."
+	icon_state = "conduit"
+
+/obj/structure/fluff/divine/convertaltar
+	name = "conversion altar"
+	desc = "An altar dedicated to a deity."
+	icon_state = "convertaltar"
+	density = 0
+	can_buckle = 1
+
+/obj/structure/fluff/divine/powerpylon
+	name = "power pylon"
+	desc = "A pylon which increases the deity's rate it can influence the world."
+	icon_state = "powerpylon"
+	can_buckle = 1
+
+/obj/structure/fluff/divine/defensepylon
+	name = "defense pylon"
+	desc = "A pylon which is blessed to withstand many blows, and fire strong bolts at nonbelievers. A god can toggle it."
+	icon_state = "defensepylon"
+
+/obj/structure/fluff/divine/shrine
+	name = "shrine"
+	desc = "A shrine dedicated to a deity."
+	icon_state = "shrine"

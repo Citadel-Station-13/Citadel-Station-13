@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+
 
 
 /obj/machinery/computer/robotics
@@ -9,15 +9,14 @@
 	req_access = list(access_robotics)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
-	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/robotics/proc/can_control(mob/user, mob/living/silicon/robot/R)
 	if(!istype(R))
 		return 0
-	if(istype(user, /mob/living/silicon/ai))
+	if(isAI(user))
 		if (R.connected_ai != user)
 			return 0
-	if(istype(user, /mob/living/silicon/robot))
+	if(iscyborg(user))
 		if (R != user)
 			return 0
 	if(R.scrambledcodes)
@@ -32,7 +31,6 @@
 /obj/machinery/computer/robotics/interact(mob/user)
 	if (src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 	user.set_machine(src)
 	var/dat
@@ -61,8 +59,10 @@
 			dat += " Slaved to [R.connected_ai.name] |"
 		else
 			dat += " Independent from AI |"
-		if (istype(user, /mob/living/silicon) || IsAdminGhost(user))
-			if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
+		if(issilicon(user) || IsAdminGhost(user))
+			if(is_servant_of_ratvar(user) && user != R)
+				dat += "<A href='?src=\ref[src];convert=\ref[R]'>(<font color=#BE8700><i>Convert</i></font>)</A> "
+			else if(((issilicon(user) && is_special_character(user)) || IsAdminGhost(user)) && !R.emagged && (user != R || R.syndicate))
 				dat += "<A href='?src=\ref[src];magbot=\ref[R]'>(<font color=blue><i>Hack</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];stopbot=\ref[R]'>(<font color=green><i>[R.canmove ? "Lockdown" : "Release"]</i></font>)</A> "
 		dat += "<A href='?src=\ref[src];killbot=\ref[R]'>(<font color=red><i>Destroy</i></font>)</A>"
@@ -70,6 +70,21 @@
 
 	if(!robots)
 		dat += "No Cyborg Units detected within access parameters."
+		dat += "<BR>"
+
+	var/drones = 0
+	for(var/mob/living/simple_animal/drone/D in mob_list)
+		if(D.hacked)
+			continue
+		drones++
+		dat += "[D.name] |"
+		if(D.stat)
+			dat += " Not Responding |"
+		dat += "<A href='?src=\ref[src];killdrone=\ref[D]'>(<font color=red><i>Destroy</i></font>)</A>"
+		dat += "<BR>"
+
+	if(!drones)
+		dat += "No Drone Units detected within access parameters."
 
 	var/datum/browser/popup = new(user, "computer", "Cyborg Control Console", 400, 500)
 	popup.set_content(dat)
@@ -86,11 +101,10 @@
 
 	else if (href_list["killbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["killbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["killbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to detonate [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					if(R.syndicate && R.emagged)
 						R << "Extreme danger.  Termination codes detected.  Scrambling security codes and automatic AI unlink triggered."
 						if(R.connected_ai)
@@ -104,15 +118,13 @@
 						R.self_destruct()
 		else
 			usr << "<span class='danger'>Access Denied.</span>"
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 	else if (href_list["stopbot"])
 		if(src.allowed(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["stopbot"])
+			var/mob/living/silicon/robot/R = locate(href_list["stopbot"]) in silicon_mobs
 			if(can_control(usr, R))
 				var/choice = input("Are you certain you wish to [R.canmove ? "lock down" : "release"] [R.name]?") in list("Confirm", "Abort")
 				if(choice == "Confirm" && can_control(usr, R) && !..())
-					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 					message_admins("<span class='notice'>[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [R.canmove ? "locked down" : "released"] [key_name(R, R.client)](<A HREF='?_src_=holder;adminplayerobservefollow=\ref[R]'>FLW</A>)!</span>")
 					log_game("[key_name(usr)] [R.canmove ? "locked down" : "released"] [key_name(R)]!")
 					R.SetLockdown(!R.lockcharge)
@@ -125,13 +137,33 @@
 
 	else if (href_list["magbot"])
 		if((issilicon(usr) && is_special_character(usr)) || IsAdminGhost(usr))
-			var/mob/living/silicon/robot/R = locate(href_list["magbot"])
-			if(istype(R) && !R.emagged && ((R.syndicate && R == usr)|| R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
+			var/mob/living/silicon/robot/R = locate(href_list["magbot"]) in silicon_mobs
+			if(istype(R) && !R.emagged && ((R.syndicate && R == usr) || R.connected_ai == usr || IsAdminGhost(usr)) && !R.scrambledcodes && can_control(usr, R))
 				log_game("[key_name(usr)] emagged [R.name] using robotic console!")
-				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)]. using robotic console!")
+				message_admins("[key_name_admin(usr)] emagged cyborg [key_name_admin(R)] using robotic console!")
 				R.SetEmagged(1)
 				if(is_special_character(R))
 					R.verbs += /mob/living/silicon/robot/proc/ResetSecurityCodes
+
+	else if(href_list["convert"])
+		if(issilicon(usr) && is_special_character(usr))
+			var/mob/living/silicon/robot/R = locate(href_list["convert"]) in silicon_mobs
+			if(istype(R) && !is_servant_of_ratvar(R) && is_servant_of_ratvar(usr) && R.connected_ai == usr)
+				log_game("[key_name(usr)] converted [R.name] using robotic console!")
+				message_admins("[key_name_admin(usr)] converted cyborg [key_name_admin(R)] using robotic console!")
+				add_servant_of_ratvar(R)
+
+	else if (href_list["killdrone"])
+		if(src.allowed(usr))
+			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			if(D.hacked)
+				usr << "<span class='danger'>ERROR: [D] is not responding to external commands.</span>"
+			else
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(3, 1, D)
+				s.start()
+				D.visible_message("<span class='danger'>\the [D] self destructs!</span>")
+				D.gib()
 
 	src.updateUsrDialog()
 	return

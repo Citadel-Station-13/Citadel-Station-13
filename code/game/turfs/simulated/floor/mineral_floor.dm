@@ -6,18 +6,22 @@
  * Bananium floor
  * Diamond floor
  * Uranium floor
+ * Shuttle floor (Titanium)
  */
 
 /turf/open/floor/mineral
 	name = "mineral floor"
 	icon_state = ""
-	var/list/icons = list()
+	var/list/icons
 
 
 
 /turf/open/floor/mineral/New()
-	..()
 	broken_states = list("[initial(icon_state)]_dam")
+	..()
+	if (!icons)
+		icons = list()
+
 
 /turf/open/floor/mineral/update_icon()
 	if(!..())
@@ -70,6 +74,36 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+
+//TITANIUM (shuttle)
+
+/turf/open/floor/mineral/titanium/blue
+	icon_state = "shuttlefloor"
+	icons = list("shuttlefloor","shuttlefloor_dam")
+
+/turf/open/floor/mineral/titanium/yellow
+	icon_state = "shuttlefloor2"
+	icons = list("shuttlefloor2","shuttlefloor2_dam")
+
+/turf/open/floor/mineral/titanium
+	name = "shuttle floor"
+	icon_state = "shuttlefloor3"
+	floor_tile = /obj/item/stack/tile/mineral/titanium
+	icons = list("shuttlefloor3","shuttlefloor3_dam")
+
+/turf/open/floor/mineral/titanium/purple
+	icon_state = "shuttlefloor5"
+	icons = list("shuttlefloor5","shuttlefloor5_dam")
+
+//PLASTITANIUM (syndieshuttle)
+/turf/open/floor/mineral/plastitanium
+	name = "shuttle floor"
+	icon_state = "shuttlefloor4"
+	floor_tile = /obj/item/stack/tile/mineral/plastitanium
+	icons = list("shuttlefloor4","shuttlefloor4_dam")
+
+/turf/open/floor/mineral/plastitanium/brig
+	name = "Brig floor"
 
 //BANANIUM
 
@@ -187,14 +221,3 @@
 
 /turf/open/floor/mineral/abductor/make_plating()
 	return ChangeTurf(/turf/open/floor/plating/abductor2)
-
-
-/turf/open/floor/plating/abductor2
-	name = "alien plating"
-	icon_state = "alienplating"
-
-/turf/open/floor/plating/abductor2/break_tile()
-	return //unbreakable
-
-/turf/open/floor/plating/abductor2/burn_tile()
-	return //unburnable

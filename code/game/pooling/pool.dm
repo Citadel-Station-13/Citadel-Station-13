@@ -23,8 +23,6 @@ For almost all pooling purposes, it is better to use the QDEL hint than to pool 
 
 */
 
-#define MAINTAINING_OBJECT_POOL_COUNT 500
-
 var/global/list/GlobalPool = list()
 
 //You'll be using this proc 90% of the time.
@@ -42,14 +40,22 @@ var/global/list/GlobalPool = list()
 	if(!get_type)
 		return
 
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_pooled_or_newed, get_type)
+
 	. = GetFromPool(get_type,second_arg)
 
 	if(!.)
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_created_new, get_type)
 		if(ispath(get_type))
 			if(islist(second_arg))
 				. = new get_type (arglist(second_arg))
 			else
 				. = new get_type (second_arg)
+	else
+		if(SSpool)
+			INCREMENT_TALLY(SSpool.stats_reused, get_type)
 
 
 /proc/GetFromPool(get_type,second_arg)
@@ -89,6 +95,9 @@ var/global/list/GlobalPool = list()
 
 	if(diver in GlobalPool[diver.type])
 		return
+
+	if(SSpool)
+		INCREMENT_TALLY(SSpool.stats_placed_in_pool, diver.type)
 
 	if(!GlobalPool[diver.type])
 		GlobalPool[diver.type] = list()
@@ -135,33 +144,3 @@ var/list/pooledvariables = list()
 /image/ResetVars()
 	..()
 	loc = null
-
-/proc/returnToPool(const/datum/D)
-	ASSERT(D)
-
-	if(istype(D, /atom/movable) && length(GlobalPool[D.type]) > MAINTAINING_OBJECT_POOL_COUNT)
-		#ifdef DEBUG_DATUM_POOL
-		to_chat(world, text("DEBUG_DATUM_POOL: returnToPool([]) exceeds [] discarding...", D.type, MAINTAINING_OBJECT_POOL_COUNT))
-		#endif
-
-		qdel(D)
-		return
-
-	if(isnull(GlobalPool[D.type]))
-		GlobalPool[D.type] = list()
-
-	D.Destroy()
-	D.ResetVars()
-
-	#ifdef DEBUG_DATUM_POOL
-	if(D in GlobalPool[D.type])
-		to_chat(world, text("returnToPool has been called twice for the same datum of type [] time to panic.", D.type))
-	#endif
-
-	GlobalPool[D.type] |= D
-
-	#ifdef DEBUG_DATUM_POOL
-	to_chat(world, text("DEBUG_DATUM_POOL: returnToPool([]) [] left.", D.type, length(GlobalPool[D.type])))
-	#endif
-
-#undef MAINTAINING_OBJECT_POOL_COUNT

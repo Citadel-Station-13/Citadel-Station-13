@@ -2,9 +2,9 @@ var/datum/subsystem/spacedrift/SSspacedrift
 
 /datum/subsystem/spacedrift
 	name = "Space Drift"
-	priority = 40
+	priority = 30
 	wait = 5
-	flags = SS_NO_INIT|SS_BACKGROUND
+	flags = SS_NO_INIT|SS_KEEP_TIMING
 
 	var/list/currentrun = list()
 	var/list/processing = list()
@@ -61,3 +61,4 @@ var/datum/subsystem/spacedrift/SSspacedrift
 		AM.inertia_last_loc = AM.loc
 		if (MC_TICK_CHECK)
 			return
+

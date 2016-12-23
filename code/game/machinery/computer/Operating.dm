@@ -6,7 +6,6 @@
 	circuit = /obj/item/weapon/circuitboard/computer/operating
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/table/optable/table = null
-	light_color = LIGHT_COLOR_BLUE
 
 
 /obj/machinery/computer/operating/New()
@@ -40,10 +39,8 @@
 		else
 			patient = null
 			dat += "<B>No patient detected</B>"
-			playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 	else
 		dat += "<B>Operating table not found.</B>"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 	var/datum/browser/popup = new(user, "op", "Operating Computer", 400, 500)
 	popup.set_content(dat)
