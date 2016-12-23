@@ -1,5 +1,33 @@
 /mob/living/New()
 	. = ..()
+
+	//Creates at least the typical 'stomach' on every mob.
+	spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
+		if(!vore_organs.len)
+			var/datum/belly/B = new /datum/belly(src)
+			B.immutable = 1
+			B.name = "Stomach"
+			B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [name]."
+			vore_organs[B.name] = B
+			vore_selected = B.name
+
+			if(istype(src,/mob/living/simple_animal))
+				B.emote_lists[DM_HOLD] = list(
+					"The insides knead at you gently for a moment.",
+					"The guts glorp wetly around you as some air shifts.",
+					"Your predator takes a deep breath and sighs, shifting you somewhat.",
+					"The stomach squeezes you tight for a moment, then relaxes.",
+					"During a moment of quiet, breathing becomes the most audible thing.",
+					"The warm slickness surrounds and kneads on you.")
+
+				B.emote_lists[DM_DIGEST] = list(
+					"The caustic acids eat away at your form.",
+					"The acrid air burns at your lungs.",
+					"Without a thought for you, the stomach grinds inwards painfully.",
+					"The guts treat you like food, squeezing to press more acids against you.",
+					"The onslaught against your body doesn't seem to be letting up; you're food now.",
+					"The insides work on you like they would any other food.")
+
 	generateStaticOverlay()
 	if(staticOverlays.len)
 		for(var/mob/living/simple_animal/drone/D in player_list)
@@ -152,8 +180,14 @@
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
+			// In case of micros, we don't swap positions; instead occupying the same square!
+			if (handle_micro_bump_helping(M)) return
+
 			now_pushing = 0
 			return 1
+
+	// Handle grabbing, stomping, and such of micros!
+	if(handle_micro_bump_other(M)) return
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -539,6 +573,11 @@
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
 		resist_buckle()
+
+	// climbing out of a gut
+	else if(ismob(loc))
+		vore_process_resist(src)
+		return
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))

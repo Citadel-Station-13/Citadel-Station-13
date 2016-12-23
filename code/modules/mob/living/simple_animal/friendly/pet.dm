@@ -34,6 +34,8 @@
 	if(pcollar)
 		pcollar = new(src)
 		regenerate_icons()
+	verbs += /mob/living/proc/insidePanel
+	verbs += /mob/living/proc/escapeOOC
 
 /mob/living/simple_animal/pet/revive(full_heal = 0, admin_revive = 0)
 	if(..())

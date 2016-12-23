@@ -36,6 +36,8 @@
 /mob/living/carbon/alien/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
+	verbs += /mob/living/proc/insidePanel
+	verbs += /mob/living/proc/escapeOOC
 
 	create_bodyparts() //initialize bodyparts
 
