@@ -42,8 +42,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //	Belly searching for simplifying other procs
 //
 /proc/check_belly(atom/movable/A)
-	if(istype(A.loc,/mob/living))
-		var/mob/living/M = A.loc
+	if(istype(get_turf(A),/mob/living))
+		var/mob/living/M = get_turf(A)
 		for(var/I in M.vore_organs)
 			var/datum/belly/B = M.vore_organs[I]
 			if(A in B.internal_contents)

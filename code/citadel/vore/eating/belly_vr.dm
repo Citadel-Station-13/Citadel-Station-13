@@ -106,49 +106,44 @@
 // Returns the number of mobs so released.
 /datum/belly/proc/release_all_contents()
 	for (var/atom/movable/M in internal_contents)
-		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+		M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 		internal_contents -= M  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
 		if(B)
 			B.internal_contents += M
 
-	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
+	owner.visible_message("<span class='warning'>[owner.name] expels everything from their [lowertext(name)]!</span>")
 	return 1
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-/datum/belly/proc/release_specific_contents(var/atom/movable/M)
+/datum/belly/proc/release_specific_contents(var/atom/movable/M, var/mob/owner)
 	if (!(M in internal_contents))
 		return 0 // They weren't in this belly anyway
 
-	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+	M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 	src.internal_contents -= M  // Remove from the belly contents
 
 	var/datum/belly/B = check_belly(owner)
 	if(B)
 		B.internal_contents += M
 
-	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
+	owner.visible_message("<span class='warning'>[owner.name] expels [M.name] from their [lowertext(name)]!</span>")
 	owner.update_icons()
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
-/datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
+/datum/belly/proc/nom_mob(var/mob/prey, var/mob/owner)
 //	if (prey.anchored)
 //		prey.anchored.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.loc = user
-
-	var/datum/belly/B = check_belly(owner)
-	if(B)
-		B.internal_contents += prey
-
-	internal_contents |= prey
+	prey.forceMove(owner)
+	internal_contents += prey
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -311,7 +306,7 @@
 
 	var/strpick = pick(struggle_sounds)
 	var/strsound = struggle_sounds[strpick]
-	playsound(R.loc, strsound, 50, 1)
+	playsound(get_turf(R), strsound, 50, 1)
 	recent_struggle = world.time + 30 //hopefully to cut down on people just spamming it
 
 // Belly copies and then returns the copy
