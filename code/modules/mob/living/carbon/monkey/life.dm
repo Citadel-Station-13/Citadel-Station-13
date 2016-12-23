@@ -1,4 +1,4 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /mob/living/carbon/monkey
 
@@ -22,24 +22,22 @@
 
 	if (radiation)
 		if (radiation > 100)
-			if(!weakened)
-				emote("collapse")
 			Weaken(10)
 			src << "<span class='danger'>You feel weak.</span>"
+			emote("collapse")
 
 		switch(radiation)
 
 			if(50 to 75)
 				if(prob(5))
-					if(!weakened)
-						emote("collapse")
 					Weaken(3)
 					src << "<span class='danger'>You feel weak.</span>"
+					emote("collapse")
 
 			if(75 to 100)
 				if(prob(1))
 					src << "<span class='danger'>You mutate!</span>"
-					randmutb()
+					randmutb(src)
 					emote("gasp")
 					domutcheck()
 		..()
@@ -83,29 +81,29 @@
 		switch(bodytemperature)
 			if(360 to 400)
 				throw_alert("temp", /obj/screen/alert/hot, 1)
-				apply_damage(HEAT_DAMAGE_LEVEL_1, BURN)
+				adjustFireLoss(2)
 			if(400 to 460)
 				throw_alert("temp", /obj/screen/alert/hot, 2)
-				apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+				adjustFireLoss(3)
 			if(460 to INFINITY)
 				throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(on_fire)
-					apply_damage(HEAT_DAMAGE_LEVEL_3, BURN)
+					adjustFireLoss(8)
 				else
-					apply_damage(HEAT_DAMAGE_LEVEL_2, BURN)
+					adjustFireLoss(3)
 
 	else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 		if(!istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			switch(bodytemperature)
 				if(200 to 260)
 					throw_alert("temp", /obj/screen/alert/cold, 1)
-					apply_damage(COLD_DAMAGE_LEVEL_1, BURN)
+					adjustFireLoss(0.5)
 				if(120 to 200)
 					throw_alert("temp", /obj/screen/alert/cold, 2)
-					apply_damage(COLD_DAMAGE_LEVEL_2, BURN)
+					adjustFireLoss(1.5)
 				if(-INFINITY to 120)
 					throw_alert("temp", /obj/screen/alert/cold, 3)
-					apply_damage(COLD_DAMAGE_LEVEL_3, BURN)
+					adjustFireLoss(3)
 		else
 			clear_alert("temp")
 
@@ -142,29 +140,7 @@
 			return 1
 
 /mob/living/carbon/monkey/handle_fire()
-	. = ..()
-	if(on_fire)
-
-		//the fire tries to damage the exposed clothes and items
-		var/list/burning_items = list()
-		//HEAD//
-		var/obj/item/clothing/head_clothes = null
-		if(wear_mask)
-			head_clothes = wear_mask
-		if(wear_neck)
-			head_clothes = wear_neck
-		if(head)
-			head_clothes = head
-		if(head_clothes)
-			burning_items += head_clothes
-
-		if(back)
-			burning_items += back
-
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			if(!(I.resistance_flags & FIRE_PROOF))
-				I.take_damage(fire_stacks, BURN, "fire", 0)
-
-		bodytemperature += BODYTEMP_HEATING_MAX
-
+	if(..())
+		return
+	bodytemperature += BODYTEMP_HEATING_MAX
+	return

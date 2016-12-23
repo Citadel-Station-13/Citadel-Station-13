@@ -4,10 +4,9 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "particle"
 	anchored = 1
-	density = 0
+	density = 1
 	var/movement_range = 10
 	var/energy = 10
-	var/speed = 1
 
 /obj/effect/accelerated_particle/weak
 	movement_range = 8
@@ -22,27 +21,24 @@
 	energy = 50
 
 
-/obj/effect/accelerated_particle/New(loc)
-	..()
+/obj/effect/accelerated_particle/New(loc, dir = 2)
+	src.setDir(dir)
 
-	addtimer(src, "move", 1)
+	spawn(0)
+		move(1)
 
 
 /obj/effect/accelerated_particle/Bump(atom/A)
-	if(A)
-		if(isliving(A))
+	if (A)
+		if(ismob(A))
 			toxmob(A)
-		else if(istype(A, /obj/machinery/the_singularitygen))
-			var/obj/machinery/the_singularitygen/S = A
-			S.energy += energy
-		else if(istype(A, /obj/singularity))
-			var/obj/singularity/S = A
-			S.energy += energy
+		if((istype(A,/obj/machinery/the_singularitygen))||(istype(A,/obj/singularity/)))
+			A:energy += energy
 
 
-/obj/effect/accelerated_particle/Crossed(atom/A)
-	if(isliving(A))
-		toxmob(A)
+/obj/effect/accelerated_particle/Bumped(atom/A)
+	if(ismob(A))
+		Bump(A)
 
 
 /obj/effect/accelerated_particle/ex_act(severity, target)
@@ -50,13 +46,15 @@
 
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	M.rad_act(energy*6)
+	M.updatehealth()
 
-/obj/effect/accelerated_particle/proc/move()
+
+/obj/effect/accelerated_particle/proc/move(lag)
 	if(!step(src,dir))
-		forceMove(get_step(src,dir))
+		loc = get_step(src,dir)
 	movement_range--
 	if(movement_range == 0)
 		qdel(src)
 	else
-		sleep(speed)
-		move()
+		sleep(lag)
+		move(lag)

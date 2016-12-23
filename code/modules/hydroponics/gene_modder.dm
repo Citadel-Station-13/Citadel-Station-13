@@ -66,7 +66,7 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	if(iscyborg(user))
+	if(isrobot(user))
 		return
 
 	if(istype(I, /obj/item/seeds))
@@ -104,7 +104,7 @@
 		return
 
 	var/datum/browser/popup = new(user, "plantdna", "Plant DNA Manipulator", 450, 600)
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
 
@@ -234,7 +234,7 @@
 			update_genes()
 			update_icon()
 		else
-			var/obj/item/I = usr.get_active_held_item()
+			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/seeds))
 				if(!usr.drop_item())
 					return
@@ -248,7 +248,7 @@
 			disk = null
 			update_genes()
 		else
-			var/obj/item/I = usr.get_active_held_item()
+			var/obj/item/I = usr.get_active_hand()
 			if(istype(I, /obj/item/weapon/disk/plantgene))
 				if(!usr.drop_item())
 					return
@@ -338,9 +338,7 @@
 			/datum/plant_gene/core/yield,
 			/datum/plant_gene/core/production,
 			/datum/plant_gene/core/endurance,
-			/datum/plant_gene/core/lifespan,
-			/datum/plant_gene/core/weed_rate,
-			/datum/plant_gene/core/weed_chance
+			/datum/plant_gene/core/lifespan
 			)
 		for(var/a in gene_paths)
 			core_genes += seed.get_gene(a)
@@ -398,7 +396,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/pen))
 		var/t = stripped_input(user, "What would you like the label to be?", name, null)
-		if(user.get_active_held_item() != W)
+		if(user.get_active_hand() != W)
 			return
 		if(!in_range(src, user) && loc != user)
 			return

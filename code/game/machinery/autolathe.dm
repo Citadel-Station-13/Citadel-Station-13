@@ -8,6 +8,11 @@
 	icon_state = "autolathe"
 	density = 1
 
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_CYAN
+
 	var/operating = 0
 	anchored = 1
 	var/list/L = list()
@@ -92,7 +97,7 @@
 	popup.set_content(dat)
 	popup.open()
 
-/obj/machinery/autolathe/on_deconstruction()
+/obj/machinery/autolathe/deconstruction()
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
@@ -115,7 +120,7 @@
 			wires.interact(user)
 			return 1
 
-	if(user.a_intent == INTENT_HARM) //so we can hit the machine
+	if(user.a_intent == "harm") //so we can hit the machine
 		return ..()
 
 	if(stat)
@@ -128,9 +133,7 @@
 		busy = 1
 		var/obj/item/weapon/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
-			for(var/B in D.blueprints)
-				if(B)
-					files.AddDesign2Known(B)
+			files.AddDesign2Known(D.blueprint)
 
 		busy = 0
 		return 1
@@ -344,9 +347,6 @@
 	return dat
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D)
-	if(D.make_reagents.len)
-		return 0
-
 	var/coeff = (ispath(D.build_path,/obj/item/stack) ? 1 : prod_coeff)
 
 	if(D.materials[MAT_METAL] && (materials.amount(MAT_METAL) < (D.materials[MAT_METAL] * coeff)))
@@ -384,7 +384,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
+	if (electrocute_mob(user, get_area(src), src, 0.7))
 		return 1
 	else
 		return 0

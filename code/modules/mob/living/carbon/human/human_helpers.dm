@@ -81,23 +81,41 @@
 	if(wear_id)
 		return wear_id.GetID()
 
+///checkeyeprot()
+///Returns a number between -1 to 2
+/mob/living/carbon/human/check_eye_prot()
+	var/number = ..()
+	if(istype(src.head, /obj/item/clothing/head))			//are they wearing something on their head
+		var/obj/item/clothing/head/HFP = src.head			//if yes gets the flash protection value from that item
+		number += HFP.flash_protect
+	if(istype(src.glasses, /obj/item/clothing/glasses))		//glasses
+		var/obj/item/clothing/glasses/GFP = src.glasses
+		number += GFP.flash_protect
+	if(istype(src.wear_mask, /obj/item/clothing/mask))		//mask
+		var/obj/item/clothing/mask/MFP = src.wear_mask
+		number += MFP.flash_protect
+	if(istype(src.dna.species, /datum/species/xeno))		//Xenos don't have eyes.
+		number += 2											//So give them protection from flashes.
+	return number
+
+/mob/living/carbon/human/check_ear_prot()
+	if((ears && (ears.flags & EARBANGPROTECT)) || (head && (head.flags & HEADBANGPROTECT)))
+		return 1
 
 /mob/living/carbon/human/abiotic(full_body = 0)
-	var/abiotic_hands = FALSE
-	for(var/obj/item/I in held_items)
-		if(!(I.flags & NODROP))
-			abiotic_hands = TRUE
-			break
-	if(full_body && abiotic_hands && ((back && !(back.flags&NODROP)) || (wear_mask && !(wear_mask.flags&NODROP)) || (head && !(head.flags&NODROP)) || (shoes && !(shoes.flags&NODROP)) || (w_uniform && !(w_uniform.flags&NODROP)) || (wear_suit && !(wear_suit.flags&NODROP)) || (glasses && !(glasses.flags&NODROP)) || (ears && !(ears.flags&NODROP)) || (gloves && !(gloves.flags&NODROP)) ) )
-		return TRUE
-	return abiotic_hands
+	if(full_body && ((l_hand && !( src.l_hand.flags&ABSTRACT )) || (r_hand && !( src.r_hand.flags&ABSTRACT )) || (back && !(back.flags&ABSTRACT)) || (wear_mask && !(wear_mask.flags&ABSTRACT)) || (head && !(head.flags&ABSTRACT)) || (shoes && !(shoes.flags&ABSTRACT)) || (w_uniform && !(w_uniform.flags&ABSTRACT)) || (wear_suit && !(wear_suit.flags&ABSTRACT)) || (glasses && !(glasses.flags&ABSTRACT)) || (ears && !(ears.flags&ABSTRACT)) || (gloves && !(gloves.flags&ABSTRACT)) ) )
+		return 1
 
+	if( (src.l_hand && !(src.l_hand.flags&ABSTRACT)) || (src.r_hand && !(src.r_hand.flags&ABSTRACT)) )
+		return 1
+
+	return 0
 
 /mob/living/carbon/human/IsAdvancedToolUser()
 	return 1//Humans can use guns and such
 
 /mob/living/carbon/human/InCritical()
-	return (health <= HEALTH_THRESHOLD_CRIT && stat == UNCONSCIOUS)
+	return (health <= config.health_threshold_crit && stat == UNCONSCIOUS)
 
 /mob/living/carbon/human/reagent_check(datum/reagent/R)
 	return dna.species.handle_chemicals(R,src)
@@ -141,7 +159,7 @@
 		if(src.dna.check_mutation(HULK))
 			src << "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>"
 			return 0
-		if(NOGUNS in src.dna.species.species_traits)
+		if(NOGUNS in src.dna.species.specflags)
 			src << "<span class='warning'>Your fingers don't fit in the trigger guard!</span>"
 			return 0
 

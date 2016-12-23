@@ -14,9 +14,9 @@
 	harm_intent_damage = 1
 	friendly = "nudges"
 	density = 0
-	movement_type = FLYING
+	flying = 1
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
 	verb_say = "flutters"
@@ -26,5 +26,4 @@
 
 /mob/living/simple_animal/butterfly/New()
 	..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))

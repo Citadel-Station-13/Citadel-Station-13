@@ -22,7 +22,7 @@
 
 /obj/structure/stacklifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		user << "Its already in use - wait a bit."
 		return
 	else
 		in_use = 1
@@ -60,7 +60,7 @@
 
 /obj/structure/weightlifter/attack_hand(mob/user as mob)
 	if(in_use)
-		user << "It's already in use - wait a bit."
+		user << "Its already in use - wait a bit."
 		return
 	else
 		in_use = 1

@@ -10,14 +10,14 @@ LINEN BINS
 	icon = 'icons/obj/bedsheets.dmi'
 	icon_state = "sheetwhite"
 	item_state = "bedsheet"
-	slot_flags = SLOT_NECK
+	slot_flags = SLOT_BACK
 	layer = MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	item_color = "white"
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 
@@ -38,7 +38,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wirecutters) || I.is_sharp())
-		var/obj/item/stack/sheet/cloth/C = new (get_turf(src), 3)
+		var/obj/item/stack/sheet/cloth/C = new (loc, 3)
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)
@@ -174,16 +174,9 @@ LINEN BINS
 	icon_state = "sheetwiz"
 	item_color = "wiz"
 
-/obj/item/weapon/bedsheet/nanotrasen
-	name = "nanotrasen bedsheet"
-	desc = "It has the Nanotrasen logo on it and has an aura of duty."
-	icon_state = "sheetNT"
-	item_color = "nanotrasen"
-
 /obj/item/weapon/bedsheet/ian
 	icon_state = "sheetian"
 	item_color = "ian"
-
 
 /obj/item/weapon/bedsheet/random
 	icon_state = "sheetrainbow"
@@ -205,9 +198,8 @@ LINEN BINS
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "linenbin-full"
 	anchored = 1
-	resistance_flags = FLAMMABLE
-	obj_integrity = 70
-	max_integrity = 70
+	burn_state = FLAMMABLE
+	burntime = 20
 	var/amount = 10
 	var/list/sheets = list()
 	var/obj/item/hidden = null
@@ -232,11 +224,16 @@ LINEN BINS
 		else
 			icon_state = "linenbin-full"
 
-/obj/structure/bedsheetbin/fire_act(exposed_temperature, exposed_volume)
-	if(amount)
-		amount = 0
-		update_icon()
+/obj/structure/bedsheetbin/fire_act()
+	if(!amount)
+		return
 	..()
+
+/obj/structure/bedsheetbin/burn()
+	amount = 0
+	extinguish()
+	update_icon()
+	return
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/bedsheet))
@@ -247,7 +244,7 @@ LINEN BINS
 		amount++
 		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
-	else if(amount && !hidden && I.w_class < WEIGHT_CLASS_BULKY)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
+	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
 			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return

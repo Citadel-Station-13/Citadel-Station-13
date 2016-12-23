@@ -1,7 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
 	block_chance = 50
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -13,7 +12,7 @@
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 3
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	origin_tech = "materials=3;combat=4"
 	attack_verb = list("shoved", "bashed")
@@ -32,8 +31,6 @@
 /obj/item/weapon/shield/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance, damage, attack_type)
 	if(attack_type == THROWN_PROJECTILE_ATTACK)
 		final_block_chance += 30
-	if(attack_type == LEAP_ATTACK)
-		final_block_chance = 100
 	return ..()
 
 /obj/item/weapon/shield/riot/roman
@@ -49,7 +46,7 @@
 	item_state = "buckler"
 	materials = list()
 	origin_tech = "materials=1;combat=3;biotech=2"
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 	block_chance = 30
 
 /obj/item/weapon/shield/energy
@@ -61,7 +58,7 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	origin_tech = "materials=4;magnets=5;syndicate=6"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
@@ -75,7 +72,7 @@
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(user.disabilities & CLUMSY && prob(50))
 		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
-		user.take_bodypart_damage(5)
+		user.take_organ_damage(5)
 	active = !active
 	icon_state = "eshield[active]"
 
@@ -83,14 +80,14 @@
 		force = 10
 		throwforce = 8
 		throw_speed = 2
-		w_class = WEIGHT_CLASS_BULKY
+		w_class = 4
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
 		user << "<span class='notice'>[src] is now active.</span>"
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		w_class = WEIGHT_CLASS_TINY
+		w_class = 1
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)
@@ -106,7 +103,7 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	var/active = 0
 
 /obj/item/weapon/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)
@@ -123,14 +120,14 @@
 		force = 8
 		throwforce = 5
 		throw_speed = 2
-		w_class = WEIGHT_CLASS_BULKY
+		w_class = 4
 		slot_flags = SLOT_BACK
 		user << "<span class='notice'>You extend \the [src].</span>"
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
-		w_class = WEIGHT_CLASS_NORMAL
+		w_class = 3
 		slot_flags = null
 		user << "<span class='notice'>[src] can now be concealed.</span>"
 	add_fingerprint(user)

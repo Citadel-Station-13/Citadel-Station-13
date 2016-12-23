@@ -60,14 +60,16 @@
 
 	sync_mind()
 
-	client.sethotkeys() //set mob specific hotkeys
+	if(client.prefs.hotkeys)
+		winset(src, null, "mainwindow.macro=[macro_hotkeys] mapwindow.map.focus=true input.background-color=#e0e0e0")
+	else
+		winset(src, null, "mainwindow.macro=[macro_default] input.focus=true input.background-color=#d3b5b5")
 
 	if(viewing_alternate_appearances && viewing_alternate_appearances.len)
 		for(var/aakey in viewing_alternate_appearances)
-			for(var/aa in viewing_alternate_appearances[aakey])
-				var/datum/alternate_appearance/AA = aa
+			var/datum/alternate_appearance/AA = viewing_alternate_appearances[aakey]
+			if(AA)
 				AA.display_to(list(src))
 
 	update_client_colour()
-	if(client)
-		client.click_intercept = null
+	client.click_intercept = null

@@ -31,7 +31,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/long_range_link = 0	// Can you link it across Z levels or on the otherside of the map? (Relay & Hub)
 	var/hide = 0				// Is it a hidden machine?
 	var/listening_level = 0	// 0 = auto set in New() - this is the z level that the machine is listening to.
-	critical_machine = TRUE
+
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_BLUE
 
 
 /obj/machinery/telecomms/proc/relay_information(datum/signal/signal, filter, copysig, amount = 20)
@@ -141,11 +145,6 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		//Defaults to our Z level!
 		var/turf/position = get_turf(src)
 		listening_level = position.z
-
-/obj/machinery/telecomms/onShuttleMove(turf/T1, rotation)
-	. = ..()
-	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
-		listening_level = T1.z
 
 /obj/machinery/telecomms/initialize()
 	if(autolinkers.len)

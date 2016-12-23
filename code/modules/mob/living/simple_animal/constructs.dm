@@ -2,7 +2,6 @@
 	name = "Construct"
 	real_name = "Construct"
 	desc = ""
-	gender = NEUTER
 	speak_emote = list("hisses")
 	response_help  = "thinks better of touching"
 	response_disarm = "flails at"
@@ -10,7 +9,7 @@
 	speak_chance = 1
 	icon = 'icons/mob/mob.dmi'
 	speed = 0
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
@@ -21,8 +20,8 @@
 	maxbodytemp = INFINITY
 	healable = 0
 	faction = list("cult")
-	movement_type = FLYING
-	pressure_resistance = 100
+	flying = 1
+	pressure_resistance = 200
 	unique_name = 1
 	AIStatus = AI_OFF //normal constructs don't have AI
 	loot = list(/obj/item/weapon/ectoplasm)
@@ -37,21 +36,14 @@
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
 
-/mob/living/simple_animal/hostile/construct/Login()
-	..()
-	src << playstyle_string
-
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
-	var/t_He = p_they(TRUE)
-	var/t_s = p_s()
-	var/msg = "<span class='cult'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
-	msg += "[desc]\n"
-	if(health < maxHealth)
+	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	if (src.health < src.maxHealth)
 		msg += "<span class='warning'>"
-		if(health >= maxHealth/2)
-			msg += "[t_He] look[t_s] slightly dented.\n"
+		if (src.health >= src.maxHealth/2)
+			msg += "It looks slightly dented.\n"
 		else
-			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
+			msg += "<b>It looks severely dented!</b>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
 
@@ -62,15 +54,15 @@
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
-				Beam(M,icon_state="sendbeam",time=4)
+				Beam(M,icon_state="sendbeam",icon='icons/effects/effects.dmi',time=4)
 				M.visible_message("<span class='danger'>[M] repairs some of \the <b>[src]'s</b> dents.</span>", \
 						   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
-				M.visible_message("<span class='danger'>[M] repairs some of [p_their()] own dents.</span>", \
+				M.visible_message("<span class='danger'>[M] repairs some of its own dents.</span>", \
 						   "<span class='cult'>You repair some of your own dents, leaving you at <b>[M.health]/[M.maxHealth]</b> health.</span>")
 		else
 			if(src != M)
-				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as [p_they()] [p_have()] none!</span>"
+				M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
 			else
 				M << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
 	else if(src != M)
@@ -82,8 +74,6 @@
 /mob/living/simple_animal/hostile/construct/narsie_act()
 	return
 
-/mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
-	return 0
 
 
 /////////////////Juggernaut///////////////
@@ -97,7 +87,6 @@
 	health = 250
 	response_harm = "harmlessly punches"
 	harm_intent_damage = 0
-	obj_damage = 90
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attacktext = "smashes their armored gauntlet into"
@@ -176,7 +165,6 @@
 	health = 50
 	response_harm = "viciously beats"
 	harm_intent_damage = 5
-	obj_damage = 60
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	retreat_distance = 10

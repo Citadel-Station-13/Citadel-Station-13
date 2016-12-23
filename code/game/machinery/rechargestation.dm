@@ -53,9 +53,16 @@
 	open_machine()
 
 /obj/machinery/recharge_station/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
-		if(occupant)
-			occupant.emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+	if(occupant)
+		occupant.emp_act(severity)
+	open_machine()
+	..(severity)
+
+/obj/machinery/recharge_station/ex_act(severity, target)
+	if(occupant)
 		open_machine()
 	..()
 
@@ -127,7 +134,7 @@
 		var/mob/living/silicon/robot/R = occupant
 		restock_modules()
 		if(repairs)
-			R.heal_bodypart_damage(repairs, repairs - 1)
+			R.heal_organ_damage(repairs, repairs - 1)
 		if(R.cell)
 			R.cell.charge = min(R.cell.charge + recharge_speed, R.cell.maxcharge)
 

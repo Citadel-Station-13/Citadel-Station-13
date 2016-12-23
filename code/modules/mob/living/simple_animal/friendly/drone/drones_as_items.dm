@@ -35,10 +35,9 @@
 		user << "Can't become a drone before the game has started."
 		return
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
-	if(be_drone == "No" || qdeleted(src) || !isobserver(user))
+	if(be_drone == "No" || qdeleted(src))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
-	D.admin_spawned = admin_spawned
 	D.key = user.key
 	qdel(src)
 
@@ -55,7 +54,7 @@
 	if(!drone)
 		return
 
-	if(isliving(loc))
+	if(istype(loc, /mob/living))
 		var/mob/living/L = loc
 		L << "<span class='warning'>[drone] is trying to escape!</span>"
 		if(!do_after(drone, 50, target = L))
@@ -74,7 +73,7 @@
 /obj/item/clothing/head/drone_holder/relaymove()
 	uncurl()
 
-/obj/item/clothing/head/drone_holder/container_resist(mob/living/user)
+/obj/item/clothing/head/drone_holder/container_resist()
 	uncurl()
 
 

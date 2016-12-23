@@ -3,17 +3,16 @@
 	thermal_conductivity = 0
 	broken_states = list("engine")
 	burnt_states = list("engine")
-	flags = NONE
 
-/turf/open/floor/holofloor/attackby(obj/item/I, mob/living/user)
+/turf/open/floor/holofloor/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	return // HOLOFLOOR DOES NOT GIVE A FUCK
 
 /turf/open/floor/holofloor/plating
-	name = "holodeck projector floor"
+	name = "Holodeck Projector Floor"
 	icon_state = "engine"
 
 /turf/open/floor/holofloor/plating/burnmix
-	name = "burn-mix floor"
+	name = "Burn-mix Floor"
 	initial_gas_mix = "o2=2500;plasma=5000;TEMP=370"
 
 /turf/open/floor/holofloor/grass
@@ -39,19 +38,11 @@
 	icon_state = "water"
 
 /turf/open/floor/holofloor/asteroid
-	name = "asteroid"
+	name = "Asteroid"
 	icon_state = "asteroid0"
 
 /turf/open/floor/holofloor/asteroid/New()
 	icon_state = "asteroid[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
-	..()
-
-/turf/open/floor/holofloor/basalt
-	name = "basalt"
-	icon_state = "basalt0"
-
-/turf/open/floor/holofloor/basalt/New()
-	icon_state = "basalt[pick(0,1,2,3,4,5,6,7,8,9,10,11,12)]"
 	..()
 
 /turf/open/floor/holofloor/space
@@ -64,12 +55,12 @@
 	..()
 
 /turf/open/floor/holofloor/hyperspace
-	name = "hyperspace"
+	name = "Hyperspace"
 	icon = 'icons/turf/space.dmi'
-	icon_state = "speedspace_ns_1"
+	icon_state = "speedspace_ew_1"
 
 /turf/open/floor/holofloor/hyperspace/New()
-	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
+	icon_state = "speedspace_ew_[(x + 5*y + (y%2+1)*7)%15+1]"
 	..()
 
 /turf/open/floor/holofloor/hyperspace/ns/New()
@@ -77,7 +68,7 @@
 	icon_state = "speedspace_ns_[(x + 5*y + (y%2+1)*7)%15+1]"
 
 /turf/open/floor/holofloor/carpet
-	name = "carpet"
+	name = "Carpet"
 	desc = "Electrically inviting."
 	icon = 'icons/turf/floors/carpet.dmi'
 	icon_state = "carpet"
@@ -104,7 +95,7 @@
 	slowdown = 2
 
 /turf/open/floor/holofloor/snow/cold
-	initial_gas_mix = "freon=7500;TEMP=0"
+	initial_gas_mix = "o2=22;n2=82;TEMP=180"
 
 /turf/open/floor/holofloor/asteroid
 	name = "asteroid sand"

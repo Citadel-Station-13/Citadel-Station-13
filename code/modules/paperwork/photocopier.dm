@@ -18,9 +18,6 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	obj_integrity = 300
-	max_integrity = 300
-	integrity_failure = 100
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/documents/doccopy = null
@@ -52,7 +49,7 @@
 				dat += "Printing in <a href='byond://?src=\ref[src];colortoggle=1'>[greytoggle]</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
-	if(isAI(user))
+	if(istype(user,/mob/living/silicon/ai))
 		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
@@ -87,7 +84,6 @@
 							c.info += "</font>"
 							c.name = copy.name
 							c.fields = copy.fields
-							c.update_icon()
 							c.updateinfolinks()
 							toner--
 					busy = 1
@@ -155,7 +151,7 @@
 							temp_img = icon("icons/ass/assfemale.png")
 						else 									//In case anyone ever makes the generic ass. For now I'll be using male asses.
 							temp_img = icon("icons/ass/assmale.png")
-					else if(isdrone(ass)) //Drones are hot
+					else if(isdrone (ass) || istype(ass,/mob/living/simple_animal/drone)) //Drones are hot
 						temp_img = icon("icons/ass/assdrone.png")
 					else
 						break
@@ -178,13 +174,13 @@
 		updateUsrDialog()
 	else if(href_list["remove"])
 		if(copy)
-			remove_photocopy(copy, usr)
+			remove_photocopy(copy)
 			copy = null
 		else if(photocopy)
-			remove_photocopy(photocopy, usr)
+			remove_photocopy(photocopy)
 			photocopy = null
 		else if(doccopy)
-			remove_photocopy(doccopy, usr)
+			remove_photocopy(doccopy)
 			doccopy = null
 		else if(check_ass())
 			ass << "<span class='notice'>You feel a slight pressure on your ass.</span>"
@@ -198,8 +194,7 @@
 			copies++
 			updateUsrDialog()
 	else if(href_list["aipic"])
-		if(!isAI(usr))
-			return
+		if(!istype(usr,/mob/living/silicon/ai)) return
 		if(toner >= 5 && !busy)
 			var/list/nametemp = list()
 			var/find
@@ -254,14 +249,13 @@
 	if(istype(O, /obj/item/weapon/paper))
 		if(copier_empty())
 			if(istype(O,/obj/item/weapon/paper/contract/infernal))
-				user << "<span class='warning'>[src] smokes, smelling of brimstone!</span>"
-				resistance_flags |= FLAMMABLE
-				fire_act()
+				user << "<span class='warning'>The [src] smokes, smelling of brimstone!</span>"
+				burn_state = ON_FIRE
 			else
 				if(!user.drop_item())
 					return
 				copy = O
-				do_insertion(O, user)
+				do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -270,7 +264,7 @@
 			if(!user.drop_item())
 				return
 			photocopy = O
-			do_insertion(O, user)
+			do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -279,7 +273,7 @@
 			if(!user.drop_item())
 				return
 			doccopy = O
-			do_insertion(O, user)
+			do_insertion(O)
 		else
 			user << "<span class='warning'>There is already something in [src]!</span>"
 
@@ -298,9 +292,9 @@
 		if(isinspace())
 			user << "<span class='warning'>There's nothing to fasten [src] to!</span>"
 			return
-		playsound(loc, O.usesound, 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user << "<span class='warning'>You start [anchored ? "unwrenching" : "wrenching"] [src]...</span>"
-		if(do_after(user, 20*O.toolspeed, target = src))
+		if(do_after(user, 20/O.toolspeed, target = src))
 			if(qdeleted(src))
 				return
 			user << "<span class='notice'>You [anchored ? "unwrench" : "wrench"] [src].</span>"
@@ -308,8 +302,28 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+/obj/machinery/photocopier/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				qdel(src)
+			else
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/oil(get_turf(src))
+					toner = 0
+		else
+			if(prob(50))
+				if(toner > 0)
+					new /obj/effect/decal/cleanable/oil(get_turf(src))
+					toner = 0
+
+
+/obj/machinery/photocopier/blob_act(obj/effect/blob/B)
+	if(prob(50))
+		qdel(src)
+	else
 		if(toner > 0)
 			new /obj/effect/decal/cleanable/oil(get_turf(src))
 			toner = 0
@@ -354,7 +368,7 @@
 		ass = null
 		updateUsrDialog()
 		return 0
-	else if(ishuman(ass))
+	else if(istype(ass,/mob/living/carbon/human))
 		if(!ass.get_item_by_slot(slot_w_uniform) && !ass.get_item_by_slot(slot_wear_suit))
 			return 1
 		else

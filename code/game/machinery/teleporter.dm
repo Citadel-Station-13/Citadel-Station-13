@@ -4,6 +4,7 @@
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/weapon/circuitboard/computer/teleporter
+	light_color = LIGHT_COLOR_BLUE
 	var/obj/item/device/gps/locked = null
 	var/regime_set = "Teleporter"
 	var/id = null
@@ -100,10 +101,10 @@
 		return
 
 	if(!check_hub_connection())
-		say("Error: Unable to detect hub.")
+		say("<span class='warning'>Error: Unable to detect hub.</span>")
 		return
 	if(calibrating)
-		say("Error: Calibration in progress. Stand by.")
+		say("<span class='warning'>Error: Calibration in progress. Stand by.</span>")
 		return
 
 	if(href_list["regimeset"])
@@ -123,21 +124,21 @@
 		target = get_turf(locked.locked_location)
 	if(href_list["calibrate"])
 		if(!target)
-			say("Error: No target set to calibrate to.")
+			say("<span class='danger'>Error: No target set to calibrate to.</span>")
 			return
 		if(power_station.teleporter_hub.calibrated || power_station.teleporter_hub.accurate >= 3)
-			say("Hub is already calibrated!")
+			say("<span class='warning'>Hub is already calibrated!</span>")
 			return
-		say("Processing hub calibration to target...")
+		say("<span class='notice'>Processing hub calibration to target...</span>")
 
 		calibrating = 1
 		spawn(50 * (3 - power_station.teleporter_hub.accurate)) //Better parts mean faster calibration
 			calibrating = 0
 			if(check_hub_connection())
 				power_station.teleporter_hub.calibrated = 1
-				say("Calibration complete.")
+				say("<span class='notice'>Calibration complete.</span>")
 			else
-				say("Error: Unable to detect hub.")
+				say("<span class='danger'>Error: Unable to detect hub.</span>")
 			updateDialog()
 
 	updateDialog()
@@ -166,7 +167,7 @@
 		var/list/L = list()
 		var/list/areaindex = list()
 
-		for(var/obj/item/device/radio/beacon/R in teleportbeacons)
+		for(var/obj/item/device/radio/beacon/R in world)
 			var/turf/T = get_turf(R)
 			if (!T)
 				continue
@@ -199,7 +200,7 @@
 					areaindex[tmpname] = 1
 				L[tmpname] = I
 
-		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
+		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
 		target = L[desc]
 
 	else
@@ -221,7 +222,7 @@
 			else
 				areaindex[tmpname] = 1
 			L[tmpname] = R
-		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
+		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target

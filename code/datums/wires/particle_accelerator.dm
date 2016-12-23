@@ -1,6 +1,5 @@
 /datum/wires/particle_accelerator/control_box
 	holder_type = /obj/machinery/particle_accelerator/control_box
-	proper_name = "Particle Accelerator"
 
 /datum/wires/particle_accelerator/control_box/New(atom/holder)
 	wires = list(

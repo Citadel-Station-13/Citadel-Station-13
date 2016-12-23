@@ -14,7 +14,7 @@
 	buckle_lying = -1
 
 /obj/machinery/atmospherics/pipe/New()
-	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
+	color = pipe_color
 	volume = 35 * device_type
 	..()
 
@@ -38,7 +38,7 @@
 	..()
 
 /obj/machinery/atmospherics/pipe/hide(i)
-	if(level == 1 && isturf(loc))
+	if(level == 1 && istype(loc, /turf))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
@@ -98,8 +98,3 @@
 
 /obj/machinery/atmospherics/pipe/returnPipenets()
 	. = list(parent)
-
-/obj/machinery/atmospherics/pipe/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12)
-		return 0
-	. = ..()

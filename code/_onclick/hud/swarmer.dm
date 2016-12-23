@@ -68,11 +68,11 @@
 	var/obj/screen/using
 
 	using = new /obj/screen/swarmer/FabricateTrap()
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_rhand
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Barricade()
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_lhand
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Replicate()

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state = "electronic"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	slot_flags = SLOT_BELT
 	flags = NOBLUDGEON
 	var/flush = FALSE
@@ -53,7 +53,7 @@
 		data["wireless"] = !AI.control_disabled //todo disabled->enabled
 		data["radio"] = AI.radio_enabled
 		data["isDead"] = AI.stat == DEAD
-		data["isBraindead"] = AI.client ? FALSE : TRUE
+		data["isBraindead"] = AI.client ? TRUE : FALSE
 	data["wiping"] = flush
 	return data
 
@@ -62,19 +62,17 @@
 		return
 	switch(action)
 		if("wipe")
-			if(flush)
-				flush = FALSE
-			else
-				var/confirm = alert("Are you sure you want to wipe this card's memory?", name, "Yes", "No")
-				if(confirm == "Yes" && !..())
-					flush = TRUE
-					if(AI && AI.loc == src)
-						AI << "Your core files are being wiped!"
-						while(AI.stat != DEAD && flush)
-							AI.adjustOxyLoss(1)
-							AI.updatehealth()
-							sleep(5)
-						flush = FALSE
+			var/confirm = alert("Are you sure you want to wipe this card's memory? This cannot be undone once started.", name, "Yes", "No")
+			if(confirm == "Yes" && !..())
+				flush = TRUE
+				if(AI && AI.loc == src)
+					AI.suiciding = TRUE
+					AI << "Your core files are being wiped!"
+					while(AI.stat != DEAD)
+						AI.adjustOxyLoss(2)
+						AI.updatehealth()
+						sleep(10)
+					flush = FALSE
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled

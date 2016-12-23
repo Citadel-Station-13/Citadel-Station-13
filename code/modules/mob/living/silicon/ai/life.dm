@@ -4,21 +4,18 @@
 #define POWER_RESTORATION_APC_FOUND 3
 
 /mob/living/silicon/ai/Life()
-	if (stat == DEAD)
+	if (src.stat == DEAD)
 		return
 	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
 		//Being dead doesn't mean your temperature never changes
 
 		update_gravity(mob_has_gravity())
 
-		if(malfhack && malfhack.aidisabled)
-			deltimer(malfhacking)
-			// This proc handles cleanup of screen notifications and
-			// messenging the client
-			malfhacked(malfhack)
-
-		if(!eyeobj || qdeleted(eyeobj) || !eyeobj.loc)
-			view_core()
+		if(malfhack)
+			if(malfhack.aidisabled)
+				src << "<span class='danger'>ERROR: APC access disabled, hack attempt canceled.</span>"
+				malfhacking = 0
+				malfhack = null
 
 		if(machine)
 			machine.check_eye(src)
@@ -47,20 +44,14 @@
 /mob/living/silicon/ai/proc/lacks_power()
 	var/turf/T = get_turf(src)
 	var/area/A = get_area(src)
-	switch(requires_power)
-		if(POWER_REQ_NONE)
-			return FALSE
-		if(POWER_REQ_ALL)
-			return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
-		if(POWER_REQ_CLOCKCULT)
-			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, 1))
-				return FALSE
-			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
+	return !T || !A || ((!A.master.power_equip || istype(T, /turf/open/space)) && !is_type_in_list(src.loc, list(/obj/item, /obj/mecha)))
 
 /mob/living/silicon/ai/updatehealth()
 	if(status_flags & GODMODE)
 		return
-	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss() - getFireLoss()
+	health = maxHealth - getOxyLoss() - getToxLoss() - getBruteLoss()
+	if(!fire_res_on_core)
+		health -= getFireLoss()
 	update_stat()
 	diag_hud_set_health()
 
@@ -68,7 +59,7 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD)
+		if(health <= config.health_threshold_dead)
 			death()
 			return
 		else if(stat == UNCONSCIOUS)
@@ -96,7 +87,7 @@
 	var/turf/T = get_turf(src)
 	var/area/AIarea = get_area(src)
 	if(AIarea && AIarea.master.power_equip)
-		if(!isspaceturf(T))
+		if(!istype(T, /turf/open/space))
 			ai_restore_power()
 			return
 	src << "Fault confirmed: missing external power. Shutting down main control system to save power."
@@ -104,7 +95,7 @@
 	src << "Emergency control system online. Verifying connection to power network."
 	sleep(50)
 	T = get_turf(src)
-	if(isspaceturf(T))
+	if (istype(T, /turf/open/space))
 		src << "Unable to verify! No power connection detected!"
 		aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 		return
@@ -131,7 +122,7 @@
 			aiRestorePowerRoutine = POWER_RESTORATION_SEARCH_APC
 			return
 		if(AIarea.master.power_equip)
-			if(!isspaceturf(T))
+			if (!istype(T, /turf/open/space))
 				ai_restore_power()
 				return
 		switch(PRP)
@@ -167,7 +158,8 @@
 	blind_eyes(1)
 	update_sight()
 	src << "You've lost power!"
-	addtimer(src, "start_RestorePowerRoutine", 20)
+	spawn(20)
+		start_RestorePowerRoutine()
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

@@ -17,8 +17,9 @@
 	production = 5
 	yield = 4
 	potency = 15
+	oneharvest = 1
 	growthstages = 4
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.35, "charcoal" = 0.35, "nutriment" = 0)
 
@@ -43,11 +44,12 @@
 	maturation = 10
 	production = 5
 	yield = 4
+	oneharvest = 1
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/angel)
-	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0, "growthserum" = 0.1)
+	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.35, "nutriment" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita
 	seed = /obj/item/seeds/amanita
@@ -71,8 +73,9 @@
 	production = 5
 	yield = 2
 	potency = 35
+	oneharvest = 1
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.04, "amatoxin" = 0.1, "nutriment" = 0, "amanitin" = 0.2)
 	rarity = 30
@@ -98,8 +101,9 @@
 	production = 1
 	yield = 5
 	potency = 15
+	oneharvest = 1
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("mushroomhallucinogen" = 0.25, "nutriment" = 0.02)
 
@@ -123,8 +127,9 @@
 	production = 1
 	yield = 4
 	potency = 15
+	oneharvest = 1
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/plump/walkingmushroom)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
@@ -163,7 +168,7 @@
 	origin_tech = "biotech=4;programming=5"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/walkingmushroom/attack_self(mob/user)
-	if(isspaceturf(user.loc))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/mob/living/simple_animal/hostile/mushroom/M = new /mob/living/simple_animal/hostile/mushroom(user.loc)
 	M.maxHealth += round(seed.endurance / 4)
@@ -189,8 +194,9 @@
 	production = 1
 	yield = 5
 	potency = 15
+	oneharvest = 1
 	growthstages = 3
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism)
+	plant_type = PLANT_MUSHROOM
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("nutriment" = 0.1)
 
@@ -216,9 +222,11 @@
 	production = 1
 	yield = 3 //-> spread
 	potency = 30 //-> brightness
+	oneharvest = 1
 	growthstages = 4
+	plant_type = PLANT_MUSHROOM
 	rarity = 20
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(/datum/plant_gene/trait/glow)
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap)
 	reagents_add = list("radium" = 0.1, "phosphorus" = 0.1, "nutriment" = 0.04)
@@ -229,16 +237,15 @@
 	desc = "<I>Mycena Bregprox</I>: This species of mushroom glows in the dark."
 	icon_state = "glowshroom"
 	filling_color = "#00FA9A"
-	var/effect_path = /obj/structure/glowshroom
+	var/effect_path = /obj/effect/glowshroom
 	origin_tech = "biotech=4;plasmatech=6"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/attack_self(mob/user)
-	if(isspaceturf(user.loc))
+	if(istype(user.loc,/turf/open/space))
 		return
-	var/obj/structure/glowshroom/planted = new effect_path(user.loc)
+	var/obj/effect/glowshroom/planted = new effect_path(user.loc)
 	planted.delay = planted.delay - seed.production * 100 //So the delay goes DOWN with better stats instead of up. :I
-	planted.obj_integrity = seed.endurance
-	planted.max_integrity = seed.endurance
+	planted.endurance = seed.endurance
 	planted.yield = seed.yield
 	planted.potency = seed.potency
 	user << "<span class='notice'>You plant [src].</span>"
@@ -254,8 +261,9 @@
 	icon_grow = "glowshroom-grow"
 	icon_dead = "glowshroom-dead"
 	plantname = "Glowcaps"
+	plant_type = PLANT_MUSHROOM
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/cell_charge)
 	mutatelist = list()
 	reagents_add = list("teslium" = 0.1, "nutriment" = 0.04)
 	rarity = 30
@@ -266,5 +274,5 @@
 	desc = "<I>Mycena Ruthenia</I>: This species of mushroom glows in the dark, but aren't bioluminescent. They're warm to the touch..."
 	icon_state = "glowcap"
 	filling_color = "#00FA9A"
-	effect_path = /obj/structure/glowshroom/glowcap
+	effect_path = /obj/effect/glowshroom/glowcap
 	origin_tech = "biotech=4;powerstorage=6;plasmatech=4"

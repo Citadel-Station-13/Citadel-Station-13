@@ -1,4 +1,4 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /obj/machinery/computer/med_data//TODO:SANITY
 	name = "medical records console"
@@ -19,6 +19,7 @@
 	//Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/med_data/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/card/id) && !scan)
@@ -27,6 +28,7 @@
 		O.loc = src
 		scan = O
 		user << "<span class='notice'>You insert [O].</span>"
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		return ..()
 
@@ -189,6 +191,8 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
+	//user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
+	//onclose(user, "med_rec")
 	var/datum/browser/popup = new(user, "med_rec", "Medical Records Console", 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
@@ -204,19 +208,19 @@
 	if(!(active2 in data_core.medical))
 		src.active2 = null
 
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr) || IsAdminGhost(usr))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)) || IsAdminGhost(usr))
 		usr.set_machine(src)
 		if(href_list["temp"])
 			src.temp = null
 		if(href_list["scan"])
 			if(src.scan)
-				if(ishuman(usr) && !usr.get_active_held_item())
+				if(istype(usr,/mob/living/carbon/human) && !usr.get_active_hand())
 					usr.put_in_hands(scan)
 				else
 					scan.loc = get_turf(src)
 				src.scan = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
+				var/obj/item/I = usr.get_active_hand()
 				if(istype(I, /obj/item/weapon/card/id))
 					if(!usr.drop_item())
 						return
@@ -227,6 +231,7 @@
 			src.screen = null
 			src.active1 = null
 			src.active2 = null
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		else if(href_list["choice"])
 			// SORTING!
 			if(href_list["choice"] == "Sorting")
@@ -241,12 +246,13 @@
 					sortBy = href_list["sort"]
 					order = initial(order)
 		else if(href_list["login"])
-			if(issilicon(usr))
+			if(istype(usr, /mob/living/silicon))
 				src.active1 = null
 				src.active2 = null
 				src.authenticated = 1
 				src.rank = "AI"
 				src.screen = 1
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			else if(IsAdminGhost(usr))
 				src.active1 = null
 				src.active2 = null
@@ -260,6 +266,7 @@
 					src.authenticated = src.scan.registered_name
 					src.rank = src.scan.assignment
 					src.screen = 1
+					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if(src.authenticated)
 
 			if(href_list["screen"])
@@ -500,7 +507,7 @@
 				var/counter = 1
 				while(src.active2.fields[text("com_[]", counter)])
 					counter++
-				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1)
+				src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [] [], []<BR>[]", src.authenticated, src.rank, worldtime2text(), time2text(world.realtime, "MMM DD"), year_integer+540, t1,)
 
 			else if(href_list["del_c"])
 				if((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))

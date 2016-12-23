@@ -9,7 +9,7 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ad" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/engine/cult,
 /area/awaymission/wwvault)
 "ae" = (
@@ -71,7 +71,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "aq" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "ar" = (
@@ -131,7 +131,7 @@
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/awaymission/wwvault)
 "aB" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/plasteel/circuit/off,
 /area/awaymission/wwvault)
 "aC" = (
@@ -366,7 +366,7 @@
 /area/awaymission/wwmines)
 "bC" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/weapon/gun/projectile,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "bD" = (
@@ -570,6 +570,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "cc" = (
+/obj/structure/sign/maltesefalcon/left,
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wwmines)
 "cd" = (
@@ -620,7 +621,7 @@
 /area/awaymission/wwmines)
 "ch" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic,
+/obj/item/weapon/gun/projectile,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -949,6 +950,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "dl" = (
+/obj/structure/sign/maltesefalcon/right,
 /turf/closed/wall/mineral/sandstone,
 /area/awaymission/wwmines)
 "dm" = (
@@ -1307,7 +1309,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/wwmines)
 "eq" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/weapon/gun/projectile/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "er" = (
@@ -1387,7 +1389,7 @@
 "eE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/blue,
-/obj/item/weapon/gun/ballistic,
+/obj/item/weapon/gun/projectile,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "eF" = (
@@ -1839,7 +1841,7 @@
 /area/awaymission/wwmines)
 "fS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/weapon/gun/projectile/shotgun,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "fT" = (
@@ -1928,7 +1930,7 @@
 /area/awaymission/wwmines)
 "gg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/weapon/gun/projectile/revolver/russian,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gh" = (
@@ -1956,7 +1958,7 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gm" = (
-/obj/item/weapon/gun/ballistic,
+/obj/item/weapon/gun/projectile,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gn" = (
@@ -2007,11 +2009,11 @@
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gw" = (
-/obj/item/weapon/gun/ballistic/automatic/pistol,
+/obj/item/weapon/gun/projectile/automatic/pistol,
 /turf/open/floor/wood,
 /area/awaymission/wwmines)
 "gx" = (
-/obj/item/weapon/gun/ballistic/shotgun,
+/obj/item/weapon/gun/projectile/shotgun,
 /turf/open/floor/plating/ironsand{
 	icon_state = "ironsand1"
 	},
@@ -2105,15 +2107,15 @@
 /obj/structure/grille,
 /turf/open/floor/plasteel,
 /area/awaymission/wwrefine)
-"gH" = (
-/obj/structure/sign/barsign,
-/turf/closed/wall/mineral/sandstone,
-/area/awaymission/wwmines)
 "gI" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6"
+	},
 /area/awaymission/wwrefine)
 "gJ" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12"
+	},
 /area/awaymission/wwrefine)
 "gK" = (
 /turf/closed/wall/shuttle{
@@ -2152,7 +2154,9 @@
 	},
 /area/awaymission/wwrefine)
 "gS" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc1"
+	},
 /area/awaymission/wwrefine)
 "gT" = (
 /turf/closed/wall/shuttle{
@@ -28346,10 +28350,10 @@ aa
 aa
 aa
 gI
-gJ
-gJ
-gJ
-gI
+gO
+gO
+gO
+gR
 aa
 aa
 aa
@@ -28607,10 +28611,10 @@ gP
 gP
 gP
 gS
-gJ
-gJ
-gJ
-gI
+gO
+gO
+gO
+gR
 aa
 aa
 aa
@@ -28859,7 +28863,7 @@ fj
 fo
 fo
 gG
-gJ
+gK
 gP
 gP
 gP
@@ -29373,7 +29377,7 @@ gA
 fo
 fo
 gG
-gJ
+gM
 gP
 gP
 gP
@@ -29634,11 +29638,11 @@ gJ
 gP
 gP
 gP
-gS
-gJ
-gJ
-gJ
-gI
+gT
+gO
+gO
+gO
+gU
 aa
 aa
 aa
@@ -29887,11 +29891,11 @@ eJ
 aa
 aa
 aa
-gI
-gJ
-gJ
-gJ
-gI
+gN
+gO
+gO
+gO
+gU
 aa
 aa
 aa
@@ -44749,7 +44753,7 @@ bj
 bj
 bj
 aT
-gH
+bu
 bD
 bj
 bD
@@ -45275,7 +45279,7 @@ bj
 bj
 db
 bj
-gH
+cc
 aT
 bj
 bj
@@ -45532,7 +45536,7 @@ bj
 bj
 bj
 bj
-bu
+dl
 aT
 bj
 bj

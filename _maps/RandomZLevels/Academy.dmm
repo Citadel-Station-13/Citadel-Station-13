@@ -235,7 +235,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "aJ" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/cult/tome,
 /obj/item/weapon/dice/d20/fate,
 /turf/open/floor/wood,
 /area/awaymission/academy/headmaster)
@@ -502,7 +502,9 @@
 /turf/closed/wall,
 /area/awaymission/academy/classrooms)
 "bF" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc2"
+	},
 /area/awaymission/academy/classrooms)
 "bG" = (
 /turf/closed/wall/shuttle{
@@ -573,7 +575,7 @@
 /turf/open/floor/plasteel/black,
 /area/awaymission/academy/headmaster)
 "bQ" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb2,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -852,7 +854,7 @@
 /turf/closed/wall,
 /area/awaymission/academy/headmaster)
 "cI" = (
-/obj/structure/trap/damage,
+/obj/structure/divine/trap/damage,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
 "cJ" = (
@@ -2263,14 +2265,14 @@
 	info = "Grade: A+ Educator's Notes: Excellent form.";
 	name = "Summoning Midterm Exam"
 	},
-/obj/item/weapon/gun/ballistic/shotgun/automatic/combat,
+/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/awaymission/academy/classrooms)
 "gI" = (
 /obj/structure/table,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/weapon/gun/projectile/revolver/russian,
 /obj/item/weapon/paper{
 	info = "Grade: B- Educator's Notes: Keep applying yourself, you're showing improvement.";
 	name = "Summoning Midterm Exam"
@@ -2797,7 +2799,7 @@
 /area/awaymission/academy/academyaft)
 "hU" = (
 /obj/structure/closet,
-/obj/item/clothing/under/skirt/black,
+/obj/item/clothing/under/blackskirt,
 /obj/item/clothing/glasses/regular,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academyaft)
@@ -2920,7 +2922,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "in" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 2
 	},
@@ -3113,7 +3115,7 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iP" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "iQ" = (
@@ -3429,7 +3431,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "jw" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 10
 	},
@@ -3438,7 +3440,7 @@
 /turf/open/floor/plasteel/yellow/side,
 /area/awaymission/academy/academyaft)
 "jy" = (
-/obj/structure/destructible/cult/pylon,
+/obj/structure/cult/pylon,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -3881,11 +3883,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/trap/chill,
+/obj/structure/divine/trap/chill,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
 "kN" = (
-/obj/structure/trap/fire,
+/obj/structure/divine/trap/fire,
 /turf/open/floor/engine,
 /area/awaymission/academy/academyaft)
 "kO" = (
@@ -3940,13 +3942,13 @@
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "kZ" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb2,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "la" = (
-/obj/structure/trap/damage,
+/obj/structure/divine/trap/damage,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lb" = (
@@ -3961,11 +3963,11 @@
 /turf/open/floor/mineral/uranium,
 /area/awaymission/academy/academycellar)
 "le" = (
-/obj/structure/spider/stickyweb,
+/obj/effect/spider/stickyweb,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lf" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/cobweb2,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
 "lg" = (
@@ -11607,9 +11609,9 @@ aa
 aa
 bs
 bF
-bF
-bF
-bF
+bW
+bW
+cs
 cA
 cA
 cP
@@ -11736,7 +11738,7 @@ aa
 aa
 aa
 bs
-bF
+bG
 bX
 bZ
 bZ
@@ -11866,7 +11868,7 @@ aa
 aa
 aP
 bs
-bF
+bG
 bY
 bZ
 bZ
@@ -11996,7 +11998,7 @@ aa
 aP
 aP
 bs
-bF
+bG
 bZ
 bZ
 bZ
@@ -12126,7 +12128,7 @@ aP
 aP
 aa
 bs
-bF
+bG
 bZ
 bX
 bZ
@@ -12256,7 +12258,7 @@ ab
 aP
 aP
 bs
-bF
+bG
 ca
 bZ
 bZ
@@ -12386,7 +12388,7 @@ aP
 aa
 aa
 bs
-bF
+bG
 bZ
 bZ
 bZ
@@ -12516,10 +12518,10 @@ aP
 aa
 aa
 bs
-bF
-bF
-bF
-bF
+bH
+bW
+bW
+cs
 cC
 cC
 cR

@@ -20,9 +20,9 @@
 	var/list/client/targets[0]
 	for(var/client/T)
 		if(T.mob)
-			if(isnewplayer(T.mob))
+			if(istype(T.mob, /mob/new_player))
 				targets["(New Player) - [T]"] = T
-			else if(isobserver(T.mob))
+			else if(istype(T.mob, /mob/dead/observer))
 				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T

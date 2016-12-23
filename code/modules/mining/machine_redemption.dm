@@ -19,7 +19,7 @@
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
 	var/point_upgrade = 1
-	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("titanium" = 30), ("uranium" = 30), ("diamond" = 50), ("bluespace crystal" = 50), ("bananium" = 60))
+	var/list/ore_values = list(("sand" = 1), ("iron" = 1), ("plasma" = 15), ("silver" = 16), ("gold" = 18), ("uranium" = 30), ("diamond" = 50), ("bananium" = 60))
 	speed_process = 1
 
 /obj/machinery/mineral/ore_redemption/New()
@@ -30,7 +30,7 @@
 /obj/item/weapon/circuitboard/machine/ore_redemption
 	name = "circuit board (Ore Redemption)"
 	build_path = /obj/machinery/mineral/ore_redemption
-	origin_tech = "programming=1;engineering=2"
+	origin_tech = "programming=2;engineering=2;plasmatech=3"
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 1,
@@ -59,6 +59,11 @@
 			var/obj/item/stack/sheet/s = new processed_sheet(src,0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
+			if(s.name != "glass" && s.name != "metal")		//we can get these from cargo anyway
+				var/msg = "[capitalize(s.name)] sheets are now available in the Cargo Bay."
+				for(var/obj/machinery/requests_console/D in allConsoles)
+					if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || (D.department == "Chemistry" && (s.name == "uranium" || s.name == "solid plasma")))
+						D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 		var/obj/item/stack/sheet/storage = stack_list[processed_sheet]
 		storage.amount += sheet_per_ore //Stack the sheets
 		O.loc = null //Let the old sheet...
@@ -88,28 +93,8 @@
 					else
 						process_sheet(O)
 						i++
-		if(i > 0 && z == ZLEVEL_STATION)
-			var/area/orm_area = get_area(src)
-			var/msg = "Now available in [orm_area.map_name]:"
-			for(var/s in stack_list) // Making an announcement for cargo
-				var/obj/item/stack/sheet/mats = stack_list[s]
-				msg += "\n[capitalize(mats.name)]: [mats.amount] sheets"
-			for(var/obj/machinery/requests_console/D in allConsoles)
-				if(D.department == "Science" || D.department == "Robotics" || D.department == "Research Director's Desk" || D.department == "Chemistry" || D.department == "Bar")
-					D.createmessage("Ore Redemption Machine", "New minerals available!", msg, 1, 0)
 
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
-	if (!powered())
-		return
-	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_held_item()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_item())
-				return
-			I.forceMove(src)
-			inserted_id = I
-			interact(user)
-		return
 	if(exchange_parts(user, W))
 		return
 
@@ -124,9 +109,20 @@
 	if(default_deconstruction_crowbar(W))
 		return
 
+	if (!powered())
+		return
+	if(istype(W,/obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = user.get_active_hand()
+		if(istype(I) && !istype(inserted_id))
+			if(!user.drop_item())
+				return
+			I.loc = src
+			inserted_id = I
+			interact(user)
+		return
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/on_deconstruction()
+/obj/machinery/mineral/ore_redemption/deconstruction()
 	empty_content()
 
 /obj/machinery/mineral/ore_redemption/proc/SmeltMineral(obj/item/weapon/ore/O)
@@ -162,22 +158,12 @@
 				dat += "<br>"		//just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
-	var/obj/item/stack/sheet/metalstack
-	if(/obj/item/stack/sheet/metal in stack_list)
-		metalstack = stack_list[/obj/item/stack/sheet/metal]
+	if((/obj/item/stack/sheet/metal in stack_list) && (/obj/item/stack/sheet/mineral/plasma in stack_list))
+		var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+		var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+		if(min(metalstack.amount, plasmastack.amount))
+			dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];plasteel=1'>Smelt</A><BR>")
 
-	var/obj/item/stack/sheet/plasmastack
-	if((/obj/item/stack/sheet/mineral/plasma in stack_list))
-		plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
-
-	var/obj/item/stack/sheet/mineral/titaniumstack
-	if((/obj/item/stack/sheet/mineral/titanium in stack_list))
-		titaniumstack = stack_list[/obj/item/stack/sheet/mineral/titanium]
-
-	if(metalstack && plasmastack && min(metalstack.amount, plasmastack.amount))
-		dat += text("Plasteel Alloy (Metal + Plasma): <A href='?src=\ref[src];alloytype1=/obj/item/stack/sheet/metal;alloytype2=/obj/item/stack/sheet/mineral/plasma;alloytypeout=/obj/item/stack/sheet/plasteel'>Smelt</A><BR>")
-	if(titaniumstack && plasmastack && min(titaniumstack.amount, plasmastack.amount))
-		dat += text("Plastitanium Alloy (Titanium + Plasma): <A href='?src=\ref[src];alloytype1=/obj/item/stack/sheet/mineral/titanium;alloytype2=/obj/item/stack/sheet/mineral/plasma;alloytypeout=/obj/item/stack/sheet/mineral/plastitanium'>Smelt</A><BR>")
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
@@ -209,7 +195,7 @@
 				else
 					usr << "<span class='warning'>Required access not found.</span>"
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
+			var/obj/item/weapon/card/id/I = usr.get_active_hand()
 			if(istype(I))
 				if(!usr.drop_item())
 					return
@@ -230,22 +216,20 @@
 				stack_list -= text2path(href_list["release"])
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
-	if(href_list["alloytype1"] && href_list["alloytype2"] && href_list["alloytypeout"])
-		var/alloytype1 = text2path(href_list["alloytype1"])
-		var/alloytype2 = text2path(href_list["alloytype2"])
-		var/alloytypeout = text2path(href_list["alloytypeout"])
+	if(href_list["plasteel"])
 		if(check_access(inserted_id) || allowed(usr))
-			if(!(alloytype1 in stack_list)) return
-			if(!(alloytype2 in stack_list)) return
-			var/obj/item/stack/sheet/stack1 = stack_list[alloytype1]
-			var/obj/item/stack/sheet/stack2 = stack_list[alloytype2]
+			if(!(/obj/item/stack/sheet/metal in stack_list)) return
+			if(!(/obj/item/stack/sheet/mineral/plasma in stack_list)) return
+			var/obj/item/stack/sheet/metalstack = stack_list[/obj/item/stack/sheet/metal]
+			var/obj/item/stack/sheet/plasmastack = stack_list[/obj/item/stack/sheet/mineral/plasma]
+
 			var/desired = input("How much?", "How much would you like to smelt?", 1) as num
-			var/obj/item/stack/sheet/alloyout = new alloytypeout
-			alloyout.amount = round(min(desired,50,stack1.amount,stack2.amount))
-			if(alloyout.amount >= 1)
-				stack1.amount -= alloyout.amount
-				stack2.amount -= alloyout.amount
-				unload_mineral(alloyout)
+			var/obj/item/stack/sheet/plasteel/plasteelout = new
+			plasteelout.amount = round(min(desired,50,metalstack.amount,plasmastack.amount))
+			if(plasteelout.amount >= 1)
+				metalstack.amount -= plasteelout.amount
+				plasmastack.amount -= plasteelout.amount
+				unload_mineral(plasteelout)
 		else
 			usr << "<span class='warning'>Required access not found.</span>"
 	updateUsrDialog()
@@ -255,7 +239,14 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	..()
+	if(severity == 1)
+		if(prob(50))
+			empty_content()
+			qdel(src)
+	else if(severity == 2)
+		if(prob(25))
+			empty_content()
+			qdel(src)
 
 //empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
@@ -268,7 +259,6 @@
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
-		s.plane = initial(s.plane)
 
 /obj/machinery/mineral/ore_redemption/power_change()
 	..()

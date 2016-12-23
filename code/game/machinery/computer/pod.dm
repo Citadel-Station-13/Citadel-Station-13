@@ -7,6 +7,9 @@
 	var/timing = 0
 	var/time = 30
 	var/range = 4
+	light_color = LIGHT_COLOR_GREEN
+	light_power_on = 0.5
+	light_range_on = 1
 
 
 /obj/machinery/computer/pod/initialize()
@@ -88,7 +91,7 @@
 /obj/machinery/computer/pod/Topic(href, href_list)
 	if(..())
 		return
-	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 		if(href_list["power"])
 			var/t = text2num(href_list["power"])

@@ -66,14 +66,6 @@
 	build_path = /obj/item/weapon/weldingtool
 	category = list("initial","Tools")
 
-/datum/design/mini_weldingtool
-	name = "Emergency welding tool"
-	id = "mini_welding_tool"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
-	build_path = /obj/item/weapon/weldingtool/mini
-	category = list("initial","Tools")
-
 /datum/design/screwdriver
 	name = "Screwdriver"
 	id = "screwdriver"
@@ -507,7 +499,7 @@
 	name = "Light tube"
 	id = "light_tube"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 100)
+	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/tube
 	category = list("initial", "Construction")
 
@@ -515,7 +507,7 @@
 	name = "Light bulb"
 	id = "light_bulb"
 	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 100)
+	materials = list(MAT_METAL = 60, MAT_GLASS = 100)
 	build_path = /obj/item/weapon/light/bulb
 	category = list("initial", "Construction")
 
@@ -719,35 +711,3 @@
 	materials = list(MAT_METAL = 12000)
 	build_path = /obj/item/wallframe/turret_control
 	category = list("initial", "Construction")
-
-/datum/design/conveyor_belt
-	name = "Conveyor belt"
-	id = "conveyor_belt"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000)
-	build_path = /obj/item/conveyor_construct
-	category = list("initial", "Construction")
-
-/datum/design/conveyor_switch
-	name = "Conveyor belt switch"
-	id = "conveyor_switch"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 450, MAT_GLASS = 190)
-	build_path = /obj/item/conveyor_switch_construct
-	category = list("initial", "Construction")
-
-/datum/design/laptop
-	name = "Laptop Frame"
-	id = "laptop"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000)
-	build_path = /obj/item/device/modular_computer/laptop/buildable
-	category = list("initial","Misc")
-
-/datum/design/tablet
-	name = "Tablet Frame"
-	id = "tablet"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
-	build_path = /obj/item/device/modular_computer/tablet
-	category = list("initial","Misc")

@@ -21,7 +21,6 @@
 	yield = 6
 	potency = 5
 	icon_dead = "ambrosia-dead"
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/ambrosia/deus)
 	reagents_add = list("space_drugs" = 0.15, "bicaridine" = 0.1, "kelotane" = 0.1, "vitamin" = 0.04, "nutriment" = 0.05, "toxin" = 0.1)
 
@@ -62,7 +61,7 @@
 	mutatelist = list()
 	reagents_add = list("earthsblood" = 0.05, "nutriment" = 0.06, "vitamin" = 0.05)
 	rarity = 30 //These are some pretty good plants right here
-	genes = list()
+	oneharvest = TRUE
 	weed_rate = 4
 	weed_chance = 100
 

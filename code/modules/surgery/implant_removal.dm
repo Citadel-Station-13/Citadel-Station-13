@@ -14,9 +14,7 @@
 	var/obj/item/weapon/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/O in target.implants)
-		I = O
-		break
+	I = locate(/obj/item/weapon/implant) in target
 	if(I)
 		user.visible_message("[user] begins to extract [I] from [target]'s [target_zone].", "<span class='notice'>You begin to extract [I] from [target]'s [target_zone]...</span>")
 	else
@@ -28,11 +26,14 @@
 		I.removed(target)
 
 		var/obj/item/weapon/implantcase/case
-		for(var/obj/item/weapon/implantcase/ic in user.held_items)
-			case = ic
-			break
-		if(!case)
+
+		if(istype(user.get_item_by_slot(slot_l_hand), /obj/item/weapon/implantcase))
+			case = user.get_item_by_slot(slot_l_hand)
+		else if(istype(user.get_item_by_slot(slot_r_hand), /obj/item/weapon/implantcase))
+			case = user.get_item_by_slot(slot_r_hand)
+		else
 			case = locate(/obj/item/weapon/implantcase) in get_turf(target)
+
 		if(case && !case.imp)
 			case.imp = I
 			I.loc = case

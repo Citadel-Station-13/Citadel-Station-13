@@ -18,9 +18,6 @@ var/datum/subsystem/tgui/SStgui
 
 	NEW_SS_GLOBAL(SStgui)
 
-/datum/subsystem/tgui/Shutdown()
-	close_all_uis()
-
 /datum/subsystem/tgui/stat_entry()
 	..("P:[processing_uis.len]")
 

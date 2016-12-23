@@ -34,7 +34,7 @@
 	languages_understood = HUMAN | ROBOT
 	throw_speed = 3
 	throw_range = 7
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	materials = list(MAT_METAL=75, MAT_GLASS=25)
 
 	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
@@ -110,7 +110,7 @@
 /obj/item/device/radio/interact(mob/user)
 	if (..())
 		return
-	if(b_stat && !isAI(user))
+	if(b_stat && !istype(user, /mob/living/silicon/ai))
 		wires.interact(user)
 	else
 		ui_interact(user)
@@ -197,10 +197,6 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
-	addtimer(src,"talk_into_impl",0, TIMER_NORMAL,M,message,channel,spans)
-	return ITALICS | REDUCE_RANGE
-
-/obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)
 	if(!on) return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message) return
@@ -281,7 +277,7 @@
 		jobname = "AI"
 
 	// --- Cyborg ---
-	else if(iscyborg(M))
+	else if(isrobot(M))
 		var/mob/living/silicon/robot/B = M
 		jobname = "[B.designation] Cyborg"
 

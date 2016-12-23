@@ -16,21 +16,19 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100)
+	implements = list(/obj/item/robot_parts = 100)
 	time = 32
 	var/obj/item/bodypart/L = null // L because "limb"
 
 
+
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/obj/item/bodypart/aug = tool
-	if(aug.status != BODYPART_ROBOTIC && aug.body_zone != target_zone)
-		user << "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>"
-		return -1
-	L = surgery.operated_bodypart
+	L = surgery.organ
 	if(L)
 		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
+
 
 
 //ACTUAL SURGERIES
@@ -41,17 +39,20 @@
 	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
+
 //SURGERY STEP SUCCESSES
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
-		user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-		L.change_bodypart_status(BODYPART_ROBOTIC, 1)
-		user.drop_item()
-		qdel(tool)
-		target.update_damage_overlays()
-		target.updatehealth()
-		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
+			L.change_bodypart_status(ORGAN_ROBOTIC, 1)
+			user.drop_item()
+			qdel(tool)
+			H.update_damage_overlays(0)
+			H.updatehealth()
+			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		user << "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>"
 	return 1
@@ -82,7 +83,7 @@
 	user.visible_message("[user] begins to install the chainsaw onto [target].", "<span class='notice'>You begin to install the chainsaw onto [target]...</span>")
 
 /datum/surgery_step/chainsaw/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!target.get_empty_held_indexes())
+	if(target.l_hand && target.r_hand)
 		user << "<span class='warning'>You can't fit the chainsaw in while [target]'s hands are full!</span>"
 		return 0
 	else
@@ -102,7 +103,9 @@
 	requires_organic_bodypart = 0
 
 /datum/surgery/chainsaw_removal/can_start(mob/user, mob/living/carbon/target)
-	if(target.is_holding_item_of_type(/obj/item/weapon/mounted_chainsaw))
+	var/list/hands = get_both_hands(target)
+	var/M = locate(/obj/item/weapon/mounted_chainsaw) in hands
+	if(M)
 		return 1//can continue surgery
 	else
 		return 0//surgery will never be available
@@ -116,7 +119,8 @@
 	user.visible_message("[user] begins sawing the chainsaw off of [target]'s arms.", "<span class='notice'>You begin removing [target]'s chainsaw...</span>")
 
 /datum/surgery_step/chainsaw_removal/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	for(var/obj/item/weapon/mounted_chainsaw/V in target.held_items)
+	var/list/hands = get_both_hands(target)
+	for(var/obj/item/weapon/mounted_chainsaw/V in hands)
 		target.unEquip(V, 1)
 		user.visible_message("[user] carefully saws [target]'s arm free of the chainsaw.", "<span class='notice'>You remove the chainsaw.</span>")
 		return 1

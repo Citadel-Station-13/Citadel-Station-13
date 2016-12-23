@@ -2,9 +2,8 @@
 	name = "cabinet"
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
-	resistance_flags = FLAMMABLE
-	obj_integrity = 70
-	max_integrity = 70
+	burn_state = FLAMMABLE
+	burntime = 20
 
 /obj/structure/closet/acloset
 	name = "strange closet"
@@ -73,7 +72,7 @@
 		new /obj/item/weapon/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-
+	
 /obj/structure/closet/thunderdome/tdgreen
 	name = "green-team Thunderdome closet"
 	icon_door = "green"
@@ -92,7 +91,7 @@
 		new /obj/item/weapon/storage/box/flashbangs(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/head/helmet/thunderdome(src)
-
+	
 /obj/structure/closet/malf/suits
 	desc = "It's a storage unit for operational gear."
 	icon_state = "syndicate"

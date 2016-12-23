@@ -421,110 +421,66 @@ var/list/binary = list("0","1")
 
 	return t
 
-#define string2charlist(string) (splittext(string, regex("(.)")) - splittext(string, ""))
+/proc/char_split(t)
+	. = list()
+	for(var/x in 1 to length(t))
+		. += copytext(t,x,x+1)
 
-/proc/rot13(text = "")
-	var/list/textlist = string2charlist(text)
-	var/list/result = list()
-	for(var/c in textlist)
-		var/ca = text2ascii(c)
-		if(ca >= text2ascii("a") && ca <= text2ascii("m"))
-			ca += 13
-		else if(ca >= text2ascii("n") && ca <= text2ascii("z"))
-			ca -= 13
-		else if(ca >= text2ascii("A") && ca <= text2ascii("M"))
-			ca += 13
-		else if(ca >= text2ascii("N") && ca <= text2ascii("Z"))
-			ca -= 13
-		result += ascii2text(ca)
-	return jointext(result, "")
+var/list/rot13_lookup = list()
 
-//Takes a list of values, sanitizes it down for readability and character count,
-//then exports it as a json file at data/npc_saves/[filename].json.
-//As far as SS13 is concerned this is write only data. You can't change something
-//in the json file and have it be reflected in the in game item/mob it came from.
-//(That's what things like savefiles are for) Note that this list is not shuffled.
-/proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
-	if(!islist(proposed) || !filename || !config.log_twitter)
-		return
+/proc/generate_rot13_lookup()
+	var/letters = alphabet.Copy()
+	for(var/c in alphabet)
+		letters += uppertext(c)
 
-	//Regular expressions are, as usual, absolute magic
-	var/regex/is_website = new("http|www.|\[a-z0-9_-]+.(com|org|net|mil|edu)+", "i")
-	var/regex/is_email = new("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]+", "i")
-	var/regex/alphanumeric = new("\[a-z0-9]+", "i")
-	var/regex/punctuation = new("\[.!?]+", "i")
-	var/regex/all_invalid_symbols = new("\[^ -~]+")
+	for(var/char in letters)
+		var/ascii_char = text2ascii(char, 1)
 
-	var/list/accepted = list()
-	for(var/string in proposed)
-		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols))
-			continue
-		var/buffer = ""
-		var/early_culling = TRUE
-		for(var/pos = 1, pos != lentext(string), pos++)
-			var/let = copytext(string, pos, (pos + 1) % lentext(string))
-			if(early_culling && !findtext(let,alphanumeric))
-				continue
-			early_culling = FALSE
-			buffer += let
-		var/punctbuffer = ""
-		var/cutoff = lentext(buffer)
-		for(var/pos = lentext(buffer), pos != 0, pos--)
-			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-			if(findtext(let,alphanumeric))
-				break
-			if(findtext(let,punctuation))
-				punctbuffer = let + punctbuffer //Note this isn't the same thing as using +=
-				cutoff = pos
-		if(punctbuffer) //We clip down excessive punctuation to get the letter count lower and reduce repeats. It's not perfect but it helps.
-			var/exclaim = FALSE
-			var/question = FALSE
-			var/periods = 0
-			for(var/pos = lentext(punctbuffer), pos != 0, pos--)
-				var/punct = copytext(buffer, pos, (pos + 1) % lentext(buffer))
-				if(!exclaim && punct == "!")
-					exclaim = TRUE
-				if(!question && punct == "?")
-					question = TRUE
-				if(!exclaim && !question && punct == ".")
-					periods += 1
-			if(exclaim)
-				if(question)
-					punctbuffer = "?!"
-				else
-					punctbuffer = "!"
-			else if(question)
-				punctbuffer = "?"
-			else if(periods)
-				if(periods >= 3)
-					punctbuffer = "..."
-				else
-					punctbuffer = "" //Grammer nazis be damned
-			buffer = copytext(buffer, 1, cutoff) + punctbuffer
+		var/index
 
-		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted)
-			continue
+		switch(ascii_char)
+			// A - Z
+			if(65 to 90)
+				index = 65
+			// a - z
+			if(97 to 122)
+				index = 97
 
-		accepted += buffer
+		var/d = ascii_char - index
+		d += 13
+		if(d >= 26)
+			d -= 26
+		ascii_char = index + d
+		var/translated_char = ascii2text(ascii_char)
 
-	var/log = file("data/npc_saves/[filename].json") //If this line ever shows up as changed in a PR be very careful you aren't being memed on
-	var/list/oldjson = list()
-	var/list/oldentries = list()
-	if(fexists(log))
-		oldjson = json_decode(file2text(log))
-		oldentries = oldjson["data"]
-	if(!isemptylist(oldentries))
-		for(var/string in accepted)
-			for(var/old in oldentries)
-				if(string == old)
-					oldentries.Remove(old) //Line's position in line is "refreshed" until it falls off the in game radar
-					break
+		rot13_lookup[char] = translated_char
 
-	var/list/finalized = list()
-	finalized["data"] = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
-	listclearnulls(finalized)
-	if(!isemptylist(finalized) && finalized.len > storemax)
-		finalized.Cut(storemax + 1)
-	fdel(log)
+/proc/rot13(t_in)
+	if(!rot13_lookup.len)
+		generate_rot13_lookup()
 
-	log << json_encode(finalized)
+	var/t_out = ""
+
+	for(var/i in 1 to length(t_in))
+		var/char = copytext(t_in, i, i + 1)
+		if(char in rot13_lookup)
+			t_out += rot13_lookup[char]
+		else
+			t_out += char
+
+	return t_out
+
+//Used in preferences' SetFlavorText and human's set_flavor verb
+//Previews a string of len or less length
+
+/proc/copytext_preserve_html(var/text, var/first, var/last)
+	return html_encode(copytext(html_decode(text), first, last))
+
+proc/TextPreview(var/string,var/len=40)
+	if(lentext(string) <= len)
+		if(!lentext(string))
+			return "\[...\]"
+		else
+			return string
+	else
+		return "[copytext(string, 1, 37)]..."

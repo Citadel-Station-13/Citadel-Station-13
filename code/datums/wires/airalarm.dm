@@ -1,6 +1,5 @@
 /datum/wires/airalarm
 	holder_type = /obj/machinery/airalarm
-	proper_name = "Air Alarm"
 
 /datum/wires/airalarm/New(atom/holder)
 	wires = list(
@@ -31,13 +30,13 @@
 			if(!A.shorted)
 				A.shorted = TRUE
 				A.update_icon()
-			addtimer(A, "reset", 1200, TIMER_NORMAL, wire)
+			addtimer(A, "reset", 1200, FALSE, wire)
 		if(WIRE_IDSCAN) // Toggle lock.
 			A.locked = !A.locked
 		if(WIRE_AI) // Disable AI control for a while.
 			if(!A.aidisabled)
 				A.aidisabled = TRUE
-			addtimer(A, "reset", 100, TIMER_NORMAL, wire)
+			addtimer(A, "reset", 100, FALSE, wire)
 		if(WIRE_PANIC) // Toggle panic siphon.
 			if(!A.shorted)
 				if(A.mode == 1) // AALARM_MODE_SCRUB
