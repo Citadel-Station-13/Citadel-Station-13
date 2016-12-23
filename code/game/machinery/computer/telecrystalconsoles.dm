@@ -9,7 +9,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	icon_keyboard = "tcstation_key"
 	icon_screen = "syndie"
 	clockwork = TRUE //it'd look weird, at least if ratvar ever got there
-	light_color = LIGHT_COLOR_RED
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /////////////////////////////////////////////
 /obj/machinery/computer/telecrystals/uplinker
@@ -33,10 +33,9 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/attackby(obj/item/O, mob/user, params)
 	if(uplinkholder)
 		user << "<span class='notice'>The [src] already has an uplink in it.</span>"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 	if(O.hidden_uplink)
-		var/obj/item/I = user.get_active_hand()
+		var/obj/item/I = user.get_active_held_item()
 		if(!user.drop_item())
 			return
 		uplinkholder = I
@@ -44,10 +43,8 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		I.add_fingerprint(user)
 		update_icon()
 		updateUsrDialog()
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
 		user << "<span class='notice'>The [O] doesn't appear to be an uplink...</span>"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
 /obj/machinery/computer/telecrystals/uplinker/update_icon()
 	..()
@@ -58,7 +55,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(uplinkholder)
 		uplinkholder.loc = get_turf(src.loc)
 		uplinkholder = null
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		update_icon()
 
 /obj/machinery/computer/telecrystals/uplinker/proc/donateTC(amt, addLog = 1)
@@ -66,7 +62,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		if(amt <= uplinkholder.hidden_uplink.telecrystals)
 			uplinkholder.hidden_uplink.telecrystals -= amt
 			linkedboss.storedcrystals += amt
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			if(addLog)
 				linkedboss.logTransfer("[src] donated [amt] telecrystals to [linkedboss].")
 
@@ -75,7 +70,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		if(amt <= linkedboss.storedcrystals)
 			uplinkholder.hidden_uplink.telecrystals += amt
 			linkedboss.storedcrystals -= amt
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			if(addLog)
 				linkedboss.logTransfer("[src] received [amt] telecrystals from [linkedboss].")
 
@@ -86,7 +80,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 		return
 	src.add_fingerprint(user)
 	user.set_machine(src)
-	playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 
 	var/dat = ""
 	if(linkedboss)
@@ -219,7 +212,6 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 				A.giveTC(1,0)
 			sanity++
 		logTransfer("[src] evenly distributed telecrystals.")
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 	src.updateUsrDialog()
 	return
