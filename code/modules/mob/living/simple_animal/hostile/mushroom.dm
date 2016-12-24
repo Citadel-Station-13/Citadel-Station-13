@@ -13,7 +13,6 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
-	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
@@ -24,7 +23,7 @@
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	robust_searching = 1
 	unique_name = 1
 	speak_emote = list("squeaks")
@@ -145,7 +144,7 @@
 
 /mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
 	..()
-	if(M.a_intent == INTENT_HARM)
+	if(M.a_intent == "harm")
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)

@@ -22,14 +22,6 @@
 	item_color = "ek"
 	can_adjust = 0
 
-/obj/item/clothing/under/scratch
-	name = "white suit"
-	desc = "A white suit, suitable for an excellent host"
-	icon_state = "scratch"
-	item_state = "scratch"
-	item_color = "scratch"
-	can_adjust = 0
-
 /obj/item/clothing/under/sl_suit
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
@@ -45,7 +37,7 @@
 	item_state = "armor"
 	can_adjust = 0
 	strip_delay = 100
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/waiter
 	name = "waiter's outfit"
@@ -87,14 +79,6 @@
 	item_color = "sexyclown"
 	can_adjust = 0
 
-/obj/item/clothing/under/jabroni
-	name = "Jabroni Outfit"
-	desc = "The leather club is two sectors down."
-	icon_state = "darkholme"
-	item_state = "darkholme"
-	item_color = "darkholme"
-	can_adjust = 0
-
 /obj/item/clothing/under/rank/vice
 	name = "vice officer's jumpsuit"
 	desc = "It's the standard issue pretty-boy outfit, as seen on Holo-Vision."
@@ -124,7 +108,7 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -133,7 +117,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/acj
 	name = "administrative cybernetic jumpsuit"
@@ -144,13 +128,13 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	can_adjust = 0
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/owl
 	name = "owl uniform"
@@ -267,7 +251,7 @@
 	item_state = "burial"
 	item_color = "burial"
 
-/obj/item/clothing/under/skirt/black
+/obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
 	icon_state = "blackskirt"
@@ -276,7 +260,7 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/skirt/blue
+/obj/item/clothing/under/blueskirt
 	name = "blue skirt"
 	desc = "A blue, casual skirt."
 	icon_state = "blueskirt"
@@ -286,26 +270,12 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/skirt/red
+/obj/item/clothing/under/blueskirt/redskirt
 	name = "red skirt"
 	desc = "A red, casual skirt."
 	icon_state = "redskirt"
 	item_color = "redskirt"
 	item_state = "r_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
-
-/obj/item/clothing/under/skirt/purple
-	name = "purple skirt"
-	desc = "A purple, casual skirt."
-	icon_state = "purpleskirt"
-	item_color = "purpleskirt"
-	item_state = "p_suit"
-	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
-
 
 /obj/item/clothing/under/schoolgirl
 	name = "blue schoolgirl uniform"
@@ -377,10 +347,6 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = 0
 
-/obj/item/clothing/under/kilt/highlander
-	desc = "You're the only one worthy of this kilt."
-	flags = NODROP
-
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
 	desc = "The only time when you DON'T enjoy looking at someone's rack."
@@ -400,11 +366,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = 0
-	resistance_flags = 0
-
-/obj/item/clothing/under/gladiator/ash_walker
-	desc = "This gladiator uniform appears to be covered in ash and fairly dated."
-	has_sensor = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/under/sundress
 	name = "sundress"
@@ -535,26 +497,6 @@
 	can_adjust = 1
 	alt_covers_chest = 1
 
-/obj/item/clothing/under/singery
-	name = "yellow performer's outfit"
-	desc = "Just looking at this makes you want to sing."
-	icon_state = "ysing"
-	item_state = "ysing"
-	item_color = "ysing"
-	fitted = NO_FEMALE_UNIFORM
-	alternate_worn_layer = ABOVE_SHOES_LAYER
-	can_adjust = 0
-
-/obj/item/clothing/under/singerb
-	name = "blue performer's outfit"
-	desc = "Just looking at this makes you want to sing."
-	icon_state = "bsing"
-	item_state = "bsing"
-	item_color = "bsing"
-	alternate_worn_layer = ABOVE_SHOES_LAYER
-	fitted = FEMALE_UNIFORM_TOP
-	can_adjust = 0
-
 /obj/item/clothing/under/plaid_skirt/green
 	name = "green plaid skirt"
 	desc = "A preppy green skirt with a white blouse."
@@ -572,27 +514,13 @@
 	item_color = "jester"
 	can_adjust = 0
 
-/obj/item/clothing/under/geisha
-	name = "geisha suit"
-	desc = "Cute space ninja senpai not included."
-	icon_state = "geisha"
-	item_color = "geisha"
-	can_adjust = 0
-
-/obj/item/clothing/under/villain
-	name = "villain suit"
-	desc = "A change of wardrobe is necessary if you ever want to catch a real superhero."
-	icon_state = "villain"
-	item_color = "villain"
-	can_adjust = 0
-
 /obj/item/clothing/under/plasmaman
 	name = "Plasma-man Jumpsuit"
 	desc = "A specially designed suit that allows Plasma based life forms to exist in an oxygenated environment."
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	item_color = "plasmaman"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0, fire = 95, acid = 95)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 0)
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
 	strip_delay = 80
@@ -646,3 +574,22 @@
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
 	item_color = "hostanclothes"
+
+/obj/item/clothing/under/mesh
+	name = "mesh suit"
+	desc = "A mesh of strong fabric worn underneath normal clothing and armor."
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	icon_state = "mesh_suit"
+	item_color = "mesh_suit"
+	item_state = "mesh_suit"
+	can_adjust = FALSE
+	burn_state = FIRE_PROOF
+	unacidable = TRUE
+
+/obj/item/clothing/under/mesh/top
+	name = "mesh shirt"
+	desc = "A mesh of strong fabric worn underneath normal clothing and armor."
+	body_parts_covered = CHEST|GROIN
+	icon_state = "mesh_shirt"
+	item_color = "mesh_shirt"
+	item_state = "mesh_shirt"

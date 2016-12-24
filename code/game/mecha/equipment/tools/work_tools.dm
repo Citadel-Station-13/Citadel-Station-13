@@ -31,7 +31,7 @@
 		return
 	if(!cargo_holder)
 		return
-	if(isobj(target))
+	if(istype(target,/obj))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
@@ -50,10 +50,10 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(isliving(target))
+	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == INTENT_HARM)
+		if(chassis.occupant.a_intent == "harm")
 			M.take_overall_damage(dam_force)
 			if(!M)
 				return
@@ -78,11 +78,9 @@
 	energy_drain = 0
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/kill/action(atom/target)
-	if(!action_checks(target))
-		return
-	if(!cargo_holder)
-		return
-	if(isobj(target))
+	if(!action_checks(target)) return
+	if(!cargo_holder) return
+	if(istype(target,/obj))
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
@@ -101,13 +99,13 @@
 		else
 			occupant_message("<span class='warning'>[target] is firmly secured!</span>")
 
-	else if(isliving(target))
+	else if(istype(target,/mob/living))
 		var/mob/living/M = target
 		if(M.stat == DEAD) return
-		if(chassis.occupant.a_intent == INTENT_HARM)
+		if(chassis.occupant.a_intent == "harm")
 			target.visible_message("<span class='danger'>[chassis] destroys [target] in an unholy fury.</span>", \
 								"<span class='userdanger'>[chassis] destroys [target] in an unholy fury.</span>")
-		if(chassis.occupant.a_intent == INTENT_DISARM)
+		if(chassis.occupant.a_intent == "disarm")
 			target.visible_message("<span class='danger'>[chassis] rips [target]'s arms off.</span>", \
 								"<span class='userdanger'>[chassis] rips [target]'s arms off.</span>")
 		else
@@ -210,7 +208,7 @@
 	if(istype(target, /turf/open/space/transit))//>implying these are ever made -Sieve
 		return
 
-	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
+	if(!istype(target, /turf) && !istype(target, /obj/machinery/door/airlock))
 		target = get_turf(target)
 	if(!action_checks(target) || get_dist(chassis, target)>3)
 		return
@@ -218,14 +216,14 @@
 
 	switch(mode)
 		if(0)
-			if(iswallturf(target))
+			if (istype(target, /turf/closed/wall))
 				var/turf/closed/wall/W = target
 				occupant_message("Deconstructing [W]...")
 				if(do_after_cooldown(W))
 					chassis.spark_system.start()
 					W.ChangeTurf(/turf/open/floor/plating)
 					playsound(W, 'sound/items/Deconstruct.ogg', 50, 1)
-			else if(isfloorturf(target))
+			else if (istype(target, /turf/open/floor))
 				var/turf/open/floor/F = target
 				occupant_message("Deconstructing [F]...")
 				if(do_after_cooldown(target))
@@ -239,14 +237,14 @@
 					qdel(target)
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(1)
-			if(isspaceturf(target))
+			if(istype(target, /turf/open/space))
 				var/turf/open/space/S = target
 				occupant_message("Building Floor...")
 				if(do_after_cooldown(S))
 					S.ChangeTurf(/turf/open/floor/plating)
 					playsound(S, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
-			else if(isfloorturf(target))
+			else if(istype(target, /turf/open/floor))
 				var/turf/open/floor/F = target
 				occupant_message("Building Wall...")
 				if(do_after_cooldown(F))
@@ -254,7 +252,7 @@
 					playsound(F, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.spark_system.start()
 		if(2)
-			if(isfloorturf(target))
+			if(istype(target, /turf/open/floor))
 				occupant_message("Building Airlock...")
 				if(do_after_cooldown(target))
 					chassis.spark_system.start()
@@ -321,8 +319,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/Destroy()
-	if(chassis)
-		chassis.events.clearEvent("onMove",event)
+	chassis.events.clearEvent("onMove",event)
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/action(var/obj/item/stack/cable_coil/target)
@@ -388,7 +385,7 @@
 	last_piece = null
 
 /obj/item/mecha_parts/mecha_equipment/cable_layer/proc/dismantleFloor(var/turf/new_turf)
-	if(isfloorturf(new_turf))
+	if(istype(new_turf, /turf/open/floor))
 		var/turf/open/floor/T = new_turf
 		if(!istype(T, /turf/open/floor/plating))
 			if(!T.broken && !T.burnt)

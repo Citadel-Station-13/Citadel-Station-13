@@ -5,7 +5,7 @@
 	item_state = "lgloves"
 	force = 0
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	throw_speed = 1
 	throw_range = 7
 	var/state
@@ -16,7 +16,8 @@
 		return
 	icon_state = "latexballon_blow"
 	item_state = "latexballon"
-	user.update_inv_hands()
+	user.update_inv_r_hand()
+	user.update_inv_l_hand()
 	user << "<span class='notice'>You blow up [src] with [tank].</span>"
 	air_contents = tank.remove_air_volume(3)
 
@@ -26,9 +27,10 @@
 	playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 	icon_state = "latexballon_bursted"
 	item_state = "lgloves"
-	if(isliving(loc))
+	if(istype(src.loc, /mob/living))
 		var/mob/living/user = src.loc
-		user.update_inv_hands()
+		user.update_inv_r_hand()
+		user.update_inv_l_hand()
 	loc.assume_air(air_contents)
 
 /obj/item/latexballon/ex_act(severity, target)
@@ -52,5 +54,5 @@
 		var/obj/item/weapon/tank/T = W
 		blow(T, user)
 		return
-	if (W.is_sharp() || W.is_hot() || is_pointed(W))
+	if (is_sharp(W) || W.is_hot() || is_pointed(W))
 		burst()

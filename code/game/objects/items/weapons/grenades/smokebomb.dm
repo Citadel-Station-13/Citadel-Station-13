@@ -20,12 +20,13 @@
 /obj/item/weapon/grenade/smokebomb/prime()
 	update_mob()
 	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-	smoke.set_up(4, src)
+	smoke.set_up(4, usr.loc)
 	smoke.start()
 
 
-	for(var/obj/structure/blob/B in view(8,src))
+	for(var/obj/effect/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
-		B.take_damage(damage, BURN, "melee", 0)
+		B.health -= damage
+		B.update_icon()
 	sleep(80)
 	qdel(src)

@@ -3,7 +3,7 @@
 	singular_name = "broken tile"
 	desc = "A broken tile. This should not exist."
 	icon = 'icons/obj/tiles.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	force = 1
 	throwforce = 1
 	throw_speed = 3
@@ -17,10 +17,6 @@
 	..()
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
-
-/obj/item/stack/tile/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -51,7 +47,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_held_item()==R)
+				var/replace = (user.get_inactive_hand()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -64,7 +60,7 @@
 							 "<span class='italics'>You hear welding.</span>")
 				var/obj/item/stack/rods/R = src
 				src = null
-				var/replace = (user.get_inactive_held_item()==R)
+				var/replace = (user.get_inactive_hand()==R)
 				R.use(4)
 				if (!R && replace)
 					user.put_in_hands(new_item)
@@ -79,7 +75,7 @@
 	icon_state = "tile_grass"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 
 //Wood
@@ -90,7 +86,7 @@
 	icon_state = "tile-wood"
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 
 //Carpets
@@ -100,7 +96,7 @@
 	desc = "A piece of carpet. It is the same size as a floor tile."
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 
 /obj/item/stack/tile/fakespace
@@ -109,8 +105,7 @@
 	desc = "A piece of carpet with a convincing star pattern."
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
-	resistance_flags = FLAMMABLE
-	merge_type = /obj/item/stack/tile/fakespace
+	burn_state = FLAMMABLE
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -123,7 +118,6 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
-	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
@@ -162,8 +156,6 @@
 	flags = CONDUCT
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
-	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR

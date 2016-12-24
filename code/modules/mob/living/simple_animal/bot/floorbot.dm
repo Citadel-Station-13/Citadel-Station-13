@@ -187,10 +187,10 @@
 	if(!target && emagged < 2)
 		if(targetdirection != null) //The bot is in line mode.
 			var/turf/T = get_step(src, targetdirection)
-			if(isspaceturf(T)) //Check for space
+			if(istype(T, /turf/open/space)) //Check for space
 				target = T
 				process_type = LINE_SPACE_MODE
-			if(isfloorturf(T)) //Check for floor
+			if(istype(T, /turf/open/floor)) //Check for floor
 				target = T
 
 		if(!target)
@@ -225,7 +225,7 @@
 
 	if(target)
 		if(path.len == 0)
-			if(!isturf(target))
+			if(!istype(target, /turf/))
 				var/turf/TL = get_turf(target)
 				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = 0)
 			else
@@ -248,9 +248,9 @@
 					target = null
 					path = list()
 					return
-			if(isturf(target) && emagged < 2)
+			if(istype(target, /turf/) && emagged < 2)
 				repair(target)
-			else if(emagged == 2 && isfloorturf(target))
+			else if(emagged == 2 && istype(target,/turf/open/floor))
 				var/turf/open/floor/F = target
 				anchored = 1
 				mode = BOT_REPAIRING
@@ -291,7 +291,7 @@
 				result = F
 		if(REPLACE_TILE)
 			F = scan_target
-			if(isfloorturf(F) && !istype(F, /turf/open/floor/plating)) //The floor must already have a tile.
+			if(istype(F, /turf/open/floor) && !istype(F, /turf/open/floor/plating)) //The floor must already have a tile.
 				result = F
 		if(FIX_TILE)	//Selects only damaged floors.
 			F = scan_target
@@ -307,14 +307,14 @@
 
 /mob/living/simple_animal/bot/floorbot/proc/repair(turf/target_turf)
 
-	if(isspaceturf(target_turf))
+	if(istype(target_turf, /turf/open/space/))
 		 //Must be a hull breach or in line mode to continue.
 		if(!is_hull_breach(target_turf) && !targetdirection)
 			target = null
 			return
-	else if(!isfloorturf(target_turf))
+	else if(!istype(target_turf, /turf/open/floor))
 		return
-	if(isspaceturf(target_turf)) //If we are fixing an area not part of pure space, it is
+	if(istype(target_turf, /turf/open/space/)) //If we are fixing an area not part of pure space, it is
 		anchored = 1
 		icon_state = "floorbot-c"
 		visible_message("<span class='notice'>[targetdirection ? "[src] begins installing a bridge plating." : "[src] begins to repair the hole."] </span>")
@@ -376,7 +376,7 @@
 		empty_tiles()
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		new /obj/item/robot_parts/l_arm(Tsec)
 
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)
 	T.amount = 1

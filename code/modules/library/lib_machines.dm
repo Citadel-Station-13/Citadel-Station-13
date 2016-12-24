@@ -337,11 +337,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				if(!bibledelay)
 
 					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
-					if(SSreligion.Bible_icon_state && SSreligion.Bible_item_state)
-						B.icon_state = SSreligion.Bible_icon_state
-						B.item_state = SSreligion.Bible_item_state
-						B.name = SSreligion.Bible_name
-						B.deity_name = SSreligion.Bible_deity_name
+					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
+						B.icon_state = ticker.Bible_icon_state
+						B.item_state = ticker.Bible_item_state
+						B.name = ticker.Bible_name
+						B.deity_name = ticker.Bible_deity_name
 
 					bibledelay = 1
 					spawn(60)
@@ -374,13 +374,11 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		b.duedate = world.time + (checkoutperiod * 600)
 		checkouts.Add(b)
 	if(href_list["checkin"])
-		var/datum/borrowbook/b = locate(href_list["checkin"]) in checkouts
-		if(b && istype(b))
-			checkouts.Remove(b)
+		var/datum/borrowbook/b = locate(href_list["checkin"])
+		checkouts.Remove(b)
 	if(href_list["delbook"])
-		var/obj/item/weapon/book/b = locate(href_list["delbook"]) in inventory
-		if(b && istype(b))
-			inventory.Remove(b)
+		var/obj/item/weapon/book/b = locate(href_list["delbook"])
+		inventory.Remove(b)
 	if(href_list["setauthor"])
 		var/newauthor = copytext(sanitize(input("Enter the author's name: ") as text|null),1,MAX_MESSAGE_LEN)
 		if(newauthor)
@@ -410,14 +408,10 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["orderbyid"])
-		if(bibledelay)
-			say("Printer unavailable. Please allow a short time before attempting to print.")
-		else
-			var/orderid = input("Enter your order:") as num|null
-			if(orderid)
-				if(isnum(orderid) && IsInteger(orderid))
-					href_list["targetid"] = num2text(orderid)
-
+		var/orderid = input("Enter your order:") as num|null
+		if(orderid)
+			if(isnum(orderid) && IsInteger(orderid))
+				href_list["targetid"] = orderid
 	if(href_list["targetid"])
 		var/sqlid = sanitizeSQL(href_list["targetid"])
 		establish_db_connection()
@@ -436,17 +430,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				var/author = query.item[2]
 				var/title = query.item[3]
 				var/content = query.item[4]
-				var/obj/item/weapon/book/B = new(get_turf(src))
+				var/obj/item/weapon/book/B = new(src.loc)
 				B.name = "Book: [title]"
 				B.title = title
 				B.author = author
 				B.dat = content
 				B.icon_state = "book[rand(1,8)]"
-				visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
+				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
-
-	add_fingerprint(usr)
-	updateUsrDialog()
+	src.add_fingerprint(usr)
+	src.updateUsrDialog()
+	return
 
 /*
  * Library Scanner
@@ -479,6 +473,8 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
+	//user << browse(dat, "window=scanner")
+	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))

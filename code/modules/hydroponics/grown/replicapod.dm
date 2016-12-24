@@ -12,6 +12,7 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
+	oneharvest = 1
 	potency = 30
 	var/ckey = null
 	var/realName = null
@@ -41,8 +42,7 @@
 					user << "<span class='warning'>The seeds reject the sample!</span>"
 		else
 			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
-	else
-		return ..()
+	..()
 
 /obj/item/seeds/replicapod/get_analyzer_text()
 	var/text = ..()
@@ -58,7 +58,7 @@
 	if(config.revival_pod_plants)
 		if(ckey)
 			for(var/mob/M in player_list)
-				if(isobserver(M))
+				if(istype(M, /mob/dead/observer))
 					var/mob/dead/observer/O = M
 					if(O.ckey == ckey && O.can_reenter_corpse)
 						make_podman = 1
@@ -66,19 +66,19 @@
 				else
 					if(M.ckey == ckey && M.stat == DEAD && !M.suiciding)
 						make_podman = 1
-						if(isliving(M))
+						if(istype(M, /mob/living))
 							var/mob/living/L = M
 							make_podman = !L.hellbound
 						break
 		else //If the player has ghosted from his corpse before blood was drawn, his ckey is no longer attached to the mob, so we need to match up the cloned player through the mind key
 			for(var/mob/M in player_list)
 				if(mind && M.mind && ckey(M.mind.key) == ckey(mind.key) && M.ckey && M.client && M.stat == 2 && !M.suiciding)
-					if(isobserver(M))
+					if(istype(M, /mob/dead/observer))
 						var/mob/dead/observer/O = M
 						if(!O.can_reenter_corpse)
 							break
 					make_podman = 1
-					if(isliving(M))
+					if(istype(M, /mob/living))
 						var/mob/living/L = M
 						make_podman = !L.hellbound
 					ckey_holder = M.ckey
@@ -106,9 +106,8 @@
 		var/seed_count = 1
 		if(prob(getYield() * 20))
 			seed_count++
-		var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
 		for(var/i=0,i<seed_count,i++)
 			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
-			harvestseeds.forceMove(output_loc)
+			harvestseeds.forceMove(parent.loc)
 
 	parent.update_tray()

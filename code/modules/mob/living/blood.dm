@@ -22,7 +22,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood()
 
-	if(NOBLOOD in dna.species.species_traits)
+	if(NOBLOOD in dna.species.specflags)
 		bleed_rate = 0
 		return
 
@@ -86,7 +86,7 @@
 				add_splatter_floor(src.loc, 1)
 
 /mob/living/carbon/human/bleed(amt)
-	if(!(NOBLOOD in dna.species.species_traits))
+	if(!(NOBLOOD in dna.species.specflags))
 		..()
 
 
@@ -162,13 +162,8 @@
 		blood_data["trace_chem"] = list2params(temp_chem)
 		if(mind)
 			blood_data["mind"] = mind
-		else if(last_mind)
-			blood_data["mind"] = last_mind
 		if(ckey)
 			blood_data["ckey"] = ckey
-		else if(last_mind)
-			blood_data["ckey"] = ckey(last_mind.key)
-
 		if(!suiciding)
 			blood_data["cloneable"] = 1
 		blood_data["blood_type"] = copytext(dna.blood_type,1,0)
@@ -193,7 +188,7 @@
 /mob/living/carbon/human/get_blood_id()
 	if(dna.species.exotic_blood)
 		return dna.species.exotic_blood
-	else if((NOBLOOD in dna.species.species_traits) || (disabilities & NOCLONE))
+	else if((NOBLOOD in dna.species.specflags) || (disabilities & NOCLONE))
 		return
 	return "blood"
 
@@ -221,43 +216,70 @@
 			return list("O-", "O+")
 		if("L")
 			return list("L")
+		if("X")
+			return list("X")
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/T, small_drip)
-	if(get_blood_id() != "blood")
+	if(get_blood_id() != "blood" && get_blood_id() != "xblood")
 		return
 	if(!T)
 		T = get_turf(src)
-
 	var/list/temp_blood_DNA
 	if(small_drip)
 		// Only a certain number of drips (or one large splatter) can be on a given turf.
-		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in T
-		if(drop)
-			if(drop.drips < 3)
-				drop.drips++
-				drop.overlays |= pick(drop.random_icon_states)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna.species.id == "xeno")
+				var/obj/effect/decal/cleanable/xdrip/xdrop = locate() in T
+				if(xdrop)
+					if(xdrop.drips < 3)
+						xdrop.drips++
+						xdrop.overlays |= pick(xdrop.random_icon_states)
+						xdrop.transfer_mob_blood_dna(src)
+						return
+					else
+						temp_blood_DNA = list()
+						temp_blood_DNA |= xdrop.blood_DNA.Copy()
+						qdel(xdrop)//the drip is replaced by a bigger splatter
+				else
+					xdrop = new(T)
+					xdrop.transfer_mob_blood_dna(src)
+					return
+		else
+			var/obj/effect/decal/cleanable/blood/drip/drop = locate() in T
+			if(drop)
+				if(drop.drips < 3)
+					drop.drips++
+					drop.overlays |= pick(drop.random_icon_states)
+					drop.transfer_mob_blood_dna(src)
+					return
+				else
+					temp_blood_DNA = list()
+					temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
+					qdel(drop)//the drip is replaced by a bigger splatter
+			else
+				drop = new(T)
 				drop.transfer_mob_blood_dna(src)
 				return
-			else
-				temp_blood_DNA = list()
-				temp_blood_DNA |= drop.blood_DNA.Copy() //we transfer the dna from the drip to the splatter
-				qdel(drop)//the drip is replaced by a bigger splatter
-		else
-			drop = new(T)
-			drop.transfer_mob_blood_dna(src)
-			return
 
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/B = locate() in T
 	if(!B)
-		B = new /obj/effect/decal/cleanable/blood/splatter(T)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna.species.id == "xeno")
+				B = new /obj/effect/decal/cleanable/xenoblood(T)
+			else
+				B = new /obj/effect/decal/cleanable/blood/splatter(T)
+		else
+			B = new /obj/effect/decal/cleanable/blood/splatter(T)
 	B.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		B.blood_DNA |= temp_blood_DNA
 
 /mob/living/carbon/human/add_splatter_floor(turf/T, small_drip)
-	if(!(NOBLOOD in dna.species.species_traits))
+	if(!(NOBLOOD in dna.species.specflags))
 		..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/T, small_drip)

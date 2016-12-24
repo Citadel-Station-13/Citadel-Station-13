@@ -1,30 +1,21 @@
-/datum/round_event_control/space_dust
+/datum/round_event_control/meteor_wave/dust
 	name = "Minor Space Dust"
-	typepath = /datum/round_event/space_dust
+	typepath = /datum/round_event/meteor_wave/dust
 	weight = 200
 	max_occurrences = 1000
 	earliest_start = 0
 	alertadmins = 0
-
-/datum/round_event/space_dust
+	
+/datum/round_event/meteor_wave/dust
 	startWhen		= 1
 	endWhen			= 2
 	announceWhen	= 0
 
-/datum/round_event/space_dust/start()
+/datum/round_event/meteor_wave/dust/announce()
+	return
+
+/datum/round_event/meteor_wave/dust/start()
 	spawn_meteors(1, meteorsC)
 
-/datum/round_event_control/sandstorm
-	name = "Sandstorm"
-	typepath = /datum/round_event/sandstorm
-	weight = 0
-	max_occurrences = 0
-	earliest_start = 0
-
-/datum/round_event/sandstorm
-	startWhen = 1
-	endWhen = 150 // ~5 min
-	announceWhen = 0
-
-/datum/round_event/sandstorm/tick()
-	spawn_meteors(10, meteorsC)
+/datum/round_event/meteor_wave/dust/tick()
+	return

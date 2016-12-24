@@ -109,8 +109,7 @@
 	update_areas()
 
 /datum/weather/proc/can_impact(mob/living/L) //Can this weather impact a mob?
-	var/turf/mob_turf = get_turf(L)
-	if(mob_turf && (mob_turf.z != target_z))
+	if(L.z != target_z)
 		return
 	if(immunity_type in L.weather_immunities)
 		return

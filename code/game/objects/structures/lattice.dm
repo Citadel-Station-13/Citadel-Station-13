@@ -5,9 +5,6 @@
 	icon_state = "lattice"
 	density = 0
 	anchored = 1
-	armor = list(melee = 50, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 50)
-	obj_integrity = 50
-	max_integrity = 50
 	layer = LATTICE_LAYER //under pipes
 	var/obj/item/stack/rods/stored
 	canSmoothWith = list(/obj/structure/lattice,
@@ -19,6 +16,8 @@
 
 /obj/structure/lattice/New()
 	..()
+	if(!(istype(src.loc, /turf/open/space)))
+		qdel(src)
 	for(var/obj/structure/lattice/LAT in src.loc)
 		if(LAT != src)
 			qdel(LAT)
@@ -29,7 +28,20 @@
 	stored = null
 	return ..()
 
-/obj/structure/lattice/blob_act(obj/structure/blob/B)
+/obj/structure/lattice/blob_act(obj/effect/blob/B)
+	return
+
+/obj/structure/lattice/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+			return
+		if(2)
+			qdel(src)
+			return
+		if(3)
+			return
+		else
 	return
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
@@ -37,20 +49,19 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			user << "<span class='notice'>Slicing [name] joints ...</span>"
-			deconstruct()
+			Deconstruct()
 	else
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
-/obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		stored.forceMove(get_turf(src))
-		stored = null
-	qdel(src)
+/obj/structure/lattice/Deconstruct()
+	stored.loc = get_turf(src)
+	stored = null
+	..()
 
 /obj/structure/lattice/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
-		deconstruct()
+		Deconstruct()
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -63,12 +74,12 @@
 /obj/structure/lattice/catwalk/Move()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.deconstruct()
+		C.Deconstruct()
 	..()
 
-/obj/structure/lattice/catwalk/deconstruct()
+/obj/structure/lattice/catwalk/Deconstruct()
 	var/turf/T = loc
 	for(var/obj/structure/cable/C in T)
-		C.deconstruct()
+		C.Deconstruct()
 	..()
 

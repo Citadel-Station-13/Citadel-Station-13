@@ -1,10 +1,3 @@
-// Byond direction defines, because I want to put them somewhere.
-// #define NORTH 1
-// #define SOUTH 2
-// #define EAST 4
-// #define WEST 8
-
-
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
 #define JANUARY		1
@@ -27,7 +20,6 @@
 #define EASTER					"Easter"
 #define HALLOWEEN				"Halloween"
 #define CHRISTMAS				"Christmas"
-#define FESTIVE_SEASON			"Festive Season"
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
@@ -47,14 +39,14 @@
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
-#define NECK_LAYER				10
-#define BACK_LAYER				9
-#define HAIR_LAYER				8		//TODO: make part of head layer?
-#define FACEMASK_LAYER			7
-#define HEAD_LAYER				6
-#define HANDCUFF_LAYER			5
-#define LEGCUFF_LAYER			4
-#define HANDS_LAYER				3
+#define BACK_LAYER				10
+#define HAIR_LAYER				9		//TODO: make part of head layer?
+#define FACEMASK_LAYER			8
+#define HEAD_LAYER				7
+#define HANDCUFF_LAYER			6
+#define LEGCUFF_LAYER			5
+#define L_HAND_LAYER			4
+#define R_HAND_LAYER			3		//Having the two hands seperate seems rather silly, merge them together? It'll allow for code to be reused on mobs with arbitarily many hands
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
 #define TOTAL_LAYERS			26		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
@@ -83,7 +75,8 @@
 #define UNDER_HEAD_LAYER			HEAD_LAYER+1
 #define UNDER_HANDCUFF_LAYER		HANDCUFF_LAYER+1
 #define UNDER_LEGCUFF_LAYER			LEGCUFF_LAYER+1
-#define UNDER_HANDS_LAYER			HANDS_LAYER+1
+#define UNDER_L_HAND_LAYER			L_HAND_LAYER+1
+#define UNDER_R_HAND_LAYER			R_HAND_LAYER+1
 #define UNDER_BODY_FRONT_LAYER		BODY_FRONT_LAYER+1
 #define UNDER_FIRE_LAYER			FIRE_LAYER+1
 
@@ -109,7 +102,8 @@
 #define ABOVE_HEAD_LAYER			HEAD_LAYER-1
 #define ABOVE_HANDCUFF_LAYER		HANDCUFF_LAYER-1
 #define ABOVE_LEGCUFF_LAYER			LEGCUFF_LAYER-1
-#define ABOVE_HANDS_LAYER			HANDS_LAYER-1
+#define ABOVE_L_HAND_LAYER			L_HAND_LAYER-1
+#define ABOVE_R_HAND_LAYER			R_HAND_LAYER-1
 #define ABOVE_BODY_FRONT_LAYER		BODY_FRONT_LAYER-1
 #define ABOVE_FIRE_LAYER			FIRE_LAYER-1
 
@@ -151,7 +145,6 @@
 
 #define CLICK_CD_MELEE 8
 #define CLICK_CD_RANGE 4
-#define CLICK_CD_RAPID 2
 #define CLICK_CD_CLICK_ABILITY 6
 #define CLICK_CD_BREAKOUT 100
 #define CLICK_CD_HANDCUFFED 10
@@ -314,14 +307,6 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_MULTI		"MULTICHOICE"
 #define POLLTYPE_IRV		"IRV"
 
-
-
-//lighting area defines
-#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
-#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 2 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.lighting_use_dynamic == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.lighting_use_dynamic )
-
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
@@ -342,15 +327,12 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
+//Fire stuff, for burn_state
+#define LAVA_PROOF -2
+#define FIRE_PROOF -1
+#define FLAMMABLE 0
+#define ON_FIRE 1
 
-//Fire and Acid stuff, for resistance_flags
-#define LAVA_PROOF 1
-#define FIRE_PROOF 2 //100% immune to fire damage (but not necessarily to lava or heat)
-#define FLAMMABLE 4
-#define ON_FIRE 8
-#define UNACIDABLE 16 //acid can't even appear on it, let alone melt it.
-#define ACID_PROOF 32 //acid stuck on it doesn't melt it.
-#define INDESTRUCTIBLE 64 //doesn't take damage
 
 //Ghost orbit types:
 #define GHOST_ORBIT_CIRCLE		"circle"
@@ -427,6 +409,12 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define TRIGGER_GUARD_NONE 0
 #define TRIGGER_GUARD_NORMAL 1
 
+// Plant types
+#define PLANT_NORMAL 0
+#define PLANT_WEED 1
+#define PLANT_MUSHROOM 2
+#define PLANT_ALIEN 3
+
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
@@ -439,9 +427,6 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 // Evil narsie colour
 #define NARSIE_WINDOW_COLOUR "#7D1919"
-
-//let's just pretend fulltile windows being children of border windows is fine
-#define FULLTILE_WINDOW_DIR NORTHEAST
 
 // Defib stats
 #define DEFIB_TIME_LIMIT 120
@@ -484,6 +469,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define STORAGE_VIEW_DEPTH	2
 
 
+
 // Medal names
 
 #define BOSS_KILL_MEDAL "Killer"
@@ -496,128 +482,5 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define COLOSSUS_SCORE "Colossus Killed"
 #define BUBBLEGUM_SCORE "Bubblegum Killed"
 #define DRAKE_SCORE "Drakes Killed"
-#define BIRD_SCORE "Hierophants Killed"
-#define SWARMER_BEACON_SCORE "Swarmer Beacons Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
-
-
-
-									// NTNet module-configuration values. Do not change these. If you need to add another use larger number (5..6..7 etc)
-#define NTNET_SOFTWAREDOWNLOAD 1 	// Downloads of software from NTNet
-#define NTNET_PEERTOPEER 2			// P2P transfers of files between devices
-#define NTNET_COMMUNICATION 3		// Communication (messaging)
-#define NTNET_SYSTEMCONTROL 4		// Control of various systems, RCon, air alarm control, etc.
-
-// NTNet transfer speeds, used when downloading/uploading a file/program.
-#define NTNETSPEED_LOWSIGNAL 0.5	// GQ/s transfer speed when the device is wirelessly connected and on Low signal
-#define NTNETSPEED_HIGHSIGNAL 1	// GQ/s transfer speed when the device is wirelessly connected and on High signal
-#define NTNETSPEED_ETHERNET 2		// GQ/s transfer speed when the device is using wired connection
-
-
-// Program bitflags
-#define PROGRAM_ALL 7
-#define PROGRAM_CONSOLE 1
-#define PROGRAM_LAPTOP 2
-#define PROGRAM_TABLET 4
-
-#define PROGRAM_STATE_KILLED 0
-#define PROGRAM_STATE_BACKGROUND 1
-#define PROGRAM_STATE_ACTIVE 2
-
-// Caps for NTNet logging. Less than 10 would make logging useless anyway, more than 500 may make the log browser too laggy. Defaults to 100 unless user changes it.
-#define MAX_NTNET_LOGS 300
-#define MIN_NTNET_LOGS 10
-//TODO Move to a pref
-#define STATION_GOAL_BUDGET  1
-
-//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
-#define LUMA_R 0.213
-#define LUMA_G 0.715
-#define LUMA_B 0.072
-
-
-//attack visual effects
-#define ATTACK_EFFECT_PUNCH		"punch"
-#define ATTACK_EFFECT_KICK		"kick"
-#define ATTACK_EFFECT_SMASH		"smash"
-#define ATTACK_EFFECT_CLAW		"claw"
-#define ATTACK_EFFECT_DISARM	"disarm"
-#define ATTACK_EFFECT_BITE		"bite"
-#define ATTACK_EFFECT_MECHFIRE	"mech_fire"
-#define ATTACK_EFFECT_MECHTOXIN	"mech_toxin"
-#define ATTACK_EFFECT_BOOP "boop"	//Honk
-
-
-//different types of atom colorations
-#define ADMIN_COLOUR_PRIORITY 		1 //only used by rare effects like greentext coloring mobs and when admins varedit color
-#define TEMPORARY_COLOUR_PRIORITY 	2 //e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
-#define WASHABLE_COLOUR_PRIORITY 	3 //color splashed onto an atom (e.g. paint on turf)
-#define FIXED_COLOUR_PRIORITY 		4 //color inherent to the atom (e.g. blob color)
-#define COLOUR_PRIORITY_AMOUNT 4 //how many priority levels there are.
-
-// w_class (weight class)
-#define WEIGHT_CLASS_TINY     1 // Usually items smaller then a human hand
-#define WEIGHT_CLASS_SMALL    2 // Pockets can hold small and tiny items
-#define WEIGHT_CLASS_NORMAL   3 // Standard backpacks can carry tiny, small & normal items
-#define WEIGHT_CLASS_BULKY    4 // Items that can be weilded or equipped but not stored in an inventory
-#define WEIGHT_CLASS_HUGE     5 // Usually represents objects that require two hands to operate
-#define WEIGHT_CLASS_GIGANTIC 6 // Essentially means it cannot be picked up or placed in an inventory
-
-// Examples of tiny items: Playing Cards, Lighter, Scalpel, Coins/Money
-// Examples of small items: Flashlight, Multitool, Grenades, GPS Device
-// Examples of normal items: Fire extinguisher, Stunbaton, Gas Mask, Metal Sheets
-// Examples of bulky items: Defibrillator, Backpack, Space Suits
-// Examples of huge items: Shotgun, Two Handed Melee Weapons
-// Examples of gigantic items: Mech Parts, Safe
-
-// m_intent
-#define MOVE_INTENT_WALK "walk"
-#define MOVE_INTENT_RUN  "run"
-
-//Endgame Results
-
-#define NUKE_NEAR_MISS 1
-#define NUKE_MISS_STATION 2
-#define NUKE_SYNDICATE_BASE 3
-#define STATION_DESTROYED_NUKE 4
-#define STATION_EVACUATED 5
-#define GANG_LOSS 6
-#define GANG_TAKEOVER 7
-#define BLOB_WIN 8
-#define BLOB_NUKE 9
-#define BLOB_DESTROYED 10
-#define CULT_ESCAPE 11
-#define CULT_FAILURE 12
-#define CULT_SUMMON 13
-#define NUKE_MISS 14
-#define OPERATIVES_KILLED 15
-#define OPERATIVE_SKIRMISH 16
-#define REVS_WIN 17
-#define REVS_LOSE 18
-#define WIZARD_KILLED 19
-#define STATION_NUKED 20
-#define CLOCK_SUMMON 21
-#define CLOCK_SILICONS 22
-#define CLOCK_PROSELYTIZATION 23
-#define SHUTTLE_HIJACK 24
-
-//For SSTimer
-
-#define TIMER_NORMAL "normal"
-#define TIMER_UNIQUE "unique"
-
-// Ventcrawling
-#define VENTCRAWLER_NONE   0
-#define VENTCRAWLER_NUDE   1
-#define VENTCRAWLER_ALWAYS 2
-
-// Intent
-#define INTENT_HELP   "help"
-#define INTENT_GRAB   "grab"
-#define INTENT_DISARM "disarm"
-#define INTENT_HARM   "harm"
-// NOTE: INTENT_HOTKEY_* defines are not actual intents!
-// they are here to support hotkeys
-#define INTENT_HOTKEY_LEFT  "left"
-#define INTENT_HOTKEY_RIGHT "right"

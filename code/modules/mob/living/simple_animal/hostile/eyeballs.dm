@@ -6,7 +6,6 @@
 	icon_state = "eyeball"
 	icon_living = "eyeball"
 	icon_gib = ""
-	gender = NEUTER
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
@@ -17,12 +16,11 @@
 	speak_emote = list("telepathically cries")
 
 	harm_intent_damage = 15
-	obj_damage = 60
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 	attacktext = "blinks at"
 	attack_sound = 'sound/weapons/pierce.ogg'
-	movement_type = FLYING
+	flying = 1
 
 	faction = list("spooky")
 	del_on_death = 1

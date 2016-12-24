@@ -8,7 +8,7 @@
 	icon_state = "syndballoon"
 	item_state = null
 	flags = ABSTRACT | NODROP
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	force = 0
 	throwforce = 0
 	throw_range = 0

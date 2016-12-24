@@ -2,40 +2,42 @@
 
 
 /obj/structure/statue
-	name = "statue"
+	name = "Statue"
 	desc = "Placeholder. Yell at Firecage if you SOMEHOW see this."
 	icon = 'icons/obj/statue.dmi'
 	icon_state = ""
 	density = 1
 	anchored = 0
-	obj_integrity = 100
-	max_integrity = 100
+	var/health = 100
 	var/oreAmount = 7
-	var/material_drop_type = /obj/item/stack/sheet/metal
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/mineralType = "metal"
+
+/obj/structure/statue/Destroy()
+	density = 0
+	return ..()
 
 /obj/structure/statue/attackby(obj/item/weapon/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(anchored)
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is loosening the [name]'s bolts.", \
 								 "<span class='notice'>You are loosening the [name]'s bolts...</span>")
-			if(do_after(user,40*W.toolspeed, target = src))
+			if(do_after(user,40/W.toolspeed, target = src))
 				if(!src.loc || !anchored)
 					return
 				user.visible_message("[user] loosened the [name]'s bolts!", \
 									 "<span class='notice'>You loosen the [name]'s bolts!</span>")
 				anchored = 0
 		else
-			if(!isfloorturf(src.loc))
+			if (!istype(src.loc, /turf/open/floor))
 				user.visible_message("<span class='warning'>A floor must be present to secure the [name]!</span>")
 				return
-			playsound(src.loc, W.usesound, 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] is securing the [name]'s bolts...", \
 								 "<span class='notice'>You are securing the [name]'s bolts...</span>")
-			if(do_after(user, 40*W.toolspeed, target = src))
+			if(do_after(user, 40/W.toolspeed, target = src))
 				if(!src.loc || anchored)
 					return
 				user.visible_message("[user] has secured the [name]'s bolts.", \
@@ -51,7 +53,7 @@
 				return
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name].</span>")
-			deconstruct(TRUE)
+			Dismantle(1)
 
 	else if(istype(W, /obj/item/weapon/pickaxe/drill/jackhammer))
 		var/obj/item/weapon/pickaxe/drill/jackhammer/D = W
@@ -63,18 +65,22 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored)
-		playsound(loc, W.usesound, 40, 1)
+		playsound(loc, 'sound/items/Welder.ogg', 40, 1)
 		user.visible_message("[user] is slicing apart the [name].", \
 							 "<span class='notice'>You are slicing apart the [name]...</span>")
-		if(do_after(user, 40*W.toolspeed, target = src))
+		if(do_after(user, 40/W.toolspeed, target = src))
 			if(!src.loc)
 				return
 			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			user.visible_message("[user] slices apart the [name].", \
 								 "<span class='notice'>You slice apart the [name]!</span>")
-			deconstruct(TRUE)
+			Dismantle(1)
 	else
 		return ..()
+
+/obj/structure/statue/attacked_by(obj/item/I, mob/living/user)
+	..()
+	take_damage(I.force, I.damtype)
 
 /obj/structure/statue/attack_hand(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -82,28 +88,72 @@
 	user.visible_message("[user] rubs some dust off from the [name]'s surface.", \
 						 "<span class='notice'>You rub some dust off from the [name]'s surface.</span>")
 
-/obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(material_drop_type)
-			var/drop_amt = oreAmount
-			if(!disassembled)
-				drop_amt -= 2
-			if(drop_amt > 0)
-				new material_drop_type(get_turf(src), drop_amt)
+/obj/structure/statue/CanAtmosPass()
+	return !density
+
+/obj/structure/statue/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
+
+/obj/structure/statue/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 40, 1)
+		else
+			return
+	health -= damage
+	if(health <= 0)
+		Dismantle(1)
+
+/obj/structure/statue/proc/Dismantle(devastated = 0)
+	if(!devastated)
+		if (mineralType == "metal")
+			var/ore = /obj/item/stack/sheet/metal
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		else
+			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+			for(var/i = 1, i <= oreAmount, i++)
+				new ore(get_turf(src))
+	else
+		if (mineralType == "metal")
+			var/ore = /obj/item/stack/sheet/metal
+			for(var/i = 3, i <= oreAmount, i++)
+				new ore(get_turf(src))
+		else
+			var/ore = text2path("/obj/item/stack/sheet/mineral/[mineralType]")
+			for(var/i = 3, i <= oreAmount, i++)
+				new ore(get_turf(src))
 	qdel(src)
+
+/obj/structure/statue/ex_act(severity = 1)
+	switch(severity)
+		if(1)
+			Dismantle(1)
+		if(2)
+			take_damage(rand(60,110), BRUTE, 0)
+		if(3)
+			take_damage(10, BRUTE, 0)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
-	obj_integrity = 300
+	health = 300
 	luminosity = 2
-	material_drop_type = /obj/item/stack/sheet/mineral/uranium
+	mineralType = "uranium"
 	var/last_event = 0
 	var/active = null
 
 /obj/structure/statue/uranium/nuke
-	name = "statue of a nuclear fission explosive"
+	name = "Statue of a Nuclear Fission Explosive"
 	desc = "This is a grand statue of a Nuclear Explosive. It has a sickening green colour."
 	icon_state = "nuke"
 
@@ -141,12 +191,12 @@
 ////////////////////////////plasma///////////////////////////////////////////////////////////////////////
 
 /obj/structure/statue/plasma
-	obj_integrity = 200
-	material_drop_type = /obj/item/stack/sheet/mineral/plasma
+	health = 200
+	mineralType = "plasma"
 	desc = "This statue is suitably made from plasma."
 
 /obj/structure/statue/plasma/scientist
-	name = "statue of a scientist"
+	name = "Statue of a Scientist"
 	icon_state = "sci"
 
 /obj/structure/statue/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -181,7 +231,7 @@
 
 /obj/structure/statue/plasma/proc/PlasmaBurn()
 	atmos_spawn_air("plasma=400;TEMP=1000")
-	deconstruct(FALSE)
+	Dismantle(1)
 
 /obj/structure/statue/plasma/proc/ignite(exposed_temperature)
 	if(exposed_temperature > 300)
@@ -190,86 +240,86 @@
 //////////////////////gold///////////////////////////////////////
 
 /obj/structure/statue/gold
-	obj_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/gold
+	health = 300
+	mineralType = "gold"
 	desc = "This is a highly valuable statue made from gold."
 
 /obj/structure/statue/gold/hos
-	name = "statue of the head of security"
+	name = "Statue of the Head of Security"
 	icon_state = "hos"
 
 /obj/structure/statue/gold/hop
-	name = "statue of the head of personnel"
+	name = "Statue of the Head of Personnel"
 	icon_state = "hop"
 
 /obj/structure/statue/gold/cmo
-	name = "statue of the chief medical officer"
+	name = "Statue of the Chief Medical Officer"
 	icon_state = "cmo"
 
 /obj/structure/statue/gold/ce
-	name = "statue of the chief engineer"
+	name = "Statue of the Chief Engineer"
 	icon_state = "ce"
 
 /obj/structure/statue/gold/rd
-	name = "statue of the research director"
+	name = "Statue of the Research Director"
 	icon_state = "rd"
 
 //////////////////////////silver///////////////////////////////////////
 
 /obj/structure/statue/silver
-	obj_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/silver
+	health = 300
+	mineralType = "silver"
 	desc = "This is a valuable statue made from silver."
 
 /obj/structure/statue/silver/md
-	name = "statue of a medical officer"
+	name = "Statue of a Medical Officer"
 	icon_state = "md"
 
 /obj/structure/statue/silver/janitor
-	name = "statue of a janitor"
+	name = "Statue of a Janitor"
 	icon_state = "jani"
 
 /obj/structure/statue/silver/sec
-	name = "statue of a security officer"
+	name = "Statue of a Security Officer"
 	icon_state = "sec"
 
 /obj/structure/statue/silver/secborg
-	name = "statue of a security cyborg"
+	name = "Statue of a Security Cyborg"
 	icon_state = "secborg"
 
 /obj/structure/statue/silver/medborg
-	name = "statue of a medical cyborg"
+	name = "Statue of a Medical Cyborg"
 	icon_state = "medborg"
 
 /////////////////////////diamond/////////////////////////////////////////
 
 /obj/structure/statue/diamond
-	obj_integrity = 1000
-	material_drop_type = /obj/item/stack/sheet/mineral/diamond
+	health = 1000
+	mineralType = "diamond"
 	desc = "This is a very expensive diamond statue"
 
 /obj/structure/statue/diamond/captain
-	name = "statue of THE captain."
+	name = "Statue of THE Captain."
 	icon_state = "cap"
 
 /obj/structure/statue/diamond/ai1
-	name = "statue of the AI hologram."
+	name = "Statue of the AI hologram."
 	icon_state = "ai1"
 
 /obj/structure/statue/diamond/ai2
-	name = "statue of the AI core."
+	name = "Statue of the AI core."
 	icon_state = "ai2"
 
 ////////////////////////bananium///////////////////////////////////////
 
 /obj/structure/statue/bananium
-	obj_integrity = 300
-	material_drop_type = /obj/item/stack/sheet/mineral/bananium
+	health = 300
+	mineralType = "bananium"
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	var/spam_flag = 0
 
 /obj/structure/statue/bananium/clown
-	name = "statue of a clown"
+	name = "Statue of a clown"
 	icon_state = "clown"
 
 /obj/structure/statue/bananium/Bumped(atom/user)
@@ -298,26 +348,19 @@
 /////////////////////sandstone/////////////////////////////////////////
 
 /obj/structure/statue/sandstone
-	obj_integrity = 50
-	material_drop_type = /obj/item/stack/sheet/mineral/sandstone
+	health = 50
+	mineralType = "sandstone"
 
 /obj/structure/statue/sandstone/assistant
-	name = "statue of an assistant"
+	name = "Statue of an assistant"
 	desc = "A cheap statue of sandstone for a greyshirt."
 	icon_state = "assist"
-
-
-/obj/structure/statue/sandstone/venus //call me when we add marble i guess
-	name = "statue of a pure maiden"
-	desc = "An ancient marble statue. The subject is depicted with a floor-length braid and is wielding a toolbox. By Jove, it's easily the most gorgeous depiction of a woman you've ever seen. The artist must truly be a master of his craft. Shame about the broken arm, though."
-	icon = 'icons/obj/statuelarge.dmi'
-	icon_state = "venus"
 
 /////////////////////snow/////////////////////////////////////////
 
 /obj/structure/statue/snow
-	obj_integrity = 50
-	material_drop_type = /obj/item/stack/sheet/mineral/snow
+	health = 50
+	mineralType = "snow"
 
 /obj/structure/statue/snow/snowman
 	name = "snowman"

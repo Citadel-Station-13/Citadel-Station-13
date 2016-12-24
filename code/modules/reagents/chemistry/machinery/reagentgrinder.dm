@@ -9,7 +9,6 @@
 		idle_power_usage = 5
 		active_power_usage = 100
 		pass_flags = PASSTABLE
-		resistance_flags = ACID_PROOF
 		var/operating = 0
 		var/obj/item/weapon/reagent_containers/beaker = null
 		var/limit = 10
@@ -27,7 +26,7 @@
 				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
 				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
 				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
-				/obj/item/weapon/grown/nettle/death = list("facid" = 0, "sacid" = 0),
+				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
 				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
 
 				//Blender Stuff
@@ -47,7 +46,6 @@
 
 
 				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
-				/obj/item/slime_extract = list(),
 				/obj/item/weapon/reagent_containers/pill = list(),
 				/obj/item/weapon/reagent_containers/food = list(),
 				/obj/item/weapon/reagent_containers/honeycomb = list()
@@ -70,9 +68,6 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/apple = list("applejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = list("grapejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = list("grapejuice" = 0),
 		)
 
 		var/list/dried_items = list(
@@ -86,36 +81,14 @@
 		var/list/holdingitems = list()
 
 /obj/machinery/reagentgrinder/New()
-	..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
-
-/obj/machinery/reagentgrinder/Destroy()
-	if(beaker)
-		qdel(beaker)
-		beaker = null
-	return ..()
-
-/obj/machinery/reagentgrinder/contents_explosion(severity, target)
-	if(beaker)
-		beaker.ex_act(severity, target)
-
-/obj/machinery/reagentgrinder/handle_atom_del(atom/A)
-	..()
-	if(A == beaker)
-		beaker = null
-		update_icon()
-		updateUsrDialog()
-
-/obj/machinery/reagentgrinder/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
+		..()
+		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		return
 
 /obj/machinery/reagentgrinder/update_icon()
-	if(beaker)
-		icon_state = "juicer1"
-	else
-		icon_state = "juicer0"
+		icon_state = "juicer"+num2text(!isnull(beaker))
+		return
+
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
 		if(default_unfasten_wrench(user, I))
@@ -161,7 +134,7 @@
 				return 1
 
 		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				if(user.a_intent == INTENT_HARM)
+				if(user.a_intent == "harm")
 						return ..()
 				else
 						user << "<span class='warning'>Cannot refine into a reagent!</span>"
@@ -430,18 +403,6 @@
 
 						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 								break
-				remove_object(O)
-
-		//Slime Extractis
-		for (var/obj/item/slime_extract/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-				if (O.reagents != null)
-						var/amount = O.reagents.total_volume
-						O.reagents.trans_to(beaker, min(amount, space))
-				if (O.Uses > 0)
-						beaker.reagents.add_reagent("slimejelly",min(20, space))
 				remove_object(O)
 
 		//Everything else - Transfers reagents from it into beaker

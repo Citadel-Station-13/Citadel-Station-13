@@ -8,7 +8,6 @@
 	circuit = /obj/item/weapon/circuitboard/computer/pandemic
 	use_power = 1
 	idle_power_usage = 20
-	resistance_flags = ACID_PROOF
 	var/temp_html = ""
 	var/wait = null
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -47,7 +46,7 @@
 	wait = 1
 	update_icon()
 	spawn(waittime)
-		wait = null
+		src.wait = null
 		update_icon()
 		playsound(src.loc, 'sound/machines/ping.ogg', 30, 1)
 
@@ -97,8 +96,8 @@
 					B.reagents.add_reagent("vaccine", 15, list(vaccine_type))
 					replicator_cooldown(200)
 		else
-			temp_html = "The replicator is not ready yet."
-		updateUsrDialog()
+			src.temp_html = "The replicator is not ready yet."
+		src.updateUsrDialog()
 		return
 	else if (href_list["create_virus_culture"])
 		if(!wait)
@@ -126,31 +125,24 @@
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood",20,data)
-			updateUsrDialog()
+			src.updateUsrDialog()
 		else
-			temp_html = "The replicator is not ready yet."
-		updateUsrDialog()
+			src.temp_html = "The replicator is not ready yet."
+		src.updateUsrDialog()
 		return
 	else if (href_list["empty_beaker"])
 		beaker.reagents.clear_reagents()
-		updateUsrDialog()
+		src.updateUsrDialog()
 		return
 	else if (href_list["eject"])
-		beaker.forceMove(get_turf(loc))
+		beaker:loc = src.loc
 		beaker = null
 		icon_state = "mixer0"
-		updateUsrDialog()
-		return
-	else if (href_list["emptyeject_beaker"])
-		beaker.reagents.clear_reagents()
-		beaker.forceMove(get_turf(loc))
-		beaker = null
-		icon_state = "mixer0"
-		updateUsrDialog()
+		src.updateUsrDialog()
 		return
 	else if(href_list["clear"])
-		temp_html = ""
-		updateUsrDialog()
+		src.temp_html = ""
+		src.updateUsrDialog()
 		return
 	else if(href_list["name_disease"])
 		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
@@ -164,15 +156,15 @@
 			A.AssignName(new_name)
 			for(var/datum/disease/advance/AD in SSdisease.processing)
 				AD.Refresh()
-		updateUsrDialog()
+		src.updateUsrDialog()
 
 
 	else
 		usr << browse(null, "window=pandemic")
-		updateUsrDialog()
+		src.updateUsrDialog()
 		return
 
-	add_fingerprint(usr)
+	src.add_fingerprint(usr)
 	return
 
 /obj/machinery/computer/pandemic/attack_hand(mob/user)
@@ -180,7 +172,7 @@
 		return
 	user.set_machine(src)
 	var/dat = ""
-	if(temp_html)
+	if(src.temp_html)
 		dat = "[src.temp_html]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
 	else if(!beaker)
 		dat += "Please insert beaker.<BR>"
@@ -227,12 +219,9 @@
 							dat += "<b>Description: </b> [(D.desc||"none")]<BR>"
 							dat += "<b>Spread:</b> [(D.spread_text||"none")]<BR>"
 							dat += "<b>Possible cure:</b> [(D.cure_text||"none")]<BR><BR>"
+
 							if(istype(D, /datum/disease/advance))
 								var/datum/disease/advance/A = D
-								dat += "<b>Stealth:</b> [(A.totalStealth())]<BR>"
-								dat += "<b>Resistance:</b> [(A.totalResistance())]<BR>"
-								dat += "<b>Stage Speed:</b> [(A.totalStageSpeed())]<BR>"
-								dat += "<b>Transmission:</b> [(A.totalTransmittable())]<BR><BR>"
 								dat += "<b>Symptoms:</b> "
 								var/english_symptoms = list()
 								for(var/datum/symptom/S in A.symptoms)
@@ -268,8 +257,7 @@
 					dat += "nothing<BR>"
 			else
 				dat += "nothing<BR>"
-		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]"
-		dat += "[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];emptyeject_beaker=1'>Empty and Eject beaker</A>":"")]<BR>"
+		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
@@ -291,12 +279,12 @@
 		beaker =  I
 		beaker.loc = src
 		user << "<span class='notice'>You add the beaker to the machine.</span>"
-		updateUsrDialog()
+		src.updateUsrDialog()
 		icon_state = "mixer1"
 	else
 		return ..()
 
-/obj/machinery/computer/pandemic/on_deconstruction()
+/obj/machinery/computer/pandemic/deconstruction()
 	if(beaker)
 		beaker.loc = get_turf(src)
 	..()

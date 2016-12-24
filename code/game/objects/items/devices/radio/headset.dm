@@ -24,8 +24,8 @@
 
 /obj/item/device/radio/headset/talk_into(mob/living/M, message, channel, list/spans)
 	if (!listening)
-		return ITALICS | REDUCE_RANGE
-	return ..()
+		return
+	..()
 
 /obj/item/device/radio/headset/receive_range(freq, level, AIuser)
 	if(ishuman(src.loc))
@@ -173,9 +173,8 @@
 
 /obj/item/device/radio/headset/headset_cargo/mining
 	name = "mining radio headset"
-	desc = "Headset used by shaft miners. \nTo access the supply channel, use :u. For science, use :n."
+	desc = "Headset used by shaft miners. \nTo access the supply channel, use :u."
 	icon_state = "mine_headset"
-	keyslot = new /obj/item/device/encryptionkey/headset_mining
 
 /obj/item/device/radio/headset/headset_srv
 	name = "service radio headset"

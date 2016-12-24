@@ -54,7 +54,7 @@
 
 		// Human check
 		var/human = 0
-		if(ishuman(M))
+		if(istype(M, /mob/living/carbon/human))
 			human = 1
 
 		var/name = M.name
@@ -136,7 +136,7 @@
 /proc/near_camera(mob/living/M)
 	if (!isturf(M.loc))
 		return 0
-	if(iscyborg(M))
+	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
 		if(!(R.camera && R.camera.can_use()) && !cameranet.checkCameraVis(M))
 			return 0

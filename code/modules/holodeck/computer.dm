@@ -25,6 +25,7 @@
 	var/area/holodeck/program
 	var/area/holodeck/last_program
 	var/area/offline_program = /area/holodeck/rec_center/offline
+	light_color = LIGHT_COLOR_CYAN
 
 	var/list/program_cache = list()
 	var/list/emag_programs = list()
@@ -143,14 +144,14 @@
 
 /obj/machinery/computer/holodeck/proc/floorcheck()
 	for(var/turf/T in linked)
-		if(!T.intact || isspaceturf(T))
+		if(!T.intact || istype(T,/turf/open/space))
 			return 0
 	return 1
 
 /obj/machinery/computer/holodeck/Topic(href, list/href_list)
 	if(..())
 		return
-	if(!Adjacent(usr) && !issilicon(usr))
+	if(!Adjacent(usr) && !istype(usr, /mob/living/silicon))
 		return
 	usr.set_machine(src)
 	add_fingerprint(usr)
@@ -204,6 +205,6 @@
 	emergency_shutdown()
 	..()
 
-/obj/machinery/computer/holodeck/blob_act(obj/structure/blob/B)
+/obj/machinery/computer/holodeck/blob_act(obj/effect/blob/B)
 	emergency_shutdown()
 	..()

@@ -11,8 +11,9 @@
 	production = 1
 	yield = -1
 	potency = -1
+	oneharvest = 1
 	growthstages = 4
-	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
+	plant_type = PLANT_WEED
 
 
 // Cabbage
@@ -30,7 +31,6 @@
 	yield = 4
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/replicapod)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
@@ -51,7 +51,6 @@
 	species = "sugarcane"
 	plantname = "Sugarcane"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/sugarcane
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 60
 	endurance = 50
 	maturation = 3
@@ -74,9 +73,8 @@
 	desc = "These seeds grow into .357 revolvers."
 	icon_state = "seed-gatfruit"
 	species = "gatfruit"
-	plantname = "Gatfruit Tree"
+	plantname = "gatfruit"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
-	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	lifespan = 20
 	endurance = 20
 	maturation = 40
@@ -94,7 +92,7 @@
 	desc = "It smells like burning."
 	icon_state = "gatfruit"
 	origin_tech = "combat=6"
-	trash = /obj/item/weapon/gun/ballistic/revolver
+	trash = /obj/item/weapon/gun/projectile/revolver
 	bitesize_mod = 2
 
 //Cherry Bombs
@@ -117,8 +115,6 @@
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
 	volume = 125 //Gives enough room for the black powder at max potency
-	obj_integrity = 40
-	max_integrity = 40
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/attack_self(mob/living/user)
 	var/area/A = get_area(user)
@@ -127,14 +123,12 @@
 	log_game("[user] ([user.key ? user.key : "no key"]) primed a cherry bomb for detonation at [A] ([user.x],[user.y],[user.z]).")
 	prime()
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/deconstruct(disassembled = TRUE)
-	if(!disassembled)
-		prime()
-	if(!qdeleted(src))
-		qdel(src)
+/obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/burn()
+	prime()
+	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
-	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
+	qdel(src) //Ensuring that it's deleted by its own explosion
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
 	icon_state = "cherry_bomb_lit"

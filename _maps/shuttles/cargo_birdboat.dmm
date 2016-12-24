@@ -1,9 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
 /area/shuttle/supply)
 "b" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
 /area/shuttle/supply)
 "c" = (
 /turf/closed/wall/shuttle{
@@ -23,7 +29,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "f" = (
 /obj/machinery/conveyor{
@@ -31,7 +37,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "g" = (
 /obj/machinery/conveyor{
@@ -39,7 +45,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "h" = (
 /obj/machinery/conveyor{
@@ -47,7 +53,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "i" = (
 /obj/machinery/conveyor{
@@ -55,7 +61,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "j" = (
 /obj/machinery/conveyor{
@@ -63,7 +69,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "k" = (
 /obj/machinery/conveyor{
@@ -71,7 +77,7 @@
 	id = "cargoshuttle";
 	name = "cargo shuttle conveyor belt"
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "l" = (
 /obj/machinery/door/poddoor{
@@ -86,13 +92,13 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "m" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/supply)
 "n" = (
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/supply)
 "o" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -115,10 +121,10 @@
 /obj/machinery/conveyor_switch/oneway{
 	id = "cargoshuttle"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/supply)
 "q" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Supply Shuttle Airlock";
 	req_access_txt = "31"
 	},
@@ -142,7 +148,9 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "s" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc3"
+	},
 /area/shuttle/supply)
 "t" = (
 /turf/closed/wall/shuttle{
@@ -184,15 +192,15 @@
 /area/shuttle/supply)
 
 (1,1,1) = {"
-b
-b
-b
-b
-b
-b
-b
-b
-b
+a
+d
+d
+d
+d
+d
+d
+d
+s
 w
 "}
 (2,1,1) = {"
@@ -204,7 +212,7 @@ m
 m
 m
 g
-b
+t
 x
 "}
 (3,1,1) = {"
@@ -252,18 +260,18 @@ n
 p
 n
 g
-b
+t
 z
 "}
 (7,1,1) = {"
-b
-b
-b
+c
+d
+d
 l
 o
-b
+d
 q
 r
-b
+v
 w
 "}

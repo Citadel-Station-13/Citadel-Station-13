@@ -7,8 +7,7 @@
 	var/turf/teleport_target
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
-	if(!target.buckled)
-		target.forceMove(get_turf(src))
+	target.Move(src.loc)
 
 /obj/machinery/abductor/pad/proc/Send()
 	if(teleport_target == null)
@@ -16,11 +15,13 @@
 	flick("alien-pad", src)
 	for(var/mob/living/target in loc)
 		target.forceMove(teleport_target)
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja, list(get_turf(target), target.dir))
+		spawn(0)
+			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)
-	PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja, list(get_turf(target), target.dir))
+	spawn(0)
+		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 	Warp(target)
 
 /obj/machinery/abductor/pad/proc/MobToLoc(place,mob/living/target)
@@ -28,15 +29,16 @@
 	sleep(80)
 	flick("alien-pad", src)
 	target.forceMove(place)
-	PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja, list(get_turf(target), target.dir))
+	anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 /obj/machinery/abductor/pad/proc/PadToLoc(place)
 	PoolOrNew(/obj/effect/overlay/temp/teleport_abductor, place)
 	sleep(80)
 	flick("alien-pad", src)
-	for(var/mob/living/target in get_turf(src))
+	for(var/mob/living/target in src.loc)
 		target.forceMove(place)
-		PoolOrNew(/obj/effect/overlay/temp/dir_setting/ninja, list(get_turf(target), target.dir))
+		spawn(0)
+			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 
 /obj/effect/overlay/temp/teleport_abductor

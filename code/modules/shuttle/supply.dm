@@ -1,8 +1,8 @@
 var/list/blacklisted_cargo_types = typecacheof(list(
 		/mob/living,
-		/obj/structure/blob,
+		/obj/effect/blob,
 		/obj/effect/rune,
-		/obj/structure/spider/spiderling,
+		/obj/effect/spider/spiderling,
 		/obj/item/weapon/disk/nuclear,
 		/obj/machinery/nuclearbomb,
 		/obj/item/device/radio/beacon,
@@ -10,7 +10,6 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		/obj/machinery/teleport/station,
 		/obj/machinery/teleport/hub,
 		/obj/machinery/telepad,
-		/obj/machinery/quantumpad,
 		/obj/machinery/clonepod,
 		/obj/effect/mob_spawn
 	))
@@ -21,7 +20,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	callTime = 600
 
 	dir = WEST
-	port_angle = 90
+	travelDir = 90
 	width = 12
 	dwidth = 5
 	height = 7
@@ -45,8 +44,8 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		var/turf/T = trf
 		for(var/a in T.GetAllContents())
 			if(is_type_in_typecache(a, blacklisted_cargo_types))
-				return FALSE
-	return TRUE
+				return TRUE
+	return FALSE
 
 /obj/docking_port/mobile/supply/request()
 	if(mode != SHUTTLE_IDLE)

@@ -1,4 +1,4 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /*
  * A large number of misc global procs.
@@ -337,7 +337,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		moblist.Add(M)
 	for(var/mob/living/carbon/human/M in sortmob)
 		moblist.Add(M)
-	for(var/mob/living/brain/M in sortmob)
+	for(var/mob/living/carbon/brain/M in sortmob)
 		moblist.Add(M)
 	for(var/mob/living/carbon/alien/M in sortmob)
 		moblist.Add(M)
@@ -358,6 +358,41 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	for(var/mob/living/carbon/true_devil/M in sortmob)
 		moblist.Add(M)
 	return moblist
+
+/var/mob/dview/dview_mob = new
+
+//Version of view() which ignores darkness, because BYOND doesn't have it (I actually suggested it but it was tagged redundant, BUT HEARERS IS A T- /rant).
+/proc/dview(var/range = world.view, var/center, var/invis_flags = 0)
+	if(!center)
+		return
+
+	dview_mob.forceMove(center)
+
+	dview_mob.see_invisible = invis_flags
+
+	. = view(range, dview_mob)
+	dview_mob.forceMove(null)
+
+/mob/dview
+	invisibility = 101
+	density = 0
+	see_in_dark = 1e6
+	anchored = 1
+
+// Finds ALL mobs on turfs in line of sight. Similar to "in dview", but catches mobs that are not on a turf (e.g. inside a locker or such).
+/proc/get_all_mobs_in_dview(var/turf/T, var/range = world.view, var/list/ignore_types = list())
+	. = list()
+	var/list/can_see = dview(range, T)
+	for(var/mob/M in can_see)
+		if(is_type_in_list(M, ignore_types))
+			continue
+		. += M
+	for(var/mob/M in mob_list) //Got the ones in vision, now let's go for the ones not on a turf.
+		if(M.z == 0) //Mobs not on a turf will have XYZ = 0,0,0. They also won't show up in dview() so we're not checking anything twice.
+			if(is_type_in_list(M, ignore_types))
+				continue
+			if(get_turf(M) in can_see) //Checking the mob's turf now, since those are it's "true" coordinates (plus dview() did pick up on turfs, so we can check using that).
+				. += M
 
 //E = MC^2
 /proc/convert2energy(M)
@@ -437,15 +472,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		if(M.ckey == key)
 			return M
 
-//Returns the atom sitting on the turf.
-//For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-//Optional arg 'type' to stop once it reaches a specific type instead of a turf.
-/proc/get_atom_on_turf(atom/movable/M, stop_type)
+// Returns the atom sitting on the turf.
+// For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
+/proc/get_atom_on_turf(atom/movable/M)
 	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
+	while(loc && loc.loc && !istype(loc.loc, /turf/))
 		loc = loc.loc
-		if(stop_type && istype(loc, stop_type))
-			break
 	return loc
 
 // returns the turf located at the map edge in the specified direction relative to A
@@ -498,6 +530,25 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /proc/arctan(x)
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
+
+
+/proc/anim(turf/location,target as mob|obj,a_icon,a_icon_state as text,flick_anim as text,sleeptime = 0,direction as num)
+//This proc throws up either an icon or an animation for a specified amount of time.
+//The variables should be apparent enough.
+	var/atom/movable/overlay/animation = new(location)
+	if(direction)
+		animation.setDir(direction)
+	animation.icon = a_icon
+	animation.layer = target:layer+1
+	if(a_icon_state)
+		animation.icon_state = a_icon_state
+	else
+		animation.icon_state = "blank"
+		animation.master = target
+		flick(flick_anim, animation)
+	sleep(max(sleeptime, 15))
+	qdel(animation)
+
 
 /atom/proc/GetAllContents()
 	var/list/processing_list = list(src)
@@ -608,59 +659,57 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
-/proc/get_areas(areatype, subtypes=TRUE)
+/proc/get_areas(areatype)
+	if(!areatype)
+		return null
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	else if(isarea(areatype))
+	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
-	else if(!ispath(areatype))
-		return null
 
-	var/list/areas = list()
-	if(subtypes)
-		var/list/cache = typecacheof(areatype)
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(cache[A.type])
-				areas += V
-	else
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(A.type == areatype)
-				areas += V
+	var/list/areas = new/list()
+	for(var/area/N in world)
+		if(istype(N, areatype))
+			areas += N
 	return areas
 
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all turfs in areas of that type of that type in the world.
-/proc/get_area_turfs(areatype, target_z = 0, subtypes=FALSE)
+/proc/get_area_turfs(areatype, target_z = 0)
+	if(!areatype)
+		return null
 	if(istext(areatype))
 		areatype = text2path(areatype)
-	else if(isarea(areatype))
+	if(isarea(areatype))
 		var/area/areatemp = areatype
 		areatype = areatemp.type
-	else if(!ispath(areatype))
-		return null
 
-	var/list/turfs = list()
-	if(subtypes)
-		var/list/cache = typecacheof(areatype)
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(!cache[A.type])
-				continue
-			for(var/turf/T in A)
-				if(target_z == 0 || target_z == T.z)
-					turfs += T
-	else
-		for(var/V in sortedAreas)
-			var/area/A = V
-			if(A.type != areatype)
-				continue
-			for(var/turf/T in A)
+	var/list/turfs = new/list()
+	for(var/area/N in world)
+		if(istype(N, areatype))
+			for(var/turf/T in N)
 				if(target_z == 0 || target_z == T.z)
 					turfs += T
 	return turfs
+
+//Takes: Area type as text string or as typepath OR an instance of the area.
+//Returns: A list of all atoms	(objs, turfs, mobs) in areas of that type of that type in the world.
+/proc/get_area_all_atoms(areatype)
+	if(!areatype)
+		return null
+	if(istext(areatype))
+		areatype = text2path(areatype)
+	if(isarea(areatype))
+		var/area/areatemp = areatype
+		areatype = areatemp.type
+
+	var/list/atoms = new/list()
+	for(var/area/N in world)
+		if(istype(N, areatype))
+			for(var/atom/A in N)
+				atoms += A
+	return atoms
 
 /proc/get_cardinal_dir(atom/A, atom/B)
 	var/dx = abs(B.x - A.x)
@@ -708,18 +757,15 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		return zone
 
 /*
-
  Gets the turf this atom's *ICON* appears to inhabit
  It takes into account:
  * Pixel_x/y
  * Matrix x/y
-
  NOTE: if your atom has non-standard bounds then this proc
  will handle it, but:
  * if the bounds are even, then there are an even amount of "middle" turfs, the one to the EAST, NORTH, or BOTH is picked
  (this may seem bad, but you're atleast as close to the center of the atom as possible, better than byond's default loc being all the way off)
  * if the bounds are odd, the true middle turf of the atom is returned
-
 */
 
 /proc/get_turf_pixel(atom/movable/AM)
@@ -798,24 +844,24 @@ var/global/list/common_tools = list(
 
 //For objects that should embed, but make no sense being is_sharp or is_pointed()
 //e.g: rods
-var/list/can_embed_types = typecacheof(list(
-	/obj/item/stack/rods,
-	/obj/item/pipe))
-
 /proc/can_embed(obj/item/W)
 	if(W.is_sharp())
 		return 1
 	if(is_pointed(W))
 		return 1
 
-	if(is_type_in_typecache(W, can_embed_types))
+	var/list/embed_items = list(\
+	/obj/item/stack/rods,\
+	)
+
+	if(is_type_in_list(W, embed_items))
 		return 1
 
 
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = typecacheof(list(
+var/list/WALLITEMS = list(
 	/obj/machinery/power/apc, /obj/machinery/airalarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
@@ -823,22 +869,22 @@ var/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
-	))
+	)
 
-var/list/WALLITEMS_EXTERNAL = typecacheof(list(
-	/obj/machinery/camera, /obj/structure/camera_assembly,
-	/obj/structure/light_construct, /obj/machinery/light))
+var/list/WALLITEMS_EXTERNAL = list(
+	/obj/machinery/camera, /obj/machinery/camera_assembly,
+	/obj/machinery/light_construct, /obj/machinery/light)
 
-var/list/WALLITEMS_INVERSE = typecacheof(list(
-	/obj/structure/light_construct, /obj/machinery/light))
+var/list/WALLITEMS_INVERSE = list(
+	/obj/machinery/light_construct, /obj/machinery/light)
 
 
 /proc/gotwallitem(loc, dir, var/check_external = 0)
 	var/locdir = get_step(loc, dir)
 	for(var/obj/O in loc)
-		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			//Direction works sometimes
-			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -849,8 +895,8 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 			if(get_turf_pixel(O) == locdir)
 				return 1
 
-		if(is_type_in_typecache(O, WALLITEMS_EXTERNAL) && check_external)
-			if(is_type_in_typecache(O, WALLITEMS_INVERSE))
+		if(is_type_in_list(O, WALLITEMS_EXTERNAL) && check_external)
+			if(is_type_in_list(O, WALLITEMS_INVERSE))
 				if(O.dir == turn(dir, 180))
 					return 1
 			else if(O.dir == dir)
@@ -858,7 +904,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in locdir)
-		if(is_type_in_typecache(O, WALLITEMS) && check_external != 2)
+		if(is_type_in_list(O, WALLITEMS) && check_external != 2)
 			if(O.pixel_x == 0 && O.pixel_y == 0)
 				return 1
 	return 0
@@ -929,34 +975,33 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 			return "white"
 
 /proc/params2turf(scr_loc, turf/origin)
-	if(!scr_loc)
-		return null
 	var/tX = splittext(scr_loc, ",")
 	var/tY = splittext(tX[2], ":")
 	var/tZ = origin.z
 	tY = tY[1]
 	tX = splittext(tX[1], ":")
 	tX = tX[1]
-	tX = Clamp(origin.x + text2num(tX) - world.view - 1, 1, world.maxx)
-	tY = Clamp(origin.y + text2num(tY) - world.view - 1, 1, world.maxy)
+	tX = max(1, min(world.maxx, origin.x + (text2num(tX) - (world.view + 1))))
+	tY = max(1, min(world.maxy, origin.y + (text2num(tY) - (world.view + 1))))
 	return locate(tX, tY, tZ)
 
 /proc/screen_loc2turf(text, turf/origin)
-	if(!text)
-		return null
 	var/tZ = splittext(text, ",")
 	var/tX = splittext(tZ[1], "-")
 	var/tY = text2num(tX[2])
 	tX = splittext(tZ[2], "-")
 	tX = text2num(tX[2])
 	tZ = origin.z
-	tX = Clamp(origin.x + 7 - tX, 1, world.maxx)
-	tY = Clamp(origin.y + 7 - tY, 1, world.maxy)
+	tX = max(1, min(origin.x + 7 - tX, world.maxx))
+	tY = max(1, min(origin.y + 7 - tY, world.maxy))
 	return locate(tX, tY, tZ)
 
-/proc/IsValidSrc(datum/D)
-	if(istype(D))
-		return !qdeleted(D)
+/proc/IsValidSrc(A)
+	if(istype(A, /datum))
+		var/datum/B = A
+		return !qdeleted(B)
+	if(istype(A, /client))
+		return 1
 	return 0
 
 
@@ -978,7 +1023,7 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 /proc/is_A_facing_B(atom/A,atom/B)
 	if(!istype(A) || !istype(B))
 		return 0
-	if(isliving(A))
+	if(istype(A, /mob/living))
 		var/mob/living/LA = A
 		if(LA.lying)
 			return 0
@@ -993,7 +1038,6 @@ var/list/WALLITEMS_INVERSE = typecacheof(list(
 
 /*
 rough example of the "cone" made by the 3 dirs checked
-
  B
   \
    \
@@ -1009,8 +1053,66 @@ B --><-- A
     /
    /
  B
-
 */
+
+
+//This is just so you can stop an orbit.
+//orbit() can run without it (swap orbiting for A)
+//but then you can never stop it and that's just silly.
+/atom/movable/var/atom/orbiting = null
+
+//A: atom to orbit
+//radius: range to orbit at, radius of the circle formed by orbiting
+//clockwise: whether you orbit clockwise or anti clockwise
+//rotation_speed: how fast to rotate
+//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
+//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
+//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
+
+/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
+	if(!istype(A))
+		return
+
+	if(orbiting)
+		stop_orbit()
+
+	orbiting = A
+	var/matrix/initial_transform = matrix(transform)
+	var/lastloc = loc
+
+	//Head first!
+	if(pre_rotation)
+		var/matrix/M = matrix(transform)
+		var/pre_rot = 90
+		if(!clockwise)
+			pre_rot = -90
+		M.Turn(pre_rot)
+		transform = M
+
+	var/matrix/shift = matrix(transform)
+	shift.Translate(0,radius)
+	transform = shift
+
+	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
+
+	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
+	transform = initial_transform
+	while(orbiting && orbiting == A && A.loc)
+		var/targetloc = get_turf(A)
+		if(!lockinorbit && loc != lastloc && loc != targetloc)
+			break
+		loc = targetloc
+		lastloc = loc
+		stoplag()
+
+	if (orbiting == A) //make sure we haven't started orbiting something else.
+		orbiting = null
+		SpinAnimation(0,0)
+
+
+
+/atom/movable/proc/stop_orbit()
+	orbiting = null
 
 
 //Center's an image.
@@ -1187,13 +1289,10 @@ B --><-- A
 
 /proc/add_to_proximity_list(atom/A, range)
 	var/turf/T = get_turf(A)
-	if(!T || !A.loc)
-		throw EXCEPTION("Someone adding a prox sensor in nullspace")
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		LAZYINITLIST(C.proximity_checkers)
-		C.proximity_checkers[A] = TRUE
+		C.proximity_checkers |= A
 	return L
 
 /proc/remove_from_proximity_list(atom/A, range)
@@ -1201,11 +1300,7 @@ B --><-- A
 	var/list/L = block(locate(T.x - range, T.y - range, T.z), locate(T.x + range, T.y + range, T.z))
 	for(var/B in L)
 		var/turf/C = B
-		if (!C.proximity_checkers)
-			continue
 		C.proximity_checkers.Remove(A)
-		UNSETEMPTY(C.proximity_checkers)
-
 
 /proc/shift_proximity(atom/checker, atom/A, range, atom/B, newrange)
 	var/turf/T = get_turf(A)
@@ -1218,14 +1313,10 @@ B --><-- A
 	var/list/O = M - L
 	for(var/C in N)
 		var/turf/D = C
-		if (!D.proximity_checkers)
-			continue
 		D.proximity_checkers.Remove(checker)
-		UNSETEMPTY(D.proximity_checkers)
 	for(var/E in O)
 		var/turf/F = E
-		LAZYINITLIST(F.proximity_checkers)
-		F.proximity_checkers[checker] = TRUE
+		F.proximity_checkers |= checker
 	return 1
 
 /proc/flick_overlay_static(image/I, atom/A, duration)
@@ -1238,13 +1329,13 @@ B --><-- A
 
 /proc/get_areas_in_z(zlevel)
 	. = list()
-	var/validarea = FALSE
+	var/validarea = 0
 	for(var/V in sortedAreas)
 		var/area/A = V
-		validarea = TRUE
+		validarea = 1
 		for(var/turf/T in A)
 			if(T.z != zlevel)
-				validarea = FALSE
+				validarea = 0
 				break
 		if(validarea)
 			. += A
@@ -1256,7 +1347,7 @@ B --><-- A
 		if(!istype(A, type))
 			continue
 		var/distance = get_dist(source, A)
-		if(!closest_atom)
+		if(!closest_distance)
 			closest_distance = distance
 			closest_atom = A
 		else
@@ -1265,14 +1356,9 @@ B --><-- A
 				closest_atom = A
 	return closest_atom
 
-
-proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
-	if (value == FALSE) //nothing should be calling us with a number, so this is safe
-		value = input("Enter type to find (blank for all, cancel to cancel)", "Search for type") as null|text
-		if (isnull(value))
-			return
-	value = trim(value)
-	if(!isnull(value) && value != "")
+proc/pick_closest_path(value)
+	var/list/matches = get_fancy_list_of_types()
+	if (!isnull(value) && value!="")
 		matches = filter_fancy_list(matches, value)
 
 	if(matches.len==0)
@@ -1282,7 +1368,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	if(matches.len==1)
 		chosen = matches[1]
 	else
-		chosen = input("Select a type", "Pick Type", matches[1]) as null|anything in matches
+		chosen = input("Select an atom type", "Spawn Atom", matches[1]) as null|anything in matches
 		if(!chosen)
 			return
 	chosen = matches[chosen]
@@ -1293,23 +1379,17 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 	CRASH(msg)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
-
-//Increases delay as the server gets more overloaded,
-//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
-
 /proc/stoplag()
-	. = round(1*DELTA_CALC)
+	. = 1
 	sleep(world.tick_lag)
 	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += round(2*DELTA_CALC)
-		sleep(world.tick_lag*2*DELTA_CALC)
+		. += 2
+		sleep(world.tick_lag*2)
 		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += round(4*DELTA_CALC)
-			sleep(world.tick_lag*4*DELTA_CALC)
+			. += 4
+			sleep(world.tick_lag*4)
 			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
 			//	not worth it.
-#undef DELTA_CALC
 
 /proc/flash_color(mob_or_client, flash_color="#960000", flash_time=20)
 	var/client/C
@@ -1331,7 +1411,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
-#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, TIMER_NORMAL, item)
+#define QDEL_IN(item, time) addtimer(GLOBAL_PROC, "qdel", time, FALSE, item)
 
 /proc/check_for_cleanbot_bug()
 	var/static/admins_warned //bet you didn't know you could do this!
@@ -1359,11 +1439,10 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		str = "0" + str
 	. = str
 
-/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
-	var/initialpixelx = pixel_x
-	var/initialpixely = pixel_y
-	var/shiftx = rand(-pixelshiftx,pixelshiftx)
-	var/shifty = rand(-pixelshifty,pixelshifty)
-	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
-	pixel_x = initialpixelx
-	pixel_y = initialpixely
+/proc/trange(var/Dist = 0, var/turf/Center = null)
+	if (isnull(Center))
+		return
+
+	var/turf/x1y1 = locate(((Center.x - Dist) < 1 ? 1 : Center.x - Dist), ((Center.y - Dist) < 1 ? 1 : Center.y - Dist), Center.z)
+	var/turf/x2y2 = locate(((Center.x + Dist) > world.maxx ? world.maxx : Center.x + Dist), ((Center.y + Dist) > world.maxy ? world.maxy : Center.y + Dist), Center.z)
+	return block(x1y1, x2y2)

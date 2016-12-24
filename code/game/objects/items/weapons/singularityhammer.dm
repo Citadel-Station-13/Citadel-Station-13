@@ -9,11 +9,9 @@
 	force_wielded = 20
 	throwforce = 15
 	throw_range = 1
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	var/charged = 5
 	origin_tech = "combat=4;bluespace=4;plasmatech=7"
-	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 50, bio = 0, rad = 0, fire = 100, acid = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/twohanded/singularityhammer/New()
 	..()
@@ -35,14 +33,12 @@
 /obj/item/weapon/twohanded/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
 		if(istype(X, /atom/movable))
-			var/atom/movable/A = X
-			if(A == wielder)
-				continue
-			if(A && !A.anchored && !ishuman(X))
-				step_towards(A,pull)
-				step_towards(A,pull)
-				step_towards(A,pull)
-			else if(ishuman(X))
+			if(X == wielder) continue
+			if((X) &&(!X:anchored) && (!istype(X,/mob/living/carbon/human)))
+				step_towards(X,pull)
+				step_towards(X,pull)
+				step_towards(X,pull)
+			else if(istype(X,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = X
 				if(istype(H.shoes,/obj/item/clothing/shoes/magboots))
 					var/obj/item/clothing/shoes/magboots/M = H.shoes
@@ -61,7 +57,7 @@
 			charged = 0
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
-				Z.take_bodypart_damage(20,0)
+				Z.take_organ_damage(20,0)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, 1)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
@@ -77,7 +73,7 @@
 	force_wielded = 25
 	throwforce = 30
 	throw_range = 7
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	//var/charged = 5
 	origin_tech = "combat=4;powerstorage=7"
 
@@ -103,7 +99,7 @@
 
 /obj/item/weapon/twohanded/mjollnir/throw_impact(atom/target)
 	. = ..()
-	if(isliving(target))
+	if(istype(target, /mob/living))
 		var/mob/living/L = target
 		L.Stun(3)
 		shock(L)

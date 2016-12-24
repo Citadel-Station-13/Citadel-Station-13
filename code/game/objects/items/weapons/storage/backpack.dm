@@ -14,14 +14,17 @@
 	desc = "You wear this on your back and put items into it."
 	icon_state = "backpack"
 	item_state = "backpack"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	slot_flags = SLOT_BACK	//ERROOOOO
-	max_w_class = WEIGHT_CLASS_NORMAL
+	max_w_class = 3
 	max_combined_w_class = 21
 	storage_slots = 21
-	resistance_flags = 0
-	obj_integrity = 300
-	max_integrity = 300
+	burn_state = FLAMMABLE
+	burntime = 20
+
+/obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
+	playsound(src.loc, "rustle", 50, 1, -5)
+	return ..()
 
 /*
  * Backpack Types
@@ -32,16 +35,14 @@
 	desc = "A backpack that opens into a localized pocket of Blue Space."
 	origin_tech = "bluespace=5;materials=4;engineering=4;plasmatech=5"
 	icon_state = "holdingpack"
-	max_w_class = WEIGHT_CLASS_GIGANTIC
+	max_w_class = 6
 	max_combined_w_class = 35
-	resistance_flags = FIRE_PROOF
+	burn_state = FIRE_PROOF
 	var/pshoom = 'sound/items/PSHOOM.ogg'
 	var/alt_sound = 'sound/items/PSHOOM_2.ogg'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
-
 
 /obj/item/weapon/storage/backpack/holding/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like \he's trying to commit suicide.</span>")
 	user.drop_item()
 	user.Stun(5)
 	sleep(20)
@@ -57,7 +58,7 @@
 					playsound(src, alt_sound, 40, 1)
 				else
 					playsound(src, pshoom, 40, 1)
-				user.Beam(dest_object,icon_state="rped_upgrade",time=5)
+				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 				return 1
 		user << "The [src.name] buzzes."
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
@@ -91,12 +92,12 @@
 	desc = "Space Santa uses this to deliver toys to all the nice children in space in Christmas! Wow, it's pretty big!"
 	icon_state = "giftbag0"
 	item_state = "giftbag"
-	w_class = WEIGHT_CLASS_BULKY
-	max_w_class = WEIGHT_CLASS_NORMAL
+	w_class = 4
+	max_w_class = 3
 	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places [src] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
+	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/storage/backpack/cultpack
@@ -140,14 +141,14 @@
 	desc = "It's a special backpack made exclusively for Nanotrasen officers."
 	icon_state = "captainpack"
 	item_state = "captainpack"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/industrial
 	name = "industrial backpack"
 	desc = "It's a tough backpack for the daily grind of station life."
 	icon_state = "engiepack"
 	item_state = "engiepack"
-	resistance_flags = FIRE_PROOF
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/botany
 	name = "botany backpack"
@@ -172,7 +173,7 @@
 	desc = "A specially designed backpack. It's fire resistant and smells vaguely of plasma."
 	icon_state = "toxpack"
 	item_state = "toxpack"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/virology
 	name = "virology backpack"
@@ -186,94 +187,93 @@
  */
 
 /obj/item/weapon/storage/backpack/satchel
-	name = "satchel"
-	desc = "A trendy looking satchel."
-	icon_state = "satchel-norm"
-	species_exception = list(/datum/species/angel) //satchels can be equipped since they are on the side, not back
-
-/obj/item/weapon/storage/backpack/satchel/leather
 	name = "leather satchel"
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel/leather/withwallet/New()
+/obj/item/weapon/storage/backpack/satchel/withwallet/New()
 	..()
 	new /obj/item/weapon/storage/wallet/random( src )
 
-/obj/item/weapon/storage/backpack/satchel/eng
+/obj/item/weapon/storage/backpack/satchel_norm
+	name = "satchel"
+	desc = "A trendy looking satchel."
+	icon_state = "satchel-norm"
+
+/obj/item/weapon/storage/backpack/satchel_eng
 	name = "industrial satchel"
 	desc = "A tough satchel with extra pockets."
 	icon_state = "satchel-eng"
 	item_state = "engiepack"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel/med
+/obj/item/weapon/storage/backpack/satchel_med
 	name = "medical satchel"
 	desc = "A sterile satchel used in medical departments."
 	icon_state = "satchel-med"
 	item_state = "medicalpack"
 
-/obj/item/weapon/storage/backpack/satchel/vir
+/obj/item/weapon/storage/backpack/satchel_vir
 	name = "virologist satchel"
 	desc = "A sterile satchel with virologist colours."
 	icon_state = "satchel-vir"
 	item_state = "satchel-vir"
 
-/obj/item/weapon/storage/backpack/satchel/chem
+/obj/item/weapon/storage/backpack/satchel_chem
 	name = "chemist satchel"
 	desc = "A sterile satchel with chemist colours."
 	icon_state = "satchel-chem"
 	item_state = "satchel-chem"
 
-/obj/item/weapon/storage/backpack/satchel/gen
+/obj/item/weapon/storage/backpack/satchel_gen
 	name = "geneticist satchel"
 	desc = "A sterile satchel with geneticist colours."
 	icon_state = "satchel-gen"
 	item_state = "satchel-gen"
 
-/obj/item/weapon/storage/backpack/satchel/tox
+/obj/item/weapon/storage/backpack/satchel_tox
 	name = "scientist satchel"
 	desc = "Useful for holding research materials."
 	icon_state = "satchel-tox"
 	item_state = "satchel-tox"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel/hyd
+/obj/item/weapon/storage/backpack/satchel_hyd
 	name = "botanist satchel"
 	desc = "A satchel made of all natural fibers."
 	icon_state = "satchel-hyd"
 	item_state = "satchel-hyd"
 
-/obj/item/weapon/storage/backpack/satchel/sec
+/obj/item/weapon/storage/backpack/satchel_sec
 	name = "security satchel"
 	desc = "A robust satchel for security related needs."
 	icon_state = "satchel-sec"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel/explorer
+/obj/item/weapon/storage/backpack/satchel_explorer
 	name = "explorer satchel"
 	desc = "A robust satchel for stashing your loot."
 	icon_state = "satchel-explorer"
 	item_state = "securitypack"
 
-/obj/item/weapon/storage/backpack/satchel/cap
+/obj/item/weapon/storage/backpack/satchel_cap
 	name = "captain's satchel"
 	desc = "An exclusive satchel for Nanotrasen officers."
 	icon_state = "satchel-cap"
 	item_state = "captainpack"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/satchel/flat
+/obj/item/weapon/storage/backpack/satchel_flat
 	name = "smuggler's satchel"
 	desc = "A very slim satchel that can easily fit into tight spaces."
 	icon_state = "satchel-flat"
-	w_class = WEIGHT_CLASS_NORMAL //Can fit in backpacks itself.
+	w_class = 3 //Can fit in backpacks itself.
 	max_combined_w_class = 15
 	level = 1
-	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
+	cant_hold = list(/obj/item/weapon/storage/backpack/satchel_flat) //muh recursive backpacks
 
-/obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
+/obj/item/weapon/storage/backpack/satchel_flat/hide(var/intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
 		anchored = 1 //otherwise you can start pulling, cover it, and drag around an invisible backpack.
@@ -283,36 +283,10 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/backpack/satchel/flat/New()
+/obj/item/weapon/storage/backpack/satchel_flat/New()
 	..()
-	PoolOrNew(/obj/item/stack/tile/plasteel, src)
+	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
-	SSpersistence.new_secret_satchels += src
-
-/obj/item/weapon/storage/backpack/satchel/flat/Destroy()
-	SSpersistence.new_secret_satchels -= src
-	return ..()
-
-/obj/item/weapon/storage/backpack/satchel/flat/secret
-	var/list/reward_one_of_these = list() //Intended for map editing
-	var/list/reward_all_of_these = list() //use paths!
-	var/revealed = 0
-
-/obj/item/weapon/storage/backpack/satchel/flat/secret/New()
-	..()
-
-	if(isfloorturf(loc) && !istype(loc,/turf/open/floor/plating/))
-		hide(1)
-
-/obj/item/weapon/storage/backpack/satchel/flat/secret/hide(intact)
-	..()
-	if(!intact && !revealed)
-		if(reward_one_of_these.len > 0)
-			var/reward = pick(reward_one_of_these)
-			new reward(src)
-		for(var/R in reward_all_of_these)
-			new R(src)
-		revealed = 1
 
 /obj/item/weapon/storage/backpack/dufflebag
 	name = "dufflebag"
@@ -327,7 +301,7 @@
 	desc = "A large dufflebag for holding extra captainly goods."
 	icon_state = "duffle-captain"
 	item_state = "duffle-captain"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/dufflebag/med
 	name = "medical dufflebag"
@@ -346,14 +320,14 @@
 	desc = "A large dufflebag for holding extra tools and supplies."
 	icon_state = "duffle-eng"
 	item_state = "duffle-eng"
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/dufflebag/drone
 	name = "drone dufflebag"
 	desc = "A large dufflebag for holding tools and hats."
 	icon_state = "duffle-drone"
 	item_state = "duffle-drone"
-	resistance_flags = FIRE_PROOF
+	burn_state = FIRE_PROOF
 
 /obj/item/weapon/storage/backpack/dufflebag/drone/New()
 	..()
@@ -381,7 +355,7 @@
 	name = "suspicious looking dufflebag"
 	desc = "A large dufflebag for holding extra tactical supplies."
 	icon_state = "duffle-syndie"
-	item_state = "duffle-syndie"
+	item_state = "duffle-syndiemed"
 	origin_tech = "syndicate=1"
 	silent = 1
 	slowdown = 0
@@ -450,7 +424,7 @@
 	contents = list()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
-	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 	return
 
@@ -461,7 +435,7 @@
 	..()
 	contents = list()
 	new /obj/item/ammo_box/magazine/m12g(src)
-	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
+	new /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	return
@@ -474,7 +448,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -486,7 +460,7 @@
 	contents = list()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
-	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
+	new /obj/item/weapon/gun/projectile/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	return
 
@@ -499,7 +473,7 @@
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
-	new /obj/item/weapon/gun/ballistic/automatic/c20r/toy(src)
+	new /obj/item/weapon/gun/projectile/automatic/c20r/toy(src)
 	new /obj/item/weapon/storage/box/syringes(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
@@ -526,7 +500,7 @@
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/weapon/gun/ballistic/automatic/pistol/APS(src)
+	new /obj/item/weapon/gun/projectile/automatic/pistol/APS(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/ammo_box/magazine/pistolm9mm(src)
 	new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka(src)

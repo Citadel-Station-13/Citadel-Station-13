@@ -4,7 +4,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "flashlight"
 	item_state = "flashlight"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=50, MAT_GLASS=20)
@@ -14,30 +14,19 @@
 
 /obj/item/device/flashlight/initialize()
 	..()
-	if(on)
-		icon_state = "[initial(icon_state)]-on"
-		SetLuminosity(brightness_on)
-	else
-		icon_state = initial(icon_state)
-		SetLuminosity(0)
+	update_brightness()
 
-/obj/item/device/flashlight/proc/update_brightness(mob/user = null)
+/obj/item/device/flashlight/proc/update_brightness()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		if(loc == user)
-			user.AddLuminosity(brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(brightness_on)
+		set_light(brightness_on)
 	else
 		icon_state = initial(icon_state)
-		if(loc == user)
-			user.AddLuminosity(-brightness_on)
-		else if(isturf(loc))
-			SetLuminosity(0)
+		set_light(0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	on = !on
-	update_brightness(user)
+	update_brightness()
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -56,15 +45,17 @@
 			return
 
 		var/mob/living/carbon/human/H = M	//mob has protective eyewear
-		if(ishuman(M) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
+		if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags_cover & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || (H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES)))
 			user << "<span class='notice'>You're going to need to remove that [(H.head && H.head.flags_cover & HEADCOVERSEYES) ? "helmet" : (H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) ? "mask": "glasses"] first.</span>"
 			return
 
 		if(M == user)	//they're using it on themselves
-			if(M.flash_act(visual = 1))
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
+			if(M.flash_eyes(visual = 1))
+				M.visible_message("[M] directs [src] to \his eyes.", \
+									 "<span class='notice'>You wave the light in front of your eyes! Trippy!</span>")
 			else
-				M.visible_message("[M] directs [src] to [M.p_their()] eyes.", "<span class='notice'>You wave the light in front of your eyes.</span>")
+				M.visible_message("[M] directs [src] to \his eyes.", \
+									 "<span class='notice'>You wave the light in front of your eyes.</span>")
 		else
 			user.visible_message("<span class='warning'>[user] directs [src] to [M]'s eyes.</span>", \
 								 "<span class='danger'>You direct [src] to [M]'s eyes.</span>")
@@ -75,25 +66,10 @@
 				else if(C.dna.check_mutation(XRAY))	//mob has X-RAY vision
 					user << "<span class='danger'>[C] pupils give an eerie glow!</span>"
 				else //they're okay!
-					if(C.flash_act(visual = 1))
+					if(C.flash_eyes(visual = 1))
 						user << "<span class='notice'>[C]'s pupils narrow.</span>"
 	else
 		return ..()
-
-
-/obj/item/device/flashlight/pickup(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(brightness_on)
-		SetLuminosity(0)
-
-
-/obj/item/device/flashlight/dropped(mob/user)
-	..()
-	if(on)
-		user.AddLuminosity(-brightness_on)
-		SetLuminosity(brightness_on)
-
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -145,7 +121,7 @@
 	icon_state = "lamp"
 	item_state = "lamp"
 	brightness_on = 5
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	flags = CONDUCT
 	materials = list()
 	on = 1
@@ -168,7 +144,7 @@
 		attack_self(usr)
 
 //Bananalamp
-/obj/item/device/flashlight/lamp/bananalamp
+obj/item/device/flashlight/lamp/bananalamp
 	name = "banana lamp"
 	desc = "Only a clown would think to make a ghetto banana-shaped lamp. Even has a goofy pullstring."
 	icon_state = "bananalamp"
@@ -179,7 +155,7 @@
 /obj/item/device/flashlight/flare
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	brightness_on = 7 // Pretty bright.
 	icon_state = "flare"
 	item_state = "flare"
@@ -188,13 +164,16 @@
 	var/on_damage = 7
 	var/produce_heat = 1500
 	heat = 1000
+	light_color = LIGHT_COLOR_FLARE
 
 /obj/item/device/flashlight/flare/New()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
 	..()
 
 /obj/item/device/flashlight/flare/process()
-	open_flame(heat)
+	var/turf/pos = get_turf(src)
+	if(pos)
+		pos.hotspot_expose(produce_heat, 5)
 	fuel = max(fuel - 1, 0)
 	if(!fuel || !on)
 		turn_off()
@@ -202,24 +181,13 @@
 			icon_state = "[initial(icon_state)]-empty"
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/device/flashlight/flare/ignition_effect(atom/A, mob/user)
-	if(fuel && on)
-		. = "<span class='notice'>[user] lights [A] with [src] like a real \
-			badass.</span>"
-	else
-		. = ""
-
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
 	force = initial(src.force)
 	damtype = initial(src.damtype)
-	if(ismob(loc))
-		var/mob/U = loc
-		update_brightness(U)
-	else
-		update_brightness(null)
+	update_brightness()
 
-/obj/item/device/flashlight/flare/update_brightness(mob/user = null)
+/obj/item/device/flashlight/flare/update_brightness()
 	..()
 	if(on)
 		item_state = "[initial(item_state)]-on"
@@ -249,7 +217,7 @@
 /obj/item/device/flashlight/flare/torch
 	name = "torch"
 	desc = "A torch fashioned from some leaves and a log."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	brightness_on = 4
 	icon_state = "torch"
 	item_state = "torch"
@@ -262,6 +230,7 @@
 	item_state = "lantern"
 	desc = "A mining lantern."
 	brightness_on = 6			// luminosity when on
+	light_color = LIGHT_COLOR_FIRE
 
 
 /obj/item/device/flashlight/slime
@@ -271,13 +240,14 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "slime"
 	item_state = "slime"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	slot_flags = SLOT_BELT
 	materials = list()
 	brightness_on = 6 //luminosity when on
+	light_color = LIGHT_COLOR_SLIME_LAMP
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=1"
+	origin_tech = "magnets=3;syndicate=�1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

@@ -13,7 +13,7 @@
 	icon_state = "imp"
 	icon_living = "imp"
 	speed = 1
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	attack_sound = 'sound/magic/demon_attack1.ogg'
@@ -26,7 +26,6 @@
 	health = 200
 	healable = 0
 	environment_smash = 1
-	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	see_in_dark = 8

@@ -3,11 +3,17 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
 /area/shuttle/escape)
 "ac" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall12";
+	icon_state = "swall12"
+	},
 /area/shuttle/escape)
 "ad" = (
 /obj/structure/grille,
@@ -21,27 +27,30 @@
 	},
 /area/shuttle/escape)
 "af" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall3";
+	icon_state = "swall3"
+	},
 /area/shuttle/escape)
 "ag" = (
 /obj/structure/closet/radiation{
 	anchored = 1
 	},
 /obj/item/clothing/glasses/meson/engine,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "ai" = (
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "aj" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "ak" = (
 /obj/structure/sign/radiation,
@@ -89,13 +98,16 @@
 /area/shuttle/escape)
 "aq" = (
 /obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	tag = "icon-swall3";
+	icon_state = "swall3"
+	},
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "as" = (
 /turf/open/floor/plating/warnplate{
@@ -114,14 +126,19 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "aw" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc2";
+	dir = 2
+	},
 /area/shuttle/escape)
 "ax" = (
-/turf/open/floor/mineral/titanium/yellow,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
+	},
 /area/shuttle/escape)
 "ay" = (
 /turf/closed/wall/shuttle{
@@ -135,7 +152,7 @@
 	},
 /area/shuttle/escape)
 "aA" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -163,14 +180,14 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/mineral/titanium/yellow,
+/turf/open/floor/plasteel/shuttle/yellow,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -192,7 +209,9 @@
 /area/shuttle/escape)
 "aI" = (
 /obj/structure/sign/radiation,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/turf/closed/wall/shuttle{
+	icon_state = "swallc1"
+	},
 /area/shuttle/escape)
 "aJ" = (
 /obj/structure/sign/radiation,
@@ -319,9 +338,11 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bf" = (
+"bh" = (
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/warnplate{
+	dir = 4
+	},
 /area/shuttle/escape)
 "bg" = (
 /obj/structure/grille,
@@ -329,11 +350,9 @@
 	dir = 8
 	},
 /area/shuttle/escape)
-"bh" = (
+"bf" = (
 /obj/structure/grille,
-/turf/open/floor/plating/warnplate{
-	dir = 4
-	},
+/turf/open/floor/plating,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -347,7 +366,7 @@ aw
 aA
 aC
 aF
-aw
+aG
 aa
 aa
 aa
@@ -361,17 +380,17 @@ aa
 aa
 "}
 (2,1,1) = {"
-af
+ab
 af
 ad
-ac
+ak
 aq
 ad
 ax
 ai
 aD
 ai
-aq
+aH
 aa
 aa
 aN
@@ -420,7 +439,7 @@ ar
 ar
 ar
 aI
-aw
+aG
 aa
 at
 aa
@@ -515,8 +534,8 @@ av
 av
 av
 av
-aI
-aw
+aJ
+aK
 aa
 at
 aa
@@ -553,17 +572,17 @@ bc
 be
 "}
 (10,1,1) = {"
-af
+ae
 af
 ad
-ac
+ak
 aq
 ad
-ax
+ay
 ai
 aE
 ai
-aq
+aH
 aa
 aa
 aQ
@@ -583,11 +602,11 @@ aa
 aa
 aa
 aa
-aw
+az
 aA
 aC
 aA
-aw
+aK
 aa
 aa
 aa

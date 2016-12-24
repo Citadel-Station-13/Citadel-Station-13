@@ -1,10 +1,10 @@
 /obj/item/weapon/gun/medbeam
 	name = "Medical Beamgun"
-	desc = "Don't cross the streams!"
+	desc = "Delivers medical nanites in a focused beam."
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3.0
 
 	var/mob/living/current_target
 	var/last_check = 0
@@ -54,7 +54,7 @@
 /obj/item/weapon/gun/medbeam/process()
 
 	var/source = loc
-	if(!mounted && !isliving(source))
+	if(!mounted && !ishuman(source))
 		LoseTarget()
 		return
 
@@ -69,7 +69,7 @@
 
 	if(get_dist(source, current_target)>max_range || !los_check(source, current_target))
 		LoseTarget()
-		if(isliving(source))
+		if(ishuman(source))
 			source << "<span class='warning'>You lose control of the beam!</span>"
 		return
 
