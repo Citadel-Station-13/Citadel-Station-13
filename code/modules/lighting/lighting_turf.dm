@@ -47,6 +47,8 @@
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
 					var/datum/light_source/S = L
+					if(!S.source_turf)
+						continue
 					S.recalc_corner(C)
 
 				C.active = TRUE
