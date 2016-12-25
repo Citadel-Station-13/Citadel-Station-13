@@ -105,7 +105,7 @@
 /turf/proc/generate_missing_corners()
 	lighting_corners_initialised = TRUE
 	if (!corners)
-		corners = list(null, null, null, null)
+		corners = list(0,0,0,0)
 
 	for (var/i = 1 to 4)
 		if (corners[i]) // Already have a corner on this direction.
@@ -119,7 +119,7 @@
 
 	if (!lighting_corners_initialised)
 		if (!corners)
-			corners = list(null, null, null, null)
+			corners = list(0,0,0,0)
 
 		for (var/i = 1 to 4)
 			if (corners[i]) // Already have a corner on this direction.
