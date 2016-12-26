@@ -162,3 +162,4 @@
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+	spawn(300) revoke_maint_all_access()
