@@ -1,4 +1,5 @@
-
+// Needed for changeTurf() so it doesn't screw up before lighting overlays have been made.
+var/lighting_overlays_initialized = FALSE
 var/datum/subsystem/lighting/SSlighting
 
 /var/list/lighting_update_lights    = list()    // List of lighting sources  queued for update.
@@ -29,6 +30,7 @@ var/datum/subsystem/lighting/SSlighting
 				A.luminosity = 0
 
 	create_all_lighting_overlays()
+	global.lighting_overlays_initialized = TRUE
 
 /datum/subsystem/lighting/fire()
 

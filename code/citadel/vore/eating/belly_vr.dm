@@ -142,7 +142,7 @@
 //		prey.buckled.unbuckle_mob()
 
 // Super super messy. prey.forceMove.owner doesn't work if there's no prey.
-	prey.loc = owner
+	prey.loc = user
 	internal_contents |= prey
 
 	if(inside_flavor)
