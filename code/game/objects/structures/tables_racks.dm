@@ -360,10 +360,10 @@
 		var/mob/living/carbon/human/H = M
 		//if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
 		src.visible_message("<span style=\"color:red\"><b>[H] slams their palms against [src]!</b></span>")
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1)*/
 			//for (var/mob/M in AIviewers(usr, null))
 			//	if (M.client)
-			//		shake_camera(M, 4, 1, 0.5)*/
+			//		shake_camera(M, 4, 1, 0.5)
 	return
 
 /*
