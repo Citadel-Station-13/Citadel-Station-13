@@ -169,7 +169,7 @@
 
 	weather_message = "<span class='userdanger'><i>Everything shuts off all at once, and the station becomes dark and lifeless.</i></span>"
 	weather_duration_lower = 450
-	weather_duration_upper = 1200
+	weather_duration_upper = 900
 	weather_sound = 'sound/effects/powerdown.ogg'
 
 	end_duration = 100
