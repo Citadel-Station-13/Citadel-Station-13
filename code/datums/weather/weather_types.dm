@@ -177,7 +177,7 @@
 	end_sound = 'sound/effects/powerup.ogg'
 
 	area_type = /area
-	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai)
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/engine/engineering)
 	target_z = ZLEVEL_STATION
 
 	immunity_type = null
@@ -192,7 +192,9 @@
 			A.power_change()
 			for(var/obj/machinery/power/apc/apc in machines)
 				apc.shorted_old = apc.shorted
-				apc.shorted = TRUE
+				var/area/C = get_area(apc)
+				if(C in impacted_areas)
+					apc.shorted = TRUE
 		else
 			A.power_light = 1
 			A.power_equip = 1
