@@ -206,4 +206,4 @@
 /datum/weather/solar_flare/end()
 	if(..())
 		return
-	addtimer(GLOBAL_PROC, "priority_announce", 60, FALSE, "The solar flare has ended. We apologize for the inconvenience.", "Anomaly Alert")
+	addtimer(GLOBAL_PROC, "priority_announce", 60, FALSE, "The solar flare has ended. Please return to work.", "Anomaly Alert")
