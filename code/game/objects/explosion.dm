@@ -71,8 +71,11 @@
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
 							skip_shake = 1
 
-					if(!explosion_shake_message_cooldown && devastation_range > 2 && !skip_shake)
-						M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
+					if(!explosion_shake_message_cooldown && devastation_range > 1 && !skip_shake && M.stat == CONSCIOUS && !istype(get_turf(M), /turf/open/space))
+						if(istype(get_turf(M), /turf/open/floor/plasteel/asteroid))
+							M << "<span class='danger'>You feel the ground shaking below you.</span>"
+						else
+							M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
 						explosion_shake_message_cooldown = 1
 						spawn(50)
 							explosion_shake_message_cooldown = 0
