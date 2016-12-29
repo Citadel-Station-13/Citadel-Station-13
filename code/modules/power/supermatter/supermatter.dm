@@ -48,6 +48,8 @@
 
 	var/oxygen = 0					// Moving this up here for easier debugging.
 
+	var/playingglowsound			//for sound loop
+
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
 	var/config_bullet_energy = 2
@@ -164,10 +166,16 @@
 	if(oxygen > 0.8)
 		// with a perfect gas mix, make the power less based on heat
 		icon_state = "[base_icon_state]_glow"
+		if(!playingglowsound)
+			start_glow_sound()
+
 	else
 		// in normal mode, base the produced energy around the heat
 		temp_factor = 30
 		icon_state = base_icon_state
+
+		if(playingglowsound)
+			playingglowsound = FALSE
 
 	power = max( (removed.temperature * temp_factor / T0C) * oxygen + power, 0) //Total laser power plus an overload
 
@@ -208,6 +216,24 @@
 	power -= (power/500)**3
 
 	return 1
+
+/obj/machinery/power/supermatter_shard/proc/start_glow_sound() //starts the loop
+	if(!playingglowsound)
+		playingglowsound = TRUE
+		playsound(src, 'sound/ambience/supermatterglow.ogg', 50, 0)
+		addtimer(src, "play_glow_sound", 1.2, FALSE)
+		return TRUE
+	else
+		return FALSE
+
+/obj/machinery/power/supermatter_shard/proc/play_glow_sound() // loop
+	if(playingglowsound)
+		playsound(src, 'sound/ambience/supermatterglow.ogg', 50, 0)
+		addtimer(src, "play_glow_sound", 1.2, FALSE)
+		return TRUE
+	else
+		playingglowsound = FALSE
+		return FALSE
 
 /obj/machinery/power/supermatter_shard
 
