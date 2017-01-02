@@ -59,8 +59,10 @@
 	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
-	var/extra = 0
 	var/center = FALSE	//Should we center the sprite?
+	var/extra = 0 											//Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
+	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
 
 //////////////////////
 // Hair Definitions //

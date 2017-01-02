@@ -46,6 +46,18 @@
 	var/siemens_coeff = 1 //base electrocution coefficient
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color2 = ""
+	var/fixed_mut_color3 = ""
+	var/generic = "something"
+	var/adjective = "unknown"
+	var/restricted = 0 //Set to 1 to not allow anyone to choose it, 2 to hide it from the DNA scanner, and text to restrict it to one person
+//	var/tail=0
+//	var/taur=0
+
+	var/whitelisted = 0 		//Is this species restricted to certain players?
+	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
+	var/lang_spoken = HUMAN
+	var/lang_understood = HUMAN
 
 	var/invis_sight = SEE_INVISIBLE_LIVING
 	var/darksight = 2
@@ -68,6 +80,11 @@
 	///////////
 	// PROCS //
 	///////////
+mob/living/carbon/human/proc/get_species()
+	if(has_dna())
+		return dna.species.id
+	else
+		return
 
 
 /datum/species/New()
@@ -473,6 +490,44 @@
 				if(S.center)
 					I = center_image(I,S.dimension_x,S.dimension_y)
 
+				standing += I
+
+			if(S.extra)
+				if(S.gender_specific)
+					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layer]"
+				else
+					icon_string = "m_[bodypart]_extra_[S.icon_state]_[layer]"
+
+				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+				if(S.center)
+					I = center_image(I,S.dimension_x,S.dimension_y)
+
+				switch(S.extra_color_src)
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						I.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						I.color = "#[H.eye_color]"
 				standing += I
 
 		H.overlays_standing[layer] = standing.Copy()
