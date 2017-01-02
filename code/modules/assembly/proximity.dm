@@ -59,11 +59,12 @@
 
 
 /obj/item/device/assembly/prox_sensor/sense()
-	if(!secured || next_activate > world.time)
+	if((!secured)||(cooldown > 0))
 		return 0
 	pulse(0)
 	audible_message("\icon[src] *beep* *beep*", null, 3)
-	next_activate = world.time + 30
+	cooldown = 2
+	addtimer(src, "process_cooldown", 10)
 
 
 /obj/item/device/assembly/prox_sensor/process()
@@ -80,9 +81,6 @@
 	if(scanning)
 		addtimer(src, "sense", 0)
 
-/obj/item/device/assembly/prox_sensor/Destroy()
-	remove_from_proximity_list(src, sensitivity)
-	..()
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)

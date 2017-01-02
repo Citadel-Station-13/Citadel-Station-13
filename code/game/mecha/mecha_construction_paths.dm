@@ -10,16 +10,13 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
@@ -30,7 +27,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.get_amount() < 5)
+		if(S.amount < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else
@@ -45,16 +42,13 @@
 		else
 			return 0
 	else if(istype(used_atom, /obj/item/weapon/wrench))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		var/obj/item/weapon/W = used_atom
-		playsound(holder, W.usesound, 50, 1)
+		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 
 	else if(istype(used_atom, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = used_atom
@@ -65,7 +59,7 @@
 			return 0
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.get_amount() < 5)
+		if(S.amount < 5)
 			user << ("<span class='warning'>There's not enough material in this stack!</span>")
 			return 0
 		else

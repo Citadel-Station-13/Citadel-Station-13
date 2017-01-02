@@ -12,12 +12,7 @@
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
 
-	resistance_flags = FIRE_PROOF
-
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 90, acid = 50)
-	obj_integrity = 100
-	max_integrity = 100
-	integrity_failure = 50
+	var/health = 50
 	var/list/network = list("SS13")
 	var/c_tag = null
 	var/c_tag_order = 999
@@ -26,7 +21,7 @@
 	var/start_active = 0 //If it ignores the random chance to start broken on round start
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
-	var/obj/structure/camera_assembly/assembly = null
+	var/obj/machinery/camera_assembly/assembly = null
 
 	//OTHER
 
@@ -88,7 +83,7 @@
 			network = list()
 			cameranet.removeCamera(src)
 			stat |= EMPED
-			SetLuminosity(0)
+			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_icon()
 			var/thisemp = emped //Take note of which EMP this proc is for
@@ -110,16 +105,17 @@
 					O << "The screen bursts into static."
 			..()
 
-/obj/machinery/camera/tesla_act(var/power)//EMP proof upgrade also makes it tesla immune
-	if(isEmpProof())
-		return
-	..()
-	qdel(src)//to prevent bomb testing camera from exploding over and over forever
 
 /obj/machinery/camera/ex_act(severity, target)
-	if(invuln)
+	if(src.invuln)
 		return
-	..()
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			take_damage(50, BRUTE, 0)
+		else
+			take_damage(rand(30,60), BRUTE, 0)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
 	src.view_range = num
@@ -144,7 +140,7 @@
 	if(panel_open)
 		if(istype(W, /obj/item/weapon/wirecutters)) //enable/disable the camera
 			toggle_cam(user, 1)
-			obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+			health = initial(health) //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 			return
 
 		else if(istype(W, /obj/item/device/multitool)) //change focus
@@ -155,13 +151,17 @@
 		else if(istype(W, /obj/item/weapon/weldingtool))
 			if(weld(W, user))
 				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame screwed to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame screwed to the wall</span>")
-				deconstruct(TRUE)
+				if(!assembly)
+					assembly = new()
+				assembly.loc = src.loc
+				assembly.state = 1
+				assembly.setDir(src.dir)
+				assembly = null
+				qdel(src)
 			return
 
 		else if(istype(W, /obj/item/device/analyzer))
 			if(!isXRay())
-				if(!user.drop_item(W))
-					return
 				upgradeXRay()
 				qdel(W)
 				user << "[msg]"
@@ -206,7 +206,7 @@
 		U << "<span class='notice'>You hold \the [itemname] up to the camera...</span>"
 		U.changeNext_move(CLICK_CD_MELEE)
 		for(var/mob/O in player_list)
-			if(isAI(O))
+			if(istype(O, /mob/living/silicon/ai))
 				var/mob/living/silicon/ai/AI = O
 				if(AI.control_disabled || (AI.stat == DEAD))
 					return
@@ -241,30 +241,25 @@
 
 	return ..()
 
-/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee" && damage_amount < 12 && !(stat & BROKEN))
-		return 0
-	. = ..()
-
-/obj/machinery/camera/obj_break(damage_flag)
-	if(status && !(flags & NODECONSTRUCT))
+/obj/machinery/camera/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BRUTE)
+			if(sound_effect)
+				if(damage)
+					playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+				else
+					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+		if(BURN)
+			if(sound_effect)
+				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		else
+			return
+	if(damage < 10) //camera has a damage resistance threshold
+		return
+	health = max(0, health - damage)
+	if(!health && status)
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
-
-/obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		if(disassembled)
-			if(!assembly)
-				assembly = new()
-			assembly.loc = src.loc
-			assembly.state = 1
-			assembly.setDir(dir)
-			assembly = null
-		else
-			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.obj_integrity = I.max_integrity * 0.5
-			new /obj/item/stack/cable_coil(loc, 2)
-	qdel(src)
 
 /obj/machinery/camera/update_icon()
 	if(!status)
@@ -279,7 +274,7 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		SetLuminosity(0)
+		set_light(0)
 		cameranet.removeCamera(src)
 	cameranet.updateChunk(x, y, z)
 	var/change_msg = "deactivates"
@@ -374,9 +369,9 @@
 		return 0
 
 	user << "<span class='notice'>You start to weld [src]...</span>"
-	playsound(src.loc, WT.usesound, 50, 1)
+	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
-	if(do_after(user, 100*WT.toolspeed, target = src))
+	if(do_after(user, 100, target = src))
 		busy = 0
 		if(!WT.isOn())
 			return 0
@@ -390,9 +385,13 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		src.set_light(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		src.set_light(0)
+
+/obj/machinery/camera/bullet_act(obj/item/projectile/P)
+	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
 /obj/machinery/camera/portable //Cameras which are placed inside of things, such as helmets.
 	var/turf/prev_turf

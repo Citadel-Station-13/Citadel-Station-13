@@ -7,7 +7,6 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "plutonium_core"
 	item_state = "plutoniumcore"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/pulse = 0
 	var/cooldown = 0
 
@@ -70,7 +69,7 @@
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
-	toolspeed = 0.5
+	toolspeed = 2
 
 /obj/item/weapon/paper/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\

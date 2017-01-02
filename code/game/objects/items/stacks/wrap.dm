@@ -12,7 +12,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/stack/wrapping_paper/Destroy()
 	if(!amount)
@@ -32,7 +32,7 @@
 	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/proc/can_be_package_wrapped() //can the item be wrapped with package wrapper into a delivery package
 	return 1
@@ -58,7 +58,7 @@
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
-		if(user.is_holding(I))
+		if(user.r_hand == I || user.l_hand == I)
 			if(!user.unEquip(I))
 				return
 		else if(!isturf(I.loc))
@@ -79,12 +79,13 @@
 		var/obj/structure/closet/O = target
 		if(O.opened)
 			return
-		if(!O.delivery_icon) //no delivery icon means unwrappable closet (e.g. body bags)
+		if(!O.density) //can't wrap non dense closets (e.g. body bags)
 			user << "<span class='warning'>You can't wrap this!</span>"
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
-			P.icon_state = O.delivery_icon
+			if(O.horizontal)
+				P.icon_state = "deliverycrate"
 			O.loc = P
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
@@ -109,6 +110,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "c_tube"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	throw_speed = 3
 	throw_range = 5

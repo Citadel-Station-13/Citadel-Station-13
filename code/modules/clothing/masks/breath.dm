@@ -6,13 +6,13 @@
 	body_parts_covered = 0
 	flags = MASKINTERNALS
 	visor_flags = MASKINTERNALS
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.10
 	permeability_coefficient = 0.50
 	actions_types = list(/datum/action/item_action/adjust)
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)

@@ -3,7 +3,7 @@
 	desc = "A device that can record to cassette tapes, and play them. It automatically translates the content in playback."
 	icon_state = "taperecorder_empty"
 	item_state = "analyzer"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	flags = HEAR
 	slot_flags = SLOT_BELT
 	languages_spoken = ALL //this is a translator, after all.
@@ -22,7 +22,6 @@
 /obj/item/device/taperecorder/New()
 	mytape = new /obj/item/device/tape/random(src)
 	update_icon()
-	..()
 
 
 /obj/item/device/taperecorder/examine(mob/user)
@@ -48,14 +47,14 @@
 		mytape = null
 		update_icon()
 
-/obj/item/device/taperecorder/fire_act(exposed_temperature, exposed_volume)
+/obj/item/device/taperecorder/fire_act()
 	mytape.ruin() //Fires destroy the tape
-	..()
+	return()
 
 /obj/item/device/taperecorder/attack_hand(mob/user)
 	if(loc == user)
 		if(mytape)
-			if(!user.is_holding(src))
+			if(user.l_hand != src && user.r_hand != src)
 				..()
 				return
 			eject(user)
@@ -239,7 +238,7 @@
 	desc = "A magnetic tape that can hold up to ten minutes of content."
 	icon_state = "tape_white"
 	item_state = "analyzer"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	materials = list(MAT_METAL=20, MAT_GLASS=5)
 	force = 1
 	throwforce = 0
@@ -249,9 +248,8 @@
 	var/list/timestamp = list()
 	var/ruined = 0
 
-/obj/item/device/tape/fire_act(exposed_temperature, exposed_volume)
+/obj/item/device/tape/fire_act()
 	ruin()
-	..()
 
 /obj/item/device/tape/attack_self(mob/user)
 	if(!ruined)
@@ -260,10 +258,7 @@
 
 
 /obj/item/device/tape/proc/ruin()
-	//Lets not add infinite amounts of overlays when our fireact is called
-	//repeatedly
-	if(!ruined)
-		add_overlay("ribbonoverlay")
+	add_overlay("ribbonoverlay")
 	ruined = 1
 
 
@@ -275,7 +270,7 @@
 /obj/item/device/tape/attackby(obj/item/I, mob/user, params)
 	if(ruined && istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start winding the tape back in...</span>"
-		if(do_after(user, 120*I.toolspeed, target = src))
+		if(do_after(user, 120/I.toolspeed, target = src))
 			user << "<span class='notice'>You wound the tape back in.</span>"
 			fix()
 
@@ -283,4 +278,3 @@
 //Random colour tapes
 /obj/item/device/tape/random/New()
 	icon_state = "tape_[pick("white", "blue", "red", "yellow", "purple")]"
-	..()

@@ -9,9 +9,6 @@
 	icon = 'icons/obj/machines/shuttle_manipulator.dmi'
 	icon_state = "holograph_on"
 
-	anchored = TRUE
-	density = TRUE
-
 	// UI state variables
 	var/datum/map_template/shuttle/selected
 
@@ -33,6 +30,9 @@
 	add_overlay(hologram_projection)
 	add_overlay(hologram_ship)
 
+/obj/machinery/shuttle_manipulator/process()
+	return
+
 /obj/machinery/shuttle_manipulator/ui_interact(mob/user, ui_key = "main", \
 	datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, \
 	datum/ui_state/state = admin_state)
@@ -47,8 +47,6 @@
 	switch(mode)
 		if(SHUTTLE_IDLE)
 			. = "idle"
-		if(SHUTTLE_IGNITING)
-			. = "engines charging"
 		if(SHUTTLE_RECALL)
 			. = "recalled"
 		if(SHUTTLE_CALL)
@@ -219,7 +217,7 @@
 	// truthy value means that it cannot dock for some reason
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
-	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
+	if(result && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
 		var/m = "Unsuccessful dock of [preview_shuttle] ([result])."
 		WARNING(m)
 		return

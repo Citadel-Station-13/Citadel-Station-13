@@ -328,7 +328,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(player.client.prefs.joblessrole == BERANDOMJOB)
+		else if(player.client.prefs.userandomjob)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -339,15 +339,8 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		if(player.client.prefs.joblessrole == BEASSISTANT)
-			Debug("AC2 Assistant located, Player: [player]")
-			AssignRole(player, "Assistant")
-		else // For those who don't want to play if their preference were filled, back you go.
-			RejectPlayer(player)
-
-	for(var/mob/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
-		GiveRandomJob(player)
-
+		Debug("AC2 Assistant located, Player: [player]")
+		AssignRole(player, "Assistant")
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -382,7 +375,7 @@ var/datum/subsystem/job/SSjob
 					if(clear)
 						S = T
 						continue
-		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
+		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
 			H.loc = S.loc
 
 	if(H.mind)
@@ -401,7 +394,7 @@ var/datum/subsystem/job/SSjob
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
 		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
-	return H
+	return 1
 
 
 /datum/subsystem/job/proc/setup_officer_positions()
@@ -477,8 +470,7 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
-	if(PopcapReached())
-		Debug("Popcap overflow Check observer located, Player: [player]")
+	Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player
 	player.ready = 0

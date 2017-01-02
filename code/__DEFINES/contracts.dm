@@ -15,8 +15,7 @@
 #define BANE_TOOLBOX "toolbox"
 
 #define OBLIGATION_FOOD "food"
-#define OBLIGATION_FIDDLE "fiddle"
-#define OBLIGATION_DANCEOFF "danceoff"
+#define OBLIGATION_DRINK "drink"
 #define OBLIGATION_GREET "greet"
 #define OBLIGATION_PRESENCEKNOWN "presenceknown"
 #define OBLIGATION_SAYNAME "sayname"

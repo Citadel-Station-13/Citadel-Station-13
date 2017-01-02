@@ -5,7 +5,6 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -41,27 +40,6 @@
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
-	return 1
-
-/obj/item/projectile/bullet/a84mm
-	name ="anti-armour rocket"
-	desc = "USE A WEEL GUN"
-	icon_state= "atrocket"
-	damage = 80
-	var/anti_armour_damage = 200
-	armour_penetration = 100
-	dismemberment = 100
-
-/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
-	..()
-	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
-
-	if(istype(target, /obj/mecha))
-		var/obj/mecha/M = target
-		M.take_damage(anti_armour_damage)
-	if(istype(target, /mob/living/silicon))
-		var/mob/living/silicon/S = target
-		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
 	return 1
 
 /obj/item/projectile/temp
@@ -120,8 +98,8 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(C.dna.species.id == "pod")
-			C.randmuti()
-			C.randmut()
+			randmuti(C)
+			randmut(C)
 			C.updateappearance()
 			C.domutcheck()
 
@@ -142,6 +120,63 @@
 		var/mob/living/carbon/human/M = target
 		M.adjustBrainLoss(20)
 		M.hallucination += 20
+
+/obj/item/projectile/kinetic
+	name = "kinetic force"
+	icon_state = null
+	damage = 10
+	damage_type = BRUTE
+	flag = "bomb"
+	range = 3
+	var/splash = 0
+
+/obj/item/projectile/kinetic/super
+	damage = 11
+	range = 4
+
+/obj/item/projectile/kinetic/hyper
+	damage = 12
+	range = 5
+	splash = 1
+
+/obj/item/projectile/kinetic/New()
+	var/turf/proj_turf = get_turf(src)
+	if(!istype(proj_turf, /turf))
+		return
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 50)
+		name = "full strength kinetic force"
+		damage *= 4
+	..()
+
+/obj/item/projectile/kinetic/on_range()
+	new /obj/effect/kinetic_blast(src.loc)
+	..()
+
+/obj/item/projectile/kinetic/on_hit(atom/target)
+	. = ..()
+	var/turf/target_turf= get_turf(target)
+	if(istype(target_turf, /turf/closed/mineral))
+		var/turf/closed/mineral/M = target_turf
+		M.gets_drilled(firer)
+	new /obj/effect/kinetic_blast(target_turf)
+	if(src.splash)
+		for(var/turf/T in range(splash, target_turf))
+			if(istype(T, /turf/closed/mineral))
+				var/turf/closed/mineral/M = T
+				M.gets_drilled(firer)
+
+
+/obj/effect/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = ABOVE_ALL_MOB_LAYER
+
+/obj/effect/kinetic_blast/New()
+	spawn(4)
+		qdel(src)
 
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"
@@ -186,26 +221,23 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
-	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	range = 5
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
-	if(!isturf(proj_turf))
+	if(!istype(proj_turf, /turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
 		if(pressure < 60)
-			name = "full strength [name]"
+			name = "full strength plasma blast"
 			damage *= 4
-			range *= 2
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(ismineralturf(target))
+	if(istype(target, /turf/closed/mineral))
 		var/turf/closed/mineral/M = target
 		M.gets_drilled(firer)
 		Range()
@@ -214,11 +246,11 @@
 
 /obj/item/projectile/plasma/adv
 	damage = 7
-	range = 5
+	range = 7
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
-	range = 6
+	range = 8
 
 
 /obj/item/projectile/gravityrepulse

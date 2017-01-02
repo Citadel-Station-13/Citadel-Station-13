@@ -4,8 +4,6 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
-	pixel_y = 8
-	unique_rename = 1
 	var/waterlevel = 100	//The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10		//The amount of nutrient in the tray (max 10)
@@ -17,7 +15,7 @@
 	var/toxic = 0			//Toxicity in the tray?
 	var/age = 0				//Current age
 	var/dead = 0			//Is it dead?
-	var/plant_health		//Its health
+	var/health = 0			//Its health.
 	var/lastproduce = 0		//Last time it was harvested
 	var/lastcycle = 0		//Used for timing of cycles.
 	var/cycledelay = 200	//About 10 seconds / cycle
@@ -25,10 +23,11 @@
 	var/obj/item/seeds/myseed = null	//The currently planted seed
 	var/rating = 1
 	var/unwrenchable = 1
-	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
+	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpolinate one plant
 	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
 
+	pixel_y=8
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -122,11 +121,11 @@
 		myseed.loc = src
 
 	if(self_sustaining)
-		adjustNutri(1)
-		adjustWater(rand(3,5))
-		adjustWeeds(-2)
-		adjustPests(-2)
-		adjustToxic(-2)
+		adjustNutri(2 / rating)
+		adjustWater(rand(8, 10) / rating)
+		adjustWeeds(-5 / rating)
+		adjustPests(-5 / rating)
+		adjustToxic(-5 / rating)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
@@ -144,15 +143,15 @@
 				adjustNutri(-1 / rating)
 
 			// Lack of nutrients hurts non-weeds
-			if(nutrilevel <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+			if(nutrilevel <= 0 && myseed.plant_type != PLANT_WEED)
 				adjustHealth(-rand(1,3))
 
 //Photosynthesis/////////////////////////////////////////////////////////
 			// Lack of light hurts non-mushrooms
 			if(isturf(loc))
 				var/turf/currentTurf = loc
-				var/lightAmt = currentTurf.lighting_lumcount
-				if(myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+				var/lightAmt = currentTurf.get_lumcount()
+				if(myseed.plant_type == PLANT_MUSHROOM)
 					if(lightAmt < 2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
@@ -164,7 +163,7 @@
 			adjustWater(-rand(1,6) / rating)
 
 			// If the plant is dry, it loses health pretty fast, unless mushroom
-			if(waterlevel <= 10 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+			if(waterlevel <= 10 && myseed.plant_type != PLANT_MUSHROOM)
 				adjustHealth(-rand(0,1) / rating)
 				if(waterlevel <= 0)
 					adjustHealth(-rand(0,2) / rating)
@@ -193,13 +192,13 @@
 				adjustHealth(-1 / rating)
 
 			// If it's a weed, it doesn't stunt the growth
-			if(weedlevel >= 5 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
+			if(weedlevel >= 5 && myseed.plant_type != PLANT_WEED)
 				adjustHealth(-1 / rating)
 
 //Health & Age///////////////////////////////////////////////////////////
 
-			// Plant dies if plant_health <= 0
-			if(plant_health <= 0)
+			// Plant dies if health <= 0
+			if(health <= 0)
 				plantdies()
 				adjustWeeds(1 / rating) // Weeds flourish
 
@@ -223,7 +222,7 @@
 		// Weeeeeeeeeeeeeeedddssss
 		if(weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed)
-				if(!myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy) && !myseed.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism)) // If a normal plant
+				if(myseed.plant_type == PLANT_NORMAL) // If a normal plant
 					weedinvasion()
 			else
 				weedinvasion() // Weed invasion into empty tray
@@ -257,10 +256,10 @@
 
 	if(self_sustaining)
 		if(istype(src, /obj/machinery/hydroponics/soil))
-			add_atom_colour(rgb(255, 175, 0), FIXED_COLOUR_PRIORITY)
+			color = rgb(255, 175, 0)
 		else
 			overlays += image('icons/obj/hydroponics/equipment.dmi', icon_state = "gaia_blessing")
-		SetLuminosity(3)
+		set_light(3)
 
 	update_icon_hoses()
 
@@ -271,9 +270,9 @@
 	if(!self_sustaining)
 		if(myseed && myseed.get_gene(/datum/plant_gene/trait/glow))
 			var/datum/plant_gene/trait/glow/G = myseed.get_gene(/datum/plant_gene/trait/glow)
-			SetLuminosity(G.get_lum(myseed))
+			set_light(G.get_lum(myseed))
 		else
-			SetLuminosity(0)
+			set_light(0)
 
 	return
 
@@ -306,7 +305,7 @@
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowwater3"))
 	if(nutrilevel <= 2)
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lownutri3"))
-	if(plant_health <= (myseed.endurance / 2))
+	if(health <= (myseed.endurance / 2))
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_lowhealth3"))
 	if(weedlevel >= 5 || pestlevel >= 5 || toxic >= 40)
 		add_overlay(image('icons/obj/hydroponics/equipment.dmi', icon_state = "over_alert3"))
@@ -322,7 +321,7 @@
 			user << "<span class='warning'>It's dead!</span>"
 		else if (harvest)
 			user << "<span class='info'>It's ready to harvest.</span>"
-		else if (plant_health <= (myseed.endurance / 2))
+		else if (health <= (myseed.endurance / 2))
 			user << "<span class='warning'>It looks unhealthy.</span>"
 	else
 		user << "<span class='info'>[src] is empty.</span>"
@@ -367,7 +366,7 @@
 		else
 			myseed = new /obj/item/seeds/weeds(src)
 	age = 0
-	plant_health = myseed.endurance
+	health = myseed.endurance
 	lastcycle = world.time
 	harvest = 0
 	weedlevel = 0 // Reset
@@ -376,13 +375,13 @@
 	visible_message("<span class='warning'>The [oldPlantName] is overtaken by some [myseed.plantname]!</span>")
 
 
-/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25, wrmut = 2, wcmut = 5, traitmut = 0) // Mutates the current seed
+/obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
 	if(!myseed)
 		return
-	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut, wrmut, wcmut, traitmut)
+	myseed.mutate(lifemut, endmut, productmut, yieldmut, potmut)
 
 /obj/machinery/hydroponics/proc/hardmutate()
-	mutate(4, 10, 2, 4, 50, 4, 10, 3)
+	mutate(4, 10, 2, 4, 50)
 
 
 /obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
@@ -400,7 +399,7 @@
 
 	hardmutate()
 	age = 0
-	plant_health = myseed.endurance
+	health = myseed.endurance
 	lastcycle = world.time
 	harvest = 0
 	weedlevel = 0 // Reset
@@ -420,7 +419,7 @@
 		dead = 0
 		hardmutate()
 		age = 0
-		plant_health = myseed.endurance
+		health = myseed.endurance
 		lastcycle = world.time
 		harvest = 0
 		weedlevel = 0 // Reset
@@ -433,7 +432,7 @@
 
 
 /obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
-	plant_health = 0
+	health = 0
 	harvest = 0
 	pestlevel = 0 // Pests die
 	if(!dead)
@@ -441,17 +440,16 @@
 		dead = 1
 
 
-
-/obj/machinery/hydroponics/proc/mutatepest(mob/user)
+/obj/machinery/hydroponics/proc/mutatepest()
 	if(pestlevel > 5)
-		message_admins("[ADMIN_LOOKUPFLW(user)] caused spiderling pests to spawn in a hydro tray")
-		log_game("[key_name(user)] caused spiderling pests to spawn in a hydro tray")
 		visible_message("<span class='warning'>The pests seem to behave oddly...</span>")
-		spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, src, 3, FALSE)
+		for(var/i=0, i<3, i++)
+			var/obj/effect/spider/spiderling/S = new(src.loc)
+			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
-		user << "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>"
+		usr << "<span class='warning'>The pests seem to behave oddly, but quickly settle down...</span>"
 
-/obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S, mob/user)
+/obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S)
 	if(myseed)
 		myseed.on_chem_reaction(S) //In case seeds have some special interactions with special chems, currently only used by vines
 
@@ -459,8 +457,7 @@
 	if(S.has_reagent("mutagen", 5) || S.has_reagent("radium", 10) || S.has_reagent("uranium", 10))
 		switch(rand(100))
 			if(91 to 100)
-				adjustHealth(-10)
-				user << "<span class='warning'>The plant shrivels and burns.</span>"
+				plantdies()
 			if(81 to 90)
 				mutatespecie()
 			if(66 to 80)
@@ -468,13 +465,13 @@
 			if(41 to 65)
 				mutate()
 			if(21 to 41)
-				user << "<span class='notice'>The plants don't seem to react...</span>"
+				usr << "<span class='warning'>The plants don't seem to react...</span>"
 			if(11 to 20)
 				mutateweed()
 			if(1 to 10)
-				mutatepest(user)
+				mutatepest()
 			else
-				user << "<span class='notice'>Nothing happens...</span>"
+				usr << "<span class='warning'>Nothing happens...</span>"
 
 	// 2 or 1 units is enough to change the yield and other stats.// Can change the yield and other stats, but requires more than mutagen
 	else if(S.has_reagent("mutagen", 2) || S.has_reagent("radium", 5) || S.has_reagent("uranium", 5))
@@ -492,18 +489,18 @@
 
 	// Nutriments
 	if(S.has_reagent("eznutriment", 1))
-		yieldmod = 1
-		mutmod = 1
+		yieldmod = 1 * rating
+		mutmod = 1 * rating
 		adjustNutri(round(S.get_reagent_amount("eznutriment") * 1))
 
 	if(S.has_reagent("left4zednutriment", 1))
-		yieldmod = 0
-		mutmod = 2
+		yieldmod = 0 * rating
+		mutmod = 2 * rating
 		adjustNutri(round(S.get_reagent_amount("left4zednutriment") * 1))
 
 	if(S.has_reagent("robustharvestnutriment", 1))
-		yieldmod = 1.3
-		mutmod = 0
+		yieldmod = 2 * rating
+		mutmod = 0 * rating
 		adjustNutri(round(S.get_reagent_amount("robustharvestnutriment") *1 ))
 
 	// Antitoxin binds shit pretty well. So the tox goes significantly down
@@ -618,11 +615,11 @@
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 	if(S.has_reagent("saltpetre", 1))
-		var/salt = S.get_reagent_amount("saltpetre")
-		adjustHealth(round(salt * 0.25))
-		if (myseed)
-			myseed.adjust_production(-round(salt/100)-prob(salt%100))
-			myseed.adjust_potency(round(salt*0.50))
+		adjustHealth(round(S.get_reagent_amount("saltpetre") * 0.25))
+		if(myseed)
+			myseed.adjust_production(-round(S.get_reagent_amount("saltpetre") * 0.02))
+			myseed.adjust_potency(round(S.get_reagent_amount("saltpetre") * 0.01))
+
 	// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
 	if(S.has_reagent("ash", 1))
 		adjustHealth(round(S.get_reagent_amount("ash") * 0.25))
@@ -670,9 +667,9 @@
 			if(33	to 65)
 				mutateweed()
 			if(1   to 32)
-				mutatepest(user)
+				mutatepest()
 			else
-				user << "<span class='warning'>Nothing happens...</span>"
+				usr << "<span class='warning'>Nothing happens...</span>"
 
 /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
 	//Called when mob user "attacks" it with object O
@@ -684,16 +681,6 @@
 			user << "<span class='warning'>[src] needs to be clear of plants and weeds!</span>"
 			return
 		if(alert(user, "This will make [src] self-sustaining but consume [O] forever. Are you sure?", "[name]", "I'm Sure", "Abort") == "Abort" || !user)
-			return
-		if(!O || qdeleted(O))
-			return
-		if(!Adjacent(user))
-			return
-		if(self_sustaining)
-			user << "<span class='warning'>This [name] is already self-sustaining!</span>"
-			return
-		if(myseed || weedlevel)
-			user << "<span class='warning'>[src] needs to be clear of plants and weeds!</span>"
 			return
 		user.visible_message("<span class='notice'>[user] gently pulls open the soil for [O] and places it inside.</span>", "<span class='notice'>You tenderly root [O] into [src].</span>")
 		user.drop_item()
@@ -759,7 +746,7 @@
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
 				qdel(reagent_source)
 
-			H.applyChemicals(S, user)
+			H.applyChemicals(S)
 
 			S.clear_reagents()
 			qdel(S)
@@ -777,9 +764,9 @@
 			dead = 0
 			myseed = O
 			age = 1
-			plant_health = myseed.endurance
+			health = myseed.endurance
 			lastcycle = world.time
-			O.forceMove(src)
+			O.loc = src
 			update_icon()
 		else
 			user << "<span class='warning'>[src] already has seeds in it!</span>"
@@ -824,8 +811,8 @@
 		if(!anchored && !isinspace())
 			user.visible_message("[user] begins to wrench [src] into place.", \
 								"<span class='notice'>You begin to wrench [src] in place...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (do_after(user, 20/O.toolspeed, target = src))
 				if(anchored)
 					return
 				anchored = 1
@@ -834,8 +821,8 @@
 		else if(anchored)
 			user.visible_message("[user] begins to unwrench [src].", \
 								"<span class='notice'>You begin to unwrench [src]...</span>")
-			playsound(loc, O.usesound, 50, 1)
-			if (do_after(user, 20*O.toolspeed, target = src))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (do_after(user, 20/O.toolspeed, target = src))
 				if(!anchored)
 					return
 				anchored = 0
@@ -844,7 +831,7 @@
 
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
 		using_irrigation = !using_irrigation
-		playsound(src, O.usesound, 50, 1)
+		playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))
@@ -861,10 +848,6 @@
 		user.visible_message("<span class='notice'>[user] digs out the plants in [src]!</span>", "<span class='notice'>You dig out all of [src]'s plants!</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 		if(myseed) //Could be that they're just using it as a de-weeder
-			age = 0
-			plant_health = 0
-			if(harvest)
-				harvest = FALSE //To make sure they can't just put in another seed and insta-harvest it
 			qdel(myseed)
 			myseed = null
 		weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
@@ -874,7 +857,7 @@
 		return ..()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(issilicon(user)) //How does AI know what plant is?
+	if(istype(user, /mob/living/silicon))		//How does AI know what plant is?
 		return
 	if(harvest)
 		myseed.harvest(user)
@@ -896,7 +879,7 @@
 		user << "<span class='warning'>You fail to harvest anything useful!</span>"
 	else
 		user << "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>"
-	if(!myseed.get_gene(/datum/plant_gene/trait/repeated_harvest))
+	if(myseed.oneharvest)
 		qdel(myseed)
 		myseed = null
 		dead = 0
@@ -914,7 +897,7 @@
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
-		plant_health = Clamp(plant_health + adjustamt, 0, myseed.endurance)
+		health = Clamp(health + adjustamt, 0, myseed.endurance)
 
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
 	toxic = Clamp(toxic + adjustamt, 0, 100)

@@ -1,6 +1,5 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	proper_name = "Airlock"
 
 /datum/wires/airlock/secure
 	randomize = TRUE
@@ -18,7 +17,7 @@
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
-	if(!issilicon(user) && A.isElectrified() && A.shock(user, 100))
+	if(!istype(user, /mob/living/silicon) && A.isElectrified() && A.shock(user, 100))
 		return FALSE
 	if(A.panel_open)
 		return TRUE
@@ -104,21 +103,17 @@
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.regainMainPower()
-				if(usr)
-					A.shock(usr, 50)
+				A.shock(usr, 50)
 			else
 				A.loseMainPower()
-				if(usr)
-					A.shock(usr, 50)
+				A.shock(usr, 50)
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
-				if(usr)
-					A.shock(usr, 50)
+				A.shock(usr, 50)
 			else
 				A.loseBackupPower()
-				if(usr)
-					A.shock(usr, 50)
+				A.shock(usr, 50)
 		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
@@ -140,8 +135,7 @@
 			else
 				if(A.secondsElectrified != -1)
 					A.secondsElectrified = -1
-					if(usr)
-						A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
 					add_logs(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend

@@ -7,8 +7,6 @@
 	icon_state = "dispenser"
 	density = 1
 	anchored = 1
-	obj_integrity = 300
-	max_integrity = 300
 	var/oxygentanks = TANK_DISPENSER_CAPACITY
 	var/plasmatanks = TANK_DISPENSER_CAPACITY
 
@@ -24,7 +22,7 @@
 	for(var/i in 1 to plasmatanks)
 		new /obj/item/weapon/tank/internals/plasma(src)
 	update_icon()
-	..()
+
 /obj/structure/tank_dispenser/update_icon()
 	cut_overlays()
 	switch(oxygentanks)
@@ -50,16 +48,13 @@
 			oxygentanks++
 		else
 			full = TRUE
-	else if(istype(I, /obj/item/weapon/wrench))
-		default_unfasten_wrench(user, I, time = 20)
-		return
-	else if(user.a_intent != INTENT_HARM)
+	else if(user.a_intent != "harm")
 		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
 	else
 		return ..()
 	if(full)
-		user << "<span class='notice'>[src] can't hold any more of [I].</span>"
+		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
 		return
 
 	if(!user.drop_item())
@@ -99,14 +94,5 @@
 				oxygentanks--
 			. = TRUE
 	update_icon()
-
-
-/obj/structure/tank_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		for(var/X in src)
-			var/obj/item/I = X
-			I.forceMove(loc)
-		new /obj/item/stack/sheet/metal (loc, 2)
-	qdel(src)
 
 #undef TANK_DISPENSER_CAPACITY

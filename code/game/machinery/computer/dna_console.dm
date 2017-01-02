@@ -37,6 +37,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 400
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
@@ -46,6 +47,7 @@
 			I.loc = src
 			src.diskette = I
 			user << "<span class='notice'>You insert [I].</span>"
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
 			return
 	else
@@ -72,7 +74,7 @@
 /obj/machinery/computer/scan_consolenew/proc/ShowInterface(mob/user, last_change)
 	if(!user) return
 	var/datum/browser/popup = new(user, "scannernew", "DNA Modifier Console", 800, 630) // Set up the popup browser window
-	if(!(in_range(src, user) || issilicon(user)))
+	if(!( in_range(src, user) || istype(user, /mob/living/silicon) ))
 		popup.close()
 		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
@@ -316,7 +318,7 @@
 		return
 	if(!isturf(usr.loc))
 		return
-	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
+	if(!( (isturf(loc) && in_range(src, usr)) || istype(usr, /mob/living/silicon) ))
 		return
 	if(current_screen == "working")
 		return
@@ -339,11 +341,13 @@
 		if("setduration")
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
+				playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(num)
 				radduration = Wrap(num, 1, RADIATION_DURATION_MAX+1)
 		if("setstrength")
 			if(!num)
 				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
+				playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(num)
 				radstrength = Wrap(num, 1, RADIATION_STRENGTH_MAX+1)
 		if("screen")
@@ -353,8 +357,10 @@
 				var/potassiodide_amount = viable_occupant.reagents.get_reagent_amount("potass_iodide")
 				var/can_add = max(min(REJUVENATORS_MAX - potassiodide_amount, REJUVENATORS_INJECT), 0)
 				viable_occupant.reagents.add_reagent("potass_iodide", can_add)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(num && text)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
@@ -362,6 +368,7 @@
 					buffer_slot["label"] = text
 		if("setbuffer")
 			if(num && viable_occupant)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = list(
 					"label"="Buffer[num]:[viable_occupant.real_name]",
@@ -373,12 +380,14 @@
 					)
 		if("clearbuffer")
 			if(num)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
 		if("transferbuffer")
 			if(num && viable_occupant)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				switch(href_list["text"])                                                                            //Numbers are this high because other way upgrading laser is just not worth the hassle, and i cant think of anything better to inmrove
 					if("se")
 						apply_buffer(SCANNER_ACTION_SE,num)
@@ -442,10 +451,12 @@
 							injectorready = 1
 		if("loaddisk")
 			if(num && diskette && diskette.fields)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = diskette.fields.Copy()
 		if("savedisk")
 			if(num && diskette && !diskette.read_only)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
@@ -453,6 +464,7 @@
 					diskette.fields = buffer_slot.Copy()
 		if("ejectdisk")
 			if(diskette)
+				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				diskette.loc = get_turf(src)
 				diskette = null
 		if("setdelayed")
@@ -460,6 +472,7 @@
 				delayed_action = list("action"=text2num(href_list["delayaction"]),"buffer"=num)
 		if("pulseui","pulsese")
 			if(num && viable_occupant && connected)
+				playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 				radduration = Wrap(radduration, 1, RADIATION_DURATION_MAX+1)
 				radstrength = Wrap(radstrength, 1, RADIATION_STRENGTH_MAX+1)
 

@@ -7,10 +7,16 @@
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
 /area/shuttle/transport)
 "c" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
 /area/shuttle/transport)
 "d" = (
 /obj/structure/window/shuttle,
@@ -23,35 +29,40 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "f" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
 /area/shuttle/transport)
 "g" = (
-/turf/open/floor/mineral/titanium/blue,
-/turf/closed/wall/mineral/titanium/interior,
+/turf/open/floor/plasteel/shuttle,
+/turf/closed/wall/shuttle/interior{
+	icon_state = "swall_f9"
+	},
 /area/shuttle/transport)
 "h" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "i" = (
 /obj/machinery/computer/shuttle/ferry/request,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "j" = (
 /obj/structure/chair,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "k" = (
-/obj/machinery/door/airlock/titanium,
-/turf/open/floor/mineral/titanium/blue,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "l" = (
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "m" = (
-/obj/machinery/door/airlock/titanium,
+/obj/machinery/door/airlock/shuttle,
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
@@ -59,11 +70,11 @@
 	id = "ferry";
 	name = "ferry shuttle";
 	roundstart_move = "ferry_away";
-	port_angle = 180;
+	travelDir = 180;
 	width = 5;
 	timid = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "n" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -83,13 +94,13 @@
 /area/shuttle/transport)
 "p" = (
 /obj/structure/closet/crate,
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "q" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/blue,
+/turf/open/floor/plasteel/shuttle,
 /area/shuttle/transport)
 "r" = (
 /turf/closed/wall/shuttle{
@@ -102,15 +113,15 @@
 a
 b
 k
-b
+n
 a
 "}
 (2,1,1) = {"
 b
 g
 l
-g
-b
+o
+n
 "}
 (3,1,1) = {"
 c
@@ -176,9 +187,9 @@ q
 c
 "}
 (12,1,1) = {"
-c
+f
 d
 m
 d
-c
+r
 "}

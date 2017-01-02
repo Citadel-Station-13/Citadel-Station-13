@@ -6,7 +6,6 @@
 	force = 40
 	throwforce = 20
 	armour_penetration = 50
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/datum/effect_system/spark_spread/spark_system
 
 /obj/item/weapon/katana/energy/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -38,7 +37,7 @@
 /obj/item/weapon/katana/energy/proc/returnToOwner(mob/living/carbon/human/user, doSpark = 1, caught = 0)
 	if(!istype(user))
 		return
-	forceMove(get_turf(user))
+	loc = get_turf(src)
 
 	if(doSpark)
 		spark_system.start()
@@ -51,6 +50,7 @@
 	else if(user.equip_to_slot_if_possible(src, slot_belt, 0, 1, 1))
 		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
 	else
+		loc = get_turf(user)
 		msg = "Your Energy Katana teleports to your location!"
 
 	if(caught)

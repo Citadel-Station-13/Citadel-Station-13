@@ -16,8 +16,8 @@
 	desc = "A camera film cartridge. Insert it into a camera to reload it."
 	icon_state = "film"
 	item_state = "electropack"
-	w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
+	w_class = 1
+	burn_state = FLAMMABLE
 
 /*
  * Photo
@@ -27,10 +27,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "photo"
 	item_state = "paper"
-	w_class = WEIGHT_CLASS_TINY
-	resistance_flags = FLAMMABLE
-	obj_integrity = 50
-	max_integrity = 50
+	w_class = 1
+	burn_state = FLAMMABLE
+	burntime = 5
 	var/icon/img		//Big photo image
 	var/scribble		//Scribble on the back.
 	var/blueprints = 0	//Does it include the blueprints?
@@ -95,7 +94,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 	can_hold = list(/obj/item/weapon/photo)
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /*
  * Camera
@@ -106,7 +105,7 @@
 	desc = "A polaroid camera."
 	icon_state = "camera"
 	item_state = "electropack"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=2000)
@@ -188,10 +187,11 @@
 		atoms.Add(T)
 		for(var/atom/movable/A in T)
 			if(A.invisibility)
-				if(see_ghosts && isobserver(A))
-					var/mob/dead/observer/O = A
-					if(O.orbiting) //so you dont see ghosts following people like antags, etc.
-						continue
+				if(see_ghosts)
+					if(istype(A, /mob/dead/observer))
+						var/mob/dead/observer/O = A
+						if(O.orbiting) //so you dont see ghosts following people like antags, etc.
+							continue
 				else
 					continue
 			atoms.Add(A)
@@ -210,10 +210,8 @@
 
 	for(var/atom/A in sorted)
 		var/icon/img = getFlatIcon(A)
-		if(isliving(A))
-			var/mob/living/L = A
-			if(L.lying)
-				img.Turn(L.lying)
+		if(istype(A, /mob/living) && A:lying)
+			img.Turn(A:lying)
 
 		var/offX = 32 * (A.x - center.x) + A.pixel_x + 33
 		var/offY = 32 * (A.y - center.y) + A.pixel_y + 33
@@ -236,7 +234,7 @@
 	var/mob_detail
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
-			if(see_ghosts && isobserver(M))
+			if(see_ghosts && istype(M,/mob/dead/observer))
 				var/mob/dead/observer/O = M
 				if(O.orbiting)
 					continue
@@ -247,22 +245,22 @@
 			else
 				continue
 
-		var/list/holding = list()
+		var/holding = null
 
-		if(isliving(M))
+		if(istype(M, /mob/living))
 			var/mob/living/L = M
-
-			for(var/obj/item/I in L.held_items)
-				if(!holding)
-					holding += "[L.p_they(TRUE)] [L.p_are()] holding \a [I]"
-				else
-					holding += " and \a [I]"
-			holding = holding.Join()
+			if(L.l_hand || L.r_hand)
+				if(L.l_hand) holding = "They are holding \a [L.l_hand]"
+				if(L.r_hand)
+					if(holding)
+						holding += " and \a [L.r_hand]"
+					else
+						holding = "They are holding \a [L.r_hand]"
 
 			if(!mob_detail)
-				mob_detail = "You can see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
+				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
 			else
-				mob_detail += "You can also see [L] on the photo[L.health < (L.maxHealth * 0.75) ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
+				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
 
 
 	return mob_detail
@@ -270,7 +268,7 @@
 
 /obj/item/device/camera/proc/captureimage(atom/target, mob/user, flag)  //Proc for both regular and AI-based camera to take the image
 	var/mobs = ""
-	var/isAi = isAI(user)
+	var/isAi = istype(user, /mob/living/silicon/ai)
 	var/list/seen
 	if(!isAi) //crappy check, but without it AI photos would be subject to line of sight from the AI Eye object. Made the best of it by moving the sec camera check inside
 		if(user.client)		//To make shooting through security cameras possible
@@ -411,7 +409,7 @@
 	qdel(P)    //so 10 thousand picture items are not left in memory should an AI take them and then view them all
 
 /obj/item/device/camera/siliconcam/proc/viewpictures(user)
-	if(iscyborg(user)) // Cyborg
+	if(isrobot(user)) // Cyborg
 		var/mob/living/silicon/robot/C = src.loc
 		var/obj/item/device/camera/siliconcam/Cinfo
 		if(C.connected_ai)

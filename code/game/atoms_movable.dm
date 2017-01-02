@@ -19,7 +19,6 @@
 	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
-	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	glide_size = 8
 	appearance_flags = TILE_BOUND
 
@@ -65,11 +64,12 @@
 						moving_diagonally = SECOND_DIAG_STEP
 						. = step(src, SOUTH)
 			moving_diagonally = 0
-			return
 
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
 		return
+
+	update_client_hook(loc)
 
 	if(.)
 		Moved(oldloc, direct)
@@ -84,8 +84,6 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
-	if (length(client_mobs_in_contents))
-		update_parallax_contents()
 	return 1
 
 /atom/movable/Destroy()
@@ -136,6 +134,9 @@
 				continue
 			AM.Crossed(src)
 		Moved(oldloc, 0)
+
+		update_client_hook(destination)
+
 		return 1
 	return 0
 
@@ -150,11 +151,32 @@
 		reset_perspective(destination)
 	update_canmove() //if the mob was asleep inside a container and then got forceMoved out we need to make them fall.
 
-/mob/living/brain/forceMove(atom/destination)
+/mob/living/carbon/brain/forceMove(atom/destination)
 	if(container)
-		return container.forceMove(destination)
+		container.forceMove(destination)
 	else //something went very wrong.
 		CRASH("Brainmob without container.")
+
+/mob/living/silicon/pai/forceMove(atom/destination)
+	if(card)
+		card.forceMove(destination)
+	else //something went very wrong.
+		CRASH("pAI without card")
+
+/atom/movable/proc/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax_values()
+
+/mob/update_client_hook(atom/destination)
+	if(locate(/mob) in src)
+		for(var/client/C in parallax_on_clients)
+			if((get_turf(C.eye) == destination) && (C.mob.hud_used))
+				C.mob.hud_used.update_parallax_values()
+	else if(client && hud_used)
+		hud_used.update_parallax_values()
+
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -243,7 +265,7 @@
 
 	while(target && ((dist_travelled < range && loc != finalturf)  || !has_gravity(src))) //stop if we reached our destination (or max range) and aren't floating
 		var/slept = 0
-		if(!isturf(loc))
+		if(!istype(loc, /turf))
 			hit = 1
 			break
 
@@ -304,6 +326,26 @@
 			throw_impact(AM)
 			return 1
 
+//Overlays
+/atom/movable/overlay
+	var/atom/master = null
+	anchored = 1
+
+/atom/movable/overlay/New()
+	verbs.Cut()
+
+/atom/movable/overlay/attackby(a, b, c)
+	if (src.master)
+		return src.master.attackby(a, b, c)
+
+/atom/movable/overlay/attack_paw(a, b, c)
+	if (src.master)
+		return src.master.attack_paw(a, b, c)
+
+/atom/movable/overlay/attack_hand(a, b, c)
+	if (src.master)
+		return src.master.attack_hand(a, b, c)
+
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
@@ -343,68 +385,3 @@
 //called when a mob resists while inside a container that is itself inside something.
 /atom/movable/proc/relay_container_resist(mob/living/user, obj/O)
 	return
-
-
-/atom/movable/proc/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, end_pixel_y)
-	if(!no_effect && (visual_effect_icon || used_item))
-		do_item_attack_animation(A, visual_effect_icon, used_item)
-
-	var/pixel_x_diff = 0
-	var/pixel_y_diff = 0
-	var/final_pixel_y = initial(pixel_y)
-	if(end_pixel_y)
-		final_pixel_y = end_pixel_y
-
-	var/direction = get_dir(src, A)
-	if(direction & NORTH)
-		pixel_y_diff = 8
-	else if(direction & SOUTH)
-		pixel_y_diff = -8
-
-	if(direction & EAST)
-		pixel_x_diff = 8
-	else if(direction & WEST)
-		pixel_x_diff = -8
-
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-
-/atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
-	var/image/I
-	if(visual_effect_icon)
-		I = image('icons/effects/effects.dmi', A, visual_effect_icon, A.layer + 0.1)
-	else if(used_item)
-		I = image(used_item.icon, A, used_item.icon_state, A.layer + 0.1)
-
-		// Scale the icon.
-		I.transform *= 0.75
-		// The icon should not rotate.
-		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-
-		// Set the direction of the icon animation.
-		var/direction = get_dir(src, A)
-		if(direction & NORTH)
-			I.pixel_y = -16
-		else if(direction & SOUTH)
-			I.pixel_y = 16
-
-		if(direction & EAST)
-			I.pixel_x = -16
-		else if(direction & WEST)
-			I.pixel_x = 16
-
-		if(!direction) // Attacked self?!
-			I.pixel_z = 16
-
-	if(!I)
-		return
-
-	flick_overlay(I, clients, 5) // 5 ticks/half a second
-
-	// And animate the attack!
-	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-
-/atom/movable/vv_get_dropdown()
-	. = ..()
-	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"

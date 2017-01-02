@@ -3,7 +3,7 @@
 	desc = "Talk through this."
 	icon_state = "intercom"
 	anchored = 1
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	canhear_range = 2
 	var/number = 0
 	var/anyai = 1

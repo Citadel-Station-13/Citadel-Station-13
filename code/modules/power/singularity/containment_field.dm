@@ -1,13 +1,13 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/machinery/field/containment
-	name = "containment field"
+	name = "Containment Field"
 	desc = "An energy field."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	anchored = 1
 	density = 0
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	unacidable = 1
 	use_power = 0
 	luminosity = 4
 	layer = ABOVE_OBJ_LAYER
@@ -26,33 +26,14 @@
 		shock(user)
 		return 1
 
-/obj/machinery/field/containment/attackby(obj/item/W, mob/user, params)
-	shock(user)
-	return 1
 
-/obj/machinery/field/containment/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BURN)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
-		if(BRUTE)
-			playsound(loc, 'sound/effects/EMPulse.ogg', 75, 1)
-
-/obj/machinery/field/containment/blob_act(obj/structure/blob/B)
+/obj/machinery/field/containment/blob_act(obj/effect/blob/B)
 	return 0
+
 
 /obj/machinery/field/containment/ex_act(severity, target)
 	return 0
 
-/obj/machinery/field/containment/attack_animal(mob/living/simple_animal/M)
-	if(!FG1 || !FG2)
-		qdel(src)
-		return
-	if(ismegafauna(M))
-		M.visible_message("<span class='warning'>[M] glows fiercely as the containment field flickers out!</span>")
-		FG1.calc_power(INFINITY) //rip that 'containment' field
-		M.adjustHealth(-M.obj_damage)
-	else
-		..()
 
 /obj/machinery/field/containment/Crossed(mob/mover)
 	if(isliving(mover))
@@ -78,8 +59,6 @@
 /obj/machinery/field/containment/Move()
 	qdel(src)
 
-
-
 // Abstract Field Class
 // Used for overriding certain procs
 
@@ -98,23 +77,26 @@
 	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
-	var/shock_damage = min(rand(30,40),rand(30,40))
+	if(isliving(user))
+		var/shock_damage = min(rand(30,40),rand(30,40))
 
-	if(iscarbon(user))
-		user.Stun(15)
-		user.Weaken(10)
-		user.electrocute_act(shock_damage, src, 1)
+		if(iscarbon(user))
+			var/stun = min(shock_damage, 15)
+			user.Stun(stun)
+			user.Weaken(10)
+			user.electrocute_act(shock_damage, src, 1)
 
-	else if(issilicon(user))
-		if(prob(20))
-			user.Stun(2)
-		user.take_overall_damage(0, shock_damage)
-		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
-		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
-		"<span class='italics'>You hear an electrical crack.</span>")
+		else if(issilicon(user))
+			if(prob(20))
+				user.Stun(2)
+			user.take_overall_damage(0, shock_damage)
+			user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+			"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
+			"<span class='italics'>You hear an electrical crack.</span>")
 
-	user.updatehealth()
-	bump_field(user)
+		user.updatehealth()
+		bump_field(user)
+	return
 
 /obj/machinery/field/proc/clear_shock()
 	hasShocked = 0

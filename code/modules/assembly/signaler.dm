@@ -25,10 +25,14 @@
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(!..())//cooldown processing
-		return FALSE
+	if(cooldown > 0)
+		return 0
+	cooldown = 2
+	spawn(10)
+		process_cooldown()
+
 	signal()
-	return TRUE
+	return 1
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)

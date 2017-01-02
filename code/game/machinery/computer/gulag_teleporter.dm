@@ -4,7 +4,7 @@
 	desc = "Used to send criminals to the Labor Camp"
 	icon_screen = "explosive"
 	icon_keyboard = "security_key"
-	req_access = list(access_armory)
+	req_access = list(access_security)
 	circuit = /obj/item/weapon/circuitboard/computer/gulag_teleporter_console
 	var/default_goal = 200
 	var/obj/item/weapon/card/id/prisoner/id = null
@@ -12,6 +12,7 @@
 	var/obj/structure/gulag_beacon/beacon = null
 	var/mob/living/carbon/human/prisoner = null
 	var/datum/data/record/temporary_record = null
+	light_color = LIGHT_COLOR_RED
 
 /obj/machinery/computer/gulag_teleporter_computer/New()
 	..()
@@ -30,6 +31,7 @@
 			W.forceMove(src)
 			id = W
 			user << "<span class='notice'>You insert [W].</span>"
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			return
 		else
 			user << "<span class='notice'>There's an ID inserted already.</span>"
@@ -82,23 +84,26 @@
 	if(..())
 		return
 	if(!allowed(usr))
+		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		usr << "<span class='warning'>Access denied.</span>"
 		return
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("scan_beacon")
 			beacon = findbeacon()
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("handle_id")
 			if(id)
-				if(!usr.get_active_held_item())
+				if(!usr.get_active_hand())
 					usr.put_in_hands(id)
 					id = null
 				else
 					id.forceMove(get_turf(src))
 					id = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
+				var/obj/item/I = usr.get_active_hand()
 				if(istype(I, /obj/item/weapon/card/id/prisoner))
 					if(!usr.drop_item())
 						return
@@ -106,6 +111,7 @@
 					id = I
 		if("set_goal")
 			var/new_goal = input("Set the amount of points:", "Points", id.goal) as num|null
+			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
@@ -113,18 +119,23 @@
 			id.goal = Clamp(new_goal, 0, 1000) //maximum 1000 points
 		if("toggle_open")
 			if(teleporter.locked)
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				usr << "The teleporter is locked"
 				return
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 			teleporter.toggle_open()
 		if("teleporter_lock")
 			if(teleporter.state_open)
 				usr << "Close the teleporter before locking!"
+				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 				return
 			teleporter.locked = !teleporter.locked
+			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
-			addtimer(src, "teleport", 5, TIMER_NORMAL, usr)
+			addtimer(src, "teleport", 5, FALSE, usr)
+			playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
 
 /obj/machinery/computer/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()
@@ -155,10 +166,3 @@
 	teleporter.toggle_open()
 	id = null
 	temporary_record = null
-
-
-
-
-
-
-

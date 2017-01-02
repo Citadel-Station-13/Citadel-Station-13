@@ -2,7 +2,7 @@
 	if(!istype(reagent_list))
 		return
 
-	var/mixcolor
+	var/color
 	var/vol_counter = 0
 	var/vol_temp
 
@@ -10,12 +10,12 @@
 		vol_temp = R.volume
 		vol_counter += vol_temp
 
-		if(!mixcolor)
-			mixcolor = R.color
+		if(!color)
+			color = R.color
 
-		else if (length(mixcolor) >= length(R.color))
-			mixcolor = BlendRGB(mixcolor, R.color, vol_temp/vol_counter)
+		else if (length(color) >= length(R.color))
+			color = BlendRGB(color, R.color, vol_temp/vol_counter)
 		else
-			mixcolor = BlendRGB(R.color, mixcolor, vol_temp/vol_counter)
+			color = BlendRGB(R.color, color, vol_temp/vol_counter)
 
-	return mixcolor
+	return color

@@ -61,25 +61,19 @@
 
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
-	var/threat = 0
 	for(var/datum/disease/D in viruses)
-		if(!(D.visibility_flags & HIDDEN_SCANNER))
-			if (D.severity != NONTHREAT) //a buffing virus gets an icon
-				threat = 2
-				return threat //harmful viruses have priority
-			else
-				threat = 1 //aka good virus
-
-	return threat
+		if((!(D.visibility_flags & HIDDEN_SCANNER)) && (D.severity != NONTHREAT))
+			return 1
+	return 0
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
 	if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
-	var/maxi_health = M.maxHealth
+	var/maxhealth = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
-		maxi_health = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
-	var/resulthealth = (M.health / maxi_health) * 100
+		maxhealth = 100 //so crit shows up right for aliens and other high-health carbon mobs; noncarbons don't have crit.
+	var/resulthealth = (M.health / maxhealth) * 100
 	switch(resulthealth)
 		if(100 to INFINITY)
 			return "health100"
@@ -137,8 +131,6 @@
 /mob/living/proc/med_hud_set_health()
 	var/image/holder = hud_list[HEALTH_HUD]
 	holder.icon_state = "hud[RoundHealth(src)]"
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 
 //for carbon suit sensors
 /mob/living/carbon/med_hud_set_health()
@@ -151,8 +143,6 @@
 //called when a carbon changes stat, virus or XENO_HOST
 /mob/living/proc/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
 	else
@@ -160,20 +150,12 @@
 
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	var/virus_state = check_virus()
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-	holder.pixel_y = I.Height() - world.icon_size
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
-	else if(has_brain_worms() && B != null && B.controlling)
-		holder.icon_state = "hudbrainworm"
-	else if(virus_state == 2)
+	else if(check_virus())
 		holder.icon_state = "hudill"
-	else if(virus_state == 1)
-		holder.icon_state = "hudbuff"
 	else
 		holder.icon_state = "hudhealthy"
 
@@ -186,8 +168,6 @@
 
 /mob/living/carbon/human/proc/sec_hud_set_ID()
 	var/image/holder = hud_list[ID_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudno_id"
 	if(wear_id)
 		holder.icon_state = "hud[ckey(wear_id.GetJobName())]"
@@ -201,27 +181,20 @@
 	for(var/i in list(IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD))
 		holder = hud_list[i]
 		holder.icon_state = null
-	for(var/obj/item/weapon/implant/I in implants)
-		if(istype(I,/obj/item/weapon/implant/tracking))
-			holder = hud_list[IMPTRACK_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_tracking"
-		else if(istype(I,/obj/item/weapon/implant/mindshield))
-			holder = hud_list[IMPLOYAL_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_loyal"
-		else if(istype(I,/obj/item/weapon/implant/chem))
-			holder = hud_list[IMPCHEM_HUD]
-			var/icon/IC = icon(icon, icon_state, dir)
-			holder.pixel_y = IC.Height() - world.icon_size
-			holder.icon_state = "hud_imp_chem"
+	for(var/obj/item/weapon/implant/I in src)
+		if(I.implanted)
+			if(istype(I,/obj/item/weapon/implant/tracking))
+				holder = hud_list[IMPTRACK_HUD]
+				holder.icon_state = "hud_imp_tracking"
+			else if(istype(I,/obj/item/weapon/implant/mindshield))
+				holder = hud_list[IMPLOYAL_HUD]
+				holder.icon_state = "hud_imp_loyal"
+			else if(istype(I,/obj/item/weapon/implant/chem))
+				holder = hud_list[IMPCHEM_HUD]
+				holder.icon_state = "hud_imp_chem"
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	var/perpname = get_face_name(get_id_name(""))
 	if(perpname)
 		var/datum/data/record/R = find_record("name", perpname, data_core.security)
@@ -267,8 +240,6 @@
 //Sillycone hooks
 /mob/living/silicon/proc/diag_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	if(stat == DEAD)
 		holder.icon_state = "huddiagdead"
 	else
@@ -276,8 +247,6 @@
 
 /mob/living/silicon/proc/diag_hud_set_status()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	switch(stat)
 		if(CONSCIOUS)
 			holder.icon_state = "hudstat"
@@ -289,9 +258,7 @@
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
 	var/image/holder = hud_list[DIAG_BATT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(cell)
+	if (cell)
 		var/chargelvl = (cell.charge/cell.maxcharge)
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
@@ -302,16 +269,12 @@
 ~~~~~~~~~~~~~~~~~~~~~*/
 /obj/mecha/proc/diag_hud_set_mechhealth()
 	var/image/holder = hud_list[DIAG_MECH_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	holder.icon_state = "huddiag[RoundDiagBar(obj_integrity/max_integrity)]"
+	holder.icon_state = "huddiag[RoundDiagBar(health/initial(health))]"
 
 
 /obj/mecha/proc/diag_hud_set_mechcell()
 	var/image/holder = hud_list[DIAG_BATT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
-	if(cell)
+	if (cell)
 		var/chargelvl = cell.charge/cell.maxcharge
 		holder.icon_state = "hudbatt[RoundDiagBar(chargelvl)]"
 	else
@@ -320,8 +283,6 @@
 
 /obj/mecha/proc/diag_hud_set_mechstat()
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = null
 	if(internal_damage)
 		holder.icon_state = "hudwarn"
@@ -331,14 +292,10 @@
 ~~~~~~~~~~*/
 /mob/living/simple_animal/bot/proc/diag_hud_set_bothealth()
 	var/image/holder = hud_list[DIAG_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
 
 /mob/living/simple_animal/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	var/image/holder = hud_list[DIAG_STAT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	if(on)
 		holder.icon_state = "hudstat"
 	else if(stat) //Generally EMP causes this
@@ -348,8 +305,6 @@
 
 /mob/living/simple_animal/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	var/image/holder = hud_list[DIAG_BOT_HUD]
-	var/icon/I = icon(icon, icon_state, dir)
-	holder.pixel_y = I.Height() - world.icon_size
 	if(client) //If the bot is player controlled, it will not be following mode logic!
 		holder.icon_state = "hudsentient"
 		return

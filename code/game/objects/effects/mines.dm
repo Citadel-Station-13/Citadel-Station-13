@@ -11,10 +11,10 @@
 	victim << "<span class='danger'>*click*</span>"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
-	if(ismob(AM))
-		var/mob/MM = AM
-		if(!(MM.movement_type & FLYING))
-			triggermine(AM)
+	if(isanimal(AM))
+		var/mob/living/simple_animal/SA = AM
+		if(!SA.flying)
+			triggermine(SA)
 	else
 		triggermine(AM)
 
@@ -55,7 +55,7 @@
 /obj/effect/mine/kickmine/mineEffect(mob/victim)
 	if(isliving(victim) && victim.client)
 		victim << "<span class='userdanger'>You have been kicked FOR NO REISIN!</span>"
-		qdel(victim.client)
+		del(victim.client)
 
 
 /obj/effect/mine/gas
@@ -114,7 +114,7 @@
 	name = "Red Orb"
 	desc = "You feel angry just looking at it."
 	duration = 1200 //2min
-	color = "#FF0000"
+	color = "red"
 
 /obj/effect/mine/pickup/bloodbath/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
@@ -130,10 +130,10 @@
 
 	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags |= NODROP
-	victim.drop_all_held_items()
+	victim.drop_r_hand()
+	victim.drop_l_hand()
 	victim.put_in_hands(chainsaw)
-	chainsaw.attack_self(victim)
-	chainsaw.wield(victim)
+
 	victim.reagents.add_reagent("adminordrazine",25)
 
 	victim.client.color = pure_red
@@ -148,7 +148,7 @@
 /obj/effect/mine/pickup/healing
 	name = "Blue Orb"
 	desc = "You feel better just looking at it."
-	color = "#0000FF"
+	color = "blue"
 
 /obj/effect/mine/pickup/healing/mineEffect(mob/living/carbon/victim)
 	if(!victim.client || !istype(victim))
@@ -159,7 +159,7 @@
 /obj/effect/mine/pickup/speed
 	name = "Yellow Orb"
 	desc = "You feel faster just looking at it."
-	color = "#FFFF00"
+	color = "yellow"
 	duration = 300
 
 /obj/effect/mine/pickup/speed/mineEffect(mob/living/carbon/victim)

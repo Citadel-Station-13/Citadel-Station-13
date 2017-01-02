@@ -5,8 +5,8 @@
 // Extra heat affects the temperature of the mixture, and may cause it to react in different ways.
 
 
-/proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
-	if(!isturf(epicenter) || !reactants.len || threatscale <= 0)
+proc/chem_splash(turf/epicenter, affected_range = 3, list/datum/reagents/reactants = list(), extra_heat = 0, threatscale = 1, adminlog = 1)
+	if(!istype(epicenter, /turf) || !reactants.len || threatscale <= 0)
 		return
 	var/has_reagents
 	var/total_reagents
@@ -46,12 +46,12 @@
 					turflist.Remove(T)
 					turflist.Add(T) // we move the purely diagonal turfs to the end of the list.
 			for(var/turf/T in turflist)
-				if(accessible[T]) continue
-				for(var/thing in T.GetAtmosAdjacentTurfs(alldir = TRUE))
-					var/turf/NT = thing
+				if(T in accessible) continue
+				for(var/turf/NT in orange(1, T))
 					if(!(NT in accessible)) continue
 					if(!(get_dir(T,NT) in cardinal)) continue
-					accessible[T] = 1
+					if(!NT.CanAtmosPass(T)) continue
+					accessible |= T
 					break
 		var/list/reactable = accessible
 		for(var/turf/T in accessible)
@@ -63,8 +63,7 @@
 		if(!reactable.len) //Nothing to react with. Probably means we're in nullspace.
 			return
 		var/fraction = 0.5/accessible.len // In a 100u mix. A small grenade spreads ~1.5u units per affected tile. A large grenade spreads ~0.75u, and a bomb spreads ~0.4u
-		for(var/thing in reactable)
-			var/atom/A = thing
+		for(var/atom/A in reactable)
 			splash_holder.reaction(A, TOUCH, fraction)
 
 	qdel(splash_holder)

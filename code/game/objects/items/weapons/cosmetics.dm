@@ -4,7 +4,7 @@
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/colour = "red"
 	var/open = 0
 
@@ -27,10 +27,8 @@
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	..()
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
-
 
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
@@ -108,7 +106,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
 
 /obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
@@ -126,7 +124,7 @@
 		var/mob/living/carbon/human/H = M
 		var/location = user.zone_selected
 		if(location == "mouth")
-			if(!(FACEHAIR in H.dna.species.species_traits))
+			if(!(FACEHAIR in H.dna.species.specflags))
 				user << "<span class='warning'>There is no facial hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))
@@ -154,7 +152,7 @@
 						shave(H, location)
 
 		else if(location == "head")
-			if(!(HAIR in H.dna.species.species_traits))
+			if(!(HAIR in H.dna.species.specflags))
 				user << "<span class='warning'>There is no hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))

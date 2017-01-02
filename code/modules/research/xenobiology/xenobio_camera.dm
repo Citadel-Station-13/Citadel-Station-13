@@ -28,6 +28,7 @@
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
+	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/camera_advanced/xenobio/CreateEye()
 	eyeobj = new /mob/camera/aiEye/remote/xenobio()
@@ -65,20 +66,10 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>"
+		user << "<span class='notice'>You feed [O] to the [src]. It now has [monkeys] monkey cubes stored.</span>"
 		user.drop_item()
 		qdel(O)
 		return
-	else if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
-		var/loaded = 0
-		for(var/obj/G in P.contents)
-			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-				loaded = 1
-				monkeys++
-				qdel(G)
-		if (loaded)
-			user << "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>"
 	..()
 
 /datum/action/innate/camera_off/xenobio/Activate()

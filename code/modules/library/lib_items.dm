@@ -17,10 +17,8 @@
 	anchored = 0
 	density = 1
 	opacity = 0
-	resistance_flags = FLAMMABLE
-	obj_integrity = 200
-	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
+	burn_state = FLAMMABLE
+	burntime = 30
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
@@ -39,16 +37,17 @@
 	switch(state)
 		if(0)
 			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
-				playsound(loc, I.usesound, 100, 1)
-				if(do_after(user, 20*I.toolspeed, target = src))
+				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				if(do_after(user, 20/I.toolspeed, target = src))
 					user << "<span class='notice'>You pry the frame apart.</span>"
-					deconstruct(TRUE)
+					new /obj/item/stack/sheet/mineral/wood(loc, 4)
+					qdel(src)
 
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/mineral/wood))
@@ -59,7 +58,7 @@
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
-				playsound(loc, I.usesound, 100, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user << "<span class='notice'>You unwrench the frame.</span>"
 				anchored = 0
 				state = 0
@@ -87,7 +86,7 @@
 				if(contents.len)
 					user << "<span class='warning'>You need to remove the books first!</span>"
 				else
-					playsound(loc, I.usesound, 100, 1)
+					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 					user << "<span class='notice'>You pry the shelf out.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
@@ -103,19 +102,20 @@
 			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 				return
 			if(ishuman(user))
-				if(!user.get_active_held_item())
+				if(!user.get_active_hand())
 					user.put_in_hands(choice)
 			else
 				choice.loc = get_turf(src)
 			update_icon()
 
 
-/obj/structure/bookcase/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/mineral/wood(loc, 4)
-	for(var/obj/item/weapon/book/B in contents)
-		B.forceMove(get_turf(src))
-	qdel(src)
-
+/obj/structure/bookcase/ex_act(severity, target)
+	..()
+	if(!qdeleted(src))
+		for(var/obj/item/weapon/book/b in contents)
+			b.loc = (get_turf(src))
+		if(prob(50))
+			qdel(src)
 
 /obj/structure/bookcase/update_icon()
 	if(contents.len < 5)
@@ -165,9 +165,9 @@
 	icon_state ="book"
 	throw_speed = 1
 	throw_range = 5
-	w_class = WEIGHT_CLASS_NORMAL		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
+	w_class = 3		 //upped to three because books are, y'know, pretty big. (and you could hide them inside eachother recursively forever)
 	attack_verb = list("bashed", "whacked", "educated")
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 	var/dat				//Actual page content
 	var/due_date = 0	//Game time in 1/10th seconds
 	var/author			//Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
@@ -177,7 +177,6 @@
 
 /obj/item/weapon/book/attack_self(mob/user)
 	if(is_blind(user))
-		user << "<span class='warning'>As you are trying to read, you suddenly feel very stupid!</span>"
 		return
 	if(ismonkey(user))
 		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
@@ -193,7 +192,6 @@
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen))
 		if(is_blind(user))
-			user << "<span class='warning'> As you are trying to write on the book, you suddenly feel very stupid!</span>"
 			return
 		if(unique)
 			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
@@ -266,7 +264,7 @@
 			B.name = src.name
 			B.title = src.title
 			B.icon_state = src.icon_state
-			if(user.is_holding(src))
+			if(user.l_hand == src || user.r_hand == src)
 				qdel(src)
 				user.put_in_hands(B)
 				return
@@ -288,7 +286,7 @@
 	icon_state ="scanner"
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/weapon/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory

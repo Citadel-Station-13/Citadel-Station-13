@@ -1,10 +1,10 @@
-/obj/structure/blob/factory
+/obj/effect/blob/factory
 	name = "factory blob"
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "blob_factory"
 	desc = "A thick spire of tendrils."
-	obj_integrity = 200
-	max_integrity = 200
+	health = 200
+	maxhealth = 200
 	health_regen = 1
 	point_return = 25
 	var/list/spores = list()
@@ -14,12 +14,12 @@
 	var/spore_cooldown = 80 //8 seconds between spores and after spore death
 
 
-/obj/structure/blob/factory/scannerreport()
+/obj/effect/blob/factory/scannerreport()
 	if(naut)
 		return "It is currently sustaining a blobbernaut, making it fragile and unable to produce blob spores."
 	return "Will produce a blob spore every few seconds."
 
-/obj/structure/blob/factory/Destroy()
+/obj/effect/blob/factory/Destroy()
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/spore in spores)
 		if(spore.factory == src)
 			spore.factory = null
@@ -30,7 +30,7 @@
 	spores = null
 	return ..()
 
-/obj/structure/blob/factory/Be_Pulsed()
+/obj/effect/blob/factory/Be_Pulsed()
 	. = ..()
 	if(naut)
 		return

@@ -119,10 +119,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-			log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
-
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -138,9 +135,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-				log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
+				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", "atmos")
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
@@ -179,9 +174,5 @@ Thus, the two variables affect pump operation are set in New():
 		if(!(stat & NOPOWER) && on)
 			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		else
-			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-			log_admin("[key_name(usr)] unwrenched a volume pump at [x], [y], [z]")
-
 			return 1
 

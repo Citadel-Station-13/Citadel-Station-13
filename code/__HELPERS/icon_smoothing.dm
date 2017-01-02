@@ -108,39 +108,39 @@
 
 	return adjacencies
 
-//do not use, use queue_smooth(atom)
 /proc/smooth_icon(atom/A)
-	if(!A || !A.smooth || !A.z)
-		return
 	if(qdeleted(A))
 		return
-	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
-		var/adjacencies = calculate_adjacencies(A)
+	if(!A || !A.smooth)
+		return
+	spawn(0)
+		if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
+			var/adjacencies = calculate_adjacencies(A)
 
-		if(A.smooth & SMOOTH_DIAGONAL)
-			A.diagonal_smooth(adjacencies)
-		else
-			cardinal_smooth(A, adjacencies)
+			if(A.smooth & SMOOTH_DIAGONAL)
+				A.diagonal_smooth(adjacencies)
+			else
+				cardinal_smooth(A, adjacencies)
 
 /atom/proc/diagonal_smooth(adjacencies)
 	switch(adjacencies)
 		if(N_NORTH|N_WEST)
-			replace_smooth_overlays("d-se","d-se-0")
+			replace_smooth_overlays("d1-se-0","d2-se","d3-se","d4-se")
 		if(N_NORTH|N_EAST)
-			replace_smooth_overlays("d-sw","d-sw-0")
+			replace_smooth_overlays("d1-sw","d2-sw-0","d3-sw","d4-sw")
 		if(N_SOUTH|N_WEST)
-			replace_smooth_overlays("d-ne","d-ne-0")
+			replace_smooth_overlays("d1-ne","d2-ne","d3-ne-0","d4-ne")
 		if(N_SOUTH|N_EAST)
-			replace_smooth_overlays("d-nw","d-nw-0")
+			replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-0")
 
 		if(N_NORTH|N_WEST|N_NORTHWEST)
-			replace_smooth_overlays("d-se","d-se-1")
+			replace_smooth_overlays("d1-se-1","d2-se","d3-se","d4-se")
 		if(N_NORTH|N_EAST|N_NORTHEAST)
-			replace_smooth_overlays("d-sw","d-sw-1")
+			replace_smooth_overlays("d1-sw","d2-sw-1","d3-sw","d4-sw")
 		if(N_SOUTH|N_WEST|N_SOUTHWEST)
-			replace_smooth_overlays("d-ne","d-ne-1")
+			replace_smooth_overlays("d1-ne","d2-ne","d3-ne-1","d4-ne")
 		if(N_SOUTH|N_EAST|N_SOUTHEAST)
-			replace_smooth_overlays("d-nw","d-nw-1")
+			replace_smooth_overlays("d1-nw","d2-nw","d3-nw","d4-nw-1")
 
 		else
 			cardinal_smooth(src, adjacencies)
@@ -153,33 +153,25 @@
 /turf/closed/wall/diagonal_smooth(adjacencies)
 	adjacencies = reverse_ndir(..())
 	if(adjacencies)
-		var/list/U = list()
+		underlays.Cut()
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
-				var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-				I.plane = PLANE_SPACE
-				U += I
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
 			else
-				U += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=TURF_LAYER)
+				underlays += image(fixed_underlay["icon"], fixed_underlay["icon_state"], layer=src.layer)
 		else
 			var/turf/T = get_step(src, turn(adjacencies, 180))
-			if(T && (T.density || T.smooth))
+			if(T && T.density)
 				T = get_step(src, turn(adjacencies, 135))
-				if(T && (T.density || T.smooth))
+				if(T && T.density)
 					T = get_step(src, turn(adjacencies, 225))
 
-			if(isspaceturf(T) && !istype(T, /turf/open/space/transit))
-				var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-				I.plane = PLANE_SPACE
-				U += I
+			if(istype(T, /turf/open/space))
+				underlays += image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=src.layer)
 			else if(T && !T.density && !T.smooth)
-				U += T
-			else if(baseturf && !initial(baseturf.density) && !initial(baseturf.smooth))
-				U += image(initial(baseturf.icon), initial(baseturf.icon_state), layer=TURF_LAYER)
+				underlays += T
 			else
-				U += DEFAULT_UNDERLAY_IMAGE
-		underlays = U
-
+				underlays += DEFAULT_UNDERLAY_IMAGE
 
 /proc/cardinal_smooth(atom/A, adjacencies)
 	//NW CORNER
@@ -234,31 +226,25 @@
 		else if(adjacencies & N_EAST)
 			se = "4-e"
 
-	var/list/New = list()
-
 	if(A.top_left_corner != nw)
 		A.overlays -= A.top_left_corner
 		A.top_left_corner = nw
-		New += nw
+		A.add_overlay(nw)
 
 	if(A.top_right_corner != ne)
 		A.overlays -= A.top_right_corner
 		A.top_right_corner = ne
-		New += ne
+		A.add_overlay(ne)
 
 	if(A.bottom_right_corner != sw)
 		A.overlays -= A.bottom_right_corner
 		A.bottom_right_corner = sw
-		New += sw
+		A.add_overlay(sw)
 
 	if(A.bottom_left_corner != se)
 		A.overlays -= A.bottom_left_corner
 		A.bottom_left_corner = se
-		New += se
-
-	if(New.len)
-		A.add_overlay(New)
-
+		A.add_overlay(se)
 
 /proc/find_type_in_direction(atom/source, direction)
 	var/turf/target_turf = get_step(source, direction)
@@ -319,16 +305,14 @@
 
 /atom/proc/replace_smooth_overlays(nw, ne, sw, se)
 	clear_smooth_overlays()
-	var/list/O = list()
 	top_left_corner = nw
-	O += nw
+	add_overlay(nw)
 	top_right_corner = ne
-	O += ne
+	add_overlay(ne)
 	bottom_left_corner = sw
-	O += sw
+	add_overlay(sw)
 	bottom_right_corner = se
-	O += se
-	add_overlay(O)
+	add_overlay(se)
 
 /proc/reverse_ndir(ndir)
 	switch(ndir)
@@ -368,6 +352,19 @@
 			return 0
 
 //SSicon_smooth
+/proc/ss_smooth_icon(atom/A)
+	if(qdeleted(A))
+		return
+	if(!istype(A) || (A && !A.smooth))
+		return
+	if((A.smooth & SMOOTH_TRUE) || (A.smooth & SMOOTH_MORE))
+		var/adjacencies = calculate_adjacencies(A)
+		if(A.smooth & SMOOTH_DIAGONAL)
+			A.diagonal_smooth(adjacencies)
+		else
+			cardinal_smooth(A, adjacencies)
+
+//SSicon_smooth
 /proc/queue_smooth_neighbors(atom/A)
 	for(var/V in orange(1,A))
 		var/atom/T = V
@@ -387,5 +384,6 @@
 	name = "smooth wall"
 	icon = 'icons/turf/smooth_wall.dmi'
 	icon_state = "smooth"
+	walltype = "shuttle"
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL|SMOOTH_BORDER
 	canSmoothWith = null

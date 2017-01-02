@@ -1,30 +1,27 @@
-/mob/living/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/gib(no_brain, no_organs)
 	var/prev_lying = lying
 	if(stat != DEAD)
 		death(1)
 
+	if(buckled)
+		buckled.unbuckle_mob(src,force=1) //to update alien nest overlay, forced because we don't exist anymore
+
 	if(!prev_lying)
 		gib_animation()
-
-	spill_organs(no_brain, no_organs, no_bodyparts)
-
-	if(!no_bodyparts)
-		spread_bodyparts(no_brain, no_organs)
-
-	spawn_gibs(no_bodyparts)
+	if(!no_organs)
+		spill_organs(no_brain)
+	spawn_gibs()
 	qdel(src)
 
 /mob/living/proc/gib_animation()
 	return
 
 /mob/living/proc/spawn_gibs()
-	new /obj/effect/gibspawner/generic(loc, viruses)
+	gibs(loc, viruses)
 
-/mob/living/proc/spill_organs()
+/mob/living/proc/spill_organs(no_brain)
 	return
 
-/mob/living/proc/spread_bodyparts()
-	return
 
 /mob/living/dust()
 	death(1)
@@ -60,6 +57,8 @@
 	living_mob_list -= src
 	if(!gibbed)
 		dead_mob_list += src
+	else if(buckled)
+		buckled.unbuckle_mob(src,force=1)
 	paralysis = 0
 	stunned = 0
 	weakened = 0
