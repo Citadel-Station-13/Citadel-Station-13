@@ -1,9 +1,9 @@
 /datum/game_mode/traitor/double_agents
 	name = "double agents"
 	config_tag = "double_agents"
-	required_players = 25
+	required_players = 15
 	required_enemies = 5
-	recommended_enemies = 8
+	recommended_enemies = 5
 	reroll_friendly = 0
 
 	traitors_possible = 10 //hard limit on traitors if scaling is turned off
