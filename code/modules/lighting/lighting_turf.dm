@@ -47,8 +47,6 @@
 			if (!C.active) // We would activate the corner, calculate the lighting for it.
 				for (var/L in C.affecting)
 					var/datum/light_source/S = L
-					if(!S.source_turf)
-						continue
 					S.recalc_corner(C)
 
 				C.active = TRUE
@@ -107,7 +105,7 @@
 /turf/proc/generate_missing_corners()
 	lighting_corners_initialised = TRUE
 	if (!corners)
-		corners = list(0,0,0,0)
+		corners = list(null, null, null, null)
 
 	for (var/i = 1 to 4)
 		if (corners[i]) // Already have a corner on this direction.
@@ -116,12 +114,12 @@
 		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
 
 /turf/ChangeTurf(path)
-	if(!path || (!use_preloader && path == type) || !global.lighting_overlays_initialized) //Sucks this is here but it would cause problems otherwise.
+	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
 	if (!lighting_corners_initialised)
 		if (!corners)
-			corners = list(0,0,0,0)
+			corners = list(null, null, null, null)
 
 		for (var/i = 1 to 4)
 			if (corners[i]) // Already have a corner on this direction.
