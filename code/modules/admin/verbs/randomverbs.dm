@@ -70,7 +70,7 @@
 		return
 
 	if(!M)
-		M = input("Direct narrate to who?", "Active Players") as null|anything in player_list
+		M = input("Direct narrate to whom?", "Active Players") as null|anything in player_list
 
 	if(!M)
 		return
@@ -521,7 +521,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","MFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
-	set category = "Abusive"
+	set category = "Special Verbs"
 	set name = "Explosion"
 
 	if (!holder)
@@ -594,8 +594,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] has gibbed [key_name(M)]")
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
-	if(istype(M, /mob/dead/observer))
-		gibs(M.loc, M.viruses)
+	if(isobserver(M))
+		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
 		return
 	if(confirm == "Yes")
 		M.gib()
@@ -612,7 +612,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		log_admin("[key_name(usr)] used gibself.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] used gibself.</span>")
 		feedback_add_details("admin_verb","GIBS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		mob.gib(1, 1)
+		mob.gib(1, 1, 1)
 
 /client/proc/cmd_admin_check_contents(mob/living/M in mob_list)
 	set category = "Special Verbs"
@@ -689,7 +689,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 /client/proc/everyone_random()
-	set category = "Abusive"
+	set category = "Fun"
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 
@@ -754,28 +754,31 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in nuke_list)
 	set name = "Toggle Nuke"
-	set category = "Abusive"
+	set category = "Fun"
 	set popup_menu = 0
 	if(!check_rights(R_DEBUG))
 		return
 
 	if(!N.timing)
-		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timeleft]") as num
+		var/newtime = input(usr, "Set activation timer.", "Activate Nuke", "[N.timer_set]") as num
 		if(!newtime)
 			return
-		N.timeleft = newtime
+		N.timer_set = newtime
 	N.set_safety()
 	N.set_active()
 
 	log_admin("[key_name(usr)] [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z]).")
-	message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) [N.timing ? "activated" : "deactivated"] a nuke at ([N.x],[N.y],[N.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[N.x];Y=[N.y];Z=[N.z]'>JMP</a>).")
+	message_admins("[ADMIN_LOOKUPFLW(usr)] [N.timing ? "activated" : "deactivated"] a nuke at [ADMIN_COORDJMP(N)].")
 	feedback_add_details("admin_verb","TN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/reset_latejoin_spawns()
-	set category = "Abusive"
+	set category = "Debug"
 	set name = "Remove Latejoin Spawns"
 
 	if(!check_rights(R_DEBUG))
+		return
+	var/confirm = alert(src, "Disable Latejoin spawns??", "Message", "Yes", "No")
+	if(confirm != "Yes")
 		return
 
 	latejoin.Cut()
@@ -994,7 +997,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		M.ui_interact(usr)
 
 /client/proc/mass_zombie_infection()
-	set category = "Abusive"
+	set category = "Fun"
 	set name = "Mass Zombie Infection"
 	set desc = "Infects all humans with a latent organ that will zombify \
 		them on death."
@@ -1014,7 +1017,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	feedback_add_details("admin_verb","MZI")
 
 /client/proc/mass_zombie_cure()
-	set category = "Abusive"
+	set category = "Fun"
 	set name = "Mass Zombie Cure"
 	set desc = "Removes the zombie infection from all humans, returning them to normal."
 	if(!holder)
@@ -1032,7 +1035,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	feedback_add_details("admin_verb","MZC")
 
 /client/proc/polymorph_all()
-	set category = "Abusive"
+	set category = "Fun"
 	set name = "Polymorph All"
 	set desc = "Applies the effects of the bolt of change to every single mob."
 
@@ -1137,3 +1140,33 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	H.regenerate_icons()
 
 #undef ON_PURRBATION
+
+/client/proc/modify_goals()
+	set category = "Debug"
+	set name = "Modify goals"
+
+	if(!check_rights(R_ADMIN))
+		return
+
+	holder.modify_goals()
+
+/datum/admins/proc/modify_goals()
+	var/dat = ""
+	for(var/datum/station_goal/S in ticker.mode.station_goals)
+		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+	usr << browse(dat, "window=goals;size=400x400")
+
+
+/client/proc/toggle_hub()
+	set category = "Server"
+	set name = "Toggle Hub"
+
+	world.visibility = (!world.visibility)
+
+	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
+	message_admins("[key_name_admin(usr)] has toggled the server's hub status for the round, it is now [(world.visibility?"on":"off")] the hub.")
+	if (world.visibility && !world.reachable)
+		message_admins("WARNING: The server will not show up on the hub because byond is detecting that a filewall is blocking incoming connections.")
+
+	feedback_add_details("admin_verb","HUB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
