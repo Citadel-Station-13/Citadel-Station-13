@@ -1053,13 +1053,14 @@ SYNDICATE BLACK OPS
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
 
-
 //CANID//
 datum/species/canid
 	name = "Canid"
 	id = "canid"
 	default_color = "4B4B4B"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
 	attack_verb = "claw"
@@ -1077,7 +1078,9 @@ datum/species/canid
 	name = "Felid"
 	id = "felid"
 	default_color = "BCAC9B"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
 	attack_verb = "claw"
@@ -1094,7 +1097,9 @@ datum/species/canid
 	name = "Avian"
 	id = "avian"
 	default_color = "BCAC9B"
-	specflags = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+
 	mutant_bodyparts = list("beak", "wings", "avian_tail")
 	default_features = list("beak" = "None", "wings" = "None")
 	attack_verb = "peck"
@@ -1112,7 +1117,9 @@ datum/species/canid
 	id = "xeno"
 	say_mod = "hisses"
 	eyes = "none"
-	specflags = list()
+
+	species_traits = list()
+
 	mutant_organs = list(/obj/item/organ/tongue/alien)
 	mutant_bodyparts = list("xenohead",
 							"xenodorsal",
@@ -1127,11 +1134,13 @@ datum/species/canid
 	heatmod = 1.75
 	darksight = 4 //Just above slimes
 	exotic_blood = "xblood"
-	exotic_damage_overlay = "xeno"
+
+	damage_overlay_type = "xeno"
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
-	safe_toxins_max = 32 //Too much of anything is bad.
+//	safe_toxins_max = 32 //Too much of anything is bad.
+
 	roundstart = 1
 //	whitelisted = 1
 //	whitelist = list("talkingcactus") //testing whitelisting
@@ -1161,6 +1170,8 @@ datum/species/canid
 	toxpwr = 0
 	acidpwr = 12
 
+
+/*
 /datum/species/yautja
 	name = "Yautja"
 	id = "pred"
@@ -1189,7 +1200,9 @@ datum/species/canid
 /datum/species/yautja/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/yautja_basic/O = new /datum/outfit/yautja_basic//Just basic gear. Doesn't include anything that gives any meaningful advantage.
 	H.equipOutfit(O, visualsOnly)
-	return 0
+
+	return 0 */
+
 
 /datum/species/octopus
 	blacklisted = 1
