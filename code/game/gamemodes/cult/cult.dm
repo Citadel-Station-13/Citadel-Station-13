@@ -42,8 +42,8 @@
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 10
-	required_enemies = 4
-	recommended_enemies = 4
+	required_enemies = 2
+	recommended_enemies = 2
 	enemy_minimum_age = 14
 
 	var/finished = 0
