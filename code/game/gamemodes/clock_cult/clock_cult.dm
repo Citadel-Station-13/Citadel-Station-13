@@ -156,7 +156,7 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 15
+	required_players = 10
 	required_enemies = 2
 	recommended_enemies = 4
 	enemy_minimum_age = 14
