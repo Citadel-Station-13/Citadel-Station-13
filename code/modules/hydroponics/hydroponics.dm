@@ -152,10 +152,10 @@
 				var/turf/currentTurf = loc
 				var/lightAmt = currentTurf.get_lumcount()
 				if(myseed.plant_type == PLANT_MUSHROOM)
-					if(lightAmt < 2)
+					if(lightAmt < 0.2)
 						adjustHealth(-1 / rating)
 				else // Non-mushroom
-					if(lightAmt < 4)
+					if(lightAmt < 0.4)
 						adjustHealth(-2 / rating)
 
 //Water//////////////////////////////////////////////////////////////////
