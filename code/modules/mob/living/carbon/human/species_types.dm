@@ -1563,7 +1563,7 @@ datum/species/canid
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
-	roundstart = 1
+	roundstart = 0
 //	whitelisted = 1
 //	whitelist = list("talkingcactus") //testing whitelisting
 
