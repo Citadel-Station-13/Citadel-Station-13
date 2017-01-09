@@ -13,6 +13,12 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
 	//socks
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
+	//human mutant bodyparts
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
 	//lizard bodyparts (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
