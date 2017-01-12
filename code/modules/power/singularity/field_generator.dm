@@ -1,4 +1,4 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 
 /*
@@ -23,17 +23,13 @@ field_generator power level display
 #define FG_ONLINE 2
 
 /obj/machinery/field/generator
-	name = "field generator"
+	name = "Field Generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
 	icon = 'icons/obj/machines/field_generator.dmi'
 	icon_state = "Field_Gen"
 	anchored = 0
 	density = 1
 	use_power = 0
-	obj_integrity = 500
-	max_integrity = 500
-	//100% immune to lasers and energy projectiles since it absorbs their energy.
-	armor = list(melee = 25, bullet = 10, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	var/const/num_power_levels = 6	// Total number of power level icon has
 	var/power_level = 0
 	var/active = FG_OFFLINE
@@ -91,14 +87,14 @@ field_generator power level display
 			if(FG_UNSECURED)
 				if(isinspace()) return
 				state = FG_SECURED
-				playsound(loc, W.usesound, 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [name] to the floor.", \
 					"<span class='notice'>You secure the external reinforcing bolts to the floor.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 1
 			if(FG_SECURED)
 				state = FG_UNSECURED
-				playsound(loc, W.usesound, 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [name] reinforcing bolts from the floor.", \
 					"<span class='notice'>You undo the external reinforcing bolts.</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
@@ -118,7 +114,7 @@ field_generator power level display
 					user.visible_message("[user.name] starts to weld the [name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20*W.toolspeed, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = FG_WELDED
 						user << "<span class='notice'>You weld the field generator to the floor.</span>"
@@ -129,7 +125,7 @@ field_generator power level display
 					user.visible_message("[user.name] starts to cut the [name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
-					if (do_after(user,20*W.toolspeed, target = src))
+					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = FG_SECURED
 						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
@@ -137,21 +133,12 @@ field_generator power level display
 	else
 		return ..()
 
-/obj/machinery/field/generator/attack_animal(mob/living/simple_animal/M)
-	if(M.environment_smash >= 3 && active == FG_OFFLINE && state != FG_UNSECURED)
-		state = FG_UNSECURED
-		anchored = FALSE
-		M.visible_message("<span class='warning'>[M] rips [src] free from its moorings!</span>")
-	else
-		..()
-	if(!anchored)
-		step(src, get_dir(M, src))
 
 /obj/machinery/field/generator/emp_act()
 	return 0
 
 
-/obj/machinery/field/generator/blob_act(obj/structure/blob/B)
+/obj/machinery/field/generator/blob_act(obj/effect/blob/B)
 	if(active)
 		return 0
 	else
@@ -161,7 +148,7 @@ field_generator power level display
 	if(Proj.flag != "bullet")
 		power = min(power + Proj.damage, field_generator_max_power)
 		check_power_level()
-	..()
+	return 0
 
 
 /obj/machinery/field/generator/Destroy()
@@ -195,10 +182,8 @@ field_generator power level display
 				start_fields()
 
 
-/obj/machinery/field/generator/proc/calc_power(set_power_draw)
+/obj/machinery/field/generator/proc/calc_power()
 	var/power_draw = 2 + fields.len
-	if(set_power_draw)
-		power_draw = set_power_draw
 
 	if(draw_power(round(power_draw/2,1)))
 		check_power_level()

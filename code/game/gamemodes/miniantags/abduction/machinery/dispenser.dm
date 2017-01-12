@@ -14,7 +14,6 @@
 	return rgb(rand(0,255),rand(0,255),rand(0,255))
 
 /obj/machinery/abductor/gland_dispenser/New()
-	..()
 	gland_types = subtypesof(/obj/item/organ/gland)
 	gland_types = shuffle(gland_types)
 	gland_colors = new/list(gland_types.len)

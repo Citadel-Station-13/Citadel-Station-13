@@ -2,10 +2,8 @@
 /datum/surgery/amputation
 	name = "amputation"
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/sever_limb)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	species = list(/mob/living/carbon/human)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
-	requires_organic_bodypart = 0
-
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
@@ -18,6 +16,7 @@
 /datum/surgery_step/sever_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/mob/living/carbon/human/L = target
 	user.visible_message("[user] severs [L]'s [parse_zone(target_zone)]!", "<span class='notice'>You sever [L]'s [parse_zone(target_zone)].</span>")
-	if(surgery.operated_bodypart)
-		surgery.operated_bodypart.drop_limb()
+	var/obj/item/bodypart/BP = L.get_bodypart(target_zone)
+	if(BP)
+		BP.drop_limb()
 	return 1

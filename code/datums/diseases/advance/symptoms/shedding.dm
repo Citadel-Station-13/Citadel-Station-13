@@ -29,7 +29,7 @@ BONUS
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
 		M << "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>"
-		if(ishuman(M))
+		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			switch(A.stage)
 				if(3, 4)

@@ -1,4 +1,4 @@
-/mob/living/simple_animal/hostile/retaliate/ghost
+/mob/living/simple_animal/retaliate/ghost
 	name = "ghost"
 	desc = "A soul of the dead, spooky."
 	icon = 'icons/mob/mob.dmi'
@@ -9,7 +9,7 @@
 	response_help = "passes through"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 	healable = 0
 	speed = 0
 	maxHealth = 40
@@ -27,8 +27,8 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = 1500
-	movement_type = FLYING
-	pressure_resistance = 300
+	flying = 1
+	pressure_resistance = 200
 	gold_core_spawnable = 0 //too spooky for science
 	var/ghost_hair_style
 	var/ghost_hair_color
@@ -38,7 +38,7 @@
 	var/image/ghost_facial_hair = null
 	var/random = TRUE //if you want random names for ghosts or not
 
-/mob/living/simple_animal/hostile/retaliate/ghost/New()
+/mob/living/simple_animal/retaliate/ghost/New()
 	..()
 	if(!random)
 		give_hair()
@@ -51,7 +51,7 @@
 		give_hair()
 
 
-/mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()
+/mob/living/simple_animal/retaliate/ghost/proc/give_hair()
 	if(ghost_hair_style != null)
 		ghost_hair = image('icons/mob/human_face.dmi', "hair_[ghost_hair_style]_s")
 		ghost_hair.layer = -HAIR_LAYER

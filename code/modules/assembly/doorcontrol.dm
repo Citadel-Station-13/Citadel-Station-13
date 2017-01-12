@@ -6,7 +6,6 @@
 	attachable = 1
 	var/id = null
 	var/can_change_id = 0
-	var/cooldown = 0//Door cooldowns
 
 /obj/item/device/assembly/control/examine(mob/user)
 	..()
@@ -47,14 +46,13 @@
 
 /obj/item/device/assembly/control/airlock/activate()
 	cooldown = 1
-	var/doors_need_closing = FALSE
-	var/list/obj/machinery/door/airlock/open_or_close = list()
 	for(var/obj/machinery/door/airlock/D in airlocks)
 		if(D.id_tag == src.id)
 			if(specialfunctions & OPEN)
-				open_or_close += D
-				if(!D.density)
-					doors_need_closing = TRUE
+				if(D.density)
+					D.open()
+				else
+					D.close()
 			if(specialfunctions & IDSCAN)
 				D.aiDisabledIdScanner = !D.aiDisabledIdScanner
 			if(specialfunctions & BOLTS)
@@ -70,10 +68,6 @@
 					D.secondsElectrified = 0
 			if(specialfunctions & SAFE)
 				D.safe = !D.safe
-
-	for(var/D in open_or_close)
-		addtimer(D, doors_need_closing ? "close" : "open",0, TIMER_NORMAL)
-
 	sleep(10)
 	cooldown = 0
 

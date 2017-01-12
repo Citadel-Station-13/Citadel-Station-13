@@ -3,7 +3,6 @@
 		return
 	stat = DEAD
 	canmove = 0
-	card.removePersonality()
 	update_sight()
 	clear_fullscreens()
 

@@ -7,7 +7,6 @@
 	amount_per_transfer_from_this = 5
 	volume = 30
 	possible_transfer_amounts = list()
-	resistance_flags = ACID_PROOF
 	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
@@ -47,7 +46,6 @@
 
 /obj/item/weapon/reagent_containers/hypospray/CMO
 	list_reagents = list("omnizine" = 30)
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/reagent_containers/hypospray/combat
 	name = "combat stimulant injector"
@@ -83,7 +81,7 @@
 	..()
 	update_icon()
 	spawn(80)
-		if(iscyborg(user) && !reagents.total_volume)
+		if(isrobot(user) && !reagents.total_volume)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell.use(100))
 				reagents.add_reagent_list(list_reagents)
@@ -130,11 +128,11 @@
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/survival
 	name = "survival medipen"
-	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. WARNING: Do not inject more than one pen in quick succession."
+	desc = "A medipen for surviving in the harshest of environments, heals and protects from environmental hazards. "
 	icon_state = "stimpen"
-	volume = 57
-	amount_per_transfer_from_this = 57
-	list_reagents = list("salbutamol" = 10, "leporazine" = 15, "tricordrazine" = 15, "epinephrine" = 10, "miningnanites" = 2, "omnizine" = 5)
+	volume = 82
+	amount_per_transfer_from_this = 82
+	list_reagents = list("nanites" = 2, "salbutamol" = 10, "coffee" = 20, "leporazine" = 20, "tricordrazine" = 15, "epinephrine" = 10, "omnizine" = 5, "stimulants" = 10)
 
 /obj/item/weapon/reagent_containers/hypospray/medipen/species_mutator
 	name = "species mutator medipen"

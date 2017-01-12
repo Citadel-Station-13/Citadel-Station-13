@@ -1,7 +1,6 @@
 //Common
 
 /obj/machinery/abductor
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/team = 0
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
@@ -46,9 +45,7 @@
 
 	if(experiment != null)
 		var/points = experiment.points
-		var/credits = experiment.credits
 		dat += "Collected Samples : [points] <br>"
-		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=\ref[src];dispense=baton'>Advanced Baton</A><br>"
 		dat += "<a href='?src=\ref[src];dispense=helmet'>Agent Helmet</A><br>"
@@ -176,7 +173,7 @@
 	entry.name = target.name
 	entry.icon = target.icon
 	entry.icon_state = target.icon_state
-	entry.overlays = target.get_overlays_copy(list(HANDS_LAYER))
+	entry.overlays = target.get_overlays_copy(list(L_HAND_LAYER,R_HAND_LAYER))
 	for(var/i=1,i<=disguises.len,i++)
 		var/datum/icon_snapshot/temp = disguises[i]
 		if(temp.name == entry.name)
@@ -201,8 +198,8 @@
 		return ..()
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
-	if(experiment && experiment.credits >= cost)
-		experiment.credits -=cost
+	if(experiment && experiment.points >= cost)
+		experiment.points-=cost
 		say("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)

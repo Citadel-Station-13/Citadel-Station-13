@@ -23,5 +23,4 @@
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
-	gender = FEMALE
 	gold_core_spawnable = 0

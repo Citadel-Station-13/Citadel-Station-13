@@ -59,8 +59,9 @@
 
 	user << "Your name has been sent to your employers for approval."
 	// Autoapproves after a certain time
-	response_timer_id = addtimer(src, "rename_station", approval_time, TIMER_NORMAL, new_name, user)
-	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>) (<a href='?_src_=holder;CentcommReply=\ref[user]'>RPLY</a>)</span>"
+	response_timer_id = addtimer(src, "rename_station", approval_time, \
+		FALSE, new_name, user)
+	admins << "<span class='adminnotice'><b><font color=orange>CUSTOM STATION RENAME:</font></b>[key_name_admin(user)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) proposes to rename the station to [new_name] (will autoapprove in [approval_time / 10] seconds). (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</A>) (<A HREF='?_src_=holder;reject_custom_name=\ref[src]'>REJECT</A>)</span>"
 
 /obj/item/station_charter/proc/reject_proposed(user)
 	if(!user)
@@ -79,17 +80,14 @@
 	response_timer_id = null
 
 /obj/item/station_charter/proc/rename_station(designation, mob/user)
-	if(config && config.server_name)
-		world.name = "[config.server_name]: [designation]"
-	else
-		world.name = designation
+	world.name = designation
 	station_name = designation
-	minor_announce("[user.real_name] has designated your station as [station_name()]", "Captain's Charter", 0)
-	log_game("[key_name(user)] has renamed the station as [station_name()].")
+	minor_announce("[user.real_name] has designated your station as [world.name]", "Captain's Charter", 0)
+	log_game("[key_name(user)] has renamed the station as [world.name]")
 
-	name = "station charter for [station_name()]"
+	name = "station charter for [world.name]"
 	desc = "An official document entrusting the governance of \
-		[station_name()] and surrounding space to Captain [user]."
+		[world.name] and surrounding space to Captain [user]."
 
 	if(!unlimited_uses)
 		used = TRUE

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "a" = (
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle/smooth,
 /area/shuttle/escape)
 "b" = (
 /obj/structure/grille,
@@ -8,7 +8,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "c" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock";
 	req_access_txt = "2"
 	},
@@ -51,10 +51,12 @@
 /area/shuttle/escape)
 "j" = (
 /obj/machinery/status_display,
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/shuttle{
+	icon_state = "swall3"
+	},
 /area/shuttle/escape)
 "k" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
@@ -92,7 +94,7 @@
 /turf/open/floor/plasteel/bot,
 /area/shuttle/escape)
 "q" = (
-/obj/machinery/door/airlock/titanium{
+/obj/machinery/door/airlock/shuttle{
 	name = "Emergency Shuttle Airlock"
 	},
 /turf/open/floor/plating,
@@ -119,25 +121,64 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "u" = (
+/turf/open/space,
+/area/space)
+"v" = (
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"w" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s6";
+	dir = 2
+	},
+/area/shuttle/escape)
+"x" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_s10";
+	dir = 2
+	},
+/area/shuttle/escape)
+"y" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3"
+	},
+/area/shuttle/escape)
+"z" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall2";
+	dir = 2
+	},
+/area/shuttle/escape)
+"A" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall1";
+	dir = 2
+	},
+/area/shuttle/escape)
+"B" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (WEST)";
+	icon_state = "wall3";
+	dir = 8
+	},
+/area/shuttle/escape)
 
 (1,1,1) = {"
-a
+w
 c
 a
 k
-a
+z
 b
 b
 b
-a
+A
 q
 a
 q
-a
-a
+B
+u
 "}
 (2,1,1) = {"
 b
@@ -153,7 +194,7 @@ l
 s
 l
 t
-u
+v
 "}
 (3,1,1) = {"
 b
@@ -169,7 +210,7 @@ l
 l
 l
 t
-u
+v
 "}
 (4,1,1) = {"
 b
@@ -185,21 +226,21 @@ r
 r
 m
 t
-u
+v
 "}
 (5,1,1) = {"
-a
-a
+x
+y
 j
-a
-a
+y
+y
 b
 b
 b
-a
-a
-a
-a
-a
-a
+y
+y
+y
+A
+B
+u
 "}

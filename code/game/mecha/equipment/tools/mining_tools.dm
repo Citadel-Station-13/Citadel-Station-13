@@ -13,11 +13,11 @@
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
 		return
-	if(isspaceturf(target))
+	if(istype(target, /turf/open/space))
 		return
 	if(isobj(target))
 		var/obj/target_obj = target
-		if(target_obj.resistance_flags & UNACIDABLE)
+		if(target_obj.unacidable)
 			return
 	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
 					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
@@ -83,11 +83,13 @@
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		H.apply_damage(drill_damage, BRUTE, "chest")
+		var/obj/item/bodypart/affecting = H.get_bodypart("chest")
+		affecting.take_damage(drill_damage)
+		H.update_damage_overlays(0)
 	else if(target.stat == DEAD && target.butcher_results)
 		target.harvest(chassis) // Butcher the mob with our drill.
 	else
-		target.take_bodypart_damage(drill_damage)
+		target.take_organ_damage(drill_damage)
 
 	if(target)
 		target.Paralyse(10)

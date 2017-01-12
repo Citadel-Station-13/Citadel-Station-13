@@ -10,9 +10,6 @@
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
-	obj_integrity = 250
-	max_integrity = 250
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -40,14 +37,14 @@
 							/obj/item/weapon/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 3)
 
-/obj/machinery/space_heater/on_construction()
+/obj/machinery/space_heater/construction()
 	qdel(cell)
 	cell = null
 	panel_open = TRUE
 	update_icon()
 	return ..()
 
-/obj/machinery/space_heater/on_deconstruction()
+/obj/machinery/space_heater/deconstruction()
 	if(cell)
 		component_parts += cell
 		cell = null
@@ -150,7 +147,7 @@
 				return
 			else
 				// insert cell
-				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_held_item()
+				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_hand()
 				if(istype(C))
 					if(!user.drop_item())
 						return

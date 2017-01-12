@@ -43,7 +43,7 @@
 	var/obj/item/bodypart/affecting = null
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if(PIERCEIMMUNE in H.dna.species.species_traits)
+		if(PIERCEIMMUNE in H.dna.species.specflags)
 			playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
 			armed = 0
 			update_icon()
@@ -59,8 +59,9 @@
 					affecting = H.get_bodypart(type)
 					H.Stun(3)
 		if(affecting)
-			if(affecting.receive_damage(1, 0))
-				H.update_damage_overlays()
+			if(affecting.take_damage(1, 0))
+				H.update_damage_overlays(0)
+			H.updatehealth()
 	else if(ismouse(target))
 		var/mob/living/simple_animal/mouse/M = target
 		visible_message("<span class='boldannounce'>SPLAT!</span>")
@@ -77,7 +78,7 @@
 	else
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!(user.active_hand_index % 2))
+			if(!user.hand)
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -93,7 +94,7 @@
 	if(armed)
 		if(((user.getBrainLoss() >= 60) || user.disabilities & CLUMSY) && prob(50))
 			var/which_hand = "l_hand"
-			if(!(user.active_hand_index % 2))
+			if(!user.hand)
 				which_hand = "r_hand"
 			triggered(user, which_hand)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
@@ -104,15 +105,16 @@
 
 /obj/item/device/assembly/mousetrap/Crossed(atom/movable/AM as mob|obj)
 	if(armed)
-		if(ismob(AM))
-			var/mob/MM = AM
-			if(!(MM.movement_type & FLYING))
-				if(ishuman(AM))
-					var/mob/living/carbon/H = AM
-					if(H.m_intent == MOVE_INTENT_RUN)
-						triggered(H)
-						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
-										  "<span class='warning'>You accidentally step on [src]</span>")
+		if(ishuman(AM))
+			var/mob/living/carbon/H = AM
+			if(H.m_intent == "run")
+				triggered(H)
+				H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
+								  "<span class='warning'>You accidentally step on [src]</span>")
+		else if(isanimal(AM))
+			var/mob/living/simple_animal/SA = AM
+			if(!SA.flying)
+				triggered(AM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()
@@ -122,7 +124,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, (finder.active_hand_index % 2 == 0) ? "r_hand" : "l_hand")
+		triggered(finder, finder.hand ? "l_hand" : "r_hand")
 		return 1	//end the search!
 	return 0
 

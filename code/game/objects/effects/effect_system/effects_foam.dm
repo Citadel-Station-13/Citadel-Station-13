@@ -7,13 +7,12 @@
 	opacity = 0
 	anchored = 1
 	density = 0
-	layer = WALL_OBJ_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
 	mouse_opacity = 0
 	var/amount = 3
 	animate_movement = 0
 	var/metal = 0
 	var/lifetime = 40
-	var/reagent_divisor = 7
 
 
 /obj/effect/particle_effect/foam/metal
@@ -40,11 +39,10 @@
 
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
-	switch(metal)
-		if(1)
-			new /obj/structure/foamedmetal(src.loc)
-		if(2)
-			new /obj/structure/foamedmetal/iron(src.loc)
+	if(metal)
+		var/obj/structure/foamedmetal/M = new(src.loc)
+		M.metal = metal
+		M.updateicon()
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 5)
 
@@ -54,24 +52,18 @@
 		kill_foam()
 		return
 
-	var/fraction = 1/initial(reagent_divisor)
+	var/fraction = 1/initial(lifetime)
 	for(var/obj/O in range(0,src))
 		if(O.type == src.type)
 			continue
-		if(isturf(O.loc))
-			var/turf/T = O.loc
-			if(T.intact && O.level == 1) //hidden under the floor
-				continue
-		if(lifetime % reagent_divisor)
-			reagents.reaction(O, VAPOR, fraction)
+		reagents.reaction(O, VAPOR, fraction)
 	var/hit = 0
 	for(var/mob/living/L in range(0,src))
 		hit += foam_mob(L)
 	if(hit)
 		lifetime++ //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 	var/T = get_turf(src)
-	if(lifetime % reagent_divisor)
-		reagents.reaction(T, VAPOR, fraction)
+	reagents.reaction(T, VAPOR, fraction)
 
 	if(--amount < 0)
 		return
@@ -82,9 +74,8 @@
 		return 0
 	if(!istype(L))
 		return 0
-	var/fraction = 1/initial(reagent_divisor)
-	if(lifetime % reagent_divisor)
-		reagents.reaction(L, VAPOR, fraction)
+	var/fraction = 1/initial(lifetime)
+	reagents.reaction(L, VAPOR, fraction)
 	lifetime--
 	return 1
 
@@ -109,7 +100,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
-		F.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
+		F.color = color
 		F.metal = metal
 
 
@@ -148,7 +139,7 @@
 	return ..()
 
 /datum/effect_system/foam_spread/set_up(amt=5, loca, datum/reagents/carry = null)
-	if(isturf(loca))
+	if(istype(loca, /turf/))
 		location = loca
 	else
 		location = get_turf(loca)
@@ -168,7 +159,7 @@
 		var/obj/effect/particle_effect/foam/F = PoolOrNew(effect_type, location)
 		var/foamcolor = mix_color_from_reagents(chemholder.reagents.reagent_list)
 		chemholder.reagents.copy_to(F, chemholder.reagents.total_volume/amount)
-		F.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
+		F.color = foamcolor
 		F.amount = amount
 		F.metal = metal
 
@@ -181,13 +172,11 @@
 	density = 1
 	opacity = 1 	// changed in New()
 	anchored = 1
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	unacidable = 1
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	gender = PLURAL
-	obj_integrity = 20
-	max_integrity = 20
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	var/metal = 1		// 1=aluminium, 2=iron
 
 /obj/structure/foamedmetal/New()
 	..()
@@ -199,27 +188,96 @@
 	air_update_turf(1)
 	return ..()
 
+
 /obj/structure/foamedmetal/Move()
 	var/turf/T = loc
 	..()
 	move_update_air(T)
 
+
+/obj/structure/foamedmetal/proc/updateicon()
+	if(metal == 1)
+		icon_state = "metalfoam"
+	else
+		icon_state = "ironfoam"
+
+
+/obj/structure/foamedmetal/ex_act(severity, target)
+	qdel(src)
+
+
+/obj/structure/foamedmetal/blob_act(obj/effect/blob/B)
+	qdel(src)
+
+
+/obj/structure/foamedmetal/bullet_act()
+	..()
+	if(metal==1 || prob(50))
+		qdel(src)
+
+
 /obj/structure/foamedmetal/attack_paw(mob/user)
 	attack_hand(user)
 
-/obj/structure/foamedmetal/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+
+/obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	if(user.environment_smash >= 1)
+		user.do_attack_animation(src)
+		user << "<span class='notice'>You smash apart the foam wall.</span>"
+		qdel(src)
+
+/obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
+	..(user, 1)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
+		qdel(src)
+	return 1
+
+/obj/structure/foamedmetal/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
+		qdel(src)
+
+/obj/structure/foamedmetal/attack_slime(mob/living/simple_animal/slime/user)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	if(!user.is_adult)
+		attack_hand(user)
+		return
+	if(prob(75 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the metal foam wall!</span>")
+		qdel(src)
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
+	user.do_attack_animation(src)
 	user << "<span class='warning'>You hit the metal foam but bounce off it!</span>"
 	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+
+
+/obj/structure/foamedmetal/attacked_by(obj/item/I, mob/living/user)
+	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1) //the item attack sound is muffled by the foam.
+	if(prob(I.force*20 - metal*25))
+		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
+						"<span class='danger'>You smash through the foamed metal with \the [I]!</span>")
+		qdel(src)
+	else
+		user << "<span class='warning'>You hit the metal foam to no effect!</span>"
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return !density
 
-/obj/structure/foamedmetal/iron
-	obj_integrity = 50
-	max_integrity = 50
-	icon_state = "ironfoam"
+
+/obj/structure/foamedmetal/CanAtmosPass()
+	return !density

@@ -62,15 +62,13 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
 	if(!spines_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	if(!legs_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	if(!body_markings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	if(!wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 
 	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
+	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -107,13 +105,6 @@
 		if(i != attempts_to_find_unique_name && !findname(.))
 			break
 
-/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
-		. = capitalize(plasmaman_name())
-
-		if(i != attempts_to_find_unique_name && !findname(.))
-			break
-
 /proc/random_skin_tone()
 	return pick(skin_tones)
 
@@ -133,6 +124,7 @@ var/list/skin_tones = list(
 	)
 
 var/global/list/species_list[0]
+var/global/list/whitelisted_species_list[0]
 var/global/list/roundstart_species[0]
 
 /proc/age2agedescription(age)
@@ -169,30 +161,24 @@ Proc for attack log creation, because really why not
 */
 
 /proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
+	var/newhealthtxt = ""
+	var/coordinates = ""
 	var/turf/attack_location = get_turf(target)
-
-	var/is_mob_user = user && typecache_mob[user.type]
-	var/is_mob_target = target && typecache_mob[target.type]
-
-	var/mob/living/living_target
-
-
+	if(attack_location)
+		coordinates = "([attack_location.x],[attack_location.y],[attack_location.z])"
 	if(target && isliving(target))
-		living_target = target
-
-	if(is_mob_user)
-		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		user.attack_log += message
+		var/mob/living/L = target
+		newhealthtxt = " (NEWHP: [L.health])"
+	if(user && ismob(user))
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 		if(user.mind)
-			user.mind.attack_log += message
-
-	if(is_mob_target)
-		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		target.attack_log += message
+			user.mind.attack_log += text("\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+	if(target && ismob(target))
+		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 		if(target.mind)
-			target.mind.attack_log += message
+			target.mind.attack_log += text("\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]")
 
-	log_attack("[user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(is_mob_target && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]")
 
 
 /proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
@@ -206,7 +192,7 @@ Proc for attack log creation, because really why not
 
 	var/target_loc = target.loc
 
-	var/holding = user.get_active_held_item()
+	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
 	if (progress)
 		progbar = new(user, time, target)
@@ -228,7 +214,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying )
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
 	if (progress)
@@ -248,7 +234,7 @@ Proc for attack log creation, because really why not
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		drifting = 1
 
-	var/holding = user.get_active_held_item()
+	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
 	if(holding)
@@ -285,7 +271,7 @@ Proc for attack log creation, because really why not
 				if(!holding)
 					. = 0
 					break
-			if(user.get_active_held_item() != holding)
+			if(user.get_active_hand() != holding)
 				. = 0
 				break
 	if (progress)
@@ -306,7 +292,7 @@ Proc for attack log creation, because really why not
 	for(var/atom/target in targets)
 		originalloc[target] = target.loc
 
-	var/holding = user.get_active_held_item()
+	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
 	if(progress)
 		progbar = new(user, time, targets[1])
@@ -330,7 +316,7 @@ Proc for attack log creation, because really why not
 				user_loc = user.loc
 
 			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying )
+				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 					. = 0
 					break mainloop
 	if(progbar)
@@ -343,33 +329,6 @@ Proc for attack log creation, because really why not
 		if(H.dna && istype(H.dna.species, species_datum))
 			. = TRUE
 
-/proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
-	var/turf/T = get_turf(target)
-	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
-
-	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
-
-/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
-	var/turf/T = get_turf(target)
-	var/step_count = 0
-	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
-
-	for(var/j in 1 to amount)
-		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
-
-		if(always_max_walk || prob(walk_chance))
-			if(always_max_walk)
-				step_count = max_walk
-			else
-				step_count = rand(1, max_walk)
-
-			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
 
 /proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)
@@ -382,7 +341,7 @@ Proc for attack log creation, because really why not
 		var/adminoverride = 0
 		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
 			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
+		if(istype(M, /mob/new_player) && !adminoverride)
 			continue
 		if(M.stat != DEAD && !adminoverride)
 			continue
@@ -397,7 +356,7 @@ Proc for attack log creation, because really why not
 				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
 					continue
 
-		if(isobserver(M) && follow_target)
+		if(istype(M, /mob/dead/observer) && follow_target)
 			var/link = FOLLOW_LINK(M, follow_target)
 			M << "[link] [message]"
 		else

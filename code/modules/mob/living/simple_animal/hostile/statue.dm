@@ -8,7 +8,7 @@
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -18,8 +18,7 @@
 	health = 50000
 	healable = 0
 
-	harm_intent_damage = 10
-	obj_damage = 100
+	harm_intent_damage = 70
 	melee_damage_lower = 68
 	melee_damage_upper = 83
 	attacktext = "claws"
@@ -111,8 +110,8 @@
 		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
-	if(T && destination && T.lighting_object)
-		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+	if(T && destination)
+		if((T.get_lumcount())<0.1 && (destination.get_lumcount())<0.1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
 			destination = null
@@ -208,7 +207,7 @@
 
 /obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
 	for(var/mob/living/target in targets)
-		if(ishuman(target))
+		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = target
 			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
 				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING

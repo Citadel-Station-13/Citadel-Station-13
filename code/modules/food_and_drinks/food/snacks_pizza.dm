@@ -3,7 +3,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pizza
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	slices_num = 6
 	volume = 80
 	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 5)

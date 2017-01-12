@@ -1,6 +1,4 @@
 /**********************Mining drone**********************/
-#define MINEDRONE_COLLECT 1
-#define MINEDRONE_ATTACK 2
 
 /mob/living/simple_animal/hostile/mining_drone
 	name = "nanotrasen minebot"
@@ -9,9 +7,10 @@
 	icon_state = "mining_drone"
 	icon_living = "mining_drone"
 	status_flags = CANSTUN|CANWEAKEN|CANPUSH
+	stop_automated_movement_when_pulled = 1
 	mouse_opacity = 1
 	faction = list("neutral")
-	a_intent = INTENT_HARM
+	a_intent = "harm"
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	wander = 0
@@ -23,10 +22,8 @@
 	maxHealth = 125
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	obj_damage = 0
 	environment_smash = 0
 	check_friendly_fire = 1
-	stop_automated_movement_when_pulled = 1
 	attacktext = "drills"
 	attack_sound = 'sound/weapons/circsawhit.ogg'
 	ranged = 1
@@ -38,32 +35,8 @@
 	speak_emote = list("states")
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver,
 						  /obj/item/weapon/ore/plasma,  /obj/item/weapon/ore/uranium,    /obj/item/weapon/ore/iron,
-						  /obj/item/weapon/ore/bananium, /obj/item/weapon/ore/titanium)
+						  /obj/item/weapon/ore/bananium)
 	healable = 0
-	var/mode = MINEDRONE_COLLECT
-	var/light_on = 0
-
-	var/datum/action/innate/minedrone/toggle_light/toggle_light_action
-	var/datum/action/innate/minedrone/toggle_meson_vision/toggle_meson_vision_action
-	var/datum/action/innate/minedrone/toggle_mode/toggle_mode_action
-	var/datum/action/innate/minedrone/dump_ore/dump_ore_action
-
-/mob/living/simple_animal/hostile/mining_drone/New()
-	..()
-	toggle_light_action = new()
-	toggle_light_action.Grant(src)
-	toggle_meson_vision_action = new()
-	toggle_meson_vision_action.Grant(src)
-	toggle_mode_action = new()
-	toggle_mode_action.Grant(src)
-	dump_ore_action = new()
-	dump_ore_action.Grant(src)
-
-	SetCollectBehavior()
-
-/mob/living/simple_animal/hostile/mining_drone/sentience_act()
-	AIStatus = AI_OFF
-	check_friendly_fire = 0
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/weldingtool))
@@ -88,23 +61,27 @@
 	..()
 	visible_message("<span class='danger'>[src] is destroyed!</span>")
 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
-	DropOre(0)
+	DropOre()
 	qdel(src)
 	return
 
+/mob/living/simple_animal/hostile/mining_drone/New()
+	..()
+	SetCollectBehavior()
+
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)
-	if(M.a_intent == INTENT_HELP)
-		toggle_mode()
-		switch(mode)
-			if(MINEDRONE_COLLECT)
+	if(M.a_intent == "help")
+		switch(search_objects)
+			if(0)
+				SetCollectBehavior()
 				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
-			if(MINEDRONE_ATTACK)
+			if(2)
+				SetOffenseBehavior()
 				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
 		return
 	..()
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetCollectBehavior()
-	mode = MINEDRONE_COLLECT
 	idle_vision_range = 9
 	search_objects = 2
 	wander = 1
@@ -112,10 +89,8 @@
 	minimum_distance = 1
 	retreat_distance = null
 	icon_state = "mining_drone"
-	src << "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
-	mode = MINEDRONE_ATTACK
 	idle_vision_range = 7
 	search_objects = 0
 	wander = 0
@@ -123,10 +98,9 @@
 	retreat_distance = 1
 	minimum_distance = 2
 	icon_state = "mining_drone_offense"
-	src << "<span class='info'>You are set to attack mode. You can now attack from range.</span>"
 
 /mob/living/simple_animal/hostile/mining_drone/AttackingTarget()
-	if(istype(target, /obj/item/weapon/ore) && mode ==  MINEDRONE_COLLECT)
+	if(istype(target, /obj/item/weapon/ore))
 		CollectOre()
 		return
 	..()
@@ -141,85 +115,18 @@
 			O.loc = src
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
+/mob/living/simple_animal/hostile/mining_drone/proc/DropOre()
 	if(!contents.len)
-		if(message)
-			src << "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>"
 		return
-	if(message)
-		src << "<span class='notice'>You dump your stored ore.</span>"
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/adjustHealth(amount)
-	if(mode != MINEDRONE_ATTACK && amount > 0)
+/mob/living/simple_animal/hostile/mining_drone/adjustHealth()
+	if(search_objects)
 		SetOffenseBehavior()
 	. = ..()
-
-/mob/living/simple_animal/hostile/mining_drone/proc/toggle_mode()
-	switch(mode)
-		if(MINEDRONE_COLLECT)
-			SetOffenseBehavior()
-		if(MINEDRONE_ATTACK)
-			SetCollectBehavior()
-		else //This should never happen.
-			mode = MINEDRONE_COLLECT
-			SetCollectBehavior()
-
-//Actions for sentient minebots
-
-/datum/action/innate/minedrone
-	check_flags = AB_CHECK_CONSCIOUS
-	background_icon_state = "bg_default"
-
-/datum/action/innate/minedrone/toggle_light
-	name = "Toggle Light"
-	button_icon_state = "mech_lights_off"
-
-/datum/action/innate/minedrone/toggle_light/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	if(user.light_on)
-		user.AddLuminosity(-6)
-	else
-		user.AddLuminosity(6)
-	user.light_on = !user.light_on
-	user << "<span class='notice'>You toggle your light [user.light_on ? "on" : "off"].</span>"
-
-/datum/action/innate/minedrone/toggle_meson_vision
-	name = "Toggle Meson Vision"
-	button_icon_state = "meson"
-
-/datum/action/innate/minedrone/toggle_meson_vision/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-
-	if(user.sight & SEE_TURFS)
-		user.sight &= ~SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_LIVING
-	else
-		user.sight |= SEE_TURFS
-		user.see_invisible = SEE_INVISIBLE_MINIMUM
-
-	user << "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>"
-
-/datum/action/innate/minedrone/toggle_mode
-	name = "Toggle Mode"
-	button_icon_state = "mech_cycle_equip_off"
-
-/datum/action/innate/minedrone/toggle_mode/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-	user.toggle_mode()
-
-/datum/action/innate/minedrone/dump_ore
-	name = "Dump Ore"
-	button_icon_state = "mech_eject"
-
-/datum/action/innate/minedrone/dump_ore/Activate()
-	var/mob/living/simple_animal/hostile/mining_drone/user = owner
-	user.DropOre()
-
 
 /**********************Minebot Upgrades**********************/
 
@@ -279,6 +186,3 @@
 	icon = 'icons/obj/module.dmi'
 	sentience_type = SENTIENCE_MINEBOT
 	origin_tech = "programming=6"
-
-#undef MINEDRONE_COLLECT
-#undef MINEDRONE_ATTACK

@@ -4,12 +4,12 @@
 	icon_state = "gas_alt"
 	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	item_state = "gas_alt"
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	resistance_flags = 0
+	burn_state = FIRE_PROOF
 
 // **** Welding gas mask ****
 
@@ -20,18 +20,23 @@
 	materials = list(MAT_METAL=4000, MAT_GLASS=2000)
 	flash_protect = 2
 	tint = 2
-	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 55)
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	origin_tech = "materials=2;engineering=3"
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	flags_cover = MASKCOVERSEYES
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
-	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/mask/gas/welding/attack_self(mob/user)
-	weldingvisortoggle(user)
+/obj/item/clothing/mask/gas/welding/attack_self()
+	toggle()
 
+/obj/item/clothing/mask/gas/welding/verb/toggle()
+	set category = "Object"
+	set name = "Adjust welding mask"
+	set src in usr
+
+	weldingvisortoggle()
 
 // ********************************************************************
 
@@ -41,7 +46,7 @@
 	desc = "A modernised version of the classic design, this mask will not only filter out toxins but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
 	item_state = "gas_mask"
-	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0, fire = 0, acid = 0)
+	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -56,11 +61,14 @@
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
 
-/obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
+/obj/item/clothing/mask/gas/clown_hat/attack_self(mob/user)
+	AltClick(user)
+
+/obj/item/clothing/mask/gas/clown_hat/AltClick(mob/living/user)
 	if(!istype(user) || user.incapacitated())
 		return
 
@@ -88,7 +96,7 @@
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -97,7 +105,7 @@
 	icon_state = "mime"
 	item_state = "mime"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 
 /obj/item/clothing/mask/gas/mime/attack_self(mob/user)
@@ -127,7 +135,7 @@
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -136,7 +144,7 @@
 	icon_state = "sexymime"
 	item_state = "sexymime"
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/death_commando
 	name = "Death Commando Mask"
@@ -147,7 +155,7 @@
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -155,9 +163,98 @@
 	icon_state = "owl"
 	flags = MASKINTERNALS
 	flags_cover = MASKCOVERSEYES
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
 	desc = "Gnash gnash."
 	icon_state = "carp_mask"
+
+/obj/item/clothing/mask/gas/yautja_fake
+	name = "ceremonial mask"
+	desc = "A beautifully designed metallic face mask. This one appears to be mostly decorative."
+	icon_state = "pred_mask"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
+	item_state = "pred_mask"
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	burn_state = LAVA_PROOF
+	var/list/options = list()
+	var/current_skin = ""
+
+/obj/item/clothing/mask/gas/yautja_fake/New()
+	options["Jawbone"] = "jaw"
+	options["Plain"]   = "plain"
+	options["Horned"]  = "horn"
+	options["Winged"]  = "wing"
+	options["Cancel"]  = null
+
+/obj/item/clothing/mask/gas/yautja_fake/examine(mob/user)
+	..()
+	if(!current_skin)
+		user << "<span class='notice'>Alt-click [src.name] to reskin it.</span>"
+
+/obj/item/clothing/mask/gas/yautja_fake/proc/reskin_mask(mob/M)
+	var/choice = input(M,"Warning, you can only reskin your mask once!","Reskin Mask") in options
+
+	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(options[choice] == null)
+			return
+		current_skin = options[choice]
+		icon_state = "[initial(icon_state)]_[current_skin]"
+		item_state = "[initial(item_state)]_[current_skin]"
+		M << "Your mask is now skinned as \"[choice]\"."
+		update_icon()
+		M.regenerate_icons()
+
+/obj/item/clothing/mask/gas/yautja_fake/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!current_skin && loc == user)
+		reskin_mask(user)
+
+/obj/item/clothing/mask/gas/yautja
+	name = "clan mask"
+	desc = "A beautifully designed metallic face mask. Both decorative and functional."
+	icon_state = "pred_mask"
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
+	item_state = "pred_mask"
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	burn_state = LAVA_PROOF
+	armor = list(melee = 50, bullet = 50, laser = 50,energy = 50, bomb = 50, bio = 80, rad = 50)
+	var/list/options = list()
+	var/current_skin = ""
+
+/obj/item/clothing/mask/gas/yautja/New()
+	options["Jawbone"] = "jaw"
+	options["Plain"]   = "plain"
+	options["Horned"]  = "horn"
+	options["Winged"]  = "wing"
+	options["Cancel"]  = null
+
+/obj/item/clothing/mask/gas/yautja/proc/reskin_mask(mob/M)
+	var/choice = input(M,"Warning, you can only reskin your mask once!","Reskin Mask") in options
+
+	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+		if(options[choice] == null)
+			return
+		current_skin = options[choice]
+		icon_state = "[initial(icon_state)]_[current_skin]"
+		item_state = "[initial(item_state)]_[current_skin]"
+		M << "Your mask is now skinned as \"[choice]\"."
+		update_icon()
+		M.regenerate_icons()
+
+/obj/item/clothing/mask/gas/yautja/AltClick(mob/user)
+	..()
+	if(user.incapacitated())
+		user << "<span class='warning'>You can't do that right now!</span>"
+		return
+	if(!current_skin && loc == user)
+		reskin_mask(user)
+
+/obj/item/clothing/mask/gas/yautja/examine(mob/user)
+	..()
+	if(!current_skin)
+		user << "<span class='notice'>Alt-click [src.name] to reskin it.</span>"

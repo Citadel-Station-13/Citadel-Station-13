@@ -43,6 +43,7 @@ Actual Adjacent procs :
 	g = pg
 	h = ph
 	f = g + h
+	source.PNode = src
 	nt = pnt
 
 /PathNode/proc/calc_f()
@@ -69,7 +70,7 @@ Actual Adjacent procs :
 
 //the actual algorithm
 /proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/pnodelist = list()
+
 	//sanitation
 	var/start = get_turf(caller)
 	if(!start)
@@ -122,25 +123,23 @@ Actual Adjacent procs :
 				continue
 
 			var/newg = cur.g + call(cur.source,dist)(T)
-
-			var/PathNode/P = pnodelist[T]
-			if(!P)
-			 //is not already in open list, so add it
-				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
-				open.Insert(newnode)
-				pnodelist[T] = newnode
+			if(!T.PNode) //is not already in open list, so add it
+				open.Insert(new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1))
 			else //is already in open list, check if it's a better way from the current turf
-				if(newg < P.g)
-					P.prevNode = cur
-					P.g = newg
-					P.calc_f()
-					P.nt = cur.nt + 1
-					open.ReSort(P)//reorder the changed element in the list
+				if(newg < T.PNode.g)
+					T.PNode.prevNode = cur
+					T.PNode.g = newg
+					T.PNode.calc_f()
+					T.PNode.nt = cur.nt + 1
+					open.ReSort(T.PNode)//reorder the changed element in the list
 		CHECK_TICK
 
 
 	//cleaning after us
-	pnodelist = null
+	for(var/PathNode/PN in open.L)
+		PN.source.PNode = null
+	for(var/turf/T in closed)
+		T.PNode = null
 
 	//reverse the path to get it from start to finish
 	if(path)

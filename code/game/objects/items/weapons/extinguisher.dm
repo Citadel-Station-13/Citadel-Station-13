@@ -7,14 +7,13 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	throw_speed = 2
 	throw_range = 7
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
-	resistance_flags = FIRE_PROOF
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = 1
@@ -31,7 +30,7 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
 	throwforce = 2
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	force = 3
 	materials = list()
 	max_water = 30
@@ -51,8 +50,11 @@
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
-		return FALSE
+	if(user.a_intent == "help")
+		// If we're in help intent, don't bash anyone with the
+		// extinguisher
+		user.visible_message("[user] targets [M] with \the [src]", "<span class='info'>You target [M] with \the [src].</span>")
+		return 0
 	else
 		return ..()
 
@@ -95,7 +97,7 @@
 			usr << "<span class='warning'>\The [src] is empty!</span>"
 			return
 
-		if (world.time < src.last_use + 12)
+		if (world.time < src.last_use + 20)
 			return
 
 		src.last_use = world.time
@@ -170,8 +172,9 @@
 		reagents.clear_reagents()
 
 		var/turf/T = get_turf(loc)
-		if(isopenturf(T))
+		if(istype(T, /turf/open))
 			var/turf/open/theturf = T
 			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
 
 		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")
+	return

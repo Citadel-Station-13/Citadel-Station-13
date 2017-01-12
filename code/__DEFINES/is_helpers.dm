@@ -4,32 +4,13 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
-#define ismovableatom(A) (istype(A, /atom/movable))
+#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
 
-//Turfs
-#define isopenturf(A) (istype(A, /turf/open))
-
-#define isspaceturf(A) (istype(A, /turf/open/space))
-
-#define isfloorturf(A) (istype(A, /turf/open/floor))
-
-#define isclosedturf(A) (istype(A, /turf/closed))
-
-#define iswallturf(A) (istype(A, /turf/closed/wall))
-
-#define ismineralturf(A) (istype(A, /turf/closed/mineral))
-
-//Mobs
-#define isliving(A) (istype(A, /mob/living))
-
-#define isbrain(A) (istype(A, /mob/living/brain))
-
-//Carbon mobs
-#define iscarbon(A) (istype(A, /mob/living/carbon))
+// MOB HELPERS
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-//Human sub-species
+// Human sub-species
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isgolem(A) (is_species(A, /datum/species/golem))
 #define islizard(A) (is_species(A, /datum/species/lizard))
@@ -41,86 +22,80 @@
 #define iszombie(A) (is_species(A, /datum/species/zombie))
 #define ishumanbasic(A) (is_species(A, /datum/species/human))
 
-//more carbon mobs
 #define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
+
+#define isbrain(A) (istype(A, /mob/living/carbon/brain))//We didn't port the /mob/living/brain update, yet.
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
-
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
-#define isdevil(A) (istype(A, /mob/living/carbon/true_devil))
-
-//Silicon mobs
-#define issilicon(A) (istype(A, /mob/living/silicon))
-
-#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
-
-#define isAI(A) (istype(A, /mob/living/silicon/ai))
-
-#define ispAI(A) (istype(A, /mob/living/silicon/pai))
-
-//Simple animals
-#define isanimal(A) (istype(A, /mob/living/simple_animal))
-
-#define isrevenant(A) (istype(A, /mob/living/simple_animal/revenant))
-
-#define isborer(A) (istype(A, /mob/living/simple_animal/borer))
-
-#define isbot(A) (istype(A, /mob/living/simple_animal/bot))
-
-#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
-
-#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
-
-#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
 #define isslime(A) (istype(A, /mob/living/simple_animal/slime))
 
-#define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
+#define isrobot(A) (istype(A, /mob/living/silicon/robot))
 
-#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
-
-#define isdog(A) (istype(A, /mob/living/simple_animal/pet/dog))
+#define isanimal(A) (istype(A, /mob/living/simple_animal))
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/pet/dog/corgi))
 
-#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
+#define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
+
+#define iscat(A) (istype(A, /mob/living/simple_animal/pet/cat))
+
+#define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
+
+#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+
+#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
+
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
+
+#define isshade(A) (istype(A, /mob/living/simple_animal/shade))
 
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
 
-#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
-
-#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
-
-#define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
-
-#define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
-
-#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
-
 #define isclown(A) (istype(A, /mob/living/simple_animal/hostile/retaliate/clown))
 
-//Misc mobs
+#define isAI(A) (istype(A, /mob/living/silicon/ai))
+
+#define ispAI(A) (istype(A, /mob/living/silicon/pai))
+
+#define iscarbon(A) (istype(A, /mob/living/carbon))
+
+#define issilicon(A) (istype(A, /mob/living/silicon))
+
+#define iscyborg(A) (istype(A, /mob/living/silicon/robot))
+
+#define isliving(A) (istype(A, /mob/living))
+
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
 #define isnewplayer(A) (istype(A, /mob/new_player))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-//Objects
-#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
+#define isdrone(A) (istype(A, /mob/living/simple_animal/drone))
+
+#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
+
+#define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
+
+#define ishostile(A) (istype(A, /mob/living/simple_animal/hostile))
 
 #define islimb(A) (istype(A, /obj/item/bodypart))
 
-#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune)) //if something is cleanable
+#define isbot(A) (istype(A, /mob/living/simple_animal/bot))
 
-#define isorgan(A) (istype(A, /obj/item/organ))
+#define ismovableatom(A) (istype(A, /atom/movable))
 
-//Assemblies
+#define isobj(A) istype(A, /obj) //override the byond proc because it returns true on children of /atom/movable that aren't objs
+
+// ASSEMBLY HELPERS
+
 #define isassembly(O) (istype(O, /obj/item/device/assembly))
 
 #define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))

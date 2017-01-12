@@ -9,6 +9,8 @@
 /datum/round_event/anomaly/anomaly_flux
 	startWhen = 3
 	announceWhen = 20
+	endWhen = 80
+
 
 /datum/round_event/anomaly/anomaly_flux/announce()
 	priority_announce("Localized hyper-energetic flux wave detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -18,3 +20,9 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
+
+
+/datum/round_event/anomaly/anomaly_flux/end()
+	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.
+		explosion(newAnomaly, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
+		qdel(newAnomaly)

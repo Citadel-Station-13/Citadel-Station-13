@@ -86,9 +86,18 @@
 										// can override if needed
 	if(powered(power_channel))
 		stat &= ~NOPOWER
+
+		if(!use_auto_lights)
+			return
+		set_light(light_range_on, light_power_on)
+
 	else
 
 		stat |= NOPOWER
+
+		if(!use_auto_lights)
+			return
+		set_light(0)
 	return
 
 // connect the machine to a powernet if a node cable is present on the turf
@@ -117,7 +126,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		var/turf/T = user.loc
-		if(T.intact || !isfloorturf(T))
+		if(T.intact || !istype(T, /turf/open/floor))
 			return
 		if(get_dist(src, user) > 1)
 			return
@@ -275,16 +284,11 @@
 //M is a mob who touched wire/whatever
 //power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
-//siemens_coeff - layman's terms, conductivity
-//dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
-/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
+/proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1)
 	if(istype(M.loc,/obj/mecha))
 		return 0	//feckin mechs are dumb
-	if(dist_check)
-		if(!in_range(source,M))
-			return 0
-	if(ishuman(M))
+	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves

@@ -3,7 +3,6 @@
 #define SPIDER_GIFT 3
 #define DEPARTMENT_RESUPPLY 4
 #define ANTIDOTE_NEEDED 5
-#define PIZZA_DELIVERY 6
 
 
 /datum/round_event_control/shuttle_loan
@@ -21,7 +20,7 @@
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
 
 /datum/round_event/shuttle_loan/start()
-	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY)
+	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
 
 /datum/round_event/shuttle_loan/announce()
 	SSshuttle.shuttle_loan = src
@@ -38,8 +37,6 @@
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
-		if (PIZZA_DELIVERY)
-			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead", "Centcom Spacepizza Division")
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")
@@ -48,8 +45,13 @@
 	SSshuttle.points += bonus_points
 	endWhen = activeFor + 1
 
-	SSshuttle.supply.mode = SHUTTLE_CALL
-	SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	SSshuttle.supply.sell()
+	SSshuttle.supply.enterTransit()
+	if(SSshuttle.supply.z != ZLEVEL_STATION)
+		SSshuttle.supply.mode = SHUTTLE_CALL
+		SSshuttle.supply.destination = SSshuttle.getDock("supply_home")
+	else
+		SSshuttle.supply.mode = SHUTTLE_RECALL
 	SSshuttle.supply.setTimer(3000)
 
 	switch(dispatch_type)
@@ -63,8 +65,6 @@
 			SSshuttle.centcom_message += "Department resupply incoming."
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
-		if(PIZZA_DELIVERY)
-			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)
@@ -105,11 +105,11 @@
 
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian/ranged)	//drops a mateba
-				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
+				shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 				if(prob(75))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/russian)
 				if(prob(50))
-					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear/russian)
+					shuttle_spawns.Add(/mob/living/simple_animal/hostile/bear)
 
 			if(SPIDER_GIFT)
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/emergency/specialops]
@@ -121,18 +121,26 @@
 				if(prob(50))
 					shuttle_spawns.Add(/mob/living/simple_animal/hostile/poison/giant_spider/hunter)
 
-				var/turf/T = pick_n_take(empty_shuttle_turfs)
+				var/turf/T = pick(empty_shuttle_turfs)
+				empty_shuttle_turfs.Remove(T)
 
 				new /obj/effect/decal/remains/human(T)
 				new /obj/item/clothing/shoes/space_ninja(T)
 				new /obj/item/clothing/mask/balaclava(T)
 
-				for(var/i in 1 to 5)
-					T = pick_n_take(empty_shuttle_turfs)
-					new /obj/structure/spider/stickyweb(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/effect/spider/stickyweb(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/effect/spider/stickyweb(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/effect/spider/stickyweb(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/effect/spider/stickyweb(T)
+				T = pick(empty_shuttle_turfs)
+				new /obj/effect/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
+				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish, /datum/disease/transformation/xeno)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
@@ -170,16 +178,6 @@
 				for(var/i in 1 to 5)
 					var/decal = pick(/obj/effect/decal/cleanable/flour, /obj/effect/decal/cleanable/robot_debris, /obj/effect/decal/cleanable/oil)
 					new decal(pick_n_take(empty_shuttle_turfs))
-			if(PIZZA_DELIVERY)
-				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-				shuttle_spawns.Add(/obj/item/pizzabox/margherita)
-				shuttle_spawns.Add(/obj/item/pizzabox/meat)
-				shuttle_spawns.Add(/obj/item/pizzabox/meat)
-				shuttle_spawns.Add(/obj/item/pizzabox/vegetable)
-				if(prob(10))
-					shuttle_spawns.Add(/obj/item/pizzabox/bomb)
-				else
-					shuttle_spawns.Add(/obj/item/pizzabox/margherita)
 
 		var/false_positive = 0
 		while(shuttle_spawns.len && empty_shuttle_turfs.len)
@@ -196,4 +194,3 @@
 #undef SPIDER_GIFT
 #undef DEPARTMENT_RESUPPLY
 #undef ANTIDOTE_NEEDED
-#undef PIZZA_DELIVERY

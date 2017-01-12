@@ -47,6 +47,10 @@
 	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
+	use_auto_lights = 1
+	light_power_on = 1
+	light_range_on = 3
+	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/seed_extractor/New()
 	..()
@@ -106,7 +110,7 @@
 			user << "<span class='notice'>You add [O] to [src.name].</span>"
 			updateUsrDialog()
 		return
-	else if(user.a_intent != INTENT_HARM)
+	else if(user.a_intent != "harm")
 		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 	else
 		return ..()

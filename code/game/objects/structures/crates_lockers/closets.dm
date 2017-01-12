@@ -10,12 +10,10 @@
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
+	var/broken = FALSE
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
-	obj_integrity = 200
-	max_integrity = 200
-	integrity_failure = 50
-	armor = list(melee = 20, bullet = 10, laser = 10, energy = 0, bomb = 10, bio = 0, rad = 0, fire = 70, acid = 60)
+	var/health = 100
 	var/breakout_time = 2
 	var/lastbang
 	var/can_weld_shut = TRUE
@@ -31,8 +29,7 @@
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/Welder.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
-	var/material_drop_amount = 3
-	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
+	var/obj/item/device/boobytrap/trap = null
 
 /obj/structure/closet/New()
 	..()
@@ -73,12 +70,15 @@
 
 /obj/structure/closet/examine(mob/user)
 	..()
-	if(anchored)
-		user << "It is anchored to the ground."
 	if(broken)
 		user << "<span class='notice'>It appears to be broken.</span>"
 	else if(secure && !opened)
 		user << "<span class='notice'>Alt-click to [locked ? "unlock" : "lock"].</span>"
+	if(trap && in_range(user, src))
+		user << "<span class='warning'>Something seems to be wired to the inside of the closet!</span>"
+
+/obj/structure/closet/alter_health()
+	return get_turf(src)
 
 /obj/structure/closet/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height == 0 || wall_mounted)
@@ -133,6 +133,17 @@
 	climb_time *= 0.5 //it's faster to climb onto an open thing
 	dump_contents()
 	update_icon()
+	if(trap)
+		visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+		trap.loc = get_turf(src)
+		trap.blow()
+		trap = null
+		for(var/mob/living/carbon/human/H in orange(2,src))
+			H.Paralyse(8)
+			H.adjust_fire_stacks(1)
+			H.IgniteMob()
+		qdel(src)
+		return ..()
 	return 1
 
 /obj/structure/closet/proc/insert(atom/movable/AM)
@@ -191,69 +202,112 @@
 	else
 		return open(user)
 
-/obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
-		new material_drop(loc, material_drop_amount)
+/obj/structure/closet/ex_act(severity, target)
+	contents_explosion(severity, target)
+	if(loc && ispath(material_drop) && !(flags & NODECONSTRUCT))
+		new material_drop(loc)
 	qdel(src)
+	..()
 
-/obj/structure/closet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
-		bust_open()
+/obj/structure/closet/bullet_act(obj/item/projectile/P)
+	..()
+	if(P.damage_type == BRUTE || P.damage_type == BURN)
+		health -= P.damage
+		if(health <= 0)
+			qdel(src)
+
+/obj/structure/closet/attack_animal(mob/living/simple_animal/user)
+	if(user.environment_smash)
+		user.do_attack_animation(src)
+		visible_message("<span class='danger'>[user] destroys \the [src].</span>")
+		qdel(src)
+
+/obj/structure/closet/blob_act(obj/effect/blob/B)
+	if(prob(75))
+		qdel(src)
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
+
 	if(user in src)
 		return
 	if(opened)
+		if(istype(W, /obj/item/device/boobytrap))
+			if(trap)
+				user << "<span class='warning'>There's already a booby trap hooked up to this closet!</span>"
+				..()
+			user << "<span class='warning'>You apply [W]. Next time someone opens the closet, it will explode.</span>"
+			W.loc = src
+			trap = W
+			qdel(W)
+			..()
+
 		if(istype(W, cutting_tool))
 			if(istype(W, /obj/item/weapon/weldingtool))
 				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.remove_fuel(0, user))
-					user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
-					playsound(loc, cutting_sound, 40, 1)
-					if(do_after(user, 40*WT.toolspeed, 1, target = src))
-						if(!opened || !WT.isOn())
-							return
-						playsound(loc, cutting_sound, 50, 1)
-						user.visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
-										"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
-										"<span class='italics'>You hear welding.</span>")
-						deconstruct(TRUE)
+				if(!WT.remove_fuel(0, user))
+					return
+				user << "<span class='notice'>You begin cutting \the [src] apart...</span>"
+				playsound(loc, cutting_sound, 40, 1)
+				if(do_after(user, 40/WT.toolspeed, 1, target = src))
+					if(!opened || !WT.isOn())
+						return
+					playsound(loc, cutting_sound, 50, 1)
+					visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+									"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+									"<span class='italics'>You hear welding.</span>")
+					var/turf/T = get_turf(src)
+					new material_drop(T)
+					qdel(src)
 					return 0
-			else // for example cardboard box is cut with wirecutters
-				user.visible_message("<span class='notice'>[user] cut apart \the [src].</span>", \
-									"<span class='notice'>You cut \the [src] apart with \the [W].</span>")
-				deconstruct(TRUE)
-				return 0
-		if(user.drop_item()) // so we put in unlit welder too
+		else if(user.drop_item())
 			W.forceMove(loc)
 			return 1
+	if(!opened && istype(W, /obj/item/device/boobytrap))
+		user << "<span class='warning'>You must open the closet first!</span>"
+		..()
+
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
 			return
 		user << "<span class='notice'>You begin [welded ? "unwelding":"welding"] \the [src]...</span>"
 		playsound(loc, 'sound/items/Welder2.ogg', 40, 1)
-		if(do_after(user, 40*WT.toolspeed, 1, target = src))
+		if(do_after(user, 40/WT.toolspeed, 1, target = src))
 			if(opened || !WT.isOn())
 				return
-			playsound(loc, WT.usesound, 50, 1)
+			playsound(loc, 'sound/items/welder.ogg', 50, 1)
 			welded = !welded
-			user.visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
+			visible_message("<span class='notice'>[user] [welded ? "welds shut" : "unweldeds"] \the [src].</span>",
 							"<span class='notice'>You [welded ? "weld" : "unwelded"] \the [src] with \the [WT].</span>",
 							"<span class='italics'>You hear welding.</span>")
 			update_icon()
-	else if(istype(W, /obj/item/weapon/wrench))
-		if(isinspace() && !anchored)
-			return
-		anchored = !anchored
-		playsound(src.loc, W.usesound, 75, 1)
-		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
-						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
-						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
+	else if(istype(W, /obj/item/weapon/wirecutters) && !opened && trap)
+		user << "<span class='notice'>You begin attempting to disarm the booby trap...</span>"
+		visible_message("<span class='warning'>[user] begins attempting to disarm the booby trap.</span>")
+		if(do_after(user, 80, target = src))
+			if(prob(75))
+				user << "<span class='notice'>You disarm the booby trap, destroying it in the process.</span>"
+				visible_message("<span class='notice'>[user] disarms the booby trap!</span>")
+				trap = null
+
+			else
+				user << "<span class='warning'>You accidentally bump the sensor and set off the booby trap!</span>"
+				visible_message("<span class='warning'>[user] fails to disarm the booby trap!</span>")
+				visible_message("<span class='warning'>[src] blows up in a spray of deadly shrapnel!</span>")
+				trap.loc = get_turf(src)
+				trap.blow()
+				trap = null
+				for(var/mob/living/carbon/human/H in orange(2,src))
+					H.Paralyse(8)
+					H.adjust_fire_stacks(1)
+					H.IgniteMob()
+					qdel(src)
+
+	else if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1
+
 	else
 		return ..()
 
@@ -317,9 +371,9 @@
 		togglelock(user)
 		return
 
-/obj/structure/closet/attack_robot(mob/user)
-	if(user.Adjacent(src))
-		return attack_hand(user)
+/obj/structure/closet/attack_alien(mob/living/user)
+	return attack_hand(user)
+
 
 // tk grab then use on self
 /obj/structure/closet/attack_self_tk(mob/user)
@@ -333,7 +387,7 @@
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 
-	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
+	if(iscarbon(usr) || issilicon(usr))
 		attack_hand(usr)
 	else
 		usr << "<span class='warning'>This mob type can't use this verb.</span>"
@@ -369,18 +423,15 @@
 		if(!user || user.stat != CONSCIOUS || user.loc != src || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
+		welded = 0 //applies to all lockers lockers
+		locked = 0 //applies to critter crates and secure lockers only
+		broken = 1 //applies to secure lockers only
 		user.visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>",
 							"<span class='notice'>You successfully break out of [src]!</span>")
-		bust_open()
+		open()
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			user << "<span class='warning'>You fail to break out of [src]!</span>"
-
-/obj/structure/closet/proc/bust_open()
-	welded = 0 //applies to all lockers
-	locked = 0 //applies to critter crates and secure lockers only
-	broken = 1 //applies to secure lockers only
-	open()
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
@@ -395,8 +446,7 @@
 /obj/structure/closet/proc/togglelock(mob/living/user)
 	if(secure && !broken)
 		if(allowed(user))
-			if(iscarbon(user))
-				add_fingerprint(user)
+			add_fingerprint(user)
 			locked = !locked
 			user.visible_message("<span class='notice'>[user] [locked ? null : "un"]locks [src].</span>",
 							"<span class='notice'>You [locked ? null : "un"]lock [src].</span>")
@@ -434,9 +484,3 @@
 				req_access = list()
 				req_access += pick(get_all_accesses())
 	..()
-
-
-/obj/structure/closet/contents_explosion(severity, target)
-	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK

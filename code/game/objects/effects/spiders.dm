@@ -1,44 +1,62 @@
 //generic procs copied from obj/effect/alien
-/obj/structure/spider
+/obj/effect/spider
 	name = "web"
-	icon = 'icons/effects/effects.dmi'
 	desc = "it's stringy and sticky"
 	anchored = 1
 	density = 0
-	obj_integrity = 15
+	var/health = 15
 
+//similar to weeds, but only barfed out by nurses manually
+/obj/effect/spider/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if (prob(50))
+				qdel(src)
+		if(3)
+			if (prob(5))
+				qdel(src)
 
+/obj/effect/spider/attacked_by(obj/item/I, mob/user)
+	..()
+	var/damage = I.force
+	take_damage(damage, I.damtype, 1)
 
-/obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
-
-
-/obj/structure/spider/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if(damage_flag == "melee")
-		switch(damage_type)
-			if(BURN)
-				damage_amount *= 2
-			if(BRUTE)
-				damage_amount *= 0.25
+/obj/effect/spider/bullet_act(obj/item/projectile/P)
 	. = ..()
+	take_damage(P.damage, P.damage_type, 0)
 
-/obj/structure/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/spider/proc/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
+	switch(damage_type)
+		if(BURN)
+			damage *= 2
+			if(sound_effect)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
+		if(BRUTE)//the stickiness of the web mutes all attack sounds except fire damage type
+			damage *= 0.25
+		else
+			return
+	health -= damage
+	if(health <= 0)
+		qdel(src)
+
+/obj/effect/spider/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+		take_damage(5, BURN, 0)
 
-/obj/structure/spider/stickyweb
+/obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
 
-/obj/structure/spider/stickyweb/New()
+/obj/effect/spider/stickyweb/New()
 	if(prob(50))
 		icon_state = "stickyweb2"
 
-/obj/structure/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
 	if(istype(mover, /mob/living/simple_animal/hostile/poison/giant_spider))
 		return 1
-	else if(isliving(mover))
+	else if(istype(mover, /mob/living))
 		if(prob(50))
 			mover << "<span class='danger'>You get stuck in \the [src] for a moment.</span>"
 			return 0
@@ -46,7 +64,7 @@
 		return prob(30)
 	return 1
 
-/obj/structure/spider/eggcluster
+/obj/effect/spider/eggcluster
 	name = "egg cluster"
 	desc = "They seem to pulse slightly with an inner life"
 	icon_state = "eggs"
@@ -56,17 +74,17 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/eggcluster/New()
+/obj/effect/spider/eggcluster/New()
 	pixel_x = rand(3,-3)
 	pixel_y = rand(3,-3)
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/spider/eggcluster/process()
+/obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
 	if(amount_grown >= 100)
 		var/num = rand(3,12)
 		for(var/i=0, i<num, i++)
-			var/obj/structure/spider/spiderling/S = new /obj/structure/spider/spiderling(src.loc)
+			var/obj/effect/spider/spiderling/S = new /obj/effect/spider/spiderling(src.loc)
 			S.poison_type = poison_type
 			S.poison_per_bite = poison_per_bite
 			S.faction = faction.Copy()
@@ -74,13 +92,13 @@
 				S.player_spiders = 1
 		qdel(src)
 
-/obj/structure/spider/spiderling
+/obj/effect/spider/spiderling
 	name = "spiderling"
 	desc = "It never stays still for long."
 	icon_state = "spiderling"
 	anchored = 0
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	obj_integrity = 3
+	health = 3
 	var/amount_grown = 0
 	var/grow_as = null
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
@@ -90,26 +108,20 @@
 	var/poison_per_bite = 5
 	var/list/faction = list("spiders")
 
-/obj/structure/spider/spiderling/New()
+/obj/effect/spider/spiderling/New()
 	pixel_x = rand(6,-6)
 	pixel_y = rand(6,-6)
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/spider/spiderling/hunter
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
-
-/obj/structure/spider/spiderling/nurse
-	grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/nurse
-
-/obj/structure/spider/spiderling/Bump(atom/user)
+/obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
 		src.loc = user.loc
 	else
 		..()
 
-/obj/structure/spider/spiderling/process()
+/obj/effect/spider/spiderling/process()
 	if(travelling_in_vent)
-		if(isturf(loc))
+		if(istype(src.loc, /turf))
 			travelling_in_vent = 0
 			entry_vent = null
 	else if(entry_vent)
@@ -181,17 +193,18 @@
 
 
 
-/obj/structure/spider/cocoon
+/obj/effect/spider/cocoon
 	name = "cocoon"
 	desc = "Something wrapped in silky spider web"
 	icon_state = "cocoon1"
-	obj_integrity = 60
+	health = 60
 
-/obj/structure/spider/cocoon/New()
-	icon_state = pick("cocoon1","cocoon2","cocoon3")
+/obj/effect/spider/cocoon/New()
+		icon_state = pick("cocoon1","cocoon2","cocoon3")
 
-/obj/structure/spider/cocoon/container_resist(mob/living/user)
-	var/breakout_time = 1
+/obj/effect/spider/cocoon/container_resist()
+	var/mob/living/user = usr
+	var/breakout_time = 2
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user << "<span class='notice'>You struggle against the tight bonds... (This will take about [breakout_time] minutes.)</span>"
@@ -203,9 +216,8 @@
 
 
 
-/obj/structure/spider/cocoon/Destroy()
-	var/turf/T = get_turf(src)
+/obj/effect/spider/cocoon/Destroy()
 	src.visible_message("<span class='warning'>\The [src] splits open.</span>")
 	for(var/atom/movable/A in contents)
-		A.forceMove(T)
+		A.loc = src.loc
 	return ..()

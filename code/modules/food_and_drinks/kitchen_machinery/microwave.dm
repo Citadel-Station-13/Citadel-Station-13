@@ -26,7 +26,6 @@
 	create_reagents(100)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/microwave(null)
 	B.apply_default_parts(src)
-	..()
 
 /obj/item/weapon/circuitboard/machine/microwave
 	name = "circuit board (Microwave)"
@@ -73,7 +72,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes part of the microwave.", \
 					"<span class='notice'>You fix part of the microwave.</span>" \
@@ -84,7 +83,7 @@
 				"[user] starts to fix part of the microwave.", \
 				"<span class='notice'>You start to fix part of the microwave...</span>" \
 			)
-			if (do_after(user,20*O.toolspeed, target = src))
+			if (do_after(user,20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] fixes the microwave.", \
 					"<span class='notice'>You fix the microwave.</span>" \
@@ -141,7 +140,7 @@
 		var/loaded = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/S in T.contents)
 			if (contents.len>=max_n_of_items)
-				user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
+				user << "<span class='warning'>[src] is full, you cannot put more!</span>"
 				return 1
 			T.remove_from_storage(S, src)
 			loaded++
@@ -150,15 +149,15 @@
 			user << "<span class='notice'>You insert [loaded] items into [src].</span>"
 
 
-	else if(O.w_class <= WEIGHT_CLASS_NORMAL && !istype(O,/obj/item/weapon/storage) && user.a_intent == INTENT_HELP)
+	else if(istype(O,/obj/item/weapon/reagent_containers/food/snacks))
 		if (contents.len>=max_n_of_items)
-			user << "<span class='warning'>[src] is full, you can't put anything in!</span>"
+			user << "<span class='warning'>[src] is full, you cannot put more!</span>"
 			return 1
 		else
+		//	user.unEquip(O)	//This just causes problems so far as I can tell. -Pete
 			if(!user.drop_item())
 				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
 				return 0
-
 			O.loc = src
 			user.visible_message( \
 				"[user] has added \the [O] to \the [src].", \
@@ -197,11 +196,7 @@
 	else
 		var/list/items_counts = new
 		for (var/obj/O in contents)
-			if(istype(O, /obj/item/stack/))
-				var/obj/item/stack/S = O
-				items_counts[O.name] += S.amount
-			else
-				items_counts[O.name]++
+			items_counts[O.name]++
 
 		for (var/O in items_counts)
 			var/N = items_counts[O]
@@ -217,6 +212,7 @@
 	var/datum/browser/popup = new(user, "microwave", name, 300, 300)
 	popup.set_content(dat)
 	popup.open()
+	return
 
 /***********************************
 *   Microwave Menu Handling/Cooking
@@ -235,30 +231,32 @@
 		muck_finish()
 		return
 
-	else
-		if(has_extra_item() && prob(min(dirty*5,100)) && !microwaving(4))
+	else if (has_extra_item())
+		if (!microwaving(4))
 			broke()
 			return
+
+		broke()
+		return
+
+	else
 
 		if(!microwaving(10))
 			abort()
 			return
 		stop()
 
-		var/metal = 0
-		for(var/obj/item/O in contents)
-			O.microwave_act(src)
-			if(O.materials[MAT_METAL])
-				metal += O.materials[MAT_METAL]
+		for(var/obj/item/weapon/reagent_containers/food/snacks/F in contents)
+			if(F.cooked_type)
+				var/obj/item/weapon/reagent_containers/food/snacks/S = new F.cooked_type (get_turf(src))
+				F.initialize_cooked_food(S, efficiency)
+				feedback_add_details("food_made","[F.type]")
+			else
+				new /obj/item/weapon/reagent_containers/food/snacks/badrecipe(src)
+				if(dirty < 100)
+					dirty++
+			qdel(F)
 
-		if(metal)
-			visible_message("<span class='warning'>Sparks fly around [src]!")
-			if(prob(max(metal/2, 33)))
-				explosion(loc,0,1,2)
-			broke()
-			return
-
-		dropContents()
 		return
 
 /obj/machinery/microwave/proc/microwaving(seconds as num)
@@ -342,3 +340,4 @@
 		if ("dispose")
 			dispose()
 	updateUsrDialog()
+	return

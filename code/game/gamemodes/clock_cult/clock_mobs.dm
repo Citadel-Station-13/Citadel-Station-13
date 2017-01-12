@@ -1,21 +1,15 @@
 
 /mob/living/simple_animal/hostile/clockwork
 	faction = list("ratvar")
-	gender = NEUTER
 	icon = 'icons/mob/clockwork_mobs.dmi'
 	unique_name = 1
 	minbodytemp = 0
-	unsuitable_atmos_damage = 0
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0) //Robotic
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
 	healable = FALSE
 	del_on_death = TRUE
-	speak_emote = list("clanks", "clinks", "clunks", "clangs")
-	verb_ask = "requests"
-	verb_exclaim = "proclaims"
-	verb_yell = "harangues"
 	bubble_icon = "clock"
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 	var/playstyle_string = "<span class='heavy_brass'>You are a bug, yell at whoever spawned you!</span>"
@@ -37,28 +31,6 @@
 	..()
 	src << playstyle_string
 
-/mob/living/simple_animal/hostile/clockwork/ratvar_act()
-	fully_heal(TRUE)
-
-/mob/living/simple_animal/hostile/clockwork/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0)
-	return 0 //ouch, my metal-unlikely-to-be-damaged-by-electricity-body
-
-/mob/living/simple_animal/hostile/clockwork/examine(mob/user)
-	var/t_He = p_they(TRUE)
-	var/t_s = p_s()
-	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
-	msg += "[desc]\n"
-	if(health < maxHealth)
-		msg += "<span class='warning'>"
-		if(health >= maxHealth/2)
-			msg += "[t_He] look[t_s] slightly dented.\n"
-		else
-			msg += "<b>[t_He] look[t_s] severely dented!</b>\n"
-		msg += "</span>"
-	msg += "*---------*</span>"
-
-	user << msg
-
 /mob/living/simple_animal/hostile/clockwork/fragment //Anima fragment: Low health and high melee damage, but slows down when struck. Created by inserting a soul vessel into an empty fragment.
 	name = "anima fragment"
 	desc = "An ominous humanoid shell with a spinning cogwheel as its head, lifted by a jet of blazing red flame."
@@ -66,13 +38,13 @@
 	health = 90
 	maxHealth = 90
 	speed = -1
-	melee_damage_lower = 18
-	melee_damage_upper = 18
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attacktext = "crushes"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	loot = list(/obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment)
 	weather_immunities = list("lava")
-	movement_type = FLYING
+	flying = 1
 	playstyle_string = "<span class='heavy_brass'>You are an anima fragment</span><b>, a clockwork creation of Ratvar. As a fragment, you have low health, do decent damage, and move at \
 	extreme speed in addition to being immune to extreme temperatures and pressures. Taking damage will temporarily slow you down, however. \n Your goal is to serve the Justiciar and his servants \
 	in any way you can. You yourself are one of these servants, and will be able to utilize anything they can, assuming it doesn't require opposable thumbs.</b>"
@@ -80,7 +52,7 @@
 
 /mob/living/simple_animal/hostile/clockwork/fragment/New()
 	..()
-	SetLuminosity(2,1)
+	set_light(2,1)
 	if(prob(1))
 		name = "anime fragment"
 		real_name = name
@@ -94,16 +66,11 @@
 /mob/living/simple_animal/hostile/clockwork/fragment/death(gibbed)
 	visible_message("<span class='warning'>[src]'s flame jets cut out as it falls to the floor with a tremendous crash.</span>", \
 	"<span class='userdanger'>Your gears seize up. Your flame jets flicker out. Your soul vessel belches smoke as you helplessly crash down.</span>")
-	..()
+	..(TRUE)
+	return 1
 
 /mob/living/simple_animal/hostile/clockwork/fragment/Process_Spacemove(movement_dir = 0)
 	return 1
-
-/mob/living/simple_animal/hostile/clockwork/fragment/emp_act(severity)
-	if(movement_delay_time > world.time)
-		movement_delay_time = movement_delay_time + (50/severity)
-	else
-		movement_delay_time = world.time + (50/severity)
 
 /mob/living/simple_animal/hostile/clockwork/fragment/movement_delay()
 	. = ..()
@@ -114,9 +81,9 @@
 	. = ..()
 	if(!ratvar_awakens && amount > 0) //if ratvar is up we ignore movement delay
 		if(movement_delay_time > world.time)
-			movement_delay_time = movement_delay_time + amount*2.5
+			movement_delay_time = movement_delay_time + amount*3
 		else
-			movement_delay_time = world.time + amount*2.5
+			movement_delay_time = world.time + amount*3
 
 /mob/living/simple_animal/hostile/clockwork/fragment/updatehealth()
 	..()
@@ -132,13 +99,13 @@
 	health = 300 //Health is very high, and under most cases it will take enough fatigue to be forced to recall first
 	maxHealth = 300
 	speed = 1
-	obj_damage = 40
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	environment_smash = 1
 	weather_immunities = list("lava")
-	movement_type = FLYING
+	flying = 1
 	loot = list(/obj/item/clockwork/component/replicant_alloy/fallen_armor)
 	var/true_name = "Meme Master 69" //Required to call forth the marauder
 	var/list/possible_true_names = list("Xaven", "Melange", "Ravan", "Kel", "Rama", "Geke", "Peris", "Vestra", "Skiwa") //All fairly short and easy to pronounce
@@ -161,7 +128,7 @@
 	..()
 	combattimer = 0
 	true_name = pick(possible_true_names)
-	SetLuminosity(2,1)
+	set_light(2,1)
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Life()
 	..()
@@ -202,7 +169,6 @@
 			else //well then, you're not even in the same zlevel
 				adjust_fatigue(10)
 				src << "<span class='userdanger'>You're too far from your host and rapidly taking fatigue damage!</span>"
-			update_health_hud()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -222,8 +188,8 @@
 		switch((fatigue/fatigue_recall_threshold) * 100)
 			if(0 to 10) //Bonuses to speed and damage at normal fatigue levels
 				speed = 0
-				melee_damage_lower = 14
-				melee_damage_upper = 14
+				melee_damage_lower = 13
+				melee_damage_upper = 13
 				attacktext = "viciously slashes"
 			if(10 to 25)
 				speed = initial(speed)
@@ -232,30 +198,30 @@
 				attacktext = initial(attacktext)
 			if(25 to 50) //Damage decrease, but not speed
 				speed = initial(speed)
-				melee_damage_lower = 8
-				melee_damage_upper = 8
+				melee_damage_lower = 7
+				melee_damage_upper = 7
 				attacktext = "lightly slashes"
 			if(50 to 75) //Speed decrease
 				speed = 2
-				melee_damage_lower = 8
-				melee_damage_upper = 8
+				melee_damage_lower = 7
+				melee_damage_upper = 7
 				attacktext = "lightly slashes"
 			if(75 to 99) //Massive speed decrease and weak melee attacks
 				speed = 3
-				melee_damage_lower = 5
-				melee_damage_upper = 5
+				melee_damage_lower = 4
+				melee_damage_upper = 4
 				attacktext = "weakly slashes"
 			if(99 to 100) //we are at maximum fatigue, we're either useless or recalling
 				if(host)
 					src << "<span class='userdanger'>The fatigue becomes too much!</span>"
 					src << "<span class='userdanger'>You retreat to [host] - you will have to wait before being deployed again.</span>"
-					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until [p_they()] [p_are()] strong enough.</span>"
+					host << "<span class='userdanger'>[true_name] is too fatigued to fight - you will need to wait until they are strong enough.</span>"
 					recovering = TRUE
 					return_to_host()
 				else
 					speed = 4
-					melee_damage_lower = 2
-					melee_damage_upper = 2
+					melee_damage_lower = 1
+					melee_damage_upper = 1
 					attacktext = "taps"
 
 
@@ -264,6 +230,7 @@
 	visible_message("<span class='warning'>[src]'s equipment clatters lifelessly to the ground as the red flames within dissipate.</span>", \
 	"<span class='userdanger'>Your equipment falls away. You feel a moment of confusion before your fragile form is annihilated.</span>")
 	..()
+	return 1
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Stat()
 	..()
@@ -272,17 +239,16 @@
 		stat(null, "Current True Name: [true_name]")
 		stat(null, "Host: [host ? host : "NONE"]")
 		if(host)
-			var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
-			if(iscarbon(host))
-				resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
+			var/resulthealth
+			resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 			stat(null, "Host Health: [resulthealth]%")
 			if(ratvar_awakens)
 				stat(null, "You are [recovering ? "un" : ""]able to deploy!")
 			else
 				if(resulthealth > 60)
-					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy on hearing your True Name"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "can deploy on hearing your True Name"]!")
 				else
-					stat(null, "You are [recovering ? "unable to deploy" : "able to deploy to protect your host"]!")
+					stat(null, "You are [recovering ? "unable to deploy" : "can deploy to protect your host"]!")
 		if(ratvar_awakens)
 			stat(null, "Block Chance: 80%")
 			stat(null, "Counter Chance: 80%")
@@ -296,13 +262,11 @@
 	if(amount > 0)
 		combattimer = world.time + initial(combattimer)
 		for(var/mob/living/L in view(2, src))
-			if(L.is_holding_item_of_type(/obj/item/weapon/nullrod))
+			if(istype(L.l_hand, /obj/item/weapon/nullrod) || istype(L.r_hand, /obj/item/weapon/nullrod)) //hand-held holy weapons increase the damage it takes
 				src << "<span class='userdanger'>The presence of a brandished holy artifact weakens your armor!</span>"
 				amount *= 4 //if a wielded null rod is nearby, it takes four times the health damage
 				break
-	. = ..() + fatiguedamage
-	if(src)
-		update_health_hud()
+	return ..() + fatiguedamage
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/adjust_fatigue(amount) //Adds or removes the given amount of fatigue
 	if(status_flags & GODMODE)
@@ -310,24 +274,6 @@
 	fatigue = Clamp(fatigue + amount, 0, fatigue_recall_threshold)
 	update_fatigue()
 	return amount
-
-/mob/living/simple_animal/hostile/clockwork/marauder/update_health_hud()
-	if(hud_used && hud_used.healths)
-		if(istype(hud_used, /datum/hud/marauder))
-			var/datum/hud/marauder/M = hud_used
-			var/resulthealth
-			if(host)
-				if(iscarbon(host))
-					resulthealth = "[round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)]%"
-				else
-					resulthealth = "[round((host.health / host.maxHealth) * 100, 0.5)]%"
-			else
-				resulthealth = "NONE"
-			M.hosthealth.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>HOST<br>[resulthealth]</font></div>"
-			M.blockchance.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#2A0006'>[blockchance]%</font></div>"
-			M.counterchance.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#2A0006'>[counterchance]%</font></div>"
-		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#AF0AAF'>[round((health / maxHealth) * 100, 0.5)]%</font><br>\
-		<font color='#2A0006'>[fatigue]</font></div>"
 
 //ATTACKING, BLOCKING, and COUNTERING
 
@@ -338,12 +284,12 @@
 	..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/bullet_act(obj/item/projectile/Proj)
-	if(blockOrCounter(null, Proj))
+	if(ratvar_awakens && blockOrCounter(null, Proj))
 		return
 	return ..()
 
 /mob/living/simple_animal/hostile/clockwork/marauder/hitby(atom/movable/AM, skipcatch, hitpush, blocked)
-	if(blockOrCounter(null, AM))
+	if(ratvar_awakens && blockOrCounter(null, AM))
 		return
 	return ..()
 
@@ -384,21 +330,16 @@
 		playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 10, 1, 0, 1) //clang
 		visible_message("<span class='boldannounce'>[src] blocks [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>", \
 		"<span class='userdanger'>You block [target && istype(textobject, /obj/item) ? "[target]'s [textobject.name]":"\the [textobject]"]!</span>")
-		if(target && Adjacent(target))
-			if(prob(counterchance))
-				counterchance = initial(counterchance)
-				var/previousattacktext = attacktext
-				attacktext = "counters"
-				target.attack_animal(src)
-				attacktext = previousattacktext
-			else
-				counterchance = min(counterchance + initial(counterchance), 100)
+		if(target && prob(counterchance))
+			counterchance = initial(counterchance)
+			var/previousattacktext = attacktext
+			attacktext = "counters"
+			target.attack_animal(src)
+			attacktext = previousattacktext
+		else
+			counterchance = min(counterchance + initial(counterchance), 100)
 	else
 		blockchance = min(blockchance + initial(blockchance), 100)
-	if(ratvar_awakens)
-		blockchance = 80
-		counterchance = 80
-	update_health_hud()
 
 //COMMUNICATION and EMERGENCE
 
@@ -502,9 +443,8 @@
 		src << "<span class='warning'>You don't have a host!</span>"
 		verbs -= /mob/living/simple_animal/hostile/clockwork/marauder/verb/try_emerge
 		return 0
-	var/resulthealth = round((host.health / host.maxHealth) * 100, 0.5)
-	if(iscarbon(host))
-		resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - host.health) / abs(HEALTH_THRESHOLD_DEAD - host.maxHealth)) * 100)
+	var/resulthealth
+	resulthealth = round((abs(config.health_threshold_dead - host.health) / abs(config.health_threshold_dead - host.maxHealth)) * 100)
 	if(!ratvar_awakens && host.stat != DEAD && resulthealth > 60) //if above 20 health, fails
 		src << "<span class='warning'>Your host must be at 60% or less health to emerge like this!</span>"
 		return
@@ -530,3 +470,110 @@
 
 /mob/living/simple_animal/hostile/clockwork/marauder/proc/is_in_host() //Checks if the marauder is inside of their host
 	return host && loc == host
+
+
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer
+	name = "clockwork reclaimer"
+	desc = "A tiny clockwork arachnid with a single cogwheel spinning quickly in its head. Its legs blur, too fast to be seen clearly."
+	icon_state = "clockwork_reclaimer"
+	health = 50
+	maxHealth = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 10
+	attacktext = "slams into"
+	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
+	ventcrawler = 2
+	playstyle_string = "<span class='heavy_brass'>You are a clockwork reclaimer</span><b>, a harbringer of the Justiciar's light. You can crawl through vents to move more swiftly. Your \
+	goal: purge all untruths and honor Ratvar. You may alt-click a valid target to break yourself apart and convert the target to a servant of Ratvar.</b>"
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer/New()
+	..()
+	if(prob(1))
+		real_name = "jehovah's witness"
+		name = real_name
+	spawn(1)
+		if(mind)
+			mind.special_role = null
+		add_servant_of_ratvar(src, TRUE)
+		src << playstyle_string
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer/Life()
+	..()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/L = loc
+		if(L.stat || !L.client)
+			disengage()
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer/death()
+	..(1)
+	visible_message("<span class='warning'>[src] bursts into deadly shrapnel!</span>")
+	for(var/mob/living/carbon/C in range(2, src))
+		C.adjustBruteLoss(rand(3, 5))
+	qdel(src)
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer/AltClickOn(atom/movable/A)
+	if(!ishuman(A))
+		return ..()
+	var/mob/living/carbon/human/H = A
+	if(is_servant_of_ratvar(H) || H.stat || (H.mind && !H.client))
+		src << "<span class='warning'>[H] isn't a valid target! Valid targets are conscious non-servants.</span>"
+		return 0
+	if(get_dist(src, H) > 3)
+		src << "<span class='warning'>You need to be closer to dominate [H]!</span>"
+		return 0
+	visible_message("<span class='warning'>[src] rockets with blinding speed towards [H]!</span>", "<span class='heavy_brass'>You leap with blinding speed towards [H]'s head!</span>")
+	for(var/i = 9, i > 0, i -= 3)
+		pixel_y += i
+		sleep(1)
+	icon_state = "[initial(icon_state)]_charging"
+	while(loc != H.loc)
+		if(!H)
+			icon_state = initial(icon_state)
+			return 0
+		sleep(1)
+		forceMove(get_step(src, get_dir(src, H)))
+	if(H.head)
+		H.visible_message("<span class='warning'>[src] tears apart [H]'s [H.name]!</span>")
+		H.unEquip(H.head)
+		qdel(H.head)
+	H.visible_message("<span class='warning'>[src] latches onto [H]'s head and digs its claws in!</span>", "<span class='userdanger'>[src] leaps onto your head and impales its claws deep!</span>")
+	add_servant_of_ratvar(H)
+	H.equip_to_slot_or_del(new/obj/item/clothing/head/helmet/clockwork/reclaimer(null), slot_head)
+	loc = H
+	icon_state = initial(icon_state)
+	status_flags += GODMODE
+	src << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
+	H << "<span class='userdanger'>ASSIMILATION SUCCESSFUL.</span>"
+	clockwork_say(H, rot13("ASSIMILATION SUCCESSFUL."))
+	if(!H.mind)
+		mind.transfer_to(H)
+	return 1
+
+/mob/living/simple_animal/hostile/clockwork/reclaimer/verb/disengage()
+	set name = "Disgengage From Host"
+	set desc = "Jumps off of your host if you have one, freeing their mind but allowing you movement."
+	set category = "Clockwork"
+
+	if(!ishuman(usr.loc))
+		usr << "<span class='warning'>You have no host! Alt-click on a non-servant to enslave them.</span>"
+		return
+	var/mob/living/carbon/human/L = usr.loc
+	usr.loc = get_turf(L)
+	pixel_y = initial(pixel_y)
+	usr.visible_message("<span class='warning'>[usr] jumps off of [L]'s head!</span>", "<span class='notice'>You disengage from your host.</span>")
+	usr.status_flags -= GODMODE
+	remove_servant_of_ratvar(L)
+	L.unEquip(L.head)
+	qdel(L.head)
+
+
+
+/mob/living/mind_control_holder
+	name = "imprisoned mind"
+	desc = "A helpless mind, imprisoned in its own body."
+	stat = 0
+	status_flags = GODMODE
+
+/mob/living/mind_control_holder/say()
+	return 0

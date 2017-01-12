@@ -46,24 +46,24 @@
 
 /////////////////////////////////// PARALYSIS ////////////////////////////////////
 
-/mob/proc/Paralyse(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
+/mob/proc/Paralyse(amount, updating = 1)
+	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(max(paralysis,amount),0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
 			if(updating)
 				update_stat()
 
-/mob/proc/SetParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
+/mob/proc/SetParalysis(amount, updating = 1)
+	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
 			if(updating)
 				update_stat()
 
-/mob/proc/AdjustParalysis(amount, updating = 1, ignore_canparalyse = 0)
-	if(status_flags & CANPARALYSE || ignore_canparalyse)
+/mob/proc/AdjustParalysis(amount, updating = 1)
+	if(status_flags & CANPARALYSE)
 		var/old_paralysis = paralysis
 		paralysis = max(paralysis + amount,0)
 		if((!old_paralysis && paralysis) || (old_paralysis && !paralysis))
@@ -245,13 +245,7 @@
 	return
 
 
-//////////////////////////////// HUSK DISABILITY ///////////////////////////:
 
-/mob/proc/cure_husk()
-	return
-
-/mob/proc/become_husk()
-	return
 
 
 

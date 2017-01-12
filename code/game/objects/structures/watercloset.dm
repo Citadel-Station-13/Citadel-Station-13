@@ -14,7 +14,6 @@
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
 	update_icon()
-	..()
 
 
 /obj/structure/toilet/attack_hand(mob/living/user)
@@ -24,7 +23,7 @@
 		swirlie.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie]'s head!</span>", "<span class='userdanger'>[user] slams the toilet seat onto your head!</span>", "<span class='italics'>You hear reverberating porcelain.</span>")
 		swirlie.adjustBruteLoss(5)
 
-	else if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	else if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
@@ -75,17 +74,17 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		user << "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 30*I.toolspeed, target = src))
+		if(do_after(user, 30/I.toolspeed, target = src))
 			user.visible_message("[user] [cistern ? "replaces the lid on the cistern" : "lifts the lid off the cistern"]!", "<span class='notice'>You [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"]!</span>", "<span class='italics'>You hear grinding porcelain.</span>")
 			cistern = !cistern
 			update_icon()
 
 	else if(cistern)
-		if(user.a_intent != INTENT_HARM)
-			if(I.w_class > WEIGHT_CLASS_NORMAL)
+		if(user.a_intent != "harm")
+			if(I.w_class > 3)
 				user << "<span class='warning'>[I] does not fit!</span>"
 				return
-			if(w_items + I.w_class > WEIGHT_CLASS_HUGE)
+			if(w_items + I.w_class > 5)
 				user << "<span class='warning'>The cistern is full!</span>"
 				return
 			if(!user.drop_item())
@@ -119,7 +118,7 @@
 	hiddenitem = new /obj/item/weapon/reagent_containers/food/urinalcake
 
 /obj/structure/urinal/attack_hand(mob/user)
-	if(user.pulling && user.a_intent == INTENT_GRAB && isliving(user.pulling))
+	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))
 		var/mob/living/GM = user.pulling
 		if(user.grab_state >= GRAB_AGGRESSIVE)
 			if(GM.loc != get_turf(src))
@@ -140,7 +139,7 @@
 			else
 				hiddenitem.forceMove(get_turf(src))
 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
-			hiddenitem = null
+			src.hiddenitem = null
 	else
 		..()
 
@@ -148,7 +147,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		user << "<span class='notice'>You start to [exposed ? "screw the cap back into place" : "unscrew the cap to the drain protector"]...</span>"
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
-		if(do_after(user, 20*I.toolspeed, target = src))
+		if(do_after(user, 20/I.toolspeed, target = src))
 			user.visible_message("[user] [exposed ? "screws the cap back into place" : "unscrew the cap to the drain protector"]!", "<span class='notice'>You [exposed ? "screw the cap back into place" : "unscrew the cap on the drain"]!</span>", "<span class='italics'>You hear metal and squishing noises.</span>")
 			exposed = !exposed
 	else if(exposed)
@@ -171,7 +170,7 @@
 	desc = "The noble urinal cake, protecting the station's pipes from the station's pee. Do not eat."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "urinalcake"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	list_reagents = list("chlorine" = 3, "ammonia" = 1)
 
 /obj/machinery/shower
@@ -210,7 +209,7 @@
 			else
 				wash_obj(G)
 	else
-		if(isopenturf(loc))
+		if(istype(loc, /turf/open))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(min_wet_time = 5, wet_time_to_add = 1)
 
@@ -220,7 +219,7 @@
 		user << "<span class='notice'>The water temperature seems to be [watertemp].</span>"
 	if(istype(I, /obj/item/weapon/wrench))
 		user << "<span class='notice'>You begin to adjust the temperature valve with \the [I]...</span>"
-		if(do_after(user, 50*I.toolspeed, target = src))
+		if(do_after(user, 50/I.toolspeed, target = src))
 			switch(watertemp)
 				if("normal")
 					watertemp = "freezing"
@@ -276,7 +275,6 @@
 
 	if(istype(O,/obj/item))
 		var/obj/item/I = O
-		I.acid_level = 0
 		I.extinguish()
 
 
@@ -297,8 +295,10 @@
 		var/mob/living/carbon/M = L
 		. = 1
 		check_heat(M)
-		for(var/obj/item/I in M.held_items)
-			I.clean_blood()
+		if(M.r_hand)
+			M.r_hand.clean_blood()
+		if(M.l_hand)
+			M.l_hand.clean_blood()
 		if(M.back)
 			if(M.back.clean_blood())
 				M.update_inv_back(0)
@@ -335,7 +335,7 @@
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(washgloves)
-				H.clean_blood()
+				clean_blood()
 			if(H.shoes && washshoes)
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
@@ -374,9 +374,6 @@
 			else
 				wash_obj(G)
 
-/obj/machinery/shower/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
 
 /obj/machinery/shower/proc/check_heat(mob/living/carbon/C)
 	if(watertemp == "freezing")
@@ -492,7 +489,7 @@
 	if(O.flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
 		return
 
-	if(user.a_intent != INTENT_HARM)
+	if(user.a_intent != "harm")
 		user << "<span class='notice'>You start washing [O]...</span>"
 		busy = 1
 		if(!do_after(user, 40, target = src))
@@ -500,17 +497,11 @@
 			return 1
 		busy = 0
 		O.clean_blood()
-		O.acid_level = 0
 		user.visible_message("<span class='notice'>[user] washes [O] using [src].</span>", \
 							"<span class='notice'>You wash [O] using [src].</span>")
 		return 1
 	else
 		return ..()
-
-/obj/structure/sink/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/metal (loc, 3)
-	qdel(src)
-
 
 
 /obj/structure/sink/kitchen
@@ -550,6 +541,7 @@
 	density = 0
 	var/open = TRUE
 
+
 /obj/structure/curtain/proc/toggle()
 	open = !open
 	update_icon()
@@ -571,17 +563,3 @@
 	playsound(loc, 'sound/effects/curtain.ogg', 50, 1)
 	toggle()
 	..()
-
-/obj/structure/curtain/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/cloth (loc, 3)
-	qdel(src)
-
-/obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, 1)

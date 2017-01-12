@@ -4,7 +4,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/floor/plating/lava,
 	/turf/open/floor/plating/beach/water))
 
-/obj/structure/glowshroom
+/obj/effect/glowshroom
 	name = "glowshroom"
 	desc = "Mycena Bregprox, a species of mushroom that glows in the dark."
 	anchored = 1
@@ -13,8 +13,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	obj_integrity = 30
-	max_integrity = 30
+	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200
 	var/floor = 0
@@ -22,20 +21,20 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	var/generation = 1
 	var/spreadIntoAdjacentChance = 60
 
-/obj/structure/glowshroom/glowcap
+obj/effect/glowshroom/glowcap
 	name = "glowcap"
 	icon_state = "glowcap"
 
-/obj/structure/glowshroom/single
+/obj/effect/glowshroom/single
 	yield = 0
 
-/obj/structure/glowshroom/examine(mob/user)
+/obj/effect/glowshroom/examine(mob/user)
 	. = ..()
 	user << "This is a [generation]\th generation [name]!"
 
-/obj/structure/glowshroom/New()
+/obj/effect/glowshroom/New()
 	..()
-	SetLuminosity(round(potency/10))
+	set_light(round(potency/10))
 	setDir(CalcDir())
 	var/base_icon_state = initial(icon_state)
 	if(!floor)
@@ -54,7 +53,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 	addtimer(src, "Spread", delay)
 
-/obj/structure/glowshroom/proc/Spread()
+/obj/effect/glowshroom/proc/Spread()
 	for(var/i = 1 to yield)
 		if(prob(1/(generation * generation) * 100))//This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 			var/list/possibleLocs = list()
@@ -66,7 +65,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 			for(var/turf/open/floor/earth in view(3,src))
 				if(is_type_in_typecache(earth, blacklisted_glowshroom_turfs))
 					continue
-				if(spreadsIntoAdjacent || !locate(/obj/structure/glowshroom) in view(1,earth))
+				if(spreadsIntoAdjacent || !locate(/obj/effect/glowshroom) in view(1,earth))
 					possibleLocs += earth
 				CHECK_TICK
 
@@ -77,7 +76,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 
 			var/shroomCount = 0 //hacky
 			var/placeCount = 1
-			for(var/obj/structure/glowshroom/shroom in newLoc)
+			for(var/obj/effect/glowshroom/shroom in newLoc)
 				shroomCount++
 			for(var/wallDir in cardinal)
 				var/turf/isWall = get_step(newLoc,wallDir)
@@ -86,18 +85,16 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 			if(shroomCount >= placeCount)
 				continue
 
-			var/obj/structure/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
+			var/obj/effect/glowshroom/child = new type(newLoc)//The baby mushrooms have different stats :3
 			child.potency = max(potency + rand(-3,6), 0)
 			child.yield = max(yield + rand(-1,2), 0)
 			child.delay = max(delay + rand(-30,60), 0)
-			var/newhealth = max(obj_integrity + rand(-3,6), 1)
-			child.obj_integrity = newhealth
-			child.max_integrity = newhealth
+			child.endurance = max(endurance + rand(-3,6), 1)
 			child.generation = generation + 1
 
 			CHECK_TICK
 
-/obj/structure/glowshroom/proc/CalcDir(turf/location = loc)
+/obj/effect/glowshroom/proc/CalcDir(turf/location = loc)
 	var/direction = 16
 
 	for(var/wallDir in cardinal)
@@ -105,7 +102,7 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 		if(newTurf.density)
 			direction |= wallDir
 
-	for(var/obj/structure/glowshroom/shroom in location)
+	for(var/obj/effect/glowshroom/shroom in location)
 		if(shroom == src)
 			continue
 		if(shroom.floor) //special
@@ -129,17 +126,34 @@ var/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	floor = 1
 	return 1
 
-/obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	if(damage_type == BURN && damage_amount)
-		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+/obj/effect/glowshroom/attacked_by(obj/item/I, mob/user)
+	..()
+	if(I.damtype != STAMINA)
+		endurance -= I.force
+		CheckEndurance()
 
-/obj/structure/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/effect/glowshroom/ex_act(severity, target)
+	switch(severity)
+		if(1)
+			qdel(src)
+		if(2)
+			if(prob(50))
+				qdel(src)
+		if(3)
+			if(prob(5))
+				qdel(src)
+
+/obj/effect/glowshroom/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
-		take_damage(5, BURN, 0, 0)
+		endurance -= 5
+		CheckEndurance()
 
-/obj/structure/glowshroom/acid_act(acidpwr, acid_volume)
-	. = 1
+/obj/effect/glowshroom/proc/CheckEndurance()
+	if(endurance <= 0)
+		qdel(src)
+
+/obj/effect/glowshroom/acid_act(acidpwr, toxpwr, acid_volume)
 	visible_message("<span class='danger'>[src] melts away!</span>")
-	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
+	var/obj/effect/decal/cleanable/molten_item/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)

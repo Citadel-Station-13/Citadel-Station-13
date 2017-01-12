@@ -155,14 +155,14 @@ function checkchangelog($payload, $merge = false) {
 	$foundcltag = false;
 	foreach ($body as $line) {
 		$line = trim($line);
-		if (substr($line,0,4) == ':cl:' || substr($line,0,4) == '🆑') {
+		if (substr($line,0,4) == ':cl:') {
 			$incltag = true;
 			$foundcltag = true;
 			$pos = strpos($line, " ");
 			if ($pos)
 				$username = substr($line, $pos+1);
 			continue;
-		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:' || substr($line,0,5) == '/🆑' || substr($line,0,6) == '/ 🆑' ) {
+		} else if (substr($line,0,5) == '/:cl:' || substr($line,0,6) == '/ :cl:' || substr($line,0,5) == ':/cl:') {
 			$incltag = false;
 			$changelogbody = array_merge($changelogbody, $currentchangelogblock);
 			continue;

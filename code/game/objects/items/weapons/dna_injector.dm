@@ -5,7 +5,7 @@
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	origin_tech = "biotech=1"
 
 	var/damage_coeff  = 1
@@ -143,7 +143,7 @@
 
 /obj/item/weapon/dnainjector/dwarf
 	name = "\improper DNA injector (Dwarfism)"
-	desc = "It's a small world after all."
+	desc = "Its a small world after all."
 	add_mutations_static = list(DWARFISM)
 
 /obj/item/weapon/dnainjector/clumsymut
@@ -152,7 +152,7 @@
 	add_mutations_static = list(CLOWNMUT)
 
 /obj/item/weapon/dnainjector/anticlumsy
-	name = "\improper DNA injector (Anti-Clumsy)"
+	name = "\improper DNA injector (Anti-Clumy)"
 	desc = "Apply this for Security Clown."
 	remove_mutations_static = list(CLOWNMUT)
 
@@ -163,7 +163,7 @@
 
 /obj/item/weapon/dnainjector/tourmut
 	name = "\improper DNA injector (Tour.)"
-	desc = "Gives you a nasty case of Tourette's."
+	desc = "Gives you a nasty case off tourrets."
 	add_mutations_static = list(TOURETTES)
 
 /obj/item/weapon/dnainjector/stuttmut
@@ -193,7 +193,7 @@
 
 /obj/item/weapon/dnainjector/antiblind
 	name = "\improper DNA injector (Anti-Blind)"
-	desc = "IT'S A MIRACLE!!!"
+	desc = "ITS A MIRACLE!!!"
 	remove_mutations_static = list(BLINDMUT)
 
 /obj/item/weapon/dnainjector/antitele
@@ -310,7 +310,7 @@
 
 	if(M.has_dna() && !(M.disabilities & NOCLONE))
 		if(M.stat == DEAD)	//prevents dead people from having their DNA changed
-			user << "<span class='notice'>You can't modify [M]'s DNA while [M.p_theyre()] dead.</span>"
+			user << "<span class='notice'>You can't modify [M]'s DNA while \he's dead.</span>"
 			return
 		M.radiation += rand(20/(damage_coeff  ** 2),50/(damage_coeff  ** 2))
 		var/log_msg = "[key_name(user)] injected [key_name(M)] with the [name]"

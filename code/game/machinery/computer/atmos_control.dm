@@ -69,6 +69,7 @@
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/computer/atmos_control
+	light_color = LIGHT_COLOR_CYAN
 
 	var/frequency = 1441
 	var/list/sensors = list(

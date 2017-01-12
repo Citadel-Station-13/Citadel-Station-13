@@ -9,7 +9,6 @@
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
-	//	luminosity = 1
 
 /obj/machinery/light_switch/New()
 	..()
@@ -69,6 +68,8 @@
 		updateicon()
 
 /obj/machinery/light_switch/emp_act(severity)
-	if(!(stat & (BROKEN|NOPOWER)))
-		power_change()
-	..()
+	if(stat & (BROKEN|NOPOWER))
+		..(severity)
+		return
+	power_change()
+	..(severity)
