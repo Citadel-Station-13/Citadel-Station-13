@@ -70,11 +70,15 @@
 		L[DNA_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.hair_color)
 		if(!facial_hair_styles_list.len)
 			init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, facial_hair_styles_list, facial_hair_styles_male_list, facial_hair_styles_female_list)
-		L[DNA_FACIAL_HAIR_STYLE_BLOCK] = construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
-		L[DNA_FACIAL_HAIR_COLOR_BLOCK] = sanitize_hexcolor(H.facial_hair_color)
-		L[DNA_SKIN_TONE_BLOCK] = construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
-		L[DNA_EYE_COLOR_BLOCK] = sanitize_hexcolor(H.eye_color)
-
+		L[DNA_FACIAL_HAIR_STYLE_BLOCK] 	= construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+		L[DNA_FACIAL_HAIR_COLOR_BLOCK] 	= sanitize_hexcolor(H.facial_hair_color)
+		L[DNA_SKIN_TONE_BLOCK] 			= construct_block(skin_tones.Find(H.skin_tone), skin_tones.len)
+		L[DNA_EYE_COLOR_BLOCK] 			= sanitize_hexcolor(H.eye_color)
+		L[DNA_FACIAL_HAIR_STYLE_BLOCK] 	= construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len)
+		L[DNA_COCK_BLOCK] 				= construct_block(features["has_cock"]+1, 2)
+		L[DNA_COCK_SHAPE_BLOCK] 		= construct_block(cock_shapes_list.Find(features["cock_shape"]), cock_shapes_list.len)
+		L[DNA_COCK_COLOR_BLOCK] 		= sanitize_hexcolor(features["cock_color"])
+		L[DNA_COCK_SIZE_BLOCK] 			= construct_block(cock_size_list.Find(features["cock_size"]), cock_size_list.len)
 	for(var/i=1, i<=DNA_UNI_IDENTITY_BLOCKS, i++)
 		if(L[i])
 			. += L[i]
@@ -124,6 +128,14 @@
 			setblock(uni_identity, blocknumber, construct_block(facial_hair_styles_list.Find(H.facial_hair_style), facial_hair_styles_list.len))
 		if(DNA_HAIR_STYLE_BLOCK)
 			setblock(uni_identity, blocknumber, construct_block(hair_styles_list.Find(H.hair_style), hair_styles_list.len))
+		if(DNA_COCK_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(features["has_cock"]+1, 2))
+		if(DNA_COCK_SHAPE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(construct_block(cock_shapes_list.Find(H.dna.features["cock_shape"]), cock_shapes_list.len)))
+		if(DNA_COCK_COLOR_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(sanitize_hexcolor(H.dna.features["cock_color"])))
+		if(DNA_COCK_SIZE_BLOCK)
+			setblock(uni_identity, blocknumber, construct_block(sanitize_integer(features["cock_size"], COCK_SIZE_MIN, COCK_SIZE_MAX, COCK_SIZE_NORMAL), COCK_SIZE_MAX))
 
 /datum/dna/proc/mutations_say_mods(message)
 	if(message)
@@ -229,7 +241,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(get_racelist(src))
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed
@@ -240,13 +252,18 @@
 
 mob/living/carbon/human/updateappearance(icon_update=1, mutcolor_update=0, mutations_overlay_update=0)
 	..()
-	var/structure = dna.uni_identity
-	hair_color = sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
-	facial_hair_color = sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
-	skin_tone = skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
-	eye_color = sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
-	facial_hair_style = facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
-	hair_style = hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	var/structure 					= dna.uni_identity
+	hair_color 						= sanitize_hexcolor(getblock(structure, DNA_HAIR_COLOR_BLOCK))
+	facial_hair_color 				= sanitize_hexcolor(getblock(structure, DNA_FACIAL_HAIR_COLOR_BLOCK))
+	skin_tone 						= skin_tones[deconstruct_block(getblock(structure, DNA_SKIN_TONE_BLOCK), skin_tones.len)]
+	eye_color 						= sanitize_hexcolor(getblock(structure, DNA_EYE_COLOR_BLOCK))
+	facial_hair_style 				= facial_hair_styles_list[deconstruct_block(getblock(structure, DNA_FACIAL_HAIR_STYLE_BLOCK), facial_hair_styles_list.len)]
+	hair_style 						= hair_styles_list[deconstruct_block(getblock(structure, DNA_HAIR_STYLE_BLOCK), hair_styles_list.len)]
+	dna.features["has_cock"] 		= deconstruct_block(getblock(structure, DNA_COCK_BLOCK), 2)-1
+	dna.features["cock_shape"] 		= cock_shapes_list[deconstruct_block(getblock(structure, DNA_COCK_SHAPE_BLOCK), cock_shapes_list.len)]
+	dna.features["cock_color"]		= sanitize_hexcolor(getblock(structure, DNA_COCK_COLOR_BLOCK))
+	dna.features["cock_size"]		= deconstruct_block(getblock(structure, DNA_COCK_SIZE_BLOCK), COCK_SIZE_MAX)
+
 	if(icon_update)
 		update_body()
 		update_hair()

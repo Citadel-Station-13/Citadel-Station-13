@@ -22,6 +22,17 @@
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
 
+/////////////
+// AROUSAL //
+/////////////
+/mob/living/carbon/handle_arousal()
+	..()
+	var/datum/species/S
+	if(has_dna())
+		S = dna.species
+	if(S && SSmob.times_fired%36==2 && getArousalLoss() < 100)//Totally stolen from breathing code. Do this every 36 ticks.
+		adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
+
 ///////////////
 // BREATHING //
 ///////////////

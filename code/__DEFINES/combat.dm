@@ -6,6 +6,7 @@
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
+#define AROUSAL 	"arousal"
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"

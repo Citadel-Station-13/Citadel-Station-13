@@ -320,6 +320,11 @@ Class Procs:
 		if(prob(H.getBrainLoss()))
 			user << "<span class='warning'>You momentarily forget how to use [src]!</span>"
 			return 1
+		if(H.isPercentAroused(90) && prob((H.getPercentAroused()) - 50))
+			user << pick("<span class='warning'>You momentarily lose focus...</span>",
+				"<span class='warning'>You're finding it hard to concentrate on [src]...</span>",
+				"<span class='warning'>Your head is swimming with dirty thoughts... Wait, what were you doing again?</span>")
+			return 1
 	if(!is_interactable())
 		return 1
 	if(set_machine)

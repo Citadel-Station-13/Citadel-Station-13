@@ -338,4 +338,4 @@
 			pred.update_icons()
 
 	else
-		src << "<span class='alert'>You aren't inside anything, you clod.</span>"
+		src << "<span class='alert'>You aren't inside anything.</span>"

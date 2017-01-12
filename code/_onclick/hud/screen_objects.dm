@@ -465,3 +465,18 @@
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+/obj/screen/arousal
+	name = "arousal"
+	icon_state = "arousal0"
+	screen_loc = ui_arousal
+
+/obj/screen/arousal/Click()
+	if(!isliving(usr))
+		return 0
+	var/mob/living/M = usr
+	if(M.canbearoused)
+		M.mob_masturbate()
+		return 1
+	else
+		M << "Arousal is disabled. Feature is unavailable."

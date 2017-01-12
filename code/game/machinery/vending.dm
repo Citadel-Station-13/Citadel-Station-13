@@ -998,6 +998,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/tie/dope_necklace=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
+/obj/machinery/vending/kink
+	name = "KinkMate"
+	desc = "A vending machine for all your unmentionable desires."
+	icon_state = "kink"
+	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
+	vend_delay = 10
+	vend_reply = "Have fun, you shameless pervert!"
+	products = list(/obj/item/weapon/dildo/random=5,/obj/item/weapon/dildo/plain=5,/obj/item/weapon/dildo/knotted=5,/obj/item/weapon/dildo/human=5,/obj/item/weapon/onahole/random=5,/obj/item/clothing/under/maid=5)
+	contraband = list()
+	premium = list(/obj/item/weapon/dildo/custom=10,/obj/item/weapon/restraints/handcuffs/fake/kinky=5)
+	refill_canister = /obj/item/weapon/vending_refill/kink
+
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE

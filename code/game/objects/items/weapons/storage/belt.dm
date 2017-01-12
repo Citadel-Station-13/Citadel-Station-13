@@ -201,7 +201,7 @@
 		/obj/item/weapon/reagent_containers/food/drinks,
 		/obj/item/organ/hivelord_core,
 		/obj/item/device/wormhole_jaunter,
-		/obj/item/device/t_scanner/motionTracker
+		/obj/item/device/t_scanner/motiontracker
 		)
 
 

@@ -283,6 +283,7 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_HUMAN			"blood"
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
+#define BLOOD_STATE_SEMEN			"semen"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
 //Turf wet states
 #define TURF_DRY		0
@@ -484,3 +485,13 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define DRAKE_SCORE "Drakes Killed"
 #define BOSS_SCORE "Bosses Killed"
 #define TENDRIL_CLEAR_SCORE "Tendrils Killed"
+
+//backpack names
+
+#define GBACKPACK "Grey Backpack"
+#define GSATCHEL "Grey Satchel"
+#define GDUFFLEBAG "Grey Dufflebag"
+#define LSATCHEL "Leather Satchel"
+#define DBACKPACK "Department Backpack"
+#define DSATCHEL "Department Satchel"
+#define DDUFFLEBAG "Department Dufflebag"

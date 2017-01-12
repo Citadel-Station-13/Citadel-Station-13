@@ -11,13 +11,22 @@
 	var/health = 100 	//A mob's health
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	var/bruteloss = 0	//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
-	var/oxyloss = 0		//Oxygen depravation damage (no air in lungs)
-	var/toxloss = 0		//Toxic damage caused by being poisoned or radiated
-	var/fireloss = 0	//Burn damage caused by being way too hot, too cold or burnt.
-	var/cloneloss = 0	//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/brainloss = 0	//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
+	var/bruteloss = 0		//Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	var/oxyloss = 0			//Oxygen depravation damage (no air in lungs)
+	var/toxloss = 0			//Toxic damage caused by being poisoned or radiated
+	var/fireloss = 0		//Burn damage caused by being way too hot, too cold or burnt.
+	var/cloneloss = 0		//Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
+	var/brainloss = 0		//'Retardation' damage caused by someone hitting you in the head with a bible or being infected with brainrot.
 	var/staminaloss = 0		//Stamina damage, or exhaustion. You recover it slowly naturally, and are stunned if it gets too high. Holodeck and hallucinations deal this.
+	var/arousalloss = 0		//How aroused the mob is.
+
+	var/min_arousal = 0			//The lowest this mobs arousal will get. default = 0
+	var/max_arousal = 100		//The highest this mobs arousal will get. default = 100
+	var/arousal_rate = 1		//The base rate that arousal will increase in this mob.
+	var/arousal_loss_rate = 1	//How easily arousal can be relieved for this mob.
+	var/canbearoused = FALSE	//Mob-level disabler for arousal. Starts off and can be enabled as features are added for different mob types.
+	var/mb_cd_length = 100		//10 second cooldown for masturbating
+	var/mb_cd_timer = 0			//The timer itself
 
 
 	var/hallucination = 0 //Directly affects how long a mob will hallucinate for

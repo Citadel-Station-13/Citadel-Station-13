@@ -41,48 +41,32 @@ var/list/preferences_datums = list()
 	var/allow_midround_antag = 1
 	var/preferred_map = null
 
-	var/vore_banned_methods = 0
-	var/vore_extra_bans = 65535
-	var/list/vore_ability = list(
-	"1"=2,
-	"2"=0,
-	"4"=0,
-	"8"=0,
-	"16"=0,
-	"32"=0,
-	"64"=1,
-	"128"=0,
-	"256"=2) //BAAAAD way to do this
-	var/character_size="normal"
-	var/be_taur=0
-
-	var/list/p_cock=list("has"=0,"type"="human","color"="900","sheath"="FFF")
-	var/p_vagina=0
-
 	//character preferences
-	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we'll have a random name every round
-	var/be_random_body = 0				//whether we'll have a random body every round
-	var/gender = MALE					//gender of character (well duh)
-	var/age = 30						//age of character
-	var/underwear = "Nude"				//underwear type
-	var/undershirt = "Nude"				//undershirt type
-	var/socks = "Nude"					//socks type
-	var/backbag = DBACKPACK				//backpack type
-	var/hair_style = "Bald"				//Hair type
-	var/hair_color = "000"				//Hair color
-	var/facial_hair_style = "Shaved"	//Face hair type
-	var/facial_hair_color = "000"		//Facial hair color
-	var/skin_tone = "caucasian1"		//Skin color
-	var/eye_color = "000"				//Eye color
+	var/real_name												//our character's name
+	var/be_random_name = 0										//whether we'll have a random name every round
+	var/be_random_body = 0										//whether we'll have a random body every round
+	var/gender = MALE											//gender of character (well duh)
+	var/age = 30												//age of character
+	var/underwear = "Nude"										//underwear type
+	var/undershirt = "Nude"										//undershirt type
+	var/socks = "Nude"											//socks type
+	var/backbag = DBACKPACK										//backpack type
+	var/hair_style = "Bald"										//Hair type
+	var/hair_color = "000"										//Hair color
+	var/facial_hair_style = "Shaved"							//Face hair type
+	var/facial_hair_color = "000"								//Facial hair color
+	var/skin_tone = "caucasian1"								//Skin color
+	var/eye_color = "000"										//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth",
-		"tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None",
-		"wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
-		"mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None")
+	var/list/features = list()									//mobs.dm for this list
 
+		//Genitals+arousal prefs
+//	var/genitals_use_skintone 	= FALSE//Humans and such which use skintones will transfer the color to their dicks and shit(MOVED TO FEATURES LIST SO IT CAN BE INCORPORATED INTO DNA LATER)
+	var/arousable 				= TRUE //Allows players to disable arousal from the character creation screen if they so choose
+
+		//Custom names
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -102,7 +86,7 @@ var/list/preferences_datums = list()
 		// Want randomjob if preferences already filled - Donkie
 	var/userandomjob = 1 //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
+		// 0 = character settings, 1 = game preferences, 3 = loadout(eventually)
 	var/current_tab = 0
 
 		// OOC Metadata:
@@ -435,6 +419,93 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 			dat += "</tr></table>"
+
+
+
+
+			if(NOGENITALS in pref_species.specflags)
+				dat += "<h2>Your species ([pref_species.name]) does not support genitals!</h2>"
+			else
+				dat += "<h2>Genitals</h2>"
+
+				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Options</h3>"
+				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+				if(pref_species.use_skintones)
+					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["gen_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Penis</h3>"
+
+				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_cock"] == TRUE)
+					//start cock
+					if(pref_species.use_skintones && features["gen_use_skintone"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+					//start balls
+					dat += "<h3>Testicles</h3>"
+					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_balls"] == TRUE)
+						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Ovipositor</h3>"
+
+				dat += "<b>Has Ovi:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_ovi"])
+					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a><BR>"
+
+					dat += "<h3>Eggsack</h3>"
+
+					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_eggsack"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Vagina</h3>"
+
+				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_vag"])
+					dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+
+					//dat += "<h3>Clitoris</h3>"
+					//dat += "<b>Clit Diameter:</b><a href='?_src_=prefs;preference=clit_diam;task=input'>[features["vag_clit_diam"]]\"</a><BR>"
+					//dat += "<b>Clit Length:</b><a href='?_src_=prefs;preference=clit_len;task=input'>[features["vag_clit_len"]]\"</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Breasts</h3>"
+
+				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_breasts"])
+//					if(pref_species.use_skintones)
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+//					else
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
+					dat += "<b>Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
+
+				dat += "</td>"
+
+
+				dat += "</td></tr></table>"
 
 
 		if (1) // Game Preferences
@@ -1218,6 +1289,7 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
@@ -1234,9 +1306,149 @@ var/list/preferences_datums = list()
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
 
+				if("cock_color")
+					var/new_cockcolor = input(user, "Choose your character's penis color:", "Character Preference") as color|null
+					if(new_cockcolor)
+						var/temp_hsv = RGBtoHSV(new_cockcolor)
+						if(new_cockcolor == "#000000")
+							features["cock_color"] = pref_species.default_color
+						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+				if("balls_color")
+					var/new_ballscolor = input(user, "Choose your character's testical color:", "Character Preference") as color|null
+					if(new_ballscolor)
+						var/temp_hsv = RGBtoHSV(new_ballscolor)
+						if(new_ballscolor == "#000000")
+							features["balls_color"] = pref_species.default_color
+						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+				if("egg_size")
+					var/new_size
+					var/list/egg_sizes = list(1,2,3)
+					new_size = input(user, "Choose the diameter of your eggs in inches:", "Egg Size") as null|anything in egg_sizes
+					if(new_size)
+						features["eggsack_egg_size"] = new_size
+
+				if("egg_color")
+					var/new_egg_color = input(user, "Choose your character's egg color:", "Character Preference") as color|null
+					if(new_egg_color)
+						var/temp_hsv = RGBtoHSV(new_egg_color)
+						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							features["eggsack_egg_color"] = sanitize_hexcolor(new_egg_color)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+				if("breasts_size")
+					var/new_size
+					new_size = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in breasts_size_list
+					if(new_size)
+						features["breasts_size"] = new_dors
 
 		else
 			switch(href_list["preference"])
+				if("arousable")
+					arousable != arousable
+
+				if("genitals_color_source")
+					switch(features["gen_use_skintone"])
+						if(TRUE)
+							features["gen_use_skintone"] = FALSE
+						if(FALSE)
+							features["gen_use_skintone"] = TRUE
+						else
+							features["gen_use_skintone"] = FALSE
+
+				if("has_vag")
+					switch(features["has_vag"])
+						if(TRUE)
+							features["has_vag"] = FALSE
+						if(FALSE)
+							features["has_vag"] = TRUE
+						else
+							features["has_vag"] = FALSE
+
+				if("has_cock")
+					switch(features["has_cock"])
+						if(TRUE)
+							features["has_cock"] = FALSE
+						if(FALSE)
+							features["has_cock"] = TRUE
+							features["has_ovi"] = FALSE
+							features["has_eggsack"] = FALSE
+						else
+							features["has_cock"] = FALSE
+							features["has_ovi"] = FALSE
+
+				if("has_ovi")
+					switch(features["has_ovi"])
+						if(TRUE)
+							features["has_ovi"] = FALSE
+						if(FALSE)
+							features["has_ovi"] = TRUE
+							features["has_cock"] = FALSE
+							features["has_balls"] = FALSE
+						else
+							features["has_ovi"] = FALSE
+							features["has_cock"] = FALSE
+
+				if("has_balls")
+					switch(features["has_balls"])
+						if(TRUE)
+							features["has_balls"] = FALSE
+						if(FALSE)
+							features["has_balls"] = TRUE
+							features["has_eggsack"] = FALSE
+						else
+							features["has_balls"] = FALSE
+							features["has_eggsack"] = FALSE
+
+				if("has_eggsack")
+					switch(features["has_eggsack"])
+						if(TRUE)
+							features["has_eggsack"] = FALSE
+						if(FALSE)
+							features["has_eggsack"] = TRUE
+							features["has_balls"] = FALSE
+						else
+							features["has_eggsack"] = FALSE
+							features["has_balls"] = FALSE
+
+				if("balls_internal")
+					switch(features["balls_internal"])
+						if(TRUE)
+							features["balls_internal"] = FALSE
+						if(FALSE)
+							features["balls_internal"] = TRUE
+							features["eggsack_internal"] = FALSE
+						else
+							features["balls_internal"] = FALSE
+							features["eggsack_internal"] = FALSE
+
+				if("eggsack_internal")
+					switch(features["eggsack_internal"])
+						if(TRUE)
+							features["eggsack_internal"] = FALSE
+						if(FALSE)
+							features["eggsack_internal"] = TRUE
+							features["balls_internal"] = FALSE
+						else
+							features["eggsack_internal"] = FALSE
+							features["balls_internal"] = FALSE
+
+				if("has_breasts")
+					switch(features["has_breasts"])
+						if(TRUE)
+							features["has_breasts"] = FALSE
+						if(FALSE)
+							features["has_breasts"] = TRUE
+						else
+							features["has_breasts"] = FALSE
+
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
@@ -1413,6 +1625,8 @@ var/list/preferences_datums = list()
 	else
 		chosen_species = /datum/species/human
 	character.set_species(chosen_species, icon_update=0)
+	character.update_sex_organs()//Checks your DNA to see if you lack any organs that are set in your dna.features list.
+
 
 	if(icon_updates)
 		character.update_body()

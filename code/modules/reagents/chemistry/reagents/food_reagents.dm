@@ -433,13 +433,13 @@
 /datum/reagent/consumable/corn_starch
 	name = "Corn Starch"
 	id = "corn_starch"
-	description = "A slippery solution."
+	description = "Mostly used for cooking. Sometimes used for 4th grade science class experiments."
 	color = "#C8A5DC"
 
 /datum/reagent/consumable/corn_syrup
 	name = "Corn Syrup"
 	id = "corn_syrup"
-	description = "Decays into sugar."
+	description = "DEAR LORD, THE CARBS!"
 	color = "#C8A5DC"
 	metabolization_rate = 3 * REAGENTS_METABOLISM
 
@@ -450,7 +450,7 @@
 /datum/reagent/consumable/honey
 	name = "honey"
 	id = "honey"
-	description = "Sweet sweet honey, decays into sugar."
+	description = "Sweet, sweet honey."
 	color = "#d3a308"
 	nutriment_factor = 15 * REAGENTS_METABOLISM
 

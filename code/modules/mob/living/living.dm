@@ -27,7 +27,6 @@ Sorry Giacom. Please don't be mad :(
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
-
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -375,6 +374,33 @@ Sorry Giacom. Please don't be mad :(
 	if(updating_stamina)
 		update_stamina()
 
+/mob/living/proc/getArousalLoss()
+	return arousalloss
+
+/mob/living/proc/adjustArousalLoss(amount, updating_arousal=1)
+	if(status_flags & GODMODE || !canbearoused)
+		return 0
+	arousalloss = Clamp(arousalloss + amount, min_arousal, max_arousal)
+	if(updating_arousal)
+		updatearousal()
+
+/mob/living/proc/setArousalLoss(amount, updating_arousal=1)
+	if(status_flags & GODMODE || !canbearoused)
+		return 0
+	arousalloss = Clamp(amount, min_arousal, max_arousal)
+	if(updating_arousal)
+		updatearousal()
+
+/mob/living/proc/getPercentAroused()
+	return ((100 / max_arousal) * arousalloss)
+
+/mob/living/proc/isPercentAroused(percentage)//returns true if the mob's arousal (measured in a percent of 100) is greater than the arg percentage.
+	if(!isnum(percentage))
+		return FALSE
+	if(getPercentAroused() >= percentage)
+		return TRUE
+
+
 /mob/living/carbon/alien/setStaminaLoss(amount, updating_stamina = 1)
 	return
 
@@ -385,6 +411,25 @@ Sorry Giacom. Please don't be mad :(
 	maxHealth = newMaxHealth
 
 // MOB PROCS //END
+/mob/living/proc/mob_masturbate()//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
+	set name = "Masturbate"
+	set category = "IC"
+	if(canbearoused && !restrained() && !stat)
+		if(mb_cd_timer <= world.time)
+			//start the cooldown even if it fails
+			mb_cd_timer = world.time + mb_cd_length
+			if(getArousalLoss() >= ((max_arousal / 100) * 33))//33% arousal or greater required
+				src << "<span class='warning'>You begin masturbating.</span>"
+				if(do_after(src, 100, target = src))
+					src << "<span class='lovebold'>You have relieved yourself.</span>"
+					setArousalLoss(min_arousal)
+					switch(gender)
+						if(MALE)
+							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
+						if(FEMALE)
+							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
+			else
+				src << "<span class='notice'>You aren't aroused enough for that.</span>"
 
 /mob/living/proc/mob_sleep()
 	set name = "Sleep"
@@ -394,9 +439,15 @@ Sorry Giacom. Please don't be mad :(
 		src << "<span class='notice'>You are already sleeping.</span>"
 		return
 	else
-		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
+		if(alert(src, "Are you sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(20) //Short nap
 	update_canmove()
+
+/mob/living/proc/updatearousal()
+	update_arousal_hud()
+
+/mob/living/proc/update_arousal_hud()
+	return 0
 
 /mob/proc/get_contents()
 
@@ -856,8 +907,10 @@ Sorry Giacom. Please don't be mad :(
 	var/image/I
 	if(hand && l_hand) // Attacked with item in left hand.
 		I = image(l_hand.icon, A, l_hand.icon_state, A.layer + 0.1)
+		I.color = l_hand.color
 	else if(!hand && r_hand) // Attacked with item in right hand.
 		I = image(r_hand.icon, A, r_hand.icon_state, A.layer + 0.1)
+		I.color = r_hand.color
 	else // Attacked with a fist?
 		return
 
@@ -1061,3 +1114,8 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form!</span>"
+
+/mob/living/proc/update_arousal()
+	return
+
+/mob/living/carbon/update_stamina()

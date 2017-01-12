@@ -50,7 +50,6 @@
 	else
 		return pressure
 
-
 /mob/living/carbon/human/handle_disabilities()
 	if(eye_blind)			//blindness, heals slowly over time
 		if(tinttotal >= TINT_BLIND) //covering your eyes heals blurry eyes faster

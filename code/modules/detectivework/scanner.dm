@@ -69,6 +69,7 @@
 		var/list/blood = list()
 		var/list/fibers = list()
 		var/list/reagents = list()
+//		var/list/dna = A.reagent_DNA.Copy()
 
 		var/target_name = A.name
 
@@ -79,7 +80,6 @@
 
 		if(A.suit_fibers && A.suit_fibers.len)
 			fibers = A.suit_fibers.Copy()
-
 		if(ishuman(A))
 
 			var/mob/living/carbon/human/H = A

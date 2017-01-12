@@ -117,7 +117,6 @@
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
-
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
 	if(hotspot && !istype(T, /turf/open/space))
 		if(T.air)
@@ -126,7 +125,6 @@
 			G.react()
 			qdel(hotspot)
 	return
-
 /*
  *	Water reaction to an object
  */
@@ -1221,3 +1219,137 @@ datum/reagent/romerol
 	// Silently add the zombie infection organ to be activated upon death
 	new /obj/item/organ/body_egg/zombie_infection(H)
 	..()
+
+//Aphrodisiacs and Anaphrodisiacs
+/datum/reagent/aphrodisiac
+	name = "Crocin"
+	id = "aphro"
+	description = "Naturally found in the crocus and gardenia flowers, this drug acts as a natural and safe aphrodisiac."
+	color = "#FFADFF"//PINK, rgb(255, 173, 255)
+
+/datum/reagent/aphrodisiac/on_mob_life(mob/living/M)
+	if(prob(33))
+		M.adjustArousalLoss(2)
+	if(prob(5))
+		M.emote(pick("moan","blush"))
+	if(prob(5))
+		var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
+		M << "<span class='love'>[aroused_message]</span>"
+	..()
+
+/datum/reagent/aphrodisiacplus
+	name = "Hexacrocin"
+	id = "aphro+"
+	description = "Chemically condensed form of basic crocin. This aphrodisiac is extremely powerful and addictive in most animals.\
+					Addiction withdrawals can cause brain damage and shortness of breath. Overdosage can lead to brain damage and a\
+					 permanent increase in libido (commonly referred to as 'bimboification')."
+	color = "#FF2BFF"//dark pink
+	addiction_threshold = 20
+	overdose_threshold = 20
+
+/datum/reagent/aphrodisiacplus/on_mob_life(mob/living/M)
+	if(prob(33))
+		M.adjustArousalLoss(6)//not quite six times as powerful, but still considerably more powerful.
+	if(prob(5))
+		if(M.getArousalLoss() > 75)
+			M.say(pick("Hnnnnngghh...", "Ohh...", "Mmnnn..."))
+		else
+			M.emote(pick("moan","blush"))
+	if(prob(5))
+		if(M.getArousalLoss() > 90)
+			var/aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
+			M << "<span class='love'>[aroused_message]</span>"
+		else
+			var/aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
+			M << "<span class='love'>[aroused_message]</span>"
+//	if(iscarbon(M) && has_dna(M))
+//		M.force_ejaculation()
+	..()
+/datum/reagent/aphrodisiacplus/addiction_act_stage2(mob/living/M)
+	if(prob(30))
+		M.adjustBrainLoss(2)
+	..()
+/datum/reagent/aphrodisiacplus/addiction_act_stage3(mob/living/M)
+	if(prob(30))
+		M.adjustBrainLoss(3)
+
+		..()
+/datum/reagent/aphrodisiacplus/addiction_act_stage4(mob/living/M)
+	if(prob(30))
+		M.adjustBrainLoss(4)
+	..()
+
+/datum/reagent/aphrodisiacplus/overdose_process(mob/living/M)
+	if(prob(66))
+		if(M.min_arousal < 50)
+			M.min_arousal += 1
+		if(M.max_arousal < 200)
+			M.max_arousal += 1
+		M.adjustArousalLoss(2)
+	..()
+
+/datum/reagent/anaphrodisiac
+	name = "Camphor"
+	id = "anaphro"
+	description = "Naturally found in some species of evergreen trees, camphor is a waxy substance. When injested by most animals, it acts as an anaphrodisiac\
+					, reducing libido and calming them. Non-habit forming and not addictive."
+	color = "#D9D9D9"//rgb(217, 217, 217)
+	reagent_state = SOLID
+
+/datum/reagent/anaphrodisiac/on_mob_life(mob/living/M)
+	if(prob(33))
+		M.adjustArousalLoss(-2)
+	..()
+
+/datum/reagent/anaphrodisiacplus
+	name = "Hexacamphor"
+	id = "anaphro+"
+	description = "Chemically condensed camphor. Causes an extreme reduction in libido and a permanent one if overdosed. Non-addictive."
+	color = "#D9D9D9"//rgb(217, 217, 217)
+	reagent_state = SOLID
+	overdose_threshold = 20
+
+/datum/reagent/anaphrodisiacplus/on_mob_life(mob/living/M)
+	if(prob(33))
+		M.adjustArousalLoss(-4)
+	..()
+
+/datum/reagent/anaphrodisiacplus/overdose_process(mob/living/M)
+	if(prob(33))
+		if(M.min_arousal > 0)
+			M.min_arousal -= 1
+		if(M.max_arousal > 75)
+			M.min_arousal -= 1
+		M.adjustArousalLoss(-2)
+	..()
+
+/datum/reagent/consumable/semen
+	name = "Semen"
+	id = "semen"
+	description = "Sperm from some animal. Useless for anything but insemination, really."
+	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
+	reagent_state = LIQUID
+	color = "#FFFFFF" // rgb: 255, 255, 255
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM //Can be eaten for food technically...
+
+/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume < 3)
+		return
+
+	var/obj/effect/decal/cleanable/semen/S = locate() in T
+	if(!S)
+		S = new(T)
+	S.reagents.add_reagent("semen", reac_volume)
+	if(data["blood_DNA"])
+		S.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+
+/datum/reagent/consumable/femcum
+	name = "Female Ejaculate"
+	id = "femcum"
+	description = "Vaginal lubricant found in most mammals and other animals of similar nature. Where you found this is your own business."
+	data = list("donor"=null,"viruses"=null,"donor_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null)
+	reagent_state = LIQUID
+	color = "#AAAAAA77"
+	nutriment_factor = 0.5 * REAGENTS_METABOLISM

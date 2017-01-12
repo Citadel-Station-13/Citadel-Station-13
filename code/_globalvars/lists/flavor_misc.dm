@@ -1,4 +1,5 @@
 //Preferences stuff
+//ALL OF THESE LISTS ARE GENERATED IN global_lists.dm
 	//Hairstyles
 var/global/list/hair_styles_list = list()			//stores /datum/sprite_accessory/hair indexed by name
 var/global/list/hair_styles_male_list = list()		//stores only hair names
@@ -56,14 +57,42 @@ var/global/list/xeno_dorsal_list = list()
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
 
+
+//Vertical Lists are easier to read. Citadel Code ahead.
+//dick stuff
+var/global/list/cock_shapes_list = list()
+
+var/global/list/cock_size_list = list(
+	COCK_SIZE_SMALL,
+	COCK_SIZE_NORMAL,
+	COCK_SIZE_BIG
+	)
+
+//balls stuff
+var/global/list/balls_list = list()
+var/global/list/balls_size_list = list(
+	"Small (1/2 inch)" 	= 0.5,//diameter
+	"Normal (1 inch)"	= 1,
+	"Big (3 inches)"	= 3
+	)
+
+var/global/list/balls_fluid_list = list(
+	"semen",
+	"honey"
+	)
+
+//ovipositor stuff
+var/global/list/ovi_shapes_list = list()
+//breast stuff
+var/global/list/breasts_size_list = list()
+//generated automatically in global_lists.dm
+
+var/global/list/breasts_fluid_list = list(
+	"milk",
+	"honey"
+	)
+
 	//Backpacks
-#define GBACKPACK "Grey Backpack"
-#define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
-#define LSATCHEL "Leather Satchel"
-#define DBACKPACK "Department Backpack"
-#define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()

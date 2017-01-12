@@ -187,7 +187,61 @@
 	..()
 
 /obj/effect/decal/cleanable/blood/footprints/can_bloodcrawl_in()
-	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
+	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_SEMEN) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
 
+/obj/effect/decal/cleanable/semen
+	name = "semen"
+	desc = null
+	gender = PLURAL
+	density = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "semen1"
+	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
+	blood_state = BLOOD_STATE_SEMEN
+	bloodiness = MAX_SHOE_BLOODINESS
+
+/obj/effect/decal/cleanable/semen/New()
+	dir = pick(1,2,4,8)
+	..()
+
+/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
+	if(S.reagent_DNA["semen"])
+		reagent_DNA["semen"] |= S.reagent_DNA["semen"]
+	..()
+
+/obj/effect/decal/cleanable/femcum
+	name = "female ejaculate"
+	desc = null
+	gender = PLURAL
+	density = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "fem1"
+	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
+	blood_DNA = list()
+	blood_state = null
+	bloodiness = null
+
+/obj/effect/decal/cleanable/femcum/New()
+	dir = pick(1,2,4,8)
+	..()
+
+/obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
+	if (F.blood_DNA)
+		blood_DNA |= F.blood_DNA.Copy()
+	..()
+
+/obj/effect/decal/cleanable/milk
+	name = "milk"
+	desc = null
+	gender = PLURAL
+	density = 0
+	layer = ABOVE_NORMAL_TURF_LAYER
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "milk1"
+	random_icon_states = list("milk1", "milk2", "milk3", "milk4")
+	blood_state = null
+	bloodiness = null

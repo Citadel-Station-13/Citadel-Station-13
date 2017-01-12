@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	return pick(socks_list)
 
-/proc/random_features()
+/proc/random_features(gender="", has_cock=FALSE, has_balls=FALSE, has_ovi=FALSE, has_eggsack=FALSE, has_vag=FALSE, has_breasts=FALSE)
 	if(!tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
 	if(!tails_list_lizard.len)
@@ -66,9 +66,76 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	if(!wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-
-	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list)))
+	switch(gender)//might incorporate this one day
+		if(MALE)
+			has_cock = TRUE
+			has_balls = TRUE
+		if(FEMALE)
+			has_vag = TRUE
+			has_breasts = TRUE
+	return(list(
+		"mcolor" 			= "f00",
+		"mcolor2" 			= "0f0",
+		"mcolor3" 			= "00f",
+		"tail_lizard" 		= pick(tails_list_lizard),
+		"tail_human" 		= "None",
+		"wings" 			= "None",
+		"snout" 			= pick(snouts_list),
+		"horns" 			= pick(horns_list),
+		"ears" 				= "None",
+		"frills" 			= pick(frills_list),
+		"spines" 			= pick(spines_list),
+		"body_markings" 	= pick(body_markings_list),
+		"mam_body_markings" = pick(mam_body_markings_list),
+		"mam_ears" 			= pick(mam_ears_list),
+		"mam_tail" 			= pick(mam_tails_list),
+		"gen_use_skintone"	= FALSE,
+		"mam_tail_animated" = "None",
+		"xenohead"			="Hunter",
+		"xenodorsal"		="Dorsal Tubes",
+		"xenotail"			="Xenomorph Tail",
+		"has_cock"			= FALSE,
+		"cock_shape"		= "human",
+		"cock_length"		= (COCK_SIZE_NORMAL * COCK_SIZE_BASE),
+		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
+		"cock_color"		= "fff",
+		"has_sheath"		= FALSE,
+		"sheath_color"		= "fff",
+		"has_balls" 		= FALSE,
+		"balls_internal" 	= FALSE,
+		"balls_color" 		= "fff",
+		"balls_amount"		= 2,
+		"balls_size"		= BALLS_SACK_SIZE_DEF,
+		"balls_cum_rate"	= CUM_RATE,
+		"balls_cum_mult"	= CUM_RATE_MULT,
+		"balls_efficiency"	= CUM_EFFICIENCY,
+		"balls_fluid" 		= "semen",
+		"has_ovi"			= FALSE,
+		"ovi_shape"			= "knotted",
+		"ovi_size"			= COCK_SIZE_NORMAL,
+		"ovi_color"			= "fff",
+		"has_eggsack" 		= FALSE,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= "fff",
+		"eggsack_size" 		= BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" 	= EGG_SIZE_NORMAL,
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= "fff",
+		"breasts_size" 		= pick(breasts_size_list),
+		"breasts_fluid" 	= "milk",
+		"has_vag"			= FALSE,
+		"vag_color"			= "fff",
+		"vag_tightness" 	= VAG_NORMAL,
+		"vag_clits"			= 1,
+		"vag_clit_diam"		= 0.25,
+		"vag_clit_len"		= 0.25,
+		"has_womb"			= FALSE,
+		"womb_cum_rate"		= CUM_RATE,
+		"womb_cum_mult"		= CUM_RATE_MULT,
+		"womb_efficiency"	= CUM_EFFICIENCY,
+		"womb_fluid" 		= "femcum"
+		))
 
 /proc/random_hair_style(gender)
 	switch(gender)

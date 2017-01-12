@@ -22,7 +22,8 @@
 		new /datum/data/mining_equipment("Stabilizing Serum",	/obj/item/weapon/hivelordstabilizer			 ,                     		400),
 		new /datum/data/mining_equipment("Fulton Beacon",		/obj/item/fulton_core			 ,                     					400),
 		new /datum/data/mining_equipment("Shelter Capsule",		/obj/item/weapon/survivalcapsule			 ,                     		400),
-		new /datum/data/mining_equipment("Motion Tracker",		/obj/item/device/t_scanner/motionTracker	 ,                     		400),
+		new /datum/data/mining_equipment("Seclite",				/obj/item/device/flashlight/seclite			 ,                     		400),
+		new /datum/data/mining_equipment("Motion Tracker",		/obj/item/device/t_scanner/motiontracker	 ,                     		400),
 		new /datum/data/mining_equipment("GAR scanners",		/obj/item/clothing/glasses/meson/gar,					  		   		500),
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/weapon/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/weapon/reagent_containers/hypospray/medipen/survival,			600),
@@ -32,7 +33,7 @@
 		new /datum/data/mining_equipment("Kinetic Crusher", 	/obj/item/weapon/twohanded/required/mining_hammer,						750),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		800),
-		new /datum/data/mining_equipment("whetstone",           /obj/item/weapon/sharpener,                                             1000),
+		new /datum/data/mining_equipment("Whetstone",           /obj/item/weapon/sharpener,                                             1000),
 		new /datum/data/mining_equipment("Survival Medipen Bundle",		/obj/item/weapon/storage/box/medipens/utility1,	 				2000),
 		new /datum/data/mining_equipment("Fulton Pack",         /obj/item/weapon/extraction_pack,                                    	1000),
 		new /datum/data/mining_equipment("Lazarus Injector",    /obj/item/weapon/lazarus_injector,                                		1000),
@@ -178,7 +179,7 @@
 			new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(loc)
 		if("Hunter Kit")
 			new /obj/item/weapon/storage/belt/mining(loc)
-			new /obj/item/device/t_scanner/motionTracker(loc)
+			new /obj/item/device/t_scanner/motiontracker(loc)
 			new /obj/item/weapon/stock_parts/cell/high/plus(loc)
 			new /obj/item/weapon/screwdriver(loc)
 		if("Mining Drone")

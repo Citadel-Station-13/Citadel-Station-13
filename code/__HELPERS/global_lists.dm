@@ -43,7 +43,10 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
-
+	//cocks
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, cock_shapes_list)
+	//breasts
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, breasts_size_list)
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
