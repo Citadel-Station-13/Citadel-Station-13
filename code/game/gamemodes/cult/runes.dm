@@ -317,7 +317,7 @@ var/list/teleport_runes = list()
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
 	color = rgb(200, 0, 0)
-	req_cultists = 2
+	req_cultists = 1
 
 /obj/effect/rune/convert/invoke(var/list/invokers)
 	var/list/convertees = list()
