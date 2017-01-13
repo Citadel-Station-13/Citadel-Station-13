@@ -5,7 +5,6 @@
 	layer = LYING_MOB_LAYER
 	keytype = null
 	vehicle_move_delay = 0
-	spacemove = TRUE
 	var/overlay_state = "cover_blue"
 	var/image/overlay = null
 
