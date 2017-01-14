@@ -3,7 +3,7 @@
 	desc = "A basic energy-based laser gun that fires concentrated beams of light which pass through glass and thin metal."
 	icon_state = "laser"
 	item_state = "laser"
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
@@ -33,6 +33,7 @@
 	origin_tech = null
 	ammo_x_offset = 3
 	selfcharge = 1
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/weapon/gun/energy/laser/captain/scattershot
 	name = "scatter shot laser rifle"
@@ -46,10 +47,7 @@
 	can_charge = 0
 	desc = "An energy-based laser gun that draws power from the cyborg's internal energy cell directly. So this is what freedom looks like?"
 	origin_tech = null
-
-/obj/item/weapon/gun/energy/laser/cyborg/newshot()
-	..()
-	robocharge()
+	use_cyborg_cell = 1
 
 /obj/item/weapon/gun/energy/laser/cyborg/emp_act()
 	return
@@ -59,6 +57,16 @@
 	desc = "A laser gun equipped with a refraction kit that spreads bolts."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter, /obj/item/ammo_casing/energy/laser)
 
+/obj/item/weapon/gun/energy/laser/scatter/shotty
+	name = "energy shotgun"
+	icon = 'icons/obj/guns/projectile.dmi'
+	icon_state = "cshotgun"
+	item_state = "shotgun"
+	desc = "A combat shotgun gutted and refitted with an internal laser system. Can switch between taser and scattered disabler shots."
+	shaded_charge = 0
+	pin = /obj/item/device/firing_pin/implant/mindshield
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
+
 ///Laser Cannon
 
 /obj/item/weapon/gun/energy/lasercannon
@@ -66,7 +74,7 @@
 	desc = "An advanced laser cannon that does more damage the farther away the target is."
 	icon_state = "lasercannon"
 	item_state = "laser"
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	force = 10
 	flags =  CONDUCT
 	slot_flags = SLOT_BACK
@@ -89,7 +97,7 @@
 /obj/item/projectile/beam/laser/accelerator/Range()
 	..()
 	damage += 7
-	transform *= TransformUsingVariable(20 , 100, 1)
+	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
 
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"

@@ -63,9 +63,10 @@
 	P.icon = 'icons/obj/objects.dmi'
 	P.icon_state = "anom"
 	P.name = "wormhole"
+	P.mech_sized = TRUE
 	var/turf/T = get_turf(target)
-	message_admins("[key_name_admin(chassis.occupant, chassis.occupant.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[chassis.occupant]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[chassis.occupant]'>FLW</A>) used a Wormhole Generator in ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)",0,1)
-	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in ([T.x],[T.y],[T.z])")
+	message_admins("[ADMIN_LOOKUPFLW(chassis.occupant)] used a Wormhole Generator in [ADMIN_COORDJMP(T)]",0,1)
+	log_game("[key_name(chassis.occupant)] used a Wormhole Generator in [COORD(T)]")
 	src = null
 	spawn(rand(150,300))
 		qdel(P)
@@ -154,8 +155,8 @@
 	var/damage_coeff = 0.8
 	selectable = 0
 
-/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react(mob/user as mob)
-	if(action_checks(user))
+/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster/proc/attack_react()
+	if(action_checks(src))
 		start_cooldown()
 		return 1
 
@@ -248,8 +249,8 @@
 				chassis.clearInternalDamage(int_dam_flag)
 				repaired = 1
 				break
-	if(health_boost<0 || chassis.health < initial(chassis.health))
-		chassis.health += min(health_boost, initial(chassis.health)-chassis.health)
+	if(health_boost<0 || chassis.obj_integrity < chassis.max_integrity)
+		chassis.obj_integrity += min(health_boost, chassis.max_integrity-chassis.obj_integrity)
 		repaired = 1
 	if(repaired)
 		if(!chassis.use_power(energy_drain))

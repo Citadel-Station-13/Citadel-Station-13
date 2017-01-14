@@ -14,7 +14,7 @@ Contents:
 	typepath = /datum/round_event/ghost_role/ninja
 	max_occurrences = 1
 	earliest_start = 30000 // 1 hour
-
+	min_players = 15
 
 /datum/round_event/ghost_role/ninja
 	var/success_spawn = 0
@@ -55,7 +55,7 @@ Contents:
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected_candidate = popleft(candidates)
+	var/mob/dead/selected_candidate = pick_n_take(candidates)
 	var/key = selected_candidate.key
 
 	//Prepare ninja player mind
@@ -66,7 +66,7 @@ Contents:
 	var/list/possible_targets = list()
 	for(var/datum/mind/M in ticker.minds)
 		if(M.current && M.current.stat != DEAD)
-			if(istype(M.current,/mob/living/carbon/human))
+			if(ishuman(M.current))
 				if(M.special_role)
 					possible_targets[M] = 0						//bad-guy
 				else if(M.assigned_role in command_positions)
@@ -134,7 +134,7 @@ Contents:
 
 	//add some RP-fluff
 	Mind.store_memory("I am an elite mercenary assassin of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
-	Mind.store_memory("Suprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
+	Mind.store_memory("Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	Mind.store_memory("Officially, [helping_station?"Nanotrasen":"The Syndicate"] are my employer.")
 
 	//spawn the ninja and assign the candidate
@@ -157,8 +157,8 @@ Contents:
 	Ninja << sound('sound/effects/ninja_greeting.ogg') //so ninja you probably wouldn't even know if you were made one
 	ticker.mode.update_ninja_icons_added(Ninja)
 	spawned_mobs += Ninja
-	message_admins("[key] has been made into a ninja by an event.")
-	log_game("[key] was spawned as a ninja by an event.")
+	message_admins("[key_name_admin(Ninja)] has been made into a ninja by an event.")
+	log_game("[key_name(Ninja)] was spawned as a ninja by an event.")
 
 	return SUCCESSFUL_SPAWN
 

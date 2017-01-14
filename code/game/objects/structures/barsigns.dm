@@ -4,9 +4,13 @@
 	icon = 'icons/obj/barsigns.dmi'
 	icon_state = "empty"
 	req_access = list(access_bar)
+	obj_integrity = 500
+	max_integrity = 500
+	integrity_failure = 250
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
+	buildable_sign = 0
 	var/list/barsigns=list()
 	var/list/hiddensigns
-	var/broken = 0
 	var/emagged = 0
 	var/state = 0
 	var/prev_sign = ""
@@ -42,6 +46,22 @@
 		desc = "It displays \"[name]\"."
 
 
+
+/obj/structure/sign/barsign/obj_break(damage_flag)
+	if(!broken && !(flags & NODECONSTRUCT))
+		broken = 1
+
+/obj/structure/sign/barsign/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/metal (loc, 2)
+	new /obj/item/stack/cable_coil (loc, 2)
+	qdel(src)
+
+/obj/structure/sign/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		if(BURN)
+			playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
 	return src.attack_hand(user)
@@ -145,60 +165,72 @@
 	icon = "maltesefalcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
 
+
 /datum/barsign/thebark
 	name = "The Bark"
 	icon = "thebark"
 	desc = "Ian's bar of choice."
+
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
 	icon = "theharmbaton"
 	desc = "A great dining experience for both security members and assistants."
 
+
 /datum/barsign/thesingulo
 	name = "The Singulo"
 	icon = "thesingulo"
 	desc = "Where people go that'd rather not be called by their name."
+
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
 	icon = "thedrunkcarp"
 	desc = "Don't drink and swim."
 
+
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
 	icon = "scotchservinwill"
 	desc = "Willy sure moved up in the world from clown to bartender."
+
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
 	icon = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great."
 
+
 /datum/barsign/thecavern
 	name = "The Cavern"
 	icon = "thecavern"
 	desc = "Fine drinks while listening to some fine tunes."
+
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
 	icon = "theouterspess"
 	desc = "This bar isn't actually located in outer space."
 
+
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
+
 
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
 	icon = "thegreytide"
 	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
 
+
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
 	icon = "honkednloaded"
 	desc = "Honk."
+
 
 /datum/barsign/thenest
 	name = "The Nest"
@@ -267,30 +299,6 @@
 	icon = "thenet"
 	desc = "You just seem to get caught up in it for hours."
 
-/datum/barsign/thenumberone
-	name = "The Number One"
-	icon = "thenumberone"
-	desc = "Known for the bartender's trickery, this place is going down in history."
-
-/datum/barsign/thesnowflake
-	name = "The Snowflake"
-	icon = "thesnowflake"
-	desc = "The drinks around here always seem to be overly unique."
-
-/datum/barsign/thehalflife
-	name = "The Half-Life"
-	icon = "thehalflife"
-	desc = "They say it's dedicated to a brave scientist who killed a hundred xenos with only a crowbar."
-
-/datum/barsign/topmen
-	name = "Top Men"
-	icon = "topmen"
-	desc = "They've got top men working here right now. Top. Men."
-
-/datum/barsign/thesun
-	name = "The Sun"
-	icon = "thesun"
-	desc = "The hottest bar in the galaxy!"
 
 /datum/barsign/hiddensigns
 	hidden = 1
@@ -318,3 +326,4 @@
 	name = "Bar Sign"
 	icon = "empty"
 	desc = "This sign doesn't seem to be on."
+

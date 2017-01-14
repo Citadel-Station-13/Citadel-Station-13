@@ -11,7 +11,8 @@ var/datum/events/keycard_events = new()
 	active_power_usage = 6
 	power_channel = ENVIRON
 	req_access = list(access_keycard_auth)
-	var/datum/event/ev
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	var/datum/callback/ev
 	var/event = ""
 	var/obj/machinery/keycard_auth/event_source
 	var/mob/triggerer = null
@@ -19,7 +20,7 @@ var/datum/events/keycard_events = new()
 
 /obj/machinery/keycard_auth/New()
 	. = ..()
-	ev = keycard_events.addEvent("triggerEvent", src, "triggerEvent")
+	ev = keycard_events.addEvent("triggerEvent", CALLBACK(src, .proc/triggerEvent))
 
 /obj/machinery/keycard_auth/Destroy()
 	keycard_events.clearEvent("triggerEvent", ev)
@@ -43,10 +44,11 @@ var/datum/events/keycard_events = new()
 
 /obj/machinery/keycard_auth/ui_status(mob/user)
 	if(isanimal(user))
-		user << "<span class='warning'>You are too primitive to use this device!</span>"
-	else
-		return ..()
-	return UI_CLOSE
+		var/mob/living/simple_animal/A = user
+		if(!A.dextrous)
+			user << "<span class='warning'>You are too primitive to use this device!</span>"
+			return UI_CLOSE
+	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, params)
 	if(..() || waiting || !allowed(usr))
@@ -71,7 +73,7 @@ var/datum/events/keycard_events = new()
 	event = event_type
 	waiting = 1
 	keycard_events.fireEvent("triggerEvent", src)
-	addtimer(src, "eventSent", 20)
+	addtimer(CALLBACK(src, .proc/eventSent), 20)
 
 /obj/machinery/keycard_auth/proc/eventSent()
 	triggerer = null
@@ -81,7 +83,7 @@ var/datum/events/keycard_events = new()
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
 	icon_state = "auth_on"
 	event_source = source
-	addtimer(src, "eventTriggered", 20)
+	addtimer(CALLBACK(src, .proc/eventTriggered), 20)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
 	icon_state = "auth_off"

@@ -6,6 +6,8 @@ var/datum/subsystem/job/SSjob
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
+	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
+	var/list/type_occupations = list()	//Dict of all jobs, keys are types
 	var/list/unassigned = list()		//Players who need jobs
 	var/list/job_debug = list()			//Debug info
 	var/initial_players_to_assign = 0 	//used for checking against population caps
@@ -15,7 +17,8 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/Initialize(timeofday)
-	SetupOccupations()
+	if(!occupations.len)
+		SetupOccupations()
 	if(config.load_jobs_from_txt)
 		LoadJobs()
 	..()
@@ -37,6 +40,8 @@ var/datum/subsystem/job/SSjob
 		if(!job.config_check())
 			continue
 		occupations += job
+		name_occupations[job.title] = job
+		type_occupations[J] = job
 
 	return 1
 
@@ -49,14 +54,15 @@ var/datum/subsystem/job/SSjob
 
 
 /datum/subsystem/job/proc/GetJob(rank)
-	if(!rank)
-		return null
-	for(var/datum/job/J in occupations)
-		if(!J)
-			continue
-		if(J.title == rank)
-			return J
-	return null
+	if(!occupations.len)
+		SetupOccupations()
+	return name_occupations[rank]
+
+/datum/subsystem/job/proc/GetJobType(jobtype)
+	if(!occupations.len)
+		SetupOccupations()
+	return type_occupations[jobtype]
+
 
 /datum/subsystem/job/proc/AssignRole(mob/new_player/player, rank, latejoin=0)
 	Debug("Running AR, Player: [player], Rank: [rank], LJ: [latejoin]")
@@ -328,7 +334,7 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		else if(player.client.prefs.userandomjob)
+		else if(player.client.prefs.joblessrole == BERANDOMJOB)
 			GiveRandomJob(player)
 
 	Debug("DO, Standard Check end")
@@ -339,8 +345,15 @@ var/datum/subsystem/job/SSjob
 	for(var/mob/new_player/player in unassigned)
 		if(PopcapReached())
 			RejectPlayer(player)
-		Debug("AC2 Assistant located, Player: [player]")
-		AssignRole(player, "Assistant")
+		if(player.client.prefs.joblessrole == BEASSISTANT)
+			Debug("AC2 Assistant located, Player: [player]")
+			AssignRole(player, "Assistant")
+		else // For those who don't want to play if their preference were filled, back you go.
+			RejectPlayer(player)
+
+	for(var/mob/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
+		GiveRandomJob(player)
+
 	return 1
 
 //Gives the player the stuff he should have with his rank
@@ -375,7 +388,7 @@ var/datum/subsystem/job/SSjob
 					if(clear)
 						S = T
 						continue
-		if(istype(S, /obj/effect/landmark) && istype(S.loc, /turf))
+		if(istype(S, /obj/effect/landmark) && isturf(S.loc))
 			H.loc = S.loc
 
 	if(H.mind)
@@ -385,7 +398,6 @@ var/datum/subsystem/job/SSjob
 		var/new_mob = job.equip(H)
 		if(ismob(new_mob))
 			H = new_mob
-		job.apply_fingerprints(H)
 
 	H << "<b>You are the [rank].</b>"
 	H << "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>"
@@ -394,7 +406,11 @@ var/datum/subsystem/job/SSjob
 		H << "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>"
 	if(config.minimal_access_threshold)
 		H << "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>"
-	return 1
+
+	if(job && H)
+		job.after_spawn(H)
+
+	return H
 
 
 /datum/subsystem/job/proc/setup_officer_positions()
@@ -470,7 +486,8 @@ var/datum/subsystem/job/SSjob
 /datum/subsystem/job/proc/RejectPlayer(mob/new_player/player)
 	if(player.mind && player.mind.special_role)
 		return
-	Debug("Popcap overflow Check observer located, Player: [player]")
+	if(PopcapReached())
+		Debug("Popcap overflow Check observer located, Player: [player]")
 	player << "<b>You have failed to qualify for any job you desired.</b>"
 	unassigned -= player
 	player.ready = 0

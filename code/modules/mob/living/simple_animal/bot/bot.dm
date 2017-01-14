@@ -4,12 +4,14 @@
 /mob/living/simple_animal/bot
 	icon = 'icons/obj/aibots.dmi'
 	layer = MOB_LAYER
+	gender = NEUTER
 	luminosity = 3
 	stop_automated_movement = 1
 	wander = 0
 	healable = 0
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	maxbodytemp = INFINITY
 	minbodytemp = 0
 	has_unlimited_silicon_privilege = 1
 	sentience_type = SENTIENCE_ARTIFICIAL
@@ -20,7 +22,7 @@
 	verb_yell = "alarms"
 	bubble_icon = "machine"
 
-	faction = list("neutral", "silicon")
+	faction = list("neutral", "silicon" , "turret")
 
 	var/obj/machinery/bot_core/bot_core = null
 	var/bot_core_type = /obj/machinery/bot_core
@@ -101,14 +103,14 @@
 	if(stat)
 		return 0
 	on = 1
-	set_light(initial(luminosity))
+	SetLuminosity(initial(luminosity))
 	update_icon()
 	diag_hud_set_botstat()
 	return 1
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = 0
-	set_light(0)
+	SetLuminosity(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
 
@@ -191,7 +193,7 @@
 	else
 		user << "[src] is in pristine condition."
 
-/mob/living/simple_animal/bot/adjustHealth(amount)
+/mob/living/simple_animal/bot/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount>0 && prob(10))
 		new /obj/effect/decal/cleanable/oil(loc)
 	. = ..()
@@ -224,7 +226,7 @@
 
 
 /mob/living/simple_animal/bot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "help")
+	if(H.a_intent == INTENT_HELP)
 		interact(H)
 	else
 		return ..()
@@ -269,7 +271,7 @@
 					ejectpai(user)
 	else
 		user.changeNext_move(CLICK_CD_MELEE)
-		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "harm")
+		if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != INTENT_HARM)
 			if(health >= maxHealth)
 				user << "<span class='warning'>[src] does not need a repair!</span>"
 				return
@@ -857,7 +859,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				src << "<span class='notice'>You sense your form change as you are uploaded into [src].</span>"
 				bot_name = name
 				name = paicard.pai.name
-				faction = user.faction
+				faction = user.faction.Copy()
 				add_logs(user, paicard.pai, "uploaded to [bot_name],")
 				return 1
 			else

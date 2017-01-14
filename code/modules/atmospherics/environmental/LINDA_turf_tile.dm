@@ -5,7 +5,7 @@
 	var/temperature_archived
 
 	//list of open turfs adjacent to us
-	var/list/atmos_adjacent_turfs = list()
+	var/list/atmos_adjacent_turfs
 	//bitfield of dirs in which we are superconducitng
 	var/atmos_supeconductivity = 0
 
@@ -33,7 +33,7 @@
 	var/atmos_cooldown  = 0
 	var/planetary_atmos = FALSE //air will revert to initial_gas_mix over time
 
-	var/list/atmos_overlay_types = list() //gas IDs of current active gas overlays
+	var/list/atmos_overlay_types //gas IDs of current active gas overlays
 
 /turf/open/New()
 	..()
@@ -98,13 +98,17 @@
 /turf/open/proc/update_visuals()
 	var/list/new_overlay_types = tile_graphic()
 
-	for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
-		overlays -= overlay
-		atmos_overlay_types -= overlay
+	if (atmos_overlay_types)
+		for(var/overlay in atmos_overlay_types-new_overlay_types) //doesn't remove overlays that would only be added
+			overlays -= overlay
 
-	for(var/overlay in new_overlay_types-atmos_overlay_types) //doesn't add overlays that already exist
-		add_overlay(overlay)
+	if (new_overlay_types.len)
+		if (atmos_overlay_types)
+			add_overlay(new_overlay_types - atmos_overlay_types) //don't add overlays that already exist
+		else
+			add_overlay(new_overlay_types)
 
+	UNSETEMPTY(new_overlay_types)
 	atmos_overlay_types = new_overlay_types
 
 /turf/open/proc/tile_graphic()
@@ -130,7 +134,7 @@
 	//cache for sanic speed
 	var/list/adjacent_turfs = atmos_adjacent_turfs
 	var/datum/excited_group/our_excited_group = excited_group
-	var/adjacent_turfs_length = adjacent_turfs.len
+	var/adjacent_turfs_length = LAZYLEN(adjacent_turfs)
 	atmos_cooldown++
 	if (planetary_atmos)
 		adjacent_turfs_length++
@@ -174,7 +178,7 @@
 				if(air.compare(enemy_tile.air)) //compare if
 					SSair.add_to_active(enemy_tile) //excite enemy
 					if(our_excited_group)
-						excited_group.add_turf(enemy_tile) //add enemy to group
+						our_excited_group.add_turf(enemy_tile) //add enemy to group
 					else
 						var/datum/excited_group/EG = new //generate new group
 						EG.add_turf(src)
@@ -246,16 +250,24 @@
 	for(var/atom/movable/M in src)
 		M.experience_pressure_difference(pressure_difference, pressure_direction)
 
-/atom/movable/var/pressure_resistance = 5
+/atom/movable/var/pressure_resistance = 10
 /atom/movable/var/last_high_pressure_movement_air_cycle = 0
-/atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
+
+/atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	var/const/PROBABILITY_OFFSET = 25
+	var/const/PROBABILITY_BASE_PRECENT = 75
 	set waitfor = 0
 	. = 0
-	if(!anchored && !pulledby)
+	if (!anchored && !pulledby)
 		. = 1
-		if(pressure_difference > pressure_resistance && last_high_pressure_movement_air_cycle < SSair.times_fired)
-			last_high_pressure_movement_air_cycle = SSair.times_fired
-			step(src, direction)
+		if (last_high_pressure_movement_air_cycle < SSair.times_fired)
+			var/move_prob = 100
+			if (pressure_resistance > 0)
+				move_prob = (pressure_difference/pressure_resistance*PROBABILITY_BASE_PRECENT)-PROBABILITY_OFFSET
+			move_prob += pressure_resistance_prob_delta
+			if (move_prob > PROBABILITY_OFFSET && prob(move_prob))
+				step(src, direction)
+				last_high_pressure_movement_air_cycle = SSair.times_fired
 
 ///////////////////////////EXCITED GROUPS/////////////////////////////
 
@@ -280,14 +292,14 @@
 			var/turf/open/T = t
 			T.excited_group = src
 			turf_list += T
-			reset_cooldowns()
+		reset_cooldowns()
 	else
 		SSair.excited_groups -= src
 		for(var/t in turf_list)
 			var/turf/open/T = t
 			T.excited_group = E
 			E.turf_list += T
-			E.reset_cooldowns()
+		E.reset_cooldowns()
 
 /datum/excited_group/proc/reset_cooldowns()
 	breakdown_cooldown = 0
