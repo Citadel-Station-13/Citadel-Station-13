@@ -28,7 +28,6 @@ var/next_mob_id = 0
 	else
 		living_mob_list += src
 	prepare_huds()
-	hook_vr("mob_new",list(src))
 	..()
 
 /atom/proc/prepare_huds()
@@ -440,30 +439,6 @@ var/next_mob_id = 0
 	return
 
 
-/mob/proc/update_flavor_text()
-	set src in usr
-	if(usr != src)
-		usr << "No."
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
-
-	if(msg != null)
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = html_encode(msg)
-
-		flavor_text = msg
-
-/mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		src << "<h2 class='alert'>OOC Warning:</h2>"
-		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
-
-/mob/proc/print_flavor_text()
-	if(flavor_text && flavor_text != "")
-		var/msg = replacetext(flavor_text, "\n", " ")
-		if(lentext(msg) <= 40)
-			return "\blue [msg]"
-		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -476,13 +451,6 @@ var/next_mob_id = 0
 		var/t1 = text("window=[href_list["mach_close"]]")
 		unset_machine()
 		src << browse(null, t1)
-
-	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, replacetext(flavor_text, "\n", "<BR>")), text("window=[];size=500x200", name))
-		onclose(usr, "[name]")
-
-	if(href_list["flavor_change"])
-		update_flavor_text()
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
@@ -499,7 +467,8 @@ var/next_mob_id = 0
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				usr.stripPanelUnequip(what,src,slot)
+				if(!(what.flags & ABSTRACT))
+					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -551,6 +520,8 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
+		if (client)
+			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 		stat(null, "Map: [MAP_NAME]")
 		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
@@ -676,7 +647,7 @@ var/next_mob_id = 0
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon()
+	update_action_buttons_icon(status_only=TRUE)
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))

@@ -9,7 +9,7 @@ var/list/preferences_datums = list()
 	//doohickeys for savefiles
 	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 10
+	var/max_save_slots = 3
 
 	//non-preference stuff
 	var/muted = 0
@@ -61,8 +61,7 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 		//Mob preview
@@ -87,13 +86,6 @@ var/list/preferences_datums = list()
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
-	var/flavor_text = ""
-
-		// Vore prefs
-	var/digestable = 1
-	var/devourable = 0
-	var/list/belly_prefs = list()
-
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -116,12 +108,10 @@ var/list/preferences_datums = list()
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 15
+				max_save_slots = 8
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
-			if(load_vore_preferences())
-				return
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
@@ -202,7 +192,7 @@ var/list/preferences_datums = list()
 			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
 
 			if(config.mutant_races)
-				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 			else
 				dat += "<b>Species:</b> Human<BR>"
 
@@ -210,18 +200,6 @@ var/list/preferences_datums = list()
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
-
-
-//			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
-			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-			if(lentext(flavor_text) <= 40)
-				if(!lentext(flavor_text))
-					dat += "\[...\]"
-				else
-					dat += "[flavor_text]"
-			else
-				dat += "[TextPreview(flavor_text)]...<br>"
-			dat += "<br>"
 
 			if(pref_species.use_skintones)
 
@@ -268,15 +246,11 @@ var/list/preferences_datums = list()
 
 				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
-					dat += "<td valign='top' width='21%'>"
+					dat += "<td valign='top' width='14%'>"
 
-					dat += "<h3>Alien/Mutant Colors</h3>"
+					dat += "<h3>Mutant Color</h3>"
 
 					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
-
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
 					dat += "</td>"
 
@@ -333,24 +307,6 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
 					dat += "</td>"
-
-				//Mammal bodyparts
-				if("mam_body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Mammal Body Markings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("mam_tail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
-
 				if("legs" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
@@ -359,44 +315,6 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
 					dat += "</td>"
-
-				if("mam_ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Ears</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
-
-					dat += "</td>"
-
-//Xeno Bodyparts
-				if("xenohead" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Head/Caste</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("xenotail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("xenodorsal" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Dorsal Tubes</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
-
-					dat += "</td>"
-
 			if(config.mutant_humans)
 
 				if("tail_human" in pref_species.mutant_bodyparts)
@@ -441,8 +359,8 @@ var/list/preferences_datums = list()
 			dat += "<b>Ghost ears:</b> <a href='?_src_=prefs;preference=ghost_ears'>[(chat_toggles & CHAT_GHOSTEARS) ? "All Speech" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost sight:</b> <a href='?_src_=prefs;preference=ghost_sight'>[(chat_toggles & CHAT_GHOSTSIGHT) ? "All Emotes" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Ghost whispers:</b> <a href='?_src_=prefs;preference=ghost_whispers'>[(chat_toggles & CHAT_GHOSTWHISPER) ? "All Speech" : "Nearest Creatures"]</a><br>"
-			dat += "<b>Ghost radio:</b> <a href='?_src=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
-			dat += "<b>Ghost pda:</b> <a href='?_src=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
+			dat += "<b>Ghost radio:</b> <a href='?_src_=prefs;preference=ghost_radio'>[(chat_toggles & CHAT_GHOSTRADIO) ? "Yes" : "No"]</a><br>"
+			dat += "<b>Ghost pda:</b> <a href='?_src_=prefs;preference=ghost_pda'>[(chat_toggles & CHAT_GHOSTPDA) ? "All Messages" : "Nearest Creatures"]</a><br>"
 			dat += "<b>Pull requests:</b> <a href='?_src_=prefs;preference=pull_requests'>[(chat_toggles & CHAT_PULLR) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Midround Antagonist:</b> <a href='?_src_=prefs;preference=allow_midround_antag'>[(toggles & MIDROUND_ANTAG) ? "Yes" : "No"]</a><br>"
 			if(config.allow_Metadata)
@@ -938,13 +856,6 @@ var/list/preferences_datums = list()
 					if(new_age)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
-				if("flavor_text")
-					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
-					if(msg != null)
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-						msg = html_encode(msg)
-						flavor_text = msg
-
 				if("metadata")
 					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
 					if(new_metadata)
@@ -1041,43 +952,16 @@ var/list/preferences_datums = list()
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3]))
 							features["mcolor"] = pref_species.default_color
-						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
-							features["mcolor2"] = pref_species.default_color
-						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
-							features["mcolor3"] = pref_species.default_color
-
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's primary alien/mutant color:", "Character Preference") as color|null
+					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference") as color|null
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
 							features["mcolor"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-
-				if("mutant_color2")
-					var/new_mutantcolor = input(user, "Choose your character's secondary alien/mutant color:", "Character Preference") as color|null
-					if(new_mutantcolor)
-						var/temp_hsv = RGBtoHSV(new_mutantcolor)
-						if(new_mutantcolor == "#000000")
-							features["mcolor2"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
-							features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
-						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
-
-				if("mutant_color3")
-					var/new_mutantcolor = input(user, "Choose your character's tertiary alien/mutant color:", "Character Preference") as color|null
-					if(new_mutantcolor)
-						var/temp_hsv = RGBtoHSV(new_mutantcolor)
-						if(new_mutantcolor == "#000000")
-							features["mcolor3"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3]) // mutantcolors must be bright, but only if they affect the skin
-							features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
@@ -1093,20 +977,6 @@ var/list/preferences_datums = list()
 					if(new_tail)
 						features["tail_human"] = new_tail
 
-				if("mam_tail")
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
-					if(new_tail)
-						features["mam_tail"] = new_tail
-
-/*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
-				if("mam_snout")
-					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in mam_snouts_list
-					if(new_snout)
-						features["snout"] = new_snout
-*/
-
 				if("snout")
 					var/new_snout
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -1118,12 +988,6 @@ var/list/preferences_datums = list()
 					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
 					if(new_horns)
 						features["horns"] = new_horns
-
-				if("mam_ears")
-					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in mam_ears_list
-					if(new_ears)
-						features["mam_ears"] = new_ears
 
 				if("ears")
 					var/new_ears
@@ -1154,31 +1018,6 @@ var/list/preferences_datums = list()
 					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
-
-				if("mam_body_markings")
-					var/new_mam_body_markings
-					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in mam_body_markings_list
-					if(new_mam_body_markings)
-						features["mam_body_markings"] = new_mam_body_markings
-
-				//Xeno Bodyparts
-				if("xenohead")//Head or caste type
-					var/new_head
-					new_head = input(user, "Choose your character's caste:", "Character Preference") as null|anything in xeno_head_list
-					if(new_head)
-						features["xenohead"] = new_head
-
-				if("xenotail")//Currently one one type, more maybe later if someone sprites them. Might include animated variants in the future.
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in xeno_tail_list
-					if(new_tail)
-						features["xenotail"] = new_tail
-
-				if("xenodorsal")
-					var/new_dors
-					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in xeno_dorsal_list
-					if(new_dors)
-						features["xenodorsal"] = new_dors
 
 				if("legs")
 					var/new_legs
@@ -1360,15 +1199,12 @@ var/list/preferences_datums = list()
 				if("save")
 					save_preferences()
 					save_character()
-					save_vore_preferences()
 
 				if("load")
 					load_preferences()
 					load_character()
-					load_vore_preferences()
 
 				if("changeslot")
-					load_vore_preferences(text2num(href_list["num"]))
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -1398,26 +1234,6 @@ var/list/preferences_datums = list()
 
 	character.real_name = real_name
 	character.name = character.real_name
-
-	character.flavor_text = flavor_text
-
-	if(!length(belly_prefs))
-		var/datum/belly/B = new /datum/belly(src)
-		B.immutable = 1
-		B.name = "Stomach"
-		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
-		belly_prefs[B.name] = B
-
-	character.vore_organs = belly_prefs
-
-	character.vore_selected = character.vore_organs[1]
-
-	for(var/I in character.vore_organs)
-		var/datum/belly/B = character.vore_organs[I]
-		B.owner = character
-
-	character.digestable = digestable
-//	character.devourable = devourable
 
 	character.gender = gender
 	character.age = age

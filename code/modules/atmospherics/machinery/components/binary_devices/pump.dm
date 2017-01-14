@@ -119,9 +119,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-			log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -137,9 +135,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-				log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", "atmos")
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -182,8 +178,5 @@ Thus, the two variables affect pump operation are set in New():
 		if(!(stat & NOPOWER) && on)
 			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		else
-			investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-			log_admin("[key_name(usr)] unwrenched a pump at [x], [y], [z]")
 			return 1
 

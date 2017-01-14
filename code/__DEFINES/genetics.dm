@@ -57,7 +57,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		19
+#define DNA_UNI_IDENTITY_BLOCKS		7
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -65,20 +65,6 @@
 #define DNA_GENDER_BLOCK			5
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
-#define DNA_EYE_COLOR_TWO_BLOCK		8
-#define DNA_EYE_COLOR_SWITCH_BLOCK	9
-#define DNA_EYE_COLOR_BLOCK			10
-#define DNA_COLOR_ONE_BLOCK			11
-#define DNA_COLOR_TWO_BLOCK			12
-#define DNA_COLOR_THR_BLOCK			13
-#define DNA_COLOR_SWITCH_BLOCK		14
-#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				15
-#define DNA_MUTANTRACE_BLOCK		16
-#define DNA_MUTANTTAIL_BLOCK		17
-#define DNA_MUTANTWING_BLOCK		18
-#define DNA_WINGCOLOR_BLOCK			19
-//#define DNA_TAUR_BLOCK				20 //Taurs will be tails for now, easier - Pooj
 
 #define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32
@@ -152,5 +138,3 @@
 #define EASYLIMBATTACHMENT 23
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define MUTCOLORS2		26
-#define MUTCOLORS3		27

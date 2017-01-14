@@ -54,10 +54,6 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		close()
 		return
 	open()
-	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-	message_admins("Valve, [src.name], was manipulated by [key_name(usr)] at [x], [y], [z], [loc.loc]")
-	log_admin("[key_name(usr)] manipulated a manual valve at [x], [y], [z]")
-
 
 /obj/machinery/atmospherics/components/binary/valve/digital		// can be controlled by AI
 	name = "digital valve"

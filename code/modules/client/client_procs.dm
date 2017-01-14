@@ -18,6 +18,7 @@
 		- If so, is there any protection against somebody spam-clicking a link?
 	If you have any  questions about this stuff feel free to ask. ~Carn
 	*/
+/client/var/inprefs = FALSE
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
 		return
@@ -45,7 +46,12 @@
 		if("usr")
 			hsrc = mob
 		if("prefs")
-			return prefs.process_link(usr,href_list)
+			if (inprefs)
+				return
+			inprefs = TRUE
+			. = prefs.process_link(usr,href_list)
+			inprefs = FALSE
+			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
@@ -136,10 +142,6 @@ var/next_external_rsc = 0
 		admins |= src
 		holder.owner = src
 
-	if(check_rights(R_ADMIN))
-		if(ahelp_count(0) > 0)
-			list_ahelps(src, 0)
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
 	if(!prefs)
@@ -152,6 +154,10 @@ var/next_external_rsc = 0
 	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
+
+	connection_time = world.time
+	connection_realtime = world.realtime
+	connection_timeofday = world.timeofday
 
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
@@ -203,7 +209,7 @@ var/next_external_rsc = 0
 			if(config.allow_panic_bunker_bounce && tdata != "redirect")
 				src << "<span class='notice'>Sending you to [config.panic_server_name].</span>"
 				winset(src, null, "command=.options")
-				src << link("[global.panic_address]?redirect")
+				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
 

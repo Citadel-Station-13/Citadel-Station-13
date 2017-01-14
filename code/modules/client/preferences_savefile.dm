@@ -127,46 +127,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["legs"] = "Normal Legs"
 
 
-// Save/Load Vore Preferences
-//
-/datum/preferences/proc/load_vore_preferences(slot)
-	if(!path) return 0 //Path couldn't be set?
-	if(!fexists(path)) //Never saved before
-		save_vore_preferences() //Make the file first
-		return 1
-
-	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
-
-	S.cd = "/character[slot]"
-
-	S["digestable"] >> digestable
-	S["devourable"] >> devourable
-	S["belly_prefs"] >> belly_prefs
-
-	if(isnull(digestable))
-		digestable = 1
-	if(isnull(devourable))
-		devourable = 0
-	if(isnull(belly_prefs))
-		belly_prefs = list()
-
-	return 1
-
-/datum/preferences/proc/save_vore_preferences()
-	if(!path)
-		return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return 0
-	S.cd = "/character[default_slot]"
-
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
-
-	return 1
-
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -311,7 +271,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	S["OOC_Notes"]			>> metadata
-	S["flavor_text"]		>> flavor_text
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
@@ -328,22 +287,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["feature_mcolor"]					>> features["mcolor"]
-	S["feature_mcolor2"]				>> features["mcolor2"]
-	S["feature_mcolor3"]				>> features["mcolor3"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
-	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
-	S["feature_mam_tail"]				>> features["mam_tail"]
-	S["feature_mam_ears"]				>> features["mam_ears"]
-	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
-	//Xeno features
-	S["feature_xeno_tail"]				>> features["xenotail"]
-	S["feature_xeno_dors"]				>> features["xenodorsal"]
-	S["feature_xeno_head"]				>> features["xenohead"]
 	S["feature_lizard_legs"]			>> features["legs"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
@@ -375,15 +324,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	flavor_text		= sanitize_text(flavor_text, initial(flavor_text))
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor2"] || features["mcolor"] == "#000")
-		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor3"] || features["mcolor"] == "#000")
-		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!real_name)
 		real_name = random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
@@ -407,8 +351,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
 	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
-	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
@@ -417,13 +359,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
-	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
-	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
-	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
-	//Xeno features
-	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
-	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
-	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
@@ -466,11 +401,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
-	S["flavor_text"]			<< flavor_text
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
-	S["feature_mcolor2"]				<< features["mcolor2"]
-	S["feature_mcolor3"]				<< features["mcolor3"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
 	S["feature_human_tail"]				<< features["tail_human"]
 	S["feature_lizard_snout"]			<< features["snout"]
@@ -479,14 +411,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
 	S["feature_lizard_body_markings"]	<< features["body_markings"]
-	S["feature_mam_body_markings"]		<< features["mam_body_markings"]
-	S["feature_mam_tail"]				<< features["mam_tail"]
-	S["feature_mam_ears"]				<< features["mam_ears"]
-	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
-	//Xeno features
-	S["feature_xeno_tail"]				<< features["xenotail"]
-	S["feature_xeno_dors"]				<< features["xenodorsal"]
-	S["feature_xeno_head"]				<< features["xenohead"]
 	S["feature_lizard_legs"]			<< features["legs"]
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
