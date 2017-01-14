@@ -1541,19 +1541,25 @@
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
 /datum/sprite_accessory/snouts/scanid
 	name = "Fox, Short"
 	icon_state = "scanid"
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	icon = 'icons/mob/mutant_bodyparts.dmi'
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
+/datum/sprite_accessory/snouts/husky
+	name = "Husky"
+	icon_state = "husky"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
 //Cat, Big
@@ -1683,14 +1689,29 @@
 	name = "Belly"
 	icon_state = "belly"
 	gender_specific = 1
-/*
+
+/datum/sprite_accessory/mam_body_markings/bellyslim
+	name = "Belly Slim"
+	icon_state = "bellyslim"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/husky
+	name = "Husky"
+	icon_state = "husky"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/handsfeet
+	name = "Hands & Feet"
+	icon_state = "handsfeet"
+	color_src = MUTCOLORS3
+
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
 	name = "Belly, Hands, & Feet"
-	icon_state = "bellyhandsfeet"
+	icon_state = "belly"
 	gender_specific = 1
 	extra = 1
 	extra_color_src = MUTCOLORS3
-*/
+
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal
