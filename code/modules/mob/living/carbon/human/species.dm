@@ -975,7 +975,7 @@ mob/living/carbon/human/proc/get_species()
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in species_traits))
 							H << "<span class='danger'>Your hair starts to \
 								fall out in clumps...<span>"
-							addtimer(src, "go_bald", 50, TIMER_UNIQUE, H)
+							addtimer(CALLBACK(src, .proc/go_bald, H), 50)
 
 				if(75 to 100)
 					if(prob(1))
@@ -984,6 +984,7 @@ mob/living/carbon/human/proc/get_species()
 						H.emote("gasp")
 						H.domutcheck()
 		return 0
+	H.radiation = 0
 	return 1
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
@@ -1031,7 +1032,7 @@ mob/living/carbon/human/proc/get_species()
 		else if(istype(T) && T.allow_thrust(0.01, H))
 			. -= 2
 		else if(flightpack && F.allow_thrust(0.01, src))
-			. -= 1
+			. -= 2
 
 	if(flightpack && F.boost)
 		. -= F.boost_speed
@@ -1367,7 +1368,6 @@ mob/living/carbon/human/proc/get_species()
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/item/projectile/energy/florayield)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
-	return
 
 /datum/species/proc/bullet_act(obj/item/projectile/P, mob/living/carbon/human/H)
 	// called before a projectile hit

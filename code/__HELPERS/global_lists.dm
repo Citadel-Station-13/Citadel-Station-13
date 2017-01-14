@@ -36,6 +36,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
+
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
@@ -50,7 +51,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
-
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
@@ -72,6 +72,11 @@
 	for(var/path in subtypesof(/datum/tech))
 		var/datum/tech/D = new path()
 		tech_list[D.id] = D
+
+	//Emotes
+	for(var/path in subtypesof(/datum/emote))
+		var/datum/emote/E = new path()
+		emote_list[E.key] = E
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 

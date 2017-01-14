@@ -32,3 +32,21 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 		else if(!S.whitelisted && S.roundstart)														//Normal roundstart species will be handled here.
 			whitelisted_species_list[S.id] = S.type
 	return whitelisted_species_list
+
+	//Mammal Species
+var/global/list/mam_body_markings_list = list()
+var/global/list/mam_ears_list = list()
+var/global/list/mam_tails_list = list()
+var/global/list/mam_tails_animated_list = list()
+
+	//Exotic Species
+var/global/list/exotic_tails_list = list()
+var/global/list/exotic_tails_animated_list = list()
+var/global/list/exotic_ears_list = list()
+var/global/list/exotic_head_list = list()
+var/global/list/exotic_back_list = list()
+
+	//Xenomorph Species
+var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
+var/global/list/xeno_tail_list = list()
+var/global/list/xeno_dorsal_list = list()

@@ -8,7 +8,7 @@
 /obj/effect/proc_holder/slab/remove_ranged_ability(msg)
 	..()
 	finished = TRUE
-	QDEL_IN(src, 2)
+	QDEL_IN(src, 6)
 
 /obj/effect/proc_holder/slab/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..() || in_progress)
@@ -64,13 +64,14 @@
 				add_logs(ranged_ability_user, L, "bound with Geis")
 				if(slab.speed_multiplier >= 0.5) //excuse my debug...
 					ranged_ability_user.notransform = TRUE
-					addtimer(src, "reset_user_notransform", 5, TIMER_NORMAL, ranged_ability_user) //stop us moving for a little bit so we don't break the scripture following this
+					addtimer(CALLBACK(src, .proc/reset_user_notransform, ranged_ability_user), 5) //stop us moving for a little bit so we don't break the scripture following this
 				slab.busy = null
 				var/datum/clockwork_scripture/geis/conversion = new
 				conversion.slab = slab
 				conversion.invoker = ranged_ability_user
 				conversion.target = target
-				successful = conversion.run_scripture()
+				conversion.run_scripture()
+				successful = TRUE
 
 		remove_ranged_ability()
 
@@ -230,11 +231,14 @@
 		if(!totaldamage && (!L.reagents || !L.reagents.has_reagent("holywater")))
 			ranged_ability_user << "<span class='inathneq'>\"[L] is unhurt and untainted.\"</span>"
 			return TRUE
+
+		successful = TRUE
+
 		var/targetturf = get_turf(L)
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
-			L.adjustToxLoss(totaldamage * 0.5)
+			L.adjustToxLoss(totaldamage * 0.5, TRUE, TRUE)
 			var/healseverity = max(round(totaldamage*0.05, 1), 1) //shows the general severity of the damage you just healed, 1 glow per 20
 			for(var/i in 1 to healseverity)
 				PoolOrNew(/obj/effect/overlay/temp/heal, list(targetturf, "#1E8CE1"))
@@ -280,6 +284,8 @@
 			ranged_ability_user << "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] already shielded by a Vanguard.\"</span>"
 			return TRUE
 
+		successful = TRUE
+
 		if(L == ranged_ability_user)
 			for(var/mob/living/LT in spiral_range(7, T))
 				if(LT.stat == DEAD || !is_servant_of_ratvar(LT) || LT == ranged_ability_user || !(LT in view(7, get_turf(ranged_ability_user))) || \
@@ -310,6 +316,8 @@
 		return TRUE
 
 	if(target in view(7, get_turf(ranged_ability_user)))
+		successful = TRUE
+
 		clockwork_say(ranged_ability_user, text2ratvar("Kneel, heathens!"))
 		ranged_ability_user.visible_message("<span class='warning'>[ranged_ability_user]'s eyes fire a stream of energy at [target], creating a strange mark!</span>", \
 		"<span class='heavy_brass'>You direct the judicial force to [target].</span>")
