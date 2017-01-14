@@ -36,6 +36,7 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
+	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	appearance_loadbanfile()
@@ -116,7 +117,6 @@ var/last_irc_status = 0
 		s["players"] = clients.len
 		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
-
 		var/list/adm = get_admin_counts()
 		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1

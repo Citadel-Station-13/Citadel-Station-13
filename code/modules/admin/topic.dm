@@ -243,6 +243,50 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
+	else if(href_list["mentor"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/M = locate(href_list["mentor"])
+		if(!ismob(M))
+			usr << "this can be only used on instances of type /mob"
+			return
+
+		if(!M.client)
+			usr << "no client"
+			return
+
+		log_admin("[key_name(usr)] has granted [key_name(M)] mentor access")
+		message_admins("\blue [key_name_admin(usr)] has granted [key_name_admin(M)] mentor access", 1)
+
+		var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("mentor")] (ckey) VALUES ('[M.client.ckey]')")
+		if(!query.Execute())
+			var/err = query.ErrorMsg()
+			log_game("SQL ERROR during adding new mentor. Error : \[[err]\]\n")
+		load_mentors()
+		M.verbs += /client/proc/cmd_mentor_say
+		M.verbs += /client/proc/show_mentor_memo
+		M << "\blue You've been granted mentor access! Help people who send mentor-pms"
+
+	else if(href_list["removementor"])
+		if(!check_rights(R_ADMIN))	return
+
+		var/mob/living/carbon/human/M = locate(href_list["removementor"])
+		if(!ismob(M))
+			usr << "this can be only used on instances of type /mob"
+			return
+
+		log_admin("[key_name(usr)] has removed mentor access from [key_name(M)]")
+		message_admins("\blue [key_name_admin(usr)] has removed mentor access from [key_name_admin(M)]", 1)
+
+		var/DBQuery/query = dbcon.NewQuery("DELETE FROM [format_table_name("mentor")] WHERE ckey = '[M.client.ckey]'")
+		if(!query.Execute())
+			var/err = query.ErrorMsg()
+			log_game("SQL ERROR during removing mentor. Error : \[[err]\]\n")
+		load_mentors()
+		M << "\blue Your mentor access has been removed"
+		M.verbs -= /client/proc/cmd_mentor_say
+		M.verbs -= /client/proc/show_mentor_memo
+
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -2162,6 +2206,17 @@
 		if(!check_rights(R_ADMIN))
 			return
 		usr.client.check_antagonists()
+
+	else if(href_list["mentormemoeditlist"])
+		var/sql_key = sanitizeSQL("[href_list["memoeditlist"]]")
+		var/DBQuery/query_memoedits = dbcon.NewQuery("SELECT edits FROM [format_table_name("mentor_memo")] WHERE (ckey = '[sql_key]')")
+		if(!query_memoedits.Execute())
+			var/err = query_memoedits.ErrorMsg()
+			log_game("SQL ERROR obtaining edits from memo table. Error : \[[err]\]\n")
+			return
+		if(query_memoedits.NextRow())
+			var/edit_log = query_memoedits.item[1]
+			usr << browse(edit_log,"window=mentormemoeditlist")
 
 	else if(href_list["kick_all_from_lobby"])
 		if(!check_rights(R_ADMIN))
