@@ -64,7 +64,6 @@
 			return "Search Failed"
 		else
 			return founds
-
 	return msg
 
 /client/var/adminhelptimerid = 0
@@ -110,30 +109,21 @@
 			return
 
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200) //2 minute cooldown of admin helps
 
 	//clean the input msg
 	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
-
-	//remove our adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200) //2 minute cooldown of admin helps
-
 	msg = keywords_lookup(msg)
-
 	if(!mob)	return						//this doesn't happen
-
 	createticket(src, msg, src.ckey, mob)
-
 	var/datum/adminticket/ticket
 
 	for(var/datum/adminticket/T in admintickets)
 		if(T.permckey == src.ckey)
 			ticket = T
-
 	msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>):</b> [msg]</span>"
 
 	//send this msg to all admins
@@ -142,6 +132,7 @@
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X)
 		X << msg
+
 	//show it to the person adminhelping too
 	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
 
@@ -194,7 +185,6 @@
 
 		world.Export("[global.cross_address]?[list2params(message)]")
 
-
 /proc/ircadminwho()
 	var/msg = "Admins: "
 	for(var/client/C in admins)
@@ -206,5 +196,4 @@
 		if(C.is_afk())
 			msg += "(AFK)"
 		msg += ", "
-
 	return msg
