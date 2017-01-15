@@ -1,5 +1,9 @@
 
 /client
+		//////////////////////
+		//BLACK MAGIC THINGS//
+		//////////////////////
+	parent_type = /datum
 		////////////////
 		//ADMIN THINGS//
 		////////////////
@@ -10,6 +14,7 @@
 	var/jobbancache = null //Used to cache this client's jobbans to save on DB queries
 	var/last_message	= "" //Contains the last message sent by this client - used to protect against copy-paste spamming.
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
+	var/ircreplyamount = 0
 
 		/////////
 		//OTHER//
@@ -50,16 +55,8 @@
 	//datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
 
-	//Used for var edit flagging, also defined in datums (clients are not a child of datums for some reason)
-	var/var_edited = 0
-
-		////////////
-		//PARALLAX//
-		////////////
-	var/list/parallax = list()
-	var/list/parallax_movable = list()
-	var/list/parallax_offset = list()
-	var/turf/previous_turf = null
-	var/obj/screen/plane_master/parallax_master/parallax_master = null
-	var/obj/screen/plane_master/parallax_dustmaster/parallax_dustmaster = null
-	var/obj/screen/plane_master/parallax_spacemaster/parallax_spacemaster = null
+	var/lastping = 0
+	var/avgping = 0
+	var/connection_time //world.time they connected
+	var/connection_realtime //world.realtime they connected
+	var/connection_timeofday //world.timeofday they connected

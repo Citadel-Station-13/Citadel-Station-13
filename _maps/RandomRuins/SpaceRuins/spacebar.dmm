@@ -4,78 +4,65 @@
 /area/space)
 "ab" = (
 /turf/closed/mineral,
-/area/space)
+/area/ruin/unpowered/no_grav)
 "ac" = (
-/turf/open/floor/plating/asteroid,
-/area/space)
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
 "ad" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ruin/unpowered)
+/area/ruin/powered/spacebar)
 "ae" = (
 /turf/closed/wall,
-/area/ruin/unpowered)
+/area/ruin/powered/spacebar)
 "af" = (
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/ruin/powered/spacebar)
 "ag" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"ah" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"ah" = (
-/turf/closed/mineral,
-/area/ruin/powered)
+/area/ruin/powered/spacebar)
 "ai" = (
-/turf/open/floor/plating/asteroid,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
-/area/ruin/powered)
+/turf/closed/mineral,
+/area/ruin/powered/spacebar)
 "aj" = (
+/turf/open/floor/plating/asteroid,
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/powered/spacebar)
+"ak" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"ak" = (
-/turf/open/floor/plating/asteroid,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
-	},
-/area/ruin/powered)
+/area/ruin/powered/spacebar)
 "al" = (
 /turf/closed/wall,
-/area/ruin/powered)
+/area/ruin/powered/spacebar/bar)
 "am" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall3";
-	dir = 2
-	},
-/area/ruin/powered)
+/turf/closed/wall/mineral/titanium,
+/area/ruin/powered/spacebar)
 "an" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/spacebar)
 "ao" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "ap" = (
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "aq" = (
 /obj/structure/table,
 /obj/machinery/light/small{
@@ -83,125 +70,135 @@
 	},
 /obj/item/weapon/book/manual/barman_recipes,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "ar" = (
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "as" = (
 /obj/structure/table,
 /obj/item/toy/figure/bartender,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "at" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "au" = (
 /obj/effect/mob_spawn/human/bartender/alive,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "av" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar/bar)
 "aw" = (
-/turf/open/floor/plasteel/shuttle,
-/area/ruin/powered)
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/spacebar)
 "ax" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/turf/open/floor/wood,
+/area/ruin/powered/spacebar/bar)
+"ay" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
 	req_access_txt = "25"
 	},
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"ay" = (
+/area/ruin/powered/spacebar/bar)
+"az" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/wood,
+/area/ruin/powered/spacebar/bar)
+"aA" = (
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/wood,
+/area/ruin/powered/spacebar/bar)
+"aB" = (
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"az" = (
+/area/ruin/powered/spacebar/bar)
+"aC" = (
 /turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/ruin/powered)
-"aA" = (
-/obj/machinery/door/airlock/shuttle{
+/turf/closed/wall/mineral/titanium/interior,
+/area/ruin/powered/spacebar)
+"aD" = (
+/obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
-/turf/open/floor/plasteel/shuttle,
-/area/ruin/powered)
-"aB" = (
-/turf/open/floor/plating,
-/obj/structure/shuttle/engine/propulsion/burst,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/ruin/powered)
-"aC" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/spacebar)
+"aE" = (
 /obj/machinery/button/door{
 	id = "spacebardock";
 	name = "pod dock door cycle";
 	pixel_x = -32
 	},
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aD" = (
+/area/ruin/powered/spacebar/bar)
+"aF" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aE" = (
+/area/ruin/powered/spacebar/bar)
+"aG" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/turf/open/floor/wood,
+/area/ruin/powered/spacebar/bar)
+"aH" = (
 /obj/machinery/light/small,
 /obj/structure/table,
 /obj/machinery/microwave,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aF" = (
+/area/ruin/powered/spacebar/bar)
+"aI" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/wood,
+/area/ruin/powered/spacebar/bar)
+"aJ" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal{
 	amount = 10
 	},
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aG" = (
+/area/ruin/powered/spacebar/bar)
+"aK" = (
+/turf/closed/wall,
+/area/ruin/powered/spacebar)
+"aL" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"aM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"aN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered/spacebar/bar)
+"aO" = (
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aH" = (
+/area/ruin/powered/spacebar/bar)
+"aP" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/beer,
 /obj/item/weapon/reagent_containers/glass/rag,
@@ -209,10 +206,18 @@
 	dir = 4
 	},
 /turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aI" = (
+/area/ruin/powered/spacebar/bar)
+"aQ" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered/spacebar/bar)
+"aR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/ruin/powered/spacebar/bar)
+"aS" = (
 /obj/machinery/door/airlock{
 	name = "Bar Storage";
 	req_access_txt = "25"
@@ -220,145 +225,265 @@
 /turf/open/floor/plasteel{
 	icon_state = "wood"
 	},
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aJ" = (
+/area/ruin/powered/spacebar/bar)
+"aT" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4;
+	on = 1
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"aU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"aV" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/ruin/powered/spacebar/bar)
+"aW" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"aX" = (
+/obj/structure/chair/stool,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"aY" = (
 /obj/structure/chair/stool,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aK" = (
+/area/ruin/powered/spacebar/bar)
+"aZ" = (
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aL" = (
+/area/ruin/powered/spacebar/bar)
+"ba" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bb" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aM" = (
+/area/ruin/powered/spacebar/bar)
+"bc" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bd" = (
+/obj/machinery/airalarm{
+	frequency = 1439;
+	locked = 0;
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"be" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aN" = (
+/area/ruin/powered/spacebar/bar)
+"bf" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aO" = (
+/area/ruin/powered/spacebar/bar)
+"bg" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bh" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bi" = (
+/obj/machinery/computer/teleporter,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bj" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aP" = (
+/area/ruin/powered/spacebar/bar)
+"bk" = (
 /turf/open/floor/plating,
-/area/ruin/powered)
-"aQ" = (
+/area/ruin/powered/spacebar/bar)
+"bl" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bo" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bp" = (
+/obj/machinery/teleport/station,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bq" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"br" = (
 /obj/structure/chair{
 	tag = "icon-chair (EAST)";
 	icon_state = "chair";
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aR" = (
+/area/ruin/powered/spacebar/bar)
+"bs" = (
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aS" = (
+/area/ruin/powered/spacebar/bar)
+"bt" = (
 /obj/structure/chair{
 	tag = "icon-chair (WEST)";
 	icon_state = "chair";
 	dir = 8
 	},
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aT" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
+/area/ruin/powered/spacebar/bar)
+"bu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aU" = (
+/area/ruin/powered/spacebar/bar)
+"bv" = (
+/obj/machinery/teleport/hub,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bw" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aV" = (
+/area/ruin/powered/spacebar/bar)
+"bx" = (
+/obj/machinery/bluespace_beacon,
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"by" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bz" = (
 /obj/machinery/vending/cola,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aW" = (
+/area/ruin/powered/spacebar/bar)
+"bA" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aX" = (
+/area/ruin/powered/spacebar/bar)
+"bB" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aY" = (
+/area/ruin/powered/spacebar/bar)
+"bC" = (
 /obj/machinery/vending/snack,
 /obj/machinery/light,
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"aZ" = (
+/area/ruin/powered/spacebar/bar)
+"bD" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"ba" = (
+/area/ruin/powered/spacebar/bar)
+"bE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/ruin/powered/spacebar/bar)
+"bF" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Bathroom"
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bb" = (
+/area/ruin/powered/spacebar/bar)
+"bG" = (
+/obj/machinery/airalarm{
+	dir = 4;
+	icon_state = "alarm0";
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel/bar,
+/area/ruin/powered/spacebar/bar)
+"bH" = (
+/obj/structure/urinal{
+	pixel_x = -32
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8;
+	on = 1
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/spacebar/bar)
+"bI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/spacebar/bar)
+"bJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/spacebar/bar)
+"bK" = (
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/spacebar/bar)
+"bL" = (
 /obj/structure/urinal{
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bc" = (
+/area/ruin/powered/spacebar/bar)
+"bM" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 8
+	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bd" = (
+/area/ruin/powered/spacebar/bar)
+"bN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/freezer,
+/area/ruin/powered/spacebar/bar)
+"bO" = (
 /obj/structure/sink{
 	dir = 4;
 	icon_state = "sink";
@@ -369,28 +494,22 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"be" = (
+/area/ruin/powered/spacebar/bar)
+"bP" = (
 /obj/structure/table/wood,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bf" = (
+/area/ruin/powered/spacebar/bar)
+"bQ" = (
 /obj/machinery/light/small{
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bg" = (
+/area/ruin/powered/spacebar/bar)
+"bR" = (
 /obj/structure/toilet{
 	dir = 4
 	},
@@ -398,430 +517,122 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bh" = (
+/area/ruin/powered/spacebar/bar)
+"bS" = (
 /obj/machinery/door/airlock{
 	name = "Toilet"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bi" = (
-/obj/effect/glowshroom/single,
+/area/ruin/powered/spacebar/bar)
+"bT" = (
+/obj/structure/glowshroom/single,
 /turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bj" = (
-/turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bk" = (
-/obj/machinery/bluespace_beacon,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bl" = (
-/turf/open/floor/plating{
-	icon_plating = "warnplate";
-	icon_state = "warnplate"
-	},
-/area/ruin/powered)
-"bm" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "spacebardock";
-	name = "airlock dock"
-	},
-/turf/open/floor/plating,
-/area/ruin/powered)
-"bn" = (
-/obj/machinery/door/poddoor{
-	id = "spacebardock";
-	name = "airlock dock"
-	},
-/turf/open/floor/plating,
-/area/ruin/powered)
-"bo" = (
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bp" = (
-/obj/structure/closet/secure_closet/freezer/kitchen,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bq" = (
-/obj/structure/closet/secure_closet/freezer/fridge,
+/area/ruin/powered/spacebar/bar)
+"bU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"br" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bs" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"bV" = (
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plating,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bt" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/space)
-"bu" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -22
-	},
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bv" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bw" = (
-/obj/machinery/atmospherics/components/unary/vent_pump,
-/turf/open/floor/wood,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bx" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"by" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"bz" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bA" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"bD" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"bE" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bF" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bG" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bI" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bJ" = (
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bL" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bM" = (
-/obj/machinery/computer/teleporter,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bN" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bO" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bP" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bQ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bR" = (
-/obj/machinery/teleport/station,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bS" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bT" = (
-/obj/machinery/teleport/hub,
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bU" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/area/ruin/powered/spacebar)
 "bW" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -22
-	},
-/turf/open/floor/plasteel/bar,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
+/turf/open/floor/plating,
+/area/ruin/powered/spacebar)
 "bX" = (
-/obj/structure/urinal{
-	pixel_x = -32
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"bZ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"ca" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"cb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/freezer,
-/area/ruin/powered{
-	name = "Space Bar"
-	})
-"cc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/mineral,
-/area/ruin/powered)
-"ce" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cf" = (
+/area/ruin/powered/spacebar)
+"bY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating/asteroid,
+/area/ruin/powered/spacebar)
+"bZ" = (
 /obj/machinery/button/door{
 	id = "spacebardock";
 	name = "Podbay Airlock";
 	pixel_y = -24
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cg" = (
+/area/ruin/powered/spacebar)
+"ca" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"ch" = (
+/area/ruin/powered/spacebar)
+"cb" = (
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"ci" = (
+/area/ruin/powered/spacebar)
+"cc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9;
 	pixel_y = 0
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cj" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"ck" = (
+/area/ruin/powered/spacebar)
+"cd" = (
 /obj/machinery/atmospherics/components/binary/valve/open,
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cl" = (
+/area/ruin/powered/spacebar)
+"ce" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cm" = (
+/area/ruin/powered/spacebar)
+"cf" = (
+/turf/open/floor/plating/asteroid,
+/area/ruin/unpowered/no_grav)
+"cg" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spacebardock";
+	name = "airlock dock"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/spacebar)
+"ch" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/meter,
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"cn" = (
+/area/ruin/powered/spacebar)
+"ci" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 8;
 	on = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/ruin/powered)
-"co" = (
+/area/ruin/powered/spacebar)
+"cj" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
-/area/ruin/powered)
-"cp" = (
+/area/ruin/powered/spacebar)
+"ck" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
-"cq" = (
+/area/ruin/unpowered/no_grav)
+"cl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/mineral,
-/area/space)
-"cr" = (
+/area/ruin/unpowered/no_grav)
+"cm" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/space)
+/area/ruin/unpowered/no_grav)
+"cn" = (
+/obj/machinery/door/poddoor{
+	id = "spacebardock";
+	name = "airlock dock"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered/spacebar)
 
 (1,1,1) = {"
 aa
@@ -1005,19 +816,19 @@ aa
 aa
 aa
 aa
-bt
+ac
 ab
 ab
 ab
-bt
+ac
 aa
 aa
-bt
+ac
 ab
 ab
 ab
-bt
-bt
+ac
+ac
 aa
 aa
 aa
@@ -1045,23 +856,23 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1087,27 +898,27 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-aM
-al
-aM
-bt
-bt
-bt
-aM
-aM
-aM
-aM
-aM
-bt
-bt
-al
-aO
-al
-bt
-bt
+ac
+ac
+ad
+ad
+ae
+ad
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ad
+ac
+ac
+ae
+bV
+ae
+ac
+ac
 ab
 ab
 aa
@@ -1128,27 +939,27 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-aM
-bt
-aM
-aM
-af
-af
-af
-af
-af
-aM
-aM
-al
-aP
-al
-bt
+ac
+ac
+ac
+ad
+ag
+ag
+ad
+ac
+ad
+ad
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ae
+bW
+ae
+ac
 ab
 ab
 ab
@@ -1169,30 +980,30 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-af
-af
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-aP
-al
-al
-al
-al
+ac
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ae
+bW
+ae
+ae
+ae
+ae
 ab
 ab
 aa
@@ -1210,31 +1021,31 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-aO
-al
-af
-af
-al
+ac
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ae
+bV
+ae
+ag
+ag
+ae
 ab
 ab
 aa
@@ -1251,37 +1062,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-al
-al
-al
-al
-al
-al
-al
+ac
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 aa
 aa
 "}
@@ -1292,37 +1103,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-ai
+ac
+ac
+ac
+ad
+ag
+aj
 am
 am
-az
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+aC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1334,37 +1145,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-af
-af
-aj
+ac
+ac
+ad
+ag
+ag
+ak
 an
 aw
-aA
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+aD
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1375,38 +1186,38 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-ak
+ac
+ac
+ac
+ad
+ag
+ag
+aj
 am
 am
-aB
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+aC
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1417,38 +1228,38 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+ac
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1458,39 +1269,39 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
+ac
+ac
+ac
 ad
-af
-af
-af
-af
-af
-af
-af
-bx
-bC
-af
-af
-af
-af
-af
-af
-ai
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+aL
+aT
+ag
+ag
+ag
+ag
+ag
+ag
+aj
 am
 am
-az
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+aC
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1500,39 +1311,39 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
+ac
+ac
+ac
 ad
-af
-af
-af
-ah
-ah
-ah
-af
-by
-bD
-bo
-bs
-bo
-af
-af
-af
-aj
+ag
+ag
+ag
+ai
+ai
+ai
+ag
+aM
+aU
+al
+bj
+al
+ag
+ag
+ag
+ak
 an
 aw
-aA
-af
-af
-af
-aP
-bm
-aP
-aP
-aP
-aP
-bn
+aD
+ag
+ag
+ag
+bW
+cg
+bW
+bW
+bW
+bW
+cn
 aa
 aa
 aa
@@ -1542,40 +1353,40 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
+ac
+ac
+ac
 ae
-af
-af
-ah
-ah
-ah
-ah
-ah
-by
-bD
-br
-bj
-br
-af
-af
-af
-ak
+ag
+ag
+ai
+ai
+ai
+ai
+ai
+aM
+aU
+be
+bk
+be
+ag
+ag
+ag
+aj
 am
 am
-aB
-af
-af
-cf
-al
-al
-al
-al
-al
-al
-al
-al
+aC
+ag
+ag
+bZ
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ae
 aa
 aa
 "}
@@ -1584,39 +1395,39 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
+ac
+ac
+ac
 ad
-af
-ah
-ah
-ah
-ah
-ah
-ah
-by
-bD
-aN
-bj
-br
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-al
-bt
-bt
-bt
-bt
+ag
+ai
+ai
+ai
+ai
+ai
+ai
+aM
+aU
+bf
+bk
+be
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ae
+ac
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1626,39 +1437,39 @@ aa
 aa
 aa
 ab
-bt
-bt
-bt
+ac
+ac
+ac
 ad
-af
-af
-ah
-bo
-bo
-bo
-bo
-bz
-bE
-bo
-bs
-bo
-bo
-bo
-bo
-bo
-br
-af
-af
-af
-af
-ah
-af
-af
+ag
+ag
+ai
 al
-bt
-bt
-bt
-bt
+al
+al
+al
+aN
+aV
+al
+bj
+al
+al
+al
+al
+al
+be
+ag
+ag
+ag
+ag
+ai
+ag
+ag
+ae
+ac
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1669,37 +1480,37 @@ aa
 aa
 ab
 ab
-bt
-bt
-bt
-aM
-af
-ah
-bo
-ao
-bu
-aC
-aG
-bF
-aK
-aK
-aT
-aU
-aR
-aZ
-bW
-aK
-br
-af
-af
-ah
-ah
-ah
-af
+ac
+ac
+ac
+ad
+ag
+ai
 al
-bt
-bt
-bt
+ao
+ax
+aE
+aO
+aW
+aZ
+aZ
+bq
+bw
+bs
+bD
+bG
+aZ
+be
+ag
+ag
+ai
+ai
+ai
+ag
+ae
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1711,37 +1522,37 @@ aa
 aa
 ab
 ab
-bt
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ac
+ad
+ag
+ag
+al
 ap
 ar
 ar
-aG
-bG
-bI
-bN
-bI
-bI
-bN
-bI
-bN
-bI
-bI
-br
-cc
-cc
-cc
-cc
-cg
-aM
-bt
-bt
-bt
+aO
+aX
+bc
+bl
+bc
+bc
+bl
+bc
+bl
+bc
+bc
+be
+bU
+bU
+bU
+bU
+ca
+ad
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1754,35 +1565,35 @@ aa
 aa
 ab
 ab
-bt
-bt
-bt
-aM
-af
-bo
+ac
+ac
+ac
+ad
+ag
+al
 aq
 ar
 ar
-aH
-aJ
-aK
-bO
-aQ
-aK
-bU
-aK
-bO
-aK
-aK
-aK
+aP
+aY
+aZ
+bm
 br
-ce
-cg
-af
-bD
-aM
-bt
-bt
+aZ
+by
+aZ
+bm
+aZ
+aZ
+aZ
+be
+bX
+ca
+ag
+aU
+ad
+ac
+ac
 aa
 aa
 aa
@@ -1796,35 +1607,35 @@ aa
 aa
 ab
 ab
-bt
-bt
-bt
-aM
-af
-bo
+ac
+ac
+ac
+ad
+ag
+al
 ar
 ar
 ar
-aG
-aJ
-aK
-bO
-aR
-aK
-aK
-aK
-bO
-aU
-be
+aO
+aY
 aZ
-bo
-ce
+bm
+bs
+aZ
+aZ
+aZ
+bm
+bw
+bP
+bD
+al
+bX
+cb
+cd
 ch
-ck
-cm
-aM
-bt
-bt
+ad
+ac
+ac
 aa
 aa
 aa
@@ -1837,36 +1648,36 @@ aa
 aa
 aa
 aa
+ac
+ac
+ac
+ad
+ag
+ag
+al
+al
+ay
+aF
+aN
+aZ
+aZ
+bm
 bt
-bt
-bt
-aM
-af
-af
-bo
-bo
-ax
-aD
+aZ
 bz
-aK
-aK
-bO
-aS
-aK
+al
 aV
-bo
-bE
-bo
-bo
-bo
-bo
-ce
+al
+al
+al
+al
+bX
+cc
+ag
 ci
-af
-cn
-aM
-bt
-bt
+ad
+ac
+ac
 aa
 aa
 aa
@@ -1879,37 +1690,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ac
+ad
+ag
+ag
+al
 as
 ar
-bp
-bz
-bH
-bK
-bO
-aK
-bk
-aW
-bo
-bX
-bb
-bo
+aG
+aN
+ba
 bg
-bo
-ah
-af
+bm
+aZ
 bx
-af
-aM
-bt
-bt
-bt
+bA
+al
+bH
+bL
+al
+bR
+al
+ai
+ag
+aL
+ag
+ad
+ac
+ac
+ac
 aa
 aa
 aa
@@ -1921,37 +1732,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ac
+ad
+ag
+ag
+al
 at
-bv
-aE
-bA
-aL
-bL
-bP
-bS
-bS
-aX
-bV
-bY
-ca
-bV
+az
+aH
+aQ
+bb
 bh
-bV
+bn
+bu
+bu
+bB
+bE
+bI
+bM
+bE
+bS
+bE
+bY
+bY
+ce
+bY
 cj
-cj
+ck
 cl
-cj
-co
-cp
-cq
-cr
+cm
 aa
 aa
 aa
@@ -1963,37 +1774,37 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ac
+ad
+ag
+ag
+al
 au
-bw
-bq
-bB
-bI
-bI
-bQ
-aK
-aK
-aY
-bo
-bZ
-cb
-bf
+aA
+aI
+aR
+bc
 bc
 bo
-ah
-ah
-af
-af
-aM
-bt
-bt
-bt
+aZ
+aZ
+bC
+al
+bJ
+bN
+bQ
+bK
+al
+ai
+ai
+ag
+ag
+ad
+ac
+ac
+ac
 aa
 aa
 aa
@@ -2005,36 +1816,36 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ac
+ad
+ag
+ag
+al
 ar
 ar
 ar
-aI
-aK
-aK
-aK
-aK
-aK
-aK
-bo
-bc
-bc
-bc
-bi
-bo
-ah
-ah
-af
-af
-aM
-bt
-bt
+aS
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+al
+bK
+bK
+bK
+bT
+al
+ai
+ai
+ag
+ag
+ad
+ac
+ac
 ab
 aa
 aa
@@ -2048,35 +1859,35 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-af
-af
-bo
+ac
+ac
+ad
+ag
+ag
+al
 av
-ay
-aF
-bo
-bJ
-bM
-bR
-bT
-aK
-aK
-ba
-bc
+aB
+aJ
+al
 bd
-bd
-bc
-bo
-ah
-ah
-ah
-af
-aM
-bt
-bt
+bi
+bp
+bv
+aZ
+aZ
+bF
+bK
+bO
+bO
+bK
+al
+ai
+ai
+ai
+ag
+ad
+ac
+ac
 ab
 aa
 aa
@@ -2090,35 +1901,35 @@ aa
 aa
 aa
 aa
-bt
-bt
+ac
+ac
+ah
 ag
-af
-af
-bo
-bo
-bo
-bo
-bo
-bo
-br
-br
-br
-br
-bo
-bo
-bo
-bo
-bo
-bo
-bo
-ah
-ah
-ah
-af
-aM
-bt
-bt
+ag
+al
+al
+al
+al
+al
+al
+be
+be
+be
+be
+al
+al
+al
+al
+al
+al
+al
+ai
+ai
+ai
+ag
+ad
+ac
+ac
 aa
 aa
 aa
@@ -2133,34 +1944,34 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-af
-af
-al
-bt
-bt
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ag
+ag
+ae
+ac
+ac
 aa
 aa
 aa
@@ -2175,34 +1986,34 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-af
-ah
-ah
-ah
-ah
-af
-af
-af
-aM
-bt
-bt
-bt
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ai
+ai
+ai
+ai
+ag
+ag
+ag
+ad
+ac
+ac
+ac
 aa
 aa
 aa
@@ -2218,32 +2029,32 @@ aa
 aa
 aa
 aa
-bt
-bt
-aM
-aM
-aM
-af
-af
-af
-af
-aM
-aM
-aM
-aM
-aM
-af
-af
-af
-af
-af
-af
-af
-aM
-aM
-al
-bt
-bt
+ac
+ac
+ad
+ad
+ad
+ag
+ag
+ag
+ag
+ad
+ad
+ad
+ad
+ad
+ag
+ag
+ag
+ag
+ag
+ag
+ag
+ad
+ad
+ae
+ac
+ac
 aa
 aa
 aa
@@ -2260,32 +2071,32 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-bt
-bt
-aM
-aM
-al
-aM
-bt
-bt
-bt
-bt
-bt
-aM
-af
-af
-af
-af
-aM
-aM
-bt
-bt
-bt
-bt
-bt
+ac
+ac
+ac
+ac
+ac
+ad
+ad
+ae
+ad
+ac
+ac
+ac
+ac
+ac
+ad
+ag
+ag
+ag
+ag
+ad
+ad
+ac
+ac
+ac
+ac
+ac
 aa
 aa
 aa
@@ -2303,30 +2114,30 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-ab
-bt
-bt
-bt
-bt
-aM
-aM
-aM
-aM
-bt
-bt
-bt
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 ac
 ab
-bt
+ac
+ac
+ac
+ac
+ad
+ad
+ad
+ad
+ac
+ac
+ac
+ac
+ab
+ac
 aa
 aa
 aa
@@ -2348,24 +2159,24 @@ aa
 aa
 aa
 aa
-bt
-bt
-bt
+ac
+ac
+ac
 aa
 ab
 ab
 ab
 aa
 aa
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
-bt
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
+ac
 aa
 aa
 aa
@@ -2400,13 +2211,13 @@ ab
 aa
 aa
 aa
-bt
+ac
 ab
 ab
 ab
-bt
-bt
-bt
+ac
+ac
+ac
 aa
 aa
 aa

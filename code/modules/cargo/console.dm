@@ -8,7 +8,6 @@
 	var/safety_warning = "For safety reasons the automated supply shuttle \
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
-	light_color = LIGHT_COLOR_BROWN
 
 /obj/machinery/computer/cargo/request
 	name = "supply request console"
@@ -62,7 +61,7 @@
 				"name" = P.group,
 				"packs" = list()
 			)
-		if((P.hidden && !emagged) || (P.contraband && !contraband))
+		if((P.hidden && !emagged) || (P.contraband && !contraband) || (P.special && !P.special_enabled))
 			continue
 		data["supplies"][P.group]["packs"] += list(list(
 			"name" = P.name,
@@ -97,7 +96,7 @@
 		return
 	switch(action)
 		if("send")
-			if(SSshuttle.supply.canMove())
+			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == "supply_home")
@@ -114,10 +113,11 @@
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
 				return
-			if(SSshuttle.supply.canMove())
-				say(safety_warning)
+			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
 				return
-			else if(SSshuttle.supply.mode == SHUTTLE_IDLE)
+			else if(SSshuttle.supply.getDockedId() != "supply_away")
+				return
+			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to Centcom.")
 				. = TRUE
@@ -198,3 +198,4 @@
 	status_signal.data["command"] = command
 
 	frequency.post_signal(src, status_signal)
+

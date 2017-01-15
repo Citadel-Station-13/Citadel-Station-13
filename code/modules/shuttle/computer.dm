@@ -28,7 +28,7 @@
 		for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
 			if(!options.Find(S.id))
 				continue
-			if(M.canDock(S))
+			if(!M.check_dock(S))
 				continue
 			destination_found = 1
 			dat += "<A href='?src=\ref[src];move=[S.id]'>Send to [S.name]</A><br>"
@@ -76,5 +76,3 @@
 		emagged = 1
 		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
 
-/obj/machinery/computer/shuttle/fluff/New()
-	take_damage(100)

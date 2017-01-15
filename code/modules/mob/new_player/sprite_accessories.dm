@@ -59,8 +59,8 @@
 	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
+	var/extra = 0
 	var/center = FALSE	//Should we center the sprite?
-	var/extra = 0 											//Used for extra overlays on top of the bodypart that may be colored seperately. Uses the secondary mutant color as default. See species.dm for the actual overlay code.
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
 
@@ -69,10 +69,6 @@
 //////////////////////
 /datum/sprite_accessory/hair
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
-
-/datum/sprite_accessory/hair/bald //Moved to the top so we can all stop scrolling all the way down.
-	name = "Bald"
-	icon_state = null
 
 /datum/sprite_accessory/hair/short
 	name = "Short Hair"	  // try to capatilize the names please~
@@ -399,6 +395,10 @@
 	name = "Balding Hair"
 	icon_state = "hair_e"
 
+/datum/sprite_accessory/hair/bald
+	name = "Bald"
+	icon_state = null
+
 /datum/sprite_accessory/hair/parted
 	name = "Side Part"
 	icon_state = "hair_part"
@@ -467,6 +467,10 @@
 	name = "Bob Hair 2"
 	icon_state = "hair_bob2"
 
+/datum/sprite_accessory/hair/boddicker
+	name = "Boddicker"
+	icon_state = "hair_boddicker"
+
 /datum/sprite_accessory/hair/long
 	name = "Long Hair 1"
 	icon_state = "hair_long"
@@ -494,6 +498,10 @@
 /datum/sprite_accessory/hair/sidepartlongalt
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
+
+/datum/sprite_accessory/hair/sidecut
+	name = "Sidecut"
+	icon_state = "hair_sidecut"
 
 /////////////////////////////
 // Facial Hair Definitions //
@@ -578,6 +586,11 @@
 /datum/sprite_accessory/facial_hair/fu
 	name = "Fu Manchu"
 	icon_state = "facial_fumanchu"
+
+/datum/sprite_accessory/facial_hair/brokenman
+	name = "Broken Man"
+	icon_state = "facial_brokenman"
+
 
 ///////////////////////////
 // Underwear Definitions //
@@ -1128,35 +1141,20 @@
 
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/mutant_bodyparts.dmi'
-	color_src = MUTCOLORS2
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
 	icon_state = "none"
 
-/datum/sprite_accessory/body_markings/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/body_markings/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
-
-/datum/sprite_accessory/body_markings/dtigerhead
-	name = "Dark Tiger Body + Head"
-	icon_state = "dtigerhead"
+	gender_specific = 1
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
-
-/datum/sprite_accessory/body_markings/ltigerhead
-	name = "Light Tiger Body + Head"
-	icon_state = "ltigerhead"
+	gender_specific = 1
 
 /datum/sprite_accessory/body_markings/lbelly
 	name = "Light Belly"
@@ -1177,30 +1175,6 @@
 	name = "Smooth"
 	icon_state = "smooth"
 
-/datum/sprite_accessory/tails/lizard/light
-	name = "Light"
-	icon_state = "light"
-
-/datum/sprite_accessory/tails_animated/lizard/light
-	name = "Light"
-	icon_state = "light"
-
-/datum/sprite_accessory/tails/lizard/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/tails_animated/lizard/dstripe
-	name = "Dark Stripe"
-	icon_state = "dstripe"
-
-/datum/sprite_accessory/tails/lizard/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
-/datum/sprite_accessory/tails_animated/lizard/lstripe
-	name = "Light Stripe"
-	icon_state = "lstripe"
-
 /datum/sprite_accessory/tails/lizard/dtiger
 	name = "Dark Tiger"
 	icon_state = "dtiger"
@@ -1217,23 +1191,13 @@
 	name = "Light Tiger"
 	icon_state = "ltiger"
 
-/datum/sprite_accessory/tails/lizard/club
-	name = "Club"
-	icon_state = "club"
+/datum/sprite_accessory/tails/lizard/spikes
+	name = "Spikes"
+	icon_state = "spikes"
 
-/datum/sprite_accessory/tails_animated/lizard/club
-	name = "Club"
-	icon_state = "club"
-
-/datum/sprite_accessory/tails/lizard/aqua
-	name = "Aquatic"
-	icon_state = "aqua"
-
-/datum/sprite_accessory/tails_animated/lizard/aqua
-	name = "Aquatic"
-	icon_state = "aqua"
-
-/datum/sprite_accessory/tails/human
+/datum/sprite_accessory/tails_animated/lizard/spikes
+	name = "Spikes"
+	icon_state = "spikes"
 
 /datum/sprite_accessory/tails/human/none
 	name = "None"
@@ -1246,10 +1210,12 @@
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon_state = "cat"
+	color_src = HAIR
 
 /datum/sprite_accessory/tails_animated/human/cat
 	name = "Cat"
 	icon_state = "cat"
+	color_src = HAIR
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1308,6 +1274,7 @@
 	name = "Cat"
 	icon_state = "cat"
 	hasinner = 1
+	color_src = HAIR
 
 /datum/sprite_accessory/wings/none
 	name = "None"
@@ -1409,6 +1376,15 @@
 	name = "Aquatic"
 	icon_state = "aqua"
 
+/datum/sprite_accessory/legs 	//legs are a special case, they aren't actually sprite_accessories but are updated with them.
+	icon = null					//These datums exist for selecting legs on preference, and little else
+
+/datum/sprite_accessory/legs/none
+	name = "Normal Legs"
+
+/datum/sprite_accessory/legs/digitigrade_lizard
+	name = "Digitigrade Legs"
+
 //Human Ears/Tails
 
 /datum/sprite_accessory/ears/fox
@@ -1499,6 +1475,7 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+
 /datum/sprite_accessory/tails_animated/human/murid
 	name = "Murid"
 	icon_state = "murid"
@@ -1541,25 +1518,19 @@
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 	extra = 1
 
 /datum/sprite_accessory/snouts/scanid
 	name = "Fox, Short"
 	icon_state = "scanid"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 	extra = 1
 
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
-
-/datum/sprite_accessory/snouts/husky
-	name = "Husky"
-	icon_state = "husky"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 	extra = 1
 
 //Cat, Big
@@ -1689,29 +1660,14 @@
 	name = "Belly"
 	icon_state = "belly"
 	gender_specific = 1
-
-/datum/sprite_accessory/mam_body_markings/bellyslim
-	name = "Belly Slim"
-	icon_state = "bellyslim"
-	gender_specific = 1
-
-/datum/sprite_accessory/mam_body_markings/husky
-	name = "Husky"
-	icon_state = "husky"
-	gender_specific = 1
-
-/datum/sprite_accessory/mam_body_markings/handsfeet
-	name = "Hands & Feet"
-	icon_state = "handsfeet"
-	color_src = MUTCOLORS3
-
+/*
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
 	name = "Belly, Hands, & Feet"
-	icon_state = "belly"
+	icon_state = "bellyhandsfeet"
 	gender_specific = 1
 	extra = 1
 	extra_color_src = MUTCOLORS3
-
+*/
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal
@@ -1746,6 +1702,7 @@
 /datum/sprite_accessory/xeno_head/none
 	name = "None"
 
+
 /datum/sprite_accessory/xeno_head/hunter
 	name = "Hunter"
 	icon_state = "hunter"
@@ -1757,7 +1714,7 @@
 /datum/sprite_accessory/xeno_head/sentinel
 	name = "Sentinel"
 	icon_state = "sentinel"
-
+/*
 //Slimecoon Parts
 /datum/sprite_accessory/slimecoon_ears
 	icon = 'icons/mob/exotic_bodyparts.dmi'
@@ -1770,4 +1727,4 @@
 /datum/sprite_accessory/slimecoon_snout
 	icon = 'icons/mob/exotic_bodyparts.dmi'
 	name = "Hunter"
-	icon_state = "slimecoon"
+	icon_state = "slimecoon" */

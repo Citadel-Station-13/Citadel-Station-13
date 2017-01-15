@@ -8,6 +8,8 @@
 	var/ready = TRUE
 	centcom_cancast = FALSE
 	sound = "sound/effects/magic.ogg"
+	cooldown_min = 300
+	level_max = 0
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
 	if(ready)
@@ -32,7 +34,7 @@
 	perform(turf_steps,user=user)
 
 /obj/effect/proc_holder/spell/spacetime_dist/after_cast(list/targets)
-	addtimer(src, "clean_turfs", duration)
+	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
 
 /obj/effect/proc_holder/spell/spacetime_dist/cast(list/targets, mob/user = usr)
 	effects = list()

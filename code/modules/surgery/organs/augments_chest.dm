@@ -14,7 +14,7 @@
 	var/synthesizing = 0
 	var/poison_amount = 5
 	slot = "stomach"
-	origin_tech = "materials=4;powerstorage=5;biotech=4"
+	origin_tech = "materials=2;powerstorage=2;biotech=2"
 
 /obj/item/organ/cyberimp/chest/nutriment/on_life()
 	if(synthesizing)
@@ -30,7 +30,7 @@
 /obj/item/organ/cyberimp/chest/nutriment/emp_act(severity)
 	if(!owner)
 		return
-	owner.reagents.add_reagent("????",poison_amount / severity) //food poisoning
+	owner.reagents.add_reagent("bad_food", poison_amount / severity)
 	owner << "<span class='warning'>You feel like your insides are burning.</span>"
 
 
@@ -41,14 +41,14 @@
 	implant_color = "#006607"
 	hunger_threshold = NUTRITION_LEVEL_HUNGRY
 	poison_amount = 10
-	origin_tech = "materials=4;powerstorage=5;biotech=5"
+	origin_tech = "materials=4;powerstorage=3;biotech=3"
 
 /obj/item/organ/cyberimp/chest/reviver
 	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	icon_state = "chest_implant"
 	implant_color = "#AD0000"
-	origin_tech = "materials=5;programming=4;biotech=6"
+	origin_tech = "materials=5;programming=4;biotech=4"
 	slot = "heartdrive"
 	var/revive_cost = 0
 	var/reviving = 0
@@ -57,7 +57,7 @@
 /obj/item/organ/cyberimp/chest/reviver/on_life()
 	if(reviving)
 		if(owner.stat == UNCONSCIOUS)
-			addtimer(src, "heal", 30)
+			addtimer(CALLBACK(src, .proc/heal), 30)
 		else
 			cooldown = revive_cost + world.time
 			reviving = FALSE
@@ -96,11 +96,11 @@
 	else
 		cooldown += 200
 
-	if(istype(owner, /mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		if(H.stat != DEAD && prob(50 / severity))
 			H.heart_attack = TRUE
-			addtimer(src, "undo_heart_attack", 600 / severity)
+			addtimer(CALLBACK(src, .proc/undo_heart_attack), 600 / severity)
 
 /obj/item/organ/cyberimp/chest/reviver/proc/undo_heart_attack()
 	var/mob/living/carbon/human/H = owner
@@ -121,7 +121,7 @@
 	implant_overlay = null
 	implant_color = null
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
-	w_class = 3
+	w_class = WEIGHT_CLASS_NORMAL
 	var/on = 0
 	var/datum/effect_system/trail_follow/ion/ion_trail
 
@@ -197,3 +197,4 @@
 
 	toggle(silent=1)
 	return 0
+
