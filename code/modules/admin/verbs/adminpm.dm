@@ -31,7 +31,6 @@
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/list/sorted = sortList(targets)
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -51,7 +50,8 @@
 		if(holder)
 			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
-var/datum/adminticket/ticket
+
+	var/datum/adminticket/ticket
 
 	for(var/datum/adminticket/T in admintickets)
 		if(T.permckey == C.ckey)
@@ -81,7 +81,7 @@ var/datum/adminticket/ticket
 				message_admins("[key_name_admin(src)] has been unassigned from [key_name(C, 0, 0)]'s admin help. Cancelled reply. ([ticket.uID])")
 				ticket.user << "<b>[src.ckey] has been unassigned from your admin help. (reply cancelled)</b>"
 			ticket.replying = 0
-		else
+	else
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
 	if(ticket)
@@ -180,18 +180,20 @@ var/datum/adminticket/ticket
 
 		//play the recieving admin the adminhelp sound (if they have them enabled)
 		if(C.prefs.toggles & SOUND_ADMINHELP)
-			C << 'sound/effects/adminhelp.ogg''
+			C << 'sound/effects/adminhelp.ogg'
 
 		else
 			if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
+
 				C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
 				C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
 
-			for(var/datum/adminticket/T in admintickets)
-				if(T.permckey == C.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+				for(var/datum/adminticket/T in admintickets)
+					if(T.permckey == C.ckey && T.resolved == "No")
+						T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+
 				//always play non-admin recipients the adminhelp sound
 				C << 'sound/effects/adminhelp.ogg'
 
@@ -203,10 +205,10 @@ var/datum/adminticket/ticket
 						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
 						if(C && reply)
 							if(sender)
-							C.cmd_admin_pm(sender,reply)
-							for(var/datum/adminticket/T in admintickets)
-								if(T.permckey == C.ckey && T.resolved == "No")
-								C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
+								C.cmd_admin_pm(sender,reply)
+								for(var/datum/adminticket/T in admintickets)
+									if(T.permckey == C.ckey && T.resolved == "No")
+										T.logs += "<span class='danger'>[sendername] TO [C]: [msg] </span>"										//sender is still about, let's reply to them
 							else
 								adminhelp(reply)													//sender has left, adminhelp instead
 						return

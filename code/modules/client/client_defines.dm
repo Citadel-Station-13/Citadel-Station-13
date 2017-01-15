@@ -16,9 +16,6 @@
 	var/last_message_count = 0 //contins a number of how many times a message identical to last_message was sent.
 	var/ircreplyamount = 0
 
-	if(check_rights(R_ADMIN))
-		if(ahelp_count(0) > 0)
- 			list_ahelps(src, 0)
 		/////////
 		//OTHER//
 		/////////
