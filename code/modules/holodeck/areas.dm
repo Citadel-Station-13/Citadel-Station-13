@@ -2,10 +2,10 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	luminosity = 1
-	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+//	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
-	var/obj/machinery/computer/holodeck/linked
-	var/restricted = 0 // if true, program goes on emag list
+//	var/obj/machinery/computer/holodeck/linked
+//	var/restricted = 0 // if true, program goes on emag list
 
 /*
 	Power tracking: Use the holodeck computer's power grid
