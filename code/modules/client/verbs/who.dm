@@ -49,14 +49,14 @@
 		for(var/client/C in sortList(admins))
 			if(C.holder)
 				if(!C.holder.fakekey)
-					Lines += "<font color='#FF0000'>[C.key]</font>[show_info(C)]"
+					Lines += "<font color='#FF0000'>[C.key]</font>[C.holder.rank]"
 
 	if(length(mentors) > 0)
 		Lines += "<b>Mentors:</b>"
 		for(var/client/C in sortList(clients))
 			var/mentor = mentor_datums[C.ckey]
 			if(mentor)
-				Lines += "<font color='#0033CC'>[C.key]</font>[show_info(C)]"
+				Lines += "<font color='#0033CC'>[C.key]</font>[C.holder.rank]"
 
 	else
 		for(var/client/C in clients)

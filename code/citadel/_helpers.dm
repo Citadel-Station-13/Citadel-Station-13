@@ -50,3 +50,14 @@ var/global/list/exotic_back_list = list()
 var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
 var/global/list/xeno_tail_list = list()
 var/global/list/xeno_dorsal_list = list()
+
+
+//mentor stuff
+
+var/list/mentors = list()
+
+/client/proc/reload_mentors()
+		set name = "Reload Mentors"
+		set category = "Admin"
+		if(!src.holder)	return
+		message_admins("[key_name_admin(usr)] manually reloaded mentors")

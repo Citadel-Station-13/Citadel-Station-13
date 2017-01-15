@@ -15,9 +15,10 @@
 	else
 		holder.following = M
 
-	usr.client.adminobs = 1
-	usr.reset_view(M)
-	src.verbs += /client/proc/mentor_unfollow
+	ManualFollow(M)
+
+//	usr.reset_perspective(M)
+	usr.verbs += /client/proc/mentor_unfollow
 
 	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>"
 	usr << "<span class='info'>You are now following [M]. Click the \"Stop Following\" button in the Mentor tab to stop.</span>"
@@ -33,9 +34,8 @@
 	if(!check_mentor())
 		return
 
-	usr.client.adminobs = 0
-	usr.reset_view(null)
-	src.verbs -= /client/proc/mentor_unfollow
+	usr.reset_perspective(null)
+	usr.verbs -= /client/proc/mentor_unfollow
 
 	var/following = null
 	if(!holder)

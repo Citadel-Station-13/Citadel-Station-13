@@ -15,7 +15,6 @@
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)
 			indexing += M.mind.name
-
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
 			var/surname_found = 0
@@ -33,7 +32,6 @@
 					forenames[word] = M
 			//ckeys
 			ckeys[M.ckey] = M
-
 	var/ai_found = 0
 	msg = ""
 	var/list/mobs_found = list()
@@ -69,7 +67,6 @@
 
 	return msg
 
-
 /client/var/adminhelptimerid = 0
 
 /client/proc/giveadminhelpverb()
@@ -90,9 +87,7 @@
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
 	var/ref_mob = "\ref[mob]"
-	var/ref_client = "\ref[src]"
 	for(var/datum/adminticket/T in admintickets)
 		if(T.permckey == src.ckey && T.resolved == "No")
 			if(alert(usr,"You already have an adminhelp open, would you like to bump it?", "Bump Adminhelp", "Yes", "No") == "Yes")
@@ -114,9 +109,11 @@
 			usr << "<b>Thank you for your patience.</b>"
 			return
 
+	src.verbs -= /client/verb/adminhelp
+	adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+
 	//clean the input msg
-	if(!msg)
-		return
+	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
@@ -127,8 +124,7 @@
 
 	msg = keywords_lookup(msg)
 
-	if(!mob)
-		return						//this doesn't happen
+	if(!mob)	return						//this doesn't happen
 
 	createticket(src, msg, src.ckey, mob)
 
@@ -138,17 +134,14 @@
 		if(T.permckey == src.ckey)
 			ticket = T
 
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>):</b> [msg]</span>"
 
 	//send this msg to all admins
-
 	for(var/client/X in admins)
 		if(X.prefs.toggles & SOUND_ADMINHELP)
 			X << 'sound/effects/adminhelp.ogg'
 		window_flash(X)
 		X << msg
-
-
 	//show it to the person adminhelping too
 	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
 
@@ -184,7 +177,6 @@
 			final = "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])"
 		send2irc(source,final)
 		send2otherserver(source,final)
-
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
