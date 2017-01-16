@@ -12,7 +12,7 @@
 
 	var/dat = picker_holder.gen_vui(src)
 
-	picker_holder.popup = new(src, "insidePanel","Inside!", 400, 600, picker_holder)
+	picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
 
@@ -138,6 +138,12 @@
 			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable</a>"
 		if(0)
 			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Digestable</span></a>"
+
+	switch(user.devourable)
+		if(1)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable</a>"
+		if(0)
+			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable</span></a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -299,6 +305,7 @@
 
 		var/datum/belly/NB = new(user)
 		NB.name = new_name
+		NB.owner = user //might be the thing we all needed.
 		user.vore_organs[new_name] = NB
 		selected = NB
 
@@ -433,10 +440,11 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!user.save_vore_prefs())
-			user << "<span class='warning'>ERROR: Preferences failed to save!</span>"
+		if(user.save_vore_prefs())
+			user << "<span class='notice'>Saved belly preferences.</span>"
 		else
-			user << "<span class='notice'>Preferences saved!</span>"
+			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
+			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable. Don't abuse this button by toggling it back and forth to extend a scene or whatever, or you'll make the admins cry. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
@@ -448,10 +456,23 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
+		if(user.client.prefs)
+			user.client.prefs.digestable = user.digestable
+
+	if(href_list["toggledvor"])
+		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
+		switch(choice)
+			if("Cancel")
+				return 1
+			if("Allow Devourment")
+				user.devourable = 1
+			if("Prevent Devourment")
+				user.devourable = 0
+
 	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
 
 		if(user.client.prefs)
-			user.client.prefs.digestable = user.digestable
+			user.client.prefs.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

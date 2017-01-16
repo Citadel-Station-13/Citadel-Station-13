@@ -118,6 +118,9 @@
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
 			  /mob/living/simple_animal/parrot/proc/perch_mob_player)
 
+	verbs += /mob/living/proc/insidePanel
+	verbs += /mob/living/proc/escapeOOC
+
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	..()

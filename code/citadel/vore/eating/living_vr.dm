@@ -2,26 +2,36 @@
 /mob/living
 	var/digestable = 1					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
-	var/list/vore_organs = list()		// List of vore containers inside a mob
+//	var/list/vore_organs = list()		// List of vore containers inside a mob
+	var/vore_organs[0]				// sanity for vore setup??
 	var/recent_struggle = 0
+	var/devourable = 1					// Can the mob be vored at all?
+	var/tmp/recent_gurgle = 0
 //
 // Hook for generic creation of stuff on new creatures
 //
+/*
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
+
+	if(M.client && M.client.prefs_vr)
+		M.vore_organs = M.client.prefs_vr.belly_prefs
+		M.vore_selected = M.vore_organs[1]
+		M.digestable = M.client.prefs_vr.digestable
+		M.devourable = M.client.prefs_vr.devourable
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-		/*	if(M.client && M.client.prefs)
-				if(!M.load_vore_preferences)
+			if(M.client && M.client.prefs_vr)
+				if(!M.copy_from_prefs_vr())
 					M << "<span class='warning'>ERROR: You seem to have saved prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
-					M.vore_selected = M.vore_organs[1] */
+					M.vore_selected = M.vore_organs[1]
 
 			if(!M.vore_organs || !M.vore_organs.len)
 				if(!M.vore_organs)
@@ -53,7 +63,7 @@
 
 	//Return 1 to hook-caller
 	return 1
-
+*/
 //
 // Handle being clicked, perhaps with something to devour
 //
@@ -74,7 +84,7 @@
 			user << "<span class='notice'>They aren't voracious enough.</span>"
 		feed_self_to_grabbed(user)
 
-	if( user == src ) //you click yourself
+	if(user == src) //you click yourself
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>You aren't voracious enough.</span>"
 		feed_grabbed_to_self(prey, user)
@@ -116,6 +126,9 @@
 	//Sanity
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
+		return
+	if (!prey.devourable)
+		user << "This can't be eaten!"
 		return
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]
@@ -217,15 +230,16 @@
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(SSair.times_fired%3 != 1)
-		return //The accursed timer
+	if(recent_gurgle > world.time)
+		return
 
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		if(B.internal_contents.len)
 			B.process_Life() //AKA 'do bellymodes_vr.dm'
 
-	if(SSair.times_fired%3 != 1) return //Occasionally do supercleanups.
+	if(recent_gurgle > world.time) return //Occasionally do supercleanups.
+
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		if(B.internal_contents.len)
@@ -233,86 +247,6 @@
 				if(M.loc != src)
 					B.internal_contents -= M
 					log_attack("Had to remove [M] from belly [B] in [src]")
-/*
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return 0
-	if(!copy_to_prefs_vr())
-		return 0
-	if(!client.prefs_vr.save_vore())
-		return 0
-
-	return 1
-
-/mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return 0
-	if(!client.prefs_vr.load_vore())
-		return 0
-	if(!copy_from_prefs_vr())
-		return 0
-
-	return 1
-
-/mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return 0
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	P.digestable = src.digestable
-	P.belly_prefs = src.vore_organs
-
-	return 1
-
-//
-//	Proc for applying vore preferences, given bellies
-//
-/mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return 0
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	src.digestable = P.digestable
-	src.vore_organs = list()
-
-	for(var/I in P.belly_prefs)
-		var/datum/belly/Bp = P.belly_prefs[I]
-		src.vore_organs[Bp.name] = Bp.copy(src)
-
-	return 1
-*/
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	set name = "Save Vore Prefs"
-	set category = "Vore"
-
-	var/result = 0
-
-	if(client.prefs)
-		result = client.prefs.save_vore_preferences()
-	else
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs variable. Tell a dev.</span>"
-		log_admin("[src] tried to save vore prefs but lacks a client.prefs var.")
-
-	return result
-
-//
-//	Proc for applying vore preferences, given bellies
-//
-/mob/living/proc/apply_vore_prefs(var/list/bellies)
-	if(!bellies || bellies.len == 0)
-		log_admin("Tried to apply bellies to [src] and failed.")
-
-
 //
 // OOC Escape code for pref-breaking or AFK preds
 //

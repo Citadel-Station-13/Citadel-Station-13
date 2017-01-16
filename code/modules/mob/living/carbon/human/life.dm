@@ -53,6 +53,10 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
+
+	if(ismob(loc))
+		return ONE_ATMOSPHERE //hopefully won't murderficate people in your guts by going for a spacewalk
+
 	else
 		return pressure
 
@@ -198,6 +202,7 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -223,6 +228,8 @@
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
+
+
 	//Handle normal clothing
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
@@ -247,6 +254,9 @@
 
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
+
+	if(ismob(loc))
+		return 1 // Because someone inside your belly while you're safe from fire shouldn't cook them either.
 
 	var/thermal_protection = 0
 	if(thermal_protection_flags)
@@ -306,6 +316,9 @@
 
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
+
+	if(ismob(loc))
+		return 1 //because lazy
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
