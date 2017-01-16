@@ -101,7 +101,7 @@
 			return
 
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200)
 
 	//clean the input msg
 	if(!msg)	return
