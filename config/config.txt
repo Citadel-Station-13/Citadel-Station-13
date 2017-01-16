@@ -193,6 +193,10 @@ ALLOW_HOLIDAYS
 ##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
 
+# HTTP URL to send Discord messages to.
+# DISCORD_URL
+# DISCORD_PASSWORD
+
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5
 

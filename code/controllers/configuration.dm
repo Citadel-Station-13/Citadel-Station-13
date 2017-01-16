@@ -72,6 +72,9 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
+
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
@@ -235,8 +238,8 @@
 	var/list/gamemode_cache = null
 
 	// Discord crap.
-	var/discord_url
- 	var/discord_password
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -486,10 +489,12 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("announce_adminhelps")
+					config.announce_adminhelps = 1
 				if("discord_url")
-					discord_url = value
+					config.discord_url = value
 				if("discord_password")
-					discord_password = value
+					config.discord_password = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
