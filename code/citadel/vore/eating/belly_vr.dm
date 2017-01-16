@@ -119,25 +119,18 @@
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-/datum/belly/proc/release_specific_contents(var/atom/movable/A, var/mob/prey, var/mob/owner, mob/living/carbon/user)
-	var/turf/T = get_turf(user)
-	if (!(A in internal_contents))
+/datum/belly/proc/release_specific_contents(var/mob/prey, var/mob/owner, mob/living/carbon/user)
+	if (!(prey in internal_contents))
 		return 0 // They weren't in this belly anyway
-	world << "Contents confirmed"
-//	user.internal_contents -= A  // Remove from the belly contents
-//	world << "contents removed"
-	A.forceMove(T)  // Move the belly contents into the same location as belly's owner.
-	world << "force moving to turf"
 
-//	var/turf/T = get_turf(src)
-//	for(var/atom/movable/AM in src)
-//		AM.forceMove(T)
+	prey.forceMove(owner)  // Move the belly contents into the same location as belly's owner.
+	internal_contents -= prey  // Remove from the belly contents
 
-//	var/datum/belly/B = check_belly(owner)
-//	if(B)
-//		B.internal_contents += M
-//	world << "belly check finished"
-//	user.visible_message("<span class='warning'>[owner] expels [A] from their [lowertext(name)]!</span>")
+	var/datum/belly/B = check_belly(owner)
+	if(B)
+		B.internal_contents += prey
+
+	owner.visible_message("<font color='green'><b>[owner] expels [prey] from their [lowertext(name)]!</b></font>")
 //	owner.update_icons()
 	return 1
 

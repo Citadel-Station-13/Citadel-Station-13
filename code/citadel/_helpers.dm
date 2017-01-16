@@ -6,7 +6,7 @@ var/const/SIZEPLAY_MICRO=2
 var/const/SIZEPLAY_NORMAL=3
 var/const/SIZEPLAY_MACRO=4
 var/const/SIZEPLAY_HUGE=5
-
+*/
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)
@@ -22,7 +22,7 @@ var/const/SIZEPLAY_HUGE=5
 /proc/get_matrix_smallest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(0.65)
-
+/*
 // omited for quick error resolution while porting -Pooj
 proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user' has available to them. It searches the list of ckeys attached to the 'whitelist' var for a species and also checks if they're an admin.
 	for(var/spath in subtypesof(/datum/species))

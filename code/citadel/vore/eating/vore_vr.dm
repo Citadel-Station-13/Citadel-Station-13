@@ -21,10 +21,26 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 //	Check if an object is capable of eating things, based on vore_organs
 //
+//
+//	Check if an object is capable of eating things, based on vore_organs
+//
 /proc/is_vore_predator(var/mob/living/O)
 	if(istype(O,/mob/living))
 		if(O.vore_organs.len > 0)
 			return 1
+
+	return 0
+
+//
+//	Belly searching for simplifying other procs
+//
+/proc/check_belly(atom/movable/A)
+	if(istype(A.loc,/mob/living))
+		var/mob/living/M = A.loc
+		for(var/I in M.vore_organs)
+			var/datum/belly/B = M.vore_organs[I]
+			if(A in B.internal_contents)
+				return(B)
 
 	return 0
 
@@ -37,19 +53,6 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 	vore_selected = input("Choose Belly") in vore_organs
 	src << "<span class='notice'>[vore_selected] selected.</span>"
-
-//
-//	Belly searching for simplifying other procs
-//
-/proc/check_belly(atom/movable/A)
-	if(istype(get_turf(A),/mob/living))
-		var/mob/living/M = get_turf(A)
-		for(var/I in M.vore_organs)
-			var/datum/belly/B = M.vore_organs[I]
-			if(A in B.internal_contents)
-				return(B)
-
-	return 0
 
 //
 //	Verb for saving vore preferences to save file
