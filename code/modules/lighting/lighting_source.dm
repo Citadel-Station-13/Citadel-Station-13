@@ -33,13 +33,13 @@
 /datum/light_source/New(var/atom/owner, var/atom/top)
 	source_atom = owner // Set our new owner.
 	if (!source_atom.light_sources)
-		source_atom.light_sources = list()
+		source_atom.light_sources = list("")
 
 	source_atom.light_sources += src // Add us to the lights of our owner.
 	top_atom = top
 	if (top_atom != source_atom)
 		if (!top.light_sources)
-			top.light_sources     = list()
+			top.light_sources     = list("")
 
 		top_atom.light_sources += src
 
@@ -50,8 +50,8 @@
 
 	parse_light_color()
 
-	effect_str      = list()
-	affecting_turfs = list()
+	effect_str      = list("")
+	affecting_turfs = list("")
 
 	update()
 
@@ -114,7 +114,7 @@
 
 		if (top_atom != source_atom)
 			if(!top_atom.light_sources)
-				top_atom.light_sources = list()
+				top_atom.light_sources = list("")
 
 			top_atom.light_sources += src // Add ourselves to the light sources of our new top atom.
 
@@ -236,7 +236,7 @@
 			APPLY_CORNER(C)
 
 		if (!T.affecting_lights)
-			T.affecting_lights = list()
+			T.affecting_lights = list("")
 
 		T.affecting_lights += src
 		affecting_turfs    += T
@@ -248,7 +248,7 @@
 
 	for (var/turf/T in affecting_turfs)
 		if (!T.affecting_lights)
-			T.affecting_lights = list()
+			T.affecting_lights = list("")
 		else
 			T.affecting_lights -= src
 
@@ -270,8 +270,8 @@
     APPLY_CORNER(C)
 
 /datum/light_source/proc/smart_vis_update()
-	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs                    = list()
+	var/list/datum/lighting_corner/corners = list("")
+	var/list/turf/turfs                    = list("")
 	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)
 		if (!T.lighting_corners_initialised)
 			T.generate_missing_corners()
