@@ -348,7 +348,6 @@ var/next_external_rsc = 0
 		current_watchlist[sql_ckey] = watchreason
 		message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(src)] is on the watchlist and has just connected - Reason: [watchreason]</font>")
 //		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
-
 	var/sql_ip = sanitizeSQL(src.address)
 	var/sql_computerid = sanitizeSQL(src.computer_id)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)

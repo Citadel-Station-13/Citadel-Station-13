@@ -71,10 +71,10 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
-
+  
 	var/announce_watchlist = 0
 	var/announce_adminhelps = 0
-
+  
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else

@@ -10,6 +10,7 @@
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
 			<A href='?src=\ref[src];secrets=mentor_log'>Mentor Log</A><BR>
+
 			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<BR>
 			"}

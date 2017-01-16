@@ -80,6 +80,7 @@
 	entry += " ([round(C.avgping, 1)]ms)"
 	return entry
 
+
 /client/verb/adminwho()
 	set category = "Admin"
 	set name = "Adminwho"

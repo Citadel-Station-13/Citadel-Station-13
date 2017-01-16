@@ -652,4 +652,5 @@ var/datum/subsystem/ticker/ticker
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 
 	if(news_message)
-		send2irc(news_source, news_message,"News_Report")
+		send2irc(news_source, news_message,"News_Report") //possible runtime, but we don't have the cross server stuff
+

@@ -186,7 +186,7 @@ var/last_irc_status = 0
 //		else
 //			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
-	else if("namecheck" in input)
+	else if("namecheck" in inpt)
 		if(!key_valid)
 			return "Bad Key"
 		else
@@ -196,6 +196,7 @@ var/last_irc_status = 0
 	else if("adminwho" in input)
 		if(!key_valid)
 			return "Bad Key"
+
 //		else
 //			return ircadminwho()
 
