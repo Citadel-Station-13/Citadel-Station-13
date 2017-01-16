@@ -19,6 +19,12 @@ ADMIN_LEGACY_SYSTEM
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
 
+## Add a # infront of this if you want to use the SQL based mentor system, the legacy system uses mentors.txt You need to set up your database to use the SQL based system.
+MENTOR_LEGACY_SYSTEM
+
+#Mentors only see ckeys by default. Uncomment to have them only see mob name
+#MENTORS_MOBNAME_ONLY
+
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
@@ -186,6 +192,10 @@ ALLOW_HOLIDAYS
 
 ##Uncomment to show the names of the admin sending a pm from IRC instead of showing as a stealthmin.
 #SHOW_IRC_NAME
+
+# HTTP URL to send Discord messages to.
+# DISCORD_URL
+# DISCORD_PASSWORD
 
 ##Defines the ticklag for the world.  0.9 is the normal one, 0.5 is smoother.
 TICKLAG 0.5
