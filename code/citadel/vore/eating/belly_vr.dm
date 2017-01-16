@@ -105,33 +105,34 @@
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
 /datum/belly/proc/release_all_contents(var/mob/owner)
+	if (internal_contents.len == 0)
+		return 0
 	for (var/atom/movable/M in internal_contents)
-		M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
+		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
 		internal_contents -= M  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
 		if(B)
 			B.internal_contents += M
 
-//	owner.visible_message("<span class='warning'>[owner] expels everything from their [lowertext(name)]!</span>")
-	return
+	return 1
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-/datum/belly/proc/release_specific_contents(var/mob/prey, var/mob/owner, mob/living/carbon/user)
-	if (!(prey in internal_contents))
+
+
+/datum/belly/proc/release_specific_contents(var/atom/movable/M)
+	if (!(M in internal_contents))
 		return 0 // They weren't in this belly anyway
 
-	prey.forceMove(owner)  // Move the belly contents into the same location as belly's owner.
-	internal_contents -= prey  // Remove from the belly contents
+	M.forceMove(owner)  // Move the belly contents into the same location as belly's owner.
+	internal_contents -= M  // Remove from the belly contents
 
 	var/datum/belly/B = check_belly(owner)
 	if(B)
-		B.internal_contents += prey
+		B.internal_contents += M
 
-	owner.visible_message("<font color='green'><b>[owner] expels [prey] from their [lowertext(name)]!</b></font>")
-//	owner.update_icons()
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
@@ -141,7 +142,6 @@
 //	if (prey.anchored)
 //		prey.anchored.unbuckle_mob()
 
-// Super super messy. prey.forceMove.owner doesn't work if there's no prey.
 	prey.forceMove(owner)
 	internal_contents += prey
 
@@ -223,10 +223,9 @@
 // Called from the process_Life() methods of bellies that digest prey.
 // Default implementation calls M.death() and removes from internal contents.
 // Indigestable items are removed, and M is deleted.
-/datum/belly/proc/digestion_death(var/mob/living/M, var/mob/prey, var/mob/pred)
+/datum/belly/proc/digestion_death(var/mob/living/M, var/mob/pred)
 	is_full = 1
-	M.death(1)
-	internal_contents -= M
+	M.death()
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if (is_vore_predator(M))
@@ -244,14 +243,10 @@
 	for (var/obj/item/W in M)
 		_handle_digested_item(W)
 
-	//Reagent transfer
-	if(M.reagents && istype(M.reagents,/datum/reagents))
-		var/datum/reagents/RL = M.reagents
-		RL.trans_to(owner,RL.total_volume*0.5)
-
 	// Delete the digested mob
-	message_admins("[key_name(pred)] digested [key_name(prey)].")
-	log_attack("[key_name(pred)] digested [key_name(prey)].")
+	internal_contents -= M
+	message_admins("[key_name(pred)] digested [key_name(M)].")
+	log_attack("[key_name(pred)] digested [key_name(M)].")
 	qdel(M)
 
 // Recursive method - To recursively scan thru someone's inventory for digestable/indigestable.

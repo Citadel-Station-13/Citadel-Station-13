@@ -234,6 +234,7 @@
 
 					selected.release_all_contents()
 					playsound(user, 'sound/effects/splat.ogg', 50, 1)
+					user.loc << "<span class='danger'>Everything is released from [user]!</span>"
 
 				if("Move all")
 					if(user.stat)
@@ -271,6 +272,7 @@
 
 				selected.release_specific_contents(tgt)
 				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
 				if(user.stat)
