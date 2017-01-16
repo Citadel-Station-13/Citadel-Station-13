@@ -234,6 +234,10 @@
 
 	var/list/gamemode_cache = null
 
+	// Discord crap.
+	var/discord_url
+ 	var/discord_password
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -482,6 +486,10 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("discord_url")
+					discord_url = value
+				if("discord_password")
+					discord_password = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

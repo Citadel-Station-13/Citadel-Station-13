@@ -209,7 +209,7 @@ var/datum/subsystem/ticker/ticker
 		var/list/adm = get_admin_counts()
 		if(!adm["present"])
 			send2irc("Server", "Round just started with no active admins online!")
-
+			send2admindiscord("**Round has started with no admins online.**", TRUE)
 	return 1
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
