@@ -206,10 +206,9 @@ var/datum/subsystem/ticker/ticker
 			if(S.name != "AI")
 				qdel(S)
 
-		var/list/adm = get_admin_counts()
-		if(!adm["present"])
+		if(0 == admins.len)
 			send2irc("Server", "Round just started with no active admins online!")
-
+			send2admindiscord("**Round has started with no admins online.**", TRUE)
 	return 1
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
@@ -653,4 +652,5 @@ var/datum/subsystem/ticker/ticker
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 
 	if(news_message)
-		send2otherserver(news_source, news_message,"News_Report")
+		send2irc(news_source, news_message,"News_Report") //possible runtime, but we don't have the cross server stuff
+

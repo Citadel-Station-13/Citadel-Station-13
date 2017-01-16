@@ -71,7 +71,10 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
-
+  
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
+  
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
@@ -84,6 +87,9 @@
 	var/ipintel_save_good = 12
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
+
+	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
+	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -230,6 +236,10 @@
 	var/showircname = 0
 
 	var/list/gamemode_cache = null
+
+	// Discord crap.
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -479,6 +489,12 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("announce_adminhelps")
+					config.announce_adminhelps = 1
+				if("discord_url")
+					config.discord_url = value
+				if("discord_password")
+					config.discord_password = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

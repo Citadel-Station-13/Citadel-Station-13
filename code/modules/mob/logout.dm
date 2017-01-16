@@ -28,6 +28,7 @@
 
 
 				send2irc("Server", "[cheesy_message]")
+				send2admindiscord("[cheesy_message]")
 	..()
 
 	if(isobj(loc))

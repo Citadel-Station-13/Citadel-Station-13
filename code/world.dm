@@ -40,6 +40,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	load_mode()
 	load_motd()
 	load_admins()
+	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -100,11 +101,12 @@ var/last_irc_status = 0
 	else if("ircstatus" in input)
 		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
 			return
-		var/list/adm = get_admin_counts()
-		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
+//		var/list/adm = get_admin_counts()
+//		var/status = "Admins: [adm["total"]] (Active: [adm["present"]] AFK: [adm["afk"]] Stealth: [adm["stealth"]] Skipped: [adm["noflags"]]). "
 		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
+		send2maindiscord("**Server starting up** on `[config.server? "byond://[config.server]" : "byond://[world.address]:[world.port]"]`. Map is **Probably Box Station**")
 
 	else if("status" in input)
 		var/list/s = list()
@@ -115,14 +117,25 @@ var/last_irc_status = 0
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
+
+		var/admins = 0
+		var/mentors = 0
+		for(var/client/C in clients)
+			var/mentor = mentor_datums[C.ckey]
+			if(mentor)
+				mentors++
+			if(C.holder)
+				if(C.holder.fakekey)
+					continue	//so stealthmins aren't revealed by the hub
+				admins++
+
 		s["active_players"] = get_active_player_count()
 		s["players"] = clients.len
 		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
-
-		var/list/adm = get_admin_counts()
-		s["admins"] = adm["present"] + adm["afk"] //equivalent to the info gotten from adminwho
 		s["gamestate"] = 1
+		s["admins"] = admins
+		s["mentors"] = mentors
 		if(ticker)
 			s["gamestate"] = ticker.current_state
 
@@ -170,10 +183,10 @@ var/last_irc_status = 0
 	else if("adminmsg" in input)
 		if(!key_valid)
 			return "Bad Key"
-		else
-			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
+//		else
+//			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
-	else if("namecheck" in input)
+	else if("namecheck" in inpt)
 		if(!key_valid)
 			return "Bad Key"
 		else
@@ -183,8 +196,9 @@ var/last_irc_status = 0
 	else if("adminwho" in input)
 		if(!key_valid)
 			return "Bad Key"
-		else
-			return ircadminwho()
+
+//		else
+//			return ircadminwho()
 
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
