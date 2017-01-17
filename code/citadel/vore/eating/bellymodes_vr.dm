@@ -1,6 +1,6 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 // Called from /mob/living/Life() proc.
-/datum/belly/proc/process_Life(var/mob/living/owner)
+/datum/belly/proc/process_Life(mob/living/owner)
 
 /////////////////////////// Auto-Emotes ///////////////////////////
 	if((digest_mode in emote_lists) && !emotePend)
@@ -55,7 +55,7 @@
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
 				M.adjustFireLoss(1)
-				owner.nutrition += 5
+			//	owner.nutrition += 5
 		recent_gurgle = world.time
 		return
 
@@ -100,7 +100,7 @@
 			if(!(M.status_flags & GODMODE))
 				M.adjustBruteLoss(2)
 				M.adjustFireLoss(3)
-				owner.nutrition += 5
+	//			owner.nutrition += 5
 		recent_gurgle = world.time
 		return
 
@@ -117,7 +117,5 @@
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					owner.nutrition -= 10
-					if(M.nutrition <= 400)			// somehow prey is fed idk
-						M.nutrition += 1
 		recent_gurgle = world.time
 		return
