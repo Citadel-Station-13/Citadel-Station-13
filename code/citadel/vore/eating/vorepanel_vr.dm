@@ -74,8 +74,8 @@
 				spanstyle = ""
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
-			if(DM_DIGESTF)
-				spanstyle = "color:red;"
+		//	if(DM_DIGESTF)
+		//		spanstyle = "color:red;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
 
@@ -442,14 +442,15 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!save_preferences())
-			user << "<span class='notice'>Unable to save belly preferences.</span>"
+		if(user.save_vore_prefs())
+			user << "<span class='notice'>Saved belly preferences.</span>"
 		else
-			user << "<span class='warning'>Saved preferences!.</span>"
+			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
+			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["toggledg"])
-		var/digest_choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
-		switch(digest_choice)
+		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
+		switch(choice)
 			if("Cancel")
 				return 1
 			if("Allow Digestion")
@@ -457,12 +458,12 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		if(digest_choice)
-			digestable = digest_choice
+		if(user.client.prefs)
+			user.client.prefs.digestable = user.digestable
 
 	if(href_list["toggledvor"])
-		var/devour_choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
-		switch(devour_choice)
+		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
+		switch(choice)
 			if("Cancel")
 				return 1
 			if("Allow Devourment")
@@ -470,10 +471,8 @@
 			if("Prevent Devourment")
 				user.devourable = 0
 
-	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
-
-		if(devour_choice)
-			devourable = devour_choice
+		if(user.client.prefs)
+			user.client.prefs.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

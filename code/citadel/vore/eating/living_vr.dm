@@ -2,63 +2,10 @@
 /mob/living
 	var/digestable = 1					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
-//	var/list/vore_organs = list()		// List of vore containers inside a mob
-	var/vore_organs[0]				// sanity for vore setup??
+	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/recent_struggle = 0
-	var/devourable = 1					// Can the mob be vored at all?
+	var/devourable = 0					// Can the mob be vored at all?
 	var/tmp/recent_gurgle = 0
-/
-//
-// Hook for generic creation of stuff on new creatures
-//
-/hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/insidePanel
-	M.verbs += /mob/living/proc/escapeOOC
-
-	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	if(!M.vore_organs || !M.vore_organs.len)
-		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
-			var/loaded_preferences_successfully = load_preferences()
-			if(loaded_preferences_successfully)
-				if(!M) return
-
-				if(M.client)
-					if(!M.load_preferences())
-						M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
-						return 0
-					if(M.vore_organs && M.vore_organs.len)
-						M.vore_selected = M.vore_organs[1]
-
-				if(!M.vore_organs || !M.vore_organs.len)
-					if(!M.vore_organs)
-						M.vore_organs = list()
-					var/datum/belly/B = new /datum/belly(M)
-					B.immutable = 1
-					B.name = "Stomach"
-					B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
-					M.vore_organs[B.name] = B
-					M.vore_selected = B.name
-
-					//Simple_animal gets emotes. move this to that hook instead?
-					if(istype(src,/mob/living/simple_animal))
-						B.emote_lists[DM_HOLD] = list(
-							"The insides knead at you gently for a moment.",
-							"The guts glorp wetly around you as some air shifts.",
-							"Your predator takes a deep breath and sighs, shifting you somewhat.",
-							"The stomach squeezes you tight for a moment, then relaxes.",
-							"During a moment of quiet, breathing becomes the most audible thing.",
-							"The warm slickness surrounds and kneads on you.")
-
-						B.emote_lists[DM_DIGEST] = list(
-							"The caustic acids eat away at your form.",
-							"The acrid air burns at your lungs.",
-							"Without a thought for you, the stomach grinds inwards painfully.",
-							"The guts treat you like food, squeezing to press more acids against you.",
-							"The onslaught against your body doesn't seem to be letting up; you're food now.",
-							"The insides work on you like they would any other food.")
-
-	//Return 1 to hook-caller
-	return 1
 
 //
 // Handle being clicked, perhaps with something to devour
@@ -234,7 +181,7 @@
 		if(B.internal_contents.len)
 			B.process_Life() //AKA 'do bellymodes_vr.dm'
 
-	if(recent_gurgle > world.time) return //Occasionally do supercleanups.
+	if(recent_gurgle > world.time) return //Occasionally recheck and clean
 
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]

@@ -115,8 +115,8 @@ var/list/preferences_datums = list()
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
-			load_vore()
-			return
+			if(load_vore_preferences())
+				return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)
@@ -1358,8 +1358,10 @@ var/list/preferences_datums = list()
 				if("load")
 					load_preferences()
 					load_character()
+					load_vore_preferences()
 
 				if("changeslot")
+					load_vore_preferences(text2num(href_list["num"]))
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -1424,4 +1426,16 @@ var/list/preferences_datums = list()
 	//vore
 	character.digestable = digestable
 	character.devourable = devourable
-	character.belly_prefs = vore_organs
+	character.vore_organs = belly_prefs
+
+	if(!length(belly_prefs))
+		var/datum/belly/B = new /datum/belly(src)
+		B.immutable = 1
+		B.name = "Stomach"
+		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
+		belly_prefs[B.name] = B
+
+	character.vore_selected = character.vore_organs[1]
+	for(var/I in character.vore_organs)
+		var/datum/belly/B = character.vore_organs[I]
+		B.owner = character
