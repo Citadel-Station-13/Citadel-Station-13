@@ -34,8 +34,11 @@
 	R.notify_ai(2)
 
 	R.uneq_all()
+	R.pixel_x = initial(pixel_x)
 	R.hands.icon_state = "nomod"
+	R.icon = 'icons/mob/robots.dmi'
 	R.icon_state = "robot"
+	R.update_icons()
 	qdel(R.module)
 	R.module = null
 
