@@ -16,9 +16,8 @@
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 100		// Time in deciseconds to swallow anything else
 	var/emoteTime = 600						// How long between stomach emotes at prey
-	var/digest_brute = 1					// Brute damage per tick in digestion mode
 	var/digest_burn = 1						// Burn damage per tick in digestion mode
-	var/digest_tickrate = 3					// Modulus this of air controller tick number to iterate gurgles on
+//	var/digest_tickrate = 3					// Modulus this of air controller tick number to iterate gurgles on
 	var/immutable = 0						// Prevents this belly from being deleted
 	var/escapable = 1						// Belly can be resisted out of at any time
 	var/escapetime = 100						// Deciseconds, how long to escape this belly
@@ -30,9 +29,9 @@
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
 	var/tmp/emotePend = 0						// If there's already a spawned thing counting for the next emote
 	var/tmp/recent_struggle = 0					// Flag to prevent struggle emote spam
-	var/tmp/recent_gurgle = 0					// Digestion timer
+	var/recent_gurgle = 0					// Digestion timer
+	var/normal_gurgle = 10					// digestion timer delay for living_vr handleing
 	// Don't forget to watch your commas at the end of each line if you change these.
-	var/datum/gas_mixture/air_contents = new() // Belly Air stuff
 
 	var/list/struggle_messages_outside = list(
 		"%pred's %belly wobbles with a squirming meal.",
@@ -317,9 +316,8 @@
 	dupe.human_prey_swallow_time = human_prey_swallow_time
 	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
 	dupe.emoteTime = emoteTime
-	dupe.digest_brute = digest_brute
 	dupe.digest_burn = digest_burn
-	dupe.digest_tickrate = digest_tickrate
+//	dupe.digest_tickrate = digest_tickrate
 	dupe.immutable = immutable
 	dupe.escapable = escapable
 	dupe.escapetime = escapetime

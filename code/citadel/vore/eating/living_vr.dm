@@ -4,7 +4,7 @@
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/recent_struggle = 0
-	var/devourable = 0					// Can the mob be vored at all?
+	var/devourable = 1					// Can the mob be vored at all?
 	var/tmp/recent_gurgle = 0
 
 //
@@ -173,15 +173,14 @@
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(recent_gurgle > world.time)
+	var/normal_gurgle = 10
+	if(recent_gurgle + normal_gurgle > world.time)
 		return
 
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		if(B.internal_contents.len)
 			B.process_Life() //AKA 'do bellymodes_vr.dm'
-
-	if(recent_gurgle > world.time) return //Occasionally recheck and clean
 
 	for (var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
