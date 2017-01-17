@@ -1,6 +1,6 @@
 /mob/living/New()
 	. = ..()
-
+/*
 	//Creates at least the typical 'stomach' on every mob.
 	spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 		if(!vore_organs.len)
@@ -28,7 +28,7 @@
 					"The guts treat you like food, squeezing to press more acids against you.",
 					"The onslaught against your body doesn't seem to be letting up; you're food now.",
 					"The insides work on you like they would any other food.")
-
+*/
 	generateStaticOverlay()
 	if(staticOverlays.len)
 		for(var/mob/living/simple_animal/drone/D in player_list)

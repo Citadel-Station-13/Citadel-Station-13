@@ -7,19 +7,13 @@
 	var/recent_struggle = 0
 	var/devourable = 1					// Can the mob be vored at all?
 	var/tmp/recent_gurgle = 0
+/
 //
 // Hook for generic creation of stuff on new creatures
 //
-/*
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
-
-	if(M.client && M.client.prefs_vr)
-		M.vore_organs = M.client.prefs_vr.belly_prefs
-		M.vore_selected = M.vore_organs[1]
-		M.digestable = M.client.prefs_vr.digestable
-		M.devourable = M.client.prefs_vr.devourable
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
@@ -28,7 +22,7 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved prefs, but they couldn't be loaded.</span>"
+					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -63,7 +57,7 @@
 
 	//Return 1 to hook-caller
 	return 1
-*/
+
 //
 // Handle being clicked, perhaps with something to devour
 //

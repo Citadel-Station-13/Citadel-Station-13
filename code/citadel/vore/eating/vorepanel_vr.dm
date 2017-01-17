@@ -442,11 +442,10 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(user.save_vore_prefs())
-			user << "<span class='notice'>Saved belly preferences.</span>"
+		if(!user.save_vore_prefs())
+			user << "<span class='notice'>Unable to save belly preferences.</span>"
 		else
-			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
-			log_admin("Could not save vore prefs on USER: [user].")
+			user << "<span class='warning'>Saved belly preferences!.</span>"
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable. Don't abuse this button by toggling it back and forth to extend a scene or whatever, or you'll make the admins cry. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
@@ -458,8 +457,8 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		if(user.client.prefs)
-			user.client.prefs.digestable = user.digestable
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.digestable = user.digestable
 
 	if(href_list["toggledvor"])
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
@@ -473,8 +472,8 @@
 
 	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
 
-		if(user.client.prefs)
-			user.client.prefs.devourable = user.devourable
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1
