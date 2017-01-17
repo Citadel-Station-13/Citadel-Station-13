@@ -111,10 +111,11 @@ var/list/preferences_datums = list()
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 8
+				max_save_slots = 16
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
+			load_vore()
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
@@ -123,7 +124,6 @@ var/list/preferences_datums = list()
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	return
-
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
