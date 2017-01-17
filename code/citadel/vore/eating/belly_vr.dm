@@ -108,7 +108,7 @@
 	if (internal_contents.len == 0)
 		return 0
 	for (var/atom/movable/M in internal_contents)
-		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+		M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 		internal_contents -= M  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
@@ -126,13 +126,13 @@
 	if (!(M in internal_contents))
 		return 0 // They weren't in this belly anyway
 
-	M.forceMove(owner)  // Move the belly contents into the same location as belly's owner.
+	M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 	internal_contents -= M  // Remove from the belly contents
 
-	var/datum/belly/B = check_belly(owner)
+/*	var/datum/belly/B = check_belly(owner) //TODO: make sure prey aren't being shadowrealm'd because this check is failing.
 	if(B)
 		B.internal_contents += M
-
+*/
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.

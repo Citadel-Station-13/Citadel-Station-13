@@ -35,7 +35,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //	Belly searching for simplifying other procs
 //
 /proc/check_belly(atom/movable/A)
-	if(istype(A.loc,/mob/living))
+	if(ismob(A.loc))
 		var/mob/living/M = A.loc
 		for(var/I in M.vore_organs)
 			var/datum/belly/B = M.vore_organs[I]
@@ -43,7 +43,6 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 				return(B)
 
 	return 0
-
 //
 //	Verb for toggling which orifice you eat people with!
 //
