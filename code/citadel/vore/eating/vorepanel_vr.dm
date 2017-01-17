@@ -442,14 +442,14 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!user.save_vore_prefs())
+		if(!save_preferences())
 			user << "<span class='notice'>Unable to save belly preferences.</span>"
 		else
-			user << "<span class='warning'>Saved belly preferences!.</span>"
+			user << "<span class='warning'>Saved preferences!.</span>"
 
 	if(href_list["toggledg"])
-		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
-		switch(choice)
+		var/digest_choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
+		switch(digest_choice)
 			if("Cancel")
 				return 1
 			if("Allow Digestion")
@@ -457,12 +457,12 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.digestable = user.digestable
+		if(digest_choice)
+			digestable = digest_choice
 
 	if(href_list["toggledvor"])
-		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
-		switch(choice)
+		var/devour_choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
+		switch(devour_choice)
 			if("Cancel")
 				return 1
 			if("Allow Devourment")
@@ -472,8 +472,8 @@
 
 	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.devourable = user.devourable
+		if(devour_choice)
+			devourable = devour_choice
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

@@ -1358,10 +1358,8 @@ var/list/preferences_datums = list()
 				if("load")
 					load_preferences()
 					load_character()
-					attempt_vr(prefs_vr,"load_vore","")
 
 				if("changeslot")
-					attempt_vr(prefs_vr,"load_vore","")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -1422,3 +1420,8 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+	//vore
+	character.digestable = digestable
+	character.devourable = devourable
+	character.belly_prefs = vore_organs

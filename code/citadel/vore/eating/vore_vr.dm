@@ -26,7 +26,10 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 /datum/preferences
 	var/datum/vore_preferences/prefs_vr
-
+	var/digestable = 1
+	var/devourable = 1
+	var/list/belly_prefs = list()
+/*
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
 	if(C.prefs_vr)
@@ -102,7 +105,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 //	Verb for saving vore preferences to save file
 //
 /mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!(client)
 		return 0
 	if(!copy_to_prefs_vr())
 		return 0
@@ -112,9 +115,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	return 1
 
 /mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
+	if(!(client))
 		return 0
-	if(!client.prefs_vr.load_vore())
+	if(!client.load_vore())
 		return 0
 	if(!copy_from_prefs_vr())
 		return 0
@@ -122,7 +125,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	return 1
 
 /mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
+	if(!client)
 		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
 		return 0
 
@@ -153,7 +156,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 		src.vore_organs[Bp.name] = Bp.copy(src)
 
 	return 1
-
+*/
 //
 //	Check if an object is capable of eating things, based on vore_organs
 //
@@ -176,7 +179,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 				return(B)
 
 	return 0
-//
+/*
 //	Verb for toggling which orifice you eat people with!
 //
 /mob/living/proc/belly_select()
@@ -188,7 +191,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 
 //
 //	Verb for saving vore preferences to save file
-/*
+
 /mob/living/proc/save_vore_prefs()
 	set name = "Save Vore Prefs"
 	set category = "Vore"

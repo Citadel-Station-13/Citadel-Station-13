@@ -175,6 +175,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
 
+	//vore
+
+	S["digestable"] >> digestable
+	S["devourable"] >> devourable
+	S["belly_prefs"] >> belly_prefs
+
+	if(isnull(digestable))
+		digestable = 1
+	if(isnull(devourable))
+		devourable = 1
+	if(isnull(belly_prefs))
+		belly_prefs = list()
+
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
@@ -230,6 +243,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
+
+	//vore
+
+	S["digestable"] << digestable
+	S["devourable"] << devourable
+	S["belly_prefs"] << belly_prefs
 
 	return 1
 
