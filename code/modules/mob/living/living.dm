@@ -5,6 +5,7 @@
 	spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 		if(!vore_organs.len)
 			var/datum/belly/B = new /datum/belly(src)
+			B.owner = src
 			B.immutable = 1
 			B.name = "Stomach"
 			B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [name]."
