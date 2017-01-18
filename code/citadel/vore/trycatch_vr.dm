@@ -45,14 +45,14 @@ The hooks you're calling should return nonzero values on success.
 	try
 		var/hook_path = text2path("/hook/[hook]")
 		if(!hook_path)
-			log_admin("hook_vr: Invalid hook '/hook/[hook]' called.")
+			//	error("hook_vr: Invalid hook '/hook/[hook]' called.")
 			return 0
 
 		var/caller = new hook_path
 		var/status = 1
 		for(var/P in typesof("[hook_path]/proc"))
 			if(!call(caller, P)(arglist(args)))
-				log_admin("hook_vr: Hook '[P]' failed or runtimed.")
+				//	error("hook_vr: Hook '[P]' failed or runtimed.")
 				status = 0
 
 		return status
