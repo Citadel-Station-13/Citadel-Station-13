@@ -56,7 +56,7 @@
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
 				M.adjustFireLoss(1)
-			//	owner.nutrition += 5
+				owner.nutrition += 1
 		recent_gurgle = world.time
 		return
 
@@ -102,7 +102,7 @@
 			if(!(M.status_flags & GODMODE))
 				M.adjustBruteLoss(2)
 				M.adjustFireLoss(3)
-	//			owner.nutrition += 5
+				owner.nutrition += 1
 		recent_gurgle = world.time
 		return
 

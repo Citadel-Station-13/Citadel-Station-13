@@ -172,7 +172,7 @@
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
-/mob/living/proc/handle_internal_contents(var/mob/living/prey, var/mob/living/owner)
+/mob/living/proc/handle_internal_contents()
 	var/normal_gurgle = 10
 	if(recent_gurgle + normal_gurgle > world.time)
 		return
@@ -183,7 +183,7 @@
 			if(M.loc != src)
 				B.internal_contents -= M
 				log_attack("Had to remove [M] from belly [B] in [src]")
-		B.process_Life(prey, owner)
+		B.process_Life()
 
 // OOC Escape code for pref-breaking or AFK preds
 //

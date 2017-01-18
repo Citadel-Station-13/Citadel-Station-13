@@ -1427,15 +1427,10 @@ var/list/preferences_datums = list()
 	character.digestable = digestable
 	character.devourable = devourable
 	character.vore_organs = belly_prefs
-
 	if(!length(belly_prefs))
 		var/datum/belly/B = new /datum/belly(src)
 		B.immutable = 1
 		B.name = "Stomach"
 		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
 		belly_prefs[B.name] = B
-
-	character.vore_selected = character.vore_organs[1]
-	for(var/I in character.vore_organs)
-		var/datum/belly/B = character.vore_organs[I]
-		B.owner = character
+		src << "Standard issue gut applied"
