@@ -21,8 +21,6 @@
 /mob/living/carbon/monkey/New()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
-	verbs += /mob/living/proc/insidePanel
-	verbs += /mob/living/proc/escapeOOC
 
 	if(unique_name) //used to exclude pun pun
 		gender = pick(MALE, FEMALE)
