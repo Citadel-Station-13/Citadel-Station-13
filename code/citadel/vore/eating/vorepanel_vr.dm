@@ -63,6 +63,7 @@
 	dat += "<ol style='list-style: none; padding: 0; overflow: auto;'>"
 	for(var/K in user.vore_organs) //Fuggin can't iterate over values
 		var/datum/belly/B = user.vore_organs[K]
+		B.owner = user
 		if(B == selected)
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else

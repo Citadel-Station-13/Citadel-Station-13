@@ -31,7 +31,8 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(istype(O,/mob/living))
 		if(O.vore_organs.len > 0)
 			return 1
-
+//	verbs -= /mob/living/proc/insidePanel
+//	verbs -= /mob/living/proc/escapeOOC
 	return 0
 
 //
