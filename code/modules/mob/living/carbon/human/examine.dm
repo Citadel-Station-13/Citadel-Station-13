@@ -258,6 +258,10 @@
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
 
+	for (var/I in src.vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		msg += B.get_examine_msg()
+
 	msg += "</span>"
 
 	if(!appears_dead)
@@ -326,6 +330,11 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_crime=1'>\[Add crime\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;view_comment=1'>\[View comment log\]</a> "
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
+
+
+	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
+		msg += "[print_flavor_text()]\n"
+
 	msg += "*---------*</span>"
 
 	user << msg

@@ -13,8 +13,10 @@
 
 /hook/simple_animal_new
 
+/hook/preferences_new
+
 //Hooks for interactions
-/hook/living_attackby
+//hook/living_attackby
 
 //
 //Hook helpers to expand hooks to others

@@ -126,48 +126,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
 
-
-// Save/Load Vore Preferences
-//
-/datum/preferences/proc/load_vore_preferences(slot)
-	if(!path) return 0 //Path couldn't be set?
-	if(!fexists(path)) //Never saved before
-		save_vore_preferences() //Make the file first
-		return 1
-
-	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
-
-	S.cd = "/character[slot]"
-
-	S["digestable"] >> digestable
-	S["devourable"] >> devourable
-	S["belly_prefs"] >> belly_prefs
-
-	if(isnull(digestable))
-		digestable = 1
-	if(isnull(devourable))
-		devourable = 0
-	if(isnull(belly_prefs))
-		belly_prefs = list()
-
-	return 1
-
-/datum/preferences/proc/save_vore_preferences()
-	if(!path)
-		return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)
-		return 0
-	S.cd = "/character[default_slot]"
-
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
-
-	return 1
-
-
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -216,6 +174,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
+
+	//vore
+
+	S["digestable"] >> digestable
+	S["devourable"] >> devourable
+	S["belly_prefs"] >> belly_prefs
+
+	if(isnull(digestable))
+		digestable = 1
+	if(isnull(devourable))
+		devourable = 1
+	if(isnull(belly_prefs))
+		belly_prefs = list()
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -272,6 +243,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
+
+	//vore
+
+	S["digestable"] << digestable
+	S["devourable"] << devourable
+	S["belly_prefs"] << belly_prefs
 
 	return 1
 
@@ -509,6 +486,42 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return 1
 
+/datum/preferences/proc/load_vore_preferences(slot)
+	if(!path)				return 0
+	if(!fexists(path))		return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/"
+	if(!slot)	slot = default_slot
+	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	if(slot != default_slot)
+		default_slot = slot
+		S["default_slot"] << slot
+	S.cd = "/character[slot]"
+
+	S["belly_prefs"]	>> belly_prefs
+	S["devourable"] >> devourable
+	S["digestable"]	>> digestable
+
+	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
+	devourable = sanitize_integer(devourable, 0, 1, initial(devourable))
+
+	if(!belly_prefs)
+		belly_prefs = list()
+
+	return 1
+
+/datum/preferences/proc/save_vore_preferences()
+	if(!path)				return 0
+	var/savefile/S = new /savefile(path)
+	if(!S)					return 0
+	S.cd = "/character[default_slot]"
+
+	S["belly_prefs"]	<< belly_prefs
+	S["devourable"] << devourable
+	S["digestable"]	<< digestable
+
+	return 1
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
