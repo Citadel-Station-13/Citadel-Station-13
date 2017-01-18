@@ -1435,10 +1435,6 @@ var/list/preferences_datums = list()
 		B.name = "Stomach"
 		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
 		belly_prefs[B.name] = B */
-	world << "preparing to set owner to [character]"
 	for(var/datum/belly/B in character.vore_organs)
-		world << "Ownership attempted for [character]"
 		if(!B.owner)
 			return B.owner = character
-			world << "Set [B] owner to [character]"
-	world << "Just set owner to [character]"
