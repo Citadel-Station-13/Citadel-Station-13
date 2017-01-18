@@ -4,6 +4,7 @@
 	var/obj/item/clothing/neck/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
+	devourable = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)

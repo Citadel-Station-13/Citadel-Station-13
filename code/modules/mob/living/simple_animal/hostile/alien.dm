@@ -33,6 +33,7 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
 	gold_core_spawnable = 0
+	devourable = 1
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
 

@@ -53,6 +53,8 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
+	if(ismob(loc))
+		return ONE_ATMOSPHERE //hopefully won't murderficate people in your guts by going for a spacewalk
 	else
 		return pressure
 
@@ -247,7 +249,8 @@
 
 /mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
-
+	if(ismob(loc))
+		return 1 // Because someone inside your belly while you're safe from fire shouldn't cook them either.
 	var/thermal_protection = 0
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
@@ -306,6 +309,9 @@
 
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
+
+	if(ismob(loc))
+		return 1 //because lazy
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1

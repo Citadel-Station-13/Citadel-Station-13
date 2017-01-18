@@ -89,11 +89,6 @@ var/list/preferences_datums = list()
 
 	var/flavor_text = ""
 
-		// Vore prefs
-	var/digestable = 1
-	var/devourable = 0
-	var/list/belly_prefs = list()
-
 		// OOC Metadata:
 	var/metadata = ""
 
@@ -116,13 +111,12 @@ var/list/preferences_datums = list()
 			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 15
+				max_save_slots = 16
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
 			if(load_vore_preferences())
 				return
-			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)
@@ -130,7 +124,6 @@ var/list/preferences_datums = list()
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	return
-
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
@@ -223,6 +216,7 @@ var/list/preferences_datums = list()
 				dat += "[TextPreview(flavor_text)]...<br>"
 			dat += "<br>"
 
+			dat += "<br>"
 			if(pref_species.use_skintones)
 
 				dat += "<td valign='top' width='21%'>"
@@ -1360,7 +1354,6 @@ var/list/preferences_datums = list()
 				if("save")
 					save_preferences()
 					save_character()
-					save_vore_preferences()
 
 				if("load")
 					load_preferences()
@@ -1400,25 +1393,6 @@ var/list/preferences_datums = list()
 	character.name = character.real_name
 
 	character.flavor_text = flavor_text
-
-	if(!length(belly_prefs))
-		var/datum/belly/B = new /datum/belly(src)
-		B.immutable = 1
-		B.name = "Stomach"
-		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
-		belly_prefs[B.name] = B
-
-	character.vore_organs = belly_prefs
-
-	character.vore_selected = character.vore_organs[1]
-
-	for(var/I in character.vore_organs)
-		var/datum/belly/B = character.vore_organs[I]
-		B.owner = character
-
-	character.digestable = digestable
-//	character.devourable = devourable
-
 	character.gender = gender
 	character.age = age
 
@@ -1448,3 +1422,19 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+	//vore
+	character.digestable = digestable
+	character.devourable = devourable
+	character.vore_organs = belly_prefs
+	character.vore_selected = character.vore_organs[1]
+	/*
+	if(!length(belly_prefs))
+		var/datum/belly/B = new /datum/belly(src)
+		B.immutable = 1
+		B.name = "Stomach"
+		B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [character]."
+		belly_prefs[B.name] = B */
+	for(var/datum/belly/B in character.vore_organs)
+		if(!B.owner)
+			return B.owner = character

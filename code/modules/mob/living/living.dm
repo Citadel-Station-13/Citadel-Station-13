@@ -17,6 +17,25 @@
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+	//Tries to load prefs if a client is present otherwise gives freebie stomach
+	spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
+		verbs += /mob/living/proc/insidePanel
+		verbs += /mob/living/proc/escapeOOC
+
+		if(!vore_organs.len)
+		//	if(isanimal(src))
+		//		return 0 // No random NPC guts
+		//	if(isbrain(src))
+		//		return 0 // No Brain guts
+		//	if(issilicon(src))
+		//		return 0 // No guts for Silicons either
+			var/datum/belly/B = new /datum/belly(src)
+			B.owner = src
+			B.immutable = 1
+			B.name = "Stomach"
+			B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [name]."
+			vore_organs[B.name] = B
+			vore_selected = B.name
 
 /mob/living/prepare_huds()
 	..()
@@ -152,8 +171,14 @@
 			if(!M_passmob)
 				M.pass_flags &= ~PASSMOB
 
+			// In case of micros, we don't swap positions; instead occupying the same square!
+			if (handle_micro_bump_helping(M)) return
+
 			now_pushing = 0
 			return 1
+
+	// Handle grabbing, stomping, and such of micros!
+	if(handle_micro_bump_other(M)) return
 
 	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
@@ -539,6 +564,11 @@
 	//unbuckling yourself
 	if(buckled && last_special <= world.time)
 		resist_buckle()
+
+	// climbing out of a gut
+	else if(ismob(loc))
+		vore_process_resist(src)
+		return
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))

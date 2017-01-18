@@ -28,6 +28,7 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
+	devourable = 1
 
 /mob/living/simple_animal/hostile/retaliate/goat/New()
 	udder = new()
@@ -105,6 +106,7 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
+	devourable = 1
 
 /mob/living/simple_animal/cow/New()
 	udder = new()
@@ -180,6 +182,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
+	devourable = 1
 
 /mob/living/simple_animal/chick/New()
 	..()
@@ -237,6 +240,7 @@ var/global/chicken_count = 0
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
+	devourable = 1
 
 /mob/living/simple_animal/chicken/New()
 	..()
