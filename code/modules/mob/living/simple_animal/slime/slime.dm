@@ -16,6 +16,7 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	languages_spoken = SLIME | HUMAN
 	languages_understood = SLIME | HUMAN
 	faction = list("slime")
+	devourable = 1
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"

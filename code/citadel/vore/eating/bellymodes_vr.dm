@@ -12,9 +12,6 @@
 				M << "<span class='notice'>[pick(EL)]</span>"
 			src.emotePend = 0
 
-//////////////////////////////Integrity regeneration ////////////////
-	integrity=min(integrity+8,100)
-
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)
 		return //Pretty boring, huh
@@ -24,8 +21,9 @@
 
 		if(prob(50))
 			var/churnsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound,volume=60)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -49,19 +47,17 @@
 				//Send messages
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
-
-				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				var/deathsound = pick(death_sounds)
-				for(var/mob/hearer in range(1,owner))
-					hearer << deathsound
+				owner.nutrition += NUTRITION_LEVEL_FULL
+				for(M in get_hearers_in_view(3,owner))
+					playsound(owner.loc, pick(death_sounds), 100, 1)
 				digestion_death(M)
 				continue
 
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
-				M.adjustBruteLoss(1)
 				M.adjustFireLoss(1)
-				owner.nutrition += 10
+				owner.nutrition += 1
+		recent_gurgle = world.time
 		return
 
 //////////////////////////// DM_DIGESTF ////////////////////////////
@@ -69,8 +65,9 @@
 
 		if(prob(50))
 			var/churnsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound,volume=80)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -95,10 +92,9 @@
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
 
-				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				var/deathsound = pick(death_sounds)
-				for(var/mob/hearer in range(1,owner))
-					hearer << deathsound
+				owner.nutrition += NUTRITION_LEVEL_FULL
+				for(M in get_hearers_in_view(2,owner))
+					playsound(owner.loc, pick(death_sounds), 70, 1)
 				digestion_death(M)
 				continue
 
@@ -106,22 +102,23 @@
 			if(!(M.status_flags & GODMODE))
 				M.adjustBruteLoss(2)
 				M.adjustFireLoss(3)
-				owner.nutrition += 10
+				owner.nutrition += 1
+		recent_gurgle = world.time
 		return
 
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		if(prob(50)) //Wet heals!
-			var/healsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(healsound,volume=80)
+			var/churnsound = pick(digestion_sounds)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)
-				if(owner.nutrition > 90 && (M.health < M.maxHealth))
-					M.adjustBruteLoss(-2)
-					M.adjustFireLoss(-2)
-					owner.nutrition -= 2
-					if(M.nutrition <= 400)
-						M.nutrition += 1
+				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
+					M.adjustBruteLoss(-1)
+					M.adjustFireLoss(-1)
+					owner.nutrition -= 10
+		recent_gurgle = world.time
 		return
