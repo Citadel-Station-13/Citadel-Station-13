@@ -128,10 +128,10 @@
 	M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
 	internal_contents -= M  // Remove from the belly contents
 
-/*	var/datum/belly/B = check_belly(owner) //TODO: make sure prey aren't being shadowrealm'd because this check is failing.
+	var/datum/belly/B = check_belly(owner) //TODO: make sure prey aren't being shadowrealm'd because this check is failing.
 	if(B)
 		B.internal_contents += M
-*/
+
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
@@ -196,7 +196,7 @@
 	for(var/i = 1, i <= raw_list.len, i++)
 		if(length(raw_list[i]) > 160 || length(raw_list[i]) < 10) //160 is fudged value due to htmlencoding increasing the size
 			raw_list.Cut(i,i)
-			log_attack("[owner] tried to set [name] with >121 or <10 char message")
+			log_admin("[owner] tried to set [name] with >121 or <10 char message")
 		else
 			raw_list[i] = readd_quotes(raw_list[i])
 			//Also fix % sign for var replacement
@@ -261,7 +261,7 @@
 	if (!(R in internal_contents))
 		return  // User is not in this belly, or struggle too soon.
 
-	if(recent_struggle > world.time)
+	if(recent_struggle + normal_gurgle > world.time)
 		return
 
 	if(owner.stat || escapable && R.a_intent != "help") //If owner is stat (dead, KO) we can actually escape, or if belly is set to escapable (non-default)
@@ -301,7 +301,7 @@
 	var/strpick = pick(struggle_sounds)
 	var/strsound = struggle_sounds[strpick]
 	playsound(get_turf(R), strsound, 50, 1)
-	recent_struggle = world.time + 30 //hopefully to cut down on people just spamming it
+	recent_struggle = world.time //hopefully to cut down on people just spamming it
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes

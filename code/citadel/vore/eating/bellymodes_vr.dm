@@ -1,6 +1,6 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 // Called from /mob/living/Life() proc.
-/datum/belly/proc/process_Life(mob/living/owner)
+/datum/belly/proc/process_Life()
 
 /////////////////////////// Auto-Emotes ///////////////////////////
 	if((digest_mode in emote_lists) && !emotePend)
@@ -20,9 +20,10 @@
 	if(digest_mode == DM_DIGEST)
 
 		if(prob(50))
-		//	var/churnsound = pick(digestion_sounds)
-			for(hearers(1,owner))
-				playsound(owner, pick(digestion_sounds), 80, 1)
+			var/churnsound = pick(digestion_sounds)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -46,8 +47,8 @@
 				//Send messages
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
-				owner.nutrition += 400
-				for(hearers(1,owner))
+				owner.nutrition += NUTRITION_LEVEL_FULL
+				for(M in get_hearers_in_view(3,owner))
 					playsound(owner.loc, pick(death_sounds), 100, 1)
 				digestion_death(M)
 				continue
@@ -63,9 +64,10 @@
 	if(digest_mode == DM_DIGESTF)
 
 		if(prob(50))
-		//	var/churnsound = pick(digestion_sounds)
-			for(hearers(1,owner))
-				playsound(owner, pick(digestion_sounds), 80, 1)
+			var/churnsound = pick(digestion_sounds)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -90,8 +92,8 @@
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
 
-				owner.nutrition += 400
-				for(hearers(1,owner))
+				owner.nutrition += NUTRITION_LEVEL_FULL
+				for(M in get_hearers_in_view(2,owner))
 					playsound(owner.loc, pick(death_sounds), 70, 1)
 				digestion_death(M)
 				continue
@@ -107,13 +109,14 @@
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		if(prob(50)) //Wet heals!
-	//		var/churnsound = pick(digestion_sounds)
-			for(hearers(1,owner))
-				playsound(owner, pick(digestion_sounds), 80, 1)
+			var/churnsound = pick(digestion_sounds)
+			var/gurgsound = struggle_sounds[churnsound]
+			for(var/mob/living/M in get_hearers_in_view(4,owner))
+				playsound(owner, pick(gurgsound), 80, 1)
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)
-				if(owner.nutrition > 90 && (M.health < M.maxHealth))
+				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
 					M.adjustBruteLoss(-1)
 					M.adjustFireLoss(-1)
 					owner.nutrition -= 10

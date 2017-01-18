@@ -172,24 +172,19 @@
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
-/mob/living/proc/handle_internal_contents()
+/mob/living/proc/handle_internal_contents(var/mob/living/prey, var/mob/living/owner)
 	var/normal_gurgle = 10
 	if(recent_gurgle + normal_gurgle > world.time)
 		return
 
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			B.process_Life() //AKA 'do bellymodes_vr.dm'
+	for (var/bellytype in vore_organs)
+		var/datum/belly/B = vore_organs[bellytype]
+		for(var/atom/movable/M in B.internal_contents)
+			if(M.loc != src)
+				B.internal_contents -= M
+				log_attack("Had to remove [M] from belly [B] in [src]")
+		B.process_Life(prey, owner)
 
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			for(var/atom/movable/M in B.internal_contents)
-				if(M.loc != src)
-					B.internal_contents -= M
-					log_attack("Had to remove [M] from belly [B] in [src]")
-//
 // OOC Escape code for pref-breaking or AFK preds
 //
 /mob/living/proc/escapeOOC()
