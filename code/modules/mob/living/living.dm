@@ -1,6 +1,5 @@
 /mob/living/New()
 	. = ..()
-
 	generateStaticOverlay()
 	if(staticOverlays.len)
 		for(var/mob/living/simple_animal/drone/D in player_list)
