@@ -16,6 +16,8 @@
 	var/vehicle_move_delay = 2 //tick delay between movements, lower = faster, higher = slower
 	var/auto_door_open = TRUE
 	var/view_range = 7
+	var/vehiclerunning = FALSE //whether the vehicle is running / able to move
+	var/spacemove = FALSE
 
 	//Pixels
 	var/generic_pixel_x = 0 //All dirs show this pixel_x for the driver
@@ -74,6 +76,7 @@
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
+		vehiclerunning = FALSE
 		if(buckled_mob.client)
 			buckled_mob.client.view = world.view
 	. = ..()
@@ -103,8 +106,15 @@
 		return
 	next_vehicle_move = world.time + vehicle_move_delay
 	if(keycheck(user))
-		if(!Process_Spacemove(direction) || !isturf(loc))
+		vehiclerunning = TRUE
+		if(world.time < next_vehicle_move || !isturf(loc))
 			return
+		if(spacemove = FALSE)
+			if(!Process_Spacemove(direction))
+				return
+
+		next_vehicle_move = world.time + vehicle_move_delay
+
 		step(src, direction)
 
 		handle_vehicle_layer()
