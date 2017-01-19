@@ -73,6 +73,7 @@
 	name = "Ash Walker"
 	id = "ashlizard"
 	limbs_id = "lizard"
+	roundstart = 0
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,NOBREATH,NOGUNS,DIGITIGRADE)
 /*
  PODPEOPLE

@@ -98,7 +98,7 @@ var/list/preferences_datums = list()
 
 	var/clientfps = 0
 
-	var/parallax = PARALLAX_HIGH
+	var/parallax = PARALLAX_DISABLE //Starting disabled by default so people stop freaking about about certain issues.
 
 /datum/preferences/New(client/C)
 	parent = C
