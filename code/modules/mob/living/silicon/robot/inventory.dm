@@ -18,7 +18,7 @@
 		update_sight()
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
-		T.do_quick_empty()
+		T.do_quick_empty() /*
 	else if(istype(O, /obj/item/weapon/storage/bag/borgdelivery/))
 		var/obj/item/weapon/storage/bag/borgdelivery/T = O
 		T.do_quick_empty()
@@ -33,7 +33,7 @@
 		sleeper_r = 0
 		update_icons()
 		var/obj/item/weapon/dogborg/sleeper/S = O
-		S.go_out()
+		S.go_out() */
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)

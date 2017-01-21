@@ -130,7 +130,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-
+/*
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
@@ -141,12 +141,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				send2otherserver("[station_name()]", input,"Comms_Console")
+			//	send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-
+*/
 		if("purchase_menu")
 			state = STATE_PURCHASE
 

@@ -259,7 +259,7 @@ var/list/admin_verbs_hideable = list(
 
 		var/rights = holder.rank.rights
 		verbs += admin_verbs_default
-		verbs += cmd_mentor_say
+		verbs += /client/proc/cmd_mentor_say
 		if(rights & R_BUILDMODE)
 			verbs += /client/proc/togglebuildmodeself
 		if(rights & R_ADMIN)

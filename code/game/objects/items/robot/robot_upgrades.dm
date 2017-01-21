@@ -45,7 +45,7 @@
 	qdel(R.module)
 	R.module = null
 
-	R.modtype = "robot"
+//	R.modtype = "robot"
 	R.designation = "Default"
 	R.updatename("Default")
 

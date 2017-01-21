@@ -598,7 +598,7 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
-
+/*
 	if(laser == 1)
 		add_overlay("laser")
 	if(disabler == 1)
@@ -621,6 +621,7 @@
 	if(stat < 2 && icon_state == "medihound-wreck")
 		icon_state = "medihound"
 
+ //None of this is working with borg code Verki
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
 		pick_module()
@@ -652,7 +653,7 @@
 		else
 			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
 	dat += "</table>"
-/*
+
 		if(activated(obj))
 			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
 		else
