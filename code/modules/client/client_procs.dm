@@ -35,6 +35,21 @@
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
+	if(href_list["mentor_msg"])
+		if(config.mentors_mobname_only)
+			var/mob/M = locate(href_list["mentor_msg"])
+			cmd_mentor_pm(M,null)
+		else
+			cmd_mentor_pm(href_list["mentor_msg"],null)
+		return
+
+	if(href_list["mentor_follow"])
+		var/mob/living/M = locate(href_list["mentor_follow"])
+
+		if(istype(M))
+			mentor_follow(M)
+
+		return
 	//Logs all hrefs
 	if(config && config.log_hrefs && href_logfile)
 		href_logfile << "<small>[time2text(world.timeofday,"hh:mm")] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"

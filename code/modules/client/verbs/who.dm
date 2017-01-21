@@ -41,6 +41,21 @@
 				if(C.holder && C.holder.fakekey)
 					entry += " <i>(as [C.holder.fakekey])</i>"
 				Lines += entry
+
+	if(length(admins) > 0)
+		Lines += "<b>Admins:</b>"
+		for(var/client/C in sortList(admins))
+			if(C.holder)
+				if(!C.holder.fakekey)
+					Lines += "<font color='#FF0000'>[C.key]</font>[show_info(C)]"
+
+	if(length(mentors) > 0)
+		Lines += "<b>Mentors:</b>"
+		for(var/client/C in sortList(clients))
+			var/mentor = mentor_datums[C.ckey]
+			if(mentor)
+				Lines += "<font color='#0033CC'>[C.key]</font>[show_info(C)]"
+
 	else
 		for(var/client/C in clients)
 			if(C.holder && C.holder.fakekey)
@@ -78,8 +93,32 @@
 			msg += "\n"
 	else
 		for(var/client/C in admins)
+			if(C.is_afk())
+				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
+		msg += "<span class='info'>Adminhelps can be vaguely alluded to on discord. If no admins are available in game an admin on Discord will see it and respond in the #adminhelp channel.Use @Gameadmin to ping.</span>"
 	src << msg
 
+
+/client/verb/mentorwho()
+	set category = "Mentor"
+	set name = "Mentorwho"
+
+	var/msg = "<b>Current Mentors:</b>\n"
+	for(var/client/C in mentors)
+		var/suffix = ""
+		if(holder)
+			if(isobserver(C.mob))
+				suffix += " - Observing"
+			else if(istype(C.mob,/mob/new_player))
+				suffix += " - Lobby"
+			else
+				suffix += " - Playing"
+
+			if(C.is_afk())
+				suffix += " (AFK)"
+
+		msg += "\t[C][suffix]\n"
+
+	src << msg
