@@ -1637,6 +1637,13 @@
 	icon_state = "lab"
 
 //Husky
+/datum/sprite_accessory/mam_ears/husky
+	name = "Husky"
+	icon_state = "wolf"
+	hasinner = 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
 /datum/sprite_accessory/mam_tails/husky
 	name = "Husky"
 	icon_state = "husky"
