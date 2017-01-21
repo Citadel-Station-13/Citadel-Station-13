@@ -196,7 +196,7 @@
 				return
 
 	if(irc)
-		log_admin("PM: [key_name(src)]->IRC: [rawmsg]")
+		log_admin("PM: [key_name(src)]->IRC: [msg]")
 		for(var/client/X in admins)
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" //inform X
 	else

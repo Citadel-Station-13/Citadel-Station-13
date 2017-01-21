@@ -24,6 +24,43 @@
 		usr << "There's no mounting point for the module!"
 		return 1
 
+/obj/item/borg/upgrade/reset
+	name = "cyborg module reset board"
+	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the cyborg."
+	icon_state = "cyborg_upgrade1"
+	require_module = 1
+
+/obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	R.notify_ai(2)
+
+	R.uneq_all()
+	R.pixel_x = initial(pixel_x)
+	R.hands.icon_state = "nomod"
+	R.icon = 'icons/mob/robots.dmi'
+	R.icon_state = "robot"
+	R.update_icons()
+	qdel(R.module)
+	R.module = null
+
+//	R.modtype = "robot"
+	R.designation = "Default"
+	R.updatename("Default")
+
+	R.update_icons()
+	R.update_headlamp()
+
+	R.speed = 0 // Remove upgrades.
+	R.ionpulse = FALSE
+	R.magpulse = FALSE
+	R.weather_immunities = initial(R.weather_immunities)
+
+	R.status_flags |= CANPUSH
+
+	return 1
+
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."

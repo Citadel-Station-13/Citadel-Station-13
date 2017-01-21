@@ -124,6 +124,18 @@ var/next_mob_id = 0
 						continue
 		M.show_message(msg,1,blind_message,2)
 
+/mob/proc/get_top_level_mob()
+	if(istype(src.loc,/mob)&&src.loc!=src)
+		var/mob/M=src.loc
+		return M.get_top_level_mob()
+	return src
+
+proc/get_top_level_mob(var/mob/S)
+	if(istype(S.loc,/mob)&&S.loc!=S)
+		var/mob/M=S.loc
+		return M.get_top_level_mob()
+	return S
+
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
 // message is the message output to anyone who can hear.
