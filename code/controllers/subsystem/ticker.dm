@@ -57,7 +57,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/title7.ogg' = 14, 'sound/ambience/clown.ogg' = 3)) // choose title music!
+	login_music = pickweight(list('sound/ambience/title2.ogg' = 15, 'sound/ambience/title1.ogg' =15, 'sound/ambience/title3.ogg' =14, 'sound/ambience/title4.ogg' =14, 'sound/misc/i_did_not_grief_them.ogg' =14, 'sound/ambience/clown.ogg' = 9, 'sound/ambience/title7.ogg' = 14)) // choose title music!
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
 		login_music = 'sound/ambience/clown.ogg'
 
@@ -75,6 +75,8 @@ var/datum/subsystem/ticker/ticker
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
+			for(var/client/C in clients)
+				window_flash(C) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -164,7 +166,7 @@ var/datum/subsystem/ticker/ticker
 		if(!can_continue)
 			qdel(mode)
 			mode = null
-			world << "<B>Error setting up [master_mode]. It's likely that there are no available antagonists for the selected mode.</B> Reverting to pre-game lobby."
+			world << "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby."
 			SSjob.ResetOccupations()
 			return 0
 	else
@@ -214,6 +216,7 @@ var/datum/subsystem/ticker/ticker
 		if(0 == admins.len)
 			send2irc("Server", "Round just started with no active admins online!")
 			send2admindiscord("**Round has started with no admins online.**", TRUE)
+
 	return 1
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
@@ -438,13 +441,13 @@ var/datum/subsystem/ticker/ticker
 
 	mode.declare_completion()//To declare normal completion.
 
-	if(cross_allowed)
-		send_news_report()
-
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
+
+	if(cross_allowed)
+		send_news_report()
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -497,7 +500,6 @@ var/datum/subsystem/ticker/ticker
 				world << "<b><font color='green'>The borers were successful!</font></b>"
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
-	return TRUE
 
 	mode.declare_station_goal_completion()
 
@@ -661,4 +663,3 @@ var/datum/subsystem/ticker/ticker
 
 	if(news_message)
 		send2irc(news_source, news_message,"News_Report") //possible runtime, but we don't have the cross server stuff
-
