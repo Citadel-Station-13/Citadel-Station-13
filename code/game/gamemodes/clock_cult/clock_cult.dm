@@ -93,7 +93,7 @@ Credit where due:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 24
+	required_players = 10
 	required_enemies = 3
 	recommended_enemies = 3
 	enemy_minimum_age = 14

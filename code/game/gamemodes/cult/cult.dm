@@ -36,9 +36,9 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 24
-	required_enemies = 4
-	recommended_enemies = 4
+	required_players = 10
+	required_enemies = 2
+	recommended_enemies = 2
 	enemy_minimum_age = 14
 
 	announce_span = "cult"
@@ -49,7 +49,7 @@
 	var/finished = 0
 	var/eldergod = 1 //for the summon god objective
 
-	var/acolytes_needed = 10 //for the survive objective
+	var/acolytes_needed = 5 //for the survive objective
 	var/acolytes_survived = 0
 
 	var/datum/mind/sacrifice_target = null//The target to be sacrificed
