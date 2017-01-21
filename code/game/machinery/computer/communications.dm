@@ -130,8 +130,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-        
-/*
+
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
@@ -147,39 +146,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-*/
-		if("purchase_menu")
-			state = STATE_PURCHASE
-
-		if("buyshuttle")
-			if(authenticated==2)
-				var/list/shuttles = flatten_list(shuttle_templates)
-				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
-				if(S && istype(S))
-					if(SSshuttle.emergency.mode != SHUTTLE_CALL && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
-						usr << "It's a bit late to buy a new shuttle, don't you think?"
-						return
-					if(SSshuttle.shuttle_purchased)
-						usr << "A replacement shuttle has already been purchased."
-					else if(!S.prerequisites_met())
-						usr << "You have not met the requirements for purchasing this shuttle."
-					else
-						if(SSshuttle.points >= S.credit_cost)
-							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
-							if(M)
-								SSshuttle.shuttle_purchased = TRUE
-								M.unload_preview()
-								M.load_template(S)
-								M.existing_shuttle = SSshuttle.emergency
-								M.action_load(S)
-								SSshuttle.points -= S.credit_cost
-								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
-								message_admins("[key_name_admin(usr)] purchased [S.name].")
-								feedback_add_details("shuttle_purchase", S.name)
-							else
-								usr << "Something went wrong! The shuttle exchange system seems to be down."
-						else
-							usr << "Not enough credits."
 
 		if("purchase_menu")
 			state = STATE_PURCHASE
@@ -512,7 +478,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
