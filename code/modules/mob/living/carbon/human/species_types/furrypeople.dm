@@ -1,11 +1,10 @@
-
-//CANID//
 datum/species/canid
 	name = "Canid"
 	id = "canid"
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout")
+//	subspecies = list("fox")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
@@ -23,7 +22,7 @@ datum/species/canid
 	id = "felid"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout")
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout", "legs")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
