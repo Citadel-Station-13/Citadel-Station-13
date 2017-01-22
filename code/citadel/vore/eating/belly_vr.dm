@@ -14,14 +14,15 @@
 	var/vore_sound = 'sound/vore/gulp.ogg'	// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
-	var/nonhuman_prey_swallow_time = 100		// Time in deciseconds to swallow anything else
+	var/nonhuman_prey_swallow_time = 60		// Time in deciseconds to swallow anything else
 	var/emoteTime = 300						// How long between stomach emotes at prey
+	var/digest_brute = 1					// Brute damage per tick in digestion mode
 	var/digest_burn = 3						// Burn damage per tick in digestion mode
 	var/digest_tickrate = 9					// Modulus this of air controller tick number to iterate gurgles on
 	var/immutable = 0						// Prevents this belly from being deleted
 	var/escapable = 1						// Belly can be resisted out of at any time
-	var/escapetime = 100						// Deciseconds, how long to escape this belly
-
+	var/escapetime = 200					// Deciseconds, how long to escape this belly
+	var/escapechance = 45 					// % Chance of prey beginning to escape if prey struggles.
 	var/tmp/digest_mode = DM_HOLD				// Whether or not to digest. Default to not digest.
 	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_DIGESTF)	// Possible digest modes
 	var/tmp/mob/living/owner					// The mob whose belly this is.
@@ -100,46 +101,46 @@
 // Release all contents of this belly into the owning mob's location.
 // If that location is another mob, contents are transferred into whichever of its bellies the owning mob is in.
 // Returns the number of mobs so released.
-/datum/belly/proc/release_all_contents(var/mob/owner)
+/datum/belly/proc/release_all_contents()
 	if (internal_contents.len == 0)
 		return 0
 	for (var/atom/movable/M in internal_contents)
-		M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
-		internal_contents -= M  // Remove from the belly contents
+		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+		internal_contents.Remove(M)  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
 		if(B)
-			B.internal_contents += M
+			B.internal_contents.Add(M)
 
+	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
 	return 1
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
-
-
 /datum/belly/proc/release_specific_contents(var/atom/movable/M)
 	if (!(M in internal_contents))
 		return 0 // They weren't in this belly anyway
 
-	M.forceMove(get_turf(owner))  // Move the belly contents into the same location as belly's owner.
-	internal_contents -= M  // Remove from the belly contents
-
-	var/datum/belly/B = check_belly(owner) //TODO: make sure prey aren't being shadowrealm'd because this check is failing.
+	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+	src.internal_contents.Add(M)  // Remove from the belly contents
+	var/datum/belly/B = check_belly(owner)
 	if(B)
-		B.internal_contents += M
+		B.internal_contents.Add(M)
 
+	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
+//	owner.regenerate_icons()
 	return 1
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
 // steps are taken.
-/datum/belly/proc/nom_mob(var/mob/prey, var/mob/owner)
-//	if (prey.anchored)
-//		prey.anchored.unbuckle_mob()
+/datum/belly/proc/nom_mob(var/mob/prey, var/mob/user)
+//	if (prey.buckled)
+//		prey.buckled.unbuckle_mob()
 
 	prey.forceMove(owner)
-	internal_contents += prey
+	internal_contents.Add(prey)
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -219,41 +220,43 @@
 // Indigestable items are removed, and M is deleted.
 /datum/belly/proc/digestion_death(var/mob/living/M)
 	is_full = 1
-//	internal_contents.Remove(M)
+	internal_contents.Remove(M)
+
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if (is_vore_predator(M))
 		for (var/bellytype in M.vore_organs)
 			var/datum/belly/belly = M.vore_organs[bellytype]
 			for (var/obj/thing in belly.internal_contents)
-				thing.forceMove(owner)
+				thing.loc = owner
 				internal_contents.Add(thing)
 			for (var/mob/subprey in belly.internal_contents)
-				subprey.forceMove(owner)
+				subprey.loc = owner
 				internal_contents.Add(subprey)
-				subprey << "<span class='userdanger'>As [M] melts away around you, you find yourself in [owner]'s [name].</span>"
+				subprey << "As [M] melts away around you, you find yourself in [owner]'s [name]"
 
 	//Drop all items into the belly.
 	for(var/obj/item/W in M)
 		if(!M.unEquip(W))
 			qdel(W)
+
 	message_admins("[key_name(owner)] digested [key_name(M)].")
 	log_attack("[key_name(owner)] digested [key_name(M)].")
-	qdel(M) 		// Delete the digested mob
-	listclearnulls(internal_contents)
+
+	// Delete the digested mob
+	qdel(M)
 
 //Handle a mob struggling
-/datum/belly/proc/relay_resist(var/mob/living/R, direction)
-	var/next_move = null
+// Called from /mob/living/carbon/relaymove()
+/datum/belly/proc/relay_resist(var/mob/living/R)
 	if (!(R in internal_contents))
 		return  // User is not in this belly, or struggle too soon.
 
-	if(next_move >= world.time)
-		return
+	R.setClickCooldown(50)
 
-	if(owner.stat || escapable && R.a_intent != "help") //If owner is stat (dead, KO) we can actually escape
+	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
 		R << "<span class='warning'>You attempt to climb out of \the [name]. (This will take around [escapetime/10] seconds.)</span>"
 		owner << "<span class='warning'>Someone is attempting to climb out of your [name]!</span>"
-		next_move = world.time+20
+
 		if(do_after(R, escapetime, owner))
 			if((owner.stat || escapable) && (R in internal_contents)) //Can still escape?
 				release_specific_contents(R)
@@ -265,7 +268,6 @@
 				owner << "<span class='notice'>The attempt to escape from your [name] has failed!</span>"
 				return
 			return
-
 	var/struggle_outer_message = pick(struggle_messages_outside)
 	var/struggle_user_message = pick(struggle_messages_inside)
 
@@ -281,12 +283,38 @@
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
 	for(var/mob/M in hearers(4, owner))
-		M.show_message(struggle_outer_message, 2) // hearable
+		M.visible_message(struggle_outer_message, 2) // hearable
 	R << struggle_user_message
 
 	var/strpick = pick(struggle_sounds)
 	var/strsound = struggle_sounds[strpick]
-	playsound(get_turf(R), strsound, 50, 1)
+	playsound(R.loc, strsound, 50, 1)
+
+	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
+		R << "<span class='warning'>You attempt to climb out of \the [name].</span>"
+		owner << "<span class='warning'>Someone is attempting to climb out of your [name]!</span>"
+		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
+			if(do_after(R, escapetime))
+				if((escapable) && (R in internal_contents)) //Does the owner still have escapable enabled?
+					release_specific_contents(R)
+					R << "<span class='warning'>You climb out of \the [name].</span>"
+					owner << "<span class='warning'>[R] climbs out of your [name]!</span>"
+					for(var/mob/M in hearers(4, owner))
+						M.visible_message("<span class='warning'>[R] climbs out of [owner]'s [name]!</span>", 2)
+					return
+				else if(!(R in internal_contents)) //Aren't even in the belly. Quietly fail.
+					return
+			else //Belly became inescapable.
+				R << "<span class='warning'>Your attempt to escape [name] has failed!</span>"
+				owner << "<span class='notice'>The attempt to escape from your [name] has failed!</span>"
+				return
+
+		else //Nothing interesting happened.
+			R << "<span class='warning'>But make no progress in escaping [owner]'s [name].</span>"
+			owner << "<span class='warning'>But appears to be unable to make any progress in escaping your [name].</span>"
+			return
+	else
+		return
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes
@@ -301,6 +329,7 @@
 	dupe.human_prey_swallow_time = human_prey_swallow_time
 	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
 	dupe.emoteTime = emoteTime
+	dupe.digest_brute = digest_brute
 	dupe.digest_burn = digest_burn
 	dupe.digest_tickrate = digest_tickrate
 	dupe.immutable = immutable

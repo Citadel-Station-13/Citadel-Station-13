@@ -19,9 +19,10 @@
 //////////////////////////// DM_DIGEST ////////////////////////////
 	if(digest_mode == DM_DIGEST)
 
-		if(prob(85))
-			for(var/mob in get_hearers_in_view(4,owner))
-				owner << sound(pick(digestion_sounds))
+		if(prob(50))
+			var/churnsound = pick(digestion_sounds)
+			for(var/mob/hearer in range(1,owner))
+				hearer << sound(churnsound)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -29,7 +30,7 @@
 				continue
 
 			//Person just died in guts!
-			if(M.stat == DEAD && M.getFireLoss() >= 150)
+			if(M.stat == DEAD)
 				var/digest_alert_owner = pick(digest_messages_owner)
 				var/digest_alert_prey = pick(digest_messages_prey)
 
@@ -45,11 +46,15 @@
 				//Send messages
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
-				owner.nutrition += NUTRITION_LEVEL_FULL
-				for(var/mob in get_hearers_in_view(4,owner))
-					owner << sound(pick(death_sounds))
+
+				owner.nutrition += 400 // so eating dead mobs gives you *something*.
+				var/deathsound = pick(death_sounds)
+				for(var/mob/hearer in range(1,owner))
+					hearer << deathsound
 				digestion_death(M)
+				owner.update_icons()
 				continue
+
 
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
@@ -60,9 +65,10 @@
 //////////////////////////// DM_DIGESTF ////////////////////////////
 	if(digest_mode == DM_DIGESTF)
 
-		if(prob(85))
-			for(var/mob in get_hearers_in_view(4,owner))
-				owner << sound(pick(digestion_sounds))
+		if(prob(51))
+			var/churnsound = pick(digestion_sounds)
+			for(var/mob/hearer in range(1,owner))
+				hearer << sound(churnsound)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -70,7 +76,7 @@
 				continue
 
 			//Person just died in guts!
-			if(M.stat == DEAD && M.getFireLoss() >= 150)
+			if(M.stat == DEAD)
 				var/digest_alert_owner = pick(digest_messages_owner)
 				var/digest_alert_prey = pick(digest_messages_prey)
 
@@ -87,10 +93,12 @@
 				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
 
-				owner.nutrition += NUTRITION_LEVEL_FULL
-				for(var/mob in get_hearers_in_view(4,owner))
-					owner << sound(pick(death_sounds))
+				owner.nutrition += 400 // so eating dead mobs gives you *something*.
+				var/deathsound = pick(death_sounds)
+				for(var/mob/hearer in range(1,owner))
+					hearer << deathsound
 				digestion_death(M)
+				owner.update_icons()
 				continue
 
 			// Deal digestion damage (and feed the pred)
@@ -102,9 +110,10 @@
 
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
-		if(prob(50)) //Wet heals!
-			for(var/mob in get_hearers_in_view(2,owner))
-				owner << sound(pick(digestion_sounds))
+		if(prob(50))
+			var/churnsound = pick(digestion_sounds)
+			for(var/mob/hearer in range(1,owner))
+				hearer << sound(churnsound,
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)
