@@ -142,7 +142,7 @@
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
+			playsound(src.loc, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return

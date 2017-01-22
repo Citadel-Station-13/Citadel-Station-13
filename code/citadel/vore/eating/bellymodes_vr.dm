@@ -22,7 +22,7 @@
 		if(prob(50))
 			var/churnsound = pick(digestion_sounds)
 			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound)
+				hearer << sound(churnsound, 80)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -68,7 +68,7 @@
 		if(prob(51))
 			var/churnsound = pick(digestion_sounds)
 			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound)
+				hearer << sound(churnsound,80)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -113,7 +113,7 @@
 		if(prob(50))
 			var/churnsound = pick(digestion_sounds)
 			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound,
+				hearer << sound(churnsound, 60)
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)

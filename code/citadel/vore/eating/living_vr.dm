@@ -3,8 +3,7 @@
 	var/digestable = 1					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
-	var/recent_struggle = 0
-	var/devourable = 0				// Can the mob be vored at all?
+	var/devourable = 0					// Can the mob be vored at all?
 
 //
 // Handle being clicked, perhaps with something to devour
