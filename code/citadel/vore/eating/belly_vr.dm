@@ -15,9 +15,9 @@
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 100		// Time in deciseconds to swallow anything else
-	var/emoteTime = 600						// How long between stomach emotes at prey
-	var/digest_burn = 1						// Burn damage per tick in digestion mode
-//	var/digest_tickrate = 3					// Modulus this of air controller tick number to iterate gurgles on
+	var/emoteTime = 300						// How long between stomach emotes at prey
+	var/digest_burn = 3						// Burn damage per tick in digestion mode
+	var/digest_tickrate = 9					// Modulus this of air controller tick number to iterate gurgles on
 	var/immutable = 0						// Prevents this belly from being deleted
 	var/escapable = 1						// Belly can be resisted out of at any time
 	var/escapetime = 100						// Deciseconds, how long to escape this belly
@@ -28,11 +28,8 @@
 	var/tmp/list/internal_contents = list()		// People/Things you've eaten into this belly!
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
 	var/tmp/emotePend = 0						// If there's already a spawned thing counting for the next emote
-	var/tmp/recent_struggle = 0					// Flag to prevent struggle emote spam
-	var/recent_gurgle = 0					// Digestion timer
-	var/normal_gurgle = 10					// digestion timer delay for living_vr handleing
-	// Don't forget to watch your commas at the end of each line if you change these.
 
+	// Don't forget to watch your commas at the end of each line if you change these.
 	var/list/struggle_messages_outside = list(
 		"%pred's %belly wobbles with a squirming meal.",
 		"%pred's %belly jostles with movement.",
@@ -191,12 +188,10 @@
 	var/list/raw_list = text2list(html_encode(raw_text),delim)
 	if(raw_list.len > 10)
 		raw_list.Cut(11)
-		log_attack("[owner] tried to set [name] with 11+ messages")
 
 	for(var/i = 1, i <= raw_list.len, i++)
 		if(length(raw_list[i]) > 160 || length(raw_list[i]) < 10) //160 is fudged value due to htmlencoding increasing the size
 			raw_list.Cut(i,i)
-			log_admin("[owner] tried to set [name] with >121 or <10 char message")
 		else
 			raw_list[i] = readd_quotes(raw_list[i])
 			//Also fix % sign for var replacement
@@ -222,52 +217,43 @@
 // Called from the process_Life() methods of bellies that digest prey.
 // Default implementation calls M.death() and removes from internal contents.
 // Indigestable items are removed, and M is deleted.
-/datum/belly/proc/digestion_death(var/mob/living/M, var/mob/pred)
+/datum/belly/proc/digestion_death(var/mob/living/M)
 	is_full = 1
-	M.death()
-
+//	internal_contents.Remove(M)
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if (is_vore_predator(M))
 		for (var/bellytype in M.vore_organs)
 			var/datum/belly/belly = M.vore_organs[bellytype]
 			for (var/obj/thing in belly.internal_contents)
 				thing.forceMove(owner)
-				internal_contents += thing
+				internal_contents.Add(thing)
 			for (var/mob/subprey in belly.internal_contents)
 				subprey.forceMove(owner)
-				internal_contents += subprey
+				internal_contents.Add(subprey)
 				subprey << "<span class='userdanger'>As [M] melts away around you, you find yourself in [owner]'s [name].</span>"
 
 	//Drop all items into the belly.
-	for (var/obj/item/W in M)
-		_handle_digested_item(W)
-
-	// Delete the digested mob
-	internal_contents -= M
-	message_admins("[key_name(pred)] digested [key_name(M)].")
-	log_attack("[key_name(pred)] digested [key_name(M)].")
-	qdel(M)
-
-// Recursive method - To recursively scan thru someone's inventory for digestable/indigestable.
-/datum/belly/proc/_handle_digested_item(var/obj/item/W)
-	W.forceMove(owner)
-	internal_contents += W
-
-/datum/belly/proc/_is_digestable(var/obj/item/I)
-	return 1
+	for(var/obj/item/W in M)
+		if(!M.unEquip(W))
+			qdel(W)
+	message_admins("[key_name(owner)] digested [key_name(M)].")
+	log_attack("[key_name(owner)] digested [key_name(M)].")
+	qdel(M) 		// Delete the digested mob
+	listclearnulls(internal_contents)
 
 //Handle a mob struggling
-/datum/belly/proc/relay_resist(var/mob/living/R)
+/datum/belly/proc/relay_resist(var/mob/living/R, direction)
+	var/next_move = null
 	if (!(R in internal_contents))
 		return  // User is not in this belly, or struggle too soon.
 
-	if(recent_struggle + normal_gurgle > world.time)
+	if(next_move >= world.time)
 		return
 
-	if(owner.stat || escapable && R.a_intent != "help") //If owner is stat (dead, KO) we can actually escape, or if belly is set to escapable (non-default)
+	if(owner.stat || escapable && R.a_intent != "help") //If owner is stat (dead, KO) we can actually escape
 		R << "<span class='warning'>You attempt to climb out of \the [name]. (This will take around [escapetime/10] seconds.)</span>"
 		owner << "<span class='warning'>Someone is attempting to climb out of your [name]!</span>"
-
+		next_move = world.time+20
 		if(do_after(R, escapetime, owner))
 			if((owner.stat || escapable) && (R in internal_contents)) //Can still escape?
 				release_specific_contents(R)
@@ -301,7 +287,6 @@
 	var/strpick = pick(struggle_sounds)
 	var/strsound = struggle_sounds[strpick]
 	playsound(get_turf(R), strsound, 50, 1)
-	recent_struggle = world.time //hopefully to cut down on people just spamming it
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes
@@ -317,7 +302,7 @@
 	dupe.nonhuman_prey_swallow_time = nonhuman_prey_swallow_time
 	dupe.emoteTime = emoteTime
 	dupe.digest_burn = digest_burn
-//	dupe.digest_tickrate = digest_tickrate
+	dupe.digest_tickrate = digest_tickrate
 	dupe.immutable = immutable
 	dupe.escapable = escapable
 	dupe.escapetime = escapetime

@@ -5,7 +5,6 @@
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/recent_struggle = 0
 	var/devourable = 0				// Can the mob be vored at all?
-	var/tmp/recent_gurgle = 0
 
 //
 // Handle being clicked, perhaps with something to devour
@@ -168,22 +167,25 @@
 
 	return 0
 
-
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	var/normal_gurgle = 10
-	if(recent_gurgle + normal_gurgle > world.time)
-		return
+	if(SSmob.times_fired%6==1)
+		return //The accursed timer
 
-	for (var/bellytype in vore_organs)
-		var/datum/belly/B = vore_organs[bellytype]
-		for(var/atom/movable/M in B.internal_contents)
-			if(M.loc != src)
-				B.internal_contents -= M
-				log_attack("Had to remove [M] from belly [B] in [src]")
-		B.process_Life()
+	for (var/I in vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		if(B.internal_contents.len)
+			B.process_Life() //AKA 'do bellymodes_vr.dm'
+
+	for (var/I in vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		if(B.internal_contents.len)
+			listclearnulls(B.internal_contents)
+			for(var/atom/movable/M in B.internal_contents)
+				if(M.loc != src)
+					B.internal_contents.Remove(M)
 
 // OOC Escape code for pref-breaking or AFK preds
 //

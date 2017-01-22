@@ -1387,7 +1387,7 @@
 
 /datum/sprite_accessory/legs/digitigrade_mam
 	name = "Anthro Digitigrade Legs"
-	icon = 'icons/mob/man/bodyparts.dmi'
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 //Human Ears/Tails
 
