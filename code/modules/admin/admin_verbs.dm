@@ -507,6 +507,7 @@ var/list/admin_verbs_hideable = list(
 
 	switch(choice)
 		if(null)
+			return 0
 		if("Small Bomb (1, 2, 3, 3)")
 			explosion(epicenter, 1, 2, 3, 3, TRUE, TRUE)
 		if("Medium Bomb (2, 3, 4, 4)")
