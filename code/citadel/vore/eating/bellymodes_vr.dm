@@ -20,9 +20,7 @@
 	if(digest_mode == DM_DIGEST)
 
 		if(prob(50))
-			var/churnsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound, 80)
+			playsound(owner.loc, "digestion_sounds", 65, 1, 0, 1, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -48,9 +46,7 @@
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				var/deathsound = pick(death_sounds)
-				for(var/mob/hearer in range(1,owner))
-					hearer << deathsound
+				playsound(owner.loc, "death_gurgles", 70, 1, 0, 1, 1)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -65,10 +61,8 @@
 //////////////////////////// DM_DIGESTF ////////////////////////////
 	if(digest_mode == DM_DIGESTF)
 
-		if(prob(51))
-			var/churnsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound,80)
+		if(prob(50))
+			playsound(owner.loc, "digestion_sounds", 65, 1, 0, 1, 1)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -94,9 +88,7 @@
 				M << "<span class='notice'>" + digest_alert_prey + "</span>"
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				var/deathsound = pick(death_sounds)
-				for(var/mob/hearer in range(1,owner))
-					hearer << deathsound
+				playsound(owner.loc, "death_gurgles", 70, 1, 0, 1, 1)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -111,9 +103,7 @@
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		if(prob(50))
-			var/churnsound = pick(digestion_sounds)
-			for(var/mob/hearer in range(1,owner))
-				hearer << sound(churnsound, 60)
+			playsound(owner.loc, "digestion_sounds", 50, 1, 0, 1, 1)
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)

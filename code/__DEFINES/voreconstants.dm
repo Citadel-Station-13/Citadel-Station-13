@@ -11,7 +11,7 @@
 
 
 var/global/list/player_sizes_list = list("Macro" = RESIZE_HUGE, "Big" = RESIZE_BIG, "Normal" = RESIZE_NORMAL, "Small" = RESIZE_SMALL, "Tiny" = RESIZE_TINY)
-
+/* // moved to sound.dm
 
 var/global/list/digestion_sounds = list(
 		'sound/vore/digest1.ogg',
@@ -37,7 +37,7 @@ var/global/list/death_sounds = list(
 		'sound/vore/death7.ogg',
 		'sound/vore/death8.ogg',
 		'sound/vore/death9.ogg',
-		'sound/vore/death10.ogg')
+		'sound/vore/death10.ogg') */
 
 var/global/list/vore_sounds = list(
 		"Gulp" = 'sound/vore/gulp.ogg',
@@ -50,13 +50,13 @@ var/global/list/vore_sounds = list(
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
 		"Squish4" = 'sound/vore/squish4.ogg')
-
+/* also moved to sound.dmi
 var/global/list/struggle_sounds = list(
 		"Squish1" = 'sound/vore/squish1.ogg',
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
 		"Squish4" = 'sound/vore/squish4.ogg')
-
+*/
 	//Species listing
 
 #define iscanine(A) (is_species(A, /datum/species/canine))

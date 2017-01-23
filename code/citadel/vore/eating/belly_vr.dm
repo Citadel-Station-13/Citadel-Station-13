@@ -285,10 +285,7 @@
 	for(var/mob/M in hearers(4, owner))
 		M.visible_message(struggle_outer_message, 2) // hearable
 	R << struggle_user_message
-
-	var/strpick = pick(struggle_sounds)
-	var/strsound = struggle_sounds[strpick]
-	playsound(R.loc, strsound, 50, 1)
+	playsound(R.loc, "struggle_sounds", 50, 1, 0, 1, 1)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		R << "<span class='warning'>You attempt to climb out of \the [name].</span>"
