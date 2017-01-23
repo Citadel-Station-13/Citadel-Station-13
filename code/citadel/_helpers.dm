@@ -1,12 +1,9 @@
 //THIS FILE CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
 ////////////////////////////////////////////////////////////////////
-/* Not needed. - Pooj
-var/const/SIZEPLAY_TINY=1
-var/const/SIZEPLAY_MICRO=2
-var/const/SIZEPLAY_NORMAL=3
-var/const/SIZEPLAY_MACRO=4
-var/const/SIZEPLAY_HUGE=5
-*/
+
+/mob/proc/setClickCooldown(var/timeout)
+	next_move = max(world.time + timeout, next_move)
+
 /proc/get_matrix_largest()
 	var/matrix/mtrx=new()
 	return mtrx.Scale(2)
@@ -62,7 +59,7 @@ var/list/mentors = list()
 		set category = "Admin"
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
-    
+
 /mob/living/carbon/human/verb/set_flavor()
 	set name = "Set Flavor Text"
 	set desc = "Sets an extended description of your character's features."

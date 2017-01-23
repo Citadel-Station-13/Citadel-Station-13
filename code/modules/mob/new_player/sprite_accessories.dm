@@ -1384,7 +1384,11 @@
 
 /datum/sprite_accessory/legs/digitigrade_lizard
 	name = "Digitigrade Legs"
-
+/* tbi eventually idk
+/datum/sprite_accessory/legs/digitigrade_mam
+	name = "Anthro Digitigrade Legs"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+*/
 //Human Ears/Tails
 
 /datum/sprite_accessory/ears/fox
