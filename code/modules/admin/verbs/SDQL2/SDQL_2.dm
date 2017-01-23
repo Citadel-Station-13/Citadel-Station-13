@@ -248,7 +248,7 @@
 
 	type = text2path(type)
 	var/typecache = typecacheof(type)
-
+	
 	if(ispath(type, /mob))
 		for(var/mob/d in location)
 			if(typecache[d.type])

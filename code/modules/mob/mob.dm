@@ -303,7 +303,7 @@ proc/get_top_level_mob(var/mob/S)
 	if (!tile)
 		return 0
 
-	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
+	new /obj/effect/overlay/temp/point(A,invisibility)
 
 	return 1
 
