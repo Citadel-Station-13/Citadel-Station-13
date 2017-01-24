@@ -6,7 +6,9 @@
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/list/blood_DNA
+	var/container_type = 0
 	var/admin_spawned = 0	//was this spawned by an admin? used for stat tracking stuff.
+	var/datum/reagents/reagents = null
 
 	//This atom's HUD (med/sec, etc) images. Associative list.
 	var/list/image/hud_list = null
@@ -38,6 +40,8 @@
 	if(luminosity)
 		light = new(src)
 
+	if(SSobj && SSobj.initialized)
+		Initialize(FALSE)
 	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
@@ -51,6 +55,8 @@
 			for(var/aa in viewing_alternate_appearances[aakey])
 				var/datum/alternate_appearance/AA = aa
 				AA.hide(list(src))
+	if(reagents)
+		qdel(reagents)
 	return ..()
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
@@ -130,7 +136,10 @@
 // returns true if open
 // false if closed
 /atom/proc/is_open_container()
-	return flags & OPENCONTAINER
+	return container_type & OPENCONTAINER
+
+/atom/proc/is_transparent()
+	return container_type & TRANSPARENT
 
 /*//Convenience proc to see whether a container can be accessed in a certain way.
 
@@ -207,7 +216,7 @@
 	// *****RM
 	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
-	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
+	if(reagents && (is_open_container() || is_transparent())) //is_open_container() isn't really the right proc for this, but w/e
 		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
@@ -424,8 +433,10 @@ var/list/blood_splatter_icons = list()
 //effects at world start up without causing runtimes
 /atom/proc/spawn_atom_to_world()
 
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
+//Called after New if the world is not loaded with TRUE
+//Called from base of New if the world is loaded with FALSE
+/atom/proc/Initialize(mapload)
+	set waitfor = 0
 	return
 
 //the vision impairment to give to the mob whose perspective is set to that atom (e.g. an unfocused camera giving you an impaired vision when looking through it)
@@ -438,7 +449,7 @@ var/list/blood_splatter_icons = list()
 
 /atom/proc/add_vomit_floor(mob/living/carbon/M, toxvomit = 0)
 	if(isturf(src))
-		var/obj/effect/decal/cleanable/vomit/V = PoolOrNew(/obj/effect/decal/cleanable/vomit, src)
+		var/obj/effect/decal/cleanable/vomit/V = new /obj/effect/decal/cleanable/vomit(src)
 		// Make toxins vomit look different
 		if(toxvomit)
 			V.icon_state = "vomittox_[pick(1,4)]"

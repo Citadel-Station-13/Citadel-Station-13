@@ -186,19 +186,20 @@
 		adjustBruteLoss(25) //hella effective
 		inhibited = 1
 		update_action_buttons_icon()
-		addtimer(src, "reset_inhibit", 30, TIMER_NORMAL)
+		addtimer(CALLBACK(src, .proc/reset_inhibit), 30)
 
 /mob/living/simple_animal/revenant/proc/reset_inhibit()
 	if(src)
 		inhibited = 0
 		update_action_buttons_icon()
 
-/mob/living/simple_animal/revenant/adjustHealth(amount)
-	if(!revealed)
-		return 0
+/mob/living/simple_animal/revenant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	if(!forced && !revealed)
+		return FALSE
 	. = amount
 	essence = max(0, essence-amount)
-	update_health_hud()
+	if(updating_health)
+		update_health_hud()
 	if(essence == 0)
 		death()
 
@@ -331,7 +332,7 @@
 
 /obj/item/weapon/ectoplasm/revenant/New()
 	..()
-	addtimer(src, "try_reform", 600, TIMER_NORMAL)
+	addtimer(CALLBACK(src, .proc/try_reform), 600)
 
 /obj/item/weapon/ectoplasm/revenant/proc/try_reform()
 	if(src)

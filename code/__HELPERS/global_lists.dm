@@ -51,7 +51,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
 
-
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
@@ -72,6 +71,11 @@
 	for(var/path in subtypesof(/datum/tech))
 		var/datum/tech/D = new path()
 		tech_list[D.id] = D
+
+	//Emotes
+	for(var/path in subtypesof(/datum/emote))
+		var/datum/emote/E = new path()
+		emote_list[E.key] = E
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 
