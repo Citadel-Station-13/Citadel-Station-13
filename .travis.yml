@@ -4,13 +4,20 @@ sudo: false
 env:
     global:
     - BYOND_MAJOR="510"
-    - BYOND_MINOR="1346"
+    - BYOND_MINOR="1332"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true
-    - DM_MAPFILE="loadallmaps"
+    - DM_MAPFILE="tgstation2"
+    - DM_MAPFILE="metastation"
+    - DM_MAPFILE="ministation"
+    - DM_MAPFILE="dreamstation"
+    - DM_MAPFILE="birdstation"
+    - DM_MAPFILE="efficiencystation"
+    - DM_MAPFILE="templates"
+
 
 cache:
   directories:
@@ -38,9 +45,3 @@ script:
   - tools/travis/check_filedirs.sh tgstation.dme
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
-  
-before_install:
- - chmod a+x tools/travis/install_build_tools.sh
-  
-  
-

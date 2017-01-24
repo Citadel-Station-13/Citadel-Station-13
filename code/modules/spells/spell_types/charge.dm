@@ -58,7 +58,7 @@
 				if(istype(item,/obj/item/weapon/gun/magic/wand) && I.max_charges != 0)
 					var/obj/item/weapon/gun/magic/W = item
 					W.icon_state = initial(W.icon_state)
-				I.recharge_newshot()
+				I.process_chamber()
 				charged_item = I
 				break
 			else if(istype(item, /obj/item/weapon/stock_parts/cell/))

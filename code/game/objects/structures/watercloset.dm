@@ -454,7 +454,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		if(RG.container_type & OPENCONTAINER)
+		if(RG.flags & OPENCONTAINER)
 			RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 			user << "<span class='notice'>You fill [RG] from [src].</span>"
 			return 1

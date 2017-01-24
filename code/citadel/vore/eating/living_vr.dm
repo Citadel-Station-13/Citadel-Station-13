@@ -3,8 +3,9 @@
 	var/digestable = 1					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
-	var/devourable = 0					// Can the mob be vored at all?
-//	var/feeding = 0 					// Are we going to feed someone else?
+	var/recent_struggle = 0
+	var/devourable = 0				// Can the mob be vored at all?
+	var/tmp/recent_gurgle = 0
 
 //
 // Handle being clicked, perhaps with something to devour
@@ -56,7 +57,7 @@
 	return perform_the_nom(user, user, pred, belly)
 
 /mob/living/proc/feed_grabbed_to_other(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
-	return//disabled until I can make that toggle work
+	return//disabled until further notice
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
@@ -67,6 +68,7 @@
 /mob/living/proc/perform_the_nom(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 100)
 	//Sanity
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+		log_attack("[user] attempted to feed [prey] to [pred], via [belly] but it went wrong.")
 		return
 	if (!prey.devourable)
 		user << "This can't be eaten!"
@@ -90,7 +92,7 @@
 	// Now give the prey time to escape... return if they did
 
 	if(!do_mob(src, user, swallow_time))
-		return 0 // Prey escaped (or user disabled) before timer expired.
+		return 0 // Prey escpaed (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
@@ -166,25 +168,22 @@
 
 	return 0
 
+
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(SSmob.times_fired%6==1)
-		return //The accursed timer
+	var/normal_gurgle = 10
+	if(recent_gurgle + normal_gurgle > world.time)
+		return
 
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			B.process_Life() //AKA 'do bellymodes_vr.dm'
-
-	for (var/I in vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		if(B.internal_contents.len)
-			listclearnulls(B.internal_contents)
-			for(var/atom/movable/M in B.internal_contents)
-				if(M.loc != src)
-					B.internal_contents.Remove(M)
+	for (var/bellytype in vore_organs)
+		var/datum/belly/B = vore_organs[bellytype]
+		for(var/atom/movable/M in B.internal_contents)
+			if(M.loc != src)
+				B.internal_contents -= M
+				log_attack("Had to remove [M] from belly [B] in [src]")
+		B.process_Life()
 
 // OOC Escape code for pref-breaking or AFK preds
 //

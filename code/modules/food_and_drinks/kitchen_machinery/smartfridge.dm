@@ -25,7 +25,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/smartfridge
-	name = "Smartfridge (Machine Board)"
+	name = "circuit board (Smartfridge)"
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
 	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
@@ -243,7 +243,7 @@
 	active_power_usage = 200
 	icon_on = "drying_rack_on"
 	icon_off = "drying_rack"
-	var/drying = FALSE
+	var/drying = 0
 
 /obj/machinery/smartfridge/drying_rack/New()
 	..()
@@ -274,16 +274,15 @@
 /obj/machinery/smartfridge/drying_rack/Topic(href, list/href_list)
 	..()
 	if(href_list["dry"])
-		toggle_drying(FALSE)
-	updateUsrDialog()
-	update_icon()
+		toggle_drying()
+	src.updateUsrDialog()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-		toggle_drying(TRUE)
+		toggle_drying(1)
 	update_icon()
 
 /obj/machinery/smartfridge/drying_rack/load() //For updating the filled overlay
@@ -292,7 +291,7 @@
 
 /obj/machinery/smartfridge/drying_rack/update_icon()
 	..()
-	cut_overlays()
+	overlays = 0
 	if(drying)
 		add_overlay("drying_rack_drying")
 	if(contents.len)
@@ -308,17 +307,17 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/food/snacks/))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
-			return TRUE
+			return 1
 	if(istype(O,/obj/item/stack/sheet/wetleather/))
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff = 0)
 	if(drying || forceoff)
-		drying = FALSE
+		drying = 0
 		use_power = 1
 	else
-		drying = TRUE
+		drying = 1
 		use_power = 2
 	update_icon()
 
@@ -326,19 +325,19 @@
 	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
 		if(S.dried_type == S.type)//if the dried type is the same as the object's type, don't bother creating a whole new item...
 			S.add_atom_colour("#ad7257", FIXED_COLOUR_PRIORITY)
-			S.dry = TRUE
+			S.dry = 1
 			S.loc = get_turf(src)
 		else
 			var/dried = S.dried_type
 			new dried(src.loc)
 			qdel(S)
-		return TRUE
+		return 1
 	for(var/obj/item/stack/sheet/wetleather/WL in contents)
 		var/obj/item/stack/sheet/leather/L = new(loc)
 		L.amount = WL.amount
 		qdel(WL)
-		return TRUE
-	return FALSE
+		return 1
+	return 0
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	..()

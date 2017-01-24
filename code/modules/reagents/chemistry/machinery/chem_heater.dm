@@ -18,7 +18,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/chem_heater
-	name = "Chemical Heater (Machine Board)"
+	name = "circuit board (Chemical Heater)"
 	build_path = /obj/machinery/chem_heater
 	origin_tech = "programming=2;engineering=2;biotech=2"
 	req_components = list(
@@ -54,7 +54,7 @@
 	if(default_deconstruction_crowbar(I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		. = 1 //no afterattack
 		if(beaker)
 			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"

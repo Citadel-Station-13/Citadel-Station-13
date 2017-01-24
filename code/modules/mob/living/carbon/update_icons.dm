@@ -89,9 +89,7 @@
 /mob/living/carbon/update_fire(var/fire_icon = "Generic_mob_burning")
 	remove_overlay(FIRE_LAYER)
 	if(on_fire)
-		var/image/new_fire_overlay = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[FIRE_LAYER] = new_fire_overlay
+		overlays_standing[FIRE_LAYER] = image("icon"='icons/mob/OnFire.dmi', "icon_state"= fire_icon, "layer"=-FIRE_LAYER)
 
 	apply_overlay(FIRE_LAYER)
 

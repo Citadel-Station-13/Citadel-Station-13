@@ -27,7 +27,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/plantgenes
-	name = "Plant DNA Manipulator (Machine Board)"
+	name = "circuit board (Plant DNA Manipulator)"
 	build_path = /obj/machinery/plantgenes
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(

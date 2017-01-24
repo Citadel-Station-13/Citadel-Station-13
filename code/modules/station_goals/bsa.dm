@@ -40,9 +40,6 @@
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
-	else if(istype(W, /obj/item/weapon/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
 	else
 		return ..()
 
@@ -56,9 +53,6 @@
 		var/obj/item/device/multitool/M = W
 		M.buffer = src
 		user << "<span class='notice'>You store linkage information in [W]'s buffer.</span>"
-	else if(istype(W, /obj/item/weapon/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
 	else
 		return ..()
 
@@ -81,17 +75,12 @@
 				front = M.buffer
 				M.buffer = null
 				user << "<span class='notice'>You link [src] with [front].</span>"
-	else if(istype(W, /obj/item/weapon/wrench))
-		default_unfasten_wrench(user, W, 10)
-		return TRUE
 	else
 		return ..()
 
 /obj/machinery/bsa/middle/proc/check_completion()
 	if(!front || !back)
 		return "No linked parts detected!"
-	if(!front.anchored || !back.anchored || !anchored)
-		return "Linked parts unwrenched!"
 	if(front.y != y || back.y != y || !(front.x > x && back.x < x || front.x < x && back.x > x) || front.z != z || back.z != z)
 		return "Parts misaligned!"
 	if(!has_space())
@@ -192,7 +181,7 @@
 /obj/machinery/bsa/full/proc/reload()
 	ready = FALSE
 	use_power(power_used_per_shot)
-	addtimer(CALLBACK(src,"ready_cannon"),600)
+	addtimer(src,"ready_cannon",600)
 
 /obj/machinery/bsa/full/proc/ready_cannon()
 	ready = TRUE
@@ -208,7 +197,7 @@
 	return
 
 /obj/item/weapon/circuitboard/machine/bsa/back
-	name = "Bluespace Artillery Generator (Machine Board)"
+	name = "circuit board (Bluespace Artillery Generator)"
 	build_path = /obj/machinery/bsa/back
 	origin_tech = "engineering=2;combat=2;bluespace=2" //No freebies!
 	req_components = list(
@@ -216,7 +205,7 @@
 							/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/middle
-	name = "Bluespace Artillery Fusor (Machine Board)"
+	name = "circuit board (Bluespace Artillery Fusor)"
 	build_path = /obj/machinery/bsa/middle
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
@@ -224,15 +213,15 @@
 							/obj/item/stack/cable_coil = 2)
 
 /obj/item/weapon/circuitboard/machine/bsa/front
-	name = "Bluespace Artillery Bore (Machine Board)"
+	name = "circuit board (Bluespace Artillery Bore)"
 	build_path = /obj/machinery/bsa/front
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
 							/obj/item/weapon/stock_parts/manipulator/femto = 5,
 							/obj/item/stack/cable_coil = 2)
 
-/obj/item/weapon/circuitboard/computer/bsa_control
-	name = "Bluespace Artillery Controls (Computer Board)"
+/obj/item/weapon/circuitboard/machine/computer/bsa_control
+	name = "circuit board (Bluespace Artillery Controls)"
 	build_path = /obj/machinery/computer/bsa_control
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 
@@ -242,7 +231,7 @@
 	var/notice
 	var/target
 	use_power = 0
-	circuit = /obj/item/weapon/circuitboard/computer/bsa_control
+	circuit = /obj/item/weapon/circuitboard/machine/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
 	var/area_aim = FALSE //should also show areas for targeting
@@ -256,7 +245,7 @@
 
 /obj/machinery/computer/bsa_control/ui_data()
 	var/list/data = list()
-	data["ready"] = cannon ? cannon.ready : FALSE
+	data["ready"] = cannon.ready
 	data["connected"] = cannon
 	data["notice"] = notice
 	if(target)
@@ -325,7 +314,7 @@
 		return null
 	//Totally nanite construction system not an immersion breaking spawning
 	var/datum/effect_system/smoke_spread/s = new
-	s.set_up(4,get_turf(centerpiece))
+	s.set_up(4, 1, get_turf(centerpiece), 0)
 	s.start()
 	var/obj/machinery/bsa/full/cannon = new(get_turf(centerpiece),cannon_direction=centerpiece.get_cannon_direction())
 	qdel(centerpiece.front)

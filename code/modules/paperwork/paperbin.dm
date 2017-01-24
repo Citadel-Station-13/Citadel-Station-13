@@ -13,10 +13,7 @@
 	var/list/papers = list()
 	var/obj/item/weapon/pen/bin_pen
 
-/obj/item/weapon/paper_bin/Initialize(mapload)
-	..()
-	if(!mapload)
-		return
+/obj/item/weapon/paper_bin/initialize()
 	var/obj/item/weapon/pen/P = locate(/obj/item/weapon/pen) in src.loc
 	if(P && !bin_pen)
 		P.loc = src

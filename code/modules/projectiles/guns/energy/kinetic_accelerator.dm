@@ -86,7 +86,7 @@
 	if(!holds_charge)
 		// Put it on a delay because moving item from slot to hand
 		// calls dropped().
-		addtimer(CALLBACK(src, .proc/empty_if_not_held), 2)
+		addtimer(src, "empty_if_not_held", 2)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
 	if(!ismob(loc))
@@ -112,7 +112,7 @@
 	else
 		carried = 1
 
-	addtimer(CALLBACK(src, .proc/reload), overheat_time * carried)
+	addtimer(src, "reload", overheat_time * carried)
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
 	return
@@ -193,10 +193,10 @@
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
 		M.gets_drilled(firer)
-	var/obj/effect/overlay/temp/kinetic_blast/K = new /obj/effect/overlay/temp/kinetic_blast(target_turf)
+	var/obj/effect/overlay/temp/kinetic_blast/K = PoolOrNew(/obj/effect/overlay/temp/kinetic_blast, target_turf)
 	K.color = color
 	for(var/type in hit_overlays)
-		new type(target_turf)
+		PoolOrNew(type, target_turf)
 	if(turf_aoe)
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 			if(ismineralturf(T))

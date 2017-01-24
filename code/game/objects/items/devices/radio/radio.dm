@@ -54,6 +54,8 @@
 		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = new
 	..()
+	if(SSradio)
+		initialize()
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
@@ -98,8 +100,7 @@
 	keyslot = null
 	return ..()
 
-/obj/item/device/radio/Initialize()
-	..()
+/obj/item/device/radio/initialize()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
@@ -196,7 +197,7 @@
 				. = TRUE
 
 /obj/item/device/radio/talk_into(atom/movable/M, message, channel, list/spans)
-	addtimer(CALLBACK(src, .proc/talk_into_impl, M, message, channel, spans), 0)
+	addtimer(src,"talk_into_impl",0, TIMER_NORMAL,M,message,channel,spans)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans)

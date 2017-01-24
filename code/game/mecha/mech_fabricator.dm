@@ -42,7 +42,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/mechfab
-	name = "Exosuit Fabricator (Machine Board)"
+	name = "circuit board (Exosuit Fabricator)"
 	build_path = /obj/machinery/mecha_part_fabricator
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

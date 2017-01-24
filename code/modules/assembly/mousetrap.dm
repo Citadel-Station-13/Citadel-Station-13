@@ -11,9 +11,7 @@
 /obj/item/device/assembly/mousetrap/examine(mob/user)
 	..()
 	if(armed)
-		user << "The mousetrap is armed!"
-	else
-		user << "The mousetrap is not armed."
+		user << "It looks like it's armed."
 
 /obj/item/device/assembly/mousetrap/activate()
 	if(..())
@@ -115,8 +113,6 @@
 						triggered(H)
 						H.visible_message("<span class='warning'>[H] accidentally steps on [src].</span>", \
 										  "<span class='warning'>You accidentally step on [src]</span>")
-				else if(ismouse(MM))
-					triggered(MM)
 		else if(AM.density) // For mousetrap grenades, set off by anything heavy
 			triggered(AM)
 	..()

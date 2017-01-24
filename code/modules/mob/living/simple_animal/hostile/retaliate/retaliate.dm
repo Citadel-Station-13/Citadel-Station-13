@@ -41,7 +41,7 @@
 			H.enemies |= enemies
 	return 0
 
-/mob/living/simple_animal/hostile/retaliate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/retaliate/adjustHealth(damage)
 	. = ..()
-	if(. > 0 && stat == CONSCIOUS)
+	if(stat == CONSCIOUS)
 		Retaliate()

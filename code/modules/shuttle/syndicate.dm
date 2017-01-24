@@ -25,7 +25,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/computer/syndicate_shuttle
-	name = "Syndicate Shuttle (Computer Board)"
+	name = "circuit board (Syndicate Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/syndicate
 	var/challenge = FALSE
 	var/moved = FALSE

@@ -16,7 +16,8 @@
 /obj/effect/clockwork/overlay/Destroy()
 	if(linked)
 		linked = null
-	. = ..()
+	..()
+	return QDEL_HINT_PUTINPOOL
 
 /obj/effect/clockwork/overlay/wall
 	name = "clockwork wall"
@@ -29,7 +30,7 @@
 /obj/effect/clockwork/overlay/wall/New()
 	..()
 	queue_smooth_neighbors(src)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/queue_smooth, src), 1)
+	addtimer(GLOBAL_PROC, "queue_smooth", 1, TIMER_NORMAL, src)
 
 /obj/effect/clockwork/overlay/wall/Destroy()
 	queue_smooth_neighbors(src)

@@ -30,14 +30,17 @@
 	//initialize limbs
 	create_bodyparts()
 
+	if(good_mutations.len) //genetic mutations have been set up.
+		initialize() //initialize monkey dna
+
 	create_internal_organs()
 
 	..()
 
-/mob/living/carbon/monkey/Initialize()
-	..()
+/mob/living/carbon/monkey/initialize()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
+
 
 /mob/living/carbon/monkey/create_internal_organs()
 	internal_organs += new /obj/item/organ/appendix

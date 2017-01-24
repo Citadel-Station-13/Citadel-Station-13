@@ -10,8 +10,8 @@
 	icon = 'icons/obj/storage.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	var/silent = 0 // No message on putting items in
-	var/list/can_hold = new/list() //Typecache of objects which this item can store (if set, it can't store anything else)
-	var/list/cant_hold = new/list() //Typecache of objects which this item can't store
+	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
+	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
 	var/max_w_class = WEIGHT_CLASS_SMALL //Max size of objects that this object can store (in effect only if can_hold isn't set)
 	var/max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
@@ -122,7 +122,7 @@
 	is_seeing |= user
 
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	close_all()
 	return ..()
 
@@ -259,15 +259,21 @@
 		return 0 //Storage item is full
 
 	if(can_hold.len)
-		if(!is_type_in_typecache(W, can_hold))
+		var/ok = 0
+		for(var/A in can_hold)
+			if(istype(W, A))
+				ok = 1
+				break
+		if(!ok)
 			if(!stop_messages)
 				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
 			return 0
 
-	if(is_type_in_typecache(W, cant_hold)) //Check for specific items which this container can't hold.
-		if(!stop_messages)
-			usr << "<span class='warning'>[src] cannot hold [W]!</span>"
-		return 0
+	for(var/A in cant_hold) //Check for specific items which this container can't hold.
+		if(istype(W, A))
+			if(!stop_messages)
+				usr << "<span class='warning'>[src] cannot hold [W]!</span>"
+			return 0
 
 	if(W.w_class > max_w_class)
 		if(!stop_messages)
@@ -321,7 +327,7 @@
 					observe.client.screen -= W
 
 		add_fingerprint(usr)
-		if(rustle_jimmies && !prevent_warning)
+		if(rustle_jimmies)
 			playsound(src.loc, "rustle", 50, 1, -5)
 
 		if(!prevent_warning)
@@ -392,7 +398,7 @@
 		return	//Robots can't interact with storage items.
 
 	if(!can_be_inserted(W, 0 , user))
-		return 0
+		return
 
 	handle_item_insertion(W, 0 , user)
 
@@ -403,8 +409,7 @@
 		close(user)
 		return
 
-	if(rustle_jimmies)
-		playsound(loc, "rustle", 50, 1, -5)
+	playsound(loc, "rustle", 50, 1, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -469,10 +474,6 @@
 
 /obj/item/weapon/storage/New()
 	..()
-
-	can_hold = typecacheof(can_hold)
-	cant_hold = typecacheof(cant_hold)
-
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else

@@ -21,7 +21,7 @@
 	stealthcooldown = 0
 
 /mob/living/simple_animal/hostile/guardian/assassin/Life()
-	. = ..()
+	..()
 	updatestealthalert()
 	if(loc == summoner && toggle)
 		ToggleMode(0)
@@ -37,9 +37,9 @@
 		if(toggle && (isliving(target) || istype(target, /obj/structure/window) || istype(target, /obj/structure/grille)))
 			ToggleMode(1)
 
-/mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/guardian/assassin/adjustHealth(amount)
 	. = ..()
-	if(. > 0 && toggle)
+	if(. && toggle)
 		ToggleMode(1)
 
 /mob/living/simple_animal/hostile/guardian/assassin/Recall()
@@ -71,7 +71,7 @@
 		armour_penetration = 100
 		obj_damage = 0
 		environment_smash = 0
-		new /obj/effect/overlay/temp/guardian/phase/out(get_turf(src))
+		PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(src))
 		alpha = 15
 		if(!forced)
 			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"

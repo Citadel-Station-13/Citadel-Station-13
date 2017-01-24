@@ -47,7 +47,7 @@
 	current_target = target
 	active = 1
 	current_beam = new(user,current_target,time=6000,beam_icon_state="medbeam",btype=/obj/effect/ebeam/medical)
-	addtimer(CALLBACK(current_beam, /datum/beam.proc/Start), 0)
+	addtimer(current_beam, "Start", 0)
 
 	feedback_add_details("gun_fired","[src.type]")
 
@@ -107,7 +107,7 @@
 
 /obj/item/weapon/gun/medbeam/proc/on_beam_tick(var/mob/living/target)
 	if(target.health != target.maxHealth)
-		new /obj/effect/overlay/temp/heal(get_turf(target), "#80F5FF")
+		PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(target), "#80F5FF"))
 	target.adjustBruteLoss(-4)
 	target.adjustFireLoss(-4)
 	return

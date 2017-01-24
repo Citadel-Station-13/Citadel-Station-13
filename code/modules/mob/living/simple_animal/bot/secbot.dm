@@ -15,7 +15,6 @@
 	bot_type = SEC_BOT
 	model = "Securitron"
 	bot_core_type = /obj/machinery/bot_core/secbot
-	var/baton_type = /obj/item/weapon/melee/baton
 	window_id = "autosec"
 	window_name = "Automatic Security Unit v1.6"
 	allow_pai = 0
@@ -381,7 +380,7 @@ Auto Patrol: []"},
 	Sa.add_overlay("hs_hole")
 	Sa.created_name = name
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new baton_type(Tsec)
+	new /obj/item/weapon/melee/baton(Tsec)
 
 	if(prob(50))
 		new /obj/item/bodypart/l_arm/robot(Tsec)
@@ -404,7 +403,14 @@ Auto Patrol: []"},
 		var/mob/living/carbon/C = AM
 		if(!istype(C) || !C || in_range(src, target))
 			return
-		knockOver(C)
+		C.visible_message("<span class='warning'>[pick( \
+						  "[C] dives out of [src]'s way!", \
+						  "[C] stumbles over [src]!", \
+						  "[C] jumps out of [src]'s path!", \
+						  "[C] trips over [src] and falls!", \
+						  "[C] topples over [src]!", \
+						  "[C] leaps out of [src]'s way!")]</span>")
+		C.Weaken(2)
 		return
 	..()
 

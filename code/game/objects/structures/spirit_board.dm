@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 0
 	var/virgin = 1
-	var/next_use = 0
+	var/cooldown = 0
 	var/planchette = "A"
 	var/lastuser = null
 
@@ -32,15 +32,16 @@
 		virgin = 0
 		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
-	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-	if(!planchette || !Adjacent(M) || next_use > world.time)
-		return
+	planchette = input("Choose the letter.", "Seance!") in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
-	next_use = world.time + rand(30,50)
+	cooldown = world.time
 	lastuser = M.ckey
-	//blind message is the same because not everyone brings night vision to seances
-	var/msg = "<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>"
-	visible_message(msg,"",msg)
+
+	var/turf/T = loc
+	sleep(rand(20,30))
+	if(T == loc)
+		visible_message("<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>")
+
 
 /obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
 	//cooldown
@@ -48,7 +49,7 @@
 	if(M.ckey == lastuser)
 		bonus = 10 //Give some other people a chance, hog.
 
-	if(next_use - bonus > world.time )
+	if(cooldown > world.time - (30 + bonus))
 		return 0 //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	//lighting check

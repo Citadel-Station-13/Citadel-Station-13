@@ -122,22 +122,16 @@
 	icon_state = "weeds"
 	obj_integrity = 15
 	max_integrity = 15
+	var/obj/structure/alien/weeds/node/linked_node = null
 	canSmoothWith = list(/obj/structure/alien/weeds, /turf/closed/wall)
 	smooth = SMOOTH_MORE
-	var/last_expand = 0 //last world.time this weed expanded
-	var/growth_cooldown_low = 150
-	var/growth_cooldown_high = 200
-	var/static/list/blacklisted_turfs = typecacheof(list(
-	/turf/open/space,
-	/turf/open/chasm,
-	/turf/open/floor/plating/lava))
 
-/obj/structure/alien/weeds/New()
+
+/obj/structure/alien/weeds/New(pos, node)
 	pixel_x = -4
 	pixel_y = -4 //so the sprites line up right in the map editor
 	..()
-	last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
-	if(icon == initial(icon))
+	if(!luminosity) //weed nodes have luminosity, but normal weeds don't!
 		switch(rand(1,3))
 			if(1)
 				icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
@@ -145,26 +139,43 @@
 				icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			if(3)
 				icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
-
-/obj/structure/alien/weeds/proc/expand()
-	var/turf/U = get_turf(src)
-	if(is_type_in_typecache(U, blacklisted_turfs))
+	linked_node = node
+	if(isspaceturf(loc))
 		qdel(src)
-		return FALSE
+		return
+	addtimer(src, "Life", rand(150, 200))
+
+/obj/structure/alien/weeds/Destroy()
+	linked_node = null
+	return ..()
+
+/obj/structure/alien/weeds/proc/Life()
+	set background = BACKGROUND_ENABLED
+	var/turf/U = get_turf(src)
+
+	if(isspaceturf(U))
+		qdel(src)
+		return
+
+	if(!linked_node || get_dist(linked_node, src) > linked_node.node_range)
+		return
 
 	for(var/turf/T in U.GetAtmosAdjacentTurfs())
-		if(locate(/obj/structure/alien/weeds) in T)
+
+		if (locate(/obj/structure/alien/weeds) in T || isspaceturf(T))
 			continue
 
-		if(is_type_in_typecache(T, blacklisted_turfs))
-			continue
+		new /obj/structure/alien/weeds(T, linked_node)
 
-		new /obj/structure/alien/weeds(T)
-	return TRUE
+
+/obj/structure/alien/weeds/ex_act(severity, target)
+	qdel(src)
+
 
 /obj/structure/alien/weeds/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		take_damage(5, BURN, 0, 0)
+
 
 //Weed nodes
 /obj/structure/alien/weeds/node
@@ -174,23 +185,10 @@
 	luminosity = 1
 	var/node_range = NODERANGE
 
+
 /obj/structure/alien/weeds/node/New()
 	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
-	..()
-	var/obj/structure/alien/weeds/W = locate(/obj/structure/alien/weeds)
-	if(W)
-		qdel(W)
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/alien/weeds/node/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/structure/alien/weeds/node/process()
-	for(var/obj/structure/alien/weeds/W in range(node_range, src))
-		if(W.last_expand <= world.time)
-			if(W.expand())
-				W.last_expand = world.time + rand(growth_cooldown_low, growth_cooldown_high)
+	..(loc, src)
 
 #undef NODERANGE
 
@@ -222,11 +220,11 @@
 /obj/structure/alien/egg/New()
 	new /obj/item/clothing/mask/facehugger(src)
 	..()
-	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
+	addtimer(src, "Grow", rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 
 /obj/structure/alien/egg/Destroy()
 	remove_from_proximity_list(src, 1)
-	return ..()
+	..()
 
 /obj/structure/alien/egg/attack_paw(mob/living/user)
 	return attack_hand(user)
@@ -281,11 +279,9 @@
 							child.Attach(M)
 							break
 
-/obj/structure/alien/egg/Moved(oldloc)
-	remove_from_proximity_list(oldloc, 1)
-	if(status == GROWN)
-		add_to_proximity_list(src, 1)	
-	return ..()
+/obj/structure/alien/egg/Move()
+	remove_from_proximity_list(src, 1)
+	..()
 
 /obj/structure/alien/egg/deconstruct()
 	if(!(flags & NODECONSTRUCT))

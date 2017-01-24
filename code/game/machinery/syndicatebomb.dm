@@ -30,19 +30,6 @@
 	var/detonation_timer
 	var/explode_now = FALSE
 
-/obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
-	. = (payload in src) && (active || ignore_active) && !defused
-	if(.)
-		payload.detonate()
-
-/obj/machinery/syndicatebomb/obj_break()
-	if(!try_detonate())
-		..()
-
-/obj/machinery/syndicatebomb/obj_destruction()
-	if(!try_detonate())
-		..()
-
 /obj/machinery/syndicatebomb/process()
 	if(!active)
 		STOP_PROCESSING(SSfastprocess, src)
@@ -73,7 +60,8 @@
 		active = FALSE
 		timer_set = initial(timer_set)
 		update_icon()
-		try_detonate(TRUE)
+		if(payload in src)
+			payload.detonate()
 	//Counter terrorists win
 	else if(!active || defused)
 		if(defused && payload in src)
@@ -178,10 +166,7 @@
 			new /obj/item/stack/sheet/plasteel( loc, 5)
 			qdel(src)
 	else
-		var/old_integ = obj_integrity
 		. = ..()
-		if((old_integ > obj_integrity) && active && !defused && (payload in src))
-			user << "<span class='warning'>That seems like a really bad idea...</span>"
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	interact(user)
@@ -419,7 +404,7 @@
 		chem_splash(get_turf(src), spread_range, list(reactants), temp_boost)
 
 		// Detonate it again in one second, until it's out of juice.
-		addtimer(CALLBACK(src, .proc/detonate), 10)
+		addtimer(src, "detonate", 10)
 
 	// If it's not a time release bomb, do normal explosion
 

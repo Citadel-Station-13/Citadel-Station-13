@@ -27,6 +27,8 @@
 	//cause a runtime
 	else if(ispath(circuit))
 		circuit = new circuit(null)
+	power_change()
+	update_icon()
 
 /obj/machinery/computer/Destroy()
 	if(circuit)
@@ -34,8 +36,7 @@
 		circuit = null
 	return ..()
 
-/obj/machinery/computer/Initialize()
-	..()
+/obj/machinery/computer/initialize()
 	power_change()
 
 /obj/machinery/computer/process()

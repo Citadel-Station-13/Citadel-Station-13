@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 5000
-	unique_rename = 1
 	var/teleport_cooldown = 400 //30 seconds base due to base parts
 	var/teleport_speed = 50
 	var/last_teleport //to handle the cooldown
@@ -21,7 +20,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/quantumpad
-	name = "Quantum Pad (Machine Board)"
+	name = "circuit board (Quantum Pad)"
 	build_path = /obj/machinery/quantumpad
 	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
 	req_components = list(

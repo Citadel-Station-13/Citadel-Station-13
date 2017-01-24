@@ -63,7 +63,6 @@
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
-	new /obj/item/weapon/paint/paint_remover(src)
 	new /obj/item/device/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/caution(src)

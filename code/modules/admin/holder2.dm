@@ -5,7 +5,6 @@ var/list/admin_datums = list()
 
 	var/client/owner	= null
 	var/fakekey			= null
-	var/following		= null
 
 	var/datum/marked_datum
 

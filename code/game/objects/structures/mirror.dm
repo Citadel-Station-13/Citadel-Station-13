@@ -42,10 +42,6 @@
 
 		H.update_hair()
 
-/obj/structure/mirror/examine_status()
-	if(broken)
-		return // no message spam
-	..()
 
 /obj/structure/mirror/obj_break(damage_flag)
 	if(!broken && !(flags & NODECONSTRUCT))

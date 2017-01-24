@@ -1,5 +1,6 @@
 /datum
 	var/var_edited = FALSE //Warrenty void if seal is broken
+	var/datum/reagents/reagents = null
 	var/fingerprintslast = null
 
 /datum/proc/vv_edit_var(var_name, var_value) //called whenever a var is edited
@@ -50,7 +51,6 @@
 	var/title = ""
 	var/refid = "\ref[D]"
 	var/icon/sprite
-	var/hash
 
 	var/type = /list
 	if (!islist)
@@ -62,15 +62,13 @@
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = new /icon(AT.icon, AT.icon_state)
-			hash = md5(AT.icon)
-			hash = md5(hash + AT.icon_state)
-			usr << browse_rsc(sprite, "vv[hash].png")
+			usr << browse_rsc(sprite, "view_vars_sprite.png")
 
 	title = "[D] (\ref[D]) = [type]"
 
 	var/sprite_text
 	if(sprite)
-		sprite_text = "<img src='vv[hash].png'></td><td>"
+		sprite_text = "<img src='view_vars_sprite.png'></td><td>"
 	var/list/atomsnowflake = list()
 
 	if(istype(D,/atom))
@@ -849,22 +847,8 @@
 					A.create_reagents(amount)
 
 			if(A.reagents)
-				var/chosen_id
 				var/list/reagent_options = sortList(chemical_reagents_list)
-				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
-					if("Enter ID")
-						var/valid_id
-						while(!valid_id)
-							chosen_id = stripped_input(usr, "Enter the ID of the reagent you want to add.")
-							if(!chosen_id) //Get me out of here!
-								break
-							for(var/ID in reagent_options)
-								if(ID == chosen_id)
-									valid_id = 1
-							if(!valid_id)
-								usr << "<span class='warning'>A reagent with that ID doesn't exist!</span>"
-					if("Choose ID")
-						chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
+				var/chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options|null
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)

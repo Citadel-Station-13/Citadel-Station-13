@@ -6,7 +6,6 @@
 	icon_keyboard = "no_keyboard"
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
-	circuit = /obj/item/weapon/circuitboard/computer/stockexchange
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/stockexchange/New()

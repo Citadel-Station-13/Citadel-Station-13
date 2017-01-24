@@ -19,7 +19,7 @@
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/cyborgrecharger
-	name = "Cyborg Recharger (Machine Board)"
+	name = "circuit board (Cyborg Recharger)"
 	build_path = /obj/machinery/recharge_station
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(

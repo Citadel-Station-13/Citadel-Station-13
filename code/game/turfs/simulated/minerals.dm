@@ -76,7 +76,8 @@
 			new mineralType(src)
 		feedback_add_details("ore_mined","[mineralType]|[mineralAmt]")
 	ChangeTurf(turf_type, defer_change)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
+	spawn(10)
+		AfterChange()
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1) //beautiful destruction
 	return
 
@@ -206,9 +207,8 @@
 
 /turf/closed/mineral/random/labormineral
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 3, /turf/closed/mineral/titanium = 4,
-		/turf/closed/mineral/silver = 6, /turf/closed/mineral/plasma = 15, /turf/closed/mineral/iron = 80,
-		/turf/closed/mineral/gibtonite = 3)
+		/turf/closed/mineral/iron = 100, /turf/closed/mineral/uranium = 1, /turf/closed/mineral/diamond = 1,
+		/turf/closed/mineral/gold = 1, /turf/closed/mineral/silver = 1, /turf/closed/mineral/plasma = 1)
 	icon_state = "rock_labor"
 
 
@@ -219,9 +219,9 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	defer_change = 1
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 2, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 3, /turf/closed/mineral/titanium/volcanic = 4,
-		/turf/closed/mineral/silver/volcanic = 6, /turf/closed/mineral/plasma/volcanic = 15, /turf/closed/mineral/iron/volcanic = 80,
-		/turf/closed/mineral/gibtonite/volcanic = 3)
+		/turf/closed/mineral/iron/volcanic = 100, /turf/closed/mineral/uranium/volcanic = 1, /turf/closed/mineral/diamond/volcanic = 1,
+		/turf/closed/mineral/gold/volcanic = 1, /turf/closed/mineral/silver/volcanic = 1, /turf/closed/mineral/plasma/volcanic = 1)
+
 
 
 
@@ -465,7 +465,8 @@
 			G.icon_state = "Gibtonite ore 2"
 
 	ChangeTurf(turf_type, defer_change)
-	addtimer(CALLBACK(src, .proc/AfterChange), 1, TIMER_UNIQUE)
+	spawn(10)
+		AfterChange()
 
 
 /turf/closed/mineral/gibtonite/volcanic

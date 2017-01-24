@@ -219,10 +219,8 @@
 	var/sensor_tag
 	var/sanitize_external
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Initialize(mapload)
+/obj/machinery/embedded_controller/radio/airlock_controller/initialize()
 	..()
-	if(!mapload)
-		return
 
 	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new
 

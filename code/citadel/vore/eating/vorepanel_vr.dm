@@ -76,7 +76,7 @@
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
 			if(DM_DIGESTF)
-				spanstyle = "color:purple;"
+				spanstyle = "color:red;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
 

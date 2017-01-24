@@ -107,7 +107,7 @@
 	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
 	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
-	clockwork proselytizers will charge very rapidly."
+	clockwork proselytizers will cost no replicant alloy to use."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
 	required_components = list(BELLIGERENT_EYE = 3, VANGUARD_COGWHEEL = 3, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 6)
@@ -140,7 +140,7 @@
 		W.damage_per_tick = 5
 		W.sight_range = 5
 	for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects) //Proselytizers no longer require alloy
-		P.charge_rate = 1250
+		P.uses_alloy = FALSE
 	for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects) //Powered clockwork structures no longer need power
 		M.needs_power = FALSE
 		if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon)) //Daemons produce components twice as quickly
@@ -154,8 +154,7 @@
 			if(W.sight_range == 5)
 				W.sight_range = initial(W.sight_range)
 		for(var/obj/item/clockwork/clockwork_proselytizer/P in all_clockwork_objects)
-			if(P.charge_rate == 1250)
-				P.charge_rate = initial(P.charge_rate)
+			P.uses_alloy = initial(P.uses_alloy)
 		for(var/obj/structure/destructible/clockwork/powered/M in all_clockwork_objects)
 			M.needs_power = initial(M.needs_power)
 			if(istype(M, /obj/structure/destructible/clockwork/powered/tinkerers_daemon))
@@ -205,7 +204,7 @@
 		playsound(invoker, 'sound/magic/lightningbolt.ogg', 100, 0)
 		if(invoker.stat == CONSCIOUS)
 			animate(invoker, color = oldcolor, time = 10)
-			addtimer(CALLBACK(invoker, /atom/proc/update_atom_colour), 10)
+			addtimer(invoker, "update_atom_colour", 10)
 			for(var/mob/living/L in view(7, invoker))
 				if(is_servant_of_ratvar(L) || L.null_rod_check())
 					continue

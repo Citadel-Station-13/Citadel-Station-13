@@ -154,7 +154,7 @@
 		user << "<span class='notice'>Location marked as test subject release point.</span>"
 
 
-/obj/machinery/abductor/console/proc/Setup()
+/obj/machinery/abductor/console/proc/Initialize()
 
 	for(var/obj/machinery/abductor/pad/p in machines)
 		if(p.team == team)

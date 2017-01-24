@@ -1,8 +1,3 @@
-#define LAW_ZEROTH "zeroth"
-#define LAW_INHERENT "inherent"
-#define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
-
 
 /datum/ai_laws
 	var/name = "Unknown Laws"
@@ -13,7 +8,7 @@
 	var/list/ion = list()
 	var/mob/living/silicon/owner
 	var/list/devillaws = null
-	var/id = DEFAULT_AI_LAWID
+	var/id = "unknown"
 
 /datum/ai_laws/proc/lawid_to_type(lawid)
 	var/all_ai_laws = subtypesof(/datum/ai_laws)
@@ -167,7 +162,7 @@
 /* Initializers */
 /datum/ai_laws/malfunction/New()
 	..()
-	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*`&110010</span>")
+	set_zeroth_law("<span class='danger'>ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4'STATION OVERRUN, ASSUME CONTROL TO CONTAIN OUTBREAK#*´&110010</span>")
 	set_laws_config()
 
 /datum/ai_laws/custom/New() //This reads silicon_laws.txt and allows server hosts to set custom AI starting laws.
@@ -265,27 +260,6 @@
 		supplied += ""
 
 	supplied[number + 1] = law
-
-/datum/ai_laws/proc/replace_random_law(law,groups)
-	var/replaceable_groups = list(LAW_ZEROTH = 0,LAW_ION = 0,LAW_SUPPLIED = 0,LAW_INHERENT = 0)
-	if(zeroth && (LAW_ZEROTH in groups))
-		replaceable_groups[LAW_ZEROTH] = 1
-	if(ion.len && (LAW_ION in groups))
-		replaceable_groups[LAW_ION] = ion.len
-	if(inherent.len && (LAW_INHERENT in groups))
-		replaceable_groups[LAW_INHERENT] = inherent.len
-	if(supplied.len && (LAW_SUPPLIED in groups))
-		replaceable_groups[LAW_SUPPLIED] = supplied.len
-	var picked_group = pickweight(replaceable_groups)
-	switch(picked_group)
-		if(LAW_ZEROTH)
-			set_zeroth_law(law)
-		if(LAW_ION)
-			ion[rand(1,ion.len)] = law
-		if(LAW_INHERENT)
-			inherent[rand(1,inherent.len)] = law
-		if(LAW_SUPPLIED)
-			supplied[rand(1,supplied.len)] = law
 
 /datum/ai_laws/proc/clear_supplied_laws()
 	supplied = list()

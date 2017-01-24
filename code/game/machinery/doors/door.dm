@@ -64,7 +64,7 @@
 		return
 	if(ismob(AM))
 		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
+		if(B.stat)
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
@@ -186,12 +186,12 @@
 
 /obj/machinery/door/emp_act(severity)
 	if(prob(20/severity) && (istype(src,/obj/machinery/door/airlock) || istype(src,/obj/machinery/door/window)) )
-		addtimer(CALLBACK(src, .proc/open), 0)
+		open()
 	if(prob(40/severity))
 		if(secondsElectrified == 0)
 			secondsElectrified = -1
 			shockedby += "\[[time_stamp()]\]EM Pulse"
-			addtimer(CALLBACK(src, .proc/unelectrify), 300)
+			addtimer(src, "unelectrify", 300)
 	..()
 
 /obj/machinery/door/proc/unelectrify()
@@ -253,7 +253,7 @@
 		for(var/atom/movable/M in get_turf(src))
 			if(M.density && M != src) //something is blocking the door
 				if(autoclose)
-					addtimer(CALLBACK(src, .proc/autoclose), 60)
+					addtimer(src, "autoclose", 60)
 				return
 	operating = 1
 
@@ -337,8 +337,4 @@
 /obj/machinery/door/proc/disable_lockdown()
 	if(!stat) //Opens only powered doors.
 		open() //Open everything!
-
-/obj/machinery/door/ex_act(severity, target)
-	//if it blows up a wall it should blow up a door
-	..(severity ? max(1, severity - 1) : 0, target)
 

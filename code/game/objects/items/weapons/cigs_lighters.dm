@@ -124,6 +124,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.add_reagent("nicotine", 15)
 
 /obj/item/clothing/mask/cigarette/Destroy()
+	if(reagents)
+		qdel(reagents)
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
@@ -352,6 +354,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "empty [initial(name)]"
 
 /obj/item/clothing/mask/cigarette/pipe/Destroy()
+	if(reagents)
+		qdel(reagents)
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
@@ -613,7 +617,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = "[param_color]_vape"
 
 /obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers) && (O.container_type & OPENCONTAINER))
+	if(istype(O, /obj/item/weapon/reagent_containers) && (O.flags & OPENCONTAINER))
 		if(reagents.total_volume < chem_volume)
 			if(O.reagents.total_volume > 0)
 				O.reagents.trans_to(src,25)

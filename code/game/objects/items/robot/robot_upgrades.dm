@@ -11,9 +11,6 @@
 	var/installed = 0
 	var/require_module = 0
 	var/module_type = null
-	// if true, is not stored in the robot to be ejected
-	// if module is reset
-	var/one_use = FALSE
 
 /obj/item/borg/upgrade/proc/action(mob/living/silicon/robot/R)
 	if(R.stat == DEAD)
@@ -24,49 +21,11 @@
 		usr << "There's no mounting point for the module!"
 		return 1
 
-/obj/item/borg/upgrade/reset
-	name = "cyborg module reset board"
-	desc = "Used to reset a cyborg's module. Destroys any other upgrades applied to the cyborg."
-	icon_state = "cyborg_upgrade1"
-	require_module = 1
-
-/obj/item/borg/upgrade/reset/action(mob/living/silicon/robot/R)
-	if(..())
-		return
-
-	R.notify_ai(2)
-
-	R.uneq_all()
-	R.pixel_x = initial(pixel_x)
-	R.hands.icon_state = "nomod"
-	R.icon = 'icons/mob/robots.dmi'
-	R.icon_state = "robot"
-	R.update_icons()
-	qdel(R.module)
-	R.module = null
-
-//	R.modtype = "robot"
-	R.designation = "Default"
-	R.updatename("Default")
-
-	R.update_icons()
-	R.update_headlamp()
-
-	R.speed = 0 // Remove upgrades.
-	R.ionpulse = FALSE
-	R.magpulse = FALSE
-	R.weather_immunities = initial(R.weather_immunities)
-
-	R.status_flags |= CANPUSH
-
-	return 1
-
 /obj/item/borg/upgrade/rename
 	name = "cyborg reclassification board"
 	desc = "Used to rename a cyborg."
 	icon_state = "cyborg_upgrade1"
-	var/heldname = ""
-	one_use = TRUE
+	var/heldname = "default name"
 
 /obj/item/borg/upgrade/rename/attack_self(mob/user)
 	heldname = stripped_input(user, "Enter new robot name", "Cyborg Reclassification", heldname, MAX_NAME_LEN)
@@ -75,12 +34,7 @@
 	if(..())
 		return
 
-	var/oldname = R.real_name
-
-	R.custom_name = heldname
-	R.updatename()
-	if(oldname == R.real_name)
-		R.notify_ai(3, oldname, R.real_name)
+	R.fully_replace_character_name(R.name, heldname)
 
 	return 1
 
@@ -89,16 +43,16 @@
 	name = "cyborg emergency reboot module"
 	desc = "Used to force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	icon_state = "cyborg_upgrade1"
-	one_use = TRUE
 
 /obj/item/borg/upgrade/restart/action(mob/living/silicon/robot/R)
 	if(R.health < 0)
 		usr << "<span class='warning'>You have to repair the cyborg before using this module!</span>"
 		return 0
 
-	if(R.mind)
-		R.mind.grab_ghost()
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+	if(!R.key)
+		for(var/mob/dead/observer/ghost in player_list)
+			if(ghost.mind && ghost.mind.current == R)
+				R.key = ghost.key
 
 	R.revive()
 
@@ -268,8 +222,8 @@
 	toggle_action.Grant(R)
 	return 1
 
-/obj/item/borg/upgrade/selfrepair/dropped()
-	addtimer(CALLBACK(src, .proc/check_dropped), 1)
+/obj/item/borg/uprgade/selfrepair/dropped()
+	addtimer(src, "check_dropped", 1)
 
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
 	if(loc != cyborg)

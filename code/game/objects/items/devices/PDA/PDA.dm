@@ -338,8 +338,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				id_check(U)
 			if("UpdateInfo")
 				ownjob = id.assignment
-				if(istype(id, /obj/item/weapon/card/id/syndicate))
-					owner = id.registered_name
 				update_label()
 			if("Eject")//Ejects the cart, only done from hub.
 				if (!isnull(cartridge))
@@ -938,6 +936,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //AI verb and proc for sending PDA messages.
 
 /mob/living/silicon/ai/proc/cmd_send_pdamesg(mob/user)
+	var/list/names = list()
 	var/list/plist = list()
 	var/list/namecounts = list()
 
@@ -954,7 +953,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		else if (P == src.aiPDA)
 			continue
 
-		plist[avoid_assoc_duplicate_keys(P.owner, namecounts)] = P
+		var/name = P.owner
+		if (name in names)
+			namecounts[name]++
+			name = text("[name] ([namecounts[name]])")
+		else
+			names.Add(name)
+			namecounts[name] = 1
+
+		plist[text("[name]")] = P
 
 	var/c = input(user, "Please select a PDA") as null|anything in sortList(plist)
 

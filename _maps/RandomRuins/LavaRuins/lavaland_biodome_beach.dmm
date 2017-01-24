@@ -303,8 +303,7 @@
 	icon_state = "tube1"
 	},
 /turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/ruin/powered)
 "bb" = (
@@ -334,8 +333,7 @@
 	dir = 8
 	},
 /turf/open/floor/pod/dark{
-	baseturf = /turf/open/floor/plating/asteroid/basalt;
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	baseturf = /turf/open/floor/plating/asteroid/basalt
 	},
 /area/ruin/powered)
 "bg" = (

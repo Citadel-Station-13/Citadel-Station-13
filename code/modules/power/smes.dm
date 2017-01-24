@@ -41,11 +41,6 @@
 	var/static/list/smesImageCache
 
 
-/obj/machinery/power/smes/examine(user)
-	..()
-	if(!terminal)
-		user << "<span class='warning'>This SMES has no power terminal!</span>"
-
 /obj/machinery/power/smes/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
@@ -68,7 +63,7 @@
 	return
 
 /obj/item/weapon/circuitboard/machine/smes
-	name = "SMES (Machine Board)"
+	name = "circuit board (SMES)"
 	build_path = /obj/machinery/power/smes
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
@@ -109,7 +104,7 @@
 				user << "<span class='notice'>Terminal found.</span>"
 				break
 		if(!terminal)
-			user << "<span class='alert'>No power terminal found.</span>"
+			user << "<span class='alert'>No power source found.</span>"
 			return
 		stat &= ~BROKEN
 		update_icon()
@@ -179,15 +174,6 @@
 		log_game("[src] has been deconstructed by [key_name(user)]")
 		investigate_log("SMES deconstructed by [key_name(user)]","singulo")
 		return
-	else if(panel_open && istype(I, /obj/item/weapon/crowbar))
-		return
-
-	return ..()
-
-/obj/machinery/power/smes/default_deconstruction_crowbar(obj/item/weapon/crowbar/C)
-	if(istype(C) && terminal)
-		usr << "<span class='warning'>You must first remove the power terminal!</span>"
-		return FALSE
 
 	return ..()
 
@@ -211,13 +197,11 @@
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.setDir(get_dir(T,src))
 	terminal.master = src
-	stat &= ~BROKEN
 
 /obj/machinery/power/smes/disconnect_terminal()
 	if(terminal)
 		terminal.master = null
 		terminal = null
-		stat |= BROKEN
 
 
 /obj/machinery/power/smes/update_icon()
@@ -264,6 +248,7 @@
 	return round(5.5*charge/capacity)
 
 /obj/machinery/power/smes/process()
+
 	if(stat & BROKEN)
 		return
 

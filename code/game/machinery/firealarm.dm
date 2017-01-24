@@ -62,12 +62,7 @@
 		if(stat & NOPOWER)
 			return
 
-		if(src.z == ZLEVEL_STATION)
-			add_overlay("overlay_[security_level]")
-		else
-			//var/green = SEC_LEVEL_GREEN
-			add_overlay("overlay_[SEC_LEVEL_GREEN]")
-
+		add_overlay("overlay_[security_level]")
 		if(detecting)
 			add_overlay("overlay_[A.fire ? "fire" : "clear"]")
 		else
@@ -87,7 +82,7 @@
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
-	if(!emagged && detecting && !stat && (temperature > T0C + 200 || temperature < BODYTEMP_COLD_DAMAGE_LIMIT))
+	if(!emagged && detecting && !stat && temperature > T0C + 200)
 		alarm()
 	..()
 
@@ -99,7 +94,7 @@
 	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
-	addtimer(CALLBACK(src, .proc/alarm), time)
+	addtimer(src, "alarm", time, TIMER_NORMAL)
 
 /obj/machinery/firealarm/proc/reset()
 	if(!is_operational())
@@ -108,7 +103,7 @@
 	A.firereset(src)
 
 /obj/machinery/firealarm/proc/reset_in(time)
-	addtimer(CALLBACK(src, .proc/reset), time)
+	addtimer(src, "reset", time, TIMER_NORMAL)
 
 /obj/machinery/firealarm/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)
@@ -120,11 +115,7 @@
 /obj/machinery/firealarm/ui_data(mob/user)
 	var/list/data = list()
 	data["emagged"] = emagged
-
-	if(src.z == ZLEVEL_STATION)
-		data["seclevel"] = get_security_level()
-	else
-		data["seclevel"] = "green"
+	data["seclevel"] = get_security_level()
 
 	var/area/A = get_area(src)
 	data["alarm"] = A.fire

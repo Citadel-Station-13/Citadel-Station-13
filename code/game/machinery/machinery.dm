@@ -156,7 +156,7 @@ Class Procs:
 /obj/machinery/emp_act(severity)
 	if(use_power && !stat)
 		use_power(7500/severity)
-		new /obj/effect/overlay/temp/emp(loc)
+		PoolOrNew(/obj/effect/overlay/temp/emp, loc)
 	..()
 
 /obj/machinery/proc/open_machine(drop = 1)
@@ -363,16 +363,15 @@ Class Procs:
 	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
-	if(istype(W) && !(flags & NODECONSTRUCT))
+	if(istype(W) &&  !(flags & NODECONSTRUCT))
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
-		if(time)
-			user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
+		user << "<span class='notice'>You begin [anchored ? "un" : ""]securing [src]...</span>"
 		playsound(loc, W.usesound, 50, 1)
 		var/prev_anchored = anchored
 		//as long as we're the same anchored state and we're either on a floor or are anchored, toggle our anchored state
-		if(!time || (do_after(user, time*W.toolspeed, target = src) && anchored == prev_anchored))
+		if(do_after(user, time*W.toolspeed, target = src) && anchored == prev_anchored)
 			can_be_unfasten = can_be_unfasten_wrench(user)
 			if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 				return can_be_unfasten

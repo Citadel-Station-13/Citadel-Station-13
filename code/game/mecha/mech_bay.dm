@@ -31,7 +31,7 @@
 	recharging_turf = get_step(loc, dir)
 
 /obj/item/weapon/circuitboard/machine/mech_recharger
-	name = "Mechbay Recharger (Machine Board)"
+	name = "circuit board (Mechbay Recharger)"
 	build_path = /obj/machinery/mech_bay_recharge_port
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
@@ -147,6 +147,5 @@
 		return
 	add_overlay("recharge_comp_on")
 
-/obj/machinery/computer/mech_bay_power_console/Initialize()
-	..()
+/obj/machinery/computer/mech_bay_power_console/initialize()
 	reconnect()

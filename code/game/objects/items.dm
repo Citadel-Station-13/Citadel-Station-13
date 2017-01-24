@@ -99,6 +99,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/datum/dog_fashion/dog_fashion = null
 
 /obj/item/New()
+	if (!armor)
+		armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	if (!materials)
 		materials = list()
 	..()
@@ -153,12 +155,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
+	var/size
+	switch(src.w_class)
+		if(WEIGHT_CLASS_TINY)
+			size = "tiny"
+		if(WEIGHT_CLASS_SMALL)
+			size = "small"
+		if(WEIGHT_CLASS_NORMAL)
+			size = "normal-sized"
+		if(WEIGHT_CLASS_BULKY)
+			size = "bulky"
+		if(WEIGHT_CLASS_HUGE)
+			size = "huge"
+		if(WEIGHT_CLASS_GIGANTIC)
+			size = "gigantic"
+		else
+	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
+
 	var/pronoun
 	if(src.gender == PLURAL)
 		pronoun = "They are"
 	else
 		pronoun = "It is"
-	var/size = weightclass2text(src.w_class)
+
 	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 	if(user.research_scanner) //Mob has a research scanner active.
@@ -306,9 +325,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 								continue
 							if(I.type in rejections) // To limit bag spamming: any given type only complains once
 								continue
-							if(!S.can_be_inserted(I, stop_messages = 1))	// Note can_be_inserted still makes noise when the answer is no
-								if(S.contents.len >= S.storage_slots)
-									break
+							if(!S.can_be_inserted(I))	// Note can_be_inserted still makes noise when the answer is no
 								rejections += I.type	// therefore full bags are still a little spammy
 								failure = 1
 								continue
@@ -500,26 +517,20 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FOUR)
-		throw_at(S,14,3, spin=0)
+		throw_at_fast(S,14,3, spin=0)
 	else ..()
 
 /obj/item/throw_impact(atom/A)
-	if(A && !qdeleted(A))
-		var/itempush = 1
-		if(w_class < 4)
-			itempush = 0 //too light to push anything
-		return A.hitby(src, 0, itempush)
+	var/itempush = 1
+	if(w_class < 4)
+		itempush = 0 //too light to push anything
+	return A.hitby(src, 0, itempush)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	thrownby = thrower
-	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
-
-
-/obj/item/proc/after_throw(datum/callback/callback)
-	if (callback) //call the original callback
-		. = callback.Invoke()
+	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -585,17 +596,15 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/burn()
 	if(!qdeleted(src))
 		var/turf/T = get_turf(src)
-		var/ash_type = /obj/effect/decal/cleanable/ash
-		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
-			ash_type = /obj/effect/decal/cleanable/ash/large
-		var/obj/effect/decal/cleanable/ash/A = new ash_type(T)
-		A.desc += "\nLooks like this used to be \an [name] some time ago."
+		var/obj/effect/decal/cleanable/ash/A = new()
+		A.desc = "Looks like this used to be a [name] some time ago."
+		A.forceMove(T) //so the ash decal is deleted if on top of lava.
 		..()
 
 /obj/item/acid_melt()
 	if(!qdeleted(src))
 		var/turf/T = get_turf(src)
-		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
+		var/obj/effect/decal/cleanable/molten_object/MO = new (T)
 		MO.pixel_x = rand(-16,16)
 		MO.pixel_y = rand(-16,16)
 		MO.desc = "Looks like this was \an [src] some time ago."

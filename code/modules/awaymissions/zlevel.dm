@@ -61,26 +61,13 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	if(!z_levels || !z_levels.len)
-		WARNING("No Z levels provided - Not generating ruins")
-		return
-
-	for(var/zl in z_levels)
-		var/turf/T = locate(1, 1, zl)
-		if(!T)
-			WARNING("Z level [zl] does not exist - Not generating ruins")
-			return
-
+		z_levels = list(1)
 	var/overall_sanity = 100
-	var/list/ruins = potentialRuins.Copy()
+	var/ruins = potentialRuins.Copy()
 
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
-		var/datum/map_template/ruin/ruin = null
-		if(ruins && ruins.len)
-			ruin = ruins[pick(ruins)]
-		else
-			world.log << "Ruin loader had no ruins to pick from with [budget] left to spend."
-			break
+		var/datum/map_template/ruin/ruin = ruins[pick(ruins)]
 		// Can we afford it
 		if(ruin.cost > budget)
 			overall_sanity--

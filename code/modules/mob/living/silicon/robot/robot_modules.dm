@@ -178,7 +178,7 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
-	addtimer(CALLBACK(RM, .proc/do_transform_animation), 0)
+	addtimer(RM, "do_transform_animation", 0)
 	qdel(src)
 	return RM
 
@@ -191,9 +191,9 @@
 
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
-	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
+	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = PoolOrNew(/obj/effect/overlay/temp/decoy/fading/fivesecond, list(R.loc, R))
 	ANM.layer = R.layer - 0.01
-	new /obj/effect/overlay/temp/small_smoke(R.loc)
+	PoolOrNew(/obj/effect/overlay/temp/small_smoke, R.loc)
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
 		R.hat = null
@@ -224,7 +224,7 @@
 	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, \
 	/obj/item/weapon/soap/nanotrasen, /obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
 	hat_offset = -3
@@ -266,7 +266,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, /obj/item/weapon/melee/baton/loaded, \
 	/obj/item/weapon/gun/energy/disabler/cyborg, /obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	feedback_key = "cyborg_security"
@@ -399,7 +399,7 @@
 	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/melee/energy/sword/cyborg, /obj/item/weapon/gun/energy/printer, \
 	/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg, /obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, \
 	/obj/item/weapon/pinpointer/syndicate/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -411,7 +411,7 @@
 	/obj/item/device/healthanalyzer, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, /obj/item/weapon/hemostat, \
 	/obj/item/weapon/cautery, /obj/item/weapon/scalpel, /obj/item/weapon/melee/energy/sword/cyborg/saw, /obj/item/roller/robo, \
 	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg, /obj/item/weapon/gun/medbeam)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

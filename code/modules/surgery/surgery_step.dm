@@ -21,7 +21,6 @@
 				implement_type = path
 				if(tool_check(user, tool))
 					success = 1
-					break
 
 	if(success)
 		if(target_zone == surgery.location)

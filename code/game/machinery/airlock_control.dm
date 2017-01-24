@@ -77,6 +77,20 @@
 		frequency = new_frequency
 		radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
 
+
+/obj/machinery/door/airlock/initialize()
+	if(frequency)
+		set_frequency(frequency)
+
+	update_icon()
+
+
+/obj/machinery/door/airlock/New()
+	..()
+
+	if(SSradio)
+		set_frequency(frequency)
+
 /obj/machinery/door/airlock/Destroy()
 	if(frequency && SSradio)
 		SSradio.remove_object(src,frequency)
@@ -142,9 +156,14 @@
 	frequency = new_frequency
 	radio_connection = SSradio.add_object(src, frequency, RADIO_AIRLOCK)
 
-/obj/machinery/airlock_sensor/Initialize()
-	..()
+/obj/machinery/airlock_sensor/initialize()
 	set_frequency(frequency)
+
+/obj/machinery/airlock_sensor/New()
+	..()
+
+	if(SSradio)
+		set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
 	if(SSradio)

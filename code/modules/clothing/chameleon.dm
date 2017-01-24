@@ -68,7 +68,7 @@
 
 /datum/action/item_action/chameleon/change
 	name = "Chameleon Change"
-	var/list/chameleon_blacklist = list() //This is a typecache
+	var/list/chameleon_blacklist = list()
 	var/list/chameleon_list = list()
 	var/chameleon_type = null
 	var/chameleon_name = "Item"
@@ -78,15 +78,15 @@
 /datum/action/item_action/chameleon/change/proc/initialize_disguises()
 	if(button)
 		button.name = "Change [chameleon_name] Appearance"
-
-
-	chameleon_blacklist |= typecacheof(target.type)
-	for(var/V in typesof(chameleon_type))
+	chameleon_blacklist += target.type
+	var/list/temp_list = typesof(chameleon_type)
+	for(var/V in temp_list - (chameleon_blacklist))
 		if(ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.flags) & ABSTRACT))
+			if(initial(I.flags) & ABSTRACT)
 				continue
-			chameleon_list += I
+			else
+				chameleon_list += I
 
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/list/item_names = list()
@@ -214,7 +214,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/under
 	chameleon_action.chameleon_name = "Jumpsuit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/under, /obj/item/clothing/under/color, /obj/item/clothing/under/rank, /obj/item/clothing/under/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
@@ -237,7 +236,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/suit
 	chameleon_action.chameleon_name = "Suit"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/suit/armor/abductor, /obj/item/clothing/suit/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/suit/chameleon/emp_act(severity)
@@ -259,7 +257,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/glasses
 	chameleon_action.chameleon_name = "Glasses"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/glasses/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity)
@@ -281,7 +278,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/gloves
 	chameleon_action.chameleon_name = "Gloves"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/clothing/gloves, /obj/item/clothing/gloves/color, /obj/item/clothing/gloves/changeling), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity)
@@ -303,7 +299,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/head
 	chameleon_action.chameleon_name = "Hat"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/head/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/head/chameleon/emp_act(severity)
@@ -347,7 +342,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/mask
 	chameleon_action.chameleon_name = "Mask"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/mask/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/mask/chameleon/emp_act(severity)
@@ -395,7 +389,6 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/shoes
 	chameleon_action.chameleon_name = "Shoes"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/clothing/shoes/changeling, only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity)
@@ -417,14 +410,14 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/weapon/gun
 	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/weapon/gun/magic, ignore_root_path = FALSE)
+	chameleon_action.chameleon_blacklist = typesof(/obj/item/weapon/gun/magic)
 	chameleon_action.initialize_disguises()
 
 /obj/item/weapon/gun/energy/laser/chameleon/emp_act(severity)
 	chameleon_action.emp_randomise()
 
 /obj/item/weapon/storage/backpack/chameleon
-	name = "backpack"
+	name = "chameleon backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/weapon/storage/backpack/chameleon/New()
@@ -438,7 +431,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/device/radio/headset/chameleon
-	name = "radio headset"
+	name = "chameleon headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/device/radio/headset/chameleon/New()
@@ -452,7 +445,7 @@
 	chameleon_action.emp_randomise()
 
 /obj/item/device/pda/chameleon
-	name = "PDA"
+	name = "chameleon PDA"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/device/pda/chameleon/New()
@@ -460,7 +453,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/device/pda
 	chameleon_action.chameleon_name = "PDA"
-	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/device/pda/heads, /obj/item/device/pda/ai, /obj/item/device/pda/ai/pai), only_root_path = TRUE)
+	chameleon_action.chameleon_blacklist = list(/obj/item/device/pda/ai)
 	chameleon_action.initialize_disguises()
 
 /obj/item/device/pda/chameleon/emp_act(severity)

@@ -113,8 +113,7 @@
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
-	flags = NODROP | NOBLUDGEON
-	container_type = OPENCONTAINER
+	flags = NODROP | OPENCONTAINER | NOBLUDGEON
 	slot_flags = 0
 
 	var/obj/item/weapon/watertank/tank
@@ -300,7 +299,7 @@
 		if(!Adj|| !isturf(target))
 			return
 		if(metal_synthesis_cooldown < 5)
-			var/obj/effect/particle_effect/foam/metal/F = new /obj/effect/particle_effect/foam/metal(get_turf(target))
+			var/obj/effect/particle_effect/foam/metal/F = PoolOrNew(/obj/effect/particle_effect/foam/metal, get_turf(target))
 			F.amount = 0
 			metal_synthesis_cooldown++
 			spawn(100)
@@ -348,7 +347,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER
+	flags = OPENCONTAINER
 	spillable = 0
 	possible_transfer_amounts = list(5,10,15)
 

@@ -15,10 +15,10 @@
 
 /turf/open/floor/bluegrid/New()
 	..()
-	SSmapping.nuke_tiles += src
+	nuke_tiles += src
 
 /turf/open/floor/bluegrid/Destroy()
-	SSmapping.nuke_tiles -= src
+	nuke_tiles -= src
 	return ..()
 
 /turf/open/floor/greengrid
@@ -69,24 +69,26 @@
 
 /turf/open/floor/clockwork/New()
 	..()
-	new /obj/effect/overlay/temp/ratvar/floor(src)
-	new /obj/effect/overlay/temp/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor(src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
+	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)
+	realappearence = PoolOrNew(/obj/effect/clockwork/overlay/floor, src)
 	realappearence.linked = src
 	change_construction_value(1)
 
 /turf/open/floor/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	change_construction_value(-1)
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
+	be_removed()
 	return ..()
 
-/turf/open/floor/clockwork/ReplaceWithLattice()
-	..()
-	for(var/obj/structure/lattice/L in src)
-		L.ratvar_act()
+/turf/open/floor/clockwork/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/clockwork/proc/be_removed()
+	STOP_PROCESSING(SSobj, src)
+	change_construction_value(-1)
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/clockwork/Entered(atom/movable/AM)
 	..()
@@ -114,7 +116,20 @@
 			if(M.client && (is_servant_of_ratvar(M) || isobserver(M) || M.stat == DEAD))
 				viewing += M.client
 		flick_overlay(I, viewing, 8)
-		L.adjustToxLoss(-3, TRUE, TRUE)
+
+		var/swapdamage = FALSE
+		if(L.has_dna()) //if has_dna() is true they're at least carbon
+			var/mob/living/carbon/C = L
+			if(TOXINLOVER in C.dna.species.species_traits)
+				swapdamage = TRUE
+		if(isanimal(L))
+			var/mob/living/simple_animal/A = L
+			if(A.damage_coeff[TOX] < 0)
+				swapdamage = TRUE
+		if(swapdamage) //they'd take damage, we need to swap it
+			L.adjustToxLoss(3)
+		else
+			L.adjustToxLoss(-3)
 
 /turf/open/floor/clockwork/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
@@ -129,7 +144,7 @@
 	return ..()
 
 /turf/open/floor/clockwork/make_plating()
-	new /obj/item/stack/tile/brass(src)
+	PoolOrNew(/obj/item/stack/tile/brass, src)
 	return ..()
 
 /turf/open/floor/clockwork/narsie_act()
@@ -138,7 +153,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(src, "update_atom_colour", 8)
 
 
 /turf/open/floor/bluespace

@@ -42,8 +42,6 @@
 			alt_icon = old_icon
 		pixel_x = get_standard_pixel_x_offset(lying)
 		pixel_y = get_standard_pixel_y_offset(lying)
-	update_inv_hands()
-	update_inv_handcuffed()
 
 /mob/living/carbon/alien/humanoid/regenerate_icons()
 	if(!..())

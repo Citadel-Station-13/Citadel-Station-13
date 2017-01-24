@@ -122,7 +122,7 @@
 	IgniteMob()
 
 /mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src || anchored)
+	if(anchored)
 		return 0
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message)
@@ -267,6 +267,7 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
+	flash_act()
 
 //Looking for irradiate()? It's been moved to radiation.dm under the rad_act() for mobs.
 
@@ -323,7 +324,7 @@
 
 
 /mob/living/ratvar_act()
-	if(stat != DEAD && !is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
+	if(!is_servant_of_ratvar(src) && !add_servant_of_ratvar(src))
 		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
 		adjustFireLoss(35)
 		if(src)
@@ -337,7 +338,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
 		overlay_fullscreen("flash", type)
-		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
+		addtimer(src, "clear_fullscreen", 25, TIMER_NORMAL, "flash", 25)
 		return 1
 
 //called when the mob receives a loud bang

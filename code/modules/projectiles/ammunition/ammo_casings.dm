@@ -296,7 +296,7 @@
 
 /obj/item/ammo_casing/shotgun/dart/New()
 	..()
-	container_type |= OPENCONTAINER
+	flags |= OPENCONTAINER
 	create_reagents(30)
 	reagents.set_reacting(FALSE)
 

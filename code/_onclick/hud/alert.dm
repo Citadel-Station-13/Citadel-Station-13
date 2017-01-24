@@ -33,7 +33,7 @@
 			else //no need to update
 				return 0
 	else
-		alert = new type()
+		alert = PoolOrNew(type)
 
 	if(new_master)
 		var/old_layer = new_master.layer
@@ -56,13 +56,11 @@
 	animate(alert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
 
 	if(alert.timeout)
-		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
+		spawn(alert.timeout)
+			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+				clear_alert(category)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	return alert
-
-/mob/proc/alert_timeout(obj/screen/alert/alert, category)
-	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
-		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category)
@@ -586,8 +584,8 @@ so as to remain in compliance with the most up-to-date laws."
 		return usr.client.Click(master, location, control, params)
 
 /obj/screen/alert/Destroy()
-	. = ..()
+	..()
 	severity = 0
 	master = null
 	screen_loc = ""
-
+	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

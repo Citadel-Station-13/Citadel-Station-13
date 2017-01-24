@@ -7,7 +7,13 @@
 	var/mob/living/carbon/human/patient = null
 	var/obj/structure/table/optable/table = null
 
-/obj/machinery/computer/operating/Initialize()
+
+/obj/machinery/computer/operating/New()
+	..()
+	if(ticker)
+		find_table()
+
+/obj/machinery/computer/operating/initialize()
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()

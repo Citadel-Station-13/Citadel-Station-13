@@ -71,9 +71,9 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
-	if(M.restrained() || ((isdrone(M) || iscyborg(M)) && M.stat))
-		return
-	bumpopen(M)
+	if(!M.stat && !M.restrained())
+		bumpopen(M)
+	return
 
 /obj/machinery/door/window/bumpopen(mob/user)
 	if( operating || !src.density )
@@ -318,7 +318,7 @@
 
 /obj/machinery/door/window/clockwork/setDir(direct)
 	if(!made_glow)
-		var/obj/effect/E = new /obj/effect/overlay/temp/ratvar/door/window(get_turf(src))
+		var/obj/effect/E = PoolOrNew(/obj/effect/overlay/temp/ratvar/door/window, get_turf(src))
 		E.setDir(direct)
 		made_glow = TRUE
 	..()
@@ -339,7 +339,7 @@
 		var/previouscolor = color
 		color = "#960000"
 		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
+		addtimer(src, "update_atom_colour", 8)
 
 /obj/machinery/door/window/clockwork/allowed(mob/M)
 	if(is_servant_of_ratvar(M))

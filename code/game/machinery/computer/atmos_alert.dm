@@ -9,7 +9,7 @@
 	var/receive_frequency = 1437
 	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/computer/atmos_alert/Initialize()
+/obj/machinery/computer/atmos_alert/initialize()
 	..()
 	set_frequency(receive_frequency)
 

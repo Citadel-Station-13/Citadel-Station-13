@@ -217,7 +217,7 @@
 				occupant.adjustFireLoss(rand(10, 16))
 			if(iscarbon(occupant))
 				occupant.emote("scream")
-		addtimer(CALLBACK(src, .proc/cook), 50)
+		addtimer(src, "cook", 50, TIMER_NORMAL)
 	else
 		uv_cycles = initial(uv_cycles)
 		uv = FALSE
@@ -263,7 +263,7 @@
 	add_fingerprint(user)
 	if(locked)
 		visible_message("<span class='notice'>You see [user] kicking against the doors of [src]!</span>", "<span class='notice'>You start kicking against the doors...</span>")
-		addtimer(CALLBACK(src, .proc/resist_open, user), 300)
+		addtimer(src, "resist_open", 300, TIMER_NORMAL, user)
 	else
 		open_machine()
 		dump_contents()

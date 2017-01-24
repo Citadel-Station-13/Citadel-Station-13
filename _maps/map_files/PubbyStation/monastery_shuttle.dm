@@ -7,5 +7,5 @@
 	no_destination_swap = TRUE
 
 /obj/item/weapon/circuitboard/computer/shuttle/monastery_shuttle
-	name = "Monastery Shuttle (Computer Board)"
+	name = "circuit board (Monastery Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/monastery_shuttle

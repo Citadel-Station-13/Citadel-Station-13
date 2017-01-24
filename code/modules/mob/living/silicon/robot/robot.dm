@@ -215,18 +215,12 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(changed_name == "" && client)
-		changed_name = client.prefs.custom_names["cyborg"]
-	if(!changed_name)
-		changed_name = get_standard_name()
-
+	else
+		changed_name = "[(designation ? "[designation] " : "")][mmi.braintype]-[num2text(ident)]"
 	real_name = changed_name
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
-
-/mob/living/silicon/robot/proc/get_standard_name()
-	return "[(designation ? "[designation] " : "")][mmi.braintype]-[ident]"
 
 /mob/living/silicon/robot/verb/cmd_robot_alerts()
 	set category = "Robot Commands"
@@ -364,7 +358,7 @@
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
-				user << "<span class='notice'>You start fixing yourself...</span>"
+				user << "<span class='notice'>You start fixing youself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 
@@ -382,7 +376,7 @@
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
-				user << "<span class='notice'>You start fixing yourself...</span>"
+				user << "<span class='notice'>You start fixing youself...</span>"
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
@@ -493,7 +487,7 @@
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "<span class='warning'>You must access the borg's internals!</span>"
+			user << "<span class='warning'>You must access the borgs internals!</span>"
 		else if(!src.module && U.require_module)
 			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
 		else if(U.locked)
@@ -503,11 +497,8 @@
 				return
 			if(U.action(src))
 				user << "<span class='notice'>You apply the upgrade to [src].</span>"
-				if(U.one_use)
-					qdel(U)
-				else
-					U.forceMove(src)
-					upgrades += U
+				U.loc = src
+				upgrades += U
 			else
 				user << "<span class='danger'>Upgrade error.</span>"
 
@@ -530,7 +521,7 @@
 	if(stat == DEAD)
 		return //won't work if dead
 	if(locked)
-		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
+		switch(alert("You can not lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
 				locked = 0
 				update_icons()
@@ -602,64 +593,8 @@
 	if(laser == 1)
 		add_overlay("laser")
 	if(disabler == 1)
-		overlays += "disabler"
-	if(sleeper_g == 1)
-		overlays += "sleeper_g"
-	if(sleeper_r == 1)
-		overlays += "sleeper_r"
-
-	if(stat > 1 && icon_state == "k9")
-		icon_state = "k9-wreck"
-	if(stat < 2 && icon_state == "k9-wreck")
-		icon_state = "k9"
-	if(stat > 1 && icon_state == "borgi")
-		icon_state = "borgi-wreck"
-	if(stat < 2 && icon_state == "borgi-wreck")
-		icon_state = "borgi"
-	if(stat > 1 && icon_state == "medihound")
-		icon_state = "medihound-wreck"
-	if(stat < 2 && icon_state == "medihound-wreck")
-		icon_state = "medihound"
-
- //None of this is working with borg code Verki
-/mob/living/silicon/robot/proc/installed_modules()
-	if(!module)
-		pick_module()
-		return
-	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
-	<BR>
-	<BR>
-	<B>Activated Modules</B>
-	<BR>
-	<table border='0'>
-	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
-	</table><BR>
-	<B>Installed Modules</B><BR><BR>
-
-	<table border='0'>"}
-
-	for (var/obj in module.modules)
-		if (!obj)
-			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
-		else if(activated(obj))
-			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
-	if (emagged)
-		if(activated(module.emag))
-			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
-	dat += "</table>"
-
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
+		add_overlay("disabler")
 */
-
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
 	var/oldLoc = src.loc
@@ -739,7 +674,7 @@
 /mob/living/silicon/robot/proc/ResetSecurityCodes()
 	set category = "Robot Commands"
 	set name = "Reset Identity Codes"
-	set desc = "Scrambles your security and identification codes and resets your current buffers. Unlocks you and permanently severs you from your AI and the robotics console and will deactivate your camera system."
+	set desc = "Scrambles your security and identification codes and resets your current buffers.  Unlocks you and permenantly severs you from your AI and the robotics console and will deactivate your camera system."
 
 	var/mob/living/silicon/robot/R = src
 

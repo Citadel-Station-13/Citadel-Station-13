@@ -17,7 +17,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/recharger
-	name = "Weapon Recharger (Machine Board)"
+	name = "circuit board (Weapon Recharger)"
 	build_path = /obj/machinery/recharger
 	origin_tech = "powerstorage=4;engineering=3;materials=4"
 	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
