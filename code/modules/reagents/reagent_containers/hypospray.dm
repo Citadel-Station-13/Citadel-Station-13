@@ -8,7 +8,7 @@
 	volume = 30
 	possible_transfer_amounts = list()
 	resistance_flags = ACID_PROOF
-	container_type = OPENCONTAINER
+	flags = OPENCONTAINER
 	slot_flags = SLOT_BELT
 	var/ignore_flags = 0
 	var/infinite = FALSE

@@ -23,8 +23,6 @@
 	master = null
 	return ..()
 
-/obj/screen/orbit()
-	return
 
 /obj/screen/text
 	icon = null

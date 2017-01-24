@@ -98,7 +98,7 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
-	name = "Subspace Broadcaster (Machine Board)"
+	name = "circuit board (Subspace Broadcaster)"
 	build_path = /obj/machinery/telecomms/broadcaster
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(

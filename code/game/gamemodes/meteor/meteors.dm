@@ -328,7 +328,7 @@
 /obj/effect/meteor/tunguska/Move()
 	. = ..()
 	if(.)
-		new /obj/effect/overlay/temp/revenant(get_turf(src))
+		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(src))
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()

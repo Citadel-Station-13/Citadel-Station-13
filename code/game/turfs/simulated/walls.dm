@@ -59,8 +59,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			var/turf/NT = ChangeTurf(baseturf)
-			NT.contents_explosion(severity, target)
+			src.ChangeTurf(src.baseturf)
 			return
 		if(2)
 			if (prob(50))
@@ -123,6 +122,7 @@
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
 	..()
+	return
 
 
 /turf/closed/wall/attackby(obj/item/weapon/W, mob/user, params)
@@ -148,6 +148,8 @@
 	//the istype cascade has been spread among various procs for easy overriding
 	if(try_wallmount(W,user,T) || try_decon(W,user,T) || try_destroy(W,user,T))
 		return
+
+	return
 
 
 /turf/closed/wall/proc/try_wallmount(obj/item/weapon/W, mob/user, turf/T)
@@ -181,7 +183,7 @@
 	else if( istype(W, /obj/item/weapon/gun/energy/plasmacutter) )
 		user << "<span class='notice'>You begin slicing through the outer plating...</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
-		if(do_after(user, slicing_duration*W.toolspeed, target = src))
+		if(do_after(user, slicing_duration*0.6, target = src))  // plasma cutter is faster than welding tool
 			if(!iswallturf(src) || !user || !W || !T)
 				return 1
 			if( user.loc == T && user.get_active_held_item() == W )
@@ -223,11 +225,17 @@
 		var/burning_time = max(100,300 - thermite)
 		var/turf/open/floor/F = ChangeTurf(/turf/open/floor/plating)
 		F.burn_tile()
+		F.icon_state = "wall_thermite"
 		F.add_hiddenprint(user)
-		QDEL_IN(O, burning_time)
+		spawn(burning_time)
+			if(O)
+				qdel(O)
 	else
 		thermite = 0
-		QDEL_IN(O, 50)
+		spawn(50)
+			if(O)
+				qdel(O)
+	return
 
 /turf/closed/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

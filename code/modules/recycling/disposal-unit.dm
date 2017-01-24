@@ -46,8 +46,7 @@
 		mode = PRESSURE_OFF
 		flush = 0
 	else
-		if(initial(mode))
-			mode = PRESSURE_ON
+		mode = PRESSURE_ON
 		flush = initial(flush)
 		trunk.linked = src // link the pipe trunk to self
 
@@ -61,10 +60,7 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
 
-/obj/machinery/disposal/Initialize(mapload)
-	..()
-	if(!mapload)
-		return
+/obj/machinery/disposal/initialize()
 	//this will get a copy of the air turf and take a SEND PRESSURE amount of air from it
 	var/atom/L = loc
 	var/datum/gas_mixture/env = new
@@ -231,7 +227,7 @@
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
-			AM.throw_at(target, 5, 1)
+			AM.throw_at_fast(target, 5, 1)
 
 		H.vent_gas(loc)
 		qdel(H)
@@ -396,7 +392,7 @@
 	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
-		addtimer(CALLBACK(src, .proc/flush), 0)
+		addtimer(src, "flush", 0)
 
 	if(stat & NOPOWER) // won't charge if no power
 		return

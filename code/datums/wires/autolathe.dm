@@ -27,13 +27,13 @@
 	switch(wire)
 		if(WIRE_HACK)
 			A.adjust_hacked(!A.hacked)
-			addtimer(CALLBACK(A, /obj/machinery/autolathe.proc/reset, wire), 60)
+			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
 		if(WIRE_SHOCK)
 			A.shocked = !A.shocked
-			addtimer(CALLBACK(A, /obj/machinery/autolathe.proc/reset, wire), 60)
+			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
 		if(WIRE_DISABLE)
 			A.disabled = !A.disabled
-			addtimer(CALLBACK(A, /obj/machinery/autolathe.proc/reset, wire), 60)
+			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
 
 /datum/wires/autolathe/on_cut(wire, mend)
 	var/obj/machinery/autolathe/A = holder

@@ -145,7 +145,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 			else
 				user << "<span class='danger'>You remove the floor tile.</span>"
 				if(floor_tile)
-					new floor_tile(src)
+					PoolOrNew(floor_tile, src)
 		make_plating()
 		playsound(src, C.usesound, 80, 1)
 		return 1
@@ -155,17 +155,17 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(current_size == STAGE_THREE)
 		if(prob(30))
 			if(floor_tile)
-				new floor_tile(src)
+				PoolOrNew(floor_tile, src)
 				make_plating()
 	else if(current_size == STAGE_FOUR)
 		if(prob(50))
 			if(floor_tile)
-				new floor_tile(src)
+				PoolOrNew(floor_tile, src)
 				make_plating()
 	else if(current_size >= STAGE_FIVE)
 		if(floor_tile)
 			if(prob(70))
-				new floor_tile(src)
+				PoolOrNew(floor_tile, src)
 				make_plating()
 		else if(prob(50))
 			ReplaceWithLattice()
@@ -179,10 +179,9 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(.)
 		ChangeTurf(/turf/open/floor/clockwork)
 
-/turf/open/floor/Initialize(mapload)
+/turf/open/floor/initialize()
 	..()
-	if(mapload)
-		MakeDirty()
+	MakeDirty()
 
 /turf/open/floor/acid_melt()
 	ChangeTurf(baseturf)

@@ -47,12 +47,9 @@
 	if(!crit_fail)
 		crit_fail = 1
 		update_icon()
-	if(ismob(loc))
-		var/mob/M = loc
-		M.visible_message("<span class='danger'>[src] burns out!</span>","<span class='userdanger'>[src] burns out!</span>")
-	else
 		var/turf/T = get_turf(src)
-		T.visible_message("<span class='danger'>[src] burns out!</span>")
+		if(T)
+			T.visible_message("[src] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -177,11 +174,11 @@
 
 /obj/item/device/assembly/flash/cyborg/attack(mob/living/M, mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attack_self(mob/user)
 	..()
-	new /obj/effect/overlay/temp/borgflash(get_turf(src))
+	PoolOrNew(/obj/effect/overlay/temp/borgflash, get_turf(src))
 
 /obj/item/device/assembly/flash/cyborg/attackby(obj/item/weapon/W, mob/user, params)
 	return
@@ -207,7 +204,7 @@
 		I.owner << "<span class='warning'>Your photon projector implant overheats and deactivates!</span>"
 		I.Retract()
 	overheat = FALSE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd * 2)
+	addtimer(src, "cooldown", flashcd * 2)
 
 /obj/item/device/assembly/flash/armimplant/try_use_flash(mob/user = null)
 	if(overheat)
@@ -215,7 +212,7 @@
 			I.owner << "<span class='warning'>Your photon projector is running too hot to be used again so quickly!</span>"
 		return FALSE
 	overheat = TRUE
-	addtimer(CALLBACK(src, .proc/cooldown), flashcd)
+	addtimer(src, "cooldown", flashcd)
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	return TRUE
@@ -278,7 +275,7 @@
 	else if(flash)
 		item_state = "flashshield_flash"
 		item_state = "flashshield_flash"
-		addtimer(CALLBACK(src, .proc/update_icon), 5)
+		addtimer(src, "update_icon", 5)
 
 	if(holder)
 		holder.update_icon()

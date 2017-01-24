@@ -26,7 +26,8 @@
 		"Head of Security",
 		"Chief Engineer",
 		"Research Director",
-		"Chief Medical Officer")
+		"Chief Medical Officer",
+		"Chaplain")
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -37,7 +38,7 @@
 
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
-	if(!slot || slot == 2)// slot being false means both are removed
+	if(slot == 2)
 		minor = 0
 		authenticated = 0
 		head_subordinates = null
@@ -175,7 +176,7 @@
 					if("id")
 						if(id_card)
 							data_core.manifest_modify(id_card.registered_name, id_card.assignment)
-							card_slot.try_eject(1, user)
+							card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
@@ -191,7 +192,7 @@
 							region_access = null
 							authenticated = 0
 							minor = 0
-							card_slot.try_eject(2, user)
+							card_slot.try_eject(, user)
 						else
 							var/obj/item/I = usr.get_active_held_item()
 							if (istype(I, /obj/item/weapon/card/id))
@@ -331,8 +332,8 @@
 				"title" = job.title,
 				"current" = job.current_positions,
 				"total" = job.total_positions,
-				"status_open" = (authed && !minor) ? status_open["enable"]: 0,
-				"status_close" = (authed && !minor) ? status_close["enable"] : 0,
+				"status_open" = authed ? status_open["enable"]: 0,
+				"status_close" = authed ? status_close["enable"] : 0,
 				"desc_open" = status_open["desc"],
 				"desc_close" = status_close["desc"])))
 		data["slots"] = pos
@@ -473,7 +474,7 @@
 					if((access_ce in auth_card.access) && ((target_dept==5) || !target_dept))
 						region_access |= 5
 						get_subordinates("Chief Engineer")
-					if(region_access.len)
+					if(region_access)
 						minor = 1
 						authenticated = 1
 						return 1

@@ -76,7 +76,7 @@ var/datum/subsystem/augury/SSaugury
 	active = FALSE
 	UpdateButtonIcon()
 
-/datum/action/innate/augury/UpdateButtonIcon(status_only = FALSE)
+/datum/action/innate/augury/UpdateButtonIcon()
 	..()
 	if(active)
 		button.icon_state = "template_active"

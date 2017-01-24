@@ -74,14 +74,11 @@
 	else //when a limb is missing the damage is actually passed to the chest
 		return "chest"
 
-/obj/item/projectile/proc/prehit(atom/target)
-	return
-
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
 	if(!isliving(target))
 		if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 		return 0
 	var/mob/living/L = target
 	if(blocked != 100) // not completely blocked
@@ -90,13 +87,13 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_loca)
 			if(isalien(L))
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter(target_loca, splatter_dir)
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter/xenosplatter, list(target_loca, splatter_dir))
 			else
-				new /obj/effect/overlay/temp/dir_setting/bloodsplatter(target_loca, splatter_dir)
+				PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(target_loca, splatter_dir))
 			if(prob(33))
 				L.add_splatter_floor(target_loca)
 		else if(impact_effect_type)
-			new impact_effect_type(target_loca, target, src)
+			PoolOrNew(impact_effect_type, list(target_loca, target, src))
 
 		var/organ_hit_text = ""
 		var/limb_hit = L.check_limb_hit(def_zone)//to get the correct message info.
@@ -148,7 +145,6 @@
 
 	var/turf/target_turf = get_turf(A)
 
-	prehit(A)
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
@@ -162,7 +158,6 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
@@ -173,7 +168,6 @@
 	if(!log_override && firer && original)
 		add_logs(firer, original, "fired at", src, " [get_area(src)]")
 	if(direct_target)
-		prehit(direct_target)
 		direct_target.bullet_act(src, def_zone)
 		qdel(src)
 		return

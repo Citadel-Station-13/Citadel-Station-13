@@ -40,7 +40,7 @@ var/global/posibrain_notif_cooldown = 0
 		notify_ghosts("[name] [msg] in [get_area(src)]!", ghost_sound = !newlymade ? 'sound/effects/ghost2.ogg':null, enter_link = "<a href=?src=\ref[src];activate=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 		if(!newlymade)
 			posibrain_notif_cooldown = 1
-			addtimer(CALLBACK(src, .proc/reset_posibrain_cooldown), askDelay)
+			addtimer(src, "reset_posibrain_cooldown", askDelay, TIMER_NORMAL)
 
 /obj/item/device/mmi/posibrain/proc/reset_posibrain_cooldown()
 	posibrain_notif_cooldown = 0
@@ -98,8 +98,8 @@ var/global/posibrain_notif_cooldown = 0
 
 /obj/item/device/mmi/posibrain/proc/transfer_personality(mob/candidate)
 	if(used || (brainmob && brainmob.key)) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
-		candidate << "This brain has already been taken! Please try your possession again later!"
-		return FALSE
+		candidate << "This brain has already been taken! Please try your possesion again later!"
+		return
 	notified = 0
 	if(candidate.mind && !isobserver(candidate))
 		candidate.mind.transfer_to(brainmob)
@@ -111,27 +111,39 @@ var/global/posibrain_notif_cooldown = 0
 	brainmob.stat = CONSCIOUS
 	dead_mob_list -= brainmob
 	living_mob_list += brainmob
+	if(clockwork)
+		add_servant_of_ratvar(brainmob, TRUE)
 
 	visible_message(new_mob_message)
 	update_icon()
 	used = 1
-	return TRUE
 
 
-/obj/item/device/mmi/posibrain/examine(mob/user)
-	. = ..()
-	var/msg
+/obj/item/device/mmi/posibrain/examine()
+
+	set src in oview()
+
+	if(!usr || !src)
+		return
+	if((usr.disabilities & BLIND || usr.stat) && !isobserver(usr))
+		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		return
+
+	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+	msg += "<span class='warning'>"
+
 	if(brainmob && brainmob.key)
 		switch(brainmob.stat)
 			if(CONSCIOUS)
 				if(!src.brainmob.client)
-					msg = "It appears to be in stand-by mode." //afk
+					msg += "It appears to be in stand-by mode.\n" //afk
 			if(DEAD)
-				msg = "<span class='deadsay'>It appears to be completely inactive.</span>"
+				msg += "<span class='deadsay'>It appears to be completely inactive.</span>\n"
 	else
-		msg = "[dead_message]"
-
-	user << msg
+		msg += "[dead_message]\n"
+	msg += "<span class='info'>*---------*</span>"
+	usr << msg
+	return
 
 /obj/item/device/mmi/posibrain/New()
 	brainmob = new(src)

@@ -66,8 +66,6 @@
 		go_up(user,is_ghost)
 	else if(down)
 		go_down(user,is_ghost)
-	else
-		user << "<span class='warning'>[src] doesn't seem to lead anywhere!</span>"
 
 	if(!is_ghost)
 		add_fingerprint(user)

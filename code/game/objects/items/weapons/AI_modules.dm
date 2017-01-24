@@ -44,7 +44,6 @@ AI MODULES
 		user << "<span class='warning'>ERROR: No laws found on board.</span>"
 		return
 
-	var/overflow = FALSE
 	//Handle the lawcap
 	if(law_datum)
 		var/tot_laws = 0
@@ -55,9 +54,9 @@ AI MODULES
 		if(tot_laws > config.silicon_max_law_amount && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
 			user << "<span class='caution'>Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."
 			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			overflow = TRUE
+			return
 
-	var/law2log = src.transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
+	var/law2log = src.transmitInstructions(law_datum, user) //Freeforms return something extra we need to log
 	if(law_datum.owner)
 		user << "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>"
 		law_datum.owner.show_laws()
@@ -73,7 +72,7 @@ AI MODULES
 	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
 
 //The proc that actually changes the silicon's laws.
-/obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
+/obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	if(law_datum.owner)
 		law_datum.owner << "<span class='userdanger'>[sender] has uploaded a change to the laws you must follow using a [name]. From now on, these are your laws: </span>"
 
@@ -95,20 +94,14 @@ AI MODULES
 			law_datum.add_supplied_law(lawpostemp, templaw)
 		lawpostemp++
 
-/obj/item/weapon/aiModule/core/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/core/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	for(var/templaw in laws)
 		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.add_inherent_law(templaw)
-			else
-				law_datum.owner.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.owner.add_inherent_law(templaw)
 		else
-			if(!overflow)
-				law_datum.add_inherent_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED))
+			law_datum.add_inherent_law(templaw)
 
-/obj/item/weapon/aiModule/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/zeroth/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	if(law_datum.owner)
 		if(law_datum.owner.laws.zeroth)
 			law_datum.owner << "[sender.real_name] attempted to modify your zeroth law."
@@ -119,28 +112,16 @@ AI MODULES
 
 	for(var/templaw in laws)
 		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.set_zeroth_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ZEROTH,LAW_ION))
+			law_datum.owner.set_zeroth_law(templaw)
 		else
-			if(!overflow)
-				law_datum.set_zeroth_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ZEROTH,LAW_ION))
+			law_datum.set_zeroth_law(templaw)
 
-/obj/item/weapon/aiModule/ion/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/ion/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	for(var/templaw in laws)
 		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.add_ion_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
+			law_datum.owner.add_ion_law(templaw)
 		else
-			if(!overflow)
-				law_datum.add_ion_law(templaw)
-			else
-				law_datum.replace_random_law(templaw,list(LAW_INHERENT,LAW_SUPPLIED,LAW_ION))
+			law_datum.add_ion_law(templaw)
 
 
 /******************** Safeguard ********************/
@@ -166,7 +147,7 @@ AI MODULES
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/supplied/safeguard/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return targetName
 
@@ -193,7 +174,7 @@ AI MODULES
 		return 0
 	..()
 
-/obj/item/weapon/aiModule/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/zeroth/oneHuman/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	if(..())
 		return "[targetName], but the AI's existing law 0 cannot be overriden."
 	return targetName
@@ -250,7 +231,7 @@ AI MODULES
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return laws[1]
 
@@ -270,7 +251,7 @@ AI MODULES
 	origin_tech = "programming=3;materials=2"
 	bypass_law_amt_check = 1
 
-/obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/reset/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	if(law_datum.owner)
 		law_datum.owner.clear_supplied_laws()
@@ -287,7 +268,7 @@ AI MODULES
 	desc = "An AI Module for purging all programmed laws."
 	origin_tech = "programming=5;materials=4"
 
-/obj/item/weapon/aiModule/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/reset/purge/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
@@ -301,7 +282,7 @@ AI MODULES
 	desc = "An AI Module for programming core laws to an AI."
 	origin_tech = "programming=3;materials=4"
 
-/obj/item/weapon/aiModule/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
+/obj/item/weapon/aiModule/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender) //These boards replace inherent laws.
 	if(law_datum.owner)
 		law_datum.owner.clear_inherent_laws()
 		law_datum.owner.clear_zeroth_law(0)
@@ -433,7 +414,7 @@ AI MODULES
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	..()
 	return laws[1]
 
@@ -453,19 +434,13 @@ AI MODULES
 	laws[1] = targName
 	..()
 
-/obj/item/weapon/aiModule/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 //	..()    //We don't want this module reporting to the AI who dun it. --NEO
 	if(law_datum.owner)
 		law_datum.owner << "<span class='warning'>BZZZZT</span>"
-		if(!overflow)
-			law_datum.owner.add_ion_law(laws[1])
-		else
-			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+		law_datum.owner.add_ion_law(laws[1])
 	else
-		if(!overflow)
-			law_datum.add_ion_law(laws[1])
-		else
-			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+		law_datum.add_ion_law(laws[1])
 	return laws[1]
 
 /******************* Ion Module *******************/
@@ -478,19 +453,13 @@ AI MODULES
 	origin_tech = "programming=6;materials=5;syndicate=6"
 	laws = list("")
 
-/obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
+/obj/item/weapon/aiModule/toyAI/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
 	//..()
 	if(law_datum.owner)
-		law_datum.owner << "<span class='warning'>BZZZZT</span>"
-		if(!overflow)
-			law_datum.owner.add_ion_law(laws[1])
-		else
-			law_datum.owner.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+		law_datum.owner << "<span class='warning'>KRZZZT</span>"
+		law_datum.owner.add_ion_law(laws[1])
 	else
-		if(!overflow)
-			law_datum.add_ion_law(laws[1])
-		else
-			law_datum.replace_random_law(laws[1],list(LAW_ION,LAW_INHERENT,LAW_SUPPLIED))
+		law_datum.add_ion_law(laws[1])
 	return laws[1]
 
 /obj/item/weapon/aiModule/toyAI/attack_self(mob/user)

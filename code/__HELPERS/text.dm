@@ -206,20 +206,6 @@
 	if(start)
 		return findtextEx(text, suffix, start, null)
 
-//Checks if any of a given list of needles is in the haystack
-/proc/text_in_list(haystack, list/needle_list, start=1, end=0)
-	for(var/needle in needle_list)
-		if(findtext(haystack, needle, start, end))
-			return 1
-	return 0
-
-//Like above, but case sensitive
-/proc/text_in_list_case(haystack, list/needle_list, start=1, end=0)
-	for(var/needle in needle_list)
-		if(findtextEx(haystack, needle, start, end))
-			return 1
-	return 0
-
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
 	while (length(t) < u)
@@ -458,7 +444,7 @@ var/list/binary = list("0","1")
 //As far as SS13 is concerned this is write only data. You can't change something
 //in the json file and have it be reflected in the in game item/mob it came from.
 //(That's what things like savefiles are for) Note that this list is not shuffled.
-/proc/twitterize(list/proposed, filename, cullshort = 1, storemax = 1000)
+/proc/twitterize(list/proposed, filename, cullshort = 0, storemax = 1000)
 	if(!islist(proposed) || !filename || !config.log_twitter)
 		return
 
@@ -471,21 +457,19 @@ var/list/binary = list("0","1")
 
 	var/list/accepted = list()
 	for(var/string in proposed)
-		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols) || !findtext(string,alphanumeric))
+		if(findtext(string,is_website) || findtext(string,is_email) || findtext(string,all_invalid_symbols))
 			continue
 		var/buffer = ""
 		var/early_culling = TRUE
-		for(var/pos = 1, pos <= lentext(string), pos++)
+		for(var/pos = 1, pos != lentext(string), pos++)
 			var/let = copytext(string, pos, (pos + 1) % lentext(string))
 			if(early_culling && !findtext(let,alphanumeric))
 				continue
 			early_culling = FALSE
 			buffer += let
-		if(!findtext(buffer,alphanumeric))
-			continue
 		var/punctbuffer = ""
 		var/cutoff = lentext(buffer)
-		for(var/pos = lentext(buffer), pos >= 0, pos--)
+		for(var/pos = lentext(buffer), pos != 0, pos--)
 			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
 			if(findtext(let,alphanumeric))
 				break
@@ -496,13 +480,13 @@ var/list/binary = list("0","1")
 			var/exclaim = FALSE
 			var/question = FALSE
 			var/periods = 0
-			for(var/pos = lentext(punctbuffer), pos >= 0, pos--)
-				var/punct = copytext(punctbuffer, pos, (pos + 1) % lentext(punctbuffer))
-				if(!exclaim && findtext(punct,"!"))
+			for(var/pos = lentext(punctbuffer), pos != 0, pos--)
+				var/punct = copytext(buffer, pos, (pos + 1) % lentext(buffer))
+				if(!exclaim && punct == "!")
 					exclaim = TRUE
-				if(!question && findtext(punct,"?"))
+				if(!question && punct == "?")
 					question = TRUE
-				if(!exclaim && !question && findtext(punct,"."))
+				if(!exclaim && !question && punct == ".")
 					periods += 1
 			if(exclaim)
 				if(question)
@@ -512,13 +496,12 @@ var/list/binary = list("0","1")
 			else if(question)
 				punctbuffer = "?"
 			else if(periods)
-				if(periods > 1)
+				if(periods >= 3)
 					punctbuffer = "..."
 				else
 					punctbuffer = "" //Grammer nazis be damned
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
-		if(!findtext(buffer,alphanumeric))
-			continue
+
 		if(!buffer || lentext(buffer) > 140 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
 
@@ -538,12 +521,10 @@ var/list/binary = list("0","1")
 					break
 
 	var/list/finalized = list()
-	finalized = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
+	finalized["data"] = accepted.Copy() + oldentries.Copy() //we keep old and unreferenced phrases near the bottom for culling
 	listclearnulls(finalized)
-	if(!isemptylist(finalized) && length(finalized) > storemax)
+	if(!isemptylist(finalized) && finalized.len > storemax)
 		finalized.Cut(storemax + 1)
 	fdel(log)
 
-	var/list/tosend = list()
-	tosend["data"] = finalized
-	log << json_encode(tosend)
+	log << json_encode(finalized)

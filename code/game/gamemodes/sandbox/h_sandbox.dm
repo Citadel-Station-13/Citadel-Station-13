@@ -5,11 +5,12 @@ var/hsboxspawn = 1
 /mob
 	var/datum/hSB/sandbox = null
 /mob/proc/CanBuild()
-	sandbox = new/datum/hSB
-	sandbox.owner = src.ckey
-	if(src.client.holder)
-		sandbox.admin = 1
-	verbs += new/mob/proc/sandbox_panel
+	if(master_mode == "sandbox")
+		sandbox = new/datum/hSB
+		sandbox.owner = src.ckey
+		if(src.client.holder)
+			sandbox.admin = 1
+		verbs += new/mob/proc/sandbox_panel
 /mob/proc/sandbox_panel()
 	set name = "Sandbox Panel"
 	if(sandbox)

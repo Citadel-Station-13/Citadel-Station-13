@@ -1,6 +1,6 @@
 /obj/structure/bigDelivery
 	name = "large parcel"
-	desc = "A large delivery parcel."
+	desc = "A big wrapped package."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverycloset"
 	density = 1
@@ -69,9 +69,10 @@
 			user << "<span class='warning'>You fail to remove [O]'s wrapping!</span>"
 
 
+
 /obj/item/smallDelivery
-	name = "parcel"
-	desc = "A brown paper delivery parcel."
+	name = "small parcel"
+	desc = "A small wrapped package."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
 	var/giftwrapped = 0

@@ -25,10 +25,7 @@
 	var/list/allowed_books = list(/obj/item/weapon/book, /obj/item/weapon/spellbook, /obj/item/weapon/storage/book) //Things allowed in the bookcase
 
 
-/obj/structure/bookcase/Initialize(mapload)
-	..()
-	if(!mapload)
-		return
+/obj/structure/bookcase/initialize()
 	state = 2
 	icon_state = "book-0"
 	anchored = 1

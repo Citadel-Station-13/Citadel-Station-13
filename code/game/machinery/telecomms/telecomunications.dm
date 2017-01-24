@@ -147,9 +147,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	if(. && T1) // Update listening Z, just in case you have telecomm relay on a shuttle
 		listening_level = T1.z
 
-/obj/machinery/telecomms/Initialize(mapload)
-	..()
-	if(mapload && autolinkers.len)
+/obj/machinery/telecomms/initialize()
+	if(autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
 			for(var/obj/machinery/telecomms/T in urange(20, src, 1))

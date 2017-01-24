@@ -36,7 +36,7 @@
 			Tr = get_turf(C)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
-			if(!C.imp_in)
+			if(!C.implanted)
 				continue
 			dat += "ID: [C.imp_in.name] | Remaining Units: [C.reagents.total_volume] <BR>"
 			dat += "| Inject: "
@@ -46,14 +46,16 @@
 			dat += "********************************<BR>"
 		dat += "<HR>Tracking Implants<BR>"
 		for(var/obj/item/weapon/implant/tracking/T in tracked_implants)
-			if(!isliving(T.imp_in))
+			if(!iscarbon(T.imp_in))
+				continue
+			if(!T.implanted)
 				continue
 			Tr = get_turf(T)
 			if((Tr) && (Tr.z != src.z))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
-			var/mob/living/M = T.imp_in
+			var/mob/living/carbon/M = T.imp_in
 			if(Tr.z == ZLEVEL_STATION && !isspaceturf(M.loc))
 				var/turf/mob_loc = get_turf(M)
 				loc_display = mob_loc.loc
@@ -133,7 +135,7 @@
 			if(!warning) return
 			var/obj/item/weapon/implant/I = locate(href_list["warn"]) in tracked_chem_implants
 			if(I && istype(I) && I.imp_in)
-				var/mob/living/R = I.imp_in
+				var/mob/living/carbon/R = I.imp_in
 				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 

@@ -62,9 +62,9 @@ Difficulty: Medium
 		return
 	..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(!forced && swooping)
-		return FALSE
+/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount)
+	if(swooping)
+		return 0
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AttackingTarget()
@@ -123,12 +123,12 @@ Difficulty: Medium
 
 /obj/effect/overlay/temp/target/New(loc)
 	..()
-	addtimer(CALLBACK(src, .proc/fall), 0)
+	addtimer(src, "fall", 0)
 
 /obj/effect/overlay/temp/target/proc/fall()
 	var/turf/T = get_turf(src)
 	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
-	new /obj/effect/overlay/temp/fireball(T)
+	PoolOrNew(/obj/effect/overlay/temp/fireball,T)
 	sleep(12)
 	explosion(T, 0, 0, 1, 0, 0, 0, 1)
 
@@ -141,15 +141,15 @@ Difficulty: Medium
 
 	if(prob(15 + anger_modifier) && !client)
 		if(health < maxHealth/2)
-			addtimer(CALLBACK(src, .proc/swoop_attack, 1), 0)
+			addtimer(src, "swoop_attack", 0, TIMER_NORMAL, 1)
 		else
 			fire_rain()
 
 	else if(prob(10+anger_modifier) && !client)
 		if(health > maxHealth/2)
-			addtimer(CALLBACK(src, .proc/swoop_attack), 0)
+			addtimer(src, "swoop_attack", 0)
 		else
-			addtimer(CALLBACK(src, .proc/triple_swoop), 0)
+			addtimer(src, "triple_swoop", 0)
 	else
 		fire_walls()
 
@@ -157,13 +157,13 @@ Difficulty: Medium
 	visible_message("<span class='boldwarning'>Fire rains from the sky!</span>")
 	for(var/turf/turf in range(12,get_turf(src)))
 		if(prob(10))
-			new /obj/effect/overlay/temp/target(turf)
+			PoolOrNew(/obj/effect/overlay/temp/target, turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
 	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
 
 	for(var/d in cardinal)
-		addtimer(CALLBACK(src, .proc/fire_wall, d), 0)
+		addtimer(src, "fire_wall", 0, TIMER_NORMAL, d)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_wall(dir)
 	var/list/hit_things = list(src)
@@ -174,7 +174,7 @@ Difficulty: Medium
 		if(!range || (J != previousturf && (!previousturf.atmos_adjacent_turfs || !previousturf.atmos_adjacent_turfs[J])))
 			break
 		range--
-		new /obj/effect/hotspot(J)
+		PoolOrNew(/obj/effect/hotspot,J)
 		J.hotspot_expose(700,50,1)
 		for(var/mob/living/L in J.contents - hit_things)
 			L.adjustFireLoss(20)
@@ -218,7 +218,7 @@ Difficulty: Medium
 	else
 		tturf = get_turf(src)
 	forceMove(tturf)
-	new /obj/effect/overlay/temp/dragon_swoop(tturf)
+	PoolOrNew(/obj/effect/overlay/temp/dragon_swoop, tturf)
 	animate(src, pixel_x = initial(pixel_x), pixel_z = 0, time = 10)
 	sleep(10)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
@@ -233,7 +233,7 @@ Difficulty: Medium
 				if(L.loc == loc)
 					throw_dir = pick(alldirs)
 				var/throwtarget = get_edge_target_turf(src, throw_dir)
-				L.throw_at(throwtarget, 3)
+				L.throw_at_fast(throwtarget, 3)
 				visible_message("<span class='warning'>[L] is thrown clear of [src]!</span>")
 
 	for(var/mob/M in range(7, src))

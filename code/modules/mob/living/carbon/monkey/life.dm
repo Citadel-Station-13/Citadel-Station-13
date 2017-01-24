@@ -10,17 +10,13 @@
 	if (notransform)
 		return
 
-	if(..())
+	..()
 
-		if(!client)
-			if(stat == CONSCIOUS)
-				if(!handle_combat())
-					if(prob(33) && canmove && isturf(loc) && !pulledby)
-						step(src, pick(cardinal))
-					if(prob(1))
-						emote(pick("scratch","jump","roll","tail"))
-			else
-				walk_to(src,0)
+	if(!client && stat == CONSCIOUS)
+		if(prob(33) && canmove && isturf(loc) && !pulledby)
+			step(src, pick(cardinal))
+		if(prob(1))
+			emote(pick("scratch","jump","roll","tail"))
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 

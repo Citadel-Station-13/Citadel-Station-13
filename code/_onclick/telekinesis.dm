@@ -92,8 +92,6 @@ var/const/tk_maxrange = 15
 	qdel(src)
 	return
 
-/obj/item/tk_grab/attack_hand(mob/user)
-	return
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -102,7 +100,6 @@ var/const/tk_maxrange = 15
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
-	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)
@@ -139,13 +136,11 @@ var/const/tk_maxrange = 15
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
 			I.afterattack(target,user,1) // for splashing with beakers
-			update_icon()
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
-		update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -175,7 +170,17 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
+	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
+	O.name = "sparkles"
+	O.anchored = 1
+	O.density = 0
+	O.layer = FLY_LAYER
+	O.setDir(pick(cardinal))
+	O.icon = 'icons/effects/effects.dmi'
+	O.icon_state = "nothing"
+	flick("empdisable",O)
+	spawn(5)
+		qdel(O)
 
 
 /obj/item/tk_grab/update_icon()

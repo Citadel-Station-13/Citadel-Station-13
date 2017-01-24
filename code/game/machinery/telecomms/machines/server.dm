@@ -39,7 +39,7 @@
 	server_radio = new()
 
 /obj/item/weapon/circuitboard/machine/telecomms/server
-	name = "Telecommunication Server (Machine Board)"
+	name = "circuit board (Telecommunication Server)"
 	build_path = /obj/machinery/telecomms/server
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(

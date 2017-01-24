@@ -32,7 +32,7 @@
 	update_icon()
 
 /obj/item/weapon/circuitboard/machine/space_heater
-	name = "Space Heater (Machine Board)"
+	name = "circuit board (Space Heater)"
 	build_path = /obj/machinery/space_heater
 	origin_tech = "programming=2;engineering=2;plasmatech=2"
 	req_components = list(

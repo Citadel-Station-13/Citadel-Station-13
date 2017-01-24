@@ -35,11 +35,10 @@
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
-	var/turf_visible = cameranet.checkTurfVis(pixel_turf)
-	if(pixel_turf && !turf_visible)
+	if(pixel_turf && !cameranet.checkTurfVis(pixel_turf))
 		log_admin("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)])")
 		message_admins("[key_name_admin(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([ADMIN_COORDJMP(pixel_turf)]))")
-		send2admindiscord("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
+		send2irc_adminless_only("NOCHEAT", "[key_name(src)] might be running a modified client! (failed checkTurfVis on AI click of [A]([COORD(pixel_turf)]))")
 		return
 
 	var/list/modifiers = params2list(params)
@@ -65,13 +64,13 @@
 	if(world.time <= next_move)
 		return
 
-	if(aicamera.in_camera_mode && pixel_turf && turf_visible)
+	if(aicamera.in_camera_mode)
 		aicamera.camera_mode_off()
-		aicamera.captureimage(pixel_turf, usr)
+		aicamera.captureimage(A, usr)
 		return
 	if(waypoint_mode)
-		waypoint_mode = 0
 		set_waypoint(A)
+		waypoint_mode = 0
 		return
 
 	/*

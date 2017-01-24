@@ -32,12 +32,7 @@ FLOOR SAFES
 	tumbler_2_open = rand(0, 71)
 
 
-/obj/structure/safe/Initialize(mapload)
-	..()
-
-	if(!mapload)
-		return
-
+/obj/structure/safe/initialize()
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
@@ -190,11 +185,10 @@ FLOOR SAFES
 	layer = LOW_OBJ_LAYER
 
 
-/obj/structure/safe/floor/Initialize(mapload)
+/obj/structure/safe/floor/initialize()
 	..()
-	if(mapload)
-		var/turf/T = loc
-		hide(T.intact)
+	var/turf/T = loc
+	hide(T.intact)
 
 
 /obj/structure/safe/floor/hide(var/intact)

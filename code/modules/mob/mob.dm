@@ -303,7 +303,7 @@ proc/get_top_level_mob(var/mob/S)
 	if (!tile)
 		return 0
 
-	new /obj/effect/overlay/temp/point(A,invisibility)
+	PoolOrNew(/obj/effect/overlay/temp/point, list(A,invisibility))
 
 	return 1
 
@@ -451,6 +451,7 @@ proc/get_top_level_mob(var/mob/S)
 //	M.Login()	//wat
 	return
 
+
 /mob/proc/update_flavor_text()
 	set src in usr
 	if(usr != src)
@@ -510,8 +511,7 @@ proc/get_top_level_mob(var/mob/S)
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags & ABSTRACT))
-					usr.stripPanelUnequip(what,src,slot)
+				usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
 
@@ -563,8 +563,6 @@ proc/get_top_level_mob(var/mob/S)
 	..()
 
 	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
 		stat(null, "Map: [MAP_NAME]")
 		if(nextmap && istype(nextmap))
 			stat(null, "Next Map: [nextmap.friendlyname]")
@@ -690,7 +688,7 @@ proc/get_top_level_mob(var/mob/S)
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
 	update_transform()
-	update_action_buttons_icon(status_only=TRUE)
+	update_action_buttons_icon()
 	if(isliving(src))
 		var/mob/living/L = src
 		if(L.has_status_effect(/datum/status_effect/freon))

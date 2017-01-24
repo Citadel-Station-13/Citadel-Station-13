@@ -4,8 +4,7 @@
 		specific_component_id = get_weighted_component_id()
 	clockwork_component_cache[specific_component_id]++
 	if(A)
-		var/component_animation_type = get_component_animation_type(specific_component_id)
-		new component_animation_type(get_turf(A))
+		PoolOrNew(get_component_animation_type(specific_component_id), get_turf(A))
 	update_slab_info()
 	return specific_component_id
 

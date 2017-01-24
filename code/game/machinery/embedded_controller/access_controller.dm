@@ -19,8 +19,7 @@
 /obj/machinery/doorButtons/proc/findObjsByTag()
 	return
 
-/obj/machinery/doorButtons/Initialize()
-	..()
+/obj/machinery/doorButtons/initialize()
 	findObjsByTag()
 
 /obj/machinery/doorButtons/emag_act(mob/user)

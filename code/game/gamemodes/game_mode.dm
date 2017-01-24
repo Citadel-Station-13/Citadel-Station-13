@@ -258,7 +258,6 @@
 	if(escaped_total > 0)
 		feedback_set("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
-	send2maindiscord("Server", "Round just ended.")
 	return 0
 
 

@@ -22,7 +22,7 @@
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid on [user.p_their()] [O]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our restraints!</span>")
 
-		addtimer(CALLBACK(src, .proc/dissolve_handcuffs, user, O), 30)
+		addtimer(src, "dissolve_handcuffs", 30, TIMER_NORMAL, user, O)
 		used = TRUE
 
 	if(user.wear_suit && user.wear_suit.breakouttime && !used)
@@ -31,7 +31,7 @@
 			return 0
 		user.visible_message("<span class='warning'>[user] vomits a glob of acid across the front of [user.p_their()] [S]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our straight jacket!</span>")
-		addtimer(CALLBACK(src, .proc/dissolve_straightjacket, user, S), 30)
+		addtimer(src, "dissolve_straightjacket", 30, TIMER_NORMAL, user, S)
 		used = TRUE
 
 
@@ -41,7 +41,7 @@
 			return 0
 		C.visible_message("<span class='warning'>[C]'s hinges suddenly begin to melt and run!</span>")
 		user << "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>"
-		addtimer(CALLBACK(src, .proc/open_closet, user, C), 70)
+		addtimer(src, "open_closet", 70, TIMER_NORMAL, user, C)
 		used = TRUE
 
 	if(istype(user.loc, /obj/structure/spider/cocoon) && !used)
@@ -50,7 +50,7 @@
 			return 0
 		C.visible_message("<span class='warning'>[src] shifts and starts to fall apart!</span>")
 		user << "<span class='warning'>We secrete acidic enzymes from our skin and begin melting our cocoon...</span>"
-		addtimer(CALLBACK(src, .proc/dissolve_cocoon, user, C), 25) //Very short because it's just webs
+		addtimer(src, "dissolve_cocoon", 25, TIMER_NORMAL, user, C) //Very short because it's just webs
 		used = TRUE
 
 	if(used)

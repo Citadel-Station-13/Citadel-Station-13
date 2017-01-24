@@ -19,13 +19,17 @@
 	if(toggle)
 		visible_message("<span class='danger'>The explosion glances off [src]'s energy shielding!</span>")
 
-/mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/guardian/protector/adjustHealth(amount)
 	. = ..()
-	if(. > 0 && toggle)
+	if(0 < . && toggle)
+		var/list/viewing = list()
+		for(var/mob/M in viewers(src))
+			if(M.client)
+				viewing += M.client
 		var/image/I = new('icons/effects/effects.dmi', src, "shield-flash", MOB_LAYER+0.01, dir = pick(cardinal))
 		if(namedatum)
 			I.color = namedatum.colour
-		flick_overlay_view(I, src, 5)
+		flick_overlay(I, viewing, 5)
 
 /mob/living/simple_animal/hostile/guardian/protector/ToggleMode()
 	if(cooldown > world.time)
@@ -56,13 +60,8 @@
 		if(get_dist(get_turf(summoner),get_turf(src)) <= range)
 			return
 		else
-			if(istype(summoner.loc, /obj/effect))
-				src << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from [summoner.real_name]!</span>"
-				visible_message("<span class='danger'>\The [src] jumps back to its user.</span>")
-				Recall(TRUE)
-			else
-				summoner << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>"
-				summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
-				new /obj/effect/overlay/temp/guardian/phase/out(get_turf(summoner))
-				summoner.forceMove(get_turf(src))
-				new /obj/effect/overlay/temp/guardian/phase(get_turf(summoner))
+			summoner << "<span class='holoparasite'>You moved out of range, and were pulled back! You can only move [range] meters from <font color=\"[namedatum.colour]\"><b>[real_name]</b></font>!</span>"
+			summoner.visible_message("<span class='danger'>\The [summoner] jumps back to [summoner.p_their()] protector.</span>")
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase/out, get_turf(summoner))
+			summoner.forceMove(get_turf(src))
+			PoolOrNew(/obj/effect/overlay/temp/guardian/phase, get_turf(summoner))

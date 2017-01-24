@@ -12,14 +12,17 @@
 	var/open = 1
 	var/capacity = 4
 
-/obj/structure/guncase/Initialize(mapload)
+/obj/structure/guncase/New()
 	..()
-	if(mapload)
-		for(var/obj/item/I in loc.contents)
-			if(istype(I, gun_category))
-				I.loc = src
-			if(contents.len >= capacity)
-				break
+	update_icon()
+
+/obj/structure/guncase/initialize()
+	..()
+	for(var/obj/item/I in loc.contents)
+		if(istype(I, gun_category))
+			I.loc = src
+		if(contents.len >= capacity)
+			break
 	update_icon()
 
 /obj/structure/guncase/update_icon()

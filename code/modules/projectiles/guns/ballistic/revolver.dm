@@ -58,17 +58,14 @@
 	if(M.stat || !in_range(M,src))
 		return
 
-	if(do_spin())
+	if(istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
+		var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
+		C.spin()
+		chamber_round(0)
 		usr.visible_message("[usr] spins [src]'s chamber.", "<span class='notice'>You spin [src]'s chamber.</span>")
 	else
 		verbs -= /obj/item/weapon/gun/ballistic/revolver/verb/spin
 
-/obj/item/weapon/gun/ballistic/revolver/proc/do_spin()
-	var/obj/item/ammo_box/magazine/internal/cylinder/C = magazine
-	. = istype(C)
-	if(.)
-		C.spin()
-		chamber_round(0)
 
 /obj/item/weapon/gun/ballistic/revolver/can_shoot()
 	return get_ammo(0,0)
@@ -177,7 +174,7 @@
 
 /obj/item/weapon/gun/ballistic/revolver/russian/New()
 	..()
-	do_spin()
+	spin()
 	spun = TRUE
 	update_icon()
 

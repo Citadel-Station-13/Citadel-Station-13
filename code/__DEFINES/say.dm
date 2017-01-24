@@ -15,7 +15,6 @@
 #define MODE_ALIEN "alientalk"
 #define MODE_HOLOPAD "holopad"
 #define MODE_CHANGELING "changeling"
-#define MODE_VOCALCORDS "cords"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"

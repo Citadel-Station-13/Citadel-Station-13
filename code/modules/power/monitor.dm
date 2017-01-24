@@ -38,14 +38,12 @@
 		next_record = world.time + record_interval
 
 		var/list/supply = history["supply"]
-		if(attached.powernet)
-			supply += attached.powernet.viewavail
+		supply += attached.powernet.viewavail
 		if(supply.len > record_size)
 			supply.Cut(1, 2)
 
 		var/list/demand = history["demand"]
-		if(attached.powernet)
-			demand += attached.powernet.viewload
+		demand += attached.powernet.viewload
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
@@ -61,28 +59,28 @@
 	data["stored"] = record_size
 	data["interval"] = record_interval / 10
 	data["attached"] = attached ? TRUE : FALSE
-	data["history"] = history
-	data["areas"] = list()
-
 	if(attached)
 		data["supply"] = attached.powernet.viewavail
 		data["demand"] = attached.powernet.viewload
-		for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
-			var/obj/machinery/power/apc/A = term.master
-			if(istype(A))
-				var/cell_charge
-				if(!A.cell)
-					cell_charge = 0
-				else
-					cell_charge = A.cell.percent()
-				data["areas"] += list(list(
-					"name" = A.area.name,
-					"charge" = cell_charge,
-					"load" = A.lastused_total,
-					"charging" = A.charging,
-					"eqp" = A.equipment,
-					"lgt" = A.lighting,
-					"env" = A.environ
-				))
+	data["history"] = history
+
+	data["areas"] = list()
+	for(var/obj/machinery/power/terminal/term in attached.powernet.nodes)
+		var/obj/machinery/power/apc/A = term.master
+		if(istype(A))
+			var/cell_charge
+			if(!A.cell)
+				cell_charge = 0
+			else
+				cell_charge = A.cell.percent()
+			data["areas"] += list(list(
+				"name" = A.area.name,
+				"charge" = cell_charge,
+				"load" = A.lastused_total,
+				"charging" = A.charging,
+				"eqp" = A.equipment,
+				"lgt" = A.lighting,
+				"env" = A.environ
+			))
 
 	return data

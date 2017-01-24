@@ -20,5 +20,4 @@
 	return 0
 
 /mob/living/brain/treat_message(message)
-	message = capitalize(message)
 	return message

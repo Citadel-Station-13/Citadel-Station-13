@@ -29,13 +29,7 @@
 		user << "<span class='warning'>Uh... how do those things work?!</span>"
 		apply_cuffs(user,user)
 		return
-		
-	// chance of monkey retaliation
-	if(istype(C, /mob/living/carbon/monkey) && prob(MONKEY_CUFF_RETALIATION_PROB))
-		var/mob/living/carbon/monkey/M
-		M = C
-		M.retaliate(user)
-		
+
 	if(!C.handcuffed)
 		if(C.get_num_arms() >= 2 || C.get_arm_ignore())
 			C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
@@ -305,7 +299,7 @@
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/New()
 	..()
-	addtimer(CALLBACK(src, .proc/dissipate), 100)
+	addtimer(src, "dissipate", 100)
 
 /obj/item/weapon/restraints/legcuffs/beartrap/energy/proc/dissipate()
 	if(!istype(loc, /mob))
@@ -329,7 +323,7 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 0
 
-/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/weapon/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
 	if(!..())
 		return
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)

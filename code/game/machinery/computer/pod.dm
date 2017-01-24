@@ -9,11 +9,11 @@
 	var/range = 4
 
 
-/obj/machinery/computer/pod/Initialize()
-	..()
+/obj/machinery/computer/pod/initialize()
 	for(var/obj/machinery/mass_driver/M in range(range, src))
 		if(M.id == id)
 			connected = M
+	..()
 
 
 /obj/machinery/computer/pod/proc/alarm()

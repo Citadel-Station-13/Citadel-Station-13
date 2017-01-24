@@ -24,7 +24,7 @@
 	..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
-	name = "ChemMaster 3000 (Machine Board)"
+	name = "circuit board (ChemMaster 3000)"
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
@@ -42,7 +42,7 @@
 			new_path = /obj/machinery/chem_master/condimaster
 
 		build_path = new_path
-		name = "[new_name] 3000 (Machine Board)"
+		name = "circuit board ([new_name] 3000)"
 		user << "<span class='notice'>You change the circuit board setting to \"[new_name]\".</span>"
 	else
 		return ..()
@@ -103,7 +103,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(istype(I, /obj/item/weapon/reagent_containers) && (I.container_type & OPENCONTAINER))
+	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		. = 1 // no afterattack
 		if(panel_open)
 			user << "<span class='warning'>You can't use the [src.name] while its panel is opened!</span>"
@@ -361,5 +361,5 @@
 	condi = 1
 
 /obj/item/weapon/circuitboard/machine/chem_master/condi
-	name = "CondiMaster 3000 (Machine Board)"
+	name = "circuit board (CondiMaster 3000)"
 	build_path = /obj/machinery/chem_master/condimaster

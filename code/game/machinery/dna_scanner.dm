@@ -19,7 +19,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/clonescanner
-	name = "Cloning Scanner (Machine Board)"
+	name = "circuit board (Cloning Scanner)"
 	build_path = /obj/machinery/dna_scannernew
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(

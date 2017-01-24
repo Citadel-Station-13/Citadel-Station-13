@@ -132,6 +132,7 @@
 	myjob = new/datum/job/assistant()
 	job = myjob.title
 	myjob.equip(src)
+	myjob.apply_fingerprints(src)
 
 /mob/living/carbon/human/interactive/attacked_by(obj/item/I, mob/living/user, def_zone)
 	. = ..()
@@ -205,6 +206,7 @@
 						for(var/obj/item/W in T)
 							qdel(W)
 						T.myjob.equip(T)
+						T.myjob.apply_fingerprints(T)
 						T.doSetup()
 						break
 			if(choice == "Random")
@@ -213,6 +215,7 @@
 				for(var/obj/item/W in T)
 					qdel(W)
 				T.myjob.equip(T)
+				T.myjob.apply_fingerprints(T)
 				T.doSetup()
 				if(prob(25))
 					var/list/validchoices = list()
@@ -236,6 +239,7 @@
 					for(var/obj/item/W in T)
 						qdel(W)
 					T.myjob.equip(T)
+					T.myjob.apply_fingerprints(T)
 					T.doSetup()
 				var/shouldDoppel = input("Do you want the SNPC to disguise themself as a crewmember?") as null|anything in list("Yes","No")
 				if(shouldDoppel)
@@ -739,7 +743,7 @@
 		tryWalk(TARGET)
 	LAST_TARGET = TARGET
 	if(alternateProcessing)
-		addtimer(CALLBACK(src, .proc/doProcess), processTime)
+		addtimer(src, "doProcess", processTime)
 
 /mob/living/carbon/human/interactive/proc/favouredObjIn(var/list/inList)
 	var/list/outList = list()
@@ -1472,10 +1476,10 @@
 				TARGET = retal_target
 			else
 				var/mob/living/M = locate(/mob/living) in oview(7,src)
+				if(M != src && !compareFaction(M.faction))
+					TARGET = M
 				if(!M)
 					doing = doing & ~FIGHTING
-				else if(M != src && !compareFaction(M.faction))
-					TARGET = M
 
 	//no infighting
 	if(retal)

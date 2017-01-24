@@ -73,17 +73,16 @@
 			timing = 0
 			toggle_scan(1)
 			time = initial(time)
-	handle_move(loc)
+	handle_move(get_turf(loc))
 
 /obj/item/device/assembly/prox_sensor/dropped()
 	..()
 	if(scanning)
-		addtimer(CALLBACK(src, .proc/sense), 0)
+		addtimer(src, "sense", 0)
 
 /obj/item/device/assembly/prox_sensor/Destroy()
-	if(scanning)
-		remove_from_proximity_list(src, sensitivity, oldloc)
-	return ..()
+	remove_from_proximity_list(src, sensitivity)
+	..()
 
 /obj/item/device/assembly/prox_sensor/toggle_scan(scan)
 	if(!secured)
@@ -99,9 +98,7 @@
 /obj/item/device/assembly/prox_sensor/proc/sensitivity_change(value)
 	var/sense = min(max(sensitivity + value, 0), 5)
 	if(scanning)
-		if(shift_proximity(src, oldloc, sensitivity, loc, sense))
-			sense()
-			oldloc = loc
+		shift_proximity(src, oldloc, sensitivity, loc, sense)
 	sensitivity = sense
 
 /obj/item/device/assembly/prox_sensor/update_icon()
@@ -119,13 +116,13 @@
 
 /obj/item/device/assembly/prox_sensor/proc/handle_move(atom/newloc)
 	if(scanning)
-		if(shift_proximity(src, oldloc, sensitivity, newloc, sensitivity) ||  newloc != oldloc)
+		if(shift_proximity(src, oldloc, sensitivity, newloc, sensitivity))
 			sense()
 			oldloc = newloc
 
-/obj/item/device/assembly/prox_sensor/Moved()
+/obj/item/device/assembly/prox_sensor/Move(newloc)
 	..()
-	handle_move(loc)
+	handle_move(newloc)
 
 
 /obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
