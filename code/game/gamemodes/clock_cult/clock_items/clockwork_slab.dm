@@ -11,6 +11,7 @@
 	var/list/stored_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0)
 	var/busy //If the slab is currently being used by something
 	var/production_time = 0
+	var/target_component_id //the target component ID to create, if any
 	var/no_cost = FALSE //If the slab is admin-only and needs no components and has no scripture locks
 	var/speed_multiplier = 1 //multiples how fast this slab recites scripture
 	var/nonhuman_usable = FALSE //if the slab can be used by nonhumans, defaults to off
@@ -68,7 +69,7 @@
 	/datum/clockwork_scripture/create_object/mania_motor)
 
 /obj/item/clockwork/slab/cyborg/janitor
-	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_void, /datum/clockwork_scripture/create_object/sigil_of_transmission, \
+	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/channeled/volt_void/cyborg, /datum/clockwork_scripture/create_object/sigil_of_transmission, \
 	/datum/clockwork_scripture/create_object/interdiction_lens)
 
 /obj/item/clockwork/slab/cyborg/service
@@ -102,7 +103,7 @@
 
 /obj/item/clockwork/slab/dropped(mob/user)
 	. = ..()
-	addtimer(src, "check_on_mob", 1, TIMER_NORMAL, user) //dropped is called before the item is out of the slot, so we need to check slightly later
+	addtimer(CALLBACK(src, .proc/check_on_mob, user), 1) //dropped is called before the item is out of the slot, so we need to check slightly later
 
 /obj/item/clockwork/slab/proc/check_on_mob(mob/user)
 	if(user && !(src in user.held_items) && slab_ability && slab_ability.ranged_ability_user) //if we happen to check and we AREN'T in user's hands, remove whatever ability we have
@@ -127,14 +128,16 @@
 	var/mob/living/L
 	L = get_atom_on_turf(src, /mob/living)
 	if(istype(L) && is_servant_of_ratvar(L) && (nonhuman_usable || ishuman(L)))
-		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
+		var/component_to_generate = target_component_id
+		if(!component_to_generate)
+			component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
 		stored_components[component_to_generate]++
 		update_slab_info(src)
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
-			if(L == src)
+			if(S == src)
 				continue
 			S.production_time = production_time + 50 //set it to our next production plus five seconds, so that if you hold the same slabs, the same one will always generate
-		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a new component.</span>"
+		L << "<span class='warning'>Your slab cl[pick("ank", "ink", "unk", "ang")]s as it produces a </span><span class='[get_component_span(component_to_generate)]'>component</span><span class='warning'>.</span>"
 
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
@@ -400,6 +403,10 @@
 
 	data["selected"] = selected_scripture
 
+	data["target_comp"] = "<font color=#B18B25>NONE</font>"
+	if(target_component_id)
+		data["target_comp"] = "<font color=[get_component_color_bright(target_component_id)]>[get_component_acronym(target_component_id)]</font>"
+
 	generate_all_scripture()
 
 	data["scripture"] = list()
@@ -436,9 +443,16 @@
 		if("toggle")
 			recollecting = !recollecting
 		if("recite")
-			addtimer(src, "recite_scripture", 0, TIMER_NORMAL, text2path(params["category"]), usr, FALSE)
+			addtimer(CALLBACK(src, .proc/recite_scripture, text2path(params["category"]), usr, FALSE), 0)
 		if("select")
 			selected_scripture = params["category"]
+		if("component")
+			var/list/components = list("Random Components")
+			for(var/i in clockwork_component_cache)
+				components["[get_component_name(i)] [(clockwork_component_cache[i])]"] = i
+			var/input_component = input("Choose a component type.", "Target Component") as null|anything in components
+			if(input_component && !..())
+				target_component_id = components[input_component]
 		if("bind")
 			var/datum/clockwork_scripture/path = text2path(params["category"]) //we need a path and not a string
 			var/found_index = quickbound.Find(path)
@@ -449,7 +463,7 @@
 					quickbound[found_index] = null //otherwise, leave it as a null so the scripture maintains position
 				update_quickbind()
 			else
-				var/target_index = input("Position of [initial(path.name)], 1 to 5?", text("Input"))  as num|null
+				var/target_index = input("Position of [initial(path.name)], 1 to 5?", "Input")  as num|null
 				if(isnum(target_index) && target_index > 0 && target_index < 6 && !..())
 					var/datum/clockwork_scripture/S
 					if(LAZYLEN(quickbound) >= target_index)

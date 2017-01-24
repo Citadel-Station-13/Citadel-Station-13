@@ -130,7 +130,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-
+/*
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
@@ -141,12 +141,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				send2otherserver("[station_name()]", input,"Comms_Console")
+			//	send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-
+*/
 		if("purchase_menu")
 			state = STATE_PURCHASE
 
@@ -174,7 +174,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								SSshuttle.points -= S.credit_cost
 								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
-								feedback_add_details("shuttle_manipulator", S.name)
+								feedback_add_details("shuttle_purchase", S.name)
 							else
 								usr << "Something went wrong! The shuttle exchange system seems to be down."
 						else
@@ -478,7 +478,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)

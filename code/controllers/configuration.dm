@@ -71,11 +71,15 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
-
+  
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
+  
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
 	var/panic_server_name = "somewhere else"
+	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
@@ -83,6 +87,9 @@
 	var/ipintel_save_good = 12
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
+
+	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
+	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -228,9 +235,15 @@
 	var/cross_name = "Other server"
 	var/showircname = 0
 
+	var/list/gamemode_cache = null
+
+	// Discord crap.
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
+
 /datum/configuration/New()
-	var/list/L = subtypesof(/datum/game_mode)
-	for(var/T in L)
+	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
+	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
@@ -399,7 +412,7 @@
 				if("panic_server_name")
 					panic_server_name = value
 				if("panic_server_address")
-					global.panic_address = value
+					panic_address = value
 					if(value != "byond:\\address:port")
 						allow_panic_bunker_bounce = 1
 				if("medal_hub_address")
@@ -476,6 +489,12 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("announce_adminhelps")
+					config.announce_adminhelps = 1
+				if("discord_url")
+					config.discord_url = value
+				if("discord_password")
+					config.discord_password = value
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
@@ -810,7 +829,7 @@
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
@@ -819,7 +838,7 @@
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
@@ -839,7 +858,7 @@
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (subtypesof(/datum/game_mode) - ticker.mode.type))
+	for(var/T in (gamemode_cache - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)

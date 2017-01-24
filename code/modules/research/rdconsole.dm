@@ -105,9 +105,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	files = new /datum/research(src) //Setup the research data holder.
 	matching_designs = list()
 	if(!id)
-		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
-			S.initialize()
-			break
+		fix_noid_research_servers()
 
 /*	Instead of calling this every tick, it is only being called when needed
 /obj/machinery/computer/rdconsole/process()
@@ -1069,7 +1067,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/robotics/New()
 	..()
 	if(circuit)
-		circuit.name = "circuit board (RD Console - Robotics)"
+		circuit.name = "RD Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
 
 /obj/machinery/computer/rdconsole/core

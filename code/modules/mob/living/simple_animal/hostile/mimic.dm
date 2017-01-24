@@ -39,10 +39,11 @@
 	var/attempt_open = 0
 
 // Pickup loot
-/mob/living/simple_animal/hostile/mimic/crate/initialize()
+/mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	..()
-	for(var/obj/item/I in loc)
-		I.loc = src
+	if(mapload)	//eat shit
+		for(var/obj/item/I in loc)
+			I.loc = src
 
 /mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
 	..()
@@ -71,7 +72,7 @@
 		visible_message("<b>[src]</b> starts to move!")
 		attempt_open = 1
 
-/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(damage)
+/mob/living/simple_animal/hostile/mimic/crate/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	trigger()
 	. = ..()
 

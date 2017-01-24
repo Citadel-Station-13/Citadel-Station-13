@@ -285,7 +285,7 @@
 			message_admins("[key_name_admin(usr)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) activated a bluespace capsule away from the mining level! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>)")
 			log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 		template.load(deploy_location, centered = TRUE)
-		PoolOrNew(/obj/effect/particle_effect/smoke, get_turf(src))
+		new /obj/effect/particle_effect/smoke(get_turf(src))
 		qdel(src)
 
 
@@ -385,6 +385,7 @@
 	luminosity = 8
 	max_n_of_items = 10
 	pixel_y = -4
+	flags = NODECONSTRUCT
 
 /obj/machinery/smartfridge/survival_pod/empty
 	name = "dusty survival pod storage"
@@ -624,7 +625,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		return
 
 	anti_spam_cd = 1
-	addtimer(src, "clear_cooldown", 100)
+	addtimer(CALLBACK(src, .proc/clear_cooldown), 100)
 
 	var/turf/landing_spot = get_turf(src)
 

@@ -53,7 +53,7 @@
 		if(POWER_REQ_ALL)
 			return !T || !A || ((!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 		if(POWER_REQ_CLOCKCULT)
-			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, 1))
+			for(var/obj/effect/clockwork/sigil/transmission/ST in range(src, SIGIL_ACCESS_RANGE))
 				return FALSE
 			return !T || !A || (!istype(T, /turf/open/floor/clockwork) && (!A.master.power_equip || isspaceturf(T)) && !is_type_in_list(loc, list(/obj/item, /obj/mecha)))
 
@@ -167,7 +167,7 @@
 	blind_eyes(1)
 	update_sight()
 	src << "You've lost power!"
-	addtimer(src, "start_RestorePowerRoutine", 20)
+	addtimer(CALLBACK(src, .proc/start_RestorePowerRoutine), 20)
 
 #undef POWER_RESTORATION_OFF
 #undef POWER_RESTORATION_START

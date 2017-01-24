@@ -11,7 +11,7 @@
 
 
 var/global/list/player_sizes_list = list("Macro" = RESIZE_HUGE, "Big" = RESIZE_BIG, "Normal" = RESIZE_NORMAL, "Small" = RESIZE_SMALL, "Tiny" = RESIZE_TINY)
-
+/* // moved to sound.dm
 
 var/global/list/digestion_sounds = list(
 		'sound/vore/digest1.ogg',
@@ -37,7 +37,7 @@ var/global/list/death_sounds = list(
 		'sound/vore/death7.ogg',
 		'sound/vore/death8.ogg',
 		'sound/vore/death9.ogg',
-		'sound/vore/death10.ogg')
+		'sound/vore/death10.ogg') */
 
 var/global/list/vore_sounds = list(
 		"Gulp" = 'sound/vore/gulp.ogg',
@@ -50,13 +50,13 @@ var/global/list/vore_sounds = list(
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
 		"Squish4" = 'sound/vore/squish4.ogg')
-
+/* also moved to sound.dmi
 var/global/list/struggle_sounds = list(
 		"Squish1" = 'sound/vore/squish1.ogg',
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
 		"Squish4" = 'sound/vore/squish4.ogg')
-
+*/
 	//Species listing
 
 #define iscanine(A) (is_species(A, /datum/species/canine))
@@ -65,101 +65,8 @@ var/global/list/struggle_sounds = list(
 #define isrodent(A) (is_species(A, /datum/species/rodent))
 #define isherbivorous(A) (is_species(A, /datum/species/herbivorous))
 #define isexotic(A) (is_species(A, /datum/species/exotic))
+
 /*
-var/list/canine_species = list (
-anubis,
-corgi,
-coyote,
-dalmatian,
-fennec,
-fox,
-husky,
-wolf,
-sheperd,
-lab,
-otusian
-)
-
-var/list/feline_species = list (
-panther,
-tajaran,
-smilodon
-)
-
-var/list/avian_species = list (
-corvid,
-hawk
-)
-
-var/list/lizard_species = list (
-crocodile,
-drake,
-gria,
-lizard,
-naga,
-turtle,
-shark
-)
-
-var/list/rodent_species = list (
-aramdillo,
-beaver,
-jackalope,
-leporid,
-murid,
-otter,
-porcupine,
-possum,
-raccoon,
-roorat,
-skunk,
-squirrel
-)
-
-var/list/herbivorous_species = list (
-boar,
-capra,
-cow,
-deer,
-hippo,
-kangaroo,
-pig
-)
-
-var/list/exotic_species = list (
-alien,
-carp,
-drider,
-glowfen,
-jelly,
-moth,
-plant,
-seaslug,
-slime,
-)
-
-var/list/taur = list (
-panther,
-tajaran,
-horse,
-lab,
-sheperd,
-fox,
-cow,
-husky,
-naga,
-wolf,
-dirder,
-drake,
-otie
-)
-
-	//Mutant Human bits
-var/global/list/tails_list_human = list()
-var/global/list/animated_tails_list_human = list()
-// var/global/list/ears_list = list()
-var/global/list/wings_list = list()
-
 /proc/log_debug(text)
 	if (config.log_debug)
 		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
