@@ -38,4 +38,9 @@ script:
   - tools/travis/check_filedirs.sh tgstation.dme
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
+  
+before_install:
+ - chmod +x install_build_tools.sh
+  
+  
 
