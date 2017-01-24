@@ -36,13 +36,24 @@
 		throwforce = initial(throwforce)
 		armour_penetration = 0
 		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
-		timerid = addtimer(src, "break_spear", 600, TIMER_NORMAL)
+		timerid = addtimer(CALLBACK(src, .proc/break_spear), 600, TIMER_STOPPABLE)
+
+/obj/item/clockwork/ratvarian_spear/cyborg/ratvar_act() //doesn't break!
+	if(ratvar_awakens)
+		force = 25
+		throwforce = 50
+		armour_penetration = 10
+	else
+		force = initial(force)
+		throwforce = initial(throwforce)
+		armour_penetration = 0
 
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
 		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
-		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
+		if(!iscyborg(user))
+			user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
@@ -88,13 +99,13 @@
 		impale_cooldown = world.time + initial(impale_cooldown)
 		attack_cooldown = world.time + initial(attack_cooldown)
 		if(target)
-			PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(get_turf(target), get_dir(user, target)))
+			new /obj/effect/overlay/temp/dir_setting/bloodsplatter(get_turf(target), get_dir(user, target))
 			target.Stun(2)
 			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
-				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = PoolOrNew(/obj/effect/overlay/temp/dir_setting/bloodsplatter, list(T, get_dir(target, user)))
+				var/obj/effect/overlay/temp/dir_setting/bloodsplatter/B = new /obj/effect/overlay/temp/dir_setting/bloodsplatter(T, get_dir(target, user))
 				playsound(T, 'sound/misc/splort.ogg', 200, 1)
 				playsound(T, 'sound/weapons/pierce.ogg', 200, 1)
 				if(target.stat != CONSCIOUS)
@@ -143,5 +154,5 @@
 			T = get_turf(src)
 		if(T) //make sure we're not in null or something
 			T.visible_message("<span class='warning'>[src] [pick("cracks in two and fades away", "snaps in two and dematerializes")]!</span>")
-			PoolOrNew(/obj/effect/overlay/temp/ratvar/spearbreak, T)
+			new /obj/effect/overlay/temp/ratvar/spearbreak(T)
 		qdel(src)

@@ -260,7 +260,7 @@
 				dna.temporary_mutations.Remove(mut)
 
 	if(radiation)
-
+		radiation = Clamp(radiation, 0, 100)
 		switch(radiation)
 			if(0 to 50)
 				radiation = max(radiation-1,0)
@@ -276,8 +276,6 @@
 			if(75 to 100)
 				radiation = max(radiation-3,0)
 				adjustToxLoss(3)
-			else
-				radiation = Clamp(radiation, 0, 100)
 
 /mob/living/carbon/handle_chemicals_in_body()
 	if(reagents)
