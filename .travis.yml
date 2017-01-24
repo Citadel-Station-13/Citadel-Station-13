@@ -40,7 +40,7 @@ script:
   - tools/travis/build_byond.sh
   
 before_install:
- - chmod +x install_build_tools.sh
+ - chmod +x tools/travis/install_build_tools.sh
   
   
 
