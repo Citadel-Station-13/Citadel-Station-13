@@ -303,6 +303,27 @@
 		S.color = NARSIE_WINDOW_COLOUR
 
 /*
+/obj/structure/table/glass/attack_hand(mob/living/carbon/human/M, mob/living/user)
+	var/mob/living/carbon/human/H = M
+	if (ishuman(M) && (M.a_intent == "harm"))
+//		if(!H.gloves && !(PIERCEIMMUNE in H.dna.species.specflags))
+		//if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+		src.visible_message("<span style=\"color:red\"><b>[H] slams their palms against [src]!</b></span>")
+		visible_message("<span class='warning'>[src] breaks!</span>")
+		playsound(src.loc, "shatter", 50, 1)
+		new frame(src.loc)
+		new /obj/item/weapon/shard(src.loc)
+		qdel(src)
+		H << "<span class='warning'>[src] cuts into your hand!</span>"
+		var/organ = (H.hand ? "l_" : "r_") + "arm"
+		var/obj/item/bodypart/affecting = H.get_bodypart(organ)
+		if(affecting && affecting.take_damage(force / 2))
+			H.update_damage_overlays(0)
+	else if(ismonkey(user))
+		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		M.adjustBruteLoss(force / 2) */
+
+/*
  * Wooden tables
  */
 
@@ -332,6 +353,18 @@
 
 /obj/structure/table/wood/poker/narsie_act()
 	new /obj/structure/table/wood(src.loc)
+
+/*
+/obj/structure/table/attack_hand(mob/living/carbon/human/M, mob/living/user)
+	if (ishuman(M) && (M.a_intent == "harm"))
+		var/mob/living/carbon/human/H = M
+		//if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+		src.visible_message("<span style=\"color:red\"><b>[H] slams their palms against [src]!</b></span>")
+		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 50, 1)*/
+			//for (var/mob/M in AIviewers(usr, null))
+			//	if (M.client)
+			//		shake_camera(M, 4, 1, 0.5)
+	return
 
 /*
  * Reinforced tables

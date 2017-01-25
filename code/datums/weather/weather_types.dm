@@ -154,12 +154,56 @@
 
 	L.adjustToxLoss(4)
 
-
-
-
-
 /datum/weather/rad_storm/end()
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
 	spawn(300) revoke_maint_all_access()
+
+/datum/weather/solar_flare
+	name = "solar flare"
+	desc = "A solar flare from the local star knocks out power on the station."
+
+	telegraph_duration = 300
+	telegraph_message = "<span class='danger'>You feel a slight tingling in the air.</span>"
+
+	weather_message = "<span class='userdanger'><i>Everything shuts off all at once, and the station becomes dark and lifeless.</i></span>"
+	weather_duration_lower = 450
+	weather_duration_upper = 900
+	weather_sound = 'sound/effects/powerdown.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The buzz of electronics returns once more as the power turns back on.</span>"
+	end_sound = 'sound/effects/powerup.ogg'
+
+	area_type = /area
+	protected_areas = list(/area/maintenance, /area/turret_protected/ai_upload, /area/turret_protected/ai_upload_foyer, /area/turret_protected/ai, /area/engine/engineering)
+	target_z = ZLEVEL_STATION
+
+	immunity_type = null
+
+/datum/weather/solar_flare/update_areas()
+	for(var/V in impacted_areas)
+		var/area/A = V
+		if(stage == MAIN_STAGE)
+			A.power_light = 0
+			A.power_equip = 0
+			A.power_environ = 0
+			A.power_change()
+			for(var/obj/machinery/power/apc/apc in machines)
+				apc.shorted_old = apc.shorted
+				var/area/C = get_area(apc)
+				if(C in impacted_areas)
+					apc.shorted = TRUE
+		else
+			A.power_light = 1
+			A.power_equip = 1
+			A.power_environ = 1
+			A.power_change()
+			for(var/obj/machinery/power/apc/apc in machines)
+				apc.shorted = apc.shorted_old
+
+/datum/weather/solar_flare/end()
+	if(..())
+		return
+	addtimer(GLOBAL_PROC, "priority_announce", 60, FALSE, "The solar flare has ended. Please return to work.", "Anomaly Alert")

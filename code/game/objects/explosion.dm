@@ -64,15 +64,18 @@
 					else if(dist <= far_dist)
 						var/far_volume = Clamp(far_dist, 30, 50) // Volume is based on explosion size and dist
 						far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
-						if(devastation_range > 0)
+						if(devastation_range > 1)
 							M.playsound_local(epicenter, 'sound/effects/explosionfar.ogg', far_volume, 1, frequency, falloff = 5)
 							shake_camera(M, 3, 1)
 						else
 							M.playsound_local(epicenter, 'sound/effects/explosionsmallfar.ogg', far_volume, 1, frequency, falloff = 5)
 							skip_shake = 1
 
-					if(!explosion_shake_message_cooldown && devastation_range > 0 && !skip_shake)
-						M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
+					if(!explosion_shake_message_cooldown && devastation_range > 1 && !skip_shake && M.stat == CONSCIOUS && !istype(get_turf(M), /turf/open/space))
+						if(istype(get_turf(M), /turf/open/floor/plasteel/asteroid | /turf/open/floor/plating/ash))
+							M << "<span class='danger'>You feel the ground shaking below you.</span>"
+						else
+							M << "<span class='danger'>You feel the station's structure shaking all around you.</span>"
 						explosion_shake_message_cooldown = 1
 						spawn(50)
 							explosion_shake_message_cooldown = 0

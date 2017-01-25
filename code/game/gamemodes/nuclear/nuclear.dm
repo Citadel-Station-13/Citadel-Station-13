@@ -5,9 +5,9 @@
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
-	required_players = 30 // 30 players - 3 players to be the nuke ops = 27 players remaining
+	required_players = 15 // 30 players - 3 players to be the nuke ops = 27 players remaining
 	required_enemies = 2
-	recommended_enemies = 5
+	recommended_enemies = 2
 	antag_flag = ROLE_OPERATIVE
 	enemy_minimum_age = 14
 	var/const/agents_possible = 5 //If we ever need more syndicate agents.

@@ -68,6 +68,7 @@
 	if(!G.client.prefs.ghost_hud)
 		return
 	mymob.client.screen += static_inventory
+	update_parallax_existence()
 
 /mob/dead/observer/create_mob_hud()
 	if(client && !hud_used)

@@ -156,9 +156,9 @@ This file's folder contains:
 	name = "clockwork cult"
 	config_tag = "clockwork_cult"
 	antag_flag = ROLE_SERVANT_OF_RATVAR
-	required_players = 30
+	required_players = 10
 	required_enemies = 2
-	recommended_enemies = 4
+	recommended_enemies = 2
 	enemy_minimum_age = 14
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")

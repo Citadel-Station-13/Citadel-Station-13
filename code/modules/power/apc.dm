@@ -55,6 +55,7 @@
 	var/cell_type = 2500				// 0=no cell, 1=regular, 2=high-cap (x5) <- old, now it's just 0=no cell, otherwise dictate cellcapacity by changing this value. 1 used to be 1000, 2 was 2500
 	var/opened = 0 //0=closed, 1=opened, 2=cover removed
 	var/shorted = 0
+	var/shorted_old = 0 //for solar flare
 	var/lighting = 3
 	var/equipment = 3
 	var/environ = 3
