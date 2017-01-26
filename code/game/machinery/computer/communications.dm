@@ -130,7 +130,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-/*
+
 		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
@@ -146,7 +146,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-*/
+
 		if("purchase_menu")
 			state = STATE_PURCHASE
 
@@ -155,7 +155,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
-					if(SSshuttle.emergency.mode != SHUTTLE_CALL && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
 						usr << "It's a bit late to buy a new shuttle, don't you think?"
 						return
 					if(SSshuttle.shuttle_purchased)
