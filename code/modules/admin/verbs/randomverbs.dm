@@ -1035,7 +1035,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	feedback_add_details("admin_verb","MZC")
 
 /client/proc/polymorph_all()
-	set category = "Fun"
+	set category = "Dangerous"
 	set name = "Polymorph All"
 	set desc = "Applies the effects of the bolt of change to every single mob."
 
