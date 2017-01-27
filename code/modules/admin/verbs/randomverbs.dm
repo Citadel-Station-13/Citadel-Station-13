@@ -521,7 +521,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	feedback_add_details("admin_verb","MFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_explosion(atom/O as obj|mob|turf in world)
-	set category = "Special Verbs"
+	set category = "Dangerous"
 	set name = "Explosion"
 
 	if (!holder)
@@ -553,7 +553,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 /client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
-	set category = "Special Verbs"
+	set category = "Dangerous"
 	set name = "EM Pulse"
 
 	if (!holder)
@@ -689,7 +689,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 /client/proc/everyone_random()
-	set category = "Fun"
+	set category = "Dangerous"
 	set name = "Make Everyone Random"
 	set desc = "Make everyone have a random appearance. You can only use this before rounds!"
 
@@ -754,7 +754,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 /client/proc/toggle_nuke(obj/machinery/nuclearbomb/N in nuke_list)
 	set name = "Toggle Nuke"
-	set category = "Fun"
+	set category = "Dangerous"
 	set popup_menu = 0
 	if(!check_rights(R_DEBUG))
 		return
@@ -997,7 +997,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 		M.ui_interact(usr)
 
 /client/proc/mass_zombie_infection()
-	set category = "Fun"
+	set category = "Dangerous"
 	set name = "Mass Zombie Infection"
 	set desc = "Infects all humans with a latent organ that will zombify \
 		them on death."
@@ -1017,7 +1017,7 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	feedback_add_details("admin_verb","MZI")
 
 /client/proc/mass_zombie_cure()
-	set category = "Fun"
+	set category = "Dangerous"
 	set name = "Mass Zombie Cure"
 	set desc = "Removes the zombie infection from all humans, returning them to normal."
 	if(!holder)
