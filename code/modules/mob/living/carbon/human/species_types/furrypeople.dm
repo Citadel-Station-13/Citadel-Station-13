@@ -47,6 +47,31 @@ datum/species/canid
 	roundstart = 0 //no sprites yet
 	blacklisted = 1
 
+//AQUATIC//
+/datum/species/shark
+	name = "Shark"
+	id = "shark"
+	default_color = "BCAC9B"
+	species_traits = list(EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark")
+	attack_verb = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+
+//INSECT//
+/datum/species/moth
+	name = "Moth"
+	id = "moth"
+	default_color = "BCAC9B"
+	species_traits = list(EYECOLOR,LIPS,HAIR)
+	attack_verb = "flutter" //wat?
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+
+
 //HERBIVOROUS//
 
 //EXOTIC//

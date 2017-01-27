@@ -39,7 +39,7 @@
 
 
 //BUCKLE HOOKS
-/datum/riding/proc/restore_position(mob/living/buckled_mob)
+/datum/riding/proc/restore_position(mob/living/buckled_mob,force = 0)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = 0
 		buckled_mob.pixel_y = 0
