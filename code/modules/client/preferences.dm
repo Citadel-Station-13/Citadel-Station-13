@@ -65,6 +65,8 @@ var/list/preferences_datums = list()
 		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/prefered_security_department = SEC_DEPT_RANDOM
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -181,6 +183,8 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
 
+			dat += "<b>Custom job preferences:</b><BR>"
+			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
 
 			dat += "<td valign='center'>"
 
@@ -1236,6 +1240,11 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+
+				if("sec_dept")
+					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
+					if(department)
+						prefered_security_department = department
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"

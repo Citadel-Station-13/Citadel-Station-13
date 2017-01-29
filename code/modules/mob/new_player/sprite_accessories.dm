@@ -1486,6 +1486,12 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
@@ -1649,6 +1655,14 @@
 	name = "Murid"
 	icon_state = "murid"
 	color_src = 0
+
+//Shark
+/datum/sprite_accessory/mam_tails/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 
 //Squirrel
 /datum/sprite_accessory/mam_ears/squirrel

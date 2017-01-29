@@ -497,7 +497,7 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
-	set category = "Special Verbs"
+	set category = "Dangerous"
 	set name = "Drop Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
@@ -530,7 +530,7 @@ var/list/admin_verbs_hideable = list(
 			if(flash_range == null)
 				return
 			if(devastation_range > MAX_EX_DEVESTATION_RANGE || heavy_impact_range > MAX_EX_HEAVY_RANGE || light_impact_range > MAX_EX_LIGHT_RANGE || flash_range > MAX_EX_FLASH_RANGE)
-				if(alert("Bomb is bigger than the maxcap. Continue?","Yes","No") != "Yes")
+				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
 					return
 			epicenter = mob.loc //We need to reupdate as they may have moved again
 			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
@@ -539,7 +539,7 @@ var/list/admin_verbs_hideable = list(
 	feedback_add_details("admin_verb","DB") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
-	set category = "Special Verbs"
+	set category = "Dangerous"
 	set name = "Drop DynEx Bomb"
 	set desc = "Cause an explosion of varying strength at your location."
 
@@ -717,7 +717,6 @@ var/list/admin_verbs_hideable = list(
 		var/list/candidates
 		var/turf/open/floor/tile
 		var/j,k
-		var/mob/living/carbon/human/mob
 
 		for (var/i = 1 to amount)
 			j = 100
@@ -737,10 +736,10 @@ var/list/admin_verbs_hideable = list(
 						while ((!tile || !istype(tile)) && --k > 0)
 
 						if (tile)
-							mob = new/mob/living/carbon/human/interactive(tile)
-
-							testing("Spawned test mob with name \"[mob.name]\" at [tile.x],[tile.y],[tile.z]")
+							new/mob/living/carbon/human/interactive(tile)
+							testing("Spawned test mob at [tile.x],[tile.y],[tile.z]")
 			while (!area && --j > 0)
+
 
 /client/proc/toggle_AI_interact()
 	set name = "Toggle Admin AI Interact"

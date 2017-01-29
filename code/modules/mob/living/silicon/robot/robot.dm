@@ -195,10 +195,6 @@
 	"Miner" = /obj/item/weapon/robot_module/miner, \
 	"Janitor" = /obj/item/weapon/robot_module/janitor, \
 	"Service" = /obj/item/weapon/robot_module/butler)
-//	"Loader" = /obj/item/weapon/robot_module/loader, \
-//	"Security K-9 Unit" = /obj/item/weapon/robot_module/k9, \
-//	"MediHound" = /obj/item/weapon/robot_module/medihound, \
-//	"Borgi" = /obj/item/weapon/robot_module/borgi)
 	if(!config.forbid_peaceborg)
 		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
@@ -598,67 +594,6 @@
 		head_overlay.pixel_y += hat_offset
 		add_overlay(head_overlay)
 	update_fire()
-/*
-	if(laser == 1)
-		add_overlay("laser")
-	if(disabler == 1)
-		overlays += "disabler"
-	if(sleeper_g == 1)
-		overlays += "sleeper_g"
-	if(sleeper_r == 1)
-		overlays += "sleeper_r"
-
-	if(stat > 1 && icon_state == "k9")
-		icon_state = "k9-wreck"
-	if(stat < 2 && icon_state == "k9-wreck")
-		icon_state = "k9"
-	if(stat > 1 && icon_state == "borgi")
-		icon_state = "borgi-wreck"
-	if(stat < 2 && icon_state == "borgi-wreck")
-		icon_state = "borgi"
-	if(stat > 1 && icon_state == "medihound")
-		icon_state = "medihound-wreck"
-	if(stat < 2 && icon_state == "medihound-wreck")
-		icon_state = "medihound"
-
- //None of this is working with borg code Verki
-/mob/living/silicon/robot/proc/installed_modules()
-	if(!module)
-		pick_module()
-		return
-	var/dat = {"<A HREF='?src=\ref[src];mach_close=robotmod'>Close</A>
-	<BR>
-	<BR>
-	<B>Activated Modules</B>
-	<BR>
-	<table border='0'>
-	<tr><td>Module 1:</td><td>[module_state_1 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_1]>[module_state_1]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 2:</td><td>[module_state_2 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_2]>[module_state_2]<A>" : "No Module"]</td></tr>
-	<tr><td>Module 3:</td><td>[module_state_3 ? "<A HREF=?src=\ref[src];mod=\ref[module_state_3]>[module_state_3]<A>" : "No Module"]</td></tr>
-	</table><BR>
-	<B>Installed Modules</B><BR><BR>
-
-	<table border='0'>"}
-
-	for (var/obj in module.modules)
-		if (!obj)
-			dat += text("<tr><td><B>Resource depleted</B></td></tr>")
-		else if(activated(obj))
-			dat += text("<tr><td>[obj]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[obj]</td><td><A HREF=?src=\ref[src];act=\ref[obj]>Activate</A></td></tr>")
-	if (emagged)
-		if(activated(module.emag))
-			dat += text("<tr><td>[module.emag]</td><td><B>Activated</B></td></tr>")
-		else
-			dat += text("<tr><td>[module.emag]</td><td><A HREF=?src=\ref[src];act=\ref[module.emag]>Activate</A></td></tr>")
-	dat += "</table>"
-
-		if(activated(obj))
-			dat += text("[obj]: \[<B>Activated</B> | <A HREF=?src=\ref[src];deact=\ref[obj]>Deactivate</A>\]<BR>")
-		else
-			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
-*/
 
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
