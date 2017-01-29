@@ -13,7 +13,6 @@
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
-	check_for_cleanbot_bug()
 	map_ready = 1
 	world.log << "Map is ready."
 
@@ -60,9 +59,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	data_core = new /datum/datacore()
 
-	spawn(10)
-		Master.Setup()
-
 	SortAreas()						//Build the list of all existing areas and sort it alphabetically
 	process_teleport_locs()			//Sets up the wizard teleport locations
 
@@ -72,8 +68,8 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 	map_name = "Unknown"
 	#endif
 
+	Master.Setup(10, FALSE)
 
-	return
 
 #define IRC_STATUS_THROTTLE 50
 var/last_irc_status = 0
@@ -117,6 +113,10 @@ var/last_irc_status = 0
 		s["vote"] = config.allow_vote_mode
 		s["ai"] = config.allow_ai
 		s["host"] = host ? host : null
+		s["active_players"] = get_active_player_count()
+		s["players"] = clients.len
+		s["revision"] = revdata.commit
+		s["revision_date"] = revdata.date
 
 		var/admins = 0
 		var/mentors = 0
@@ -128,11 +128,6 @@ var/last_irc_status = 0
 				if(C.holder.fakekey)
 					continue	//so stealthmins aren't revealed by the hub
 				admins++
-
-		s["active_players"] = get_active_player_count()
-		s["players"] = clients.len
-		s["revision"] = revdata.commit
-		s["revision_date"] = revdata.date
 		s["gamestate"] = 1
 		s["admins"] = admins
 		s["mentors"] = mentors
@@ -189,14 +184,13 @@ var/last_irc_status = 0
 	else if("namecheck" in input)
 		if(!key_valid)
 			return "Bad Key"
-		else
-			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
-			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
-			return keywords_lookup(input["namecheck"],1)
+//		else
+//			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
+//			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
+//			return keywords_lookup(input["namecheck"],1)
 	else if("adminwho" in input)
 		if(!key_valid)
 			return "Bad Key"
-
 //		else
 //			return ircadminwho()
 
@@ -262,7 +256,7 @@ var/last_irc_status = 0
 		if(ticker && ticker.round_end_sound)
 			world << sound(ticker.round_end_sound)
 		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg')) // random end sounds!! - LastyBatsy
+			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg', 'sound/misc/its_only_game.ogg', 'sound/misc/yeehaw.ogg')) // random end sounds!! - LastyBatsy
 	sleep(soundwait)
 	Master.Shutdown()	//run SS shutdowns
 	for(var/thing in clients)
@@ -307,6 +301,10 @@ var/inerror = 0
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+	join_motd += "<br>"
+	for(var/line in revdata.testmerge)
+		if(line)
+			join_motd += "Test merge active of PR <a href='[config.githuburl]/pull/[line]'>#[line]</a><br>"
 
 /world/proc/load_configuration()
 	protected_config = new /datum/protected_configuration()
