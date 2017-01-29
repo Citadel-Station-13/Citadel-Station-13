@@ -95,13 +95,13 @@
 					usr << "<b>Admins have been notified.</b>"
 					message_admins("[src.ckey] has bumped their adminhelp #[T.ID].")
 				src.verbs -= /client/verb/adminhelp
-				adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+				adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 				return
 			usr << "<b>Thank you for your patience.</b>"
 			return
 
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE)
 
 	//clean the input msg
 	if(!msg)	return
