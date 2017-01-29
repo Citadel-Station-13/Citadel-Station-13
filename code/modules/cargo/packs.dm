@@ -562,6 +562,17 @@
 	crate_name = "space suit crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/engineering/hardsuit
+	name = "Spare Hardsuit Crate"
+	cost = 3500
+	access = access_ce
+	contains = list(/obj/item/clothing/head/helmet/space/hardsuit/engine,
+					/obj/item/clothing/head/helmet/space/hardsuit/engine,
+					/obj/item/clothing/head/helmet/space/hardsuit/engine/elite)
+	crate_name = "spare hardsuit crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+
+
 /datum/supply_pack/engineering/shieldgen
 	name = "Anti-breach Shield Projector Crate"
 	cost = 2500
