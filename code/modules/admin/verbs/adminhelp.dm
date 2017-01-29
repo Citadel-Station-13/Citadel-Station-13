@@ -1,4 +1,4 @@
-/proc/keywords_lookup(msg,irc)
+/proc/keywords_lookup(msg)
 
 	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
 	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
@@ -10,7 +10,6 @@
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
-	var/founds = ""
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
 		if(M.mind)	indexing += M.mind.name
@@ -53,19 +52,9 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
-								is_antag = 1
-							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							msg += "[original_word]<font size='1' color='black'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
 							continue
 		msg += "[original_word] "
-	if(irc)
-		if(founds == "")
-			return "Search Failed"
-		else
-			return founds
-
 	return msg
 
 
@@ -97,7 +86,7 @@
 				if(T.admin == "N/A")
 					usr << "<b>Due to the fact your Adminhelp had no assigned admin, admins have been pinged.</b>"
 					message_admins("[src.ckey] has bumped their adminhelp #[T.ID], still no assigned admin!")
-					msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[T];resolve=\ref[T]'>R</a>):</b> [T.msg]</span>"
+					msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[T];resolve=\ref[T]'>R</a>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_mob]'>REJT</A>):</b> [T.msg]</span>"
 					for(var/client/X in admins)
 						if(X.prefs.toggles & SOUND_ADMINHELP)
 							X << 'sound/effects/adminhelp.ogg'
@@ -106,34 +95,33 @@
 					usr << "<b>Admins have been notified.</b>"
 					message_admins("[src.ckey] has bumped their adminhelp #[T.ID].")
 				src.verbs -= /client/verb/adminhelp
-				adminhelptimerid = addtimer(src,"giveadminhelpverb",1200, FALSE)
+				adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 				return
 			usr << "<b>Thank you for your patience.</b>"
 			return
 
 	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200)
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE)
 
 	//clean the input msg
-	if(!msg)
-		return
+	if(!msg)	return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
 
-	//remove our adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200) //2 minute cooldown of admin helps
+	msg = keywords_lookup(msg)
+
+	if(!mob)	return						//this doesn't happen
 
 	createticket(src, msg, src.ckey, mob)
 
-//	var/datum/adminticket/ticket
+	var/datum/adminticket/ticket
 
-	if(!mob)
-		return						//this doesn't happen
+	for(var/datum/adminticket/T in admintickets)
+		if(T.permckey == src.ckey)
+			ticket = T
 
-	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>):</b> [msg]</span>"
 
 
 	//send this msg to all admins
@@ -201,13 +189,10 @@
 			else
 				if(admin_number_present <= 0)
 					if(!afk_admins && !ignored_admins)
-						send2irc(source, irc_message_adminless)
 						send2admindiscord(source, irc_message_adminless)
 					else if(afk_admins >= 1)
-						send2irc(source, irc_message_afk)
 						send2admindiscord(source, irc_message_afk)
 					else
-						send2irc(source, irc_message_normal)
 						send2admindiscord(source, irc_message_normal)
 		if("watchlist")
 			if(config.announce_watchlist)
@@ -215,15 +200,23 @@
 			else
 				if(admin_number_present <= 0)
 					if(!afk_admins && !ignored_admins)
-						send2irc(source, irc_message_adminless)
 						send2admindiscord(source, irc_message_adminless)
 					else if(afk_admins >= 1)
-						send2irc(source, irc_message_afk)
 						send2admindiscord(source, irc_message_afk)
 					else
-						send2irc(source, irc_message_normal)
 						send2admindiscord(source, irc_message_normal)
-			return admin_number_present
+		if("new_player")
+			if(config.irc_first_connection_alert)
+				send2irc(source, irc_message_normal)
+			else
+				if(admin_number_present <= 0)
+					if(!afk_admins && !ignored_admins)
+						send2admindiscord(source, irc_message_adminless)
+					else if(afk_admins >= 1)
+						send2admindiscord(source, irc_message_afk)
+					else
+						send2admindiscord(source, irc_message_normal)
+	return admin_number_present
 
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
