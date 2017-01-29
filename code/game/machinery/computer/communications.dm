@@ -1,5 +1,3 @@
-
-
 var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 // The communications computer
@@ -32,8 +30,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
 	var/const/STATE_PURCHASE = 11
-	var/const/COMMUNICATION_COOLDOWN = 600
-	var/const/COMMUNICATION_COOLDOWN_AI = 600
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -117,7 +113,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 							if(SEC_LEVEL_BLUE)
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
-				else:
+				else
 					usr << "<span class='warning'>You are not authorized to do this!</span>"
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					tmp_alertlevel = 0
@@ -131,7 +127,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
 
-		if("crossserver")
+/*		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
@@ -141,11 +137,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-			//	send2otherserver("[station_name()]", input,"Comms_Console")
+				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
+				*/
 
 		if("purchase_menu")
 			state = STATE_PURCHASE
@@ -652,26 +649,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
-	if((is_silicon && ai_message_cooldown > world.time) || (!is_silicon && message_cooldown > world.time))
+	if(!SScommunications.can_announce(user, is_silicon))
 		user << "Intercomms recharging. Please stand by."
 		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
-	if(is_silicon)
-		if(ai_message_cooldown > world.time)
-			return
-		minor_announce(input,"[user.name] Announces:")
-		ai_message_cooldown = world.time + COMMUNICATION_COOLDOWN_AI
-	else
-		if(message_cooldown > world.time)
-			return
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
-		message_cooldown = world.time + COMMUNICATION_COOLDOWN
-	log_say("[key_name(user)] has made a priority announcement: [input]")
-	message_admins("[key_name_admin(user)] has made a priority announcement.")
-
-
+	SScommunications.make_announcement(user, is_silicon, input)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 
