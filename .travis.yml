@@ -27,9 +27,6 @@ addons:
       - python
       - python-pip
 
-before_install:
- - chmod +x tools/travis/before_build_tools.sh
-
 install:
   - tools/travis/install_build_tools.sh
 
@@ -41,9 +38,4 @@ script:
   - tools/travis/check_filedirs.sh tgstation.dme
   - tools/travis/build_tools.sh
   - tools/travis/build_byond.sh
-  
-before_install:
- - chmod a+x tools/travis/install_build_tools.sh
-  
-  
 

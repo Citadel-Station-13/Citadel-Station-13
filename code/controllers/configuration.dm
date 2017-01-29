@@ -49,6 +49,7 @@
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/tick_limit_mc_init = TICK_LIMIT_MC_INIT_DEFAULT	//SSinitialization throttling
 
 	var/hostedby = null
 	var/respawn = 1
@@ -71,10 +72,8 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
-  
 	var/announce_watchlist = 0
 	var/announce_adminhelps = 0
-  
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
@@ -395,6 +394,8 @@
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
 						fps = 10 / ticklag
+				if("tick_limit_mc_init")
+					tick_limit_mc_init = text2num(value)
 				if("fps")
 					fps = text2num(value)
 				if("automute_on")
