@@ -53,6 +53,8 @@ var/datum/subsystem/ticker/ticker
 
 	var/news_report
 
+	var/modevoted = 0						//Have we sent a vote for the gamemode?
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -93,6 +95,10 @@ var/datum/subsystem/ticker/ticker
 			if(timeLeft < 0)
 				return
 			timeLeft -= wait
+
+			if(timeLeft <= 1200 && !modevoted) //Vote for the round type
+				send_gamemode_vote()
+				modevoted = TRUE
 
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round()
@@ -566,6 +572,8 @@ var/datum/subsystem/ticker/ticker
 		return
 	addtimer(CALLBACK(GLOBAL_PROC, /.proc/maprotate), 0)
 
+/datum/subsystem/ticker/proc/send_gamemode_vote(var/)
+	SSvote.initiate_vote("roundtype","server")
 
 /world/proc/has_round_started()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
@@ -604,6 +612,8 @@ var/datum/subsystem/ticker/ticker
 	queued_players = ticker.queued_players
 	cinematic = ticker.cinematic
 	maprotatechecked = ticker.maprotatechecked
+
+	modevoted = ticker.modevoted
 
 
 /datum/subsystem/ticker/proc/send_news_report()
