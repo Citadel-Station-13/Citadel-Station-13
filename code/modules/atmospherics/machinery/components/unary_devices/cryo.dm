@@ -22,11 +22,22 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/reagent_transfer = 0
 
+	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_med
+	var/radio_channel = "Medical"
+
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
 	initialize_directions = dir
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cryo_tube(null)
 	B.apply_default_parts(src)
+
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.subspace_transmission = 1
+	radio.canhear_range = 0
+	radio.recalculateChannels()
 
 /obj/item/weapon/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -53,6 +64,8 @@
 	conduction_coefficient = initial(conduction_coefficient) * C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
+	qdel(radio)
+	radio = null
 	if(beaker)
 		qdel(beaker)
 		beaker = null
@@ -138,15 +151,21 @@
 		update_icon()
 		return
 	var/datum/gas_mixture/air1 = AIR1
+	var/turf/T = get_turf(src)
 	if(occupant)
 		if(occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
+			radio.talk_into(src, "Patient fully restored", radio_channel)
 			if(autoeject) // Eject if configured.
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
+			return
+			if(autoeject) // Eject if configured.
+				open_machine()
 			return
 		if(air1.gases.len)
 			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.

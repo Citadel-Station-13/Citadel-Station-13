@@ -334,6 +334,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["cyborg_name"]		>> custom_names["cyborg"]
 	S["religion_name"]		>> custom_names["religion"]
 	S["deity_name"]			>> custom_names["deity"]
+	S["prefered_security_department"] >> prefered_security_department
+
 
 	//Jobs
 	S["joblessrole"]		>> joblessrole
@@ -471,6 +473,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["cyborg_name"]		<< custom_names["cyborg"]
 	S["religion_name"]		<< custom_names["religion"]
 	S["deity_name"]			<< custom_names["deity"]
+	S["prefered_security_department"] << prefered_security_department
+
 
 	//Jobs
 	S["joblessrole"]		<< joblessrole
