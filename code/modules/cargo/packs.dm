@@ -566,9 +566,8 @@
 	name = "Spare Hardsuit Crate"
 	cost = 3500
 	access = access_ce
-	contains = list(/obj/item/clothing/head/helmet/space/hardsuit/engine,
-					/obj/item/clothing/head/helmet/space/hardsuit/engine,
-					/obj/item/clothing/head/helmet/space/hardsuit/engine/elite)
+	contains = list(/obj/item/clothing/suit/space/hardsuit/engine
+					/obj/item/clothing/suit/space/hardsuit/engine,)
 	crate_name = "spare hardsuit crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
