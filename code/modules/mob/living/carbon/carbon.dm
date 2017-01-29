@@ -279,13 +279,20 @@
 
 /mob/living/carbon/resist_restraints()
 	var/obj/item/I = null
+	var/type = 0
 	if(handcuffed)
 		I = handcuffed
+		type = 1
 	else if(legcuffed)
 		I = legcuffed
+		type = 2
 	if(I)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 1)
+			changeNext_move(CLICK_CD_BREAKOUT)
+			last_special = world.time + CLICK_CD_BREAKOUT
+		if(type == 2)
+			changeNext_move(CLICK_CD_RANGE)
+			last_special = world.time + CLICK_CD_RANGE
 		cuff_resist(I)
 
 
@@ -557,9 +564,6 @@
 
 /mob/living/carbon/proc/get_total_tint()
 	. = 0
-
-	if(ismob(loc))
-		. += 3
 	if(istype(head, /obj/item/clothing/head))
 		var/obj/item/clothing/head/HT = head
 		. += HT.tint
