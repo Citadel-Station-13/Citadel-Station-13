@@ -755,6 +755,16 @@
 	icon_state = "female_commie"
 	gender = FEMALE
 
+/datum/sprite_accessory/underwear/female_braonly
+	name = "White Bra"
+	icon_state = "female_bra"
+	gender = FEMALE
+
+/datum/sprite_accessory/underwear/female_pantiesonly
+	name = "White Panties"
+	icon_state = "female_panties"
+	gender = FEMALE
+
 ////////////////////////////
 // Undershirt Definitions //
 ////////////////////////////

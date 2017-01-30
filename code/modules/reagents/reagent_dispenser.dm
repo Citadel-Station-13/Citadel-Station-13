@@ -190,3 +190,10 @@
 	icon_state = "virus_food"
 	anchored = 1
 	reagent_id = "virusfood"
+
+/obj/structure/reagent_dispensers/sulphericacid
+	name = "sulpheric acid dispenser"
+	desc = "A sulpheric acid dispenser, for refilling circut imprinters."
+	icon_state = "sacid"
+	anchored = 1
+	reagent_id = "sacid"
