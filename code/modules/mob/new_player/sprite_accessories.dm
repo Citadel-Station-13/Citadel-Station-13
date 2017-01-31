@@ -63,6 +63,7 @@
 	var/center = FALSE	//Should we center the sprite?
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
+	var/list/species_allowed = list("human", "lizard", "canid", "feline", "avian")
 
 //////////////////////
 // Hair Definitions //
@@ -1150,16 +1151,26 @@
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
 	gender_specific = 1
+	species_allowed = list("lizard")
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
 	gender_specific = 1
+	species_allowed = list("lizard")
 
 /datum/sprite_accessory/body_markings/lbelly
 	name = "Light Belly"
 	icon_state = "lbelly"
 	gender_specific = 1
+	species_allowed = list("lizard")
+
+/datum/sprite_accessory/body_markings/moth
+	icon = 'icons/mob/exotic_bodyparts.dmi'
+	name = "Moth"
+	icon_state = "moth"
+	gender_specific = 1
+	species_allowed = list("moth")
 
 /datum/sprite_accessory/tails
 	icon = 'icons/mob/mutant_bodyparts.dmi'
@@ -1691,14 +1702,14 @@
 	name = "Belly"
 	icon_state = "belly"
 	gender_specific = 1
-/*
+
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
 	name = "Belly, Hands, & Feet"
 	icon_state = "bellyhandsfeet"
 	gender_specific = 1
 	extra = 1
 	extra_color_src = MUTCOLORS3
-*/
+
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal

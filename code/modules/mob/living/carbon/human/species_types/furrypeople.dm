@@ -52,7 +52,7 @@ datum/species/canid
 	name = "Shark"
 	id = "shark"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark")
 	attack_verb = "bite"
@@ -65,7 +65,8 @@ datum/species/canid
 	name = "Moth"
 	id = "moth"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
