@@ -1498,6 +1498,12 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/ailurus
+	name = "ailurus"
+	icon_state = "ailurus"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
@@ -1690,6 +1696,10 @@
 /datum/sprite_accessory/mam_tails_animated/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
+
+/datum/sprite_accessory/mam_tails/ailurus
+	name = "Ailurus"
+	icon_state = "ailurus"
 
 //Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings

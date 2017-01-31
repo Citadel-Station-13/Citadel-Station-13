@@ -33,6 +33,19 @@ datum/species/canid
 	if(H)
 		H.endTailWag()
 
+//Mammal
+/datum/species/ailurus
+	name = "Ailurus"
+	id = "Ailurus"
+	default_color = "BCAC9B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mam_tail" = "ailurus")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
