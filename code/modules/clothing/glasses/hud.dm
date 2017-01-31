@@ -1,20 +1,22 @@
 /obj/item/clothing/glasses/hud
-	name = "HUD"
+	name = "\improper HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
-	var/hud_type = null
+	var/HUDType = null //Hudtype is defined on glasses.dm
+	prescription_upgradable = 1
+	var/list/icon/current = list() //the current hud icons
+
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(hud_type && slot == slot_glasses)
-		var/datum/atom_hud/H = huds[hud_type]
+	if(HUDType && slot == slot_glasses)
+		var/datum/atom_hud/H = huds[HUDType]
 		H.add_hud_to(user)
 
 /obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
 	..()
-	if(hud_type && istype(user) && user.glasses == src)
-		var/datum/atom_hud/H = huds[hud_type]
+	if(HUDType && istype(user) && user.glasses == src)
+		var/datum/atom_hud/H = huds[HUDType]
 		H.remove_hud_from(user)
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
@@ -22,159 +24,113 @@
 		emagged = 1
 		desc = desc + " The display flickers slightly."
 
-/obj/item/clothing/glasses/hud/emag_act(mob/user)
-	if(emagged == 0)
-		emagged = 1
-		user << "<span class='warning'>PZZTTPFFFT</span>"
-		desc = desc + " The display flickers slightly."
-
 /obj/item/clothing/glasses/hud/health
-	name = "Health Scanner HUD"
+	name = "\improper Health Scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	origin_tech = "magnets=3;biotech=2"
-	hud_type = DATA_HUD_MEDICAL_ADVANCED
-	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+	HUDType = DATA_HUD_MEDICAL_ADVANCED
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi',
+		"Drask" = 'icons/mob/species/drask/eyes.dmi'
+		)
+
+/obj/item/clothing/glasses/hud/health/health_advanced
+	name = "\improper Advanced Health Scanner HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status.  Includes anti-flash filter."
+	icon_state = "advmedhud"
+	flash_protect = 1
 
 /obj/item/clothing/glasses/hud/health/night
-	name = "Night Vision Health Scanner HUD"
+	name = "\improper Night Vision Health Scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
 	item_state = "glasses"
-	origin_tech = "magnets=4;biotech=4;plasmatech=4;engineering=5"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	invis_view = SEE_INVISIBLE_MINIMUM //don't render darkness while wearing these
+	prescription_upgradable = 0
 
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "Diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
-	origin_tech = "magnets=2;engineering=2"
-	hud_type = DATA_HUD_DIAGNOSTIC
-	glass_colour_type = /datum/client_colour/glass_colour/lightorange
+	HUDType = DATA_HUD_DIAGNOSTIC
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "Night Vision Diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
 	item_state = "glasses"
-	origin_tech = "magnets=4;powerstorage=4;plasmatech=4;engineering=5"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	invis_view = SEE_INVISIBLE_MINIMUM //don't render darkness while wearing these
+	prescription_upgradable = 0
 
 /obj/item/clothing/glasses/hud/security
-	name = "Security HUD"
+	name = "\improper Security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
-	origin_tech = "magnets=3;combat=2"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
-	glass_colour_type = /datum/client_colour/glass_colour/red
+	var/global/list/jobs[0]
+	HUDType = DATA_HUD_SECURITY_ADVANCED
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi',
+		"Drask" = 'icons/mob/species/drask/eyes.dmi'
+		)
 
 /obj/item/clothing/glasses/hud/security/chameleon
-	name = "Chamleon Security HUD"
+	name = "Chameleon Security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
 	flash_protect = 1
 
 /obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
 	chameleon(user)
 
+/obj/item/clothing/glasses/hud/security/sunglasses/jensenshades
+	name = "augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "jensenshades"
+	item_state = "jensenshades"
+	vision_flags = SEE_MOBS
 
-/obj/item/clothing/glasses/hud/security/sunglasses/eyepatch
-	name = "Eyepatch HUD"
-	desc = "A heads-up display that connects directly to the optical nerve of the user, replacing the need for that useless eyeball."
-	icon_state = "hudpatch"
+/obj/item/clothing/glasses/hud/security/night
+	name = "\improper Night Vision Security HUD"
+	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
+	icon_state = "securityhudnight"
+	darkness_view = 8
+	invis_view = SEE_INVISIBLE_MINIMUM //don't render darkness while wearing these
+	prescription_upgradable = 0
 
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "HUDSunglasses"
 	desc = "Sunglasses with a HUD."
 	icon_state = "sunhud"
-	origin_tech = "magnets=3;combat=3;engineering=3"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
-	glass_colour_type = /datum/client_colour/glass_colour/darkred
+	prescription_upgradable = 1
 
-/obj/item/clothing/glasses/hud/security/night
-	name = "Night Vision Security HUD"
-	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
-	icon_state = "securityhudnight"
-	origin_tech = "magnets=4;combat=4;plasmatech=4;engineering=5"
+/obj/item/clothing/glasses/hud/security/sunglasses/prescription
+	prescription = 1
+
+/obj/item/clothing/glasses/hud/hydroponic
+	name = "Hydroponic HUD"
+	desc = "A heads-up display capable of analyzing the health and status of plants growing in hydro trays and soil."
+	icon_state = "hydroponichud"
+	HUDType = DATA_HUD_HYDROPONIC
+	species_fit = list("Vox")
+	sprite_sheets = list(
+		"Vox" = 'icons/mob/species/vox/eyes.dmi'
+		)
+
+/obj/item/clothing/glasses/hud/hydroponic/night
+	name = "Night Vision Hydroponic HUD"
+	desc = "A hydroponic HUD fitted with a light amplifier."
+	icon_state = "hydroponichudnight"
+	item_state = "glasses"
 	darkness_view = 8
-	invis_view = SEE_INVISIBLE_MINIMUM
-	glass_colour_type = /datum/client_colour/glass_colour/green
-
-/obj/item/clothing/glasses/hud/security/sunglasses/gars
-	name = "HUD gar glasses"
-	desc = "GAR glasses with a HUD."
-	icon_state = "gars"
-	item_state = "garb"
-	force = 10
-	throwforce = 10
-	throw_speed = 4
-	attack_verb = list("sliced")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-
-/obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars
-	name = "giga HUD gar glasses"
-	desc = "GIGA GAR glasses with a HUD."
-	icon_state = "supergars"
-	item_state = "garb"
-	force = 12
-	throwforce = 12
-
-/obj/item/clothing/glasses/hud/toggle
-	name = "Toggle Hud"
-	desc = "A hud with multiple functions."
-	actions_types = list(/datum/action/item_action/switch_hud)
-
-/obj/item/clothing/glasses/hud/toggle/attack_self(mob/user)
-	if(!ishuman(user))
-		return
-	var/mob/living/carbon/human/wearer = user
-	if (wearer.glasses != src)
-		return
-
-	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
-		H.remove_hud_from(user)
-
-	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
-		hud_type = null
-	else if (hud_type == DATA_HUD_SECURITY_ADVANCED)
-		hud_type = DATA_HUD_MEDICAL_ADVANCED
-	else
-		hud_type = DATA_HUD_SECURITY_ADVANCED
-
-	if (hud_type)
-		var/datum/atom_hud/H = huds[hud_type]
-		H.add_hud_to(user)
-
-/obj/item/clothing/glasses/hud/toggle/thermal
-	name = "Thermal HUD Scanner"
-	desc = "Thermal imaging HUD in the shape of glasses."
-	icon_state = "thermal"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
-	vision_flags = SEE_MOBS
-	invis_view = 2
-	glass_colour_type = /datum/client_colour/glass_colour/red
-
-/obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
-	..()
-	switch (hud_type)
-		if (DATA_HUD_MEDICAL_ADVANCED)
-			icon_state = "meson"
-			change_glass_color(user, /datum/client_colour/glass_colour/green)
-		if (DATA_HUD_SECURITY_ADVANCED)
-			icon_state = "thermal"
-			change_glass_color(user, /datum/client_colour/glass_colour/red)
-		else
-			icon_state = "purple"
-			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_inv_glasses()
-
-/obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
-	thermal_overload()
-	..()
+	invis_view = SEE_INVISIBLE_MINIMUM //don't render darkness while wearing these
+	prescription_upgradable = 0

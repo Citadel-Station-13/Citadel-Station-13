@@ -7,6 +7,7 @@
  *		for anyone who wants to make their own stuff.
  *
  * Contains:
+ *		Areas
  *		Landmarks
  *		Guns
  *		Safe code hints
@@ -14,6 +15,29 @@
  *		Modified Nar-Sie
  */
 
+/*
+ * Areas
+ */
+ //Gateroom gets its own APC specifically for the gate
+ /area/awaymission/gateroom
+
+ //Library, medbay, storage room
+ /area/awaymission/southblock
+
+ //Arrivals, security, hydroponics, shuttles (since they dont move, they dont need specific areas)
+ /area/awaymission/arrivalblock
+
+ //Crew quarters, cafeteria, chapel
+ /area/awaymission/midblock
+
+ //engineering, bridge (not really north but it doesnt really need its own APC)
+ /area/awaymission/northblock
+
+ //That massive research room
+ /area/awaymission/research
+
+//Syndicate shuttle
+/area/awaymission/syndishuttle
 
 
 /*
@@ -23,7 +47,7 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(src.loc)
+	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
@@ -36,26 +60,24 @@
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
  */
 //Captain's retro laser - Fires practice laser shots instead.
-/obj/item/weapon/gun/energy/laser/retro/sc_retro
-	name ="retro laser"
-	icon_state = "retro"
+obj/item/weapon/gun/energy/laser/retro/sc_retro
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces."
-//	projectile_type = "/obj/item/projectile/practice"
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = 0 //No sense in having a harmless gun blow up in the clowns face
 
 //Syndicate sub-machine guns.
-/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/ballistic/automatic/c20r/sc_c20r/New()
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
 			magazine.stored_ammo -= ammo
 
 //Barman's shotgun
-/obj/item/weapon/gun/ballistic/shotgun/sc_pump
+/obj/item/weapon/gun/projectile/shotgun/sc_pump
 
-/obj/item/weapon/gun/ballistic/shotgun/sc_pump/New()
+/obj/item/weapon/gun/projectile/shotgun/sc_pump/New()
 	..()
 	for(var/ammo in magazine.stored_ammo)
 		if(prob(95)) //95% chance
@@ -108,7 +130,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 			<br>
 			Our on-board spy has learned the code and has hidden away a few copies of the code around the station. Unfortunatly he has been captured by security
 			Your objective is to split up, locate any of the papers containing the captain's safe code, open the safe and
-			secure anything found inside. If possible, recover the imprisioned syndicate operative and receive the code from him.<br>
+			secure anything found inside. If possible, recover the imprisioned syndicate operative and recieve the code from him.<br>
 			<br>
 			<u>As always, eliminate anyone who gets in the way.</u><br>
 			<br>
@@ -127,7 +149,8 @@ var/sc_safecode5 = "[rand(0,9)]"
 	l_set = 1
 	new /obj/item/weapon/gun/energy/mindflayer(src)
 	new /obj/item/device/soulstone(src)
-	new /obj/item/clothing/suit/space/hardsuit/cult(src)
+	new /obj/item/clothing/head/helmet/space/cult(src)
+	new /obj/item/clothing/suit/space/cult(src)
 	//new /obj/item/weapon/teleportation_scroll(src)
 	new /obj/item/weapon/ore/diamond(src)
 
@@ -138,7 +161,8 @@ var/sc_safecode5 = "[rand(0,9)]"
 	desc = "Your body becomes weak and your feel your mind slipping away as you try to comprehend what you know can't be possible."
 	move_self = 0 //Contianed narsie does not move!
 	grav_pull = 0 //Contained narsie does not pull stuff in!
-	var/uneatable = list(/turf/open/space, /obj/effect/overlay, /mob/living/simple_animal/hostile/construct)
+	var/uneatable = list(/turf/space, /obj/effect/overlay, /atom/movable/lighting_overlay, /mob/living/simple_animal/hostile/construct)
+
 //Override this to prevent no adminlog runtimes and admin warnings about a singularity without containment
 /obj/singularity/narsie/sc_Narsie/admin_investigate_setup()
 	return
@@ -148,15 +172,15 @@ var/sc_safecode5 = "[rand(0,9)]"
 	if(prob(25))
 		mezzer()
 
-/obj/singularity/narsie/sc_Narsie/consume(atom/A)
+/obj/singularity/narsie/sc_Narsie/consume(var/atom/A)
 	if(is_type_in_list(A, uneatable))
 		return 0
-	if(isliving(A))
+	if(istype(A,/mob/living))
 		var/mob/living/L = A
 		L.gib()
 	else if(istype(A,/obj/))
 		var/obj/O = A
-		O.ex_act(1)
+		O.ex_act(1.0)
 		if(O) qdel(O)
 	else if(isturf(A))
 		var/turf/T = A
@@ -164,9 +188,9 @@ var/sc_safecode5 = "[rand(0,9)]"
 			for(var/obj/O in T.contents)
 				if(O.level != 1)
 					continue
-				if(O.invisibility == INVISIBILITY_MAXIMUM)
+				if(O.invisibility == 101)
 					src.consume(O)
-		T.ChangeTurf(/turf/open/space)
+		T.ChangeTurf(/turf/space)
 	return
 
 /obj/singularity/narsie/sc_Narsie/ex_act()

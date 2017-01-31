@@ -2,20 +2,16 @@
 	..()
 	//Mind updates
 	sync_mind()
-	mind.show_memory(src, 0)
 
-	//Round specific stuff
-	if(ticker && ticker.mode)
-		switch(ticker.mode.name)
-			if("sandbox")
-				CanBuild()
-
-	update_damage_hud()
-	update_health_hud()
+	//If they're SSD, remove it so they can wake back up.
+	player_logged = 0
 
 	//Vents
 	if(ventcrawler)
-		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"
+		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
+	//Should update regardless of if we can ventcrawl, since we can end up in pipes in other ways.
+	update_pipe_vision()
 
-	if(ranged_ability)
-		ranged_ability.add_ranged_ability(src, "<span class='notice'>You currently have <b>[ranged_ability]</b> active!</span>")
+	update_interface()
+
+	return .

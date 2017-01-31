@@ -8,4 +8,3 @@
 	/datum/mapGeneratorModule/randBushes, \
 	/datum/mapGeneratorModule/randRocks, \
 	/datum/mapGeneratorModule/denseLayer/grassTufts)
-

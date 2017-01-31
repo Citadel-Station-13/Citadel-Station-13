@@ -1,22 +1,13 @@
-/proc/lizard_name(gender)
-	if(gender == MALE)
-		return "[pick(lizard_names_male)]-[pick(lizard_names_male)]"
-	else
-		return "[pick(lizard_names_female)]-[pick(lizard_names_female)]"
-
-/proc/plasmaman_name()
-	return "[pick(plasmaman_names)] \Roman[rand(1,99)]"
-
 var/church_name = null
 /proc/church_name()
-	if (church_name)
+	if(church_name)
 		return church_name
 
 	var/name = ""
 
 	name += pick("Holy", "United", "First", "Second", "Last")
 
-	if (prob(20))
+	if(prob(20))
 		name += " Space"
 
 	name += " " + pick("Church", "Cathedral", "Body", "Worshippers", "Movement", "Witnesses")
@@ -26,7 +17,7 @@ var/church_name = null
 
 var/command_name = null
 /proc/command_name()
-	if (command_name)
+	if(command_name)
 		return command_name
 
 	var/name = "Central Command"
@@ -34,7 +25,7 @@ var/command_name = null
 	command_name = name
 	return name
 
-/proc/change_command_name(name)
+/proc/change_command_name(var/name)
 
 	command_name = name
 
@@ -42,27 +33,27 @@ var/command_name = null
 
 var/religion_name = null
 /proc/religion_name()
-	if (religion_name)
+	if(religion_name)
 		return religion_name
 
 	var/name = ""
 
-	name += pick("bee", "science", "edu", "captain", "assistant", "monkey", "alien", "space", "unit", "sprocket", "gadget", "bomb", "revolution", "beyond", "station", "goon", "robot", "ivor", "hobnob")
+	name += pick("bee", "science", "edu", "captain", "civilian", "monkey", "alien", "space", "unit", "sprocket", "gadget", "bomb", "revolution", "beyond", "station", "goon", "robot", "ivor", "hobnob")
 	name += pick("ism", "ia", "ology", "istism", "ites", "ick", "ian", "ity")
 
 	return capitalize(name)
+
+/proc/system_name()
+	return "Nyx"
 
 /proc/station_name()
 	if(station_name)
 		return station_name
 
-	if(config && config.station_name)
-		station_name = config.station_name
-	else
-		station_name = new_station_name()
+	var/name = ""
 
 	if(config && config.server_name)
-		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+		world.name = "[config.server_name]: [name]"
 	else
 		world.name = station_name
 
@@ -74,25 +65,25 @@ var/religion_name = null
 	var/new_station_name = ""
 
 	//Rare: Pre-Prefix
-	if (prob(10))
-		name = pick(station_prefixes)
+	if(prob(10))
+		name = pick("Imperium", "Heretical", "Cuban", "Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique", "Houseruled", "Religious", "Atheist", "Traditional", "Houseruled", "Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death", "Zybourne", "Central", "Main", "Government", "Uoi", "Fat", "Automated", "Experimental", "Augmented")
 		new_station_name = name + " "
 		name = ""
 
 	// Prefix
-	for(var/holiday_name in SSevent.holidays)
+	for(var/holiday_name in holiday_master.holidays)
 		if(holiday_name == "Friday the 13th")
 			random = 13
-		var/datum/holiday/holiday = SSevent.holidays[holiday_name]
+		var/datum/holiday/holiday = holiday_master.holidays[holiday_name]
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)
-		name = pick(station_names)
+		name = pick("", "Stanford", "Dorf", "Alium", "Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World", "Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia", "Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East", "South", "Slant-ways", "Widdershins", "Rimward", "Expensive", "Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork", "Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist","Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist", "Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon", "System", "Mining", "Neckbeard", "Research", "Supply", "Military", "Orbital", "Battle", "Science", "Asteroid", "Home", "Production", "Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional", "Robot", "Hats", "Pizza")
 	if(name)
 		new_station_name += name + " "
 
 	// Suffix
-	name = pick(station_suffixes)
+	name = pick("Station", "Fortress", "Frontier", "Suffix", "Death-trap", "Space-hulk", "Lab", "Hazard","Spess Junk", "Fishery", "No-Moon", "Tomb", "Crypt", "Hut", "Monkey", "Bomb", "Trade Post", "Fortress", "Village", "Town", "City", "Edition", "Hive", "Complex", "Base", "Facility", "Depot", "Outpost", "Installation", "Drydock", "Observatory", "Array", "Relay", "Monitor", "Platform", "Construct", "Hangar", "Prison", "Center", "Port", "Waystation", "Factory", "Waypoint", "Stopover", "Hub", "HQ", "Office", "Object", "Fortification", "Colony", "Planet-Cracker", "Roost", "Fat Camp")
 	new_station_name += name + " "
 
 	// ID Number
@@ -100,20 +91,32 @@ var/religion_name = null
 		if(1)
 			new_station_name += "[rand(1, 99)]"
 		if(2)
-			new_station_name += pick(greek_letters)
+			new_station_name += pick("Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega")
 		if(3)
-			new_station_name += "\Roman[rand(1,99)]"
+			new_station_name += pick("II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX")
 		if(4)
-			new_station_name += pick(phonetic_alphabet)
+			new_station_name += pick("Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet", "Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor", "Whiskey", "X-ray", "Yankee", "Zulu")
 		if(5)
-			new_station_name += pick(numbers_as_words)
+			new_station_name += pick("One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen")
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name
 
+
+/proc/world_name(var/name)
+
+	station_name = name
+
+	if(config && config.server_name)
+		world.name = "[config.server_name]: [name]"
+	else
+		world.name = name
+
+	return name
+
 var/syndicate_name = null
 /proc/syndicate_name()
-	if (syndicate_name)
+	if(syndicate_name)
 		return syndicate_name
 
 	var/name = ""
@@ -122,11 +125,11 @@ var/syndicate_name = null
 	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
 
 	// Suffix
-	if (prob(80))
+	if(prob(80))
 		name += " "
 
 		// Full
-		if (prob(60))
+		if(prob(60))
 			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive")
 		// Broken
 		else
@@ -172,7 +175,7 @@ var/syndicate_code_response//Code response for traitors.
 
 	var/safety[] = list(1,2,3)//Tells the proc which options to remove later on.
 	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
-	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island iced tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
+	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
 	var/locations[] = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
 
 	var/names[] = list()
@@ -195,14 +198,11 @@ var/syndicate_code_response//Code response for traitors.
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							if(prob(10))
-								code_phrase += pick(lizard_name(MALE),lizard_name(FEMALE))
-							else
-								code_phrase += pick(pick(first_names_male,first_names_female))
-								code_phrase += " "
-								code_phrase += pick(last_names)
+							code_phrase += pick(pick(first_names_male,first_names_female))
+							code_phrase += " "
+							code_phrase += pick(last_names)
 					if(2)
-						code_phrase += pick(get_all_jobs())//Returns a job.
+						code_phrase += pick(joblist)//Returns a job.
 				safety -= 1
 			if(2)
 				switch(rand(1,2))//Places or things.
@@ -225,3 +225,96 @@ var/syndicate_code_response//Code response for traitors.
 			code_phrase += ", "
 
 	return code_phrase
+
+/proc/GenerateKey()
+	var/newKey
+	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
+	newKey += pick("diamond", "beer", "mushroom", "civilian", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
+	newKey += pick("1", "2", "3", "4", "5", "6", "7", "8", "9", "0")
+	return newKey
+
+/*
+//This proc tests the gen above.
+/client/verb/test_code_phrase()
+	set name = "Generate Code Phrase"
+	set category = "Debug"
+
+	to_chat(world, "<span class='warning'>Code Phrase is:</span> [generate_code_phrase()]")
+	return
+
+
+	This was an earlier attempt at code phrase system, aside from an even earlier attempt (and failure).
+	This system more or less works as intended--aside from being unfinished--but it's still very predictable.
+	Particularly, the phrase opening statements are pretty easy to recognize and identify when metagaming.
+	I think the above-used method solves this issue by using words in a sequence, providing for much greater flexibility.
+	/N
+
+	switch(choice)
+		if(1)
+			syndicate_code_phrase += pick("I'm looking for","Have you seen","Maybe you've seen","I'm trying to find","I'm tracking")
+			syndicate_code_phrase += " "
+			syndicate_code_phrase += pick(pick(first_names_male,first_names_female))
+			syndicate_code_phrase += " "
+			syndicate_code_phrase += pick(last_names)
+			syndicate_code_phrase += "."
+		if(2)
+			syndicate_code_phrase += pick("How do I get to","How do I find","Where is","Where do I find")
+			syndicate_code_phrase += " "
+			syndicate_code_phrase += pick("Escape","Engineering","Atmos","the bridge","the brig","Clown Planet","CentComm","the library","the chapel","a bathroom","Med Bay","Tool Storage","the escape shuttle","Robotics","a locker room","the living quarters","the gym","the autolathe","QM","the bar","the theater","the derelict")
+			syndicate_code_phrase += "?"
+		if(3)
+			if(prob(70))
+				syndicate_code_phrase += pick("Get me","I want","I'd like","Make me")
+				syndicate_code_phrase += " a "
+			else
+				syndicate_code_phrase += pick("One")
+				syndicate_code_phrase += " "
+			syndicate_code_phrase += pick("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequila sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
+			syndicate_code_phrase += "."
+		if(4)
+			syndicate_code_phrase += pick("I wish I was","My dad was","His mom was","Where do I find","The hero this station needs is","I'd fuck","I wouldn't trust","Someone caught","HoS caught","Someone found","I'd wrestle","I wanna kill")
+			syndicate_code_phrase += " [pick("a","the")] "
+			syndicate_code_phrase += pick("wizard","ninja","xeno","lizard","slime","monkey","syndicate","cyborg","clown","space carp","singularity","singulo","mime")
+			syndicate_code_phrase += "."
+		if(5)
+			syndicate_code_phrase += pick("Do we have","Is there","Where is","Where's","Who's")
+			syndicate_code_phrase += " "
+			syndicate_code_phrase += "[pick(joblist)]"
+			syndicate_code_phrase += "?"
+
+	switch(choice)
+		if(1)
+			if(prob(80))
+				syndicate_code_response += pick("Try looking for them near","I they ran off to","Yes. I saw them near","Nope. I'm heading to","Try searching")
+				syndicate_code_response += " "
+				syndicate_code_response += pick("Escape","Engineering","Atmos","the bridge","the brig","Clown Planet","CentComm","the library","the chapel","a bathroom","Med Bay","Tool Storage","the escape shuttle","Robotics","a locker room","the living quarters","the gym","the autolathe","QM","the bar","the theater","the derelict")
+				syndicate_code_response += "."
+			else if(prob(60))
+				syndicate_code_response += pick("No. I'm busy, sorry.","I don't have the time.","Not sure, maybe?","There is no time.")
+			else
+				syndicate_code_response += pick("*shrug*","*smile*","*blink*","*sigh*","*laugh*","*nod*","*giggle*")
+		if(2)
+			if(prob(80))
+				syndicate_code_response += pick("Go to","Navigate to","Try","Sure, run to","Try searching","It's near","It's around")
+				syndicate_code_response += " the "
+				syndicate_code_response += pick("[pick("south","north","east","west")] maitenance door","nearby maitenance","teleporter","[pick("cold","dead")] space","morgue","vacuum","[pick("south","north","east","west")] hall ","[pick("south","north","east","west")] hallway","[pick("white","black","red","green","blue","pink","purple")] [pick("rabbit","frog","lion","tiger","panther","snake","facehugger")]")
+				syndicate_code_response += "."
+			else if(prob(60))
+				syndicate_code_response += pick("Try asking","Ask","Talk to","Go see","Follow","Hunt down")
+				syndicate_code_response += " "
+				if(prob(50))
+					syndicate_code_response += pick(pick(first_names_male,first_names_female))
+					syndicate_code_response += " "
+					syndicate_code_response += pick(last_names)
+				else
+					syndicate_code_response += " the "
+					syndicate_code_response += "[pic(joblist)]"
+				syndicate_code_response += "."
+			else
+				syndicate_code_response += pick("*shrug*","*smile*","*blink*","*sigh*","*laugh*","*nod*","*giggle*")
+		if(3)
+		if(4)
+		if(5)
+
+	return
+*/

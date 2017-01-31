@@ -1,9 +1,9 @@
 var/list/clientmessages = list()
 
-/proc/addclientmessage(var/ckey, var/message)
+proc/addclientmessage(var/ckey, var/message)
 	ckey = ckey(ckey)
-	if (!ckey || !message)
+	if(!ckey || !message)
 		return
-	if (!(ckey in clientmessages))
+	if(!(ckey in clientmessages))
 		clientmessages[ckey] = list()
 	clientmessages[ckey] += message

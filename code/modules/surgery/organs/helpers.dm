@@ -1,30 +1,48 @@
-/mob/proc/getorgan(typepath)
+/mob/proc/get_int_organ(typepath) //int stands for internal
 	return
 
-/mob/proc/getorganszone(zone)
+/mob/proc/get_organs_zone(zone)
 	return
 
-/mob/proc/getorganslot(slot)
+/mob/proc/get_organ_slot(slot) //is it a brain, is it a brain_tumor?
 	return
 
+/mob/proc/get_int_organ_tag(tag) //is it a brain, is it a brain_tumor?
+	return
 
-/mob/living/carbon/getorgan(typepath)
+/mob/living/carbon/get_int_organ(typepath)
 	return (locate(typepath) in internal_organs)
 
-/mob/living/carbon/getorganszone(zone, subzones = 0)
+
+/mob/living/carbon/get_organs_zone(zone, var/subzones = 0)
 	var/list/returnorg = list()
 	if(subzones)
 		// Include subzones - groin for chest, eyes and mouth for head
+		//Fethas note:We have check_zone, i may need to remove the below
 		if(zone == "head")
-			returnorg = getorganszone("eyes") + getorganszone("mouth")
+			returnorg = get_organs_zone("eyes") + get_organs_zone("mouth")
 		if(zone == "chest")
-			returnorg = getorganszone("groin")
+			returnorg = get_organs_zone("groin")
 
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
-		if(zone == O.zone)
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(zone == O.parent_organ)
 			returnorg += O
 	return returnorg
 
-/mob/living/carbon/getorganslot(slot)
-	return internal_organs_slot[slot]
+/mob/living/carbon/get_organ_slot(slot)
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(slot == O.slot)
+			return O
+
+/mob/living/carbon/get_int_organ_tag(tag)
+	for(var/obj/item/organ/internal/O in internal_organs)
+		if(tag == O.organ_tag)
+			return O
+
+/proc/is_int_organ(atom/A)
+	return istype(A, /obj/item/organ/internal)
+
+/mob/living/carbon/human/proc/get_limb_by_name(limb_name) //Look for a limb with the given limb name in the source mob, and return it if found.
+	for(var/obj/item/organ/external/O in organs)
+		if(limb_name == O.limb_name)
+			return O

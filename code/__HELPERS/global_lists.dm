@@ -1,8 +1,13 @@
+
 //////////////////////////
 /////Initial Building/////
 //////////////////////////
 
-/proc/make_datum_references_lists()
+/proc/makeDatumRefLists()
+	//markings
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, marking_styles_list)
+	//head accessory
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/head_accessory, head_accessory_styles_list)
 	//hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hair_styles_list, hair_styles_male_list, hair_styles_female_list)
 	//facial hair
@@ -12,95 +17,72 @@
 	//undershirt
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
 	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
-	//human mutant bodyparts
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
-	//lizard bodyparts (blizzard intensifies)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, animated_tails_list_lizard)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, animated_spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list, socks_m, socks_f)
+	//alt heads
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/alt_heads, alt_heads_list)
 
-	//mammal bodyparts (fucking furries)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
-	//avian bodyparts (i swear this isn't starbound)
-//	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
-//	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)
-//	init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_wings, avian_wings_list)
-//  init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_open_wings, avian_open_wings_list)
-	//xeno parts (hiss?)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
+	init_subtypes(/datum/surgery_step, surgery_steps)
 
-
-	//Species
-	for(var/spath in subtypesof(/datum/species))
-		var/datum/species/S = new spath()
-		if(S.roundstart)
-			roundstart_species[S.id] = S.type
-		species_list[S.id] = S.type
-
-	//Surgeries
-	for(var/path in subtypesof(/datum/surgery))
+	for(var/path in (subtypesof(/datum/surgery)))
 		surgeries_list += new path()
 
-	//Materials
-	for(var/path in subtypesof(/datum/material))
-		var/datum/material/D = new path()
-		materials_list[D.id] = D
+	init_datum_subtypes(/datum/job, joblist, list(/datum/job/ai, /datum/job/cyborg), "title")
+	init_datum_subtypes(/datum/superheroes, all_superheroes, null, "name")
+	init_datum_subtypes(/datum/nations, all_nations, null, "default_name")
+	init_datum_subtypes(/datum/language, all_languages, null, "name")
 
-	//Techs
-	for(var/path in subtypesof(/datum/tech))
-		var/datum/tech/D = new path()
-		tech_list[D.id] = D
+	for(var/language_name in all_languages)
+		var/datum/language/L = all_languages[language_name]
+		if(!(L.flags & NONGLOBAL))
+			language_keys[":[lowertext(L.key)]"] = L
+			language_keys[".[lowertext(L.key)]"] = L
+			language_keys["#[lowertext(L.key)]"] = L
+
+	var/list/paths = subtypesof(/datum/species)
+	var/rkey = 0
+	for(var/T in paths)
+		var/datum/species/S = new T
+		S.race_key = ++rkey //Used in mob icon caching.
+		all_species[S.name] = S
+
+		if(S.flags & IS_WHITELISTED)
+			whitelisted_species += S.name
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
+
+	all_cults = typesof(/datum/cult_info)
+
+	return 1
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 
-	for (var/reaction in chemical_reactions_list)
+	for(var/reaction in chemical_reactions_list)
 		. += "chemical_reactions_list\[\"[reaction]\"\] = \"[chemical_reactions_list[reaction]]\"\n"
 		if(islist(chemical_reactions_list[reaction]))
 			var/list/L = chemical_reactions_list[reaction]
 			for(var/t in L)
 				. += "    has: [t]\n"
-	world << .
+	to_chat(world, .)
 */
+
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.
 //if no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
-	if(!istype(L))
-		L = list()
+	if(!istype(L))	L = list()
 	for(var/path in subtypesof(prototype))
 		L += new path()
 	return L
 
-//returns a list of paths to every subtype of prototype (excluding prototype)
-//if no list/L is provided, one is created.
-/proc/init_paths(prototype, list/L)
-	if(!istype(L))
-		L = list()
-		for(var/path in subtypesof(prototype))
-			L+= path
-		return L
+/proc/init_datum_subtypes(prototype, list/L, list/pexempt, assocvar)
+	if(!istype(L))	L = list()
+	for(var/path in subtypesof(prototype) - pexempt)
+		var/datum/D = new path()
+		if(istype(D))
+			var/assoc
+			if(D.vars["[assocvar]"]) //has the var
+				assoc = D.vars["[assocvar]"] //access value of var
+			if(assoc) //value gotten
+				L["[assoc]"] = D //put in association
+	return L

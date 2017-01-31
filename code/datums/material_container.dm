@@ -22,31 +22,40 @@
 	owner = O
 	max_amount = max(0, max_amt)
 
-	var/list/possible_mats = list()
-	for(var/mat_type in subtypesof(/datum/material))
-		var/datum/material/MT = mat_type
-		possible_mats[initial(MT.id)] = mat_type
-	for(var/id in mat_list)
-		if(possible_mats[id])
-			var/mat_path = possible_mats[id]
-			materials[id] = new mat_path()
+	if(mat_list[MAT_METAL])
+		materials[MAT_METAL] = new /datum/material/metal()
+	if(mat_list[MAT_GLASS])
+		materials[MAT_GLASS] = new /datum/material/glass()
+	if(mat_list[MAT_SILVER])
+		materials[MAT_SILVER] = new /datum/material/silver()
+	if(mat_list[MAT_GOLD])
+		materials[MAT_GOLD] = new /datum/material/gold()
+	if(mat_list[MAT_DIAMOND])
+		materials[MAT_DIAMOND] = new /datum/material/diamond()
+	if(mat_list[MAT_URANIUM])
+		materials[MAT_URANIUM] = new /datum/material/uranium()
+	if(mat_list[MAT_PLASMA])
+		materials[MAT_PLASMA] = new /datum/material/plasma()
+	if(mat_list[MAT_BANANIUM])
+		materials[MAT_BANANIUM] = new /datum/material/bananium()
+	if(mat_list[MAT_TRANQUILLITE])
+		materials[MAT_TRANQUILLITE] = new /datum/material/tranquillite()
 
 /datum/material_container/Destroy()
 	owner = null
 	return ..()
 
 //For inserting an amount of material
-/datum/material_container/proc/insert_amount(amt, id = null)
+/datum/material_container/proc/insert_amount(amt, material_type = null)
 	if(amt > 0 && has_space(amt))
 		var/total_amount_saved = total_amount
-		if(id)
-			var/datum/material/M = materials[id]
+		if(material_type)
+			var/datum/material/M = materials[material_type]
 			if(M)
 				M.amount += amt
 				total_amount += amt
 		else
-			for(var/i in materials)
-				var/datum/material/M = materials[i]
+			for(var/datum/material/M in materials)
 				M.amount += amt
 				total_amount += amt
 		return (total_amount - total_amount_saved)
@@ -57,7 +66,6 @@
 		return 0
 	if(amt > S.amount)
 		amt = S.amount
-
 	var/material_amt = get_item_material_amount(S)
 	if(!material_amt)
 		return 0
@@ -112,8 +120,9 @@
 	return total_amount_save - total_amount
 
 
-/datum/material_container/proc/use_amount_type(amt, id)
-	var/datum/material/M = materials[id]
+/datum/material_container/proc/use_amount_type(amt, material_type)
+	var/datum/material/M
+	M = materials[material_type]
 	if(M)
 		if(M.amount >= amt)
 			M.amount -= amt
@@ -121,24 +130,8 @@
 			return amt
 	return 0
 
-/datum/material_container/proc/can_use_amount(amt, id, list/mats)
-	if(amt && id)
-		var/datum/material/M = materials[id]
-		if(M && M.amount >= amt)
-			return TRUE
-	else if(istype(mats))
-		for(var/M in mats)
-			if(materials[M] && (mats[M] <= materials[M]))
-				continue
-			else
-				return FALSE
-		return TRUE
-	return FALSE
-
 //For spawning mineral sheets; internal use only
 /datum/material_container/proc/retrieve(sheet_amt, datum/material/M)
-	if(!M.sheet_type)
-		return 0
 	if(sheet_amt > 0)
 		if(M.amount < (sheet_amt * MINERAL_MATERIAL_AMOUNT))
 			sheet_amt = round(M.amount / MINERAL_MATERIAL_AMOUNT)
@@ -147,23 +140,23 @@
 		while(sheet_amt > MAX_STACK_SIZE)
 			new M.sheet_type(get_turf(owner), MAX_STACK_SIZE)
 			count += MAX_STACK_SIZE
-			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.material_type)
 			sheet_amt -= MAX_STACK_SIZE
 
 		if(round(M.amount / MINERAL_MATERIAL_AMOUNT))
 			new M.sheet_type(get_turf(owner), sheet_amt)
 			count += sheet_amt
-			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.id)
+			use_amount_type(sheet_amt * MINERAL_MATERIAL_AMOUNT, M.material_type)
 		return count
 	return 0
 
-/datum/material_container/proc/retrieve_sheets(sheet_amt, id)
-	if(materials[id])
-		return retrieve(sheet_amt, materials[id])
+/datum/material_container/proc/retrieve_sheets(sheet_amt, material_type)
+	if(materials[material_type])
+		return retrieve(sheet_amt, materials[material_type])
 	return 0
 
-/datum/material_container/proc/retrieve_amount(amt, id)
-	return retrieve_sheets(amount2sheet(amt), id)
+/datum/material_container/proc/retrieve_amount(amt, material_type)
+	return retrieve_sheets(amount2sheet(amt),material_type)
 
 /datum/material_container/proc/retrieve_all()
 	var/result = 0
@@ -197,8 +190,8 @@
 		return sheet_amt * MINERAL_MATERIAL_AMOUNT
 	return 0
 
-/datum/material_container/proc/amount(id)
-	var/datum/material/M = materials[id]
+/datum/material_container/proc/amount(material_type)
+	var/datum/material/M = materials[material_type]
 	return M ? M.amount : 0
 
 //returns the amount of material relevant to this container;
@@ -213,64 +206,69 @@
 
 
 /datum/material
-	var/name
 	var/amount = 0
-	var/id = null
+	var/material_type = null
 	var/sheet_type = null
-	var/coin_type = null
 
 /datum/material/metal
-	name = "Metal"
-	id = MAT_METAL
+
+/datum/material/metal/New()
+	..()
+	material_type = MAT_METAL
 	sheet_type = /obj/item/stack/sheet/metal
-	coin_type = /obj/item/weapon/coin/iron
 
 /datum/material/glass
-	name = "Glass"
-	id = MAT_GLASS
+
+/datum/material/glass/New()
+	..()
+	material_type = MAT_GLASS
 	sheet_type = /obj/item/stack/sheet/glass
 
 /datum/material/silver
-	name = "Silver"
-	id = MAT_SILVER
+
+/datum/material/silver/New()
+	..()
+	material_type = MAT_SILVER
 	sheet_type = /obj/item/stack/sheet/mineral/silver
-	coin_type = /obj/item/weapon/coin/silver
 
 /datum/material/gold
-	name = "Gold"
-	id = MAT_GOLD
+
+/datum/material/gold/New()
+	..()
+	material_type = MAT_GOLD
 	sheet_type = /obj/item/stack/sheet/mineral/gold
-	coin_type = /obj/item/weapon/coin/gold
 
 /datum/material/diamond
-	name = "Diamond"
-	id = MAT_DIAMOND
+
+/datum/material/diamond/New()
+	..()
+	material_type = MAT_DIAMOND
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
-	coin_type = /obj/item/weapon/coin/diamond
 
 /datum/material/uranium
-	name = "Uranium"
-	id = MAT_URANIUM
+
+/datum/material/uranium/New()
+	..()
+	material_type = MAT_URANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
-	coin_type = /obj/item/weapon/coin/uranium
 
 /datum/material/plasma
-	name = "Solid Plasma"
-	id = MAT_PLASMA
+
+/datum/material/plasma/New()
+	..()
+	material_type = MAT_PLASMA
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
-	coin_type = /obj/item/weapon/coin/plasma
 
 /datum/material/bananium
-	name = "Bananium"
-	id = MAT_BANANIUM
+
+/datum/material/bananium/New()
+	..()
+	material_type = MAT_BANANIUM
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
-	coin_type = /obj/item/weapon/coin/clown
 
-/datum/material/titanium
-	name = "Titanium"
-	id = MAT_TITANIUM
-	sheet_type = /obj/item/stack/sheet/mineral/titanium
+/datum/material/tranquillite
 
-/datum/material/biomass
-	name = "Biomass"
-	id = MAT_BIOMASS
+/datum/material/tranquillite/New()
+	..()
+	material_type = MAT_TRANQUILLITE
+	sheet_type = /obj/item/stack/sheet/mineral/tranquillite

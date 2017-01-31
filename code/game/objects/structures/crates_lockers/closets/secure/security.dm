@@ -1,198 +1,373 @@
 /obj/structure/closet/secure_closet/captains
-	name = "\proper captain's locker"
+	name = "captain's locker"
 	req_access = list(access_captain)
-	icon_state = "cap"
+	icon_state = "capsecure1"
+	icon_closed = "capsecure"
+	icon_locked = "capsecure1"
+	icon_opened = "capsecureopen"
+	icon_broken = "capsecurebroken"
+	icon_off = "capsecureoff"
 
-/obj/structure/closet/secure_closet/captains/New()
-	..()
-	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
-	if(prob(50))
-		new /obj/item/weapon/storage/backpack/captain(src)
-	else
-		new /obj/item/weapon/storage/backpack/satchel/cap(src)
-	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
-	new /obj/item/clothing/head/crown/fancy(src)
-	new /obj/item/clothing/suit/captunic(src)
-	new /obj/item/clothing/under/captainparade(src)
-	new /obj/item/clothing/head/caphat/parade(src)
-	new /obj/item/clothing/under/rank/captain(src)
-	new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
-	new /obj/item/weapon/cartridge/captain(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/weapon/storage/box/silver_ids(src)
-	new /obj/item/device/radio/headset/heads/captain/alt(src)
-	new /obj/item/device/radio/headset/heads/captain(src)
-	new /obj/item/clothing/glasses/sunglasses/gar/supergar(src)
-	new /obj/item/clothing/gloves/color/captain(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/storage/belt/sabre(src)
-	new /obj/item/weapon/gun/energy/e_gun(src)
-	new /obj/item/weapon/door_remote/captain(src)
+	New()
+		..()
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/captain(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_cap(src)
+		new /obj/item/weapon/book/manual/faxes(src)
+		new /obj/item/clothing/head/crown/fancy(src)
+		new /obj/item/weapon/storage/backpack/duffel/captain(src)
+		new /obj/item/clothing/suit/captunic(src)
+		new /obj/item/clothing/suit/captunic/capjacket(src)
+		new /obj/item/clothing/under/captainparade(src)
+		new /obj/item/clothing/head/caphat/parade(src)
+		new /obj/item/clothing/under/rank/captain(src)
+		new /obj/item/clothing/under/dress/dress_cap(src)
+		new /obj/item/clothing/suit/armor/vest/capcarapace/alt(src)
+		new /obj/item/weapon/cartridge/captain(src)
+		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/laceup(src)
+		new /obj/item/device/radio/headset/heads/captain/alt(src)
+		new /obj/item/clothing/gloves/color/captain(src)
+		new /obj/item/weapon/storage/belt/rapier(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/weapon/door_remote/captain(src)
+
+
 
 /obj/structure/closet/secure_closet/hop
-	name = "\proper head of personnel's locker"
+	name = "head of personnel's locker"
 	req_access = list(access_hop)
-	icon_state = "hop"
+	icon_state = "hopsecure1"
+	icon_closed = "hopsecure"
+	icon_locked = "hopsecure1"
+	icon_opened = "hopsecureopen"
+	icon_broken = "hopsecurebroken"
+	icon_off = "hopsecureoff"
 
-/obj/structure/closet/secure_closet/hop/New()
-	..()
-	new /obj/item/clothing/under/rank/head_of_personnel(src)
-	new /obj/item/clothing/head/hopcap(src)
-	new /obj/item/weapon/cartridge/hop(src)
-	new /obj/item/device/radio/headset/heads/hop(src)
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	new /obj/item/weapon/storage/box/ids(src)
-	new /obj/item/weapon/storage/box/ids(src)
-	new /obj/item/device/megaphone/command(src)
-	new /obj/item/clothing/suit/armor/vest/alt(src)
-	new /obj/item/device/assembly/flash/handheld(src)
-	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/weapon/restraints/handcuffs/cable/zipties(src)
-	new /obj/item/weapon/gun/energy/e_gun(src)
-	new /obj/item/clothing/neck/petcollar(src)
-	new /obj/item/weapon/door_remote/civillian(src)
+	New()
+		..()
+		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/head/hopcap(src)
+		new /obj/item/weapon/cartridge/hop(src)
+		new /obj/item/device/radio/headset/heads/hop(src)
+		new /obj/item/weapon/storage/box/ids(src)
+		new /obj/item/weapon/storage/box/PDAs(src)
+		new /obj/item/clothing/suit/armor/vest(src)
+		new /obj/item/weapon/gun/energy/gun(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/clothing/accessory/petcollar(src)
+		new /obj/item/weapon/door_remote/civillian(src)
+
+/obj/structure/closet/secure_closet/hop2
+	name = "head of personnel's attire"
+	req_access = list(access_hop)
+	icon_state = "hopsecure1"
+	icon_closed = "hopsecure"
+	icon_locked = "hopsecure1"
+	icon_opened = "hopsecureopen"
+	icon_broken = "hopsecurebroken"
+	icon_off = "hopsecureoff"
+
+	New()
+		..()
+		new /obj/item/clothing/under/rank/head_of_personnel(src)
+		new /obj/item/clothing/under/dress/dress_hop(src)
+		new /obj/item/clothing/under/dress/dress_hr(src)
+		new /obj/item/clothing/under/lawyer/female(src)
+		new /obj/item/clothing/under/lawyer/black(src)
+		new /obj/item/clothing/under/lawyer/red(src)
+		new /obj/item/clothing/under/lawyer/oldman(src)
+		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/clothing/shoes/black(src)
+		new /obj/item/clothing/shoes/leather(src)
+		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/clothing/under/rank/head_of_personnel_whimsy(src)
+
+
 
 /obj/structure/closet/secure_closet/hos
-	name = "\proper head of security's locker"
+	name = "head of security's locker"
 	req_access = list(access_hos)
-	icon_state = "hos"
+	icon_state = "hossecure1"
+	icon_closed = "hossecure"
+	icon_locked = "hossecure1"
+	icon_opened = "hossecureopen"
+	icon_broken = "hossecurebroken"
+	icon_off = "hossecureoff"
 
-/obj/structure/closet/secure_closet/hos/New()
-	..()
-	new /obj/item/clothing/neck/cloak/hos(src)
-	new /obj/item/weapon/cartridge/hos(src)
-	new /obj/item/device/radio/headset/heads/hos(src)
-	new /obj/item/clothing/under/hosparadefem(src)
-	new /obj/item/clothing/under/hosparademale(src)
-	new /obj/item/clothing/suit/armor/vest/leather(src)
-	new /obj/item/clothing/suit/armor/hos(src)
-	new /obj/item/clothing/under/rank/head_of_security/alt(src)
-	new /obj/item/clothing/head/HoS(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/supergars(src)
-	new /obj/item/device/megaphone/sec(src)
-	new /obj/item/weapon/holosign_creator/security(src)
-	new /obj/item/weapon/storage/lockbox/loyalty(src)
-	new /obj/item/clothing/mask/gas/sechailer/swat(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/weapon/gun/energy/e_gun/hos(src)
-	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/weapon/pinpointer(src)
+	New()
+		..()
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/security(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+		new /obj/item/weapon/cartridge/hos(src)
+		new /obj/item/device/radio/headset/heads/hos/alt(src)
+		new /obj/item/clothing/under/rank/head_of_security(src)
+		new /obj/item/clothing/under/rank/head_of_security/formal(src)
+		new /obj/item/clothing/under/rank/head_of_security/corp(src)
+		new /obj/item/clothing/under/rank/head_of_security/skirt(src)
+		new /obj/item/clothing/suit/armor/hos(src)
+		new /obj/item/clothing/suit/armor/hos/alt(src)
+		new /obj/item/clothing/head/HoS(src)
+		new /obj/item/clothing/head/HoS/beret(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+		new /obj/item/weapon/storage/lockbox/loyalty(src)
+		new /obj/item/weapon/storage/box/flashbangs(src)
+		new /obj/item/clothing/mask/gas/sechailer/hos(src)
+		new /obj/item/weapon/shield/riot/tele(src)
+		new /obj/item/weapon/melee/baton/loaded(src)
+		new /obj/item/weapon/storage/belt/security/sec(src)
+		new /obj/item/taperoll/police(src)
+		new /obj/item/weapon/gun/energy/gun/hos(src)
+		new /obj/item/weapon/door_remote/head_of_security(src)
+
+
 
 /obj/structure/closet/secure_closet/warden
-	name = "\proper warden's locker"
+	name = "warden's locker"
 	req_access = list(access_armory)
-	icon_state = "warden"
+	icon_state = "wardensecure1"
+	icon_closed = "wardensecure"
+	icon_locked = "wardensecure1"
+	icon_opened = "wardensecureopen"
+	icon_broken = "wardensecurebroken"
+	icon_off = "wardensecureoff"
 
-/obj/structure/closet/secure_closet/warden/New()
-	..()
-	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/clothing/suit/armor/vest/warden(src)
-	new /obj/item/clothing/head/warden(src)
-	new /obj/item/clothing/head/beret/sec/navywarden(src)
-	new /obj/item/clothing/suit/armor/vest/warden/alt(src)
-	new /obj/item/clothing/under/rank/warden/navyblue(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
-	new /obj/item/weapon/holosign_creator/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/weapon/storage/box/zipties(src)
-	new /obj/item/weapon/storage/box/flashbangs(src)
-	new /obj/item/weapon/storage/belt/security/full(src)
-	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/clothing/gloves/krav_maga/sec(src)
-	new /obj/item/weapon/door_remote/head_of_security(src)
-	new /obj/item/weapon/gun/ballistic/shotgun/automatic/dual_tube(src)
+
+	New()
+		..()
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/security(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+		new /obj/item/device/radio/headset/headset_sec/alt(src)
+		new /obj/item/clothing/suit/armor/vest/warden(src)
+		new /obj/item/clothing/head/warden(src)
+		new /obj/item/clothing/suit/armor/vest/warden/alt(src)
+		new /obj/item/clothing/head/beret/sec/warden(src)
+		new /obj/item/clothing/under/rank/warden(src)
+		new /obj/item/clothing/under/rank/warden/formal(src)
+		new /obj/item/clothing/under/rank/warden/corp(src)
+		new /obj/item/clothing/under/rank/warden/skirt(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+		new /obj/item/clothing/mask/gas/sechailer/warden(src)
+		new /obj/item/taperoll/police(src)
+		new /obj/item/weapon/storage/box/zipties(src)
+		new /obj/item/weapon/storage/box/flashbangs(src)
+		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/weapon/melee/baton/loaded(src)
+		new /obj/item/weapon/gun/energy/gun/advtaser(src)
+		new /obj/item/weapon/storage/belt/security/sec(src)
+		new /obj/item/weapon/storage/box/holobadge(src)
+		new /obj/item/clothing/gloves/color/black/krav_maga/sec(src)
+
+
 
 /obj/structure/closet/secure_closet/security
 	name = "security officer's locker"
 	req_access = list(access_security)
-	icon_state = "sec"
+	icon_state = "sec1"
+	icon_closed = "sec"
+	icon_locked = "sec1"
+	icon_opened = "secopen"
+	icon_broken = "secbroken"
+	icon_off = "secoff"
 
-/obj/structure/closet/secure_closet/security/New()
-	..()
-	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/clothing/head/helmet/sec(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/radio/headset/headset_sec/alt(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
-	new /obj/item/device/flashlight/seclite(src)
+	New()
+		..()
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/security(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_sec(src)
+		new /obj/item/clothing/suit/armor/vest/security(src)
+		new /obj/item/device/radio/headset/headset_sec/alt(src)
+		new /obj/item/clothing/head/soft/sec(src)
+		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/weapon/grenade/flashbang(src)
+		new /obj/item/weapon/storage/belt/security/sec(src)
+		new /obj/item/clothing/mask/gas/sechailer(src)
+		new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+		new /obj/item/clothing/head/helmet(src)
+		new /obj/item/weapon/melee/baton/loaded(src)
+		new /obj/item/taperoll/police(src)
 
-/obj/structure/closet/secure_closet/security/sec
+/obj/structure/closet/secure_closet/brigdoc
+	name = "brig physician's locker"
+	req_access = list(access_security)
+	icon_state = "securemed1"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_broken = "securemedbroken"
+	icon_off = "securemedoff"
 
-/obj/structure/closet/secure_closet/security/sec/New()
-	..()
-	new /obj/item/weapon/storage/belt/security/full(src)
+	New()
+		..()
+		if(prob(50))
+			new /obj/item/weapon/storage/backpack/medic(src)
+		else
+			new /obj/item/weapon/storage/backpack/satchel_med(src)
+		new /obj/item/weapon/reagent_containers/spray/pepper(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/weapon/storage/firstaid/regular(src)
+		new /obj/item/weapon/storage/firstaid/fire(src)
+		new /obj/item/weapon/storage/firstaid/adv(src)
+		new /obj/item/weapon/storage/firstaid/o2(src)
+		new /obj/item/weapon/storage/firstaid/toxin(src)
+		new /obj/item/clothing/suit/storage/brigdoc(src)
+		new /obj/item/clothing/under/rank/security/brigphys(src)
+		new /obj/item/clothing/shoes/white(src)
+		new /obj/item/device/radio/headset/headset_sec/alt(src)
+		new /obj/item/clothing/shoes/sandal/white(src)
+
+/obj/structure/closet/secure_closet/blueshield
+	name = "blueshield's locker"
+	req_access = list(access_blueshield)
+	icon_state = "bssecure1"
+	icon_closed = "bssecure"
+	icon_locked = "bssecure1"
+	icon_opened = "bssecureopen"
+	icon_broken = "bssecurebroken"
+	icon_off = "bssecureoff"
+
+	New()
+		..()
+		new /obj/item/weapon/storage/briefcase(src)
+		new	/obj/item/weapon/storage/firstaid/adv(src)
+		new /obj/item/weapon/storage/belt/security/sec(src)
+		new /obj/item/weapon/grenade/flashbang(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/weapon/restraints/handcuffs(src)
+		new /obj/item/weapon/melee/baton/loaded(src)
+		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/glasses/hud/health/health_advanced
+		new /obj/item/clothing/head/beret/centcom/officer(src)
+		new /obj/item/clothing/head/beret/centcom/officer/navy(src)
+		new /obj/item/clothing/suit/armor/vest/blueshield(src)
+		new /obj/item/clothing/suit/storage/blueshield(src)
+		new /obj/item/clothing/shoes/centcom(src)
+		new /obj/item/clothing/accessory/holster(src)
+		new /obj/item/clothing/accessory/blue(src)
+		new /obj/item/clothing/shoes/jackboots/jacksandals(src)
+
+/obj/structure/closet/secure_closet/ntrep
+	name = "\improper Nanotrasen Representative's locker"
+	req_access = list(access_ntrep)
+	icon_state = "ntsecure1"
+	icon_closed = "ntsecure"
+	icon_locked = "ntsecure1"
+	icon_opened = "ntsecureopen"
+	icon_broken = "ntsecurebroken"
+	icon_off = "ntsecureoff"
+
+	New()
+		..()
+		new /obj/item/weapon/book/manual/faxes(src)
+		new /obj/item/weapon/storage/briefcase(src)
+		new /obj/item/device/paicard(src)
+		new /obj/item/device/flash(src)
+		new /obj/item/clothing/glasses/sunglasses(src)
+		new /obj/item/clothing/gloves/color/white(src)
+		new /obj/item/clothing/shoes/centcom(src)
+		new /obj/item/clothing/under/lawyer/oldman(src)
+		new /obj/item/clothing/under/lawyer/black(src)
+		new /obj/item/clothing/under/lawyer/female(src)
+		new /obj/item/clothing/head/ntrep(src)
+		new /obj/item/clothing/shoes/sandal/fancy(src)
+		new /obj/item/weapon/storage/box/tapes(src)
+		new /obj/item/device/taperecorder(src)
+
 
 /obj/structure/closet/secure_closet/security/cargo
 
-/obj/structure/closet/secure_closet/security/cargo/New()
-	..()
-	new /obj/item/clothing/tie/armband/cargo(src)
-	new /obj/item/device/encryptionkey/headset_cargo(src)
+	New()
+		..()
+		new /obj/item/clothing/accessory/armband/cargo(src)
+		new /obj/item/device/encryptionkey/headset_cargo(src)
 
 /obj/structure/closet/secure_closet/security/engine
 
-/obj/structure/closet/secure_closet/security/engine/New()
-	..()
-	new /obj/item/clothing/tie/armband/engine(src)
-	new /obj/item/device/encryptionkey/headset_eng(src)
+	New()
+		..()
+		new /obj/item/clothing/accessory/armband/engine(src)
+		new /obj/item/device/encryptionkey/headset_eng(src)
 
 /obj/structure/closet/secure_closet/security/science
 
-/obj/structure/closet/secure_closet/security/science/New()
-	..()
-	new /obj/item/clothing/tie/armband/science(src)
-	new /obj/item/device/encryptionkey/headset_sci(src)
+	New()
+		..()
+		new /obj/item/clothing/accessory/armband/science(src)
+		new /obj/item/device/encryptionkey/headset_sci(src)
 
 /obj/structure/closet/secure_closet/security/med
 
-/obj/structure/closet/secure_closet/security/med/New()
-	..()
-	new /obj/item/clothing/tie/armband/medblue(src)
-	new /obj/item/device/encryptionkey/headset_med(src)
+	New()
+		..()
+		new /obj/item/clothing/accessory/armband/medgreen(src)
+		new /obj/item/device/encryptionkey/headset_med(src)
+
 
 /obj/structure/closet/secure_closet/detective
-	name = "\proper detective's cabinet"
+	name = "detective's cabinet"
 	req_access = list(access_forensics_lockers)
-	icon_state = "cabinet"
-	resistance_flags = FLAMMABLE
-	obj_integrity = 70
-	max_integrity = 70
+	icon_state = "cabinetdetective_locked"
+	icon_closed = "cabinetdetective"
+	icon_locked = "cabinetdetective_locked"
+	icon_opened = "cabinetdetective_open"
+	icon_broken = "cabinetdetective_broken"
+	icon_off = "cabinetdetective_broken"
+	burn_state = FLAMMABLE
+	burntime = 20
 
-/obj/structure/closet/secure_closet/detective/New()
-	..()
-	new /obj/item/clothing/under/rank/det(src)
-	new /obj/item/clothing/suit/det_suit(src)
-	new /obj/item/clothing/head/det_hat(src)
-	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/clothing/under/rank/det/grey(src)
-	new /obj/item/clothing/tie/waistcoat(src)
-	new /obj/item/clothing/suit/det_suit/grey(src)
-	new /obj/item/clothing/head/fedora(src)
-	new /obj/item/clothing/shoes/laceup(src)
-	new /obj/item/weapon/storage/box/evidence(src)
-	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
-	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/weapon/holosign_creator/security(src)
-	new /obj/item/weapon/reagent_containers/spray/pepper(src)
-	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/ammo_box/c38(src)
-	new /obj/item/weapon/storage/belt/holster(src)
-	new /obj/item/weapon/gun/ballistic/revolver/detective(src)
+	New()
+		..()
+		new /obj/item/clothing/under/det(src)
+		new /obj/item/clothing/suit/storage/det_suit(src)
+		new /obj/item/clothing/suit/storage/det_suit/forensics/blue(src)
+		new /obj/item/clothing/suit/storage/det_suit/forensics/red(src)
+		new /obj/item/clothing/gloves/color/black(src)
+		new /obj/item/clothing/head/det_hat(src)
+		new /obj/item/clothing/shoes/brown(src)
+		new /obj/item/weapon/storage/box/evidence(src)
+		new /obj/item/weapon/clipboard(src)
+		new /obj/item/device/radio/headset/headset_sec/alt(src)
+		new /obj/item/device/detective_scanner(src)
+		new /obj/item/clothing/suit/armor/vest/det_suit(src)
+		new /obj/item/ammo_box/c38(src)
+		new /obj/item/ammo_box/c38(src)
+		new /obj/item/weapon/gun/projectile/revolver/detective(src)
+		new /obj/item/taperoll/police(src)
+		new /obj/item/clothing/accessory/holster/armpit(src)
+		new /obj/item/clothing/glasses/sunglasses/yeah(src)
+		new /obj/item/device/flashlight/seclite(src)
+		new /obj/item/clothing/accessory/black(src)
+
+/obj/structure/closet/secure_closet/detective/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened
 
 /obj/structure/closet/secure_closet/injection
-	name = "lethal injections"
-	req_access = list(access_hos)
+	name = "lethal injections locker"
+	req_access = list(access_security)
 
-/obj/structure/closet/secure_closet/injection/New()
-	..()
-	for(var/i in 1 to 5)
-		new /obj/item/weapon/reagent_containers/syringe/lethal/execution(src)
+
+	New()
+		..()
+		new /obj/item/weapon/reagent_containers/ld50_syringe/lethal(src)
+		new /obj/item/weapon/reagent_containers/ld50_syringe/lethal(src)
+
+
 
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
@@ -200,85 +375,50 @@
 	anchored = 1
 	var/id = null
 
-/obj/structure/closet/secure_closet/brig/New()
-	..()
-	new /obj/item/clothing/under/rank/prisoner( src )
-	new /obj/item/clothing/shoes/sneakers/orange( src )
+	New()
+		..()
+		new /obj/item/clothing/under/color/orange/prison( src )
+		new /obj/item/clothing/shoes/orange( src )
+
+
 
 /obj/structure/closet/secure_closet/courtroom
 	name = "courtroom locker"
 	req_access = list(access_court)
 
-/obj/structure/closet/secure_closet/courtroom/New()
-	..()
-	new /obj/item/clothing/shoes/sneakers/brown(src)
-	for(var/i in 1 to 3)
+	New()
+		..()
+		new /obj/item/clothing/shoes/brown(src)
 		new /obj/item/weapon/paper/Court (src)
-	new /obj/item/weapon/pen (src)
-	new /obj/item/clothing/suit/judgerobe (src)
-	new /obj/item/clothing/head/powdered_wig (src)
-	new /obj/item/weapon/storage/briefcase(src)
+		new /obj/item/weapon/paper/Court (src)
+		new /obj/item/weapon/paper/Court (src)
+		new /obj/item/weapon/pen (src)
+		new /obj/item/clothing/suit/judgerobe (src)
+		new /obj/item/clothing/head/powdered_wig (src)
+		new /obj/item/weapon/storage/briefcase(src)
 
-/obj/structure/closet/secure_closet/armory1
-	name = "armory armor locker"
-	req_access = list(access_armory)
-	icon_state = "armory"
+/obj/structure/closet/secure_closet/wall
+	name = "wall locker"
+	req_access = list(access_security)
+	icon_state = "wall-locker1"
+	density = 1
+	icon_closed = "wall-locker"
+	icon_locked = "wall-locker1"
+	icon_opened = "wall-lockeropen"
+	icon_broken = "wall-lockerbroken"
+	icon_off = "wall-lockeroff"
 
-/obj/structure/closet/secure_closet/armory1/New()
-	..()
-	new /obj/item/clothing/suit/armor/laserproof(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/suit/armor/riot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/clothing/head/helmet/riot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/shield/riot(src)
+	//too small to put a man in
+	large = 0
 
-/obj/structure/closet/secure_closet/armory2
-	name = "armory ballistics locker"
-	req_access = list(access_armory)
-	icon_state = "armory"
-
-/obj/structure/closet/secure_closet/armory2/New()
-	..()
-	new /obj/item/weapon/storage/box/firingpins(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/storage/box/rubbershot(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/ballistic/shotgun/riot(src)
-
-/obj/structure/closet/secure_closet/armory3
-	name = "armory energy gun locker"
-	req_access = list(access_armory)
-	icon_state = "armory"
-
-/obj/structure/closet/secure_closet/armory3/New()
-	..()
-	new /obj/item/weapon/storage/box/firingpins(src)
-	new /obj/item/weapon/gun/energy/ionrifle(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/e_gun(src)
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/gun/energy/laser(src)
-
-/obj/structure/closet/secure_closet/tac
-	name = "armory tac locker"
-	req_access = list(access_armory)
-	icon_state = "tac"
-
-/obj/structure/closet/secure_closet/tac/New()
-	..()
-	new /obj/item/weapon/gun/ballistic/automatic/wt550(src)
-	new /obj/item/clothing/head/helmet/alt(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
-	new /obj/item/clothing/suit/armor/bulletproof(src)
-
-/obj/structure/closet/secure_closet/lethalshots
-	name = "shotgun lethal rounds"
-	req_access = list(access_armory)
-	icon_state = "tac"
-
-/obj/structure/closet/secure_closet/lethalshots/New()
-	..()
-	for(var/i in 1 to 3)
-		new /obj/item/weapon/storage/box/lethalshot(src)
+/obj/structure/closet/secure_closet/wall/update_icon()
+	if(broken)
+		icon_state = icon_broken
+	else
+		if(!opened)
+			if(locked)
+				icon_state = icon_locked
+			else
+				icon_state = icon_closed
+		else
+			icon_state = icon_opened

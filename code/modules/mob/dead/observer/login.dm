@@ -1,16 +1,11 @@
 /mob/dead/observer/Login()
 	..()
-
-	ghost_accs = client.prefs.ghost_accs
-	ghost_others = client.prefs.ghost_others
-	var/preferred_form = null
-
-	if(IsAdminGhost(src))
-		has_unlimited_silicon_privilege = 1
-
-	if(client.prefs.unlock_content)
-		preferred_form = client.prefs.ghost_form
-		ghost_orbit = client.prefs.ghost_orbit
-
-	update_icon(preferred_form)
+	if(ghostimage)
+		ghostimage.icon_state = src.icon_state
 	updateghostimages()
+
+	if(non_respawnable_keys[ckey])
+		can_reenter_corpse = 0
+		respawnable_list -= src
+	
+	update_interface()

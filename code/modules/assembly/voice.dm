@@ -3,88 +3,53 @@
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-	origin_tech = "magnets=1;engineering=1"
-	flags = HEAR
-	attachable = 1
-	verb_say = "beeps"
-	verb_ask = "beeps"
-	verb_exclaim = "beeps"
+	origin_tech = "magnets=1"
 	var/listening = 0
-	var/recorded = "" //the activation message
-	var/mode = 1
-	var/global/list/modes = list("inclusive",
-								 "exclusive",
-								 "recognizer",
-								 "voice sensor")
+	var/recorded = null	//the activation message
+	var/recorded_type = 0 // 0 for say, 1 for emote
 
-/obj/item/device/assembly/voice/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
-	if(speaker == src)
-		return
+	bomb_name = "voice-activated bomb"
 
-	if(listening && !radio_freq)
-		record_speech(speaker, raw_message)
-	else
-		if(check_activation(speaker, raw_message))
-			spawn(10)
+	describe()
+		if(recorded || listening)
+			return "A meter on [src] flickers with every nearby sound."
+		else
+			return "[src] is deactivated."
+
+	hear_talk(mob/living/M as mob, msg)
+		hear_input(M, msg, 0)
+	
+	hear_message(mob/living/M as mob, msg)
+		hear_input(M, msg, 1)
+		
+	proc/hear_input(mob/living/M as mob, msg, type)
+		if(!istype(M,/mob/living))
+			return
+		if(listening)
+			recorded = msg
+			recorded_type = type
+			listening = 0
+			var/turf/T = get_turf(src)	//otherwise it won't work in hand
+			T.visible_message("[bicon(src)] beeps, \"Activation message is [type ? "the sound when one [recorded]" : "'[recorded]'."]\"")
+		else
+			if(findtext(msg, recorded) && type == recorded_type)
 				pulse(0)
+				var/turf/T = get_turf(src)  //otherwise it won't work in hand
+				T.visible_message("[bicon(src)] \red beeps!")
 
-/obj/item/device/assembly/voice/proc/record_speech(atom/movable/speaker, raw_message)
-	switch(mode)
-		if(1)
-			recorded = raw_message
-			listening = 0
-			say("Activation message is '[recorded]'.")
-		if(2)
-			recorded = raw_message
-			listening = 0
-			say("Activation message is '[recorded]'.")
-		if(3)
-			recorded = speaker.GetVoice()
-			listening = 0
-			say("Your voice pattern is saved.")
-		if(4)
-			if(length(raw_message))
-				spawn(10)
-					pulse(0)
-
-/obj/item/device/assembly/voice/proc/check_activation(atom/movable/speaker, raw_message)
-	. = 0
-	switch(mode)
-		if(1)
-			if(findtextEx(raw_message, recorded))
-				. = 1
-		if(2)
-			if(raw_message == recorded)
-				. = 1
-		if(3)
-			if(speaker.GetVoice() == recorded)
-				. = 1
-		if(4)
-			if(length(raw_message))
-				. = 1
-
-/obj/item/device/assembly/voice/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/device/multitool))
-		mode %= modes.len
-		mode++
-		user << "You set [src] into a [modes[mode]] mode."
-		listening = 0
-		recorded = ""
-	else
-		return ..()
-
-/obj/item/device/assembly/voice/activate()
-	if(secured)
-		if(!holder)
-			listening = !listening
-			say("[listening ? "Now" : "No longer"] recording input.")
-
-/obj/item/device/assembly/voice/attack_self(mob/user)
-	if(!user)
-		return 0
 	activate()
-	return 1
+		return // previously this toggled listning when not in a holder, that's a little silly.  It was only called in attack_self that way.
 
-/obj/item/device/assembly/voice/toggle_secure()
-	. = ..()
-	listening = 0
+
+	attack_self(mob/user)
+		if(!user || !secured)	return 0
+
+		listening = !listening
+		var/turf/T = get_turf(src)
+		T.visible_message("[bicon(src)] beeps, \"[listening ? "Now" : "No longer"] recording input.\"")
+		return 1
+
+
+	toggle_secure()
+		. = ..()
+		listening = 0

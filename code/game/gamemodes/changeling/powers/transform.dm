@@ -7,66 +7,33 @@
 	req_human = 1
 	max_genetic_damage = 3
 
-/obj/item/clothing/glasses/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/under/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/suit/changeling
-	name = "flesh"
-	flags = NODROP
-	allowed = list(/obj/item/changeling)
-
-/obj/item/clothing/head/changeling
-	name = "flesh"
-	flags = NODROP
-/obj/item/clothing/shoes/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/gloves/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/clothing/mask/changeling
-	name = "flesh"
-	flags = NODROP
-
-/obj/item/changeling
-	name = "flesh"
-	flags = NODROP
-	slot_flags = ALL
-	allowed = list(/obj/item/changeling)
-
 //Change our DNA to that of somebody we've absorbed.
-/obj/effect/proc_holder/changeling/transform/sting_action(mob/living/carbon/human/user)
+/obj/effect/proc_holder/changeling/transform/sting_action(var/mob/living/carbon/human/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	var/datum/changelingprofile/chosen_prof = changeling.select_dna("Select the target DNA: ", "Target DNA", user)
+	var/datum/dna/chosen_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
 
-	if(!chosen_prof)
+	if(!chosen_dna)
 		return
-
-	changeling_transform(user, chosen_prof)
+	user.dna = chosen_dna.Clone()
+	user.real_name = chosen_dna.real_name
+	user.flavor_text = ""
+	if(ishuman(user))
+		user.set_species()
+	user.UpdateAppearance()
+	domutcheck(user, null)
+	
+	user.changeling_update_languages(changeling.absorbed_languages)
 
 	feedback_add_details("changeling_powers","TR")
 	return 1
 
-/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
-	var/list/names = list("Drop Flesh Disguise")
-	for(var/datum/changelingprofile/prof in stored_profiles)
-		names += "[prof.name]"
+/datum/changeling/proc/select_dna(var/prompt, var/title)
+	var/list/names = list()
+	for(var/datum/dna/DNA in (absorbed_dna+protected_dna))
+		names += "[DNA.real_name]"
 
 	var/chosen_name = input(prompt, title, null) as null|anything in names
 	if(!chosen_name)
 		return
-	
-	if(chosen_name == "Drop Flesh Disguise")
-		for(var/slot in slots)
-			if(istype(user.vars[slot], slot2type[slot]))
-				qdel(user.vars[slot])
-
-	var/datum/changelingprofile/prof = get_dna(chosen_name)
-	return prof
+	var/datum/dna/chosen_dna = GetDNA(chosen_name)
+	return chosen_dna

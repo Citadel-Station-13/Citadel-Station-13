@@ -18,32 +18,23 @@
 //- Check for any misplaced or stacked piece of wire
 //- Identify how hard it is to break into the area and where the weak points are
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
+
+var/camera_range_display_status = 0
 var/intercom_range_display_status = 0
 
-var/list/admin_verbs_debug_mapping = list(
-	/client/proc/do_not_use_these, 			//-errorage
-	/client/proc/camera_view, 				//-errorage
-	/client/proc/sec_camera_report, 		//-errorage
-	/client/proc/intercom_view, 			//-errorage
-	/client/proc/air_status, //Air things
-	/client/proc/Cell, //More air things
-	/client/proc/atmosscan, //check plumbing
-	/client/proc/powerdebug, //check power
-	/client/proc/count_objects_on_z_level,
-	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control,	//-errorage
-	/client/proc/startSinglo,
-	/client/proc/set_server_fps,	//allows you to set the ticklag.
-	/client/proc/cmd_admin_grantfullaccess,
-	/client/proc/cmd_admin_areatest,
-	/client/proc/cmd_admin_rejuvenate,
-	/datum/admins/proc/show_traitor_panel,
-	/client/proc/disable_communication,
-	/client/proc/print_pointers,
-	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_list,
-	/client/proc/manipulate_organs
-)
+/obj/effect/debugging/camera_range
+	icon = 'icons/480x480.dmi'
+	icon_state = "25percent"
+
+	New()
+		src.pixel_x = -224
+		src.pixel_y = -224
+
+/obj/effect/debugging/mapfix_marker
+	name = "map fix marker"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "mapfixmarker"
+	desc = "I am a mappers mistake."
 
 /obj/effect/debugging/marker
 	icon = 'icons/turf/areas.dmi'
@@ -52,48 +43,40 @@ var/list/admin_verbs_debug_mapping = list(
 /obj/effect/debugging/marker/Move()
 	return 0
 
-/client/proc/do_not_use_these()
-	set category = "Mapping"
-	set name = "-None of these are for ingame use!!"
-
-	..()
-
 /client/proc/camera_view()
 	set category = "Mapping"
 	set name = "Camera Range Display"
 
-	var/on = 0
-	for(var/turf/T in world)
-		if(T.maptext)
-			on = 1
-		T.maptext = null
+	if(!check_rights(R_DEBUG))
+		return
 
-	if(!on)
-		var/list/seen = list()
+	if(camera_range_display_status)
+		camera_range_display_status = 0
+	else
+		camera_range_display_status = 1
+
+	for(var/obj/effect/debugging/camera_range/C in world)
+		qdel(C)
+
+	if(camera_range_display_status)
 		for(var/obj/machinery/camera/C in cameranet.cameras)
-			for(var/turf/T in C.can_see())
-				seen[T]++
-		for(var/turf/T in seen)
-			T.maptext = "[seen[T]]"
+			new/obj/effect/debugging/camera_range(C.loc)
 	feedback_add_details("admin_verb","mCRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
 
 /client/proc/sec_camera_report()
 	set category = "Mapping"
 	set name = "Camera Report"
 
-	if(!Master)
-		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/list/obj/machinery/camera/CL = list()
 
 	for(var/obj/machinery/camera/C in cameranet.cameras)
 		CL += C
 
-	var/output = {"<B>CAMERA ANNOMALITIES REPORT</B><HR>
-<B>The following annomalities have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
+	var/output = {"<B>CAMERA ANOMALIES REPORT</B><HR>
+<B>The following anomalies have been detected. The ones in red need immediate attention: Some of those in black may be intentional.</B><BR><ul>"}
 
 	for(var/obj/machinery/camera/C1 in CL)
 		for(var/obj/machinery/camera/C2 in CL)
@@ -109,7 +92,7 @@ var/list/admin_verbs_debug_mapping = list(
 			if(!(locate(/obj/structure/grille,T)))
 				var/window_check = 0
 				for(var/obj/structure/window/W in T)
-					if (W.dir == turn(C1.dir,180) || W.dir in list(5,6,9,10) )
+					if(W.dir == turn(C1.dir,180) || W.is_fulltile() )
 						window_check = 1
 						break
 				if(!window_check)
@@ -123,6 +106,9 @@ var/list/admin_verbs_debug_mapping = list(
 	set category = "Mapping"
 	set name = "Intercom Range Display"
 
+	if(!check_rights(R_DEBUG))
+		return
+
 	if(intercom_range_display_status)
 		intercom_range_display_status = 0
 	else
@@ -135,45 +121,17 @@ var/list/admin_verbs_debug_mapping = list(
 		for(var/obj/item/device/radio/intercom/I in world)
 			for(var/turf/T in orange(7,I))
 				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
+				if(!(F in view(7,I.loc)))
 					qdel(F)
 	feedback_add_details("admin_verb","mIRD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/cmd_show_at_list()
-	set category = "Mapping"
-	set name = "Show roundstart AT list"
-	set desc = "Displays a list of active turfs coordinates at roundstart"
-
-	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
-	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
-
-	for(var/i=1; i<=active_turfs_startlist.len; i++)
-		dat += active_turfs_startlist[i]
-		dat += "<br>"
-
-	usr << browse(dat, "window=at_list")
-
-	feedback_add_details("admin_verb","mATL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/enable_debug_verbs()
-	set category = "Debug"
-	set name = "Debug verbs - Enable"
-	if(!check_rights(R_DEBUG))
-		return
-	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
-	feedback_add_details("admin_verb","mDVE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/disable_debug_verbs()
-	set category = "Debug"
-	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, admin_verbs_debug_mapping)
-	verbs += /client/proc/enable_debug_verbs
-	feedback_add_details("admin_verb", "mDVD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
 	set category = "Mapping"
 	set name = "Count Objects On Level"
+
+	if(!check_rights(R_DEBUG))
+		return
+
 	var/level = input("Which z-level?","Level?") as text
 	if(!level) return
 	var/num_level = text2num(level)
@@ -201,22 +159,16 @@ var/list/admin_verbs_debug_mapping = list(
 				if(B.z == num_level)
 					count++
 					atom_list += A
-	/*
-	var/atom/temp_atom
-	for(var/i = 0; i <= (atom_list.len/10); i++)
-		var/line = ""
-		for(var/j = 1; j <= 10; j++)
-			if(i*10+j <= atom_list.len)
-				temp_atom = atom_list[i*10+j]
-				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
 
-	world << "There are [count] objects of type [type_path] on z-level [num_level]"
+	to_chat(world, "There are [count] objects of type [type_path] on z-level [num_level].")
 	feedback_add_details("admin_verb","mOBJZ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_all()
 	set category = "Mapping"
 	set name = "Count Objects All"
+
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/type_text = input("Which type path?","") as text
 	if(!type_text) return
@@ -228,28 +180,6 @@ var/list/admin_verbs_debug_mapping = list(
 	for(var/atom/A in world)
 		if(istype(A,type_path))
 			count++
-	/*
-	var/atom/temp_atom
-	for(var/i = 0; i <= (atom_list.len/10); i++)
-		var/line = ""
-		for(var/j = 1; j <= 10; j++)
-			if(i*10+j <= atom_list.len)
-				temp_atom = atom_list[i*10+j]
-				line += " no.[i+10+j]@\[[temp_atom.x], [temp_atom.y], [temp_atom.z]\]; "
-		world << line*/
 
-	world << "There are [count] objects of type [type_path] in the game world"
+	to_chat(world, "There are [count] objects of type [type_path] in the game world.")
 	feedback_add_details("admin_verb","mOBJ") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-
-//This proc is intended to detect lag problems relating to communication procs
-var/global/say_disabled = 0
-/client/proc/disable_communication()
-	set category = "Mapping"
-	set name = "Disable all communication verbs"
-
-	say_disabled = !say_disabled
-	if(say_disabled)
-		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
-	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")

@@ -3,9 +3,9 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	pressure_resistance = 2
-	resistance_flags = FLAMMABLE
+	burn_state = FLAMMABLE
 
 /obj/item/weapon/folder/blue
 	desc = "A blue folder."
@@ -23,57 +23,75 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
-
 /obj/item/weapon/folder/update_icon()
-	cut_overlays()
+	overlays.Cut()
 	if(contents.len)
-		add_overlay("folder_paper")
+		overlays += "folder_paper"
+	return
 
-
-/obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents))
-		if(!user.unEquip(W))
-			return
+/obj/item/weapon/folder/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/documents))
+		user.drop_item()
 		W.loc = src
-		user << "<span class='notice'>You put [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You put the [W] into \the [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
-		var/n_name = copytext(sanitize(input(user, "What would you like to label the folder?", "Folder Labelling", null) as text), 1, MAX_NAME_LEN)
-		if((in_range(src,user) && user.stat == CONSCIOUS))
-			name = "folder[(n_name ? " - '[n_name]'" : null)]"
+		var/n_name = input(usr, "What would you like to label the folder?", "Folder Labelling", null) as text|null
+		if(!n_name)
+			return
+		n_name = sanitize(copytext(n_name, 1, MAX_NAME_LEN))
 
+		if((loc == usr || Adjacent(usr)) && usr.stat == 0)
+			name = "folder[(n_name ? text("- '[n_name]'") : null)]"
+	return
 
-/obj/item/weapon/folder/attack_self(mob/user)
+/obj/item/weapon/folder/attack_self(mob/user as mob)
 	var/dat = "<title>[name]</title>"
 
-	for(var/obj/item/I in src)
-		dat += "<A href='?src=\ref[src];remove=\ref[I]'>Remove</A> - <A href='?src=\ref[src];read=\ref[I]'>[I.name]</A><BR>"
+	for(var/obj/item/weapon/paper/P in src)
+		dat += "<A href='?src=[UID()];remove=\ref[P]'>Remove</A> - <A href='?src=[UID()];read=\ref[P]'>[P.name]</A><BR>"
+	for(var/obj/item/weapon/photo/Ph in src)
+		dat += "<A href='?src=[UID()];remove=\ref[Ph]'>Remove</A> - <A href='?src=[UID()];look=\ref[Ph]'>[Ph.name]</A><BR>"
+	for(var/obj/item/weapon/paper_bundle/Pa in src)
+		dat += "<A href='?src=[UID()];remove=\ref[Pa]'>Remove</A> - <A href='?src=[UID()];look=\ref[Pa]'>[Pa.name]</A><BR>"
+	for(var/obj/item/documents/doc in src)
+		dat += "<A href='?src=[UID()];remove=\ref[doc]'>Remove</A> - <A href='?src=[UID()];look=\ref[doc]'>[doc.name]</A><BR>"
 	user << browse(dat, "window=folder")
 	onclose(user, "folder")
 	add_fingerprint(usr)
-
+	return
 
 /obj/item/weapon/folder/Topic(href, href_list)
 	..()
-	if(usr.stat || usr.restrained())
+	if((usr.stat || usr.restrained()))
 		return
 
-	if(usr.contents.Find(src))
+	if(src.loc == usr)
 
 		if(href_list["remove"])
-			var/obj/item/I = locate(href_list["remove"])
-			if(istype(I) && I.loc == src)
-				I.loc = usr.loc
-				usr.put_in_hands(I)
+			var/obj/item/P = locate(href_list["remove"])
+			if(P && (P.loc == src) && istype(P))
+				P.loc = usr.loc
+				usr.put_in_hands(P)
 
-		if(href_list["read"])
-			var/obj/item/I = locate(href_list["read"])
-			if(istype(I) && I.loc == src)
-				usr.examinate(I)
+		else if(href_list["read"])
+			var/obj/item/weapon/paper/P = locate(href_list["read"])
+			if(P && (P.loc == src) && istype(P))
+				P.show_content(usr)
+		else if(href_list["look"])
+			var/obj/item/weapon/photo/P = locate(href_list["look"])
+			if(P && (P.loc == src) && istype(P))
+				P.show(usr)
+		else if(href_list["browse"])
+			var/obj/item/weapon/paper_bundle/P = locate(href_list["browse"])
+			if(P && (P.loc == src) && istype(P))
+				P.attack_self(usr)
+				onclose(usr, "[P.name]")
 
 		//Update everything
 		attack_self(usr)
 		update_icon()
+	return
 
 /obj/item/weapon/folder/documents
 	name = "folder- 'TOP SECRET'"
@@ -85,7 +103,6 @@
 	update_icon()
 
 /obj/item/weapon/folder/syndicate
-	icon_state = "folder_syndie"
 	name = "folder- 'TOP SECRET'"
 	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
 
@@ -105,7 +122,3 @@
 	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
 
-/obj/item/weapon/folder/syndicate/mining/New()
-	..()
-	new /obj/item/documents/syndicate/mining(src)
-	update_icon()

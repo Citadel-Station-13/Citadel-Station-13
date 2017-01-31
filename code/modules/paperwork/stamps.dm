@@ -1,11 +1,11 @@
 /obj/item/weapon/stamp
-	name = "\improper GRANTED rubber stamp"
+	name = "\improper rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "stamp-ok"
 	item_state = "stamp"
 	throwforce = 0
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=60)
@@ -14,16 +14,16 @@
 	attack_verb = list("stamped")
 
 /obj/item/weapon/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
+	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on \his forehead, then promptly falls over, dead.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/stamp/qm
-	name = "quartermaster's rubber stamp"
+	name = "Quartermaster's rubber stamp"
 	icon_state = "stamp-qm"
 	item_color = "qm"
 
 /obj/item/weapon/stamp/law
-	name = "law office's rubber stamp"
+	name = "Law office's rubber stamp"
 	icon_state = "stamp-law"
 	item_color = "cargo"
 
@@ -55,7 +55,12 @@
 /obj/item/weapon/stamp/cmo
 	name = "chief medical officer's rubber stamp"
 	icon_state = "stamp-cmo"
-	item_color = "cmo"
+	item_color = "medical"
+
+/obj/item/weapon/stamp/granted
+	name = "\improper GRANTED rubber stamp"
+	icon_state = "stamp-ok"
+	item_color = "qm"
 
 /obj/item/weapon/stamp/denied
 	name = "\improper DENIED rubber stamp"
@@ -67,44 +72,37 @@
 	icon_state = "stamp-clown"
 	item_color = "clown"
 
-/obj/item/weapon/stamp/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/weapon/stamp/centcom
+	name = "Nanotrasen Representative's rubber stamp"
+	icon_state = "stamp-cent"
+	item_color = "centcom"
+
+/obj/item/weapon/stamp/syndicate
+	name = "suspicious rubber stamp"
+	icon_state = "stamp-syndicate"
+	item_color = "syndicate"
 
 // Syndicate stamp to forge documents.
 
-/obj/item/weapon/stamp/chameleon
-	actions_types = list(/datum/action/item_action/toggle)
+/obj/item/weapon/stamp/chameleon/attack_self(mob/user as mob)
 
-	var/list/stamp_types
-	var/list/stamp_names
+	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
+	var/list/stamps = list()
 
-/obj/item/weapon/stamp/chameleon/New()
-	stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
-
-	stamp_names = list()
 	// Generate them into a list
-	for(var/i in stamp_types)
-		var/obj/item/weapon/stamp/stamp_type = i
-		stamp_names += initial(stamp_type.name)
+	for(var/stamp_type in stamp_types)
+		var/obj/item/weapon/stamp/S = new stamp_type
+		stamps[capitalize(S.name)] = S
 
-	stamp_names = sortList(stamp_names)
+	var/list/show_stamps = list("EXIT" = null) + sortList(stamps) // the list that will be shown to the user to pick from
 
-/obj/item/weapon/stamp/chameleon/emp_act(severity)
-	change_to(pick(stamp_types))
+	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") in show_stamps
 
-/obj/item/weapon/stamp/chameleon/proc/change_to(obj/item/weapon/stamp/stamp_type)
-	name = initial(stamp_type.name)
-	icon_state = initial(stamp_type.icon_state)
-	item_color = initial(stamp_type.item_color)
+	if(user && src in user.contents)
 
-/obj/item/weapon/stamp/chameleon/attack_self(mob/user)
-	var/input_stamp = input(user, "Choose a stamp to disguise as.",
-		"Choose a stamp.") as null|anything in stamp_names
+		var/obj/item/weapon/stamp/chosen_stamp = stamps[capitalize(input_stamp)]
 
-	if(user && (src in user.contents) && input_stamp)
-		var/obj/item/weapon/stamp/stamp_type
-		for(var/i in stamp_types)
-			stamp_type = i
-			if(initial(stamp_type.name) == input_stamp)
-				break
-		change_to(stamp_type)
+		if(chosen_stamp)
+			name = chosen_stamp.name
+			icon_state = chosen_stamp.icon_state
+			item_color = chosen_stamp.item_color

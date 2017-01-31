@@ -1,29 +1,25 @@
-//supposedly the fastest way to do this according to https://gist.github.com/Giacom/be635398926bb463b42a
-#define RANGE_TURFS(RADIUS, CENTER) \
-  block( \
-    locate(max(CENTER.x-(RADIUS),1),          max(CENTER.y-(RADIUS),1),          CENTER.z), \
-    locate(min(CENTER.x+(RADIUS),world.maxx), min(CENTER.y+(RADIUS),world.maxy), CENTER.z) \
-  )
+/proc/dopage(src,target)
+	var/href_list
+	var/href
+	href_list = params2list("src=[src:UID()]&[target]=1")
+	href = "src=[src:UID()];[target]=1"
+	src:temphtml = null
+	src:Topic(href, href_list)
+	return null
 
-#define Z_TURFS(ZLEVEL) block(locate(1,1,ZLEVEL), locate(world.maxx, world.maxy, ZLEVEL))
+/proc/get_area_master(const/O)
+	var/area/A = get_area(O)
+
+	if(isarea(A))
+		return A
 
 /proc/get_area(atom/A)
-	if (!istype(A))
+	if(!istype(A))
 		return
 	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
 	return A
 
-/proc/get_area_name(atom/X)
-	var/area/Y = get_area(X)
-	return Y.name
-
-/proc/get_area_master(O)
-	var/area/A = get_area(O)
-	if(A && A.master)
-		A = A.master
-	return A
-
-/proc/get_area_by_name(N) //get area by its name
+/proc/get_area_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
@@ -45,8 +41,7 @@
 
 // Like view but bypasses luminosity check
 
-/proc/get_hear(range, atom/source)
-
+/proc/hear(var/range, var/atom/source)
 	var/lum = source.luminosity
 	source.luminosity = 6
 
@@ -54,22 +49,6 @@
 	source.luminosity = lum
 
 	return heard
-
-/proc/alone_in_area(area/the_area, mob/must_be_alone, check_type = /mob/living/carbon)
-	var/area/our_area = get_area_master(the_area)
-	for(var/C in living_mob_list)
-		if(!istype(C, check_type))
-			continue
-		if(C == must_be_alone)
-			continue
-		if(our_area == get_area_master(C))
-			return 0
-	return 1
-
-//We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
-//And lo and behold, it is, and it's more accurate to boot.
-/proc/cheap_hypotenuse(Ax,Ay,Bx,By)
-	return sqrt(abs(Ax - Bx)**2 + abs(Ay - By)**2) //A squared + B squared = C squared
 
 /proc/circlerange(center=usr,radius=3)
 
@@ -136,88 +115,103 @@
 	return turfs
 
 
-//This is the new version of recursive_mob_check, used for say().
-//The other proc was left intact because morgue trays use it.
-//Sped this up again for real this time
-/proc/recursive_hear_check(O)
-	var/list/processing_list = list(O)
-	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		if(A.flags & HEAR)
-			. += A
-		processing_list.Cut(1, 2)
-		processing_list += A.contents
 
-// Better recursive loop, technically sort of not actually recursive cause that shit is retarded, enjoy.
-//No need for a recursive limit either
-/proc/recursive_mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
+//var/debug_mob = 0
 
-	var/list/processing_list = list(O)
-	var/list/processed_list = list()
-	var/list/found_mobs = list()
+// Will recursively loop through an atom's contents and check for mobs, then it will loop through every atom in that atom's contents.
+// It will keep doing this until it checks every content possible. This will fix any problems with mobs, that are inside objects,
+// being unable to hear people due to being in a box within a bag.
 
-	while(processing_list.len)
+/proc/recursive_mob_check(var/atom/O,  var/list/L = list(), var/recursion_limit = 3, var/client_check = 1, var/sight_check = 1, var/include_radio = 1)
 
-		var/atom/A = processing_list[1]
-		var/passed = 0
+	//debug_mob += O.contents.len
+	if(!recursion_limit)
+		return L
+	for(var/atom/A in O.contents)
 
 		if(ismob(A))
-			var/mob/A_tmp = A
-			passed=1
-
-			if(client_check && !A_tmp.client)
-				passed=0
-
-			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
+			var/mob/M = A
+			if(client_check && !M.client)
+				L |= recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+				continue
+			if(sight_check && !isInSight(A, O))
+				continue
+			L |= M
+			//log_to_dd("[recursion_limit] = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])")
 
 		else if(include_radio && istype(A, /obj/item/device/radio))
-			passed=1
-
 			if(sight_check && !isInSight(A, O))
-				passed=0
+				continue
+			L |= A
 
-		if(passed)
-			found_mobs |= A
+		if(isobj(A) || ismob(A))
+			L |= recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
+	return L
 
-		for(var/atom/B in A)
-			if(!processed_list[B])
-				processing_list |= B
+// The old system would loop through lists for a total of 5000 per function call, in an empty server.
+// This new system will loop at around 1000 in an empty server.
 
-		processing_list.Cut(1, 2)
-		processed_list[A] = A
+/proc/get_mobs_in_view(var/R, var/atom/source)
+	// Returns a list of mobs in range of R from source. Used in radio and say code.
 
-	return found_mobs
-
-
-/proc/get_hearers_in_view(R, atom/source)
-	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	var/list/hear = list()
 
 	if(!T)
 		return hear
 
-	var/list/range = get_hear(R, T)
-	for(var/atom/movable/A in range)
-		hear |= recursive_hear_check(A)
+	var/list/range = hear(R, T)
+
+	for(var/atom/A in range)
+		if(ismob(A))
+			var/mob/M = A
+			if(M.client)
+				hear += M
+			//log_to_dd("Start = [M] - [get_turf(M)] - ([M.x], [M.y], [M.z])")
+		else if(istype(A, /obj/item/device/radio))
+			hear += A
+
+		if(isobj(A) || ismob(A))
+			hear |= recursive_mob_check(A, hear, 3, 1, 0, 1)
 
 	return hear
 
 
-/proc/get_mobs_in_radio_ranges(list/obj/item/device/radio/radios)
+/proc/get_mobs_in_radio_ranges(var/list/obj/item/device/radio/radios)
 
-	set background = BACKGROUND_ENABLED
+	set background = 1
 
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
+	var/list/speaker_coverage = list()
 	for(var/obj/item/device/radio/R in radios)
 		if(R)
-			. |= get_hearers_in_view(R.canhear_range, R)
+			//Cyborg checks. Receiving message uses a bit of cyborg's charge.
+			var/obj/item/device/radio/borg/BR = R
+			if(istype(BR) && BR.myborg)
+				var/mob/living/silicon/robot/borg = BR.myborg
+				var/datum/robot_component/CO = borg.get_component("radio")
+				if(!CO)
+					continue //No radio component (Shouldn't happen)
+				if(!borg.is_component_functioning("radio"))
+					continue //No power.
+
+			var/turf/speaker = get_turf(R)
+			if(speaker)
+				for(var/turf/T in hear(R.canhear_range,speaker))
+					speaker_coverage[T] = T
 
 
-#define SIGN(X) ((X<0)?-1:1)
+	// Try to find all the players who can hear the message
+	for(var/A in player_list + hear_radio_list)
+		var/mob/M = A
+		if(M)
+			var/turf/ear = get_turf(M)
+			if(ear)
+				// Ghostship is magic: Ghosts can hear radio chatter from anywhere
+				if(speaker_coverage[ear] || (istype(M, /mob/dead/observer) && M.get_preference(CHAT_GHOSTRADIO)))
+					. |= M		// Since we're already looping through mobs, why bother using |= ? This only slows things down.
+	return .
 
 /proc/inLineOfSight(X1,Y1,X2,Y2,Z=1,PX1=16.5,PY1=16.5,PX2=16.5,PY2=16.5)
 	var/turf/T
@@ -225,7 +219,7 @@
 		if(Y1==Y2)
 			return 1 //Light cannot be blocked on same tile
 		else
-			var/s = SIGN(Y2-Y1)
+			var/s = SIMPLE_SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
@@ -235,8 +229,8 @@
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
 		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-		var/signX = SIGN(X2-X1)
-		var/signY = SIGN(Y2-Y1)
+		var/signX = SIMPLE_SIGN(X2-X1)
+		var/signY = SIMPLE_SIGN(Y2-Y1)
 		if(X1<X2)
 			b+=m
 		while(X1!=X2 || Y1!=Y2)
@@ -248,22 +242,15 @@
 			if(T.opacity)
 				return 0
 	return 1
-#undef SIGN
 
-
-/proc/isInSight(atom/A, atom/B)
+/proc/isInSight(var/atom/A, var/atom/B)
 	var/turf/Aturf = get_turf(A)
 	var/turf/Bturf = get_turf(B)
 
 	if(!Aturf || !Bturf)
 		return 0
 
-	if(inLineOfSight(Aturf.x,Aturf.y, Bturf.x,Bturf.y,Aturf.z))
-		return 1
-
-	else
-		return 0
-
+	return inLineOfSight(Aturf.x, Aturf.y, Bturf.x, Bturf.y, Aturf.z)
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -286,15 +273,14 @@
 		if(AM.Move(get_step(T, direction)))
 			break
 
-/proc/get_mob_by_key(key)
+/proc/get_mob_by_key(var/key)
 	for(var/mob/M in mob_list)
 		if(M.ckey == lowertext(key))
 			return M
 	return null
 
-// Will return a list of active candidates. It increases the buffer 5 times until it finds a candidate which is active within the buffer.
-
-/proc/get_candidates(be_special_type, afk_bracket=3000, var/jobbanType)
+/proc/get_candidates(be_special_type, afk_bracket=3000, override_age=0, override_jobban=0)
+	var/roletext = get_roletext(be_special_type)
 	var/list/candidates = list()
 	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
 	while(!candidates.len && afk_bracket < 6000)
@@ -302,17 +288,31 @@
 			if(G.client != null)
 				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
 					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
-						if (jobbanType)
-							if(!(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate")))
+						if(!override_jobban || (!jobban_isbanned(G, roletext) && !jobban_isbanned(G,"Syndicate")))
+							if(override_age || player_old_enough_antag(G.client,be_special_type))
 								candidates += G.client
-						else
-							candidates += G.client
 		afk_bracket += 600 // Add a minute to the bracket, for every attempt
+
+	return candidates
+
+/proc/get_candidate_ghosts(be_special_type, afk_bracket=3000, override_age=0, override_jobban=0)
+	var/roletext = get_roletext(be_special_type)
+	var/list/candidates = list()
+	// Keep looping until we find a non-afk candidate within the time bracket (we limit the bracket to 10 minutes (6000))
+	while(!candidates.len && afk_bracket < 6000)
+		for(var/mob/dead/observer/G in player_list)
+			if(G.client != null)
+				if(!(G.mind && G.mind.current && G.mind.current.stat != DEAD))
+					if(!G.client.is_afk(afk_bracket) && (be_special_type in G.client.prefs.be_special))
+						if(!override_jobban || (!jobban_isbanned(G, roletext) && !jobban_isbanned(G,"Syndicate")))
+							if(override_age || player_old_enough_antag(G.client,be_special_type))
+								candidates += G
+		afk_bracket += 600 // Add a minute to the bracket, for every attempt
+
 	return candidates
 
 /proc/ScreenText(obj/O, maptext="", screen_loc="CENTER-7,CENTER-7", maptext_height=480, maptext_width=480)
-	if(!isobj(O))
-		O = new /obj/screen/text()
+	if(!isobj(O))	O = new /obj/screen/text()
 	O.maptext = maptext
 	O.maptext_height = maptext_height
 	O.maptext_width = maptext_width
@@ -320,10 +320,8 @@
 	return O
 
 /proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))
-		return
-	if(!group)
-		group = clients
+	if(!isobj(O))	return
+	if(!group)	group = clients
 	for(var/client/C in group)
 		C.screen += O
 	if(delay)
@@ -338,19 +336,13 @@
 		for(var/client/C in show_to)
 			C.images -= I
 
-/proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
+/proc/get_active_player_count()
 	// Get active players who are playing in the round
 	var/active_players = 0
 	for(var/i = 1; i <= player_list.len; i++)
 		var/mob/M = player_list[i]
 		if(M && M.client)
-			if(alive_check && M.stat)
-				continue
-			else if(afk_check && M.client.is_afk())
-				continue
-			else if(human_check && !ishuman(M))
-				continue
-			else if(isnewplayer(M)) // exclude people in the lobby
+			if(istype(M, /mob/new_player)) // exclude people in the lobby
 				continue
 			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
 				var/mob/dead/observer/O = M
@@ -380,7 +372,7 @@
 	src.dest_x = dest_x
 	src.dest_y = dest_y
 
-/proc/projectile_trajectory(src_x, src_y, rotation, angle, power)
+/proc/projectile_trajectory(var/src_x, var/src_y, var/rotation, var/angle, var/power)
 
 	// returns the destination (Vx,y) that a projectile shot at [src_x], [src_y], with an angle of [angle],
 	// rotated at [rotation] and with the power of [power]
@@ -397,87 +389,95 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
+
+/proc/mobs_in_area(var/area/the_area, var/client_needed=0, var/moblist=mob_list)
+	var/list/mobs_found[0]
+	var/area/our_area = get_area_master(the_area)
+	for(var/mob/M in moblist)
+		if(client_needed && !M.client)
+			continue
+		if(our_area != get_area_master(M))
+			continue
+		mobs_found += M
+	return mobs_found
+
+/proc/alone_in_area(var/area/the_area, var/mob/must_be_alone, var/check_type = /mob/living/carbon)
+	var/area/our_area = get_area_master(the_area)
+	for(var/C in living_mob_list)
+		if(!istype(C, check_type))
+			continue
+		if(C == must_be_alone)
+			continue
+		if(our_area == get_area_master(C))
+			return 0
+	return 1
+
+/proc/MinutesToTicks(var/minutes as num)
+	return minutes * 60 * 10
+
+/proc/SecondsToTicks(var/seconds)
+	return seconds * 10
+
+proc/pollCandidates(Question, be_special_type, antag_age_check = 0, poll_time = 300, ignore_respawnability = 0, min_hours = 0, flashwindow = TRUE)
+	var/roletext = be_special_type ? get_roletext(be_special_type) : null
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
-	if (!Question)
+	if(!Question)
 		Question = "Would you like to be a special role?"
 
-	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
+	for(var/mob/dead/observer/G in (ignore_respawnability ? player_list : respawnable_list))
+		if(!G.key || !G.client)
 			continue
-		if(be_special_flag)
-			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
+		if(be_special_type)
+			if(!(be_special_type in G.client.prefs.be_special))
 				continue
-		if (gametypeCheck)
-			if(!gametypeCheck.age_check(G.client))
+			if(antag_age_check)
+				if(!player_old_enough_antag(G.client, be_special_type))
+					continue
+		if(roletext)
+			if(jobban_isbanned(G, roletext) || jobban_isbanned(G, "Syndicate"))
 				continue
-		if (jobbanType)
-			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
+		if(min_hours)
+			if(G.client.get_exp_living_num() < min_hours * 60)
 				continue
+		if(G.has_enabled_antagHUD)
+			continue
 		spawn(0)
-			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
-				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+			G << 'sound/misc/notice2.ogg'//Alerting them to their consideration
+			if(flashwindow)
+				window_flash(G.client)
+			switch(alert(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Not This Round"))
+				if("Yes")
+					to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
+					if((world.time-time_passed)>poll_time)//If more than 30 game seconds passed.
+						to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
 						G << 'sound/machines/buzz-sigh.ogg'
-					else
-						candidates += G
-				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
-				if(3)
-					var/list/L = poll_ignore[ignore_category]
-					if(!L)
-						poll_ignore[ignore_category] = list()
-					poll_ignore[ignore_category] += G.ckey
-					G << "<span class='danger'>Choice registered: Never for this round.</span>"
+						return
+					candidates += G
+				if("No")
+					to_chat(G, "<span class='danger'>Choice registered: No.</span>")
+					return
+				if("Not This Round")
+					to_chat(G, "<span class='danger'>Choice registered: No.</span>")
+					to_chat(G, "<span class='notice'>You will no longer receive notifications for the role '[roletext]' for the rest of the round.</span>")
+					G.client.prefs.be_special -= be_special_type
+					return
+				else
+					return
 	sleep(poll_time)
 
-	//Check all our candidates, to make sure they didn't log off during the wait period.
+	//Check all our candidates, to make sure they didn't log off during the 30 second wait period.
 	for(var/mob/dead/observer/G in candidates)
 		if(!G.key || !G.client)
 			candidates.Remove(G)
 
 	return candidates
 
-/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
-	if(!M || qdeleted(M) || !M.loc)
-		return list()
-	return L
-
-/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
-	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
-	var/i=1
-	for(var/v in mobs)
-		var/atom/A = v
-		if(!A || qdeleted(A) || !A.loc)
-			mobs.Cut(i,i+1)
-		else
-			++i
-	return L
-
-/proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
-	if(!G_found || !G_found.key)
+/proc/window_flash(client/C)
+	if(ismob(C))
+		var/mob/M = C
+		if(M.client)
+			C = M.client
+	if(!C || !C.prefs.windowflashing)
 		return
-
-	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(latejoin))//The mob being spawned.
-
-	G_found.client.prefs.copy_to(new_character)
-	new_character.dna.update_dna_identity()
-	new_character.key = G_found.key
-
-	return new_character
-
-/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
-	for(var/M in player_list)
-		if(M && !isnewplayer(M))
-			M << thing
-
-/proc/window_flash(var/client_or_usr)
-	if (!client_or_usr)
-		return
-	winset(client_or_usr, "mainwindow", "flash=5")
+	winset(C, "mainwindow", "flash=5")

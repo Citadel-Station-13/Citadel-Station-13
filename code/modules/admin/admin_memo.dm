@@ -1,21 +1,23 @@
 /client/proc/admin_memo()
 	set name = "Memo"
 	set category = "Server"
-	if(!check_rights(0))
+	if(!check_rights(R_SERVER))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
 	if(!memotask)
 		return
 	admin_memo_output(memotask)
 
-/client/proc/admin_memo_output(task)
+/client/proc/admin_memo_output(task, checkrights = 1, silent = 0)
+	if(checkrights && !check_rights(R_SERVER))
+		return
 	if(!task)
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)
@@ -26,7 +28,7 @@
 				log_game("SQL ERROR obtaining ckey from memo table. Error : \[[err]\]\n")
 				return
 			if(query_memocheck.NextRow())
-				src << "You already have set a memo."
+				to_chat(src, "You already have set a memo.")
 				return
 			var/memotext = input(src,"Write your Memo","Memo") as message
 			if(!memotext)
@@ -51,7 +53,7 @@
 				var/lkey = query_memolist.item[1]
 				memolist += "[lkey]"
 			if(!memolist.len)
-				src << "No memos found in database."
+				to_chat(src, "No memos found in database.")
 				return
 			var/target_ckey = input(src, "Select whose memo to edit", "Select memo") as null|anything in memolist
 			if(!target_ckey)
@@ -76,11 +78,11 @@
 					log_game("SQL ERROR editing memo. Error : \[[err]\]\n")
 					return
 				if(target_sql_ckey == sql_ckey)
-					log_admin("[key_name(src)] has edited their memo from [old_memo] to [new_memo]")
-					message_admins("[key_name_admin(src)] has edited their memo from<br>[old_memo]<br>to<br>[new_memo]")
+					log_admin("[key_name(src)] has edited their memo from \"[old_memo]\" to \"[new_memo]\"")
+					message_admins("[key_name_admin(src)] has edited their memo from \"[old_memo]]\" to \"[new_memo]\"")
 				else
-					log_admin("[key_name(src)] has edited [target_sql_ckey]'s memo from [old_memo] to [new_memo]")
-					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s memo from<br>[old_memo]<br>to<br>[new_memo]")
+					log_admin("[key_name(src)] has edited [target_sql_ckey]'s memo from \"[old_memo]\" to \"[new_memo]\"")
+					message_admins("[key_name_admin(src)] has edited [target_sql_ckey]'s memo from \"[old_memo]\" to \"[new_memo]\"")
 		if("Show")
 			var/DBQuery/query_memoshow = dbcon.NewQuery("SELECT ckey, memotext, timestamp, last_editor FROM [format_table_name("memo")]")
 			if(!query_memoshow.Execute())
@@ -97,10 +99,10 @@
 				if(last_editor)
 					output += "<br><span class='memoedit'>Last edit by [last_editor] <A href='?_src_=holder;memoeditlist=[ckey]'>(Click here to see edit log)</A></span>"
 				output += "<br>[memotext]</span><br>"
-			if(!output)
-				src << "No memos found in database."
-				return
-			src << output
+			if(output)
+				to_chat(src, output)
+			else if(!silent)
+				to_chat(src, "No memos found in database.")
 		if("Remove")
 			var/DBQuery/query_memodellist = dbcon.NewQuery("SELECT ckey FROM [format_table_name("memo")]")
 			if(!query_memodellist.Execute())
@@ -112,7 +114,7 @@
 				var/ckey = query_memodellist.item[1]
 				memolist += "[ckey]"
 			if(!memolist.len)
-				src << "No memos found in database."
+				to_chat(src, "No memos found in database.")
 				return
 			var/target_ckey = input(src, "Select whose memo to delete", "Select memo") as null|anything in memolist
 			if(!target_ckey)

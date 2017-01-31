@@ -4,7 +4,7 @@
 	var/minX = 2
 	var/minY = 2
 
-/obj/effect/vaultspawner/New(turf/location,lX = minX,uX = maxX,lY = minY,uY = maxY,type = null)
+/obj/effect/vaultspawner/New(turf/location as turf,lX = minX,uX = maxX,lY = minY,uY = maxY,var/type = null)
 	if(!type)
 		type = pick("sandstone","rock","alien")
 
@@ -18,11 +18,9 @@
 
 	for(var/i = lowBoundX,i<=hiBoundX,i++)
 		for(var/j = lowBoundY,j<=hiBoundY,j++)
-			var/turf/T = locate(i,j,z)
 			if(i == lowBoundX || i == hiBoundX || j == lowBoundY || j == hiBoundY)
-				T.ChangeTurf(/turf/closed/wall/vault)
+				new /turf/simulated/wall/vault(locate(i,j,z),type)
 			else
-				T.ChangeTurf(/turf/open/floor/vault)
-			T.icon_state = "[type]vault"
+				new /turf/simulated/floor/vault(locate(i,j,z),type)
 
 	qdel(src)

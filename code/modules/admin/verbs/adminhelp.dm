@@ -1,7 +1,35 @@
-/proc/keywords_lookup(msg,irc)
 
-	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
-	var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+
+//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+var/list/adminhelp_ignored_words = list("unknown","the","a","an","of","monkey","alien","as")
+
+/client/verb/adminhelp()
+	set category = "Admin"
+	set name = "Adminhelp"
+
+	//handle muting and automuting
+	if(prefs.muted & MUTE_ADMINHELP)
+		to_chat(src, "<font color='red'>Error: Admin-PM: You cannot send adminhelps (Muted).</font>")
+		return
+
+	adminhelped = 1 //Determines if they get the message to reply by clicking the name.
+
+	var/msg
+	var/list/type = list("Mentorhelp","Adminhelp")
+	var/selected_type = input("Pick a category.", "Admin Help", null, null) as null|anything in type
+	if(selected_type)
+		msg = input("Please enter your message.", "Admin Help", null, null) as text|null
+
+	//clean the input msg
+	if(!msg)
+		return
+
+	if(handle_spam_prevention(msg, MUTE_ADMINHELP, OOC_COOLDOWN))
+		return
+
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)	return
+	var/original_msg = msg
 
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
@@ -10,11 +38,9 @@
 	var/list/surnames = list()
 	var/list/forenames = list()
 	var/list/ckeys = list()
-	var/founds = ""
 	for(var/mob/M in mob_list)
 		var/list/indexing = list(M.real_name, M.name)
-		if(M.mind)
-			indexing += M.mind.name
+		if(M.mind)	indexing += M.mind.name
 
 		for(var/string in indexing)
 			var/list/L = splittext(string, " ")
@@ -54,134 +80,86 @@
 							mobs_found += found
 							if(!ai_found && isAI(found))
 								ai_found = 1
-							var/is_antag = 0
-							if(found.mind && found.mind.special_role)
-								is_antag = 1
-							founds += "Name: [found.name]([found.real_name]) Ckey: [found.ckey] [is_antag ? "(Antag)" : null] "
-							msg += "[original_word]<font size='1' color='[is_antag ? "red" : "black"]'>(<A HREF='?_src_=holder;adminmoreinfo=\ref[found]'>?</A>|<A HREF='?_src_=holder;adminplayerobservefollow=\ref[found]'>F</A>)</font> "
+							msg += "<b><font color='black'>[original_word] </font></b> "
 							continue
-		msg += "[original_word] "
-	if(irc)
-		if(founds == "")
-			return "Search Failed"
-		else
-			return founds
+			msg += "[original_word] "
 
-	return msg
-
-
-/client/var/adminhelptimerid = 0
-
-/client/proc/giveadminhelpverb()
-	src.verbs |= /client/verb/adminhelp
-	adminhelptimerid = 0
-
-/client/verb/adminhelp(msg as text)
-	set category = "Admin"
-	set name = "Adminhelp"
-
-	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
-		return
-
-	//handle muting and automuting
-	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<span class='danger'>Error: Admin-PM: You cannot send adminhelps (Muted).</span>"
-		return
-	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
-		return
-
-	//clean the input msg
-	if(!msg)
-		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
-	var/original_msg = msg
-
-	//remove our adminhelp verb temporarily to prevent spamming of admins.
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(src, "giveadminhelpverb", 1200, TIMER_NORMAL) //2 minute cooldown of admin helps
-
-	msg = keywords_lookup(msg)
-
-	if(!mob)
-		return						//this doesn't happen
+	if(!mob)	return						//this doesn't happen
 
 	var/ref_mob = "\ref[mob]"
 	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>):</b> [msg]</span>"
 
 	//send this msg to all admins
-
+	var/admin_number_afk = 0
+	var/list/mentorholders = list()
+	var/list/modholders = list()
+	var/list/adminholders = list()
 	for(var/client/X in admins)
-		if(X.prefs.toggles & SOUND_ADMINHELP)
-			X << 'sound/effects/adminhelp.ogg'
-		window_flash(X)
-		X << msg
+		if(check_rights(R_ADMIN, 0, X.mob))
+			if(X.is_afk())
+				admin_number_afk++
+			adminholders += X
+			continue
+		if(check_rights(R_MOD, 0, X.mob))
+			modholders += X
+			continue
+		if(check_rights(R_MENTOR, 0, X.mob))
+			mentorholders += X
+			continue
 
+	switch(selected_type)
+		if("Mentorhelp")
+			msg = "<span class='mentorhelp'>[selected_type]: </span><span class='boldnotice'>[key_name(src, 1, 1, selected_type)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[mob.UID()]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) ([admin_jump_link(mob)]) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</span> <span class='mentorhelp'>[msg]</span>"
+			for(var/client/X in mentorholders + modholders + adminholders)
+				if(X.prefs.sound & SOUND_ADMINHELP)
+					X << 'sound/effects/adminhelp.ogg'
+				to_chat(X, msg)
+		if("Adminhelp")
+			msg = "<span class='adminhelp'>[selected_type]: </span><span class='boldnotice'>[key_name(src, 1, 1, selected_type)] (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[mob.UID()]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) ([admin_jump_link(mob)]) (<A HREF='?_src_=holder;check_antagonist=1'>CA</A>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) [ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</span> <span class='adminhelp'>[msg]</span>"
+			for(var/client/X in modholders + adminholders)
+				if(X.prefs.sound & SOUND_ADMINHELP)
+					X << 'sound/effects/adminhelp.ogg'
+				window_flash(X)
+				to_chat(X, msg)
 
 	//show it to the person adminhelping too
-	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
+	to_chat(src, "<span class='boldnotice'>[selected_type]</b>: [original_msg]</span>")
 
-	//send it to irc if nobody is on and tell us how many were on
-	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	var/admin_number_present = adminholders.len - admin_number_afk
+	log_admin("[selected_type]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins.")
+	if(admin_number_present <= 0)
+		if(!admin_number_afk)
+			send2adminirc("[selected_type] from [key_name(src)]: [original_msg] - !!No admins online!!")
+		else
+			send2adminirc("[selected_type] from [key_name(src)]: [original_msg] - !!All admins AFK ([admin_number_afk])!!")
+	else
+		send2adminirc("[selected_type] from [key_name(src)]: [original_msg]")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
-/proc/get_admin_counts(requiredflags = R_BAN)
-	. = list("total" = 0, "noflags" = 0, "afk" = 0, "stealth" = 0, "present" = 0)
-	for(var/client/X in admins)
-		.["total"]++
-		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
-			.["noflags"]++
-		else if(X.is_afk())
-			.["afk"]++
-		else if(X.holder.fakekey)
-			.["stealth"]++
-		else
-			.["present"]++
-
 /proc/send2irc_adminless_only(source, msg, requiredflags = R_BAN)
-	var/list/adm = get_admin_counts(requiredflags)
-	. = adm["present"]
-	if(. <= 0)
-		var/final = ""
-		if(!adm["afk"] && !adm["stealth"] && !adm["noflags"])
-			final = "[msg] - No admins online"
+	var/admin_number_total = 0		//Total number of admins
+	var/admin_number_afk = 0		//Holds the number of admins who are afk
+	var/admin_number_ignored = 0	//Holds the number of admins without +BAN (so admins who are not really admins)
+	var/admin_number_decrease = 0	//Holds the number of admins with are afk, ignored or both
+	for(var/client/X in admins)
+		admin_number_total++;
+		var/invalid = 0
+		if(requiredflags != 0 && !check_rights_for(X, requiredflags))
+			admin_number_ignored++
+			invalid = 1
+		if(X.is_afk())
+			admin_number_afk++
+			invalid = 1
+		if(X.holder.fakekey)
+			admin_number_ignored++
+			invalid = 1
+		if(invalid)
+			admin_number_decrease++
+	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid
+	if(admin_number_present <= 0)
+		if(!admin_number_afk && !admin_number_ignored)
+			send2irc(source, "[msg] - No admins online")
 		else
-			final = "[msg] - All admins AFK ([adm["afk"]]/[adm["total"]]), stealthminned ([adm["stealth"]]/[adm["total"]]), or lack[rights2text(requiredflags, " ")] ([adm["noflags"]]/[adm["total"]])"
-		send2irc(source,final)
-		send2otherserver(source,final)
-
-
-/proc/send2irc(msg,msg2)
-	if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
-	return
-
-/proc/send2otherserver(source,msg,type = "Ahelp")
-	if(global.cross_allowed)
-		var/list/message = list()
-		message["message_sender"] = source
-		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
-		message["crossmessage"] = type
-
-		world.Export("[global.cross_address]?[list2params(message)]")
-
-
-/proc/ircadminwho()
-	var/msg = "Admins: "
-	for(var/client/C in admins)
-		msg += "[C] "
-
-		if(C.holder.fakekey)
-			msg += "(Stealth)"
-
-		if(C.is_afk())
-			msg += "(AFK)"
-		msg += ", "
-
-	return msg
+			send2irc(source, "[msg] - All admins AFK ([admin_number_afk]/[admin_number_total]) or skipped ([admin_number_ignored]/[admin_number_total])")
+	return admin_number_present

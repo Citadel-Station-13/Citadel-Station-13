@@ -3,22 +3,39 @@
 	desc = "A large man-sized tube sporting a complex array of surgical apparatus."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "experiment-open"
-	density = 0
 	anchored = 1
-	state_open = 1
+	density = 1
 	var/points = 0
-	var/credits = 0
 	var/list/history = list()
 	var/list/abductee_minds = list()
 	var/flash = " - || - "
 	var/obj/machinery/abductor/console/console
+	var/mob/living/carbon/human/occupant
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
+/obj/machinery/abductor/experiment/Destroy()
+	eject_abductee()
+	return ..()
+
+/obj/machinery/abductor/experiment/MouseDrop_T(mob/living/carbon/human/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return
-	if(isabductor(target))
+	if(IsAbductor(target))
 		return
-	close_machine(target)
+	if(occupant)
+		to_chat(user, "<span class='notice'>\The [src] is already occupied.</span>")
+		return //occupied
+	if(target.buckled)
+		return
+	for(var/mob/living/carbon/slime/M in range(1, target))
+		if(M.Victim == target)
+			to_chat(user, "<span class='danger'>[target] has a slime attached to them, deal with that first.</span>")
+			return
+	visible_message("[user] puts [target] into the [src].")
+
+	target.forceMove(src)
+	occupant = target
+	icon_state = "experiment"
+	add_fingerprint(user)
 
 /obj/machinery/abductor/experiment/attack_hand(mob/user)
 	if(..())
@@ -26,87 +43,31 @@
 
 	experimentUI(user)
 
-/obj/machinery/abductor/experiment/open_machine()
-	if(!state_open && !panel_open)
-		..()
-
-/obj/machinery/abductor/experiment/close_machine(mob/target)
-	for(var/A in loc)
-		if(isabductor(A))
-			return
-	if(state_open && !panel_open)
-		..(target)
-
-/obj/machinery/abductor/experiment/relaymove(mob/user)
-	if(user.stat != CONSCIOUS)
-		return
-	container_resist(user)
-
-/obj/machinery/abductor/experiment/container_resist(mob/living/user)
-	var/breakout_time = 600
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
-	user << "<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about a minute.)</span>"
-	user.visible_message("<span class='italics'>You hear a metallic creaking from [src]!</span>")
-
-	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
-			return
-
-		visible_message("<span class='warning'>[user] successfully broke out of [src]!</span>")
-		user << "<span class='notice'>You successfully break out of [src]!</span>"
-
-		open_machine()
-
-
 /obj/machinery/abductor/experiment/proc/dissection_icon(mob/living/carbon/human/H)
-	var/icon/photo = null
-	var/g = (H.gender == FEMALE) ? "f" : "m"
-	if(!config.mutant_races || H.dna.species.use_skintones)
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.skin_tone]_[g]_s")
-	else
-		photo = icon("icon" = 'icons/mob/human.dmi', "icon_state" = "[H.dna.species.id]_[g]_s")
-		photo.Blend("#[H.dna.features["mcolor"]]", ICON_MULTIPLY)
+	var/icon/I = icon(H.stand_icon)
 
-	var/icon/eyes_s
-	if(EYECOLOR in H.dna.species.species_traits)
-		eyes_s = icon("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[H.dna.species.eyes]_s")
-		eyes_s.Blend("#[H.eye_color]", ICON_MULTIPLY)
+	var/icon/splat = icon(H.species.damage_overlays, "30")
+	splat.Blend(icon(H.species.damage_mask, "torso"), ICON_MULTIPLY)
+	splat.Blend(H.species.blood_color, ICON_MULTIPLY)
+	I.Blend(splat, ICON_OVERLAY)
 
-	var/datum/sprite_accessory/S
-	S = hair_styles_list[H.hair_style]
-	if(S && (HAIR in H.dna.species.species_traits))
-		var/icon/hair_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		hair_s.Blend("#[H.hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(hair_s, ICON_OVERLAY)
-
-	S = facial_hair_styles_list[H.facial_hair_style]
-	if(S && (FACEHAIR in H.dna.species.species_traits))
-		var/icon/facial_s = icon("icon" = S.icon, "icon_state" = "[S.icon_state]_s")
-		facial_s.Blend("#[H.facial_hair_color]", ICON_MULTIPLY)
-		eyes_s.Blend(facial_s, ICON_OVERLAY)
-
-	if(eyes_s)
-		photo.Blend(eyes_s, ICON_OVERLAY)
-
-	var/icon/splat = icon("icon" = 'icons/mob/dam_mob.dmi',"icon_state" = "chest30")
-	photo.Blend(splat,ICON_OVERLAY)
-
-	return photo
+	return I
 
 /obj/machinery/abductor/experiment/proc/experimentUI(mob/user)
 	var/dat
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
-		var/obj/item/weapon/photo/P = new
-		P.photocreate(null, icon(dissection_icon(occupant), dir = SOUTH))
-		user << browse_rsc(P.img, "dissection_img")
-		dat += "<table><tr><td>"
-		dat += "<img src=dissection_img height=80 width=80>" //Avert your eyes
-		dat += "</td><td>"
-		dat += "<a href='?src=\ref[src];experiment=1'>Probe</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=2'>Dissect</a><br>"
-		dat += "<a href='?src=\ref[src];experiment=3'>Analyze</a><br>"
+		var/icon/H = icon(dissection_icon(occupant), dir = SOUTH)
+		if(H)
+			user << browse_rsc(H, "dissection_img.png")
+			dat += "<table><tr><td>"
+			dat += "<img src='dissection_img.png' height='80' width='80'>"
+			dat += "</td><td>"
+		else
+			dat += "ERR: Unable to retrieve image data for occupant."
+		dat += "<a href='?src=[UID()];experiment=1'>Probe</a><br>"
+		dat += "<a href='?src=[UID()];experiment=2'>Dissect</a><br>"
+		dat += "<a href='?src=[UID()];experiment=3'>Analyze</a><br>"
 		dat += "</td></tr></table>"
 	else
 		dat += "<span class='linkOff'>Experiment </span>"
@@ -126,8 +87,8 @@
 	dat += "<br>"
 	dat += "[flash]"
 	dat += "<br>"
-	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
-	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+	dat += "<a href='?src=[UID()];refresh=1'>Scan</a>"
+	dat += "<a href='?src=[UID()];[occupant ? "eject=1'>Eject Occupant</a>" : "unoccupied=1'>Unoccupied</a>"]"
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
@@ -140,11 +101,8 @@
 	if(href_list["refresh"])
 		updateUsrDialog()
 		return
-	if(href_list["open"])
-		open_machine()
-		return
-	if(href_list["close"])
-		close_machine()
+	if(href_list["eject"])
+		eject_abductee()
 		return
 	if(occupant && occupant.stat != DEAD)
 		if(href_list["experiment"])
@@ -158,49 +116,52 @@
 	if(H in history)
 		return "<span class='bad'>Specimen already in database.</span>"
 	if(H.stat == DEAD)
-		say("Specimen deceased - please provide fresh sample.")
+		atom_say("Specimen deceased - please provide fresh sample.")
 		return "<span class='bad'>Specimen deceased.</span>"
-	var/obj/item/organ/gland/GlandTest = locate() in H.internal_organs
+	var/obj/item/organ/internal/gland/GlandTest = locate() in H.internal_organs
 	if(!GlandTest)
-		say("Experimental dissection not detected!")
+		atom_say("Experimental dissection not detected!")
 		return "<span class='bad'>No glands detected!</span>"
 	if(H.mind != null && H.ckey != null)
 		history += H
 		abductee_minds += H.mind
-		say("Processing specimen...")
+		atom_say("Processing specimen...")
 		sleep(5)
 		switch(text2num(type))
 			if(1)
-				H << "<span class='warning'>You feel violated.</span>"
+				to_chat(H, "<span class='warning'>You feel violated.</span>")
 			if(2)
-				H << "<span class='warning'>You feel yourself being sliced apart and put back together.</span>"
+				to_chat(H, "<span class='warning'>You feel yourself being sliced apart and put back together.</span>")
 			if(3)
-				H << "<span class='warning'>You feel intensely watched.</span>"
+				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
-		H << "<span class='warning'><b>Your mind snaps!</b></span>"
+		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
 		ticker.mode.abductees += H.mind
 		H.mind.objectives += O
-		H.mind.announce_objectives()
+		var/obj_count = 1
+		to_chat(H, "<span class='notice'>Your current objectives:</span>")
+		for(var/datum/objective/objective in H.mind.objectives)
+			to_chat(H, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			obj_count++
 		ticker.mode.update_abductor_icons_added(H.mind)
 
-		for(var/obj/item/organ/gland/G in H.internal_organs)
+		for(var/obj/item/organ/internal/gland/G in H.internal_organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
-			open_machine()
+			eject_abductee()
 			SendBack(H)
 			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			points += point_reward
-			credits += point_reward
 			return "<span class='good'>Experiment successful! [point_reward] new data-points collected.</span>"
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			return "<span class='bad'>Experiment failed! No replacement organ detected.</span>"
 	else
-		say("Brain activity nonexistant - disposing sample...")
-		open_machine()
+		atom_say("Brain activity nonexistant - disposing sample...")
+		eject_abductee()
 		SendBack(H)
 		return "<span class='bad'>Specimen braindead - disposed.</span>"
 	return "<span class='bad'>ERROR</span>"
@@ -217,9 +178,31 @@
 	H.uncuff()
 	return
 
-
-/obj/machinery/abductor/experiment/update_icon()
-	if(state_open)
-		icon_state = "experiment-open"
-	else
+/obj/machinery/abductor/experiment/attackby(obj/item/weapon/G, mob/user)
+	if(istype(G, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/grabbed = G
+		if(!ishuman(grabbed.affecting))
+			return
+		if(IsAbductor(grabbed.affecting))
+			return
+		if(occupant)
+			to_chat(user, "<span class='notice'>The [src] is already occupied!</span>")
+			return
+		for(var/mob/living/carbon/slime/S in range(1, grabbed.affecting))
+			if(S.Victim == grabbed.affecting)
+				to_chat(user, "<span class='danger'>[grabbed.affecting] has a slime attached to them, deal with that first.</span>")
+				return
+		visible_message("[user] puts [grabbed.affecting] into the [src].")
+		var/mob/living/carbon/human/H = grabbed.affecting
+		H.forceMove(src)
+		occupant = H
 		icon_state = "experiment"
+		add_fingerprint(user)
+		qdel(G)
+
+/obj/machinery/abductor/experiment/proc/eject_abductee()
+	if(!occupant)
+		return
+	occupant.forceMove(get_turf(src))
+	occupant = null
+	icon_state = "experiment-open"

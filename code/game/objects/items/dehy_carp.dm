@@ -3,25 +3,25 @@
  *	Instant carp, just add water
  */
 
-//Child of carpplushie because this should do everything the toy does and more
+// Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/carpplushie/dehy_carp
-	var/mob/owner = null	//Carp doesn't attack owner, set when using in hand
-	var/owned = 0	//Boolean, no owner to begin with
-	var/mobtype = /mob/living/simple_animal/hostile/carp //So admins can change what mob spawns via var fuckery
+	var/mob/owner = null	// Carp doesn't attack owner, set when using in hand
+	var/owned = 1	// Boolean, no owner to begin with
 
-//Attack self
-/obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user)
-	src.add_fingerprint(user)	//Anyone can add their fingerprints to it with this
-	if(!owned)
-		user << "<span class='notice'>You pet [src]. You swear it looks up at you.</span>"
+// Attack self
+/obj/item/toy/carpplushie/dehy_carp/attack_self(mob/user as mob)
+	src.add_fingerprint(user)	// Anyone can add their fingerprints to it with this
+	if(owned)
+		to_chat(user, "<span class='notice'>[src] stares up at you with friendly eyes.</span>")
 		owner = user
-		owned = 1
+		owned = 0
 	return ..()
 
 
 /obj/item/toy/carpplushie/dehy_carp/afterattack(obj/O, mob/user,proximity)
 	if(!proximity) return
 	if(istype(O,/obj/structure/sink))
+		to_chat(user, "<span class='notice'>You place [src] under a stream of water...</span>")
 		user.drop_item()
 		loc = get_turf(O)
 		return Swell()
@@ -31,24 +31,13 @@
 	desc = "It's growing!"
 	visible_message("<span class='notice'>[src] swells up!</span>")
 
-	//Animation
+	// Animation
 	icon = 'icons/mob/animal.dmi'
 	flick("carp_swell", src)
-	//Wait for animation to end
+	// Wait for animation to end
 	sleep(6)
-	if(!src || qdeleted(src))//we got toasted while animating
-		return
-	//Make space carp
-	var/mob/living/M = new mobtype(get_turf(src))
-	//Make carp non-hostile to user, and their allies
-	if(owner)
-		var/list/factions = owner.faction.Copy()
-		for(var/F in factions)
-			if(F == "neutral")
-				factions -= F
-		M.faction = factions
-	if (!owner || owner.faction != M.faction)
-		visible_message("<span class='warning'>You have a bad feeling about this.</span>") //welcome to the hostile carp enjoy your die
-	else
-		visible_message("<span class='notice'>The newly grown [M.name] looks up at you with friendly eyes.</span>")
+	// Make space carp
+	var/mob/living/simple_animal/hostile/carp/C = new /mob/living/simple_animal/hostile/carp(get_turf(src))
+	// Make carp non-hostile to user, yes this means
+	C.faction |= list("syndicate", "\ref[owner]")
 	qdel(src)

@@ -7,7 +7,7 @@
 
 /datum/map_template/shelter/New()
 	. = ..()
-	blacklisted_turfs = typecacheof(/turf/closed)
+	blacklisted_turfs = typecacheof(list(/turf/simulated/wall, /turf/simulated/mineral, /turf/simulated/shuttle/wall))
 	whitelisted_turfs = list()
 	banned_areas = typecacheof(/area/shuttle)
 
@@ -35,8 +35,8 @@
 		built-in navigation, entertainment, medical facilities and a \
 		sleeping area! Order now, and we'll throw in a TINY FAN, \
 		absolutely free!"
-	mappath = "_maps/templates/shelter_1.dmm"
+	mappath = "_maps/map_files/templates/shelter_1.dmm"
 
 /datum/map_template/shelter/alpha/New()
 	. = ..()
-	whitelisted_turfs = typecacheof(/turf/closed/mineral)
+	whitelisted_turfs = typecacheof(/turf/simulated/mineral)

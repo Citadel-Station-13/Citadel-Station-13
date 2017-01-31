@@ -7,15 +7,13 @@
 
 */
 
-#define SYMPTOM_LIMIT 8
-
 var/list/archive_diseases = list()
 
 // The order goes from easy to cure to hard to cure.
 var/list/advance_cures = 	list(
 									"sodiumchloride", "sugar", "orangejuice",
 									"spaceacillin", "salglu_solution", "ethanol",
-									"leporazine", "synaptizine", "lipolicide",
+									"teporone", "diphenhydramine", "lipolicide",
 									"silver", "gold"
 								)
 
@@ -33,10 +31,10 @@ var/list/advance_cures = 	list(
 	agent = "advance microbes"
 	max_stages = 5
 	spread_text = "Unknown"
-	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human)
 
 	// NEW VARS
-	var/list/properties = list()
+
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
 	var/processing = 0
@@ -163,9 +161,9 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(new_name = 0)
-	//world << "[src.name] \ref[src] - REFRESH!"
-	GenerateProperties()
-	AssignProperties()
+//	to_chat(world, "[src.name] \ref[src] - REFRESH!")
+	var/list/properties = GenerateProperties()
+	AssignProperties(properties)
 	id = null
 
 	if(!archive_diseases[GetDiseaseID()])
@@ -184,24 +182,26 @@ var/list/advance_cures = 	list(
 		CRASH("We did not have any symptoms before generating properties.")
 		return
 
-	properties = list("resistance" = 0, "stealth" = 0, "stage_rate" = 0, "transmittable" = 0, "severity" = 0)
+	var/list/properties = list("resistance" = 1, "stealth" = 0, "stage_rate" = 1, "transmittable" = 1, "severity" = 0)
 
 	for(var/datum/symptom/S in symptoms)
+
 		properties["resistance"] += S.resistance
 		properties["stealth"] += S.stealth
 		properties["stage_rate"] += S.stage_speed
 		properties["transmittable"] += S.transmittable
 		properties["severity"] = max(properties["severity"], S.severity) // severity is based on the highest severity symptom
-	return
+
+	return properties
 
 // Assign the properties that are in the list.
-/datum/disease/advance/proc/AssignProperties()
+/datum/disease/advance/proc/AssignProperties(list/properties = list())
 
 	if(properties && properties.len)
 		switch(properties["stealth"])
-			if(2,3)
+			if(2)
 				visibility_flags = HIDDEN_SCANNER
-			if(4 to INFINITY)
+			if(3 to INFINITY)
 				visibility_flags = HIDDEN_SCANNER|HIDDEN_PANDEMIC
 
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
@@ -252,10 +252,10 @@ var/list/advance_cures = 	list(
 
 
 // Will generate a random cure, the less resistance the symptoms have, the harder the cure.
-/datum/disease/advance/proc/GenerateCure()
+/datum/disease/advance/proc/GenerateCure(list/properties = list())
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//world << "Res = [res]"
+//		to_chat(world, "Res = [res]")
 		cures = list(advance_cures[res])
 
 		// Get the cure name from the cure_id
@@ -306,7 +306,7 @@ var/list/advance_cures = 	list(
 	if(HasSymptom(S))
 		return
 
-	if(symptoms.len < (SYMPTOM_LIMIT - 1) + rand(-1, 1))
+	if(symptoms.len < 5 + rand(-1, 1))
 		symptoms += S
 	else
 		RemoveSymptom(pick(symptoms))
@@ -327,7 +327,7 @@ var/list/advance_cures = 	list(
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(var/list/D_list)
 
-	//world << "Mixing!!!!"
+//	to_chat(world, "Mixing!!!!")
 
 	var/list/diseases = list()
 
@@ -352,7 +352,7 @@ var/list/advance_cures = 	list(
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//world << "END MIXING!!!!!"
+//	to_chat(world, "END MIXING!!!!!")
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return
@@ -372,7 +372,7 @@ var/list/advance_cures = 	list(
 	if(!user)
 		return
 
-	var/i = SYMPTOM_LIMIT
+	var/i = 5
 
 	var/datum/disease/advance/D = new(0, null)
 	D.symptoms = list()
@@ -402,11 +402,11 @@ var/list/advance_cures = 	list(
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in disease_master.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
-			if(H.z != 1)
+			if(!is_station_level(H.z))
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)
@@ -420,21 +420,37 @@ var/list/advance_cures = 	list(
 /*
 /mob/verb/test()
 
-	for(var/datum/disease/D in SSdisease.processing)
-		src << "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>"
+	for(var/datum/disease/D in disease_master.processing)
+		to_chat(src, "<a href='?_src_=vars;Vars=[D.UID()]'>[D.name] - [D.holder]</a>")
 */
 
 
 /datum/disease/advance/proc/totalStageSpeed()
-	return properties["stage_rate"]
+	var/total_stage_speed = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stage_speed += S.stage_speed
+	return total_stage_speed
 
 /datum/disease/advance/proc/totalStealth()
-	return properties["stealth"]
+	var/total_stealth = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_stealth += S.stealth
+	return total_stealth
 
 /datum/disease/advance/proc/totalResistance()
-	return properties["resistance"]
+	var/total_resistance = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_resistance += S.resistance
+	return total_resistance
 
 /datum/disease/advance/proc/totalTransmittable()
-	return properties["transmittable"]
+	var/total_transmittable = 0
+	for(var/i in symptoms)
+		var/datum/symptom/S = i
+		total_transmittable += S.transmittable
+	return total_transmittable
 
 #undef RANDOM_STARTING_LEVEL

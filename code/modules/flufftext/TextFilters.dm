@@ -1,7 +1,29 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
+proc/Intoxicated(phrase)
+	phrase = html_decode(phrase)
+	var/leng=lentext(phrase)
+	var/counter=lentext(phrase)
+	var/newphrase=""
+	var/newletter=""
+	while(counter>=1)
+		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
+		if(rand(1,3)==3)
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="c")	newletter="k"
+		switch(rand(1,7))
+			if(1,3,5,8)	newletter="[lowertext(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext(newletter)]"
+			if(7)	newletter+="'"
+			//if(9,10)	newletter="<b>[newletter]</b>"
+			//if(11,12)	newletter="<big>[newletter]</big>"
+			//if(13)	newletter="<small>[newletter]</small>"
+		newphrase+="[newletter]";counter-=1
+	return newphrase
 
-//is this shit even used at all
-/proc/NewStutter(phrase,stunned)
+proc/NewStutter(phrase,stunned)
 	phrase = html_decode(phrase)
 
 	var/list/split_phrase = splittext(phrase," ") //Split it up into words.
@@ -11,7 +33,7 @@
 	if(stunned) i = split_phrase.len
 	for(,i > 0,i--) //Pick a few words to stutter on.
 
-		if (!unstuttered_words.len)
+		if(!unstuttered_words.len)
 			break
 		var/word = pick(unstuttered_words)
 		unstuttered_words -= word //Remove from unstuttered words so we don't stutter it again.
@@ -37,10 +59,10 @@
 
 	return sanitize(jointext(split_phrase," "))
 
-/proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
+proc/Stagger(mob/M,d) //Technically not a filter, but it relates to drunkenness.
 	step(M, pick(d,turn(d,90),turn(d,-90)))
 
-/proc/Ellipsis(original_msg, chance = 50, keep_words)
+proc/Ellipsis(original_msg, chance = 50)
 	if(chance <= 0) return "..."
 	if(chance >= 100) return original_msg
 
@@ -53,9 +75,8 @@
 	for(var/w in words)
 		if(prob(chance))
 			new_words += "..."
-			if(!keep_words)
-				continue
-		new_words += w
+		else
+			new_words += w
 
 	new_msg = jointext(new_words," ")
 

@@ -1,6 +1,4 @@
-
 // Drill, Diamond drill, Mining scanner
-
 
 /obj/item/mecha_parts/mecha_equipment/drill
 	name = "exosuit drill"
@@ -13,16 +11,15 @@
 /obj/item/mecha_parts/mecha_equipment/drill/action(atom/target)
 	if(!action_checks(target))
 		return
-	if(isspaceturf(target))
+	if(istype(target, /turf/space))
 		return
 	if(isobj(target))
 		var/obj/target_obj = target
-		if(target_obj.resistance_flags & UNACIDABLE)
+		if(target_obj.unacidable)
 			return
-	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>", \
-					"<span class='userdanger'>[chassis] starts to drill [target]...</span>", \
-					 "<span class='italics'>You hear drilling.</span>")
-
+	target.visible_message("<span class='warning'>[chassis] starts to drill [target].</span>",
+					"<span class='userdanger'>[chassis] starts to drill [target]...</span>",
+					blind_message = "<span class='italics'>You hear drilling.</span>")
 	if(do_after_cooldown(target))
 		if(isturf(target))
 			var/turf/T = target
@@ -40,7 +37,13 @@
 /turf/proc/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	return
 
-/turf/closed/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+/turf/simulated/floor/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	ex_act(1)
+
+/turf/simulated/wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	ex_act(2)
+
+/turf/simulated/wall/r_wall/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
 	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
 		if(drill.do_after_cooldown(src))//To slow down how fast mechs can drill through the station
 			drill.log_message("Drilled through [src]")
@@ -48,30 +51,33 @@
 	else
 		drill.occupant_message("<span class='danger'>[src] is too durable to drill through.</span>")
 
-/turf/closed/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/closed/mineral/M in range(drill.chassis,1))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
+/turf/simulated/mineral/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	for(var/turf/simulated/mineral/M in range(drill.chassis, 1))
+		if(get_dir(drill.chassis, M) & drill.chassis.dir)
 			M.gets_drilled()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
 
-/turf/open/floor/plating/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
-	for(var/turf/open/floor/plating/asteroid/M in range(1, drill.chassis))
-		if(get_dir(drill.chassis,M)&drill.chassis.dir)
-			M.gets_dug()
+/turf/simulated/floor/plating/airless/asteroid/drill_act(obj/item/mecha_parts/mecha_equipment/drill/drill)
+	if(istype(drill, /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill))
+		for(var/turf/simulated/floor/plating/airless/asteroid/M in range(1, src))
+			M.gets_drilled()
+	else
+		for(var/turf/simulated/floor/plating/airless/asteroid/M in range(1, drill.chassis))
+			if(get_dir(drill.chassis, M) & drill.chassis.dir)
+				M.gets_drilled()
 	drill.log_message("Drilled through [src]")
 	drill.move_ores()
-
 
 /obj/item/mecha_parts/mecha_equipment/drill/proc/move_ores()
 	if(locate(/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp) in chassis.equipment)
 		var/obj/structure/ore_box/ore_box = locate(/obj/structure/ore_box) in chassis:cargo
 		if(ore_box)
 			for(var/obj/item/weapon/ore/ore in range(1, chassis))
-				if(get_dir(chassis,ore)&chassis.dir)
+				if(get_dir(chassis, ore) & chassis.dir)
 					ore.Move(ore_box)
 
-/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M as obj)
+/obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
 	if(..())
 		if(istype(M, /obj/mecha/working) || istype(M, /obj/mecha/combat))
 			return 1
@@ -81,13 +87,10 @@
 	target.visible_message("<span class='danger'>[chassis] drills [target] with [src].</span>", \
 						"<span class='userdanger'>[chassis] drills [target] with [src].</span>")
 	add_logs(user, target, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		H.apply_damage(drill_damage, BRUTE, "chest")
-	else if(target.stat == DEAD && target.butcher_results)
+	if(target.stat == DEAD && target.butcher_results)
 		target.harvest(chassis) // Butcher the mob with our drill.
 	else
-		target.take_bodypart_damage(drill_damage)
+		target.take_organ_damage(drill_damage)
 
 	if(target)
 		target.Paralyse(10)
@@ -107,28 +110,27 @@
 	name = "exosuit mining scanner"
 	desc = "Equipment for engineering and combat exosuits. It will automatically check surrounding rock for useful minerals."
 	icon_state = "mecha_analyzer"
+	origin_tech = "materials=3;engineering=2"
 	selectable = 0
 	equip_cooldown = 30
 	var/scanning = 0
 
-/obj/item/mecha_parts/mecha_equipment/mining_scanner/New()
-	START_PROCESSING(SSobj, src)
-
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/attach(obj/mecha/M)
-	..()
+	. = ..()
+	processing_objects.Add(src)
 	M.occupant_sight_flags |= SEE_TURFS
 	if(M.occupant)
 		M.occupant.update_sight()
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/detach()
 	chassis.occupant_sight_flags &= ~SEE_TURFS
+	processing_objects.Remove(src)
 	if(chassis.occupant)
 		chassis.occupant.update_sight()
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/mining_scanner/process()
 	if(!loc)
-		STOP_PROCESSING(SSobj, src)
 		qdel(src)
 	if(scanning)
 		return
@@ -136,8 +138,9 @@
 		var/obj/mecha/working/mecha = loc
 		if(!mecha.occupant)
 			return
-		var/list/L = list(mecha.occupant)
+		var/list/occupant = list()
+		occupant |= mecha.occupant
 		scanning = 1
-		mineral_scan_pulse(L,get_turf(loc))
+		mineral_scan_pulse(occupant,get_turf(loc))
 		spawn(equip_cooldown)
 			scanning = 0

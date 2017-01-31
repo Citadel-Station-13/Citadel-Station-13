@@ -1,7 +1,7 @@
 /*
 	HOW DO I LOG RUNTIMES?
 	Firstly, start dreamdeamon if it isn't already running. Then select "world>Log Session" (or press the F3 key)
-	navigate the popup window to the data/logs/runtimes/ folder from where your tgstation .dmb is located.
+	navigate the popup window to the data/logs/runtime/ folder from where your tgstation .dmb is located.
 	(you may have to make this folder yourself)
 
 	OPTIONAL: 	you can select the little checkbox down the bottom to make dreamdeamon save the log everytime you
@@ -24,16 +24,16 @@
 	set category = null
 
 	if(!src.holder)
-		src << "<font color='red'>Only Admins may use this command.</font>"
+		to_chat(src, "<font color='red'>Only Admins may use this command.</font>")
 		return
 
 	var/client/target = input(src,"Choose somebody to grant access to the server's runtime logs (permissions expire at the end of each round):","Grant Permissions",null) as null|anything in clients
 	if(!istype(target,/client))
-		src << "<font color='red'>Error: giveruntimelog(): Client not found.</font>"
+		to_chat(src, "<font color='red'>Error: giveruntimelog(): Client not found.</font>")
 		return
 
 	target.verbs |= /client/proc/getruntimelog
-	target << "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>"
+	to_chat(target, "<font color='red'>You have been granted access to runtime logs. Please use them responsibly or risk being banned.</font>")
 	return
 
 
@@ -44,7 +44,7 @@
 	set desc = "Retrieve any session logfiles saved by dreamdeamon."
 	set category = null
 
-	var/path = browse_files("data/logs/runtimes/")
+	var/path = browse_files("data/logs/runtime/")
 	if(!path)
 		return
 
@@ -52,8 +52,9 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	src << ftp(file(path))
+
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -72,8 +73,9 @@
 		return
 
 	message_admins("[key_name_admin(src)] accessed file: [path]")
-	src << ftp( file(path) )
-	src << "Attempting to send file, this may take a fair few minutes if the file is very large."
+	src << ftp(file(path))
+
+	to_chat(src, "Attempting to send file, this may take a fair few minutes if the file is very large.")
 	return
 
 
@@ -85,10 +87,12 @@
 	set name = "Show Server Log"
 	set desc = "Shows today's server log."
 
-	if(fexists("[diary]"))
-		src << ftp(diary)
+	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")].log"
+	if( fexists(path) )
+		src << ftp(file(path))
+
 	else
-		src << "<font color='red'>Server log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Error: view_txt_log(): File not found/Invalid path([path]).</font>")
 		return
 	feedback_add_details("admin_verb","VTL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -99,10 +103,14 @@
 	set name = "Show Server Attack Log"
 	set desc = "Shows today's server attack log."
 
-	if(fexists("[diaryofmeanpeople]"))
-		src << ftp(diaryofmeanpeople)
+	var/path = "data/logs/[time2text(world.realtime,"YYYY/MM-Month/DD-Day")] Attack.log"
+	if( fexists(path) )
+		src << ftp(file(path))
+
 	else
-		src << "<font color='red'>Server attack log not found, try using .getserverlog.</font>"
+		to_chat(src, "<font color='red'>Error: view_atk_log(): File not found/Invalid path([path]).</font>")
 		return
+	usr << run(file(path))
+
 	feedback_add_details("admin_verb","SSAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

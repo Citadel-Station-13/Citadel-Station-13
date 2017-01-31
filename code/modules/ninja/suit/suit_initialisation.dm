@@ -2,101 +2,93 @@
 //Verbs link to procs because verb-like procs have a bug which prevents their use if the arguments are not readily referenced.
 //^ Old coder words may be false these days, Not taking the risk for now.
 
-/obj/item/clothing/suit/space/space_ninja/proc/init()
-	set name = "Initialize Suit"
-	set desc = "Initializes the suit for field operation."
-	set category = "Ninja Equip"
+/obj/item/clothing/suit/space/space_ninja/verb/toggle_suit()
+	set category = "Space Ninja - Equipment"
+	set name = "Toggle Suit"
 
-	ninitialize()
+	if(usr.mind.special_role == "Ninja")
+		if(suitBusy)
+			to_chat(usr, "<span style='color: #ff0000;'><b>ERROR: </b>Suit systems busy, cannot initiate [suitActive ? "de-activation" : "activation"] protocals at this time.</span>")
+			return
 
-/obj/item/clothing/suit/space/space_ninja/proc/deinit()
-	set name = "De-Initialize Suit"
-	set desc = "Begins procedure to remove the suit."
-	set category = "Ninja Equip"
+		suitBusy = 1
 
-	if(!s_busy)
-		deinitialize()
-	else
-		affecting << "<span class='danger'>The function did not trigger!</span>"
+		if(suitActive && (alert("Confirm suit systems shutdown? This cannot be halted once it has started.", "Confirm Shutdown", "Yes", "No") == "Yes"))
+			to_chat(usr, "<span style='color: #0000ff;'>Now de-initializing...</span>")
 
+			sleep(15)
+			to_chat(usr, "<span style='color: #0000ff;'>Logging off, [usr.real_name]. Shutting down <b>SpiderOS</b>.</span>")
 
-/obj/item/clothing/suit/space/space_ninja/proc/ninitialize(delay = s_delay, mob/living/carbon/human/U = loc)
-	if(U.mind && U.mind.assigned_role==U.mind.special_role && !s_initialized && !s_busy)//Shouldn't be busy... but anything is possible I guess.
-		s_busy = 1
-		for(var/i,i<7,i++)
-			switch(i)
-				if(0)
-					U << "<span class='notice'>Now initializing...</span>"
-				if(1)
-					if(!lock_suit(U))//To lock the suit onto wearer.
-						break
-					U << "<span class='notice'>Securing external locking mechanism...\nNeural-net established.</span>"
-				if(2)
-					U << "<span class='notice'>Extending neural-net interface...\nNow monitoring brain wave pattern...</span>"
-				if(3)
-					if(U.stat==2||U.health<=0)
-						U << "<span class='danger'><B>FÄAL ï¿½Rrï¿½R</B>: 344--93#ï¿½&&21 BRï¿½ï¿½N |/|/aVï¿½ PATT$RN <B>RED</B>\nA-A-aBï¿½rTï¿½NG...</span>"
-						unlock_suit()
-						break
-					lock_suit(U,1)//Check for icons.
-					U.regenerate_icons()
-					U << "<span class='notice'>Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>"
-				if(4)
-					U << "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>"
-				if(5)
-					U << "<span class='notice'>Primary system status: <B>ONLINE</B>.\nBackup system status: <B>ONLINE</B>.\nCurrent energy capacity: <B>[cell.charge]</B>.</span>"
-				if(6)
-					U << "<span class='notice'>All systems operational. Welcome to <B>SpiderOS</B>, [U.real_name].</span>"
-					grant_ninja_verbs()
-					grant_equip_verbs()
-					ntick()
-			sleep(delay)
-		s_busy = 0
-	else
-		if(!U.mind||U.mind.assigned_role!=U.mind.special_role)//Your run of the mill persons shouldn't know what it is. Or how to turn it on.
-			U << "You do not understand how this suit functions. Where the heck did it even come from?"
-		else if(s_initialized)
-			U << "<span class='danger'>The suit is already functioning.</span> Please report this bug."
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>Primary system status: <B>OFFLINE</B>.\nBackup system status: <b>OFFLINE</b>.</span>")
+
+			sleep(5)
+			to_chat(usr, "<span style='color: #0000ff;'>VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>")
+			//TODO: Shut down any active abilities
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>Disconnecting neural-net interface...</span> <span style='color: #32CD32'><b>Success</b>.</span>")
+			if(usr.hud_used)
+				qdel(usr.hud_used)
+				usr.hud_used = null
+			usr.create_mob_hud()
+			usr.regenerate_icons()
+
+			sleep(5)
+			to_chat(usr, "<span style='color: #0000ff;'>Disengaging neural-net interface...</span> <span style='color: #32CD32'><b>Success</b>.</span>")
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
+			//TODO: Grant verbs
+			toggle_suit_lock(usr)
+			usr.regenerate_icons()
+			suitBusy = 0
+			suitActive = 0
+
+		else if(!suitActive) // Activate the suit.
+			to_chat(usr, "<span style='color: #0000ff;'>Now initializing...</span>")
+
+			sleep(15)
+			to_chat(usr, "<span style='color: #0000ff;'>Now establishing neural-net interface...")
+			if(usr.mind.special_role != "Ninja")
+				to_chat(usr, "<span style='color: #ff0000;'><b>FĆAL �Rr�R</b>: ŧer nt recgnized, c-cntr-r䣧-ç äcked.")
+				return
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>Neural-net established. Now monitoring brainwave pattern. \nBrainwave pattern</span> <span style='color: #32CD32;'><b>GREEN</b></span><span style='color: #0000ff;'>, proceeding.</span>")
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>Securing external locking mechanism...</span>")
+			if(!toggle_suit_lock(usr))
+				return
+
+			sleep(5)
+			to_chat(usr, "<span style='color: #0000ff;'>Suit secured, extending neural-net interface...</span>")
+			if(usr.hud_used)
+				qdel(usr.hud_used)
+				usr.hud_used = null
+			usr.hud_used = new /datum/hud/human(usr, 'icons/mob/screen_ninja.dmi', "#ffffff", 255)
+			if(usr.hud_used)
+				usr.hud_used.show_hud(usr.hud_used.hud_version)
+			usr.regenerate_icons()
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>VOID-shift device status: <b>ONLINE</b>.\nCLOAK-tech device status:<b>ONLINE</b></span>")
+
+			sleep(5)
+			to_chat(usr, "<span style='color: #0000ff;'>Primary system status: <b>ONLINE</b>.\nBackup system status: <b>ONLINE</b>.</span>")
+			if(suitCell)
+				to_chat(usr, "<span style='color: #0000ff;'>Current energy capacity: <b>[suitCell.charge]/[suitCell.maxcharge]</b>.</span>")
+
+			sleep(10)
+			to_chat(usr, "<span style='color: #0000ff;'>All systems operational. Welcome to <b>SpiderOS</b>, [usr.real_name].</span>")
+			//TODO: Grant ninja verbs here.
+			suitBusy = 0
+			suitActive = 1
+
 		else
-			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
-	return
-
-
-
-/obj/item/clothing/suit/space/space_ninja/proc/deinitialize(delay = s_delay)
-	if(affecting==loc&&!s_busy)
-		var/mob/living/carbon/human/U = affecting
-		if(!s_initialized)
-			U << "<span class='danger'>The suit is not initialized.</span> Please report this bug."
-			return
-		if(alert("Are you certain you wish to remove the suit? This will take time and remove all abilities.",,"Yes","No")=="No")
-			return
-		if(s_busy)
-			U << "<span class='userdanger'>ERROR</span>: You cannot use this function at this time."
-			return
-		s_busy = 1
-		for(var/i = 0,i<7,i++)
-			switch(i)
-				if(0)
-					U << "<span class='notice'>Now de-initializing...</span>"
-					spideros = 0//Spideros resets.
-				if(1)
-					U << "<span class='notice'>Logging off, [U:real_name]. Shutting down <B>SpiderOS</B>.</span>"
-					remove_ninja_verbs()
-				if(2)
-					U << "<span class='notice'>Primary system status: <B>OFFLINE</B>.\nBackup system status: <B>OFFLINE</B>.</span>"
-				if(3)
-					U << "<span class='notice'>VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>"
-					cancel_stealth()//Shutdowns stealth.
-				if(4)
-					U << "<span class='notice'>Disconnecting neural-net interface...</span>\green<B>Success</B><span class='notice'>.</span>"
-				if(5)
-					U << "<span class='notice'>Disengaging neural-net interface...</span>\green<B>Success</B><span class='notice'>.</span>"
-				if(6)
-					U << "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>"
-					remove_equip_verbs()
-					unlock_suit()
-					U.regenerate_icons()
-			sleep(delay)
-		s_busy = 0
-	return
+			suitBusy = 0
+			to_chat(usr, "<span style='color: #0000ff;'><b>NOTICE: </b>Suit de-activation protocals aborted.</span>")
+	else
+		to_chat(usr, "<span style='color: #ff0000;'><b>FĆAL �Rr�R</b>: ŧer nt recgnized, c-cntr-r䣧-ç äcked.")
+		return

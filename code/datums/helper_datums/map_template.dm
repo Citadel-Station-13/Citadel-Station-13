@@ -17,51 +17,53 @@
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	var/bounds = maploader.load_map(file(path), 1, 1, 1, cropMap = 0, measureOnly = 1)
 	if(bounds)
 		width = bounds[MAP_MAXX] // Assumes all templates are rectangular, have a single Z level, and begin at 1,1,1
 		height = bounds[MAP_MAXY]
 	return bounds
 
-/proc/initTemplateBounds(var/list/bounds)
-	var/list/obj/machinery/atmospherics/atmos_machines = list()
-	var/list/obj/structure/cable/cables = list()
-	var/list/atom/atoms = list()
-
-	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
-	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-		var/turf/B = L
-		for(var/A in B)
-			atoms += A
-			if(istype(A,/obj/structure/cable))
-				cables += A
-				continue
-			if(istype(A,/obj/machinery/atmospherics))
-				atmos_machines += A
-				continue
-
-	SSobj.setup_template_objects(atoms)
-	SSmachine.setup_template_powernets(cables)
-	SSair.setup_template_machinery(atmos_machines)
-
-/datum/map_template/proc/load(turf/T, centered = FALSE)
+/datum/map_template/proc/load(turf/T, centered = 0)
+	var/turf/placement = T
+	var/min_x = placement.x
+	var/min_y = placement.y
 	if(centered)
-		T = locate(T.x - round(width/2) , T.y - round(height/2) , T.z)
-	if(!T)
-		return
-	if(T.x+width > world.maxx)
-		return
-	if(T.y+height > world.maxy)
-		return
+		min_x -= round(width/2)
+		min_y -= round(height/2)
 
-	var/list/bounds = maploader.load_map(get_file(), T.x, T.y, T.z, cropMap=TRUE)
-	if(!bounds)
+	var/max_x = min_x + width - 1
+	var/max_y = min_y + height - 1
+
+	if(!T)
 		return 0
 
-	//initialize things that are normally initialized after map load
-	initTemplateBounds(bounds)
+	var/turf/bot_left = locate(max(1, min_x), max(1, min_y), placement.z)
+	var/turf/top_right = locate(min(world.maxx, max_x), min(world.maxy, max_y), placement.z)
 
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	// 1 bigger, to update the turf smoothing
+	var/turf/ST_bot_left = locate(max(1, min_x-1), max(1, min_y-1), placement.z)
+	var/turf/ST_top_right = locate(min(world.maxx, max_x+1), min(world.maxy, max_y+1), placement.z)
+	// This is to place a freeze on initialization until the map's done loading
+	// otherwise atmos and stuff will start running mid-load
+	// This system will metaphorically snap in half (not postpone init everywhere)
+	// if given a multi-z template
+	// it might need to be adapted for that when that time comes
+	space_manager.add_dirt(placement.z)
+	var/list/bounds = maploader.load_map(get_file(), min_x, min_y, placement.z, cropMap = 1)
+	if(!bounds)
+		return 0
+	if(bot_left == null || top_right == null)
+		log_runtime(EXCEPTION("One of the late setup corners is bust"), src)
+
+	if(ST_bot_left == null || ST_top_right == null)
+		log_runtime(EXCEPTION("One of the smoothing corners is bust"), src)
+
+	late_setup_level(
+		block(bot_left, top_right),
+		block(ST_bot_left, ST_top_right))
+	space_manager.remove_dirt(placement.z)
+
+	log_game("[name] loaded at [min_x],[min_y],[placement.z]")
 	return 1
 
 /datum/map_template/proc/get_file()
@@ -71,31 +73,56 @@
 		. = file(mappath)
 
 	if(!.)
-		world.log << "The file of [src] appears to be empty/non-existent."
+		log_runtime(EXCEPTION("  The file of [src] appears to be empty/non-existent."), src)
 
-/datum/map_template/proc/get_affected_turfs(turf/T, centered = FALSE)
+/datum/map_template/proc/get_affected_turfs(turf/T, centered = 0)
 	var/turf/placement = T
+	var/min_x = placement.x
+	var/min_y = placement.y
 	if(centered)
-		var/turf/corner = locate(placement.x - round(width/2), placement.y - round(height/2), placement.z)
-		if(corner)
-			placement = corner
-	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
+		min_x -= round(width/2)
+		min_y -= round(height/2)
+
+	var/max_x = min_x + width-1
+	var/max_y = min_y + height-1
+	placement = locate(max(min_x,1), max(min_y,1), placement.z)
+	return block(placement, locate(min(max_x, world.maxx), min(max_y, world.maxy), placement.z))
+
+/datum/map_template/proc/fits_in_map_bounds(turf/T, centered = 0)
+	var/turf/placement = T
+	var/min_x = placement.x
+	var/min_y = placement.y
+	if(centered)
+		min_x -= round(width/2)
+		min_y -= round(height/2)
+
+	var/max_x = min_x + width-1
+	var/max_y = min_y + height-1
+	if(min_x < 1 || min_y < 1 || max_x > world.maxx || max_y > world.maxy)
+		return 0
+	else
+		return 1
 
 
-/proc/preloadTemplates(path = "_maps/templates/") //see master controller setup
-	var/list/filelist = flist(path)
-	for(var/map in filelist)
-		var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
-		map_templates[T.name] = T
+/proc/preloadTemplates(path = "_maps/map_files/templates/") //see master controller setup
+	for(var/map in flist(path))
+		if(cmptext(copytext(map, length(map) - 3), ".dmm"))
+			var/datum/map_template/T = new(path = "[path][map]", rename = "[map]")
+			map_templates[T.name] = T
 
-	preloadRuinTemplates()
-	preloadShuttleTemplates()
+	if(!config.disable_space_ruins) // so we don't unnecessarily clutter start-up
+		preloadRuinTemplates()
 	preloadShelterTemplates()
+	preloadShuttleTemplates()
 
 /proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
-	banned += generateMapList("config/spaceruinblacklist.txt")
+	var/list/banned
+	if(fexists("config/spaceRuinBlacklist.txt"))
+		banned = generateMapList("config/spaceRuinBlacklist.txt")
+	else
+		banned = generateMapList("config/example/spaceRuinBlacklist.txt")
+	//banned += generateMapList("config/lavaRuinBlacklist.txt")
 
 	for(var/item in subtypesof(/datum/map_template/ruin))
 		var/datum/map_template/ruin/ruin_type = item
@@ -110,26 +137,12 @@
 		map_templates[R.name] = R
 		ruins_templates[R.name] = R
 
+		/*
 		if(istype(R, /datum/map_template/ruin/lavaland))
 			lava_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/space))
+		*/
+		if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
-
-
-/proc/preloadShuttleTemplates()
-	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
-
-	for(var/item in subtypesof(/datum/map_template/shuttle))
-		var/datum/map_template/shuttle/shuttle_type = item
-		if(!(initial(shuttle_type.suffix)))
-			continue
-
-		var/datum/map_template/shuttle/S = new shuttle_type()
-		if(unbuyable.Find(S.mappath))
-			S.can_be_bought = FALSE
-
-		shuttle_templates[S.shuttle_id] = S
-		map_templates[S.shuttle_id] = S
 
 /proc/preloadShelterTemplates()
 	for(var/item in subtypesof(/datum/map_template/shelter))
@@ -140,3 +153,14 @@
 
 		shelter_templates[S.shelter_id] = S
 		map_templates[S.shelter_id] = S
+
+/proc/preloadShuttleTemplates()
+	for(var/item in subtypesof(/datum/map_template/shuttle))
+		var/datum/map_template/shuttle/shuttle_type = item
+		if(!initial(shuttle_type.suffix))
+			continue
+
+		var/datum/map_template/shuttle/S = new shuttle_type()
+
+		shuttle_templates[S.shuttle_id] = S
+		map_templates[S.shuttle_id] = S

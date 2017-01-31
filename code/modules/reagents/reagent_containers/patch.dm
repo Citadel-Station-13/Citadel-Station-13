@@ -1,31 +1,40 @@
-/obj/item/weapon/reagent_containers/pill/patch
+/obj/item/weapon/reagent_containers/food/pill/patch
 	name = "chemical patch"
 	desc = "A chemical patch for touch based applications."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bandaid"
 	item_state = "bandaid"
-	possible_transfer_amounts = list()
+	possible_transfer_amounts = null
 	volume = 40
-	apply_type = PATCH
+	apply_type = TOUCH
 	apply_method = "apply"
-	self_delay = 30		// three seconds
+	transfer_efficiency = 0.5 //patches aren't as effective at getting chemicals into the bloodstream.
 
-/obj/item/weapon/reagent_containers/pill/patch/afterattack(obj/target, mob/user , proximity)
+/obj/item/weapon/reagent_containers/food/pill/patch/afterattack(obj/target, mob/user , proximity)
 	return // thanks inheritance again
 
-/obj/item/weapon/reagent_containers/pill/patch/canconsume(mob/eater, mob/user)
-	if(!iscarbon(eater))
-		return 0
-	return 1 // Masks were stopping people from "eating" patches. Thanks, inheritance.
-
-/obj/item/weapon/reagent_containers/pill/patch/styptic
-	name = "brute patch"
+/obj/item/weapon/reagent_containers/food/pill/patch/styptic
+	name = "healing patch"
 	desc = "Helps with brute injuries."
-	list_reagents = list("styptic_powder" = 20)
 	icon_state = "bandaid_brute"
+	instant_application = 1
+	list_reagents = list("styptic_powder" = 40)
 
-/obj/item/weapon/reagent_containers/pill/patch/silver_sulf
+/obj/item/weapon/reagent_containers/food/pill/patch/silver_sulf
 	name = "burn patch"
 	desc = "Helps with burn injuries."
-	list_reagents = list("silver_sulfadiazine" = 20)
 	icon_state = "bandaid_burn"
+	instant_application = 1
+	list_reagents = list("silver_sulfadiazine" = 40)
+
+/obj/item/weapon/reagent_containers/food/pill/patch/synthflesh
+	name = "syntheflesh patch"
+	desc = "Helps with burn injuries."
+	icon_state = "bandaid_med"
+	instant_application = 1
+	list_reagents = list("synthflesh" = 20)
+
+/obj/item/weapon/reagent_containers/food/pill/patch/nicotine
+	name = "nicotine patch"
+	desc = "Helps temporarily curb the cravings of nicotine dependency."
+	list_reagents = list("nicotine" = 20)

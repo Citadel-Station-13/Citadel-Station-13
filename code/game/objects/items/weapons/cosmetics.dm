@@ -1,13 +1,11 @@
 /obj/item/weapon/lipstick
-	gender = PLURAL
 	name = "red lipstick"
 	desc = "A generic brand of lipstick."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "lipstick"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/colour = "red"
 	var/open = 0
-
 
 /obj/item/weapon/lipstick/purple
 	name = "purple lipstick"
@@ -22,43 +20,47 @@
 	name = "black lipstick"
 	colour = "black"
 
+/obj/item/weapon/lipstick/green
+	name = "green lipstick"
+	colour = "green"
+
+/obj/item/weapon/lipstick/blue
+	name = "blue lipstick"
+	colour = "blue"
+
+/obj/item/weapon/lipstick/white
+	name = "white lipstick"
+	colour = "white"
 
 /obj/item/weapon/lipstick/random
 	name = "lipstick"
 
 /obj/item/weapon/lipstick/random/New()
-	..()
 	colour = pick("red","purple","lime","black","green","blue","white")
 	name = "[colour] lipstick"
 
 
-
-/obj/item/weapon/lipstick/attack_self(mob/user)
-	cut_overlays()
-	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
+/obj/item/weapon/lipstick/attack_self(mob/user as mob)
+	overlays.Cut()
+	to_chat(user, "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>")
 	open = !open
 	if(open)
 		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
 		colored.color = colour
 		icon_state = "lipstick_uncap"
-		add_overlay(colored)
+		overlays += colored
 	else
 		icon_state = "lipstick"
 
-/obj/item/weapon/lipstick/attack(mob/M, mob/user)
-	if(!open)
-		return
+/obj/item/weapon/lipstick/attack(mob/M as mob, mob/user as mob)
+	if(!open)	return
 
-	if(!istype(M, /mob))
-		return
+	if(!istype(M, /mob))	return
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.is_mouth_covered())
-			user << "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>"
-			return
 		if(H.lip_style)	//if they already have lipstick on
-			user << "<span class='warning'>You need to wipe off the old lipstick first!</span>"
+			to_chat(user, "<span class='notice'>You need to wipe off the old lipstick first!</span>")
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
@@ -68,39 +70,15 @@
 			H.update_body()
 		else
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
-								 "<span class='notice'>You begin to apply \the [src] on [H]'s lips...</span>")
+								 "<span class='notice'>You begin to apply \the [src].</span>")
 			if(do_after(user, 20, target = H))
-				user.visible_message("[user] does [H]'s lips with \the [src].", \
-									 "<span class='notice'>You apply \the [src] on [H]'s lips.</span>")
+				user.visible_message("<span class='notice'>[user] does [H]'s lips with \the [src].</span>", \
+									 "<span class='notice'>You apply \the [src].</span>")
 				H.lip_style = "lipstick"
 				H.lip_color = colour
 				H.update_body()
 	else
-		user << "<span class='warning'>Where are the lips on that?</span>"
-
-//you can wipe off lipstick with paper!
-/obj/item/weapon/paper/attack(mob/M, mob/user)
-	if(user.zone_selected == "mouth")
-		if(!ismob(M))
-			return
-
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H == user)
-				user << "<span class='notice'>You wipe off the lipstick with [src].</span>"
-				H.lip_style = null
-				H.update_body()
-			else
-				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
-								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick...</span>")
-				if(do_after(user, 10, target = H))
-					user.visible_message("[user] wipes [H]'s lipstick off with \the [src].", \
-										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
-					H.lip_style = null
-					H.update_body()
-	else
-		..()
-
+		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
 /obj/item/weapon/razor
 	name = "electric razor"
@@ -108,78 +86,75 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "razor"
 	flags = CONDUCT
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
-
-/obj/item/weapon/razor/proc/shave(mob/living/carbon/human/H, location = "mouth")
-	if(location == "mouth")
-		H.facial_hair_style = "Shaved"
-	else
-		H.hair_style = "Skinhead"
-
-	H.update_hair()
-	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
-
-
-/obj/item/weapon/razor/attack(mob/M, mob/user)
+/obj/item/weapon/razor/attack(mob/living/carbon/M as mob, mob/user as mob)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/location = user.zone_selected
-		if(location == "mouth")
-			if(!(FACEHAIR in H.dna.species.species_traits))
-				user << "<span class='warning'>There is no facial hair to shave!</span>"
+		var/obj/item/organ/external/head/C = H.get_organ("head")
+		var/datum/robolimb/robohead = all_robolimbs[C.model]
+		if(user.zone_sel.selecting == "mouth")
+			if(!get_location_accessible(H, "mouth"))
+				to_chat(user, "<span class='warning'>The mask is in the way.</span>")
 				return
-			if(!get_location_accessible(H, location))
-				user << "<span class='warning'>The mask is in the way!</span>"
+			if((C.species && C.species.flags & ALL_RPARTS) && robohead.is_monitor) //If the target is of a species that can have prosthetic heads, but the head doesn't support human hair 'wigs'...
+				to_chat(user, "<span class='warning'>You find yourself disappointed at the appalling lack of facial hair.</span>")
 				return
-			if(H.facial_hair_style == "Shaved")
-				user << "<span class='warning'>Already clean-shaven!</span>"
+			if(C.f_style == "Shaved")
+				to_chat(user, "<span class='notice'>Already clean-shaven.</span>")
 				return
-
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their facial hair with [src].", \
-									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
+				user.visible_message("<span class='notice'>[user] starts to shave their facial hair with \the [src].</span>", \
+				"<span class='notice'>You take a moment shave your facial hair with \the [src].</span>")
 				if(do_after(user, 50, target = H))
-					user.visible_message("[user] shaves his facial hair clean with [src].", \
-										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
-					shave(H, location)
+					user.visible_message("<span class='notice'>[user] shaves his facial hair clean with the [src].</span>", \
+					"<span class='notice'>You finish shaving with the [src]. Fast and clean!</span>")
+					C.f_style = "Shaved"
+					H.update_fhair()
+					playsound(src.loc, 'sound/items/Welder2.ogg', 20, 1)
 			else
+				var/turf/user_loc = user.loc
 				var/turf/H_loc = H.loc
-				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
-									 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
+				user.visible_message("<span class='danger'>[user] tries to shave [H]'s facial hair with \the [src].</span>", \
+				"<span class='warning'>You start shaving [H]'s facial hair.</span>")
 				if(do_after(user, 50, target = H))
-					if(H_loc == H.loc)
-						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
-											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
-						shave(H, location)
-
-		else if(location == "head")
-			if(!(HAIR in H.dna.species.species_traits))
-				user << "<span class='warning'>There is no hair to shave!</span>"
+					if(user_loc == user.loc && H_loc == H.loc)
+						user.visible_message("<span class='danger'>[user] shaves off [H]'s facial hair with \the [src].</span>", \
+						"<span class='notice'>You shave [H]'s facial hair clean off.</span>")
+						C.f_style = "Shaved"
+						H.update_fhair()
+						playsound(src.loc, 'sound/items/Welder2.ogg', 20, 1)
+		if(user.zone_sel.selecting == "head")
+			if(!get_location_accessible(H, "head"))
+				to_chat(user, "<span class='warning'>The headgear is in the way.</span>")
 				return
-			if(!get_location_accessible(H, location))
-				user << "<span class='warning'>The headgear is in the way!</span>"
+			if((C.species && C.species.flags & ALL_RPARTS) && robohead.is_monitor) //If the target is of a species that can have prosthetic heads, but the head doesn't support human hair 'wigs'...
+				to_chat(user, "<span class='warning'>You find yourself disappointed at the appalling lack of hair.</span>")
 				return
-			if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
-				user << "<span class='warning'>There is not enough hair left to shave!</span>"
+			if(C.h_style == "Bald" || C.h_style == "Balding Hair" || C.h_style == "Skinhead")
+				to_chat(user, "<span class='notice'>There is not enough hair left to shave...</span>")
 				return
-
 			if(H == user) //shaving yourself
-				user.visible_message("[user] starts to shave their head with [src].", \
-									 "<span class='notice'>You start to shave your head with [src]...</span>")
-				if(do_after(user, 5, target = H))
-					user.visible_message("[user] shaves his head with [src].", \
-										 "<span class='notice'>You finish shaving with [src].</span>")
-					shave(H, location)
-			else
-				var/turf/H_loc = H.loc
-				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
-									 "<span class='notice'>You start shaving [H]'s head...</span>")
+				user.visible_message("<span class='warning'>[user] starts to shave their head with \the [src].</span>", \
+				"<span class='warning'>You start to shave your head with \the [src].</span>")
 				if(do_after(user, 50, target = H))
-					if(H_loc == H.loc)
-						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
-											 "<span class='notice'>You shave [H]'s head bald.</span>")
-						shave(H, location)
+					user.visible_message("<span class='notice'>[user] shaves his head with the [src].</span>", \
+					"<span class='notice'>You finish shaving with the [src].</span>")
+					C.h_style = "Skinhead"
+					H.update_hair()
+					playsound(src.loc, 'sound/items/Welder2.ogg', 40, 1)
+			else
+				var/turf/user_loc = user.loc
+				var/turf/H_loc = H.loc
+				user.visible_message("<span class='danger'>[user] tries to shave [H]'s head with \the [src]!</span>", \
+				"<span class='warning'>You start shaving [H]'s head.</span>")
+				if(do_after(user, 50, target = H))
+					if(user_loc == user.loc && H_loc == H.loc)
+						user.visible_message("<span class='danger'>[user] shaves [H]'s head bald with \the [src]!</span>", \
+						"<span class='warning'>You shave [H]'s head bald.</span>")
+						C.h_style = "Skinhead"
+						H.update_hair()
+						playsound(src.loc, 'sound/items/Welder2.ogg', 40, 1)
 		else
 			..()
 	else

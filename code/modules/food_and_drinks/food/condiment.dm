@@ -26,17 +26,20 @@
 	 "sugar" = list("emptycondiment", "sugar bottle", "Tasty spacey sugar!"))
 	var/originalname = "condiment" //Can't use initial(name) for this. This stores the name set by condimasters.
 
+/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W, mob/user, params)
+	return
+
+/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
+	return
+
 /obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
 
 	if(!reagents || !reagents.total_volume)
-		user << "<span class='warning'>None of [src] left, oh no!</span>"
-		return 0
-
-	if(!canconsume(M, user))
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		return 0
 
 	if(M == user)
-		M << "<span class='notice'>You swallow some of contents of \the [src].</span>"
+		to_chat(M, "<span class='notice'>You swallow some of contents of \the [src].</span>")
 	else
 		user.visible_message("<span class='warning'>[user] attempts to feed [M] from [src].</span>")
 		if(!do_mob(user, M))
@@ -52,31 +55,35 @@
 	playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 	return 1
 
+/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/I, mob/user, params)
+	return
+
 /obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			user << "<span class='warning'>[target] is empty!</span>"
+			to_chat(user, "<span class='warning'>[target] is empty!</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			user << "<span class='warning'>[src] is full!</span>"
+			to_chat(user, "<span class='warning'>[src] is full!</span>")
 			return
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-		user << "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>"
+		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "<span class='warning'>[src] is empty!</span>"
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>you can't add anymore to [target]!</span>"
+			to_chat(user, "<span class='warning'>you can't add anymore to [target]!</span>")
 			return
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		user << "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>"
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the condiment to [target].</span>")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
 	if(!possible_states.len)
@@ -92,7 +99,7 @@
 		else
 			name = "[originalname] bottle"
 			main_reagent = reagents.get_master_reagent_name()
-			if (reagents.reagent_list.len==1)
+			if(reagents.reagent_list.len==1)
 				desc = "Looks like it is [lowertext(main_reagent)], but you are not sure."
 			else
 				desc = "A mixture of various condiments. [lowertext(main_reagent)] is one of them."
@@ -101,7 +108,6 @@
 		icon_state = "emptycondiment"
 		name = "condiment bottle"
 		desc = "An empty condiment bottle."
-		return
 
 /obj/item/weapon/reagent_containers/food/condiment/enzyme
 	name = "universal enzyme"
@@ -125,26 +131,13 @@
 	possible_states = list()
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] begins to swap forms with the salt shaker! It looks like \he's trying to commit suicide.</span>")
 	var/newname = "[name]"
 	name = "[user.name]"
 	user.name = newname
 	user.real_name = newname
 	desc = "Salt. From dead crew, presumably."
 	return (TOXLOSS)
-
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker/afterattack(obj/target, mob/living/user, proximity)
-	if(!proximity)
-		return
-	if(isturf(target))
-		if(!reagents.has_reagent("sodiumchloride", 2))
-			user << "<span class='warning'>You don't have enough salt to make a pile!</span>"
-			return
-		user.visible_message("<span class='notice'>[user] shakes some salt onto [target].</span>", "<span class='notice'>You shake some salt onto [target].</span>")
-		reagents.remove_reagent("sodiumchloride", 2)
-		new/obj/effect/decal/cleanable/salt(target)
-		return
-	..()
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -195,7 +188,11 @@
 	list_reagents = list("soysauce" = 50)
 	possible_states = list()
 
-
+/obj/item/weapon/reagent_containers/food/condiment/syndisauce
+	name = "\improper Chef Excellence's Special Sauce"
+	desc = "A potent sauce extracted from the potent amanita mushrooms. Death never tasted quite so delicious."
+	list_reagents = list("amanitin" = 50)
+	possible_states = list()
 
 //Food packs. To easily apply deadly toxi... delicious sauces to your food!
 
@@ -217,16 +214,16 @@
 	//You can tear the bag open above food to put the condiments on it, obviously.
 	if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			user << "<span class='warning'>You tear open [src], but there's nothing in it.</span>"
+			to_chat(user, "<span class='warning'>You tear open [src], but there's nothing in it.</span>")
 			qdel(src)
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			user << "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>" //Not sure if food can ever be full, but better safe than sorry.
+			to_chat(user, "<span class='warning'>You tear open [src], but [target] is stacked so high that it just drips off!</span>") //Not sure if food can ever be full, but better safe than sorry.
 			qdel(src)
 			return
 		else
-			user << "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>"
-			src.reagents.trans_to(target, amount_per_transfer_from_this)
+			to_chat(user, "<span class='notice'>You tear open [src] above [target] and the condiments drip onto it.</span>")
+			reagents.trans_to(target, amount_per_transfer_from_this)
 			qdel(src)
 
 /obj/item/weapon/reagent_containers/food/condiment/pack/on_reagent_change()

@@ -1,29 +1,68 @@
 /obj/machinery/door/poddoor/shutters
-	gender = PLURAL
-	name = "shutters"
-	desc = "Heavy duty metal shutters that opens mechanically."
-	icon = 'icons/obj/doors/shutters.dmi'
-	layer = CLOSED_DOOR_LAYER
-	damage_deflection = 20
-
-/obj/machinery/door/poddoor/shutters/preopen
-	icon_state = "open"
-	density = 0
-	opacity = 0
-
-
-//shutters look like ass with things on top of them.
+	name = "Shutters"
+	icon = 'icons/obj/doors/rapid_pdoor.dmi'
+	icon_state = "shutter1"
+	power_channel = ENVIRON
 
 /obj/machinery/door/poddoor/shutters/New()
 	..()
-	layer = CLOSED_DOOR_LAYER	//to handle /obj/machinery/door/New() resetting the layer.
+	layer = 3.1
 
+/obj/machinery/door/poddoor/shutters/preopen
+	icon_state = "shutter0"
+	density = 0
+	opacity = 0
 
-/obj/machinery/door/poddoor/shutters/open(ignorepower = 0)
-	..()
-	layer = CLOSED_DOOR_LAYER
+/obj/machinery/door/poddoor/shutters/attackby(obj/item/weapon/C as obj, mob/user as mob, params)
+	add_fingerprint(user)
+	if(!(istype(C, /obj/item/weapon/crowbar) || (istype(C, /obj/item/weapon/twohanded/fireaxe) && C:wielded == 1) ))
+		return
+	if(density && (stat & NOPOWER) && !operating)
+		operating = 1
+		spawn(-1)
+			flick("shutterc0", src)
+			icon_state = "shutter0"
+			sleep(15)
+			density = 0
+			set_opacity(0)
+			operating = 0
+			return
+	return
 
+/obj/machinery/door/poddoor/shutters/open()
+	if(operating == 1) //doors can still open when emag-disabled
+		return
+	if(!ticker)
+		return 0
+	if(!operating) //in case of emag
+		operating = 1
+	flick("shutterc0", src)
+	icon_state = "shutter0"
+	sleep(10)
+	density = 0
+	set_opacity(0)
+	air_update_turf(1)
+	update_freelook_sight()
 
-/obj/machinery/door/poddoor/shutters/close(ignorepower = 0)
-	..()
-	layer = CLOSED_DOOR_LAYER
+	if(operating == 1) //emag again
+		operating = 0
+	if(autoclose)
+		spawn(150)
+			autoclose()		//TODO: note to self: look into this ~Carn
+	return 1
+
+/obj/machinery/door/poddoor/shutters/close()
+	if(operating)
+		return
+	operating = 1
+	flick("shutterc1", src)
+	icon_state = "shutter1"
+	density = 1
+	if(visible)
+		set_opacity(1)
+	air_update_turf(1)
+	update_freelook_sight()
+
+	sleep(10)
+	operating = 0
+	return

@@ -12,12 +12,6 @@
 	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
-	..(target,thrower)
-	SplashReagents(target)
-	smash(target,thrower,1)
-	return
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
 
 	//Creates a shattering noise and replaces the bottle with a broken_bottle
@@ -28,9 +22,9 @@
 	else
 		user.drop_item()
 		user.put_in_active_hand(B)
-	B.icon_state = src.icon_state
+	B.icon_state = icon_state
 
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
@@ -44,7 +38,7 @@
 		B.force = 0
 		B.throwforce = 0
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -53,13 +47,12 @@
 	if(!target)
 		return
 
-	if(user.a_intent != INTENT_HARM || !isGlass)
+	if(user.a_intent != I_HARM || !isGlass)
 		return ..()
-
 
 	force = 15 //Smashing bottles over someoen's head hurts.
 
-	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
+	var/obj/item/organ/external/affecting = user.zone_sel.selecting //Find what the player is aiming at
 
 	var/armor_block = 0 //Get the target's armor values for normal attack damage.
 	var/armor_duration = 0 //The more force the bottle has, the longer the duration.
@@ -93,12 +86,12 @@
 	armor_duration /= 10
 
 	//Apply the damage!
-	armor_block = min(90,armor_block)
+	armor_block = min(90, armor_block)
 	target.apply_damage(force, BRUTE, affecting, armor_block)
 
 	// You are going to knock someone out for longer if they are not wearing a helmet.
 	var/head_attack_message = ""
-	if(affecting == "head" && istype(target, /mob/living/carbon/))
+	if(affecting == "head" && iscarbon(target))
 		head_attack_message = " on the head"
 		//Weaken the target for the duration that we calculated and divide it by 5.
 		if(armor_duration)
@@ -106,11 +99,11 @@
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [name]!</span>", \
+				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits \himself with a bottle of [name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", src)
@@ -119,16 +112,13 @@
 	SplashReagents(target)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
-	return
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
-	if(src.reagents.total_volume)
-		M.visible_message("<span class='danger'>The contents of [src] splashes all over [M]!</span>")
+/obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(mob/M)
+	if(reagents && reagents.total_volume)
+		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
 		reagents.reaction(M, TOUCH)
 		reagents.clear_reagents()
-	return
 
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
@@ -140,12 +130,13 @@
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	item_state = "beer"
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "attacked")
 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
-	sharpness = IS_SHARP
+	sharp = 1
+	edge = 1
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/gin
 	name = "Griffeater Gin"
@@ -241,71 +232,17 @@
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/New()
-	..()
-	redact()
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
-	// There was a large fight in the coderbus about a player reference
-	// in absinthe. Ergo, this is why the name generation is now so
-	// complicated. Judge us kindly.
-	var/shortname = pickweight(
-		list("T&T" = 1, "A&A" = 1, "Generic" = 1))
-	var/fullname
-	switch(shortname)
-		if("T&T")
-			fullname = "Teal and Tealer"
-		if("A&A")
-			fullname = "Ash and Asher"
-		if("Generic")
-			fullname = "Nanotrasen Cheap Imitations"
-	var/removals = list("\[REDACTED\]", "\[EXPLETIVE DELETED\]",
-		"\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]",
-		"\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]")
-	var/chance = 50
-
-	if(prob(chance))
-		shortname = pick_n_take(removals)
-
-	var/list/final_fullname = list()
-	for(var/word in splittext(fullname, " "))
-		if(prob(chance))
-			word = pick_n_take(removals)
-		final_fullname += word
-
-	fullname = jointext(final_fullname, " ")
-
-	// Actually finally setting the new name and desc
-	name = "[shortname] [name]"
-	desc = "[desc] [fullname] Inc."
-
-
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium
 	name = "Gwyn's Premium Absinthe"
 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
 	icon_state = "absinthepremium"
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
-	return
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/lizardwine
-	name = "Bottle of lizard wine"
-	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
-	icon_state = "lizardwine"
-	list_reagents = list("lizardwine" = 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/hcider
 	name = "Jian Hard Cider"
 	desc = "Apple juice for adults."
 	icon_state = "hcider"
 	volume = 50
-	list_reagents = list("hcider" = 50)
-
-/obj/item/weapon/reagent_containers/food/drinks/bottle/grappa
-	name = "Phillipes well-aged Grappa"
-	desc = "Bottle of Grappa."
-	icon_state = "grappabottle"
-	list_reagents = list("grappa" = 100)
+	list_reagents = list("suicider" = 50)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -341,15 +278,14 @@
 	isGlass = 0
 	list_reagents = list("limejuice" = 100)
 
-
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
 	list_reagents = list()
-	var/list/accelerants = list(	/datum/reagent/consumable/ethanol,/datum/reagent/fuel,/datum/reagent/clf3,/datum/reagent/phlogiston,
-							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/toxin/plasma,/datum/reagent/toxin/spore_burning)
+	var/list/accelerants = list(/datum/reagent/consumable/ethanol,/datum/reagent/fuel,/datum/reagent/clf3,/datum/reagent/phlogiston,
+							/datum/reagent/napalm,/datum/reagent/hellwater,/datum/reagent/plasma,/datum/reagent/plasma_dust)
 	var/active = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
@@ -357,17 +293,16 @@
 	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
 	if(B)
 		icon_state = B.icon_state
-		B.reagents.copy_to(src,100)
+		B.reagents.copy_to(src, 100)
 		if(!B.isGlass)
 			desc += " You're not sure if making this out of a carton was the brightest idea."
 			isGlass = 0
-	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)
 	var/firestarter = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)
-			if(istype(R,A))
+			if(istype(R, A))
 				firestarter = 1
 				break
 	SplashReagents(target)
@@ -377,23 +312,21 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot() && !active)
+	if(is_hot(I) && !active)
 		active = 1
 		var/turf/bombturf = get_turf(src)
 		var/area/bombarea = get_area(bombturf)
-		var/message = "[ADMIN_LOOKUP(user)] has primed a [name] for detonation at [ADMIN_COORDJMP(bombturf)]."
-		bombers += message
-		message_admins(message)
-		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] [COORD(bombturf)].")
+		message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[bombarea] (JMP)</a>.")
+		log_game("[key_name(user)] has primed a [name] for detonation at [bombarea] ([bombturf.x],[bombturf.y],[bombturf.z]).")
 
-		user << "<span class='info'>You light [src] on fire.</span>"
-		add_overlay(fire_overlay)
+		to_chat(user, "<span class='info'>You light [src] on fire.</span>")
+		overlays += fire_overlay
 		if(!isGlass)
 			spawn(50)
 				if(active)
 					var/counter
-					var/target = src.loc
-					for(counter = 0, counter<2, counter++)
+					var/target = loc
+					for(counter = 0, counter < 2, counter++)
 						if(istype(target, /obj/item/weapon/storage))
 							var/obj/item/weapon/storage/S = target
 							target = S.loc
@@ -406,8 +339,8 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)
 		if(!isGlass)
-			user << "<span class='danger'>The flame's spread too far on it!</span>"
+			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")
 			return
-		user << "<span class='info'>You snuff out the flame on [src].</span>"
+		to_chat(user, "<span class='info'>You snuff out the flame on \the [src].</span>")
 		overlays -= fire_overlay
 		active = 0

@@ -10,21 +10,21 @@
 	var/planchette = "A"
 	var/lastuser = null
 
-/obj/structure/spirit_board/examine()
-	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
-	..()
+/obj/structure/spirit_board/examine(mob/user)
+	..(user)
+	to_chat(user, "[initial(desc)] The planchette is sitting at \"[planchette]\".")
 
-/obj/structure/spirit_board/attack_hand(mob/user)
+/obj/structure/spirit_board/attack_hand(mob/user as mob)
 	if(..())
 		return
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user)
+/obj/structure/spirit_board/attack_ghost(mob/dead/observer/user as mob)
 	spirit_board_pick_letter(user)
 
 
-/obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
+/obj/structure/spirit_board/proc/spirit_board_pick_letter(var/mob/M)
 	if(!spirit_board_checks(M))
 		return 0
 
@@ -33,7 +33,7 @@
 		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
 
 	planchette = input("Choose the letter.", "Seance!") in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
-	add_logs(M, src, "picked a letter on", " which was \"[planchette]\".")
+	add_logs(M, src, "picked a letter on", addition="which was \"[planchette]\".")
 	cooldown = world.time
 	lastuser = M.ckey
 
@@ -43,7 +43,7 @@
 		visible_message("<span class='notice'>The planchette slowly moves... and stops at the letter \"[planchette]\".</span>")
 
 
-/obj/structure/spirit_board/proc/spirit_board_checks(mob/M)
+/obj/structure/spirit_board/proc/spirit_board_checks(var/mob/M)
 	//cooldown
 	var/bonus = 0
 	if(M.ckey == lastuser)
@@ -55,11 +55,14 @@
 	//lighting check
 	var/light_amount = 0
 	var/turf/T = get_turf(src)
-	light_amount = T.get_lumcount()
-
+	var/atom/movable/lighting_overlay/LO = locate(/atom/movable/lighting_overlay) in T
+	if(LO)
+		light_amount = LO.get_clamped_lum(0.5)*10
+	else
+		light_amount =  10
 
 	if(light_amount > 2)
-		M << "<span class='warning'>It's too bright here to use [src.name]!</span>"
+		to_chat(M, "<span class='warning'>It's too bright here to use [src.name]!</span>")
 		return 0
 
 	//mobs in range check
@@ -67,12 +70,12 @@
 	for(var/mob/living/L in orange(1,src))
 		if(L.ckey && L.client)
 			if((world.time - L.client.inactivity) < (world.time - 300) || L.stat != CONSCIOUS || L.restrained())//no playing with braindeads or corpses or handcuffed dudes.
-				M << "<span class='warning'>[L] doesn't seem to be paying attention...</span>"
+				to_chat(M, "<span class='warning'>[L] doesn't seem to be paying attention...</span>")
 			else
 				users_in_range++
 
 	if(users_in_range < 2)
-		M << "<span class='warning'>There aren't enough people to use the [src.name]!</span>"
+		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
 		return 0
 
 	return 1

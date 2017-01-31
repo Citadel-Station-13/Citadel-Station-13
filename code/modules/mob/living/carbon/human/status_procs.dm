@@ -1,18 +1,19 @@
-
-/mob/living/carbon/human/Stun(amount, updating = 1, ignore_canstun = 0)
-	amount = dna.species.spec_stun(src,amount)
+/mob/living/carbon/human/SetStunned(amount, updating = 1, force = 0)
+	if(species)
+		amount = amount * species.stun_mod
 	..()
 
-/mob/living/carbon/human/Weaken(amount, updating = 1, ignore_canstun = 0)
-	amount = dna.species.spec_stun(src,amount)
+/mob/living/carbon/human/SetWeakened(amount, updating = 1, force = 0)
+	if(species)
+		amount = amount * species.stun_mod
 	..()
 
-/mob/living/carbon/human/cure_husk()
-	. = ..()
-	if(.)
-		update_hair()
+/mob/living/carbon/human/SetParalysis(amount, updating = 1, force = 0)
+	if(species)
+		amount = amount * species.stun_mod
+	..()
 
-/mob/living/carbon/human/become_husk()
-	. = ..()
-	if(.)
-		update_hair()
+/mob/living/carbon/human/SetSleeping(amount, updating = 1)
+	if(species)
+		amount = amount * species.stun_mod
+	..()

@@ -28,22 +28,23 @@ BONUS
 	..()
 	if(prob(SYMPTOM_ACTIVATION_PROB))
 		var/mob/living/M = A.affected_mob
-		if(ishuman(M))
+		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
+			var/obj/item/organ/external/head/head_organ = H.get_organ("head")
 			switch(A.stage)
 				if(1, 2)
-					H << "<span class='warning'>Your chin itches.</span>"
-					if(H.facial_hair_style == "Shaved")
-						H.facial_hair_style = "Jensen Beard"
-						H.update_hair()
+					to_chat(H, "<span class='warning'>Your chin itches.</span>")
+					if(head_organ.f_style == "Shaved")
+						head_organ.f_style = "Jensen Beard"
+						H.update_fhair()
 				if(3, 4)
-					H << "<span class='warning'>You feel tough.</span>"
-					if(!(H.facial_hair_style == "Dwarf Beard") && !(H.facial_hair_style == "Very Long Beard") && !(H.facial_hair_style == "Full Beard"))
-						H.facial_hair_style = "Full Beard"
-						H.update_hair()
+					to_chat(H, "<span class='warning'>You feel tough.</span>")
+					if(!(head_organ.f_style == "Dwarf Beard") && !(head_organ.f_style == "Very Long Beard") && !(head_organ.f_style == "Full Beard"))
+						head_organ.f_style = "Full Beard"
+						H.update_fhair()
 				else
-					H << "<span class='warning'>You feel manly!</span>"
-					if(!(H.facial_hair_style == "Dwarf Beard") && !(H.facial_hair_style == "Very Long Beard"))
-						H.facial_hair_style = pick("Dwarf Beard", "Very Long Beard")
-						H.update_hair()
+					to_chat(H, "<span class='warning'>You feel manly!</span>")
+					if(!(head_organ.f_style == "Dwarf Beard") && !(head_organ.f_style == "Very Long Beard"))
+						head_organ.f_style = pick("Dwarf Beard", "Very Long Beard")
+						H.update_fhair()
 	return

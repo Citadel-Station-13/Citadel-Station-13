@@ -6,6 +6,7 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt"
 	desc = "A conveyor belt."
+	layer = 2			// so they appear under stuff
 	anchored = 1
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -22,7 +23,7 @@
 	id = "round_end_belt"
 
 
-// Auto conveyour is always on unless unpowered
+// Auto conveyor is always on unless unpowered
 
 /obj/machinery/conveyor/auto/New(loc, newdir)
 	..(loc, newdir)
@@ -42,12 +43,17 @@
 		operating = 1
 	icon_state = "conveyor[operating * verted]"
 
-// create a conveyor
+	// create a conveyor
 /obj/machinery/conveyor/New(loc, newdir)
 	..(loc)
 	if(newdir)
-		setDir(newdir)
+		dir = newdir
 	update_move_direction()
+
+/obj/machinery/conveyor/set_dir(newdir)
+	. = ..()
+	update_move_direction()
+
 
 /obj/machinery/conveyor/proc/update_move_direction()
 	switch(dir)
@@ -67,11 +73,11 @@
 			forwards = EAST
 			backwards = SOUTH
 		if(NORTHWEST)
-			forwards = NORTH
-			backwards = EAST
-		if(SOUTHEAST)
 			forwards = SOUTH
 			backwards = WEST
+		if(SOUTHEAST)
+			forwards = NORTH
+			backwards = EAST
 		if(SOUTHWEST)
 			forwards = WEST
 			backwards = NORTH
@@ -84,6 +90,7 @@
 	else
 		movedir = backwards
 	update()
+
 
 /obj/machinery/conveyor/proc/update()
 	if(stat & BROKEN)
@@ -109,46 +116,38 @@
 	sleep(1)
 	for(var/atom/movable/A in affecting)
 		if(!A.anchored)
-			if(A.loc == src.loc) // prevents the object from being affected if it's not currently here.
+			if(A.loc == loc) // prevents the object from being affected if it's not currently here.
 				step(A,movedir)
 		CHECK_TICK
+
+
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
-		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
-		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
-		if(do_after(user, 40*I.toolspeed, target = src))
-			if(qdeleted(src))
-				return //prevent multiple decontructs
-			if(!(stat & BROKEN))
-				var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
-				C.id = id
-				transfer_fingerprints_to(C)
-			user << "<span class='notice'>You remove the conveyor belt.</span>"
-			qdel(src)
+		if(!(stat & BROKEN))
+			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
+			C.id = id
+			transfer_fingerprints_to(C)
+		to_chat(usr,"<span class='notice'>You remove the conveyor belt.</span>")
+		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(!(stat & BROKEN))
-			playsound(loc, I.usesound, 50, 1)
-			setDir(turn(dir,-45))
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
+			dir = turn(dir,-45)
 			update_move_direction()
-			user << "<span class='notice'>You rotate [src].</span>"
+			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 
-	else if(istype(I, /obj/item/weapon/screwdriver))
-		if(!(stat & BROKEN))
-			verted = verted * -1
-			update_move_direction()
-			user << "<span class='notice'>You reverse [src]'s direction.</span>"
-
-	else if(user.a_intent != INTENT_HARM)
+	else if(user.a_intent != "harm")
 		if(user.drop_item())
-			I.loc = src.loc
+			I.forceMove(loc)
 	else
 		return ..()
 
+
 // attack with hand, move pulled object onto conveyor
-/obj/machinery/conveyor/attack_hand(mob/user)
+/obj/machinery/conveyor/attack_hand(mob/user as mob)
 	user.Move_Pulled(src)
 
 
@@ -212,18 +211,18 @@
 	speed_process = 1
 
 
-
 /obj/machinery/conveyor_switch/New(newloc, newid)
 	..(newloc)
 	if(!id)
 		id = newid
 	update()
 
-	spawn(5)		// allow map load
+	spawn(5)
 		conveyors = list()
 		for(var/obj/machinery/conveyor/C in machines)
 			if(C.id == id)
 				conveyors += C
+
 
 // update the icon depending on the position
 
@@ -249,8 +248,14 @@
 		C.update_move_direction()
 		CHECK_TICK
 
+/obj/machinery/conveyor_switch/oneway
+	convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.) - Cargo uses a reverse belt.
+
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
+	if(!allowed(user)) //this is in Para but not TG. I don't think there's any which are set anyway.
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
 	add_fingerprint(user)
 	if(position == 0)
 		if(convdir)   //is it a oneway switch
@@ -276,17 +281,33 @@
 			S.update()
 		CHECK_TICK
 
+
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/crowbar))
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
-		user << "<span class='notice'>You deattach the conveyor switch.</span>"
+		to_chat(user,"<span class='notice'>You deattach the conveyor switch.</span>")
 		qdel(src)
 
-/obj/machinery/conveyor_switch/oneway
-	convdir = 1 //Set to 1 or -1 depending on which way you want the convayor to go. (In other words keep at 1 and set the proper dir on the belts.)
-	desc = "A conveyor control switch. It appears to only go in one direction."
+	else if(istype(I, /obj/item/device/multitool))
+		update_multitool_menu(user)
+		return 1
+
+
+/obj/machinery/conveyor_switch/multitool_topic(var/mob/user,var/list/href_list,var/obj/O)
+	..()
+	if("toggle_logic" in href_list)
+		convdir = !convdir //reverses?
+
+
+/obj/machinery/conveyor_switch/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
+	return {"
+ 	<ul>
+ 	<li><b>One direction only:</b> <a href='?src=[UID()];toggle_logic=1'>[convdir ? "On" : "Off"]</a></li>
+ 	</ul>"}
+
+
 
 //
 // CONVEYOR CONSTRUCTION STARTS HERE
@@ -297,22 +318,22 @@
 	icon_state = "conveyor0"
 	name = "conveyor belt assembly"
 	desc = "A conveyor belt assembly."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	var/id = "" //inherited by the belt
 
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
-		user << "<span class='notice'>You link the switch to the conveyor belt assembly.</span>"
+		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
 /obj/item/conveyor_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		user << "<span class='notice'>You cannot place a conveyor belt under yourself.</span>"
+		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
@@ -324,7 +345,7 @@
 	desc = "A conveyor control switch assembly."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	var/id = "" //inherited by the switch
 
 /obj/item/conveyor_switch_construct/New()
@@ -332,7 +353,7 @@
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || user.stat || !isfloorturf(A) || istype(A, /area/shuttle))
+	if(!proximity || user.stat || !istype(A, /turf/simulated/floor) || istype(A, /area/shuttle))
 		return
 	var/found = 0
 	for(var/obj/machinery/conveyor/C in view())
@@ -340,7 +361,7 @@
 			found = 1
 			break
 	if(!found)
-		user << "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>"
+		to_chat(usr, "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)
@@ -348,4 +369,4 @@
 
 /obj/item/weapon/paper/conveyor
 	name = "paper- 'Nano-it-up U-build series, #9: Build your very own conveyor belt, in SPACE'"
-	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, so we have devised a special streamlined assembly procedure that puts all other mail-order products to shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt assemblies. After doing so, you simply need to install the belt assemblies onto the floor, et voila, belt built. Our special Nano-it-up smart switch will detected any linked assemblies as far as the eye can see! This convenience, you can only have it when you Nano-it-up. Stay nano!</p>"
+	info = "<h1>Congratulations!</h1><p>You are now the proud owner of the best conveyor set available for space mail order! We at Nano-it-up know you love to prepare your own structures without wasting time, so we have devised a special streamlined assembly procedure that puts all other mail-order products to shame!</p><p>Firstly, you need to link the conveyor switch assembly to each of the conveyor belt assemblies. After doing so, you simply need to install the belt assemblies onto the floor, et voila, belt built. Our special Nano-it-up smart switch will detected any linked assemblies as far as the eye can see! </p><p> Set single directional switches by using your multitool on the switch after you've installed the switch assembly.</p><p> This convenience, you can only have it when you Nano-it-up. Stay nano!</p>"

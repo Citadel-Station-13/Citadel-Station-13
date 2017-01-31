@@ -1,30 +1,114 @@
-// How much "space" we give the edge of the map
-var/global/list/potentialRandomZlevels = generateMapList(filename = "config/awaymissionconfig.txt")
+var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away_mission_config.txt")
+
+// Call this before you remove the last dirt on a z level - that way, all objects
+// will have proper atmos and other important enviro things
+/proc/late_setup_level(turfs, smoothTurfs)
+	var/total_timer = start_watch()
+	var/subtimer = start_watch()
+	if(!smoothTurfs)
+		smoothTurfs = turfs
+
+	log_debug("Setting up atmos")
+	if(air_master)
+		air_master.setup_allturfs(turfs)
+	log_debug("\tTook [stop_watch(subtimer)]s")
+
+	subtimer = start_watch()
+	log_debug("Initializing lighting")
+	for(var/turf/T in turfs)
+		if(T.dynamic_lighting)
+			T.lighting_build_overlays()
+	log_debug("\tTook [stop_watch(subtimer)]s")
+
+	subtimer = start_watch()
+	log_debug("Smoothing tiles")
+	for(var/turf/T in smoothTurfs)
+		if(T.smooth)
+			smooth_icon(T)
+		for(var/R in T)
+			var/atom/A = R
+			if(A.smooth)
+				smooth_icon(A)
+		if(istype(T, /turf/simulated/mineral)) // For the listening post, among other maps
+			var/turf/simulated/mineral/MT = T
+			MT.add_edges()
+	log_debug("\tTook [stop_watch(subtimer)]s")
+	log_debug("Late setup finished - took [stop_watch(total_timer)]s")
+
+/proc/empty_rect(low_x,low_y, hi_x,hi_y, z)
+	var/timer = start_watch()
+	log_debug("Emptying region: ([low_x], [low_y]) to ([hi_x], [hi_y]) on z '[z]'")
+	empty_region(block(locate(low_x, low_y, z), locate(hi_x, hi_y, z)))
+	log_debug("Took [stop_watch(timer)]s")
+
+/proc/empty_region(list/turfs)
+	for(var/thing in turfs)
+		var/turf/T = thing
+		for(var/otherthing in T)
+			qdel(otherthing)
+		T.ChangeTurf(/turf/space)
 
 /proc/createRandomZlevel()
 	if(awaydestinations.len)	//crude, but it saves another var!
 		return
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
-		world << "<span class='boldannounce'>Loading away mission...</span>"
+		var/watch = start_watch()
+		log_startup_progress("Loading away mission...")
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
 		if(isfile(file))
-			maploader.load_map(file)
-			smooth_zlevel(world.maxz)
-			world.log << "away mission loaded: [map]"
-
-		map_transition_config.Add(AWAY_MISSION_LIST)
+			var/zlev = space_manager.add_new_zlevel(AWAY_MISSION, linkage = UNAFFECTED, traits = list(AWAY_LEVEL,BLOCK_TELEPORT))
+			space_manager.add_dirt(zlev)
+			maploader.load_map(file, z_offset = zlev)
+			late_setup_level(block(locate(1, 1, zlev), locate(world.maxx, world.maxy, zlev)))
+			space_manager.remove_dirt(zlev)
+			log_to_dd("  Away mission loaded: [map]")
 
 		for(var/obj/effect/landmark/L in landmarks_list)
-			if (L.name != "awaystart")
+			if(L.name != "awaystart")
 				continue
 			awaydestinations.Add(L)
 
-		world << "<span class='boldannounce'>Away mission loaded.</span>"
+		log_startup_progress("  Away mission loaded in [stop_watch(watch)]s.")
 
-		SortAreas() //To add recently loaded areas
+	else
+		log_startup_progress("  No away missions found.")
+		return
+
+/proc/createALLZlevels()
+	if(awaydestinations.len)	//crude, but it saves another var!
+		return
+
+	if(potentialRandomZlevels && potentialRandomZlevels.len)
+		var/watch = start_watch()
+		log_startup_progress("Loading away missions...")
+
+		for(var/map in potentialRandomZlevels)
+			var/file = file(map)
+			if(isfile(file))
+				log_startup_progress("Loading away mission: [map]")
+				var/zlev = space_manager.add_new_zlevel()
+				space_manager.add_dirt(zlev)
+				maploader.load_map(file, z_offset = zlev)
+				late_setup_level(block(locate(1, 1, zlev), locate(world.maxx, world.maxy, zlev)))
+				space_manager.remove_dirt(zlev)
+				log_to_dd("  Away mission loaded: [map]")
+
+			//map_transition_config.Add(AWAY_MISSION_LIST)
+
+			for(var/obj/effect/landmark/L in landmarks_list)
+				if(L.name != "awaystart")
+					continue
+				awaydestinations.Add(L)
+
+			log_startup_progress("  Away mission loaded in [stop_watch(watch)]s.")
+			watch = start_watch()
+
+	else
+		log_startup_progress("  No away missions found.")
+		return
 
 /proc/generateMapList(filename)
 	var/list/potentialMaps = list()
@@ -32,26 +116,26 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 	if(!Lines.len)
 		return
-	for (var/t in Lines)
-		if (!t)
+	for(var/t in Lines)
+		if(!t)
 			continue
 
 		t = trim(t)
-		if (length(t) == 0)
+		if(length(t) == 0)
 			continue
-		else if (copytext(t, 1, 2) == "#")
+		else if(copytext(t, 1, 2) == "#")
 			continue
 
 		var/pos = findtext(t, " ")
 		var/name = null
 
-		if (pos)
+		if(pos)
 			name = lowertext(copytext(t, 1, pos))
 
 		else
 			name = lowertext(t)
 
-		if (!name)
+		if(!name)
 			continue
 
 		potentialMaps.Add(t)
@@ -59,11 +143,11 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	return potentialMaps
 
 
-/proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
-	if(!z_levels || !z_levels.len)
-		z_levels = list(1)
+/proc/seedRuins(z_level = 1, budget = 0, whitelist = /area/space, list/potentialRuins = space_ruins_templates)
 	var/overall_sanity = 100
 	var/ruins = potentialRuins.Copy()
+	var/initialbudget = budget
+	var/watch = start_watch()
 
 	while(budget > 0 && overall_sanity > 0)
 		// Pick a ruin
@@ -78,22 +162,19 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 
 		while(sanity > 0)
 			sanity--
-			var/width_border = TRANSITIONEDGE + round(ruin.width / 2)
-			var/height_border = TRANSITIONEDGE + round(ruin.height / 2)
-			var/z_level = pick(z_levels)
-			var/turf/T = locate(rand(width_border, world.maxx - width_border), rand(height_border, world.maxy - height_border), z_level)
-			var/valid = TRUE
+			var/turf/T = locate(rand(25, world.maxx - 25), rand(25, world.maxy - 25), z_level)
+			var/valid = 1
 
 			for(var/turf/check in ruin.get_affected_turfs(T,1))
 				var/area/new_area = get_area(check)
 				if(!(istype(new_area, whitelist)))
-					valid = FALSE
+					valid = 0
 					break
 
 			if(!valid)
 				continue
 
-			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			log_to_dd("  Ruin \"[ruin.name]\" loaded in [stop_watch(watch)]s at ([T.x], [T.y], [T.z]).")
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
 			R.Load(ruins,ruin)
@@ -102,12 +183,14 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 				ruins -= ruin.name
 			break
 
-	if(!overall_sanity)
-		world.log << "Ruin loader gave up with [budget] left to spend."
+
+	if(initialbudget == budget) //Kill me
+		log_to_dd("  No ruins loaded.")
 
 
 /obj/effect/ruin_loader
 	name = "random ruin"
+	desc = "If you got lucky enough to see this..."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "syndballoon"
 	invisibility = 0
@@ -121,19 +204,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	if(!template && possible_ruins.len)
 		template = safepick(possible_ruins)
 	if(!template)
-		return FALSE
-	var/turf/central_turf = get_turf(src)
-	for(var/i in template.get_affected_turfs(central_turf, 1))
-		var/turf/T = i
-		for(var/mob/living/simple_animal/monster in T)
-			qdel(monster)
-		for(var/obj/structure/flora/ash/plant in T)
-			qdel(plant)
-	template.load(central_turf,centered = TRUE)
+		return 0
+	template.load(get_turf(src),centered = 1)
 	template.loaded++
-	var/datum/map_template/ruin = template
-	if(istype(ruin))
-		new /obj/effect/landmark/ruin(central_turf, ruin)
-
 	qdel(src)
-	return TRUE
+	return 1

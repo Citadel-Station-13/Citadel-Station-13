@@ -2,7 +2,7 @@
 	name = "Human Observation Console"
 	var/team = 0
 	networks = list("SS13","Abductor")
-	off_action = new/datum/action/innate/camera_off/abductor //specific datum
+	off_action = new /datum/action/innate/camera_off/abductor //specific datum
 	var/datum/action/innate/teleport_in/tele_in_action = new
 	var/datum/action/innate/teleport_out/tele_out_action = new
 	var/datum/action/innate/teleport_self/tele_self_action = new
@@ -13,7 +13,10 @@
 
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "camera"
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/machinery/computer/camera_advanced/abductor/New()
+	abductor_equipment.Add(src)
+	..()
 
 /obj/machinery/computer/camera_advanced/abductor/CreateEye()
 	..()
@@ -46,12 +49,15 @@
 	set_droppoint_action.target = console
 	set_droppoint_action.Grant(user)
 
+/obj/machinery/computer/camera_advanced/abductor/proc/IsAbductor(mob/living/carbon/human/H)
+	return H.get_species() == "Abductor"
+
 /obj/machinery/computer/camera_advanced/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	var/datum/species/abductor/S = H.dna.species
-	return S.scientist
+	if(H.mind && H.mind.abductor)
+		return H.mind.abductor.scientist
 
 /obj/machinery/computer/camera_advanced/abductor/attack_hand(mob/user)
-	if(!isabductor(user))
+	if(!iscarbon(user) || !IsAbductor(user))
 		return
 	return ..()
 
@@ -61,6 +67,7 @@
 	var/mob/living/carbon/C = target
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/abductor/origin = remote_eye.origin
+	C.remote_view = 0
 	origin.current_user = null
 	origin.jump_action.Remove(C)
 	origin.tele_in_action.Remove(C)

@@ -8,18 +8,17 @@
 	anchored = 1
 	var/obj/machinery/mineral/stacking_machine/machine = null
 	var/machinedir = SOUTHEAST
-	speed_process = 1
 
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
 		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
-		if (machine)
+		if(machine)
 			machine.CONSOLE = src
 		else
 			qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
+/obj/machinery/mineral/stacking_unit_console/attack_hand(user as mob)
 
 	var/obj/item/stack/sheet/s
 	var/dat
@@ -29,13 +28,14 @@
 	for(var/O in machine.stack_list)
 		s = machine.stack_list[O]
 		if(s.amount > 0)
-			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=[UID()];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br>Stacking: [machine.stack_amt]<br><br>")
 
-	user << browse(dat, "window=console_stacking_machine")
+	user << browse("[dat]", "window=console_stacking_machine")
 
 	return
+
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	if(..())
@@ -53,7 +53,6 @@
 	src.updateUsrDialog()
 	return
 
-
 /**********************Mineral stacking unit**************************/
 
 
@@ -62,7 +61,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
 	density = 1
-	anchored = 1
+	anchored = 1.0
 	var/obj/machinery/mineral/stacking_unit_console/CONSOLE
 	var/stk_types = list()
 	var/stk_amt   = list()
@@ -70,6 +69,7 @@
 	var/stack_amt = 50; //ammount to stack before releassing
 	input_dir = EAST
 	output_dir = WEST
+	speed_process = 1
 
 /obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/inp)
 	if(!(inp.type in stack_list)) //It's the first of this sheet added
@@ -90,3 +90,4 @@
 	if(T)
 		for(var/obj/item/stack/sheet/S in T)
 			process_sheet(S)
+			CHECK_TICK

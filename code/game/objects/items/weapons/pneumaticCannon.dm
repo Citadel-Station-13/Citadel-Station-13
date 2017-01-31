@@ -1,7 +1,7 @@
 /obj/item/weapon/pneumatic_cannon
 	name = "pneumatic cannon"
 	desc = "A gas-powered cannon that can fire any object loaded into it."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	force = 8 //Very heavy
 	attack_verb = list("bludgeoned", "smashed", "beaten")
 	icon = 'icons/obj/pneumaticCannon.dmi'
@@ -9,37 +9,46 @@
 	item_state = "bulldog"
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 60, acid = 50)
 	var/maxWeightClass = 20 //The max weight of items that can fit into the cannon
 	var/loadedWeightClass = 0 //The weight of items currently in the cannon
-	var/obj/item/weapon/tank/internals/tank = null //The gas tank that is drawn from to fire things
+	var/obj/item/weapon/tank/tank = null //The gas tank that is drawn from to fire things
 	var/gasPerThrow = 3 //How much gas is drawn from a tank's pressure to fire
 	var/list/loadedItems = list() //The items loaded into the cannon that will be fired out
 	var/pressureSetting = 1 //How powerful the cannon is - higher pressure = more gas but more powerful throws
 
+/obj/item/weapon/pneumatic_cannon/Destroy()
+	if(tank)
+		qdel(tank)
+		tank = null
+	for(var/obj/item/I in loadedItems)
+		qdel(I)
+	loadedItems.Cut()
+	return ..()
 
 /obj/item/weapon/pneumatic_cannon/examine(mob/user)
 	..()
 	if(!in_range(user, src))
-		user << "<span class='notice'>You'll need to get closer to see any more.</span>"
+		to_chat(user, "<span class='notice'>You'll need to get closer to see any more.</span>")
 		return
 	for(var/obj/item/I in loadedItems)
-		user << "<span class='info'>\icon [I] It has \the [I] loaded.</span>"
+		spawn(0)
+			to_chat(user, "<span class='info'>[bicon(I)] It has \the [I] loaded.</span>")
 	if(tank)
-		user << "<span class='notice'>\icon [tank] It has \the [tank] mounted onto it.</span>"
+		to_chat(user, "<span class='notice'>[bicon(tank)] It has \the [tank] mounted onto it.</span>")
 
 
 /obj/item/weapon/pneumatic_cannon/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/tank/internals))
-		if(!tank)
-			var/obj/item/weapon/tank/internals/IT = W
-			if(IT.volume <= 3)
-				user << "<span class='warning'>\The [IT] is too small for \the [src].</span>"
-				return
-			updateTank(W, 0, user)
-	else if(W.type == type)
-		user << "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>"
-	else if(istype(W, /obj/item/weapon/wrench))
+	..()
+	if(istype(W, /obj/item/weapon/tank/) && !tank)
+		if(istype(W, /obj/item/weapon/tank/emergency_oxygen))
+			to_chat(user, "<span class='warning'>\The [W] is too small for \the [src].</span>")
+			return
+		updateTank(W, 0, user)
+		return
+	if(W.type == type)
+		to_chat(user, "<span class='warning'>You're fairly certain that putting a pneumatic cannon inside another pneumatic cannon would cause a spacetime disruption.</span>")
+		return
+	if(istype(W, /obj/item/weapon/wrench))
 		switch(pressureSetting)
 			if(1)
 				pressureSetting = 2
@@ -47,34 +56,40 @@
 				pressureSetting = 3
 			if(3)
 				pressureSetting = 1
-		user << "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>"
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(tank)
-			updateTank(tank, 1, user)
-	else if(loadedWeightClass >= maxWeightClass)
-		user << "<span class='warning'>\The [src] can't hold any more items!</span>"
-	else if(istype(W, /obj/item))
+		to_chat(user, "<span class='notice'>You tweak \the [src]'s pressure output to [pressureSetting].</span>")
+		return
+	if(istype(W, /obj/item/weapon/screwdriver) && tank)
+		updateTank(tank, 1, user)
+		return
+	if(loadedWeightClass >= maxWeightClass)
+		to_chat(user, "<span class='warning'>\The [src] can't hold any more items!</span>")
+		return
+	if(istype(W, /obj/item))
 		var/obj/item/IW = W
 		if((loadedWeightClass + IW.w_class) > maxWeightClass)
-			user << "<span class='warning'>\The [IW] won't fit into \the [src]!</span>"
+			to_chat(user, "<span class='warning'>\The [IW] won't fit into \the [src]!</span>")
 			return
 		if(IW.w_class > src.w_class)
-			user << "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>"
+			to_chat(user, "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>")
 			return
 		if(!user.unEquip(W))
 			return
-		user << "<span class='notice'>You load \the [IW] into \the [src].</span>"
+		to_chat(user, "<span class='notice'>You load \the [IW] into \the [src].</span>")
 		loadedItems.Add(IW)
 		loadedWeightClass += IW.w_class
 		IW.loc = src
-
+		return
 
 
 /obj/item/weapon/pneumatic_cannon/afterattack(atom/target, mob/living/carbon/human/user, flag, params)
-	if(flag && user.a_intent == INTENT_HARM) //melee attack
-		return
+	if(istype(target, /obj/item/weapon/storage)) //So you can store it in backpacks
+		return ..()
+	if(istype(target, /obj/structure/closet)) //So you can store it in closets
+		return ..()
+	if(istype(target, /obj/structure/rack)) //So you can store it on racks
+		return ..()
 	if(!istype(user))
-		return
+		return ..()
 	Fire(user, target)
 
 
@@ -83,15 +98,15 @@
 		return
 	var/discharge = 0
 	if(!loadedItems || !loadedWeightClass)
-		user << "<span class='warning'>\The [src] has nothing loaded.</span>"
+		to_chat(user, "<span class='warning'>\The [src] has nothing loaded.</span>")
 		return
 	if(!tank)
-		user << "<span class='warning'>\The [src] can't fire without a source of gas.</span>"
+		to_chat(user, "<span class='warning'>\The [src] can't fire without a source of gas.</span>")
 		return
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
-		user << "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>"
+		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
-	if(user.disabilities & CLUMSY && prob(75))
+	if(user && (CLUMSY in user.mutations) && prob(75))
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		user.drop_item()
 		if(prob(10))
@@ -106,11 +121,12 @@
 	add_logs(user, target, "fired at", src)
 	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
-		loadedItems.Remove(ITD)
-		loadedWeightClass -= ITD.w_class
-		ITD.throw_speed = pressureSetting * 2
-		ITD.loc = get_turf(src)
-		ITD.throw_at_fast(target, pressureSetting * 5, pressureSetting * 2,user)
+		spawn(0)
+			loadedItems.Remove(ITD)
+			loadedWeightClass -= ITD.w_class
+			ITD.throw_speed = pressureSetting * 2
+			ITD.loc = get_turf(src)
+			ITD.throw_at(target, pressureSetting * 5, pressureSetting * 2,user)
 	if(pressureSetting >= 3 && user)
 		user.visible_message("<span class='warning'>[user] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
 		user.Weaken(3)
@@ -120,7 +136,7 @@
 	name = "improvised pneumatic cannon"
 	desc = "A gas-powered, object-firing cannon made out of common parts."
 	force = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	maxWeightClass = 7
 	gasPerThrow = 5
 
@@ -135,28 +151,28 @@
 	time = 300
 	category = CAT_WEAPON
 
-/obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
+/obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!src.tank)
 			return
-		user << "<span class='notice'>You detach \the [thetank] from \the [src].</span>"
+		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
 		src.tank.loc = get_turf(user)
 		user.put_in_hands(tank)
 		src.tank = null
 	if(!removing)
 		if(src.tank)
-			user << "<span class='warning'>\The [src] already has a tank.</span>"
+			to_chat(user, "<span class='warning'>\The [src] already has a tank.</span>")
 			return
 		if(!user.unEquip(thetank))
 			return
-		user << "<span class='notice'>You hook \the [thetank] up to \the [src].</span>"
+		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
 		src.tank = thetank
 		thetank.loc = src
 	src.update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()
-	src.cut_overlays()
+	src.overlays.Cut()
 	if(!tank)
 		return
-	src.add_overlay(image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]"))
+	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
 	src.update_icon()

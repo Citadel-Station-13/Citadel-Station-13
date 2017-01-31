@@ -7,12 +7,12 @@
 
 	var/displayed_text
 	var/atom/attached_to
-	var/text_color = "#ff0000"
+	color = "#ff0000"
 	var/text_size = 4
-	var/started = FALSE
+	var/started = 0
 	invisibility = INVISIBILITY_OBSERVER
-	anchored = TRUE
-	layer = GHOST_LAYER
+	anchored = 1
+	layer = 5
 
 /obj/effect/countdown/New(atom/A)
 	. = ..()
@@ -24,14 +24,14 @@
 
 /obj/effect/countdown/proc/start()
 	if(!started)
-		START_PROCESSING(SSfastprocess, src)
-		started = TRUE
+		fast_processing += src
+		started = 1
 
 /obj/effect/countdown/proc/stop()
 	if(started)
-		overlays.Cut()
-		STOP_PROCESSING(SSfastprocess, src)
-		started = FALSE
+		maptext = null
+		fast_processing -= src
+		started = 0
 
 /obj/effect/countdown/proc/get_value()
 	// Get the value from our atom
@@ -47,45 +47,17 @@
 	displayed_text = new_val
 
 	if(displayed_text)
-		var/image/text_image = new(loc = src)
-		//text_image.maptext = "<font size=[text_size]>[new_val]</font>"
-		text_image.maptext = "<font size = [text_size]>[displayed_text]</font>"
-		text_image.color = text_color
-
-		overlays.Cut()
-		overlays += text_image
+		maptext = "<font size = [text_size]>[displayed_text]</font>"
 	else
-		overlays.Cut()
+		maptext = null
 
 /obj/effect/countdown/Destroy()
 	attached_to = null
-	STOP_PROCESSING(SSfastprocess, src)
-	. = ..()
-
-/obj/effect/countdown/syndicatebomb
-	name = "syndicate bomb countdown"
-
-/obj/effect/countdown/syndicatebomb/get_value()
-	var/obj/machinery/syndicatebomb/S = attached_to
-	if(!istype(S))
-		return
-	else if(S.active)
-		return S.timer
-
-/obj/effect/countdown/nuclearbomb
-	name = "nuclear bomb countdown"
-	text_color = "#81FF14"
-
-/obj/effect/countdown/nuclearbomb/get_value()
-	var/obj/machinery/nuclearbomb/N = attached_to
-	if(!istype(N))
-		return
-	else if(N.timing)
-		return N.timeleft
+	fast_processing -= src
+	return ..()
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"
-	text_color = "#0C479D"
 	text_size = 1
 
 /obj/effect/countdown/clonepod/get_value()
@@ -95,43 +67,3 @@
 	else if(C.occupant)
 		var/completion = round(C.get_completion())
 		return completion
-
-/obj/effect/countdown/dominator
-	name = "dominator countdown"
-	text_size = 1
-	text_color = "#ff00ff" // Overwritten when the dominator starts
-
-/obj/effect/countdown/dominator/get_value()
-	var/obj/machinery/dominator/D = attached_to
-	if(!istype(D))
-		return
-	else if(D.gang && D.gang.is_dominating)
-		var/timer = D.gang.domination_time_remaining()
-		return timer
-	else
-		return "OFFLINE"
-
-/obj/effect/countdown/clockworkgate
-	name = "gateway countdown"
-	text_size = 1
-	text_color = "#BE8700"
-	layer = POINT_LAYER
-
-/obj/effect/countdown/clockworkgate/get_value()
-	var/obj/structure/clockwork/massive/celestial_gateway/G = attached_to
-	if(!istype(G))
-		return
-	else if(G.health && !G.purpose_fulfilled)
-		return "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'>[GATEWAY_RATVAR_ARRIVAL - G.progress_in_seconds]</div>"
-
-/obj/effect/countdown/transformer
-	name = "transformer countdown"
-	text_color = "#4C5866"
-
-/obj/effect/countdown/transformer/get_value()
-	var/obj/machinery/transformer/T = attached_to
-	if(!istype(T))
-		return
-	else if(T.cooldown)
-		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
-		return "[round(seconds_left)]"

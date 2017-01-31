@@ -1,5 +1,4 @@
-	// MySQL configuration
-
+// MySQL configuration
 var/sqladdress = "localhost"
 var/sqlport = "3306"
 var/sqlfdbkdb = "test"

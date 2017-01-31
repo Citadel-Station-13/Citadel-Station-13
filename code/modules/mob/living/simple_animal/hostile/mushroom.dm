@@ -13,7 +13,6 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "whacks"
 	harm_intent_damage = 5
-	obj_damage = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_same = 2
@@ -24,11 +23,10 @@
 	stat_attack = 2
 	mouse_opacity = 1
 	speed = 1
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	robust_searching = 1
-	unique_name = 1
 	speak_emote = list("squeaks")
-	deathmessage = "fainted."
+	deathmessage = "fainted"
 	var/powerlevel = 0 //Tracks our general strength level gained from eating other shrooms
 	var/bruised = 0 //If someone tries to cheat the system by attacking a shroom to lower its health, punish them so that it wont award levels to shrooms that eat it
 	var/recovery_cooldown = 0 //So you can't repeatedly revive it during a fight
@@ -37,11 +35,11 @@
 	var/image/cap_dead = null
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
-	..()
+	..(user)
 	if(health >= maxHealth)
-		user << "<span class='info'>It looks healthy.</span>"
+		to_chat(user, "<span class='info'>It looks healthy.</span>")
 	else
-		user << "<span class='info'>It looks like it's been roughed up.</span>"
+		to_chat(user, "<span class='info'>It looks like it's been roughed up.</span>")
 
 /mob/living/simple_animal/hostile/mushroom/Life()
 	..()
@@ -65,20 +63,18 @@
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(damage)//Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))
 		retreat_distance = 5
-		addtimer(src, "stop_retreat", 30)
-	. = ..()
+		spawn(30)
+			retreat_distance = null
+	..()
 
-/mob/living/simple_animal/hostile/mushroom/proc/stop_retreat()
-	retreat_distance = null
-
-/mob/living/simple_animal/hostile/mushroom/attack_animal(mob/living/L)
+/mob/living/simple_animal/hostile/mushroom/attack_animal(var/mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/mushroom) && stat == DEAD)
 		var/mob/living/simple_animal/hostile/mushroom/M = L
 		if(faint_ticker < 2)
-			M.visible_message("[M] chews a bit on [src].")
+			M.visible_message("<span class='notice'>[M] chews a bit on [src].</span>")
 			faint_ticker++
 			return
-		M.visible_message("<span class='warning'>[M] devours [src]!</span>")
+		M.visible_message("<span class='notice'>[M] devours [src]!</span>")
 		var/level_gain = (powerlevel - M.powerlevel)
 		if(level_gain >= -1 && !bruised && !M.ckey)//Player shrooms can't level up to become robust gods.
 			if(level_gain < 1)//So we still gain a level if two mushrooms were the same level
@@ -88,35 +84,32 @@
 		qdel(src)
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/revive(full_heal = 0, admin_revive = 0)
-	if(..())
-		icon_state = "mushroom_color"
-		UpdateMushroomCap()
-		. = 1
+/mob/living/simple_animal/hostile/mushroom/revive()
+	..()
+	icon_state = "mushroom_color"
+	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/death(gibbed)
-	..(gibbed)
+	..()
 	UpdateMushroomCap()
 
 /mob/living/simple_animal/hostile/mushroom/proc/UpdateMushroomCap()
-	cut_overlays()
+	overlays.Cut()
 	if(health == 0)
-		add_overlay(cap_dead)
+		overlays += cap_dead
 	else
-		add_overlay(cap_living)
+		overlays += cap_living
 
 /mob/living/simple_animal/hostile/mushroom/proc/Recover()
-	visible_message("[src] slowly begins to recover.")
+	visible_message("<span class='notice'>[src] slowly begins to recover.</span>")
 	faint_ticker = 0
-	revive(full_heal = 1)
+	revive()
 	UpdateMushroomCap()
 	recovery_cooldown = 1
-	addtimer(src, "recovery_recharge", 300)
+	spawn(300)
+		recovery_cooldown = 0
 
-/mob/living/simple_animal/hostile/mushroom/proc/recovery_recharge()
-	recovery_cooldown = 0
-
-/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(level_gain)
+/mob/living/simple_animal/hostile/mushroom/proc/LevelUp(var/level_gain)
 	if(powerlevel <= 9)
 		powerlevel += level_gain
 		if(prob(25))
@@ -128,24 +121,24 @@
 
 /mob/living/simple_animal/hostile/mushroom/proc/Bruise()
 	if(!bruised && !stat)
-		src.visible_message("The [src.name] was bruised!")
+		src.visible_message("<span class='notice'>The [src.name] was bruised!</span>")
 		bruised = 1
 
-/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I, mob/user, params)
+/mob/living/simple_animal/hostile/mushroom/attackby(obj/item/I as obj, mob/user as mob, params)
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom))
 		if(stat == DEAD && !recovery_cooldown)
 			Recover()
 			qdel(I)
 		else
-			user << "<span class='warning'>[src] won't eat it!</span>"
+			to_chat(user, "<span class='notice'>[src] won't eat it!</span>")
 		return
 	if(I.force)
 		Bruise()
 	..()
 
-/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/hostile/mushroom/attack_hand(mob/living/carbon/human/M as mob)
 	..()
-	if(M.a_intent == INTENT_HARM)
+	if(M.a_intent == I_HARM)
 		Bruise()
 
 /mob/living/simple_animal/hostile/mushroom/hitby(atom/movable/AM)

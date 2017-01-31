@@ -1,5 +1,5 @@
 
-
+////HUD NONSENSE////
 /obj/screen/swarmer
 	icon = 'icons/mob/swarmer.dmi'
 
@@ -63,16 +63,20 @@
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
 		S.ContactSwarmers()
 
+/mob/living/simple_animal/hostile/swarmer/create_mob_hud()
+	if(client && !hud_used)
+		hud_used = new /datum/hud/swarmer(src)
+
 /datum/hud/swarmer/New(mob/owner)
 	..()
 	var/obj/screen/using
 
 	using = new /obj/screen/swarmer/FabricateTrap()
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_rhand
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Barricade()
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_lhand
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Replicate()
@@ -91,7 +95,3 @@
 	using.screen_loc = ui_inventory
 	static_inventory += using
 
-
-/mob/living/simple_animal/hostile/swarmer/create_mob_hud()
-	if(client && !hud_used)
-		hud_used = new /datum/hud/swarmer(src)

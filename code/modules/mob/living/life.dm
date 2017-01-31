@@ -2,34 +2,32 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if(digitalinvis)
-		handle_diginvis() //AI becomes unable to see mob
-
-	if (notransform)
+	if(notransform)
 		return
 	if(!loc)
-		if(client)
-			for(var/obj/effect/landmark/error/E in landmarks_list)
-				loc = E.loc
-				break
-			message_admins("[key_name_admin(src)] was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished.")
-			log_game("[key_name(src)] was found to have no .loc with an attached client.")
-		else
-			return
+		return
 	var/datum/gas_mixture/environment = loc.return_air()
+
+	//Apparently, the person who wrote this code designed it so that
+	//blinded get reset each cycle and then get activated later in the
+	//code. Very ugly. I dont care. Moving this stuff here so its easy
+	//to find it.
+	blinded = null
 
 	if(stat != DEAD)
 		//Breathing, if applicable
 		handle_breathing()
-	if(stat != DEAD)
+
 		//Mutations and radiation
 		handle_mutations_and_radiation()
-	if(stat != DEAD)
+
 		//Chemicals in the body
 		handle_chemicals_in_body()
-	if(stat != DEAD)
+
 		//Random events (vomiting etc)
 		handle_random_events()
+
+		. = 1
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
@@ -40,21 +38,26 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	// Vore code for belly processes
-	handle_internal_contents()
-
 	update_gravity(mob_has_gravity())
 
-	if(machine)
-		machine.check_eye(src)
+	update_pulling()
 
-	if(stat != DEAD)
+	for(var/obj/item/weapon/grab/G in src)
+		G.process()
+
+	if(handle_regular_status_updates()) // Status & health update, are we dead or alive etc.
 		handle_disabilities() // eye, ear, brain damages
-	if(stat != DEAD)
 		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
 
-	if(stat != DEAD)
-		return 1
+	update_canmove(1) // set to 1 to not update icon action buttons; rip this argument out if Life is ever refactored to be non-stupid. -Fox
+
+	if(client)
+		//regular_hud_updates() //THIS DOESN'T FUCKING UPDATE SHIT
+		handle_regular_hud_updates() //IT JUST REMOVES FUCKING HUD IMAGES
+	if(get_nations_mode())
+		process_nations()
+
+	..()
 
 /mob/living/proc/handle_breathing()
 	return
@@ -66,75 +69,208 @@
 /mob/living/proc/handle_chemicals_in_body()
 	return
 
-/mob/living/proc/handle_diginvis()
-	if(!digitaldisguise)
-		src.digitaldisguise = image(loc = src)
-	src.digitaldisguise.override = 1
-	for(var/mob/living/silicon/ai/AI in player_list)
-		AI.client.images |= src.digitaldisguise
-
-
 /mob/living/proc/handle_random_events()
 	return
 
 /mob/living/proc/handle_environment(datum/gas_mixture/environment)
 	return
 
-/mob/living/proc/handle_fire()
-	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
-		fire_stacks = min(0, fire_stacks + 1)//So we dry ourselves back to default, nonflammable.
-	if(!on_fire)
-		return 1
-	if(fire_stacks > 0)
-		adjust_fire_stacks(-0.1) //the fire is slowly consumed
-	else
-		ExtinguishMob()
-		return
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(!G.gases["o2"] || G.gases["o2"][MOLES] < 1)
-		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
-		return
-	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
-
 /mob/living/proc/handle_stomach()
 	return
 
+/mob/living/proc/update_pulling()
+	if(pulling)
+		if(incapacitated())
+			stop_pulling()
+
+//This updates the health and status of the mob (conscious, unconscious, dead)
+/mob/living/proc/handle_regular_status_updates()
+
+	updatehealth()
+
+	if(stat != DEAD)
+
+		if(paralysis)
+			stat = UNCONSCIOUS
+
+		else if(status_flags & FAKEDEATH)
+			stat = UNCONSCIOUS
+
+		else
+			stat = CONSCIOUS
+
+		return 1
+
 //this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(paralysis)
-		AdjustParalysis(-1, 1, 1)
+	handle_stunned()
+	handle_weakened()
+	handle_stuttering()
+	handle_silent()
+	handle_drugged()
+	handle_slurring()
+	handle_paralysed()
+	handle_sleeping()
+	handle_slowed()
+	handle_drunk()
+	handle_cultslurring()
+
+
+/mob/living/proc/handle_stunned()
 	if(stunned)
-		AdjustStunned(-1, 1, 1)
+		AdjustStunned(-1, updating = 1, force = 1)
+		if(!stunned)
+			update_icons()
+	return stunned
+
+/mob/living/proc/handle_weakened()
 	if(weakened)
-		AdjustWeakened(-1, 1, 1)
-	if(confused)
-		confused = max(0, confused - 1)
+		AdjustWeakened(-1, updating = 1, force = 1)
+		if(!weakened)
+			update_icons()
+	return weakened
+
+/mob/living/proc/handle_stuttering()
+	if(stuttering)
+		stuttering = max(stuttering-1, 0)
+	return stuttering
+
+/mob/living/proc/handle_silent()
+	if(silent)
+		AdjustSilence(-1)
+	return silent
+
+/mob/living/proc/handle_drugged()
+	if(druggy)
+		AdjustDruggy(-1)
+	return druggy
+
+/mob/living/proc/handle_slurring()
+	if(slurring)
+		AdjustSlur(-1)
+	return slurring
+
+/mob/living/proc/handle_cultslurring()
+	if(cultslurring)
+		AdjustCultSlur(-1)
+	return cultslurring
+
+/mob/living/proc/handle_paralysed()
+	if(paralysis)
+		AdjustParalysis(-1, updating = 1, force = 1)
+	return paralysis
+
+/mob/living/proc/handle_sleeping()
+	if(sleeping)
+		AdjustSleeping(-1)
+		throw_alert("asleep", /obj/screen/alert/asleep)
+	else
+		clear_alert("asleep")
+	return sleeping
+
+/mob/living/proc/handle_slowed()
+	if(slowed)
+		AdjustSlowed(-1)
+	return slowed
+
+/mob/living/proc/handle_drunk()
+	if(drunk)
+		AdjustDrunk(-1)
+	return drunk
 
 /mob/living/proc/handle_disabilities()
 	//Eyes
-	if(eye_blind)			//blindness, heals slowly over time
-		if(!stat && !(disabilities & BLIND))
-			eye_blind = max(eye_blind-1,0)
-			if(client && !eye_blind)
-				clear_alert("blind")
-				clear_fullscreen("blind")
-		else
-			eye_blind = max(eye_blind-1,1)
+	if(disabilities & BLIND || stat)	//blindness from disability or unconsciousness doesn't get better on its own
+		EyeBlind(1)
+	else if(eye_blind)			//blindness, heals slowly over time
+		AdjustEyeBlind(-1)
 	else if(eye_blurry)			//blurry eyes heal slowly
-		eye_blurry = max(eye_blurry-1, 0)
-		if(client && !eye_blurry)
-			clear_fullscreen("blurry")
+		AdjustEyeBlurry(-1)
 
 	//Ears
 	if(disabilities & DEAF)		//disabled-deaf, doesn't get better on its own
-		setEarDamage(-1, max(ear_deaf, 1))
+		EarDeaf(1)
 	else
 		// deafness heals slowly over time, unless ear_damage is over 100
 		if(ear_damage < 100)
-			adjustEarDamage(-0.05,-1)
+			AdjustEarDamage(-0.05)
+			AdjustEarDeaf(-1)
 
-/mob/living/proc/update_damage_hud()
+//this handles hud updates. Calls update_vision() and handle_hud_icons()
+/mob/living/proc/handle_regular_hud_updates()
+	if(!client)	return 0
+
+	handle_vision()
+	handle_hud_icons()
+
+	return 1
+
+/mob/living/proc/handle_vision()
+	update_sight()
+
+	if(stat == DEAD)
+		return
+	if(blinded || eye_blind)
+		overlay_fullscreen("blind", /obj/screen/fullscreen/blind)
+		throw_alert("blind", /obj/screen/alert/blind)
+	else
+		clear_fullscreen("blind")
+		clear_alert("blind")
+
+		if(disabilities & NEARSIGHTED)
+			overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
+		else
+			clear_fullscreen("nearsighted")
+
+		if(eye_blurry)
+			overlay_fullscreen("blurry", /obj/screen/fullscreen/blurry)
+		else
+			clear_fullscreen("blurry")
+
+		if(druggy)
+			overlay_fullscreen("high", /obj/screen/fullscreen/high)
+			throw_alert("high", /obj/screen/alert/high)
+		else
+			clear_fullscreen("high")
+			clear_alert("high")
+
+	if(machine)
+		if(!machine.check_eye(src))
+			reset_perspective(null)
+	else
+		if(!remote_view && !client.adminobs)
+			reset_perspective(null)
+
+/mob/living/proc/update_sight()
 	return
 
+// Gives a mob the vision of being dead
+/mob/living/proc/grant_death_vision()
+	sight |= SEE_TURFS
+	sight |= SEE_MOBS
+	sight |= SEE_OBJS
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_OBSERVER
 
+// See through walls, dark, etc.
+// basically the same as death vision except you can't
+// see ghosts
+/mob/living/proc/grant_xray_vision()
+	sight |= SEE_TURFS
+	sight |= SEE_MOBS
+	sight |= SEE_OBJS
+	see_in_dark = 8
+	see_invisible = SEE_INVISIBLE_LEVEL_TWO
+
+/mob/living/proc/handle_hud_icons()
+	handle_hud_icons_health()
+	return
+
+/mob/living/proc/handle_hud_icons_health()
+	return
+
+/mob/living/proc/process_nations()
+	if(client)
+		var/client/C = client
+		for(var/mob/living/carbon/human/H in view(src, world.view))
+			C.images += H.hud_list[NATIONS_HUD]

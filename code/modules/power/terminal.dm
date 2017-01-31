@@ -8,9 +8,10 @@
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
 	level = 1
+	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
-	layer = WIRE_TERMINAL_LAYER //a bit above wires
+	layer = 2.6 // a bit above wires
 
 
 /obj/machinery/power/terminal/New()
@@ -18,61 +19,18 @@
 	var/turf/T = src.loc
 	if(level==1) hide(T.intact)
 	return
-
+	
 /obj/machinery/power/terminal/Destroy()
 	if(master)
 		master.disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/terminal/hide(i)
+
+/obj/machinery/power/terminal/hide(var/i)
 	if(i)
-		invisibility = INVISIBILITY_MAXIMUM
+		invisibility = 101
 		icon_state = "term-f"
 	else
 		invisibility = 0
 		icon_state = "term"
 
-
-/obj/machinery/power/proc/can_terminal_dismantle()
-	. = 0
-
-/obj/machinery/power/apc/can_terminal_dismantle()
-	. = 0
-	if(opened)
-		. = 1
-
-/obj/machinery/power/smes/can_terminal_dismantle()
-	. = 0
-	if(panel_open)
-		. = 1
-
-
-/obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/W)
-	if(isturf(loc))
-		var/turf/T = loc
-		if(T.intact)
-			user << "<span class='warning'>You must first expose the power terminal!</span>"
-			return
-
-		if(master && master.can_terminal_dismantle())
-			user.visible_message("[user.name] dismantles the power terminal from [master].", \
-								"<span class='notice'>You begin to cut the cables...</span>")
-
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			if(do_after(user, 50*W.toolspeed, target = src))
-				if(master && master.can_terminal_dismantle())
-					if(prob(50) && electrocute_mob(user, powernet, src, 1, TRUE))
-						var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-						s.set_up(5, 1, master)
-						s.start()
-						return
-					new /obj/item/stack/cable_coil(loc, 10)
-					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
-					qdel(src)
-
-
-/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user, params)
-	if(istype(W, /obj/item/weapon/wirecutters))
-		dismantle(user, W)
-	else
-		return ..()

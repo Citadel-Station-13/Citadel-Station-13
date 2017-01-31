@@ -1,9 +1,10 @@
 /obj/machinery/computer/telescience
-	name = "\improper Telepad Control Console"
+	name = "telepad control console"
 	desc = "Used to teleport objects to and from the telescience telepad."
-	icon_screen = "teleport"
-	icon_keyboard = "teleport_key"
-	circuit = /obj/item/weapon/circuitboard/computer/telesci_console
+	icon_keyboard = "telesci_key"
+	icon_screen = "telesci"
+	circuit = /obj/item/weapon/circuitboard/telesci_console
+	req_access = list(access_research)
 	var/sending = 1
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
@@ -23,9 +24,9 @@
 
 	// Based on the power used
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
-	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
+	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80)
 	var/teleporting = 0
-	var/starting_crystals = 3
+	var/starting_crystals = 0
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
@@ -42,43 +43,47 @@
 	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
-	..()
-	user << "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots."
+	..(user)
+	to_chat(user, "There are [crystals.len ? crystals.len : "no"] bluespace crystal\s in the crystal slots.")
 
 /obj/machinery/computer/telescience/initialize()
 	..()
 	for(var/i = 1; i <= starting_crystals; i++)
 		crystals += new /obj/item/weapon/ore/bluespace_crystal/artificial(null) // starting crystals
 
-/obj/machinery/computer/telescience/attack_paw(mob/user)
-	user << "<span class='warning'>You are too primitive to use this computer!</span>"
-	return
-
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/ore/bluespace_crystal))
 		if(crystals.len >= max_crystals)
-			user << "<span class='warning'>There are not enough crystal slots.</span>"
+			to_chat(user, "<span class='warning'>There are not enough crystal slots.</span>")
 			return
-		if(!user.drop_item())
-			return
+		user.drop_item()
 		crystals += W
 		W.loc = null
-		user.visible_message("[user] inserts [W] into \the [src]'s crystal slot.", "<span class='notice'>You insert [W] into \the [src]'s crystal slot.</span>")
-		updateDialog()
+		user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s crystal slot.</span>")
+		updateUsrDialog()
 	else if(istype(W, /obj/item/device/gps))
 		if(!inserted_gps)
 			inserted_gps = W
 			user.unEquip(W)
 			W.loc = src
-			user.visible_message("[user] inserts [W] into \the [src]'s GPS device slot.", "<span class='notice'>You insert [W] into \the [src]'s GPS device slot.</span>")
+			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
+			updateUsrDialog()
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
 			telepad = M.buffer
 			M.buffer = null
-			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class = 'caution'>You upload the data from the [W.name]'s buffer.</span>")
+			updateUsrDialog()
 	else
-		return ..()
+		..()
+
+/obj/machinery/computer/telescience/emag_act(user as mob)
+	if(!emagged)
+		to_chat(user, "\blue You scramble the Telescience authentication key to an unknown signal. You should be able to teleport to more places now!")
+		emagged = 1
+	else
+		to_chat(user, "\red The machine seems unaffected by the card swipe...")
 
 /obj/machinery/computer/telescience/attack_ai(mob/user)
 	src.attack_hand(user)
@@ -89,22 +94,23 @@
 	interact(user)
 
 /obj/machinery/computer/telescience/interact(mob/user)
+	user.set_machine(src)
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
-			t += "<A href='?src=\ref[src];ejectGPS=1'>Eject GPS</A>"
-			t += "<A href='?src=\ref[src];setMemory=1'>Set GPS memory</A>"
+			t += "<A href='?src=[UID()];ejectGPS=1'>Eject GPS</A>"
+			t += "<A href='?src=[UID()];setMemory=1'>Set GPS memory</A>"
 		else
 			t += "<span class='linkOff'>Eject GPS</span>"
 			t += "<span class='linkOff'>Set GPS memory</span>"
 		t += "<div class='statusDisplay'>[temp_msg]</div><BR>"
-		t += "<A href='?src=\ref[src];setrotation=1'>Set Bearing</A>"
-		t += "<div class='statusDisplay'>[rotation]°</div>"
-		t += "<A href='?src=\ref[src];setangle=1'>Set Elevation</A>"
-		t += "<div class='statusDisplay'>[angle]°</div>"
+		t += "<A href='?src=[UID()];setrotation=1'>Set Bearing</A>"
+		t += "<div class='statusDisplay'>[rotation] degrees</div>"
+		t += "<A href='?src=[UID()];setangle=1'>Set Elevation</A>"
+		t += "<div class='statusDisplay'>[angle] degrees</div>"
 		t += "<span class='linkOn'>Set Power</span>"
 		t += "<div class='statusDisplay'>"
 
@@ -115,15 +121,15 @@
 			if(power == power_options[i])
 				t += "<span class='linkOn'>[power_options[i]]</span>"
 				continue
-			t += "<A href='?src=\ref[src];setpower=[i]'>[power_options[i]]</A>"
+			t += "<A href='?src=[UID()];setpower=[i]'>[power_options[i]]</A>"
 		t += "</div>"
 
-		t += "<A href='?src=\ref[src];setz=1'>Set Sector</A>"
+		t += "<A href='?src=[UID()];setz=1'>Set Sector</A>"
 		t += "<div class='statusDisplay'>[z_co ? z_co : "NULL"]</div>"
 
-		t += "<BR><A href='?src=\ref[src];send=1'>Send</A>"
-		t += " <A href='?src=\ref[src];receive=1'>Receive</A>"
-		t += "<BR><A href='?src=\ref[src];recal=1'>Recalibrate Crystals</A> <A href='?src=\ref[src];eject=1'>Eject Crystals</A>"
+		t += "<BR><A href='?src=[UID()];send=1'>Send</A>"
+		t += " <A href='?src=[UID()];receive=1'>Receive</A>"
+		t += "<BR><A href='?src=[UID()];recal=1'>Recalibrate Crystals</A> <A href='?src=[UID()];eject=1'>Eject Crystals</A>"
 
 		// Information about the last teleport
 		t += "<BR><div class='statusDisplay'>"
@@ -142,7 +148,7 @@
 
 /obj/machinery/computer/telescience/proc/sparks()
 	if(telepad)
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+		var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 		s.set_up(5, 1, get_turf(telepad))
 		s.start()
 	else
@@ -200,7 +206,7 @@
 			// use a lot of power
 			use_power(power * 10)
 
-			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+			var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 			s.set_up(5, 1, get_turf(telepad))
 			s.start()
 
@@ -211,7 +217,7 @@
 				temp_msg += "Data printed below."
 
 			var/sparks = get_turf(target)
-			var/datum/effect_system/spark_spread/y = new /datum/effect_system/spark_spread
+			var/datum/effect/system/spark_spread/y = new /datum/effect/system/spark_spread
 			y.set_up(5, 1, sparks)
 			y.start()
 
@@ -246,7 +252,7 @@
 					log_msg += "[key_name(T)], "
 				else
 					log_msg += "[ROI.name]"
-					if (istype(ROI, /obj/structure/closet))
+					if(istype(ROI, /obj/structure/closet))
 						var/obj/structure/closet/C = ROI
 						log_msg += " ("
 						for(var/atom/movable/Q as mob|obj in C)
@@ -254,7 +260,7 @@
 								log_msg += "[key_name(Q)], "
 							else
 								log_msg += "[Q.name], "
-						if (dd_hassuffix(log_msg, "("))
+						if(dd_hassuffix(log_msg, "("))
 							log_msg += "empty)"
 						else
 							log_msg = dd_limittext(log_msg, length(log_msg) - 2)
@@ -262,13 +268,13 @@
 					log_msg += ", "
 				do_teleport(ROI, dest)
 
-			if (dd_hassuffix(log_msg, ", "))
+			if(dd_hassuffix(log_msg, ", "))
 				log_msg = dd_limittext(log_msg, length(log_msg) - 2)
 			else
 				log_msg += "nothing"
 			log_msg += " [sending ? "to" : "from"] [trueX], [trueY], [z_co] ([A ? A.name : "null area"])"
 			investigate_log(log_msg, "telesci")
-			updateDialog()
+			updateUsrDialog()
 
 /obj/machinery/computer/telescience/proc/teleport(mob/user)
 	if(rotation == null || angle == null || z_co == null)
@@ -282,10 +288,28 @@
 		telefail()
 		temp_msg = "ERROR!<BR>Elevation is less than 1 or greater than 90."
 		return
-	if(z_co == ZLEVEL_CENTCOM || z_co < 1 || z_co > ZLEVEL_SPACEMAX)
+	if(z_co == 2 || z_co < 1 || z_co > 6)
+		if(z_co == 7 & emagged == 1)
+		// This should be empty, allows for it to continue if the z-level is 7 and the machine is emagged.
+		else
+			telefail()
+			temp_msg = "ERROR! Sector is less than 1, <BR>greater than [src.emagged ? "7" : "6"], or equal to 2."
+			return
+
+
+	var/truePower = Clamp(power + power_off, 1, 1000)
+	var/trueRotation = rotation + rotation_off
+	var/trueAngle = Clamp(angle, 1, 90)
+
+	var/datum/projectile_data/proj_data = projectile_trajectory(telepad.x, telepad.y, trueRotation, trueAngle, truePower)
+	var/turf/target = locate(Clamp(round(proj_data.dest_x, 1), 1, world.maxx), Clamp(round(proj_data.dest_y, 1), 1, world.maxy), z_co)
+	var/area/A = get_area(target)
+
+	if(A.tele_proof == 1)
 		telefail()
-		temp_msg = "ERROR! Sector is outside known time and space!"
+		temp_msg = "ERROR! Target destination unreachable due to interference."
 		return
+
 	if(teles_left > 0)
 		doteleport(user)
 	else
@@ -295,8 +319,10 @@
 	return
 
 /obj/machinery/computer/telescience/proc/eject()
+
 	for(var/obj/item/I in crystals)
-		I.loc = src.loc
+		I.loc = loc
+		I.pixel_y = -9
 		crystals -= I
 	power = 0
 
@@ -304,7 +330,7 @@
 	if(..())
 		return
 	if(!telepad)
-		updateDialog()
+		updateUsrDialog()
 		return
 	if(telepad.panel_open)
 		temp_msg = "Telepad undergoing physical maintenance operations."
@@ -337,7 +363,7 @@
 
 	if(href_list["ejectGPS"])
 		if(inserted_gps)
-			inserted_gps.loc = loc
+			usr.put_in_hands(inserted_gps)
 			inserted_gps = null
 
 	if(href_list["setMemory"])
@@ -364,7 +390,7 @@
 		eject()
 		temp_msg = "NOTICE:<BR>Bluespace crystals ejected."
 
-	updateDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/telescience/proc/recalibrate()
 	teles_left = rand(30, 40)

@@ -1,11 +1,10 @@
 
 /obj/item/weapon/reagent_containers/honeycomb
 	name = "honeycomb"
-	desc = "A hexagonal mesh of honeycomb."
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	desc = "a hexagonal mesh of honeycomb"
+	icon = 'icons/obj/apiary_bees.dmi'
 	icon_state = "honeycomb"
 	possible_transfer_amounts = list()
-	spillable = 0
 	disease_amount = 0
 	volume = 10
 	amount_per_transfer_from_this = 0
@@ -20,14 +19,14 @@
 
 
 /obj/item/weapon/reagent_containers/honeycomb/update_icon()
-	cut_overlays()
+	overlays.Cut()
 	var/image/honey
 	if(honey_color)
-		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "greyscale_honey")
+		honey = image(icon = 'icons/obj/apiary_bees.dmi', icon_state = "greyscale_honey")
 		honey.color = honey_color
 	else
-		honey = image(icon = 'icons/obj/hydroponics/harvest.dmi', icon_state = "honey")
-	add_overlay(honey)
+		honey = image(icon = 'icons/obj/apiary_bees.dmi', icon_state = "honey")
+	overlays += honey
 
 
 /obj/item/weapon/reagent_containers/honeycomb/proc/set_reagent(reagent)

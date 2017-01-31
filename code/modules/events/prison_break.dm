@@ -1,60 +1,68 @@
-/datum/round_event_control/grey_tide
-	name = "Grey Tide"
-	typepath = /datum/round_event/grey_tide
-	max_occurrences = 2
-	min_players = 5
+/datum/event/prison_break
+	startWhen		= 5
+	announceWhen	= 75
 
-/datum/round_event/grey_tide
-	announceWhen = 50
-	endWhen = 20
-	var/list/area/areasToOpen = list()
-	var/list/potential_areas = list(/area/atmos,
-									/area/bridge,
-									/area/engine,
-									/area/medical,
-									/area/security,
-									/area/quartermaster,
-									/area/toxins)
-	var/severity = 1
+	var/releaseWhen = 60
+	var/list/area/areas = list()		//List of areas to affect. Filled by start()
+
+	var/eventDept = "Security"			//Department name in announcement
+	var/list/areaName = list("Brig")	//Names of areas mentioned in AI and Engineering announcements
+	var/list/areaType = list(/area/security/prison, /area/security/brig, /area/security/permabrig)	//Area types to include.
+	var/list/areaNotType = list()		//Area types to specifically exclude.
+
+/datum/event/prison_break/virology
+	eventDept = "Medical"
+	areaName = list("Virology")
+	areaType = list(/area/medical/virology, /area/medical/virology/lab)
+
+/datum/event/prison_break/xenobiology
+	eventDept = "Science"
+	areaName = list("Xenobiology")
+	areaType = list(/area/toxins/xenobiology)
+	areaNotType = list(/area/toxins/xenobiology/xenoflora, /area/toxins/xenobiology/xenoflora_storage)
+
+/datum/event/prison_break/station
+	eventDept = "Station"
+	areaName = list("Brig","Virology","Xenobiology")
+	areaType = list(/area/security/prison, /area/security/brig, /area/security/permabrig, /area/medical/virology, /area/medical/virology/lab, /area/toxins/xenobiology)
+	areaNotType = list(/area/toxins/xenobiology/xenoflora, /area/toxins/xenobiology/xenoflora_storage)
 
 
-/datum/round_event/grey_tide/setup()
-	announceWhen = rand(50, 60)
-	endWhen = rand(20, 30)
-	severity = rand(1,3)
-	for(var/i in 1 to severity)
-		var/picked_area = pick_n_take(potential_areas)
-		for(var/area/A in world)
-			if(istype(A, picked_area))
-				areasToOpen += A
+/datum/event/prison_break/setup()
+	announceWhen = rand(75, 105)
+	releaseWhen = rand(60, 90)
+
+	src.endWhen = src.releaseWhen+2
 
 
-/datum/round_event/grey_tide/announce()
-	if(areasToOpen && areasToOpen.len > 0)
-		priority_announce("Gr3y.T1d3 virus detected in [station_name()] door subroutines. Severity level of [severity]. Recommend station AI involvement.", "Security Alert")
+/datum/event/prison_break/announce()
+	if(areas && areas.len > 0)
+		event_announcement.Announce("[pick("Gr3y.T1d3 virus","Malignant trojan")] detected in [station_name()] [(eventDept == "Security")? "imprisonment":"containment"] subroutines. Secure any compromised areas immediately. Station AI involvement is recommended.", "[eventDept] Alert")
+
+/datum/event/prison_break/start()
+	for(var/area/A in world)
+		if(is_type_in_list(A,areaType) && !is_type_in_list(A,areaNotType))
+			areas += A
+
+	if(areas && areas.len > 0)
+		var/my_department = "[station_name()] firewall subroutines"
+		var/rc_message = "An unknown malicious program has been detected in the [english_list(areaName)] lighting and airlock control systems at [worldtime2text()]. Systems will be fully compromised within approximately three minutes. Direct intervention is required immediately.<br>"
+		for(var/obj/machinery/message_server/MS in world)
+			MS.send_rc_message("Engineering", my_department, rc_message, "", "", 2)
+		for(var/mob/living/silicon/ai/A in player_list)
+			to_chat(A, "<span class='danger'>Malicious program detected in the [english_list(areaName)] lighting and airlock control systems by [my_department].</span>")
+
 	else
-		world.log << "ERROR: Could not initate grey-tide. No areas in the list!"
+		log_runtime("Could not initate grey-tide. Unable to find suitable containment area.", src)
 		kill()
 
+/datum/event/prison_break/tick()
+	if(activeFor == releaseWhen)
+		if(areas && areas.len > 0)
+			for(var/area/A in areas)
+				for(var/obj/machinery/light/L in A)
+					L.flicker(10)
 
-/datum/round_event/grey_tide/start()
-	for(var/area/A in areasToOpen)
-		for(var/obj/machinery/light/L in A)
-			L.flicker(10)
-
-/datum/round_event/grey_tide/end()
-	for(var/area/A in areasToOpen)
-		for(var/obj/O in A)
-			if(istype(O,/obj/machinery/power/apc))
-				var/obj/machinery/power/apc/temp = O
-				temp.overload_lighting()
-			else if(istype(O,/obj/structure/closet/secure_closet))
-				var/obj/structure/closet/secure_closet/temp = O
-				temp.locked = 0
-				temp.update_icon()
-			else if(istype(O,/obj/machinery/door/airlock))
-				var/obj/machinery/door/airlock/temp = O
-				temp.prison_open()
-			else if(istype(O,/obj/machinery/door_timer))
-				var/obj/machinery/door_timer/temp = O
-				temp.timer_end(forced = TRUE)
+/datum/event/prison_break/end()
+	for(var/area/A in shuffle(areas))
+		A.prison_break()

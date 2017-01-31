@@ -16,7 +16,7 @@
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
 	networks = list("SS13")
-	off_action = new/datum/action/innate/camera_off/xenobio
+	off_action = new /datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
 	var/datum/action/innate/feed_slime/feed_slime_action = new
@@ -62,31 +62,13 @@
 		return
 	return ..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-		monkeys++
-		user << "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>"
-		user.drop_item()
-		qdel(O)
-		return
-	else if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
-		var/loaded = 0
-		for(var/obj/G in P.contents)
-			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
-				loaded = 1
-				monkeys++
-				qdel(G)
-		if (loaded)
-			user << "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>"
-	..()
-
 /datum/action/innate/camera_off/xenobio/Activate()
 	if(!target || !ishuman(target))
 		return
 	var/mob/living/carbon/C = target
 	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/xenobio/origin = remote_eye.origin
+	C.remote_view = 0
 	origin.current_user = null
 	origin.jump_action.Remove(C)
 	origin.slime_place_action.Remove(C)
@@ -95,8 +77,9 @@
 	origin.monkey_recycle_action.Remove(C)
 	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
 	remote_eye.eye_user = null
-	C.reset_perspective(null)
 	if(C.client)
+		C.client.perspective = MOB_PERSPECTIVE
+		C.client.eye = src
 		C.client.images -= remote_eye.user_image
 		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
 			C.client.images -= chunk.obscured
@@ -117,12 +100,10 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in X.stored_slimes)
-			S.loc = remote_eye.loc
+		for(var/mob/living/carbon/slime/S in X.stored_slimes)
+			S.forceMove(remote_eye.loc)
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
-	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
@@ -136,17 +117,16 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/simple_animal/slime/S in remote_eye.loc)
+		for(var/mob/living/carbon/slime/S in remote_eye.loc)
 			if(X.stored_slimes.len >= X.max_slimes)
 				break
 			if(!S.ckey)
 				if(S.buckled)
-					S.Feedstop(silent=1)
+					S.buckled.unbuckle_mob()
+				S.Feedstop()
 				S.visible_message("[S] vanishes in a flash of light!")
-				S.loc = X
+				S.forceMove(X)
 				X.stored_slimes += S
-	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
 
 
 /datum/action/innate/feed_slime
@@ -162,12 +142,10 @@
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		if(X.monkeys >= 1)
-			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
+			var/mob/living/carbon/human/monkey/food = new /mob/living/carbon/human/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys] monkeys left."
-	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+			to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
 
 
 /datum/action/innate/monkey_recycle
@@ -182,10 +160,8 @@
 	var/obj/machinery/computer/camera_advanced/xenobio/X = target
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
-		for(var/mob/living/carbon/monkey/M in remote_eye.loc)
-			if(M.stat)
+		for(var/mob/living/carbon/human/M in remote_eye.loc)
+			if(issmall(M) && M.stat)
 				M.visible_message("[M] vanishes as they are reclaimed for recycling!")
-				X.monkeys = round(X.monkeys + 0.2,0.1)
+				X.monkeys += 0.2
 				qdel(M)
-	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"

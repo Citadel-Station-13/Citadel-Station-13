@@ -1,29 +1,22 @@
+#pretending we're C because otherwise ruby will initialize, even with "language: dm".
 language: generic
 sudo: false
 
-env:
-    global:
-    - BYOND_MAJOR="510"
-    - BYOND_MINOR="1332"
-    - NODE_VERSION="4"
-    - BUILD_TOOLS=false
-    - DM_MAPFILE=""
-    matrix:
-    - BUILD_TOOLS=true
-    - DM_MAPFILE="tgstation2"
-    - DM_MAPFILE="metastation"
-    - DM_MAPFILE="ministation"
-    - DM_MAPFILE="dreamstation"
-    - DM_MAPFILE="birdstation"
-    - DM_MAPFILE="efficiencystation"
-    - DM_MAPFILE="templates"
+git:
+  depth: 1
 
+env:
+  global:
+    - BYOND_MAJOR="510"
+    - BYOND_MINOR="1346"
+  matrix:
+    - DM_MAPFILE="cyberiad"
+    - DM_MAPFILE="metastation"
+    - DM_MAPFILE="test_away_missions"
 
 cache:
   directories:
-    - tgui/node_modules
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
-
 
 addons:
   apt:
@@ -31,17 +24,24 @@ addons:
       - libc6-i386
       - libgcc1:i386
       - libstdc++6:i386
-      - python
-      - python-pip
-
-install:
-  - tools/travis/install_build_tools.sh
 
 before_script:
-  - tools/travis/before_build_tools.sh
-  - tools/travis/before_build_byond.sh
-
+  - chmod +x ./install-byond.sh
+  - ./install-byond.sh
 script:
-  - tools/travis/check_filedirs.sh tgstation.dme
-  - tools/travis/build_tools.sh
-  - tools/travis/build_byond.sh
+  - source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
+  - bash dm.sh -M${DM_MAPFILE} paradise.dme
+
+matrix:
+  include:
+    - env: FILE_CHECKS=1
+      addons:
+      install:
+        - pip install --user PyYaml -q
+        - pip install --user beautifulsoup4 -q
+      before_script:
+      script:
+        - shopt -s globstar
+        - (! grep 'step_[xy]' _maps/map_files/**/*.dmm)
+        - md5sum -c - <<< "6dc1b6bf583f3bd4176b6df494caa5f1 *html/changelogs/example.yml"
+        - python tools/ss13_genchangelog.py html/changelog.html html/changelogs

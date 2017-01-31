@@ -15,11 +15,8 @@
 	var/req_stat = CONSCIOUS // CONSCIOUS, UNCONSCIOUS or DEAD
 	var/genetic_damage = 0 // genetic damage caused by using the sting. Nothing to do with cloneloss.
 	var/max_genetic_damage = 100 // hard counter for spamming abilities. Not used/balanced much yet.
-	var/always_keep = 0 // important for abilities like revive that screw you if you lose them.
-	var/ignores_fakedeath = FALSE // usable with the FAKEDEATH flag
 
-
-/obj/effect/proc_holder/changeling/proc/on_purchase(mob/user)
+/obj/effect/proc_holder/changeling/proc/on_purchase(var/mob/user)
 	return
 
 /obj/effect/proc_holder/changeling/proc/on_refund(mob/user)
@@ -31,7 +28,9 @@
 		return
 	try_to_sting(user)
 
-/obj/effect/proc_holder/changeling/proc/try_to_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/proc/try_to_sting(var/mob/user, var/mob/target)
+	if(!user.mind || !user.mind.changeling)
+		return
 	if(!can_sting(user, target))
 		return
 	var/datum/changeling/c = user.mind.changeling
@@ -39,44 +38,44 @@
 		sting_feedback(user, target)
 		take_chemical_cost(c)
 
-/obj/effect/proc_holder/changeling/proc/sting_action(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/proc/sting_action(var/mob/user, var/mob/target)
 	return 0
 
-/obj/effect/proc_holder/changeling/proc/sting_feedback(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/proc/sting_feedback(var/mob/user, var/mob/target)
 	return 0
 
-/obj/effect/proc_holder/changeling/proc/take_chemical_cost(datum/changeling/changeling)
+/obj/effect/proc_holder/changeling/proc/take_chemical_cost(var/datum/changeling/changeling)
 	changeling.chem_charges -= chemical_cost
 	changeling.geneticdamage += genetic_damage
 
 //Fairly important to remember to return 1 on success >.<
-/obj/effect/proc_holder/changeling/proc/can_sting(mob/user, mob/target)
-	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
+/obj/effect/proc_holder/changeling/proc/can_sting(var/mob/user, var/mob/target)
+	if(!ishuman(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
-	if(req_human && !ishuman(user))
-		user << "<span class='warning'>We cannot do that in this form!</span>"
+	if(req_human && (!ishuman(user) || issmall(user)))
+		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
 		return 0
 	var/datum/changeling/c = user.mind.changeling
-	if(c.chem_charges < chemical_cost)
-		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
+	if(c.chem_charges<chemical_cost)
+		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
 		return 0
-	if(c.absorbedcount < req_dna)
-		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
+	if(c.absorbedcount<req_dna)
+		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
 		return 0
 	if(req_stat < user.stat)
-		user << "<span class='warning'>We are incapacitated.</span>"
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
-	if((user.status_flags & FAKEDEATH) && (!ignores_fakedeath))
-		user << "<span class='warning'>We are incapacitated.</span>"
+	if((user.status_flags & FAKEDEATH) && name!="Regenerate")
+		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
-		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
+		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
 		return 0
 	return 1
 
 //used in /mob/Stat()
-/obj/effect/proc_holder/changeling/proc/can_be_used_by(mob/user)
-	if(!ishuman(user) && !ismonkey(user))
+/obj/effect/proc_holder/changeling/proc/can_be_used_by(var/mob/user)
+	if(!ishuman(user))
 		return 0
 	if(req_human && !ishuman(user))
 		return 0

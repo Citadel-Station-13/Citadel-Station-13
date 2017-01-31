@@ -4,7 +4,7 @@
 //
 //*******************************
 
-// Deprecated! See global.dm for new SQL config vars
+// Deprecated! See global.dm for new SQL config vars -- TLE
 /*
 #define SQL_ADDRESS ""
 #define SQL_DB ""

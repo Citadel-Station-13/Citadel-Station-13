@@ -1,49 +1,35 @@
-/datum/round_event_control/borer
-	name = "Borer"
-	typepath = /datum/round_event/borer
-	weight = 15
-	max_occurrences = 0
-	min_players = 15
-	earliest_start = 12000
+//Cortical borer spawn event - care of RobRichards1997 with minor editing by Zuhayr.
 
-/datum/round_event/borer
-	announceWhen = 2400 //Borers get 4 minutes till the crew tries to murder them.
-	var/successSpawn = 0
+/datum/event/borer_infestation
+	announceWhen = 400
 
-	var/spawncount = 2
+	var/spawncount = 5
+	var/successSpawn = 0        //So we don't make a command report if nothing gets spawned.
 
-/datum/round_event/borer/setup()
-	spawncount = rand(2, 4)
+/datum/event/borer_infestation/setup()
+	announceWhen = rand(announceWhen, announceWhen + 50)
+	spawncount = rand(1, 3)
 
-/datum/round_event/borer/announce()
+/datum/event/borer_infestation/announce()
 	if(successSpawn)
-		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg') //Borers seem like normal xenomorphs.
+		command_announcement.Announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", new_sound = 'sound/AI/aliens.ogg')
 
-
-/datum/round_event/borer/start()
-
+/datum/event/borer_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
-		if(qdeleted(temp_vent))
-			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
-			if(temp_vent_parent.other_atmosmch.len > 20)
+	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in world)
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
+			//Stops cortical borers getting stuck in small networks. See: Security, Virology
+			if(temp_vent.parent.other_atmosmch.len > 50)
 				vents += temp_vent
 
-	if(!vents.len)
-		message_admins("An event attempted to spawn a borer but no suitable vents were found. Shutting down.")
-		return kill()
+	spawn(0)
+		var/list/candidates = pollCandidates("Do you want to play as a cortical borer?", ROLE_BORER, 1)
+		while(spawncount > 0 && vents.len && candidates.len)
+			var/obj/vent = pick_n_take(vents)
+			var/mob/C = pick_n_take(candidates)
 
-	var/total_humans = 0
-	for(var/mob/living/carbon/human/H in mob_list)
-		if(H.stat != DEAD)
-			total_humans++
+			var/mob/living/simple_animal/borer/new_borer = new(vent.loc)
+			new_borer.key = C.key
 
-	total_borer_hosts_needed = round(1 + total_humans/6)
-
-	while(spawncount >= 1  && vents.len)
-		var/obj/vent = pick_n_take(vents)
-		new /mob/living/simple_animal/borer(vent.loc)
-		successSpawn = TRUE
-		spawncount--
+			spawncount--
+			successSpawn = 1

@@ -4,6 +4,7 @@
 	name = "\improper Unexplored Location"
 	icon_state = "away"
 	has_gravity = 1
+	there_can_be_many = 1
 
 
 /area/ruin/unpowered
@@ -46,9 +47,3 @@
 /area/ruin/onehalf/bridge
 	name = "Bridge"
 	icon_state = "bridge"
-
-/area/ruin/powered/dinner_for_two
-	name = "Dinner for Two"
-
-/area/ruin/powered/authorship
-	name = "Authorship"

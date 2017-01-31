@@ -4,13 +4,12 @@
 	icon_state = "chronohelmet"
 	item_state = "chronohelmet"
 	slowdown = 1
-	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 100)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	armor = list(melee = 60, bullet = 30/*bullet through the visor*/, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/obj/item/clothing/suit/space/chronos/suit = null
 
 /obj/item/clothing/head/helmet/space/chronos/dropped()
 	if(suit)
-		suit.deactivate(1, 1)
+		suit.deactivate()
 	..()
 
 /obj/item/clothing/head/helmet/space/chronos/Destroy()
@@ -20,35 +19,24 @@
 
 /obj/item/clothing/suit/space/chronos
 	name = "Chronosuit"
-	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology"
+	desc = "An advanced spacesuit equipped with teleportation and anti-compression technology"
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
 	actions_types = list(/datum/action/item_action/toggle)
-	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90, fire = 100, acid = 1000)
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/list/chronosafe_items = list(/obj/item/weapon/chrono_eraser, /obj/item/weapon/gun/energy/chrono_gun)
-	var/list/hands_nodrop = list()
+	armor = list(melee = 60, bullet = 60, laser = 60, energy = 60, bomb = 30, bio = 90, rad = 90)
 	var/obj/item/clothing/head/helmet/space/chronos/helmet = null
 	var/obj/effect/chronos_cam/camera = null
-	var/image/phase_underlay = null
-	var/datum/action/innate/chrono_teleport/teleport_now = new
 	var/activating = 0
 	var/activated = 0
 	var/cooldowntime = 50 //deciseconds
 	var/teleporting = 0
-	var/phase_timer_id
 
-/obj/item/clothing/suit/space/chronos/New()
-	..()
-	teleport_now.chronosuit = src
-	teleport_now.target = src
 
-/obj/item/clothing/suit/space/chronos/proc/new_camera(mob/user)
+/obj/item/clothing/suit/space/chronos/proc/new_camera(var/mob/user)
 	if(camera)
 		qdel(camera)
-	camera = new /obj/effect/chronos_cam(user)
+	camera = new /obj/effect/chronos_cam(get_turf(user))
 	camera.holder = user
-	camera.chronosuit = src
 	user.remote_control = camera
 
 /obj/item/clothing/suit/space/chronos/ui_action_click()
@@ -71,279 +59,153 @@
 	var/mob/living/carbon/human/user = src.loc
 	switch(severity)
 		if(1)
-			if(activated && user && ishuman(user) && (user.wear_suit == src))
-				user << "<span class='danger'>E:FATAL:RAM_READ_FAIL\nE:FATAL:STACK_EMPTY\nE:FATAL:READ_NULL_POINT\nE:FATAL:PWR_BUS_OVERLOAD</span>"
-				user << "<span class='userdanger'>An electromagnetic pulse disrupts your [name] and violently tears you out of time-bluespace!</span>"
-				user.emote("scream")
-			deactivate(1, 1)
+			if(user && ishuman(user) && (user.wear_suit == src))
+				to_chat(user, "<span class='userdanger'>Elecrtromagnetic pulse detected, shutting down systems to preserve integrity...</span>")
+			deactivate()
 
-/obj/item/clothing/suit/space/chronos/proc/finish_chronowalk(mob/living/carbon/human/user, turf/to_turf)
-	if(!user)
-		user = src.loc
-	if(phase_timer_id)
-		deltimer(phase_timer_id)
-		phase_timer_id = 0
-	if(istype(user))
-		if(to_turf)
-			user.forceMove(to_turf)
-		user.SetStunned(0)
-		user.next_move = 1
-		user.alpha = 255
-		user.update_atom_colour()
-		user.animate_movement = FORWARD_STEPS
-		user.notransform = 0
-		user.anchored = 0
-		teleporting = 0
-		for(var/obj/item/I in user.held_items)
-			if(I in hands_nodrop)
-				I.flags &= ~NODROP
-		if(phase_underlay && !qdeleted(phase_underlay))
-			user.underlays -= phase_underlay
-			qdel(phase_underlay)
-			phase_underlay = null
-		if(camera)
-			camera.remove_target_ui()
-			camera.loc = user
-		teleport_now.UpdateButtonIcon()
-
-/obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
-	var/mob/living/carbon/human/user = src.loc
-	if(activated && !teleporting && user && istype(user) && location && user.loc && location.loc && user.wear_suit == src && user.stat == CONSCIOUS)
+/obj/item/clothing/suit/space/chronos/proc/chronowalk(var/mob/living/carbon/human/user)
+	if(!teleporting && user && (user.stat == CONSCIOUS))
 		teleporting = 1
 		var/turf/from_turf = get_turf(user)
-		var/turf/to_turf = get_turf(location)
-		var/distance = cheap_hypotenuse(from_turf.x, from_turf.y, to_turf.x, to_turf.y)
-		var/phase_in_ds = distance*2
-
-		if(camera)
-			camera.remove_target_ui()
-
-		teleport_now.UpdateButtonIcon()
-
-		var/list/nonsafe_slots = list(slot_belt, slot_back)
-		var/list/exposed = list()
-		for(var/slot in nonsafe_slots)
-			var/obj/item/slot_item = user.get_item_by_slot(slot)
-			exposed += slot_item
-		exposed += user.held_items
-		for(var/exposed_item in exposed)
-			var/obj/item/exposed_I = exposed_item
-			if(exposed_I && !(exposed_I.type in chronosafe_items) && user.unEquip(exposed_I))
-				user << "<span class='notice'>Your [exposed_I.name] got left behind.</span>"
-
+		if(!from_turf) //sanity, things happen
+			teleporting = 0
+			return
+		var/turf/to_turf = from_turf
+		var/atom/movable/overlay/phaseanim = new(from_turf)
+		var/obj/holder = new(camera)
+		phaseanim.name = "phasing [user.name]"
+		phaseanim.icon = 'icons/mob/mob.dmi'
+		phaseanim.icon_state = "chronostuck"
+		phaseanim.density = 1
+		phaseanim.layer = FLY_LAYER
+		phaseanim.master = user
 		user.ExtinguishMob()
-
-		phase_underlay = create_phase_underlay(user)
-
-		hands_nodrop = list()
-		for(var/obj/item/I in user.held_items)
-			if(!(I.flags & NODROP))
-				hands_nodrop += I
-				I.flags |= NODROP
-		user.animate_movement = NO_STEPS
-		user.changeNext_move(8 + phase_in_ds)
-		user.notransform = 1
-		user.anchored = 1
-		user.Stun(INFINITY)
-
-		animate(user, color = "#00ccee", time = 3)
-		phase_timer_id = addtimer(src, "phase_2", 3, TIMER_NORMAL, user, to_turf, phase_in_ds)
-
-/obj/item/clothing/suit/space/chronos/proc/phase_2(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
-	if(teleporting && activated && user)
-		animate(user, alpha = 0, time = 2)
-		phase_timer_id = addtimer(src, "phase_3", 2, TIMER_NORMAL, user, to_turf, phase_in_ds)
-	else
-		finish_chronowalk(user, to_turf)
-
-/obj/item/clothing/suit/space/chronos/proc/phase_3(mob/living/carbon/human/user, turf/to_turf, phase_in_ds)
-	if(teleporting && activated && user)
-		user.forceMove(to_turf)
-		animate(user, alpha = 255, time = phase_in_ds)
-		phase_timer_id = addtimer(src, "phase_4", phase_in_ds, TIMER_NORMAL, user, to_turf)
-	else
-		finish_chronowalk(user, to_turf)
-
-/obj/item/clothing/suit/space/chronos/proc/phase_4(mob/living/carbon/human/user, turf/to_turf)
-	if(teleporting && activated && user)
-		animate(user, color = "#ffffff", time = 3)
-		phase_timer_id = addtimer(src, "finish_chronowalk", 3, TIMER_NORMAL, user, to_turf)
-	else
-		finish_chronowalk(user, to_turf)
-
-
-/obj/item/clothing/suit/space/chronos/proc/create_phase_underlay(var/mob/user)
-	var/icon/user_icon = icon('icons/effects/alphacolors.dmi', "")
-	user_icon.AddAlphaMask(getFlatIcon(user))
-	var/image/phase = new(user_icon)
-	phase.appearance_flags = RESET_COLOR|RESET_ALPHA
-	user.underlays += phase
-	return phase
+		if(user.buckled)
+			user.buckled.unbuckle_mob()
+		user.loc = holder
+		flick("chronophase", phaseanim)
+		spawn(7)
+			if(user)
+				if(phaseanim)
+					if(camera && camera.loc)
+						to_turf = camera.loc
+						flick("chronounphase", phaseanim)
+					else
+						flick("chronostuck", phaseanim)
+					phaseanim.loc = to_turf
+					sleep(7)
+			if(holder)
+				if(user && user in holder.contents)
+					user.loc = to_turf
+					if(user.client)
+						if(camera)
+							user.client.eye = camera
+						else
+							user.client.eye = user
+				qdel(holder)
+			else if(user)
+				user.loc = from_turf
+			if(phaseanim)
+				qdel(phaseanim)
+			teleporting = 0
+			if(user && !user.loc) //ubersanity
+				user.loc = locate(0,0,1)
+				user.gib()
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user) && (user.wear_suit == src))
 			if(camera && (user.remote_control == camera))
-				if(!teleporting)
-					if(camera.loc != user && ((camera.x != user.x) || (camera.y != user.y) || (camera.z != user.z)))
-						if(camera.phase_time <= world.time)
-							chronowalk(camera)
-					else
-						camera.remove_target_ui()
+				if(!teleporting && !((camera.x == user.x) && (camera.y == user.y) && (camera.z == user.z))) //cheaper than a couple get_turf calls???
+					chronowalk(user)
 			else
 				new_camera(user)
 	else
-		STOP_PROCESSING(SSobj, src)
+		processing_objects.Remove(src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
-		if(user && ishuman(user) && user.wear_suit == src)
-			user << "\nChronosuitMK4 login: root"
-			user << "Password:\n"
-			user << "root@ChronosuitMK4# chronowalk4 --start\n"
-			if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helm"
-				helmet = user.head
-				helmet.flags |= NODROP
-				helmet.suit = src
-				src.flags |= NODROP
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner"
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver"
-				user << "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view"
-				new_camera(user)
-				START_PROCESSING(SSobj, src)
-				activated = 1
-			else
-				user << "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm"
-				user << "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helm. <b>Aborting...</b>"
-			teleport_now.Grant(user)
+		if(user && ishuman(user))
+			if(user.wear_suit == src)
+				to_chat(user, "\nChronosuitMK4 login: root")
+				to_chat(user, "Password:\n")
+				to_chat(user, "root@ChronosuitMK4# chronowalk4 --start\n")
+				if(user.head && istype(user.head, /obj/item/clothing/head/helmet/space/chronos))
+					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Mounting /dev/helmet")
+					helmet = user.head
+					helmet.flags |= NODROP
+					helmet.suit = src
+					src.flags |= NODROP
+					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
+					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
+					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
+					new_camera(user)
+					processing_objects.Add(src)
+					activated = 1
+				else
+					to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helmet")
+					to_chat(user, "<span style='color: #ff0000;'><b>FATAL: </b>Unable to locate /dev/helmet. <b>Aborting...</b>")
 		cooldown = world.time + cooldowntime
 		activating = 0
+		return 0
 
-/obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
-	if(activated && (!teleporting || force))
+/obj/item/clothing/suit/space/chronos/proc/deactivate()
+	if(activated)
 		activating = 1
 		var/mob/living/carbon/human/user = src.loc
-		var/hard_landing = teleporting && force
+		if(user && ishuman(user))
+			if(user.wear_suit == src)
+				to_chat(user, "\nroot@ChronosuitMK4# chronowalk4 --stop\n")
+				if(camera)
+					to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view")//yes I know they aren't a different color when shutting down, but they were too similar at a glance
+
+					qdel(camera)
+				if(helmet)
+					to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver")
+					to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner")
+					to_chat(user, "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet")
+					helmet.flags &= ~NODROP
+					helmet.suit = null
+					helmet = null
+				to_chat(user, "logout")
 		src.flags &= ~NODROP
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
-		finish_chronowalk()
-		if(user && ishuman(user))
-			teleport_now.Remove(user)
-			if(user.wear_suit == src)
-				if(hard_landing)
-					user.electrocute_act(35, src, safety = 1)
-					user.Weaken(10)
-				if(!silent)
-					user << "\nroot@ChronosuitMK4# chronowalk4 --stop\n"
-					if(camera)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Sending TERM signal to chronowalk4-view"
-					if(helmet)
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping ui display driver"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Stopping brainwave scanner"
-						user << "\[ <span style='color: #ff5500;'>ok</span> \] Unmounting /dev/helmet"
-					user << "logout"
-		if(helmet)
-			helmet.flags &= ~NODROP
-			helmet.suit = null
-			helmet = null
-		if(camera)
-			qdel(camera)
+
 
 /obj/effect/chronos_cam
 	name = "Chronosuit View"
 	density = 0
 	anchored = 1
-	invisibility = INVISIBILITY_ABSTRACT
+	invisibility = 101
 	opacity = 0
 	mouse_opacity = 0
 	var/mob/holder = null
-	var/phase_time = 0
-	var/phase_time_length = 3
-	var/obj/screen/chronos_target/target_ui = null
-	var/obj/item/clothing/suit/space/chronos/chronosuit
-
-/obj/effect/chronos_cam/proc/create_target_ui()
-	if(holder && holder.client && chronosuit)
-		if(target_ui)
-			remove_target_ui()
-		target_ui = new(null, holder)
-		holder.client.screen += target_ui
-
-/obj/effect/chronos_cam/proc/remove_target_ui()
-	if(target_ui)
-		qdel(target_ui)
-		target_ui = null
 
 /obj/effect/chronos_cam/relaymove(var/mob/user, direction)
 	if(holder)
 		if(user == holder)
-			if(loc == user)
-				loc = get_turf(user)
 			if(user.client && user.client.eye != src)
 				src.loc = get_turf(user)
-				user.reset_perspective(src)
-				user.set_machine(src)
-			var/atom/step = get_step(src, direction)
+				user.client.eye = src
+			var/step = get_step(src, direction)
 			if(step)
-				if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
+				if(istype(step, /turf/space))
 					if(!src.Move(step))
 						src.loc = step
 				else
 					src.loc = step
-				if((x == holder.x) && (y == holder.y) && (z == holder.z))
-					remove_target_ui()
-					loc = user
-				else if(!target_ui)
-					create_target_ui()
-				phase_time = world.time + phase_time_length
 	else
 		qdel(src)
-
-/obj/effect/chronos_cam/check_eye(mob/user)
-	if(user != holder)
-		user.unset_machine()
-
-/obj/effect/chronos_cam/on_unset_machine(mob/user)
-	user.reset_perspective(null)
 
 /obj/effect/chronos_cam/Destroy()
 	if(holder)
 		if(holder.remote_control == src)
 			holder.remote_control = null
 		if(holder.client && (holder.client.eye == src))
-			holder.unset_machine()
+			holder.client.eye = holder
 	return ..()
-
-/obj/screen/chronos_target
-	name = "target display"
-	screen_loc = "CENTER,CENTER"
-	color = "#ff3311"
-	blend_mode = BLEND_SUBTRACT
-
-/obj/screen/chronos_target/New(loc, var/mob/living/carbon/human/user)
-	if(user)
-		var/icon/user_icon = getFlatIcon(user)
-		icon = user_icon
-		transform = user.transform
-	else
-		qdel(src)
-
-/datum/action/innate/chrono_teleport
-	name = "Teleport Now"
-	button_icon_state = "chrono_phase"
-	check_flags = AB_CHECK_CONSCIOUS //|AB_CHECK_INSIDE
-	var/obj/item/clothing/suit/space/chronos/chronosuit = null
-
-/datum/action/innate/chrono_teleport/IsAvailable()
-	return (chronosuit && chronosuit.activated && chronosuit.camera && !chronosuit.teleporting)
-
-/datum/action/innate/chrono_teleport/Activate()
-	if(IsAvailable())
-		if(chronosuit.camera)
-			chronosuit.chronowalk(chronosuit.camera)

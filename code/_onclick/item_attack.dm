@@ -4,81 +4,21 @@
 	return
 
 // No comment
-/atom/proc/attackby(obj/item/W, mob/user, params)
+/atom/proc/attackby(obj/item/W, mob/living/user, params)
 	return
 
-/obj/attackby(obj/item/I, mob/living/user, params)
-	if(unique_rename && istype(I, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		return I.attack_obj(src, user)
+/atom/movable/attackby(obj/item/W, mob/living/user, params)
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	if(!(W.flags&NOBLUDGEON))
+		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(user.a_intent == INTENT_HARM && stat == DEAD && butcher_results) //can we butcher it?
-		var/sharpness = I.is_sharp()
-		if(sharpness)
-			user << "<span class='notice'>You begin to butcher [src]...</span>"
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80/sharpness))
-				harvest(user)
-			return 1
-	return I.attack(src, user)
-
-
-/obj/item/proc/attack(mob/living/M, mob/living/user)
-	if(flags & NOBLUDGEON)
+	if(attempt_harvest(I, user))
 		return
-	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)
-	else if(hitsound)
-		playsound(loc, hitsound, get_clamped_volume(), 1, -1)
+	I.attack(src, user)
 
-	user.lastattacked = M
-	M.lastattacker = user
-
-	user.do_attack_animation(M)
-	M.attacked_by(src, user)
-
-	add_logs(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
-	add_fingerprint(user)
-
-
-//the equivalent of the standard version of attack() but for object targets.
-/obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(flags & NOBLUDGEON)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	user.do_attack_animation(O)
-	O.attacked_by(src, user)
-
-/atom/movable/proc/attacked_by()
-	return
-
-/obj/attacked_by(obj/item/I, mob/living/user)
-	if(I.force)
-		visible_message("<span class='danger'>[user] has hit [src] with [I]!</span>", null, null, COMBAT_MESSAGE_RANGE)
-		//only witnesses close by and the victim see a hit message.
-	take_damage(I.force, I.damtype, "melee", 1)
-
-/mob/living/attacked_by(obj/item/I, mob/living/user)
-	send_item_attack_message(I, user)
-	if(I.force)
-		apply_damage(I.force, I.damtype)
-		if(I.damtype == BRUTE)
-			if(prob(33))
-				I.add_mob_blood(src)
-				var/turf/location = get_turf(src)
-				add_splatter_floor(location)
-				if(get_dist(user, src) <= 1)	//people with TK won't get smeared with blood
-					user.add_mob_blood(src)
-		return TRUE //successful attack
-
-/mob/living/simple_animal/attacked_by(obj/item/I, mob/living/user)
-	if(I.force < force_threshold || I.damtype == STAMINA)
-		playsound(loc, 'sound/weapons/tap.ogg', I.get_clamped_volume(), 1, -1)
-	else
-		return ..()
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -86,26 +26,167 @@
 	return
 
 
-/obj/item/proc/get_clamped_volume()
-	if(w_class)
-		if(force)
-			return Clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
-		else
-			return Clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+/obj/item/proc/attack(mob/living/M as mob, mob/living/user as mob, def_zone)
 
-/mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
-	var/message_verb = "attacked"
-	if(I.attack_verb && I.attack_verb.len)
-		message_verb = "[pick(I.attack_verb)]"
-	else if(!I.force)
-		return
-	var/message_hit_area = ""
-	if(hit_area)
-		message_hit_area = " in the [hit_area]"
-	var/attack_message = "[src] has been [message_verb][message_hit_area] with [I]."
-	if(user in viewers(src, null))
-		attack_message = "[user] has [message_verb] [src][message_hit_area] with [I]!"
-	visible_message("<span class='danger'>[attack_message]</span>", \
-		"<span class='userdanger'>[attack_message]</span>", null, COMBAT_MESSAGE_RANGE)
+	if(!istype(M)) // not sure if this is the right thing...
+		return 0
+	var/messagesource = M
+
+	if(can_operate(M))  //Checks if mob is lying down on table for surgery
+		if(istype(src,/obj/item/robot_parts))//popup override for direct attach
+			if(!attempt_initiate_surgery(src, M, user,1))
+				return 0
+			else
+				return 1
+		if(istype(src,/obj/item/organ/external))
+			var/obj/item/organ/external/E = src
+			if(E.robotic == 2) // Robot limbs are less messy to attach
+				if(!attempt_initiate_surgery(src, M, user,1))
+					return 0
+				else
+					return 1
+
+		if(istype(src,/obj/item/weapon/screwdriver) && M.get_species() == "Machine")
+			if(!attempt_initiate_surgery(src, M, user))
+				return 0
+			else
+				return 1
+		if(is_sharp(src))
+			if(!attempt_initiate_surgery(src, M, user))
+				return 0
+			else
+				return 1
+
+	if(istype(M,/mob/living/carbon/brain))
+		var/mob/living/carbon/brain/B = M
+		messagesource = B.container
+	if(hitsound && force > 0)
+		playsound(loc, hitsound, 50, 1, -1)
+	/////////////////////////
+	user.lastattacked = M
+	M.lastattacker = user
+	add_logs(user, M, "attacked", name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", print_attack_log = (force > 0))//print it if stuff deals damage
+
+	if(!iscarbon(user))
+		M.LAssailant = null
+	else
+		M.LAssailant = user
+
+	/////////////////////////
+
+	if(istype(M, /mob/living/simple_animal))
+		return 0 // No sanic-speed double-attacks for you - simple mobs will handle being attacked on their own
+	var/power = force
+
+	if(!istype(M, /mob/living/carbon/human))
+		if(istype(M, /mob/living/carbon/slime))
+			var/mob/living/carbon/slime/slime = M
+			if(prob(25))
+				to_chat(user, "\red [src] passes right through [M]!")
+				return
+
+			if(power > 0)
+				slime.attacked += 10
+
+			if(slime.Discipline && prob(50))	// wow, buddy, why am I getting attacked??
+				slime.Discipline = 0
+
+			if(power >= 3)
+				if(slime.is_adult)
+					if(prob(5 + round(power/2)))
+
+						if(slime.Victim)
+							if(prob(80) && !slime.client)
+								slime.Discipline++
+						slime.Victim = null
+						slime.anchored = 0
+
+						spawn()
+							if(slime)
+								slime.SStun = 1
+								sleep(rand(5,20))
+								if(slime)
+									slime.SStun = 0
+
+						spawn(0)
+							if(slime)
+								slime.canmove = 0
+								step_away(slime, user)
+								if(prob(25 + power))
+									sleep(2)
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
+
+				else
+					if(prob(10 + power*2))
+						if(slime)
+							if(slime.Victim)
+								if(prob(80) && !slime.client)
+									slime.Discipline++
+
+									if(slime.Discipline == 1)
+										slime.attacked = 0
+
+								spawn()
+									if(slime)
+										slime.SStun = 1
+										sleep(rand(5,20))
+										if(slime)
+											slime.SStun = 0
+
+							slime.Victim = null
+							slime.anchored = 0
+
+
+						spawn(0)
+							if(slime && user)
+								step_away(slime, user)
+								slime.canmove = 0
+								if(prob(25 + power*4))
+									sleep(2)
+									if(slime && user)
+										step_away(slime, user)
+								slime.canmove = 1
+
+
+		var/showname = "."
+		if(user)
+			showname = " by [user]."
+			user.do_attack_animation(src)
+		if(!(user in viewers(M, null)))
+			showname = "."
+
+		for(var/mob/O in viewers(messagesource, null))
+			if(attack_verb.len)
+				O.show_message("<span class='danger'>[M] has been [pick(attack_verb)] with [src][showname] </span>", 1)
+			else
+				O.show_message("<span class='danger'>[M] has been attacked with [src][showname] </span>", 1)
+
+		if(!showname && user)
+			if(user.client)
+				to_chat(user, "<span class='danger'>You attack [M] with [src]. </span>")
+
+
+
+	if(istype(M, /mob/living/carbon/human))
+		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
+	else
+		switch(damtype)
+			if("brute")
+				if(istype(src, /mob/living/carbon/slime))
+					M.adjustBrainLoss(power)
+
+				else
+
+					M.take_organ_damage(power)
+					if(prob(33)) // Added blood for whacking non-humans too
+						var/turf/simulated/location = M.loc
+						if(istype(location, /turf/simulated))
+							location.add_blood_floor(M)
+			if("fire")
+				M.take_organ_damage(0, power)
+				to_chat(M, "Aargh it burns!")
+		M.updatehealth()
+	add_fingerprint(user)
 	return 1
-

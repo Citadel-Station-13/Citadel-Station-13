@@ -16,9 +16,9 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_level = MAIN_STATION
 
-	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
+	overlay_layer = 2 //Covers floors only
 	immunity_type = "lava"
 
 /datum/weather/floor_is_lava/impact(mob/living/L)
@@ -31,6 +31,9 @@
 		return
 	L.adjustFireLoss(3)
 
+/datum/weather/floor_is_lava/fake
+	name = "fake lava"
+	aesthetic = TRUE
 
 /datum/weather/advanced_darkness //Advanced Darkness: Restricts the vision of all affected mobs to a single tile in the cardinal directions.
 	name = "advanced darkness"
@@ -39,7 +42,7 @@
 	telegraph_message = "<span class='warning'>The lights begin to dim... is the power going out?</span>"
 	telegraph_duration = 150
 
-	weather_message = "<span class='userdanger'>This isn't your average everday darkness... this is <i>advanced</i> darkness!</span>"
+	weather_message = "<span class='userdanger'>This isn't your everyday darkness... this is <i>advanced</i> darkness!</span>"
 	weather_duration_lower = 300
 	weather_duration_upper = 300
 
@@ -47,7 +50,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_level = MAIN_STATION
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
@@ -83,8 +86,8 @@
 	end_sound = 'sound/lavaland/ash_storm_end.ogg'
 	end_overlay = "light_ash"
 
-	area_type = /area/lavaland/surface/outdoors
-	target_z = ZLEVEL_LAVALAND
+	area_type = /area/mine/dangerous
+	target_level = MINING
 
 	immunity_type = "ash"
 
@@ -113,72 +116,3 @@
 	aesthetic = TRUE
 
 	probability = 10
-
-/datum/weather/rad_storm
-	name = "radiation storm"
-	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
-
-	telegraph_duration = 400
-	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
-
-	weather_message = "<span class='userdanger'><i>You feel waves of heat wash over you! Find shelter!</i></span>"
-	weather_overlay = "ash_storm"
-	weather_duration_lower = 600
-	weather_duration_upper = 1500
-	weather_color = "green"
-	weather_sound = 'sound/misc/bloblarm.ogg'
-
-	end_duration = 100
-	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
-
-	area_type = /area
-	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer, /area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle/labor)
-	target_z = ZLEVEL_STATION
-
-	immunity_type = "rad"
-
-/datum/weather/rad_storm/telegraph()
-	..()
-	status_alarm("alert")
-
-
-/datum/weather/rad_storm/impact(mob/living/L)
-	var/resist = L.getarmor(null, "rad")
-	if(prob(40))
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.species_traits))
-					if(prob(max(0,100-resist)))
-						H.randmuti()
-						if(prob(50))
-							if(prob(90))
-								H.randmutb()
-							else
-								H.randmutg()
-							H.domutcheck()
-		L.rad_act(20,1)
-/datum/weather/rad_storm/end()
-	if(..())
-		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
-	status_alarm()
-
-
-/datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new
-	var/atom/movable/virtualspeaker/virt = PoolOrNew(/atom/movable/virtualspeaker,null)
-	status_signal.source = virt
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = "shuttle"
-
-	if(command == "alert")
-		status_signal.data["command"] = "alert"
-		status_signal.data["picture_state"] = "radiation"
-
-	frequency.post_signal(src, status_signal)

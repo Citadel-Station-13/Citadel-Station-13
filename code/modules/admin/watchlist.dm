@@ -1,4 +1,6 @@
 /client/proc/watchlist_add(target_ckey, browse = 0)
+	if(!check_rights(R_ADMIN))
+		return
 	if(!target_ckey)
 		var/new_ckey = ckey(input(usr,"Who would you like to add to the watchlist?","Enter a ckey",null) as text)
 		if(!new_ckey)
@@ -10,14 +12,15 @@
 			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_watchfind.NextRow())
-			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add them to the watchlist?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
-				return
-		target_ckey = new_ckey
+			to_chat(usr, "<span class='redtext'>[new_ckey] has not been seen before, you can only add known players.</span>")
+			return
+		else
+			target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(check_watchlist(target_sql_ckey))
-		usr << "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>"
+		to_chat(usr, "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>")
 		return
-	var/reason = input(usr,"Please State Reason","Reason") as message
+	var/reason = input(usr,"Please state the reason","Reason") as message|null
 	if(!reason)
 		return
 	reason = sanitizeSQL(reason)
@@ -37,6 +40,8 @@
 		watchlist_show(target_sql_ckey)
 
 /client/proc/watchlist_remove(target_ckey, browse = 0)
+	if(!check_rights(R_ADMIN))
+		return
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watchdel = dbcon.NewQuery("DELETE FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watchdel.Execute())
@@ -49,6 +54,8 @@
 		watchlist_show()
 
 /client/proc/watchlist_edit(target_ckey, browse = 0)
+	if(!check_rights(R_ADMIN))
+		return
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watchreason = dbcon.NewQuery("SELECT reason FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watchreason.Execute())
@@ -57,24 +64,26 @@
 		return
 	if(query_watchreason.NextRow())
 		var/watch_reason = query_watchreason.item[1]
-		var/new_reason = input("Input new reason", "New Reason", "[watch_reason]") as message
+		var/new_reason = input("Input the new reason", "New Reason", "[watch_reason]") as message|null
 		new_reason = sanitizeSQL(new_reason)
-		if(!new_reason)
+		if(!new_reason || new_reason == watch_reason)
 			return
 		var/sql_ckey = sanitizeSQL(usr.ckey)
-		var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from<br>[watch_reason]<br>to<br>[new_reason]<hr>"
+		var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from \"[watch_reason]\" to \"[new_reason]\""
 		edit_text = sanitizeSQL(edit_text)
 		var/DBQuery/query_watchupdate = dbcon.NewQuery("UPDATE [format_table_name("watch")] SET reason = '[new_reason]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE ckey = '[target_sql_ckey]'")
 		if(!query_watchupdate.Execute())
 			var/err = query_watchupdate.ErrorMsg()
 			log_game("SQL ERROR editing watchlist reason. Error : \[[err]\]\n")
 			return
-		log_admin("[key_name(usr)] has edited [target_ckey]'s watchlist reason from [watch_reason] to [new_reason]")
-		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s watchlist reason from<br>[watch_reason]<br>to<br>[new_reason]")
+		log_admin("[key_name(usr)] has edited [target_ckey]'s watchlist reason from \"[watch_reason]\" to \"[new_reason]\"")
+		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s watchlist reason from \"[watch_reason]\" to \"[new_reason]\"")
 		if(browse)
 			watchlist_show(target_sql_ckey)
 
 /client/proc/watchlist_show(search)
+	if(!check_rights(R_ADMIN))
+		return
 	var/output
 	output += "<form method='GET' name='search' action='?'>\
 	<input type='hidden' name='_src_' value='holder'>\
@@ -105,6 +114,8 @@
 	usr << browse(output, "window=watchwin;size=900x500")
 
 /client/proc/check_watchlist(target_ckey)
+	if(!check_rights(R_ADMIN,0))
+		return
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	var/DBQuery/query_watch = dbcon.NewQuery("SELECT reason FROM [format_table_name("watch")] WHERE ckey = '[target_sql_ckey]'")
 	if(!query_watch.Execute())

@@ -7,16 +7,14 @@
 	hitsound = 'sound/weapons/smash.ogg'
 	flags = CONDUCT
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	throw_speed = 2
 	throw_range = 7
 	force = 10
 	materials = list(MAT_METAL=90)
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
-	dog_fashion = /datum/dog_fashion/back
-	resistance_flags = FIRE_PROOF
 	var/max_water = 50
-	var/last_use = 1
+	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
 	var/power = 5 //Maximum distance launched water will travel
@@ -31,55 +29,48 @@
 	hitsound = null	//it is much lighter, after all.
 	flags = null //doesn't CONDUCT
 	throwforce = 2
-	w_class = WEIGHT_CLASS_SMALL
-	force = 3
+	w_class = 2
+	force = 3.0
 	materials = list()
 	max_water = 30
 	sprite_name = "miniFE"
-	dog_fashion = null
+
+/obj/item/weapon/extinguisher/examine(mob/user)
+	if(..(user, 0))
+		to_chat(usr, "[bicon(src)] [src.name] contains:")
+		if(reagents && reagents.reagent_list.len)
+			for(var/datum/reagent/R in reagents.reagent_list)
+				to_chat(user, "\blue [R.volume] units of [R.name]")
+
 
 /obj/item/weapon/extinguisher/New()
-	..()
 	create_reagents(max_water)
 	reagents.add_reagent("water", max_water)
 
-/obj/item/weapon/extinguisher/attack_self(mob/user)
+/obj/item/weapon/extinguisher/attack_self(mob/user as mob)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "The safety is [safety ? "on" : "off"]."
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
-
-/obj/item/weapon/extinguisher/attack(mob/M, mob/user)
-	if(user.a_intent == INTENT_HELP && !safety) //If we're on help intent and going to spray people, don't bash them.
-		return FALSE
-	else
-		return ..()
-
-/obj/item/weapon/extinguisher/examine(mob/user)
-	..()
-	if(reagents.total_volume)
-		user << "It contains [round(reagents.total_volume)] units."
-	else
-		user << "It is empty."
 
 /obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = 1
 		if(reagents.total_volume == reagents.maximum_volume)
-			user << "<span class='warning'>\The [src] is already full!</span>"
+			to_chat(user, "<span class='notice'>\The [src] is already full!</span>")
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/watertank/W = target
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
-			user << "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>"
+			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			user << "<span class='warning'>\The [W] is empty!</span>"
+			to_chat(user, "<span class='notice'>\The [W] is empty!</span>")
 		safety = safety_save
 		return 1
 	else
@@ -87,15 +78,17 @@
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
+	if(target.loc == user)//No more spraying yourself when putting your extinguisher away
+		return
 	var/Refill = AttemptRefill(target, user)
 	if(Refill)
 		return
-	if (!safety)
-		if (src.reagents.total_volume < 1)
-			usr << "<span class='warning'>\The [src] is empty!</span>"
+	if(!safety)
+		if(src.reagents.total_volume < 1)
+			to_chat(usr, "<span class='danger'>\The [src] is empty.</span>")
 			return
 
-		if (world.time < src.last_use + 12)
+		if(world.time < src.last_use + 20)
 			return
 
 		src.last_use = world.time
@@ -104,21 +97,29 @@
 
 		var/direction = get_dir(src,target)
 
-		if(user.buckled && isobj(user.buckled) && !user.buckled.anchored)
+		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
 			spawn(0)
-				var/obj/B = user.buckled
+				var/obj/structure/stool/bed/chair/C = null
+				if(istype(usr.buckled, /obj/structure/stool/bed/chair))
+					C = usr.buckled
+				var/obj/B = usr.buckled
 				var/movementdirection = turn(direction,180)
+				if(C)	C.propelled = 4
 				step(B, movementdirection)
+				sleep(1)
+				step(B, movementdirection)
+				if(C)	C.propelled = 3
 				sleep(1)
 				step(B, movementdirection)
 				sleep(1)
 				step(B, movementdirection)
-				sleep(1)
-				step(B, movementdirection)
+				if(C)	C.propelled = 2
 				sleep(2)
 				step(B, movementdirection)
+				if(C)	C.propelled = 1
 				sleep(2)
 				step(B, movementdirection)
+				if(C)	C.propelled = 0
 				sleep(3)
 				step(B, movementdirection)
 				sleep(3)
@@ -139,7 +140,7 @@
 
 		for(var/a=0, a<5, a++)
 			spawn(0)
-				var/obj/effect/particle_effect/water/W = PoolOrNew( /obj/effect/particle_effect/water, get_turf(src) )
+				var/obj/effect/effect/water/W = new /obj/effect/effect/water( get_turf(src) )
 				var/turf/my_target = pick(the_targets)
 				if(precision)
 					the_targets -= my_target
@@ -149,29 +150,18 @@
 				R.my_atom = W
 				if(!W || !src) return
 				src.reagents.trans_to(W,1)
-				for(var/b=0, b<power, b++)
+				for(var/b=0, b<5, b++)
 					step_towards(W,my_target)
 					if(!W || !W.reagents) return
 					W.reagents.reaction(get_turf(W))
-					for(var/A in get_turf(W))
+					for(var/atom/atm in get_turf(W))
 						if(!W) return
-						W.reagents.reaction(A)
+						W.reagents.reaction(atm)
+						if(isliving(atm)) //For extinguishing mobs on fire
+							var/mob/living/M = atm
+							M.ExtinguishMob()
+
 					if(W.loc == my_target) break
 					sleep(2)
-
 	else
 		return ..()
-
-/obj/item/weapon/extinguisher/AltClick(mob/user)
-	EmptyExtinguisher(user)
-
-/obj/item/weapon/extinguisher/proc/EmptyExtinguisher(var/mob/user)
-	if(loc == user && reagents.total_volume)
-		reagents.clear_reagents()
-
-		var/turf/T = get_turf(loc)
-		if(isopenturf(T))
-			var/turf/open/theturf = T
-			theturf.MakeSlippery(min_wet_time = 10, wet_time_to_add = 5)
-
-		user.visible_message("[user] empties out \the [src] onto the floor using the release valve.", "<span class='info'>You quietly empty out \the [src] using its release valve.</span>")

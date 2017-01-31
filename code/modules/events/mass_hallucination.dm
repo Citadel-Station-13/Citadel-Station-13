@@ -1,10 +1,12 @@
-/datum/round_event_control/mass_hallucination
-	name = "Mass Hallucination"
-	typepath = /datum/round_event/mass_hallucination
-	weight = 7
-	max_occurrences = 2
-	min_players = 1
+/datum/event/mass_hallucination/setup()
+	announceWhen = rand(0, 20)
 
-/datum/round_event/mass_hallucination/start()
-	for(var/mob/living/carbon/C in living_mob_list)
-		C.hallucination += rand(20, 50)
+/datum/event/mass_hallucination/start()
+	for(var/mob/living/carbon/human/H in living_mob_list)
+		var/armor = H.getarmor(type = "rad")
+		if((H.species.flags & RADIMMUNE) || armor >= 75) // Leave radiation-immune species/rad armored players completely unaffected
+			continue
+		H.AdjustHallucinate(rand(50, 100))
+
+/datum/event/mass_hallucination/announce()
+	event_announcement.Announce("It seems that station [station_name()] is passing through a minor radiation field, this may cause some hallucination, but no further damage")

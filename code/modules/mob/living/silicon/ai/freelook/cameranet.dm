@@ -9,7 +9,7 @@ var/datum/cameranet/cameranet = new()
 /datum/cameranet
 	var/name = "Camera Net" // Name to show for VV and stat()
 
-	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Destroy().
 	var/list/cameras = list()
 	// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
@@ -47,9 +47,9 @@ var/datum/cameranet/cameranet = new()
 
 	var/list/visibleChunks = list()
 
-	for(var/x = x1; x <= x2; x += CHUNK_SIZE)
-		for(var/y = y1; y <= y2; y += CHUNK_SIZE)
-			visibleChunks |= getCameraChunk(x, y, ai.z)
+	for(var/x = x1; x <= x2; x += 16)
+		for(var/y = y1; y <= y2; y += 16)
+			visibleChunks += getCameraChunk(x, y, ai.z)
 
 	var/list/remove = ai.visibleCameraChunks - visibleChunks
 	var/list/add = visibleChunks - ai.visibleCameraChunks
@@ -103,7 +103,7 @@ var/datum/cameranet/cameranet = new()
 // Setting the choice to 0 will remove the camera from the chunks.
 // If you want to update the chunks around an object, without adding/removing a camera, use choice 2.
 
-/datum/cameranet/proc/majorChunkChange(atom/c, choice)
+/datum/cameranet/proc/majorChunkChange(atom/c, var/choice)
 	// 0xf = 15
 	if(!c)
 		return
@@ -115,7 +115,7 @@ var/datum/cameranet/cameranet = new()
 		var/x2 = min(world.maxx, T.x + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 		var/y2 = min(world.maxy, T.y + (CHUNK_SIZE / 2)) & ~(CHUNK_SIZE - 1)
 
-		//world << "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]"
+//		to_chat(world, "X1: [x1] - Y1: [y1] - X2: [x2] - Y2: [y2]")
 
 		for(var/x = x1; x <= x2; x += CHUNK_SIZE)
 			for(var/y = y1; y <= y2; y += CHUNK_SIZE)
@@ -131,14 +131,13 @@ var/datum/cameranet/cameranet = new()
 
 // Will check if a mob is on a viewable turf. Returns 1 if it is, otherwise returns 0.
 
-/datum/cameranet/proc/checkCameraVis(mob/living/target)
+/datum/cameranet/proc/checkCameraVis(mob/living/target as mob)
 
 	// 0xf = 15
 	var/turf/position = get_turf(target)
 	return checkTurfVis(position)
 
-
-/datum/cameranet/proc/checkTurfVis(turf/position)
+/datum/cameranet/proc/checkTurfVis(var/turf/position)
 	var/datum/camerachunk/chunk = getCameraChunk(position.x, position.y, position.z)
 	if(chunk)
 		if(chunk.changed)
@@ -147,11 +146,13 @@ var/datum/cameranet/cameranet = new()
 			return 1
 	return 0
 
+/*
 /datum/cameranet/proc/stat_entry()
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug("Initializing...", src)
 
 	stat(name, statclick.update("Cameras: [cameranet.cameras.len] | Chunks: [cameranet.chunks.len]"))
+*/
 
 // Debug verb for VVing the chunk that the turf is in.
 /*

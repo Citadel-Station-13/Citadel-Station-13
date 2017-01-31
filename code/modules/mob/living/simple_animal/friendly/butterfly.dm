@@ -5,27 +5,22 @@
 	icon_living = "butterfly"
 	icon_dead = "butterfly_dead"
 	turns_per_move = 1
+	emote_see = list("flutters")
 	response_help = "shoos"
 	response_disarm = "brushes aside"
 	response_harm = "squashes"
-	speak_emote = list("flutters")
+	speak_chance = 0
 	maxHealth = 2
 	health = 2
 	harm_intent_damage = 1
 	friendly = "nudges"
 	density = 0
-	devourable = 1
-	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	ventcrawler = VENTCRAWLER_ALWAYS
+	ventcrawler = 2
 	mob_size = MOB_SIZE_TINY
-	gold_core_spawnable = 2
-	verb_say = "flutters"
-	verb_ask = "flutters inquisitively"
-	verb_exclaim = "flutters intensely"
-	verb_yell = "flutters intensely"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 0)
+	gold_core_spawnable = CHEM_MOB_SPAWN_FRIENDLY
 
 /mob/living/simple_animal/butterfly/New()
 	..()
-	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
+	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))

@@ -2,7 +2,7 @@
 	name = "firearms authentication implant"
 	desc = "Lets you shoot your guns"
 	icon_state = "auth"
-	origin_tech = "magnets=2;programming=7;biotech=5;syndicate=5"
+	origin_tech = "materials=2;magnets=2;programming=2;biotech=5;syndicate=5"
 	activated = 0
 
 /obj/item/weapon/implant/weapons_auth/get_data()
@@ -34,7 +34,7 @@
 
 /obj/item/weapon/implant/adrenalin/activate()
 	uses--
-	imp_in << "<span class='notice'>You feel a sudden surge of energy!</span>"
+	to_chat(imp_in, "<span class='notice'>You feel a sudden surge of energy!</span>")
 	imp_in.SetStunned(0)
 	imp_in.SetWeakened(0)
 	imp_in.SetParalysis(0)
@@ -44,7 +44,7 @@
 
 	imp_in.reagents.add_reagent("synaptizine", 10)
 	imp_in.reagents.add_reagent("omnizine", 10)
-	imp_in.reagents.add_reagent("stimulants", 10)
+	imp_in.reagents.add_reagent("stimulative_agent", 10)
 	if(!uses)
 		qdel(src)
 
@@ -53,8 +53,8 @@
 	name = "emp implant"
 	desc = "Triggers an EMP."
 	icon_state = "emp"
-	origin_tech = "biotech=3;magnets=4;syndicate=1"
-	uses = 3
+	origin_tech = "materials=2;biotech=3;magnets=4;syndicate=4"
+	uses = 2
 
 /obj/item/weapon/implant/emp/activate()
 	uses--
@@ -62,21 +62,7 @@
 	if(!uses)
 		qdel(src)
 
-
-//Health Tracker Implant
-
-/obj/item/weapon/implant/health
-	name = "health implant"
-	activated = 0
-	var/healthstring = ""
-
-/obj/item/weapon/implant/health/proc/sensehealth()
-	if (!implanted)
-		return "ERROR"
-	else
-		if(isliving(implanted))
-			var/mob/living/L = implanted
-			healthstring = "<small>Oxygen Deprivation Damage => [round(L.getOxyLoss())]<br />Fire Damage => [round(L.getFireLoss())]<br />Toxin Damage => [round(L.getToxLoss())]<br />Brute Force Damage => [round(L.getBruteLoss())]</small>"
-		if (!healthstring)
-			healthstring = "ERROR"
-		return healthstring
+/obj/item/weapon/implant/cortical
+	name = "cortical stack"
+	desc = "A fist-sized mass of biocircuits and chips."
+	icon_state = "implant_evil"

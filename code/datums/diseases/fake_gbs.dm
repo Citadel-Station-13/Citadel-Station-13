@@ -3,10 +3,10 @@
 	max_stages = 5
 	spread_text = "On contact"
 	spread_flags = CONTACT_GENERAL
-	cure_text = "Synaptizine & Sulfur"
-	cures = list("synaptizine","sulfur")
+	cure_text = "Diphenhydramine & Sulfur"
+	cures = list("diphenhydramine","sulfur")
 	agent = "Gravitokinetic Bipotential SADS-"
-	viable_mobtypes = list(/mob/living/carbon/human,/mob/living/carbon/monkey)
+	viable_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/human/monkey)
 	desc = "If left untreated death will occur."
 	severity = BIOHAZARD
 
@@ -22,7 +22,7 @@
 			else if(prob(5))
 				affected_mob.emote("gasp")
 			if(prob(10))
-				affected_mob << "<span class='danger'>You're starting to feel very weak...</span>"
+				to_chat(affected_mob, "<span class='danger'>You're starting to feel very weak...</span>")
 		if(4)
 			if(prob(10))
 				affected_mob.emote("cough")

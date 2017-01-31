@@ -1,7 +1,7 @@
 /proc/empulse(turf/epicenter, heavy_range, light_range, log=0)
 	if(!epicenter) return
 
-	if(!isturf(epicenter))
+	if(!istype(epicenter, /turf))
 		epicenter = get_turf(epicenter.loc)
 
 	if(log)
@@ -9,13 +9,14 @@
 		log_game("EMP with size ([heavy_range], [light_range]) in area [epicenter.loc.name] ")
 
 	if(heavy_range > 1)
-		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, epicenter)
+		new/obj/effect/overlay/temp/emp/pulse(epicenter)
 
 	if(heavy_range > light_range)
 		light_range = heavy_range
 
-	for(var/A in spiral_range(light_range, epicenter))
-		var/atom/T = A
+	for(var/mob/M in range(heavy_range, epicenter))
+		M << 'sound/effects/EMPulse.ogg'
+	for(var/atom/T in range(light_range, epicenter))
 		var/distance = get_dist(epicenter, T)
 		if(distance < 0)
 			distance = 0

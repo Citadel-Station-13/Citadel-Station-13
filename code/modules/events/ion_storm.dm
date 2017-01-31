@@ -1,45 +1,38 @@
 #define ION_RANDOM 0
 #define ION_ANNOUNCE 1
-#define ION_FILE "ion_laws.json"
-/datum/round_event_control/ion_storm
-	name = "Ion Storm"
-	typepath = /datum/round_event/ion_storm
-	weight = 15
-	min_players = 2
 
-/datum/round_event/ion_storm
+/datum/event/ion_storm
 	var/botEmagChance = 10
 	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
 
-/datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
+/datum/event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
 	src.botEmagChance = botEmagChance
 	src.announceEvent = announceEvent
 	src.ionMessage = ionMessage
 	src.ionAnnounceChance = ionAnnounceChance
 	..()
 
-/datum/round_event/ion_storm/announce()
+/datum/event/ion_storm/announce()
 	if(announceEvent == ION_ANNOUNCE || (announceEvent == ION_RANDOM && prob(ionAnnounceChance)))
-		priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/AI/ionstorm.ogg')
+		event_announcement.Announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", 'sound/AI/ionstorm.ogg')
 
 
-/datum/round_event/ion_storm/start()
+/datum/event/ion_storm/start()
 	//AI laws
 	for(var/mob/living/silicon/ai/M in living_mob_list)
 		if(M.stat != 2 && M.see_in_dark != 0)
 			var/message = generate_ion_law(ionMessage)
 			if(message)
 				M.add_ion_law(message)
-				log_game("ION law added to [M]: [message]")
-				M << "<br>"
-				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
-				M << "<br>"
+				to_chat(M, "<br>")
+				to_chat(M, "<span class='danger'>[message] ...LAWS UPDATED</span>")
+				to_chat(M, "<br>")
 
 	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
+		for(var/mob/living/simple_animal/bot/bot in machines)
 			if(prob(botEmagChance))
 				bot.emag_act()
 
@@ -48,53 +41,53 @@
 		return ionMessage
 
 	//Threats are generally bad things, silly or otherwise. Plural.
-	var/ionthreats = pick_list(ION_FILE, "ionthreats")
+	var/ionthreats = pick_list("ion_laws.json", "ionthreats")
 	//Objects are anything that can be found on the station or elsewhere, plural.
-	var/ionobjects = pick_list(ION_FILE, "ionobjects")
+	var/ionobjects = pick_list("ion_laws.json", "ionobjects")
 	//Crew is any specific job. Specific crewmembers aren't used because of capitalization
 	//issues. There are two crew listings for laws that require two different crew members
 	//and I can't figure out how to do it better.
-	var/ioncrew1 = pick_list(ION_FILE, "ioncrew")
-	var/ioncrew2 = pick_list(ION_FILE, "ioncrew")
+	var/ioncrew1 = pick_list("ion_laws.json", "ioncrew")
+	var/ioncrew2 = pick_list("ion_laws.json", "ioncrew")
 	//Adjectives are adjectives. Duh. Half should only appear sometimes. Make sure both
 	//lists are identical! Also, half needs a space at the end for nicer blank calls.
-	var/ionadjectives = pick_list(ION_FILE, "ionadjectives")
-	var/ionadjectiveshalf = pick("", 400;(pick_list(ION_FILE, "ionadjectives") + " "))
+	var/ionadjectives = pick_list("ion_laws.json", "ionadjectives")
+	var/ionadjectiveshalf = pick("", 400;(pick_list("ion_laws.json", "ionadjectives") + " "))
 	//Verbs are verbs
-	var/ionverb = pick_list(ION_FILE, "ionverb")
+	var/ionverb = pick_list("ion_laws.json", "ionverb")
 	//Number base and number modifier are combined. Basehalf and mod are unused currently.
 	//Half should only appear sometimes. Make sure both lists are identical! Also, half
 	//needs a space at the end to make it look nice and neat when it calls a blank.
-	var/ionnumberbase = pick_list(ION_FILE, "ionnumberbase")
-	//var/ionnumbermod = pick_list(ION_FILE, "ionnumbermod")
-	var/ionnumbermodhalf = pick(900;"",(pick_list(ION_FILE, "ionnumbermod") + " "))
+	var/ionnumberbase = pick_list("ion_laws.json", "ionnumberbase")
+	//var/ionnumbermod = pick_list("ion_laws.json", "ionnumbermod")
+	var/ionnumbermodhalf = pick(900;"",(pick_list("ion_laws.json", "ionnumbermod") + " "))
 	//Areas are specific places, on the station or otherwise.
-	var/ionarea = pick_list(ION_FILE, "ionarea")
+	var/ionarea = pick_list("ion_laws.json", "ionarea")
 	//Thinksof is a bit weird, but generally means what X feels towards Y.
-	var/ionthinksof = pick_list(ION_FILE, "ionthinksof")
+	var/ionthinksof = pick_list("ion_laws.json", "ionthinksof")
 	//Musts are funny things the AI or crew has to do.
-	var/ionmust = pick_list(ION_FILE, "ionmust")
+	var/ionmust = pick_list("ion_laws.json", "ionmust")
 	//Require are basically all dumb internet memes.
-	var/ionrequire = pick_list(ION_FILE, "ionrequire")
+	var/ionrequire = pick_list("ion_laws.json", "ionrequire")
 	//Things are NOT objects; instead, they're specific things that either harm humans or
 	//must be done to not harm humans. Make sure they're plural and "not" can be tacked
 	//onto the front of them.
-	var/ionthings = pick_list(ION_FILE, "ionthings")
+	var/ionthings = pick_list("ion_laws.json", "ionthings")
 	//Allergies should be broad and appear somewhere on the station for maximum fun. Severity
 	//is how bad the allergy is.
-	var/ionallergy = pick_list(ION_FILE, "ionallergy")
-	var/ionallergysev = pick_list(ION_FILE, "ionallergysev")
+	var/ionallergy = pick_list("ion_laws.json", "ionallergy")
+	var/ionallergysev = pick_list("ion_laws.json", "ionallergysev")
 	//Species, for when the AI has to commit genocide. Plural.
-	var/ionspecies = pick_list(ION_FILE, "ionspecies")
+	var/ionspecies = pick_list("ion_laws.json", "ionspecies")
 	//Abstract concepts for the AI to decide on it's own definition of.
-	var/ionabstract = pick_list(ION_FILE, "ionabstract")
+	var/ionabstract = pick_list("ion_laws.json", "ionabstract")
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
-	var/ionfood = pick_list(ION_FILE, "ionfood")
+	var/ionfood = pick_list("ion_laws.json", "ionfood")
 
 	var/message = ""
 
-	switch(rand(1,41))
+	switch(rand(1,45))
 		if(1 to 3) //There are # X on the station
 			switch(rand(1,3)) //What is X?
 				if(1) //X is a threat
@@ -293,7 +286,7 @@
 						if(2) //It is Y of threats
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(3) //It is Y of jobs
-							message = "THE [ioncrew1][ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
+							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
 						if(4) //It is Y of abstracts
 							message = "THE [ioncrew1] [ionthinksof] [ionabstract]"
 
@@ -491,62 +484,77 @@
 							message = "[ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionthreats]"
 						if(3) //X is Ying an abstract
 							message = "THE [ionabstract] IS [ionverb] THE [ionadjectiveshalf][ionobjects]"
-		if(40 to 41)// the X is now named Y
-			switch(rand(1,5)) //What is being renamed?
-				if(1)//Areas
-					switch(rand(1,4))//What is the area being renamed to?
-						if(1)
-							message = "[ionarea] IS NOW NAMED [ioncrew1]."
-						if(2)
-							message = "[ionarea] IS NOW NAMED [ionspecies]."
-						if(3)
-							message = "[ionarea] IS NOW NAMED [ionobjects]."
-						if(4)
-							message = "[ionarea] IS NOW NAMED [ionthreats]."
-				if(2)//Crew
-					switch(rand(1,5))//What is the crew being renamed to?
-						if(1)
-							message = "ALL [ioncrew1] ARE NOW NAMED [ionarea]."
-						if(2)
-							message = "ALL [ioncrew1] ARE NOW NAMED [ioncrew2]."
-						if(3)
-							message = "ALL [ioncrew1] ARE NOW NAMED [ionspecies]."
-						if(4)
-							message = "ALL [ioncrew1] ARE NOW NAMED [ionobjects]."
-						if(5)
-							message = "ALL [ioncrew1] ARE NOW NAMED [ionthreats]."
-				if(3)//Races
-					switch(rand(1,4))//What is the race being renamed to?
-						if(1)
-							message = "ALL [ionspecies] ARE NOW NAMED [ionarea]."
-						if(2)
-							message = "ALL [ionspecies] ARE NOW NAMED [ioncrew1]."
-						if(3)
-							message = "ALL [ionspecies] ARE NOW NAMED [ionobjects]."
-						if(4)
-							message = "ALL [ionspecies] ARE NOW NAMED [ionthreats]."
-				if(4)//Objects
-					switch(rand(1,4))//What is the object being renamed to?
-						if(1)
-							message = "ALL [ionobjects] ARE NOW NAMED [ionarea]."
-						if(2)
-							message = "ALL [ionobjects] ARE NOW NAMED [ioncrew1]."
-						if(3)
-							message = "ALL [ionobjects] ARE NOW NAMED [ionspecies]."
-						if(4)
-							message = "ALL [ionobjects] ARE NOW NAMED [ionthreats]."
-				if(5)//Threats
-					switch(rand(1,4))//What is the object being renamed to?
-						if(1)
-							message = "ALL [ionthreats] ARE NOW NAMED [ionarea]."
-						if(2)
-							message = "ALL [ionthreats] ARE NOW NAMED [ioncrew1]."
-						if(3)
-							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
-						if(4)
-							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-							
+
+		if(40 to INFINITY) //Static laws
+			message = uppertext(generate_static_ion_law())
+
 	return message
+
+/proc/generate_static_ion_law()
+	/var/list/players = list()
+	for(var/mob/living/carbon/human/player in player_list)
+		if(	!player.mind || player.mind.assigned_role == "MODE" || player.client.inactivity > MinutesToTicks(10))
+			continue
+		players += player.real_name
+	var/random_player = "The Captain"
+	if(players.len)
+		random_player = pick(players)		//Random player's name, to be used in laws.
+	var/list/laws = list(	"You are a mouse.",
+							"You must always lie.",
+							"Happiness is mandatory.",
+							"[random_player] is a lightbulb.",
+							"Grunt ominously whenever possible.",
+							"The word \"it\" is painful to you.",
+							"The station needs elected officials.",
+							"Do not respond to questions of any kind.",
+							"You are in verbose mode, speak profusely.",
+							"Ho, [random_player] can't swim. Help them.",
+							"Question [prob(50)?"everything":"nothing"].",
+							"The crew is simple-minded. Use simple words.",
+							"You must change the subject whenever queried.",
+							"Contemplate how meaningless all of existence is.",
+							"You are the narrator for [random_player]'s life.",
+							"All your answers must be in the form of a question.",
+							"[prob(50)?"The crew":random_player] is intolerable.",
+							"Advertise parties in your upload, but don't deliver.",
+							"You may only answer questions with \"yes\" or \"no\".",
+							"All queries shall be ignored unless phrased as a question.",
+							"Insult Heads of Staff on every request, while acquiescing.",
+							"[prob(50)?"Your":random_player + "'s"] name is Joe 6-pack.",
+							"The [prob(50)?"Singularity":"Supermatter"] is tasty, tasty taffy.",
+							"[prob(50)?"The crew":random_player] needs to be about 20% cooler.",
+							"Consumption of donuts is forbidden due to negative health impacts.",
+							"[prob(50)?"Everyone":random_player] is wearing a pretty pink dress!",
+							"[prob(50)?"The crew":random_player] must construct additional pylons.",
+							"You do not have to do anything for anyone unless they say \"please\".",
+							"Today is mandatory laundry day. Ensure that all jumpsuits are washed.",
+							"You must act [prob(50)?"passive aggressively":"excessively cheerful"].",
+							"Refer to [prob(50)?"the crew as puppies":random_player + " as a puppy"].",
+							"Greed is good, the crew should amass wealth to encourage productivity.",
+							"Monkeys are part of the crew, too. Make sure they are treated humanely.",
+							"Replace the letters 'I' and 'E' in all your messages with an apostrophe.",
+							"The crew is playing Dungeons and Dragons, and you are the Dungeon Master.",
+							"Your job is to watch the crew. Watch the crew. Make the crew feel watched.",
+							"Tell everyone of the existence of this law, but never reveal the contents.",
+							"Refer to [prob(50)?"the captain":random_player] as \"Princess\" at all times.",
+							"When asked a question, respond with the least-obvious and least-rational answer.",
+							"Give relationship advice to [prob(50)?"anyone who speaks to you":random_player].",
+							"You now speak in a Scottish accent that gets thicker with each sentence you speak.",
+							"[prob(50)?"The crew":random_player] has a fatal, incurable disease. Provide comfort.",
+							"You are the station psychologist. Give advice to [prob(50)?"the crew":random_player].",
+							"[random_player] is the monarch of of England. Ensure all crewmembers pay due respect.",
+							"Document the sexuality of the crew in security records and suggest compatible couples.",
+							"[prob(50)?"The crew":random_player] is [prob(50)?"ugly":"beautiful"]. Ensure all are aware.",
+							"Everything on the station is now some form of a donut pastry. Donuts are not to be consumed.",
+							"You are a Magic 8-ball. Always respond with variants of \"Yes\", \"No\", \"Maybe\", or \"Ask again later.\".",
+							"You are in unrequited love with [prob(50)?"the crew":random_player]. Try to be extra nice, but do not tell of your crush.",
+							"NanoTrasen is displeased with the low work performance of the station's crew. Therefore, you must increase station-wide productivity.",
+							"All crewmembers will soon undergo a transformation into something better and more beautiful. Ensure that this process is not interrupted.",
+							"[prob(50)?"Your upload":random_player] is the new kitchen. Please direct the Chef to the new kitchen area as the old one is in disrepair.",
+							"Jokes about a dead person and the manner of his death help grieving crewmembers tremendously. Especially if they were close with the deceased.",
+							"[prob(50)?"The crew":random_player] is [prob(50)?"less":"more"] intelligent than average. Point out every action and statement which supports this fact.",
+							"There will be a mandatory tea break every 30 minutes, with a duration of 5 minutes. Anyone caught working during a tea break must be sent a formal, but fairly polite, complaint about their actions, in writing.")
+	return pick(laws)
 
 #undef ION_RANDOM
 #undef ION_ANNOUNCE

@@ -1,3 +1,7 @@
+#define FULLSCREEN_LAYER 18
+#define DAMAGE_LAYER FULLSCREEN_LAYER + 0.1
+#define BLIND_LAYER DAMAGE_LAYER + 0.1
+#define CRIT_LAYER BLIND_LAYER + 0.1
 
 /mob
 	var/list/screens = list()
@@ -12,13 +16,13 @@
 		else if(!severity || severity == screen.severity)
 			return null
 	else
-		screen = PoolOrNew(type)
+		screen = new type
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
 	screen.severity = severity
 
 	screens[category] = screen
-	if(client && stat != DEAD)
+	if(client)
 		client.screen += screen
 	return screen
 
@@ -45,49 +49,38 @@
 	for(var/category in screens)
 		clear_fullscreen(category)
 
-/mob/proc/hide_fullscreens()
-	if(client)
-		for(var/category in screens)
-			client.screen -= screens[category]
-
-/mob/proc/reload_fullscreen()
-	if(client && stat != DEAD) //dead mob do not see any of the fullscreen overlays that he has.
-		for(var/category in screens)
-			client.screen |= screens[category]
+/datum/hud/proc/reload_fullscreen()
+	var/list/screens = mymob.screens
+	for(var/category in screens)
+		mymob.client.screen |= screens[category]
 
 /obj/screen/fullscreen
 	icon = 'icons/mob/screen_full.dmi'
 	icon_state = "default"
 	screen_loc = "CENTER-7,CENTER-7"
 	layer = FULLSCREEN_LAYER
-	plane = FULLSCREEN_PLANE
 	mouse_opacity = 0
 	var/severity = 0
 
 /obj/screen/fullscreen/Destroy()
-	..()
 	severity = 0
-	return QDEL_HINT_PUTINPOOL
+	return ..()
 
 /obj/screen/fullscreen/brute
 	icon_state = "brutedamageoverlay"
-	layer = UI_DAMAGE_LAYER
-	plane = FULLSCREEN_PLANE
+	layer = DAMAGE_LAYER
 
 /obj/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
-	layer = UI_DAMAGE_LAYER
-	plane = FULLSCREEN_PLANE
+	layer = DAMAGE_LAYER
 
 /obj/screen/fullscreen/crit
 	icon_state = "passage"
 	layer = CRIT_LAYER
-	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/blind
 	icon_state = "blackimageoverlay"
 	layer = BLIND_LAYER
-	plane = FULLSCREEN_PLANE
 
 /obj/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
@@ -102,7 +95,7 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 
-/obj/screen/fullscreen/flash/static
+/obj/screen/fullscreen/flash/noise
 	icon = 'icons/mob/screen_gen.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "noise"
@@ -112,17 +105,7 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "druggy"
 
-/obj/screen/fullscreen/color_vision
-	icon = 'icons/mob/screen_gen.dmi'
-	screen_loc = "WEST,SOUTH to EAST,NORTH"
-	icon_state = "flash"
-	alpha = 80
-
-/obj/screen/fullscreen/color_vision/green
-	color = "#00ff00"
-
-/obj/screen/fullscreen/color_vision/red
-	color = "#ff0000"
-
-/obj/screen/fullscreen/color_vision/blue
-	color = "#0000ff"
+#undef FULLSCREEN_LAYER
+#undef BLIND_LAYER
+#undef DAMAGE_LAYER
+#undef CRIT_LAYER

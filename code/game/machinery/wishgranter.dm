@@ -1,5 +1,5 @@
 /obj/machinery/wish_granter
-	name = "wish granter"
+	name = "Wish Granter"
 	desc = "You're not so sure about this, anymore..."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "syndbeacon"
@@ -7,47 +7,56 @@
 	use_power = 0
 	anchored = 1
 	density = 1
+	var/datum/mind/target
+	var/list/types = list()
+	var/inuse = 0
 
-	var/charges = 1
-	var/insisting = 0
+/obj/machinery/wish_granter/New()
+	for(var/supname in all_superheroes)
+		types |= supname
+	..()
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
-	if(charges <= 0)
-		user << "The Wish Granter lies silent."
+/obj/machinery/wish_granter/attack_hand(var/mob/user as mob)
+	usr.set_machine(src)
+
+	if(!istype(user, /mob/living/carbon/human))
+		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
 		return
 
-	else if(!ishuman(user))
-		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
+	if(is_special_character(user))
+		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
 		return
 
-	else if(is_special_character(user))
-		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
+	if(inuse)
+		to_chat(user, "Someone is already communing with the Wish Granter.")
+		return
 
-	else if (!insisting)
-		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
-		insisting++
+	to_chat(user, "The power of the Wish Granter have turned you into the superhero the station deserves. You are a masked vigilante, and answer to no man. Will you use your newfound strength to protect the innocent, or will you hunt the guilty?")
 
+	inuse = 1
+	var/wish
+	if(types.len == 1)
+		wish = pick(types)
 	else
-		user << "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers."
-		user << "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first."
+		wish = input("You want to become...","Wish") as null|anything in types
+	if(!wish)
+		inuse=0
+		return
+	types -= wish
+	var/mob/living/carbon/human/M = user
+	var/datum/superheroes/S = all_superheroes[wish]
+	if(S)
+		S.create(M)
+	inuse=0
 
-		charges--
-		insisting = 0
-
-		user.dna.add_mutation(HULK)
-		user.dna.add_mutation(XRAY)
-		user.dna.add_mutation(COLDRES)
-		user.dna.add_mutation(TK)
-
-		ticker.mode.traitors += user.mind
-		user.mind.special_role = "Avatar of the Wish Granter"
-
-		var/datum/objective/hijack/hijack = new
-		hijack.owner = user.mind
-		user.mind.objectives += hijack
-
-		user.mind.announce_objectives()
-		
-		user << "You have a very bad feeling about this."
-
+	//Remove the wishgranter or teleport it randomly on the station
+	if(!types.len)
+		to_chat(user, "The wishgranter slowly fades into mist...")
+		qdel(src)
+		return
+	else
+		var/impact_area = findEventArea()
+		var/turf/T = pick(get_area_turfs(impact_area))
+		if(T)
+			src.loc = T
 	return

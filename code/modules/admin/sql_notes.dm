@@ -1,9 +1,11 @@
-/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server, secret)
+/proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server, checkrights = 1)
+	if(checkrights && !check_rights(R_ADMIN|R_MOD))
+		return
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!target_ckey)
-		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text)
+		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text|null)
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)
@@ -13,12 +15,13 @@
 			log_game("SQL ERROR obtaining ckey from player table. Error : \[[err]\]\n")
 			return
 		if(!query_find_ckey.NextRow())
-			if(alert(usr, "[new_ckey] has not been seen before, are you sure you want to add a note for them?", "Unknown ckey", "Yes", "No", "Cancel") != "Yes")
-				return
-		target_ckey = new_ckey
+			to_chat(usr, "<span class='redtext'>[new_ckey] has not been seen before, you can only add notes to known players.</span>")
+			return
+		else
+			target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
-		notetext = input(usr,"Write your Note","Add Note") as null|message
+		notetext = input(usr,"Write your note","Add Note") as message|null
 		if(!notetext)
 			return
 	notetext = sanitizeSQL(notetext)
@@ -30,18 +33,10 @@
 			return
 	var/admin_sql_ckey = sanitizeSQL(adminckey)
 	if(!server)
-		if (config && config.server_name)
+		if(config && config.server_name)
 			server = config.server_name
 	server = sanitizeSQL(server)
-	if(isnull(secret))
-		switch(alert("Hide note from being viewed by players?", "Secret Note?","Yes","No","Cancel"))
-			if("Yes")
-				secret = 1
-			if("No")
-				secret = 0
-			else
-				return
-	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server, secret) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]', '[secret]')")
+	var/DBQuery/query_noteadd = dbcon.NewQuery("INSERT INTO [format_table_name("notes")] (ckey, timestamp, notetext, adminckey, server) VALUES ('[target_sql_ckey]', '[timestamp]', '[notetext]', '[admin_sql_ckey]', '[server]')")
 	if(!query_noteadd.Execute())
 		var/err = query_noteadd.ErrorMsg()
 		log_game("SQL ERROR adding new note to table. Error : \[[err]\]\n")
@@ -52,11 +47,13 @@
 		show_note(target_ckey)
 
 /proc/remove_note(note_id)
+	if(!check_rights(R_ADMIN|R_MOD))
+		return
 	var/ckey
 	var/notetext
 	var/adminckey
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!note_id)
 		return
@@ -64,7 +61,7 @@
 	var/DBQuery/query_find_note_del = dbcon.NewQuery("SELECT ckey, notetext, adminckey FROM [format_table_name("notes")] WHERE id = [note_id]")
 	if(!query_find_note_del.Execute())
 		var/err = query_find_note_del.ErrorMsg()
-		log_game("SQL ERROR obtaining ckey, notetext, adminckey from notes table. Error : \[[err]\]\n")
+		log_game("SQL ERROR obtaining ckey, notetext, adminckey from player table. Error : \[[err]\]\n")
 		return
 	if(query_find_note_del.NextRow())
 		ckey = query_find_note_del.item[1]
@@ -80,8 +77,10 @@
 	show_note(ckey)
 
 /proc/edit_note(note_id)
+	if(!check_rights(R_ADMIN|R_MOD))
+		return
 	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	if(!note_id)
 		return
@@ -97,49 +96,24 @@
 		target_ckey = query_find_note_edit.item[1]
 		var/old_note = query_find_note_edit.item[2]
 		var/adminckey = query_find_note_edit.item[3]
-		var/new_note = input("Input new note", "New Note", "[old_note]") as null|message
+		var/new_note = input("Input new note", "New Note", "[old_note]") as message|null
 		if(!new_note)
 			return
 		new_note = sanitizeSQL(new_note)
-		var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from<br>[old_note]<br>to<br>[new_note]<hr>"
+		var/edit_text = "Edited by [sql_ckey] on [SQLtime()] from \"[old_note]\" to \"[new_note]\"<hr>"
 		edit_text = sanitizeSQL(edit_text)
 		var/DBQuery/query_update_note = dbcon.NewQuery("UPDATE [format_table_name("notes")] SET notetext = '[new_note]', last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [note_id]")
 		if(!query_update_note.Execute())
 			var/err = query_update_note.ErrorMsg()
 			log_game("SQL ERROR editing note. Error : \[[err]\]\n")
 			return
-		log_admin("[key_name(usr)] has edited [target_ckey]'s note made by [adminckey] from [old_note] to [new_note]")
-		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s note made by [adminckey] from<br>[old_note]<br>to<br>[new_note]")
-		show_note(target_ckey)
-
-/proc/toggle_note_secrecy(note_id)
-	if(!dbcon.IsConnected())
-		usr << "<span class='danger'>Failed to establish database connection.</span>"
-		return
-	if(!note_id)
-		return
-	note_id = text2num(note_id)
-	var/DBQuery/query_find_note_secret = dbcon.NewQuery("SELECT ckey, adminckey, secret FROM [format_table_name("notes")] WHERE id = [note_id]")
-	if(!query_find_note_secret.Execute())
-		var/err = query_find_note_secret.ErrorMsg()
-		log_game("SQL ERROR obtaining ckey, adminckey, secret from notes table. Error : \[[err]\]\n")
-		return
-	if(query_find_note_secret.NextRow())
-		var/target_ckey = query_find_note_secret.item[1]
-		var/adminckey = query_find_note_secret.item[2]
-		var/secret = text2num(query_find_note_secret.item[3])
-		var/sql_ckey = sanitizeSQL(usr.ckey)
-		var/edit_text = "Made [secret ? "not secret" : "secret"] by [sql_ckey] on [SQLtime()]<hr>"
-		var/DBQuery/query_update_note = dbcon.NewQuery("UPDATE [format_table_name("notes")] SET secret = NOT secret, last_editor = '[sql_ckey]', edits = CONCAT(IFNULL(edits,''),'[edit_text]') WHERE id = [note_id]")
-		if(!query_update_note.Execute())
-			var/err = query_update_note.ErrorMsg()
-			log_game("SQL ERROR toggling note secrecy. Error : \[[err]\]\n")
-			return
-		log_admin("[key_name(usr)] has toggled [target_ckey]'s note made by [adminckey] to [secret ? "not secret" : "secret"]")
-		message_admins("[key_name_admin(usr)] has toggled [target_ckey]'s note made by [adminckey] to [secret ? "not secret" : "secret"]")
+		log_admin("[key_name(usr)] has edited [target_ckey]'s note made by [adminckey] from \"[old_note]\" to \"[new_note]\"")
+		message_admins("[key_name_admin(usr)] has edited [target_ckey]'s note made by [adminckey] from \"[old_note]\" to \"[new_note]\"")
 		show_note(target_ckey)
 
 /proc/show_note(target_ckey, index, linkless = 0)
+	if(!check_rights(R_ADMIN|R_MOD))
+		return
 	var/output
 	var/navbar
 	var/ruler
@@ -155,31 +129,25 @@
 		output = navbar
 	if(target_ckey)
 		var/target_sql_ckey = sanitizeSQL(target_ckey)
-		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT secret, timestamp, notetext, adminckey, last_editor, server, id FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
+		var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT id, timestamp, notetext, adminckey, last_editor, server FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
 		if(!query_get_notes.Execute())
 			var/err = query_get_notes.ErrorMsg()
-			log_game("SQL ERROR obtaining secret, timestamp, notetext, adminckey, last_editor, server, id from notes table. Error : \[[err]\]\n")
+			log_game("SQL ERROR obtaining ckey, notetext, adminckey, last_editor, server from notes table. Error : \[[err]\]\n")
 			return
 		output += "<h2><center>Notes of [target_ckey]</center></h2>"
 		if(!linkless)
-			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a>"
-			output += " <a href='?_src_=holder;shownoteckey=[target_ckey]'>\[Refresh Page\]</a></center>"
-		else
-			output += " <a href='?_src_=holder;shownoteckeylinkless=[target_ckey]'>\[Refresh Page\]</a></center>"
+			output += "<center><a href='?_src_=holder;addnote=[target_ckey]'>\[Add Note\]</a></center>"
 		output += ruler
 		while(query_get_notes.NextRow())
-			var/secret = text2num(query_get_notes.item[1])
-			if(linkless && secret)
-				continue
+			var/id = query_get_notes.item[1]
 			var/timestamp = query_get_notes.item[2]
 			var/notetext = query_get_notes.item[3]
 			var/adminckey = query_get_notes.item[4]
 			var/last_editor = query_get_notes.item[5]
 			var/server = query_get_notes.item[6]
-			var/id = query_get_notes.item[7]
 			output += "<b>[timestamp] | [server] | [adminckey]</b>"
 			if(!linkless)
-				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;secretnote=[id]'>[secret ? "<b>\[Secret\]</b>" : "\[Not Secret\]"]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
+				output += " <a href='?_src_=holder;removenote=[id]'>\[Remove Note\]</a> <a href='?_src_=holder;editnote=[id]'>\[Edit Note\]</a>"
 				if(last_editor)
 					output += " <font size='2'>Last edit by [last_editor] <a href='?_src_=holder;noteedits=[id]'>(Click here to see edit log)</a></font>"
 			output += "<br>[notetext]<hr style='background:#000000; border:0; height:1px'>"
@@ -210,49 +178,18 @@
 		output += ruler
 	usr << browse(output, "window=show_notes;size=900x500")
 
-#define NOTESFILE "data/player_notes.sav"
-//if the AUTOCONVERT_NOTES is turned on, anytime a player connects this will be run to try and add all their notes to the databas
-/proc/convert_notes_sql(ckey)
-	var/savefile/notesfile = new(NOTESFILE)
-	if(!notesfile)
-		log_game("Error: Cannot access [NOTESFILE]")
+/proc/show_player_info_irc(var/key as text)
+	var/target_sql_ckey = sanitizeSQL(key)
+	var/DBQuery/query_get_notes = dbcon.NewQuery("SELECT timestamp, notetext, adminckey, server FROM [format_table_name("notes")] WHERE ckey = '[target_sql_ckey]' ORDER BY timestamp")
+	if(!query_get_notes.Execute())
+		var/err = query_get_notes.ErrorMsg()
+		log_game("SQL ERROR obtaining timestamp, notetext, adminckey, server from notes table. Error : \[[err]\]\n")
 		return
-	notesfile.cd = "/[ckey]"
-	while(!notesfile.eof)
-		var/notetext
-		notesfile >> notetext
-		var/server
-		if(config && config.server_name)
-			server = config.server_name
-		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
-		note.Find(notetext)
-		var/timestamp = note.group[1]
-		notetext = note.group[2]
-		var/adminckey = note.group[3]
-		var/DBQuery/query_convert_time = dbcon.NewQuery("SELECT ADDTIME(STR_TO_DATE('[timestamp]','%d-%b-%Y'), '0')")
-		if(!query_convert_time.Execute())
-			var/err = query_convert_time.ErrorMsg()
-			log_game("SQL ERROR converting timestamp. Error : \[[err]\]\n")
-			return
-		if(query_convert_time.NextRow())
-			timestamp = query_convert_time.item[1]
-		if(ckey && notetext && timestamp && adminckey && server)
-			add_note(ckey, notetext, timestamp, adminckey, 0, server, 1)
-	notesfile.cd = "/"
-	notesfile.dir.Remove(ckey)
-
-/*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
-this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
-/proc/mass_convert_notes()
-	world << "Beginning mass note conversion"
-	var/savefile/notesfile = new(NOTESFILE)
-	if(!notesfile)
-		log_game("Error: Cannot access [NOTESFILE]")
-		return
-	notesfile.cd = "/"
-	for(var/ckey in notesfile.dir)
-		convert_notes_sql(ckey)
-	world << "Deleting NOTESFILE"
-	fdel(NOTESFILE)
-	world << "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/
-#undef NOTESFILE
+	var/output = " Info on [key]%0D%0A"
+	while(query_get_notes.NextRow())
+		var/timestamp = query_get_notes.item[1]
+		var/notetext = query_get_notes.item[2]
+		var/adminckey = query_get_notes.item[3]
+		var/server = query_get_notes.item[4]
+		output += "[notetext]%0D%0Aby [adminckey] on [timestamp] (Server: [server])%0D%0A%0D%0A"
+	return output

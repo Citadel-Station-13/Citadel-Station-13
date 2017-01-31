@@ -7,7 +7,10 @@
 	req_dna = 5
 
 //Makes some spiderlings. Good for setting traps and causing general trouble.
-/obj/effect/proc_holder/changeling/spiders/sting_action(mob/user)
-	spawn_atom_to_turf(/obj/structure/spider/spiderling/hunter, user, 2, FALSE)
+/obj/effect/proc_holder/changeling/spiders/sting_action(var/mob/user)
+	for(var/i=0, i<2, i++)
+		var/obj/effect/spider/spiderling/S = new(user.loc)
+		S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
+
 	feedback_add_details("changeling_powers","SI")
 	return 1

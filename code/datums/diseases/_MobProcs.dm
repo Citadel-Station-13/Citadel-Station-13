@@ -16,8 +16,11 @@
 	if(HasDisease(D))
 		return 0
 
-	if(!(type in D.viable_mobtypes))
+	if(count_by_type(viruses, /datum/disease/advance) >= 3)
 		return 0
+
+	if(!(type in D.viable_mobtypes))
+		return -1 //for stupid fucking monkies
 
 	return 1
 
@@ -29,30 +32,23 @@
 
 
 /mob/proc/AddDisease(datum/disease/D)
-	for(var/datum/disease/advance/P in viruses)
-		if(istype(D, /datum/disease/advance))
-			var/datum/disease/advance/DD = D
-			if (P.totalResistance() < DD.totalTransmittable()) //Overwrite virus if the attacker's Transmission is lower than the defender's Resistance. This does not grant immunity to the lost virus.
-				P.remove_virus()
+	var/datum/disease/DD = new D.type(1, D, 0)
+	viruses += DD
+	DD.affected_mob = src
+	DD.holder = src
 
-	if (!viruses.len) //Only add the new virus if it defeated the existing one
-		var/datum/disease/DD = new D.type(1, D, 0)
-		viruses += DD
-		DD.affected_mob = src
-		DD.holder = src
+	//Copy properties over. This is so edited diseases persist.
+	var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
+	for(var/V in DD.vars)
+		if(V in skipped)
+			continue
+		if(istype(DD.vars[V],/list))
+			var/list/L = D.vars[V]
+			DD.vars[V] = L.Copy()
+		else
+			DD.vars[V] = D.vars[V]
 
-		//Copy properties over. This is so edited diseases persist.
-		var/list/skipped = list("affected_mob","holder","carrier","stage","type","parent_type","vars","transformed")
-		for(var/V in DD.vars)
-			if(V in skipped)
-				continue
-			if(istype(DD.vars[V],/list))
-				var/list/L = D.vars[V]
-				DD.vars[V] = L.Copy()
-			else
-				DD.vars[V] = D.vars[V]
-
-		DD.affected_mob.med_hud_set_status()
+	DD.affected_mob.med_hud_set_status()
 
 
 /mob/living/carbon/ContractDisease(datum/disease/D)
@@ -81,12 +77,12 @@
 	if(prob(15/D.permeability_mod))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety > 0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
 		return
 
 	var/target_zone = pick(head_ch;1,body_ch;2,hands_ch;3,feet_ch;4)
 
-	if(ishuman(src))
+	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 
 		switch(target_zone)
@@ -96,9 +92,6 @@
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 				if(passed && isobj(H.wear_mask))
 					Cl = H.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
-				if(passed && isobj(H.wear_neck))
-					Cl = H.wear_neck
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 			if(2)
 				if(isobj(H.wear_suit))
@@ -124,13 +117,6 @@
 					Cl = H.shoes
 					passed = prob((Cl.permeability_coefficient*100) - 1)
 
-	else if(ismonkey(src))
-		var/mob/living/carbon/monkey/M = src
-		switch(target_zone)
-			if(1)
-				if(M.wear_mask && isobj(M.wear_mask))
-					Cl = M.wear_mask
-					passed = prob((Cl.permeability_coefficient*100) - 1)
 
 	if(!passed && (D.spread_flags & AIRBORNE) && !internal)
 		passed = (prob((50*D.permeability_mod) - 1))
@@ -147,6 +133,12 @@
 
 
 /mob/living/carbon/human/CanContractDisease(datum/disease/D)
-	if(dna && (VIRUSIMMUNE in dna.species.species_traits))
+	if(species.virus_immune)
 		return 0
 	return ..()
+
+/mob/living/carbon/human/monkey/CanContractDisease(datum/disease/D)
+	. = ..()
+	if(. == -1)
+		if(D.viable_mobtypes.Find(/mob/living/carbon/human))
+			return 1 //this is stupid as fuck but because monkeys are only half the time actually subtypes of humans they need this

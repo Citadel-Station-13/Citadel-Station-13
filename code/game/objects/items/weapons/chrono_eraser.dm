@@ -6,14 +6,14 @@
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
 	item_state = "backpack"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	slot_flags = SLOT_BACK
 	slowdown = 1
 	actions_types = list(/datum/action/item_action/equip_unequip_TED_Gun)
 	var/obj/item/weapon/gun/energy/chrono_gun/PA = null
 	var/list/erased_minds = list() //a collection of minds from the dead
 
-/obj/item/weapon/chrono_eraser/proc/pass_mind(datum/mind/M)
+/obj/item/weapon/chrono_eraser/proc/pass_mind(var/datum/mind/M)
 	erased_minds += M
 
 /obj/item/weapon/chrono_eraser/dropped()
@@ -39,14 +39,15 @@
 	if(slot == slot_back)
 		return 1
 
+
 /obj/item/weapon/gun/energy/chrono_gun
 	name = "T.E.D. Projection Apparatus"
 	desc = "It's as if they never existed in the first place."
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
 	item_state = "chronogun"
-	w_class = WEIGHT_CLASS_NORMAL
-	flags = NODROP | DROPDEL
+	w_class = 3
+	flags = NODROP
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)
 	can_charge = 0
 	fire_delay = 50
@@ -61,6 +62,10 @@
 	else //admin must have spawned it
 		TED = new(src.loc)
 		qdel(src)
+
+/obj/item/weapon/gun/energy/chrono_gun/dropped()
+	..()
+	qdel(src)
 
 /obj/item/weapon/gun/energy/chrono_gun/update_icon()
 	return
@@ -78,31 +83,31 @@
 		field_disconnect(field)
 	return ..()
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_connect(var/obj/effect/chrono_field/F)
 	var/mob/living/user = src.loc
 	if(F.gun)
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>"
+			to_chat(user, "<span class='alert'><b>FAIL: <i>[F.captured]</i> already has an existing connection.</b></span>")
 		src.field_disconnect(F)
 	else
 		startpos = get_turf(src)
 		field = F
 		F.gun = src
 		if(isliving(user) && F.captured)
-			user << "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='notice'>Connection established with target: <b>[F.captured]</b></span>")
 
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_disconnect(var/obj/effect/chrono_field/F)
 	if(F && field == F)
 		var/mob/living/user = src.loc
 		if(F.gun == src)
 			F.gun = null
 		if(isliving(user) && F.captured)
-			user << "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>"
+			to_chat(user, "<span class='alert'>Disconnected from target: <b>[F.captured]</b></span>")
 	field = null
 	startpos = null
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(obj/effect/chrono_field/F)
+/obj/item/weapon/gun/energy/chrono_gun/proc/field_check(var/obj/effect/chrono_field/F)
 	if(F)
 		if(field == F)
 			var/turf/currentpos = get_turf(src)
@@ -112,7 +117,7 @@
 		field_disconnect(F)
 		return 0
 
-/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(datum/mind/M)
+/obj/item/weapon/gun/energy/chrono_gun/proc/pass_mind(var/datum/mind/M)
 	if(TED)
 		TED.pass_mind(M)
 
@@ -121,11 +126,12 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
+	color = null
 	nodamage = 1
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
 
 /obj/item/projectile/energy/chrono_beam/fire()
-	gun = firer.get_active_held_item()
+	gun = firer.get_active_hand()
 	if(istype(gun))
 		return ..()
 	else
@@ -136,25 +142,24 @@
 		var/obj/effect/chrono_field/F = new(target.loc, target, gun)
 		gun.field_connect(F)
 
-
 /obj/item/ammo_casing/energy/chrono_beam
 	name = "eradication beam"
 	projectile_type = /obj/item/projectile/energy/chrono_beam
 	icon_state = "chronobolt"
 	e_cost = 0
 
-
 /obj/effect/chrono_field
 	name = "eradication field"
 	desc = "An aura of time-bluespace energy."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "chronofield"
-	density = 0
+	density = 1
 	anchored = 1
+	unacidable = 1
 	blend_mode = BLEND_MULTIPLY
 	var/mob/living/captured = null
 	var/obj/item/weapon/gun/energy/chrono_gun/gun = null
-	var/tickstokill = 15
+	var/tickstokill = 30
 	var/image/mob_underlay = null
 	var/preloaded = 0
 	var/RPpos = null
@@ -176,7 +181,7 @@
 		update_icon()
 
 		desc = initial(desc) + "<br><span class='info'>It appears to contain [target.name].</span>"
-	START_PROCESSING(SSobj, src)
+	processing_objects.Add(src)
 
 /obj/effect/chrono_field/Destroy()
 	if(gun && gun.field_check(src))
@@ -199,7 +204,7 @@
 				AM.loc = loc
 			qdel(src)
 		else if(tickstokill <= 0)
-			captured << "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>"
+			to_chat(captured, "<span class='boldnotice'>As the last essence of your being is erased from time, you begin to re-experience your most enjoyable memory. You feel happy...</span>")
 			var/mob/dead/observer/ghost = captured.ghostize(1)
 			if(captured.mind)
 				if(ghost)
@@ -210,8 +215,12 @@
 			qdel(src)
 		else
 			captured.Paralyse(4)
-			if(captured.loc != src)
+			if(captured.reagents)
+				captured.reagents.del_reagent("synaptizine") //you pesky thing you
+			if(captured.loc != src) //If they manage to escape, immediately kill them, this is so that even if there IS a way to get out, they won't use it
 				captured.loc = src
+				tickstokill = 0
+				return .()
 			update_icon()
 			if(gun)
 				if(gun.field_check(src))
@@ -224,7 +233,7 @@
 	else
 		qdel(src)
 
-/obj/effect/chrono_field/bullet_act(obj/item/projectile/P)
+/obj/effect/chrono_field/bullet_act(var/obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy/chrono_beam))
 		var/obj/item/projectile/energy/chrono_beam/beam = P
 		var/obj/item/weapon/gun/energy/chrono_gun/Pgun = beam.gun
@@ -238,9 +247,8 @@
 
 /obj/effect/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/GM = new
-	GM.assert_gases("o2","n2")
-	GM.gases["o2"][MOLES] = MOLES_O2STANDARD
-	GM.gases["n2"][MOLES] = MOLES_N2STANDARD
+	GM.oxygen = MOLES_O2STANDARD
+	GM.nitrogen = MOLES_N2STANDARD
 	GM.temperature = T20C
 	return GM
 
@@ -253,7 +261,7 @@
 /obj/effect/chrono_field/ex_act()
 	return
 
-/obj/effect/chrono_field/blob_act(obj/structure/blob/B)
+/obj/effect/chrono_field/blob_act()
 	return
 
 

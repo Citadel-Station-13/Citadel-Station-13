@@ -1,412 +1,534 @@
-////////////////////////////////////////
-//////////////MISC Boards///////////////
-////////////////////////////////////////
+///////////////////////////////////
+//////////Machine Boards///////////
+///////////////////////////////////
 
-/datum/design/board/smes
-	name = "Machine Design (SMES Board)"
+/datum/design/thermomachine
+	name = "Machine Board (Freezer/Heater)"
+	desc = "The circuit board for a Freezer/Heater."
+	id = "thermomachine"
+	req_tech = list("programming" = 3, "plasmatech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/thermomachine
+	category = list ("Engineering Machinery")
+
+/datum/design/smes
+	name = "Machine Board (SMES)"
 	desc = "The circuit board for a SMES."
 	id = "smes"
 	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/smes
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smes
 	category = list ("Engineering Machinery")
 
-/datum/design/board/announcement_system
-	name = "Machine Design (Automated Announcement System Board)"
-	desc = "The circuit board for an automated announcement system."
-	id = "automated_announcement"
-	req_tech = list("programming" = 3, "bluespace" = 3, "magnets" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/announcement_system
-	category = list("Subspace Telecomms")
+/datum/design/emitter
+	name = "Machine Board (Emitter)"
+	desc = "The circuit board for an emitter."
+	id = "emitter"
+	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+	category = list ("Engineering Machinery")
 
-/datum/design/board/turbine_computer
+/datum/design/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
 	desc = "The circuit board for a power turbine console."
 	id = "power_turbine_console"
-	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/computer/turbine_computer
+	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/turbine_computer
 	category = list ("Engineering Machinery")
 
-/datum/design/board/emitter
-	name = "Machine Design (Emitter Board)"
-	desc = "The circuit board for an emitter."
-	id = "emitter"
-	req_tech = list("programming" = 3, "powerstorage" = 5, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/emitter
-	category = list ("Engineering Machinery")
-
-/datum/design/board/power_compressor
+/datum/design/power_compressor
 	name = "Machine Design (Power Compressor Board)"
 	desc = "The circuit board for a power compressor."
 	id = "power_compressor"
 	req_tech = list("programming" = 4, "powerstorage" = 5, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/power_compressor
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/power_compressor
 	category = list ("Engineering Machinery")
 
-/datum/design/board/power_turbine
+/datum/design/power_turbine
 	name = "Machine Design (Power Turbine Board)"
 	desc = "The circuit board for a power turbine."
 	id = "power_turbine"
 	req_tech = list("programming" = 4, "powerstorage" = 4, "engineering" = 5)
-	build_path = /obj/item/weapon/circuitboard/machine/power_turbine
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/power_turbine
 	category = list ("Engineering Machinery")
 
-/datum/design/board/thermomachine
-	name = "Machine Design (Freezer/Heater Board)"
-	desc = "The circuit board for a freezer/heater."
-	id = "thermomachine"
-	req_tech = list("programming" = 3, "plasmatech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/thermomachine
-	category = list ("Engineering Machinery")
-
-/datum/design/board/space_heater
-	name = "Machine Design (Space Heater Board)"
-	desc = "The circuit board for a space heater."
-	id = "space_heater"
-	req_tech = list("programming" = 2, "engineering" = 2, "plasmatech" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/space_heater
-	category = list ("Engineering Machinery")
-
-/datum/design/board/teleport_station
-	name = "Machine Design (Teleportation Station Board)"
-	desc = "The circuit board for a teleportation station."
-	id = "tele_station"
-	req_tech = list("programming" = 5, "bluespace" = 4, "engineering" = 4, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/teleporter_station
+/datum/design/telepad
+	name = "Machine Board (Telepad Board)"
+	desc = "Allows for the construction of circuit boards used to build a Telepad."
+	id = "telepad"
+	req_tech = list("programming" = 4, "bluespace" = 4, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/telesci_pad
 	category = list ("Teleportation Machinery")
 
-/datum/design/board/teleport_hub
-	name = "Machine Design (Teleportation Hub Board)"
-	desc = "The circuit board for a teleportation hub."
+/datum/design/teleport_hub
+	name = "Machine Board (Teleportation Hub)"
+	desc = "Allows for the construction of circuit boards used to build a Teleportation Hub."
 	id = "tele_hub"
 	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
-	build_path = /obj/item/weapon/circuitboard/machine/teleporter_hub
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter_hub
 	category = list ("Teleportation Machinery")
 
-/datum/design/board/quantumpad
-	name = "Machine Design (Quantum Pad Board)"
-	desc = "The circuit board for a quantum telepad."
-	id = "quantumpad"
-	req_tech = list("programming" = 4, "bluespace" = 4, "plasmatech" = 3, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/quantumpad
+/datum/design/teleport_station
+	name = "Machine Board (Teleportation Station)"
+	desc = "Allows for the construction of circuit boards used to build a Teleporter Station."
+	id = "tele_station"
+	req_tech = list("programming" = 4, "bluespace" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter_station
 	category = list ("Teleportation Machinery")
 
-/datum/design/board/telepad
-	name = "Machine Design (Telepad Board)"
-	desc = "The circuit board for a telescience telepad."
-	id = "telepad"
-	req_tech = list("programming" = 4, "bluespace" = 5, "plasmatech" = 4, "engineering" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/telesci_pad
+/datum/design/teleport_perma
+	name = "Machine Board (Permanent Teleporter)"
+	desc = "Allows for the construction of circuit boards used to build a Permanent Teleporter."
+	id = "tele_perma"
+	req_tech = list("programming" = 3, "bluespace" = 5, "materials" = 4, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/teleporter_perma
 	category = list ("Teleportation Machinery")
 
-/datum/design/board/teleconsole
-	name = "Computer Design (Teleporter Console)"
-	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
-	id = "teleconsole"
-	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/computer/teleporter
-	category = list("Teleportation Machinery")
+/datum/design/bodyscanner
+	name = "Machine Board (Body Scanner)"
+	desc = "Allows for the construction of circuit boards used to build a Body Scanner."
+	id = "bodyscanner"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/bodyscanner
+	category = list("Medical Machinery")
 
-/datum/design/board/telesci_console
-	name = "Computer Design (Telepad Control Console Board)"
-	desc = "Allows for the construction of circuit boards used to build a telescience console."
-	id = "telesci_console"
-	req_tech = list("programming" = 3, "bluespace" = 3, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/computer/telesci_console
-	category = list("Teleportation Machinery")
+/datum/design/bodyscanner_console
+	name = "Machine Board (Body Scanner Console)"
+	desc = "Allows for the construction of circuit boards used to build a Body Scanner Console."
+	id = "bodyscanner_console"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/bodyscanner_console
+	category = list("Medical Machinery")
 
-/datum/design/board/sleeper
-	name = "Machine Design (Sleeper Board)"
-	desc = "The circuit board for a sleeper."
-	id = "sleeper"
-	req_tech = list("programming" = 3, "biotech" = 2, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/sleeper
-	category = list ("Medical Machinery")
+/datum/design/clonepod
+	name = "Machine Board (Cloning Pod)"
+	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
+	id = "clonepod"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/clonepod
+	category = list("Medical Machinery")
 
-/datum/design/board/cryotube
-	name = "Machine Design (Cryotube Board)"
-	desc = "The circuit board for a cryotube."
+/datum/design/clonescanner
+	name = "Machine Board (Cloning Scanner)"
+	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
+	id = "clonescanner"
+	req_tech = list("programming" = 3, "biotech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/clonescanner
+	category = list("Medical Machinery")
+
+/datum/design/cryotube
+	name = "Machine Board (Cryotube Board)"
+	desc = "Allows for the construction of circuit boards used to build a Cryotube."
 	id = "cryotube"
-	req_tech = list("programming" = 5, "biotech" = 3, "engineering" = 4, "plasmatech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/cryo_tube
-	category = list ("Medical Machinery")
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cryo_tube
+	category = list("Medical Machinery")
 
-/datum/design/board/chem_dispenser
-	name = "Machine Design (Portable Chem Dispenser Board)"
-	desc = "The circuit board for a portable chem dispenser."
+/datum/design/chem_dispenser
+	name = "Machine Board (Portable Chem Dispenser)"
+	desc = "The circuit board for a Portable Chem Dispenser."
 	id = "chem_dispenser"
-	req_tech = list("programming" = 5, "biotech" = 3, "materials" = 4, "plasmatech" = 4)
-	build_path = /obj/item/weapon/circuitboard/machine/chem_dispenser
-	category = list ("Medical Machinery")
+	req_tech = list("programming" = 4, "biotech" = 3, "engineering" = 4, "materials" = 4, "plasmatech" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_dispenser
+	category = list("Medical Machinery")
 
-/datum/design/board/chem_master
+/datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
-	desc = "The circuit board for a Chem Master 3000."
+	desc = "The circuit board for a Chem Master 2999."
 	id = "chem_master"
-	req_tech = list("biotech" = 3, "materials" = 3, "programming" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/chem_master
-	category = list ("Medical Machinery")
+	req_tech = list("biotech" = 1, "materials" = 2, "programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_master
+	category = list("Medical Machinery")
 
-/datum/design/board/chem_heater
+/datum/design/chem_heater
 	name = "Machine Design (Chemical Heater Board)"
 	desc = "The circuit board for a chemical heater."
 	id = "chem_heater"
-	req_tech = list("engineering" = 2, "biotech" = 2, "programming" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/chem_heater
+	req_tech = list("engineering" = 2, "materials" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/chem_heater
 	category = list ("Medical Machinery")
 
-/datum/design/board/clonecontrol
-	name = "Computer Design (Cloning Machine Console)"
-	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
-	id = "clonecontrol"
-	req_tech = list("programming" = 4, "biotech" = 3)
-	build_path = /obj/item/weapon/circuitboard/computer/cloning
+/datum/design/sleeper
+	name = "Machine Board (Sleeper)"
+	desc = "Allows for the construction of circuit boards used to build a Sleeper."
+	id = "sleeper"
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/sleeper
 	category = list("Medical Machinery")
 
-/datum/design/board/clonepod
-	name = "Machine Design (Clone Pod)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
-	id = "clonepod"
-	req_tech = list("programming" = 4, "biotech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/clonepod
-	category = list("Medical Machinery")
-
-/datum/design/board/clonescanner
-	name = "Machine Design (Cloning Scanner)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
-	id = "clonescanner"
-	req_tech = list("programming" = 4, "biotech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/clonescanner
-	category = list("Medical Machinery")
-
-/datum/design/board/biogenerator
-	name = "Machine Design (Biogenerator Board)"
-	desc = "The circuit board for a biogenerator."
+/datum/design/biogenerator
+	name = "Machine Board (Biogenerator)"
+	desc = "The circuit board for a Biogenerator."
 	id = "biogenerator"
-	req_tech = list("programming" = 2, "biotech" = 3, "materials" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/biogenerator
+	req_tech = list("programming" = 3, "biotech" = 2, "materials" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/biogenerator
 	category = list ("Hydroponics Machinery")
 
-/datum/design/board/hydroponics
-	name = "Machine Design (Hydroponics Tray Board)"
-	desc = "The circuit board for a hydroponics tray."
+/datum/design/hydroponics
+	name = "Machine Board (Hydroponics Tray)"
+	desc = "The circuit board for a Hydroponics Tray."
 	id = "hydro_tray"
-	req_tech = list("biotech" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/hydroponics
+	req_tech = list("programming" = 1, "biotech" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/hydroponics
 	category = list ("Hydroponics Machinery")
 
-/datum/design/board/destructive_analyzer
-	name = "Machine Design (Destructive Analyzer Board)"
-	desc = "The circuit board for a destructive analyzer."
-	id = "destructive_analyzer"
-	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/destructive_analyzer
+/datum/design/autolathe
+	name = "Machine Board (Autolathe)"
+	desc = "The circuit board for an Autolathe."
+	id = "autolathe"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/autolathe
 	category = list("Research Machinery")
 
-/datum/design/board/experimentor
+/datum/design/circuit_imprinter
+	name = "Machine Board (Circuit Imprinter)"
+	desc = "The circuit board for a Circuit Imprinter."
+	id = "circuit_imprinter"
+	req_tech = list("programming" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
+	category = list("Research Machinery")
+
+/datum/design/cyborgrecharger
+	name = "Machine Board (Cyborg Recharger)"
+	desc = "The circuit board for a Cyborg Recharger."
+	id = "cyborgrecharger"
+	req_tech = list("powerstorage" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cyborgrecharger
+	category = list("Research Machinery")
+
+/datum/design/destructive_analyzer
+	name = "Machine Board (Destructive Analyzer)"
+	desc = "The circuit board for a Destructive Analyzer."
+	id = "destructive_analyzer"
+	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/destructive_analyzer
+	category = list("Research Machinery")
+
+/datum/design/mechfab
+	name = "Machine Board (Exosuit Fabricator)"
+	desc = "The circuit board for an Exosuit Fabricator"
+	id = "mechfab"
+	req_tech = list("programming" = 3, "engineering" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mechfab
+	category = list("Research Machinery")
+
+/datum/design/mech_recharger
+	name = "Machine Board (Mech Bay Recharger)"
+	desc = "The circuit board for a Mech Bay Recharger."
+	id = "mech_recharger"
+	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/mech_recharger
+	category = list("Research Machinery")
+
+/datum/design/experimentor
 	name = "Machine Design (E.X.P.E.R.I-MENTOR Board)"
 	desc = "The circuit board for an E.X.P.E.R.I-MENTOR."
 	id = "experimentor"
 	req_tech = list("programming" = 2, "magnets" = 2, "engineering" = 2, "bluespace" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/experimentor
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/experimentor
 	category = list("Research Machinery")
 
-/datum/design/board/protolathe
-	name = "Machine Design (Protolathe Board)"
-	desc = "The circuit board for a protolathe."
+/datum/design/protolathe
+	name = "Machine Board (Protolathe)"
+	desc = "The circuit board for a Protolathe."
 	id = "protolathe"
 	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/protolathe
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/protolathe
 	category = list("Research Machinery")
 
-/datum/design/board/circuit_imprinter
-	name = "Machine Design (Circuit Imprinter Board)"
-	desc = "The circuit board for a circuit imprinter."
-	id = "circuit_imprinter"
-	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/circuit_imprinter
-	category = list("Research Machinery")
-
-/datum/design/board/rdservercontrol
-	name = "Computer Design (R&D Server Control Console Board)"
-	desc = "The circuit board for an R&D Server Control Console."
-	id = "rdservercontrol"
-	req_tech = list("programming" = 3)
-	build_path = /obj/item/weapon/circuitboard/computer/rdservercontrol
-	category = list("Research Machinery")
-
-/datum/design/board/rdserver
-	name = "Machine Design (R&D Server Board)"
-	desc = "The circuit board for an R&D Server."
+/datum/design/rdserver
+	name = "Machine Board (R&D Server)"
+	desc = "The circuit board for an R&D Server"
 	id = "rdserver"
 	req_tech = list("programming" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/rdserver
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/rdserver
 	category = list("Research Machinery")
 
-/datum/design/board/mechfab
-	name = "Machine Design (Exosuit Fabricator Board)"
-	desc = "The circuit board for an Exosuit Fabricator."
-	id = "mechfab"
-	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/mechfab
-	category = list("Research Machinery")
-
-/datum/design/board/cyborgrecharger
-	name = "Machine Design (Cyborg Recharger Board)"
-	desc = "The circuit board for a Cyborg Recharger."
-	id = "cyborgrecharger"
-	req_tech = list("powerstorage" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/cyborgrecharger
-	category = list("Research Machinery")
-
-/datum/design/board/mech_recharger
-	name = "Machine Design (Mechbay Recharger Board)"
-	desc = "The circuit board for a Mechbay Recharger."
-	id = "mech_recharger"
-	req_tech = list("programming" = 3, "powerstorage" = 4, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/mech_recharger
-	category = list("Research Machinery")
-
-/datum/design/board/microwave
-	name = "Machine Design (Microwave Board)"
-	desc = "The circuit board for a microwave."
-	id = "microwave"
-	req_tech = list("programming" = 2, "magnets" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/microwave
-	category = list ("Misc. Machinery")
-
-/datum/design/board/gibber
+/datum/design/gibber
 	name = "Machine Design (Gibber Board)"
 	desc = "The circuit board for a gibber."
 	id = "gibber"
-	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/gibber
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/gibber
 	category = list ("Misc. Machinery")
 
-/datum/design/board/smartfridge
+/datum/design/smartfridge
 	name = "Machine Design (Smartfridge Board)"
 	desc = "The circuit board for a smartfridge."
 	id = "smartfridge"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/smartfridge
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/smartfridge
 	category = list ("Misc. Machinery")
 
-/datum/design/board/monkey_recycler
+/datum/design/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
 	desc = "The circuit board for a monkey recycler."
-	id = "smartfridge"
+	id = "monkey_recycler"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/monkey_recycler
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/monkey_recycler
 	category = list ("Misc. Machinery")
 
-/datum/design/board/seed_extractor
+/datum/design/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
 	desc = "The circuit board for a seed extractor."
 	id = "seed_extractor"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/seed_extractor
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/seed_extractor
 	category = list ("Misc. Machinery")
 
-/datum/design/board/processor
+/datum/design/processor
 	name = "Machine Design (Processor Board)"
 	desc = "The circuit board for a processor."
 	id = "processor"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/processor
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/processor
 	category = list ("Misc. Machinery")
 
-/datum/design/board/recycler
+/datum/design/recycler
 	name = "Machine Design (Recycler Board)"
 	desc = "The circuit board for a recycler."
 	id = "recycler"
-	req_tech = list("programming" = 2, "engineering" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/recycler
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/recycler
 	category = list ("Misc. Machinery")
 
-/datum/design/board/holopad
+/datum/design/holopad
 	name = "Machine Design (AI Holopad Board)"
 	desc = "The circuit board for a holopad."
 	id = "holopad"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/holopad
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/holopad
 	category = list ("Misc. Machinery")
 
-/datum/design/board/autolathe
-	name = "Machine Design (Autolathe Board)"
-	desc = "The circuit board for an autolathe."
-	id = "autolathe"
-	req_tech = list("programming" = 3, "engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/autolathe
-	category = list ("Misc. Machinery")
-
-/datum/design/board/recharger
-	name = "Machine Design (Weapon Recharger Board)"
-	desc = "The circuit board for a Weapon Recharger."
-	id = "recharger"
-	req_tech = list("powerstorage" = 4, "engineering" = 3, "materials" = 4)
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 100)
-	build_path = /obj/item/weapon/circuitboard/machine/recharger
+/datum/design/arcadebattle
+	name = "Machine Board (Battle Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Arcade Machine."
+	id = "arcademachinebattle"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/arcade/battle
 	category = list("Misc. Machinery")
 
-/datum/design/board/vendor
-	name = "Machine Design (Vendor Board)"
-	desc = "The circuit board for a Vendor."
-	id = "vendor"
+/datum/design/microwave
+	name = "Machine Board (Microwave)"
+	desc = "The circuit board for a Microwave."
+	id = "microwave"
 	req_tech = list("programming" = 1)
-	build_path = /obj/item/weapon/circuitboard/machine/vendor
-	category = list ("Misc. Machinery")
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/microwave
+	category = list("Misc. Machinery")
 
-/datum/design/board/ore_redemption
+/datum/design/oven
+	name = "Machine Board (Oven)"
+	desc = "The circuit board for an Oven."
+	id = "oven"
+	req_tech = list("programming" = 1, "plasmatech" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/oven
+	category = list("Misc. Machinery")
+
+/datum/design/grill
+	name = "Machine Board (Grill)"
+	desc = "The circuit board for a Grill."
+	id = "grill"
+	req_tech = list("programming" = 1, "plasmatech" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/grill
+	category = list("Misc. Machinery")
+
+/datum/design/candy_maker
+	name = "Machine Board (Candy Maker)"
+	desc = "The circuit board for a Candy Maker."
+	id = "candymaker"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/candy_maker
+	category = list("Misc. Machinery")
+
+/datum/design/deepfryer
+	name = "Machine Board (Deep Fryer)"
+	desc = "The circuit board for a Deep Fryer."
+	id = "deepfryer"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/deepfryer
+	category = list("Misc. Machinery")
+
+/datum/design/orion_trail
+	name = "Machine Board (Orion Trail Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
+	id = "arcademachineonion"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/arcade/orion_trail
+	category = list("Misc. Machinery")
+
+/datum/design/programmable
+	name = "Machine Board (Programmable Unloader)"
+	desc = "The circuit board for a Programmable Unloader."
+	id = "selunload"
+	req_tech = list("programming" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/programmable
+	category = list("Misc. Machinery")
+
+/datum/design/pod
+	name = "Machine Board (Mass Driver and Pod Doors Control)"
+	desc = "Allows for the construction of circuit boards used to build a Mass Driver and Pod Doors Control."
+	id = "pod"
+	req_tech = list("programming" = 2,"engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/pod
+	category = list("Misc. Machinery")
+
+/datum/design/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
 	desc = "The circuit board for an Ore Redemption machine."
 	id = "ore_redemption"
-	req_tech = list("programming" = 2, "engineering" = 2, "plasmatech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/ore_redemption
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/ore_redemption
 	category = list ("Misc. Machinery")
 
-/datum/design/board/mining_equipment_vendor
-	name = "Machine Design (Mining Rewards Vender Board)"
-	desc = "The circuit board for a Mining Rewards Vender."
+/datum/design/mining_equipment_vendor
+	name = "Machine Design (Mining Rewards Vendor Board)"
+	desc = "The circuit board for a Mining Rewards Vendor."
 	id = "mining_equipment_vendor"
-	req_tech = list("engineering" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/mining_equipment_vendor
+	req_tech = list("programming" = 1, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/mining_equipment_vendor
 	category = list ("Misc. Machinery")
 
-/datum/design/board/tesla_coil
-	name = "Machine Design (Tesla Coil Board)"
-	desc = "The circuit board for a tesla coil."
-	id = "tesla_coil"
-	req_tech = list("programming" = 3, "powerstorage" = 3, "magnets" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/tesla_coil
+/datum/design/clawgame
+	name = "Machine Design (Claw Game Board)"
+	desc = "The circuit board for a Claw Game."
+	id = "clawgame"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/clawgame
 	category = list ("Misc. Machinery")
 
-/datum/design/board/grounding_rod
-	name = "Machine Design (Grounding Rod Board)"
-	desc = "The circuit board for a grounding rod."
-	id = "grounding_rod"
-	req_tech = list("programming" = 3, "powerstorage" = 3, "magnets" = 3, "plasmatech" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/grounding_rod
-	category = list ("Misc. Machinery")
+/datum/design/prize_counter
+	name = "Machine Design (Prize Counter)"
+	desc = "The circuit board for an arcade Prize Counter."
+	id = "prize_counter"
+	req_tech = list("programming" = 2, "materials" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/prize_counter
+	category = list("Misc. Machinery")
 
-/datum/design/board/plantgenes
-	name = "Machine Design (Plant DNA Manipulator Board)"
-	desc = "The circuit board for a plant DNA manipulator."
-	id = "plantgenes"
-	req_tech = list("programming" = 4, "biotech" = 3)
-	build_path = /obj/item/weapon/circuitboard/machine/plantgenes
-	category = list ("Misc. Machinery")
+/datum/design/gameboard
+	name = "Machine Design (Virtual Gameboard)"
+	desc = "The circuit board for a Virtual Gameboard."
+	id = "gameboard"
+	req_tech = list("programming" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/gameboard
+	category = list("Misc. Machinery")
 
-/datum/design/board/ntnet_relay
-	name = "Machine Design (NTNet Relay Board)"
-	desc = "The circuit board for a wireless network relay."
-	id = "ntnet_relay"
-	req_tech = list("programming" = 2, "engineering" = 2, "bluespace" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/ntnet_relay
-	category = list("Subspace Telecomms")
 
-/datum/design/board/limbgrower
-	name = "Machine Design (Limb Grower Board)"
-	desc = "The circuit board for a limb grower."
-	id = "limbgrower"
-	req_tech = list("programming" = 3, "biotech" = 2)
-	build_path = /obj/item/weapon/circuitboard/machine/limbgrower
-	category = list("Medical Machinery")
+/datum/design/botany_extractor
+	name = "Machine Design (Lysis-Isolation Centrifuge)"
+	desc = "The circuit board for a lysis-isolation centrifuge."
+	id = "botany_extractor"
+	req_tech = list("biotech" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/botany_extractor
+	category = list("Hydroponics Machinery")
+
+/datum/design/botany_editor
+	name = "Machine Design (Bioballistic Delivery System)"
+	desc = "The circuit board for a bioballistic delivery system."
+	id = "botany_editor"
+	req_tech = list("biotech" = 3, "programming" = 3)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS=1000, "sacid"=20)
+	build_path = /obj/item/weapon/circuitboard/botany_editor
+	category = list("Hydroponics Machinery")

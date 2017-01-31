@@ -10,23 +10,16 @@
 	if(!mother)
 		return
 	var/list/map = mother.map
-	for(var/turf/T in map)
-		SSair.remove_from_active(T)
-	for(var/turf/open/T in map)
+	for(var/turf/simulated/T in map)
+		air_master.remove_from_active(T)
+	for(var/turf/simulated/T in map)
 		if(T.air)
-			T.air.copy_from_turf(T)
-		SSair.add_to_active(T)
-
-/datum/mapGeneratorModule/bottomLayer/massdelete
-	spawnableAtoms = list()
-	spawnableTurfs = list()
-
-/datum/mapGeneratorModule/bottomLayer/massdelete/generate()
-	if(!mother)
-		return
-	for(var/V in mother.map)
-		var/turf/T = V
-		T.empty()
+			T.air.oxygen = T.oxygen
+			T.air.nitrogen = T.nitrogen
+			T.air.carbon_dioxide = T.carbon_dioxide
+			T.air.toxins = T.toxins
+			T.air.temperature = T.temperature
+		air_master.add_to_active(T)
 
 //Only places atoms/turfs on area borders
 /datum/mapGeneratorModule/border
@@ -40,15 +33,9 @@
 		if(is_border(T))
 			place(T)
 
-/datum/mapGeneratorModule/border/proc/is_border(turf/T)
+/datum/mapGeneratorModule/border/proc/is_border(var/turf/T)
 	for(var/direction in list(SOUTH,EAST,WEST,NORTH))
-		if (get_step(T,direction) in mother.map)
+		if(get_step(T,direction) in mother.map)
 			continue
 		return 1
 	return 0
-
-/datum/mapGenerator/repressurize
-	modules = list(/datum/mapGeneratorModule/bottomLayer/repressurize)
-
-/datum/mapGenerator/massdelete
-	modules = list(/datum/mapGeneratorModule/bottomLayer/massdelete)

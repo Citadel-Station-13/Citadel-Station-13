@@ -4,11 +4,11 @@
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
 	desc = "An incredibly lifelike marble carving. Its eyes seems to follow you.." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
-	icon_state = "human_male"
-	icon_living = "human_male"
-	icon_dead = "human_male"
+	icon_state = "angel"
+	icon_living = "angel"
+	icon_dead = "angel"
 	gender = NEUTER
-	a_intent = INTENT_HARM
+	a_intent = I_HARM
 
 	response_help = "touches"
 	response_disarm = "pushes"
@@ -18,10 +18,9 @@
 	health = 50000
 	healable = 0
 
-	harm_intent_damage = 10
-	obj_damage = 100
-	melee_damage_lower = 68
-	melee_damage_upper = 83
+	harm_intent_damage = 35
+	melee_damage_lower = 34
+	melee_damage_upper = 42
 	attacktext = "claws"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
 
@@ -32,7 +31,6 @@
 	move_to_delay = 0 // Very fast
 
 	animate_movement = NO_STEPS // Do not animate movement, you jump around as you're a scary statue.
-	hud_possible = list(ANTAG_HUD)
 
 	see_in_dark = 13
 	vision_range = 12
@@ -47,7 +45,6 @@
 
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
-	gold_core_spawnable = 1
 
 
 // No movement while seen code.
@@ -55,33 +52,28 @@
 /mob/living/simple_animal/hostile/statue/New(loc, var/mob/living/creator)
 	..()
 	// Give spells
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
-	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(null))
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/blindness(null))
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision(null))
 
 	// Give nightvision
-	see_invisible = SEE_INVISIBLE_NOLIGHTING
+	see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
 
 	// Set creator
 	if(creator)
 		src.creator = creator
 
-/mob/living/simple_animal/hostile/statue/med_hud_set_health()
-	return //we're a statue we're invincible
-
-/mob/living/simple_animal/hostile/statue/med_hud_set_status()
-	return //we're a statue we're invincible
-
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
-			src << "<span class='warning'>You cannot move, there are eyes on you!</span>"
+			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
 		return 0
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
-	..()
-	if(!client && target) // If we have a target and we're AI controlled
+/mob/living/simple_animal/hostile/statue/handle_automated_action()
+	if(!..())
+		return
+	if(target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
 		// If they're not our target
 		if(watching && watching != target)
@@ -93,7 +85,7 @@
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
 		if(client)
-			src << "<span class='warning'>You cannot attack, there are eyes on you!</span>"
+			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
 			return
 	else
 		..()
@@ -111,8 +103,8 @@
 		return null
 	// Check for darkness
 	var/turf/T = get_turf(loc)
-	if(T && destination && T.lighting_object)
-		if(T.lighting_lumcount<1 && destination.lighting_lumcount<1) // No one can see us in the darkness, right?
+	if(T && destination && T.lighting_overlay)
+		if(T.get_lumcount() * 10 < 1 && destination.get_lumcount() * 10 < 1) // No one can see us in the darkness, right?
 			return null
 		if(T == destination)
 			destination = null
@@ -126,11 +118,11 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.eye_blind)
+				if(M.has_vision())
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
 			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
+				if(M.occupant.has_vision())
 					return M.occupant
 	return null
 
@@ -171,7 +163,7 @@
 	clothes_req = 0
 	range = 14
 
-/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/flicker_lights/cast(list/targets)
 	for(var/turf/T in targets)
 		for(var/obj/machinery/light/L in T)
 			L.flicker()
@@ -187,11 +179,13 @@
 	clothes_req = 0
 	range = 10
 
-/obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/blindness/cast(list/targets)
 	for(var/mob/living/L in living_mob_list)
+		if(L == usr)
+			continue
 		var/turf/T = get_turf(L.loc)
 		if(T && T in targets)
-			L.blind_eyes(4)
+			L.EyeBlind(4)
 	return
 
 //Toggle Night Vision
@@ -206,30 +200,21 @@
 	range = -1
 	include_user = 1
 
-/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/night_vision/cast(list/targets)
+
 	for(var/mob/living/target in targets)
-		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(H.dna.species.invis_sight == SEE_INVISIBLE_LIVING)
-				H.dna.species.invis_sight = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				H.dna.species.invis_sight = SEE_INVISIBLE_LIVING
-				name = "Toggle Nightvision \[OFF]"
-
+		if(target.see_invisible == SEE_INVISIBLE_LIVING)
+			target.see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+			name = "Toggle Nightvision \[ON\]"
 		else
-			if(target.see_invisible == SEE_INVISIBLE_LIVING)
-				target.see_invisible = SEE_INVISIBLE_NOLIGHTING
-				name = "Toggle Nightvision \[ON]"
-			else
-				target.see_invisible = SEE_INVISIBLE_LIVING
-				name = "Toggle Nightvision \[OFF]"
-
+			target.see_invisible = SEE_INVISIBLE_LIVING
+			name = "Toggle Nightvision \[OFF\]"
+	return
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
 
-/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
+/mob/living/simple_animal/hostile/statue/restrained()
 	. = ..()
 	if(can_be_seen(loc))
 		return 1

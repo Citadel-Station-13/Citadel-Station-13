@@ -10,14 +10,10 @@
 
 /obj/machinery/power/tesla_coil/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/tesla_coil(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/tesla_coil
-	name = "circuit board (Tesla Coil)"
-	build_path = /obj/machinery/power/tesla_coil
-	origin_tech = "programming=3;magnets=3;powerstorage=3"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/tesla_coil(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	RefreshParts()
 
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
@@ -30,9 +26,6 @@
 		return
 
 	if(exchange_parts(user, W))
-		return
-
-	if(default_pry_open(W))
 		return
 
 	if(default_unfasten_wrench(user, W))
@@ -49,9 +42,7 @@
 
 /obj/machinery/power/tesla_coil/tesla_act(var/power)
 	being_shocked = 1
-	//don't lose arc power when it's not connected to anything
-	//please place tesla coils all around the station to maximize effectiveness
-	var/power_produced = powernet ? power / power_loss : power
+	var/power_produced = power / power_loss
 	add_avail(power_produced*input_power_multiplier)
 	flick("coilhit", src)
 	playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
@@ -68,23 +59,16 @@
 
 /obj/machinery/power/grounding_rod/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/grounding_rod(null)
-	B.apply_default_parts(src)
-
-/obj/item/weapon/circuitboard/machine/grounding_rod
-	name = "circuit board (Grounding Rod)"
-	build_path = /obj/machinery/power/grounding_rod
-	origin_tech = "programming=3;powerstorage=3;magnets=3;plasmatech=2"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	component_parts = list()
+	component_parts += new /obj/item/weapon/circuitboard/grounding_rod(null)
+	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
+	RefreshParts()
 
 /obj/machinery/power/grounding_rod/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grounding_rod", "grounding_rod", W))
 		return
 
 	if(exchange_parts(user, W))
-		return
-
-	if(default_pry_open(W))
 		return
 
 	if(default_unfasten_wrench(user, W))

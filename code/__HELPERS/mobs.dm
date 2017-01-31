@@ -1,202 +1,274 @@
-/proc/random_blood_type()
-	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
+proc/GetOppositeDir(var/dir)
+	switch(dir)
+		if(NORTH)     return SOUTH
+		if(SOUTH)     return NORTH
+		if(EAST)      return WEST
+		if(WEST)      return EAST
+		if(SOUTHWEST) return NORTHEAST
+		if(NORTHWEST) return SOUTHEAST
+		if(NORTHEAST) return SOUTHWEST
+		if(SOUTHEAST) return NORTHWEST
+	return 0
 
-/proc/random_eye_color()
-	switch(pick(20;"brown",20;"hazel",20;"grey",15;"blue",15;"green",1;"amber",1;"albino"))
-		if("brown")
-			return "630"
-		if("hazel")
-			return "542"
-		if("grey")
-			return pick("666","777","888","999","aaa","bbb","ccc")
-		if("blue")
-			return "36c"
-		if("green")
-			return "060"
-		if("amber")
-			return "fc0"
-		if("albino")
-			return pick("c","d","e","f") + pick("0","1","2","3","4","5","6","7","8","9") + pick("0","1","2","3","4","5","6","7","8","9")
-		else
-			return "000"
-
-/proc/random_underwear(gender)
-	if(!underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, underwear_list, underwear_m, underwear_f)
+proc/random_underwear(gender, species = "Human")
+	var/list/pick_list = list()
 	switch(gender)
-		if(MALE)
-			return pick(underwear_m)
-		if(FEMALE)
-			return pick(underwear_f)
-		else
-			return pick(underwear_list)
+		if(MALE)	pick_list = underwear_m
+		if(FEMALE)	pick_list = underwear_f
+		else		pick_list = underwear_list
+	return pick_species_allowed_underwear(pick_list, species)
 
-/proc/random_undershirt(gender)
-	if(!undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
+proc/random_undershirt(gender, species = "Human")
+	var/list/pick_list = list()
 	switch(gender)
-		if(MALE)
-			return pick(undershirt_m)
-		if(FEMALE)
-			return pick(undershirt_f)
-		else
-			return pick(undershirt_list)
+		if(MALE)	pick_list = undershirt_m
+		if(FEMALE)	pick_list = undershirt_f
+		else		pick_list = undershirt_list
+	return pick_species_allowed_underwear(pick_list, species)
 
-/proc/random_socks()
-	if(!socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
-	return pick(socks_list)
-
-/proc/random_features()
-	if(!tails_list_human.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	if(!tails_list_lizard.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
-	if(!snouts_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, snouts_list)
-	if(!horns_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/horns, horns_list)
-	if(!ears_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, horns_list)
-	if(!frills_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, frills_list)
-	if(!spines_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, spines_list)
-	if(!legs_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
-	if(!body_markings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
-	if(!wings_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-
-	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
-
-/proc/random_hair_style(gender)
+proc/random_socks(gender, species = "Human")
+	var/list/pick_list = list()
 	switch(gender)
-		if(MALE)
-			return pick(hair_styles_male_list)
-		if(FEMALE)
-			return pick(hair_styles_female_list)
-		else
-			return pick(hair_styles_list)
+		if(MALE)	pick_list = socks_m
+		if(FEMALE)	pick_list = socks_f
+		else		pick_list = socks_list
+	return pick_species_allowed_underwear(pick_list, species)
 
-/proc/random_facial_hair_style(gender)
-	switch(gender)
-		if(MALE)
-			return pick(facial_hair_styles_male_list)
-		if(FEMALE)
-			return pick(facial_hair_styles_female_list)
-		else
-			return pick(facial_hair_styles_list)
+proc/pick_species_allowed_underwear(list/all_picks, species)
+	var/list/valid_picks = list()
+	for(var/test in all_picks)
+		var/datum/sprite_accessory/S = all_picks[test]
+		if(!(species in S.species_allowed))
+			continue
+		valid_picks += test
 
-/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	if(!valid_picks.len) valid_picks += "Nude"
+
+	return pick(valid_picks)
+
+proc/random_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
+	var/h_style = "Bald"
+	var/list/valid_hairstyles = list()
+	for(var/hairstyle in hair_styles_list)
+		var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
+
+		if(hairstyle == "Bald") //Just in case.
+			valid_hairstyles += hairstyle
+			continue
+		if((gender == MALE && S.gender == FEMALE) || (gender == FEMALE && S.gender == MALE))
+			continue
+		if(species == "Machine") //If the user is a species who can have a robotic head...
+			if(!robohead)
+				robohead = all_robolimbs["Morpheus Cyberkinetics"]
+			if((species in S.species_allowed) && robohead.is_monitor && ((S.models_allowed && (robohead.company in S.models_allowed)) || !S.models_allowed)) //If this is a hair style native to the user's species, check to see if they have a head with an ipc-style screen and that the head's company is in the screen style's allowed models list.
+				valid_hairstyles += hairstyle //Give them their hairstyles if they do.
+			else
+				if(!robohead.is_monitor && ("Human" in S.species_allowed)) /*If the hairstyle is not native to the user's species and they're using a head with an ipc-style screen, don't let them access it.
+																			But if the user has a robotic humanoid head and the hairstyle can fit humans, let them use it as a wig. */
+					valid_hairstyles += hairstyle
+		else //If the user is not a species who can have robotic heads, use the default handling.
+			if(species in S.species_allowed) //If the user's head is of a species the hairstyle allows, add it to the list.
+				valid_hairstyles += hairstyle
+
+	if(valid_hairstyles.len)
+		h_style = pick(valid_hairstyles)
+
+	return h_style
+
+proc/random_facial_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
+	var/f_style = "Shaved"
+	var/list/valid_facial_hairstyles = list()
+	for(var/facialhairstyle in facial_hair_styles_list)
+		var/datum/sprite_accessory/S = facial_hair_styles_list[facialhairstyle]
+
+		if(facialhairstyle == "Shaved") //Just in case.
+			valid_facial_hairstyles += facialhairstyle
+			continue
+		if((gender == MALE && S.gender == FEMALE) || (gender == FEMALE && S.gender == MALE))
+			continue
+		if(species == "Machine") //If the user is a species who can have a robotic head...
+			if(!robohead)
+				robohead = all_robolimbs["Morpheus Cyberkinetics"]
+			if((species in S.species_allowed) && robohead.is_monitor && ((S.models_allowed && (robohead.company in S.models_allowed)) || !S.models_allowed)) //If this is a facial hair style native to the user's species, check to see if they have a head with an ipc-style screen and that the head's company is in the screen style's allowed models list.
+				valid_facial_hairstyles += facialhairstyle //Give them their facial hairstyles if they do.
+			else
+				if(!robohead.is_monitor && ("Human" in S.species_allowed)) /*If the facial hairstyle is not native to the user's species and they're using a head with an ipc-style screen, don't let them access it.
+																			But if the user has a robotic humanoid head and the facial hairstyle can fit humans, let them use it as a wig. */
+					valid_facial_hairstyles += facialhairstyle
+		else //If the user is not a species who can have robotic heads, use the default handling.
+			if(species in S.species_allowed) //If the user's head is of a species the facial hair style allows, add it to the list.
+				valid_facial_hairstyles += facialhairstyle
+
+	if(valid_facial_hairstyles.len)
+		f_style = pick(valid_facial_hairstyles)
+
+	return f_style
+
+proc/random_head_accessory(species = "Human")
+	var/ha_style = "None"
+	var/list/valid_head_accessories = list()
+	for(var/head_accessory in head_accessory_styles_list)
+		var/datum/sprite_accessory/S = head_accessory_styles_list[head_accessory]
+
+		if(!(species in S.species_allowed))
+			continue
+		valid_head_accessories += head_accessory
+
+	if(valid_head_accessories.len)
+		ha_style = pick(valid_head_accessories)
+
+	return ha_style
+
+proc/random_marking_style(var/location = "body", species = "Human", var/datum/robolimb/robohead, var/body_accessory, var/alt_head)
+	var/m_style = "None"
+	var/list/valid_markings = list()
+	for(var/marking in marking_styles_list)
+		var/datum/sprite_accessory/body_markings/S = marking_styles_list[marking]
+		if(S.name == "None")
+			valid_markings += marking
+			continue
+		if(S.marking_location != location) //If the marking isn't for the location we desire, skip.
+			continue
+		if(!(species in S.species_allowed)) //If the user's head is not of a species the marking style allows, skip it. Otherwise, add it to the list.
+			continue
+		if(location == "tail")
+			if(!body_accessory)
+				if(S.tails_allowed)
+					continue
+			else
+				if(!S.tails_allowed || !(body_accessory in S.tails_allowed))
+					continue
+		if(location == "head")
+			var/datum/sprite_accessory/body_markings/head/M = marking_styles_list[S.name]
+			if(species == "Machine")//If the user is a species that can have a robotic head...
+				if(!robohead)
+					robohead = all_robolimbs["Morpheus Cyberkinetics"]
+				if(!(S.models_allowed && (robohead.company in S.models_allowed))) //Make sure they don't get markings incompatible with their head.
+					continue
+			else if(alt_head && alt_head != "None") //If the user's got an alt head, validate markings for that head.
+				if(!("All" in M.heads_allowed) && !(alt_head in M.heads_allowed))
+					continue
+			else
+				if(M.heads_allowed && !("All" in M.heads_allowed))
+					continue
+		valid_markings += marking
+
+	if(valid_markings.len)
+		m_style = pick(valid_markings)
+
+	return m_style
+
+proc/random_body_accessory(species = "Vulpkanin")
+	var/body_accessory = null
+	var/list/valid_body_accessories = list()
+	for(var/B in body_accessory_by_name)
+		var/datum/body_accessory/A = body_accessory_by_name[B]
+		if(!istype(A))
+			valid_body_accessories += "None" //The only null entry should be the "None" option.
+			continue
+		if(species in A.allowed_species) //If the user is not of a species the body accessory style allows, skip it. Otherwise, add it to the list.
+			valid_body_accessories += B
+
+	if(valid_body_accessories.len)
+		body_accessory = pick(valid_body_accessories)
+
+	return body_accessory
+
+proc/random_name(gender, species = "Human")
+
+	var/datum/species/current_species
+	if(species)
+		current_species = all_species[species]
+
+	if(!current_species || current_species.name == "Human")
 		if(gender==FEMALE)
-			. = capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
+			return capitalize(pick(first_names_female)) + " " + capitalize(pick(last_names))
 		else
-			. = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+			return capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
+	else
+		return current_species.get_random_name(gender)
 
-		if(i != attempts_to_find_unique_name && !findname(.))
-			break
+proc/random_skin_tone(species = "Human")
+	if(species == "Human" || species == "Drask")
+		switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
+			if("caucasian")		. = -10
+			if("afroamerican")	. = -115
+			if("african")		. = -165
+			if("latino")		. = -55
+			if("albino")		. = 34
+			else				. = rand(-185, 34)
+		return min(max(. + rand(-25, 25), -185), 34)
+	else if(species == "Vox")
+		. = rand(1, 6)
+		return .
 
-/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
-		. = capitalize(lizard_name(gender))
+proc/skintone2racedescription(tone, species = "Human")
+	if(species == "Human")
+		switch(tone)
+			if(30 to INFINITY)		return "albino"
+			if(20 to 30)			return "pale"
+			if(5 to 15)				return "light skinned"
+			if(-10 to 5)			return "white"
+			if(-25 to -10)			return "tan"
+			if(-45 to -25)			return "darker skinned"
+			if(-65 to -45)			return "brown"
+			if(-INFINITY to -65)	return "black"
+			else					return "unknown"
+	else if(species == "Vox")
+		switch(tone)
+			if(2)					return "dark green"
+			if(3)					return "brown"
+			if(4)					return "gray"
+			if(5)					return "emerald"
+			if(6)					return "azure"
+			else					return "green"
+	else
+		return "unknown"
 
-		if(i != attempts_to_find_unique_name && !findname(.))
-			break
-
-/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
-		. = capitalize(plasmaman_name())
-
-		if(i != attempts_to_find_unique_name && !findname(.))
-			break
-
-/proc/random_skin_tone()
-	return pick(skin_tones)
-
-var/list/skin_tones = list(
-	"albino",
-	"caucasian1",
-	"caucasian2",
-	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
-	"indian",
-	"african1",
-	"african2"
-	)
-
-var/global/list/species_list[0]
-var/global/list/whitelisted_species_list[0]
-var/global/list/roundstart_species[0]
-
-/proc/age2agedescription(age)
+proc/age2agedescription(age)
 	switch(age)
-		if(0 to 1)
-			return "infant"
-		if(1 to 3)
-			return "toddler"
-		if(3 to 13)
-			return "child"
-		if(13 to 19)
-			return "teenager"
-		if(19 to 30)
-			return "young adult"
-		if(30 to 45)
-			return "adult"
-		if(45 to 60)
-			return "middle-aged"
-		if(60 to 70)
-			return "aging"
-		if(70 to INFINITY)
-			return "elderly"
-		else
-			return "unknown"
+		if(0 to 1)			return "infant"
+		if(1 to 3)			return "toddler"
+		if(3 to 13)			return "child"
+		if(13 to 19)		return "teenager"
+		if(19 to 30)		return "young adult"
+		if(30 to 45)		return "adult"
+		if(45 to 60)		return "middle-aged"
+		if(60 to 70)		return "aging"
+		if(70 to INFINITY)	return "elderly"
+		else				return "unknown"
+
 
 /*
 Proc for attack log creation, because really why not
 1 argument is the actor
 2 argument is the target of action
 3 is the description of action(like punched, throwed, or any other verb)
-4 should it make adminlog note or not
-5 is the tool with which the action was made(usually item)					5 and 6 are very similar(5 have "by " before it, that it) and are separated just to keep things in a bit more in order
-6 is additional information, anything that needs to be added
+4 is the tool with which the action was made(usually item)
+5 is additional information, anything that needs to be added
+6 is whether the attack should be logged to the log file and shown to admins
 */
 
-/proc/add_logs(mob/user, mob/target, what_done, object=null, addition=null)
-	var/turf/attack_location = get_turf(target)
+proc/add_logs(mob/user, mob/target, what_done, var/object=null, var/addition=null, var/admin=1, var/print_attack_log = 1)//print_attack_log notifies admins with attack logs on
+	var/list/ignore=list("shaked", "CPRed", "grabbed", "punched", "disarmed")
+	if(!user)
+		return
+	if(ismob(user))
+		user.create_attack_log("<font color='red'>Has [what_done] [key_name(target)][object ? " with [object]" : " "][addition]</font>")
+	if(ismob(target))
+		target.create_attack_log("<font color='orange'>Has been [what_done] by [key_name(user)][object ? " with [object]" : " "][addition]</font>")
+	if(admin)
+		log_attack("<font color='red'>[key_name(user)] [what_done] [key_name(target)][object ? " with [object]" : " "][addition]</font>")
+	if(istype(target) && (target.key))
+		if(what_done in ignore)
+			return
+		if(target == user)
+			return
+		if(!print_attack_log)
+			return
+		msg_admin_attack("[key_name_admin(user)] [what_done] [key_name_admin(target)][object ? " with [object]" : " "][addition]")
 
-	var/is_mob_user = user && typecache_mob[user.type]
-	var/is_mob_target = target && typecache_mob[target.type]
-
-	var/mob/living/living_target
-
-
-	if(target && isliving(target))
-		living_target = target
-
-	if(is_mob_user)
-		var/message = "\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(is_mob_target && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		user.attack_log += message
-		if(user.mind)
-			user.mind.attack_log += message
-
-	if(is_mob_target)
-		var/message = "\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]</font>"
-		target.attack_log += message
-		if(target.mind)
-			target.mind.attack_log += message
-
-	log_attack("[user ? "[user.name][(is_mob_user && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(is_mob_target && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][(living_target) ? " (NEWHP: [living_target.health])" : ""][(attack_location) ? "([attack_location.x],[attack_location.y],[attack_location.z])" : ""]")
-
-
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1)
+/proc/do_mob(var/mob/user, var/mob/target, var/time = 30, var/uninterruptible = 0, progress = 1)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -207,17 +279,17 @@ Proc for attack log creation, because really why not
 
 	var/target_loc = target.loc
 
-	var/holding = user.get_active_held_item()
+	var/holding = user.get_active_hand()
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		progbar = new(user, time, target)
 
 	var/endtime = world.time+time
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
-		stoplag()
-		if (progress)
+	while(world.time < endtime)
+		sleep(1)
+		if(progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
 			. = 0
@@ -229,12 +301,11 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying )
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
 			. = 0
 			break
-	if (progress)
+	if(progress)
 		qdel(progbar)
-
 
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
 	if(!user)
@@ -249,22 +320,22 @@ Proc for attack log creation, because really why not
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		drifting = 1
 
-	var/holding = user.get_active_held_item()
+	var/holding = user.get_active_hand()
 
 	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
 	if(holding)
 		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
-	if (progress)
+	if(progress)
 		progbar = new(user, delay, target)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
 	. = 1
-	while (world.time < endtime)
-		stoplag()
-		if (progress)
+	while(world.time < endtime)
+		sleep(1)
+		if(progress)
 			progbar.update(world.time - starttime)
 
 		if(drifting && !user.inertia_dir)
@@ -286,120 +357,79 @@ Proc for attack log creation, because really why not
 				if(!holding)
 					. = 0
 					break
-			if(user.get_active_held_item() != holding)
+			if(user.get_active_hand() != holding)
 				. = 0
 				break
-	if (progress)
-		qdel(progbar)
-
-/proc/do_after_mob(mob/user, var/list/targets, time = 30, uninterruptible = 0, progress = 1)
-	if(!user || !targets)
-		return 0
-	if(!islist(targets))
-		targets = list(targets)
-	var/user_loc = user.loc
-
-	var/drifting = 0
-	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
-
-	var/list/originalloc = list()
-	for(var/atom/target in targets)
-		originalloc[target] = target.loc
-
-	var/holding = user.get_active_held_item()
-	var/datum/progressbar/progbar
 	if(progress)
-		progbar = new(user, time, targets[1])
-
-	var/endtime = world.time + time
-	var/starttime = world.time
-	. = 1
-	mainloop:
-		while(world.time < endtime)
-			sleep(1)
-			if(progress)
-				progbar.update(world.time - starttime)
-			if(!user || !targets)
-				. = 0
-				break
-			if(uninterruptible)
-				continue
-
-			if(drifting && !user.inertia_dir)
-				drifting = 0
-				user_loc = user.loc
-
-			for(var/atom/target in targets)
-				if((!drifting && user_loc != user.loc) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || user.lying )
-					. = 0
-					break mainloop
-	if(progbar)
 		qdel(progbar)
 
-/proc/is_species(A, species_datum)
-	. = FALSE
-	if(ishuman(A))
-		var/mob/living/carbon/human/H = A
-		if(H.dna && istype(H.dna.species, species_datum))
-			. = TRUE
+/proc/admin_mob_info(mob/M, mob/user = usr)
+	if(!ismob(M))
+		to_chat(user, "This can only be used on instances of type /mob")
+		return
 
-/proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE)
-	var/turf/T = get_turf(target)
-	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
+	var/location_description = ""
+	var/special_role_description = ""
+	var/health_description = ""
+	var/gender_description = ""
+	var/turf/T = get_turf(M)
 
-	for(var/j in 1 to amount)
-		var/atom/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
-
-/proc/spawn_and_random_walk(spawn_type, target, amount, walk_chance=100, max_walk=3, always_max_walk=FALSE, admin_spawn=FALSE)
-	var/turf/T = get_turf(target)
-	var/step_count = 0
-	if(!T)
-		throw EXCEPTION("attempt to spawn atom type: [spawn_type] in nullspace")
-
-	for(var/j in 1 to amount)
-		var/atom/movable/X = new spawn_type(T)
-		X.admin_spawned = admin_spawn
-
-		if(always_max_walk || prob(walk_chance))
-			if(always_max_walk)
-				step_count = max_walk
-			else
-				step_count = rand(1, max_walk)
-
-			for(var/i in 1 to step_count)
-				step(X, pick(NORTH, SOUTH, EAST, WEST))
-
-/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
-	for(var/mob/M in player_list)
-		var/datum/preferences/prefs
-		if(M.client && M.client.prefs)
-			prefs = M.client.prefs
+	//Location
+	if(isturf(T))
+		if(isarea(T.loc))
+			location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z] in area <b>[T.loc]</b>)"
 		else
-			prefs = new
+			location_description = "([M.loc == T ? "at coordinates " : "in [M.loc] at coordinates "] [T.x], [T.y], [T.z])"
 
-		var/adminoverride = 0
-		if(M.client && M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
-			adminoverride = 1
-		if(isnewplayer(M) && !adminoverride)
-			continue
-		if(M.stat != DEAD && !adminoverride)
-			continue
-		if(speaker_key && speaker_key in prefs.ignoring)
-			continue
+	//Job + antagonist
+	if(M.mind)
+		special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>; Has been rev: [(M.mind.has_been_rev)?"Yes":"No"]"
+	else
+		special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>; Has been rev: <i>Mind datum missing</i>;"
 
-		switch(message_type)
-			if(DEADCHAT_DEATHRATTLE)
-				if(prefs.toggles & DISABLE_DEATHRATTLE)
-					continue
-			if(DEADCHAT_ARRIVALRATTLE)
-				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
-					continue
+	//Health
+	if(isliving(M))
+		var/mob/living/L = M
+		var/status
+		switch(M.stat)
+			if(CONSCIOUS)
+				status = "Alive"
+			if(UNCONSCIOUS)
+				status = "<font color='orange'><b>Unconscious</b></font>"
+			if(DEAD)
+				status = "<font color='red'><b>Dead</b></font>"
+		health_description = "Status = [status]"
+		health_description += "<BR>Oxy: [L.getOxyLoss()] - Tox: [L.getToxLoss()] - Fire: [L.getFireLoss()] - Brute: [L.getBruteLoss()] - Clone: [L.getCloneLoss()] - Brain: [L.getBrainLoss()]"
+	else
+		health_description = "This mob type has no health to speak of."
 
-		if(isobserver(M) && follow_target)
-			var/link = FOLLOW_LINK(M, follow_target)
-			M << "[link] [message]"
+	//Gener
+	switch(M.gender)
+		if(MALE, FEMALE)
+			gender_description = "[M.gender]"
 		else
-			M << "[message]"
+			gender_description = "<font color='red'><b>[M.gender]</b></font>"
+
+	to_chat(user, "<b>Info about [M.name]:</b> ")
+	to_chat(user, "Mob type = [M.type]; Gender = [gender_description] Damage = [health_description]")
+	to_chat(user, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
+	to_chat(user, "Location = [location_description];")
+	to_chat(user, "[special_role_description]")
+	to_chat(user, "(<a href='?src=[usr.UID()];priv_msg=\ref[M]'>PM</a>) (<A HREF='?_src_=holder;adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=[M.UID()]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[M]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>)")
+
+// Gets the first mob contained in an atom, and warns the user if there's not exactly one
+/proc/get_mob_in_atom_with_warning(atom/A, mob/user = usr)
+	if(!istype(A))
+		return null
+	if(ismob(A))
+		return A
+
+	. = null
+	for(var/mob/M in A)
+		if(!.)
+			. = M
+		else
+			to_chat(user, "<span class='warning'>Multiple mobs in [A], using first mob found...</span>")
+			break
+	if(!.)
+		to_chat(user, "<span class='warning'>No mob located in [A].</span>")

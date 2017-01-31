@@ -4,7 +4,6 @@
 	icon_state = "health"
 	materials = list(MAT_METAL=800, MAT_GLASS=200)
 	origin_tech = "magnets=1;biotech=1"
-	attachable = 1
 	secured = 0
 
 	var/scanning = 0
@@ -14,18 +13,17 @@
 
 
 /obj/item/device/assembly/health/activate()
-	if(!..())
-		return 0//Cooldown check
+	if(!..())	return 0//Cooldown check
 	toggle_scan()
 	return 0
 
 /obj/item/device/assembly/health/toggle_secure()
 	secured = !secured
 	if(secured && scanning)
-		START_PROCESSING(SSobj, src)
+		processing_objects.Add(src)
 	else
 		scanning = 0
-		STOP_PROCESSING(SSobj, src)
+		processing_objects.Remove(src)
 	update_icon()
 	return secured
 
@@ -57,29 +55,30 @@
 		health_scan = M.health
 		if(health_scan <= alarm_health)
 			pulse()
-			audible_message("\icon[src] *beep* *beep*", "*beep* *beep*")
+			audible_message("[bicon(src)] *beep* *beep*", "*beep* *beep*")
 			toggle_scan()
 		return
 	return
 
 /obj/item/device/assembly/health/proc/toggle_scan()
-	if(!secured)
-		return 0
+	if(!secured)	return 0
 	scanning = !scanning
 	if(scanning)
-		START_PROCESSING(SSobj, src)
+		processing_objects.Add(src)
 	else
-		STOP_PROCESSING(SSobj, src)
+		processing_objects.Remove(src)
 	return
 
 /obj/item/device/assembly/health/interact(mob/user as mob)//TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("<span class='warning'>The [name] is unsecured!</span>")
 		return 0
-	var/dat = "<TT><B>Health Sensor</B> <A href='?src=\ref[src];scanning=1'>[scanning?"On":"Off"]</A>"
+	var/dat = text("<TT><B>Health Sensor</B> <A href='?src=[UID()];scanning=1'>[scanning?"On":"Off"]</A>")
 	if(scanning && health_scan)
 		dat += "<BR>Health: [health_scan]"
-	user << browse(dat, "window=hscan")
+	var/datum/browser/popup = new(user, "hscan", name, 400, 400)
+	popup.set_content(dat)
+	popup.open(0)
 	onclose(user, "hscan")
 	return
 
@@ -91,7 +90,7 @@
 
 	var/mob/user = usr
 
-	if(!user.canUseTopic(src))
+	if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
 		usr << browse(null, "window=hscan")
 		onclose(usr, "hscan")
 		return

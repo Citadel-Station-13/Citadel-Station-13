@@ -2,6 +2,7 @@ var/diary = null
 var/diaryofmeanpeople = null
 var/href_logfile = null
 
+var/list/jobMax = list()
 var/list/bombers = list(  )
 var/list/admin_log = list (  )
 var/list/lastsignalers = list(	)	//keeps last 100 signals here in format: "[src] used \ref[src] @ location [src.loc]: [freq]/[code]"
@@ -11,6 +12,5 @@ var/list/combatlog = list()
 var/list/IClog = list()
 var/list/OOClog = list()
 var/list/adminlog = list()
-var/list/admintickets = list()
 
-var/list/active_turfs_startlist = list()
+var/list/investigate_log_subjects = list("notes", "watchlist", "hrefs")

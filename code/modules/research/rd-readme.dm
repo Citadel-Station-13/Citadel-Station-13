@@ -22,7 +22,7 @@ materials.
 While researching you are dealing with two different types of information: Technology Paths and Device Designs. Technology Paths
 are the "Tech Trees" of the game. You start out with a number of them at the game start and they are improved by using the
 Destructive Analyzer. By themselves, they don't do a whole lot. However, they unlock Device Designs. This is the information used
-by the circuit imprinter and the protolathe to produce objects.
+by the circuit imprinter and the protolathe to produce objects. It also tracks the current reliability of that particular design.
 
 //EXISTING TECH
 Each tech path should have at LEAST one item at every level (levels 1 - 20). This is to allow for a more fluid progression of the
@@ -189,7 +189,7 @@ When thinking about new stuff, check here to see if there are any slots unfilled
 //SYNDICATE
 1	|	Sleepypen
 2	|	TYRANT Module, Emag
-3	|	Power Sink
+3	|	Cloaking Device, Power Sink
 4	|
 5	|
 6	|

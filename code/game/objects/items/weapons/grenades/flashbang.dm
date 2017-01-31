@@ -2,42 +2,62 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
-	origin_tech = "materials=2;combat=3"
+	origin_tech = "materials=2;combat=1"
 
 /obj/item/weapon/grenade/flashbang/prime()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
 		return
-	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
+	for(var/mob/living/M in hearers(7, flashbang_turf))
 		bang(get_turf(M), M)
 
-	for(var/obj/structure/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
-		var/distance = get_dist(B, get_turf(src))
-		var/damage = round(100/(distance*distance)+1)
-		B.take_damage(damage, BURN, "energy")
+	for(var/obj/effect/blob/B in hear(8,flashbang_turf))     		//Blob damage here
+		var/damage = round(30/(get_dist(B,get_turf(src))+1))
+		B.health -= damage
+		B.update_icon()
 	qdel(src)
 
-/obj/item/weapon/grenade/flashbang/proc/bang(turf/T , mob/living/M)
+/obj/item/weapon/grenade/flashbang/proc/bang(var/turf/T , var/mob/living/M)
 	M.show_message("<span class='warning'>BANG</span>", 2)
-	playsound(loc, 'sound/weapons/flashbang.ogg', 100, 1)
-	var/distance = max(0,get_dist(get_turf(src),T))
+	playsound(loc, 'sound/effects/bang.ogg', 25, 1)
+
+//Checking for protections
+	var/ear_safety = M.check_ear_prot()
+	var/distance = max(1,get_dist(src,T))
 
 //Flash
 	if(M.weakeyes)
 		M.visible_message("<span class='disarm'><b>[M]</b> screams and collapses!</span>")
-		M << "<span class='userdanger'><font size=3>AAAAGH!</font></span>"
+		to_chat(M, "<span class='userdanger'><font size=3>AAAAGH!</font></span>")
 		M.Weaken(15) //hella stunned
 		M.Stun(15)
-		M.adjust_eye_damage(8)
-	else if(M.flash_act(affect_silicon = 1))
-		M.Stun(max(10/max(1,distance), 3))
-		M.Weaken(max(10/max(1,distance), 3))
+		if(ishuman(M))
+			M.emote("scream")
+			var/mob/living/carbon/human/H = M
+			var/obj/item/organ/internal/eyes/E = H.get_int_organ(/obj/item/organ/internal/eyes)
+			if(E)
+				E.damage += 8
+
+	if(M.flash_eyes(affect_silicon = 1))
+		M.Stun(max(10/distance, 3))
+		M.Weaken(max(10/distance, 3))
+
+
 //Bang
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+	if((loc == M) || loc == M.loc)//Holding on person or being exactly where lies is significantly more dangerous and voids protection
 		M.Stun(10)
 		M.Weaken(10)
-		M.soundbang_act(1, 10, 10, 15)
-
-	else
-		M.soundbang_act(1, max(10/max(1,distance), 3), rand(0, 5))
+	if(!ear_safety)
+		M.Stun(max(10/distance, 3))
+		M.Weaken(max(10/distance, 3))
+		M.EarDeaf(15)
+		M.AdjustEarDamage(rand(0, 5))
+		if(M.ear_damage >= 15)
+			to_chat(M, "<span class='warning'>Your ears start to ring badly!</span>")
+			if(prob(M.ear_damage - 5))
+				to_chat(M, "<span class='warning'>You can't hear anything!</span>")
+				M.BecomeDeaf()
+		else
+			if(M.ear_damage >= 5)
+				to_chat(M, "<span class='warning'>Your ears start to ring!</span>")

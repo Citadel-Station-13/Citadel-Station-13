@@ -2,12 +2,8 @@
 	name = "\improper AI liquid dispenser"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion3"
-	layer = PROJECTILE_HIT_THRESHHOLD_LAYER
-	anchored = 1
-	obj_integrity = 200
-	max_integrity = 200
-	armor = list(melee = 50, bullet = 20, laser = 20, energy = 20, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
-
+	layer = 3
+	anchored = 1.0
 	var/uses = 20
 	var/disabled = 1
 	var/lethal = 0
@@ -27,7 +23,7 @@
 			icon_state = "motion0"
 			stat |= NOPOWER
 
-/obj/machinery/ai_slipper/proc/setState(enabled, uses)
+/obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
 	src.disabled = disabled
 	src.uses = uses
 	src.power_change()
@@ -35,63 +31,72 @@
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (issilicon(user))
+	if(istype(user, /mob/living/silicon))
 		return src.attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(user))
+		if(src.allowed(usr))
 			locked = !locked
-			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>"
-			if (locked)
-				if (user.machine==src)
+			to_chat(user, "You [ locked ? "lock" : "unlock"] the device.")
+			if(locked)
+				if(user.machine==src)
 					user.unset_machine()
 					user << browse(null, "window=ai_slipper")
 			else
-				if (user.machine==src)
-					src.attack_hand(user)
+				if(user.machine==src)
+					src.attack_hand(usr)
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "\red Access denied.")
+			return
+	return
 
-
-/obj/machinery/ai_slipper/attack_ai(mob/user)
+/obj/machinery/ai_slipper/attack_ai(mob/user as mob)
 	return attack_hand(user)
 
-/obj/machinery/ai_slipper/attack_hand(mob/user)
+/obj/machinery/ai_slipper/attack_hand(mob/user as mob)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if ( (get_dist(src, user) > 1 ))
-		if (!(issilicon(user) || IsAdminGhost(user)))
-			user << text("Too far away.")
+	if( (get_dist(src, user) > 1 ))
+		if(!istype(user, /mob/living/silicon))
+			to_chat(user, text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
 			return
 
 	user.set_machine(src)
-	var/area/A = get_area(src)
-	var/t = "<TT><B>AI Liquid Dispenser</B> ([format_text(A.name)])<HR>"
+	var/loc = src.loc
+	if(istype(loc, /turf))
+		loc = loc:loc
+	if(!istype(loc, /area))
+		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
+		return
+	var/area/area = loc
+	var/t = "<TT><B>AI Liquid Dispenser</B> ([area.name])<HR>"
 
-	if(locked && (!(issilicon(user) || IsAdminGhost(user))))
+	if(src.locked && (!istype(user, /mob/living/silicon)))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
-		t += "Dispenser [disabled?"deactivated":"activated"] - <A href='?src=\ref[src];toggleOn=1'>[disabled?"Enable":"Disable"]?</a><br>\n"
-		t += "Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n"
+		t += text("Dispenser [] - <A href='?src=[UID()];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src.disabled?"Enable":"Disable")
+		t += text("Uses Left: [uses]. <A href='?src=[UID()];toggleUse=1'>Activate the dispenser?</A><br>\n")
+
 	user << browse(t, "window=computer;size=575x450")
 	onclose(user, "computer")
+	return
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	if(..())
-		return
-	if (src.locked)
-		if(!(issilicon(usr)|| IsAdminGhost(usr)))
-			usr << "Control panel is locked!"
+		return 1
+	if(src.locked)
+		if(!istype(usr, /mob/living/silicon))
+			to_chat(usr, "Control panel is locked!")
 			return
-	if (href_list["toggleOn"])
+	if(href_list["toggleOn"])
 		src.disabled = !src.disabled
 		icon_state = src.disabled? "motion0":"motion3"
-	if (href_list["toggleUse"])
+	if(href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return
 		else
-			PoolOrNew(/obj/effect/particle_effect/foam, loc)
+			new /obj/effect/effect/foam(src.loc)
 			src.uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100
@@ -99,6 +104,7 @@
 			return
 
 	src.attack_hand(usr)
+	return
 
 /obj/machinery/ai_slipper/proc/slip_process()
 	while(cooldown_time - world.timeofday > 0)
@@ -110,8 +116,9 @@
 
 		cooldown_timeleft = (ticksleft / 10)
 		sleep(5)
-	if (uses <= 0)
+	if(uses <= 0)
 		return
-	if (uses >= 0)
+	if(uses >= 0)
 		cooldown_on = 0
 	src.power_change()
+	return

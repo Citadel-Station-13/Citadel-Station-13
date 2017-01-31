@@ -1,24 +1,19 @@
-
-
 //Keeps track of the time for the ID console. Having it as a global variable prevents people from dismantling/reassembling it to
 //increase the slots of many jobs.
 var/time_last_changed_position = 0
 
 /obj/machinery/computer/card
-	name = "identification console"
-	desc = "You can use this to manage jobs and ID access."
-	icon_screen = "id"
+	name = "identification computer"
+	desc = "Terminal for programming Nanotrasen employee ID cards to access parts of the station."
 	icon_keyboard = "id_key"
-	req_one_access = list(access_heads, access_change_ids)
-	circuit = /obj/item/weapon/circuitboard/computer/card
+	icon_screen = "id"
+	req_access = list(access_change_ids)
+	circuit = /obj/item/weapon/circuitboard/card
+	light_color = LIGHT_COLOR_LIGHTBLUE
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
-	var/authenticated = 0
-	var/mode = 0
+	var/mode = 0.0
 	var/printing = null
-	var/list/region_access = null
-	var/list/head_subordinates = null
-	var/target_dept = 0 //Which department this computer has access to. 0=all departments
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -26,15 +21,26 @@ var/time_last_changed_position = 0
 	var/change_position_cooldown = 60
 	//Jobs you cannot open new positions for
 	var/list/blacklisted = list(
-		"AI",
-		"Assistant",
-		"Cyborg",
-		"Captain",
-		"Head of Personnel",
-		"Head of Security",
-		"Chief Engineer",
-		"Research Director",
-		"Chief Medical Officer")
+		/datum/job/ai,
+		/datum/job/cyborg,
+		/datum/job/captain,
+		/datum/job/hop,
+		/datum/job/hos,
+		/datum/job/chief_engineer,
+		/datum/job/rd,
+		/datum/job/cmo,
+		/datum/job/judge,
+		/datum/job/blueshield,
+		/datum/job/nanotrasenrep,
+		/datum/job/pilot,
+		/datum/job/brigdoc,
+		/datum/job/mechanic,
+		/datum/job/barber,
+		/datum/job/chaplain,
+		/datum/job/ntnavyofficer,
+		/datum/job/ntspecops,
+		/datum/job/civilian
+	)
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players
@@ -43,67 +49,99 @@ var/time_last_changed_position = 0
 	//Assoc array: "JobName" = (int)<Opened Positions>
 	var/list/opened_positions = list();
 
-/obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
-		if(check_access(idcard))
-			if(!scan)
-				if(!usr.drop_item())
-					return
-				idcard.loc = src
-				scan = idcard
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			else if(!modify)
-				if(!usr.drop_item())
-					return
-				idcard.loc = src
-				modify = idcard
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		else
-			if(!modify)
-				if(!usr.drop_item())
-					return
-				idcard.loc = src
-				modify = idcard
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+/obj/machinery/computer/card/proc/is_centcom()
+	return istype(src, /obj/machinery/computer/card/centcom)
+
+/obj/machinery/computer/card/proc/is_authenticated(var/mob/user)
+	if(user.can_admin_interact())
+		return 1
+	if(scan)
+		return check_access(scan)
+	return 0
+
+/obj/machinery/computer/card/proc/get_target_rank()
+	return modify && modify.assignment ? modify.assignment : "Unassigned"
+
+/obj/machinery/computer/card/proc/format_jobs(list/jobs)
+	var/list/formatted = list()
+	for(var/job in jobs)
+		formatted.Add(list(list(
+			"display_name" = replacetext(job, " ", "&nbsp;"),
+			"target_rank" = get_target_rank(),
+			"job" = job)))
+
+	return formatted
+
+/obj/machinery/computer/card/proc/format_job_slots()
+	var/list/formatted = list()
+	for(var/datum/job/job in job_master.occupations)
+		if(job_blacklisted(job))
+			continue
+		formatted.Add(list(list(
+			"title" = job.title,
+			"current_positions" = job.current_positions,
+			"total_positions" = job.total_positions,
+			"can_open" = can_open_job(job),
+			"can_close" = can_close_job(job))))
+
+	return formatted
+
+/obj/machinery/computer/card/proc/format_card_skins(list/card_skins)
+	var/list/formatted = list()
+	for(var/skin in card_skins)
+		formatted.Add(list(list(
+			"display_name" = get_skin_desc(skin),
+			"skin" = skin)))
+
+	return formatted
+
+/obj/machinery/computer/card/verb/eject_id()
+	set category = null
+	set name = "Eject ID Card"
+	set src in oview(1)
+
+	if(!usr || usr.stat || usr.lying)	return
+
+	if(scan)
+		to_chat(usr, "You remove \the [scan] from \the [src].")
+		scan.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(scan)
+		scan = null
+	else if(modify)
+		to_chat(usr, "You remove \the [modify] from \the [src].")
+		modify.loc = get_turf(src)
+		if(!usr.get_active_hand())
+			usr.put_in_hands(modify)
+		modify = null
 	else
+		to_chat(usr, "There is nothing to remove from the console.")
+	return
+
+/obj/machinery/computer/card/attackby(obj/item/weapon/card/id/id_card, mob/user, params)
+	if(!istype(id_card))
 		return ..()
 
-/obj/machinery/computer/card/Destroy()
-	if(scan)
-		qdel(scan)
-		scan = null
-	if(modify)
-		qdel(modify)
-		modify = null
-	return ..()
+	if(!scan && access_change_ids in id_card.access)
+		user.drop_item()
+		id_card.loc = src
+		scan = id_card
+	else if(!modify)
+		user.drop_item()
+		id_card.loc = src
+		modify = id_card
 
-/obj/machinery/computer/card/handle_atom_del(atom/A)
-	..()
-	if(A == scan)
-		scan = null
-		updateUsrDialog()
-	if(A == modify)
-		modify = null
-		updateUsrDialog()
-
-/obj/machinery/computer/card/on_deconstruction()
-	if(scan)
-		scan.forceMove(loc)
-		scan = null
-	if(modify)
-		modify.forceMove(loc)
-		modify = null
+	nanomanager.update_uis(src)
+	attack_hand(user)
 
 //Check if you can't open a new position for a certain job
-/obj/machinery/computer/card/proc/job_blacklisted(jobtitle)
-	return (jobtitle in blacklisted)
-
+/obj/machinery/computer/card/proc/job_blacklisted(datum/job/job)
+	return (job.type in blacklisted)
 
 //Logic check for Topic() if you can open the job
 /obj/machinery/computer/card/proc/can_open_job(datum/job/job)
 	if(job)
-		if(!job_blacklisted(job.title))
+		if(!job_blacklisted(job))
 			if((job.total_positions <= player_list.len * (max_relative_positions / 100)))
 				var/delta = (world.time / 10) - time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] < 0))
@@ -115,7 +153,7 @@ var/time_last_changed_position = 0
 //Logic check for Topic() if you can close the job
 /obj/machinery/computer/card/proc/can_close_job(datum/job/job)
 	if(job)
-		if(!job_blacklisted(job.title))
+		if(!job_blacklisted(job))
 			if(job.total_positions > job.current_positions)
 				var/delta = (world.time / 10) - time_last_changed_position
 				if((change_position_cooldown < delta) || (opened_positions[job.title] > 0))
@@ -124,353 +162,248 @@ var/time_last_changed_position = 0
 			return -1
 	return 0
 
-/obj/machinery/computer/card/attack_hand(mob/user)
+/obj/machinery/computer/card/attack_ai(var/mob/user as mob)
+	return attack_hand(user)
+
+/obj/machinery/computer/card/attack_hand(mob/user as mob)
 	if(..())
 		return
-
-	user.set_machine(src)
-	var/dat
-	if(!ticker)
+	if(stat & (NOPOWER|BROKEN))
 		return
-	if (mode == 1) // accessing crew manifest
-		var/crew = ""
-		for(var/datum/data/record/t in sortRecord(data_core.general))
-			crew += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br><br>[crew]<a href='?src=\ref[src];choice=print'>Print</a><br><br><a href='?src=\ref[src];choice=mode;mode_target=0'>Access ID modification console.</a><br></tt>"
 
-	else if(mode == 2)
-		// JOB MANAGEMENT
-		dat = "<a href='?src=\ref[src];choice=return'>Return</a>"
-		dat += " || Confirm Identity: "
-		var/S
-		if(scan)
-			S = html_encode(scan.name)
-		else
-			S = "--------"
-		dat += "<a href='?src=\ref[src];choice=scan'>[S]</a>"
-		dat += "<table>"
-		dat += "<tr><td style='width:25%'><b>Job</b></td><td style='width:25%'><b>Slots</b></td><td style='width:25%'><b>Open job</b></td><td style='width:25%'><b>Close job</b></td></tr>"
-		var/ID
-		if(scan && (access_change_ids in scan.access) && !target_dept)
-			ID = 1
-		else
-			ID = 0
-		for(var/datum/job/job in SSjob.occupations)
-			dat += "<tr>"
-			if(job.title in blacklisted)
-				continue
-			dat += "<td>[job.title]</td>"
-			dat += "<td>[job.current_positions]/[job.total_positions]</td>"
-			dat += "<td>"
-			switch(can_open_job(job))
-				if(1)
-					if(ID)
-						dat += "<a href='?src=\ref[src];choice=make_job_available;job=[job.title]'>Open Position</a><br>"
-					else
-						dat += "Open Position"
-				if(-1)
-					dat += "Denied"
-				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
-					var/mins = round(time_to_wait / 60)
-					var/seconds = time_to_wait - (60*mins)
-					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
-				if(0)
-					dat += "Denied"
-			dat += "</td><td>"
-			switch(can_close_job(job))
-				if(1)
-					if(ID)
-						dat += "<a href='?src=\ref[src];choice=make_job_unavailable;job=[job.title]'>Close Position</a>"
-					else
-						dat += "Close Position"
-				if(-1)
-					dat += "Denied"
-				if(-2)
-					var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
-					var/mins = round(time_to_wait / 60)
-					var/seconds = time_to_wait - (60*mins)
-					dat += "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
-				if(0)
-					dat += "Denied"
-			dat += "</td></tr>"
-		dat += "</table>"
-	else
-		var/header = ""
+	ui_interact(user)
 
-		var/target_name
-		var/target_owner
-		var/target_rank
-		if(modify)
-			target_name = html_encode(modify.name)
-		else
-			target_name = "--------"
-		if(modify && modify.registered_name)
-			target_owner = html_encode(modify.registered_name)
-		else
-			target_owner = "--------"
-		if(modify && modify.assignment)
-			target_rank = html_encode(modify.assignment)
-		else
-			target_rank = "Unassigned"
+/obj/machinery/computer/card/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+	user.set_machine(src)
 
-		var/scan_name
-		if(scan)
-			scan_name = html_encode(scan.name)
-		else
-			scan_name = "--------"
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "identification_computer.tmpl", src.name, 775, 700)
+		ui.open()
 
-		if(!authenticated)
-			header += "<br><i>Please insert the cards into the slots</i><br>"
-			header += "Target: <a href='?src=\ref[src];choice=modify'>[target_name]</a><br>"
-			header += "Confirm Identity: <a href='?src=\ref[src];choice=scan'>[scan_name]</a><br>"
-		else
-			header += "<div align='center'><br>"
-			header += "<a href='?src=\ref[src];choice=modify'>Remove [target_name]</a> || "
-			header += "<a href='?src=\ref[src];choice=scan'>Remove [scan_name]</a> <br> "
-			header += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a> || "
-			header += "<a href='?src=\ref[src];choice=logout'>Log Out</a></div>"
+/obj/machinery/computer/card/ui_data(mob/user, ui_key = "main", datum/topic_state/state = default_state)
+	var/data[0]
+	data["src"] = UID()
+	data["station_name"] = station_name()
+	data["mode"] = mode
+	data["printing"] = printing
+	data["manifest"] = data_core ? data_core.get_manifest(0) : null
+	data["target_name"] = modify ? modify.name : "-----"
+	data["target_owner"] = modify && modify.registered_name ? modify.registered_name : "-----"
+	data["target_rank"] = get_target_rank()
+	data["scan_name"] = scan ? scan.name : "-----"
+	data["authenticated"] = is_authenticated(user)
+	data["has_modify"] = !!modify
+	data["account_number"] = modify ? modify.associated_account_number : null
+	data["centcom_access"] = is_centcom()
+	data["all_centcom_access"] = null
+	data["regions"] = null
 
-		header += "<hr>"
+	data["engineering_jobs"] = format_jobs(engineering_positions)
+	data["medical_jobs"] = format_jobs(medical_positions)
+	data["science_jobs"] = format_jobs(science_positions)
+	data["security_jobs"] = format_jobs(security_positions)
+	data["support_jobs"] = format_jobs(support_positions)
+	data["civilian_jobs"] = format_jobs(civilian_positions)
+	data["special_jobs"] = format_jobs(whitelisted_positions)
+	data["centcom_jobs"] = format_jobs(get_all_centcom_jobs())
+	data["card_skins"] = format_card_skins(get_station_card_skins())
 
-		var/jobs_all = ""
-		var/list/alljobs = list("Unassigned")
-		alljobs += (istype(src,/obj/machinery/computer/card/centcom)? get_all_centcom_jobs() : get_all_jobs()) + "Custom"
-		for(var/job in alljobs)
-			jobs_all += "<a href='?src=\ref[src];choice=assign;assign_target=[job]'>[replacetext(job, " ", "&nbsp")]</a> " //make sure there isn't a line break in the middle of a job
+	data["job_slots"] = format_job_slots()
 
+	var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - time_last_changed_position), 1)
+	var/mins = round(time_to_wait / 60)
+	var/seconds = time_to_wait - (60*mins)
+	data["cooldown_mins"] = mins
+	data["cooldown_secs"] = (seconds < 10) ? "0[seconds]" : seconds
 
-		var/body
+	if(modify)
+		data["current_skin"] = modify.icon_state
 
-		if (authenticated && modify)
+	if(modify && is_centcom())
+		var/list/all_centcom_access = list()
+		for(var/access in get_all_centcom_access())
+			all_centcom_access.Add(list(list(
+				"desc" = replacetext(get_centcom_access_desc(access), " ", "&nbsp;"),
+				"ref" = access,
+				"allowed" = (access in modify.access) ? 1 : 0)))
 
-			var/carddesc = text("")
-			var/jobs = text("")
-			if( authenticated == 2)
-				carddesc += {"<script type="text/javascript">
-									function markRed(){
-										var nameField = document.getElementById('namefield');
-										nameField.style.backgroundColor = "#FFDDDD";
-									}
-									function markGreen(){
-										var nameField = document.getElementById('namefield');
-										nameField.style.backgroundColor = "#DDFFDD";
-									}
-									function showAll(){
-										var allJobsSlot = document.getElementById('alljobsslot');
-										allJobsSlot.innerHTML = "<a href='#' onclick='hideAll()'>hide</a><br>"+ "[jobs_all]";
-									}
-									function hideAll(){
-										var allJobsSlot = document.getElementById('alljobsslot');
-										allJobsSlot.innerHTML = "<a href='#' onclick='showAll()'>show</a>";
-									}
-								</script>"}
-				carddesc += "<form name='cardcomp' action='?src=\ref[src]' method='get'>"
-				carddesc += "<input type='hidden' name='src' value='\ref[src]'>"
-				carddesc += "<input type='hidden' name='choice' value='reg'>"
-				carddesc += "<b>registered name:</b> <input type='text' id='namefield' name='reg' value='[target_owner]' style='width:250px; background-color:white;' onchange='markRed()'>"
-				carddesc += "<input type='submit' value='Rename' onclick='markGreen()'>"
-				carddesc += "</form>"
-				carddesc += "<b>Assignment:</b> "
+		data["all_centcom_access"] = all_centcom_access
+		data["all_centcom_skins"] = format_card_skins(get_centcom_card_skins())
 
-				jobs += "<span id='alljobsslot'><a href='#' onclick='showAll()'>[target_rank]</a></span>" //CHECK THIS
+	else if(modify)
+		var/list/regions = list()
+		for(var/i = 1; i <= 7; i++)
+			var/list/accesses = list()
+			for(var/access in get_region_accesses(i))
+				if(get_access_desc(access))
+					accesses.Add(list(list(
+						"desc" = replacetext(get_access_desc(access), " ", "&nbsp;"),
+						"ref" = access,
+						"allowed" = (access in modify.access) ? 1 : 0)))
 
-			else
-				carddesc += "<b>registered_name:</b> [target_owner]</span>"
-				jobs += "<b>Assignment:</b> [target_rank] (<a href='?src=\ref[src];choice=demote'>Demote</a>)</span>"
+			regions.Add(list(list(
+				"name" = get_region_accesses_name(i),
+				"accesses" = accesses)))
 
-			var/accesses = ""
-			if(istype(src,/obj/machinery/computer/card/centcom))
-				accesses += "<h5>Central Command:</h5>"
-				for(var/A in get_all_centcom_access())
-					if(A in modify.access)
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</font></a> "
-					else
-						accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_centcom_access_desc(A), " ", "&nbsp")]</a> "
-			else
-				accesses += "<div align='center'><b>Access</b></div>"
-				accesses += "<table style='width:100%'>"
-				accesses += "<tr>"
-				for(var/i = 1; i <= 7; i++)
-					if(authenticated == 1 && !(i in region_access))
-						continue
-					accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
-				accesses += "</tr><tr>"
-				for(var/i = 1; i <= 7; i++)
-					if(authenticated == 1 && !(i in region_access))
-						continue
-					accesses += "<td style='width:14%' valign='top'>"
-					for(var/A in get_region_accesses(i))
-						if(A in modify.access)
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=0'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
-						else
-							accesses += "<a href='?src=\ref[src];choice=access;access_target=[A];allowed=1'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
-						accesses += "<br>"
-					accesses += "</td>"
-				accesses += "</tr></table>"
-			body = "[carddesc]<br>[jobs]<br><br>[accesses]" //CHECK THIS
+		data["regions"] = regions
 
-		else
-			body = "<a href='?src=\ref[src];choice=auth'>{Log in}</a> <br><hr>"
-			body += "<a href='?src=\ref[src];choice=mode;mode_target=1'>Access Crew Manifest</a>"
-			if(!target_dept)
-				body += "<br><hr><a href = '?src=\ref[src];choice=mode;mode_target=2'>Job Management</a>"
-
-		dat = "<tt>[header][body]<hr><br></tt>"
-	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
-	return
-
+	return data
 
 /obj/machinery/computer/card/Topic(href, href_list)
 	if(..())
-		return
-	usr.set_machine(src)
+		return 1
+
 	switch(href_list["choice"])
-		if ("modify")
-			if (modify)
+		if("modify")
+			if(modify)
 				data_core.manifest_modify(modify.registered_name, modify.assignment)
-				modify.update_label()
-				modify.loc = loc
-				modify.verb_pickup()
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				modify = null
-				region_access = null
-				head_subordinates = null
+				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
+				if(ishuman(usr))
+					modify.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hands(modify)
+					modify = null
+				else
+					modify.loc = loc
+					modify = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
-					if(!usr.drop_item())
-						return
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				var/obj/item/I = usr.get_active_hand()
+				if(istype(I, /obj/item/weapon/card/id))
+					usr.drop_item()
 					I.loc = src
 					modify = I
-			authenticated = 0
 
-		if ("scan")
-			if (scan)
-				scan.loc = src.loc
-				scan.verb_pickup()
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-				scan = null
+		if("scan")
+			if(scan)
+				if(ishuman(usr))
+					scan.loc = usr.loc
+					if(!usr.get_active_hand())
+						usr.put_in_hands(scan)
+					scan = null
+				else
+					scan.loc = src.loc
+					scan = null
 			else
-				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
-					if(!usr.drop_item())
-						return
-					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+				var/obj/item/I = usr.get_active_hand()
+				if(istype(I, /obj/item/weapon/card/id))
+					usr.drop_item()
 					I.loc = src
 					scan = I
-			authenticated = 0
-		if ("auth")
-			if ((!( authenticated ) && (scan || issilicon(usr)) && (modify || mode)))
-				if (check_access(scan))
-					region_access = list()
-					head_subordinates = list()
-					if(access_change_ids in scan.access)
-						if(target_dept)
-							head_subordinates = get_all_jobs()
-							region_access |= target_dept
-							authenticated = 1
-						else
-							authenticated = 2
-						playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 
-					else
-						if((access_hop in scan.access) && ((target_dept==1) || !target_dept))
-							region_access |= 1
-							region_access |= 6
-							get_subordinates("Head of Personnel")
-						if((access_hos in scan.access) && ((target_dept==2) || !target_dept))
-							region_access |= 2
-							get_subordinates("Head of Security")
-						if((access_cmo in scan.access) && ((target_dept==3) || !target_dept))
-							region_access |= 3
-							get_subordinates("Chief Medical Officer")
-						if((access_rd in scan.access) && ((target_dept==4) || !target_dept))
-							region_access |= 4
-							get_subordinates("Research Director")
-						if((access_ce in scan.access) && ((target_dept==5) || !target_dept))
-							region_access |= 5
-							get_subordinates("Chief Engineer")
-						if(region_access)
-							authenticated = 1
-			else if ((!( authenticated ) && issilicon(usr)) && (!modify))
-				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
-		if ("logout")
-			region_access = null
-			head_subordinates = null
-			authenticated = 0
-			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 		if("access")
 			if(href_list["allowed"])
-				if(authenticated)
+				if(is_authenticated(usr))
 					var/access_type = text2num(href_list["access_target"])
 					var/access_allowed = text2num(href_list["allowed"])
-					if(access_type in (istype(src,/obj/machinery/computer/card/centcom)?get_all_centcom_access() : get_all_accesses()))
+					if(access_type in (is_centcom() ? get_all_centcom_access() : get_all_accesses()))
 						modify.access -= access_type
-						if(access_allowed == 1)
+						if(!access_allowed)
 							modify.access += access_type
-						playsound(src, "terminal_type", 50, 0)
-		if ("assign")
-			if (authenticated == 2)
+
+		if("skin")
+			var/skin = href_list["skin_target"]
+			if(is_authenticated(usr) && modify && ((skin in get_station_card_skins()) || ((skin in get_centcom_card_skins()) && is_centcom())))
+				modify.icon_state = href_list["skin_target"]
+
+		if("assign")
+			if(is_authenticated(usr) && modify)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
-					if(newJob)
-						t1 = newJob
-
-				else if(t1 == "Unassigned")
-					modify.access -= get_all_accesses()
-
+					var/temp_t = sanitize(copytext(input("Enter a custom job assignment.","Assignment"),1,MAX_MESSAGE_LEN))
+					//let custom jobs function as an impromptu alt title, mainly for sechuds
+					if(temp_t && modify)
+						modify.assignment = temp_t
 				else
-					var/datum/job/jobdatum
-					for(var/jobtype in typesof(/datum/job))
-						var/datum/job/J = new jobtype
-						if(ckey(J.title) == ckey(t1))
-							jobdatum = J
-							break
-					if(!jobdatum)
-						usr << "<span class='error'>No log exists for this job.</span>"
-						return
-
-					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
-				if (modify)
-					modify.assignment = t1
-					playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-		if ("demote")
-			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")
-				modify.assignment = "Unassigned"
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-			else
-				usr << "<span class='error'>You are not authorized to demote this position.</span>"
-		if ("reg")
-			if (authenticated)
-				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
-				if ((authenticated && modify == t2 && (in_range(src, usr) || issilicon(usr)) && isturf(loc)))
-					var/newName = reject_bad_name(href_list["reg"])
-					if(newName)
-						modify.registered_name = newName
-						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+					var/list/access = list()
+					if(is_centcom())
+						access = get_centcom_access(t1)
 					else
-						usr << "<span class='error'>Invalid name entered.</span>"
-						return
-		if ("mode")
+						var/datum/job/jobdatum
+						for(var/jobtype in typesof(/datum/job))
+							var/datum/job/J = new jobtype
+							if(ckey(J.title) == ckey(t1))
+								jobdatum = J
+								break
+						if(!jobdatum)
+							to_chat(usr, "\red No log exists for this job: [t1]")
+							return
+
+						access = jobdatum.get_access()
+
+					modify.access = access
+					modify.assignment = t1
+					modify.rank = t1
+
+				callHook("reassign_employee", list(modify))
+
+		if("reg")
+			if(is_authenticated(usr))
+				var/t2 = modify
+				if((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+					var/temp_name = reject_bad_name(href_list["reg"])
+					if(temp_name)
+						modify.registered_name = temp_name
+					else
+						src.visible_message("<span class='notice'>[src] buzzes rudely.</span>")
+			nanomanager.update_uis(src)
+
+		if("account")
+			if(is_authenticated(usr))
+				var/t2 = modify
+				if((modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
+					var/account_num = text2num(href_list["account"])
+					modify.associated_account_number = account_num
+			nanomanager.update_uis(src)
+
+		if("mode")
 			mode = text2num(href_list["mode_target"])
 
-		if("return")
-			//DISPLAY MAIN MENU
-			mode = 3;
-			playsound(src, "terminal_type", 25, 0)
+		if("print")
+			if(!printing)
+				printing = 1
+				playsound(loc, "sound/goonstation/machines/printer_dotmatrix.ogg", 50, 1)
+				spawn(50)
+					printing = null
+					nanomanager.update_uis(src)
+
+					var/obj/item/weapon/paper/P = new(loc)
+					if(mode == 2)
+						P.name = text("crew manifest ([])", worldtime2text())
+						P.info = {"<h4>Crew Manifest</h4>
+							<br>
+							[data_core ? data_core.get_manifest(0) : ""]
+						"}
+					else if(modify && !mode)
+						P.name = "access report"
+						P.info = {"<h4>Access Report</h4>
+							<u>Prepared By:</u> [scan && scan.registered_name ? scan.registered_name : "Unknown"]<br>
+							<u>For:</u> [modify.registered_name ? modify.registered_name : "Unregistered"]<br>
+							<hr>
+							<u>Assignment:</u> [modify.assignment]<br>
+							<u>Account Number:</u> #[modify.associated_account_number]<br>
+							<u>Blood Type:</u> [modify.blood_type]<br><br>
+							<u>Access:</u><div style="margin-left:1em">
+						"}
+
+						var/first = 1
+						for(var/A in modify.access)
+							P.info += "[first ? "" : ", "][get_access_desc(A)]"
+							first = 0
+						P.info += "</div>"
+
+		if("terminate")
+			if(is_authenticated(usr))
+				modify.assignment = "Terminated"
+				modify.access = list()
+
+				callHook("terminate_employee", list(modify))
 
 		if("make_job_available")
 			// MAKE ANOTHER JOB POSITION AVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(is_authenticated(usr))
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = SSjob.GetJob(edit_job_target)
+				var/datum/job/j = job_master.GetJob(edit_job_target)
 				if(!j)
 					return 0
 				if(can_open_job(j) != 1)
@@ -479,13 +412,13 @@ var/time_last_changed_position = 0
 					time_last_changed_position = world.time / 10
 				j.total_positions++
 				opened_positions[edit_job_target]++
-				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
+				nanomanager.update_uis(src)
 
 		if("make_job_unavailable")
 			// MAKE JOB POSITION UNAVAILABLE FOR LATE JOINERS
-			if(scan && (access_change_ids in scan.access) && !target_dept)
+			if(is_authenticated(usr))
 				var/edit_job_target = href_list["job"]
-				var/datum/job/j = SSjob.GetJob(edit_job_target)
+				var/datum/job/j = job_master.GetJob(edit_job_target)
 				if(!j)
 					return 0
 				if(can_close_job(j) != 1)
@@ -495,63 +428,16 @@ var/time_last_changed_position = 0
 					time_last_changed_position = world.time / 10
 				j.total_positions--
 				opened_positions[edit_job_target]--
-				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
+				nanomanager.update_uis(src)
 
-		if ("print")
-			if (!( printing ))
-				printing = 1
-				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
-				var/t1 = "<B>Crew Manifest:</B><BR>"
-				for(var/datum/data/record/t in sortRecord(data_core.general))
-					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"
-				P.info = t1
-				P.name = "paper- 'Crew Manifest'"
-				printing = null
-				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-	if (modify)
-		modify.update_label()
-	updateUsrDialog()
-	return
+	if(modify)
+		modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 
-/obj/machinery/computer/card/proc/get_subordinates(rank)
-	for(var/datum/job/job in SSjob.occupations)
-		if(rank in job.department_head)
-			head_subordinates += job.title
+	return 1
 
 /obj/machinery/computer/card/centcom
-	name = "\improper Centcom identification console"
-	circuit = /obj/item/weapon/circuitboard/computer/card/centcom
-	req_access = list(access_cent_captain)
-
-/obj/machinery/computer/card/minor
-	name = "department management console"
-	desc = "You can use this to change ID's for specific departments."
-	icon_screen = "idminor"
-	circuit = /obj/item/weapon/circuitboard/computer/card/minor
-
-/obj/machinery/computer/card/minor/New()
-	..()
-	var/obj/item/weapon/circuitboard/computer/card/minor/typed_circuit = circuit
-	if(target_dept)
-		typed_circuit.target_dept = target_dept
-	else
-		target_dept = typed_circuit.target_dept
-	var/list/dept_list = list("general","security","medical","science","engineering")
-	name = "[dept_list[target_dept]] department console"
-
-/obj/machinery/computer/card/minor/hos
-	target_dept = 2
-	icon_screen = "idhos"
-
-/obj/machinery/computer/card/minor/cmo
-	target_dept = 3
-	icon_screen = "idcmo"
-
-/obj/machinery/computer/card/minor/rd
-	target_dept = 4
-	icon_screen = "idrd"
-
-/obj/machinery/computer/card/minor/ce
-	target_dept = 5
-	icon_screen = "idce"
+	name = "\improper CentComm identification computer"
+	circuit = /obj/item/weapon/circuitboard/card/centcom
+	req_access = list(access_cent_commander)
+	change_position_cooldown = -1
+	blacklisted = list()

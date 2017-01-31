@@ -1,102 +1,142 @@
-
 /datum/chemical_reaction/formaldehyde
 	name = "formaldehyde"
-	id = "Formaldehyde"
-	results = list("formaldehyde" = 3)
+	id = "formaldehyde"
+	result = "formaldehyde"
 	required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
-	required_temp = 420
+	result_amount = 3
+	min_temp = 420
+	mix_message = "Ugh, it smells like the morgue in here."
 
 /datum/chemical_reaction/neurotoxin2
 	name = "neurotoxin2"
 	id = "neurotoxin2"
-	results = list("neurotoxin2" = 1)
+	result = "neurotoxin2"
 	required_reagents = list("space_drugs" = 1)
-	required_temp = 674
+	result_amount = 1
+	min_temp = 674
+	mix_sound = null
+	no_message = 1
 
 /datum/chemical_reaction/cyanide
 	name = "Cyanide"
 	id = "cyanide"
-	results = list("cyanide" = 3)
+	result = "cyanide"
 	required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1)
-	required_temp = 380
+	result_amount = 3
+	min_temp = 380
+	mix_message = "The mixture gives off a faint scent of almonds."
+	mix_sound = 'sound/goonstation/misc/drinkfizz.ogg'
+
+/datum/chemical_reaction/cyanide/on_reaction(datum/reagents/holder)
+	var/turf/T = get_turf(holder.my_atom)
+	T.visible_message("<span class='warning'>The solution generates a strong vapor!</span>")
+	for(var/mob/living/carbon/C in range(T, 1))
+		if(C.can_breathe_gas())
+			C.reagents.add_reagent("cyanide", 7)
 
 /datum/chemical_reaction/itching_powder
 	name = "Itching Powder"
 	id = "itching_powder"
-	results = list("itching_powder" = 3)
-	required_reagents = list("welding_fuel" = 1, "ammonia" = 1, "charcoal" = 1)
+	result = "itching_powder"
+	required_reagents = list("fuel" = 1, "ammonia" = 1, "fungus" = 1)
+	result_amount = 3
+	mix_message = "The mixture congeals and dries up, leaving behind an abrasive powder."
+	mix_sound = 'sound/effects/blobattack.ogg'
 
 /datum/chemical_reaction/facid
-	name = "Fluorosulfuric acid"
+	name = "Fluorosulfuric Acid"
 	id = "facid"
-	results = list("facid" = 4)
+	result = "facid"
 	required_reagents = list("sacid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1)
-	required_temp = 380
+	result_amount = 4
+	min_temp = 380
+	mix_message = "The mixture deepens to a dark blue, and slowly begins to corrode its container."
+
+/datum/chemical_reaction/initropidril
+	name = "Initropidril"
+	id = "initropidril"
+	result = "initropidril"
+	required_reagents = list("crank" = 1, "histamine" = 1, "krokodil" = 1, "bath_salts" = 1, "atropine" = 1, "nicotine" = 1, "morphine" = 1)
+	result_amount = 4
+	mix_message = "A sweet and sugary scent drifts from the unpleasant milky substance."
 
 /datum/chemical_reaction/sulfonal
 	name = "sulfonal"
 	id = "sulfonal"
-	results = list("sulfonal" = 3)
+	result = "sulfonal"
 	required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
+	result_amount = 3
+	mix_message = "The mixture gives off quite a stench."
+	mix_sound = 'sound/goonstation/misc/drinkfizz.ogg'
 
 /datum/chemical_reaction/lipolicide
 	name = "lipolicide"
 	id = "lipolicide"
-	results = list("lipolicide" = 3)
+	result = "lipolicide"
 	required_reagents = list("mercury" = 1, "diethylamine" = 1, "ephedrine" = 1)
+	result_amount = 3
+
+/datum/chemical_reaction/sarin
+	name = "sarin"
+	id = "sarin"
+	result = "sarin"
+	required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "atrazine" = 1)
+	result_amount = 3
+	mix_message = "The mixture yields a colorless, odorless liquid."
+	min_temp = 374
+	mix_sound = 'sound/goonstation/misc/drinkfizz.ogg'
+
+/datum/chemical_reaction/sarin/on_reaction(datum/reagents/holder)
+	var/turf/T = get_turf(holder.my_atom)
+	T.visible_message("<span class='warning'>The solution generates a strong vapor!</span>")
+	for(var/mob/living/carbon/C in range(T, 2))
+		if(C.can_breathe_gas())
+			C.reagents.add_reagent("sarin", 4)
+
+/datum/chemical_reaction/atrazine
+	name = "atrazine"
+	id = "atrazine"
+	result = "atrazine"
+	required_reagents = list("chlorine" = 1, "hydrogen" = 1, "nitrogen" = 1)
+	result_amount = 3
+	mix_message = "The mixture gives off a harsh odor"
+
+/datum/chemical_reaction/capulettium
+	name = "capulettium"
+	id = "capulettium"
+	result = "capulettium"
+	required_reagents = list("neurotoxin2" = 1, "chlorine" = 1, "hydrogen" = 1)
+	result_amount = 1
+	mix_message = "The smell of death wafts up from the solution."
+
+/datum/chemical_reaction/capulettium_plus
+	name = "capulettium_plus"
+	id = "capulettium_plus"
+	result = "capulettium_plus"
+	required_reagents = list("capulettium" = 1, "ephedrine" = 1, "methamphetamine" = 1)
+	result_amount = 3
+	mix_message = "The solution begins to slosh about violently by itself."
+
+/datum/chemical_reaction/teslium
+	name = "Teslium"
+	id = "teslium"
+	result = "teslium"
+	required_reagents = list("plasma" = 1, "silver" = 1, "blackpowder" = 1)
+	result_amount = 3
+	mix_message = "<span class='danger'>A jet of sparks flies from the mixture as it merges into a flickering slurry.</span>"
+	min_temp = 400
+	mix_sound = null
+
+/datum/chemical_reaction/teslium/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	s.set_up(6, 1, location)
+	s.start()
 
 /datum/chemical_reaction/mutagen
 	name = "Unstable mutagen"
 	id = "mutagen"
-	results = list("mutagen" = 3)
-	required_reagents = list("radium" = 1, "phosphorus" = 1, "chlorine" = 1)
-
-/datum/chemical_reaction/lexorin
-	name = "Lexorin"
-	id = "lexorin"
-	results = list("lexorin" = 3)
-	required_reagents = list("plasma" = 1, "hydrogen" = 1, "nitrogen" = 1)
-
-/datum/chemical_reaction/chloralhydrate
-	name = "Chloral Hydrate"
-	id = "chloralhydrate"
-	results = list("chloralhydrate" = 1)
-	required_reagents = list("ethanol" = 1, "chlorine" = 3, "water" = 1)
-
-/datum/chemical_reaction/mutetoxin //i'll just fit this in here snugly between other unfun chemicals :v
-	name = "Mute toxin"
-	id = "mutetoxin"
-	results = list("mutetoxin" = 2)
-	required_reagents = list("uranium" = 2, "water" = 1, "carbon" = 1)
-
-/datum/chemical_reaction/zombiepowder
-	name = "Zombie Powder"
-	id = "zombiepowder"
-	results = list("zombiepowder" = 2)
-	required_reagents = list("carpotoxin" = 5, "morphine" = 5, "copper" = 5)
-
-/datum/chemical_reaction/mindbreaker
-	name = "Mindbreaker Toxin"
-	id = "mindbreaker"
-	results = list("mindbreaker" = 5)
-	required_reagents = list("silicon" = 1, "hydrogen" = 1, "charcoal" = 1)
-
-/datum/chemical_reaction/heparin
-	name = "Heparin"
-	id = "Heparin"
-	results = list("heparin" = 4)
-	required_reagents = list("formaldehyde" = 1, "sodium" = 1, "chlorine" = 1, "lithium" = 1)
-	mix_message = "<span class='danger'>The mixture thins and loses all color.</span>"
-
-/datum/chemical_reaction/rotatium
-	name = "Rotatium"
-	id = "Rotatium"
-	results = list("rotatium" = 3)
-	required_reagents = list("mindbreaker" = 1, "teslium" = 1, "neurotoxin2" = 1)
-	mix_message = "<span class='danger'>After sparks, fire, and the smell of mindbreaker, the mix is constantly spinning with no stop in sight.</span>"
-	
-/datum/chemical_reaction/anacea
-	name = "Anacea"
-	id = "anacea"
-	results = list("anacea" = 3)
-	required_reagents = list("haloperidol" = 1, "impedrezene" = 1, "radium" = 1)
+	result = "mutagen"
+	required_reagents = list("radium" = 1, "plasma" = 1, "chlorine" = 1)
+	result_amount = 3
+	mix_message = "The substance turns neon green and bubbles unnervingly."

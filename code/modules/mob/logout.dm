@@ -1,37 +1,21 @@
 /mob/Logout()
-	SStgui.on_logout(src)
+	nanomanager.user_logout(src) // this is used to clean up (remove) this user's Nano UIs
 	unset_machine()
 	player_list -= src
-	current_watchlist -= ckey
 	log_access("Logout: [key_name(src)]")
-	if(admin_datums[src.ckey])
-		if (ticker && ticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
-			var/admins_number = admins.len
-			if(admins_number == 0) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-				var/cheesy_message = pick( list(  \
-					"I have no admins online!",\
-					"I'm all alone :(",\
-					"I'm feeling lonely :(",\
-					"I'm so lonely :(",\
-					"Why does nobody love me? :(",\
-					"I want a man :(",\
-					"Where has everyone gone?",\
-					"I need a hug :(",\
-					"Someone come hold me :(",\
-					"I need someone on me :(",\
-					"What happened? Where has everyone gone?",\
-					"Forever alone :("\
-				) )
+	// `holder` is nil'd out by now, so we check the `admin_datums` array directly
+	//Only report this stuff if we are currently playing.
+	if(admin_datums[ckey] && ticker && ticker.current_state == GAME_STATE_PLAYING)
+		var/datum/admins/temp_admin = admin_datums[ckey]
+		// Triggers on people with banhammer power only - no mentors tripping the alarm
+		if(temp_admin.rights & R_BAN)
+			message_admins("Admin logout: [key_name_admin(src)]")
+			var/list/admincounter = staff_countup(R_BAN)
+			if(admincounter[1] == 0) // No active admins
+				send2irc(config.admin_notify_irc, "[key_name(src)] logged out - No active admins, [admincounter[2]] non-admin staff, [admincounter[3]] inactive staff.")
 
-				if(cheesy_message)
-					cheesy_message += " (No admins online)"
-
-
-				send2irc("Server", "[cheesy_message]")
 	..()
 
-	if(isobj(loc))
-		var/obj/Loc=loc
-		Loc.on_log()
+	callHook("mob_logout", list("client" = client, "mob" = src))
 
 	return 1

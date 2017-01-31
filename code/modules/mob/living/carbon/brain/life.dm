@@ -1,60 +1,66 @@
-
-/mob/living/carbon/brain/Life()
-	set invisibility = 0
-	set background = BACKGROUND_ENABLED
-
-	if (notransform)
-		return
-	if(!loc)
-		return
-	. = ..()
-	handle_emp_damage()
-
-/mob/living/carbon/brain/handle_breathing()
-	return
-
 /mob/living/carbon/brain/handle_mutations_and_radiation()
-	return
+	if(radiation)
+		if(radiation > 100)
+			radiation -= 3
+			adjustToxLoss(3)
+			updatehealth()
+			if(!container)
+				to_chat(src, "<span class='danger'>You feel weak.</span>")
+			else
+				to_chat(src, "<span class='danger'>STATUS: CRITICAL AMOUNTS OF RADIATION DETECTED.</span>")
 
-/mob/living/carbon/brain/handle_environment(datum/gas_mixture/environment)
-	return
+		switch(radiation)
+			if(0 to 49)
+				radiation--
+				if(prob(25))
+					adjustToxLoss(1)
+					updatehealth()
 
-/mob/living/carbon/brain/update_stat()
+			if(50 to 74)
+				radiation -= 2
+				adjustToxLoss(1)
+				if(prob(5))
+					radiation -= 5
+					if(!container)
+						to_chat(src, "<span class='danger'>You feel weak.</span>")
+					else
+						to_chat(src, "<span class='danger'>STATUS: DANGEROUS AMOUNTS OF RADIATION DETECTED.</span>")
+				updatehealth()
+
+			if(75 to 100)
+				radiation -= 3
+				adjustToxLoss(3)
+				updatehealth()
+
+/mob/living/carbon/brain/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
 	if(status_flags & GODMODE)
 		return
-	if(health <= config.health_threshold_dead)
-		if(stat != DEAD)
+
+	if(exposed_temperature > bodytemperature)
+		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
+		//adjustFireLoss(2.5*discomfort)
+		//adjustFireLoss(5.0*discomfort)
+		adjustFireLoss(20.0*discomfort)
+
+	else
+		var/discomfort = min( abs(exposed_temperature - bodytemperature)*(exposed_intensity)/2000000, 1.0)
+		//adjustFireLoss(2.5*discomfort)
+		adjustFireLoss(5.0*discomfort)
+
+/mob/living/carbon/brain/handle_regular_status_updates()
+	updatehealth()
+
+	if(stat == DEAD)
+		blinded = 1
+		SetSilence(0)
+	else
+		if(!container && (health < config.health_threshold_dead || ((world.time - timeofhostdeath) > config.revival_brain_life)))
 			death()
-		var/obj/item/organ/brain/BR
-		if(container && container.brain)
-			BR = container.brain
-		else if(istype(loc, /obj/item/organ/brain))
-			BR = loc
-		if(BR)
-			BR.damaged_brain = 1 //beaten to a pulp
+			blinded = 1
+			SetSilence(0)
+			return 1
 
-/* //currently unused feature, since brain outside a mmi is always dead.
-/mob/living/carbon/brain/proc/handle_brain_revival_life()
-	if(stat != DEAD)
-		if(config.revival_brain_life != -1)
-			if( !container && (world.time - timeofhostdeath) > config.revival_brain_life)
-				death()
-*/
+		. = 1
 
-/mob/living/carbon/brain/proc/handle_emp_damage()
-	if(emp_damage)
-		if(stat == DEAD)
-			emp_damage = 0
-		else
-			emp_damage = max(emp_damage-1, 0)
-
-/mob/living/carbon/brain/handle_status_effects()
+/mob/living/carbon/brain/breathe()
 	return
-
-/mob/living/carbon/brain/handle_disabilities()
-	return
-
-/mob/living/carbon/brain/handle_changeling()
-	return
-
-

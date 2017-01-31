@@ -1,33 +1,30 @@
 
 /obj/machinery/juicer
-	name = "juicer"
-	desc = "a centrifugal juicer with two speeds: Juice and Separate."
+	name = "Juicer"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "juicer1"
-	layer = BELOW_OBJ_LAYER
-	density = 1
+	layer = 2.9
+	density = 0
 	anchored = 0
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 100
-	pass_flags = PASSTABLE
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/global/list/allowed_items = list (
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato  = "tomatojuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/carrot  = "carrotjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries = "berryjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes = "grapejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/grapes/green = "grapejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/banana  = "banana",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/potato = "potato",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = "lemonjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = "orangejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = "limejuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = "watermelonjuice",
+	var/global/list/allowed_items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = "watermelonjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = "poisonberryjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = "pumpkinjuice",
-		/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = "blumpkinjuice",
+		/obj/item/weapon/reagent_containers/food/snacks/grown = "water",
+	)
+
+	var/global/list/allowed_tags = list (
+		"tomato"  = "tomatojuice",
+		"carrot"  = "carrotjuice",
+		"berries" = "berryjuice",
+		"banana" = "banana",
+		"potato" = "potato",
+		"lemon" = "lemonjuice",
+		"orange" = "orangejuice",
+		"lime" = "limejuice",
+		"poisonberries" = "poisonberryjuice",
 	)
 
 /obj/machinery/juicer/New()
@@ -39,34 +36,29 @@
 
 
 /obj/machinery/juicer/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
-		return
-	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
+	if(istype(O,/obj/item/weapon/reagent_containers/glass) || \
 		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass))
-		if (beaker)
+		if(beaker)
 			return 1
 		else
 			if(!user.unEquip(O))
-				user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				to_chat(user, "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>")
 				return 0
-			O.loc = src
+			O.forceMove(src)
 			beaker = O
-			src.verbs += /obj/machinery/juicer/verb/detach
+			verbs += /obj/machinery/juicer/verb/detach
 			update_icon()
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return 0
-	if (!is_type_in_list(O, allowed_items))
-		user << "This object contains no fluid or extractable reagents."
+	if(!is_type_in_list(O, allowed_items))
+		to_chat(user, "It doesn't look like that contains any juice.")
 		return 1
 	if(!user.unEquip(O))
-		user << "<span class='warning'>\the [O] is stuck to your hand, you cannot put it in \the [src]!</span>"
+		to_chat(user, "<span class='notice'>\the [O] is stuck to your hand, you cannot put it in \the [src]</span>")
 		return 0
-	O.loc = src
-	src.updateUsrDialog()
+	O.forceMove(src)
+	updateUsrDialog()
 	return 0
-
-/obj/machinery/juicer/attack_paw(mob/user)
-	return src.attack_hand(user)
 
 /obj/machinery/juicer/attack_ai(mob/user)
 	return 0
@@ -81,36 +73,38 @@
 	var/processing_chamber = ""
 	var/beaker_contents = ""
 
-	for (var/i in allowed_items)
-		for (var/obj/item/O in src.contents)
-			if (!istype(O,i))
+	for(var/i in allowed_items)
+		for(var/obj/item/O in contents)
+			if(!istype(O,i))
 				continue
 			processing_chamber+= "some <B>[O]</B><BR>"
 			break
-	if (!processing_chamber)
+	if(!processing_chamber)
 		is_chamber_empty = 1
 		processing_chamber = "Nothing."
-	if (!beaker)
-		beaker_contents = "\The [src] has no container attached."
-	else if (!beaker.reagents.total_volume)
-		beaker_contents = "\The [src] has an empty [beaker] attached."
+	if(!beaker)
+		beaker_contents = "\The [src] has no beaker attached."
+	else if(!beaker.reagents.total_volume)
+		beaker_contents = "\The [src]  has attached an empty beaker."
 		is_beaker_ready = 1
-	else if (beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-		beaker_contents = "\The [src] has a partially filled [beaker] attached."
+	else if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
+		beaker_contents = "\The [src]  has attached a beaker with something."
 		is_beaker_ready = 1
 	else
-		beaker_contents = "\The [src] has a completly filled [beaker] attached!"
+		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
 
 	var/dat = {"
 <b>Processing chamber contains:</b><br>
 [processing_chamber]<br>
 [beaker_contents]<hr>
 "}
-	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
-		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
-	if (beaker)
-		dat += "<A href='?src=\ref[src];action=detach'>Detach the container!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
+	if(is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
+		dat += "<A href='?src=[UID()];action=juice'>Turn on!<BR>"
+	if(beaker)
+		dat += "<A href='?src=[UID()];action=detach'>Detach a beaker!<BR>"
+	var/datum/browser/popup = new(user, "juicer", name, 400, 400)
+	popup.set_content(dat)
+	popup.open(0)
 	onclose(user, "juicer")
 	return
 
@@ -120,70 +114,72 @@
 		return
 	usr.set_machine(src)
 	switch(href_list["action"])
-		if ("juice")
+		if("juice")
 			juice()
 
-		if ("detach")
+		if("detach")
 			detach()
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/juicer/verb/detach()
 	set category = "Object"
-	set name = "Detach container from the juicer"
+	set name = "Detach Beaker from the juicer"
 	set src in oview(1)
-	if(usr.stat || !usr.canmove || usr.restrained())
+	if(usr.stat != 0)
 		return
-	if (!beaker)
+	if(!beaker)
 		return
-	src.verbs -= /obj/machinery/juicer/verb/detach
-	beaker.loc = src.loc
+	verbs -= /obj/machinery/juicer/verb/detach
+	beaker.forceMove(loc)
 	beaker = null
 	update_icon()
 
-/obj/machinery/juicer/proc/get_juice_id(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	for (var/i in allowed_items)
-		if (istype(O, i))
-			return allowed_items[i]
+/obj/machinery/juicer/proc/get_juice_id(var/obj/item/weapon/reagent_containers/food/snacks/O)
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/watermelonslice))
+		return "watermelonjuice"
+	else if(istype(O, /obj.item/weapon/reagent_containers/food/snacks/grown))
+		var/obj/item/weapon/reagent_containers/food/snacks/grown/G = O
+		for(var/i in allowed_tags)
+			if(G.seed.kitchen_tag == allowed_tags[i])
+				return allowed_tags[i]
+		return "water"
 
-/obj/machinery/juicer/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-	if (!istype(O) || !O.seed)
+/obj/machinery/juicer/proc/get_juice_amount(var/obj/item/weapon/reagent_containers/food/snacks/grown/O)
+	if(!istype(O))
 		return 5
-	else if (O.seed.potency == -1)
+	else if(O.potency == -1)
 		return 5
 	else
-		return round(5*sqrt(O.seed.potency))
+		return round(5*sqrt(O.potency))
 
 /obj/machinery/juicer/proc/juice()
 	power_change() //it is a portable machine
 	if(stat & (NOPOWER|BROKEN))
 		return
-	if (!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+	if(!beaker || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		return
-	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-	for (var/obj/item/weapon/reagent_containers/food/snacks/O in src.contents)
+	playsound(loc, 'sound/machines/juicer.ogg', 50, 1)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/O in contents)
 		var/r_id = get_juice_id(O)
 		beaker.reagents.add_reagent(r_id,get_juice_amount(O))
 		qdel(O)
-		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice/New()
-	..()
-	new/obj/machinery/juicer(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-	new/obj/item/weapon/reagent_containers/food/snacks/grown/grapes(src)
-
+/obj/structure/closet/crate/juice
+	New()
+		..()
+		new/obj/machinery/juicer(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
+		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)

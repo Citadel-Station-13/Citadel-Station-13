@@ -1,458 +1,514 @@
 /obj/item/weapon/robot_module
-	name = "Default"
+	name = "robot module"
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_module"
-	w_class = WEIGHT_CLASS_GIGANTIC
+	w_class = 100
 	item_state = "electronic"
 	flags = CONDUCT
 
-	var/list/basic_modules = list() //a list of paths, converted to a list of instances on New()
-	var/list/emag_modules = list() //ditto
-	var/list/ratvar_modules = list() //ditto ditto
-	var/list/modules = list() //holds all the usable modules
-	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
-	var/list/storages = list()
+	var/list/modules = list()
+	var/obj/item/emag = null
+	var/list/subsystems = list()
+	var/list/module_actions = list()
 
-	var/cyborg_base_icon = "robot" //produces the icon for the borg and, if no special_light_key is set, the lights
-	var/special_light_key //if we want specific lights, use this instead of copying lights in the dmi
+	var/module_type = "NoMod" // For icon usage
 
-	var/moduleselect_icon = "nomod"
+	var/list/stacktypes
+	var/channels = list()
 
-	var/can_be_pushed = TRUE
-	var/magpulsing = FALSE
-
-	var/did_feedback = FALSE
-	var/feedback_key
-
-	var/hat_offset = -3
-
-/obj/item/weapon/robot_module/New()
-	..()
-	for(var/i in basic_modules)
-		var/obj/item/I = new i(src)
-		basic_modules += I
-		basic_modules -= i
-	for(var/i in emag_modules)
-		var/obj/item/I = new i(src)
-		emag_modules += I
-		emag_modules -= i
-	for(var/i in ratvar_modules)
-		var/obj/item/I = new i(src)
-		ratvar_modules += I
-		ratvar_modules -= i
-
-/obj/item/weapon/robot_module/Destroy()
-	basic_modules.Cut()
-	emag_modules.Cut()
-	ratvar_modules.Cut()
-	modules.Cut()
-	added_modules.Cut()
-	storages.Cut()
-	return ..()
 
 /obj/item/weapon/robot_module/emp_act(severity)
-	for(var/obj/O in modules)
-		O.emp_act(severity)
+	if(modules)
+		for(var/obj/O in modules)
+			O.emp_act(severity)
+	if(emag)
+		emag.emp_act(severity)
 	..()
 
-/obj/item/weapon/robot_module/proc/get_usable_modules()
-	. = modules.Copy()
 
-/obj/item/weapon/robot_module/proc/get_inactive_modules()
-	. = list()
-	var/mob/living/silicon/robot/R = loc
-	for(var/m in get_usable_modules())
-		if(!(m in R.held_items))
-			. += m
+/obj/item/weapon/robot_module/New()
+	modules += new /obj/item/device/flash/cyborg(src)
+	emag = new /obj/item/toy/sword(src)
+	emag.name = "Placeholder Emag Item"
 
-/obj/item/weapon/robot_module/proc/get_or_create_estorage(var/storage_type)
-	for(var/datum/robot_energy_storage/S in storages)
-		if(istype(S, storage_type))
-			return S
-
-	return new storage_type(src)
-
-/obj/item/weapon/robot_module/proc/add_module(obj/item/I, nonstandard, requires_rebuild)
-	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
-
-		if(is_type_in_list(S, list(/obj/item/stack/sheet/metal, /obj/item/stack/rods, /obj/item/stack/tile/plasteel)))
-			if(S.materials[MAT_METAL])
-				S.cost = S.materials[MAT_METAL] * 0.25
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
-
-		else if(istype(S, /obj/item/stack/sheet/glass))
-			S.cost = 500
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/glass)
-
-		else if(istype(S, /obj/item/stack/sheet/rglass/cyborg))
-			var/obj/item/stack/sheet/rglass/cyborg/G = S
-			G.source = get_or_create_estorage(/datum/robot_energy_storage/metal)
-			G.glasource = get_or_create_estorage(/datum/robot_energy_storage/glass)
-
-		else if(istype(S, /obj/item/stack/medical))
-			S.cost = 250
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/medical)
-
-		else if(istype(S, /obj/item/stack/cable_coil))
-			S.cost = 1
-			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
-
-		if(S && S.source)
-			S.materials = list()
-			S.is_cyborg = 1
-
-	if(istype(I, /obj/item/weapon/restraints/handcuffs/cable))
-		var/obj/item/weapon/restraints/handcuffs/cable/C = I
-		C.wirestorage = get_or_create_estorage(/datum/robot_energy_storage/wire)
-
-	if(I.loc != src)
-		I.forceMove(src)
-	modules += I
-	I.flags |= NODROP
-	I.mouse_opacity = 2
-	if(nonstandard)
-		added_modules += I
-	if(requires_rebuild)
-		rebuild_modules()
-	return I
-
-/obj/item/weapon/robot_module/proc/remove_module(obj/item/I, delete_after)
-	basic_modules -= I
-	modules -= I
-	emag_modules -= I
-	ratvar_modules -= I
-	added_modules -= I
-	rebuild_modules()
-	if(delete_after)
-		qdel(I)
-
-/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	for(var/datum/robot_energy_storage/st in storages)
-		st.energy = min(st.max_energy, st.energy + coeff * st.recharge_rate)
-
-	for(var/obj/item/I in get_usable_modules())
-		if(istype(I, /obj/item/device/assembly/flash))
-			var/obj/item/device/assembly/flash/F = I
-			F.times_used = 0
-			F.crit_fail = 0
-			F.update_icon()
-		else if(istype(I, /obj/item/weapon/melee/baton))
-			var/obj/item/weapon/melee/baton/B = I
-			if(B.bcell)
-				B.bcell.charge = B.bcell.maxcharge
-		else if(istype(I, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/EG = I
-			if(!EG.chambered)
-				EG.recharge_newshot() //try to reload a new shot.
-
-	R.toner = R.tonermax
-
-/obj/item/weapon/robot_module/proc/rebuild_modules() //builds the usable module list from the modules we have
-	var/mob/living/silicon/robot/R = loc
-	var/held_modules = R.held_items.Copy()
-	R.uneq_all()
-	modules = list()
-	for(var/obj/item/I in basic_modules)
-		add_module(I, FALSE, FALSE)
-	if(R.emagged)
-		for(var/obj/item/I in emag_modules)
-			add_module(I, FALSE, FALSE)
-	if(is_servant_of_ratvar(R))
-		for(var/obj/item/I in ratvar_modules)
-			add_module(I, FALSE, FALSE)
-	for(var/obj/item/I in added_modules)
-		add_module(I, FALSE, FALSE)
-	for(var/i in held_modules)
-		if(i)
-			R.activate_module(i)
-	if(R.hud_used)
-		R.hud_used.update_robot_modules_display()
-
-/obj/item/weapon/robot_module/proc/transform_to(new_module_type)
-	var/mob/living/silicon/robot/R = loc
-	var/obj/item/weapon/robot_module/RM = new new_module_type(R)
-	if(!RM.be_transformed_to(src))
-		qdel(RM)
-		return
-	R.module = RM
-	R.update_module_innate()
-	RM.rebuild_modules()
-	addtimer(RM, "do_transform_animation", 0)
-	qdel(src)
-	return RM
-
-/obj/item/weapon/robot_module/proc/be_transformed_to(obj/item/weapon/robot_module/old_module)
-	for(var/i in old_module.added_modules)
-		added_modules += i
-		old_module.added_modules -= i
-	did_feedback = old_module.did_feedback
-	return TRUE
-
-/obj/item/weapon/robot_module/proc/do_transform_animation()
-	var/mob/living/silicon/robot/R = loc
-	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = PoolOrNew(/obj/effect/overlay/temp/decoy/fading/fivesecond, list(R.loc, R))
-	ANM.layer = R.layer - 0.01
-	PoolOrNew(/obj/effect/overlay/temp/small_smoke, R.loc)
-	if(R.hat)
-		R.hat.forceMove(get_turf(R))
-		R.hat = null
-	R.update_headlamp()
-	R.alpha = 0
-	animate(R, alpha = 255, time = 50)
-	var/prev_lockcharge = R.lockcharge
-	R.SetLockdown(1)
-	R.anchored = TRUE
-	sleep(2)
-	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
-		sleep(12)
-	if(!prev_lockcharge)
-		R.SetLockdown(0)
-	R.anchored = FALSE
-	R.notify_ai(2)
-	if(R.hud_used)
-		R.hud_used.update_robot_modules_display()
-	if(feedback_key && !did_feedback)
-		feedback_inc(feedback_key, 1)
-
-/obj/item/weapon/robot_module/standard
-	name = "Standard"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/epi, /obj/item/device/healthanalyzer, \
-	/obj/item/weapon/weldingtool/largetank/cyborg, /obj/item/weapon/wrench/cyborg, /obj/item/weapon/crowbar/cyborg, \
-	/obj/item/stack/sheet/metal/cyborg, /obj/item/weapon/extinguisher, /obj/item/weapon/pickaxe, \
-	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, \
-	/obj/item/weapon/soap/nanotrasen, /obj/item/borg/cyborghug)
-	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg, /obj/item/clockwork/ratvarian_spear)
-	moduleselect_icon = "standard"
-	feedback_key = "cyborg_standard"
-	hat_offset = -3
-
-/obj/item/weapon/robot_module/medical
-	name = "Medical"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/device/healthanalyzer, /obj/item/weapon/reagent_containers/borghypo, \
-	/obj/item/weapon/reagent_containers/glass/beaker/large, /obj/item/weapon/reagent_containers/dropper, \
-	/obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, \
-	/obj/item/weapon/hemostat, /obj/item/weapon/cautery, /obj/item/weapon/surgicaldrill, /obj/item/weapon/scalpel, \
-	/obj/item/weapon/circular_saw, /obj/item/weapon/extinguisher/mini, /obj/item/roller/robo, /obj/item/borg/cyborghug/medical, \
-	/obj/item/stack/medical/gauze/cyborg, /obj/item/borg/lollipop)
-	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical)
-	cyborg_base_icon = "medical"
-	moduleselect_icon = "medical"
-	feedback_key = "cyborg_medical"
-	can_be_pushed = FALSE
-	hat_offset = 3
-
-/obj/item/weapon/robot_module/engineering
-	name = "Engineering"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/borg/sight/meson, /obj/item/weapon/rcd/borg, /obj/item/weapon/pipe_dispenser, \
-	/obj/item/weapon/extinguisher, /obj/item/weapon/weldingtool/largetank/cyborg, /obj/item/weapon/screwdriver/cyborg, \
-	/obj/item/weapon/wrench/cyborg, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/wirecutters/cyborg, \
-	/obj/item/device/multitool/cyborg, /obj/item/device/t_scanner, /obj/item/device/analyzer, \
-	/obj/item/areaeditor/blueprints/cyborg, /obj/item/stack/sheet/metal/cyborg, /obj/item/stack/sheet/glass/cyborg, \
-	/obj/item/stack/sheet/rglass/cyborg, /obj/item/stack/rods/cyborg, /obj/item/stack/tile/plasteel/cyborg, /obj/item/stack/cable_coil/cyborg)
-	emag_modules = list(/obj/item/borg/stun)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/engineer, /obj/item/clockwork/clockwork_proselytizer/cyborg)
-	cyborg_base_icon = "engineer"
-	moduleselect_icon = "engineer"
-	feedback_key = "cyborg_engineering"
-	magpulsing = TRUE
-	hat_offset = INFINITY // No hats
-
-/obj/item/weapon/robot_module/security
-	name = "Security"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg, /obj/item/weapon/melee/baton/loaded, \
-	/obj/item/weapon/gun/energy/disabler/cyborg, /obj/item/clothing/mask/gas/sechailer/cyborg)
-	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear)
-	cyborg_base_icon = "sec"
-	moduleselect_icon = "security"
-	feedback_key = "cyborg_security"
-	can_be_pushed = FALSE
-	hat_offset = 3
-
-/obj/item/weapon/robot_module/security/do_transform_animation()
-	..()
-	loc << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-
-/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.power_supply.charge < T.power_supply.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.power_supply.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
-
-/obj/item/weapon/robot_module/peacekeeper
-	name = "Peacekeeper"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/cookiesynth, /obj/item/device/harmalarm, /obj/item/weapon/reagent_containers/borghypo/peace, \
-	/obj/item/weapon/holosign_creator/cyborg, /obj/item/borg/cyborghug/peacekeeper, /obj/item/weapon/extinguisher)
-	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/peacekeeper)
-	cyborg_base_icon = "peace"
-	moduleselect_icon = "standard"
-	feedback_key = "cyborg_peacekeeper"
-	can_be_pushed = FALSE
-	hat_offset = -2
-
-/obj/item/weapon/robot_module/peacekeeper/do_transform_animation()
-	..()
-	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
-
-/obj/item/weapon/robot_module/janitor
-	name = "Janitor"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/soap/nanotrasen, /obj/item/weapon/storage/bag/trash/cyborg, /obj/item/weapon/mop/cyborg, \
-	/obj/item/device/lightreplacer/cyborg, /obj/item/weapon/holosign_creator, /obj/item/weapon/reagent_containers/spray/cyborg_drying)
-	emag_modules = list(/obj/item/weapon/reagent_containers/spray/cyborg_lube)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/janitor, /obj/item/clockwork/clockwork_proselytizer/cyborg)
-	cyborg_base_icon = "janitor"
-	moduleselect_icon = "janitor"
-	feedback_key = "cyborg_janitor"
-	hat_offset = -5
-
-/obj/item/weapon/reagent_containers/spray/cyborg_drying
-	name = "drying agent spray"
-	color = "#A000A0"
-	list_reagents = list("drying_agent" = 250)
-
-/obj/item/weapon/reagent_containers/spray/cyborg_lube
-	name = "lube spray"
-	list_reagents = list("lube" = 250)
-
-/obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
-	if(LR)
-		for(var/i in 1 to coeff)
-			LR.Charge(R)
-
-	var/obj/item/weapon/reagent_containers/spray/cyborg_drying/CD = locate(/obj/item/weapon/reagent_containers/spray/cyborg_drying) in basic_modules
-	if(CD)
-		CD.reagents.add_reagent("drying_agent", 5 * coeff)
-
-	var/obj/item/weapon/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/weapon/reagent_containers/spray/cyborg_lube) in emag_modules
-	if(CL)
-		CL.reagents.add_reagent("lube", 2 * coeff)
-
-/obj/item/weapon/robot_module/butler
-	name = "Service"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass, /obj/item/weapon/reagent_containers/food/condiment/enzyme, \
-	/obj/item/weapon/pen, /obj/item/toy/crayon/spraycan/borg, /obj/item/weapon/hand_labeler/borg, /obj/item/weapon/razor, \
-	/obj/item/device/instrument/violin, /obj/item/device/instrument/guitar, /obj/item/weapon/rsf/cyborg, /obj/item/weapon/reagent_containers/dropper, \
-	/obj/item/weapon/lighter, /obj/item/weapon/storage/bag/tray, /obj/item/weapon/reagent_containers/borghypo/borgshaker, /obj/item/borg/lollipop)
-	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/borgshaker/hacked)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/service, /obj/item/borg/sight/xray/truesight_lens)
-	moduleselect_icon = "service"
-	special_light_key = "service"
-	feedback_key = "cyborg_service"
-	hat_offset = 0
-
-/obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/weapon/reagent_containers/O = locate(/obj/item/weapon/reagent_containers/food/condiment/enzyme) in basic_modules
-	if(O)
-		O.reagents.add_reagent("enzyme", 2 * coeff)
-
-/obj/item/weapon/robot_module/butler/be_transformed_to(obj/item/weapon/robot_module/old_module)
-	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Waitress", "Butler", "Tophat", "Kent", "Bro")
-	if(!borg_icon)
-		return FALSE
-	switch(borg_icon)
-		if("Waitress")
-			cyborg_base_icon = "service_f"
-		if("Butler")
-			cyborg_base_icon = "service_m"
-		if("Bro")
-			cyborg_base_icon = "brobot"
-		if("Kent")
-			cyborg_base_icon = "kent"
-			special_light_key = "medical"
-			hat_offset = 3
-		if("Tophat")
-			cyborg_base_icon = "tophat"
-			special_light_key = null
-			hat_offset = INFINITY //He is already wearing a hat
+/obj/item/weapon/robot_module/Destroy()
+	for(var/module in modules)
+		qdel(module)
+	modules.Cut()
+	qdel(emag)
+	emag = null
 	return ..()
 
+/obj/item/weapon/robot_module/proc/fix_modules()
+	for(var/obj/item/I in modules)
+		I.flags |= NODROP
+		I.mouse_opacity = 2
+	if(emag)
+		emag.flags |= NODROP
+		emag.mouse_opacity = 2
+
+/obj/item/weapon/robot_module/proc/respawn_consumable(mob/living/silicon/robot/R)
+	if(!stacktypes || !stacktypes.len)
+		return
+
+	var/stack_respawned = 0
+	for(var/T in stacktypes)
+		var/O = locate(T) in modules
+		var/obj/item/stack/S = O
+
+		if(!S)
+			modules -= null
+			S = new T(src)
+			modules += S
+			S.amount = 1
+			stack_respawned = 1
+
+		if(S && S.amount < stacktypes[T])
+			S.amount++
+	if(stack_respawned && istype(R) && R.hud_used)
+		R.hud_used.update_robot_modules_display()
+
+/obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
+	var/list/temp_list = modules
+	modules = list()
+	for(var/obj/O in temp_list)
+		if(O)
+			modules += O
+
+/obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
+	//full set of languages
+	R.add_language("Galactic Common", 1)
+	R.add_language("Sol Common", 1)
+	R.add_language("Tradeband", 1)
+	R.add_language("Gutter", 0)
+	R.add_language("Sinta'unathi", 0)
+	R.add_language("Siik'tajr", 0)
+	R.add_language("Canilunzt", 0)
+	R.add_language("Skrellian", 0)
+	R.add_language("Vox-pidgin", 0)
+	R.add_language("Rootspeak", 0)
+	R.add_language("Trinary", 1)
+	R.add_language("Chittin", 0)
+	R.add_language("Bubblish", 0)
+	R.add_language("Orluum", 0)
+	R.add_language("Clownish",0)
+
+/obj/item/weapon/robot_module/proc/add_subsystems_and_actions(mob/living/silicon/robot/R)
+	R.verbs |= subsystems
+	for(var/A in module_actions)
+		var/datum/action/act = new A()
+		act.Grant(R)
+		R.module_actions += act
+
+/obj/item/weapon/robot_module/proc/remove_subsystems_and_actions(mob/living/silicon/robot/R)
+	R.verbs -= subsystems
+	for(var/datum/action/A in R.module_actions)
+		A.Remove(R)
+		qdel(A)
+	R.module_actions.Cut()
+
+/obj/item/weapon/robot_module/standard
+	name = "standard robot module"
+	module_type = "Standard"
+
+/obj/item/weapon/robot_module/standard/New()
+	..()
+	modules += new /obj/item/weapon/melee/baton/loaded(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	emag = new /obj/item/weapon/melee/energy/sword/cyborg(src)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/medical
+	name = "medical robot module"
+	module_type = "Medical"
+	subsystems = list(/mob/living/silicon/proc/subsystem_crew_monitor)
+	stacktypes = list(
+		/obj/item/stack/medical/bruise_pack/advanced = 5,
+		/obj/item/stack/medical/ointment/advanced = 5,
+		/obj/item/stack/medical/splint = 5,
+		/obj/item/stack/nanopaste = 5
+		)
+
+/obj/item/weapon/robot_module/medical/New()
+	..()
+	modules += new /obj/item/device/healthanalyzer/advanced(src)
+	modules += new /obj/item/device/reagent_scanner/adv(src)
+	modules += new /obj/item/weapon/borg_defib(src)
+	modules += new /obj/item/roller_holder(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	modules += new /obj/item/weapon/reagent_containers/dropper(src)
+	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/stack/medical/bruise_pack/advanced(src)
+	modules += new /obj/item/stack/medical/ointment/advanced(src)
+	modules += new /obj/item/stack/medical/splint(src)
+	modules += new /obj/item/stack/nanopaste(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/bonegel(src)
+	modules += new /obj/item/weapon/FixOVein(src)
+	modules += new /obj/item/weapon/bonesetter(src)
+	modules += new /obj/item/weapon/circular_saw(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+	emag.reagents.add_reagent("facid", 250)
+	emag.name = "Polyacid spray"
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/medical/respawn_consumable(mob/living/silicon/robot/R)
+	if(emag)
+		var/obj/item/weapon/reagent_containers/spray/PS = emag
+		PS.reagents.add_reagent("facid", 2)
+	..()
+
+/obj/item/weapon/robot_module/engineering
+	name = "engineering robot module"
+	module_type = "Engineer"
+	subsystems = list(/mob/living/silicon/proc/subsystem_power_monitor)
+	module_actions = list(
+		/datum/action/innate/robot_sight/meson,
+	)
+
+	stacktypes = list(
+		/obj/item/stack/sheet/metal/cyborg = 50,
+		/obj/item/stack/sheet/glass/cyborg = 50,
+		/obj/item/stack/sheet/rglass/cyborg = 50,
+		/obj/item/stack/cable_coil/cyborg = 50,
+		/obj/item/stack/rods/cyborg = 60,
+		/obj/item/stack/tile/plasteel = 20
+		)
+
+/obj/item/weapon/robot_module/engineering/New()
+	..()
+	modules += new /obj/item/weapon/rcd/borg(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/device/t_scanner(src)
+	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/taperoll/engineering(src)
+	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/matter_decompiler(src)
+	modules += new /obj/item/device/floor_painter(src)
+
+	emag = new /obj/item/borg/stun(src)
+
+	for(var/G in stacktypes) //Attempt to unify Engi-Borg material stacks into fewer lines. See Line 492 for example. Variables changed out of paranoia.
+		var/obj/item/stack/sheet/M = new G(src)
+		M.amount = stacktypes[G]
+		modules += M
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/security
+	name = "security robot module"
+	module_type = "Security"
+	subsystems = list(/mob/living/silicon/proc/subsystem_crew_monitor)
+
+/obj/item/weapon/robot_module/security/New()
+	..()
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+	modules += new /obj/item/weapon/melee/baton/loaded/robot(src)
+	modules += new /obj/item/weapon/gun/energy/disabler/cyborg(src)
+	modules += new /obj/item/taperoll/police(src)
+	modules += new /obj/item/clothing/mask/gas/sechailer/cyborg(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/janitor
+	name = "janitorial robot module"
+	module_type = "Janitor"
+
+/obj/item/weapon/robot_module/janitor/New()
+	..()
+	modules += new /obj/item/weapon/soap/nanotrasen(src)
+	modules += new /obj/item/weapon/storage/bag/trash/cyborg(src)
+	modules += new /obj/item/weapon/mop/advanced/cyborg(src)
+	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/weapon/holosign_creator(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
+
+	emag.reagents.add_reagent("lube", 250)
+	emag.name = "Lube spray"
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/butler
+	name = "service robot module"
+	module_type = "Service"
+
+/obj/item/weapon/robot_module/butler/New()
+	..()
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
+	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	modules += new /obj/item/weapon/pen(src)
+	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/device/violin(src)
+	modules += new /obj/item/device/guitar(src)
+
+	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
+	M.matter = 30
+	modules += M
+
+	modules += new /obj/item/weapon/reagent_containers/dropper/cyborg(src)
+	modules += new /obj/item/weapon/lighter/zippo(src)
+	modules += new /obj/item/weapon/storage/bag/tray/cyborg(src)
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+	emag = new /obj/item/weapon/reagent_containers/food/drinks/cans/beer(src)
+
+	var/datum/reagents/R = new/datum/reagents(50)
+	emag.reagents = R
+	R.my_atom = emag
+	R.add_reagent("beer2", 50)
+	emag.name = "Mickey Finn's Special Brew"
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/butler/respawn_consumable(var/mob/living/silicon/robot/R)
+	var/obj/item/weapon/reagent_containers/food/condiment/enzyme/E = locate() in modules
+	E.reagents.add_reagent("enzyme", 2)
+	if(emag)
+		var/obj/item/weapon/reagent_containers/food/drinks/cans/beer/B = emag
+		B.reagents.add_reagent("beer2", 2)
+	..()
+
+/obj/item/weapon/robot_module/butler/add_languages(var/mob/living/silicon/robot/R)
+	//full set of languages
+	R.add_language("Galactic Common", 1)
+	R.add_language("Sol Common", 1)
+	R.add_language("Tradeband", 1)
+	R.add_language("Gutter", 1)
+	R.add_language("Sinta'unathi", 1)
+	R.add_language("Siik'tajr", 1)
+	R.add_language("Canilunzt", 1)
+	R.add_language("Skrellian", 1)
+	R.add_language("Vox-pidgin", 1)
+	R.add_language("Rootspeak", 1)
+	R.add_language("Trinary", 1)
+	R.add_language("Chittin", 1)
+	R.add_language("Bubblish", 1)
+	R.add_language("Clownish",1)
+
+
 /obj/item/weapon/robot_module/miner
-	name = "Miner"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/borg/sight/meson, /obj/item/weapon/storage/bag/ore/cyborg, /obj/item/weapon/pickaxe/drill/cyborg, /obj/item/weapon/shovel, \
-	/obj/item/weapon/crowbar/cyborg, /obj/item/weapon/weldingtool/mini, /obj/item/weapon/extinguisher/mini, /obj/item/weapon/storage/bag/sheetsnatcher/borg, \
-	/obj/item/device/t_scanner/adv_mining_scanner, /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg, /obj/item/device/gps/cyborg)
-	emag_modules = list(/obj/item/borg/stun)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/miner, /obj/item/borg/sight/xray/truesight_lens)
-	cyborg_base_icon = "miner"
-	moduleselect_icon = "miner"
-	feedback_key = "cyborg_miner"
-	hat_offset = 0
+	name = "miner robot module"
+	module_type = "Miner"
+	module_actions = list(
+		/datum/action/innate/robot_sight/meson,
+	)
+
+/obj/item/weapon/robot_module/miner/New()
+	..()
+	modules += new /obj/item/weapon/storage/bag/ore/cyborg(src)
+	modules += new /obj/item/weapon/pickaxe/drill/cyborg(src)
+	modules += new /obj/item/weapon/shovel(src)
+	modules += new /obj/item/weapon/weldingtool/mini(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+	modules += new /obj/item/device/t_scanner/adv_mining_scanner/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/cyborg(src)
+	modules += new /obj/item/device/gps/cyborg(src)
+	emag = new /obj/item/borg/stun(src)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/deathsquad
+	name = "NT advanced combat module"
+	module_type = "Malf"
+	module_actions = list(
+		/datum/action/innate/robot_sight/thermal,
+	)
+
+/obj/item/weapon/robot_module/deathsquad/New()
+	..()
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/pulse/cyborg(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	emag = null
+
+	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate
-	name = "Syndicate Assault"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/melee/energy/sword/cyborg, /obj/item/weapon/gun/energy/printer, \
-	/obj/item/weapon/gun/ballistic/revolver/grenadelauncher/cyborg, /obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, \
-	/obj/item/weapon/pinpointer/syndicate/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security, /obj/item/clockwork/ratvarian_spear)
-	cyborg_base_icon = "synd_sec"
-	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
-	hat_offset = 3
+	name = "syndicate assault robot module"
+	module_type = "Malf" // cuz it looks cool
+
+/obj/item/weapon/robot_module/syndicate/New()
+	..()
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/printer(src)
+	modules += new /obj/item/weapon/gun/projectile/revolver/grenadelauncher/multi/cyborg(src)
+	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/pinpointer/operative(src)
+	emag = null
+
+	fix_modules()
 
 /obj/item/weapon/robot_module/syndicate_medical
-	name = "Syndicate Medical"
-	basic_modules = list(/obj/item/device/assembly/flash/cyborg, /obj/item/weapon/reagent_containers/borghypo/syndicate, /obj/item/weapon/twohanded/shockpaddles/syndicate, \
-	/obj/item/device/healthanalyzer, /obj/item/weapon/surgical_drapes, /obj/item/weapon/retractor, /obj/item/weapon/hemostat, \
-	/obj/item/weapon/cautery, /obj/item/weapon/scalpel, /obj/item/weapon/melee/energy/sword/cyborg/saw, /obj/item/roller/robo, \
-	/obj/item/weapon/card/emag, /obj/item/weapon/crowbar/cyborg, /obj/item/weapon/pinpointer/syndicate/cyborg, /obj/item/stack/medical/gauze/cyborg, /obj/item/weapon/gun/medbeam)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical, /obj/item/clockwork/ratvarian_spear)
-	cyborg_base_icon = "synd_medical"
-	moduleselect_icon = "malf"
-	can_be_pushed = FALSE
-	hat_offset = 3
+	name = "syndicate medical robot module"
+	module_type = "Malf"
+	stacktypes = list(
+		/obj/item/stack/medical/bruise_pack/advanced = 25,
+		/obj/item/stack/medical/ointment/advanced = 25,
+		/obj/item/stack/medical/splint = 25,
+		/obj/item/stack/nanopaste = 25
+	)
 
-/datum/robot_energy_storage
-	var/name = "Generic energy storage"
-	var/max_energy = 30000
-	var/recharge_rate = 1000
-	var/energy
+/obj/item/weapon/robot_module/syndicate_medical/New()
+	..()
+	modules += new /obj/item/device/healthanalyzer/advanced(src)
+	modules += new /obj/item/device/reagent_scanner/adv(src)
+	modules += new /obj/item/weapon/borg_defib(src)
+	modules += new /obj/item/roller_holder(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/syndicate(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/stack/medical/bruise_pack/advanced(src)
+	modules += new /obj/item/stack/medical/ointment/advanced(src)
+	modules += new /obj/item/stack/medical/splint(src)
+	modules += new /obj/item/stack/nanopaste(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/bonegel(src)
+	modules += new /obj/item/weapon/FixOVein(src)
+	modules += new /obj/item/weapon/bonesetter(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg/saw(src) //Energy saw -- primary weapon
+	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/pinpointer/operative(src)
+	emag = null
 
-/datum/robot_energy_storage/New(var/obj/item/weapon/robot_module/R = null)
-	energy = max_energy
-	if(R)
-		R.storages |= src
-	return
+	fix_modules()
 
-/datum/robot_energy_storage/proc/use_charge(amount)
-	if (energy >= amount)
-		energy -= amount
-		if (energy == 0)
-			return 1
-		return 2
-	else
+/obj/item/weapon/robot_module/combat
+	name = "combat robot module"
+	module_type = "Malf"
+	module_actions = list(
+		/datum/action/innate/robot_sight/thermal,
+	)
+
+/obj/item/weapon/robot_module/combat/New()
+	..()
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/gun/cyborg(src)
+	modules += new /obj/item/weapon/pickaxe/drill/jackhammer(src)
+	modules += new /obj/item/borg/combat/shield(src)
+	modules += new /obj/item/borg/combat/mobility(src)
+	modules += new /obj/item/weapon/wrench(src)
+	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/peacekeeper
+	name = "peacekeeper robot module"
+	module_type = "Malf"
+
+/obj/item/weapon/robot_module/peacekeeper/New()
+	..()
+	modules += new /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/gun/cyborg(src)
+	modules += new /obj/item/weapon/pickaxe/drill/jackhammer(src)
+	modules += new /obj/item/borg/combat/shield(src)
+	modules += new /obj/item/borg/combat/mobility(src)
+	modules += new /obj/item/weapon/wrench(src)
+	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/alien/hunter
+	name = "alien hunter module"
+	module_type = "Standard"
+	module_actions = list(
+		/datum/action/innate/robot_sight/thermal/alien,
+	)
+
+/obj/item/weapon/robot_module/alien/hunter/New()
+	modules += new /obj/item/weapon/melee/energy/alien/claws(src)
+	modules += new /obj/item/device/flash/cyborg/alien(src)
+	var/obj/item/weapon/reagent_containers/spray/alien/stun/S = new /obj/item/weapon/reagent_containers/spray/alien/stun(src)
+	S.reagents.add_reagent("ether",250) //nerfed to sleeptoxin to make it less instant drop.
+	modules += S
+	var/obj/item/weapon/reagent_containers/spray/alien/smoke/A = new /obj/item/weapon/reagent_containers/spray/alien/smoke(src)
+	S.reagents.add_reagent("water",50) //Water is used as a dummy reagent for the smoke bombs. More of an ammo counter.
+	modules += A
+	emag = new /obj/item/weapon/reagent_containers/spray/alien/acid(src)
+	emag.reagents.add_reagent("facid", 125)
+	emag.reagents.add_reagent("sacid", 125)
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/alien/hunter/add_languages(var/mob/living/silicon/robot/R)
+	..()
+	R.add_language("xenocommon", 1)
+
+/obj/item/weapon/robot_module/drone
+	name = "drone module"
+	module_type = "Engineer"
+	stacktypes = list(
+		/obj/item/stack/sheet/wood = 10,
+		/obj/item/stack/sheet/rglass/cyborg = 50,
+		/obj/item/stack/tile/wood = 20,
+		/obj/item/stack/rods/cyborg = 60,
+		/obj/item/stack/tile/plasteel = 20,
+		/obj/item/stack/sheet/metal/cyborg = 50,
+		/obj/item/stack/sheet/glass/cyborg = 50,
+		/obj/item/stack/cable_coil/cyborg = 30
+		)
+
+/obj/item/weapon/robot_module/drone/New()
+	modules += new /obj/item/weapon/weldingtool/largetank/cyborg(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/matter_decompiler(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
+	modules += new /obj/item/weapon/soap(src)
+	modules += new /obj/item/device/t_scanner(src)
+
+	emag = new /obj/item/weapon/pickaxe/drill/cyborg/diamond(src)
+
+	for(var/T in stacktypes)
+		var/obj/item/stack/sheet/W = new T(src)
+		W.amount = stacktypes[T]
+		modules += W
+
+	fix_modules()
+
+/obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
+	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in modules
+	C.reagents.add_reagent("cleaner", 3)
+
+	var/obj/item/device/lightreplacer/LR = locate() in modules
+	LR.Charge(R)
+
+	..()
+
+//checks whether this item is a module of the robot it is located in.
+/obj/item/proc/is_robot_module()
+	if(!istype(loc, /mob/living/silicon/robot))
 		return 0
 
-/datum/robot_energy_storage/proc/add_charge(amount)
-	energy = min(energy + amount, max_energy)
+	var/mob/living/silicon/robot/R = loc
 
-/datum/robot_energy_storage/metal
-	name = "Metal Synthesizer"
-
-/datum/robot_energy_storage/glass
-	name = "Glass Synthesizer"
-
-/datum/robot_energy_storage/wire
-	max_energy = 50
-	recharge_rate = 2
-	name = "Wire Synthesizer"
-
-/datum/robot_energy_storage/medical
-	max_energy = 2500
-	recharge_rate = 250
-	name = "Medical Synthesizer"
+	return (src in R.module.modules)

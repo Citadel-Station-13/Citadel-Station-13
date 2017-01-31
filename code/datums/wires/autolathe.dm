@@ -1,48 +1,58 @@
 /datum/wires/autolathe
+
 	holder_type = /obj/machinery/autolathe
-	proper_name = "Autolathe"
+	wire_count = 10
 
-/datum/wires/autolathe/New(atom/holder)
-	wires = list(
-		WIRE_HACK, WIRE_DISABLE,
-		WIRE_SHOCK, WIRE_ZAP
-	)
-	add_duds(6)
-	..()
+var/const/AUTOLATHE_HACK_WIRE = 1
+var/const/AUTOLATHE_SHOCK_WIRE = 2
+var/const/AUTOLATHE_DISABLE_WIRE = 4
 
-/datum/wires/autolathe/interactable(mob/user)
+/datum/wires/autolathe/GetInteractWindow()
+	var/obj/machinery/autolathe/A = holder
+	. += ..()
+	. += text("<BR>The red light is [A.disabled ? "off" : "on"].<BR>The green light is [A.shocked ? "off" : "on"].<BR>The blue light is [A.hacked ? "off" : "on"].<BR>")
+
+/datum/wires/autolathe/CanUse()
 	var/obj/machinery/autolathe/A = holder
 	if(A.panel_open)
-		return TRUE
+		return 1
+	return 0
 
-/datum/wires/autolathe/get_status()
-	var/obj/machinery/autolathe/A = holder
-	var/list/status = list()
-	status += "The red light is [A.disabled ? "on" : "off"]."
-	status += "The blue light is [A.hacked ? "on" : "off"]."
-	return status
+/datum/wires/autolathe/Interact(var/mob/living/user)
+	if(CanUse(user))
+		var/obj/machinery/autolathe/V = holder
+		V.attack_hand(user)
 
-/datum/wires/autolathe/on_pulse(wire)
+/datum/wires/autolathe/UpdateCut(index, mended)
 	var/obj/machinery/autolathe/A = holder
-	switch(wire)
-		if(WIRE_HACK)
+	switch(index)
+		if(AUTOLATHE_HACK_WIRE)
+			A.adjust_hacked(!mended)
+		if(AUTOLATHE_SHOCK_WIRE)
+			A.shocked = !mended
+		if(AUTOLATHE_DISABLE_WIRE)
+			A.disabled = !mended
+
+/datum/wires/autolathe/UpdatePulsed(index)
+	if(IsIndexCut(index))
+		return
+	var/obj/machinery/autolathe/A = holder
+	switch(index)
+		if(AUTOLATHE_HACK_WIRE)
 			A.adjust_hacked(!A.hacked)
-			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
-		if(WIRE_SHOCK)
+			spawn(50)
+				if(A && !IsIndexCut(index))
+					A.adjust_hacked(0)
+					Interact(usr)
+		if(AUTOLATHE_SHOCK_WIRE)
 			A.shocked = !A.shocked
-			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
-		if(WIRE_DISABLE)
+			spawn(50)
+				if(A && !IsIndexCut(index))
+					A.shocked = 0
+					Interact(usr)
+		if(AUTOLATHE_DISABLE_WIRE)
 			A.disabled = !A.disabled
-			addtimer(A, "reset", 60, TIMER_NORMAL, wire)
-
-/datum/wires/autolathe/on_cut(wire, mend)
-	var/obj/machinery/autolathe/A = holder
-	switch(wire)
-		if(WIRE_HACK)
-			A.adjust_hacked(!mend)
-		if(WIRE_HACK)
-			A.shocked = !mend
-		if(WIRE_DISABLE)
-			A.disabled = !mend
-		if(WIRE_ZAP)
-			A.shock(usr, 50)
+			spawn(50)
+				if(A && !IsIndexCut(index))
+					A.disabled = 0
+					Interact(usr)

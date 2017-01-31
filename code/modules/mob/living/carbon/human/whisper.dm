@@ -1,84 +1,26 @@
+//Lallander was here
 /mob/living/carbon/human/whisper(message as text)
-	if(!IsVocal())
-		return
-	if(!message)
-		return
+	var/alt_name = ""
 
-	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
-		return
+	if(name != GetVoice())
+		alt_name = "(as [get_id_name("Unknown")])"
 
-	if(stat == DEAD)
-		return
+	message = trim_strip_html_properly(message) //bit of duplicate code, acceptable because the workaround would be annoying
 
+	//parse the language code and consume it
+	var/datum/language/speaking = parse_language(message)
+	if(speaking)
+		message = copytext(message, 2 + length(speaking.key))
+	else
+		speaking = get_default_language()
 
-	message = trim(html_encode(message))
-	if(!can_speak(message))
-		return
+	// This is broadcast to all mobs with the language,
+	// irrespective of distance or anything else.
+	if(speaking && (speaking.flags & HIVEMIND))
+		speaking.broadcast(src,trim(message))
+		return 1
 
-	message = "[message]"
-	log_whisper("[src.name]/[src.key] : [message]")
+	message = trim_left(message)
+	message = handle_autohiss(message, speaking)
 
-	if (src.client)
-		if (src.client.prefs.muted & MUTE_IC)
-			src << "<span class='danger'>You cannot whisper (muted).</span>"
-			return
-
-	log_whisper("[src.name]/[src.key] : [message]")
-
-	var/alt_name = get_alt_name()
-
-	var/whispers = "whispers"
-	var/critical = InCritical()
-
-	// We are unconscious but not in critical, so don't allow them to whisper.
-	if(stat == UNCONSCIOUS && !critical)
-		return
-
-	// If whispering your last words, limit the whisper based on how close you are to death.
-	if(critical)
-		var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
-		// If we cut our message short, abruptly end it with a-..
-		var/message_len = length(message)
-		message = copytext(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"
-		message = Ellipsis(message, 10, 1)
-
-	message = treat_message(message)
-
-	var/list/listening_dead = list()
-	for(var/mob/M in player_list)
-		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER) || (get_dist(M, src) <= 7)))
-			listening_dead |= M
-
-	var/list/listening = get_hearers_in_view(1, src)
-	listening |= listening_dead
-	var/list/eavesdropping = get_hearers_in_view(2, src)
-	eavesdropping -= listening
-	var/list/watching  = hearers(5, src)
-	watching  -= listening
-	watching  -= eavesdropping
-
-	var/rendered
-	whispers = critical ? "whispers something in [p_their()] final breath." : "whispers something."
-	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers]</span>"
-	for(var/mob/M in watching)
-		M.show_message(rendered, 2)
-
-	var/spans = list(SPAN_ITALICS)
-	whispers = critical ? "whispers in [p_their()] final breath" : "whispers"
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
-
-	for(var/atom/movable/AM in listening)
-		if(istype(AM,/obj/item/device/radio))
-			continue
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
-
-	message = stars(message)
-	rendered = "<span class='game say'><span class='name'>[GetVoice()]</span>[alt_name] [whispers], <span class='message'>\"[attach_spans(message, spans)]\"</span></span>"
-	for(var/atom/movable/AM in eavesdropping)
-		if(istype(AM,/obj/item/device/radio))
-			continue
-		AM.Hear(rendered, src, languages_spoken, message, , spans)
-
-	if(critical) //Dying words.
-		succumb(1)
+	whisper_say(message, speaking, alt_name)

@@ -1,16 +1,24 @@
-/turf/open/floor/engine/attack_paw(mob/user)
-	return src.attack_hand(user)
 
-/turf/open/floor/engine/attack_hand(mob/user)
+/turf/simulated/floor/engine/attack_hand(var/mob/user as mob)
 	user.Move_Pulled(src)
 
-/turf/open/floor/engine/ex_act(severity, target)
-	contents_explosion(severity, target)
+/turf/simulated/floor/engine/ex_act(severity)
 	switch(severity)
-		if(1)
-			ChangeTurf(src.baseturf)
-		if(2)
-			if(prob(50))
-				ChangeTurf(src.baseturf)
-		else
+		if(1.0)
+			ChangeTurf(/turf/space)
+			qdel(src)
 			return
+		if(2.0)
+			if(prob(50))
+				ChangeTurf(/turf/space)
+				qdel(src)
+				return
+		else
+	return
+
+/turf/simulated/floor/engine/blob_act()
+	if(prob(25))
+		ChangeTurf(/turf/space)
+		qdel(src)
+		return
+	return

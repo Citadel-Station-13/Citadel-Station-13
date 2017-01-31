@@ -5,14 +5,11 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/ion
 
-
-/obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/ion/on_hit(var/atom/target, var/blocked = 0)
 	..()
 	empulse(target, 1, 1)
 	return 1
-
 
 /obj/item/projectile/ion/weak
 
@@ -21,13 +18,15 @@
 	empulse(target, 0, 0)
 	return 1
 
-
 /obj/item/projectile/bullet/gyro
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
+	flag = "bullet"
+	sharp = 1
+	edge = 1
 
-/obj/item/projectile/bullet/gyro/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/bullet/gyro/on_hit(var/atom/target, var/blocked = 0)
 	..()
 	explosion(target, -1, 0, 2)
 	return 1
@@ -37,71 +36,88 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "bolter"
 	damage = 60
+	flag = "bullet"
 
 /obj/item/projectile/bullet/a40mm/on_hit(atom/target, blocked = 0)
 	..()
 	explosion(target, -1, 0, 2, 1, 0, flame_range = 3)
 	return 1
 
-/obj/item/projectile/bullet/a84mm
-	name ="anti-armour rocket"
-	desc = "USE A WEEL GUN"
-	icon_state= "atrocket"
-	damage = 80
-	var/anti_armour_damage = 200
-	armour_penetration = 100
-	dismemberment = 100
-
-/obj/item/projectile/bullet/a84mm/on_hit(atom/target, blocked = 0)
-	..()
-	explosion(target, -1, 1, 3, 1, 0, flame_range = 4)
-
-	if(istype(target, /obj/mecha))
-		var/obj/mecha/M = target
-		M.take_damage(anti_armour_damage)
-	if(istype(target, /mob/living/silicon))
-		var/mob/living/silicon/S = target
-		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
-	return 1
-
 /obj/item/projectile/temp
-	name = "freeze beam"
-	icon_state = "ice_2"
+	name = "temperature beam"
+	icon_state = "temp_4"
 	damage = 0
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
-	var/temperature = 100
+	var/temperature = 300
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
+/obj/item/projectile/temp/New(loc, shot_temp)
+	..(loc)
+	if(!isnull(shot_temp))
+		temperature = shot_temp
+	switch(temperature)
+		if(501 to INFINITY)
+			name = "searing beam"	//if emagged
+			icon_state = "temp_8"
+		if(400 to 500)
+			name = "burning beam"	//temp at which mobs start taking HEAT_DAMAGE_LEVEL_2
+			icon_state = "temp_7"
+		if(360 to 400)
+			name = "hot beam"		//temp at which mobs start taking HEAT_DAMAGE_LEVEL_1
+			icon_state = "temp_6"
+		if(335 to 360)
+			name = "warm beam"		//temp at which players get notified of their high body temp
+			icon_state = "temp_5"
+		if(295 to 335)
+			name = "ambient beam"
+			icon_state = "temp_4"
+		if(260 to 295)
+			name = "cool beam"		//temp at which players get notified of their low body temp
+			icon_state = "temp_3"
+		if(200 to 260)
+			name = "cold beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_1
+			icon_state = "temp_2"
+		if(120 to 260)
+			name = "ice beam"		//temp at which mobs start taking COLD_DAMAGE_LEVEL_2
+			icon_state = "temp_1"
+		if(-INFINITY to 120)
+			name = "freeze beam"	//temp at which mobs start taking COLD_DAMAGE_LEVEL_3
+			icon_state = "temp_0"
+		else
+			name = "temperature beam"//failsafe
+			icon_state = "temp_4"
+	..()
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(var/atom/target, var/blocked = 0)//These two could likely check temp protection on the mob
 	..()
 	if(isliving(target))
-		var/mob/M = target
+		var/mob/living/M = target
 		M.bodytemperature = temperature
+		if(temperature > 500)//emagged
+			M.adjust_fire_stacks(0.5)
+			M.IgniteMob()
+			playsound(M.loc, 'sound/effects/bamf.ogg', 50, 0)
 	return 1
-
-/obj/item/projectile/temp/hot
-	name = "heat beam"
-	temperature = 400
 
 /obj/item/projectile/meteor
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
-	icon_state = "small1"
+	icon_state = "small"
 	damage = 0
 	damage_type = BRUTE
 	nodamage = 1
 	flag = "bullet"
 
 /obj/item/projectile/meteor/Bump(atom/A, yes)
-	if(!yes) //prevents multi bumps.
+	if(yes)
 		return
 	if(A == firer)
 		loc = A.loc
 		return
-	A.ex_act(2)
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	for(var/mob/M in urange(10, src))
 		if(!M.stat)
 			shake_camera(M, 3, 1)
@@ -115,15 +131,30 @@
 	nodamage = 1
 	flag = "energy"
 
-/obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
-	. = ..()
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(C.dna.species.id == "pod")
-			C.randmuti()
-			C.randmut()
-			C.updateappearance()
-			C.domutcheck()
+/obj/item/projectile/energy/floramut/on_hit(var/atom/target, var/blocked = 0)
+	..()
+	var/mob/living/M = target
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags & IS_PLANT)
+			if(prob(15))
+				M.apply_effect((rand(30,80)),IRRADIATE)
+				M.Weaken(5)
+				M.visible_message("<span class='warning'>[M] writhes in pain as \his vacuoles boil.</span>", "<span class='userdanger'>You writhe in pain as your vacuoles boil!</span>", "<span class='italics'>You hear the crunching of leaves.</span>")
+			if(prob(35))
+				if(prob(80))
+					randmutb(M)
+					domutcheck(M,null)
+				else
+					randmutg(M)
+					domutcheck(M,null)
+			else
+				M.adjustFireLoss(rand(5,15))
+				M.show_message("<span class='warning'>The radiation beam singes you!</span>")
+	else if(iscarbon(target))
+		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+	else
+		return 1
 
 /obj/item/projectile/energy/florayield
 	name = "beta somatoray"
@@ -133,15 +164,98 @@
 	nodamage = 1
 	flag = "energy"
 
+/obj/item/projectile/energy/florayield/on_hit(var/atom/target, var/blocked = 0)
+	..()
+	var/mob/M = target
+	if(ishuman(target)) //These rays make plantmen fat.
+		var/mob/living/carbon/human/H = M
+		if(H.species.flags & IS_PLANT)
+			H.nutrition = min(H.nutrition+30, NUTRITION_LEVEL_FULL)
+	else if(iscarbon(target))
+		M.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+	else
+		return 1
+
+
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
 
-/obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/beam/mindflayer/on_hit(var/atom/target, var/blocked = 0)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/M = target
 		M.adjustBrainLoss(20)
-		M.hallucination += 20
+		M.AdjustHallucinate(20)
+
+/obj/item/projectile/clown
+	name = "snap-pop"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "snappop"
+
+/obj/item/projectile/clown/Bump(atom/A as mob|obj|turf|area)
+	var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
+	new /obj/effect/decal/cleanable/ash(loc)
+	visible_message("<span class='warning'>The [name] explodes!</span>","<span class='warning'>You hear a snap!</span>")
+	playsound(src, 'sound/effects/snap.ogg', 50, 1)
+	qdel(src)
+
+/obj/item/projectile/kinetic
+	name = "kinetic force"
+	icon_state = null
+	damage = 10
+	damage_type = BRUTE
+	flag = "bomb"
+	range = 3
+	var/splash = 0
+
+/obj/item/projectile/kinetic/super
+	damage = 11
+	range = 4
+
+/obj/item/projectile/kinetic/hyper
+	damage = 12
+	range = 5
+	splash = 1
+
+obj/item/projectile/kinetic/New()
+	var/turf/proj_turf = get_turf(src)
+	if(!istype(proj_turf, /turf))
+		return
+	var/datum/gas_mixture/environment = proj_turf.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure < 50)
+		name = "full strength kinetic force"
+		damage *= 4
+	..()
+
+/obj/item/projectile/kinetic/on_range()
+	new /obj/effect/kinetic_blast(loc)
+	..()
+
+/obj/item/projectile/kinetic/on_hit(atom/target)
+	. = ..()
+	var/turf/target_turf= get_turf(target)
+	if(istype(target_turf, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target_turf
+		M.gets_drilled(firer)
+	new /obj/effect/kinetic_blast(target_turf)
+	if(splash)
+		for(var/turf/T in range(splash, target_turf))
+			if(istype(T, /turf/simulated/mineral))
+				var/turf/simulated/mineral/M = T
+				M.gets_drilled(firer)
+
+/obj/effect/kinetic_blast
+	name = "kinetic explosion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "kinetic_blast"
+	layer = 4.1
+
+/obj/effect/kinetic_blast/New()
+	spawn(4)
+		qdel(src)
 
 /obj/item/projectile/beam/wormhole
 	name = "bluespace beam"
@@ -159,13 +273,11 @@
 	if(casing)
 		gun = casing.gun
 
-/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
-	gun = wh
-
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
-		var/turf/portal_destination = pick(orange(6, src))
-		do_teleport(target, portal_destination)
+		if(is_teleport_allowed(target.z))
+			var/turf/portal_destination = pick(orange(6, src))
+			do_teleport(target, portal_destination)
 		return ..()
 	if(!gun)
 		qdel(src)
@@ -186,129 +298,113 @@
 	icon_state = "plasmacutter"
 	damage_type = BRUTE
 	damage = 5
-	range = 3.5 //works as 4, but doubles to 7
-	dismemberment = 20
-	impact_effect_type = /obj/effect/overlay/temp/impact_effect/purple_laser
+	range = 3
 
 /obj/item/projectile/plasma/New()
 	var/turf/proj_turf = get_turf(src)
-	if(!isturf(proj_turf))
+	if(!istype(proj_turf, /turf))
 		return
 	var/datum/gas_mixture/environment = proj_turf.return_air()
 	if(environment)
 		var/pressure = environment.return_pressure()
-		if(pressure < 60)
-			name = "full strength [name]"
-			damage *= 4
-			range *= 2
+		if(pressure < 30)
+			name = "full strength plasma blast"
+			damage *= 3
 	..()
 
 /obj/item/projectile/plasma/on_hit(atom/target)
 	. = ..()
-	if(ismineralturf(target))
-		var/turf/closed/mineral/M = target
+	if(istype(target, /turf/simulated/mineral))
+		var/turf/simulated/mineral/M = target
 		M.gets_drilled(firer)
 		Range()
 		if(range > 0)
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 7
 	range = 5
 
 /obj/item/projectile/plasma/adv/mech
 	damage = 10
 	range = 6
 
-
-/obj/item/projectile/gravityrepulse
-	name = "repulsion bolt"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+/obj/item/projectile/energy/teleport
+	name = "teleportation burst"
+	icon_state = "bluespace"
 	damage = 0
-	damage_type = BRUTE
 	nodamage = 1
-	color = "#33CCFF"
-	var/turf/T
-	var/power = 4
+	var/teleport_target = null
 
-/obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
+/obj/item/projectile/energy/teleport/New(loc, tele_target)
+	..(loc)
+	if(tele_target)
+		teleport_target = tele_target
 
-/obj/item/projectile/gravityrepulse/on_hit()
+/obj/item/projectile/energy/teleport/on_hit(var/atom/target, var/blocked = 0)
+	if(isliving(target))
+		if(teleport_target)
+			do_teleport(target, teleport_target, 0)//teleport what's in the tile to the beacon
+		else
+			do_teleport(target, target, 15) //Otherwise it just warps you off somewhere.
+
+/obj/item/projectile/snowball
+	name = "snowball"
+	icon_state = "snowball"
+	hitsound = 'sound/items/dodgeball.ogg'
+	damage = 4
+	damage_type = BURN
+
+/obj/item/projectile/snowball/on_hit(atom/target)	//chilling
 	. = ..()
-	T = get_turf(src)
-	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
-			continue
-		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
-		A.throw_at_fast(throwtarget,power+1,1)
-	for(var/turf/F in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		F.overlays += gravfield
-		spawn(5)
-		F.overlays -= gravfield
+	if(istype(target, /mob/living))
+		var/mob/living/M = target
+		M.bodytemperature = max(0, M.bodytemperature - 50)	//each hit will drop your body temp, so don't get surrounded!
+		M.ExtinguishMob()	//bright side, they counter being on fire!
 
-/obj/item/projectile/gravityattract
-	name = "attraction bolt"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
+/obj/item/projectile/ornament
+	name = "ornament"
+	icon_state = "ornament-1"
+	hitsound = 'sound/effects/Glasshit.ogg'
+	damage = 7
+	damage_type = BRUTE
+
+/obj/item/projectile/ornament/New()
+	icon_state = pick("ornament-1", "ornament-2")
+	..()
+
+/obj/item/projectile/ornament/on_hit(atom/target)	//knockback
+	..()
+	if(istype(target, /turf))
+		return 0
+	var/obj/T = target
+	var/throwdir = get_dir(firer,target)
+	T.throw_at(get_edge_target_turf(target, throwdir),10,10)
+	return 1
+
+/obj/item/projectile/mimic
+	name = "googly-eyed gun"
+	hitsound = 'sound/weapons/genhit1.ogg'
 	damage = 0
-	damage_type = BRUTE
 	nodamage = 1
-	color = "#FF6600"
-	var/turf/T
-	var/power = 4
+	damage_type = BURN
+	flag = "melee"
+	var/obj/item/weapon/gun/stored_gun
 
-/obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
+/obj/item/projectile/mimic/New(loc, mimic_type)
+	..(loc)
+	if(mimic_type)
+		stored_gun = new mimic_type(src)
+		icon = stored_gun.icon
+		icon_state = stored_gun.icon_state
+		overlays = stored_gun.overlays
+		SpinAnimation(20, -1)
+
+/obj/item/projectile/mimic/on_hit(atom/target)
 	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
-
-/obj/item/projectile/gravityattract/on_hit()
-	. = ..()
-	T = get_turf(src)
-	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
-			continue
-		A.throw_at_fast(T, power+1, 1)
-	for(var/turf/F in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		F.overlays += gravfield
-		spawn(5)
-		F.overlays -= gravfield
-
-/obj/item/projectile/gravitychaos
-	name = "gravitational blast"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "chronofield"
-	hitsound = "sound/weapons/wave.ogg"
-	damage = 0
-	damage_type = BRUTE
-	nodamage = 1
-	color = "#101010"
-	var/turf/T
-	var/power = 4
-
-/obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
-	..()
-	if(C) //Hard-coded maximum power so servers can't be crashed by trying to throw the entire Z level's items
-		power = min(C.gun.power, 15)
-
-/obj/item/projectile/gravitychaos/on_hit()
-	. = ..()
-	T = get_turf(src)
-	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored)
-			continue
-		A.throw_at_fast(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
-	for(var/turf/Z in range(T,power))
-		var/obj/effect/overlay/gravfield = new /obj/effect/overlay{icon='icons/effects/effects.dmi'; icon_state="shieldsparkles"; mouse_opacity=0; density=0}()
-		Z.overlays += gravfield
-		spawn(5)
-		Z.overlays -= gravfield
-
+	var/turf/T = get_turf(src)
+	var/obj/item/weapon/gun/G = stored_gun
+	stored_gun = null
+	G.forceMove(T)
+	var/mob/living/simple_animal/hostile/mimic/copy/ranged/R = new /mob/living/simple_animal/hostile/mimic/copy/ranged(T, G, firer)
+	if(ismob(target))
+		R.target = target

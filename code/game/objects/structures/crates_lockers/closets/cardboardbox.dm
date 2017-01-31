@@ -1,20 +1,15 @@
-#define SNAKE_SPAM_TICKS 600 //how long between cardboard box openings that trigger the '!'
 /obj/structure/closet/cardboard
 	name = "large cardboard box"
 	desc = "Just a box..."
 	icon_state = "cardboard"
-	mob_storage_capacity = 1
-	resistance_flags = FLAMMABLE
-	obj_integrity = 70
-	max_integrity = 70
-	integrity_failure = 0
-	can_weld_shut = 0
-	cutting_tool = /obj/item/weapon/wirecutters
-	open_sound = "rustle"
-	cutting_sound = 'sound/items/poster_ripped.ogg'
+	icon_opened = "cardboard_open"
+	icon_closed = "cardboard"
+	health = 10
+	burn_state = FLAMMABLE
+	burntime = 20
+	sound = 'sound/effects/rustle2.ogg'
 	material_drop = /obj/item/stack/sheet/cardboard
-	delivery_icon = "deliverybox"
-	var/move_speed_multiplier = 1
+	cutting_sound = 'sound/items/poster_ripped.ogg'
 	var/move_delay = 0
 	var/egged = 0
 
@@ -23,7 +18,7 @@
 		return
 	move_delay = 1
 	if(step(src, direction))
-		spawn(config.walk_speed*move_speed_multiplier)
+		spawn(config.walk_speed)
 			move_delay = 0
 	else
 		move_delay = 0
@@ -31,23 +26,20 @@
 /obj/structure/closet/cardboard/open()
 	if(opened || !can_open())
 		return 0
-	var/list/alerted = null
-	if(egged < world.time)
+	if(!egged)
 		var/mob/living/Snake = null
 		for(var/mob/living/L in src.contents)
 			Snake = L
 			break
 		if(Snake)
-			alerted = viewers(7,src)
+			var/list/alerted = viewers(7,src)
+			if(alerted)
+				for(var/mob/living/L in alerted)
+					if(!L.stat)
+						L.do_alert_animation(L)
+						egged = 1
+				alerted << sound('sound/machines/chime.ogg')
 	..()
-	if(alerted.len)
-		egged = world.time + SNAKE_SPAM_TICKS
-		for(var/mob/living/L in alerted)
-			if(!L.stat)
-				if(!L.incapacitated(ignore_restraints = 1))
-					L.face_atom(src)
-				L.do_alert_animation(L)
-		playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
 
 /mob/living/proc/do_alert_animation(atom/A)
 	var/image/I
@@ -60,17 +52,13 @@
 	I.alpha = 0
 	animate(I, pixel_z = 32, alpha = 255, time = 5, easing = ELASTIC_EASING)
 
-
-/obj/structure/closet/cardboard/metal
-	name = "large metal box"
-	desc = "THE COWARDS! THE FOOLS!"
-	icon_state = "metalbox"
-	obj_integrity = 500
-	mob_storage_capacity = 5
-	resistance_flags = 0
-	move_speed_multiplier = 2
-	cutting_tool = /obj/item/weapon/weldingtool
-	open_sound = 'sound/machines/click.ogg'
-	cutting_sound = 'sound/items/Welder.ogg'
-	material_drop = /obj/item/stack/sheet/plasteel
-#undef SNAKE_SPAM_TICKS
+/obj/structure/closet/cardboard/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
+	if(src.opened)
+		if(istype(W, /obj/item/weapon/weldingtool))
+			return
+		if(istype(W, /obj/item/weapon/wirecutters))
+			var/obj/item/weapon/wirecutters/WC = W
+			new /obj/item/stack/sheet/cardboard(src.loc)
+			for(var/mob/M in viewers(src))
+				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WC].</span>", 3, "You hear cutting.", 2)
+			qdel(src)

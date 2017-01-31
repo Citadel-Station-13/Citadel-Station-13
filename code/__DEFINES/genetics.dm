@@ -1,110 +1,91 @@
-
-//Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
-#define HULK		"Hulk"
-#define XRAY		"X Ray Vision"
-#define COLDRES		"Cold Resistance"
-#define TK			"Telekinesis"
-#define NERVOUS		"Nervousness"
-#define EPILEPSY	"Epilepsy"
-#define MUTATE		"Unstable DNA"
-#define COUGH		"Cough"
-#define DWARFISM	"Dwarfism"
-#define CLOWNMUT	"Clumsiness"
-#define TOURETTES	"Tourettes Syndrome"
-#define DEAFMUT		"Deafness"
-#define BLINDMUT	"Blindness"
-#define RACEMUT		"Monkified"
-#define BADSIGHT	"Near Sightness"
-#define LASEREYES	"Laser Eyes"
-#define CHAMELEON	"Chameleon"
-#define WACKY		"Wacky"
-#define MUT_MUTE	"Mute"
-#define SMILE		"Smile"
-#define UNINTELLIGABLE		"Unintelligable"
-#define SWEDISH		"Swedish"
-#define CHAV		"Chav"
-#define ELVIS		"Elvis"
-
-#define UI_CHANGED "ui changed"
-#define UE_CHANGED "ue changed"
-
-#define CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY 204
-
 // String identifiers for associative list lookup
 
-//Types of usual mutations
-#define	POSITIVE 			1
-#define	NEGATIVE			2
-#define	MINOR_NEGATIVE		3
 
-//Mutations that cant be taken from genetics and are not in SE
-#define	NON_SCANNABLE		-1
+#define MUTCHK_FORCED        1
 
-	// Extra powers:
+// mob/var/list/mutations
+
+// Used in preferences.
+#define DISABILITY_FLAG_NEARSIGHTED 1
+#define DISABILITY_FLAG_FAT         2
+#define DISABILITY_FLAG_EPILEPTIC   4
+#define DISABILITY_FLAG_DEAF        8
+#define DISABILITY_FLAG_BLIND       16
+#define DISABILITY_FLAG_MUTE        32
+
+///////////////////////////////////////
+// MUTATIONS
+///////////////////////////////////////
+
+// Generic mutations:
+#define	TK				1
+#define RESIST_COLD		2
+#define XRAY			3
+#define HULK			4
+#define CLUMSY			5
+#define FAT				6
+#define HUSK			7
+#define NOCLONE			8
+
+
+// Extra powers:
 #define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
-#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
-#define SCREAM			12 	// supersonic screaming (25%)
-#define EXPLOSIVE		13 	// exploding on-demand (15%)
-#define REGENERATION	14 	// superhuman regeneration (30%)
-#define REPROCESSOR		15 	// eat anything (50%)
-#define SHAPESHIFTING	16 	// take on the appearance of anything (40%)
-#define PHASING			17 	// ability to phase through walls (40%)
-#define SHIELD			18 	// shielding from all projectile attacks (30%)
-#define SHOCKWAVE		19 	// attack a nearby tile and cause a massive shockwave, knocking most people on their asses (25%)
-#define ELECTRICITY		20 	// ability to shoot electric attacks (15%)
 
-//DNA - Because fuck you and your magic numbers being all over the codebase.
-#define DNA_BLOCK_SIZE				3
+//2spooky
+#define SKELETON 29
+#define PLANT 30
 
-#define DNA_UNI_IDENTITY_BLOCKS		19
-#define DNA_HAIR_COLOR_BLOCK		1
-#define DNA_FACIAL_HAIR_COLOR_BLOCK	2
-#define DNA_SKIN_TONE_BLOCK			3
-#define DNA_EYE_COLOR_BLOCK			4
-#define DNA_GENDER_BLOCK			5
-#define DNA_FACIAL_HAIR_STYLE_BLOCK	6
-#define DNA_HAIR_STYLE_BLOCK		7
-#define DNA_EYE_COLOR_TWO_BLOCK		8
-#define DNA_EYE_COLOR_SWITCH_BLOCK	9
-#define DNA_EYE_COLOR_BLOCK			10
-#define DNA_COLOR_ONE_BLOCK			11
-#define DNA_COLOR_TWO_BLOCK			12
-#define DNA_COLOR_THR_BLOCK			13
-#define DNA_COLOR_SWITCH_BLOCK		14
-#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				15
-#define DNA_MUTANTRACE_BLOCK		16
-#define DNA_MUTANTTAIL_BLOCK		17
-#define DNA_MUTANTWING_BLOCK		18
-#define DNA_WINGCOLOR_BLOCK			19
-//#define DNA_TAUR_BLOCK				20 //Taurs will be tails for now, easier - Pooj
+// Other Mutations:
+#define NO_BREATH		100 	// no need to breathe
+#define REMOTE_VIEW		101 	// remote viewing
+#define REGEN			102 	// health regen
+#define RUN				103 	// no slowdown
+#define REMOTE_TALK		104 	// remote talking
+#define MORPH			105 	// changing appearance
+#define RESIST_HEAT		106 	// heat resistance
+#define HALLUCINATE		107 	// hallucinations
+#define FINGERPRINTS	108 	// no fingerprints
+#define NO_SHOCK		109 	// insulated hands
+#define DWARF			110 	// table climbing
 
-#define DNA_STRUC_ENZYMES_BLOCKS	19
-#define DNA_UNIQUE_ENZYMES_LEN		32
+// Goon muts
+#define OBESITY       	200		// Decreased metabolism
+#define TOXIC_FARTS   	201		// Duh
+#define STRONG        	202		// (Nothing)
+#define SOBER         	203		// Increased alcohol metabolism
+#define PSY_RESIST    	204		// Block remoteview
+#define SUPER_FART    	205		// Duh
+#define EMPATH			206		//Read minds
+#define COMIC			207		//Comic Sans
 
-//Transformation proc stuff
-#define TR_KEEPITEMS	1
-#define TR_KEEPVIRUS	2
-#define TR_KEEPDAMAGE	4
-#define TR_HASHNAME		8	// hashing names (e.g. monkey(e34f)) (only in monkeyize)
-#define TR_KEEPIMPLANTS	16
-#define TR_KEEPSE		32 // changelings shouldn't edit the DNA's SE when turning into a monkey
-#define TR_DEFAULTMSG	64
-#define TR_KEEPSRC		128
-#define TR_KEEPORGANS	256
+// /vg/ muts
+#define LOUD			208		// CAUSES INTENSE YELLING
+#define DIZZY			210		// Trippy.
 
-//Organ stuff, It's here because "Genetics" is the most relevant file for organs and bodyparts
-#define ORGAN_ORGANIC   1
-#define ORGAN_ROBOTIC   2
+#define LISP			300
+#define RADIOACTIVE 	301
+#define CHAV			302
+#define SWEDISH			303
+#define SCRAMBLED		304
+#define HORNS			305
+#define IMMOLATE		306
+#define CLOAK			307
+#define CHAMELEON		308
+#define CRYO			309
+#define EATER			310
 
-#define BODYPART_ORGANIC   1
-#define BODYPART_ROBOTIC   2
+#define JUMPY			400
+#define POLYMORPH		401
 
-#define MONKEY_BODYPART "monkey"
-#define ALIEN_BODYPART "alien"
-#define LARVA_BODYPART "larva"
-#define DEVIL_BODYPART "devil"
+//disabilities
+#define NEARSIGHTED		1
+#define EPILEPSY		2
+#define COUGHING		4
+#define TOURETTES		8
+#define NERVOUS			16
+#define BLIND			32
+#define MUTE			64
+#define DEAF			128
 
 //Nutrition levels for humans. No idea where else to put it
 #define NUTRITION_LEVEL_FAT 600
@@ -114,43 +95,22 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
-#define CLONER_FRESH_CLONE "fresh"
-#define CLONER_MATURE_CLONE "mature"
-
 //Blood levels
-#define BLOOD_VOLUME_MAXIMUM		2000
-#define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
 #define BLOOD_VOLUME_SAFE			501
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
 
-//species traits for mutantraces
-#define MUTCOLORS		1
-#define HAIR			2
-#define FACEHAIR		3
-#define EYECOLOR		4
-#define LIPS			5
-#define RESISTHOT		6
-#define RESISTCOLD		7
-#define RESISTPRESSURE  8
-#define RADIMMUNE		9
-#define NOBREATH		10
-#define NOGUNS			11
-#define NOBLOOD			12
-#define NOFIRE			13
-#define VIRUSIMMUNE		14
-#define PIERCEIMMUNE	15
-#define NOTRANSSTING	16
-#define MUTCOLORS_PARTSONLY	17	//Used if we want the mutant colour to be only used by mutant bodyparts. Don't combine this with MUTCOLORS, or it will be useless.
-#define NODISMEMBER		18
-#define NOHUNGER		19
-#define NOCRITDAMAGE	20
-#define NOZOMBIE		21
-#define EASYDISMEMBER	22
-#define EASYLIMBATTACHMENT 23
-#define TOXINLOVER		24
-#define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define MUTCOLORS2		26
-#define MUTCOLORS3		27
+//Used for calculations for negative effects of having genetics powers
+#define DEFAULT_GENE_STABILITY 100
+#define GENE_INSTABILITY_MINOR 5
+#define GENE_INSTABILITY_MODERATE 10
+#define GENE_INSTABILITY_MAJOR 15
+
+#define GENETIC_DAMAGE_STAGE_1 80
+#define GENETIC_DAMAGE_STAGE_2 65
+#define GENETIC_DAMAGE_STAGE_3 35
+
+#define CLONER_FRESH_CLONE "fresh"
+#define CLONER_MATURE_CLONE "mature"

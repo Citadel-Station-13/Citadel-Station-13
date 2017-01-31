@@ -1,8 +1,6 @@
-#define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
 
 /obj/screen/movable/action_button
 	var/datum/action/linked_action
-	var/actiontooltipstyle = ""
 	screen_loc = null
 
 /obj/screen/movable/action_button/Click(location,control,params)
@@ -22,9 +20,6 @@
 	icon = 'icons/mob/actions.dmi'
 	icon_state = "bg_default"
 	var/hidden = 0
-	var/hide_icon = 'icons/mob/actions.dmi'
-	var/hide_state = "hide"
-	var/show_state = "show"
 
 /obj/screen/movable/action_button/hide_toggle/Click(location,control,params)
 	var/list/modifiers = params2list(params)
@@ -42,39 +37,26 @@
 	usr.update_action_buttons()
 
 
-/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(datum/hud/owner_hud)
-	var settings = owner_hud.get_action_buttons_icons()
-	icon = settings["bg_icon"]
-	icon_state = settings["bg_state"]
-	hide_icon = settings["toggle_icon"]
-	hide_state = settings["toggle_hide"]
-	show_state = settings["toggle_show"]
+/obj/screen/movable/action_button/hide_toggle/proc/InitialiseIcon(mob/living/user)
+	if(isalien(user))
+		icon_state = "bg_alien"
+	else
+		icon_state = "bg_default"
 	UpdateIcon()
 
 /obj/screen/movable/action_button/hide_toggle/proc/UpdateIcon()
-	cut_overlays()
-	var/image/img = image(hide_icon, src, hidden ? show_state : hide_state)
-	add_overlay(img)
+	overlays.Cut()
+	var/image/img = image(icon, src, hidden ? "show" : "hide")
+	overlays += img
 
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
-	openToolTip(usr,src,params,title = name,content = desc,theme = actiontooltipstyle)
+	openToolTip(usr,src,params,title = name,content = desc)
 
 
 /obj/screen/movable/action_button/MouseExited()
 	closeToolTip(usr)
 
-/datum/hud/proc/get_action_buttons_icons()
-	. = list()
-	.["bg_icon"] = ui_style_icon
-	.["bg_state"] = "template"
-	
-	//TODO : Make these fit theme
-	.["toggle_icon"] = 'icons/mob/actions.dmi'
-	.["toggle_hide"] = "hide"
-	.["toggle_show"] = "show"
-
-//see human and alien hud for specific implementations.
 
 /mob/proc/update_action_buttons_icon()
 	for(var/X in actions)
@@ -99,7 +81,7 @@
 	else
 		for(var/datum/action/A in actions)
 			button_number++
-			A.UpdateButtonIcon(hud_used)
+			A.UpdateButtonIcon()
 			var/obj/screen/movable/action_button/B = A.button
 			if(!B.moved)
 				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)

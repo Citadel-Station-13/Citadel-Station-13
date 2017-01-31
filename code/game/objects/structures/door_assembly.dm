@@ -1,717 +1,328 @@
-/obj/structure/door_assembly
-	name = "airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/public.dmi'
-	icon_state = "construction"
-	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
+obj/structure/door_assembly
+	icon = 'icons/obj/doors/door_assembly.dmi'
+
+	name = "Airlock Assembly"
+	icon_state = "door_as_0"
 	anchored = 0
 	density = 1
-	obj_integrity = 200
-	max_integrity = 200
 	var/state = 0
-	var/mineral = null
-	var/typetext = ""
-	var/icontext = ""
-	var/obj/item/weapon/electronics/airlock/electronics = null
-	var/airlock_type = /obj/machinery/door/airlock //the type path of the airlock once completed
-	var/glass_type = /obj/machinery/door/airlock/glass
+	var/base_icon_state = ""
+	var/base_name = "Airlock"
+	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/airlock_type = "" //the type path of the airlock once completed
+	var/glass_type = "/glass"
+	var/glass = 0 // 0 = glass can be installed. -1 = glass can't be installed. 1 = glass is already installed. Text = mineral plating is installed instead.
 	var/created_name = null
-	var/heat_proof_finished = 0 //whether to heat-proof the finished airlock
-	var/material = null //icon state logic
 
-/obj/structure/door_assembly/New()
-	update_icon()
-	..()
+	New()
+		update_state()
 
-/obj/structure/door_assembly/door_assembly_0
-	name = "airlock assembly"
-	airlock_type = /obj/machinery/door/airlock
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_com
+	base_icon_state = "com"
+	base_name = "Command Airlock"
+	glass_type = "/glass_command"
+	airlock_type = "/command"
 
-/obj/structure/door_assembly/door_assembly_com
-	name = "command airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/command.dmi'
-	typetext = "command"
-	icontext = "com"
-	glass_type = /obj/machinery/door/airlock/glass_command
-	airlock_type = /obj/machinery/door/airlock/command
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_sec
+	base_icon_state = "sec"
+	base_name = "Security Airlock"
+	glass_type = "/glass_security"
+	airlock_type = "/security"
 
-/obj/structure/door_assembly/door_assembly_com/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_eng
+	base_icon_state = "eng"
+	base_name = "Engineering Airlock"
+	glass_type = "/glass_engineering"
+	airlock_type = "/engineering"
 
-/obj/structure/door_assembly/door_assembly_sec
-	name = "security airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/security.dmi'
-	typetext = "security"
-	icontext = "sec"
-	glass_type = /obj/machinery/door/airlock/glass_security
-	airlock_type = /obj/machinery/door/airlock/security
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_min
+	base_icon_state = "min"
+	base_name = "Mining Airlock"
+	glass_type = "/glass_mining"
+	airlock_type = "/mining"
 
-/obj/structure/door_assembly/door_assembly_sec/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_atmo
+	base_icon_state = "atmo"
+	base_name = "Atmospherics Airlock"
+	glass_type = "/glass_atmos"
+	airlock_type = "/atmos"
 
-/obj/structure/door_assembly/door_assembly_eng
-	name = "engineering airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
-	typetext = "engineering"
-	icontext = "eng"
-	glass_type = /obj/machinery/door/airlock/glass_engineering
-	airlock_type = /obj/machinery/door/airlock/engineering
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_research
+	base_icon_state = "res"
+	base_name = "Research Airlock"
+	glass_type = "/glass_research"
+	airlock_type = "/research"
 
-/obj/structure/door_assembly/door_assembly_eng/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_science
+	base_icon_state = "sci"
+	base_name = "Science Airlock"
+	glass_type = "/glass_science"
+	airlock_type = "/science"
 
-/obj/structure/door_assembly/door_assembly_min
-	name = "mining airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
-	typetext = "mining"
-	icontext = "min"
-	glass_type = /obj/machinery/door/airlock/glass_mining
-	airlock_type = /obj/machinery/door/airlock/mining
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_med
+	base_icon_state = "med"
+	base_name = "Medical Airlock"
+	glass_type = "/glass_medical"
+	airlock_type = "/medical"
 
-/obj/structure/door_assembly/door_assembly_min/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_mai
+	base_icon_state = "mai"
+	base_name = "Maintenance Airlock"
+	airlock_type = "/maintenance"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_atmo
-	name = "atmospherics airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
-	typetext = "atmos"
-	icontext = "atmo"
-	glass_type = /obj/machinery/door/airlock/glass_atmos
-	airlock_type = /obj/machinery/door/airlock/atmos
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_ext
+	base_icon_state = "ext"
+	base_name = "External Airlock"
+	airlock_type = "/external"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_atmo/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_fre
+	base_icon_state = "fre"
+	base_name = "Freezer Airlock"
+	airlock_type = "/freezer"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_research
-	name = "research airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/research.dmi'
-	typetext = "research"
-	icontext = "res"
-	glass_type = /obj/machinery/door/airlock/glass_research
-	airlock_type = /obj/machinery/door/airlock/research
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_hatch
+	base_icon_state = "hatch"
+	base_name = "Airtight Hatch"
+	airlock_type = "/hatch"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_research/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_mhatch
+	base_icon_state = "mhatch"
+	base_name = "Maintenance Hatch"
+	airlock_type = "/maintenance_hatch"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_science
-	name = "science airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/science.dmi'
-	typetext = "science"
-	icontext = "sci"
-	glass_type = /obj/machinery/door/airlock/glass_science
-	airlock_type = /obj/machinery/door/airlock/science
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
+	base_icon_state = "highsec"
+	base_name = "High Security Airlock"
+	airlock_type = "/highsecurity"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_science/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/door_assembly_shuttle
+	base_icon_state = "shuttle"
+	base_name = "shuttle airlock"
+	airlock_type = "/shuttle"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_med
-	name = "medical airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
-	typetext = "medical"
-	icontext = "med"
-	glass_type = /obj/machinery/door/airlock/glass_medical
-	airlock_type = /obj/machinery/door/airlock/medical
-	anchored = 1
-	state = 1
+obj/structure/door_assembly/multi_tile
+	icon = 'icons/obj/doors/door_assembly2x1.dmi'
+	dir = EAST
+	var/width = 1
+/*Temporary until we get sprites.
+	glass_type = "/multi_tile/glass"
+	airlock_type = "/multi_tile/maint"
+	glass = 1*/
+	base_icon_state = "g" //Remember to delete this line when reverting "glass" var to 1.
+	airlock_type = "/multi_tile/glass"
+	glass = -1 //To prevent bugs in deconstruction process.
 
-/obj/structure/door_assembly/door_assembly_med/glass
-	mineral = "glass"
-	material = "glass"
-
-/obj/structure/door_assembly/door_assembly_mai
-	name = "maintenance airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
-	typetext = "maintenance"
-	icontext = "mai"
-	glass_type = /obj/machinery/door/airlock/glass_maintenance
-	airlock_type = /obj/machinery/door/airlock/maintenance
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_mai/glass
-	mineral = "glass"
-	material = "glass"
-
-/obj/structure/door_assembly/door_assembly_ext
-	name = "external airlock assembly"
-	icon = 'icons/obj/doors/airlocks/external/external.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-	typetext = "external"
-	icontext = "ext"
-	glass_type = /obj/machinery/door/airlock/glass_external
-	airlock_type = /obj/machinery/door/airlock/external
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_ext/glass
-	mineral = "glass"
-	material = "glass"
-
-/obj/structure/door_assembly/door_assembly_fre
-	name = "freezer airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
-	typetext = "freezer"
-	icontext = "fre"
-	airlock_type = /obj/machinery/door/airlock/freezer
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_hatch
-	name = "airtight hatch assembly"
-	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	typetext = "hatch"
-	icontext = "hatch"
-	airlock_type = /obj/machinery/door/airlock/hatch
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_mhatch
-	name = "maintenance hatch assembly"
-	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	typetext = "maintenance_hatch"
-	icontext = "mhatch"
-	airlock_type = /obj/machinery/door/airlock/maintenance_hatch
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_glass
-	name = "glass airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-	airlock_type = /obj/machinery/door/airlock/glass
-	anchored = 1
-	state = 1
-	mineral = "glass"
-	material = "glass"
-
-/obj/structure/door_assembly/door_assembly_gold
-	name = "gold airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
-	airlock_type = /obj/machinery/door/airlock/gold
-	anchored = 1
-	state = 1
-	mineral = "gold"
-
-/obj/structure/door_assembly/door_assembly_silver
-	name = "silver airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
-	airlock_type = /obj/machinery/door/airlock/silver
-	anchored = 1
-	state = 1
-	mineral = "silver"
-
-/obj/structure/door_assembly/door_assembly_diamond
-	name = "diamond airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
-	airlock_type = /obj/machinery/door/airlock/diamond
-	anchored = 1
-	state = 1
-	mineral = "diamond"
-
-/obj/structure/door_assembly/door_assembly_uranium
-	name = "uranium airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
-	airlock_type = /obj/machinery/door/airlock/uranium
-	anchored = 1
-	state = 1
-	mineral = "uranium"
-
-/obj/structure/door_assembly/door_assembly_plasma
-	name = "plasma airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
-	airlock_type = /obj/machinery/door/airlock/plasma
-	anchored = 1
-	state = 1
-	mineral = "plasma"
-
-/obj/structure/door_assembly/door_assembly_clown
-	name = "bananium airlock assembly"
-	desc = "Honk"
-	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
-	airlock_type = /obj/machinery/door/airlock/clown
-	anchored = 1
-	state = 1
-	mineral = "bananium"
-
-/obj/structure/door_assembly/door_assembly_sandstone
-	name = "sandstone airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
-	airlock_type = /obj/machinery/door/airlock/sandstone
-	anchored = 1
-	state = 1
-	mineral = "sandstone"
-
-/obj/structure/door_assembly/door_assembly_titanium
-	name = "titanium airlock assembly"
-	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
-	typetext = "titanium"
-	icontext = "titanium"
-	glass_type = /obj/machinery/door/airlock/glass_titanium
-	airlock_type = /obj/machinery/door/airlock/titanium
-	anchored = 1
-	state = 1
-	mineral = "titanium"
-
-/obj/structure/door_assembly/door_assembly_titanium/glass
-	mineral = "glass"
-	material = "glass"
-
-/obj/structure/door_assembly/door_assembly_highsecurity // Borrowing this until WJohnston makes sprites for the assembly
-	name = "high security airlock assembly"
-	icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
-	typetext = "highsecurity"
-	icontext = "highsec"
-	airlock_type = /obj/machinery/door/airlock/highsecurity
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_vault
-	name = "vault door assembly"
-	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
-	typetext = "vault"
-	icontext = "vault"
-	airlock_type = /obj/machinery/door/airlock/vault
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/door_assembly_shuttle
-	name = "shuttle airlock assembly"
-	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
-	typetext = "shuttle"
-	icontext = "shuttle"
-	airlock_type = /obj/machinery/door/airlock/shuttle
-	anchored = 1
-	state = 1
 
 /obj/structure/door_assembly/door_assembly_cult
-	name = "cult airlock assembly"
-	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
-	typetext = "cult"
-	icontext = "cult"
-	airlock_type = /obj/machinery/door/airlock/cult
-	anchored = 1
-	state = 1
+	base_name = "cult airlock assembly"
+	icon = 'icons/obj/doors/Doorcult.dmi'
+	base_icon_state ="construction"
+	airlock_type = "/cult"
 
-/obj/structure/door_assembly/door_assembly_cult/glass
-	mineral = "glass"
-	material = "glass"
+obj/structure/door_assembly/multi_tile/New()
+	if(dir in list(EAST, WEST))
+		bound_width = width * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = width * world.icon_size
+	update_state()
 
-/obj/structure/door_assembly/door_assembly_cult/unruned
-	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
+obj/structure/door_assembly/multi_tile/Move()
+	. = ..()
+	if(dir in list(EAST, WEST))
+		bound_width = width * world.icon_size
+		bound_height = world.icon_size
+	else
+		bound_width = world.icon_size
+		bound_height = width * world.icon_size
 
-/obj/structure/door_assembly/door_assembly_cult/unruned/glass
-	mineral = "glass"
-	material = "glass"
+/obj/structure/door_assembly/door_assembly_cult
+	icon = 'icons/obj/doors/Doorcult.dmi'
+	base_icon_state = "construction"
+	base_name = "engraved airlock"
+	airlock_type = "/cult"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_wood
-	name = "wooden airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
-	airlock_type = /obj/machinery/door/airlock/wood
-	anchored = 1
-	state = 1
-	mineral = "wood"
 
-/obj/structure/door_assembly/door_assembly_viro
-	name = "virology airlock assembly"
-	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
-	typetext = "virology"
-	icontext = "viro"
-	glass_type = /obj/machinery/door/airlock/glass_virology
-	airlock_type = /obj/machinery/door/airlock/virology
-	anchored = 1
-	state = 1
+/obj/structure/door_assembly/door_assembly_cultruned
+	icon = 'icons/obj/doors/Doorcultruned.dmi'
+	base_icon_state = "construction"
+	base_name = "runed airlock"
+	airlock_type = "/cult/runed"
+	glass = -1
 
-/obj/structure/door_assembly/door_assembly_viro/glass
-	mineral = "glass"
-	material = "glass"
 
-/obj/structure/door_assembly/door_assembly_centcom
-	typetext = "centcom"
-	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
-	icontext = "ele"
-	airlock_type = /obj/machinery/door/airlock/centcom
-	anchored = 1
-	state = 1
-
-/obj/structure/door_assembly/attackby(obj/item/W, mob/user, params)
+/obj/structure/door_assembly/attackby(obj/item/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter the name for the door.", src.name, src.created_name,MAX_NAME_LEN)
-		if(!t)
-			return
-		if(!in_range(src, usr) && src.loc != usr)
-			return
+		var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+		if(!t)	return
+		if(!in_range(src, usr) && src.loc != usr)	return
 		created_name = t
+		return
 
-	else if(istype(W, /obj/item/weapon/airlock_painter)) // |- Ricotez
-	//INFORMATION ABOUT ADDING A NEW AIRLOCK TO THE PAINT LIST:
-	//If your airlock has a regular version, add it to the list with regular versions.
-	//If your airlock has a glass version, add it to the list with glass versions.
-	//Don't forget to also set has_solid and has_glass to the proper value.
-	//Do NOT add your airlock to a list if it does not have a version for that list,
-	//	or you will get broken icons.
-		var/obj/item/weapon/airlock_painter/WT = W
-		if(WT.can_use(user))
-			var/icontype
-			var/optionlist
-			if(mineral && mineral == "glass")
-				//These airlocks have a glass version.
-				optionlist = list("Public", "Public2", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Mining")
-			else
-				//These airlocks have a regular version.
-				optionlist = list("Public", "Engineering", "Atmospherics", "Security", "Command", "Medical", "Research", "Science", "Mining", "Maintenance", "External", "High Security")
-
-
-			icontype = input(user, "Please select a paintjob for this airlock.") in optionlist
-			if((!in_range(src, usr) && src.loc != usr) || !WT.use(user))
-				return
-			var/has_solid = 0
-			var/has_glass = 0
-			switch(icontype)
-				if("Public")
-					icon = 'icons/obj/doors/airlocks/station/public.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = ""
-					icontext = ""
-					has_solid = 1
-					has_glass = 1
-				if("Public2")
-					icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-					typetext = ""
-					icontext = ""
-					has_solid = 1
-					has_glass = 1
-				if("Engineering")
-					icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "engineering"
-					icontext = "eng"
-					has_solid = 1
-					has_glass = 1
-				if("Atmospherics")
-					icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "atmos"
-					icontext = "atmo"
-					has_solid = 1
-					has_glass = 1
-				if("Security")
-					icon = 'icons/obj/doors/airlocks/station/security.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "security"
-					icontext = "sec"
-					has_solid = 1
-					has_glass = 1
-				if("Command")
-					icon = 'icons/obj/doors/airlocks/station/command.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "command"
-					icontext = "com"
-					has_solid = 1
-					has_glass = 1
-				if("Medical")
-					icon = 'icons/obj/doors/airlocks/station/medical.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "medical"
-					icontext = "med"
-					has_solid = 1
-					has_glass = 1
-				if("Research")
-					icon = 'icons/obj/doors/airlocks/station/research.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "research"
-					icontext = "res"
-					has_solid = 1
-					has_glass = 1
-				if("Science")
-					icon = 'icons/obj/doors/airlocks/station/science.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "research"
-					icontext = "res"
-					has_solid = 1
-					has_glass = 1
-				if("Mining")
-					icon = 'icons/obj/doors/airlocks/station/mining.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "mining"
-					icontext = "min"
-					has_solid = 1
-					has_glass = 1
-				if("Maintenance")
-					icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-					typetext = "maintenance"
-					icontext = "mai"
-					has_solid = 1
-					has_glass = 0
-				if("External")
-					icon = 'icons/obj/doors/airlocks/external/external.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
-					typetext = "external"
-					icontext = "ext"
-					has_solid = 1
-					has_glass = 0
-				if("High Security")
-					icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
-					overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
-					typetext = "highsecurity"
-					icontext = "highsec"
-					has_solid = 1
-					has_glass = 0
-			if(has_solid)
-				airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
-			else
-				airlock_type = /obj/machinery/door/airlock
-
-			if(has_glass)
-				glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
-			else
-				glass_type = /obj/machinery/door/airlock/glass
-
-			if(mineral && mineral != "glass")
-				mineral = null //I know this is stupid, but until we change glass to a boolean it's how this code works.
-			user << "<span class='notice'>You change the paintjob on the airlock assembly.</span>"
-
-	else if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
+	if(istype(W, /obj/item/weapon/weldingtool) && ( (istext(glass)) || (glass == 1) || (!anchored) ))
 		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0,user))
-			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
-								"You start to disassemble the airlock assembly...")
+		if(WT.remove_fuel(0, user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
-
-			if(do_after(user, 40*W.toolspeed, target = src))
-				if( !WT.isOn() )
-					return
-				user << "<span class='notice'>You disassemble the airlock assembly.</span>"
-				deconstruct(TRUE)
-
-	else if(istype(W, /obj/item/weapon/wrench))
-		if(!anchored )
-			var/door_check = 1
-			for(var/obj/machinery/door/D in loc)
-				if(!D.sub_door)
-					door_check = 0
-					break
-
-			if(door_check)
-				playsound(src.loc, W.usesound, 100, 1)
-				user.visible_message("[user] secures the airlock assembly to the floor.", \
-									 "<span class='notice'>You start to secure the airlock assembly to the floor...</span>", \
-									 "<span class='italics'>You hear wrenching.</span>")
-
-				if(do_after(user, 40*W.toolspeed, target = src))
-					if( src.anchored )
-						return
-					user << "<span class='notice'>You secure the airlock assembly.</span>"
-					src.name = "secured airlock assembly"
-					src.anchored = 1
-			else
-				user << "There is another door here!"
-
+			if(istext(glass))
+				user.visible_message("[user] welds the [glass] plating off the airlock assembly.", "You start to weld the [glass] plating off the airlock assembly.")
+				if(do_after(user, 40, target = src))
+					if(!src || !WT.isOn()) return
+					to_chat(user, "\blue You welded the [glass] plating off!")
+					var/M = text2path("/obj/item/stack/sheet/mineral/[glass]")
+					new M(src.loc, 2)
+					glass = 0
+			else if(glass == 1)
+				user.visible_message("[user] welds the glass panel out of the airlock assembly.", "You start to weld the glass panel out of the airlock assembly.")
+				if(do_after(user, 40, target = src))
+					if(!src || !WT.isOn()) return
+					to_chat(user, "\blue You welded the glass panel out!")
+					new /obj/item/stack/sheet/rglass(src.loc)
+					glass = 0
+			else if(!anchored)
+				user.visible_message("[user] dissassembles the airlock assembly.", "You start to dissassemble the airlock assembly.")
+				if(do_after(user, 40, target = src))
+					if(!src || !WT.isOn()) return
+					to_chat(user, "\blue You dissasembled the airlock assembly!")
+					new /obj/item/stack/sheet/metal(src.loc, 4)
+					qdel(src)
 		else
-			playsound(src.loc, W.usesound, 100, 1)
-			user.visible_message("[user] unsecures the airlock assembly from the floor.", \
-								 "<span class='notice'>You start to unsecure the airlock assembly from the floor...</span>", \
-								 "<span class='italics'>You hear wrenching.</span>")
-			if(do_after(user, 40*W.toolspeed, target = src))
-				if(!anchored )
-					return
-				user << "<span class='notice'>You unsecure the airlock assembly.</span>"
-				name = "airlock assembly"
-				anchored = 0
+			to_chat(user, "\blue You need more welding fuel.")
+			return
+
+	else if(istype(W, /obj/item/weapon/wrench) && state == 0)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+		if(anchored)
+			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
+		else
+			user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
+
+		if(do_after(user, 40, target = src))
+			if(!src) return
+			to_chat(user, "\blue You [anchored? "un" : ""]secured the airlock assembly!")
+			anchored = !anchored
 
 	else if(istype(W, /obj/item/stack/cable_coil) && state == 0 && anchored )
-		var/obj/item/stack/cable_coil/C = W
-		if (C.get_amount() < 1)
-			user << "<span class='warning'>You need one length of cable to wire the airlock assembly!</span>"
-			return
-		user.visible_message("[user] wires the airlock assembly.", \
-							"<span class='notice'>You start to wire the airlock assembly...</span>")
+		var/obj/item/stack/cable_coil/coil = W
+		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40, target = src))
-			if(C.get_amount() < 1 || state != 0) return
-			C.use(1)
+			if(!src) return
+			coil.use(1)
 			src.state = 1
-			user << "<span class='notice'>You wire the airlock assembly.</span>"
-			src.name = "wired airlock assembly"
+			to_chat(user, "\blue You wire the Airlock!")
 
 	else if(istype(W, /obj/item/weapon/wirecutters) && state == 1 )
-		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] cuts the wires from the airlock assembly.", \
-							"<span class='notice'>You start to cut the wires from the airlock assembly...</span>")
+		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
-		if(do_after(user, 40*W.toolspeed, target = src))
-			if( src.state != 1 )
-				return
-			user << "<span class='notice'>You cut the wires from the airlock assembly.</span>"
-			new/obj/item/stack/cable_coil(get_turf(user), 1)
-			src.state = 0
-			src.name = "secured airlock assembly"
-
-	else if(istype(W, /obj/item/weapon/electronics/airlock) && state == 1 )
-		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] installs the electronics into the airlock assembly.", \
-							"<span class='notice'>You start to install electronics into the airlock assembly...</span>")
 		if(do_after(user, 40, target = src))
-			if( src.state != 1 )
-				return
-			if(!user.drop_item())
-				return
+			if(!src) return
+			to_chat(user, "\blue You cut the airlock wires.!")
+			new/obj/item/stack/cable_coil(src.loc, 1)
+			src.state = 0
 
-			W.loc = src
-			user << "<span class='notice'>You install the airlock electronics.</span>"
+	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == 1 && W:icon_state != "door_electronics_smoked")
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
+		user.drop_item()
+		W.loc = src
+
+		if(do_after(user, 40, target = src))
+			if(!src) return
+			to_chat(user, "\blue You installed the airlock electronics!")
 			src.state = 2
-			src.name = "near finished airlock assembly"
+			src.name = "Near finished Airlock Assembly"
 			src.electronics = W
-
+		else
+			W.loc = src.loc
 
 	else if(istype(W, /obj/item/weapon/crowbar) && state == 2 )
-		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] removes the electronics from the airlock assembly.", \
-								"<span class='notice'>You start to remove electronics from the airlock assembly...</span>")
+		playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
+		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
-		if(do_after(user, 40*W.toolspeed, target = src))
-			if( src.state != 2 )
-				return
-			user << "<span class='notice'>You remove the airlock electronics.</span>"
+		if(do_after(user, 40, target = src))
+			if(!src) return
+			to_chat(user, "\blue You removed the airlock electronics!")
 			src.state = 1
-			src.name = "wired airlock assembly"
-			var/obj/item/weapon/electronics/airlock/ae
-			if (!electronics)
-				ae = new/obj/item/weapon/electronics/airlock( src.loc )
+			src.name = "Wired Airlock Assembly"
+			var/obj/item/weapon/airlock_electronics/ae
+			if(!electronics)
+				ae = new/obj/item/weapon/airlock_electronics( src.loc )
 			else
 				ae = electronics
 				electronics = null
 				ae.loc = src.loc
-	else if(istype(W, /obj/item/stack/sheet) && !mineral)
-		var/obj/item/stack/sheet/G = W
-		if(G)
-			if(G.get_amount() >= 1)
-				if(istype(G, /obj/item/stack/sheet/rglass) || istype(G, /obj/item/stack/sheet/glass))
+
+	else if(istype(W, /obj/item/stack/sheet) && !glass)
+		var/obj/item/stack/sheet/S = W
+		if(S)
+			if(S.amount>=1)
+				if(istype(S, /obj/item/stack/sheet/rglass))
 					playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-					user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-										"<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+					user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
 					if(do_after(user, 40, target = src))
-						if(G.get_amount() < 1 || mineral) return
-						if (G.type == /obj/item/stack/sheet/rglass)
-							user << "<span class='notice'>You install reinforced glass windows into the airlock assembly.</span>"
-							heat_proof_finished = 1 //reinforced glass makes the airlock heat-proof
-							name = "near finished heat-proofed window airlock assembly"
-						else
-							user << "<span class='notice'>You install regular glass windows into the airlock assembly.</span>"
-							name = "near finished window airlock assembly"
-						G.use(1)
-						mineral = "glass"
-						material = "glass"
-						//This list contains the airlock paintjobs that have a glass version:
-						if(icontext in list("eng", "atmo", "sec", "com", "med", "res", "min"))
-							src.airlock_type = text2path("/obj/machinery/door/airlock/[typetext]")
-							src.glass_type = text2path("/obj/machinery/door/airlock/glass_[typetext]")
-						else
-							//This airlock is default or does not have a glass version, so we revert to the default glass airlock. |- Ricotez
-							airlock_type = /obj/machinery/door/airlock
-							glass_type = /obj/machinery/door/airlock/glass
-							typetext = ""
-							icontext = ""
-				else if(istype(G, /obj/item/stack/sheet/mineral))
-					var/M = G.sheettype
-					if(G.get_amount() >= 2)
+						to_chat(user, "\blue You installed reinforced glass windows into the airlock assembly!")
+						S.use(1)
+						glass = 1
+				else if(istype(S, /obj/item/stack/sheet/mineral) && S.sheettype)
+					var/M = S.sheettype
+					if(S.amount>=2)
 						playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-						user.visible_message("[user] adds [G.name] to the airlock assembly.", \
-										 "<span class='notice'>You start to install [G.name] into the airlock assembly...</span>")
+						user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
 						if(do_after(user, 40, target = src))
-							if(G.get_amount() < 2 || mineral) return
-							user << "<span class='notice'>You install [M] plating into the airlock assembly.</span>"
-							G.use(2)
-							mineral = "[M]"
-							name = "near finished [M] airlock assembly"
-							airlock_type = text2path ("/obj/machinery/door/airlock/[M]")
-							glass_type = /obj/machinery/door/airlock/glass
+							to_chat(user, "\blue You installed [M] plating into the airlock assembly!")
+							S.use(2)
+							glass = "[M]"
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && state == 2 )
-		playsound(src.loc, W.usesound, 100, 1)
-		user.visible_message("[user] finishes the airlock.", \
-							 "<span class='notice'>You start finishing the airlock...</span>")
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		to_chat(user, "\blue Now finishing the airlock.")
 
-		if(do_after(user, 40*W.toolspeed, target = src))
-			if(src.loc && state == 2)
-				user << "<span class='notice'>You finish the airlock.</span>"
-				var/obj/machinery/door/airlock/door
-				if(mineral == "glass")
-					door = new src.glass_type( src.loc )
-				else
-					door = new src.airlock_type( src.loc )
-				//door.req_access = src.req_access
-				door.electronics = src.electronics
-				door.heat_proof = src.heat_proof_finished
-				if(src.electronics.one_access)
-					door.req_one_access = src.electronics.accesses
-				else
-					door.req_access = src.electronics.accesses
-				if(created_name)
-					door.name = created_name
-				src.electronics.loc = door
-				qdel(src)
-	else
-		return ..()
-	update_icon()
-
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
-	if(!material)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
-	else
-		add_overlay(get_airlock_overlay("[material]_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
-
-
-/obj/structure/door_assembly/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
-		var/turf/T = get_turf(src)
-		var/metal_amt = 4
-		if(!disassembled)
-			metal_amt = rand(2,4)
-		new /obj/item/stack/sheet/metal(T, metal_amt)
-		if(mineral)
-			if (mineral == "glass")
-				if(disassembled)
-					if (heat_proof_finished)
-						new /obj/item/stack/sheet/rglass(T)
-					else
-						new /obj/item/stack/sheet/glass(T)
-				else
-					new /obj/item/weapon/shard(T)
+		if(do_after(user, 40, target = src))
+			if(!src) return
+			to_chat(user, "\blue You finish the airlock!")
+			var/path
+			if(istext(glass))
+				path = text2path("/obj/machinery/door/airlock/[glass]")
+			else if(glass == 1)
+				path = text2path("/obj/machinery/door/airlock[glass_type]")
 			else
-				var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
-				new mineral_path(T, 2)
-	qdel(src)
+				path = text2path("/obj/machinery/door/airlock[airlock_type]")
+			var/obj/machinery/door/airlock/door = new path(src.loc)
+			door.assembly_type = type
+			door.electronics = src.electronics
+			if(src.electronics.one_access)
+				door.req_access = null
+				door.req_one_access = src.electronics.conf_access
+			else
+				door.req_access = src.electronics.conf_access
+			if(created_name)
+				door.name = created_name
+			else
+				door.name = "[istext(glass) ? "[glass] airlock" : base_name]"
+			src.electronics.loc = door
+			qdel(src)
+	else
+		..()
+	update_state()
+
+/obj/structure/door_assembly/proc/update_state()
+	icon_state = "door_as_[glass == 1 ? "g" : ""][istext(glass) ? glass : base_icon_state][state]"
+	name = ""
+	switch(state)
+		if(0)
+			if(anchored)
+				name = "Secured "
+		if(1)
+			name = "Wired "
+		if(2)
+			name = "Near Finished "
+	name += "[glass == 1 ? "Window " : ""][istext(glass) ? "[glass] Airlock" : base_name] Assembly"

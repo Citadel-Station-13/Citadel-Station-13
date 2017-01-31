@@ -102,7 +102,7 @@ var/list/diseases = subtypesof(/datum/disease)
 		return
 
 	if(affected_mob)
-		if( affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)) )
+		if(affected_mob.reagents.has_reagent("spaceacillin") || (affected_mob.satiety > 0 && prob(affected_mob.satiety/10)))
 			return
 
 	var/spread_range = 1
@@ -122,13 +122,13 @@ var/list/diseases = subtypesof(/datum/disease)
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/C in oview(spread_range, source))
 			if(isturf(C.loc))
-				if(AStar(source, C.loc,/turf/proc/Distance, spread_range, adjacent = (spread_flags & AIRBORNE) ? /turf/proc/reachableAdjacentAtmosTurfs : /turf/proc/reachableAdjacentTurfs))
+				if(AStar(source, C.loc, /turf/proc/Distance, spread_range, adjacent = (spread_flags & AIRBORNE) ? /turf/proc/reachableAdjacentAtmosTurfs : /turf/proc/reachableAdjacentTurfs))
 					C.ContractDisease(src)
 
 
-/datum/disease/process()
+/datum/disease/proc/process()
 	if(!holder)
-		SSdisease.processing -= src
+		disease_master.processing_diseases -= src
 		return
 
 	if(prob(infectivity))
@@ -155,7 +155,7 @@ var/list/diseases = subtypesof(/datum/disease)
 		if(disease_flags & CAN_RESIST)
 			if(!(type in affected_mob.resistances))
 				affected_mob.resistances += type
-		remove_virus()
+				remove_virus()
 	qdel(src)
 
 
@@ -164,12 +164,16 @@ var/list/diseases = subtypesof(/datum/disease)
 		if(ishuman(affected_mob))
 			var/mob/living/carbon/human/H = affected_mob
 			for(var/obj/item/organ/O in required_organs)
-				if(!locate(O) in H.bodyparts)
+				if(!locate(O) in H.organs)
 					if(!locate(O) in H.internal_organs)
 						cure()
 						return
 
-	SSdisease.processing += src
+	if(disease_master)
+		register()
+
+/datum/disease/proc/register()
+	disease_master.processing_diseases += src
 
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -189,7 +193,8 @@ var/list/diseases = subtypesof(/datum/disease)
 
 
 /datum/disease/Destroy()
-	SSdisease.processing.Remove(src)
+	if(disease_master && disease_master.processing_diseases.Find(src))
+		disease_master.processing_diseases.Remove(src)
 	return ..()
 
 

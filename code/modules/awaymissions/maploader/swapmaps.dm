@@ -1,4 +1,4 @@
-
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /*
 	SwapMaps library by Lummox JR
@@ -117,7 +117,7 @@
 		Builds a filled rectangle of item from one corner turf to the
 		 other, on multiple z-levels if necessary. The corners may be
 		 specified in any order.
-		item is a type path like /turf/closed/wall or /obj/barrel{full=1}.
+		item is a type path like /turf/wall or /obj/barrel{full=1}.
 	swapmap.BuildRectangle(turf/corner1,turf/corner2,item)
 		Builds an unfilled rectangle of item from one corner turf to
 		 the other, on multiple z-levels if necessary.
@@ -326,7 +326,7 @@ swapmap
 		x2+=x1-1
 		y2+=y1-1
 		z2+=z1-1
-		world.maxz=max(z2,world.maxz)	// stretch z if necessary
+		space_manager.increase_max_zlevel_to(z2)	// stretch z if necessary
 		if(!ischunk)
 			swapmaps_loaded[src]=null
 			swapmaps_byname[id]=src
@@ -373,7 +373,7 @@ swapmap
 			mz=max(mz,M.z2)
 		world.maxx=mx
 		world.maxy=my
-		world.maxz=mz
+		space_manager.cut_levels_downto(mz)
 
 	// save and delete
 	proc/Unload()
@@ -420,7 +420,7 @@ swapmap
 		Build procs: Take 2 turfs as corners, plus an item type.
 		An item may be like:
 
-		/turf/closed/wall
+		/turf/wall
 		/obj/fence{icon_state="iron"}
 	 */
 	proc/BuildFilledRectangle(turf/T1,turf/T2,item)
@@ -509,7 +509,7 @@ var/swapmaps_initialized
 var/swapmaps_loaded
 var/swapmaps_byname
 
-/proc/InitializeSwapMaps()
+proc/InitializeSwapMaps()
 	if(swapmaps_initialized) return
 	swapmaps_initialized=1
 	swapmaps_compiled_maxx=world.maxx
@@ -523,16 +523,16 @@ var/swapmaps_byname
 			// so you can look up an icon file by name or vice-versa
 			swapmaps_iconcache[swapmaps_iconcache[V]]=V
 
-/proc/SwapMaps_AddIconToCache(name,icon)
+proc/SwapMaps_AddIconToCache(name,icon)
 	if(!swapmaps_iconcache) swapmaps_iconcache=list()
 	swapmaps_iconcache[name]=icon
 	swapmaps_iconcache[icon]=name
 
-/proc/SwapMaps_Find(id)
+proc/SwapMaps_Find(id)
 	InitializeSwapMaps()
 	return swapmaps_byname[id]
 
-/proc/SwapMaps_Load(id)
+proc/SwapMaps_Load(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M)
@@ -553,29 +553,29 @@ var/swapmaps_byname
 		M.mode=text
 	return M
 
-/proc/SwapMaps_Save(id)
+proc/SwapMaps_Save(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(M) M.Save()
 	return M
 
-/proc/SwapMaps_Save_All()
+proc/SwapMaps_Save_All()
 	InitializeSwapMaps()
 	for(var/swapmap/M in swapmaps_loaded)
 		if(M) M.Save()
 
-/proc/SwapMaps_Unload(id)
+proc/SwapMaps_Unload(id)
 	InitializeSwapMaps()
 	var/swapmap/M=swapmaps_byname[id]
 	if(!M) return	// return silently from an error
 	M.Unload()
 	return 1
 
-/proc/SwapMaps_DeleteFile(id)
+proc/SwapMaps_DeleteFile(id)
 	fdel("map_[id].sav")
 	fdel("map_[id].txt")
 
-/proc/SwapMaps_CreateFromTemplate(template_id)
+proc/SwapMaps_CreateFromTemplate(template_id)
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -586,7 +586,7 @@ var/swapmaps_byname
 	else if(swapmaps_mode!=SWAPMAPS_TEXT && fexists("map_[template_id].txt"))
 		text=1
 	else
-		world.log << "SwapMaps error in SwapMaps_CreateFromTemplate(): map_[template_id] file not found."
+		log_to_dd("SwapMaps error in SwapMaps_CreateFromTemplate(): map_[template_id] file not found.")
 		return
 	if(text)
 		S=new
@@ -602,7 +602,7 @@ var/swapmaps_byname
 	while(M.locked) sleep(1)
 	return M
 
-/proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
+proc/SwapMaps_LoadChunk(chunk_id,turf/locorner)
 	var/swapmap/M=new
 	var/savefile/S
 	var/text=0
@@ -613,7 +613,7 @@ var/swapmaps_byname
 	else if(swapmaps_mode!=SWAPMAPS_TEXT && fexists("map_[chunk_id].txt"))
 		text=1
 	else
-		world.log << "SwapMaps error in SwapMaps_LoadChunk(): map_[chunk_id] file not found."
+		log_to_dd("SwapMaps error in SwapMaps_LoadChunk(): map_[chunk_id] file not found.")
 		return
 	if(text)
 		S=new
@@ -629,11 +629,11 @@ var/swapmaps_byname
 	qdel(M)
 	return 1
 
-/proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
+proc/SwapMaps_SaveChunk(chunk_id,turf/corner1,turf/corner2)
 	if(!corner1 || !corner2)
-		world.log << "SwapMaps error in SwapMaps_SaveChunk():"
-		if(!corner1) world.log << "  corner1 turf is null"
-		if(!corner2) world.log << "  corner2 turf is null"
+		log_to_dd("SwapMaps error in SwapMaps_SaveChunk():")
+		if(!corner1) log_to_dd("  corner1 turf is null")
+		if(!corner2) log_to_dd("  corner2 turf is null")
 		return
 	var/swapmap/M=new
 	M.id=chunk_id
@@ -650,7 +650,7 @@ var/swapmaps_byname
 	qdel(M)
 	return 1
 
-/proc/SwapMaps_GetSize(id)
+proc/SwapMaps_GetSize(id)
 	var/savefile/S
 	var/text=0
 	if(swapmaps_mode==SWAPMAPS_TEXT && fexists("map_[id].txt"))
@@ -660,7 +660,7 @@ var/swapmaps_byname
 	else if(swapmaps_mode!=SWAPMAPS_TEXT && fexists("map_[id].txt"))
 		text=1
 	else
-		world.log << "SwapMaps error in SwapMaps_GetSize(): map_[id] file not found."
+		log_to_dd("SwapMaps error in SwapMaps_GetSize(): map_[id] file not found.")
 		return
 	if(text)
 		S=new

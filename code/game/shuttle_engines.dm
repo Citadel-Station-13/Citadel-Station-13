@@ -1,13 +1,32 @@
-
 /obj/structure/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/structure/shuttle/shuttleRotate(rotation)
+	..()
+	var/matrix/M = transform
+	M.Turn(rotation)
+	transform = M
+
+/obj/structure/shuttle/window
+	name = "shuttle window"
+	icon = 'icons/obj/podwindows.dmi'
+	icon_state = "1"
+	density = 1
+	opacity = 0
+	anchored = 1
+
+	CanPass(atom/movable/mover, turf/target, height, air_group)
+		if(!height || air_group) return 0
+		else return ..()
+
+	CanAtmosPass(turf/T)
+		return !density
 
 /obj/structure/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1
+	anchored = 1.0
 
 /obj/structure/shuttle/engine/heater
 	name = "heater"

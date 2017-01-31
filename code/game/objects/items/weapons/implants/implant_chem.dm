@@ -24,11 +24,11 @@
 /obj/item/weapon/implant/chem/New()
 	..()
 	create_reagents(50)
-	tracked_chem_implants += src
+	tracked_implants += src
 
 /obj/item/weapon/implant/chem/Destroy()
-	..()
-	tracked_chem_implants -= src
+	tracked_implants -= src
+	return ..()
 
 
 
@@ -38,18 +38,17 @@
 		activate(reagents.total_volume)
 
 /obj/item/weapon/implant/chem/activate(cause)
-	if(!cause || !imp_in)
-		return 0
+	if(!cause || !imp_in)	return 0
 	var/mob/living/carbon/R = imp_in
 	var/injectamount = null
-	if (cause == "action_button")
+	if(cause == "action_button")
 		injectamount = reagents.total_volume
 	else
 		injectamount = cause
 	reagents.trans_to(R, injectamount)
-	R << "<span class='italics'>You hear a faint beep.</span>"
+	to_chat(R, "<span class='italics'>You hear a faint beep.</span>")
 	if(!reagents.total_volume)
-		R << "<span class='italics'>You hear a faint click from your chest.</span>"
+		to_chat(R, "<span class='italics'>You hear a faint click from your chest.</span>")
 		qdel(src)
 
 
@@ -60,10 +59,3 @@
 /obj/item/weapon/implantcase/chem/New()
 	imp = new /obj/item/weapon/implant/chem(src)
 	..()
-	
-/obj/item/weapon/implantcase/chem/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/reagent_containers/syringe) && imp)
-		W.afterattack(imp, user, params)
-		return TRUE
-	else
-		return ..()

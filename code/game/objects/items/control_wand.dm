@@ -8,7 +8,7 @@
 	icon = 'icons/obj/device.dmi'
 	name = "control wand"
 	desc = "Remotely controls airlocks."
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/mode = WAND_OPEN
 	var/region_access = 1 //See access.dm
 	var/obj/item/weapon/card/id/ID
@@ -18,6 +18,12 @@
 	ID = new /obj/item/weapon/card/id
 	ID.access = get_region_accesses(region_access)
 
+/obj/item/weapon/door_remote/Destroy()
+	if(ID)
+		qdel(ID)
+		ID = null
+	return ..()
+
 /obj/item/weapon/door_remote/attack_self(mob/user)
 	switch(mode)
 		if(WAND_OPEN)
@@ -26,18 +32,21 @@
 			mode = WAND_EMERGENCY
 		if(WAND_EMERGENCY)
 			mode = WAND_OPEN
-	user << "Now in mode: [mode]."
+	to_chat(user, "Now in mode: [mode].")
 
 /obj/item/weapon/door_remote/afterattack(obj/machinery/door/airlock/D, mob/user)
 	if(!istype(D))
 		return
-	if(!(D.hasPower()))
-		user << "<span class='danger'>[D] has no power!</span>"
+	if(D.is_special)
+		to_chat(user, "<span class='danger'>[src] cannot access this kind of door!</span>")
+		return
+	if(!(D.arePowerSystemsOn()))
+		to_chat(user, "<span class='danger'>[D] has no power!</span>")
 		return
 	if(!D.requiresID())
-		user << "<span class='danger'>[D]'s ID scan is disabled!</span>"
+		to_chat(user, "<span class='danger'>[D]'s ID scan is disabled!</span>")
 		return
-	if(D.check_access(ID) && D.canAIControl(user))
+	if(D.check_access(src.ID))
 		switch(mode)
 			if(WAND_OPEN)
 				if(D.density)
@@ -46,9 +55,9 @@
 					D.close()
 			if(WAND_BOLT)
 				if(D.locked)
-					D.unbolt()
+					D.unlock()
 				else
-					D.bolt()
+					D.lock()
 			if(WAND_EMERGENCY)
 				if(D.emergency)
 					D.emergency = 0
@@ -56,48 +65,54 @@
 					D.emergency = 1
 				D.update_icon()
 	else
-		user << "<span class='danger'>[src] does not have access to this door.</span>"
+		to_chat(user, "<span class='danger'>[src] does not have access to this door.</span>")
 
 /obj/item/weapon/door_remote/omni
 	name = "omni door remote"
 	desc = "This control wand can access any door on the station."
 	icon_state = "gangtool-yellow"
-	region_access = 0
+	region_access = REGION_ALL
 
 /obj/item/weapon/door_remote/captain
 	name = "command door remote"
 	icon_state = "gangtool-yellow"
-	region_access = 7
+	region_access = REGION_COMMAND
 
 /obj/item/weapon/door_remote/chief_engineer
 	name = "engineering door remote"
 	icon_state = "gangtool-orange"
-	region_access = 5
+	region_access = REGION_ENGINEERING
 
 /obj/item/weapon/door_remote/research_director
 	name = "research door remote"
 	icon_state = "gangtool-purple"
-	region_access = 4
+	region_access = REGION_RESEARCH
 
 /obj/item/weapon/door_remote/head_of_security
 	name = "security door remote"
 	icon_state = "gangtool-red"
-	region_access = 2
+	region_access = REGION_SECURITY
 
 /obj/item/weapon/door_remote/quartermaster
 	name = "supply door remote"
 	icon_state = "gangtool-green"
-	region_access = 6
+	region_access = REGION_SUPPLY
 
 /obj/item/weapon/door_remote/chief_medical_officer
 	name = "medical door remote"
 	icon_state = "gangtool-blue"
-	region_access = 3
+	region_access = REGION_MEDBAY
 
 /obj/item/weapon/door_remote/civillian
 	name = "civillian door remote"
 	icon_state = "gangtool-white"
-	region_access = 1
+	region_access = REGION_GENERAL
+
+/obj/item/weapon/door_remote/centcomm
+	name = "centcomm door remote"
+	desc = "High-ranking NT officials only."
+	icon_state = "gangtool-blue"
+	region_access = REGION_CENTCOMM
 
 #undef WAND_OPEN
 #undef WAND_BOLT

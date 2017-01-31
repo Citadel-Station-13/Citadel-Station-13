@@ -1,39 +1,63 @@
-/obj/structure/destructible/cult
+//Noncult
+/obj/structure/cult
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/cult.dmi'
+
+//Noncult As we may have this on maps
+/obj/structure/cult/talisman
+	name = "Altar"
+	desc = "A bloodstained altar dedicated to Nar-Sie"
+	icon_state = "talismanaltar"
+
+/obj/structure/cult/forge
+	name = "Daemon forge"
+	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie"
+	icon_state = "forge"
+
+/obj/structure/cult/pylon
+	name = "Pylon"
+	desc = "A floating crystal that hums with an unearthly energy"
+	icon_state = "pylon"
+	light_range = 5
+	light_color = "#3e0000"
+
+/obj/structure/cult/tome
+	name = "Desk"
+	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl"
+	icon_state = "tomealtar"
+
+//Cult versions cuase fuck map conflicts
+/obj/structure/cult/functional
 	var/cooldowntime = 0
-	break_sound = 'sound/hallucinations/veryfar_noise.ogg'
-	debris = list(/obj/item/stack/sheet/runed_metal = 1)
+	var/health = 100
+	var/death_message = "<span class='warning'>The structure falls apart.</span>" //The message shown when the structure is destroyed
+	var/death_sound = 'sound/items/bikehorn.ogg'
+	var/heathen_message = "You're a huge nerd, go away. Also, a coder forgot to put a message here."
+	var/selection_title = "Oops"
+	var/selection_prompt = "Choose your weapon, nerdwad"
+	var/creation_delay = 2400
+	var/list/choosable_items = list(
+	    "A coder forgot to set this" = /obj/item/weapon/bananapeel
+	)
+	var/creation_message = "A dank smoke comes out, and you pass out. When you come to, you notice a %ITEM%!"
 
-/obj/structure/destructible/cult/examine(mob/user)
-	..()
-	var/can_see_cult = iscultist(user) || isobserver(user)
-	var/t_It = p_they(TRUE)
-	var/t_is = p_are()
-	if(!(resistance_flags & INDESTRUCTIBLE))
-		if(can_see_cult)
-			user << "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
-	user << "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
-	if(can_see_cult && cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is too weak, [t_It] will be ready to use again in [getETA()].</span>"
+/obj/structure/cult/functional/proc/destroy_structure()
+	visible_message(death_message)
+	playsound(src, death_sound, 50, 1)
+	qdel(src)
 
-/obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
-		if(obj_integrity < max_integrity)
-			obj_integrity = min(max_integrity, obj_integrity + 5)
-			Beam(M, icon_state="sendbeam", time=4)
-			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
-		else
-			M << "<span class='cult'>You cannot repair [src], as [p_they()] [p_are()] undamaged!</span>"
-	else
-		..()
+/obj/structure/cult/functional/examine(mob/user)
+	. = ..()
+	if(iscultist(user) && cooldowntime > world.time)
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
 
-/obj/structure/destructible/cult/attackby(obj/I, mob/user, params)
+/obj/structure/cult/functional/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/tome) && iscultist(user))
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "":"un"]secure \the [src] [anchored ? "to":"from"] the floor.</span>")
+		playsound(loc, 'sound/hallucinations/wail.ogg', 75, 1)
 		if(!anchored)
 			icon_state = "[initial(icon_state)]_off"
 		else
@@ -41,14 +65,24 @@
 	else
 		return ..()
 
-/obj/structure/destructible/cult/ratvar_act()
-	if(take_damage(rand(25, 50), BURN) && src) //if we still exist
-		var/previouscolor = color
-		color = "#FAE48C"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(src, "update_atom_colour", 8)
+/obj/structure/cult/functional/attack_hand(mob/living/user)
+	if(!iscultist(user))
+		to_chat(user, "[heathen_message]")
+		return
+	if(!anchored)
+		to_chat(user, "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>")
+		return
+	if(cooldowntime > world.time)
+		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>")
+		return
+	var/choice = input(user, selection_prompt, selection_title) as null|anything in choosable_items
+	var/pickedtype = choosable_items[choice]
+	if(pickedtype && Adjacent(user) && src && !qdeleted(src) && !user.incapacitated() && cooldowntime <= world.time)
+		cooldowntime = world.time + creation_delay
+		var/obj/item/N = new pickedtype(get_turf(src))
+		to_chat(user, replacetext("[creation_message]", "%ITEM%", "[N]"))
 
-/obj/structure/destructible/cult/proc/getETA()
+/obj/structure/cult/functional/proc/getETA()
 	var/time = (cooldowntime - world.time)/600
 	var/eta = "[round(time, 1)] minutes"
 	if(time <= 1)
@@ -56,119 +90,115 @@
 		eta = "[round(time, 1)] seconds"
 	return eta
 
-/obj/structure/destructible/cult/talisman
+/obj/structure/cult/functional/talisman
 	name = "altar"
-	desc = "A bloodstained altar dedicated to Nar-Sie."
+	desc = "A bloodstained altar dedicated to a cult."
 	icon_state = "talismanaltar"
-	break_message = "<span class='warning'>The altar shatters, leaving only the wailing of the damned!</span>"
+	health = 150 //Sturdy
+	death_message = "<span class='warning'>The altar breaks into splinters, releasing a cascade of spirits into the air!</span>"
+	death_sound = 'sound/effects/altar_break.ogg'
+	heathen_message = "<span class='warning'>There is a foreboding aura to the altar and you want nothing to do with it.</span>"
+	selection_prompt = "You study the rituals on the altar..."
+	selection_title = "Altar"
+	creation_message = "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an %ITEM%!</span>"
+	choosable_items = list("Eldritch Whetstone"= /obj/item/weapon/whetstone/cult, "Zealot's Blindfold" = /obj/item/clothing/glasses/night/cultblind, \
+							"Flask of Unholy Water" = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater, "Cultist Dagger" = /obj/item/weapon/melee/cultblade/dagger)
 
-/obj/structure/destructible/cult/talisman/attack_hand(mob/living/user)
-	if(!iscultist(user))
-		user << "<span class='warning'>You're pretty sure you know exactly what this is used for and you can't seem to touch it.</span>"
-		return
-	if(!anchored)
-		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
-		return
-	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
-		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Eldritch Whetstone","Zealot's Blindfold","Flask of Unholy Water")
-	var/pickedtype
-	switch(choice)
-		if("Eldritch Whetstone")
-			pickedtype = /obj/item/weapon/sharpener/cult
-		if("Zealot's Blindfold")
-			pickedtype = /obj/item/clothing/glasses/night/cultblind
-		if("Flask of Unholy Water")
-			pickedtype = /obj/item/weapon/reagent_containers/food/drinks/bottle/unholywater
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
-		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		user << "<span class='cultitalic'>You kneel before the altar and your faith is rewarded with an [N]!</span>"
-
-
-/obj/structure/destructible/cult/forge
+/obj/structure/cult/functional/forge
 	name = "daemon forge"
-	desc = "A forge used in crafting the unholy weapons used by the armies of Nar-Sie."
+	desc = "A forge used in crafting the unholy weapons used by the armies of a cult."
 	icon_state = "forge"
-	luminosity = 3
-	break_message = "<span class='warning'>The force breaks apart into shards with a howling scream!</span>"
+	health = 300 //Made of metal
+	death_message = "<span class='warning'>The forge falls apart, its lava cooling and winking away!</span>"
+	death_sound = 'sound/effects/forge_destroy.ogg'
+	heathen_message = "<span class='warning'>Your hand feels like it's melting off as you try to touch the forge.</span>"
+	selection_prompt = "You study the schematics etched on the forge..."
+	selection_title = "Forge"
+	creation_message = "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating %ITEM%!</span>"
+	choosable_items = list("Shielded Robe" = /obj/item/clothing/suit/hooded/cultrobes/cult_shield, "Flagellant's Robe" = /obj/item/clothing/suit/hooded/cultrobes/berserker, \
+							"Cultist Hardsuit" = /obj/item/weapon/storage/box/cult)
 
-/obj/structure/destructible/cult/forge/attack_hand(mob/living/user)
-	if(!iscultist(user))
-		user << "<span class='warning'>The heat radiating from [src] pushes you back.</span>"
-		return
-	if(!anchored)
-		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
-		return
-	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
-		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
-	var/pickedtype
-	switch(choice)
-		if("Shielded Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
-		if("Flagellant's Robe")
-			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
-		if("Nar-Sien Hardsuit")
-			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
-	if(src && !qdeleted(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
-		cooldowntime = world.time + 2400
-		var/obj/item/N = new pickedtype(get_turf(src))
-		user << "<span class='cultitalic'>You work the forge as dark knowledge guides your hands, creating [N]!</span>"
 
+/obj/structure/cult/functional/forge/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		if(!iscarbon(G.affecting))
+			to_chat(user, "<span class='warning'>You may only dunk carbon-based creatures!</span>")
+			return 0
+		if(G.affecting == LAVA_PROOF)
+			to_chat(user, "<span class='warning'>Is immune to the lava!</span>")
+			return 0
+		if(G.affecting.stat == DEAD)
+			to_chat(user, "<span class='warning'>[G.affecting] is dead!</span>")
+			return 0
+		var/mob/living/carbon/human/C = G.affecting
+		C.visible_message("<span class='danger'>[user] dunks [C]'s face into [src]'s lava!</span>", \
+						"<span class='userdanger'>[user] dunks your face into [src]'s lava!</span>")
+		if(!C.stat)
+			C.emote("scream")
+		user.changeNext_move(CLICK_CD_MELEE)
+		var/obj/item/organ/external/head/head = C.get_organ("head")
+		if(head)
+			C.apply_damage(30, BURN, "head") //30 fire damage because it's FUCKING LAVA
+			head.disfigure("burn") //Your face is unrecognizable because it's FUCKING LAVA
+		return 1
 
 var/list/blacklisted_pylon_turfs = typecacheof(list(
-	/turf/closed,
-	/turf/open/floor/engine/cult,
-	/turf/open/space,
-	/turf/open/floor/plating/lava,
-	/turf/open/chasm))
+	/turf/simulated/floor/engine/cult,
+	/turf/space,
+	/turf/unsimulated/floor/lava,
+	/turf/unsimulated/floor/chasm,
+	/turf/simulated/wall,
+	))
 
-/obj/structure/destructible/cult/pylon
+/obj/structure/cult/functional/pylon
 	name = "pylon"
-	desc = "A floating crystal that slowly heals those faithful to Nar'Sie."
+	desc = "A floating crystal that slowly heals those faithful to a cult."
 	icon_state = "pylon"
-	luminosity = 5
-	break_sound = 'sound/effects/Glassbr2.ogg'
-	break_message = "<span class='warning'>The blood-red crystal falls to the floor and shatters!</span>"
+	light_range = 5
+	light_color = "#3e0000"
+	health = 50 //Very fragile
+	death_message = "<span class='warning'>The pylon's crystal vibrates and glows fiercely before violently shattering!</span>"
+	death_sound = 'sound/effects/pylon_shatter.ogg'
+
 	var/heal_delay = 25
 	var/last_heal = 0
 	var/corrupt_delay = 50
 	var/last_corrupt = 0
 
-/obj/structure/destructible/cult/pylon/New()
-	START_PROCESSING(SSfastprocess, src)
+/obj/structure/cult/functional/pylon/attack_hand(mob/living/user)//override as it should not create anything
+	return
+
+/obj/structure/cult/functional/pylon/New()
+	processing_objects |= src
 	..()
 
-/obj/structure/destructible/cult/pylon/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+/obj/structure/cult/functional/pylon/Destroy()
+	processing_objects.Remove(src)
 	return ..()
 
-/obj/structure/destructible/cult/pylon/process()
+/obj/structure/cult/functional/pylon/process()
 	if(!anchored)
 		return
 	if(last_heal <= world.time)
 		last_heal = world.time + heal_delay
 		for(var/mob/living/L in range(5, src))
-			if(iscultist(L) || isshade(L) || isconstruct(L))
+			if(iscultist(L) || istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 				if(L.health != L.maxHealth)
-					PoolOrNew(/obj/effect/overlay/temp/heal, list(get_turf(src), "#960000"))
+					new /obj/effect/overlay/temp/heal(get_turf(src), "#960000")
 					if(ishuman(L))
-						L.adjustBruteLoss(-1, 0)
-						L.adjustFireLoss(-1, 0)
+						L.adjustBruteLoss(-1)
+						L.adjustFireLoss(-1)
 						L.updatehealth()
-					if(isshade(L) || isconstruct(L))
+					if(istype(L, /mob/living/simple_animal/shade) || istype(L, /mob/living/simple_animal/hostile/construct))
 						var/mob/living/simple_animal/M = L
 						if(M.health < M.maxHealth)
 							M.adjustHealth(-1)
-			CHECK_TICK
 	if(last_corrupt <= world.time)
 		var/list/validturfs = list()
 		var/list/cultturfs = list()
 		for(var/T in circleviewturfs(src, 5))
-			if(istype(T, /turf/open/floor/engine/cult))
+			if(istype(T, /turf/simulated/floor/engine/cult))
 				cultturfs |= T
 				continue
 			if(is_type_in_typecache(T, blacklisted_pylon_turfs))
@@ -180,53 +210,61 @@ var/list/blacklisted_pylon_turfs = typecacheof(list(
 
 		var/turf/T = safepick(validturfs)
 		if(T)
-			T.ChangeTurf(/turf/open/floor/engine/cult)
+			T.ChangeTurf(/turf/simulated/floor/engine/cult)
 		else
-			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
+			var/turf/simulated/floor/engine/cult/F = safepick(cultturfs)
 			if(F)
-				PoolOrNew(/obj/effect/overlay/temp/cult/turf/floor, F)
+				new /obj/effect/overlay/temp/cult/turf/open/floor(F)
 			else
 				// Are we in space or something? No cult turfs or
 				// convertable turfs?
 				last_corrupt = world.time + corrupt_delay*2
 
-/obj/structure/destructible/cult/tome
+
+
+/obj/structure/cult/functional/tome
 	name = "archives"
 	desc = "A desk covered in arcane manuscripts and tomes in unknown languages. Looking at the text makes your skin crawl."
 	icon_state = "tomealtar"
-	luminosity = 1
-	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
-
-/obj/structure/destructible/cult/tome/attack_hand(mob/living/user)
-	if(!iscultist(user))
-		user << "<span class='warning'>All of these books seem to be gibberish.</span>"
-		return
-	if(!anchored)
-		user << "<span class='cultitalic'>You need to anchor [src] to the floor with a tome first.</span>"
-		return
-	if(cooldowntime > world.time)
-		user << "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [getETA()].</span>"
-		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Supply Talisman","Shuttle Curse","Veil Walker Set")
-	var/list/pickedtype = list()
-	switch(choice)
-		if("Supply Talisman")
-			pickedtype += /obj/item/weapon/paper/talisman/supply/weak
-		if("Shuttle Curse")
-			pickedtype += /obj/item/device/shuttle_curse
-		if("Veil Walker Set")
-			pickedtype += /obj/item/device/cult_shift
-			pickedtype += /obj/item/device/flashlight/flare/culttorch
-	if(src && !qdeleted(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
-		cooldowntime = world.time + 2400
-		for(var/N in pickedtype)
-			var/obj/item/D = new N(get_turf(src))
-			user << "<span class='cultitalic'>You summon [D] from the archives!</span>"
+	health = 125 //Slightly sturdy
+	death_message = "<span class='warning'>The desk breaks apart, its books falling to the floor.</span>"
+	death_sound = 'sound/effects/wood_break.ogg'
+	heathen_message = "<span class='cultlarge'>What do you hope to seek?</span>"
+	selection_prompt = "You flip through the black pages of the archives..."
+	selection_title = "Archives"
+	creation_message = "<span class='cultitalic'>You invoke the dark magic of the tomes creating %ITEM%!</span>"
+	choosable_items = list("Supply Talisman" = /obj/item/weapon/paper/talisman/supply/weak, "Shuttle Curse" = /obj/item/device/shuttle_curse, \
+							"Veil Shifter" = /obj/item/device/cult_shift)
 
 /obj/effect/gateway
 	name = "gateway"
-	desc = "You're pretty sure that abyss is staring back."
+	desc = "You're pretty sure that abyss is staring back"
 	icon = 'icons/obj/cult.dmi'
 	icon_state = "hole"
 	density = 1
-	anchored = 1
+	unacidable = 1
+	anchored = 1.0
+
+/obj/effect/gateway/Bumped(mob/M as mob|obj)
+	spawn(0)
+		return
+	return
+
+/obj/effect/gateway/Crossed(AM as mob|obj)
+	spawn(0)
+		return
+	return
+
+
+//Armor kit
+
+/obj/item/weapon/storage/box/cult
+	name = "Dark Forge Cache"
+	can_hold = list("/obj/item/clothing/suit/space/cult", "/obj/item/clothing/head/helmet/space/cult")
+	max_w_class = 3
+
+/obj/item/weapon/storage/box/cult/New()
+	..()
+	new /obj/item/clothing/suit/space/cult(src)
+	new /obj/item/clothing/head/helmet/space/cult(src)
+	return

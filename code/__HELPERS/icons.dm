@@ -132,27 +132,27 @@ mob
 		underlays += image(icon='old_or_unused.dmi',icon_state="red", pixel_x = -32)
 
 		// Testing image overlays
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32))
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32))
-		add_overlay(image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32))
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = -32)
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = 32, pixel_y = 32)
+		overlays += image(icon='old_or_unused.dmi',icon_state="green", pixel_x = -32, pixel_y = -32)
 
 		// Testing icon file overlays (defaults to mob's state)
-		add_overlay('_flat_demoIcons2.dmi')
+		overlays += '_flat_demoIcons2.dmi'
 
 		// Testing icon_state overlays (defaults to mob's icon)
-		add_overlay("white")
+		overlays += "white"
 
 		// Testing dynamic icon overlays
 		var/icon/I = icon('old_or_unused.dmi', icon_state="aqua")
 		I.Shift(NORTH,16,1)
-		add_overlay(I)
+		overlays+=I
 
 		// Testing dynamic image overlays
 		I=image(icon=I,pixel_x = -32, pixel_y = 32)
-		add_overlay(I)
+		overlays+=I
 
 		// Testing object types (and layers)
-		add_overlay(/obj/effect/overlayTest)
+		overlays+=/obj/effect/overlayTest
 
 		loc = locate (10,10,1)
 	verb
@@ -167,7 +167,7 @@ mob
 
 		Output_Icon()
 			set name = "2. Output Icon"
-			src<<"Icon is: \icon[getFlatIcon(src)]"
+			to_chat(src, "Icon is: [bicon(getFlatIcon(src))]")
 
 		Label_Icon()
 			set name = "3. Label Icon"
@@ -182,7 +182,7 @@ mob
 
 		Add_Overlay()
 			set name = "4. Add Overlay"
-			add_overlay(image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
+			overlays += image(icon='old_or_unused.dmi',icon_state="yellow",pixel_x = rand(-64,32), pixel_y = rand(-64,32))
 
 		Stress_Test()
 			set name = "5. Stress Test"
@@ -199,7 +199,7 @@ mob
 				getFlatIcon(src)
 			Browse_Icon()
 
-/obj/effect/overlayTest
+obj/effect/overlayTest
 	icon = 'old_or_unused.dmi'
 	icon_state = "blue"
 	pixel_x = -24
@@ -215,75 +215,85 @@ world
 
 #define TO_HEX_DIGIT(n) ascii2text((n&15) + ((n&15)<10 ? 48 : 87))
 
+icon
+	proc/MakeLying()
+		var/icon/I = new(src,dir=SOUTH)
+		I.BecomeLying()
+		return I
+
+	proc/BecomeLying()
+		Turn(90)
+		Shift(SOUTH,6)
+		Shift(EAST,1)
 
 	// Multiply all alpha values by this float
-/icon/proc/ChangeOpacity(opacity = 1)
-	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
+	proc/ChangeOpacity(opacity = 1.0)
+		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,opacity, 0,0,0,0)
 
-// Convert to grayscale
-/icon/proc/GrayScale()
-	MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
+	// Convert to grayscale
+	proc/GrayScale()
+		MapColors(0.3,0.3,0.3, 0.59,0.59,0.59, 0.11,0.11,0.11, 0,0,0)
 
-/icon/proc/ColorTone(tone)
-	GrayScale()
+	proc/ColorTone(tone)
+		GrayScale()
 
-	var/list/TONE = ReadRGB(tone)
-	var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
+		var/list/TONE = ReadRGB(tone)
+		var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
 
-	var/icon/upper = (255-gray) ? new(src) : null
+		var/icon/upper = (255-gray) ? new(src) : null
 
-	if(gray)
-		MapColors(255/gray,0,0, 0,255/gray,0, 0,0,255/gray, 0,0,0)
-		Blend(tone, ICON_MULTIPLY)
-	else SetIntensity(0)
-	if(255-gray)
-		upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
-		upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
-		Blend(upper, ICON_ADD)
+		if(gray)
+			MapColors(255/gray,0,0, 0,255/gray,0, 0,0,255/gray, 0,0,0)
+			Blend(tone, ICON_MULTIPLY)
+		else SetIntensity(0)
+		if(255-gray)
+			upper.Blend(rgb(gray,gray,gray), ICON_SUBTRACT)
+			upper.MapColors((255-TONE[1])/(255-gray),0,0,0, 0,(255-TONE[2])/(255-gray),0,0, 0,0,(255-TONE[3])/(255-gray),0, 0,0,0,0, 0,0,0,1)
+			Blend(upper, ICON_ADD)
 
-// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
-/icon/proc/MinColors(icon)
-	var/icon/I = new(src)
-	I.Opaque()
-	I.Blend(icon, ICON_SUBTRACT)
-	Blend(I, ICON_SUBTRACT)
+	// Take the minimum color of two icons; combine transparency as if blending with ICON_ADD
+	proc/MinColors(icon)
+		var/icon/I = new(src)
+		I.Opaque()
+		I.Blend(icon, ICON_SUBTRACT)
+		Blend(I, ICON_SUBTRACT)
 
-// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
-/icon/proc/MaxColors(icon)
-	var/icon/I
-	if(isicon(icon))
-		I = new(icon)
-	else
-		// solid color
-		I = new(src)
-		I.Blend("#000000", ICON_OVERLAY)
-		I.SwapColor("#000000", null)
-		I.Blend(icon, ICON_OVERLAY)
-	var/icon/J = new(src)
-	J.Opaque()
-	I.Blend(J, ICON_SUBTRACT)
-	Blend(I, ICON_OR)
+	// Take the maximum color of two icons; combine opacity as if blending with ICON_OR
+	proc/MaxColors(icon)
+		var/icon/I
+		if(isicon(icon))
+			I = new(icon)
+		else
+			// solid color
+			I = new(src)
+			I.Blend("#000000", ICON_OVERLAY)
+			I.SwapColor("#000000", null)
+			I.Blend(icon, ICON_OVERLAY)
+		var/icon/J = new(src)
+		J.Opaque()
+		I.Blend(J, ICON_SUBTRACT)
+		Blend(I, ICON_OR)
 
-// make this icon fully opaque--transparent pixels become black
-/icon/proc/Opaque(background = "#000000")
-	SwapColor(null, background)
-	MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
+	// make this icon fully opaque--transparent pixels become black
+	proc/Opaque(background = "#000000")
+		SwapColor(null, background)
+		MapColors(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,0, 0,0,0,1)
 
-// Change a grayscale icon into a white icon where the original color becomes the alpha
-// I.e., black -> transparent, gray -> translucent white, white -> solid white
-/icon/proc/BecomeAlphaMask()
-	SwapColor(null, "#000000ff")	// don't let transparent become gray
-	MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
+	// Change a grayscale icon into a white icon where the original color becomes the alpha
+	// I.e., black -> transparent, gray -> translucent white, white -> solid white
+	proc/BecomeAlphaMask()
+		SwapColor(null, "#000000ff")	// don't let transparent become gray
+		MapColors(0,0,0,0.3, 0,0,0,0.59, 0,0,0,0.11, 0,0,0,0, 1,1,1,0)
 
-/icon/proc/UseAlphaMask(mask)
-	Opaque()
-	AddAlphaMask(mask)
+	proc/UseAlphaMask(mask)
+		Opaque()
+		AddAlphaMask(mask)
 
-/icon/proc/AddAlphaMask(mask)
-	var/icon/M = new(mask)
-	M.Blend("#ffffff", ICON_SUBTRACT)
-	// apply mask
-	Blend(M, ICON_ADD)
+	proc/AddAlphaMask(mask)
+		var/icon/M = new(mask)
+		M.Blend("#ffffff", ICON_SUBTRACT)
+		// apply mask
+		Blend(M, ICON_ADD)
 
 /*
 	HSV format is represented as "#hhhssvv" or "#hhhssvvaa"
@@ -307,7 +317,7 @@ world
 		Higher value means brighter color
  */
 
-/proc/ReadRGB(rgb)
+proc/ReadRGB(rgb)
 	if(!rgb) return
 
 	// interpret the HSV or HSVA value
@@ -357,7 +367,7 @@ world
 	. = list(r, g, b)
 	if(usealpha) . += alpha
 
-/proc/ReadHSV(hsv)
+proc/ReadHSV(hsv)
 	if(!hsv) return
 
 	// interpret the HSV or HSVA value
@@ -396,7 +406,7 @@ world
 	. = list(hue, sat, val)
 	if(usealpha) . += alpha
 
-/proc/HSVtoRGB(hsv)
+proc/HSVtoRGB(hsv)
 	if(!hsv) return "#000000"
 	var/list/HSV = ReadHSV(hsv)
 	if(!HSV) return "#000000"
@@ -424,7 +434,7 @@ world
 
 	return (HSV.len > 3) ? rgb(r,g,b,HSV[4]) : rgb(r,g,b)
 
-/proc/RGBtoHSV(rgb)
+proc/RGBtoHSV(rgb)
 	if(!rgb) return "#0000000"
 	var/list/RGB = ReadRGB(rgb)
 	if(!RGB) return "#0000000"
@@ -455,7 +465,7 @@ world
 
 	return hsv(hue, sat, val, (RGB.len>3 ? RGB[4] : null))
 
-/proc/hsv(hue, sat, val, alpha)
+proc/hsv(hue, sat, val, alpha)
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
 	if((hue & 0xFF) == 0xFF)
@@ -488,7 +498,7 @@ world
 
 	amount<0 or amount>1 are allowed
  */
-/proc/BlendHSV(hsv1, hsv2, amount)
+proc/BlendHSV(hsv1, hsv2, amount)
 	var/list/HSV1 = ReadHSV(hsv1)
 	var/list/HSV2 = ReadHSV(hsv2)
 
@@ -542,7 +552,7 @@ world
 
 	amount<0 or amount>1 are allowed
  */
-/proc/BlendRGB(rgb1, rgb2, amount)
+proc/BlendRGB(rgb1, rgb2, amount)
 	var/list/RGB1 = ReadRGB(rgb1)
 	var/list/RGB2 = ReadRGB(rgb2)
 
@@ -558,10 +568,10 @@ world
 
 	return isnull(alpha) ? rgb(r, g, b) : rgb(r, g, b, alpha)
 
-/proc/BlendRGBasHSV(rgb1, rgb2, amount)
+proc/BlendRGBasHSV(rgb1, rgb2, amount)
 	return HSVtoRGB(RGBtoHSV(rgb1), RGBtoHSV(rgb2), amount)
 
-/proc/HueToAngle(hue)
+proc/HueToAngle(hue)
 	// normalize hsv in case anything is screwy
 	if(hue < 0 || hue >= 1536) hue %= 1536
 	if(hue < 0) hue += 1536
@@ -569,7 +579,7 @@ world
 	hue -= hue >> 8
 	return hue / (1530/360)
 
-/proc/AngleToHue(angle)
+proc/AngleToHue(angle)
 	// normalize hsv in case anything is screwy
 	if(angle < 0 || angle >= 360) angle -= 360 * round(angle / 360)
 	var/hue = angle * (1530/360)
@@ -579,7 +589,7 @@ world
 
 
 // positive angle rotates forward through red->green->blue
-/proc/RotateHue(hsv, angle)
+proc/RotateHue(hsv, angle)
 	var/list/HSV = ReadHSV(hsv)
 
 	// normalize hsv in case anything is screwy
@@ -601,13 +611,13 @@ world
 	return hsv(HSV[1], HSV[2], HSV[3], (HSV.len > 3 ? HSV[4] : null))
 
 // Convert an rgb color to grayscale
-/proc/GrayScale(rgb)
+proc/GrayScale(rgb)
 	var/list/RGB = ReadRGB(rgb)
 	var/gray = RGB[1]*0.3 + RGB[2]*0.59 + RGB[3]*0.11
 	return (RGB.len > 3) ? rgb(gray, gray, gray, RGB[4]) : rgb(gray, gray, gray)
 
 // Change grayscale color to black->tone->white range
-/proc/ColorTone(rgb, tone)
+proc/ColorTone(rgb, tone)
 	var/list/RGB = ReadRGB(rgb)
 	var/list/TONE = ReadRGB(tone)
 
@@ -618,26 +628,6 @@ world
 	else return BlendRGB(tone, "#ffffff", (gray-tone_gray)/((255-tone_gray) || 1))
 
 
-//Used in the OLD chem colour mixing algorithm
-/proc/GetColors(hex)
-	hex = uppertext(hex)
-	// No alpha set? Default to full alpha.
-	if(length(hex) == 7)
-		hex += "FF"
-	var/hi1 = text2ascii(hex, 2) // R
-	var/lo1 = text2ascii(hex, 3) // R
-	var/hi2 = text2ascii(hex, 4) // G
-	var/lo2 = text2ascii(hex, 5) // G
-	var/hi3 = text2ascii(hex, 6) // B
-	var/lo3 = text2ascii(hex, 7) // B
-	var/hi4 = text2ascii(hex, 8) // A
-	var/lo4 = text2ascii(hex, 9) // A
-	return list(((hi1>= 65 ? hi1-55 : hi1-48)<<4) | (lo1 >= 65 ? lo1-55 : lo1-48),
-		((hi2 >= 65 ? hi2-55 : hi2-48)<<4) | (lo2 >= 65 ? lo2-55 : lo2-48),
-		((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48),
-		((hi4 >= 65 ? hi4-55 : hi4-48)<<4) | (lo4 >= 65 ? lo4-55 : lo4-48))
-
-
 /*
 Get flat icon by DarkCampainger. As it says on the tin, will return an icon with all the overlays
 as a single icon. Useful for when you want to manipulate an icon via the above as overlays are not normally included.
@@ -645,9 +635,9 @@ The _flatIcons list is a cache for generated icon files.
 */
 
 // Creates a single icon from a given /atom or /image.  Only the first argument is required.
-/proc/getFlatIcon(image/A, defdir=A.dir, deficon=A.icon, defstate=A.icon_state, defblend=A.blend_mode)
+/proc/getFlatIcon(image/A, defdir=2, deficon=null, defstate="", defblend=BLEND_DEFAULT)
 	// We start with a blank canvas, otherwise some icon procs crash silently
-	var/icon/flat = icon('icons/effects/effects.dmi', "nothing") // Final flattened icon
+	var/icon/flat = icon('icons/effects/effects.dmi', "icon_state"="nothing") // Final flattened icon
 	if(!A)
 		return flat
 	if(A.alpha <= 0)
@@ -710,7 +700,7 @@ The _flatIcons list is a cache for generated icon files.
 		if(curIndex<=process.len)
 			current = process[curIndex]
 			if(!current)
-				curIndex++ //Try the next layer
+				curIndex++ //Skip this bad layer item
 				continue
 			currentLayer = current:layer
 			if(currentLayer<0) // Special case for FLY_LAYER
@@ -755,6 +745,24 @@ The _flatIcons list is a cache for generated icon files.
 		if(I == copy) // 'I' is an /image based on the object being flattened.
 			curblend = BLEND_OVERLAY
 			add = icon(I:icon, I:icon_state, I:dir)
+			// This checks for a silent failure mode of the icon routine. If the requested dir
+			// doesn't exist in this icon state it returns a 32x32 icon with 0 alpha.
+			if(I:dir != SOUTH && add.Width() == 32 && add.Height() == 32)
+				// Check every pixel for blank (computationally expensive, but the process is limited
+				// by the amount of film on the station, only happens when we hit something that's
+				// turned, and bails at the very first pixel it sees.
+				var/blankpixel;
+				for(var/y;y<=32;y++)
+					for(var/x;x<32;x++)
+						blankpixel = isnull(add.GetPixel(x,y))
+						if(!blankpixel)
+							break
+					if(!blankpixel)
+						break
+				// If we ALWAYS returned a null (which happens when GetPixel encounters something with alpha 0)
+				if(blankpixel)
+					// Pull the default direction.
+					add = icon(I:icon, I:icon_state)
 		else // 'I' is an appearance object.
 			add = getFlatIcon(new/image(I), curdir, curicon, curstate, curblend)
 
@@ -783,8 +791,7 @@ The _flatIcons list is a cache for generated icon files.
 /proc/getIconMask(atom/A)//By yours truly. Creates a dynamic mask for a mob/whatever. /N
 	var/icon/alpha_mask = new(A.icon,A.icon_state)//So we want the default icon and icon state of A.
 	for(var/I in A.overlays)//For every image in overlays. var/image/I will not work, don't try it.
-		if(I:layer>A.layer)
-			continue//If layer is greater than what we need, skip it.
+		if(I:layer>A.layer)	continue//If layer is greater than what we need, skip it.
 		var/icon/image_overlay = new(I:icon,I:icon_state)//Blend only works with icon objects.
 		//Also, icons cannot directly set icon_state. Slower than changing variables but whatever.
 		alpha_mask.Blend(image_overlay,ICON_OR)//OR so they are lumped together in a nice overlay.
@@ -800,21 +807,21 @@ The _flatIcons list is a cache for generated icon files.
 	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)
-				I.pixel_x--
-			if(2)
-				I.pixel_x++
-			if(3)
-				I.pixel_y--
-			if(4)
-				I.pixel_y++
-		add_overlay(I)//And finally add the overlay.
+			if(1)	I.pixel_x--
+			if(2)	I.pixel_x++
+			if(3)	I.pixel_y--
+			if(4)	I.pixel_y++
+		overlays += I//And finally add the overlay.
 
 /proc/getHologramIcon(icon/A, safety=1)//If safety is on, a new icon is not created.
 	var/icon/flat_icon = safety ? A : new(A)//Has to be a new icon to not constantly change the same icon.
+	var/icon/alpha_mask
 	flat_icon.ColorTone(rgb(125,180,225))//Let's make it bluish.
 	flat_icon.ChangeOpacity(0.5)//Make it half transparent.
-	var/icon/alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
+	if(A.Height() == 64)
+		alpha_mask = new('icons/mob/ancient_machine.dmi', "scanline2")//Scaline for tall icons.
+	else
+		alpha_mask = new('icons/effects/effects.dmi', "scanline")//Scanline effect.
 	flat_icon.AddAlphaMask(alpha_mask)//Finally, let's mix in a distortion effect.
 	return flat_icon
 
@@ -826,212 +833,54 @@ The _flatIcons list is a cache for generated icon files.
 		composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 	return composite
 
+proc/adjust_brightness(var/color, var/value)
+	if(!color) return "#FFFFFF"
+	if(!value) return color
 
-//What the mob looks like as animated static
-//By vg's ComicIronic
-/proc/getStaticIcon(icon/A, safety=1)
-	var/icon/flat_icon = safety ? A : new(A)
-	flat_icon.Blend(rgb(255,255,255))
-	flat_icon.BecomeAlphaMask()
-	var/icon/static_icon = new/icon('icons/effects/effects.dmi', "static_base")
-	static_icon.AddAlphaMask(flat_icon)
-	return static_icon
+	var/list/RGB = ReadRGB(color)
+	RGB[1] = Clamp(RGB[1]+value,0,255)
+	RGB[2] = Clamp(RGB[2]+value,0,255)
+	RGB[3] = Clamp(RGB[3]+value,0,255)
+	return rgb(RGB[1],RGB[2],RGB[3])
 
-
-//What the mob looks like as a pitch black outline
-//By vg's ComicIronic
-/proc/getBlankIcon(icon/A, safety=1)
-	var/icon/flat_icon = safety ? A : new(A)
-	flat_icon.Blend(rgb(255,255,255))
-	flat_icon.BecomeAlphaMask()
-	var/icon/blank_icon = new/icon('icons/effects/effects.dmi', "blank_base")
-	blank_icon.AddAlphaMask(flat_icon)
-	return blank_icon
-
-
-//Dwarf fortress style icons based on letters (defaults to the first letter of the Atom's name)
-//By vg's ComicIronic
-/proc/getLetterImage(atom/A, letter= "", uppercase = 0)
-	if(!A)
-		return
-
-	var/icon/atom_icon = new(A.icon, A.icon_state)
-
-	if(!letter)
-		letter = copytext(A.name, 1, 2)
-		if(uppercase == 1)
-			letter = uppertext(letter)
-		else if(uppercase == -1)
-			letter = lowertext(letter)
-
-	var/image/text_image = new(loc = A)
-	text_image.maptext = "<font size = 4>[letter]</font>"
-	text_image.color = AverageColour(atom_icon)
-	text_image.pixel_x = 7
-	text_image.pixel_y = 5
-	del(atom_icon)
-	return text_image
-
-var/global/list/friendly_animal_types = list()
-
-// Pick a random animal instead of the icon, and use that instead
-/proc/getRandomAnimalImage(atom/A)
-	if(!friendly_animal_types.len)
-		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = T
-			if(initial(SA.gold_core_spawnable) == 2)
-				friendly_animal_types += SA
-
-
-	var/mob/living/simple_animal/SA = pick(friendly_animal_types)
-
-	var/icon = initial(SA.icon)
-	var/icon_state = initial(SA.icon_state)
-
-	var/image/final_image = image(icon, icon_state=icon_state, loc = A)
-
-	if(ispath(SA, /mob/living/simple_animal/butterfly))
-		final_image.color = rgb(rand(0,255), rand(0,255), rand(0,255))
-
-	// For debugging
-	final_image.text = initial(SA.name)
-	return final_image
-
-//Find's the average colour of the icon
-//By vg's ComicIronic
-/proc/AverageColour(icon/I)
-	var/list/colours = list()
-	for(var/x_pixel = 1 to I.Width())
-		for(var/y_pixel = 1 to I.Height())
-			var/this_colour = I.GetPixel(x_pixel, y_pixel)
-			if(this_colour)
-				colours.Add(this_colour)
-
-	if(!colours.len)
-		return null
-
-	var/final_average = colours[1]
-	for(var/colour in (colours - colours[1]))
-		final_average = BlendRGB(final_average, colour, 1)
-	return final_average
-
+proc/sort_atoms_by_layer(var/list/atoms)
+	// Comb sort icons based on levels
+	var/list/result = atoms.Copy()
+	var/gap = result.len
+	var/swapped = 1
+	while(gap > 1 || swapped)
+		swapped = 0
+		if(gap > 1)
+			gap = round(gap / 1.3) // 1.3 is the emperic comb sort coefficient
+		if(gap < 1)
+			gap = 1
+		for(var/i = 1; gap + i <= result.len; i++)
+			var/atom/l = result[i]		//Fucking hate
+			var/atom/r = result[gap+i]	//how lists work here
+			if(l.layer > r.layer)		//no "result[i].layer" for me
+				result.Swap(i, gap + i)
+				swapped = 1
+	return result
 
 //Interface for using DrawBox() to draw 1 pixel on a coordinate.
 //Returns the same icon specifed in the argument, but with the pixel drawn
-/proc/DrawPixel(icon/I,colour,drawX,drawY)
+/proc/DrawPixel(var/icon/I,var/colour,var/drawX,var/drawY)
 	if(!I)
 		return 0
-
 	var/Iwidth = I.Width()
 	var/Iheight = I.Height()
-
 	if(drawX > Iwidth || drawX <= 0)
 		return 0
 	if(drawY > Iheight || drawY <= 0)
 		return 0
-
 	I.DrawBox(colour,drawX, drawY)
 	return I
 
-
 //Interface for easy drawing of one pixel on an atom.
-/atom/proc/DrawPixelOn(colour, drawX, drawY)
+/atom/proc/DrawPixelOn(var/colour, var/drawX, var/drawY)
 	var/icon/I = new(icon)
 	var/icon/J = DrawPixel(I, colour, drawX, drawY)
 	if(J) //Only set the icon if it succeeded, the icon without the pixel is 1000x better than a black square.
 		icon = J
 		return J
 	return 0
-
-/atom/proc/cut_overlays()
-	overlays.Cut()
-	overlays += priority_overlays
-
-/atom/proc/add_overlay(image, priority = 0)
-	var/list/new_overlays = overlays.Copy()
-	new_overlays -= image
-	if(priority)
-		if(!priority_overlays)
-			priority_overlays = list()
-		priority_overlays += image
-		new_overlays += image
-	else
-		if(priority_overlays)
-			new_overlays -= priority_overlays
-			new_overlays += image
-			new_overlays += priority_overlays
-		else
-			new_overlays += image
-	overlays = new_overlays
-
-var/global/list/humanoid_icon_cache = list()
-//For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(var/icon_id,var/outfit,var/datum/preferences/prefs)
-	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new()
-
-		if(prefs)
-			prefs.copy_to(body)
-		if(outfit)
-			body.equipOutfit(outfit, TRUE)
-
-		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-
-		body.setDir(NORTH)
-		var/icon/partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=NORTH)
-
-		body.setDir(SOUTH)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=SOUTH)
-
-		body.setDir(WEST)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=WEST)
-
-		body.setDir(EAST)
-		partial = getFlatIcon(body)
-		out_icon.Insert(partial,dir=EAST)
-
-		qdel(body)
-
-		humanoid_icon_cache[icon_id] = out_icon
-		return out_icon
-	else
-		return humanoid_icon_cache[icon_id]
-
-
-//Hook, override to run code on- wait this is images
-//Images have dir without being an atom, so they get their own definition.
-//Lame.
-/image/proc/setDir(newdir)
-	dir = newdir
-
-// Used to make the frozen item visuals for Freon.
-var/list/freeze_item_icons = list()
-
-/atom/proc/freeze_icon_index()
-	return "\ref[initial(icon)]-[initial(icon_state)]"
-
-/obj/proc/make_frozen_visual()
-	if(!is_frozen && (initial(icon) && initial(icon_state)))
-		var/index = freeze_icon_index()
-		var/icon/IC
-		var/icon/P = freeze_item_icons[index]
-		if(!P)
-			P = new /icon
-			for(var/iconstate in icon_states(icon))
-				var/icon/O = new('icons/effects/freeze.dmi', "ice_cube")
-				IC = new(icon, iconstate)
-				O.Blend(IC, ICON_ADD)
-				P.Insert(O, iconstate)
-			freeze_item_icons[index] = P
-		icon = P
-		name = "frozen [name]"
-		is_frozen = TRUE
-
-//Assumes already frozed
-obj/proc/make_unfrozen()
-	icon = initial(icon)
-	name = replacetext(name, "frozen ", "")
-	is_frozen = FALSE
