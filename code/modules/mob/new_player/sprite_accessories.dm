@@ -1492,6 +1492,12 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/shark/datashark
+	name = "datashark"
+	icon_state = "datashark"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/squirrel
 	name = "Squirrel"
 	icon_state = "squirrel"
@@ -1660,6 +1666,13 @@
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
 	icon_state = "shark"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+
+/datum/sprite_accessory/mam_tails/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
