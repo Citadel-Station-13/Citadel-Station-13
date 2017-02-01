@@ -1,16 +1,16 @@
 
 //these aren't defines so they can stay in this file
-var/const/RESIZE_HUGE = 2
-var/const/RESIZE_BIG = 1.5
-var/const/RESIZE_NORMAL = 1
-var/const/RESIZE_SMALL = 0.85
-var/const/RESIZE_TINY = 0.50
+var/const/SIZESCALE_HUGE = 2
+var/const/SIZESCALE_BIG = 1.5
+var/const/SIZESCALE_NORMAL = 1
+var/const/SIZESCALE_SMALL = 0.85
+var/const/SIZESCALE_TINY = 0.50
 
 //average
-var/const/RESIZE_A_HUGEBIG = (RESIZE_HUGE + RESIZE_BIG) / 2
-var/const/RESIZE_A_BIGNORMAL = (RESIZE_BIG + RESIZE_NORMAL) / 2
-var/const/RESIZE_A_NORMALSMALL = (RESIZE_NORMAL + RESIZE_SMALL) / 2
-var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
+var/const/SIZESCALE_A_HUGEBIG = (SIZESCALE_HUGE + SIZESCALE_BIG) / 2
+var/const/SIZESCALE_A_BIGNORMAL = (SIZESCALE_BIG + SIZESCALE_NORMAL) / 2
+var/const/SIZESCALE_A_NORMALSMALL = (SIZESCALE_NORMAL + SIZESCALE_SMALL) / 2
+var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 
 // Adding needed defines to /mob/living
 // Note: Polaris had this on /mob/living/carbon/human We need it higher up for animals and stuff.
@@ -23,13 +23,13 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 
 /**
  * Scale up the size of a mob's icon by the size_multiplier.
- * NOTE: mob/living/carbon/human/update_icons() has a more complicated system and
+ * NOTE: mob/living/carbon/human/update_transform() has a more complicated system and
  * 	is already applying this transform.   BUT, it does not call ..()
  *	as long as that is true, we should be fine.  If that changes we need to
  *	re-evaluate.
  */
-/mob/living/update_icons()
-//	ASSERT(!iscarbon(src))
+/mob/living/update_transform()
+	ASSERT(!iscarbon(src))
 	var/matrix/M = matrix()
 	M.Scale(size_multiplier)
 	M.Translate(0, 16*(size_multiplier-1))
@@ -48,14 +48,14 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
  * Resizes the mob immediately to the desired mod, animating it growing/shrinking.
  * It can be used by anything that calls it.
  */
-/mob/living/proc/resize(var/new_size)
-	var/matrix/resize = matrix() // Defines the matrix to change the player's size
-	resize.Scale(new_size) //Change the size of the matrix
+/mob/living/proc/sizescale(var/new_size)
+	var/matrix/sizescale = matrix() // Defines the matrix to change the player's size
+	sizescale.Scale(new_size) //Change the size of the matrix
 
-	if(new_size >= RESIZE_NORMAL)
-		resize.Translate(0, -1 * (1 - new_size) * 16) //Move the player up in the tile so their feet align with the bottom
+	if(new_size >= SIZESCALE_NORMAL)
+		sizescale.Translate(0, -1 * (1 - new_size) * 16) //Move the player up in the tile so their feet align with the bottom
 
-	animate(src, transform = resize, time = 5) //Animate the player resizing
+	animate(src, transform = sizescale, time = 5) //Animate the player resizing
 	size_multiplier = new_size //Change size_multiplier so that other items can interact with them
 
 /*
@@ -72,12 +72,12 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
 
 	var/size_name = input(nagmessage, "Pick a Size") in player_sizes_list
 	if (size_name && player_sizes_list[size_name])
-		src.resize(player_sizes_list[size_name])
-		message_admins("[key_name(src)] used the resize command in-game to be [size_name]. \
+		src.sizescale(player_sizes_list[size_name])
+		message_admins("[key_name(src)] used the sizescale command in-game to be [size_name]. \
 			([src ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>" : "null"])")
 
 /** Add the set_size() proc to usable verbs. */
-/hook/living_new/proc/resize_setup(mob/living/M)
+/hook/living_new/proc/sizescale_setup(mob/living/M)
 	M.verbs += /mob/living/proc/set_size
 	return 1
 
@@ -105,7 +105,7 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
  * // TODO - can the now_pushing = 0 be moved up? What does it do anyway?
  */
 /mob/living/proc/handle_micro_bump_helping(var/mob/living/tmob)
-	if(src.get_effective_size() <= RESIZE_A_SMALLTINY && tmob.get_effective_size() <= RESIZE_A_SMALLTINY)
+	if(src.get_effective_size() <= SIZESCALE_A_SMALLTINY && tmob.get_effective_size() <= SIZESCALE_A_SMALLTINY)
 		// Both small! Go ahead and
 		now_pushing = 0
 		return 1
@@ -139,7 +139,7 @@ var/const/RESIZE_A_SMALLTINY = (RESIZE_SMALL + RESIZE_TINY) / 2
  * @return false if normal code should continue, 1 to prevent normal code.
  */
 /mob/living/proc/handle_micro_bump_other(var/mob/living/tmob)
-	ASSERT(istype(tmob)) // Baby don't hurt me
+	ASSERT(isliving(tmob)) // Baby don't hurt me
 
 	if(src.a_intent == "disarm" && src.canmove && !src.buckled)
 		// If bigger than them by at least 0.75, move onto them and print message.

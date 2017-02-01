@@ -172,7 +172,7 @@
 				M.pass_flags &= ~PASSMOB
 
 			// In case of micros, we don't swap positions; instead occupying the same square!
-			if (handle_micro_bump_helping(M)) return
+			if (handle_micro_bump_helping(src)) return
 
 			now_pushing = 0
 			return 1
