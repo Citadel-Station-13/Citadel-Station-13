@@ -130,4 +130,5 @@
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define MUTCOLORS2		26
 #define MUTCOLORS3		27
+#define HAS_MARKINGS	28
 //#define SUBSPECIES		28

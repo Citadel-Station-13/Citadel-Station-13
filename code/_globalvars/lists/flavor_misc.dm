@@ -16,10 +16,12 @@ var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Socks
 var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
-	//Lizard Bits (all datum lists indexed by name)
+	//Body Markings
 var/global/list/body_markings_list = list()
-var/global/list/tails_list_lizard = list()
-var/global/list/animated_tails_list_lizard = list()
+	//Tails
+var/global/list/tails_list = list()
+var/global/list/animated_tails_list = list()
+	//Bits (all datum lists indexed by name)
 var/global/list/snouts_list = list()
 var/global/list/horns_list = list()
 var/global/list/frills_list = list()
@@ -28,8 +30,6 @@ var/global/list/legs_list = list()
 var/global/list/animated_spines_list = list()
 
 	//Mutant Human bits
-var/global/list/tails_list_human = list()
-var/global/list/animated_tails_list_human = list()
 var/global/list/ears_list = list()
 var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()

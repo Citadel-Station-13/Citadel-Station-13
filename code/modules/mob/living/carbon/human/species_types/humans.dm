@@ -3,14 +3,14 @@
 	id = "human"
 	default_color = "FFFFFF"
 	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears")
-	default_features = list("tail_human" = "None", "ears" = "None")
+	mutant_bodyparts = list("tail", "ears")
+	default_features = list("tail" = "None", "ears" = "None")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
-	if((!features["tail_human"] || features["tail_human"] == "None") && (!features["ears"] || features["ears"] == "None"))
+	if((!features["tail"] || features["tail"] == "None") && (!features["ears"] || features["ears"] == "None"))
 		return TRUE	//Pure humans are always allowed in all roles.
 	return ..()
 

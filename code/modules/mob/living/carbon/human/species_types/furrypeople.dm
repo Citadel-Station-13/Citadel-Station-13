@@ -4,8 +4,8 @@ datum/species/canid
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 //	subspecies = list("fox")
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
+	mutant_bodyparts = list("tail", "ears", "body_markings", "snout", "legs")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "Fox", "tail" = "None", "ears" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -22,8 +22,8 @@ datum/species/canid
 	id = "felid"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
+	mutant_bodyparts = list("body_markings", "ears", "tail", "snout", "legs")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "Belly", "ears" = "Big Cat", "tail" = "Big Cat")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -48,24 +48,29 @@ datum/species/canid
 	blacklisted = 1
 
 //AQUATIC//
-/datum/species/shark
-	name = "Shark"
-	id = "shark"
+/datum/species/aquatic
+	name = "Aquatic"
+	id = "aquatic"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark")
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","tail" = "shark")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1 //no sprites yet
 
+/datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
 //INSECT//
-/datum/species/moth
-	name = "Moth"
-	id = "moth"
+/datum/species/insect
+	name = "Insect"
+	id = "insect"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
