@@ -307,27 +307,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
-	S["feature_lizard_tail"]			>> features["tail_lizard"]
-	S["feature_lizard_snout"]			>> features["snout"]
+	S["feature_tail"]					>> features["tail"]
+	S["feature_snout"]					>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
-	S["feature_lizard_body_markings"]	>> features["body_markings"]
-	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
-	S["feature_mam_tail"]				>> features["mam_tail"]
-	S["feature_mam_ears"]				>> features["mam_ears"]
-	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
+	S["feature_body_markings"]			>> features["body_markings"]
 	//Xeno features
 	S["feature_xeno_tail"]				>> features["xenotail"]
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	if(!config.mutant_humans)
-		features["tail_human"] = "none"
-		features["ears"] = "none"
-	else
-		S["feature_human_tail"]				>> features["tail_human"]
-		S["feature_human_ears"]				>> features["ears"]
+	S["feature_ears"]					>> features["ears"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -388,17 +379,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
-	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
-	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
+	features["tail"]	= sanitize_inlist(features["tail"], tails_list)
 	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
 	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
 	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
-	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
-	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
-	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
 	//Xeno features
 	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
 	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
@@ -450,18 +437,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mcolor"]					<< features["mcolor"]
 	S["feature_mcolor2"]				<< features["mcolor2"]
 	S["feature_mcolor3"]				<< features["mcolor3"]
-	S["feature_lizard_tail"]			<< features["tail_lizard"]
-	S["feature_human_tail"]				<< features["tail_human"]
-	S["feature_lizard_snout"]			<< features["snout"]
+	S["feature_tail"]					<< features["tail"]
+	S["feature_snout"]					<< features["snout"]
 	S["feature_lizard_horns"]			<< features["horns"]
-	S["feature_human_ears"]				<< features["ears"]
+	S["feature_ears"]					<< features["ears"]
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
-	S["feature_lizard_body_markings"]	<< features["body_markings"]
-	S["feature_mam_body_markings"]		<< features["mam_body_markings"]
-	S["feature_mam_tail"]				<< features["mam_tail"]
-	S["feature_mam_ears"]				<< features["mam_ears"]
-	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
+	S["feature_body_markings"]			<< features["body_markings"]
 	//Xeno features
 	S["feature_xeno_tail"]				<< features["xenotail"]
 	S["feature_xeno_dors"]				<< features["xenodorsal"]
@@ -504,8 +486,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[slot]"
 
 	S["belly_prefs"]	>> belly_prefs
-	S["devourable"] >> devourable
-	S["digestable"]	>> digestable
+	S["devourable"] 	>> devourable
+	S["digestable"]		>> digestable
 
 	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
 	devourable = sanitize_integer(devourable, 0, 1, initial(devourable))
@@ -522,8 +504,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S.cd = "/character[default_slot]"
 
 	S["belly_prefs"]	<< belly_prefs
-	S["devourable"] << devourable
-	S["digestable"]	<< digestable
+	S["devourable"]		<< devourable
+	S["digestable"]		<< digestable
 
 	return 1
 

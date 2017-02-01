@@ -61,8 +61,8 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
+	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None",
+							"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -262,76 +262,74 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
-			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
+			if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
 
-				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+				dat += "<td valign='top' width='21%'>"
 
-					dat += "<td valign='top' width='21%'>"
+				dat += "<h3>Alien/Mutant Colors</h3>"
 
-					dat += "<h3>Alien/Mutant Colors</h3>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
 
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
 
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+				dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("tail" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("tail_lizard" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Tail</h3>"
 
-					dat += "<h3>Tail</h3>"
+				dat += "<a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("snout" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("snout" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Snout</h3>"
 
-					dat += "<h3>Snout</h3>"
+				dat += "<a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("horns" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Horns</h3>"
 
-					dat += "<h3>Horns</h3>"
+				dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("frills" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("frills" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Frills</h3>"
 
-					dat += "<h3>Frills</h3>"
+				dat += "<a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("spines" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("spines" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Spines</h3>"
 
-					dat += "<h3>Spines</h3>"
+				dat += "<a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
+				dat += "</td>"
 
-					dat += "</td>"
+			if("body_markings" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Body Markings</h3>"
 
-					dat += "<h3>Body Markings</h3>"
+				dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
-
-					dat += "</td>"
-
+				dat += "</td>"
+/*
 				//Mammal bodyparts
 				if("mam_body_markings" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
@@ -348,16 +346,16 @@ var/list/preferences_datums = list()
 					dat += "<h3>Tail</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
+*/
+			if("legs" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("legs" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Legs</h3>"
 
-					dat += "<h3>Legs</h3>"
+				dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
-
-					dat += "</td>"
-
+				dat += "</td>"
+/*
 				if("mam_ears" in pref_species.mutant_bodyparts)
 					dat += "<td valign='top' width='7%'>"
 
@@ -366,63 +364,62 @@ var/list/preferences_datums = list()
 					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
 
 					dat += "</td>"
-
+*/
 //Xeno Bodyparts
-				if("xenohead" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+			if("xenohead" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-					dat += "<h3>Head/Caste</h3>"
+				dat += "<h3>Head/Caste</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
 
-					dat += "</td>"
+				dat += "</td>"
 
-				if("xenotail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+			if("xenotail" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-					dat += "<h3>Tail</h3>"
+				dat += "<h3>Tail</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
 
-					dat += "</td>"
+				dat += "</td>"
 
-				if("xenodorsal" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+			if("xenodorsal" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-					dat += "<h3>Dorsal Tubes</h3>"
+				dat += "<h3>Dorsal Tubes</h3>"
 
-					dat += "<a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
 
-					dat += "</td>"
+				dat += "</td>"
 
-			if(config.mutant_humans)
+/*
+			if("tail_human" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Tail</h3>"
 
-					dat += "<h3>Tail</h3>"
+				dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
 
-					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+				dat += "</td>"
+*/
+			if("ears" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
 
-					dat += "</td>"
+				dat += "<h3>Ears</h3>"
 
-				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
 
-					dat += "<h3>Ears</h3>"
+				dat += "</td>"
 
-					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+			if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+				dat += "<td valign='top' width='7%'>"
 
-					dat += "</td>"
+				dat += "<h3>Wings</h3>"
 
-				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
-					dat += "<td valign='top' width='7%'>"
+				dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
-					dat += "<h3>Wings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
-
-					dat += "</td>"
+				dat += "</td>"
 
 			dat += "</tr></table>"
 
@@ -948,6 +945,35 @@ var/list/preferences_datums = list()
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
+				if("species")
+/*					var/list/new_species = roundstart_species
+					var/prev_species = species
+						var/whitelisted = 0
+
+					if(get_racelist) //If we're using the whitelist, make sure to check it!
+						for(var/S in whitelisted_species)
+							if(is_alien_whitelisted(user,S))
+								new_species += S
+									whitelisted = 1
+							if(!whitelisted)
+								alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
+					else //Not using the whitelist? Aliens for everyone!
+						new_species += whitelisted_species
+*/
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+
+					if(result)
+						var/newtype = roundstart_species[result]
+						pref_species = new newtype()
+						//Now that we changed our species, we must verify that the mutant colour is still allowed.
+						var/temp_hsv = RGBtoHSV(features["mcolor"])
+						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+							features["mcolor"] = pref_species.default_color
+						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+							features["mcolor2"] = pref_species.default_color
+						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
+							features["mcolor3"] = pref_species.default_color
+
 				if("hair")
 					var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as null|color
 					if(new_hair)
@@ -1030,22 +1056,6 @@ var/list/preferences_datums = list()
 					if(new_eyes)
 						eye_color = sanitize_hexcolor(new_eyes)
 
-				if("species")
-
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
-
-					if(result)
-						var/newtype = roundstart_species[result]
-						pref_species = new newtype()
-						//Now that we changed our species, we must verify that the mutant colour is still allowed.
-						var/temp_hsv = RGBtoHSV(features["mcolor"])
-						if(features["mcolor"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
-							features["mcolor"] = pref_species.default_color
-						if(features["mcolor2"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
-							features["mcolor2"] = pref_species.default_color
-						if(features["mcolor3"] == "#000" || (!(MUTCOLORS_PARTSONLY in pref_species.species_traits) && ReadHSV(temp_hsv)[3] < ReadHSV("#202020")[3]))
-							features["mcolor3"] = pref_species.default_color
-
 				if("mutant_color")
 					var/new_mutantcolor = input(user, "Choose your character's primary alien/mutant color:", "Character Preference") as color|null
 					if(new_mutantcolor)
@@ -1079,32 +1089,27 @@ var/list/preferences_datums = list()
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
-				if("tail_lizard")
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
-					if(new_tail)
-						features["tail_lizard"] = new_tail
+				if("tail")
+					if(pref_species in list(("human", "lizard", "canid", "feline", "avian", "aquatic"))) //Species with tails
+						valid_tails = list()
+							valid_tails("none") =
+							for(var/tails in tails_list)
+								var/datum/sprite_accessory/M = tails_list[tails]
+								if(!(pref_species in M.species_allowed))
+									continue
+								valid_tails += tails
 
+							var/new_tails
+							new_tails = input(user, "Choose your character's tail:", "Character Preference") as null|anything in valid_tails
+							if(new_tails)
+								features["tails"] = new_tails
+/*
 				if("tail_human")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
 					if(new_tail)
 						features["tail_human"] = new_tail
-
-				if("mam_tail")
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
-					if(new_tail)
-						features["mam_tail"] = new_tail
-
-/*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
-				if("mam_snout")
-					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in mam_snouts_list
-					if(new_snout)
-						features["snout"] = new_snout
 */
-
 				if("snout")
 					var/new_snout
 					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
@@ -1117,17 +1122,20 @@ var/list/preferences_datums = list()
 					if(new_horns)
 						features["horns"] = new_horns
 
-				if("mam_ears")
-					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in mam_ears_list
-					if(new_ears)
-						features["mam_ears"] = new_ears
-
 				if("ears")
-					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
-					if(new_ears)
-						features["ears"] = new_ears
+					if(pref_species in list(("human", "lizard", "canid", "feline", "avian", "aquatic", "insect"))) //Species with ears.
+						var/valid_ears = list()
+							valid_ears["None"] = ears_list["None"]
+							for(var/ears in ears_list)
+								var/datum/sprite_accessory/M = ears_list[ears]
+								if(!(pref_species in M.species_allowed))
+									continue
+								valid_ears += ears
+
+							var/new_ears
+							new_ears = input(user, "Choose the style of your character's ears:", "Character Preference") as null|anything in valid_ears
+							if(new_ears)
+								features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
@@ -1148,17 +1156,26 @@ var/list/preferences_datums = list()
 						features["spines"] = new_spines
 
 				if("body_markings")
-					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
-					if(new_body_markings)
-						features["body_markings"] = new_body_markings
+					if(pref_species in list(("human", "lizard", "canid", "feline", "avian", "aquatic", "insect"))) //Species with body markings.
+						var/list/valid_markings = list()
+							valid_markings["None"] = body_markings_list["None"]
+							for(var/body_markings in body_markings_list)
+								var/datum/sprite_accessory/M = body_markings_list[body_markings]
+								if(!(pref_species in M.species_allowed))
+									continue
+								valid_markings += body_markings
 
+							var/new_body_markings
+							new_body_markings = input(user, "Choose the style of your character's body markings:", "Character Preference") as null|anything in valid_markings
+							if(new_body_markings)
+								features["body_markings"] = new_body_markings
+/*
 				if("mam_body_markings")
 					var/new_mam_body_markings
 					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in mam_body_markings_list
 					if(new_mam_body_markings)
 						features["mam_body_markings"] = new_mam_body_markings
-
+*/
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
 					var/new_head
