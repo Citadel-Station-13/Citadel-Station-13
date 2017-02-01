@@ -4,7 +4,7 @@ var/const/SIZESCALE_HUGE = 2
 var/const/SIZESCALE_BIG = 1.5
 var/const/SIZESCALE_NORMAL = 1
 var/const/SIZESCALE_SMALL = 0.85
-var/const/SIZESCALE_TINY = 0.50
+var/const/SIZESCALE_TINY = 0.60
 
 //average
 var/const/SIZESCALE_A_HUGEBIG = (SIZESCALE_HUGE + SIZESCALE_BIG) / 2
@@ -108,6 +108,7 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 	if(src.get_effective_size() <= SIZESCALE_A_SMALLTINY && tmob.get_effective_size() <= SIZESCALE_A_SMALLTINY)
 		// Both small! Go ahead and
 		now_pushing = 0
+		src.forceMove(tmob.loc)
 		return 1
 	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
 		now_pushing = 0
@@ -118,7 +119,9 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 			if(istype(tmob) && istype(tmob.tail_style, /datum/sprite_accessory/tail/taur/naga))
 				src << "You carefully slither around [tmob]."
 				M << "[src]'s huge tail slithers past beside you!"
-			else */
+			else
+*/
+			src.forceMove(tmob.loc)
 			src << "You carefully step over [tmob]."
 			tmob << "[src] steps over you carefully!"
 		if(tmob.get_effective_size() > src.get_effective_size())
@@ -126,7 +129,9 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 				src << "You jump over [M]'s thick tail."
 				M << "[src] bounds over your tail."
-			else */
+			else
+*/
+			src.forceMove(tmob.loc)
 			src << "You run between [tmob]'s legs."
 			tmob << "[src] runs between your legs."
 		return 1
@@ -152,7 +157,8 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 			if(istype(H) && istype(H.tail_style, /datum/sprite_accessory/tail/taur/naga))
 				src << "You carefully squish [tmob] under your tail!"
 				tmob << "[src] pins you under their tail!"
-			else */
+			else
+*/
 			src << "You pin [tmob] beneath your foot!"
 			tmob << "[src] pins you beneath their foot!"
 		return 1
@@ -162,22 +168,25 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 			now_pushing = 0
 			src.forceMove(tmob.loc)
 			tmob.adjustStaminaLoss(35)
-			tmob.adjustBruteLoss(2)
+			tmob.adjustBruteLoss(5)
 /*			var/mob/living/carbon/human/M = src
 			if(istype(M) && istype(M.tail_style, /datum/sprite_accessory/tail/taur/naga))
 				src << "You steamroller over [tmob] with your heavy tail!"
 				tmob << "[src] ploughs you down mercilessly with their heavy tail!"
-			else */
+			else
+*/
 			src << "You bring your foot down heavily upon [tmob]!"
 			tmob << "[src] steps carelessly on your body!"
 		return 1
 
  // until I figure out grabbing micros with the godawful pull code...
 	if(src.a_intent == "grab" && src.canmove && !src.buckled)
-		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.75)
+		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
 			now_pushing = 0
 			tmob.adjustStaminaLoss(15)
 			src.forceMove(tmob.loc)
+			src << "You press [tmob] beneath your foot!"
+			tmob << "[src] presses you beneath their foot!"
 /*
 			var/mob/living/carbon/human/M = src
 			if(istype(M) && !M.shoes)
