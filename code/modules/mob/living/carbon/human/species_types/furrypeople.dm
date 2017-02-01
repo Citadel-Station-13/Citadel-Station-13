@@ -33,6 +33,19 @@ datum/species/canid
 	if(H)
 		H.endTailWag()
 
+//Mammal//
+/datum/species/ailurus
+	name = "Ailurus"
+	id = "ailurus"
+	default_color = "BCAC9B"
+	species_traits = list(EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "ailurus")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+
 //AVIAN//
 /datum/species/avian
 	name = "Avian"
@@ -183,3 +196,19 @@ datum/species/canid
 	blacklisted = 1
 	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
 	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
+
+
+/datum/species/shark/datashark
+	name = "DataShark"
+	id = "datashark"
+	default_color = "BCAC9B"
+	species_traits = list(EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "datashark")
+	attack_verb = "bite"
+	attack_sound = 'sound/weapons/bite.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1 //no sprites yet
+	whitelisted = 1
+	whitelist = list("rubyflamewing")
+	blacklisted = 0
