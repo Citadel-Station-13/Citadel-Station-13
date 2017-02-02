@@ -46,15 +46,15 @@
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(RESIZE_HUGE to INFINITY)
-				M.resize(RESIZE_BIG)
-			if(RESIZE_BIG to RESIZE_HUGE)
-				M.resize(RESIZE_NORMAL)
-			if(RESIZE_NORMAL to RESIZE_BIG)
-				M.resize(RESIZE_SMALL)
-			if((0 - INFINITY) to RESIZE_NORMAL)
-				M.resize(RESIZE_TINY)
-		M.update_icons()
+			if(SIZESCALE_HUGE to INFINITY)
+				M.sizescale(SIZESCALE_BIG)
+			if(SIZESCALE_BIG to SIZESCALE_HUGE)
+				M.sizescale(SIZESCALE_NORMAL)
+			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
+				M.sizescale(SIZESCALE_SMALL)
+			if((0 - INFINITY) to SIZESCALE_NORMAL)
+				M.sizescale(SIZESCALE_TINY)
+		M.update_transform()
 	return 1
 
 /obj/item/projectile/beam/growlaser
@@ -72,15 +72,15 @@
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(RESIZE_BIG to RESIZE_HUGE)
-				M.resize(RESIZE_HUGE)
-			if(RESIZE_NORMAL to RESIZE_BIG)
-				M.resize(RESIZE_BIG)
-			if(RESIZE_SMALL to RESIZE_NORMAL)
-				M.resize(RESIZE_NORMAL)
-			if((0 - INFINITY) to RESIZE_TINY)
-				M.resize(RESIZE_SMALL)
-		M.update_icons()
+			if(SIZESCALE_BIG to SIZESCALE_HUGE)
+				M.sizescale(SIZESCALE_HUGE)
+			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
+				M.sizescale(SIZESCALE_BIG)
+			if(SIZESCALE_SMALL to SIZESCALE_NORMAL)
+				M.sizescale(SIZESCALE_NORMAL)
+			if((0 - INFINITY) to SIZESCALE_TINY)
+				M.sizescale(SIZESCALE_SMALL)
+		M.update_transform()
 	return 1
 */
 
@@ -90,7 +90,7 @@ datum/design/sizeray
 	id = "sizeray"
 	req_tech = list("combat" = 5, "materials" = 4, "engineering" = 5, "bluespace" = 4)
 	build_type = PROTOLATHE
-	materials = list("$metal" = 5000, "$glass" = 1000, "$diamond" = 1500)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_DIAMOND = 2500, MAT_URANIUM = 2500, MAT_TITANIUM = 1000)
 	build_path = /obj/item/weapon/gun/energy/laser/sizeray
 	category = list("Weapons")
 
@@ -113,30 +113,30 @@ datum/design/sizeray
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(RESIZE_HUGE to INFINITY)
-				M.resize(RESIZE_BIG)
-			if(RESIZE_BIG to RESIZE_HUGE)
-				M.resize(RESIZE_NORMAL)
-			if(RESIZE_NORMAL to RESIZE_BIG)
-				M.resize(RESIZE_SMALL)
-			if((0 - INFINITY) to RESIZE_NORMAL)
-				M.resize(RESIZE_TINY)
-		M.update_icons()
+			if(SIZESCALE_HUGE to INFINITY)
+				M.sizescale(SIZESCALE_BIG)
+			if(SIZESCALE_BIG to SIZESCALE_HUGE)
+				M.sizescale(SIZESCALE_NORMAL)
+			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
+				M.sizescale(SIZESCALE_SMALL)
+			if((0 - INFINITY) to SIZESCALE_NORMAL)
+				M.sizescale(SIZESCALE_TINY)
+		M.update_transform()
 	return 1
 
 /obj/item/projectile/sizeray/growthray/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(RESIZE_BIG to RESIZE_HUGE)
-				M.resize(RESIZE_HUGE)
-			if(RESIZE_NORMAL to RESIZE_BIG)
-				M.resize(RESIZE_BIG)
-			if(RESIZE_SMALL to RESIZE_NORMAL)
-				M.resize(RESIZE_NORMAL)
-			if((0 - INFINITY) to RESIZE_TINY)
-				M.resize(RESIZE_SMALL)
-		M.update_icons()
+			if(SIZESCALE_BIG to SIZESCALE_HUGE)
+				M.sizescale(SIZESCALE_HUGE)
+			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
+				M.sizescale(SIZESCALE_BIG)
+			if(SIZESCALE_SMALL to SIZESCALE_NORMAL)
+				M.sizescale(SIZESCALE_NORMAL)
+			if((0 - INFINITY) to SIZESCALE_TINY)
+				M.sizescale(SIZESCALE_SMALL)
+		M.update_transform()
 	return 1
 
 /obj/item/ammo_casing/energy/laser/growthray

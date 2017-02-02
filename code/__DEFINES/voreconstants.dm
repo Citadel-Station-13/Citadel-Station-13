@@ -10,7 +10,7 @@
 #define HOSTILE_STANCE_EATING	99
 
 
-var/global/list/player_sizes_list = list("Macro" = RESIZE_HUGE, "Big" = RESIZE_BIG, "Normal" = RESIZE_NORMAL, "Small" = RESIZE_SMALL, "Tiny" = RESIZE_TINY)
+var/global/list/player_sizes_list = list("Macro" = SIZESCALE_HUGE, "Big" = SIZESCALE_BIG, "Normal" = SIZESCALE_NORMAL, "Small" = SIZESCALE_SMALL, "Tiny" = SIZESCALE_TINY)
 /* // moved to sound.dm
 
 var/global/list/digestion_sounds = list(
