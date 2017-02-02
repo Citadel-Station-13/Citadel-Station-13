@@ -69,3 +69,4 @@
 	if (!area_motion)
 		if(isliving(AM))
 			newTarget(AM)
+

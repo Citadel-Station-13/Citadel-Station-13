@@ -6,7 +6,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
-	required_players = 10
+	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
 	enemy_minimum_age = 14
@@ -138,7 +138,6 @@
 	qdel(wizard_mob.head)
 	qdel(wizard_mob.shoes)
 	for(var/obj/item/I in wizard_mob.held_items)
-		wizard_mob.unEquip(I)
 		qdel(I)
 	qdel(wizard_mob.r_store)
 	qdel(wizard_mob.l_store)
