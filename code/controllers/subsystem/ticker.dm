@@ -570,7 +570,7 @@ var/datum/subsystem/ticker/ticker
 	//map rotate chance defaults to 75% of the length of the round (in minutes)
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
-	addtimer(CALLBACK(GLOBAL_PROC, /.proc/maprotate), 0)
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/maprotate)
 
 /datum/subsystem/ticker/proc/send_gamemode_vote(var/)
 	SSvote.initiate_vote("roundtype","server")
