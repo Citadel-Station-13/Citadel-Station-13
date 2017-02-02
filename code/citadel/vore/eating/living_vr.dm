@@ -6,8 +6,6 @@
 	var/devourable = 0					// Can the mob be vored at all?
 //	var/feeding = 0 					// Are we going to feed someone else?
 
-	var/flavor_text = "" //tired of fucking double checking this
-
 //
 // Handle being clicked, perhaps with something to devour
 //
