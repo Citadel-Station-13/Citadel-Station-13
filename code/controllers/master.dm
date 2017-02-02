@@ -494,3 +494,4 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 
 	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (TickDrift:[round(Master.tickdrift)]) (Iteration:[Master.iteration])"))
+
