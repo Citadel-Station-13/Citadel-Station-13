@@ -36,7 +36,6 @@
 					minor_announce(config.alert_desc_blue_upto, "Attention! Security level elevated to blue:",1)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(0.5)
-
 				else
 					minor_announce(config.alert_desc_blue_downto, "Attention! Security level lowered to blue:")
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
@@ -45,10 +44,6 @@
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
-				for(var/mob/M in ZLEVEL_STATION)
-					M << 'sound/misc/voybluealert.ogg'
-
-
 			if(SEC_LEVEL_RED)
 				if(security_level < SEC_LEVEL_RED)
 					minor_announce(config.alert_desc_red_upto, "Attention! Code red!",1)
@@ -61,8 +56,6 @@
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
 				security_level = SEC_LEVEL_RED
 
-				for(var/mob/M in ZLEVEL_STATION)
-					M << 'sound/misc/voyalert.ogg'
 				/*	- At the time of commit, setting status displays didn't work properly
 				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
 				if(CC)
@@ -80,8 +73,6 @@
 						SSshuttle.emergency.modTimer(0.25)
 					else if(security_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
-				for(var/mob/M in ZLEVEL_STATION)
-					M << 'sound/misc/tas_red_alert.ogg'
 				security_level = SEC_LEVEL_DELTA
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)

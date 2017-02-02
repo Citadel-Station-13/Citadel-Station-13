@@ -1,15 +1,15 @@
-/obj/item/weapon/gun/ballistic
+/obj/item/weapon/gun/projectile
 	desc = "Now comes in flavors like GUN. Uses 10mm ammo, for some reason"
 	name = "projectile gun"
 	icon_state = "pistol"
 	origin_tech = "combat=2;materials=2"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	var/spawnwithmagazine = 1
+
 	var/mag_type = /obj/item/ammo_box/magazine/m10mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
-	var/casing_ejector = 1 //whether the gun ejects the chambered casing
 
-/obj/item/weapon/gun/ballistic/New()
+/obj/item/weapon/gun/projectile/New()
 	..()
 	if(!spawnwithmagazine)
 		update_icon()
@@ -19,7 +19,7 @@
 	chamber_round()
 	update_icon()
 
-/obj/item/weapon/gun/ballistic/update_icon()
+/obj/item/weapon/gun/projectile/update_icon()
 	..()
 	if(current_skin)
 		icon_state = "[current_skin][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
@@ -27,59 +27,63 @@
 		icon_state = "[initial(icon_state)][suppressed ? "-suppressed" : ""][sawn_state ? "-sawn" : ""]"
 
 
-/obj/item/weapon/gun/ballistic/process_chamber(empty_chamber = 1)
+/obj/item/weapon/gun/projectile/process_chamber(eject_casing = 1, empty_chamber = 1)
+//	if(in_chamber)
+//		return 1
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
-	if(istype(AC)) //there's a chambered round
-		if(casing_ejector)
-			AC.forceMove(get_turf(src)) //Eject casing onto ground.
-			AC.SpinAnimation(10, 1) //next gen special effects
-			chambered = null
-		else if(empty_chamber)
-			chambered = null
+	if(isnull(AC) || !istype(AC))
+		chamber_round()
+		return
+	if(eject_casing)
+		AC.loc = get_turf(src) //Eject casing onto ground.
+		AC.SpinAnimation(10, 1) //next gen special effects
+
+	if(empty_chamber)
+		chambered = null
 	chamber_round()
+	return
 
-
-/obj/item/weapon/gun/ballistic/proc/chamber_round()
+/obj/item/weapon/gun/projectile/proc/chamber_round()
 	if (chambered || !magazine)
 		return
 	else if (magazine.ammo_count())
 		chambered = magazine.get_round()
-		chambered.forceMove(src)
+		chambered.loc = src
+	return
 
-/obj/item/weapon/gun/ballistic/can_shoot()
+/obj/item/weapon/gun/projectile/can_shoot()
 	if(!magazine || !magazine.ammo_count(0))
 		return 0
 	return 1
 
-/obj/item/weapon/gun/ballistic/attackby(obj/item/A, mob/user, params)
+/obj/item/weapon/gun/projectile/attackby(obj/item/A, mob/user, params)
 	..()
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
 		if (!magazine && istype(AM, mag_type))
-			if(user.transferItemToLoc(AM, src))
-				magazine = AM
-				user << "<span class='notice'>You load a new magazine into \the [src].</span>"
-				chamber_round()
-				A.update_icon()
-				update_icon()
-				return 1
-			else
-				user << "<span class='warning'>You cannot seem to get \the [src] out of your hands!</span>"
-				return
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
+			chamber_round()
+			A.update_icon()
+			update_icon()
+			return 1
 		else if (magazine)
 			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
-				if(!user.transferItemToLoc(A, src))
+				if(!user.unEquip(A))
 					return
 				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
 				fire_sound = 'sound/weapons/Gunshot_silenced.ogg'
-				w_class = WEIGHT_CLASS_NORMAL //so pistols do not fit in pockets when suppressed
+				w_class = 3 //so pistols do not fit in pockets when suppressed
+				A.loc = src
 				update_icon()
 				return
 			else
@@ -90,7 +94,7 @@
 			return
 	return 0
 
-/obj/item/weapon/gun/ballistic/attack_hand(mob/user)
+/obj/item/weapon/gun/projectile/attack_hand(mob/user)
 	if(loc == user)
 		if(suppressed && can_unsuppress)
 			var/obj/item/weapon/suppressor/S = suppressed
@@ -106,7 +110,7 @@
 			return
 	..()
 
-/obj/item/weapon/gun/ballistic/attack_self(mob/living/user)
+/obj/item/weapon/gun/projectile/attack_self(mob/living/user)
 	var/obj/item/ammo_casing/AC = chambered //Find chambered round
 	if(magazine)
 		magazine.loc = get_turf(src.loc)
@@ -125,11 +129,11 @@
 	return
 
 
-/obj/item/weapon/gun/ballistic/examine(mob/user)
+/obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
 	user << "Has [get_ammo()] round\s remaining."
 
-/obj/item/weapon/gun/ballistic/proc/get_ammo(countchambered = 1)
+/obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
@@ -137,25 +141,25 @@
 		boolets += magazine.ammo_count()
 	return boolets
 
-/obj/item/weapon/gun/ballistic/suicide_act(mob/user)
-	if (chambered && chambered.BB && !chambered.BB.nodamage)
-		user.visible_message("<span class='suicide'>[user] is putting the barrel of [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+/obj/item/weapon/gun/projectile/suicide_act(mob/user)
+	if (src.chambered && src.chambered.BB && !src.chambered.BB.nodamage)
+		user.visible_message("<span class='suicide'>[user] is putting the barrel of the [src.name] in \his mouth.  It looks like \he's trying to commit suicide.</span>")
 		sleep(25)
 		if(user.is_holding(src))
 			process_fire(user, user, 0, zone_override = "head")
-			user.visible_message("<span class='suicide'>[user] blows [user.p_their()] brain[user.p_s()] out with [src]!</span>")
+			user.visible_message("<span class='suicide'>[user] blows \his brains out with the [src.name]!</span>")
 			return(BRUTELOSS)
 		else
 			user.visible_message("<span class='suicide'>[user] panics and starts choking to death!</span>")
 			return(OXYLOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] is pretending to blow [user.p_their()] brain[user.p_s()] out with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b></span>")
+		user.visible_message("<span class='suicide'>[user] is pretending to blow \his brains out with the [src.name]! It looks like \he's trying to commit suicide!</b></span>")
 		playsound(loc, 'sound/weapons/empty.ogg', 50, 1, -1)
 		return (OXYLOSS)
 
 
 
-/obj/item/weapon/gun/ballistic/proc/sawoff(mob/user)
+/obj/item/weapon/gun/projectile/proc/sawoff(mob/user)
 	if(sawn_state == SAWN_OFF)
 		user << "<span class='warning'>\The [src] is already shortened!</span>"
 		return
@@ -173,7 +177,7 @@
 		user.visible_message("[user] shortens \the [src]!", "<span class='notice'>You shorten \the [src].</span>")
 		name = "sawn-off [src.name]"
 		desc = sawn_desc
-		w_class = WEIGHT_CLASS_NORMAL
+		w_class = 3
 		item_state = "gun"
 		slot_flags &= ~SLOT_BACK	//you can't sling it on your back
 		slot_flags |= SLOT_BELT		//but you can wear it on your belt (poorly concealed under a trenchcoat, ideally)
@@ -182,7 +186,7 @@
 		return 1
 
 // Sawing guns related proc
-/obj/item/weapon/gun/ballistic/proc/blow_up(mob/user)
+/obj/item/weapon/gun/projectile/proc/blow_up(mob/user)
 	. = 0
 	for(var/obj/item/ammo_casing/AC in magazine.stored_ammo)
 		if(AC.BB)
@@ -195,7 +199,7 @@
 	desc = "A universal syndicate small-arms suppressor for maximum espionage."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "suppressor"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	var/oldsound = null
 	var/initial_w_class = null
 
