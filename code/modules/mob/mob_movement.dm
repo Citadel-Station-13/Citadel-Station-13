@@ -424,7 +424,7 @@
 /client/verb/toggle_walk_run()
 	set name = "toggle-walk-run"
 	set hidden = TRUE
-	set instant = TRUE
+	set instant = TRUE 
 	if(mob)
 		mob.toggle_move_intent()
 
