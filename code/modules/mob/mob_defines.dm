@@ -10,6 +10,8 @@
 
 	var/stat = 0 //Whether a mob is alive or dead. TODO: Move this to living - Nodrak
 
+	var/flavor_text = "" //tired of fucking double checking this
+
 
 	/*A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -34,8 +36,6 @@
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
-
-	var/flavor_text = ""
 
 	var/next_move = null
 	var/notransform = null	//Carbon
@@ -75,6 +75,7 @@
 	var/weakened = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = INTENT_HELP//Living
+	var/list/possible_a_intents = null//Living
 	var/m_intent = MOVE_INTENT_RUN//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living
@@ -130,8 +131,6 @@
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
-	var/weakeyes = 0 //Are they vulnerable to flashes?
-
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
 	var/force_compose = 0 //If this is nonzero, the mob will always compose it's own hear message instead of using the one given in the arguments.
@@ -147,3 +146,5 @@
 	var/resize = 1 //Badminnery resize
 
 	var/list/observers = null	//The list of people observing this mob.
+
+	var/list/progressbars = null	//for stacking do_after bars

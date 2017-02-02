@@ -10,6 +10,12 @@
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
+/datum/protected_configuration/vv_get_var(var_name)
+	return debug_variable(var_name, "SECRET", 0, src)
+
+/datum/protected_configuration/vv_edit_var(var_name, var_value)
+	return FALSE
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -239,6 +245,9 @@
 	// Discord crap.
 	var/discord_url = "hfdksjhfa.com"
 	var/discord_password
+
+	var/minutetopiclimit
+	var/secondtopiclimit
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -496,7 +505,10 @@
 					config.discord_url = value
 				if("discord_password")
 					config.discord_password = value
-
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

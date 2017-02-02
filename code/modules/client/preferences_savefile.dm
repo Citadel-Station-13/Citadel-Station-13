@@ -174,6 +174,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
+	S["uplink_loc"]			>> uplink_spawn_loc
 
 	//vore
 
@@ -405,6 +406,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
 
+	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
+
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
 	job_civilian_med = sanitize_integer(job_civilian_med, 0, 65535, initial(job_civilian_med))
@@ -474,6 +477,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["religion_name"]		<< custom_names["religion"]
 	S["deity_name"]			<< custom_names["deity"]
 	S["prefered_security_department"] << prefered_security_department
+	S["uplink_loc"]			<< uplink_spawn_loc
 
 
 	//Jobs

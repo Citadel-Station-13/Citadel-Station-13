@@ -142,8 +142,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-				*/
-
+*/
 		if("purchase_menu")
 			state = STATE_PURCHASE
 

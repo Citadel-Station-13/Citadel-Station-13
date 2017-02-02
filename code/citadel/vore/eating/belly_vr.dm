@@ -236,7 +236,7 @@
 
 	//Drop all items into the belly.
 	for(var/obj/item/W in M)
-		if(!M.unEquip(W))
+		if(!M.dropItemToGround(W))
 			qdel(W)
 
 	message_admins("[key_name(owner)] digested [key_name(M)].")
