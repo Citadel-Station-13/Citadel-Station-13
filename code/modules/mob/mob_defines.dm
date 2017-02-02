@@ -35,8 +35,6 @@
 	var/atom/movable/pulling = null
 	var/grab_state = 0
 
-	var/flavor_text = ""
-
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/eye_blind = 0		//Carbon
@@ -130,8 +128,6 @@
 	var/digitalcamo = 0 // Can they be tracked by the AI?
 	var/digitalinvis = 0 //Are they ivisible to the AI?
 	var/image/digitaldisguise = null  //what does the AI see instead of them?
-
-	var/weakeyes = 0 //Are they vulnerable to flashes?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
