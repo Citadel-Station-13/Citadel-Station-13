@@ -37,14 +37,29 @@ datum/species/canid
 /datum/species/ailurus
 	name = "Ailurus"
 	id = "ailurus"
-	default_color = "BCAC9B"
+	default_color = "4B4B4B"
 	species_traits = list(EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "ailurus")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
+
+/datum/species/capra
+	name = "Capra"
+	id = "capra"
+	default_color = "4B4B4B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "capra")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
+
+
+
 
 //AVIAN//
 /datum/species/avian
@@ -59,6 +74,18 @@ datum/species/canid
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 0 //no sprites yet
 	blacklisted = 1
+
+/datum/species/avian
+	name = "Hawk"
+	id = "hawk"
+	default_color = "BCAC9B"
+	species_traits = list(EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("wings" = "hawk")
+	attack_verb = "peck"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
 
 //AQUATIC//
 /datum/species/shark
