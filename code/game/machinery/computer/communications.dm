@@ -1,5 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
-
 var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 // The communications computer
@@ -31,12 +29,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/STATE_PURCHASE = 11
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
 	var/stat_msg2
-
-	light_color = LIGHT_COLOR_BLUE
 
 
 /obj/machinery/computer/communications/New()
@@ -64,9 +61,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		// main interface
 		if("main")
 			src.state = STATE_DEFAULT
+			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/weapon/card/id/I = M.get_active_held_item()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -76,23 +74,23 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					auth_id = "[I.registered_name] ([I.assignment])"
 					if((20 in I.access))
 						authenticated = 2
-					playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
-
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
 				if(src.emagged)
 					authenticated = 2
-					auth_id = "ERROR: CANNOT READ"
-					M << "<span class='warning'>[src] lets out a few quiet beeps as its login is overriden.</span>"
+					auth_id = "Unknown"
+					M << "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>"
+					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_alert.ogg', 25, 0)
 					if(prob(25))
 						for(var/mob/living/silicon/ai/AI in active_ais())
-							AI << sound('sound/machines/terminal_emagged.ogg', volume = 10) //Very quiet for balance reasons
-
+							AI << sound('sound/machines/terminal_alert.ogg', volume = 10) //Very quiet for balance reasons
 		if("logout")
 			authenticated = 0
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_off.ogg', 50, 0)
 
 		if("swipeidseclevel")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
+			var/obj/item/weapon/card/id/I = M.get_active_held_item()
 			if (istype(I, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = I
 				I = pda.id
@@ -105,7 +103,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					set_security_level(tmp_alertlevel)
 					if(security_level != old_level)
 						usr << "<span class='notice'>Authorization confirmed. Modifying security level.</span>"
-						playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
+						playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 						//Only notify the admins if an actual change happened
 						log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
 						message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
@@ -115,37 +113,68 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 							if(SEC_LEVEL_BLUE)
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
-				else:
+				else
 					usr << "<span class='warning'>You are not authorized to do this!</span>"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
 				usr << "<span class='warning'>You need to swipe your ID!</span>"
-				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if("announce")
-			if(src.authenticated==2 && !message_cooldown)
-				playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
+			if(src.authenticated==2)
+				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
-			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
-				playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 
-		if("crossserver")
+/*		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_multiline_input(usr, "Please choose a message to transmit to an allied station.  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)))
 					return
-				playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				send2otherserver("[station_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
+				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
+*/
+		if("purchase_menu")
+			state = STATE_PURCHASE
+
+		if("buyshuttle")
+			if(authenticated==2)
+				var/list/shuttles = flatten_list(shuttle_templates)
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				if(S && istype(S))
+					if(SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_IDLE)
+						usr << "It's a bit late to buy a new shuttle, don't you think?"
+						return
+					if(SSshuttle.shuttle_purchased)
+						usr << "A replacement shuttle has already been purchased."
+					else if(!S.prerequisites_met())
+						usr << "You have not met the requirements for purchasing this shuttle."
+					else
+						if(SSshuttle.points >= S.credit_cost)
+							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							if(M)
+								SSshuttle.shuttle_purchased = TRUE
+								M.unload_preview()
+								M.load_template(S)
+								M.existing_shuttle = SSshuttle.emergency
+								M.action_load(S)
+								SSshuttle.points -= S.credit_cost
+								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								message_admins("[key_name_admin(usr)] purchased [S.name].")
+								feedback_add_details("shuttle_purchase", S.name)
+							else
+								usr << "Something went wrong! The shuttle exchange system seems to be down."
+						else
+							usr << "Not enough credits."
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -168,7 +197,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("messagelist")
 			src.currmsg = 0
 			src.state = STATE_MESSAGELIST
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 		if("viewmessage")
 			src.state = STATE_VIEWMESSAGE
 			if (!src.currmsg)
@@ -193,7 +221,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				src.state = STATE_VIEWMESSAGE
 		if("status")
 			src.state = STATE_STATUSDISPLAY
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
 
 		if("securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
@@ -217,7 +244,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		// Status display stuff
 		if("setstat")
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, "terminal_type", 50, 0)
 			switch(href_list["statdisp"])
 				if("message")
 					post_status("message", stat_msg1, stat_msg2)
@@ -227,11 +254,9 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			stat_msg1 = reject_bad_text(input("Line 1", "Enter Message Text", stat_msg1) as text|null, 40)
 			src.updateDialog()
 		if("setmsg2")
-			playsound(src, 'sound/machines/terminal_displaying.ogg', 50, 0)
 			stat_msg2 = reject_bad_text(input("Line 2", "Enter Message Text", stat_msg2) as text|null, 40)
 			src.updateDialog()
 
@@ -240,14 +265,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
-				playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Centcomm_announce(input, usr)
-				usr << "Message transmitted."
+				usr << "<span class='notice'>Message transmitted to Central Command.</span>"
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				CM.lastTimeUsed = world.time
 
@@ -257,12 +281,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
+					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
 					return
-				playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
+				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				Syndicate_announce(input, usr)
 				usr << "<span class='danger'>SYSERR @l(19833)of(transmit.dm): !@$ MESSAGE TRANSMITTED TO SYNDICATE COMMAND.</span>"
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
@@ -270,7 +294,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		if("RestoreBackup")
 			usr << "<span class='notice'>Backup routing data restored!</span>"
-			playsound(src, 'sound/machines/terminal_success.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			src.emagged = 0
 			src.updateDialog()
 
@@ -278,16 +302,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			if(src.authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling. Please stand by.</span>"
-					playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)))
 					return
 				Nuke_request(input, usr)
 				usr << "<span class='notice'>Request sent.</span>"
-				playsound(src, 'sound/machines/terminal_processing.ogg', 50, 0)
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [auth_id]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 				CM.lastTimeUsed = world.time
 
 
@@ -325,8 +347,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("ai-status")
 			src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(!ai_message_cooldown)
-				make_announcement(usr, 1)
+			make_announcement(usr, 1)
 		if("ai-securitylevel")
 			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel) tmp_alertlevel = 0
@@ -375,15 +396,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "<span class='danger'>You scramble the communication routing circuits.</span>"
-		playsound(src, 'sound/machines/terminal_emagged.ogg', 50, 0)
+		user << "<span class='danger'>You scramble the communication routing circuits!</span>"
+		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if (src.z > 6)
 		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
-		playsound(src, 'sound/machines/terminal_error.ogg', 50, 0)
 		return
 
 	user.set_machine(src)
@@ -396,13 +416,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
-	if (istype(user, /mob/living/silicon))
+	if(issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			//user << browse(dat, "window=communications;size=400x500")
-			//onclose(user, "communications")
-
 			popup.set_content(dat)
 			popup.open()
 		return
@@ -431,6 +448,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(cross_allowed)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -443,20 +461,20 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += get_call_shuttle_form()
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(STATE_CANCELSHUTTLE)
 			dat += get_cancel_shuttle_form()
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
 			for(var/i = 1; i<=src.messagetitle.len; i++)
 				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_VIEWMESSAGE)
 			if (src.currmsg)
 				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
 				if (src.authenticated)
-					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete \]"
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
 				src.state = STATE_MESSAGELIST
 				src.attack_hand(user)
@@ -479,8 +497,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
 			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
-
+			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(security_level == SEC_LEVEL_DELTA)
@@ -493,7 +510,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 		if(STATE_TOGGLE_EMERGENCY)
-			playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			if(emergency_access == 1)
 				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
 				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
@@ -501,9 +518,21 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
+		if(STATE_PURCHASE)
+			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			for(var/shuttle_id in shuttle_templates)
+				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				if(S.can_be_bought && S.credit_cost < INFINITY)
+					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					dat += "[S.description]<BR>"
+					if(S.prerequisites)
+						dat += "Prerequisites: [S.prerequisites]<BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
+
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	//user << browse(dat, "window=communications;size=400x500")
-	//onclose(user, "communications")
+
+	popup.set_content(dat)
+	popup.open()
 	popup.set_content(dat)
 	popup.open()
 
@@ -619,23 +648,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
+	if(!SScommunications.can_announce(user, is_silicon))
+		user << "Intercomms recharging. Please stand by."
+		return
 	var/input = stripped_input(user, "Please choose a message to announce to the station crew.", "What?")
 	if(!input || !user.canUseTopic(src))
 		return
-	if(is_silicon)
-		minor_announce(input,"[user.name] Announces:")
-		ai_message_cooldown = 1
-		spawn(600)//One minute cooldown
-			ai_message_cooldown = 0
-	else
-		priority_announce(html_decode(input), null, 'sound/misc/announce.ogg', "Captain")
-		message_cooldown = 1
-		spawn(600)//One minute cooldown
-			message_cooldown = 0
-	log_say("[key_name(user)] has made a priority announcement: [input]")
-	message_admins("[key_name_admin(user)] has made a priority announcement.")
-
-
+	SScommunications.make_announcement(user, is_silicon, input)
 
 /obj/machinery/computer/communications/proc/post_status(command, data1, data2)
 

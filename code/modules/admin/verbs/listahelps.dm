@@ -14,7 +14,7 @@
 	var/mob //The mob adminhelping mob.
 
 /client/proc/list_ahelps(user, resolved)
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_ADMIN))
 		src << "<font color='red'>Error: Only administrators may use this command.</font>"
 		return
 
@@ -68,7 +68,7 @@
 	set name = "List Adminhelps"
 	set desc = "List all current adminhelps"
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_ADMIN))
 		src << "<font color='red'>Error: Only administrators may use this command.</font>"
 		return
 
@@ -100,7 +100,7 @@
 	set name = "List Unresolved Adminhelps"
 	set desc = "List all current unresolved adminhelps"
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_ADMIN))
 		src << "<font color='red'>Error: Only administrators may use this command.</font>"
 		return
 
@@ -134,7 +134,7 @@
 	set name = "View Handling Ahelps"
 	set desc = "List all current handling ahelps"
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_ADMIN))
 		src << "<font color='red'>Error: Only administrators may use this command.</font>"
 		return
 
@@ -253,7 +253,7 @@
 	set name = "Resolve Handling Ahelp"
 	set desc = "Resolve my own adminhelp"
 
-	if(!check_rights(R_BAN))
+	if(!check_rights(R_ADMIN))
 		src << "<font color='red'>Error: Only administrators may use this command.</font>"
 		return
 

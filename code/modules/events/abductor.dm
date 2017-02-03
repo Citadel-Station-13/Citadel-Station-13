@@ -5,7 +5,6 @@
 	max_occurrences = 1
 
 	min_players = 5
-	earliest_start = 18000 // 30 min
 
 	gamemode_blacklist = list("nuclear","wizard","revolution","abduction")
 
@@ -28,8 +27,8 @@
 	else
 		temp = new
 
-	var/agent_mind = popleft(candidates)
-	var/scientist_mind = popleft(candidates)
+	var/agent_mind = pick_n_take(candidates)
+	var/scientist_mind = pick_n_take(candidates)
 
 	var/mob/living/carbon/human/agent = makeBody(agent_mind)
 	var/mob/living/carbon/human/scientist = makeBody(scientist_mind)

@@ -91,7 +91,7 @@ var/list/freqtospan = list(
 		if(message_langs & HUMAN)
 			raw_message = stars(raw_message)
 		if(message_langs & RATVAR)
-			raw_message = rot13(raw_message)
+			raw_message = text2ratvar(raw_message)
 		if(AM)
 			return AM.say_quote(raw_message, spans)
 		else
@@ -170,7 +170,3 @@ var/list/freqtospan = list(
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
-
-/atom/movable/virtualspeaker/Destroy()
-	..()
-	return QDEL_HINT_PUTINPOOL

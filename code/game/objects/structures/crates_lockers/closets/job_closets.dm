@@ -63,6 +63,7 @@
 	new /obj/item/weapon/cartridge/janitor(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/head/soft/purple(src)
+	new /obj/item/weapon/paint/paint_remover(src)
 	new /obj/item/device/flashlight(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/caution(src)
@@ -93,6 +94,8 @@
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
+	new /obj/item/clothing/tie/lawyers_badge(src)
 
 /obj/structure/closet/wardrobe/chaplain_black
 	name = "chapel wardrobe"
@@ -106,6 +109,10 @@
 	new /obj/item/clothing/shoes/sneakers/black(src)
 	new /obj/item/clothing/suit/nun(src)
 	new /obj/item/clothing/head/nun_hood(src)
+	new /obj/item/clothing/suit/studentuni(src)
+	new /obj/item/clothing/head/cage(src)
+	new /obj/item/clothing/suit/witchhunter(src)
+	new /obj/item/clothing/head/witchunter_hat(src)
 	new /obj/item/clothing/suit/hooded/chaplain_hoodie(src)
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
@@ -119,8 +126,11 @@
 	name = "coffin"
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
-	burn_state = FLAMMABLE
-	burntime = 20
+	resistance_flags = FLAMMABLE
+	obj_integrity = 70
+	max_integrity = 70
+	horizontal = TRUE
+	delivery_icon = "deliverycrate"
 
 /obj/structure/closet/wardrobe/red
 	name = "security wardrobe"
@@ -131,7 +141,7 @@
 	contents = list()
 	new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 	new /obj/item/weapon/storage/backpack/security(src)
-	new /obj/item/weapon/storage/backpack/satchel_sec(src)
+	new /obj/item/weapon/storage/backpack/satchel/sec(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/sec(src)
 	for(var/i in 1 to 3)
@@ -173,7 +183,7 @@
 	..()
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos(src)
@@ -192,7 +202,7 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag/engineering(src)
 	new /obj/item/weapon/storage/backpack/industrial(src)
-	new /obj/item/weapon/storage/backpack/satchel_eng(src)
+	new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/engineering(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/engineer(src)
@@ -212,7 +222,7 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/dufflebag/med(src)
 	new /obj/item/weapon/storage/backpack/medic(src)
-	new /obj/item/weapon/storage/backpack/satchel_med(src)
+	new /obj/item/weapon/storage/backpack/satchel/med(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/medical(src)
 	new /obj/item/clothing/under/rank/nursesuit (src)
 	new /obj/item/clothing/head/nursehat (src)
@@ -272,8 +282,8 @@
 	new /obj/item/clothing/suit/toggle/labcoat/chemist(src)
 	new /obj/item/weapon/storage/backpack/chemistry(src)
 	new /obj/item/weapon/storage/backpack/chemistry(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
-	new /obj/item/weapon/storage/backpack/satchel_chem(src)
+	new /obj/item/weapon/storage/backpack/satchel/chem(src)
+	new /obj/item/weapon/storage/backpack/satchel/chem(src)
 	new /obj/item/weapon/storage/bag/chemistry(src)
 	new /obj/item/weapon/storage/bag/chemistry(src)
 	return
@@ -294,8 +304,8 @@
 	new /obj/item/clothing/suit/toggle/labcoat/genetics(src)
 	new /obj/item/weapon/storage/backpack/genetics(src)
 	new /obj/item/weapon/storage/backpack/genetics(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
-	new /obj/item/weapon/storage/backpack/satchel_gen(src)
+	new /obj/item/weapon/storage/backpack/satchel/gen(src)
+	new /obj/item/weapon/storage/backpack/satchel/gen(src)
 	return
 
 
@@ -316,8 +326,8 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/weapon/storage/backpack/virology(src)
 	new /obj/item/weapon/storage/backpack/virology(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
-	new /obj/item/weapon/storage/backpack/satchel_vir(src)
+	new /obj/item/weapon/storage/backpack/satchel/vir(src)
+	new /obj/item/weapon/storage/backpack/satchel/vir(src)
 	return
 
 /obj/structure/closet/wardrobe/science_white
@@ -329,8 +339,8 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/science(src)
 	new /obj/item/weapon/storage/backpack/science(src)
-	new /obj/item/weapon/storage/backpack/satchel_tox(src)
-	new /obj/item/weapon/storage/backpack/satchel_tox(src)
+	new /obj/item/weapon/storage/backpack/satchel/tox(src)
+	new /obj/item/weapon/storage/backpack/satchel/tox(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/science(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/under/rank/scientist(src)
@@ -353,8 +363,8 @@
 	contents = list()
 	new /obj/item/weapon/storage/backpack/botany(src)
 	new /obj/item/weapon/storage/backpack/botany(src)
-	new /obj/item/weapon/storage/backpack/satchel_hyd(src)
-	new /obj/item/weapon/storage/backpack/satchel_hyd(src)
+	new /obj/item/weapon/storage/backpack/satchel/hyd(src)
+	new /obj/item/weapon/storage/backpack/satchel/hyd(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/hydro(src)
 	new /obj/item/clothing/suit/apron(src)
 	new /obj/item/clothing/suit/apron(src)

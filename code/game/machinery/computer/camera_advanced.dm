@@ -47,7 +47,7 @@
 	if(!eyeobj)
 		CreateEye()
 
-	if(!eyeobj.initialized)
+	if(!eyeobj.eye_initialized)
 		var/camera_location
 		for(var/obj/machinery/camera/C in cameranet.cameras)
 			if(!C.can_use())
@@ -56,7 +56,7 @@
 				camera_location = get_turf(C)
 				break
 		if(camera_location)
-			eyeobj.initialized = 1
+			eyeobj.eye_initialized = 1
 			give_eye_control(L)
 			eyeobj.setLoc(camera_location)
 		else
@@ -82,7 +82,7 @@
 	var/acceleration = 1
 	var/mob/living/carbon/human/eye_user = null
 	var/obj/machinery/computer/camera_advanced/origin
-	var/initialized = 0
+	var/eye_initialized = 0
 	var/visible_icon = 0
 	var/image/user_image = null
 
@@ -175,14 +175,15 @@
 		if (tempnetwork.len)
 			T[text("[][]", netcam.c_tag, (netcam.can_use() ? null : " (Deactivated)"))] = netcam
 
-	playsound(origin, 'sound/machines/terminal_select.ogg', 25, 0)
+
+	playsound(origin, 'sound/machines/terminal_prompt.ogg', 25, 0)
 	var/camera = input("Choose which camera you want to view", "Cameras") as null|anything in T
 	var/obj/machinery/camera/final = T[camera]
-	playsound(src, 'sound/machines/terminal_select.ogg', 50, 0)
+	playsound(src, "terminal_type", 25, 0)
 	if(final)
-		playsound(origin, 'sound/machines/terminal_select.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
 		remote_eye.setLoc(get_turf(final))
-		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/noise)
+		C.overlay_fullscreen("flash", /obj/screen/fullscreen/flash/static)
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
-		playsound(origin, 'sound/machines/terminal_error.ogg', 25, 0)
+		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)

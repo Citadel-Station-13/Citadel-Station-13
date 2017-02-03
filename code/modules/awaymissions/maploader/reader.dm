@@ -41,8 +41,9 @@ var/global/dmm_suite/preloader/_preloader = new
 	var/list/grid_models = list()
 	var/key_len = 0
 
-	dmmRegex.next = 1
-	while(dmmRegex.Find(tfile, dmmRegex.next))
+	var/stored_index = 1
+	while(dmmRegex.Find(tfile, stored_index))
+		stored_index = dmmRegex.next
 
 		// "aa" = (/type{vars=blah})
 		if(dmmRegex.group[1]) // Model
@@ -241,6 +242,8 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
 		first_turf_index++
 
+	//turn off base new Initialization until the whole thing is loaded
+	SSobj.map_loader_begin()
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
@@ -258,7 +261,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
 		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
-		CHECK_TICK
+
+		//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+		if(world.tick_usage > CURRENT_TICKLIMIT)
+			SSobj.map_loader_stop()
+			stoplag()
+			SSobj.map_loader_begin()
+	//Restore initialization to the previous value
+	SSobj.map_loader_stop()
 
 ////////////////
 //Helpers procs
@@ -360,13 +370,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(position != 0)
 
 	return to_return
-
-//atom creation method that preloads variables at creation
-/atom/New()
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
-
-	. = ..()
 
 /dmm_suite/Destroy()
 	..()

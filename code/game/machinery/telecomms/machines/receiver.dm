@@ -16,7 +16,6 @@
 	use_power = 1
 	idle_power_usage = 30
 	machinetype = 1
-	light_color = LIGHT_COLOR_GREEN
 	//heatgen = 0
 
 /obj/machinery/telecomms/receiver/receive_signal(datum/signal/signal)
@@ -58,7 +57,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/telecomms/receiver
-	name = "circuit board (Subspace Receiver)"
+	name = "Subspace Receiver (Machine Board)"
 	build_path = /obj/machinery/telecomms/receiver
 	origin_tech = "programming=2;engineering=2;bluespace=1"
 	req_components = list(

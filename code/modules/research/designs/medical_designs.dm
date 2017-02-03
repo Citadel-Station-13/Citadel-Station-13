@@ -89,7 +89,7 @@
 	name = "Piercing Syringe"
 	desc = "A diamond-tipped syringe that pierces armor when launched at high velocity. It can hold up to 10 units."
 	id = "piercesyringe"
-	req_tech = list("materials" = 5, "combat" = 3, "engineering" = 7)
+	req_tech = list("materials" = 7, "combat" = 3, "engineering" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 4000, MAT_DIAMOND = 1500)
 	build_path = /obj/item/weapon/reagent_containers/syringe/piercing
@@ -113,6 +113,66 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_PLASMA = 1000)
 	build_path = /obj/item/device/extinguisher_refill
+	category = list("Medical Designs")
+
+/datum/design/alienscalpel
+	name = "Alien Scalpel"
+	desc = "An advanced scalpel obtained through Abductor technology."
+	id = "alien_scalpel"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/scalpel/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+
+/datum/design/alienhemostat
+	name = "Alien Hemostat"
+	desc = "An advanced hemostat obtained through Abductor technology."
+	id = "alien_hemostat"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/hemostat/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+
+/datum/design/alienretractor
+	name = "Alien Retractor"
+	desc = "An advanced retractor obtained through Abductor technology."
+	id = "alien_retractor"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/retractor/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+
+/datum/design/aliensaw
+	name = "Alien Circular Saw"
+	desc = "An advanced surgical saw obtained through Abductor technology."
+	id = "alien_saw"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/circular_saw/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+
+/datum/design/aliendrill
+	name = "Alien Drill"
+	desc = "An advanced drill obtained through Abductor technology."
+	id = "alien_drill"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/surgicaldrill/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_SILVER = 2500, MAT_PLASMA = 1000, MAT_TITANIUM = 1500)
+	category = list("Medical Designs")
+
+/datum/design/aliencautery
+	name = "Alien Cautery"
+	desc = "An advanced cautery obtained through Abductor technology."
+	id = "alien_cautery"
+	req_tech = list("bio" = 4, "materials" = 4, "abductor" = 3)
+	build_path = /obj/item/weapon/cautery/alien
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_SILVER = 1500, MAT_PLASMA = 500, MAT_TITANIUM = 1500)
 	category = list("Medical Designs")
 
 /////////////////////////////////////////
@@ -222,10 +282,10 @@
 	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
-	req_tech = list("materials" = 5, "powerstorage" = 6, "biotech" = 5)
+	req_tech = list("materials" = 3, "powerstorage" = 4, "biotech" = 3)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
-	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_URANIUM = 500)
+	materials = list(MAT_METAL = 500, MAT_GLASS = 500, MAT_GOLD = 500)
 	build_path = /obj/item/organ/cyberimp/chest/nutriment
 	category = list("Misc", "Medical Designs")
 
@@ -233,7 +293,7 @@
 	name = "Nutriment pump implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	id = "ci-nutrimentplus"
-	req_tech = list("materials" = 5, "powerstorage" = 6, "biotech" = 6)
+	req_tech = list("materials" = 5, "powerstorage" = 4, "biotech" = 4)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 50
 	materials = list(MAT_METAL = 600, MAT_GLASS = 600, MAT_GOLD = 500, MAT_URANIUM = 750)
@@ -244,10 +304,10 @@
 	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	id = "ci-reviver"
-	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 8)
+	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 5)
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 60
-	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 500, MAT_URANIUM = 1000, MAT_DIAMOND = 2000)
+	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_GOLD = 300, MAT_URANIUM = 500)
 	build_path = /obj/item/organ/cyberimp/chest/reviver
 	category = list("Misc", "Medical Designs")
 
@@ -285,6 +345,16 @@
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 500)
 	build_path = /obj/item/weapon/implantcase
+	category = list("Medical Designs")
+
+/datum/design/implant_sadtrombone
+	name = "Sad Trombone Implant Case"
+	desc = "Makes death amusing."
+	id = "implant_trombone"
+	req_tech = list("materials" = 2, "biotech" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_BANANIUM = 500)
+	build_path = /obj/item/weapon/implantcase/sad_trombone
 	category = list("Medical Designs")
 
 /datum/design/implant_freedom

@@ -9,6 +9,7 @@
 	emote_hear = list("clicks.")
 	emote_see = list("clacks.")
 	speak_chance = 1
+	devourable = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
@@ -16,7 +17,7 @@
 	response_harm   = "stomps"
 	stop_automated_movement = 1
 	friendly = "pinches"
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = 2
@@ -39,6 +40,7 @@
 	name = "Coffee"
 	real_name = "Coffee"
 	desc = "It's Coffee, the other pet!"
+	gender = FEMALE
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"

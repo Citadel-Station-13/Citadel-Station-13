@@ -8,10 +8,11 @@
 /proc/notice(msg)
 	world.log << "## NOTICE: [msg]"
 
-//print a testing-mode debug message to world.log
-/proc/testing(msg)
+//print a testing-mode debug message to world.log and world
 #ifdef TESTING
-	world.log << "## TESTING: [msg]"
+#define testing(msg) world.log << "## TESTING: [msg]"; world << "## TESTING: [msg]"
+#else
+#define testing(msg)
 #endif
 
 /proc/log_admin(text)
@@ -19,10 +20,14 @@
 	if (config.log_admin)
 		diary << "\[[time_stamp()]]ADMIN: [text]"
 
+/proc/log_mentor(text)
+		mentor_log.Add(text)
+		diary << "\[[time_stamp()]]MENTOR: [text]"
+
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		log_admin("ASAY: [text]")
-		
+
 /proc/log_dsay(text)
 	if (config.log_adminchat)
 		log_admin("DSAY: [text]")
@@ -76,3 +81,6 @@
 		//reusing the PDA option because I really don't think news comments are worth a config option
 		diary << "\[[time_stamp()]]COMMENT: [text]"
 
+/proc/log_chat(text)
+	if (config.log_pda)
+		diary << "\[[time_stamp()]]CHAT: [text]"

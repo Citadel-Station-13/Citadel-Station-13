@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 
 //NOTE: Breathing happens once per FOUR TICKS, unless the last breath fails. In which case it happens once per ONE TICK! So oxyloss healing is done once per 4 ticks while oxyloss damage is applied once per tick!
 
@@ -29,24 +29,32 @@
 	if (notransform)
 		return
 
-	if(..())
+	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
 
+	if(stat != DEAD)
 		//heart attack stuff
 		handle_heart()
 
+	if(stat != DEAD)
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
 	dna.species.spec_life(src) // for mutantraces
 
+	if(stat != DEAD)
+		return 1
+
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
+	if(ismob(loc))
+		return ONE_ATMOSPHERE //hopefully won't murderficate people in your guts by going for a spacewalk
 	else
 		return pressure
 
@@ -85,29 +93,54 @@
 /mob/living/carbon/human/breathe()
 	if(!dna.species.breathe(src))
 		..()
-
+#define HUMAN_MAX_OXYLOSS 3
+#define HUMAN_CRIT_MAX_OXYLOSS (SSmob.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
-	dna.species.check_breath(breath, src)
+
+	var/L = getorganslot("lungs")
+
+	if(!L)
+		if(health >= HEALTH_THRESHOLD_CRIT)
+			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
+		else if(!(NOCRITDAMAGE in dna.species.species_traits))
+			adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
+
+		failed_last_breath = 1
+
+		if(dna && dna.species)
+			var/datum/species/S = dna.species
+
+			if(S.breathid == "o2")
+				throw_alert("oxy", /obj/screen/alert/oxy)
+			else if(S.breathid == "tox")
+				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+			else if(S.breathid == "co2")
+				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+
+		return 0
+	else
+		if(istype(L,/obj/item/organ/lungs))
+			var/obj/item/organ/lungs/lun = L
+			lun.check_breath(breath,src)
+
+#undef HUMAN_MAX_OXYLOSS
+#undef HUMAN_CRIT_MAX_OXYLOSS
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	dna.species.handle_environment(environment, src)
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
-	if(!dna || !dna.species.handle_fire(src))
-		..()
-	if(on_fire)
-		var/thermal_protection = get_thermal_protection()
-
-		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-			return
-		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
-			bodytemperature += 11
-		else
-			bodytemperature += (BODYTEMP_HEATING_MAX + (fire_stacks * 12))
+	..()
+	if(dna)
+		dna.species.handle_fire(src)
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+
+	if(ismob(loc))
+		thermal_protection = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //because lazy
+
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -133,6 +166,7 @@
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
+
 	//Handle normal clothing
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
@@ -217,8 +251,11 @@
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
-	if(dna && (RESISTTEMP in dna.species.specflags))
+	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
+
+	if(ismob(loc))
+		return 1 //because lazy
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -277,7 +314,7 @@
 	if(head)
 		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
-	if(NOBREATH in dna.species.specflags)
+	if(NOBREATH in dna.species.species_traits)
 		. = 1
 	return .
 
@@ -287,11 +324,11 @@
 		var/obj/item/bodypart/BP = X
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
-				BP.take_damage(I.w_class*I.embedded_pain_multiplier)
+				BP.receive_damage(I.w_class*I.embedded_pain_multiplier)
 				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
 
 			if(prob(I.embedded_fall_chance))
-				BP.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
+				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
 				I.loc = get_turf(src)
 				visible_message("<span class='danger'>\the [I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>\the [I] falls out of your [BP.name]!</span>")
@@ -301,8 +338,8 @@
 
 /mob/living/carbon/human/proc/handle_heart()
 	CHECK_DNA_AND_SPECIES(src)
-	var/needs_heart = (!(NOBLOOD in dna.species.specflags))
-	var/we_breath = (!(NOBREATH in dna.species.specflags))
+	var/needs_heart = (!(NOBLOOD in dna.species.species_traits))
+	var/we_breath = (!(NOBREATH in dna.species.species_traits))
 
 	if(heart_attack)
 		if(!needs_heart)

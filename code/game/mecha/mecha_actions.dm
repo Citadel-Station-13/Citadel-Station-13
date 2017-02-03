@@ -37,7 +37,7 @@
 	button_icon_state = "mech_eject"
 
 /datum/action/innate/mecha/mech_eject/Activate()
-	if(!owner || !iscarbon(owner))
+	if(!owner)
 		return
 	if(!chassis || chassis.occupant != owner)
 		return
@@ -106,10 +106,10 @@
 		return
 	chassis.lights = !chassis.lights
 	if(chassis.lights)
-		chassis.set_light(chassis.lights_power)
+		chassis.AddLuminosity(chassis.lights_power)
 		button_icon_state = "mech_lights_on"
 	else
-		chassis.set_light(0)
+		chassis.AddLuminosity(-chassis.lights_power)
 		button_icon_state = "mech_lights_off"
 	chassis.occupant_message("Toggled lights [chassis.lights?"on":"off"].")
 	chassis.log_message("Toggled lights [chassis.lights?"on":"off"].")

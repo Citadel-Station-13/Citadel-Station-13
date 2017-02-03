@@ -9,6 +9,9 @@
 			<A href='?src=\ref[src];secrets=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
+			<A href='?src=\ref[src];secrets=mentor_log'>Mentor Log</A><BR>
+
+			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<BR>
 			"}
 
@@ -99,6 +102,14 @@
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
 
+		if("mentor_log")
+			var/dat = "<B>Mentor Log<HR></B>"
+			for(var/l in mentor_log)
+				dat += "<li>[l]</li>"
+			if(!mentor_log.len)
+				dat += "No mentors have done anything this round!"
+			usr << browse(dat, "window=mentor_log")
+
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
 			if(SSjob)
@@ -118,6 +129,13 @@
 					var/datum/admins/D = admin_datums[ckey]
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
+
+		if("show_current_watchlist")
+			var/dat = "<B>Watchlist: </B><HR>"
+			if(current_watchlist)
+				for(var/ckey in current_watchlist)
+					dat += "[ckey] - [current_watchlist[ckey]]"
+				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
 
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
@@ -389,7 +407,7 @@
 			feedback_add_details("admin_secrets_fun_used","BO")
 			message_admins("[key_name_admin(usr)] broke all lights")
 			for(var/obj/machinery/light/L in machines)
-				L.broken()
+				L.break_light_tube()
 
 		if("anime")
 			if(!check_rights(R_FUN))
@@ -411,7 +429,7 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.unEquip(H.w_uniform)
+					H.temporarilyRemoveItemFromInventory(H.w_uniform, TRUE)
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else

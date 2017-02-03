@@ -262,12 +262,10 @@
 	effect_str.Cut()
 
 /datum/light_source/proc/recalc_corner(var/datum/lighting_corner/C)
-    if(!C)
-        return
-    if (effect_str.Find(C)) // Already have one.
-        REMOVE_CORNER(C)
+	if (effect_str.Find(C)) // Already have one.
+		REMOVE_CORNER(C)
 
-    APPLY_CORNER(C)
+	APPLY_CORNER(C)
 
 /datum/light_source/proc/smart_vis_update()
 	var/list/datum/lighting_corner/corners = list()
