@@ -7,7 +7,6 @@
 	circuit = /obj/item/weapon/circuitboard/computer/aifixer
 	icon_keyboard = "tech_key"
 	icon_screen = "ai-fixer"
-	light_color = LIGHT_COLOR_PINK
 
 /obj/machinery/computer/aifixer/attackby(obj/I, mob/user, params)
 	if(occupier && istype(I, /obj/item/weapon/screwdriver))
@@ -65,43 +64,40 @@
 		else
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {"<br><A href='?src=\ref[user];mach_close=computer'>Close</A>"}
-
-	//user << browse(dat, "window=computer;size=400x500")
-	//onclose(user, "computer")
 	var/datum/browser/popup = new(user, "computer", "AI System Integrity Restorer", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 	return
 
+/obj/machinery/computer/aifixer/proc/Fix()
+	. = use_power(1000)
+	if(.)
+		occupier.adjustOxyLoss(-1, 0)
+		occupier.adjustFireLoss(-1, 0)
+		occupier.adjustToxLoss(-1, 0)
+		occupier.adjustBruteLoss(-1, 0)
+		occupier.updatehealth()
+		occupier.updatehealth()
+		if(occupier.health >= 0 && occupier.stat == DEAD)
+			occupier.revive()
+		. = occupier.health < 100
+
 /obj/machinery/computer/aifixer/process()
 	if(..())
-		src.updateDialog()
-		return
+		if(active)
+			active = Fix()
+		updateDialog()
+		update_icon()
 
 /obj/machinery/computer/aifixer/Topic(href, href_list)
 	if(..())
 		return
 	if(href_list["fix"])
 		usr << "<span class='notice'>Reconstruction in progress. This will take several minutes.</span>"
-		playsound(src, 'sound/machines/terminal_processing.ogg', 25, 0)
-		active = 1
-		while (occupier.health < 100)
-			occupier.adjustOxyLoss(-1, 0)
-			occupier.adjustFireLoss(-1, 0)
-			occupier.adjustToxLoss(-1, 0)
-			occupier.adjustBruteLoss(-1, 0)
-			occupier.updatehealth()
-			if(occupier.health >= 0 && occupier.stat == DEAD)
-				occupier.revive()
-			updateUsrDialog()
-			update_icon()
-			sleep(10)
-		active = 0
+		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, 0)
+		active = TRUE
 		add_fingerprint(usr)
-	updateUsrDialog()
-	update_icon()
-
 
 /obj/machinery/computer/aifixer/update_icon()
 	..()

@@ -12,10 +12,6 @@
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
-	use_auto_lights = 1
-	light_power_on = 1
-	light_range_on = 2
-	light_color = LIGHT_COLOR_GREEN
 
 /obj/machinery/dna_scannernew/New()
 	..()
@@ -23,7 +19,7 @@
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/clonescanner
-	name = "circuit board (Cloning Scanner)"
+	name = "Cloning Scanner (Machine Board)"
 	build_path = /obj/machinery/dna_scannernew
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
@@ -82,8 +78,7 @@
 
 	open_machine()
 
-/obj/machinery/dna_scannernew/container_resist()
-	var/mob/living/user = usr
+/obj/machinery/dna_scannernew/container_resist(mob/living/user)
 	var/breakout_time = 2
 	if(state_open || !locked)	//Open and unlocked, no need to escape
 		state_open = 1

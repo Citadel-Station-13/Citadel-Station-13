@@ -7,3 +7,12 @@
 			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
 			index = findtext(t, char)
 	return t
+
+proc/TextPreview(var/string,var/len=40)
+	if(lentext(string) <= len)
+		if(!lentext(string))
+			return "\[...\]"
+		else
+			return string
+	else
+		return "[copytext(string, 1, 37)]..."

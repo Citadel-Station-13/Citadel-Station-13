@@ -4,7 +4,7 @@
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
-	weight = 15
+	weight = 3
 	min_players = 2
 
 /datum/round_event/ion_storm
@@ -33,6 +33,7 @@
 			var/message = generate_ion_law(ionMessage)
 			if(message)
 				M.add_ion_law(message)
+				log_game("ION law added to [M]: [message]")
 				M << "<br>"
 				M << "<span class='danger'>[message] ...LAWS UPDATED</span>"
 				M << "<br>"
@@ -544,7 +545,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-							
+
 	return message
 
 #undef ION_RANDOM

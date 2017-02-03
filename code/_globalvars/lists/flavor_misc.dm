@@ -16,7 +16,6 @@ var/global/list/undershirt_m = list()	 //stores only undershirt name
 var/global/list/undershirt_f = list()	 //stores only undershirt name
 	//Socks
 var/global/list/socks_list = list()		//stores /datum/sprite_accessory/socks indexed by name
-
 	//Lizard Bits (all datum lists indexed by name)
 var/global/list/body_markings_list = list()
 var/global/list/tails_list_lizard = list()
@@ -25,6 +24,7 @@ var/global/list/snouts_list = list()
 var/global/list/horns_list = list()
 var/global/list/frills_list = list()
 var/global/list/spines_list = list()
+var/global/list/legs_list = list()
 var/global/list/animated_spines_list = list()
 
 	//Mutant Human bits
@@ -35,26 +35,10 @@ var/global/list/wings_list = list()
 var/global/list/wings_open_list = list()
 var/global/list/r_wings_list = list()
 
-	//Mammal Species
-var/global/list/mam_body_markings_list = list()
-var/global/list/mam_ears_list = list()
-var/global/list/mam_tails_list = list()
-var/global/list/mam_tails_animated_list = list()
-
-	//Exotic Species
-var/global/list/exotic_tails_list = list()
-var/global/list/exotic_tails_animated_list = list()
-var/global/list/exotic_ears_list = list()
-var/global/list/exotic_head_list = list()
-var/global/list/exotic_back_list = list()
-
-	//Xenomorph Species
-var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
-var/global/list/xeno_tail_list = list()
-var/global/list/xeno_dorsal_list = list()
-
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
+
+var/global/list/security_depts_prefs = list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)
 
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
@@ -65,6 +49,13 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 #define DSATCHEL "Department Satchel"
 #define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
+
+//Uplink spawn loc
+#define UPLINK_PDA		"PDA"
+#define UPLINK_RADIO	"Radio"
+#define UPLINK_PEN		"Pen" //like a real spy!
+var/global/list/uplink_spawn_loc_list = list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN)
+
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 
@@ -151,10 +142,6 @@ var/global/list/greek_letters = list("Alpha", "Beta", "Gamma", "Delta",
 	"Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi",
 	"Chi", "Psi", "Omega")
 
-var/global/list/roman_numerals = list("I", "II", "III", "IV", "V", "VI",
-	"VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI",
-	"XVII", "XVIII", "XIX", "XX")
-
 var/global/list/phonetic_alphabet = list("Alpha", "Bravo", "Charlie",
 	"Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet",
 	"Kilo", "Lima", "Mike", "November", "Oscar", "Papa", "Quebec",
@@ -170,6 +157,7 @@ var/global/list/numbers_as_words = list("One", "Two", "Three", "Four",
 	var/list/L
 	for(var/i in 1 to 99)
 		L += "[i]"
+		L += "\Roman[i]"
 	return L
 
-var/global/list/station_numerals = greek_letters + roman_numerals + phonetic_alphabet + numbers_as_words + generate_number_strings()
+var/global/list/station_numerals = greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings()

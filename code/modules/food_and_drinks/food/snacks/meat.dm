@@ -6,7 +6,7 @@
 	name = "meat"
 	desc = "A slab of meat"
 	icon_state = "meat"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky
+	dried_type = /obj/item/weapon/reagent_containers/food/snacks/sosjerky/healthy
 	bitesize = 3
 	list_reagents = list("nutriment" = 3)
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain
@@ -177,9 +177,8 @@
 	icon_state = "goliathmeat"
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/goliath/burn()
-	visible_message("\The [src] finishes cooking!")
-	new/obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(src.loc)
-	SSobj.burning -= src
+	visible_message("[src] finishes cooking!")
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath/(loc)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatwheat
@@ -238,7 +237,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/steak/goliath
 	name = "goliath steak"
 	desc = "A delicious, lava cooked steak."
-	burn_state = LAVA_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	icon_state = "goliathsteak"
 	trash = null
 
@@ -289,7 +288,6 @@
 	name = "raw spider cutlet"
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 
-
 //Cooked cutlets
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet
@@ -316,4 +314,3 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/spider
 	name = "spider cutlet"
-

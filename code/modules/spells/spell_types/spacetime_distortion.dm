@@ -8,6 +8,8 @@
 	var/ready = TRUE
 	centcom_cancast = FALSE
 	sound = "sound/effects/magic.ogg"
+	cooldown_min = 300
+	level_max = 0
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)
 	if(ready)
@@ -32,7 +34,7 @@
 	perform(turf_steps,user=user)
 
 /obj/effect/proc_holder/spell/spacetime_dist/after_cast(list/targets)
-	addtimer(src, "clean_turfs", duration)
+	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
 
 /obj/effect/proc_holder/spell/spacetime_dist/cast(list/targets, mob/user = usr)
 	effects = list()
@@ -80,10 +82,9 @@
 
 /obj/effect/cross_action/spacetime_dist/proc/get_walker(atom/movable/AM)
 	busy = TRUE
-	if(linked_dist)
-		flick("purplesparkles", src)
-		AM.forceMove(get_turf(src))
-		playsound(get_turf(src),sound,70,0)
+	flick("purplesparkles", src)
+	AM.forceMove(get_turf(src))
+	playsound(get_turf(src),sound,70,0)
 	busy = FALSE
 
 /obj/effect/cross_action/spacetime_dist/Crossed(atom/movable/AM)
@@ -91,7 +92,7 @@
 		walk_link(AM)
 
 /obj/effect/cross_action/spacetime_dist/attackby(obj/item/W, mob/user, params)
-	if(user.unEquip(W))
+	if(user.temporarilyRemoveItemFromInventory(W))
 		walk_link(W)
 	else
 		walk_link(user)
