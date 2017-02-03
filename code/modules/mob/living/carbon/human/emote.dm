@@ -151,7 +151,7 @@
 	if("waggingtail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail_human"
 		dna.species.mutant_bodyparts |= "tail_human"
-	if("mam_tail" in dna.species.mutant_bodyparts)
+	if("mam_waggingtail" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "mam_waggingtail"
 		dna.species.mutant_bodyparts |= "mam_tail"
 	update_body()
