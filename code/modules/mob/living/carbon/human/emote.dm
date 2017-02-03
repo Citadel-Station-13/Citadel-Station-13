@@ -84,13 +84,13 @@
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None")))
+	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None") || ("mam_tail" in H.dna.species.mutant_bodyparts)))
 		return TRUE
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts))
+	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts) || ("mam_tail" in H.dna.species.mutant_bodyparts))
 		. = null
 
 /datum/emote/living/carbon/human/wing
@@ -134,6 +134,9 @@
 	if("tail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "tail_human"
 		dna.species.mutant_bodyparts |= "waggingtail_human"
+	if("mam_tail" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "mam_tail"
+		dna.species.mutant_bodyparts |= "mam_waggingtail"
 	update_body()
 
 
@@ -148,6 +151,9 @@
 	if("waggingtail_human" in dna.species.mutant_bodyparts)
 		dna.species.mutant_bodyparts -= "waggingtail_human"
 		dna.species.mutant_bodyparts |= "tail_human"
+	if("mam_waggingtail" in dna.species.mutant_bodyparts)
+		dna.species.mutant_bodyparts -= "mam_waggingtail"
+		dna.species.mutant_bodyparts |= "mam_tail"
 	update_body()
 
 /mob/living/carbon/human/proc/OpenWings()
