@@ -13,13 +13,17 @@
 	for(A, A && !isarea(A), A=A.loc); //semicolon is for the empty statement
 	return A
 
+/proc/get_area_name(atom/X)
+	var/area/Y = get_area(X)
+	return Y.name
+
 /proc/get_area_master(O)
 	var/area/A = get_area(O)
 	if(A && A.master)
 		A = A.master
 	return A
 
-/proc/get_area_name(N) //get area by its name
+/proc/get_area_by_name(N) //get area by its name
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
@@ -315,24 +319,22 @@
 	O.screen_loc = screen_loc
 	return O
 
-/proc/Show2Group4Delay(obj/O, list/group, delay=0)
-	if(!isobj(O))
-		return
-	if(!group)
-		group = clients
-	for(var/client/C in group)
-		C.screen += O
-	if(delay)
-		spawn(delay)
-			for(var/client/C in group)
-				C.screen -= O
+/proc/remove_images_from_clients(image/I, list/show_to)
+	for(var/client/C in show_to)
+		C.images -= I
 
 /proc/flick_overlay(image/I, list/show_to, duration)
 	for(var/client/C in show_to)
 		C.images += I
-	spawn(duration)
-		for(var/client/C in show_to)
-			C.images -= I
+	addtimer(CALLBACK(GLOBAL_PROC, /.proc/remove_images_from_clients, I, show_to), duration)
+
+/proc/flick_overlay_view(image/I, atom/target, duration) //wrapper for the above, flicks to everyone who can see the target atom
+	var/list/viewing = list()
+	for(var/m in viewers(target))
+		var/mob/M = m
+		if(M.client)
+			viewing += M.client
+	flick_overlay(I, viewing, duration)
 
 /proc/get_active_player_count(var/alive_check = 0, var/afk_check = 0, var/human_check = 0)
 	// Get active players who are playing in the round
@@ -344,9 +346,9 @@
 				continue
 			else if(afk_check && M.client.is_afk())
 				continue
-			else if(human_check && !istype(M, /mob/living/carbon/human))
+			else if(human_check && !ishuman(M))
 				continue
-			else if(istype(M, /mob/new_player)) // exclude people in the lobby
+			else if(isnewplayer(M)) // exclude people in the lobby
 				continue
 			else if(isobserver(M)) // Ghosts are fine if they were playing once (didn't start as observers)
 				var/mob/dead/observer/O = M
@@ -393,14 +395,35 @@
 
 	return new /datum/projectile_data(src_x, src_y, time, distance, power_x, power_y, dest_x, dest_y)
 
-/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300)
+/proc/showCandidatePollWindow(mob/dead/observer/G, poll_time, Question, list/candidates, ignore_category, time_passed)
+	set waitfor = 0
+
+	G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
+	switch(ignore_category ? askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
+		if(1)
+			G << "<span class='notice'>Choice registered: Yes.</span>"
+			if((world.time-time_passed)>poll_time)
+				G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
+				G << 'sound/machines/buzz-sigh.ogg'
+			else
+				candidates += G
+		if(2)
+			G << "<span class='danger'>Choice registered: No.</span>"
+		if(3)
+			var/list/L = poll_ignore[ignore_category]
+			if(!L)
+				poll_ignore[ignore_category] = list()
+			poll_ignore[ignore_category] += G.ckey
+			G << "<span class='danger'>Choice registered: Never for this round.</span>"
+
+/proc/pollCandidates(var/Question, var/jobbanType, var/datum/game_mode/gametypeCheck, var/be_special_flag = 0, var/poll_time = 300, var/ignore_category = null)
 	var/list/mob/dead/observer/candidates = list()
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
 
 	for(var/mob/dead/observer/G in player_list)
-		if(!G.key || !G.client)
+		if(!G.key || !G.client || (ignore_category && poll_ignore[ignore_category] && G.ckey in poll_ignore[ignore_category]))
 			continue
 		if(be_special_flag)
 			if(!(G.client.prefs) || !(be_special_flag in G.client.prefs.be_special))
@@ -411,18 +434,8 @@
 		if (jobbanType)
 			if(jobban_isbanned(G, jobbanType) || jobban_isbanned(G, "Syndicate"))
 				continue
-		spawn(0)
-			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
-			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
-				if(1)
-					G << "<span class='notice'>Choice registered: Yes.</span>"
-					if((world.time-time_passed)>poll_time)
-						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
-						G << 'sound/machines/buzz-sigh.ogg'
-					else
-						candidates += G
-				if(2)
-					G << "<span class='danger'>Choice registered: No.</span>"
+
+		showCandidatePollWindow(G, poll_time, Question, candidates, ignore_category, time_passed)
 	sleep(poll_time)
 
 	//Check all our candidates, to make sure they didn't log off during the wait period.
@@ -430,7 +443,26 @@
 		if(!G.key || !G.client)
 			candidates.Remove(G)
 
+	listclearnulls(candidates)
+
 	return candidates
+
+/proc/pollCandidatesForMob(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, mob/M, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	if(!M || qdeleted(M) || !M.loc)
+		return list()
+	return L
+
+/proc/pollCandidatesForMobs(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, list/mobs, ignore_category = null)
+	var/list/L = pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category)
+	var/i=1
+	for(var/v in mobs)
+		var/atom/A = v
+		if(!A || qdeleted(A) || !A.loc)
+			mobs.Cut(i,i+1)
+		else
+			++i
+	return L
 
 /proc/makeBody(mob/dead/observer/G_found) // Uses stripped down and bastardized code from respawn character
 	if(!G_found || !G_found.key)
@@ -444,3 +476,13 @@
 	new_character.key = G_found.key
 
 	return new_character
+
+/proc/send_to_playing_players(thing) //sends a whatever to all playing players; use instead of world << where needed
+	for(var/M in player_list)
+		if(M && !isnewplayer(M))
+			M << thing
+
+/proc/window_flash(var/client_or_usr)
+	if (!client_or_usr)
+		return
+	winset(client_or_usr, "mainwindow", "flash=5")

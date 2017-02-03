@@ -59,14 +59,6 @@ var/datum/subsystem/events/SSevent
 /datum/subsystem/events/proc/reschedule()
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
-	if(world.time > 108000) //3 hours
-		frequency_lower=1000
-		frequency_upper=1500
-		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
-			SSshuttle.emergency.request(null, 1.5)
-			log_game("Round time limit reached. Shuttle has been auto-called.")
-			message_admins("Round time limit reached. Shuttle called.")
-
 //selects a random event based on whether it can occur and it's 'weight'(probability)
 /datum/subsystem/events/proc/spawnEvent()
 	if(!config.allow_random_events)
@@ -105,13 +97,14 @@ var/datum/subsystem/events/SSevent
 				continue
 			if (E.alertadmins)
 				message_admins("Random Event triggering: [E.name] ([E.typepath])")
+				deadchat_broadcast("[E.name] has just been randomly triggered!") //STOP ASSUMING IT'S BADMINS!
 			log_game("Random Event triggering: [E.name] ([E.typepath])")
 			return
 
 /datum/round_event/proc/findEventArea() //Here's a nice proc to use to find an area for your event to land in!
 	var/list/safe_areas = list(
-	/area/turret_protected/ai,
-	/area/turret_protected/ai_upload,
+	/area/ai_monitored/turret_protected/ai,
+	/area/ai_monitored/turret_protected/ai_upload,
 	/area/engine,
 	/area/solar,
 	/area/holodeck,

@@ -1,3 +1,5 @@
+#define HIGHLIGHT_DYNAMIC_TRANSIT 1
+
 var/datum/subsystem/shuttle/SSshuttle
 
 /datum/subsystem/shuttle
@@ -10,6 +12,10 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/stationary = list()
 	var/list/transit = list()
 
+	var/list/turf/transit_turfs = list()
+	var/list/transit_requesters = list()
+	var/clear_transit = FALSE
+
 		//emergency shuttle stuff
 	var/obj/docking_port/mobile/emergency/emergency
 	var/obj/docking_port/mobile/emergency/backup/backup_shuttle
@@ -18,6 +24,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/emergencyEscapeTime = 1200	//time taken for emergency shuttle to reach a safe distance after leaving station (in deciseconds)
 	var/area/emergencyLastCallLoc
 	var/emergencyNoEscape
+	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
@@ -32,6 +39,11 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/orderhistory = list()
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
+
+	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
+	var/list/shuttle_purchase_requirements_met = list() //For keeping track of ingame events that would unlock new shuttles, such as defeating a boss or discovering a secret item
+
+	var/lockdown = FALSE	//disallow transit after nuke goes off
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -53,16 +65,87 @@ var/datum/subsystem/shuttle/SSshuttle
 		supply_packs[P.type] = P
 
 	initial_move()
-	..()
+	setup_transit_zone()
+#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+	color_space()
+#endif
 
+/datum/subsystem/shuttle/proc/setup_transit_zone()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
+	// transit zone
+	var/turf/A = get_turf(transit_markers[1])
+	var/turf/B = get_turf(transit_markers[2])
+	for(var/i in block(A, B))
+		var/turf/T = i
+		T.ChangeTurf(/turf/open/space)
+		transit_turfs += T
+		T.flags |= UNUSED_TRANSIT_TURF
+
+#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+/datum/subsystem/shuttle/proc/color_space()
+	if(transit_markers.len == 0)
+		WARNING("No /obj/effect/landmark/transit placed on the map!")
+		return
+	var/turf/A = get_turf(transit_markers[1])
+	var/turf/B = get_turf(transit_markers[2])
+	for(var/i in block(A, B))
+		var/turf/T = i
+		// Only dying the "pure" space, not the transit tiles
+		if(istype(T, /turf/open/space/transit) || !isspaceturf(T))
+			continue
+		if((T.x == A.x) || (T.x == B.x) || (T.y == A.y) || (T.y == B.y))
+			T.color = "#ffff00"
+		else
+			T.color = "#00ffff"
+#endif
+
+	//world.log << "[transit_turfs.len] transit turfs registered"
 
 /datum/subsystem/shuttle/fire()
 	for(var/thing in mobile)
-		if(thing)
-			var/obj/docking_port/mobile/P = thing
-			P.check()
+		if(!thing)
+			mobile.Remove(thing)
 			continue
-		mobile.Remove(thing)
+		var/obj/docking_port/mobile/P = thing
+		P.check()
+	var/changed_transit = FALSE
+	for(var/thing in transit)
+		var/obj/docking_port/stationary/transit/T = thing
+		if(!T.owner)
+			qdel(T, force=TRUE)
+			changed_transit = TRUE
+		// This next one removes transit docks/zones that aren't
+		// immediately being used. This will mean that the zone creation
+		// code will be running a lot.
+		var/obj/docking_port/mobile/owner = T.owner
+		if(owner)
+			var/idle = owner.mode == SHUTTLE_IDLE
+			var/not_centcom_evac = owner.launch_status == NOLAUNCH
+			var/not_in_use = (!T.get_docked())
+			if(idle && not_centcom_evac && not_in_use)
+				qdel(T, force=TRUE)
+				changed_transit = TRUE
+	if(clear_transit)
+		transit_requesters.Cut()
+		for(var/i in transit)
+			qdel(i, force=TRUE)
+		setup_transit_zone()
+		clear_transit = FALSE
+		changed_transit = TRUE
+#ifdef HIGHLIGHT_DYNAMIC_TRANSIT
+	if(changed_transit)
+		color_space()
+#endif
+
+	while(transit_requesters.len)
+		var/requester = popleft(transit_requesters)
+		var/success = generate_transit_dock(requester)
+		if(!success) // BACK OF THE QUEUE
+			transit_requesters += requester
+		if(MC_TICK_CHECK)
+			return
 
 /datum/subsystem/shuttle/proc/getShuttle(id)
 	for(var/obj/docking_port/mobile/M in mobile)
@@ -105,6 +188,9 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(SHUTTLE_DOCKED)
 			user << "The emergency shuttle is already here."
 			return
+		if(SHUTTLE_IGNITING)
+			user << "The emergency shuttle is firing its engines to leave."
+			return
 		if(SHUTTLE_ESCAPE)
 			user << "The emergency shuttle is moving away to a safe distance."
 			return
@@ -114,21 +200,23 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	call_reason = trim(html_encode(call_reason))
 
-	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH)
+	if(length(call_reason) < CALL_SHUTTLE_REASON_LENGTH && seclevel2num(get_security_level()) > SEC_LEVEL_GREEN)
 		user << "You must provide a reason."
 		return
 
 	var/area/signal_origin = get_area(user)
 	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
-	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED) // There is a serious threat we gotta move no time to give them five minutes.
-		emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1)
-	else
-		emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+	var/security_num = seclevel2num(get_security_level())
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			emergency.request(null, 2, signal_origin, html_decode(emergency_reason), 0)
+		if(SEC_LEVEL_BLUE)
+			emergency.request(null, 1, signal_origin, html_decode(emergency_reason), 0)
+		else
+			emergency.request(null, 0.5, signal_origin, html_decode(emergency_reason), 1) // There is a serious threat we gotta move no time to give them five minutes.
 
 	log_game("[key_name(user)] has called the shuttle.")
 	message_admins("[key_name_admin(user)] has called the shuttle.")
-
-	return
 
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
@@ -149,19 +237,24 @@ var/datum/subsystem/shuttle/SSshuttle
 		return
 	if(ticker.mode.name == "meteor")
 		return
-	if(seclevel2num(get_security_level()) == SEC_LEVEL_RED)
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
-			return
-	else
-		if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
-			return
+	var/security_num = seclevel2num(get_security_level())
+	switch(security_num)
+		if(SEC_LEVEL_GREEN)
+			if(emergency.timeLeft(1) < emergencyCallTime)
+				return
+		if(SEC_LEVEL_BLUE)
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.5)
+				return
+		else
+			if(emergency.timeLeft(1) < emergencyCallTime * 0.25)
+				return
 	return 1
 
 /datum/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
 	for(var/thing in shuttle_caller_list)
-		if(istype(thing, /mob/living/silicon/ai))
+		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
 				continue
@@ -180,6 +273,34 @@ var/datum/subsystem/shuttle/SSshuttle
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
+
+/datum/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
+	hostileEnvironments[bad] = TRUE
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/clearHostileEnvironment(datum/bad)
+	hostileEnvironments -= bad
+	checkHostileEnvironment()
+
+/datum/subsystem/shuttle/proc/checkHostileEnvironment()
+	for(var/datum/d in hostileEnvironments)
+		if(!istype(d) || qdeleted(d))
+			hostileEnvironments -= d
+	emergencyNoEscape = hostileEnvironments.len
+
+	if(emergencyNoEscape && (emergency.mode == SHUTTLE_IGNITING))
+		emergency.mode = SHUTTLE_STRANDED
+		emergency.timer = null
+		emergency.sound_played = FALSE
+		priority_announce("Hostile environment detected. \
+			Departure has been postponed indefinitely pending \
+			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+	if(!emergencyNoEscape && (emergency.mode == SHUTTLE_STRANDED))
+		emergency.mode = SHUTTLE_DOCKED
+		emergency.setTimer(emergencyDockTime)
+		priority_announce("Hostile environment resolved. \
+			You have 3 minutes to board the Emergency Shuttle.",
+			null, 'sound/AI/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -213,11 +334,149 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 2
 	return 0	//dock successful
 
+/datum/subsystem/shuttle/proc/request_transit_dock(obj/docking_port/mobile/M)
+	if(!istype(M))
+		throw EXCEPTION("[M] is not a mobile docking port")
+
+	if(M.assigned_transit)
+		return
+	else
+		if(!(M in transit_requesters))
+			transit_requesters += M
+
+/datum/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
+	// First, determine the size of the needed zone
+	// Because of shuttle rotation, the "width" of the shuttle is not
+	// always x.
+	var/travel_dir = M.preferred_direction
+	// Remember, the direction is the direction we appear to be
+	// coming from
+	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_dir = angle2dir(dock_angle)
+
+	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2
+	var/transit_height = SHUTTLE_TRANSIT_BORDER * 2
+
+	// Shuttles travelling on their side have their dimensions swapped
+	// from our perspective
+	switch(dock_dir)
+		if(NORTH, SOUTH)
+			transit_width += M.width
+			transit_height += M.height
+		if(EAST, WEST)
+			transit_width += M.height
+			transit_height += M.width
+/*
+	world << "The attempted transit dock will be [transit_width] width, and \
+		[transit_height] in height. The travel dir is [travel_dir]."
+*/
+
+	// Then find a place to put the zone
+
+	var/list/proposed_zone
+
+	base:
+		for(var/i in transit_turfs)
+			CHECK_TICK
+			var/turf/topleft = i
+			if(!(topleft.flags & UNUSED_TRANSIT_TURF))
+				continue
+			var/turf/bottomright = locate(topleft.x + transit_width,
+				topleft.y + transit_height, topleft.z)
+			if(!bottomright)
+				continue
+			if(!(bottomright.flags & UNUSED_TRANSIT_TURF))
+				continue
+
+			proposed_zone = block(topleft, bottomright)
+			if(!proposed_zone)
+				continue
+			for(var/j in proposed_zone)
+				var/turf/T = j
+				if(!T)
+					continue base
+				if(!(T.flags & UNUSED_TRANSIT_TURF))
+					continue base
+			//world << "[COORD(topleft)] and [COORD(bottomright)]"
+			break base
+
+	if((!proposed_zone) || (!proposed_zone.len))
+		return FALSE
+
+	var/turf/topleft = proposed_zone[1]
+	//world << "[COORD(topleft)] is TOPLEFT"
+	// Then create a transit docking port in the middle
+	var/coords = M.return_coords(0, 0, dock_dir)
+	//world << json_encode(coords)
+	/*  0------2
+        |      |
+        |      |
+        |  x   |
+        3------1
+	*/
+
+	var/x0 = coords[1]
+	var/y0 = coords[2]
+	var/x1 = coords[3]
+	var/y1 = coords[4]
+	// Then we want the point closest to -infinity,-infinity
+	var/x2 = min(x0, x1)
+	var/y2 = min(y0, y1)
+/*
+	var/lowx = topleft.x + SHUTTLE_TRANSIT_BORDER
+	var/lowy = topleft.y + SHUTTLE_TRANSIT_BORDER
+
+	var/turf/low_point = locate(lowx, lowy, topleft.z)
+	new /obj/effect/landmark/stationary(low_point)
+	world << "Starting at the low point, we go [x2],[y2]"
+*/
+	// Then invert the numbers
+	var/transit_x = topleft.x + SHUTTLE_TRANSIT_BORDER + abs(x2)
+	var/transit_y = topleft.y + SHUTTLE_TRANSIT_BORDER + abs(y2)
+
+	var/transit_path = /turf/open/space/transit
+	switch(travel_dir)
+		if(NORTH)
+			transit_path = /turf/open/space/transit/north
+		if(SOUTH)
+			transit_path = /turf/open/space/transit/south
+		if(EAST)
+			transit_path = /turf/open/space/transit/east
+		if(WEST)
+			transit_path = /turf/open/space/transit/west
+
+	//world << "Docking port at [transit_x], [transit_y], [topleft.z]"
+	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
+	if(!midpoint)
+		return FALSE
+	//world << "Making transit dock at [COORD(midpoint)]"
+	var/area/shuttle/transit/A = new()
+	A.parallax_movedir = travel_dir
+	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
+	new_transit_dock.assigned_turfs = proposed_zone
+	new_transit_dock.name = "Transit for [M.id]/[M.name]"
+	new_transit_dock.turf_type = transit_path
+	new_transit_dock.owner = M
+	new_transit_dock.assigned_area = A
+
+
+	// Add 180, because ports point inwards, rather than outwards
+	new_transit_dock.setDir(angle2dir(dock_angle))
+
+	for(var/i in new_transit_dock.assigned_turfs)
+		var/turf/T = i
+		T.ChangeTurf(transit_path)
+		T.flags &= ~(UNUSED_TRANSIT_TURF)
+		A.contents += T
+
+	M.assigned_transit = new_transit_dock
+	return TRUE
+
 /datum/subsystem/shuttle/proc/initial_move()
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(!M.roundstart_move)
 			continue
-		moveShuttle(M.id, "[M.roundstart_move]", 0)
+		M.dockRoundstart()
 		CHECK_TICK
 
 /datum/subsystem/shuttle/Recover()
@@ -239,6 +498,8 @@ var/datum/subsystem/shuttle/SSshuttle
 		backup_shuttle = SSshuttle.backup_shuttle
 	if (istype(SSshuttle.supply))
 		supply = SSshuttle.supply
+	if (istype(SSshuttle.transit_turfs))
+		transit_turfs = SSshuttle.transit_turfs
 
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum

@@ -11,17 +11,17 @@
 	icon_living = "morph"
 	icon_dead = "morph_dead"
 	speed = 2
-	a_intent = "harm"
+	a_intent = INTENT_HARM
 	stop_automated_movement = 1
 	status_flags = CANPUSH
 	pass_flags = PASSTABLE
-	ventcrawler = 2
+	ventcrawler = VENTCRAWLER_ALWAYS
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxHealth = 150
 	health = 150
 	healable = 0
-	environment_smash = 1
+	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	see_in_dark = 8
@@ -53,14 +53,14 @@
 	return
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_health()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
 	..()
 
 /mob/living/simple_animal/hostile/morph/med_hud_set_status()
-	if(morphed)
+	if(morphed && !isliving(form))
 		var/image/holder = hud_list[STATUS_HUD]
 		holder.icon_state = null
 		return //we hide medical hud while morphed
@@ -100,6 +100,7 @@
 	visible_message("<span class='warning'>[src] suddenly twists and changes shape, becoming a copy of [target]!</span>", \
 					"<span class='notice'>You twist your body and assume the form of [target].</span>")
 	appearance = target.appearance
+	alpha = max(alpha, 150)	//fucking chameleons
 	transform = initial(transform)
 	pixel_y = initial(pixel_y)
 	pixel_x = initial(pixel_x)
@@ -120,8 +121,7 @@
 	morphed = 0
 	form = null
 	alpha = initial(alpha)
-
-	//anim(loc,src,'icons/mob/mob.dmi',,"morph",,src.dir)
+	color = initial(color)
 
 	visible_message("<span class='warning'>[src] suddenly collapses in on itself, dissolving into a pile of green flesh!</span>", \
 					"<span class='notice'>You reform to your normal body.</span>")
@@ -180,17 +180,17 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/morph/AttackingTarget()
-	if(isliving(target)) // Eat Corpses to regen health
+	if(isliving(target)) //Eat Corpses to regen health
 		var/mob/living/L = target
 		if(L.stat == DEAD)
 			if(do_after(src, 30, target = L))
 				if(eat(L))
 					adjustHealth(-50)
 			return
-	else if(istype(target,/obj/item)) // Eat items just to be annoying
+	else if(istype(target,/obj/item)) //Eat items just to be annoying
 		var/obj/item/I = target
 		if(!I.anchored)
-			if(do_after(src,20, target = I))
+			if(do_after(src, 20, target = I))
 				eat(I)
 			return
 	target.attack_animal(src)
@@ -212,7 +212,7 @@
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
-	var/mob/dead/selected = popleft(candidates)
+	var/mob/dead/selected = pick_n_take(candidates)
 
 	var/datum/mind/player_mind = new /datum/mind(selected.key)
 	player_mind.active = 1
@@ -225,7 +225,7 @@
 	ticker.mode.traitors |= player_mind
 	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'
-	message_admins("[selected.key] has been made into morph by an event.")
-	log_game("[selected.key] was spawned as a morph by an event.")
+	message_admins("[key_name_admin(S)] has been made into a morph by an event.")
+	log_game("[key_name(S)] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN

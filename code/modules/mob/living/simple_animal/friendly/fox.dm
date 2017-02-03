@@ -18,9 +18,11 @@
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 	gold_core_spawnable = 2
+	devourable = 1
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
+	gender = FEMALE
 	gold_core_spawnable = 0

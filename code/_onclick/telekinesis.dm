@@ -1,11 +1,13 @@
 /*
 	Telekinesis
+
 	This needs more thinking out, but I might as well.
 */
 var/const/tk_maxrange = 15
 
 /*
 	Telekinetic attack:
+
 	By default, emulate the user's unarmed attack
 */
 /atom/proc/attack_tk(mob/user)
@@ -17,6 +19,7 @@ var/const/tk_maxrange = 15
 /*
 	This is similar to item attack_self, but applies to anything
 	that you can grab with a telekinetic grab.
+
 	It is used for manipulating things at range, for example, opening and closing closets.
 	There are not a lot of defaults at this time, add more where appropriate.
 */
@@ -54,6 +57,7 @@ var/const/tk_maxrange = 15
 
 /*
 	TK Grab Item (the workhorse of old TK)
+
 	* If you have not grabbed something, do a normal tk attack
 	* If you have something, throw it at the target.  If it is already adjacent, do a normal attackby()
 	* If you click what you are holding, or attack_self(), do an attack_self_tk() on it.
@@ -66,8 +70,9 @@ var/const/tk_maxrange = 15
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//item_state = null
-	w_class = 10
+	w_class = WEIGHT_CLASS_GIGANTIC
 	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 	var/last_throw = 0
 	var/atom/movable/focus = null
@@ -82,11 +87,13 @@ var/const/tk_maxrange = 15
 
 //stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )
+	if(slot == slot_hands)
 		return
 	qdel(src)
 	return
 
+/obj/item/tk_grab/attack_hand(mob/user)
+	return
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -95,6 +102,7 @@ var/const/tk_maxrange = 15
 		qdel(src)
 		return
 	focus.attack_self_tk(user)
+	update_icon()
 
 /obj/item/tk_grab/afterattack(atom/target, mob/living/carbon/user, proximity, params)//TODO: go over this
 	if(!target || !user)
@@ -131,11 +139,13 @@ var/const/tk_maxrange = 15
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
 			I.afterattack(target,user,1) // for splashing with beakers
+			update_icon()
 	else
 		apply_focus_overlay()
 		focus.throw_at(target, 10, 1,user)
 		last_throw = world.time
 		user.changeNext_move(CLICK_CD_MELEE)
+		update_icon()
 
 /proc/tkMaxRangeCheck(mob/user, atom/target, atom/focus)
 	var/d = get_dist(user, target)
@@ -165,17 +175,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)
 		return
-	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
-	O.name = "sparkles"
-	O.anchored = 1
-	O.density = 0
-	O.layer = FLY_LAYER
-	O.setDir(pick(cardinal))
-	O.icon = 'icons/effects/effects.dmi'
-	O.icon_state = "nothing"
-	flick("empdisable",O)
-	spawn(5)
-		qdel(O)
+	new /obj/effect/overlay/temp/telekinesis(get_turf(focus))
 
 
 /obj/item/tk_grab/update_icon()
@@ -185,7 +185,7 @@ var/const/tk_maxrange = 15
 	return
 
 /obj/item/tk_grab/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using \his telekinesis to choke \himself! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is using [user.p_their()] telekinesis to choke [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (OXYLOSS)
 
 /*Not quite done likely needs to use something thats not get_step_to
@@ -213,4 +213,5 @@ var/const/tk_maxrange = 15
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
+
 */

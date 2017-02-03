@@ -1,4 +1,4 @@
-f//Configuraton defines //TODO: Move all yes/no switches into bitflags
+//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 //Used by jobs_have_maint_access
 #define ASSISTANTS_HAVE_MAINT_ACCESS 1
@@ -10,6 +10,12 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/autoadmin = 0
 	var/autoadmin_rank = "Game Admin"
 
+/datum/protected_configuration/vv_get_var(var_name)
+	return debug_variable(var_name, "SECRET", 0, src)
+
+/datum/protected_configuration/vv_edit_var(var_name, var_value)
+	return FALSE
+
 /datum/configuration
 	var/name = "Configuration"			// datum name
 
@@ -18,6 +24,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
+	var/hub = 0
 
 	var/log_ooc = 0						// log OOC channel
 	var/log_access = 0					// log login/logout
@@ -33,6 +40,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/log_adminchat = 0				// log admin chat messages
 	var/log_pda = 0						// log pda messages
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
+	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
@@ -47,6 +55,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/fps = 20
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
+	var/tick_limit_mc_init = TICK_LIMIT_MC_INIT_DEFAULT	//SSinitialization throttling
 
 	var/hostedby = null
 	var/respawn = 1
@@ -69,6 +78,13 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
+	var/check_randomizer = 0
+
+	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
+	var/panic_server_name = "somewhere else"
+	var/panic_address = "byond://" //Reconnect a player this linked server if this server isn't accepting new players
 
 	//IP Intel vars
 	var/ipintel_email
@@ -77,9 +93,13 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
 
+	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
+	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
+
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
+	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
 	//Population cap vars
@@ -96,6 +116,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
+	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
+	var/list/max_pop = list()
 
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
@@ -137,9 +159,6 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/alert_desc_red_downto = "The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised."
 	var/alert_desc_delta = "Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill."
 
-	var/health_threshold_crit = 0
-	var/health_threshold_dead = -100
-
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
 	var/revival_brain_life = -1
@@ -167,6 +186,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/silent_ai = 0
 	var/silent_borg = 0
 
+	var/damage_multiplier = 1 //Modifier for damage to all mobs. Impacts healing as well.
+
 	var/allowwebclient = 0
 	var/webclientmembersonly = 0
 
@@ -174,6 +195,9 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 	var/silicon_max_law_amount = 12
+	var/list/lawids = list()
+
+	var/list/law_weights = list()
 
 	var/assistant_cap = -1
 
@@ -182,6 +206,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/grey_assistants = 0
 
 	var/lavaland_budget = 60
+	var/space_budget = 16
 
 	var/aggressive_changelog = 0
 
@@ -213,10 +238,20 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/showircname = 0
+
+	var/list/gamemode_cache = null
+
+	// Discord crap.
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
+
+	var/minutetopiclimit
+	var/secondtopiclimit
 
 /datum/configuration/New()
-	var/list/L = subtypesof(/datum/game_mode)
-	for(var/T in L)
+	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
+	for(var/T in gamemode_cache)
 		// I wish I didn't have to instance the game modes in order to look up
 		// their information, but it is the only way (at least that I know of).
 		var/datum/game_mode/M = new T()
@@ -260,12 +295,16 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 		if(type == "config")
 			switch(name)
+				if("hub")
+					config.hub = 1
 				if("admin_legacy_system")
 					config.admin_legacy_system = 1
 				if("ban_legacy_system")
 					config.ban_legacy_system = 1
 				if("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1
+				if("use_account_age_for_jobs")
+					config.use_account_age_for_jobs = 1
 				if("lobby_countdown")
 					config.lobby_countdown = text2num(value)
 				if("round_end_countdown")
@@ -298,6 +337,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.log_pda = 1
 				if("log_hrefs")
 					config.log_hrefs = 1
+				if("log_twitter")
+					config.log_twitter = 1
 				if("log_world_topic")
 					config.log_world_topic = 1
 				if("allow_admin_ooccolor")
@@ -341,7 +382,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 				if("guest_ban")
 					guests_allowed = 0
 				if("usewhitelist")
-					config.usewhitelist = 1
+					config.usewhitelist = TRUE
 				if("allow_metadata")
 					config.allow_Metadata = 1
 				if("kick_inactive")
@@ -362,6 +403,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
 						fps = 10 / ticklag
+				if("tick_limit_mc_init")
+					tick_limit_mc_init = text2num(value)
 				if("fps")
 					fps = text2num(value)
 				if("automute_on")
@@ -376,6 +419,18 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 						global.cross_allowed = 1
 				if("cross_comms_name")
 					cross_name = value
+				if("panic_server_name")
+					panic_server_name = value
+				if("panic_server_address")
+					panic_address = value
+					if(value != "byond:\\address:port")
+						allow_panic_bunker_bounce = 1
+				if("medal_hub_address")
+					global.medal_hub = value
+				if("medal_hub_password")
+					global.medal_pass = value
+				if("show_irc_name")
+					config.showircname = 1
 				if("see_own_notes")
 					config.see_own_notes = 1
 				if("soft_popcap")
@@ -396,6 +451,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.notify_new_player_age = text2num(value)
 				if("irc_first_connection_alert")
 					config.irc_first_connection_alert = 1
+				if("check_randomizer")
+					config.check_randomizer = 1
 				if("ipintel_email")
 					if (value != "ch@nge.me")
 						config.ipintel_email = value
@@ -442,16 +499,23 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
-
+				if("announce_adminhelps")
+					config.announce_adminhelps = 1
+				if("discord_url")
+					config.discord_url = value
+				if("discord_password")
+					config.discord_password = value
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
 		else if(type == "game_options")
 			switch(name)
-				if("health_threshold_crit")
-					config.health_threshold_crit	= text2num(value)
-				if("health_threshold_dead")
-					config.health_threshold_dead	= text2num(value)
+				if("damage_multiplier")
+					config.damage_multiplier		= text2num(value)
 				if("revival_pod_plants")
 					config.revival_pod_plants		= text2num(value)
 				if("revival_cloning")
@@ -520,6 +584,34 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
 					config.midround_antag_life_check = text2num(value)
+				if("min_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.min_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown minimum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+				if("max_pop")
+					var/pop_pos = findtext(value, " ")
+					var/mode_name = null
+					var/mode_value = null
+
+					if(pop_pos)
+						mode_name = lowertext(copytext(value, 1, pop_pos))
+						mode_value = copytext(value, pop_pos + 1)
+						if(mode_name in config.modes)
+							config.max_pop[mode_name] = text2num(mode_value)
+						else
+							diary << "Unknown maximum population configuration definition: [mode_name]."
+					else
+						diary << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -589,6 +681,19 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.sandbox_autoclose		= 1
 				if("default_laws")
 					config.default_laws				= text2num(value)
+				if("random_laws")
+					var/law_id = lowertext(value)
+					lawids += law_id
+				if("law_weight")
+					// Value is in the form "LAWID,NUMBER"
+					var/list/L = splittext(value, ",")
+					if(L.len != 2)
+						diary << "Invalid LAW_WEIGHT: " + t
+						continue
+					var/lawid = L[1]
+					var/weight = text2num(L[2])
+					law_weights[lawid] = weight
+
 				if("silicon_max_law_amount")
 					config.silicon_max_law_amount	= text2num(value)
 				if("join_with_mutant_race")
@@ -609,6 +714,8 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 					config.grey_assistants			= 1
 				if("lavaland_budget")
 					config.lavaland_budget			= text2num(value)
+				if("space_budget")
+					config.space_budget			= text2num(value)
 				if("no_summon_guns")
 					config.no_summon_guns			= 1
 				if("no_summon_magic")
@@ -735,7 +842,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up
 	// their information, but it is the only way (at least that I know of).
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		if(M.config_tag && M.config_tag == mode_name)
 			return M
@@ -744,7 +851,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 /datum/configuration/proc/get_runnable_modes()
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in subtypesof(/datum/game_mode))
+	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
 		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
 		if(!(M.config_tag in modes))
@@ -753,6 +860,10 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
 			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
@@ -760,7 +871,7 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
 	var/list/datum/game_mode/runnable_modes = new
-	for(var/T in (subtypesof(/datum/game_mode) - ticker.mode.type))
+	for(var/T in (gamemode_cache - ticker.mode.type))
 		var/datum/game_mode/M = new T()
 		if(!(M.config_tag in modes))
 			qdel(M)
@@ -768,7 +879,13 @@ f//Configuraton defines //TODO: Move all yes/no switches into bitflags
 		if(probabilities[M.config_tag]<=0)
 			qdel(M)
 			continue
+		if(min_pop[M.config_tag])
+			M.required_players = min_pop[M.config_tag]
+		if(max_pop[M.config_tag])
+			M.maximum_players = max_pop[M.config_tag]
 		if(M.required_players <= crew)
+			if(M.maximum_players >= 0 && M.maximum_players < crew)
+				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
 

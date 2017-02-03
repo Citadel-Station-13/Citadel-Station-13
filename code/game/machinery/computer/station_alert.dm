@@ -5,7 +5,6 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/weapon/circuitboard/computer/stationalert
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
-	light_color = LIGHT_COLOR_CYAN
 
 /obj/machinery/computer/station_alert/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
 									datum/tgui/master_ui = null, datum/ui_state/state = default_state)

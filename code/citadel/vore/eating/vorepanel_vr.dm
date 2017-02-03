@@ -12,7 +12,7 @@
 
 	var/dat = picker_holder.gen_vui(src)
 
-	picker_holder.popup = new(src, "insidePanel","Inside!", 400, 600, picker_holder)
+	picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
 
@@ -63,6 +63,7 @@
 	dat += "<ol style='list-style: none; padding: 0; overflow: auto;'>"
 	for(var/K in user.vore_organs) //Fuggin can't iterate over values
 		var/datum/belly/B = user.vore_organs[K]
+		B.owner = user
 		if(B == selected)
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else
@@ -75,7 +76,7 @@
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
 			if(DM_DIGESTF)
-				spanstyle = "color:red;"
+				spanstyle = "color:purple;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
 
@@ -138,6 +139,12 @@
 			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable</a>"
 		if(0)
 			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Digestable</span></a>"
+
+	switch(user.devourable)
+		if(1)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable</a>"
+		if(0)
+			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable</span></a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -228,6 +235,7 @@
 
 					selected.release_all_contents()
 					playsound(user, 'sound/effects/splat.ogg', 50, 1)
+					user.loc << "<span class='danger'>Everything is released from [user]!</span>"
 
 				if("Move all")
 					if(user.stat)
@@ -265,6 +273,7 @@
 
 				selected.release_specific_contents(tgt)
 				playsound(user, 'sound/effects/splat.ogg', 50, 1)
+				user.loc << "<span class='danger'>[tgt] is released from [user]!</span>"
 
 			if("Move")
 				if(user.stat)
@@ -299,6 +308,7 @@
 
 		var/datum/belly/NB = new(user)
 		NB.name = new_name
+		NB.owner = user //might be the thing we all needed.
 		user.vore_organs[new_name] = NB
 		selected = NB
 
@@ -433,13 +443,14 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(!user.save_vore_prefs())
-			user << "<span class='warning'>ERROR: Preferences failed to save!</span>"
+		if(user.save_vore_prefs())
+			user << "<span class='notice'>Saved belly preferences.</span>"
 		else
-			user << "<span class='notice'>Preferences saved!</span>"
+			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
+			log_admin("Could not save vore prefs on USER: [user].")
 
 	if(href_list["toggledg"])
-		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable. Don't abuse this button by toggling it back and forth to extend a scene or whatever, or you'll make the admins cry. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
+		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
 		switch(choice)
 			if("Cancel")
 				return 1
@@ -448,10 +459,21 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-	//	message_admins("[key_name(user)] toggled their digestability to [user.digestable] ([user ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[user.loc.];Y=[user.loc.y];Z=[user.loc.z]'>JMP</a>" : "null"])")
-
 		if(user.client.prefs)
 			user.client.prefs.digestable = user.digestable
+
+	if(href_list["toggledvor"])
+		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
+		switch(choice)
+			if("Cancel")
+				return 1
+			if("Allow Devourment")
+				user.devourable = 1
+			if("Prevent Devourment")
+				user.devourable = 0
+
+		if(user.client.prefs)
+			user.client.prefs.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1
