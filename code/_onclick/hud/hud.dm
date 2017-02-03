@@ -50,6 +50,8 @@
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
+	//citadel code
+	var/obj/screen/arousal
 
 	var/ui_style_icon = 'icons/mob/screen_midnight.dmi'
 

@@ -2,6 +2,7 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
+	return
 	if(!canSuicide())
 		return
 	var/confirm = alert("Are you sure you want to commit suicide?", "Confirm Suicide", "Yes", "No")

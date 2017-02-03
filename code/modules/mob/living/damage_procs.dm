@@ -25,6 +25,9 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		//citadel code
+		if(AROUSAL)
+			adjustArousalLoss(damage * hit_percent)
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -41,6 +44,9 @@
 			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
+		//citadel code
+		if(AROUSAL)
+			return adjustArousalLoss(damage)
 
 /mob/living/proc/get_damage_amount(damagetype = BRUTE)
 	switch(damagetype)
@@ -56,9 +62,12 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
+		//citadel code
+		if(AROUSAL)
+			return getArousalLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0, arousal = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -73,6 +82,9 @@
 		apply_damage(clone, CLONE, def_zone, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, def_zone, blocked)
+	//citadel code
+	if(arousal)
+		apply_damage(arousal, AROUSAL, def_zone, blocked)
 	return 1
 
 
@@ -231,7 +243,6 @@
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
-
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1)
