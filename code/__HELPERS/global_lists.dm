@@ -41,6 +41,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, taur_list)
 	//avian bodyparts (i swear this isn't starbound)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)
