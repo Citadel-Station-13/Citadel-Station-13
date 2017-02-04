@@ -1701,6 +1701,17 @@
 	name = "Ailurus"
 	icon_state = "ailurus"
 
+//Capra
+/datum/sprite_accessory/mam_tails/capra
+	name = "Capra"
+	icon_state = "capra"
+
+//Hawk
+/datum/sprite_accessory/mam_tails/hawk
+	name = "Hawk"
+	icon_state = "hawk"
+
+
 //Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings
 	color_src = MUTCOLORS2
