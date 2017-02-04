@@ -318,6 +318,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
 	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
+	S["feature_taur"]					>> features["taur"]
 	//Xeno features
 	S["feature_xeno_tail"]				>> features["xenotail"]
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
@@ -400,6 +401,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
 	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
 	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
+	features["taur"]		= sanitize_inlist(features["taur"], taur_list)
 	//Xeno features
 	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
 	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
@@ -465,6 +467,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				<< features["mam_tail"]
 	S["feature_mam_ears"]				<< features["mam_ears"]
 	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
+	S["feature_taur"]					<< features["taur"]
 	//Xeno features
 	S["feature_xeno_tail"]				<< features["xenotail"]
 	S["feature_xeno_dors"]				<< features["xenodorsal"]
@@ -507,9 +510,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["default_slot"] << slot
 	S.cd = "/character[slot]"
 
-	S["belly_prefs"]	>> belly_prefs
-	S["devourable"] >> devourable
-	S["digestable"]	>> digestable
+	S["belly_prefs"]		>> belly_prefs
+	S["devourable"]			>> devourable
+	S["digestable"]			>> digestable
 
 	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
 	devourable = sanitize_integer(devourable, 0, 1, initial(devourable))
@@ -525,9 +528,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!S)					return 0
 	S.cd = "/character[default_slot]"
 
-	S["belly_prefs"]	<< belly_prefs
-	S["devourable"] << devourable
-	S["digestable"]	<< digestable
+	S["belly_prefs"]		<< belly_prefs
+	S["devourable"]			<< devourable
+	S["digestable"]			<< digestable
 
 	return 1
 

@@ -62,7 +62,7 @@ var/list/preferences_datums = list()
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
+		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs", "taur" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -366,6 +366,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Ears</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("taur" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Taur Body</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -1098,6 +1107,12 @@ var/list/preferences_datums = list()
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
 					if(new_tail)
 						features["mam_tail"] = new_tail
+
+				if("taur")
+					var/new_taur
+					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in taur_list
+					if(new_taur)
+						features["taur"] = new_taur
 
 /*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
 				if("mam_snout")

@@ -3,8 +3,8 @@
 	id = "human"
 	default_color = "FFFFFF"
 	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears")
-	default_features = list("tail_human" = "None", "ears" = "None")
+	mutant_bodyparts = list("tail_human", "ears", "taur")
+	default_features = list("tail_human" = "None", "ears" = "None", "taur" = "none")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 

@@ -1,4 +1,4 @@
-/datum/sprite_accessories
+/datum/sprite_accessory
 	var/extra = 0
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
@@ -329,7 +329,13 @@
 	name = "Squirrel"
 	icon_state = "squirrel"
 
+// Wah
+
 /datum/sprite_accessory/mam_tails/ailurus
+	name = "Ailurus"
+	icon_state = "ailurus"
+
+/datum/sprite_accessory/mam_tails_animated/ailurus
 	name = "Ailurus"
 	icon_state = "ailurus"
 
@@ -349,17 +355,87 @@
 	name = "Belly"
 	icon_state = "belly"
 	gender_specific = 1
-/*
+
 /datum/sprite_accessory/mam_body_markings/bellyhandsfeet
 	name = "Belly, Hands, & Feet"
 	icon_state = "bellyhandsfeet"
 	gender_specific = 1
 	extra = 1
 	extra_color_src = MUTCOLORS3
-*/
+
 
 /******************************************
 ************ Taur Bodies ******************
+*******************************************/
+/datum/sprite_accessory/taur
+	icon = 'icons/mob/special/mam_taur.dmi'
+	extra_icon = 'icons/mob/special/mam_taur.dmi'
+	extra = 1
+	extra_color_src = MUTCOLORS2
+	center = TRUE
+	dimension_x = 64
+
+/datum/sprite_accessory/taur/none
+	name = "None"
+
+/datum/sprite_accessory/taur/panther
+	name = "Panther"
+	icon_state = "panther"
+	hasinner = 1
+
+/datum/sprite_accessory/taur/tajaran
+	name = "Tajaran"
+	icon_state = "tajaran"
+
+/datum/sprite_accessory/taur/horse
+	name = "Horse"
+	icon_state = "horse"
+
+/datum/sprite_accessory/taur/lab
+	name = "Lab"
+	icon_state = "lab"
+
+/datum/sprite_accessory/taur/shepard
+	name = "Shepard"
+	icon_state = "shepard"
+	hasinner = 1
+
+/datum/sprite_accessory/taur/husky
+	name = "Husky"
+	icon_state = "husky"
+
+/datum/sprite_accessory/taur/cow
+	name = "Cow"
+	icon_state = "cow"
+
+/datum/sprite_accessory/taur/fox
+	name = "Fox"
+	icon_state = "fox"
+
+/datum/sprite_accessory/taur/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+
+/datum/sprite_accessory/taur/naga
+	name = "Naga"
+	hasinner = 1
+	icon_state = "naga"
+
+/datum/sprite_accessory/taur/otie
+	name = "Otie"
+	hasinner = 1
+	icon_state = "otie"
+
+/datum/sprite_accessory/taur/drake
+	name = "Drake"
+	icon_state = "drake"
+
+/datum/sprite_accessory/taur/drider
+	name = "Drider"
+	icon_state = "drider"
+
+/******************************************
+*************** Ayyliums ******************
 *******************************************/
 
 //Xeno Dorsal Tubes
