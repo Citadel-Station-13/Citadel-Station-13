@@ -303,22 +303,22 @@
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
 	if("tail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_lizard"
 
 	if("waggingtail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_lizard"
 		else if ("tail_lizard" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_lizard"
 
 	if("tail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_human"
 
 
 	if("waggingtail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_human"
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
@@ -373,11 +373,11 @@
 
 	//Other Races
 	if("mam_tail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "mam_tail"
 
 	if("mam_waggingtail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT || !H.dna.features["taur"] == "None"))
 			bodyparts_to_add -= "mam_waggingtail"
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
@@ -385,6 +385,10 @@
 	if("mam_ears" in mutant_bodyparts)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "mam_ears"
+
+	if("taur" in mutant_bodyparts)
+		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || !H.dna.features["mam_tail"] == "None" || !H.dna.features["mam_waggingtail"] == "None")
+			bodyparts_to_add -= "taur"
 
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
@@ -462,6 +466,8 @@
 					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("mam_ears")
 					S = mam_ears_list[H.dna.features["mam_ears"]]
+				if("taur")
+					S = taur_list[H.dna.features["taur"]]
 
 				//Xeno Bodyparts
 				if("xenodorsal")
