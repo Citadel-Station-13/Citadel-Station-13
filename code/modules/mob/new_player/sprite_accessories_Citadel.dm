@@ -9,7 +9,9 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
 
-//Human Ears/Tails
+/******************************************
+************ Human Ears/Tails *************
+*******************************************/
 
 /datum/sprite_accessory/ears/fox
 	name = "Fox"
@@ -140,7 +142,11 @@
 	icon_state = "squirrel"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-//Mammal Bodyparts
+
+/******************************************
+*************** Body Parts ****************
+*******************************************/
+
 /datum/sprite_accessory/mam_ears
 	icon = 'icons/mob/mam_bodyparts.dmi'
 /datum/sprite_accessory/mam_ears/none
@@ -156,7 +162,10 @@
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
 
-//Snouts
+/******************************************
+**************** Snouts *******************
+*******************************************/
+
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
@@ -181,6 +190,9 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
+/******************************************
+************ Actual Species ***************
+*******************************************/
 //Cat, Big
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
@@ -321,7 +333,10 @@
 	name = "Ailurus"
 	icon_state = "ailurus"
 
-//Mammal Specific Body Markings
+/******************************************
+************ Body Markings ****************
+*******************************************/
+
 /datum/sprite_accessory/mam_body_markings
 	color_src = MUTCOLORS2
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -342,6 +357,10 @@
 	extra = 1
 	extra_color_src = MUTCOLORS3
 */
+
+/******************************************
+************ Taur Bodies ******************
+*******************************************/
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal
