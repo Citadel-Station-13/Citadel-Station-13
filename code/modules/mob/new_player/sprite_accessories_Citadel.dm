@@ -377,6 +377,7 @@
 
 /datum/sprite_accessory/taur/none
 	name = "None"
+	icon_state = "None"
 
 /datum/sprite_accessory/taur/panther
 	name = "Panther"
