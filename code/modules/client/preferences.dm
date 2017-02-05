@@ -118,8 +118,7 @@ var/list/preferences_datums = list()
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
-			if(load_vore_preferences())
-				return
+			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)
@@ -1390,10 +1389,10 @@ var/list/preferences_datums = list()
 				if("load")
 					load_preferences()
 					load_character()
-					load_vore_preferences()
+					attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
-					load_vore_preferences(text2num(href_list["num"]))
+					attempt_vr(parent.prefs_vr,"load_vore","")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -1454,8 +1453,3 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
-
-	//vore
-	character.digestable = digestable
-	character.devourable = devourable
-	character.vore_organs = belly_prefs

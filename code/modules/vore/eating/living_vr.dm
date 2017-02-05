@@ -6,6 +6,57 @@
 	var/devourable = 0					// Can the mob be vored at all?
 //	var/feeding = 0 					// Are we going to feed someone else?
 
+
+//
+// Hook for generic creation of stuff on new creatures
+//
+/hook/living_new/proc/vore_setup(mob/living/M)
+	M.verbs += /mob/living/proc/insidePanel
+	M.verbs += /mob/living/proc/escapeOOC
+
+	//Tries to load prefs if a client is present otherwise gives freebie stomach
+	if(!M.vore_organs || !M.vore_organs.len)
+		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
+			if(!M) return
+
+			if(M.client && M.client.prefs_vr)
+				if(!M.copy_from_prefs_vr())
+					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+					return 0
+				if(M.vore_organs && M.vore_organs.len)
+					M.vore_selected = M.vore_organs[1]
+
+			if(!M.vore_organs || !M.vore_organs.len)
+				if(!M.vore_organs)
+					M.vore_organs = list()
+				var/datum/belly/B = new /datum/belly(M)
+				B.immutable = 1
+				B.name = "Stomach"
+				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
+				M.vore_organs[B.name] = B
+				M.vore_selected = B.name
+
+				//Simple_animal gets emotes. move this to that hook instead?
+				if(istype(src,/mob/living/simple_animal))
+					B.emote_lists[DM_HOLD] = list(
+						"The insides knead at you gently for a moment.",
+						"The guts glorp wetly around you as some air shifts.",
+						"Your predator takes a deep breath and sighs, shifting you somewhat.",
+						"The stomach squeezes you tight for a moment, then relaxes.",
+						"During a moment of quiet, breathing becomes the most audible thing.",
+						"The warm slickness surrounds and kneads on you.")
+
+					B.emote_lists[DM_DIGEST] = list(
+						"The caustic acids eat away at your form.",
+						"The acrid air burns at your lungs.",
+						"Without a thought for you, the stomach grinds inwards painfully.",
+						"The guts treat you like food, squeezing to press more acids against you.",
+						"The onslaught against your body doesn't seem to be letting up; you're food now.",
+						"The insides work on you like they would any other food.")
+
+	//Return 1 to hook-caller
+	return 1
+
 //
 // Handle being clicked, perhaps with something to devour
 //
@@ -15,33 +66,36 @@
 			// Critical adjustments due to TG grab changes - Poojawa
 
 /mob/living/proc/vore_attack(var/mob/living/user, var/mob/living/prey)
-	if(!user)
+	if(!user || !prey)
 		return
-	if(!prey)
-		return
-	if(prey==user)
-		return
+
 	if(prey == src && user.zone_selected == "mouth") //you click your target
+//		if(!feeding(src))
+//			return
 		if(!is_vore_predator(prey))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
-		feed_self_to_grabbed(user)
+			return
+		feed_self_to_grabbed(user, src)
 
 	if(user == src) //you click yourself
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>You aren't voracious enough.</span>"
-		feed_grabbed_to_self(prey, user)
+			return
+		user.feed_grabbed_to_self(src, prey)
 
 	else // click someone other than you/prey
+//		if(!feeding(src))
+//			return
 		if(!is_vore_predator(src))
 			user << "<span class='notice'>They aren't voracious enough.</span>"
 			return
-		feed_grabbed_to_other(user)
+		feed_grabbed_to_other(user, prey, src)
 //
 // Eating procs depending on who clicked what
 //
 /mob/living/proc/feed_grabbed_to_self(var/mob/living/user, var/mob/living/prey)
 	var/belly = user.vore_selected
-	return perform_the_nom(prey, user, prey, belly)
+	return perform_the_nom(user, prey, user, belly)
 /*
 /mob/living/proc/eat_held_mob(var/mob/living/user, var/mob/living/prey, var/mob/living/pred)
 	var/belly
@@ -90,7 +144,7 @@
 	// Now give the prey time to escape... return if they did
 
 	if(!do_mob(src, user, swallow_time))
-		return 0 // Prey escaped (or user disabled) before timer expired.
+		return FALSE // Prey escaped (or user disabled) before timer expired.
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
@@ -111,7 +165,7 @@
 	else
 		message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
 		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
-	return 1
+	return TRUE
 
 //
 //End vore code.
@@ -164,7 +218,7 @@
 	//Other overridden resists go here
 
 
-	return 0
+	return FALSE
 
 //
 //	Proc for updating vore organs and digestion/healing/absorbing
@@ -211,3 +265,59 @@
 
 	else
 		src << "<span class='alert'>You aren't inside anything, you clod.</span>"
+
+//
+//	Verb for saving vore preferences to save file
+//
+/mob/living/proc/save_vore_prefs()
+	if(!(client || client.prefs_vr))
+		return FALSE
+	if(!copy_to_prefs_vr())
+		return FALSE
+	if(!client.prefs_vr.save_vore())
+		return FALSE
+
+	return TRUE
+
+/mob/living/proc/apply_vore_prefs()
+	if(!(client || client.prefs_vr))
+		return FALSE
+	if(!client.prefs_vr.load_vore())
+		return FALSE
+	if(!copy_from_prefs_vr())
+		return FALSE
+
+	return TRUE
+
+/mob/living/proc/copy_to_prefs_vr()
+	if(!client || !client.prefs_vr)
+		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
+		return FALSE
+
+	var/datum/vore_preferences/P = client.prefs_vr
+
+	P.digestable = src.digestable
+	P.devourable = src.devourable
+	P.belly_prefs = src.vore_organs
+
+	return TRUE
+
+//
+//	Proc for applying vore preferences, given bellies
+//
+/mob/living/proc/copy_from_prefs_vr()
+	if(!client || !client.prefs_vr)
+		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
+		return FALSE
+
+	var/datum/vore_preferences/P = client.prefs_vr
+
+	src.digestable = P.digestable
+	src.devourable = P.devourable
+	src.vore_organs = list()
+
+	for(var/I in P.belly_prefs)
+		var/datum/belly/Bp = P.belly_prefs[I]
+		src.vore_organs[Bp.name] = Bp.copy(src)
+
+	return TRUE

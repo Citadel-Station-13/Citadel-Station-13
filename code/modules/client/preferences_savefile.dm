@@ -176,19 +176,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["uplink_loc"]			>> uplink_spawn_loc
 
-	//vore
-
-	S["digestable"] >> digestable
-	S["devourable"] >> devourable
-	S["belly_prefs"] >> belly_prefs
-
-	if(isnull(digestable))
-		digestable = 1
-	if(isnull(devourable))
-		devourable = 1
-	if(isnull(belly_prefs))
-		belly_prefs = list()
-
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_preferences(needs_update, S)		//needs_update = savefile_version if we need an update (positive integer)
@@ -244,12 +231,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
-
-	//vore
-
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
 
 	return 1
 
@@ -494,43 +475,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
-
-	return 1
-
-/datum/preferences/proc/load_vore_preferences(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
-	S.cd = "/"
-	if(!slot)	slot = default_slot
-	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
-	if(slot != default_slot)
-		default_slot = slot
-		S["default_slot"] << slot
-	S.cd = "/character[slot]"
-
-	S["belly_prefs"]		>> belly_prefs
-	S["devourable"]			>> devourable
-	S["digestable"]			>> digestable
-
-	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
-	devourable = sanitize_integer(devourable, 0, 1, initial(devourable))
-
-	if(!belly_prefs)
-		belly_prefs = list()
-
-	return 1
-
-/datum/preferences/proc/save_vore_preferences()
-	if(!path)				return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
-	S.cd = "/character[default_slot]"
-
-	S["belly_prefs"]		<< belly_prefs
-	S["devourable"]			<< devourable
-	S["digestable"]			<< digestable
 
 	return 1
 

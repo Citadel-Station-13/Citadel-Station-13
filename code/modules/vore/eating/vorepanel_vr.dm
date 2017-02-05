@@ -63,7 +63,6 @@
 	dat += "<ol style='list-style: none; padding: 0; overflow: auto;'>"
 	for(var/K in user.vore_organs) //Fuggin can't iterate over values
 		var/datum/belly/B = user.vore_organs[K]
-		B.owner = user
 		if(B == selected)
 			dat += "<li style='float: left'><a href='?src=\ref[src];bellypick=\ref[B]'><b>[B.name]</b>"
 		else
@@ -351,7 +350,7 @@
 
 		if(length(new_desc) > 1024)
 			usr << "<span class='warning'>Entered belly desc too long. 1024 character limit.</span>"
-			return 0
+			return FALSE
 
 		selected.inside_flavor = new_desc
 
@@ -412,7 +411,7 @@
 
 		if(length(new_verb) > 12 || length(new_verb) < 2)
 			usr << "<span class='warning'>Entered verb length invalid (must be longer than 2, shorter than 12).</span>"
-			return 0
+			return FALSE
 
 		selected.vore_verb = new_verb
 
@@ -444,10 +443,12 @@
 
 	if(href_list["saveprefs"])
 		if(user.save_vore_prefs())
-			user << "<span class='notice'>Saved belly preferences.</span>"
+			user << "<span class='notice'>Belly Preferences saved!</span>"
+
 		else
-			user << "<span class='warning'>ERROR: Could not save vore prefs.</span>"
+			user << "<span class='warning'>ERROR: Belly Preferences were not saved!</span>"
 			log_admin("Could not save vore prefs on USER: [user].")
+
 
 	if(href_list["toggledg"])
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
@@ -459,8 +460,8 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		if(user.client.prefs)
-			user.client.prefs.digestable = user.digestable
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.digestable = user.digestable
 
 	if(href_list["toggledvor"])
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
@@ -472,8 +473,8 @@
 			if("Prevent Devourment")
 				user.devourable = 0
 
-		if(user.client.prefs)
-			user.client.prefs.devourable = user.devourable
+		if(user.client.prefs_vr)
+			user.client.prefs_vr.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1
