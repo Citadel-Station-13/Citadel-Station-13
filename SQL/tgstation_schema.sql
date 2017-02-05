@@ -376,4 +376,19 @@ CREATE TABLE  `ipintel` (
 PRIMARY KEY (  `ip` )
 ) ENGINE = INNODB;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+DROP TABLE IF EXISTS `mentor`;
+CREATE TABLE `mentor` (
+  `ckey` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `mentor_memo`;
+CREATE TABLE `mentor_memo` (
+  `ckey` varchar(32) NOT NULL,
+  `memotext` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `last_editor` varchar(32) DEFAULT NULL,
+  `edits` text,
+  PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 -- Dump completed on 2013-03-24 18:02:35
