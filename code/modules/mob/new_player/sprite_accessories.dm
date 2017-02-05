@@ -59,10 +59,7 @@
 	var/locked = 0		//Is this part locked from roundstart selection? Used for parts that apply effects
 	var/dimension_x = 32
 	var/dimension_y = 32
-	var/extra = 0
 	var/center = FALSE	//Should we center the sprite?
-	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
-	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
 
 //////////////////////
 // Hair Definitions //
@@ -71,7 +68,7 @@
 	icon = 'icons/mob/human_face.dmi'	  // default icon for all hairs
 
 /datum/sprite_accessory/hair/short
-	name = "Short Hair"	  // try to capatilize the names please~
+	name = "Short Hair"	  // try to capatilize the names please~ // try to spell
 	icon_state = "hair_a" // you do not need to define _s or _l sub-states, game automatically does this for you
 
 /datum/sprite_accessory/hair/shorthair2
@@ -316,7 +313,7 @@
 	icon_state = "hair_spiky2"
 
 /datum/sprite_accessory/hair/protagonist
-	name = "Slightly long"
+	name = "Slightly Long"
 	icon_state = "hair_protagonist"
 
 /datum/sprite_accessory/hair/kusangi
@@ -1384,6 +1381,7 @@
 
 /datum/sprite_accessory/legs/digitigrade_lizard
 	name = "Digitigrade Legs"
+  
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
 	name = "Anthro Digitigrade Legs"
@@ -1701,6 +1699,17 @@
 	name = "Ailurus"
 	icon_state = "ailurus"
 
+//Capra
+/datum/sprite_accessory/mam_tails/capra
+	name = "Capra"
+	icon_state = "capra"
+
+//Hawk
+/datum/sprite_accessory/mam_tails/hawk
+	name = "Hawk"
+	icon_state = "hawk"
+
+
 //Mammal Specific Body Markings
 /datum/sprite_accessory/mam_body_markings
 	color_src = MUTCOLORS2
@@ -1782,3 +1791,4 @@
 	icon = 'icons/mob/exotic_bodyparts.dmi'
 	name = "Hunter"
 	icon_state = "slimecoon" */
+

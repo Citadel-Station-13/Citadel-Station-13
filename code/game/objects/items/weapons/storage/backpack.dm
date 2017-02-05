@@ -273,6 +273,13 @@
 	level = 1
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
+/obj/item/weapon/storage/backpack/satchel/duty
+	name = "duty satchel"
+	desc = "An extra trendy looking satchel."
+	icon_state = "satchel-duty"
+
+
+
 /obj/item/weapon/storage/backpack/satchel/flat/hide(var/intact)
 	if(intact)
 		invisibility = INVISIBILITY_MAXIMUM
