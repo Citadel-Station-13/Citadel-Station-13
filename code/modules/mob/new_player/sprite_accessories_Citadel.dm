@@ -347,8 +347,10 @@
 *******************************************/
 
 /datum/sprite_accessory/mam_body_markings
-	color_src = MUTCOLORS2
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+	extra2 = 1
+	icon = 'icons/mob/special/mam_body_markings.dmi'
+	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -359,12 +361,79 @@
 	icon_state = "belly"
 	gender_specific = 1
 
-/datum/sprite_accessory/mam_body_markings/bellyhandsfeet
-	name = "Belly, Hands, & Feet"
-	icon_state = "bellyhandsfeet"
-	gender_specific = 1
-	extra = 1
+/datum/sprite_accessory/mam_body_markings/ailurus
+	name = "Red Panda"
+	icon_state = "ailurus"
+	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/fox
+	name = "Fox"
+	icon_state = "fox"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/wolf
+	name = "Wolf"
+	icon_state = "wolf"
+	color_src = MUTCOLORS2
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/otie
+	name = "Otie"
+	icon_state = "otie"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/cow
+	name = "Cow"
+	icon_state = "cow"
+	color_src = MUTCOLORS2
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/fennec
+	name = "Fennec"
+	icon_state = "Fennec"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/corvid
+	name = "Crow"
+	icon_state = "corvid"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/tiger
+	name = "Tiger Stripes"
+	color_src = MUTCOLORS3
+	icon_state = "tiger"
+
+/datum/sprite_accessory/mam_body_markings/husky
+	name = "Husky"
+	icon_state = "husky"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/shepherd
+	name = "Shepherd"
+	icon_state = "shepherd"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/corgi
+	name = "Corgi"
+	icon_state = "corgi"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/moth
+	name = "Moth"
+	icon_state = "moth"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
 
 
 /******************************************
