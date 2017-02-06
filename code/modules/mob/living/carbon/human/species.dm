@@ -264,7 +264,7 @@
 
 		// eyes
 		if((EYECOLOR in species_traits) && HD && has_eyes)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			standing	+= img_eyes
 

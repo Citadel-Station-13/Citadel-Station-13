@@ -116,6 +116,7 @@ datum/species/canid
 
 //EXOTIC//
 //These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
+/*
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
@@ -170,7 +171,7 @@ datum/species/canid
 	toxpwr = 0
 	acidpwr = 12
 
-/*
+
 /datum/species/yautja
 	name = "Yautja"
 	id = "pred"

@@ -30,6 +30,28 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
+		//human mutant bodyparts
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
+
+	//mammal bodyparts (fucking furries)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, taur_list)
+	//avian bodyparts (i swear this isn't starbound)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)
+//	init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_wings, avian_wings_list)
+//  init_sprite_accessory_subtypes(/datum/sprite_accessory/avian_open_wings, avian_open_wings_list)
+	//xeno parts (hiss?)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
