@@ -1,7 +1,10 @@
 /datum/sprite_accessory
 	var/extra = 0
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
-	var/extra_color_src = MUTCOLORS2 						//The color source for the extra overlay.
+	var/extra_color_src = MUTCOLORS2						//The color source for the extra overlay.
+	var/extra2 = 0
+	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
+	var/extra2_color_src = MUTCOLORS3
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
@@ -371,7 +374,8 @@
 	icon = 'icons/mob/special/mam_taur.dmi'
 	extra_icon = 'icons/mob/special/mam_taur.dmi'
 	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra2_icon = 'icons/mob/special/mam_taur.dmi'
+	extra2 = 1
 	center = TRUE
 	dimension_x = 64
 
@@ -382,7 +386,6 @@
 /datum/sprite_accessory/taur/panther
 	name = "Panther"
 	icon_state = "panther"
-	hasinner = 1
 
 /datum/sprite_accessory/taur/tajaran
 	name = "Tajaran"
@@ -396,10 +399,9 @@
 	name = "Lab"
 	icon_state = "lab"
 
-/datum/sprite_accessory/taur/shepard
-	name = "Shepard"
-	icon_state = "shepard"
-	hasinner = 1
+/datum/sprite_accessory/taur/shepherd
+	name = "Shepherd"
+	icon_state = "shepherd"
 
 /datum/sprite_accessory/taur/husky
 	name = "Husky"
@@ -419,12 +421,10 @@
 
 /datum/sprite_accessory/taur/naga
 	name = "Naga"
-	hasinner = 1
 	icon_state = "naga"
 
 /datum/sprite_accessory/taur/otie
 	name = "Otie"
-	hasinner = 1
 	icon_state = "otie"
 
 /datum/sprite_accessory/taur/drake
