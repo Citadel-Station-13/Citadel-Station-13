@@ -315,7 +315,7 @@ proc/get_message_output(type, target_ckey)
 				delete_message(id, 0)
 			if("watchlist entry")
 				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] is on the watchlist and has just connected - Reason: [text]</font>")
-				send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
+				send2admindiscord("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_ckey]</span> on [timestamp]"
 				if(editor_ckey)
