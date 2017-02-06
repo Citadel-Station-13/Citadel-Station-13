@@ -29436,6 +29436,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/kitchen)
 "bbq" = (
+/obj/machinery/deepfryer,
 /mob/living/carbon/monkey/punpun,
 /turf/open/floor/plasteel/red,
 /area/crew_quarters/kitchen)
@@ -30615,7 +30616,7 @@
 "bdC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/valve/open{
-	name = "SM coolant loop";
+	name = "SM Coolant loop";
 	open = 0
 	},
 /turf/open/floor/plasteel/vault{
@@ -118363,6 +118364,10 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/abandoned_gambling_den)
+"edb" = (
+/obj/machinery/deepfryer,
+/turf/open/floor/plasteel/red,
+/area/crew_quarters/kitchen)
 
 (1,1,1) = {"
 aaa
@@ -149615,8 +149620,8 @@ ceO
 cFo
 cGG
 ecI
-ecM
-ecO
+ecI
+ecI
 cHW
 cOI
 cQy
@@ -149814,7 +149819,7 @@ aMs
 aOb
 aPG
 aRu
-ect
+ecp
 aUF
 boy
 boy
@@ -149871,7 +149876,7 @@ cCL
 ceO
 cFm
 cGG
-ecJ
+ecI
 cJI
 cLo
 cMY
@@ -150385,7 +150390,7 @@ cCL
 ceO
 cFn
 cGG
-ecK
+ecI
 cJK
 cLq
 cNa
@@ -150642,9 +150647,9 @@ cCK
 bZD
 cFn
 cGG
-ecL
-ecN
-ecP
+ecI
+ecI
+ecI
 cHW
 cOM
 cQI
@@ -155987,7 +155992,7 @@ aGY
 aGZ
 aYv
 aZV
-aZU
+edb
 bcD
 bdZ
 bfP
@@ -156789,8 +156794,8 @@ bWx
 bYh
 bZZ
 ecz
-ecC
-ecD
+ecz
+ecz
 ecE
 ecG
 cjC
@@ -157819,8 +157824,8 @@ cad
 cbN
 cbN
 cbN
-ecF
-ecH
+ecE
+ecG
 cjG
 clg
 cmt
@@ -158330,7 +158335,7 @@ bUO
 bWC
 bYl
 cae
-ecB
+ecA
 cdH
 cfh
 cgx
