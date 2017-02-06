@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	10
+#define SAVEFILE_VERSION_MIN	11
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -157,7 +157,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
 	else //force update and store the old bitflag version of be_special
-		needs_update = 11
+		needs_update = 12
 		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
