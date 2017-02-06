@@ -49,8 +49,6 @@
 		Remove(owner)
 
 /datum/action/proc/Remove(mob/M)
-	if(!M)
-		return
 	if(M)
 		if(M.client)
 			M.client.screen -= button

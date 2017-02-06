@@ -119,6 +119,7 @@
 	name = "radiation storm"
 	desc = "A cloud of intense radiation passes through the area dealing rad damage to those who are unprotected."
 
+	spawn(300) grant_maint_all_access()
 	telegraph_duration = 400
 	telegraph_message = "<span class='danger'>The air begins to grow warm.</span>"
 
