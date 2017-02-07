@@ -2,8 +2,8 @@
 	name = "Borer"
 	typepath = /datum/round_event/borer
 	weight = 15
-	max_occurrences = 1
-	min_players = 10
+	max_occurrences = 0
+	min_players = 15
 	earliest_start = 12000
 
 /datum/round_event/borer
@@ -24,7 +24,7 @@
 
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
-		if(qdeleted(temp_vent))
+		if(QDELETED(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1

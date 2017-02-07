@@ -35,6 +35,7 @@ var/global/list/mam_body_markings_list = list()
 var/global/list/mam_ears_list = list()
 var/global/list/mam_tails_list = list()
 var/global/list/mam_tails_animated_list = list()
+var/global/list/taur_list = list()
 
 	//Exotic Species
 var/global/list/exotic_tails_list = list()

@@ -165,7 +165,7 @@
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
 	status_alarm()
-
+	spawn(300) revoke_maint_all_access()
 
 /datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)

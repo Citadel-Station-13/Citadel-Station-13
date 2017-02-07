@@ -113,14 +113,14 @@
 			B.internal_contents.Add(M)
 
 	owner.visible_message("<font color='green'><b>[owner] expels everything from their [lowertext(name)]!</b></font>")
-	return 1
+	return TRUE
 
 // Release a specific atom from the contents of this belly into the owning mob's location.
 // If that location is another mob, the atom is transferred into whichever of its bellies the owning mob is in.
 // Returns the number of atoms so released.
 /datum/belly/proc/release_specific_contents(var/atom/movable/M)
 	if (!(M in internal_contents))
-		return 0 // They weren't in this belly anyway
+		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
 	src.internal_contents.Add(M)  // Remove from the belly contents
@@ -130,7 +130,7 @@
 
 	owner.visible_message("<font color='green'><b>[owner] expels [M] from their [lowertext(name)]!</b></font>")
 //	owner.regenerate_icons()
-	return 1
+	return TRUE
 
 // Actually perform the mechanics of devouring the tasty prey.
 // The purpose of this method is to avoid duplicate code, and ensure that all necessary
@@ -282,10 +282,10 @@
 	struggle_outer_message = "<span class='alert'>" + struggle_outer_message + "</span>"
 	struggle_user_message = "<span class='alert'>" + struggle_user_message + "</span>"
 
-	for(var/mob/M in hearers(4, owner))
-		M.visible_message(struggle_outer_message, 2) // hearable
-	R << struggle_user_message
-	playsound(R.loc, "struggle_sounds", 50, 1, 0, 1, 1)
+//	for(var/mob/M in hearers(4, owner))
+//		M.visible_message(struggle_outer_message) // hearable
+	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
+	playsound(R.loc, "struggle_sounds", 50, 0, -5)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		R << "<span class='warning'>You attempt to climb out of \the [name].</span>"

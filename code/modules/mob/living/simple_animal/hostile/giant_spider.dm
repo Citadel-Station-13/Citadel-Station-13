@@ -50,7 +50,6 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
 	var/playable_spider = FALSE
-	devourable = 1
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
@@ -66,7 +65,7 @@
 	if(key || !playable_spider)//Someone is in it or the fun police are shutting it down
 		return 0
 	var/spider_ask = alert("Become a spider?", "Are you australian?", "Yes", "No")
-	if(spider_ask == "No" || !src || qdeleted(src))
+	if(spider_ask == "No" || !src || QDELETED(src))
 		return 1
 	if(key)
 		user << "<span class='notice'>Someone else already took this spider.</span>"

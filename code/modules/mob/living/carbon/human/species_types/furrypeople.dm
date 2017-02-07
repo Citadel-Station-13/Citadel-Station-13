@@ -4,8 +4,8 @@ datum/species/canid
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 //	subspecies = list("fox")
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs", "taur")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -22,8 +22,8 @@ datum/species/canid
 	id = "felid"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout", "legs")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat")
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout", "legs", "taur")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Tajaran", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -34,17 +34,33 @@ datum/species/canid
 		H.endTailWag()
 
 //Mammal//
+/* // Not needed, as markings and tails work fine
 /datum/species/ailurus
 	name = "Ailurus"
 	id = "ailurus"
-	default_color = "BCAC9B"
+	default_color = "4B4B4B"
 	species_traits = list(EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "ailurus")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
+*/
+/datum/species/capra
+	name = "Capra"
+	id = "capra"
+	default_color = "4B4B4B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "capra")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
+
+
+
 
 //AVIAN//
 /datum/species/avian
@@ -52,22 +68,34 @@ datum/species/canid
 	id = "avian"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("beak", "wings", "avian_tail")
-	default_features = list("beak" = "None", "wings" = "None")
+	mutant_bodyparts = list("beak", "wings", "avian_tail", "taur")
+	default_features = list("beak" = "None", "wings" = "None", "taur" = "None")
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 0 //no sprites yet
 	blacklisted = 1
 
+/datum/species/avian
+	name = "Hawk"
+	id = "hawk"
+	default_color = "BCAC9B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_body_markings")
+	default_features = list("wings" = "hawk", "mam_body_markings" = "hawk")
+	attack_verb = "peck"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1
+
 //AQUATIC//
 /datum/species/shark
 	name = "Shark"
 	id = "shark"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark")
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_body_markings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -78,7 +106,9 @@ datum/species/canid
 	name = "Moth"
 	id = "moth"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_body_markings")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -89,6 +119,7 @@ datum/species/canid
 
 //EXOTIC//
 //These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
+/*
 /datum/species/xeno
 	name = "Xenomorph"
 	id = "xeno"
@@ -143,7 +174,7 @@ datum/species/canid
 	toxpwr = 0
 	acidpwr = 12
 
-/*
+
 /datum/species/yautja
 	name = "Yautja"
 	id = "pred"

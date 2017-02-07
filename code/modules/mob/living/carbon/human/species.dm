@@ -15,8 +15,6 @@
 	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
-
-	var/eyes = "eyes"	// which eyes the race uses. at the moment, the only types of eyes are "eyes" (regular eyes) and "jelleyes" (three eyes)
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -47,9 +45,6 @@
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
-	var/invis_sight = SEE_INVISIBLE_LIVING
-	var/darksight = 2
-
 	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
 
@@ -64,6 +59,9 @@
 
 	//Flight and floating
 	var/override_float = 0
+
+		//Eyes
+	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
@@ -250,6 +248,13 @@
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
+	// eyes
+	var/has_eyes = TRUE
+
+	if(!H.getorgan(/obj/item/organ/eyes) && HD)
+		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
+		has_eyes = FALSE
+
 	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
@@ -258,8 +263,8 @@
 			standing	+= lips
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "[eyes]", "layer" = -BODY_LAYER)
+		if((EYECOLOR in species_traits) && HD && has_eyes)
+			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
 			img_eyes.color = "#" + H.eye_color
 			standing	+= img_eyes
 
@@ -303,22 +308,22 @@
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
 	if("tail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_lizard"
 
 	if("waggingtail_lizard" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_lizard"
 		else if ("tail_lizard" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_lizard"
 
 	if("tail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "tail_human"
 
 
 	if("waggingtail_human" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "waggingtail_human"
 		else if ("tail_human" in mutant_bodyparts)
 			bodyparts_to_add -= "waggingtail_human"
@@ -373,11 +378,11 @@
 
 	//Other Races
 	if("mam_tail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT) || !H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "mam_tail"
 
 	if("mam_waggingtail" in mutant_bodyparts)
-		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))
+		if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT || !H.dna.features["taur"] == "None"))
 			bodyparts_to_add -= "mam_waggingtail"
 		else if ("mam_tail" in mutant_bodyparts)
 			bodyparts_to_add -= "mam_waggingtail"
@@ -385,6 +390,10 @@
 	if("mam_ears" in mutant_bodyparts)
 		if(!H.dna.features["mam_ears"] || H.dna.features["mam_ears"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.status == BODYPART_ROBOTIC)
 			bodyparts_to_add -= "mam_ears"
+
+	if("taur" in mutant_bodyparts)
+		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || !H.dna.features["mam_tail"] == "None" || !H.dna.features["mam_waggingtail"] == "None")
+			bodyparts_to_add -= "taur"
 
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
@@ -462,6 +471,8 @@
 					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("mam_ears")
 					S = mam_ears_list[H.dna.features["mam_ears"]]
+				if("taur")
+					S = taur_list[H.dna.features["taur"]]
 
 				//Xeno Bodyparts
 				if("xenodorsal")
@@ -586,6 +597,40 @@
 						I.color = "#[H.facial_hair_color]"
 					if(EYECOLOR)
 						I.color = "#[H.eye_color]"
+				standing += I
+
+			if(S.extra2) //apply the extra overlay, if there is one
+				if(S.gender_specific)
+					icon_string = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
+				else
+					icon_string = "m_[bodypart]_extra2_[S.icon_state]_[layertext]"
+
+				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
+				if(S.center)
+					I = center_image(I,S.dimension_x,S.dimension_y)
+
+				switch(S.extra2_color_src) //change the color of the extra overlay
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
+					if(HAIR)
+						if(hair_color == "mutcolor")
+							I.color = "#[H.dna.features["mcolor"]]"
+						else
+							I.color = "#[H.hair_color]"
 				standing += I
 
 		H.overlays_standing[layer] = standing.Copy()
@@ -861,7 +906,6 @@
 			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max(0, H.nutrition - hunger_rate)
 
-
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
@@ -894,42 +938,6 @@
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		else
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
-
-
-/datum/species/proc/update_sight(mob/living/carbon/human/H)
-	H.sight = initial(H.sight)
-	H.see_in_dark = darksight
-	H.see_invisible = invis_sight
-
-	if(H.client.eye != H)
-		var/atom/A = H.client.eye
-		if(A.update_remote_sight(H)) //returns 1 if we override all other sight updates.
-			return
-
-	for(var/obj/item/organ/cyberimp/eyes/E in H.internal_organs)
-		H.sight |= E.sight_flags
-		if(E.dark_view)
-			H.see_in_dark = E.dark_view
-		if(E.see_invisible)
-			H.see_invisible = min(H.see_invisible, E.see_invisible)
-
-	if(H.glasses)
-		var/obj/item/clothing/glasses/G = H.glasses
-		H.sight |= G.vision_flags
-		H.see_in_dark = max(G.darkness_view, H.see_in_dark)
-		if(G.invis_override)
-			H.see_invisible = G.invis_override
-		else
-			H.see_invisible = min(G.invis_view, H.see_invisible)
-
-	for(var/X in H.dna.mutations)
-		var/datum/mutation/M = X
-		if(M.name == XRAY)
-			H.sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-			H.see_in_dark = max(H.see_in_dark, 8)
-
-	if(H.see_override)	//Override all
-		H.see_invisible = H.see_override
 
 /datum/species/proc/update_health_hud(mob/living/carbon/human/H)
 	return 0
