@@ -1062,6 +1062,11 @@ var/list/preferences_datums = list()
 						eye_color = sanitize_hexcolor(new_eyes)
 
 				if("species")
+					for(var/spath in subtypesof(/datum/species))
+						var/datum/species/S = new spath()
+						var/list/wlist = S.whitelist
+						if(S.whitelisted && (wlist.Find(user.ckey) || wlist.Find(user.key) || user.client.holder))  //If your ckey is on the species whitelist or you're an admin:)
+							roundstart_species += S.id
 
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
 
