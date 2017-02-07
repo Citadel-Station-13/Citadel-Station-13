@@ -130,4 +130,7 @@
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define MUTCOLORS2		26
 #define MUTCOLORS3		27
+//citadel code
+#define NOAROUSAL		28//Stops all arousal effects
+#define NOGENITALS		29//Cannot create, use, or otherwise have genitals
 //#define SUBSPECIES		28
