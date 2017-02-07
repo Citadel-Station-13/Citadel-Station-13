@@ -176,3 +176,36 @@
 			M.min_arousal -= 1
 		M.adjustArousalLoss(-2)
 	..()
+
+//recipes
+/datum/chemical_reaction/aphro
+	name = "crocin"
+	id = "aphro"
+	results = list("aphro" = 6)
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "water" = 1)
+	required_temp = 400
+	mix_message = "The mixture boils off a pink vapor..."//The water boils off, leaving the crocin
+
+/datum/chemical_reaction/aphroplus
+	name = "hexacrocin"
+	id = "aphro+"
+	results = list("aphro+" = 1)
+	required_reagents = list("aphro" = 6, "phenol" = 1)
+	required_temp = 400
+	mix_message = "The mixture rapidly condenses and darkens in color..."
+
+/datum/chemical_reaction/anaphro
+	name = "camphor"
+	id = "anaphro"
+	results = list("anaphro" = 6)
+	required_reagents = list("carbon" = 2, "hydrogen" = 2, "oxygen" = 2, "sulfur" = 1)
+	required_temp = 400
+	mix_message = "The mixture boils off a yellow, smelly vapor..."//Sulfur burns off, leaving the camphor
+
+/datum/chemical_reaction/anaphroplus
+	name = "pentacamphor"
+	id = "anaphro+"
+	results = list("anaphro+" = 1)
+	required_reagents = list("anaphro" = 5, "acetone" = 1)
+	required_temp = 300
+	mix_message = "The mixture thickens and heats up slighty..."
