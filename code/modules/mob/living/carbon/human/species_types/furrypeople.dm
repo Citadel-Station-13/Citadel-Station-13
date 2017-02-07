@@ -186,9 +186,9 @@ datum/species/mammal
 	name = "DataShark"
 	id = "datashark"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "datashark", "mam_body_markings" = "None")
+	default_features = list("mam_tail" = "datashark", "mam_body_markings" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
