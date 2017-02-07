@@ -3,7 +3,6 @@ datum/species/mammal
 	id = "mammal"
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-//	subspecies = list("fox")
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
@@ -27,8 +26,7 @@ datum/species/mammal
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
-//	blacklisted = 1
+	roundstart = 1
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -45,7 +43,7 @@ datum/species/mammal
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
 
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -61,7 +59,7 @@ datum/species/mammal
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -192,7 +190,7 @@ datum/species/mammal
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-//	roundstart = 1 //no sprites yet
+//	roundstart = 1
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0

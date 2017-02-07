@@ -337,10 +337,52 @@
 /datum/sprite_accessory/mam_tails/ailurus
 	name = "Ailurus"
 	icon_state = "ailurus"
+	extra = 1
+	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_tails_animated/ailurus
 	name = "Ailurus"
 	icon_state = "ailurus"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+
+// Hawk
+
+/datum/sprite_accessory/mam_tails/hawk
+	name = "Hawk"
+	icon_state = "hawk"
+
+/datum/sprite_accessory/mam_tails_animated/hawk
+	name = "Hawk"
+	icon_state = "hawk"
+
+//Otusian
+/datum/sprite_accessory/mam_ears/otie
+	name = "Otusian"
+	icon_state = "otie"
+	hasinner= 1
+
+/datum/sprite_accessory/mam_tails/otie
+	name = "Otusian"
+	icon_state = "otie"
+
+/datum/sprite_accessory/mam_tails_animated/otie
+	name = "Otusian"
+	icon_state = "otie"
+
+// G Shepherd
+/datum/sprite_accessory/mam_tails/shepherd
+	name = "Shepherd"
+	icon_state = "shepherd"
+	extra = 1
+	extra2 = 1
+
+/datum/sprite_accessory/mam_tails_animated/shepherd
+	name = "Shepherd"
+	icon_state = "shepherd"
+	extra = 1
+	extra2 = 1
+
 
 /******************************************
 ************ Body Markings ****************
@@ -350,7 +392,6 @@
 	extra = 1
 	extra2 = 1
 	icon = 'icons/mob/special/mam_body_markings.dmi'
-	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -364,14 +405,13 @@
 /datum/sprite_accessory/mam_body_markings/ailurus
 	name = "Red Panda"
 	icon_state = "ailurus"
-	color_src = MUTCOLORS2
-	extra_color_src = MUTCOLORS3
+	extra_color_src = MUTCOLORS2
+	extra2_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/fox
 	name = "Fox"
 	icon_state = "fox"
-	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
@@ -390,18 +430,23 @@
 	name = "Cow"
 	icon_state = "cow"
 	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/fennec
 	name = "Fennec"
 	icon_state = "Fennec"
-	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/corvid
 	name = "Crow"
 	icon_state = "corvid"
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/hawk
+	name = "Hawk"
+	icon_state = "hawk"
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/tiger
