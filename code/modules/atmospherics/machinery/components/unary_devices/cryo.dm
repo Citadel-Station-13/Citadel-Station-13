@@ -13,6 +13,7 @@
 	var/autoeject = FALSE
 	var/volume = 100
 	var/running_bob_animation = 0
+
 	var/efficiency = 1
 	var/sleep_factor = 750
 	var/paralyze_factor = 1000
@@ -25,7 +26,6 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
-
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
@@ -144,6 +144,7 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
+
 	if(!on)
 		return
 	if(!is_operational())
@@ -214,12 +215,16 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	container_resist(user)
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
+/obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = 0)
 	if(!state_open && !panel_open)
 		on = FALSE
 		..()
-		if(beaker)
-			beaker.forceMove(src)
+	for(var/mob/M in contents) //only drop mobs
+		M.forceMove(get_turf(src))
+		if(isliving(M))
+			var/mob/living/L = M
+			L.update_canmove()
+	occupant = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)

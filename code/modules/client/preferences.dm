@@ -62,7 +62,7 @@ var/list/preferences_datums = list()
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
 	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs")
+		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs", "taur" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -118,8 +118,7 @@ var/list/preferences_datums = list()
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
-			if(load_vore_preferences())
-				return
+			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)
@@ -366,6 +365,15 @@ var/list/preferences_datums = list()
 					dat += "<h3>Ears</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
+
+					dat += "</td>"
+
+				if("taur" in pref_species.mutant_bodyparts)
+					dat += "<td valign='top' width='7%'>"
+
+					dat += "<h3>Taur Body</h3>"
+
+					dat += "<a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 
 					dat += "</td>"
 
@@ -1099,6 +1107,12 @@ var/list/preferences_datums = list()
 					if(new_tail)
 						features["mam_tail"] = new_tail
 
+				if("taur")
+					var/new_taur
+					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in taur_list
+					if(new_taur)
+						features["taur"] = new_taur
+
 /*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
 				if("mam_snout")
 					var/new_snout
@@ -1375,10 +1389,10 @@ var/list/preferences_datums = list()
 				if("load")
 					load_preferences()
 					load_character()
-					load_vore_preferences()
+					attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
-					load_vore_preferences(text2num(href_list["num"]))
+					attempt_vr(parent.prefs_vr,"load_vore","")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
@@ -1439,8 +1453,3 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
-
-	//vore
-	character.digestable = digestable
-	character.devourable = devourable
-	character.vore_organs = belly_prefs

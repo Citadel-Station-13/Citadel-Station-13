@@ -13,12 +13,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, undershirt_list, undershirt_m, undershirt_f)
 	//socks
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
-	//human mutant bodyparts
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
 	//lizard bodyparts (blizzard intensifies)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, tails_list_lizard)
@@ -36,11 +30,19 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, r_wings_list,roundstart = TRUE)
 
+		//human mutant bodyparts
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, animated_tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
+
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_ears, mam_ears_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails_animated, mam_tails_animated_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/taur, taur_list)
 	//avian bodyparts (i swear this isn't starbound)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/beaks/avian, avian_beaks_list)
 //	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/avian, avian_tails_list)

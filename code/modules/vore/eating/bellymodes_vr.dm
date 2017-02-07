@@ -20,7 +20,7 @@
 	if(digest_mode == DM_DIGEST)
 
 		if(prob(50))
-			playsound(owner.loc, "digestion_sounds", 65, 1, 0, 1, 1)
+			playsound(owner.loc, "digestion_sounds", 50, 0, -5)
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -42,11 +42,11 @@
 				digest_alert_prey = replacetext(digest_alert_prey,"%belly",lowertext(name))
 
 				//Send messages
-				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
-				M << "<span class='notice'>" + digest_alert_prey + "</span>"
+				owner << "<span class='warning'>" + digest_alert_owner + "</span>"
+				M << "<span class='userdanger'>" + digest_alert_prey + "</span>"
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				playsound(owner.loc, "death_gurgles", 70, 1, 0, 1, 1)
+				playsound(owner.loc, "death_gurgles", 50, 0, -5)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -62,7 +62,7 @@
 	if(digest_mode == DM_DIGESTF)
 
 		if(prob(50))
-			playsound(owner.loc, "digestion_sounds", 65, 1, 0, 1, 1)
+			playsound(owner.loc, "digestion_sounds", 55, 0, -3) //slightly louder 'cuz heavier gurgles
 
 		for (var/mob/living/M in internal_contents)
 			//Pref protection!
@@ -84,11 +84,12 @@
 				digest_alert_prey = replacetext(digest_alert_prey,"%belly",lowertext(name))
 
 				//Send messages
-				owner << "<span class='notice'>" + digest_alert_owner + "</span>"
-				M << "<span class='notice'>" + digest_alert_prey + "</span>"
-
+				owner << "<span class='warning'>" + digest_alert_owner + "</span>"
+				M << "<span class='userdanger'>" + digest_alert_prey + "</span>"
+				M.visible_message("<span class='userdanger'>[digest_alert_owner]</span>", "<span class='warning'>[digest_alert_prey]</span>",
+									"<span class='notice'>You watch as [owner]'s form lose its additions.</span>")
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				playsound(owner.loc, "death_gurgles", 70, 1, 0, 1, 1)
+				playsound(owner.loc, "death_gurgles", 50, 0, -5)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -103,7 +104,7 @@
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		if(prob(50))
-			playsound(owner.loc, "digestion_sounds", 50, 1, 0, 1, 1)
+			playsound(owner.loc, "digestion_sounds", 45, 0, -6) //very quiet gurgles, supposedly.
 
 		for (var/mob/living/M in internal_contents)
 			if(M.stat != DEAD)

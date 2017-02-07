@@ -17,26 +17,6 @@
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
-	//Tries to load prefs if a client is present otherwise gives freebie stomach
-	spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
-		verbs += /mob/living/proc/insidePanel
-		verbs += /mob/living/proc/escapeOOC
-
-		if(!vore_organs.len)
-		//	if(isanimal(src))
-		//		return 0 // No random NPC guts
-		//	if(isbrain(src))
-		//		return 0 // No Brain guts
-		//	if(issilicon(src))
-		//		return 0 // No guts for Silicons either
-			var/datum/belly/B = new /datum/belly(src)
-			B.owner = src
-			B.immutable = 1
-			B.name = "Stomach"
-			B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [name]."
-			vore_organs[B.name] = B
-			vore_selected = B.name
-
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -568,9 +548,7 @@
 		resist_buckle()
 
 	// climbing out of a gut
-	else if(ismob(loc))
-		vore_process_resist(src)
-		return
+	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
 
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
@@ -788,7 +766,7 @@
 	return 0
 
 /mob/living/proc/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(butcher_results)
 		for(var/path in butcher_results)

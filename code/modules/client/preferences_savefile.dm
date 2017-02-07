@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	10
+#define SAVEFILE_VERSION_MIN	11
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -157,7 +157,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
 	else //force update and store the old bitflag version of be_special
-		needs_update = 11
+		needs_update = 12
 		S["be_special"] 	>> old_be_special
 
 	S["default_slot"]		>> default_slot
@@ -175,19 +175,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
 	S["uplink_loc"]			>> uplink_spawn_loc
-
-	//vore
-
-	S["digestable"] >> digestable
-	S["devourable"] >> devourable
-	S["belly_prefs"] >> belly_prefs
-
-	if(isnull(digestable))
-		digestable = 1
-	if(isnull(devourable))
-		devourable = 1
-	if(isnull(belly_prefs))
-		belly_prefs = list()
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -244,12 +231,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
-
-	//vore
-
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
 
 	return 1
 
@@ -318,6 +299,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
 	S["feature_mam_tail_animated"]		>> features["mam_tail_animated"]
+	S["feature_taur"]					>> features["taur"]
 	//Xeno features
 	S["feature_xeno_tail"]				>> features["xenotail"]
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
@@ -400,6 +382,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
 	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
 	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
+	features["taur"]		= sanitize_inlist(features["taur"], taur_list)
 	//Xeno features
 	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
 	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
@@ -465,6 +448,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_mam_tail"]				<< features["mam_tail"]
 	S["feature_mam_ears"]				<< features["mam_ears"]
 	S["feature_mam_tail_animated"]		<< features["mam_tail_animated"]
+	S["feature_taur"]					<< features["taur"]
 	//Xeno features
 	S["feature_xeno_tail"]				<< features["xenotail"]
 	S["feature_xeno_dors"]				<< features["xenodorsal"]
@@ -491,43 +475,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_high"]	<< job_engsec_high
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
-
-	return 1
-
-/datum/preferences/proc/load_vore_preferences(slot)
-	if(!path)				return 0
-	if(!fexists(path))		return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
-	S.cd = "/"
-	if(!slot)	slot = default_slot
-	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
-	if(slot != default_slot)
-		default_slot = slot
-		S["default_slot"] << slot
-	S.cd = "/character[slot]"
-
-	S["belly_prefs"]	>> belly_prefs
-	S["devourable"] >> devourable
-	S["digestable"]	>> digestable
-
-	digestable = sanitize_integer(digestable, 0, 1, initial(digestable))
-	devourable = sanitize_integer(devourable, 0, 1, initial(devourable))
-
-	if(!belly_prefs)
-		belly_prefs = list()
-
-	return 1
-
-/datum/preferences/proc/save_vore_preferences()
-	if(!path)				return 0
-	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
-	S.cd = "/character[default_slot]"
-
-	S["belly_prefs"]	<< belly_prefs
-	S["devourable"] << devourable
-	S["digestable"]	<< digestable
 
 	return 1
 

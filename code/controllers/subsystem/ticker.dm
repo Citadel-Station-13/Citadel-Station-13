@@ -51,9 +51,9 @@ var/datum/subsystem/ticker/ticker
 
 	var/maprotatechecked = 0
 
-	var/modevoted = 0						//Have we sent a vote for the gamemode?
-
 	var/news_report
+
+	var/modevoted = 0						//Have we sent a vote for the gamemode?
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
@@ -122,13 +122,6 @@ var/datum/subsystem/ticker/ticker
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
-				addtimer(CALLBACK(src, .proc/NukeCleanup), 50)
-
-/datum/subsystem/ticker/proc/NukeCleanup()
-	if(mode.station_was_nuked)
-		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
-	else
-		world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/setup()
 		//Create and announce mode
@@ -391,6 +384,7 @@ var/datum/subsystem/ticker/ticker
 
 
 /datum/subsystem/ticker/proc/declare_completion()
+	set waitfor = FALSE
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
@@ -419,6 +413,8 @@ var/datum/subsystem/ticker/ticker
 			else
 				Player << "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>"
 
+		CHECK_TICK
+
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
@@ -440,6 +436,8 @@ var/datum/subsystem/ticker/ticker
 		world << "<BR>[TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
 	world << "<BR>"
 
+	CHECK_TICK
+
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
 		if (aiPlayer.stat != 2 && aiPlayer.mind)
@@ -457,6 +455,9 @@ var/datum/subsystem/ticker/ticker
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			world << "[robolist]"
+
+	CHECK_TICK
+
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
@@ -467,15 +468,23 @@ var/datum/subsystem/ticker/ticker
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
+	CHECK_TICK
+
 	mode.declare_completion()//To declare normal completion.
+
+	CHECK_TICK
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
 
+	CHECK_TICK
+
 	if(cross_allowed)
 		send_news_report()
+
+	CHECK_TICK
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -489,10 +498,14 @@ var/datum/subsystem/ticker/ticker
 				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
 				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
 
+	CHECK_TICK
+
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	CHECK_TICK
 
 	//Borers
 	var/borerwin = FALSE
@@ -529,7 +542,11 @@ var/datum/subsystem/ticker/ticker
 			else
 				world << "<b><font color='red'>The borers have failed!</font></b>"
 
+	CHECK_TICK
+
 	mode.declare_station_goal_completion()
+
+	CHECK_TICK
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
 	if(SSgarbage.didntgc.len)
@@ -539,9 +556,16 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	CHECK_TICK
+
 	//Collects persistence features
 	SSpersistence.CollectData()
-	return 1
+
+	sleep(50)
+	if(mode.station_was_nuked)
+		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+	else
+		world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -638,6 +662,7 @@ var/datum/subsystem/ticker/ticker
 	maprotatechecked = ticker.maprotatechecked
 
 	modevoted = ticker.modevoted
+
 
 /datum/subsystem/ticker/proc/send_news_report()
 	var/news_message

@@ -47,6 +47,8 @@
 			internal_organs += new /obj/item/organ/lungs()
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
+
+	internal_organs += new dna.species.mutanteyes()
 	internal_organs += new /obj/item/organ/brain
 	..()
 
@@ -595,11 +597,11 @@
 					threatcount += 2
 
 	//Check for dresscode violations
-	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard))
-		threatcount += 2
+	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
+		threatcount += 5
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && dna.species.id != "human")
+	if(dna && dna.species.id && dna.species.id != "human" || "lizard" || "canine" || "felid" || "avian" || "shark" || "moth")
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
@@ -608,7 +610,7 @@
 
 	//Agent cards lower threatlevel.
 	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
-		threatcount -= 5
+		threatcount -= 2
 
 	return threatcount
 
@@ -763,17 +765,6 @@
 		var/datum/data/record/R = find_record("name", oldname, L)
 		if(R)
 			R.fields["name"] = newname
-
-/mob/living/carbon/human/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		sight = (SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		see_in_dark = 8
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		return
-
-	dna.species.update_sight(src)
 
 /mob/living/carbon/human/get_total_tint()
 	. = ..()
