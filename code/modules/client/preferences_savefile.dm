@@ -175,6 +175,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
 	S["uplink_loc"]			>> uplink_spawn_loc
+	//citadel code
+	S["arousable"]			>> arousable
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -231,6 +233,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
+	//citadel code
+	S["arousable"]			<< arousable
 
 	return 1
 

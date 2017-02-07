@@ -84,6 +84,9 @@ var/list/preferences_datums = list()
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
+	//citadel code
+	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
+
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
@@ -435,6 +438,24 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 			dat += "</tr></table>"
+			//citadel code
+			if(NOGENITALS in pref_species.species_traits)
+				dat += "<h2>Your species ([pref_species.name]) does not support genitals!</h2>"
+			else
+				dat += "<h2>Genitals</h2>"
+
+				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Options</h3>"
+				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+				dat += "<h2>More Coming Soon(tm)</h2>"
+
+				dat += "</td>"
+
+
+				dat += "</td></tr></table>"
 
 
 		if (1) // Game Preferences
@@ -1301,6 +1322,17 @@ var/list/preferences_datums = list()
 
 		else
 			switch(href_list["preference"])
+
+				//citadel code
+				if("arousable")
+					switch(arousable)
+						if(TRUE)
+							arousable = FALSE
+						if(FALSE)
+							arousable = TRUE
+						else//failsafe
+							arousable = FALSE
+
 				if("publicity")
 					if(unlock_content)
 						toggles ^= MEMBER_PUBLIC
@@ -1420,6 +1452,8 @@ var/list/preferences_datums = list()
 		else if(firstspace == name_length)
 			real_name += "[pick(last_names)]"
 
+	//citadel code
+	character.canbearoused = arousable
 	character.real_name = real_name
 	character.name = character.real_name
 

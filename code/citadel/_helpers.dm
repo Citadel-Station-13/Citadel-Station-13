@@ -1,6 +1,5 @@
 //THIS FILE CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
 ////////////////////////////////////////////////////////////////////
-
 /mob/proc/setClickCooldown(var/timeout)
 	next_move = max(world.time + timeout, next_move)
 
