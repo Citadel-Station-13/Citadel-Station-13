@@ -153,4 +153,4 @@
 		M.mob_masturbate()
 		return 1
 	else
-		M << "Arousal is disabled. Feature is unavailable."
+		M << "<span class='warning'>Arousal is disabled. Feature is unavailable.</span>"
