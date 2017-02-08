@@ -1,4 +1,4 @@
-/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1)
+/proc/playsound(atom/source, soundin, vol as num, vary, extrarange as num, falloff, surround = 1, frequency = null)
 
 	soundin = get_sfx(soundin) // same sound for everyone
 
@@ -6,7 +6,8 @@
 		throw EXCEPTION("playsound(): source is an area")
 		return
 
-	var/frequency = get_rand_frequency() // Same frequency for everybody
+	if(isnull(frequency))
+		frequency = get_rand_frequency() // Same frequency for everybody
 	var/turf/turf_source = get_turf(source)
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
@@ -121,7 +122,7 @@
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
 								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
 								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
-		/*	//Scream emote sounds //when they get ported again
+/*			//Scream emote sounds //when they get ported again
 			if ("malescream")
 				soundin = pick('sound/voice/scream/scream_m1.ogg', 'sound/voice/scream/scream_m2.ogg')
 			if ("femscream")
@@ -132,7 +133,7 @@
 				soundin = pick('sound/voice/scream/bird1.ogg', 'sound/voice/scream/bird2.ogg')
 			if ("mothscream")
 				soundin = pick('sound/voice/scream/moth1.ogg')
-		*/
+*/
 			//Vore sounds
 			if ("digestion_sounds")
 				soundin = pick('sound/vore/digest1.ogg', 'sound/vore/digest2.ogg', 'sound/vore/digest3.ogg', \
@@ -145,7 +146,6 @@
 								'sound/vore/death7.ogg', 'sound/vore/death8.ogg', 'sound/vore/death9.ogg', 'sound/vore/death10.ogg')
 			if ("struggle_sounds")
 				soundin = pick('sound/vore/squish1.ogg', 'sound/vore/squish2.ogg', 'sound/vore/squish3.ogg', 'sound/vore/squish4.ogg')
-
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
