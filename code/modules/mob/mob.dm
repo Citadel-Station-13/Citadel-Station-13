@@ -1,5 +1,6 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
+	SSmob.currentrun -= src
 	dead_mob_list -= src
 	living_mob_list -= src
 	all_clockwork_mobs -= src
@@ -966,4 +967,5 @@ proc/get_top_level_mob(var/mob/S)
 	switch(var_name)
 		if ("attack_log")
 			return debug_variable(var_name, attack_log, 0, src, FALSE)
+
 	. = ..()
