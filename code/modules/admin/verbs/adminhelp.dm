@@ -86,7 +86,7 @@
 				if(T.admin == "N/A")
 					usr << "<b>Due to the fact your Adminhelp had no assigned admin, admins have been pinged.</b>"
 					message_admins("[src.ckey] has bumped their adminhelp #[T.ID], still no assigned admin!")
-					msg = "<span class='adminnotice'><b><font color=red>ADMINHELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> (<A HREF='?_src_=holder;adminmoreinfo=[ref_mob]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=[ref_mob]'>PP</A>) (<A HREF='?_src_=vars;Vars=[ref_mob]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=[ref_mob]'>SM</A>) (<A HREF='?_src_=holder;traitor=[ref_mob]'>TP</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=[ref_mob]'>FLW</A>) (<a href='?src=\ref[T];resolve=\ref[T]'>R</a>) (<A HREF='?_src_=holder;rejectadminhelp=[ref_mob]'>REJT</A>):</b> [T.msg]</span>"
+					msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=holder;resolve=[ref_client]'>R</a>):</b> [msg]</span>"
 					for(var/client/X in admins)
 						if(X.prefs.toggles & SOUND_ADMINHELP)
 							X << 'sound/effects/adminhelp.ogg'
