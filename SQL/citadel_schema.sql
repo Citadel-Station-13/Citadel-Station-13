@@ -106,6 +106,24 @@ CREATE TABLE `ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `connection_log`
+--
+
+DROP TABLE IF EXISTS `connection_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `connection_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `datetime` datetime DEFAULT NULL,
+  `serverip` varchar(45) DEFAULT NULL,
+  `ckey` varchar(45) DEFAULT NULL,
+  `ip` varchar(18) DEFAULT NULL,
+  `computerid` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `characters`
 --
 
@@ -116,48 +134,35 @@ CREATE TABLE `characters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `slot` int(2) NOT NULL,
-  `OOC_Notes` mediumtext NOT NULL,
+  `metadata` mediumtext NOT NULL,
   `real_name` varchar(45) NOT NULL,
-  `name_is_always_random` tinyint(1) NOT NULL,
+  `be_random_name` tinyint(1) NOT NULL,
+  `be_random_body` tinyint(1) NOT NULL,
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) NOT NULL,
-  `species` varchar(45) NOT NULL,
-  `language` varchar(45) NOT NULL,
-  `hair_red` smallint(4) NOT NULL,
-  `hair_green` smallint(4) NOT NULL,
-  `hair_blue` smallint(4) NOT NULL,
-  `secondary_hair_red` smallint(4) NOT NULL,
-  `secondary_hair_green` smallint(4) NOT NULL,
-  `secondary_hair_blue` smallint(4) NOT NULL,
-  `facial_red` smallint(4) NOT NULL,
-  `facial_green` smallint(4) NOT NULL,
-  `facial_blue` smallint(4) NOT NULL,
-  `secondary_facial_red` smallint(4) NOT NULL,
-  `secondary_facial_green` smallint(4) NOT NULL,
-  `secondary_facial_blue` smallint(4) NOT NULL,
-  `skin_tone` smallint(4) NOT NULL,
-  `skin_red` smallint(4) NOT NULL,
-  `skin_green` smallint(4) NOT NULL,
-  `skin_blue` smallint(4) NOT NULL,
-  `marking_colours` varchar(255) NOT NULL DEFAULT 'head=%23000000&body=%23000000&tail=%23000000',
-  `head_accessory_red` smallint(4) NOT NULL,
-  `head_accessory_green` smallint(4) NOT NULL,
-  `head_accessory_blue` smallint(4) NOT NULL,
+  `species` varchar(45) NOT NULL DEFAUlT,
+  `mcolor` varchar(255) NOT NULL DEFAULT,
+  `mcolor2` varchar(255) NOT NULL DEFAULT,
+  `mcolor3` varchar(255) NOT NULL DEFAULT,
+  `features` varchar(512) NOT NULL DEFAULT,
+  `custom_names` varchar(255) NOT NULL,
   `hair_style_name` varchar(45) NOT NULL,
   `facial_style_name` varchar(45) NOT NULL,
+  `skin_tone` smallint(4) NOT NULL,
+  `facial_hair_color` varchar(255) NOT NULL,
   `marking_styles` varchar(255) NOT NULL DEFAULT 'head=None&body=None&tail=None',
   `head_accessory_style_name` varchar(45) NOT NULL,
   `alt_head_name` varchar(45) NOT NULL,
-  `eyes_red` smallint(4) NOT NULL,
-  `eyes_green` smallint(4) NOT NULL,
-  `eyes_blue` smallint(4) NOT NULL,
+  `eye_color` smallint(4) NOT NULL,
+  `hair_color` smallint(4) NOT NULL,
+  `socks` mediumtext NOT NULL,
   `underwear` mediumtext NOT NULL,
   `undershirt` mediumtext NOT NULL,
   `backbag` smallint(4) NOT NULL,
   `b_type` varchar(45) NOT NULL,
-  `alternate_option` smallint(4) NOT NULL,
-  `job_support_high` mediumint(8) NOT NULL,
-  `job_support_med` mediumint(8) NOT NULL,
+  `joblessrole` smallint(2)
+  `job_civilian_high` mediumint(8) NOT NULL,
+  `job_civilian_med` mediumint(8) NOT NULL,
   `job_support_low` mediumint(8) NOT NULL,
   `job_medsci_high` mediumint(8) NOT NULL,
   `job_medsci_med` mediumint(8) NOT NULL,
@@ -165,22 +170,12 @@ CREATE TABLE `characters` (
   `job_engsec_high` mediumint(8) NOT NULL,
   `job_engsec_med` mediumint(8) NOT NULL,
   `job_engsec_low` mediumint(8) NOT NULL,
-  `job_karma_high` mediumint(8) NOT NULL,
-  `job_karma_med` mediumint(8) NOT NULL,
-  `job_karma_low` mediumint(8) NOT NULL,
   `flavor_text` mediumtext NOT NULL,
-  `med_record` mediumtext NOT NULL,
-  `sec_record` mediumtext NOT NULL,
-  `gen_record` mediumtext NOT NULL,
-  `disabilities` mediumint(8) NOT NULL,
-  `player_alt_titles` mediumtext NOT NULL,
-  `organ_data` mediumtext NOT NULL,
-  `rlimb_data` mediumtext NOT NULL,
-  `nanotrasen_relation` varchar(45) NOT NULL,
+  `prefered_security_department` smallint(4) NOT NULL,
+  `arousable` int(2) NOT NULL,
   `speciesprefs` int(1) NOT NULL,
   `socks` mediumtext NOT NULL,
-  `body_accessory` mediumtext NOT NULL,
-  `gear` mediumtext NOT NULL,
+  `prefs_vr` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18747 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -217,6 +212,8 @@ CREATE TABLE `death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` text NOT NULL COMMENT 'Place of death',
   `coord` text NOT NULL COMMENT 'X, Y, Z POD',
+  `mapname` text NOT NULL,
+  `server` text NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` text NOT NULL,
   `special` text NOT NULL,
@@ -242,10 +239,8 @@ DROP TABLE IF EXISTS `donators`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `donators` (
   `patreon_name` varchar(32) NOT NULL,
-  `tier` int(2),
   `ckey` varchar(32) COMMENT 'Manual Field',
   `start_date` datetime,
-  `end_date` datetime,
   `active` boolean,
   PRIMARY KEY (`patreon_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -289,24 +284,6 @@ CREATE TABLE `ban` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `feedback`
---
-
-DROP TABLE IF EXISTS `feedback`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `feedback` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL,
-  `round_id` int(8) NOT NULL,
-  `var_name` varchar(32) NOT NULL,
-  `var_value` int(16) DEFAULT NULL,
-  `details` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=257638 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `player`
 --
 
@@ -325,17 +302,29 @@ CREATE TABLE `player` (
   `UI_style` varchar(10) DEFAULT 'Midnight',
   `UI_style_color` varchar(7) DEFAULT '#ffffff',
   `UI_style_alpha` smallint(4) DEFAULT '255',
-  `be_role` mediumtext NOT NULL,
+  `be_special` mediumtext NOT NULL,
   `default_slot` smallint(4) DEFAULT '1',
+  `chat_toggles` varchar(20) NOT NULL DEFAULT,
   `toggles` mediumint(8) DEFAULT '383',
   `sound` mediumint(8) DEFAULT '31',
   `randomslot` tinyint(1) DEFAULT '0',
   `volume` smallint(4) DEFAULT '100',
   `nanoui_fancy` smallint(4) DEFAULT '1',
+  `tgui_fancy` smallint(4) DEFAULT '1',
+  `tugi_lock` smallint(2) DEFAULT,
   `show_ghostitem_attack` smallint(4) DEFAULT '1',
   `lastchangelog` varchar(32) NOT NULL DEFAULT '0',
   `windowflashing` smallint(4) DEFAULT '1',
-  `exp` mediumtext,
+  `ghost_form` varchar(20) NOT NULL DEFAULT,
+  `ghost_orbit` varchar(25) NOT NULL DEFAULT,
+  `ghost_accs` varchar(20) NOT NULL DEFAULT,
+  `preferred_map` varchar(20) NOT NULL DEFAULT,
+  `ghost_hud` varchar(20) NOT NULL DEFAULT,
+  `inquisitive_ghost` smallint(1) NOT NULL DEFAULT,
+  `clientfps` varchar(45) NOT NULL DEFAULT,
+  `parallax` smallint(4) NOT NULL DEFAULT,
+  `uplink_spawn_loc` smallint(4) NOT NULL DEFAULT,
+  `uses_glasses_colour` smallint(1) NOT NULL DEFAULT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32446 DEFAULT CHARSET=latin1;
@@ -439,60 +428,21 @@ CREATE TABLE `privacy` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `karma`
+-- Table structure for table `feedback`
 --
 
-DROP TABLE IF EXISTS `karma`;
+DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `karma` (
+CREATE TABLE `feedback` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `spendername` text NOT NULL,
-  `spenderkey` text NOT NULL,
-  `receivername` text NOT NULL,
-  `receiverkey` text NOT NULL,
-  `receiverrole` text,
-  `receiverspecial` text,
-  `isnegative` tinyint(1) DEFAULT NULL,
-  `spenderip` text NOT NULL,
   `time` datetime NOT NULL,
+  `round_id` int(8) NOT NULL,
+  `var_name` varchar(32) NOT NULL,
+  `var_value` int(16) DEFAULT NULL,
+  `details` text,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=73614 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `karmatotals`
---
-
-DROP TABLE IF EXISTS `karmatotals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `karmatotals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `byondkey` text NOT NULL,
-  `karma` int(11) NOT NULL,
-  `karmaspent` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6765 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `library`
---
-
-DROP TABLE IF EXISTS `library`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `library` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` text NOT NULL,
-  `title` text NOT NULL,
-  `content` text NOT NULL,
-  `category` text NOT NULL,
-  `ckey` varchar(45) NOT NULL,
-  `flagged` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=929 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -508,7 +458,7 @@ CREATE TABLE `legacy_population` (
   `admincount` int(11) DEFAULT NULL,
   `time` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2550 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,57 +487,77 @@ CREATE TABLE `whitelist` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 --
--- Table structure for table `watch`
+-- Table structure for table `library`
 --
 
-DROP TABLE IF EXISTS `watch`;
+DROP TABLE IF EXISTS `library`;
+CREATE TABLE `library` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `content` text NOT NULL,
+  `category` varchar(45) NOT NULL,
+  `ckey` varchar(45) DEFAULT 'LEGACY',
+  `datetime` datetime DEFAULT NULL,
+  `deleted` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Create an index to speed up the libary
+--
+CREATE INDEX deleted_idx ON `library` (`deleted`);
+--
+-- Table structure for table `ipintel`
+--
+
+DROP TABLE IF EXISTS `ipintel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `watch` (
-  `ckey` varchar(32) NOT NULL,
-  `reason` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32),
-  `edits` text,
-  PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `ipintel` (
+`ip` INT UNSIGNED NOT NULL ,
+`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
+`intel` REAL NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `ip` )
+) ENGINE = INNODB;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
--- Table structure for table `notes`
+-- Table structure for table `messages`
 --
 
-DROP TABLE IF EXISTS `notes`;
+DROP TABLE IF EXISTS `messages`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ckey` varchar(32) NOT NULL,
-  `notetext` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32),
-  `edits` text,
-  `server` varchar(50) NOT NULL,
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT ,
+  `type` varchar(32) NOT NULL ,
+  `targetckey` varchar(32) NOT NULL ,
+  `adminckey` varchar(32) NOT NULL ,
+  `text` text NOT NULL ,
+  `timestamp` datetime NOT NULL ,
+  `server` varchar(32) NULL ,
+  `secret` tinyint(1) NULL DEFAULT 1 ,
+  `lasteditor` varchar(32) NULL ,
+  `edits` text NULL ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 --
--- Table structure for table `memo`
+-- Mentor stufs
 --
 
-DROP TABLE IF EXISTS `memo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `memo` (
+DROP TABLE IF EXISTS `mentor`;
+CREATE TABLE `mentor` (
+  `ckey` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `mentor_memo`;
+CREATE TABLE `mentor_memo` (
   `ckey` varchar(32) NOT NULL,
   `memotext` text NOT NULL,
   `timestamp` datetime NOT NULL,
-  `last_editor` varchar(32),
+  `last_editor` varchar(32) DEFAULT NULL,
   `edits` text,
   PRIMARY KEY (`ckey`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
