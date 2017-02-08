@@ -480,6 +480,12 @@
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
+/datum/sprite_accessory/mam_body_markings/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
 
 /******************************************
 ************ Taur Bodies ******************
