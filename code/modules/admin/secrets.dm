@@ -130,13 +130,6 @@
 					dat += "[ckey] - [D.rank.name]<br>"
 				usr << browse(dat, "window=showadmins;size=600x500")
 
-		if("show_current_watchlist")
-			var/dat = "<B>Watchlist: </B><HR>"
-			if(current_watchlist)
-				for(var/ckey in current_watchlist)
-					dat += "[ckey] - [current_watchlist[ckey]]"
-				usr << browse(dat, "window=showcurrentwatchlist;size=600x500")
-
 		if("tdomereset")
 			if(!check_rights(R_ADMIN))
 				return

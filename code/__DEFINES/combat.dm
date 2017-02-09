@@ -9,6 +9,8 @@
 #define OXY			"oxy"
 #define CLONE		"clone"
 #define STAMINA 	"stamina"
+//citadel code
+#define AROUSAL		"arousal"
 
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 1
@@ -16,6 +18,8 @@
 #define TOXLOSS 4
 #define OXYLOSS 8
 #define SHAME 16
+//citadel code
+#define AROUSAL 32
 
 #define STUN		"stun"
 #define WEAKEN		"weaken"

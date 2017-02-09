@@ -1,8 +1,8 @@
 //This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
-#define SAVEFILE_VERSION_MIN	11
+#define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	18
+#define SAVEFILE_VERSION_MAX	17
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -175,6 +175,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
 	S["uplink_loc"]			>> uplink_spawn_loc
+	//citadel code
+	S["arousable"]			>> arousable
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -231,6 +233,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]<< uses_glasses_colour
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
+	//citadel code
+	S["arousable"]			<< arousable
 
 	return 1
 

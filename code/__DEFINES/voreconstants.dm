@@ -56,17 +56,7 @@ var/global/list/struggle_sounds = list(
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
 		"Squish4" = 'sound/vore/squish4.ogg')
-*/
-	//Species listing
 
-#define iscanine(A) (is_species(A, /datum/species/canine))
-#define isfeline(A) (is_species(A, /datum/species/feline))
-#define isavian(A) (is_species(A, /datum/species/avian))
-#define isrodent(A) (is_species(A, /datum/species/rodent))
-#define isherbivorous(A) (is_species(A, /datum/species/herbivorous))
-#define isexotic(A) (is_species(A, /datum/species/exotic))
-
-/*
 /proc/log_debug(text)
 	if (config.log_debug)
 		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"

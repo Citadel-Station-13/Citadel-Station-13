@@ -41,6 +41,8 @@
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
 				security_level = SEC_LEVEL_BLUE
+				for(var/mob/M in player_list)
+					M << sound('sound/misc/voybluealert.ogg')
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
@@ -54,6 +56,8 @@
 							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
+				for(var/mob/M in player_list)
+					M << sound('sound/misc/voyalert.ogg')
 				security_level = SEC_LEVEL_RED
 
 				/*	- At the time of commit, setting status displays didn't work properly
@@ -74,6 +78,8 @@
 					else if(security_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
 				security_level = SEC_LEVEL_DELTA
+				for(var/mob/M in player_list)
+					M << sound('sound/misc/deltakalaxon.ogg')
 				for(var/obj/machinery/firealarm/FA in machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()

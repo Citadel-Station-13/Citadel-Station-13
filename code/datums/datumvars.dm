@@ -80,6 +80,7 @@
 			if(A.dir)
 				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
+			//citadel code
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
 				<br><font size='1'>
@@ -90,6 +91,7 @@
 					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=arousal'>[M.getArousalLoss()]</a>
 				</font>
 			"}
 		else
