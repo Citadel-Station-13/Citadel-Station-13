@@ -1491,3 +1491,52 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+	character.belly_prefs = belly_prefs
+	character.devourable = devourable
+	character.digestable = digestable
+
+/*	if(size_scale!="normal")
+		if(size_scale=="small")
+			character.sizeplay_set(SIZESCALE_MICRO)
+		else if(character_size=="tiny")
+			character.sizeplay_set(SIZESCALE_SMALL)
+		else if(character_size=="large")
+			character.sizeplay_set(SIZESCALE_LARGE)
+		else
+			character.sizeplay_set(SIZESCALE_MACRO)*/
+
+/datum/preferences/proc/open_load_dialog(mob/user)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT slot,real_name FROM [format_table_name("characters")] WHERE ckey='[user.ckey]' ORDER BY slot")
+	var/list/slotnames[max_save_slots]
+
+	if(!query.Execute())
+		var/err = query.ErrorMsg()
+		log_game("SQL ERROR during character slot loading. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during character slot loading. Error : \[[err]\]\n")
+		return
+	while(query.NextRow())
+		slotnames[text2num(query.item[1])] = query.item[2]
+
+	var/dat = "<body>"
+	dat += "<tt><center>"
+	dat += "<b>Select a character slot to load</b><hr>"
+	var/name
+
+	for(var/i in 1 to max_save_slots)
+		name = slotnames[i] || "Character [i]"
+		if(i == default_slot)
+			name = "<b>[name]</b>"
+		dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
+
+	dat += "<hr>"
+	dat += "<a href='byond://?src=[user.UID()];preference=close_load_dialog'>Close</a><br>"
+	dat += "</center></tt>"
+//		user << browse(dat, "window=saves;size=300x390")
+	var/datum/browser/popup = new(user, "saves", "<div align='center'>Character Saves</div>", 300, 390)
+	popup.set_content(dat)
+	popup.open(0)
+
+/datum/preferences/proc/close_load_dialog(mob/user)
+	user << browse(null, "window=saves")
