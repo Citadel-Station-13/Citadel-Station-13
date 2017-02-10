@@ -442,7 +442,7 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(user.save_vore_prefs())
+		if(prefs.save_preferences(user))
 			user << "<span class='notice'>Belly Preferences saved!</span>"
 
 		else
@@ -460,8 +460,8 @@
 			if("Prevent Digestion")
 				user.digestable = 0
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.digestable = user.digestable
+		if(user.client.prefs)
+			user.client.prefs.digestable = user.digestable
 
 	if(href_list["toggledvor"])
 		var/choice = alert(user, "This button is for those who don't like vore at all. Devouring you is currently: [user.devourable ? "Allowed" : "Prevented"]", "", "Allow Devourment", "Cancel", "Prevent Devourment")
@@ -473,8 +473,8 @@
 			if("Prevent Devourment")
 				user.devourable = 0
 
-		if(user.client.prefs_vr)
-			user.client.prefs_vr.devourable = user.devourable
+		if(user.client.prefs)
+			user.client.prefs.devourable = user.devourable
 
 	//Refresh when interacted with, returning 1 makes vore_look.Topic update
 	return 1

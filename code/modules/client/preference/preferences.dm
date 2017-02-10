@@ -18,7 +18,7 @@ var/list/preferences_datums = list()
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = null
+	var/ooccolor = "#b82e00"
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection
@@ -86,6 +86,10 @@ var/list/preferences_datums = list()
 
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
+	var/digestable = 1
+	var/devourable = 0
+	var/list/belly_prefs = list()
+	var/size_scale = SIZESCALE_NORMAL
 
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
@@ -114,7 +118,6 @@ var/list/preferences_datums = list()
 	custom_names["mime"] = pick(mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
 				max_save_slots = 16
@@ -1419,20 +1422,18 @@ var/list/preferences_datums = list()
 						parent.mob.hud_used.update_parallax_pref()
 
 				if("save")
-					save_preferences()
-					save_character()
+					save_preferences(parent)
+					save_character(parent)
 
 				if("load")
-					load_preferences()
-					load_character()
-					attempt_vr(parent.prefs_vr,"load_vore","")
+					load_preferences(parent)
+					load_character(parent)
 
 				if("changeslot")
-					attempt_vr(parent.prefs_vr,"load_vore","")
-					if(!load_character(text2num(href_list["num"])))
+					if(!load_character(parent,text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
-						save_character()
+						save_character(parent)
 
 				if("tab")
 					if (href_list["tab"])
@@ -1492,7 +1493,7 @@ var/list/preferences_datums = list()
 		character.update_hair()
 		character.update_body_parts()
 
-	character.belly_prefs = belly_prefs
+	character.vore_organs = belly_prefs
 	character.devourable = devourable
 	character.digestable = digestable
 

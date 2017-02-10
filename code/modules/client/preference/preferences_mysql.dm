@@ -10,10 +10,6 @@
 					chat_toggles,
 					default_slot,
 					toggles,
-					sound,
-					randomslot,
-					volume,
-					nanoui_fancy,
 					ghost_orbit,
 					ghost_form,
 					ghost_accs,
@@ -49,23 +45,19 @@
 		chat_toggles = params2list(query.item[7])
 		default_slot = text2num(query.item[8])
 		toggles = text2num(query.item[9])
-		sound = text2num(query.item[10])
-		randomslot = text2num(query.item[11])
-		volume = text2num(query.item[12])
-		nanoui_fancy = text2num(query.item[13])
-		ghost_orbit = query.item[14]
-		ghost_form = query.item[15]
-		ghost_accs = query.item[16]
-		ghost_others = query.item]17]
-		preferred_map = query.item[18]
-		ignoring = query.item[19]
-		ghost_hud = text2num(query.item[20])
-		inquisitive_ghost = text2num(query.item[21])
-		uses_glasses_colour = text2num(query.item[22])
-		clientfps = text2num(query.item[23])
-		parallax = text2num(query.item[24])
-		uplink_spawn_loc = query.item[25]
-		arousable = query.item[26]
+		ghost_orbit = query.item[10]
+		ghost_form = query.item[11]
+		ghost_accs = query.item[12]
+		ghost_others = query.item[13]
+		preferred_map = query.item[14]
+		ignoring = query.item[15]
+		ghost_hud = text2num(query.item[16])
+		inquisitive_ghost = text2num(query.item[17])
+		uses_glasses_colour = text2num(query.item[18])
+		clientfps = text2num(query.item[19])
+		parallax = text2num(query.item[20])
+		uplink_spawn_loc = query.item[21]
+		arousable = query.item[22]
 
 
 
@@ -97,7 +89,7 @@
 	// Might as well scrub out any malformed be_special list entries while we're here
 	for(var/role in be_special)
 		if(!(role in special_roles))
-			log_runtime(EXCEPTION("[C.key] had a malformed role entry: '[role]'. Removing!"), src)
+			CRASH("[C.key] had a malformed role entry: '[role]'")
 			be_special -= role
 
 	var/DBQuery/query = dbcon.NewQuery({"UPDATE [format_table_name("player")]
@@ -111,14 +103,10 @@
 					chat_toggles='[chat_toggles]',
 					default_slot='[default_slot]',
 					toggles='[toggles]',
-					sound='[sound]',
-					randomslot='[randomslot]',
-					volume='[volume]',
-					nanoui_fancy='[nanoui_fancy]'
 					ghost_orbit='[ghost_orbit]',
 					ghost_form='[ghost_form]',
-					ghost_acc='[ghost_acc]',
-					ghost_other='[ghost_other]',
+					ghost_accs='[ghost_accs]',
+					ghost_others='[ghost_others]',
 					preferred_map='[preferred_map]',
 					ignoring='[ignoring]',
 					ghost_hud='[ghost_hud]',
@@ -155,14 +143,11 @@
 					be_random_body,
 					gender,
 					age,
-					species,
-					mcolor,
-					mcolor2,
-					mcolor3,
+					pref_species,
 					features,
 					custom_names,
-					hair_style_name,
-					facial_style_name,
+					hair_style,
+					facial_hair_style,
 					skin_tone,
 					facial_hair_color,
 					eye_color,
@@ -202,58 +187,56 @@
 		be_random_body = text2num(query.item[4])
 		gender = query.item[5]
 		age = text2num(query.item[5])
-		species = query.item[6]
+		pref_species = query.item[6]
 
 		//colors to be consolidated into hex strings (requires some work with dna code)
-		mcolor = text2num(query.item[7])
-		mcolor2 = text2num(query.item[8])
-		mcolor3 = text2num(query.item[9])
-		features = params2list(query.item[10])
-		custom_names = query.item[11]
-		hair_style_name = query.item[12]
-		facial_style_name = query.item[13]
-		skin_tone = text2num(query.item[14])
-		facial_hair_color = text2num(query.item[15]
-		eye_color = text2num(query.item[16])
-		hair_color = text2num(query.item[17]
-		socks = query.item[18]
-		underwear = query.item[19]
-		undershirt = query.item[20]
-		backbag = text2num(query.item[21])
+		features = params2list(query.item[7])
+		custom_names = query.item[8]
+		hair_style = query.item[9]
+		facial_hair_style = query.item[10]
+		skin_tone = text2num(query.item[11])
+		facial_hair_color = text2num(query.item[12])
+		eye_color = text2num(query.item[13])
+		hair_color = text2num(query.item[14])
+		socks = query.item[15]
+		underwear = query.item[16]
+		undershirt = query.item[17]
+		backbag = text2num(query.item[18])
 		//Jobs
-		joblessrole = text2num(query.item[22])
-		job_civilian_high = text2num(query.item[23])
-		job_civilian_med = text2num(query.item[24])
-		job_civilian_low = text2num(query.item[25])
-		job_medsci_high = text2num(query.item[26])
-		job_medsci_med = text2num(query.item[27])
-		job_medsci_low = text2num(query.item[28])
-		job_engsec_high = text2num(query.item[29])
-		job_engsec_med = text2num(query.item[30])
-		job_engsec_low = text2num(query.item[31])
+		joblessrole = text2num(query.item[19])
+		job_civilian_high = text2num(query.item[20])
+		job_civilian_med = text2num(query.item[21])
+		job_civilian_low = text2num(query.item[22])
+		job_medsci_high = text2num(query.item[23])
+		job_medsci_med = text2num(query.item[24])
+		job_medsci_low = text2num(query.item[25])
+		job_engsec_high = text2num(query.item[26])
+		job_engsec_med = text2num(query.item[27])
+		job_engsec_low = text2num(query.item[28])
 
-		flavor_text = query.item[32]
+		flavor_text = query.item[29]
 		if(findtext(flavor_text, "<")) // ... so let's clumsily check for tags!
 			flavor_text = html_encode(flavor_text)
-		prefered_security_department = query.item[33]
-		belly_prefs = query.item[34]
+		prefered_security_department = query.item[30]
+		belly_prefs = query.item[31]
 		// Apparently, the preceding vars weren't always encoded properly...
 		if(findtext(belly_prefs, "<"))
 			belly_prefs = html_encode(belly_prefs)
-		devourable = text2num(query.item[35])
-		digestable = text2num(query.item[36])
-		size_scale = query.item[37]
+		devourable = text2num(query.item[32])
+		digestable = text2num(query.item[33])
+		size_scale = query.item[34]
 
 	//Sanitize
 
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
-	if(!real_name) real_name = random_name(gender,species)
+	if(!real_name)
+		real_name	= random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	if(isnull(species)) species = "Human"
+	if(isnull(pref_species)) pref_species = "Human"
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"]	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!features["mcolor2"] || features["mcolor"] == "#000")
@@ -317,10 +300,7 @@
 	return 1
 
 /datum/preferences/proc/save_character(client/C)
-	var/features
 	var/belly_prefs
-
-	var/features = list2params(features)
 	if(!isemptylist(belly_prefs))
 		belly_prefs = list2params(belly_prefs)
 
@@ -335,15 +315,12 @@
 												be_random_body='[be_random_body]',
 												gender='[gender]',
 												age='[age]',
-												species='[sanitizeSQL(species)]',
-												mcolor='[mcolor]',
-												mcolor2='[mcolor2]',
-												mcolor3='[mcolor3]',
+												pref_species='[sanitizeSQL(pref_species)]',
 												features='[sanitizeSQL(features)]',
 												custom_names='[sanitizeSQL(custom_names)]',
-												hair_style_name='[sanitizeSQL(hair_style_name)]',
-												facial_style_name='[sanitizeSQL(facial_style_name)]',
-												skin_tone='[s_tone]',
+												hair_style='[sanitizeSQL(hair_style)]',
+												facial_hair_style='[sanitizeSQL(facial_hair_style)]',
+												skin_tone='[skin_tone]',
 												facial_hair_color='[facial_hair_color]',
 												eye_color='[eye_color]',
 												hair_color='[hair_color]',
@@ -385,14 +362,11 @@
 					be_random_body,
 					gender,
 					age,
-					species,
-					mcolor,
-					mcolor2,
-					mcolor3,
+					pref_species,
 					features,
 					custom_names,
-					hair_style_name,
-					facial_style_name,
+					hair_style,
+					facial_hair_style,
 					skin_tone,
 					facial_hair_color,
 					eye_color,
@@ -425,15 +399,12 @@
 												'[be_random_body]',
 												'[gender]',
 												'[age]',
-												'[sanitizeSQL(species)]',
-												'[mcolor]',
-												'[mcolor2]',
-												'[mcolor3]',
+												'[sanitizeSQL(pref_species)]',
 												'[sanitizeSQL(features)]',
 												'[sanitizeSQL(custom_names)]',
 												'[sanitizeSQL(hair_style)]',
 												'[sanitizeSQL(facial_hair_style)]',
-												'[s_tone]',
+												'[skin_tone]',
 												'[facial_hair_color]',
 												'[eye_color]',
 												'[hair_color]',
@@ -495,6 +466,6 @@
 		var/err = query.ErrorMsg()
 		log_game("SQL ERROR during lastchangelog updating. Error : \[[err]\]\n")
 		message_admins("SQL ERROR during lastchangelog updating. Error : \[[err]\]\n")
-		to_chat(C, "Couldn't update your last seen changelog, please try again later.")
+		C << "Couldn't update your last seen changelog, please try again later."
 		return
 	return 1
