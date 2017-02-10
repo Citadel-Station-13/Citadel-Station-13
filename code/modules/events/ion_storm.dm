@@ -4,7 +4,7 @@
 /datum/round_event_control/ion_storm
 	name = "Ion Storm"
 	typepath = /datum/round_event/ion_storm
-	weight = 3
+	weight = 15
 	min_players = 2
 
 /datum/round_event/ion_storm
@@ -545,7 +545,7 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
-
+							
 	return message
 
 #undef ION_RANDOM
