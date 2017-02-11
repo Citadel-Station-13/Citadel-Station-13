@@ -184,3 +184,8 @@ Temporary Items
 .apdisk
 
 *.before
+
+cfg/admin.txt
+config/config.txt
+config/dbconfig.txt
+config/config.txt

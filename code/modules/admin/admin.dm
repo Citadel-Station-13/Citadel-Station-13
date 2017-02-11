@@ -47,6 +47,11 @@ var/global/BSACooldown = 0
 	body += "<a href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>"
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
+	if(M.client)
+		if(M.client.related_accounts_cid.len)
+			body += "<b>Related accounts by CID:</b> [jointext(M.client.related_accounts_cid, " - ")]<br>"
+		if(M.client.related_accounts_ip.len)
+			body += "<b>Related accounts by IP:</b> [jointext(M.client.related_accounts_ip, " - ")]<br><br>"
 
 	body += "<A href='?_src_=holder;boot2=\ref[M]'>Kick</A> | "
 	body += "<A href='?_src_=holder;newban=\ref[M]'>Ban</A> | "

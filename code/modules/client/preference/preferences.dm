@@ -2,14 +2,22 @@
 
 var/list/preferences_datums = list()
 
+/proc/check_client_age(client/C, var/days) // If days isn't provided, returns the age of the client. If it is provided, it returns the days until the player_age is equal to or greater than the days variable
+	if(!days)
+		return C.player_age
+	else
+		return max(0, days - C.player_age)
+	return 0
 
+#define MAX_SAVE_SLOTS 10 // Save slots for regular players
+#define MAX_SAVE_SLOTS_MEMBER 20 // Save slots for BYOND members
 
 /datum/preferences
-	var/client/parent
+//	var/client/client
 	//doohickeys for savefiles
-	var/path
+//	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 10
+	var/max_save_slots = MAX_SAVE_SLOTS
 
 	//non-preference stuff
 	var/muted = 0
@@ -96,6 +104,7 @@ var/list/preferences_datums = list()
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
+	var/slot_name = ""
 
 	var/flavor_text = ""
 
@@ -111,7 +120,6 @@ var/list/preferences_datums = list()
 	var/parallax = PARALLAX_DISABLE //Starting disabled by default so people stop freaking about about certain issues.
 
 /datum/preferences/New(client/C)
-	parent = C
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
@@ -120,18 +128,18 @@ var/list/preferences_datums = list()
 		if(!IsGuestKey(C.key))
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 16
-	var/loaded_preferences_successfully = load_preferences()
+				max_save_slots = MAX_SAVE_SLOTS_MEMBER
+
+	var/loaded_preferences_successfully = load_preferences(C)
 	if(loaded_preferences_successfully)
-		if(load_character())
+		if(load_character(C))
 			return
 	//we couldn't load character data so just randomize the character appearance + name
 	random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
-		save_preferences()
-	save_character()		//let's save this new random character so it doesn't keep generating new ones.
-	return
+		save_preferences(C)
+	save_character(C)		//let's save this new random character so it doesn't keep generating new ones.
 
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
@@ -143,7 +151,7 @@ var/list/preferences_datums = list()
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 
-	if(!path)
+	if(IsGuestKey(key))
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
 
 	dat += "</center>"
@@ -152,19 +160,17 @@ var/list/preferences_datums = list()
 
 	switch(current_tab)
 		if (0) // Character Settings#
-			if(path)
-				var/savefile/S = new /savefile(path)
-				if(S)
-					dat += "<center>"
-					var/name
-					for(var/i=1, i<=max_save_slots, i++)
-						S.cd = "/character[i]"
-						S["real_name"] >> name
-						if(!name)
-							name = "Character[i]"
+			var/DBQuery/query = dbcon.NewQuery("SELECT slot,real_name FROM [format_table_name("characters")] WHERE ckey='[user.ckey]' ORDER BY slot")
+			var/list/slotnames[max_save_slots]
+			dat += "<center>"
+				var/name = "<b>[slot]</b>"
+				for(var/i in 1 to max_save_slots)
+					name = slotnames[i] || "Character [i]"
+					if(i == default_slot)
+						name = "<b>[name]</b>"
 						//if(i!=1) dat += " | "
 						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
-					dat += "</center>"
+			dat += "</center>"
 
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
@@ -847,6 +853,8 @@ var/list/preferences_datums = list()
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
+	if(!user)	return
+
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
@@ -1410,30 +1418,30 @@ var/list/preferences_datums = list()
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
-
+/*
 				if("parallaxup")
 					parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
+					if (user && user.mob && user.mob.hud_used)
+						user.mob.hud_used.update_parallax_pref()
 
 				if("parallaxdown")
 					parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
-
+					if (user && user.mob && user.mob.hud_used)
+						user.mob.hud_used.update_parallax_pref()
+*/
 				if("save")
-					save_preferences(parent)
-					save_character(parent)
+					save_preferences()
+					save_character()
 
 				if("load")
-					load_preferences(parent)
-					load_character(parent)
+					load_preferences()
+					load_character()
 
 				if("changeslot")
-					if(!load_character(parent,text2num(href_list["num"])))
+					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
-						save_character(parent)
+						save_character()
 
 				if("tab")
 					if (href_list["tab"])
@@ -1492,6 +1500,7 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+		character.regenerate_icons()
 
 	character.vore_organs = belly_prefs
 	character.devourable = devourable
@@ -1506,38 +1515,3 @@ var/list/preferences_datums = list()
 			character.sizeplay_set(SIZESCALE_LARGE)
 		else
 			character.sizeplay_set(SIZESCALE_MACRO)*/
-
-/datum/preferences/proc/open_load_dialog(mob/user)
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT slot,real_name FROM [format_table_name("characters")] WHERE ckey='[user.ckey]' ORDER BY slot")
-	var/list/slotnames[max_save_slots]
-
-	if(!query.Execute())
-		var/err = query.ErrorMsg()
-		log_game("SQL ERROR during character slot loading. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during character slot loading. Error : \[[err]\]\n")
-		return
-	while(query.NextRow())
-		slotnames[text2num(query.item[1])] = query.item[2]
-
-	var/dat = "<body>"
-	dat += "<tt><center>"
-	dat += "<b>Select a character slot to load</b><hr>"
-	var/name
-
-	for(var/i in 1 to max_save_slots)
-		name = slotnames[i] || "Character [i]"
-		if(i == default_slot)
-			name = "<b>[name]</b>"
-		dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
-
-	dat += "<hr>"
-	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
-	dat += "</center></tt>"
-//		user << browse(dat, "window=saves;size=300x390")
-	var/datum/browser/popup = new(user, "saves", "<div align='center'>Character Saves</div>", 300, 390)
-	popup.set_content(dat)
-	popup.open(0)
-
-/datum/preferences/proc/close_load_dialog(mob/user)
-	user << browse(null, "window=saves")

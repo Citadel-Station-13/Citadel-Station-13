@@ -13,14 +13,14 @@
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
-
+/*
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-			if(M.client && M.client.load_character)
-				if(!M.preference())
+			if(M.client && M.client.load_character())
+				if(!M.preferences)
 					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
@@ -53,7 +53,7 @@
 						"The guts treat you like food, squeezing to press more acids against you.",
 						"The onslaught against your body doesn't seem to be letting up; you're food now.",
 						"The insides work on you like they would any other food.")
-
+*/
 	//Return 1 to hook-caller
 	return 1
 

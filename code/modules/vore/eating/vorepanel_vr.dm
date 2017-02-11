@@ -442,7 +442,7 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		prefs.save_character(user)
+		user << "this will save eventually"
 
 
 	if(href_list["toggledg"])
