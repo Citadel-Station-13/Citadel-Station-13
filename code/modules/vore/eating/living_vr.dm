@@ -19,9 +19,9 @@
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-			if(M.client && M.client.prefs_vr)
-				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+			if(M.client && M.client.load_character)
+				if(!M.preference())
+					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]

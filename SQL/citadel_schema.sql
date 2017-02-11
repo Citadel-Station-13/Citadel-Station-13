@@ -71,13 +71,10 @@ CREATE TABLE `characters` (
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) NOT NULL,
   `species` varchar(45) NOT NULL,
-  `mcolor` smallint(6) NOT NULL,
-  `mcolor2` smallint(6) NOT NULL,
-  `mcolor3` smallint(6) NOT NULL,
   `features` varchar(512) NOT NULL,
   `custom_names` varchar(255) NOT NULL,
-  `hair_style_name` varchar(45) NOT NULL,
-  `facial_style_name` varchar(45) NOT NULL,
+  `hair_style` varchar(45) NOT NULL,
+  `facial_hair_style` varchar(45) NOT NULL,
   `skin_tone` smallint(4) NOT NULL,
   `facial_hair_color` varchar(255) NOT NULL,
   `eye_color` smallint(4) NOT NULL,
@@ -97,10 +94,11 @@ CREATE TABLE `characters` (
   `job_engsec_med` mediumint(8) NOT NULL,
   `job_engsec_low` mediumint(8) NOT NULL,
   `flavor_text` mediumtext NOT NULL,
-  `prefered_security_department` smallint(4) NOT NULL,
+  `prefered_security_department` varchar(64) NOT NULL,
   `belly_prefs` mediumtext NOT NULL,
-  `devourable` int(1) NOT NULL,
-  `digestable` int(1) NOT NULL
+  `devourable` tinyint(1) NOT NULL,
+  `digestable` tinyint(1) NOT NULL,
+  `size_scale` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `connection_log`;
@@ -193,13 +191,19 @@ CREATE TABLE `library` (
   `deleted` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `memo`;
-CREATE TABLE `memo` (
-  `ckey` varchar(32) NOT NULL,
-  `memotext` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `last_editor` varchar(32) DEFAULT NULL,
-  `edits` text
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT ,
+  `type` varchar(32) NOT NULL ,
+  `targetckey` varchar(32) NOT NULL ,
+  `adminckey` varchar(32) NOT NULL ,
+  `text` text NOT NULL ,
+  `timestamp` datetime NOT NULL ,
+  `server` varchar(32) NULL ,
+  `secret` tinyint(1) NULL DEFAULT 1 ,
+  `lasteditor` varchar(32) NULL ,
+  `edits` text NULL ,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `mentor`;
@@ -216,19 +220,6 @@ CREATE TABLE `mentor_memo` (
   `edits` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `notes`;
-CREATE TABLE `notes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ckey` varchar(32) NOT NULL,
-  `notetext` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32) DEFAULT NULL,
-  `edits` text,
-  `server` varchar(50) NOT NULL,
-  `secret` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 DROP TABLE IF EXISTS `player`;
 CREATE TABLE `player` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -238,31 +229,6 @@ CREATE TABLE `player` (
   `ip` varchar(18) NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  `ooccolor` varchar(7) DEFAULT '#b82e00',
-  `UI_style` varchar(10) DEFAULT 'Midnight',
-  `hotkeys` smallint(1) NOT NULL,
-  `tgui_fancy` smallint(4) NOT NULL,
-  `tugi_lock` smallint(1) NOT NULL,
-  `be_special` mediumtext NOT NULL,
-  `chat_toggles` varchar(64) NOT NULL,
-  `default_slot` smallint(2) DEFAULT '1',
-  `toggles` mediumint(8) DEFAULT '383',
-  `sound` mediumint(8) DEFAULT '31',
-  `randomslot` tinyint(1) DEFAULT '0',
-  `volume` smallint(4) DEFAULT '100',
-  `nanoui_fancy` smallint(4) DEFAULT '1',
-  `ghost_orbit` varchar(25) NOT NULL,
-  `ghost_form` varchar(20) NOT NULL,
-  `ghost_accs` varchar(20) NOT NULL,
-  `ghost_others` varchar(20) NOT NULL,
-  `preferred_map` varchar(20) NOT NULL,
-  `ignoring` varchar(20) NOT NULL,
-  `ghost_hud` smallint(1) DEFAULT '1',
-  `inquisitive_ghost` smallint(1) DEFAULT '1',
-  `uses_glasses_colour` smallint(1) DEFAULT '1',
-  `clientfps` varchar(45) NOT NULL,
-  `parallax` smallint(4) NOT NULL,
-  `uplink_spawn_loc` smallint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `poll_option`;
@@ -316,16 +282,32 @@ CREATE TABLE `poll_vote` (
   `rating` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `watch`;
-CREATE TABLE `watch` (
-  `ckey` varchar(32) NOT NULL,
-  `reason` text NOT NULL,
-  `timestamp` datetime NOT NULL,
-  `adminckey` varchar(32) NOT NULL,
-  `last_editor` varchar(32) DEFAULT NULL,
-  `edits` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+DROP TABLE IF EXISTS `preferences`;
+CREATE TABLE `preferences` (
+  `ooccolor` varchar(7) DEFAULT '#b82e00',
+  `UI_style` varchar(10) DEFAULT 'Midnight',
+  `hotkeys` smallint(1) NOT NULL,
+  `tgui_fancy` smallint(4) NOT NULL,
+  `tugi_lock` smallint(1) NOT NULL,
+  `be_special` mediumtext NOT NULL,
+  `chat_toggles` varchar(64) NOT NULL,
+  `default_slot` smallint(2) DEFAULT '1',
+  `toggles` mediumint(8) DEFAULT '383',
+  `ghost_orbit` varchar(25) NOT NULL,
+  `ghost_form` varchar(20) NOT NULL,
+  `ghost_accs` varchar(20) NOT NULL,
+  `ghost_others` varchar(20) NOT NULL,
+  `preferred_map` varchar(20) NOT NULL,
+  `ignoring` varchar(20) NOT NULL,
+  `ghost_hud` smallint(1) DEFAULT '1',
+  `inquisitive_ghost` smallint(1) DEFAULT '1',
+  `uses_glasses_colour` smallint(1) DEFAULT '1',
+  `clientfps` smallint(4) NOT NULL,
+  `parallax` varchar(16) NOT NULL,
+  `uplink_spawn_loc` smallint(4) NOT NULL,
+  `arousable` smallint(1) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

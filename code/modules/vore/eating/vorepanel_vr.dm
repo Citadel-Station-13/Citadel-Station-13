@@ -442,12 +442,7 @@
 				user.vore_selected = user.vore_organs[1]
 
 	if(href_list["saveprefs"])
-		if(prefs.save_preferences(user))
-			user << "<span class='notice'>Belly Preferences saved!</span>"
-
-		else
-			user << "<span class='warning'>ERROR: Belly Preferences were not saved!</span>"
-			log_admin("Could not save vore prefs on USER: [user].")
+		prefs.save_character(user)
 
 
 	if(href_list["toggledg"])

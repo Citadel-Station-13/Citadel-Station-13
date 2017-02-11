@@ -16,9 +16,9 @@
 
 var/global/next_unique_datum_id = 1
 
-/datum/var/tmp/unique_datum_id = null
+//datum/var/tmp/unique_datum_id = null
 /client/var/tmp/unique_datum_id = null
-
+/*
 /datum/proc/UID()
 	if(!unique_datum_id)
 		var/tag_backup = tag
@@ -26,7 +26,7 @@ var/global/next_unique_datum_id = 1
 		unique_datum_id = "\ref[src]_[next_unique_datum_id++]"
 		tag = tag_backup
 	return unique_datum_id
-
+*/
 /client/proc/UID()
 	if(!unique_datum_id)
 		unique_datum_id = "\ref[src]_[next_unique_datum_id++]"

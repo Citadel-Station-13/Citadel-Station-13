@@ -1532,7 +1532,7 @@ var/list/preferences_datums = list()
 		dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
 
 	dat += "<hr>"
-	dat += "<a href='byond://?src=[user.UID()];preference=close_load_dialog'>Close</a><br>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
 	dat += "</center></tt>"
 //		user << browse(dat, "window=saves;size=300x390")
 	var/datum/browser/popup = new(user, "saves", "<div align='center'>Character Saves</div>", 300, 390)
