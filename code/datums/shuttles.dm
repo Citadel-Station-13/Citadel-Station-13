@@ -45,6 +45,10 @@
 	admin_notes = "No brig, no medical facilities, no air."
 	credit_cost = -7500
 
+/datum/map_template/shuttle/emergency/airless/prerequisites_met()
+	// first 10 minutes only
+	return world.time - round_start_time < 6000
+
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid Station Emergency Shuttle"
@@ -72,6 +76,19 @@
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
+
+
+/datum/map_template/shuttle/emergency/arena
+	suffix = "arena"
+	name = "The Arena"
+	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties. The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
+	admin_notes = "RIP AND TEAR."
+	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/arena/prerequisites_met()
+	if("bubblegum" in SSshuttle.shuttle_purchase_requirements_met)
+		return TRUE
+	return FALSE
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -104,7 +121,6 @@
 	\n\
 	Contains contraband armory guns, maintenance loot, and abandoned crates!"
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an active GPS onboard labeled STV5."
-	credit_cost = -7500
 
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
@@ -160,8 +176,8 @@
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
 	name = "NES Port"
-	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known nanotrasen facilities and has a more open inside for larger crowds."
-	credit_cost = 3000
+	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) is a shuttle used at other less known Nanotrasen facilities and has a more open inside for larger crowds, but fewer onboard shuttle facilities."
+	credit_cost = 500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
