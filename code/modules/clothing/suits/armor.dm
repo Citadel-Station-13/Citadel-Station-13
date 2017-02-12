@@ -268,6 +268,11 @@
 /obj/item/clothing/suit/armor/reactive/tesla
 	name = "reactive tesla armor"
 	desc = "An experimental suit of armor with sensitive detectors hooked up to a huge capacitor grid, with emitters strutting out of it. Zap."
+	siemens_coefficient = -1
+	var/tesla_power = 25000
+	var/tesla_range = 20
+	var/tesla_boom = FALSE
+	var/tesla_stun = FALSE
 
 /obj/item/clothing/suit/armor/reactive/tesla/hit_reaction(mob/living/carbon/human/owner, attack_text)
 	if(!active)
@@ -277,15 +282,10 @@
 			var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
 			sparks.set_up(1, 1, src)
 			sparks.start()
-			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive telsa armor are still recharging! The armor merely emits some sparks.</spawn>")
+			owner.visible_message("<span class='danger'>The tesla capacitors on [owner]'s reactive tesla armor are still recharging! The armor merely emits some sparks.</spawn>")
 			return
 		owner.visible_message("<span class='danger'>The [src] blocks the [attack_text], sending out arcs of lightning!</span>")
-		for(var/mob/living/M in view(6, owner))
-			if(M == owner)
-				continue
-			owner.Beam(M,icon_state="lightning[rand(1, 12)]",time=5)
-			M.adjustFireLoss(25)
-			playsound(M, 'sound/machines/defib_zap.ogg', 50, 1, -1)
+		tesla_zap(owner,tesla_range,tesla_power,tesla_boom, tesla_stun)
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return 1
 
@@ -403,3 +403,44 @@
 	desc = "God wills it!"
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
+
+/obj/item/clothing/suit/armor/xcomsquaddie
+	name = "Squaddie Armor"
+	desc = "A suit of armor with heavy padding to protect against projectile and laser attacks. Distributed to shadow organization squaddies."
+	icon_state = "xcomarmor2"
+	item_state = "xcomarmor2"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(melee = 10, bullet = 50, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.5
+
+/obj/item/clothing/suit/armor/xcomsquaddie/dredd
+	name = "Judge Armor"
+	desc = "A large suit of heavy armor, fit for a Judge."
+	icon_state = "dredd-suit"
+	item_state = "dredd-suit"
+
+
+/obj/item/clothing/suit/armor/xcomarmor
+	name = "Mysterious Armor"
+	desc = "A suit of armor with heavy plating to protect against melee attacks. Distributed to shadow organization squaddies."
+	icon_state = "xcomarmor1"
+	item_state = "xcomarmor1"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	armor = list(melee = 50, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0)
+	slowdown = 1
+	siemens_coefficient = 0.5
+
+/obj/item/clothing/suit/armor/vest/neorussian
+	name = "neo-Russian vest"
+	desc = "The narkotiki camo pattern will come useful for botany raids."
+	icon_state = "nr_vest"
+	item_state = "nr_vest"
+
+/obj/item/clothing/suit/armor/doomguy
+	name = "Doomguy's armor"
+	desc = ""
+	icon_state = "doom"
+	item_state = "doom"
+	body_parts_covered = CHEST|GROIN
+	slowdown = 0
+	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)

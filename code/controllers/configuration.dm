@@ -20,8 +20,8 @@
 	var/name = "Configuration"			// datum name
 
 	var/server_name = null				// server name (the name of the game window)
+	var/server_sql_name = null			// short form server name used for the DB
 	var/station_name = null				// station name (the name of the station in-game)
-	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
 	var/hub = 0
@@ -78,8 +78,7 @@
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
-	var/announce_watchlist = 0
-	var/announce_adminhelps = 0
+
 	var/check_randomizer = 0
 
 	var/allow_panic_bunker_bounce = 0 //Send new players somewhere else
@@ -95,6 +94,11 @@
 
 	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
 	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
+	// Discord crap.
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -242,10 +246,6 @@
 
 	var/list/gamemode_cache = null
 
-	// Discord crap.
-	var/discord_url = "hfdksjhfa.com"
-	var/discord_password
-
 	var/minutetopiclimit
 	var/secondtopiclimit
 
@@ -359,10 +359,10 @@
 					config.respawn = 0
 				if("servername")
 					config.server_name = value
+				if("serversqlname")
+					config.server_sql_name = 1
 				if("stationname")
 					config.station_name = value
-				if("serversuffix")
-					config.server_suffix = 1
 				if("hostedby")
 					config.hostedby = value
 				if("server")
@@ -499,16 +499,16 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
+				if("minute_topic_limit")
+					config.minutetopiclimit = text2num(value)
+				if("second_topic_limit")
+					config.secondtopiclimit = text2num(value)
 				if("announce_adminhelps")
 					config.announce_adminhelps = 1
 				if("discord_url")
 					config.discord_url = value
 				if("discord_password")
 					config.discord_password = value
-				if("minute_topic_limit")
-					config.minutetopiclimit = text2num(value)
-				if("second_topic_limit")
-					config.secondtopiclimit = text2num(value)
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 

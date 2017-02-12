@@ -869,6 +869,59 @@
 			Good luck!
 			</html>"}
 
+//citadel code
+/obj/item/weapon/book/manual/daredice
+	name = "Dare Dice Manual"
+	icon_state = "gamebook"
+	author = "Cactus Space Federation"
+	title = "Dare Dice Manual"
+	dat = {"<html>
+				<head>
+				<style>
+				h1 {font-size: 21px; margin: 15px 0px 5px;}
+				h2 {font-size: 18px; margin: 15px 0px 5px;}
+        		h3 {font-size: 15px; margin: 15px 0px 5px;}
+				li {margin: 2px 0px 2px 15px;}
+				ul {list-style: none; margin: 5px; padding: 0px;}
+				ol {margin: 5px; padding: 0px 15px;}
+				</style>
+				</head>
+				<body>
+				<h1>Dare Dice Manual</h1>
+
+				<h2>Requirements</h2>
+				<h3>Number of Players</h3>
+				At least two, but a small group is preferred
+				<h3>Required Equipment</h3>
+				d100 or d20<br>
+				An open space, or tables and chairs
+				<h3>Optional Equipment</h3>
+				Drinks & snacks<br>
+				Extra clothing<br>
+				Pen & paper
+				<h2>How To Play</h2>
+				<ol>
+				<li>To start the game, one player chosen by any means starts by rolling the game die. This player then passes the die to the player next to them, traveling clockwise. Make sure to remember the number you rolled!</li>
+				<li>The die continues around the table until it reaches the first player again.</li>
+				<li>The players with the highest and lowest rolled numbers are selected as the 'darer' and the 'dared' respectively.</li>
+				<li>If the dared player finishes the dare sufficiently, they receive <b>1</b> point.</li>
+				</ol>
+				Repeat the cycle until a player reaches <b>5</b> points, then they win! The winner decides who starts rolling first in the next game and can give or receive one free dare from any player of their choice.
+				<h3>Ties</h3>
+				Ties between two or more players can usually be ignored. In a case where two or more players tie for the position of the darer or dared, the tied players can reroll until there is one darer and one dared.<br>
+				Alternatively, ties can be ignored completely. To continue playing with multiple dared or darers, simply have each darer give one dare to each dared player.
+				<h3>Special Rules</h3>
+				<li>Dares which break the law are automatically invalid. The dared should ask the darer for a different one.</li>
+				<li>Dares which are impossible to complete are automatically invalid. The dared should ask the darer for a different one. </li>
+				<li>If the dared player cannot complete a dare fully, but the table unanimously agrees that they still deserve the point then they receive it.</li>
+				<li>All dares must take place within the general vicinity of the table or game space so all players can see.</li>
+				<li>Depending on the amount of players, the amount of points required to win can vary. Adjust as needed.</li>
+				<h3>Notes</h3>
+				Dare Dice is, by far, the most popular dice game in space right now. However, players should be prepared for anything when entering a game. While the game is simple in essence; dares can be quite complicated, sometimes requiring multiple steps and/or testing your mental and physical abilities. Some dares might be downright shameful, degrading, or disgusting to some players. Thick skin is recommended.
+				</body>
+				</html>
+				"}
+
 // Wiki books that are linked to the configured wiki link.
 
 // A book that links to the wiki

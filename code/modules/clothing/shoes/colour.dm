@@ -111,3 +111,9 @@
 			user << "<span class='warning'>You need help taking these off!</span>"
 			return
 	..()
+	
+/obj/item/clothing/shoes/leather
+	name = "leather shoes"
+	desc = "A sturdy pair of leather shoes."
+	icon_state = "leather"
+	item_color = "leather"

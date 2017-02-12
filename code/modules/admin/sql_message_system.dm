@@ -35,8 +35,8 @@
 	if(!timestamp)
 		timestamp = SQLtime()
 	if(!server)
-		if (config && config.server_name)
-			server = config.server_name
+		if (config && config.server_sql_name)
+			server = config.server_sql_name
 	server = sanitizeSQL(server)
 	if(isnull(secret))
 		switch(alert("Hide note from being viewed by players?", "Secret note?","Yes","No","Cancel"))
@@ -332,7 +332,7 @@ proc/get_message_output(type, target_ckey)
 					return
 			if("watchlist entry")
 				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] is on the watchlist and has just connected - Reason: [text]</font>")
-			//	send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
+				send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_ckey]</span> on [timestamp]"
 				if(editor_ckey)
@@ -352,8 +352,8 @@ proc/get_message_output(type, target_ckey)
 		var/notetext
 		notesfile >> notetext
 		var/server
-		if(config && config.server_name)
-			server = config.server_name
+		if(config && config.server_sql_name)
+			server = config.server_sql_name
 		var/regex/note = new("^(\\d{2}-\\w{3}-\\d{4}) \\| (.+) ~(\\w+)$", "i")
 		note.Find(notetext)
 		var/timestamp = note.group[1]
