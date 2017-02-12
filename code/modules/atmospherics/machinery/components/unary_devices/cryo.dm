@@ -267,7 +267,7 @@
 							"<span class='notice'>You place [I] in [src].</span>")
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+		if(default_deconstruction_screwdriver(user, "pod0-o", "pod0", I))
 			return
 		if(exchange_parts(user, I))
 			return
