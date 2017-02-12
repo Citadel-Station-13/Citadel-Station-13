@@ -94,6 +94,15 @@ CREATE TABLE `admin_ranks` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+insert into admin_ranks (rank, flags) values ('Moderator',2);
+insert into admin_ranks (rank, flags) values ('Admin Candidate',2);
+insert into admin_ranks (rank, flags) values ('Trial Admin',5638);
+insert into admin_ranks (rank, flags) values ('Badmin',5727);
+insert into admin_ranks (rank, flags) values ('Game Admin',8063);
+insert into admin_ranks (rank, flags) values ('Game Master',65535);
+insert into admin_ranks (rank, flags) values ('Host',65535);
+insert into admin_ranks (rank, flags) values ('Coder',5168);
+
 DROP TABLE IF EXISTS `ban`;
 CREATE TABLE `ban` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

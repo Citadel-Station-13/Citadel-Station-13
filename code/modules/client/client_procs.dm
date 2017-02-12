@@ -261,7 +261,6 @@ var/next_external_rsc = 0
 	if(mentor && !holder)
 		mentor_memo_output("Show")
 
-	log_client_to_db(tdata)
 	add_verbs_from_config()
 	set_client_age_from_db()
 
@@ -290,7 +289,7 @@ var/next_external_rsc = 0
 	if(!IsGuestKey(key) && dbcon.IsConnected())
 		findJoinDate()
 
-	sync_client_with_db(tdata)
+	log_client_to_db(tdata)
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
@@ -435,49 +434,6 @@ var/next_external_rsc = 0
 
 	//no match mark it as a first connection for use in client/New()
 	player_age = -1
-
-
-/client/proc/sync_client_with_db(connectiontopic)
-	if (IsGuestKey(src.key))
-		return
-
-	establish_db_connection()
-	if (!dbcon.IsConnected())
-		return
-
-	var/sql_ckey = sanitizeSQL(ckey)
-
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
-	query_ip.Execute()
-	related_accounts_ip = ""
-	while(query_ip.NextRow())
-		related_accounts_ip += "[query_ip.item[1]], "
-
-	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]' AND ckey != '[sql_ckey]'")
-	query_cid.Execute()
-	related_accounts_cid = ""
-	while (query_cid.NextRow())
-		related_accounts_cid += "[query_cid.item[1]], "
-
-	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
-	else
-		if (check_randomizer(connectiontopic))
-			return
-
-	var/sql_ip = sanitizeSQL(src.address)
-	var/sql_computerid = sanitizeSQL(src.computer_id)
-	var/sql_admin_rank = sanitizeSQL(admin_rank)
-
-
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
-	query_insert.Execute()
-
-	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
-	query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)
 	. = FALSE
