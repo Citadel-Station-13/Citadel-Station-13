@@ -1,6 +1,5 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
-	SSmob.currentrun -= src
 	dead_mob_list -= src
 	living_mob_list -= src
 	all_clockwork_mobs -= src
@@ -28,8 +27,8 @@ var/next_mob_id = 0
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	prepare_huds()
 	hook_vr("mob_new",list(src))
+	prepare_huds()
 	..()
 
 /atom/proc/prepare_huds()
@@ -112,7 +111,7 @@ var/next_mob_id = 0
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility)//if src is invisible to us
+			if(M.see_invisible<invisibility)//if src is invisible to us,
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
@@ -124,18 +123,6 @@ var/next_mob_id = 0
 					else
 						continue
 		M.show_message(msg,1,blind_message,2)
-
-/mob/proc/get_top_level_mob()
-	if(istype(src.loc,/mob)&&src.loc!=src)
-		var/mob/M=src.loc
-		return M.get_top_level_mob()
-	return src
-
-proc/get_top_level_mob(var/mob/S)
-	if(istype(S.loc,/mob)&&S.loc!=S)
-		var/mob/M=S.loc
-		return M.get_top_level_mob()
-	return S
 
 // Show a message to all mobs in earshot of this one
 // This would be for audible actions by the src mob
@@ -352,6 +339,23 @@ proc/get_top_level_mob(var/mob/S)
 		else
 			M.LAssailant = usr
 
+/mob/proc/spin(spintime, speed)
+	set waitfor = 0
+	var/D = dir
+	while(spintime >= speed)
+		sleep(speed)
+		switch(D)
+			if(NORTH)
+				D = EAST
+			if(SOUTH)
+				D = WEST
+			if(EAST)
+				D = SOUTH
+			if(WEST)
+				D = NORTH
+		setDir(D)
+		spintime -= speed
+
 /mob/verb/stop_pulling()
 	set name = "Stop Pulling"
 	set category = "IC"
@@ -452,30 +456,7 @@ proc/get_top_level_mob(var/mob/S)
 //	M.Login()	//wat
 	return
 
-/mob/proc/update_flavor_text()
-	set src in usr
-	if(usr != src)
-		usr << "No."
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
 
-	if(msg != null)
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = html_encode(msg)
-
-		flavor_text = msg
-
-/mob/proc/warn_flavor_changed()
-	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
-		src << "<h2 class='alert'>OOC Warning:</h2>"
-		src << "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>"
-
-/mob/proc/print_flavor_text()
-	if(flavor_text && flavor_text != "")
-		var/msg = replacetext(flavor_text, "\n", " ")
-		if(lentext(msg) <= 40)
-			return "\blue [msg]"
-		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -571,7 +552,6 @@ proc/get_top_level_mob(var/mob/S)
 			stat(null, "Next Map: [nextmap.friendlyname]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(SSshuttle.emergency)
-			stat(null, "Current Shuttle: [SSshuttle.emergency.name]")
 			var/ETA = SSshuttle.emergency.getModeStr()
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
@@ -967,5 +947,4 @@ proc/get_top_level_mob(var/mob/S)
 	switch(var_name)
 		if ("attack_log")
 			return debug_variable(var_name, attack_log, 0, src, FALSE)
-
 	. = ..()
