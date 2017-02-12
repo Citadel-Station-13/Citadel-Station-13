@@ -58,6 +58,50 @@
         "the ai and borgs are mettacomming I think",
         "u just did the world a little bit more sad place for someone",
         "WHERES THE SLIP REWRITE WHERE THR FUCK ID IT?"
+		"CEMISTRY SUKS!!!!!!!!",
+		"youed call her a toeugh bithc",
+		"git gud!!",
+		"CHEMIT GIB HALNOM PLS",
+		"PLASMA iS MENT 2 BE FREE",
+		"LoL tROLED U",
+		"SEC IS A REV, LINCH!!",
+		"FUCK U IM WAY MORE ROBUST u bITCH!!1!!",
+		"iS tHis bay?",
+		"NO PRED CAN eVER CATCH MI",
+		"SCIENCE GIB SHINK RAY PLS",
+		"KILL PUNPUN 4 FUN xDD"
+		"ooc wow rly?",
+		"i play @pick(roles) to only ORDER not DO"
+		"CRAGO ORDER @pick(cargo) PLS",
+		"erp?",
+		"i want to digest u!!!",
+		"i shure hop dere are no PRED arund!!!!",
+		"NOM!1!",
+		"iF it COMPILES it werks!",
+		"LYNCH RObOTIKS NOT GIBING ME MECH WTF?/?",
+		"GWURGLE!!",
+		"balid saled!",
+		"LINCH VIRO",
+		"VIRO GIB SuPR VIrUS!!",
+		"Ai plai vxtest2!",
+		"ahelp kan i b pick@(s_roles)???",
+		";taitor trie to make meh malk/?!1!!",
+		";ENGIE TATOR HE SET UP SINGULO!!!11",
+		"WHEN NAGAS ADdED?/?",
+		"SINDYIE ON SAtIONS GiB gUNS PLISE",
+		"CcLOWN IV SlIPPING MI, SEc t BAR@",
+		"ahelp iT's RP vALiDZ!",
+		"HYDROBONIX PLS WEED PLIESe PLIsE BLAzE IT1!!!",
+		"HALP GOLIATH TENETCAL RAPPPP!!!!111",
+		"DudSE it'S 4:20 LmAO BLAZZ IT xDDDDD",
+		"ahelp DUDE I JUT LOST MY JOBB!!",
+		"looc dude rly",
+		"pray can i heff spells",
+		"aI state dem1!",
+		"SINGULO eNGINE 2 DANGER, SOLARS PLS!",
+		"nerf blob!1",
+		"iM NOT A FUWRRYY!!!",
+		"FOURTEEN INCHES SOFT!!!"
     ],
 
     "mutations": [
@@ -104,7 +148,12 @@
         "bager",
         "sybl",
         "mrs sybil",
-        "mr basil"
+        "mr basil",
+		"sisadel",
+		"dullus",
+		"colon marhens",
+		"haylo",
+		"EEGEE"
     ],
 
     "create_verbs": [
@@ -119,5 +168,33 @@
         "treaitors",
         "sheadow lings",
         "abdoocters"
-    ]
+    ],
+	
+	"roles": [
+		"heds",
+		"ceptin",
+		"hop",
+		"arrdee",
+		"sek"
+	],
+	
+	"cargo": [
+		"GUNS",
+		"HATS",
+		"PIZEH",
+		"MEMES",
+		"GLOWY CYSTAL"
+	
+	],
+	
+	"s_roles": [
+	"ert",
+	"shadowlig",
+	"ninja",
+	"admen",
+	"mantor",
+	"bluh daymon",
+	"wizzerd"
+	
+	]
 }
