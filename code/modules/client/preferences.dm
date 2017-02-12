@@ -454,6 +454,24 @@ var/list/preferences_datums = list()
 
 				dat += "</td>"
 
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Penis</h3>"
+
+				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_cock"] == TRUE)
+					//start cock
+					if(pref_species.use_skintones && features["gen_use_skintone"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+					//start balls
+					dat += "<h3>Testicles</h3>"
+					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_balls"] == TRUE)
+						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
+
+				dat += "</td>"
 
 				dat += "</td></tr></table>"
 
@@ -1486,6 +1504,8 @@ var/list/preferences_datums = list()
 	else
 		chosen_species = /datum/species/human
 	character.set_species(chosen_species, icon_update=0)
+	//citadel code
+	character.update_genitals()
 
 	if(icon_updates)
 		character.update_body()
