@@ -73,4 +73,4 @@
 	name = "atmospherics magboots"
 	icon_state = "atmosmagboots0"
 	magboot_state = "atmosmagboots"
-resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF
