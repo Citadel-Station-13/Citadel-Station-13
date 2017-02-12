@@ -104,16 +104,7 @@
 	if(!mob)
 		return						//this doesn't happen
 
-	createticket(src, msg, src.ckey, mob)
-
-	var/datum/adminticket/ticket
-
-
-	for(var/datum/adminticket/T in admintickets)
-		if(T.permckey == src.ckey)
-			ticket = T
 	var/ref_client = "\ref[src]"
-	var/ref_mob = "\ref[mob]"
 	for(var/datum/adminticket/T in admintickets)
 		if(T.permckey == src.ckey && T.resolved == "No")
 			if(alert(usr,"You already have an adminhelp open, would you like to bump it?", "Bump Adminhelp", "Yes", "No") == "Yes")
@@ -137,6 +128,11 @@
 
 	src.verbs -= /client/verb/adminhelp
 	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE)
+
+	for(var/datum/adminticket/T in admintickets)
+		msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=ticket;resolve=[T.ID]'>R</a>):</b> [msg]</span>"
+
+	createticket(src, msg, src.ckey, mob)
 	//send this msg to all admins
 
 	for(var/client/X in admins)
