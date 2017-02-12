@@ -48,7 +48,7 @@
 	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
 	if(!getorganslot("testicles"))
-		var/obj/item/organ/testicles/T = new
+		var/obj/item/organ/genital/testicles/T = new
 		T.Insert(src)
 		if(T)
 			if(dna.species.use_skintones)

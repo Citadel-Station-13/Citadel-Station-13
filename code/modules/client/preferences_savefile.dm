@@ -309,6 +309,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
 	S["feature_lizard_legs"]			>> features["legs"]
+	//cock features
+	S["feature_has_cock"]				>> features["has_cock"]
+	S["feature_cock_shape"]				>> features["cock_shape"]
+	S["feature_cock_color"]				>> features["cock_color"]
+	S["feature_cock_length"]			>> features["cock_length"]
+	S["feature_cock_girth"]				>> features["cock_girth"]
+	S["feature_has_sheath"]				>> features["sheath_color"]
+	//balls features
+	S["feature_has_balls"]				>> features["has_balls"]
+	S["feature_balls_color"]			>> features["balls_color"]
+	S["feature_balls_size"]				>> features["balls_size"]
+	S["feature_balls_fluid"]			>> features["balls_fluid"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -392,6 +404,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
 	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
+	//cock features
+	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, initial(features["has_cock"]))
+	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list)
+	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
+	features["cock_length"]			= sanitize_integer(features["cock_size"], 1, 12, 6)
 
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
 

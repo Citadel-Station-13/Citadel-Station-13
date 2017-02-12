@@ -61,8 +61,70 @@ var/list/preferences_datums = list()
 	var/skin_tone = "caucasian1"		//Skin color
 	var/eye_color = "000"				//Eye color
 	var/datum/species/pref_species = new /datum/species/human()	//Mutant race
-	var/list/features = list("mcolor" = "FFF", "mcolor2" = "FFF","mcolor3" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None", "mam_body_markings" = "None", "mam_ears" = "None", "mam_tail" = "None", "mam_tail_animated" = "None",
-		"xenodorsal" = "None", "xenohead" = "None", "xenotail" = "None", "legs" = "Normal Legs", "taur" = "None")
+	var/list/features = list("mcolor" 			= "FFF",
+		"mcolor2" 			= "FFF",
+		"mcolor3" 			= "FFF",
+		"tail_lizard" 		= "Smooth",
+		"tail_human" 		= "None",
+		"snout" 			= "Round",
+		"horns" 			= "None",
+		"ears" 				= "None",
+		"wings" 			= "None",
+		"frills" 			= "None",
+		"spines" 			= "None",
+		"body_markings" 	= "None",
+		"mam_body_markings" = "None",
+		"mam_ears" 			= "None",
+		"mam_tail" 			= "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" 		= "None",
+		"xenohead" 			= "None",
+		"xenotail" 			= "None",
+		"legs" 				= "Normal Legs",
+		"taur" 				= "None",
+		"has_cock"			= FALSE,
+		"cock_shape"		= "human",
+		"cock_length"		= 6,
+		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
+		"cock_color"		= "fff",
+		"has_sheath"		= FALSE,
+		"sheath_color"		= "fff",
+		"has_balls" 		= FALSE,
+		"balls_internal" 	= FALSE,
+		"balls_color" 		= "fff",
+		"balls_amount"		= 2,
+		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
+		"balls_size"		= BALLS_SIZE_NORMAL,
+		"balls_cum_rate"	= CUM_RATE,
+		"balls_cum_mult"	= CUM_RATE_MULT,
+		"balls_efficiency"	= CUM_EFFICIENCY,
+		"balls_fluid" 		= "semen",
+		"has_ovi"			= FALSE,
+		"ovi_shape"			= "knotted",
+		"ovi_length"		= 6,
+		"ovi_color"			= "fff",
+		"has_eggsack" 		= FALSE,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= "fff",
+		"eggsack_size" 		= BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = "fff",
+		"eggsack_egg_size" 	= EGG_GIRTH_DEF,
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= "fff",
+		"breasts_size" 		= "C",
+		"breasts_fluid" 	= "milk",
+		"has_vag"			= FALSE,
+		"vag_color"			= "fff",
+		"vag_clits"			= 1,
+		"vag_clit_diam"		= 0.25,
+		"vag_clit_len"		= 0.25,
+		"has_womb"			= FALSE,
+		"womb_cum_rate"		= CUM_RATE,
+		"womb_cum_mult"		= CUM_RATE_MULT,
+		"womb_efficiency"	= CUM_EFFICIENCY,
+		"womb_fluid" 		= "femcum"
+		)//MAKE SURE TO UPDATE THE LIST IN MOBS.DM IF YOU'RE GOING TO ADD TO THIS LIST, OTHERWISE THINGS MIGHT GET FUCKEY
+
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = SEC_DEPT_RANDOM
@@ -450,7 +512,8 @@ var/list/preferences_datums = list()
 
 				dat += "<h3>Options</h3>"
 				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-				dat += "<h2>More Coming Soon(tm)</h2>"
+				if(pref_species.use_skintones)
+					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["gen_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
 
 				dat += "</td>"
 
@@ -472,6 +535,53 @@ var/list/preferences_datums = list()
 						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
 
 				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Ovipositor</h3>"
+
+				dat += "<b>Has Ovi:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_ovi"])
+					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a><BR>"
+
+					dat += "<h3>Eggsack</h3>"
+
+					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_eggsack"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a><BR>"
+						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Vagina</h3>"
+
+				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_vag"])
+					dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+
+					//dat += "<h3>Clitoris</h3>"
+					//dat += "<b>Clit Diameter:</b><a href='?_src_=prefs;preference=clit_diam;task=input'>[features["vag_clit_diam"]]\"</a><BR>"
+					//dat += "<b>Clit Length:</b><a href='?_src_=prefs;preference=clit_len;task=input'>[features["vag_clit_len"]]\"</a><BR>"
+
+				dat += "</td>"
+
+				dat += "<td valign='top' width='20%'>"
+
+				dat += "<h3>Breasts</h3>"
+
+				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_breasts"])
+//					if(pref_species.use_skintones)
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+//					else
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
+					dat += "<b>Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
+
+				dat += "</td>"
+
 
 				dat += "</td></tr></table>"
 
@@ -1354,6 +1464,81 @@ var/list/preferences_datums = list()
 							arousable = TRUE
 						else//failsafe
 							arousable = FALSE
+				if("has_cock")
+					switch(features["has_cock"])
+						if(TRUE)
+							features["has_cock"] = FALSE
+						if(FALSE)
+							features["has_cock"] = TRUE
+							features["has_ovi"] = FALSE
+							features["has_eggsack"] = FALSE
+						else
+							features["has_cock"] = FALSE
+							features["has_ovi"] = FALSE
+				if("has_balls")
+					switch(features["has_balls"])
+						if(TRUE)
+							features["has_balls"] = FALSE
+						if(FALSE)
+							features["has_balls"] = TRUE
+							features["has_eggsack"] = FALSE
+						else
+							features["has_balls"] = FALSE
+							features["has_eggsack"] = FALSE
+
+				if("has_ovi")
+					switch(features["has_ovi"])
+						if(TRUE)
+							features["has_ovi"] = FALSE
+						if(FALSE)
+							features["has_ovi"] = TRUE
+							features["has_cock"] = FALSE
+							features["has_balls"] = FALSE
+						else
+							features["has_ovi"] = FALSE
+							features["has_cock"] = FALSE
+
+				if("has_eggsack")
+					switch(features["has_eggsack"])
+						if(TRUE)
+							features["has_eggsack"] = FALSE
+						if(FALSE)
+							features["has_eggsack"] = TRUE
+							features["has_balls"] = FALSE
+						else
+							features["has_eggsack"] = FALSE
+							features["has_balls"] = FALSE
+
+				if("balls_internal")
+					switch(features["balls_internal"])
+						if(TRUE)
+							features["balls_internal"] = FALSE
+						if(FALSE)
+							features["balls_internal"] = TRUE
+							features["eggsack_internal"] = FALSE
+						else
+							features["balls_internal"] = FALSE
+							features["eggsack_internal"] = FALSE
+
+				if("eggsack_internal")
+					switch(features["eggsack_internal"])
+						if(TRUE)
+							features["eggsack_internal"] = FALSE
+						if(FALSE)
+							features["eggsack_internal"] = TRUE
+							features["balls_internal"] = FALSE
+						else
+							features["eggsack_internal"] = FALSE
+							features["balls_internal"] = FALSE
+
+				if("has_breasts")
+					switch(features["has_breasts"])
+						if(TRUE)
+							features["has_breasts"] = FALSE
+						if(FALSE)
+							features["has_breasts"] = TRUE
+						else
+							features["has_breasts"] = FALSE
 
 				if("publicity")
 					if(unlock_content)

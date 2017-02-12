@@ -14,7 +14,7 @@
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags = list()
-	var/obj/item/organ/testicles/linked_balls
+	var/obj/item/organ/genital/testicles/linked_balls
 
 /obj/item/organ/genital/penis/New()
 	..()
@@ -42,5 +42,6 @@
 	var/string = "penis_[shape]_[size]"
 	icon_state = sanitize_text(string)
 	name = "[shape] penis"
-	if(owner.has_dna())
-		color = owner.dna.features["cock_color"]
+	if(!owner)
+		return
+	color = owner.dna.features["cock_color"]

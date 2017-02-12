@@ -50,8 +50,12 @@ var/global/list/xeno_tail_list = list()
 var/global/list/xeno_dorsal_list = list()
 
 
-//mentor stuff
+	//Genitals Lists
+var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
+var/global/list/breasts_size_list = list()
 
+
+//mentor stuff
 var/list/mentors = list()
 
 /client/proc/reload_mentors()

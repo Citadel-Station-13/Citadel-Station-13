@@ -1,4 +1,4 @@
-/obj/item/organ/testicles
+/obj/item/organ/genital/testicles
 	name = "testicles"
 	desc = "A male reproductive organ."
 	icon_state = "testicles"
@@ -16,29 +16,31 @@
 	var/producing			= TRUE
 	var/obj/item/organ/genital/penis/linked_penis
 
-/obj/item/organ/testicles/New()
+/obj/item/organ/genital/testicles/New()
 	..()
-	if(reagents)
-		reagents.maximum_volume = balls_volume
+	create_reagents(balls_volume)
 
-/obj/item/organ/testicles/on_life()
+/obj/item/organ/genital/testicles/on_life()
 	..()
-	if(!owner)
-		if(linked_penis)
-			linked_penis = null
+
+/obj/item/organ/genital/testicles/proc/generate_cum()
+	if(!owner && linked_penis)
+		if(linked_penis.linked_balls == src)
+			linked_penis.linked_balls = null
+		linked_penis = null
 		return FALSE
 	if(!reagents)
 		return FALSE
 	if(!linked_penis)
 		if(istype(owner.getorganslot("penis"), /obj/item/organ/genital/penis))
 			owner.getorganslot("penis")
-	reagents.maximum_volume = balls_volume
+	reagents.maximum_volume = balls_volume//update this before modifying values
 	for(var/r in reagents.reagent_list)
 		var/datum/reagent/R = r
 		if(R.id != src.cum_id)
-			src.reagents.del_reagent(R.id)
+			src.reagents.del_reagent(R.id)//delete reagents in the balls which are not the correct type.
 	if(reagents.total_volume < balls_volume)
 		reagents.add_reagent(cum_id, (cum_mult * cum_rate))//generate the cum
 		owner.nutrition = (owner.nutrition - cum_efficiency)//use some nutrition from the mob that's using it
 	if(reagents.total_volume > reagents.maximum_volume)
-		reagents.remove_reagent(cum_id, (reagents.total_volume - reagents.maximum_volume))
+		reagents.remove_reagent(cum_id, (reagents.total_volume - reagents.maximum_volume))//if we went over the limit, fixit fixit fixit
