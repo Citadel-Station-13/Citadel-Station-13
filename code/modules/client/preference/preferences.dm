@@ -26,7 +26,7 @@ var/list/preferences_datums = list()
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
-	var/ooccolor = "#b82e00"
+	var/ooccolor = null
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection

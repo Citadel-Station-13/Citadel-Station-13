@@ -50,7 +50,7 @@ CREATE TABLE `characters` (
   `joblessrole` varchar(16) NOT NULL,
   `job_civilian_high` mediumint(8) NOT NULL,
   `job_civilian_med` mediumint(8) NOT NULL,
-  `job_support_low` mediumint(8) NOT NULL,
+  `job_civilian_low` mediumint(8) NOT NULL,
   `job_medsci_high` mediumint(8) NOT NULL,
   `job_medsci_med` mediumint(8) NOT NULL,
   `job_medsci_low` mediumint(8) NOT NULL,
@@ -315,7 +315,7 @@ CREATE TABLE `poll_vote` (
 
 DROP TABLE IF EXISTS `preferences`;
 CREATE TABLE `preferences` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `ooccolor` varchar(7) DEFAULT '#b82e00',
   `UI_style` varchar(10) DEFAULT 'Midnight',

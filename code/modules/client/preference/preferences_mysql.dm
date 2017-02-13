@@ -62,7 +62,7 @@
 
 
 	//Sanitize
-	ooccolor		= sanitize_ooccolor(sanitize_hexcolor(ooccolor, 6, 1, initial(ooccolor)))
+	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	UI_style		= sanitize_inlist(UI_style, list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork"), initial(UI_style))
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
@@ -93,8 +93,7 @@
 			be_special -= role
 
 	var/DBQuery/query = dbcon.NewQuery({"UPDATE [format_table_name("player")]
-				SET
-					ooccolor='[ooccolor]',
+				SET	ooccolor='[ooccolor]',
 					UI_style='[UI_style]',
 					hotkeys='[hotkeys]',
 					tgui_fancy='[tgui_fancy]',
