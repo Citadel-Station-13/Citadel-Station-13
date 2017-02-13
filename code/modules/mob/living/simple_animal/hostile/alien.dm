@@ -12,7 +12,7 @@
 	response_harm = "hits"
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1)
+							/obj/item/stack/sheet/animalhide/xeno = 1, /obj/item/organ/tongue/alien = 1)
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
