@@ -1,5 +1,4 @@
 #define IRCREPLYCOUNT 2
-
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M in mob_list)
 	set category = null
@@ -7,8 +6,7 @@
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
-	if( !ismob(M) || !M.client )
-		return
+	if( !ismob(M) || !M.client )	return
 	cmd_admin_pm(M.client,null)
 	feedback_add_details("admin_verb","APMM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -22,15 +20,16 @@
 	var/list/client/targets[0]
 	for(var/client/T)
 		if(T.mob)
-			if(isnewplayer(T.mob))
+			if(istype(T.mob, /mob/new_player))
 				targets["(New Player) - [T]"] = T
-			else if(isobserver(T.mob))
+			else if(istype(T.mob, /mob/dead/observer))
 				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
+	var/list/sorted = sortList(targets)
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) in sorted|null
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -46,8 +45,7 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 
 	var/datum/adminticket/ticket

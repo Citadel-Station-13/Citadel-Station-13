@@ -76,6 +76,7 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
+
 /client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
@@ -90,6 +91,7 @@
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
+
 	var/ref_client = "\ref[src]"
 	for(var/datum/adminticket/T in admintickets)
 		if(T.permckey == src.ckey && T.resolved == "No")
@@ -133,7 +135,7 @@
 		if(T.permckey == src.ckey)
 			ticket = T
 
-		msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=ticket;resolve=[ticket]'>R</a>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=holder;resolve=[ticket]'>R</a>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
