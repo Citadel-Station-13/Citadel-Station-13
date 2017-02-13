@@ -23,7 +23,7 @@
 					parallax,
 					uplink_spawn_loc,
 					arousable
-					FROM [format_table_name("player")]
+					FROM [format_table_name("preferences")]
 					WHERE ckey='[C.ckey]'"}
 					)
 
@@ -132,7 +132,7 @@
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		var/DBQuery/firstquery = dbcon.NewQuery("UPDATE [format_table_name("player")] SET default_slot=[slot] WHERE ckey='[C.ckey]'")
+		var/DBQuery/firstquery = dbcon.NewQuery("UPDATE [format_table_name("characters")] SET default_slot=[slot] WHERE ckey='[C.ckey]'")
 		firstquery.Execute()
 
 	// Let's not have this explode if you sneeze on the DB

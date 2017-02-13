@@ -12,13 +12,15 @@ USE citadel;
 
 DROP TABLE IF EXISTS `player`;
 CREATE TABLE `player` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ckey` varchar(32) NOT NULL,
   `firstseen` datetime NOT NULL,
   `lastseen` datetime NOT NULL,
   `ip` varchar(18) NOT NULL,
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  PRIMARY KEY (`ckey`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `characters`;
@@ -32,7 +34,7 @@ CREATE TABLE `characters` (
   `be_random_body` tinyint(1) NOT NULL,
   `gender` varchar(11) NOT NULL,
   `age` smallint(4) NOT NULL,
-  `species` varchar(45) NOT NULL,
+  `pref_species` varchar(45) NOT NULL,
   `features` varchar(512) NOT NULL,
   `custom_names` varchar(255) NOT NULL,
   `hair_style` varchar(45) NOT NULL,
@@ -62,7 +64,7 @@ CREATE TABLE `characters` (
   `digestable` tinyint(1) NOT NULL,
   `size_scale` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  UNIQUE KEY `ckey` (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `admin`;
@@ -72,8 +74,7 @@ CREATE TABLE `admin` (
   `rank` varchar(32) NOT NULL DEFAULT 'Administrator',
   `level` int(2) NOT NULL DEFAULT '0',
   `flags` int(16) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `admin_log`;
@@ -128,8 +129,7 @@ CREATE TABLE `ban` (
   `unbanned_ckey` varchar(32) DEFAULT NULL,
   `unbanned_computerid` varchar(32) DEFAULT NULL,
   `unbanned_ip` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `connection_log`;
@@ -154,8 +154,7 @@ CREATE TABLE `customuseritems` (
   `cuiReason` text,
   `cuiPropAdjust` text,
   `cuiJobMask` text NOT NULL,
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`cuiCkey`) REFERENCES player(`ckey`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `death`;
@@ -186,8 +185,7 @@ CREATE TABLE `donators` (
   `patreon_name` varchar(32) NOT NULL,
   `ckey` varchar(32) DEFAULT NULL COMMENT 'Manual Field',
   `start_date` datetime DEFAULT NULL,
-  `active` tinyint(1) DEFAULT NULL,
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  `active` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `feedback`;
@@ -203,10 +201,11 @@ CREATE TABLE `feedback` (
 
 DROP TABLE IF EXISTS `ipintel`;
 CREATE TABLE `ipintel` (
-  `ip` int(10) UNSIGNED NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `intel` double NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+`ip` INT UNSIGNED NOT NULL ,
+`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
+`intel` REAL NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `ip` )
+) ENGINE = INNODB;
 
 DROP TABLE IF EXISTS `legacy_population`;
 CREATE TABLE `legacy_population` (
@@ -256,8 +255,7 @@ CREATE TABLE `mentor_memo` (
   `memotext` text NOT NULL,
   `timestamp` datetime NOT NULL,
   `last_editor` varchar(32) DEFAULT NULL,
-  `edits` text,
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  `edits` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `poll_option`;
@@ -283,23 +281,23 @@ CREATE TABLE `poll_question` (
   `question` varchar(255) NOT NULL,
   `adminonly` tinyint(1) DEFAULT '0',
   `multiplechoiceoptions` int(2) DEFAULT NULL,
-  `createdby_ckey` varchar(45) DEFAULT NULL,
-  `createdby_ip` varchar(45) DEFAULT NULL,
-  `for_trialmin` varchar(45) DEFAULT NULL,
+  `createdby_ckey` varchar(45) NULL DEFAULT NULL,
+  `createdby_ip` varchar(45) NULL DEFAULT NULL,
+  `for_trialmin` varchar(45) NULL DEFAULT NULL,
   `dontshow` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `poll_textreply`;
 CREATE TABLE `poll_textreply` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `datetime` datetime NOT NULL,
   `pollid` int(11) NOT NULL,
   `ckey` varchar(32) NOT NULL,
   `ip` varchar(18) NOT NULL,
   `replytext` text NOT NULL,
   `adminrank` varchar(32) NOT NULL DEFAULT 'Player',
-  FOREIGN KEY (`ckey`) REFERENCES player(`ckey`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `poll_vote`;
@@ -318,6 +316,7 @@ CREATE TABLE `poll_vote` (
 DROP TABLE IF EXISTS `preferences`;
 CREATE TABLE `preferences` (
   `id` int(11) NOT NULL,
+  `ckey` varchar(32) NOT NULL,
   `ooccolor` varchar(7) DEFAULT '#b82e00',
   `UI_style` varchar(10) DEFAULT 'Midnight',
   `hotkeys` smallint(1) NOT NULL,
@@ -340,7 +339,8 @@ CREATE TABLE `preferences` (
   `parallax` varchar(16) NOT NULL,
   `uplink_spawn_loc` smallint(4) NOT NULL,
   `arousable` smallint(1) NOT NULL,
-  FOREIGN KEY (id) REFERENCES characters(id)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ckey` (`ckey`)
   ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
   
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

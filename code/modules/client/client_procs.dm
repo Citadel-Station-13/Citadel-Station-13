@@ -345,13 +345,16 @@ var/next_external_rsc = 0
 	return QDEL_HINT_HARDDEL_NOW
 
 
+
 /client/proc/log_client_to_db(connectiontopic)
 	if(IsGuestKey(key))
 		return
 
+
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
+
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[ckey]'")
 	query.Execute()
@@ -362,12 +365,14 @@ var/next_external_rsc = 0
 		player_age = text2num(query.item[2])
 		break
 
+
 	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]'")
 	query_ip.Execute()
 	related_accounts_ip = list()
 	while(query_ip.NextRow())
 		if(ckey != query_ip.item[1])
 			related_accounts_ip.Add("[query_ip.item[1]]")
+
 
 	var/DBQuery/query_cid = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE computerid = '[computer_id]'")
 	query_cid.Execute()
@@ -376,6 +381,7 @@ var/next_external_rsc = 0
 		if(ckey != query_cid.item[1])
 			related_accounts_cid.Add("[query_cid.item[1]]")
 
+
 	var/admin_rank = "Player"
 	if(holder)
 		admin_rank = holder.rank
@@ -383,6 +389,7 @@ var/next_external_rsc = 0
 	else
 		if(check_randomizer(connectiontopic))
 			return
+
 
 	//Log all the alts
 	if(related_accounts_cid.len)
@@ -403,16 +410,23 @@ var/next_external_rsc = 0
 	if(sql_id)
 		//Player already identified previously, we need to just update the 'lastseen', 'ip' and 'computer_id' variables
 		var/DBQuery/query_update = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = '[sql_ip]', computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]' WHERE id = [sql_id]")
-		query_update.Execute()
+		if(!query_update.Execute())
+			var/err = query_update.ErrorMsg()
+			log_game("SQL ERROR during log_client_to_db (update). Error : \[[err]\]\n")
+			message_admins("SQL ERROR during log_client_to_db (update). Error : \[[err]\]\n")
 	else
 		//New player!! Need to insert all the stuff
-		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES ('[ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
-		query_insert.Execute()
+		var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]')")
+		if(!query_insert.Execute())
+			var/err = query_insert.ErrorMsg()
+			log_game("SQL ERROR during log_client_to_db (insert). Error : \[[err]\]\n")
+			message_admins("SQL ERROR during log_client_to_db (insert). Error : \[[err]\]\n")
 
 	//Logging player access
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
 
 /client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
