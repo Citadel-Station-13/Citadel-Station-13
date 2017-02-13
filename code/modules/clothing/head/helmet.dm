@@ -332,3 +332,83 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+/obj/item/clothing/head/helmet/dredd
+	name = "Judge Helmet"
+	desc = "Judge, Jury, and Executioner."
+	icon_state = "dredd-helmet"
+	item_state = "dredd-helmet"
+	armor = list(melee = 40, bullet = 30, laser = 30,energy = 30, bomb = 50, bio = 90, rad = 20, fire = 50, acid = 50)
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags = STOPSPRESSUREDMAGE
+	strip_delay = 80
+	dog_fashion = null
+
+/obj/item/clothing/head/helmet/aviatorhelmet
+	name = "Aviator Helmet"
+	desc = "Help the Bombardier!"
+	armor = list(melee = 25, bullet = 0, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	item_state = "aviator_helmet"
+	icon_state = "aviator_helmet"
+
+/obj/item/clothing/head/helmet/biker
+	name = "Biker's Helmet"
+	desc = "This helmet should protect you from russians and masked vigilantes."
+	armor = list(melee = 25, bullet = 15, laser = 20, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "biker_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/head/helmet/richard
+	name = "Richard"
+	desc = "Do you like hurting people?"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	icon_state = "richard"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+
+/obj/item/clothing/head/helmet/megahelmet
+	name = "DRN-001 Helmet"
+	desc = "The helmet of the DRN-001 model. A simple, sturdy blue helmet."
+	icon_state = "megahelmet"
+	item_state = "megahelmet"
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/protohelmet
+	name = "Prototype Helmet"
+	desc = "Shiny red helmet with white accents and a built in shaded visor that does absolutely nothing, nothing but look rad as hell."
+	icon_state = "protohelmet"
+	item_state = "protohelmet"
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/megaxhelmet
+	name = "Maverick Hunter Helmet"
+	desc = "Heavily armored upgrade to the DRN-001 model's helmet, now comes with a pointless red crystal thing!"
+	icon_state = "megaxhelmet"
+	item_state = "megaxhelmet"
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/joehelmet
+	name = "Sniper Helmet"
+	desc = "Helmet belonging to one of the many mass produced 'Joe' type robots."
+	icon_state = "joehelmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	item_state = "joehelmet"
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/doomguy
+	name = "Doomguy's helmet"
+	desc = ""
+	icon_state = "doom"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
+	item_state = "doom"
+	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
+	siemens_coefficient = 1
+
+/obj/item/clothing/head/helmet/neorussian
+	name = "neo-Russian helmet"
+	desc = "This piece of equipment can double as a pillow, a bowl, an emergency toilet, and sometimes as a helmet."
+	icon_state = "nr_helmet"
+	item_state = "nr_helmet"
+
