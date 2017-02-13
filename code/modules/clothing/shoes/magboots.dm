@@ -59,3 +59,18 @@
 	icon_state = "syndiemag0"
 	magboot_state = "syndiemag"
 	origin_tech = "magnets=4;syndicate=2"
+
+/obj/item/clothing/shoes/magboots/deathsquad
+	desc = "Very expensive and advanced magnetic boots, used only by the elite during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	name = "deathsquad magboots"
+	icon_state = "DS-magboots0"
+	magboot_state = "DS-magboots"
+	origin_tech = null
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/shoes/magboots/atmos
+	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle. These are painted in the colors of an atmospheric technician."
+	name = "atmospherics magboots"
+	icon_state = "atmosmagboots0"
+	magboot_state = "atmosmagboots"
+	resistance_flags = FIRE_PROOF

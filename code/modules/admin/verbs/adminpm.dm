@@ -1,3 +1,5 @@
+#define IRCREPLYCOUNT 2
+
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
 /client/proc/cmd_admin_pm_context(mob/M in mob_list)
 	set category = null
@@ -5,7 +7,8 @@
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
-	if( !ismob(M) || !M.client )	return
+	if( !ismob(M) || !M.client )
+		return
 	cmd_admin_pm(M.client,null)
 	feedback_add_details("admin_verb","APMM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -19,16 +22,15 @@
 	var/list/client/targets[0]
 	for(var/client/T)
 		if(T.mob)
-			if(istype(T.mob, /mob/new_player))
+			if(isnewplayer(T.mob))
 				targets["(New Player) - [T]"] = T
-			else if(istype(T.mob, /mob/dead/observer))
+			else if(isobserver(T.mob))
 				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/list/sorted = sortList(targets)
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) in sorted|null
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -44,7 +46,8 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 
 	var/datum/adminticket/ticket
@@ -206,3 +209,50 @@
 	for(var/client/X in admins)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 			X << "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" //inform X
+
+/proc/IrcPm(target,msg,sender)
+
+	var/client/C = directory[target]
+
+	var/static/stealthkey
+	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
+
+	if(!C)
+		return "No client"
+
+	if(!stealthkey)
+		stealthkey = GenIrcStealthKey()
+
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)
+		return "No message"
+
+	message_admins("IRC message from [sender] to [key_name_admin(C)] : [msg]")
+	log_admin("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	msg = emoji_parse(msg)
+
+	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
+	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
+	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
+	window_flash(C)
+	//always play non-admin recipients the adminhelp sound
+	C << 'sound/effects/adminhelp.ogg'
+
+	C.ircreplyamount = IRCREPLYCOUNT
+
+	return "Message Successful"
+
+/proc/GenIrcStealthKey()
+	var/num = (rand(0,1000))
+	var/i = 0
+	while(i == 0)
+		i = 1
+		for(var/P in stealthminID)
+			if(num == stealthminID[P])
+				num++
+				i = 0
+	var/stealth = "@[num2text(num)]"
+	stealthminID["IRCKEY"] = stealth
+	return	stealth
+
+#undef IRCREPLYCOUNT
