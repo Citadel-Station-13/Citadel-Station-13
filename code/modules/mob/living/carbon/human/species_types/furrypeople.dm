@@ -10,7 +10,7 @@ datum/species/mammal
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
 
-/datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 

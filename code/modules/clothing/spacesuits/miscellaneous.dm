@@ -308,3 +308,21 @@ Contains:
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-beserker"
 	item_state = "hardsuit0-beserker"
+	
+/obj/item/clothing/head/helmet/space/bomberman
+	name = "Bomberman head"
+	desc = "Terrorism has never looked so adorable."
+	icon_state = "bomberman"
+	item_state = "bomberman"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	siemens_coefficient = 0
+
+obj/item/clothing/suit/space/bomberman
+	name = "Bomberman's suit"
+	desc = "Doesn't actually make you immune to bombs!"
+	icon_state = "bomberman"
+	item_state = "bomberman"
+	slowdown = 0
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	siemens_coefficient = 0
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT

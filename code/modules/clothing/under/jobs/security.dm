@@ -132,3 +132,11 @@
 	item_state = "blueshift"
 	item_color = "blueshift"
 	can_adjust = 0
+
+/obj/item/clothing/under/rank/security/sneaksuit
+	name = "sneaking suit"
+	desc = "It's made of a strong material developed by the Soviet Union centuries ago which provides robust protection."
+	icon_state = "sneakingsuit"
+	item_state = "sneakingsuit"
+	item_color = "sneakingsuit"
+	can_adjust = 0
