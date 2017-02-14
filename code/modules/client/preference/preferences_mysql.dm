@@ -1,5 +1,5 @@
 /datum/preferences/proc/load_preferences(client/C)
-	var/sql_ckey = sanitizeSQL(C.key)
+
 	var/DBQuery/query = dbcon.NewQuery({"SELECT
 					ooccolor,
 					UI_style,
@@ -22,7 +22,7 @@
 					uplink_spawn_loc,
 					arousable
 					FROM [format_table_name("preferences")]
-					WHERE ckey='[sql_ckey]'"}
+					WHERE ckey='[C.ckey]'"}
 					)
 
 	if(!query.Execute())
@@ -74,7 +74,7 @@
 	return 1
 
 /datum/preferences/proc/save_preferences(client/C)
-	var/sql_ckey = sanitizeSQL(C.key)
+
 	// Might as well scrub out any malformed be_special list entries while we're here
 	for(var/role in be_special)
 		if(!(role in special_roles))
@@ -102,7 +102,7 @@
 					parallax='[parallax]',
 					uplink_spawn_loc='[uplink_spawn_loc]',
 					arousable='[arousable]'
-					WHERE ckey='[sql_ckey]'"}
+					WHERE ckey='[C.ckey]'"}
 					)
 
 	if(!query.Execute())
@@ -113,12 +113,12 @@
 	return 1
 
 /datum/preferences/proc/load_character(client/C,slot)
-	var/sql_ckey = sanitizeSQL(C.key)
+
 	if(!slot)	slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		var/DBQuery/firstquery = dbcon.NewQuery("UPDATE [format_table_name("characters")] SET default_slot=[slot] WHERE ckey='[sql_ckey]'")
+		var/DBQuery/firstquery = dbcon.NewQuery("UPDATE [format_table_name("characters")] SET default_slot=[slot] WHERE ckey='[C.ckey]'")
 		firstquery.Execute()
 
 	// Let's not have this explode if you sneeze on the DB
@@ -159,7 +159,7 @@
 					digestable,
 					size_scale,
 					default_slot,
-				 	FROM [format_table_name("characters")] WHERE ckey='[sql_ckey]' AND slot='[default_slot]'"})
+				 	FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' AND slot='[default_slot]'"})
 	if(!query.Execute())
 		var/err = query.ErrorMsg()
 		log_game("SQL ERROR during character slot loading. Error : \[[err]\]\n")
@@ -288,12 +288,12 @@
 	return 1
 
 /datum/preferences/proc/save_character(client/C)
-	var/sql_ckey = sanitizeSQL(C.key)
+
 	var/belly_prefs
 	if(!isemptylist(belly_prefs))
 		belly_prefs = list2params(belly_prefs)
 
-	var/DBQuery/firstquery = dbcon.NewQuery("SELECT slot FROM [format_table_name("characters")] WHERE ckey='[sql_ckey]' ORDER BY slot")
+	var/DBQuery/firstquery = dbcon.NewQuery("SELECT slot FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' ORDER BY slot")
 	firstquery.Execute()
 	while(firstquery.NextRow())
 		if(text2num(firstquery.item[1]) == default_slot)
@@ -334,7 +334,7 @@
 												digestable='[digestable]',
 												size_scale='[size_scale]',
 												default_slot='[default_slot]'
-												WHERE ckey='[sql_ckey]'
+												WHERE ckey='[C.ckey]'
 												AND slot='[default_slot]'"}
 												)
 
@@ -432,8 +432,8 @@
 	return 1
 
 /datum/preferences/proc/load_random_character_slot(client/C)
-	var/sql_ckey = sanitizeSQL(C.key)
-	var/DBQuery/query = dbcon.NewQuery("SELECT slot FROM [format_table_name("characters")] WHERE ckey='[sql_ckey]' ORDER BY slot")
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT slot FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' ORDER BY slot")
 	var/list/saves = list()
 
 	if(!query.Execute())
@@ -453,9 +453,9 @@
 
 /datum/preferences/proc/SetChangelog(client/C,hash)
 	lastchangelog=hash
-	var/sql_ckey = sanitizeSQL(C.key)
+
 	winset(C, "rpane.changelog", "background-color=none;font-style=")
-	var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastchangelog='[lastchangelog]' WHERE ckey='[sql_ckey]'")
+	var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET lastchangelog='[lastchangelog]' WHERE ckey='[C.ckey]'")
 	if(!query.Execute())
 		var/err = query.ErrorMsg()
 		log_game("SQL ERROR during lastchangelog updating. Error : \[[err]\]\n")
