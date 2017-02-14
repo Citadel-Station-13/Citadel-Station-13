@@ -917,14 +917,27 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
 					/obj/item/clothing/under/sailor=1,
-					/obj/item/clothing/shoes/megaboots=1, /obj/item/clothing/gloves/megagloves=1, /obj/item/clothing/head/helmet/megahelmet=1, /obj/item/clothing/under/mega=1,
-					/obj/item/clothing/shoes/protoboots=1, /obj/item/clothing/gloves/protogloves=1, /obj/item/clothing/head/helmet/protohelmet = 1, /obj/item/clothing/under/proto = 1,
-					/obj/item/clothing/shoes/megaxboots = 1, /obj/item/clothing/gloves/megaxgloves = 1, /obj/item/clothing/head/helmet/megaxhelmet = 1, /obj/item/clothing/under/megax = 1,
-					/obj/item/clothing/shoes/joeboots = 1, /obj/item/clothing/gloves/joegloves = 1, /obj/item/clothing/head/helmet/joehelmet = 1,
+					/obj/item/clothing/shoes/megaboots=1, 
+					/obj/item/clothing/gloves/megagloves=1, 
+					/obj/item/clothing/head/helmet/megahelmet=1, 
+					/obj/item/clothing/under/mega=1,
+					/obj/item/clothing/shoes/protoboots=1, 
+					/obj/item/clothing/gloves/protogloves=1, 
+					/obj/item/clothing/head/helmet/protohelmet = 1, 
+					/obj/item/clothing/under/proto = 1,
+					/obj/item/clothing/shoes/megaxboots = 1, 
+					/obj/item/clothing/gloves/megaxgloves = 1, 
+					/obj/item/clothing/head/helmet/megaxhelmet = 1, 
+					/obj/item/clothing/under/megax = 1,
+					/obj/item/clothing/shoes/joeboots = 1, 
+					/obj/item/clothing/gloves/joegloves = 1, 
+					/obj/item/clothing/head/helmet/joehelmet = 1,
 					/obj/item/clothing/under/joe = 1,
 					/obj/item/clothing/under/vault = 1,
 					/obj/item/clothing/under/roll = 1,
-					/obj/item/clothing/head/clownpiece = 1, /obj/item/clothing/under/clownpiece = 1, /obj/item/clothing/suit/clownpiece = 1)
+					/obj/item/clothing/head/clownpiece = 1, 
+					/obj/item/clothing/under/clownpiece = 1, 
+					/obj/item/clothing/suit/clownpiece = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2,
 		/obj/item/clothing/gloves/anchor_arms = 1,
 		/obj/item/clothing/suit/kaminacape = 1,
@@ -1049,10 +1062,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/suit/jacket/letterman_red=1, /obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
 	/obj/item/clothing/under/casualhoodie/skirt=1)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
-		/obj/item/clothing/under/wedding/bride_orange=1, /obj/item/clothing/under/wedding/bride_purple=1, /obj/item/clothing/under/wedding/bride_blue=1, /obj/item/clothing/under/wedding/bride_red=1, /obj/item/clothing/under/wedding/bride_white=1, 
+		/obj/item/clothing/under/wedding/bride_orange=1, 
+		/obj/item/clothing/under/wedding/bride_purple=1, 
+		/obj/item/clothing/under/wedding/bride_blue=1, 
+		/obj/item/clothing/under/wedding/bride_red=1, 
+		/obj/item/clothing/under/wedding/bride_white=1, 
 		/obj/item/clothing/under/keyholesweater=1,
 	 	/obj/item/clothing/suit/doshjacket=1, 
-		/obj/item/clothing/under/squatter_outfit = 1, /obj/item/clothing/head/squatter_hat = 1)
+		/obj/item/clothing/under/squatter_outfit = 1, 
+		/obj/item/clothing/head/squatter_hat = 1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
