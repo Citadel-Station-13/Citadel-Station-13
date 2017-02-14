@@ -92,7 +92,7 @@
 			CRASH("[C.key] had a malformed role entry: '[role]'")
 			be_special -= role
 
-	var/DBQuery/query = dbcon.NewQuery({"UPDATE [format_table_name("player")]
+	var/DBQuery/query = dbcon.NewQuery({"UPDATE [format_table_name("preferences")]
 				SET	ooccolor='[ooccolor]',
 					UI_style='[UI_style]',
 					hotkeys='[hotkeys]',
@@ -389,7 +389,7 @@
 					belly_prefs,
 					devourable,
 					digestable,
-					size_play)
+					size_scale)
 
 					VALUES
 											('[C.ckey]', '[default_slot]', '[sanitizeSQL(metadata)]',
