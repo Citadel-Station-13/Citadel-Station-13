@@ -163,12 +163,15 @@ var/list/preferences_datums = list()
 
 	switch(current_tab)
 		if (0) // Character Settings#
+			dat += "<table width='100%'><tr><td width='405px' height='25px' valign='top'>"
+			dat += "</td><td width='405px' height='25px' valign='left'>"
 			dat += "<center>"
 			dat += "Slot <b>[slot_name]</b> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
 			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
-
+			dat += "</center>"
+			dat += "</td></tr></table>"
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			dat += "<h2>Identity</h2>"
@@ -231,9 +234,16 @@ var/list/preferences_datums = list()
 			dat += "<br>"
 
 			dat += "<br>"
-			if(pref_species.use_skintones)
 
-				dat += "<td valign='top' width='21%'>"
+			dat += "</tr></table>"
+
+			dat += "<h2>Features</h2>"
+
+			dat += "<table width='100%'><tr><td width='20%' valign='top'>"
+
+			dat += "<td valign='top' width='20%'>"
+			dat += "<center>"
+			if(pref_species.use_skintones)
 
 				dat += "<h3>Skin Tone</h3>"
 
@@ -242,8 +252,6 @@ var/list/preferences_datums = list()
 				dat += "</td>"
 
 			if(HAIR in pref_species.species_traits)
-
-				dat += "<td valign='top' width='21%'>"
 
 				dat += "<h3>Hair Style</h3>"
 
@@ -264,19 +272,18 @@ var/list/preferences_datums = list()
 
 			if(EYECOLOR in pref_species.species_traits)
 
-				dat += "<td valign='top' width='21%'>"
-
 				dat += "<h3>Eye Color</h3>"
 
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 				dat += "</td>"
 
+			dat += "<br>"
+
+			dat += "</td><td width='300px' height='300px' valign='top'>"
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
 				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-
-					dat += "<td valign='top' width='21%'>"
 
 					dat += "<h3>Alien/Mutant Colors</h3>"
 
@@ -289,7 +296,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("tail_lizard" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -298,7 +304,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("snout" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Snout</h3>"
 
@@ -307,7 +312,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Horns</h3>"
 
@@ -316,7 +320,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("frills" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Frills</h3>"
 
@@ -325,7 +328,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("spines" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Spines</h3>"
 
@@ -334,7 +336,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Body Markings</h3>"
 
@@ -344,7 +345,6 @@ var/list/preferences_datums = list()
 
 				//Mammal bodyparts
 				if("mam_body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Mammal Body Markings</h3>"
 
@@ -353,14 +353,12 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("mam_tail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
 
 				if("legs" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Legs</h3>"
 
@@ -369,7 +367,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("mam_ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Ears</h3>"
 
@@ -378,7 +375,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("taur" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Taur Body</h3>"
 
@@ -386,9 +382,8 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-//Xeno Bodyparts
+				//Xeno Bodyparts
 				if("xenohead" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Head/Caste</h3>"
 
@@ -397,7 +392,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("xenotail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -406,7 +400,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("xenodorsal" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Dorsal Tubes</h3>"
 
@@ -417,7 +410,6 @@ var/list/preferences_datums = list()
 			if(config.mutant_humans)
 
 				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -426,7 +418,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Ears</h3>"
 
@@ -435,13 +426,14 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Wings</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
+			dat += "</center>"
+			dat += "</td></tr></table>"
 
 			dat += "</tr></table>"
 			//citadel code
@@ -450,9 +442,7 @@ var/list/preferences_datums = list()
 			else
 				dat += "<h2>Genitals</h2>"
 
-				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
-
-				dat += "<td valign='top' width='20%'>"
+				dat += "<table width='100%'><tr><td width='20%'>"
 
 				dat += "<h3>Options</h3>"
 				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
@@ -1427,12 +1417,12 @@ var/list/preferences_datums = list()
 						user.hud_used.update_parallax_pref()
 
 				if("save")
-					save_preferences(user)
-					save_character(user)
+					save_preferences()
+					save_character()
 
 				if("reload")
-					load_preferences(user)
-					load_character(user)
+					load_preferences()
+					load_character()
 
 				if("open_load_dialog")
 					if(!IsGuestKey(user.key))
@@ -1446,11 +1436,11 @@ var/list/preferences_datums = list()
 					if(!load_character(user,text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
-						save_character(user)
+						save_character()
 					close_load_dialog(user)
 
 				if("tab")
-					if (href_list["tab"])
+					if(href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 
 	ShowChoices(user)

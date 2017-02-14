@@ -23,3 +23,20 @@ var/global/list/whitelisted_species_list[0]
 /proc/log_mentor(text)
 		mentor_log.Add(text)
 		diary << "\[[time_stamp()]]MENTOR: [text]"
+
+/proc/datum_info_line(var/datum/d)
+	if(!istype(d))
+		return
+	if(!istype(d, /mob))
+		return "[d] ([d.type])"
+	var/mob/m = d
+	return "[m] ([m.ckey]) ([m.type])"
+
+/proc/atom_loc_line(var/atom/a)
+	if(!istype(a))
+		return
+	var/turf/t = get_turf(a)
+	if(istype(t))
+		return "[a.loc] ([t.x],[t.y],[t.z]) ([a.loc.type])"
+	else if(a.loc)
+		return "[a.loc] (0,0,0) ([a.loc.type])"

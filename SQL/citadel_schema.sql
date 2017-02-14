@@ -63,8 +63,8 @@ CREATE TABLE `characters` (
   `devourable` tinyint(1) NOT NULL,
   `digestable` tinyint(1) NOT NULL,
   `size_scale` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ckey` (`ckey`)
+  `default_slot` smallint(2) DEFAULT '1',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `admin`;
@@ -320,11 +320,9 @@ CREATE TABLE `preferences` (
   `ooccolor` varchar(7) DEFAULT '#b82e00',
   `UI_style` varchar(10) DEFAULT 'Midnight',
   `hotkeys` smallint(1) NOT NULL,
-  `tgui_fancy` smallint(4) NOT NULL,
-  `tugi_lock` smallint(1) NOT NULL,
+  `tgui_fancy` smallint(1) DEFAULT '1',
   `be_special` mediumtext NOT NULL,
   `chat_toggles` varchar(64) NOT NULL,
-  `default_slot` smallint(2) DEFAULT '1',
   `toggles` mediumint(8) DEFAULT '383',
   `ghost_orbit` varchar(25) NOT NULL,
   `ghost_form` varchar(20) NOT NULL,
