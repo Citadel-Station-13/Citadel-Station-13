@@ -2,14 +2,22 @@
 
 var/list/preferences_datums = list()
 
+/proc/check_client_age(client/C, var/days) // If days isn't provided, returns the age of the client. If it is provided, it returns the days until the player_age is equal to or greater than the days variable
+	if(!days)
+		return C.player_age
+	else
+		return max(0, days - C.player_age)
+	return 0
 
+#define MAX_SAVE_SLOTS 10 // Save slots for regular players
+#define MAX_SAVE_SLOTS_MEMBER 20 // Save slots for BYOND members
 
 /datum/preferences
-	var/client/parent
+//	var/client/client
 	//doohickeys for savefiles
-	var/path
+//	var/path
 	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
-	var/max_save_slots = 10
+	var/max_save_slots = MAX_SAVE_SLOTS
 
 	//non-preference stuff
 	var/muted = 0
@@ -86,12 +94,17 @@ var/list/preferences_datums = list()
 
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
+	var/digestable = 1
+	var/devourable = 0
+	var/list/belly_prefs = list()
+	var/size_scale = SIZESCALE_NORMAL
 
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
 	// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
+	var/slot_name = ""
 
 	var/flavor_text = ""
 
@@ -107,17 +120,15 @@ var/list/preferences_datums = list()
 	var/parallax = PARALLAX_DISABLE //Starting disabled by default so people stop freaking about about certain issues.
 
 /datum/preferences/New(client/C)
-	parent = C
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
 	custom_names["clown"] = pick(clown_names)
 	custom_names["mime"] = pick(mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
-			load_path(C.ckey)
 			unlock_content = C.IsByondMember()
 			if(unlock_content)
-				max_save_slots = 16
+				max_save_slots = MAX_SAVE_SLOTS_MEMBER
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -140,8 +151,11 @@ var/list/preferences_datums = list()
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 
-	if(!path)
-		dat += "<div class='notice'>Please create an account to save your preferences</div>"
+	var/client/C
+
+	if(istype(C))
+		if(IsGuestKey(C.key))
+			dat += "<div class='notice'>Please create an account to save your preferences</div>"
 
 	dat += "</center>"
 
@@ -149,20 +163,15 @@ var/list/preferences_datums = list()
 
 	switch(current_tab)
 		if (0) // Character Settings#
-			if(path)
-				var/savefile/S = new /savefile(path)
-				if(S)
-					dat += "<center>"
-					var/name
-					for(var/i=1, i<=max_save_slots, i++)
-						S.cd = "/character[i]"
-						S["real_name"] >> name
-						if(!name)
-							name = "Character[i]"
-						//if(i!=1) dat += " | "
-						dat += "<a style='white-space:nowrap;' href='?_src_=prefs;preference=changeslot;num=[i];' [i == default_slot ? "class='linkOn'" : ""]>[name]</a> "
-					dat += "</center>"
-
+			dat += "<table width='100%'><tr><td width='405px' height='25px' valign='top'>"
+			dat += "</td><td width='405px' height='25px' valign='left'>"
+			dat += "<center>"
+			dat += "Slot <b>[slot_name]</b> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=open_load_dialog\">Load slot</a> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
+			dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a>"
+			dat += "</center>"
+			dat += "</td></tr></table>"
 			dat += "<center><h2>Occupation Choices</h2>"
 			dat += "<a href='?_src_=prefs;preference=job;task=menu'>Set Occupation Preferences</a><br></center>"
 			dat += "<h2>Identity</h2>"
@@ -225,9 +234,16 @@ var/list/preferences_datums = list()
 			dat += "<br>"
 
 			dat += "<br>"
-			if(pref_species.use_skintones)
 
-				dat += "<td valign='top' width='21%'>"
+			dat += "</tr></table>"
+
+			dat += "<h2>Features</h2>"
+
+			dat += "<table width='100%'><tr><td width='20%' valign='top'>"
+
+			dat += "<td valign='top' width='20%'>"
+			dat += "<center>"
+			if(pref_species.use_skintones)
 
 				dat += "<h3>Skin Tone</h3>"
 
@@ -236,8 +252,6 @@ var/list/preferences_datums = list()
 				dat += "</td>"
 
 			if(HAIR in pref_species.species_traits)
-
-				dat += "<td valign='top' width='21%'>"
 
 				dat += "<h3>Hair Style</h3>"
 
@@ -258,19 +272,18 @@ var/list/preferences_datums = list()
 
 			if(EYECOLOR in pref_species.species_traits)
 
-				dat += "<td valign='top' width='21%'>"
-
 				dat += "<h3>Eye Color</h3>"
 
 				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 
 				dat += "</td>"
 
+			dat += "<br>"
+
+			dat += "</td><td width='300px' height='300px' valign='top'>"
 			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
 
 				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-
-					dat += "<td valign='top' width='21%'>"
 
 					dat += "<h3>Alien/Mutant Colors</h3>"
 
@@ -283,7 +296,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("tail_lizard" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -292,7 +304,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("snout" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Snout</h3>"
 
@@ -301,7 +312,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Horns</h3>"
 
@@ -310,7 +320,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("frills" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Frills</h3>"
 
@@ -319,7 +328,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("spines" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Spines</h3>"
 
@@ -328,7 +336,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Body Markings</h3>"
 
@@ -338,7 +345,6 @@ var/list/preferences_datums = list()
 
 				//Mammal bodyparts
 				if("mam_body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Mammal Body Markings</h3>"
 
@@ -347,14 +353,12 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("mam_tail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
 
 				if("legs" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Legs</h3>"
 
@@ -363,7 +367,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("mam_ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Ears</h3>"
 
@@ -372,7 +375,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("taur" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Taur Body</h3>"
 
@@ -380,9 +382,8 @@ var/list/preferences_datums = list()
 
 					dat += "</td>"
 
-//Xeno Bodyparts
+				//Xeno Bodyparts
 				if("xenohead" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Head/Caste</h3>"
 
@@ -391,7 +392,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("xenotail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -400,7 +400,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("xenodorsal" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Dorsal Tubes</h3>"
 
@@ -411,7 +410,6 @@ var/list/preferences_datums = list()
 			if(config.mutant_humans)
 
 				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Tail</h3>"
 
@@ -420,7 +418,6 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Ears</h3>"
 
@@ -429,13 +426,14 @@ var/list/preferences_datums = list()
 					dat += "</td>"
 
 				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
-					dat += "<td valign='top' width='7%'>"
 
 					dat += "<h3>Wings</h3>"
 
 					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 
 					dat += "</td>"
+			dat += "</center>"
+			dat += "</td></tr></table>"
 
 			dat += "</tr></table>"
 			//citadel code
@@ -444,9 +442,7 @@ var/list/preferences_datums = list()
 			else
 				dat += "<h2>Genitals</h2>"
 
-				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
-
-				dat += "<td valign='top' width='20%'>"
+				dat += "<table width='100%'><tr><td width='20%'>"
 
 				dat += "<h3>Options</h3>"
 				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
@@ -844,6 +840,8 @@ var/list/preferences_datums = list()
 	return 0
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
+	if(!user)	return
+
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
@@ -1410,32 +1408,39 @@ var/list/preferences_datums = list()
 
 				if("parallaxup")
 					parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
+					if (user && user.hud_used)
+						user.hud_used.update_parallax_pref()
 
 				if("parallaxdown")
 					parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
-					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
+					if (user && user.hud_used)
+						user.hud_used.update_parallax_pref()
 
 				if("save")
 					save_preferences()
 					save_character()
 
-				if("load")
+				if("reload")
 					load_preferences()
 					load_character()
-					attempt_vr(parent.prefs_vr,"load_vore","")
+
+				if("open_load_dialog")
+					if(!IsGuestKey(user.key))
+						open_load_dialog(user)
+						return 1
+
+				if("close_load_dialog")
+					close_load_dialog(user)
 
 				if("changeslot")
-					attempt_vr(parent.prefs_vr,"load_vore","")
-					if(!load_character(text2num(href_list["num"])))
+					if(!load_character(user,text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
 						save_character()
+					close_load_dialog(user)
 
 				if("tab")
-					if (href_list["tab"])
+					if(href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 
 	ShowChoices(user)
@@ -1491,3 +1496,53 @@ var/list/preferences_datums = list()
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+		character.regenerate_icons()
+
+	character.vore_organs = belly_prefs
+	character.devourable = devourable
+	character.digestable = digestable
+
+/*	if(size_scale!="normal")
+		if(size_scale=="small")
+			character.sizeplay_set(SIZESCALE_MICRO)
+		else if(character_size=="tiny")
+			character.sizeplay_set(SIZESCALE_SMALL)
+		else if(character_size=="large")
+			character.sizeplay_set(SIZESCALE_LARGE)
+		else
+			character.sizeplay_set(SIZESCALE_MACRO)*/
+
+/datum/preferences/proc/open_load_dialog(mob/user)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT slot,real_name FROM [format_table_name("characters")] WHERE ckey='[user.ckey]' ORDER BY slot")
+	var/list/slotnames[max_save_slots]
+
+	if(!query.Execute())
+		var/err = query.ErrorMsg()
+		log_game("SQL ERROR during character slot loading. Error : \[[err]\]\n")
+		message_admins("SQL ERROR during character slot loading. Error : \[[err]\]\n")
+		return
+	while(query.NextRow())
+		slotnames[text2num(query.item[1])] = query.item[2]
+
+	var/dat = "<body>"
+	dat += "<tt><center>"
+	dat += "<b>Select a character slot to load</b><hr>"
+	var/name
+
+	for(var/i in 1 to max_save_slots)
+		name = slotnames[i] || "Character [i]"
+		if(i == default_slot)
+			name = "<b>[name]</b>"
+		dat += "<a href='?_src_=prefs;preference=changeslot;num=[i];'>[name]</a><br>"
+
+	dat += "<hr>"
+	dat += "<a href='byond://?src=\ref[user];preference=close_load_dialog'>Close</a><br>"
+	dat += "</center></tt>"
+//		user << browse(dat, "window=saves;size=300x390")
+	var/datum/browser/popup = new(user, "saves", "<div align='center'>Character Saves</div>", 300, 390)
+	popup.set_content(dat)
+	popup.open(0)
+
+/datum/preferences/proc/close_load_dialog(mob/user)
+	user << browse(null, "window=saves")

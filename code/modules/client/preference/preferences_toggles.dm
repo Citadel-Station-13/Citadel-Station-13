@@ -5,7 +5,7 @@
 	set desc = ".Toggle Between seeing all mob speech, and only speech of nearby mobs"
 	prefs.chat_toggles ^= CHAT_GHOSTEARS
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TGE") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_ghost_sight()
@@ -14,7 +14,7 @@
 	set desc = ".Toggle Between seeing all mob emotes, and only emotes of nearby mobs"
 	prefs.chat_toggles ^= CHAT_GHOSTSIGHT
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTSIGHT) ? "see all emotes in the world" : "only see emotes from nearby mobs"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_ghost_whispers()
@@ -23,7 +23,7 @@
 	set desc = ".Toggle between hearing all whispers, and only whispers of nearby mobs"
 	prefs.chat_toggles ^= CHAT_GHOSTWHISPER
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTWHISPER) ? "see all whispers in the world" : "only see whispers from nearby mobs"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TGW") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/toggle_ghost_radio()
@@ -32,7 +32,7 @@
 	set desc = ".Enable or disable hearing radio chatter as a ghost"
 	prefs.chat_toggles ^= CHAT_GHOSTRADIO
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTRADIO) ? "see radio chatter" : "not see radio chatter"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TGR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc! //social experiment, increase the generation whenever you copypaste this shamelessly GENERATION 1
 
 /client/verb/toggle_ghost_pda()
@@ -41,7 +41,7 @@
 	set desc = ".Toggle Between seeing all mob pda messages, and only pda messages of nearby mobs"
 	prefs.chat_toggles ^= CHAT_GHOSTPDA
 	src << "As a ghost, you will now [(prefs.chat_toggles & CHAT_GHOSTPDA) ? "see all pda messages in the world" : "only see pda messages from nearby mobs"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TGP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/toggle_hear_radio()
@@ -50,7 +50,7 @@
 	set desc = "Toggle seeing radiochatter from nearby radios and speakers"
 	if(!holder) return
 	prefs.chat_toggles ^= CHAT_RADIO
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	usr << "You will [(prefs.chat_toggles & CHAT_RADIO) ? "now" : "no longer"] see radio chatter from nearby radios or speakers"
 	feedback_add_details("admin_verb","THR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -60,7 +60,7 @@
 	set desc = "Toggle recieving a message in deadchat when sentient mobs \
 		die."
 	prefs.toggles ^= DISABLE_DEATHRATTLE
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	usr << "You will \
 		[(prefs.toggles & DISABLE_DEATHRATTLE) ? "no longer" : "now"] get \
 		messages when a sentient mob dies."
@@ -75,7 +75,7 @@
 	usr << "You will \
 		[(prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get \
 		messages when someone joins the station."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb", "TAR") // If you are copy-pasting this, maybe you should rethink where your life went so wrong.
 
 /client/proc/toggleadminhelpsound()
@@ -85,7 +85,7 @@
 	if(!holder)
 		return
 	prefs.toggles ^= SOUND_ADMINHELP
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	usr << "You will [(prefs.toggles & SOUND_ADMINHELP) ? "now" : "no longer"] hear a sound when adminhelps arrive."
 	feedback_add_details("admin_verb","AHS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -96,7 +96,7 @@
 	if(!holder)
 		return
 	prefs.toggles ^= ANNOUNCE_LOGIN
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	usr << "You will [(prefs.toggles & ANNOUNCE_LOGIN) ? "now" : "no longer"] have an announcement to other admins when you login."
 	feedback_add_details("admin_verb","TAL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -105,7 +105,7 @@
 	set category = "Preferences"
 	set desc ="Toggles seeing deadchat"
 	prefs.chat_toggles ^= CHAT_DEAD
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	src << "You will [(prefs.chat_toggles & CHAT_DEAD) ? "now" : "no longer"] see deadchat."
 	feedback_add_details("admin_verb","TDV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -114,7 +114,7 @@
 	set category = "Preferences"
 	set desc = "Toggles seeing prayers"
 	prefs.chat_toggles ^= CHAT_PRAYER
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	src << "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat."
 	feedback_add_details("admin_verb","TP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -123,7 +123,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing pray sounds."
 	prefs.toggles ^= SOUND_PRAYERS
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_PRAYERS)
 		src << "You will now hear prayer sounds."
 	else
@@ -135,7 +135,7 @@
 	set category = "Preferences"
 	set desc = "Toggles whether or not you will be considered for antagonist status given during a round."
 	prefs.toggles ^= MIDROUND_ANTAG
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	src << "You will [(prefs.toggles & MIDROUND_ANTAG) ? "now" : "no longer"] be considered for midround antagonist positions."
 	feedback_add_details("admin_verb","TMidroundA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -144,7 +144,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing the GameLobby music"
 	prefs.toggles ^= SOUND_LOBBY
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_LOBBY)
 		src << "You will now hear music in the game lobby."
 		if(isnewplayer(mob))
@@ -160,7 +160,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing sounds uploaded by admins"
 	prefs.toggles ^= SOUND_MIDI
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_MIDI)
 		src << "You will now hear any sounds uploaded by admins."
 		if(admin_sound)
@@ -185,7 +185,7 @@
 	set category = "Preferences"
 	set desc = "Toggles seeing OutOfCharacter chat"
 	prefs.chat_toggles ^= CHAT_OOC
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	src << "You will [(prefs.chat_toggles & CHAT_OOC) ? "now" : "no longer"] see messages on the OOC channel."
 	feedback_add_details("admin_verb","TOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -194,7 +194,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing ambient sound effects"
 	prefs.toggles ^= SOUND_AMBIENCE
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_AMBIENCE)
 		src << "You will now hear ambient sounds."
 	else
@@ -209,7 +209,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing musical instruments like the violin and piano"
 	prefs.toggles ^= SOUND_INSTRUMENTS
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_INSTRUMENTS)
 		src << "You will now hear people playing musical instruments."
 	else
@@ -222,7 +222,7 @@
 	set category = "Preferences"
 	set desc = "Toggles hearing generalized ship ambience, no matter your area."
 	prefs.toggles ^= SOUND_SHIP_AMBIENCE
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.toggles & SOUND_SHIP_AMBIENCE)
 		src << "You will now hear ship ambience."
 	else
@@ -243,7 +243,7 @@ var/global/list/ghost_forms = list("ghost","ghostking","ghostian2","skeleghost",
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
-		prefs.save_preferences()
+		prefs.save_preferences(src)
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon(new_form)
@@ -257,7 +257,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in ghost_orbits
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
-		prefs.save_preferences()
+		prefs.save_preferences(src)
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.ghost_orbit = new_orbit
@@ -272,7 +272,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 				prefs.ghost_accs = GHOST_ACCS_DIR
 			if("default sprites")
 				prefs.ghost_accs = GHOST_ACCS_NONE
-		prefs.save_preferences()
+		prefs.save_preferences(src)
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.update_icon()
@@ -305,7 +305,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 				prefs.ghost_others = GHOST_OTHERS_DEFAULT_SPRITE
 			if("White Ghost")
 				prefs.ghost_others = GHOST_OTHERS_SIMPLE
-		prefs.save_preferences()
+		prefs.save_preferences(src)
 		if(isobserver(mob))
 			var/mob/dead/observer/O = mob
 			O.updateghostsight()
@@ -316,7 +316,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = "Toggle between directly clicking the desired intent or clicking to rotate through."
 	prefs.toggles ^= INTENT_STYLE
 	src << "[(prefs.toggles & INTENT_STYLE) ? "Clicking directly on intents selects them." : "Clicking on intents rotates selection clockwise."]"
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","ITENTS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/setup_character()
@@ -333,7 +333,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 
 	prefs.ghost_hud = !prefs.ghost_hud
 	src << "Ghost HUD will now be [prefs.ghost_hud ? "visible" : "hidden"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(isobserver(mob))
 		mob.hud_used.show_hud()
 
@@ -343,7 +343,7 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set category = "Preferences"
 
 	prefs.inquisitive_ghost = !prefs.inquisitive_ghost
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	if(prefs.inquisitive_ghost)
 		src << "<span class='notice'>You will now examine everything you click on.</span>"
 	else
@@ -355,5 +355,5 @@ var/global/list/ghost_orbits = list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set desc = ".Toggles hearing Central Command, Captain, VOX, and other announcement sounds"
 	prefs.toggles ^= SOUND_ANNOUNCEMENTS
 	src << "You will now [(prefs.toggles & SOUND_ANNOUNCEMENTS) ? "hear announcement sounds" : "no longer hear announcements"]."
-	prefs.save_preferences()
+	prefs.save_preferences(src)
 	feedback_add_details("admin_verb","TAS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

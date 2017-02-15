@@ -64,3 +64,10 @@ var/global/list/struggle_sounds = list(
 	for(var/client/C in admins)
 		if(C.prefs.toggles & CHAT_DEBUGLOGS)
 			C << "DEBUG: [text]" */
+/*
+var/const/SIZESCALE_MICRO=1
+var/const/SIZESCALE_SMALL=2
+var/const/SIZESCALE_NORMAL=3
+var/const/SIZESCALE_LARGE=4
+var/const/SIZESCALE_MACRO=5
+*/

@@ -344,28 +344,6 @@ var/next_external_rsc = 0
 /client/Destroy()
 	return QDEL_HINT_HARDDEL_NOW
 
-/client/proc/set_client_age_from_db()
-	if (IsGuestKey(src.key))
-		return
-
-	establish_db_connection()
-	if(!dbcon.IsConnected())
-		return
-
-	var/sql_ckey = sanitizeSQL(src.ckey)
-
-	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
-	if (!query.Execute())
-		return
-
-	while (query.NextRow())
-		player_age = text2num(query.item[2])
-		return
-
-	//no match mark it as a first connection for use in client/New()
-	player_age = -1
-
-
 /client/proc/sync_client_with_db(connectiontopic)
 	if (IsGuestKey(src.key))
 		return
@@ -407,6 +385,27 @@ var/next_external_rsc = 0
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/set_client_age_from_db()
+	if (IsGuestKey(src.key))
+		return
+
+	establish_db_connection()
+	if(!dbcon.IsConnected())
+		return
+
+	var/sql_ckey = sanitizeSQL(src.ckey)
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
+	if (!query.Execute())
+		return
+
+	while (query.NextRow())
+		player_age = text2num(query.item[2])
+		return
+
+	//no match mark it as a first connection for use in client/New()
+	player_age = -1
 
 /client/proc/check_randomizer(topic)
 	. = FALSE

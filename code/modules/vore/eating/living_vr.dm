@@ -13,15 +13,15 @@
 /hook/living_new/proc/vore_setup(mob/living/M)
 	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
-
+/*
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
 		spawn(20) //Wait a couple of seconds to make sure copy_to or whatever has gone
 			if(!M) return
 
-			if(M.client && M.client.prefs_vr)
-				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+			if(M.client && M.client.load_character())
+				if(!M.preferences)
+					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return 0
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -53,7 +53,7 @@
 						"The guts treat you like food, squeezing to press more acids against you.",
 						"The onslaught against your body doesn't seem to be letting up; you're food now.",
 						"The insides work on you like they would any other food.")
-
+*/
 	//Return 1 to hook-caller
 	return 1
 
@@ -265,59 +265,3 @@
 
 	else
 		src << "<span class='alert'>You aren't inside anything, you clod.</span>"
-
-//
-//	Verb for saving vore preferences to save file
-//
-/mob/living/proc/save_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return FALSE
-	if(!copy_to_prefs_vr())
-		return FALSE
-	if(!client.prefs_vr.save_vore())
-		return FALSE
-
-	return TRUE
-
-/mob/living/proc/apply_vore_prefs()
-	if(!(client || client.prefs_vr))
-		return FALSE
-	if(!client.prefs_vr.load_vore())
-		return FALSE
-	if(!copy_from_prefs_vr())
-		return FALSE
-
-	return TRUE
-
-/mob/living/proc/copy_to_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to save your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	P.digestable = src.digestable
-	P.devourable = src.devourable
-	P.belly_prefs = src.vore_organs
-
-	return TRUE
-
-//
-//	Proc for applying vore preferences, given bellies
-//
-/mob/living/proc/copy_from_prefs_vr()
-	if(!client || !client.prefs_vr)
-		src << "<span class='warning'>You attempted to apply your vore prefs but somehow you're in this character without a client.prefs_vr variable. Tell a dev.</span>"
-		return FALSE
-
-	var/datum/vore_preferences/P = client.prefs_vr
-
-	src.digestable = P.digestable
-	src.devourable = P.devourable
-	src.vore_organs = list()
-
-	for(var/I in P.belly_prefs)
-		var/datum/belly/Bp = P.belly_prefs[I]
-		src.vore_organs[Bp.name] = Bp.copy(src)
-
-	return TRUE
