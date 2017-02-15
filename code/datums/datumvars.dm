@@ -629,7 +629,7 @@
 			if (prompt != "Yes")
 				return
 			L.Cut(index, index+1)
-			world.log << "### ListVarEdit by [src]: /list's contents: REMOVED=[html_encode("[variable]")]"
+			log_world("### ListVarEdit by [src]: /list's contents: REMOVED=[html_encode("[variable]")]")
 			log_admin("[key_name(src)] modified list's contents: REMOVED=[variable]")
 			message_admins("[key_name_admin(src)] modified list's contents: REMOVED=[variable]")
 
@@ -648,7 +648,7 @@
 				return
 
 			uniqueList_inplace(L)
-			world.log << "### ListVarEdit by [src]: /list contents: CLEAR DUPES"
+			log_world("### ListVarEdit by [src]: /list contents: CLEAR DUPES")
 			log_admin("[key_name(src)] modified list's contents: CLEAR DUPES")
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR DUPES")
 
@@ -659,7 +659,7 @@
 				return
 
 			listclearnulls(L)
-			world.log << "### ListVarEdit by [src]: /list contents: CLEAR NULLS"
+			log_world("### ListVarEdit by [src]: /list contents: CLEAR NULLS")
 			log_admin("[key_name(src)] modified list's contents: CLEAR NULLS")
 			message_admins("[key_name_admin(src)] modified list's contents: CLEAR NULLS")
 
@@ -673,7 +673,7 @@
 				return
 
 			L.len = value["value"]
-			world.log << "### ListVarEdit by [src]: /list len: [L.len]"
+			log_world(" "### ListVarEdit by [src]: /list len: [L.len]"
 			log_admin("[key_name(src)] modified list's len: [L.len]")
 			message_admins("[key_name_admin(src)] modified list's len: [L.len]")
 
@@ -684,7 +684,7 @@
 				return
 
 			shuffle_inplace(L)
-			world.log << "### ListVarEdit by [src]: /list contents: SHUFFLE"
+			log_world(" "### ListVarEdit by [src]: /list contents: SHUFFLE"
 			log_admin("[key_name(src)] modified list's contents: SHUFFLE")
 			message_admins("[key_name_admin(src)] modified list's contents: SHUFFLE")
 
