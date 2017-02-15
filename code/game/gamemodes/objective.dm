@@ -342,6 +342,7 @@
 /datum/objective/escape
 	explanation_text = "Escape on the shuttle or an escape pod alive and without being in custody."
 	dangerrating = 5
+	martyr_compatible = 0
 
 /datum/objective/escape/check_completion()
 	if(issilicon(owner.current))
