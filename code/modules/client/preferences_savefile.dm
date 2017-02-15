@@ -8,14 +8,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
 	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
-
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
-
 	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
-
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
@@ -153,6 +150,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
+	S["windowflash"]		>> windowflashing
 
 	if(islist(S["be_special"]))
 		S["be_special"] 	>> be_special
@@ -174,7 +172,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
 	S["parallax"]			>> parallax
-	S["uplink_loc"]			>> uplink_spawn_loc
 	//citadel code
 	S["arousable"]			>> arousable
 
@@ -190,6 +187,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	hotkeys			= sanitize_integer(hotkeys, 0, 1, initial(hotkeys))
 	tgui_fancy		= sanitize_integer(tgui_fancy, 0, 1, initial(tgui_fancy))
 	tgui_lock		= sanitize_integer(tgui_lock, 0, 1, initial(tgui_lock))
+	windowflashing		= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
 	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
@@ -218,6 +216,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["hotkeys"]			<< hotkeys
 	S["tgui_fancy"]			<< tgui_fancy
 	S["tgui_lock"]			<< tgui_lock
+	S["windowflash"]		<< windowflashing
 	S["be_special"]			<< be_special
 	S["default_slot"]		<< default_slot
 	S["toggles"]			<< toggles
@@ -290,6 +289,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			>> undershirt
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
+	S["uplink_loc"]			>> uplink_spawn_loc
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -309,27 +309,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	//cock features
-	S["feature_has_cock"]				>> features["has_cock"]
-	S["feature_cock_shape"]				>> features["cock_shape"]
-	S["feature_cock_color"]				>> features["cock_color"]
-	S["feature_cock_length"]			>> features["cock_length"]
-	S["feature_cock_girth"]				>> features["cock_girth"]
-	S["feature_has_sheath"]				>> features["sheath_color"]
-	//balls features
-	S["feature_has_balls"]				>> features["has_balls"]
-	S["feature_balls_color"]			>> features["balls_color"]
-	S["feature_balls_size"]				>> features["balls_size"]
-	S["feature_balls_sack_size"]		>> features["balls_sack_size"]
-	S["feature_balls_fluid"]			>> features["balls_fluid"]
-	//breasts features
-	S["feature_has_breasts"]			>> features["has_breasts"]
-	S["feature_breasts_size"]			>> features["breasts_size"]
-	S["feature_breasts_color"]			>> features["breasts_color"]
-	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
-	//vagina features
-	S["feature_has_vag"]				>> features["has_vag"]
-	S["feature_vag_color"]				>> features["vag_color"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -377,66 +356,43 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_random_body	= sanitize_integer(be_random_body, 0, 1, initial(be_random_body))
 	gender			= sanitize_gender(gender)
 	if(gender == MALE)
-		hair_style				= sanitize_inlist(hair_style, hair_styles_male_list)
-		facial_hair_style		= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
-		underwear				= sanitize_inlist(underwear, underwear_m)
-		undershirt 				= sanitize_inlist(undershirt, undershirt_m)
+		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
+		underwear		= sanitize_inlist(underwear, underwear_m)
+		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
 	else
-		hair_style						= sanitize_inlist(hair_style, hair_styles_female_list)
-		facial_hair_style				= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
-		underwear						= sanitize_inlist(underwear, underwear_f)
-		undershirt						= sanitize_inlist(undershirt, undershirt_f)
-	socks							= sanitize_inlist(socks, socks_list)
-	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
-	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
-	eye_color						= sanitize_hexcolor(eye_color, 3, 0)
-	skin_tone						= sanitize_inlist(skin_tone, skin_tones)
-	backbag							= sanitize_inlist(backbag, backbaglist, initial(backbag))
-	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["mcolor2"]				= sanitize_hexcolor(features["mcolor2"], 3, 0)
-	features["mcolor3"]				= sanitize_hexcolor(features["mcolor3"], 3, 0)
-	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
-	features["tail_human"] 			= sanitize_inlist(features["tail_human"], tails_list_human, "None")
-	features["snout"]				= sanitize_inlist(features["snout"], snouts_list)
-	features["horns"] 				= sanitize_inlist(features["horns"], horns_list)
-	features["ears"]				= sanitize_inlist(features["ears"], ears_list, "None")
-	features["frills"] 				= sanitize_inlist(features["frills"], frills_list)
-	features["spines"] 				= sanitize_inlist(features["spines"], spines_list)
-	features["body_markings"] 		= sanitize_inlist(features["body_markings"], body_markings_list, "None")
-	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list, "None")
-	features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], mam_ears_list, "None")
-	features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], mam_tails_list, "None")
-	features["taur"]				= sanitize_inlist(features["taur"], taur_list, "None")
-	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
-	features["genitals_use_skintone"] = sanitize_integer(features["genitals_use_skintone"], 0, 1, 0)
-	//xeno features
-	features["xenotail"] 			= sanitize_inlist(features["xenotail"], xeno_tail_list)
-	features["xenohead"] 			= sanitize_inlist(features["xenohead"], xeno_head_list)
-	features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
-	//cock features
-	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
-	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
-	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
-	features["cock_length"]			= sanitize_integer(features["cock_size"], 1, 12, 6)
-	//balls features
-	features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
-	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
-	features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
-	features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-	if(!features["balls_fluid"])
-		features["balls_fluid"] 	= "semen"
-	//breasts features
-	features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
-	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
-	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-	if(!features["breasts_fluid"])
-		features["breasts_fluid"] 	= "milk"
-	//vagina features
-	features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
-	features["vag_color"]			= sanitize_hexcolor(features["breasts_color"], 3, 0)
-
+		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
+		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
+		underwear		= sanitize_inlist(underwear, underwear_f)
+		undershirt		= sanitize_inlist(undershirt, undershirt_f)
+	socks			= sanitize_inlist(socks, socks_list)
+	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
+	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
+	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
+	eye_color		= sanitize_hexcolor(eye_color, 3, 0)
+	skin_tone		= sanitize_inlist(skin_tone, skin_tones)
+	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
+	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
+	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
+	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
+	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
+	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
+	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
+	features["horns"] 	= sanitize_inlist(features["horns"], horns_list)
+	features["ears"]	= sanitize_inlist(features["ears"], ears_list, "None")
+	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
+	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
+	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
+	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
+	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
+	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
+	features["taur"]		= sanitize_inlist(features["taur"], taur_list)
+	//Xeno features
+	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
+	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
+	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
+	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -478,6 +434,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["undershirt"]			<< undershirt
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
+	S["uplink_loc"]			<< uplink_spawn_loc
 	S["flavor_text"]			<< flavor_text
 	S["species"]			<< pref_species.id
 	S["feature_mcolor"]					<< features["mcolor"]
@@ -501,28 +458,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_dors"]				<< features["xenodorsal"]
 	S["feature_xeno_head"]				<< features["xenohead"]
 	S["feature_lizard_legs"]			<< features["legs"]
-	//cock features
-	S["feature_has_cock"]				<< features["has_cock"]
-	S["feature_cock_shape"]				<< features["cock_shape"]
-	S["feature_cock_color"]				<< features["cock_color"]
-	S["feature_cock_length"]			<< features["cock_length"]
-	S["feature_cock_girth"]				<< features["cock_girth"]
-	S["feature_has_sheath"]				<< features["sheath_color"]
-	//balls features
-	S["feature_has_balls"]				<< features["has_balls"]
-	S["feature_balls_color"]			<< features["balls_color"]
-	S["feature_balls_size"]				<< features["balls_size"]
-	S["feature_balls_sack_size"]		<< features["balls_sack_size"]
-	S["feature_balls_fluid"]			<< features["balls_fluid"]
-	//breasts features
-	S["feature_has_breasts"]			<< features["has_breasts"]
-	S["feature_breasts_size"]			<< features["breasts_size"]
-	S["feature_breasts_color"]			<< features["breasts_color"]
-	S["feature_breasts_fluid"]			<< features["breasts_fluid"]
-	//vagina features
-	S["feature_has_vag"]				<< features["has_vag"]
-	S["feature_vag_color"]				<< features["vag_color"]
-
 	S["clown_name"]			<< custom_names["clown"]
 	S["mime_name"]			<< custom_names["mime"]
 	S["ai_name"]			<< custom_names["ai"]
@@ -530,8 +465,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["religion_name"]		<< custom_names["religion"]
 	S["deity_name"]			<< custom_names["deity"]
 	S["prefered_security_department"] << prefered_security_department
-	S["uplink_loc"]			<< uplink_spawn_loc
-
 
 	//Jobs
 	S["joblessrole"]		<< joblessrole
