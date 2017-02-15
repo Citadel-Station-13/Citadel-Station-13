@@ -76,6 +76,7 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
+
 /client/verb/adminhelp(msg as text)
 	set category = "Admin"
 	set name = "Adminhelp"
@@ -90,19 +91,6 @@
 		return
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
-
-	//clean the input msg
-	if(!msg)
-		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
-	var/original_msg = msg
-
-	msg = keywords_lookup(msg)
-
-	if(!mob)
-		return						//this doesn't happen
 
 	var/ref_client = "\ref[src]"
 	for(var/datum/adminticket/T in admintickets)
@@ -129,10 +117,26 @@
 	src.verbs -= /client/verb/adminhelp
 	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE)
 
-	for(var/datum/adminticket/T in admintickets)
-		msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=ticket;resolve=[T.ID]'>R</a>):</b> [msg]</span>"
+	//clean the input msg
+	if(!msg)	return
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	if(!msg)	return
+	var/original_msg = msg
+
+	msg = keywords_lookup(msg)
+
+	if(!mob)	return						//this doesn't happen
 
 	createticket(src, msg, src.ckey, mob)
+
+	var/datum/adminticket/ticket
+
+	for(var/datum/adminticket/T in admintickets)
+		if(T.permckey == src.ckey)
+			ticket = T
+
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=holder;resolve=[ticket]'>R</a>):</b> [msg]</span>"
+
 	//send this msg to all admins
 
 	for(var/client/X in admins)
@@ -146,12 +150,11 @@
 	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
 
 	//send it to irc if nobody is on and tell us how many were on
-	var/admin_number_present = send2admindiscord(ckey,original_msg)
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
-	if(admin_number_present <= 0)
-		src << "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>"
+	var/admin_number_present = send2admindiscord("adminhelp", ckey, original_msg)
+	log_admin("ADMINHELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
+
 
 /proc/get_admin_counts(requiredflags = R_BAN)
 	. = list("total" = list(), "noflags" = list(), "afk" = list(), "stealth" = list(), "present" = list())
