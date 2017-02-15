@@ -127,7 +127,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
 
-/*		if("crossserver")
+		if("crossserver")
 			if(authenticated==2)
 				if(CM.lastTimeUsed + 600 > world.time)
 					usr << "<span class='warning'>Arrays recycling.  Please stand by.</span>"
@@ -142,7 +142,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				log_say("[key_name(usr)] has sent a message to the other server: [input]")
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")
 				CM.lastTimeUsed = world.time
-*/
+
 		if("purchase_menu")
 			state = STATE_PURCHASE
 

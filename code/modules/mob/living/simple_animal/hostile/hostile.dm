@@ -333,6 +333,11 @@
 			Shoot(A)
 		spawn(6)
 			Shoot(A)
+/*		var/datum/callback/cb = CALLBACK(A, .proc/Shoot)
+		addtimer(cb, 1)
+		addtimer(cb, 4)
+		addtimer(cb, 6)*/
+
 	else
 		Shoot(A)
 	ranged_cooldown = world.time + ranged_cooldown_time
