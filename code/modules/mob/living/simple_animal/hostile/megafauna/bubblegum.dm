@@ -115,6 +115,12 @@ Difficulty: Hard
 		bloodspell.phased = 1
 	internal = new/obj/item/device/gps/internal/bubblegum(src)
 
+/mob/living/simple_animal/hostile/megafauna/bubblegum/grant_achievement(medaltype,scoretype)
+	..()
+	SSshuttle.shuttle_purchase_requirements_met |= "bubblegum"
+
+
+
 /mob/living/simple_animal/hostile/megafauna/bubblegum/do_attack_animation(atom/A, visual_effect_icon)
 	if(!charging)
 		..()
@@ -153,7 +159,7 @@ Difficulty: Hard
 	var/obj/effect/overlay/temp/decoy/D = new /obj/effect/overlay/temp/decoy(loc,src)
 	animate(D, alpha = 0, color = "#FF0000", transform = matrix()*2, time = 3)
 	sleep(3)
-	throw_at(T, get_dist(src, T), 0.5, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
+	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end, bonus_charges))
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end(bonus_charges)
 	charging = 0
