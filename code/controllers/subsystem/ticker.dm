@@ -77,7 +77,7 @@ var/datum/subsystem/ticker/ticker
 			world << "Please set up your character and select \"Ready\". The game will start in [config.lobby_countdown] seconds."
 			current_state = GAME_STATE_PREGAME
 			for(var/client/C in clients)
-				window_flash(C) //let them know lobby has opened up.
+				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -106,6 +106,8 @@ var/datum/subsystem/ticker/ticker
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				if(start_immediately)
+					fire()
 
 		if(GAME_STATE_SETTING_UP)
 			if(!setup())
@@ -212,11 +214,11 @@ var/datum/subsystem/ticker/ticker
 		//Deleting Startpoints but we need the ai point to AI-ize people later
 		if(S.name != "AI")
 			qdel(S)
-/*
+
 	var/list/adm = get_admin_counts()
-	if(!adm["present"])
-		send2irc("Server", "Round just started with no active admins online!")
-*/
+	var/list/allmins = adm["present"]
+	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+
 /datum/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
 		var/turf/epi = bomb.loc
@@ -554,7 +556,7 @@ var/datum/subsystem/ticker/ticker
 		for(var/path in SSgarbage.didntgc)
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-		world.log << dellog
+		log_world(dellog)
 
 	CHECK_TICK
 
@@ -663,7 +665,6 @@ var/datum/subsystem/ticker/ticker
 
 	modevoted = ticker.modevoted
 
-
 /datum/subsystem/ticker/proc/send_news_report()
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
@@ -714,4 +715,4 @@ var/datum/subsystem/ticker/ticker
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
 
 	if(news_message)
-		send2irc(news_source, news_message,"News_Report")
+		send2otherserver(news_source, news_message,"News_Report")

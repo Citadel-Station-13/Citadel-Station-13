@@ -42,6 +42,7 @@
 	var/log_hrefs = 0					// log all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_twitter = 0					// log certain expliotable parrots and other such fun things in a JSON file of twitter valid phrases.
 	var/log_world_topic = 0				// log all world.Topic() calls
+	var/log_runtimes = FALSE			// log runtimes into a file
 	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
@@ -91,14 +92,6 @@
 	var/ipintel_save_good = 12
 	var/ipintel_save_bad = 1
 	var/ipintel_domain = "check.getipintel.net"
-
-	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
-	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
-	// Discord crap.
-	var/discord_url = "hfdksjhfa.com"
-	var/discord_password
-	var/announce_watchlist = 0
-	var/announce_adminhelps = 0
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
 	var/ban_legacy_system = 0	//Defines whether the server uses the legacy banning system with the files in /data or the SQL system. Config option in config.txt
@@ -248,6 +241,20 @@
 
 	var/minutetopiclimit
 	var/secondtopiclimit
+
+	var/error_cooldown = 600 // The "cooldown" time for each occurrence of a unique error
+	var/error_limit = 50 // How many occurrences before the next will silence them
+	var/error_silence_time = 6000 // How long a unique error will be silenced for
+	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
+
+	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
+	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
+	// Discord crap.
+	var/discord_url = "hfdksjhfa.com"
+	var/discord_password
+	var/announce_watchlist = 0
+	var/announce_adminhelps = 0
+
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -467,10 +474,11 @@
 				if("aggressive_changelog")
 					config.aggressive_changelog = 1
 				if("log_runtimes")
+					log_runtimes = TRUE
 					var/newlog = file("data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log")
-					if (world.log != newlog)
+					if(runtime_diary != newlog)
 						world.log << "Now logging runtimes to data/logs/runtimes/runtime-[time2text(world.realtime, "YYYY-MM-DD")].log"
-						world.log = newlog
+						runtime_diary = newlog
 				if("autoconvert_notes")
 					config.autoconvert_notes = 1
 				if("allow_webclient")
@@ -503,6 +511,14 @@
 					config.minutetopiclimit = text2num(value)
 				if("second_topic_limit")
 					config.secondtopiclimit = text2num(value)
+				if("error_cooldown")
+					error_cooldown = text2num(value)
+				if("error_limit")
+					error_limit = text2num(value)
+				if("error_silence_time")
+					error_silence_time = text2num(value)
+				if("error_msg_delay")
+					error_msg_delay = text2num(value)
 				if("announce_adminhelps")
 					config.announce_adminhelps = 1
 				if("discord_url")
