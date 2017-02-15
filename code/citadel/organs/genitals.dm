@@ -1,6 +1,6 @@
 /obj/item/organ/genital
 	var/shape = "human"
-	var/sensitivity = 100 //Percentage
+	var/sensitivity = 1
 	var/list/genital_flags = list()
 
 /obj/item/organ/genital/proc/update()
@@ -34,7 +34,7 @@
 		var/obj/item/organ/genital/penis/P = new
 		P.Insert(src)
 		if(P)
-			if(dna.species.use_skintones)
+			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				P.color = skintone2hex(skin_tone)
 			else
 				P.color 			= dna.features["cock_color"]
@@ -51,10 +51,10 @@
 		var/obj/item/organ/genital/testicles/T = new
 		T.Insert(src)
 		if(T)
-			if(dna.species.use_skintones)
+			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				T.color = skintone2hex(skin_tone)
 			else
 				T.color = dna.features["balls_color"]
-			T.size		= dna.features[""]
-			T. = dna.features[""]
+			T.size		= dna.features["bals_size"]
+			T.sack_size = dna.features["balls_sack_size"]
 

@@ -99,7 +99,7 @@
 		"balls_color" 		= "fff",
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
-		"balls_size"		= BALLS_SIZE_NORMAL,
+		"balls_size"		= BALLS_SIZE_DEF,
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,

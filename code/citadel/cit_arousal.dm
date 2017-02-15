@@ -154,3 +154,39 @@
 		return 1
 	else
 		M << "<span class='warning'>Arousal is disabled. Feature is unavailable.</span>"
+
+/mob/living/carbon/human/mob_masturbate()
+	var/list/genitals_list = list()
+	var/obj/item/organ/genital/SG//originally selected_genital
+	var/obj/item/weapon/reagent_containers/RC
+	if(canbearoused && mb_cd_timer <= world.time && has_dna())
+		if(restrained())
+			src << "<span class='warning'>You can't do that while restrained!</span>"
+			return
+		if(stat)
+			src << "<span class='warning'>You must be conscious to do that!</span>"
+			return
+		if(if(getArousalLoss() < ((max_arousal / 100) * 33)))
+			src << "<span class='warning'>You aren't aroused enough for that.</span>"
+			return
+		if(w_suit)
+			if(GROIN in w_suit.body_parts_covered)
+			src << "<span class='warning'>You need to undress, first.</span>"
+			return
+		if(w_uniform)
+			if(GROIN in w_uniform.body_parts_covered)
+			src << "<span class='warning'>You need to undress, first.</span>"
+			return
+		for(var/obj/item/organ/genital/G in internal_organs)
+			genitals_list += G
+		if(genitals_list.len)
+			SG = input(user, "Masturbate with what?", "Masturbate")  as null|anything in genitals_list
+			if(SG)
+				switch(SG.type)
+					if(/obj/item/organ/genital/penis)
+						var/obj/item/organ/genital/penis/P = SG
+
+
+					else
+		else
+			return

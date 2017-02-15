@@ -82,6 +82,7 @@ var/list/preferences_datums = list()
 		"xenotail" 			= "None",
 		"legs" 				= "Normal Legs",
 		"taur" 				= "None",
+		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= "human",
 		"cock_length"		= 6,
@@ -94,7 +95,7 @@ var/list/preferences_datums = list()
 		"balls_color" 		= "fff",
 		"balls_amount"		= 2,
 		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
-		"balls_size"		= BALLS_SIZE_NORMAL,
+		"balls_size"		= BALLS_SIZE_DEF,
 		"balls_cum_rate"	= CUM_RATE,
 		"balls_cum_mult"	= CUM_RATE_MULT,
 		"balls_efficiency"	= CUM_EFFICIENCY,
@@ -513,7 +514,7 @@ var/list/preferences_datums = list()
 				dat += "<h3>Options</h3>"
 				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 				if(pref_species.use_skintones)
-					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["gen_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
+					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["genitals_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
 
 				dat += "</td>"
 
@@ -524,7 +525,7 @@ var/list/preferences_datums = list()
 				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_cock"] == TRUE)
 					//start cock
-					if(pref_species.use_skintones && features["gen_use_skintone"] == TRUE)
+					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
 						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 					else
 						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
@@ -540,7 +541,7 @@ var/list/preferences_datums = list()
 
 				dat += "<h3>Ovipositor</h3>"
 
-				dat += "<b>Has Ovi:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
+				dat += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_ovi"])
 					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a><BR>"
 

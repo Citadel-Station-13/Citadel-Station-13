@@ -7,7 +7,8 @@
 	slot = "testicles"
 	w_class = 3
 	var/internal = FALSE
-	var/size 				= BALLS_SIZE_NORMAL
+	var/size 				= BALLS_SIZE_DEF
+	var/sack_size			= BALLS_SACK_SIZE_DEF
 	var/cum_mult 			= CUM_RATE_MULT
 	var/cum_rate 			= CUM_RATE
 	var/cum_efficiency		= CUM_EFFICIENCY
