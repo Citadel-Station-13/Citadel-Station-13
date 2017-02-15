@@ -7,6 +7,10 @@
 	color_src = "cock_color"
 	locked = 0
 
+/datum/sprite_accessory/penis/none
+	icon_state = "none"
+	name = "None"
+
 /datum/sprite_accessory/penis/human
 	icon_state = "human"
 	name = "Human"
@@ -44,6 +48,9 @@
 	color_src = MUTCOLORS2	//I'll have skin_tone override this if the species uses them
 	locked = 0
 /*!!ULTRACOMPRESSEDEDITION!!*/
+/datum/sprite_accessory/breasts/none
+	icon_state = "none"
+	name = "None"
 /datum/sprite_accessory/breasts/a
 	icon_state = "a"
 	name = "A"

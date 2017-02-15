@@ -158,7 +158,11 @@
 /mob/living/carbon/human/mob_masturbate()
 	var/list/genitals_list = list()
 	var/obj/item/organ/genital/SG//originally selected_genital
+	var/list/containers_list = list()
 	var/obj/item/weapon/reagent_containers/RC
+	var/into_container = 0
+	var/hands = get_num_arms()
+	var/free_hands = get_num_arms()
 	if(canbearoused && mb_cd_timer <= world.time && has_dna())
 		if(restrained())
 			src << "<span class='warning'>You can't do that while restrained!</span>"
@@ -166,21 +170,37 @@
 		if(stat)
 			src << "<span class='warning'>You must be conscious to do that!</span>"
 			return
-		if(if(getArousalLoss() < ((max_arousal / 100) * 33)))
+		if(getArousalLoss() < ((max_arousal / 100) * 33))
 			src << "<span class='warning'>You aren't aroused enough for that.</span>"
 			return
-		if(w_suit)
-			if(GROIN in w_suit.body_parts_covered)
-			src << "<span class='warning'>You need to undress, first.</span>"
-			return
+		if(wear_suit)
+			if(GROIN in wear_suit.body_parts_covered)
+				src << "<span class='warning'>You need to remove your [wear_suit.name], first.</span>"
+				return
 		if(w_uniform)
 			if(GROIN in w_uniform.body_parts_covered)
-			src << "<span class='warning'>You need to undress, first.</span>"
+				src << "<span class='warning'>You need to remove your [w_uniform.name], first.</span>"
+				return
+		if(underwear && underwear != "Nude")
+			src << "<span class='warning'>You need to remove your undergarments, first.</span>"
 			return
+		switch(get_num_arms())
+			if(1)//if they have one arm
+				free_hands--
+			if(0 || null)
+				src << "<span class='warning'>You need at least one arm.</span>"
+				return
+		for(var/helditem in held_items)//how many hands are free
+			if(isobj(helditem))
+				free_hands--
+		if(free_hands <= 0)
+			src << "<span class='warning'>You need at least one free hand.</span>"
+			return
+
 		for(var/obj/item/organ/genital/G in internal_organs)
 			genitals_list += G
 		if(genitals_list.len)
-			SG = input(user, "Masturbate with what?", "Masturbate")  as null|anything in genitals_list
+			SG = input(src, "Masturbate with what?", "Masturbate")  as null|obj in genitals_list
 			if(SG)
 				switch(SG.type)
 					if(/obj/item/organ/genital/penis)

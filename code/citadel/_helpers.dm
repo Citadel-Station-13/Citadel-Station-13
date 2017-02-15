@@ -70,3 +70,48 @@ var/list/mentors = list()
 	set category = "IC"
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavor text.", "Flavor text", null)  as text), 1)
+
+/mob/living/carbon/proc/has_penis()
+	if(getorganslot("penis"))//slot shared with ovipositor
+		if(istype(getorganslot("penis"), /obj/item/organ/genital/penis))
+			return 1
+	return 0
+
+/mob/living/carbon/proc/has_balls()
+	if(getorganslot("balls"))
+		if(istype(getorganslot("balls"), /obj/item/organ/genital/testicles))
+			return 1
+	return 0
+
+/mob/living/carbon/proc/has_vagina()
+	if(getorganslot("vagina"))
+		return 1
+	return 0
+
+/mob/living/carbon/proc/has_breasts()
+	if(getorganslot("breasts"))
+		return 1
+	return 0
+
+/mob/living/carbon/proc/has_ovipositor()
+	if(getorganslot("penis"))//shared slot
+		if(istype(getorganslot("penis"), /obj/item/organ/genital/ovipositor))
+			return 1
+	return 0
+
+/mob/living/carbon/human/proc/has_eggsack()
+	if(getorganslot("balls"))
+		if(istype(getorganslot("balls"), /obj/item/organ/eggsack))
+			return 1
+	return 0
+
+/mob/living/carbon/human/proc/is_groin_exposed()
+	if(wear_suit)
+		if(GROIN in wear_suit.body_parts_covered)
+			return 0
+	if(w_uniform)
+		if(GROIN in w_uniform.body_parts_covered)
+			return 0
+	if(underwear && underwear != "Nude")
+		return 0
+	return 1
