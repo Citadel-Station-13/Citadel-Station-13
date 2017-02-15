@@ -60,11 +60,6 @@ var/datum/subsystem/events/SSevent
 	scheduled = world.time + rand(frequency_lower, max(frequency_lower,frequency_upper))
 
 	if(world.time > 108000) //2:45
-		frequency_lower=1000
-		frequency_upper=1500
-		//if ((!( ticker ) || emergency_shuttle.location))
-		//if(SSshuttle.emergency.mode == SHUTTLE_DOCKED || SSshuttle.emergency.mode == SHUTTLE_CALL)
-		//	return
 		if(SSshuttle.emergency.mode < SHUTTLE_CALL)
 			SSshuttle.emergency.request(null, 1.5)
 			log_game("Round time limit reached. Shuttle has been auto-called.")
