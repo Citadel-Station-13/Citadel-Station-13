@@ -143,6 +143,7 @@
 /obj/screen/arousal
 	name = "arousal"
 	icon_state = "arousal0"
+	icon = 'code/citadel/icons/hud.dmi'
 	screen_loc = ui_arousal
 
 /obj/screen/arousal/Click()
