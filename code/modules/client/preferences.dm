@@ -83,6 +83,7 @@ var/list/preferences_datums = list()
 		"xenotail" 			= "None",
 		"legs" 				= "Normal Legs",
 		"taur" 				= "None",
+		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= "human",

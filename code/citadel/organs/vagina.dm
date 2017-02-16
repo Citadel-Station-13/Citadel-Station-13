@@ -4,6 +4,7 @@
 	icon_state 				= "vagina"
 	zone 					= "groin"
 	slot 					= "vagina"
+	can_masturbate_with		= 1
 	w_class 				= 3
 	var/wetness				= 1
 	var/capacity_length		= 8//D   E   P   T   H

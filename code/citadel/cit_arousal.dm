@@ -12,10 +12,21 @@
 /mob/living/carbon/human
 	canbearoused = TRUE
 
+	var/saved_underwear = ""//saves their underwear so it can be toggled later
+	var/saved_undershirt = ""
+
+/mob/living/carbon/human/New()
+	..()
+	saved_underwear = underwear
+	saved_undershirt = undershirt
+
 //Species vars
 /datum/species
 	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
 	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relieved
+	var/list/cum_fluids = list("semen")
+	var/list/milk_fludis = list("milk")
+	var/list/femcum_fluids = list("femcum")
 
 //Mob procs
 /mob/living/Life()
@@ -59,30 +70,6 @@
 		return FALSE
 	if(getPercentAroused() >= percentage)
 		return TRUE
-
-/mob/living/proc/mob_masturbate()//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
-	set name = "Masturbate"
-	set category = "IC"
-	if(canbearoused && !restrained() && !stat)
-		if(mb_cd_timer <= world.time)
-			//start the cooldown even if it fails
-			mb_cd_timer = world.time + mb_cd_length
-			if(getArousalLoss() >= ((max_arousal / 100) * 33))//33% arousal or greater required
-				src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
-								"<span class='userdanger'>You start masturbating.</span>")
-				if(do_after(src, 100, target = src))
-					src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
-								"<span class='userdanger'>You have relieved yourself.</span>")
-					setArousalLoss(min_arousal)
-					/*
-					switch(gender)
-						if(MALE)
-							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
-						if(FEMALE)
-							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
-					*/
-			else
-				src << "<span class='notice'>You aren't aroused enough for that.</span>"
 
 //H U D//
 /mob/living/proc/updatearousal()
@@ -156,15 +143,46 @@
 	else
 		M << "<span class='warning'>Arousal is disabled. Feature is unavailable.</span>"
 
+
+
+/mob/living/proc/mob_masturbate()//This is just so I can test this shit without being forced to add actual content to get rid of arousal. Will be a very basic proc for a while.
+	set name = "Masturbate"
+	set category = "IC"
+	if(canbearoused && !restrained() && !stat)
+		if(mb_cd_timer <= world.time)
+			//start the cooldown even if it fails
+			mb_cd_timer = world.time + mb_cd_length
+			if(getArousalLoss() >= ((max_arousal / 100) * 33))//33% arousal or greater required
+				src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
+								"<span class='userdanger'>You start masturbating.</span>")
+				if(do_after(src, 30, target = src))
+					src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
+								"<span class='userdanger'>You have relieved yourself.</span>")
+					setArousalLoss(min_arousal)
+					/*
+					switch(gender)
+						if(MALE)
+							PoolOrNew(/obj/effect/decal/cleanable/semen, loc)
+						if(FEMALE)
+							PoolOrNew(/obj/effect/decal/cleanable/femcum, loc)
+					*/
+			else
+				src << "<span class='notice'>You aren't aroused enough for that.</span>"
+
 /mob/living/carbon/human/mob_masturbate()
+	if(mb_cd_timer > world.time)
+		src << "<span class='warning'>You need to wait [round((mb_cd_timer - world.time)/(20))] seconds before you can do that again!</span>"
+		return
 	var/list/genitals_list = list()
 	var/obj/item/organ/genital/SG//originally selected_genital
 	var/list/containers_list = list()
-	var/obj/item/weapon/reagent_containers/RC
+	var/obj/item/weapon/reagent_containers/SC
 	var/into_container = 0
-	var/hands = get_num_arms()
-	var/free_hands = get_num_arms()
-	if(canbearoused && mb_cd_timer <= world.time && has_dna())
+	var/arms = get_num_arms()
+	var/free_hands = arms
+	var/obj/item/organ/fluid_source
+	mb_cd_timer = (world.time + mb_cd_length)
+	if(canbearoused && has_dna())
 		if(restrained())
 			src << "<span class='warning'>You can't do that while restrained!</span>"
 			return
@@ -172,42 +190,81 @@
 			src << "<span class='warning'>You must be conscious to do that!</span>"
 			return
 		if(getArousalLoss() < ((max_arousal / 100) * 33))
-			src << "<span class='warning'>You aren't aroused enough for that.</span>"
+			src << "<span class='warning'>You aren't aroused enough for that!</span>"
 			return
 		if(wear_suit)
 			if(GROIN in wear_suit.body_parts_covered)
-				src << "<span class='warning'>You need to remove your [wear_suit.name], first.</span>"
+				src << "<span class='warning'>[wear_suit.name] is in the way!</span>"
 				return
 		if(w_uniform)
 			if(GROIN in w_uniform.body_parts_covered)
-				src << "<span class='warning'>You need to remove your [w_uniform.name], first.</span>"
+				src << "<span class='warning'>[w_uniform.name] is in the way!</span>"
 				return
 		if(underwear && underwear != "Nude")
 			src << "<span class='warning'>You need to remove your undergarments, first.</span>"
 			return
-		switch(get_num_arms())
-			if(1)//if they have one arm
-				free_hands--
-			if(0 || null)
-				src << "<span class='warning'>You need at least one arm.</span>"
-				return
+		if(!arms)
+			src << "<span class='warning'>You need at least one arm.</span>"
+			return
 		for(var/helditem in held_items)//how many hands are free
 			if(isobj(helditem))
 				free_hands--
 		if(free_hands <= 0)
 			src << "<span class='warning'>You need at least one free hand.</span>"
 			return
-
 		for(var/obj/item/organ/genital/G in internal_organs)
-			genitals_list += G
+			if(G.can_masturbate_with)//filter out testicles and what not
+				genitals_list += G
 		if(genitals_list.len)
-			SG = input(src, "Masturbate with what?", "Masturbate")  as null|obj in genitals_list
+			SG = input(src, "with what?", "Masturbate")  as null|obj in genitals_list
 			if(SG)
+				for(var/obj/item/weapon/reagent_containers/container in held_items)
+					if(container.container_type == OPENCONTAINER)//only include containers that can have reagents added to them normally
+						containers_list += container
+				if(containers_list.len)
+					SC = input(src, "Into or onto what?(Cancel for nowhere)", "Masturbate")  as null|obj in containers_list
+					if(SC)
+						if(in_range(src, SC))
+							into_container = 1
 				switch(SG.type)
+
+					//Penis
 					if(/obj/item/organ/genital/penis)
 						var/obj/item/organ/genital/penis/P = SG
+						P.update_link()
+						if(!P.linked_balls)
+							return
+						fluid_source = P.linked_balls.reagents
+						var/total_cum = fluid_source.reagents.total_volume
+						if(into_container)//into a glass or beaker or whatever
+							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG] over [SC].</span>", \
+								"<span class='userdanger'>You start jerking off over [SC.name].</span>", \
+										"<span class='userdanger'>You start masturbating.</span>")
+							if(do_after(src, 30, target = src) && in_range(src, SC))
+								fluid_source.reagents.trans_to(SC, total_cum)
+								src.visible_message("<span class='danger'>[src] orgasms, [pick("cumming into", "emptying themself into")] [SC]!</span>", \
+									"<span class='green'>You cum into [SC].</span>", \
+									"<span class='green'>You have relieved yourself.</span>")
 
+						else//not into a container
+							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG.name].</span>", \
+								"<span class='userdanger'>You start jerking your [SG] off.</span>", \
+										"<span class='userdanger'>You start masturbating.</span>")
+							if(do_after(src, 30, target = src))
+								fluid_source.reagents.reaction(src.loc, TOUCH)
+								src.visible_message("<span class='danger'>[src] orgasms, [pick("shooting cum", "draining their balls")][istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
+									"<span class='green'>You cum into [SC].</span>", \
+									"<span class='green'>You have relieved yourself.</span>")
 
-					else
+					else//backup message, just in case
+						src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
+								"<span class='userdanger'>You start masturbating.</span>")
+						if(do_after(src, 30, target = src))
+							src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
+								"<span class='userdanger'>You have relieved yourself.</span>")
+
+				setArousalLoss(min_arousal)
+
 		else
+			src << "<span class='warning'>You have no genitals.</span>"
 			return

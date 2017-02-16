@@ -2,6 +2,7 @@
 	var/shape = "human"
 	var/sensitivity = 1
 	var/list/genital_flags = list()
+	var/can_masturbate_with = 0
 
 /obj/item/organ/genital/proc/update()
 	return
@@ -12,6 +13,7 @@
 /obj/item/organ/genital/proc/update_appearance()
 	return
 
+/obj/item/organ/genital/proc/update_link()
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/update_genitals()
@@ -58,3 +60,4 @@
 			T.size		= dna.features["bals_size"]
 			T.sack_size = dna.features["balls_sack_size"]
 
+/mob/living/carbon/human/proc/update_breasts()

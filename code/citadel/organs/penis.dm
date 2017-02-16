@@ -1,12 +1,13 @@
 /obj/item/organ/genital/penis
-	name = "penis"
-	desc = "A male reproductive organ."
-	icon_state = "penis"
-	icon = 'code/citadel/icons/penis.dmi'
-	zone = "groin"
-	slot = "penis"
-	w_class = 3
-	color = null
+	name 		= "penis"
+	desc 		= "A male reproductive organ."
+	icon_state 	= "penis"
+	icon 		= 'code/citadel/icons/penis.dmi'
+	zone 		= "groin"
+	slot 		= "penis"
+	w_class 	= 3
+	color 		= null
+	can_masturbate_with = 1
 	var/mob/living/carbon/human/holder
 	var/size 	= 2 //arbitrary value derived from length for sprites.
 	var/length 	= 6	//inches
@@ -23,6 +24,7 @@
 /obj/item/organ/genital/penis/update()
 	update_size()
 	update_appearance()
+	update_link()
 
 /obj/item/organ/genital/penis/update_size()
 	switch(length)
@@ -45,3 +47,13 @@
 	if(!owner)
 		return
 	color = owner.dna.features["cock_color"]
+
+/obj/item/organ/genital/penis/update_link()
+	if(owner && !linked_balls)
+		var/obj/item/organ/genital/testicles/balls = owner.getorganslot("testicles")
+		if(balls)
+			balls.linked_penis = src
+			linked_balls = balls
+	else
+		if(istype(linked_balls, /obj/item/organ/genital/testicles))
+			linked_balls = null

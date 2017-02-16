@@ -106,12 +106,16 @@ var/list/mentors = list()
 	return 0
 
 /mob/living/carbon/human/proc/is_groin_exposed()
-	if(wear_suit)
-		if(GROIN in wear_suit.body_parts_covered)
-			return 0
-	if(w_uniform)
-		if(GROIN in w_uniform.body_parts_covered)
-			return 0
-	if(underwear && underwear != "Nude")
+	for(var/obj/item/I in get_equipped_items())
+		if(I.body_parts_covered & GROIN)
+		return 0
+	return 1
+
+/mob/living/carbon/human/proc/is_chest_exposed()
+	for(var/obj/item/I in get_equipped_items())
+		if(I.body_parts_covered & CHEST)
+		return 0
+	return 1
+	if(undershirt && undershirt != "Nude")
 		return 0
 	return 1

@@ -37,10 +37,7 @@
 		if(istype(owner.getorganslot("penis"), /obj/item/organ/genital/penis))
 			owner.getorganslot("penis")
 	reagents.maximum_volume = balls_volume//update this before modifying values
-	for(var/r in reagents.reagent_list)
-		var/datum/reagent/R = r
-		if(R.id != src.cum_id)
-			reagents.del_reagent(R.id)//delete reagents in the balls which are not the correct type.
+	reagents.isolate_reagent(cum_id)
 	if(reagents.total_volume < balls_volume)
 		reagents.add_reagent(cum_id, (cum_mult * cum_rate))//generate the cum
 		owner.nutrition = (owner.nutrition - cum_efficiency)//use some nutrition from the mob that's using it

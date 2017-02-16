@@ -30,17 +30,15 @@
 	icon = 'code/citadel/icons/effects.dmi'
 	icon_state = "semen1"
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
-//	blood_state = BLOOD_STATE_SEMEN
-//	bloodiness = MAX_SHOE_BLOODINESS
 
 /obj/effect/decal/cleanable/semen/New()
 	dir = pick(1,2,4,8)
 	..()
 
-/obj/effect/decal/cleanable/semen/replace_decal(obj/effect/decal/cleanable/semen/S)
-//	if(S.reagent_DNA["semen"])
-//		reagent_DNA["semen"] |= S.reagent_DNA["semen"]
-	..()
+/datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
+	if(!isspaceturf(T))
+		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/semen(T)
+		reagentdecal.reagents.add_reagent("flour", reac_volume)
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"
