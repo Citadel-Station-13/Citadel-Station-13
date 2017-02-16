@@ -91,7 +91,7 @@
 					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=\ref[D];adjustDamage=arousal'>[M.getArousalLoss()]</a>
+					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=arousal'>[M.getArousalLoss()]</a>
 				</font>
 			"}
 		else
@@ -1148,6 +1148,8 @@
 					L.adjustCloneLoss(amount)
 				if("stamina")
 					L.adjustStaminaLoss(amount)
+				if("arousal")
+					L.adjustArousalLoss(amount)
 				else
 					usr << "You caused an error. DEBUG: Text:[Text] Mob:[L]"
 					return
