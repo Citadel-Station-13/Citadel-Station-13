@@ -20,6 +20,7 @@
 /obj/item/organ/genital/testicles/New()
 	..()
 	create_reagents(balls_volume)
+	reagents.add_reagent(cum_id, balls_volume)
 
 /obj/item/organ/genital/testicles/on_life()
 	..()
@@ -39,7 +40,7 @@
 	for(var/r in reagents.reagent_list)
 		var/datum/reagent/R = r
 		if(R.id != src.cum_id)
-			src.reagents.del_reagent(R.id)//delete reagents in the balls which are not the correct type.
+			reagents.del_reagent(R.id)//delete reagents in the balls which are not the correct type.
 	if(reagents.total_volume < balls_volume)
 		reagents.add_reagent(cum_id, (cum_mult * cum_rate))//generate the cum
 		owner.nutrition = (owner.nutrition - cum_efficiency)//use some nutrition from the mob that's using it

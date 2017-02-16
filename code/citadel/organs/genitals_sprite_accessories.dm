@@ -116,5 +116,9 @@
 	locked = 0
 
 /datum/sprite_accessory/ovipositor/knotted
+	icon_state = "none"
+	name = "None"
+
+/datum/sprite_accessory/ovipositor/knotted
 	icon_state = "knotted"
 	name = "Knotted"

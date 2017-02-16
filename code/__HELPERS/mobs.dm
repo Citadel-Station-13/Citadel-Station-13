@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	return pick(socks_list)
 
-/proc/random_features()
+/proc/random_features(penis=0,balls=0,vagina=0,womb=0,breasts=0)
 	if(!tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
 	if(!tails_list_lizard.len)
@@ -70,8 +70,21 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 	if(!cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, cock_shapes_list)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.gender == MALE)
+			penis = 1
+			balls = 1
+			vagina = 0
+			womb = 0
+			breasts = 0
+		if(H.gender == FEMALE)
+			penis = 0
+			balls = 0
+			vagina = 1
+			womb = 1
+			breasts = 1
 
-	//For now we will always return none for tail_human and ears.
 	return(list(
 		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -87,6 +100,13 @@
 		"body_markings" = pick(body_markings_list),
 		"legs" = "Normal Legs",
 		"taur" = "None",
+		"mam_body_markings" = "None",
+		"mam_ears" 			= "None",
+		"mam_tail" 			= "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" 		= "None",
+		"xenohead" 			= "None",
+		"xenotail" 			= "None",
 		"has_cock"			= FALSE,
 		"cock_shape"		= "human",
 		"cock_length"		= 6,

@@ -538,7 +538,7 @@ var/list/preferences_datums = list()
 						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
 
 				dat += "</td>"
-
+/*
 				dat += "<td valign='top' width='20%'>"
 
 				dat += "<h3>Ovipositor</h3>"
@@ -556,7 +556,7 @@ var/list/preferences_datums = list()
 						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
 
 				dat += "</td>"
-
+*/
 				dat += "<td valign='top' width='20%'>"
 
 				dat += "<h3>Vagina</h3>"
@@ -1462,7 +1462,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
 							features["cock_color"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1473,7 +1473,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(new_ballscolor)
 						if(new_ballscolor == "#000000")
 							features["balls_color"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["balls_color"] = sanitize_hexcolor(new_ballscolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
@@ -1497,7 +1497,7 @@ var/list/preferences_datums = list()
 					var/new_size
 					new_size = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in breasts_size_list
 					if(new_size)
-						features["breasts_size"] = new_dors
+						features["breasts_size"] = new_size
 
 				if("breasts_color")
 					var/new_breasts_color = input(user, "Choose your character's breasts color:", "Character Preference") as color|null
@@ -1505,7 +1505,7 @@ var/list/preferences_datums = list()
 						var/temp_hsv = RGBtoHSV(new_breasts_color)
 						if(new_breasts_color == "#000000")
 							features["breasts_color"] = pref_species.default_color
-						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
