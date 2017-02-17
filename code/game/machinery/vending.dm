@@ -623,7 +623,6 @@
  */
 
 /*
-
 /obj/machinery/vending/[vendors name here]   // --vending machine template   :)
 	name = ""
 	desc = ""
@@ -632,7 +631,6 @@
 	products = list()
 	contraband = list()
 	premium = list()
-
 IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
@@ -1097,6 +1095,18 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/head/squatter_hat = 1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
+
+/obj/machinery/vending/kink
+	name = "KinkMate"
+	desc = "A vending machine for all your unmentionable desires."
+	icon_state = "kink"
+	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
+	vend_reply = "Have fun, you shameless pervert!"
+	products = list(/obj/item/clothing/under/maid = 5, /obj/item/clothing/under/stripper_pink = 5, /obj/item/clothing/under/stripper_green = 5)
+	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5, /obj/item/clothing/neck/petcollar=5, /obj/item/clothing/under/mankini = 1)
+	premium = list()
+	refill_canister = /obj/item/weapon/vending_refill/kink
+
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

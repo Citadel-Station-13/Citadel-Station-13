@@ -46352,11 +46352,7 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bXJ" = (
-/obj/machinery/computer/arcade,
-/obj/item/weapon/paper{
-	info = "We're processing your order for that new vending machine. We need to ship it from some star system on the other side of the galaxy so it might take a few weeks, two months tops, to deliver it.  -Cargo Bay";
-	 name = "Order Confirmation"
-	},
+/obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "bXK" = (
