@@ -1,9 +1,9 @@
 /obj/item/clothing/under/bb_sweater
 	name = "cream sweater"
 	desc = "Why trade style for comfort? Now you can go commando down south and still be cozy up north."
-	icon_state = "bb_turtleblk"
+	icon_state = "bb_turtle"
 	item_state = "w_suit"
-	item_color = "bb_turtleblk"
+	item_color = "bb_turtle"
 	body_parts_covered = CHEST|ARMS
 	can_adjust = 1
 
