@@ -38,7 +38,7 @@
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
 		var/obj/effect/decal/cleanable/reagentdecal = new/obj/effect/decal/cleanable/semen(T)
-		reagentdecal.reagents.add_reagent("flour", reac_volume)
+		reagentdecal.reagents.add_reagent("semen", reac_volume)
 
 /datum/reagent/consumable/femcum
 	name = "Female Ejaculate"

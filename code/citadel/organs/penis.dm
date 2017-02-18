@@ -43,10 +43,10 @@
 /obj/item/organ/genital/penis/update_appearance()
 	var/string = "penis_[shape]_[size]"
 	icon_state = sanitize_text(string)
-	name = "[shape] penis"
+//	name = "[shape] penis"
 	if(!owner)
 		return
-	color = owner.dna.features["cock_color"]
+	color = sanitize_hexcolor(owner.dna.features["cock_color"], 6, 0)
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner && !linked_balls)

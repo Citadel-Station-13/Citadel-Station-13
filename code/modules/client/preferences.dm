@@ -1458,7 +1458,7 @@ var/list/preferences_datums = list()
 
 				//citadel code
 				if("cock_color")
-					var/new_cockcolor = input(user, "Choose your character's penis color:", "Character Preference") as color|null
+					var/new_cockcolor = input(user, "Penis Color:", "Character Preference") as color|null
 					if(new_cockcolor)
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
@@ -1469,7 +1469,7 @@ var/list/preferences_datums = list()
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
 				if("balls_color")
-					var/new_ballscolor = input(user, "Choose your character's testical color:", "Character Preference") as color|null
+					var/new_ballscolor = input(user, "Testicle Color:", "Character Preference") as color|null
 					if(new_ballscolor)
 						var/temp_hsv = RGBtoHSV(new_ballscolor)
 						if(new_ballscolor == "#000000")
@@ -1482,12 +1482,12 @@ var/list/preferences_datums = list()
 				if("egg_size")
 					var/new_size
 					var/list/egg_sizes = list(1,2,3)
-					new_size = input(user, "Choose the diameter of your eggs in inches:", "Egg Size") as null|anything in egg_sizes
+					new_size = input(user, "Egg Diameter(inches):", "Egg Size") as null|anything in egg_sizes
 					if(new_size)
 						features["eggsack_egg_size"] = new_size
 
 				if("egg_color")
-					var/new_egg_color = input(user, "Choose your character's egg color:", "Character Preference") as color|null
+					var/new_egg_color = input(user, "Egg Color:", "Character Preference") as color|null
 					if(new_egg_color)
 						var/temp_hsv = RGBtoHSV(new_egg_color)
 						if(ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
@@ -1496,12 +1496,12 @@ var/list/preferences_datums = list()
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 				if("breasts_size")
 					var/new_size
-					new_size = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in breasts_size_list
+					new_size = input(user, "Breast Size", "Character Preference") as null|anything in breasts_size_list
 					if(new_size)
 						features["breasts_size"] = new_size
 
 				if("breasts_color")
-					var/new_breasts_color = input(user, "Choose your character's breasts color:", "Character Preference") as color|null
+					var/new_breasts_color = input(user, "Breast Color:", "Character Preference") as color|null
 					if(new_breasts_color)
 						var/temp_hsv = RGBtoHSV(new_breasts_color)
 						if(new_breasts_color == "#000000")
@@ -1599,6 +1599,14 @@ var/list/preferences_datums = list()
 							features["has_breasts"] = TRUE
 						else
 							features["has_breasts"] = FALSE
+				if("exhibitionist")
+					switch(features["exhibitionist"])
+						if(TRUE)
+							features["exhibitionist"] = FALSE
+						if(FALSE)
+							features["exhibitionist"] = TRUE
+						else
+							features["exhibitionist"] = FALSE
 
 				if("publicity")
 					if(unlock_content)
@@ -1751,7 +1759,7 @@ var/list/preferences_datums = list()
 		chosen_species = /datum/species/human
 	character.set_species(chosen_species, icon_update=0)
 	//citadel code
-	character.update_genitals()
+	character.give_genitals()
 
 	if(icon_updates)
 		character.update_body()

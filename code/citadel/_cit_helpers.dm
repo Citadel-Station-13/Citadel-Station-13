@@ -50,10 +50,11 @@ var/global/list/xeno_tail_list = list()
 var/global/list/xeno_dorsal_list = list()
 
 
-	//Genitals Lists
+	//Genitals and Arousal Lists
 var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
 var/global/list/breasts_size_list = list()
-
+var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie)
+	)
 
 //mentor stuff
 var/list/mentors = list()
@@ -105,17 +106,20 @@ var/list/mentors = list()
 			return 1
 	return 0
 
+/mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
+
 /mob/living/carbon/human/proc/is_groin_exposed()
 	for(var/obj/item/I in get_equipped_items())
 		if(I.body_parts_covered & GROIN)
+			return 0
+	if(underwear != "Nude")
 		return 0
 	return 1
 
 /mob/living/carbon/human/proc/is_chest_exposed()
 	for(var/obj/item/I in get_equipped_items())
 		if(I.body_parts_covered & CHEST)
-		return 0
-	return 1
-	if(undershirt && undershirt != "Nude")
+			return 0
+	if(undershirt != "Nude")
 		return 0
 	return 1
