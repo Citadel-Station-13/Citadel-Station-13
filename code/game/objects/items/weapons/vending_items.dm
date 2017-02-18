@@ -70,7 +70,7 @@
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
 	charges = list(42, 13, 4)// of 109 standard, 12 contraband, 10 premium(?) (someone fucked this number up, who wants to recount?)
-	init_charges = list(40, 13, 4)
+	init_charges = list(42, 13, 4)
 
 /obj/item/weapon/vending_refill/kink
 	machine_name 	= "KinkMate"
