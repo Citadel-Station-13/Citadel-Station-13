@@ -149,6 +149,7 @@
 #include "code\citadel\cit_reagents.dm"
 #include "code\citadel\discordbot.dm"
 #include "code\citadel\kegs.dm"
+#include "code\citadel\sweaters.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\controller.dm"
