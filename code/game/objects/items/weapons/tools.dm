@@ -579,6 +579,7 @@
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
 	origin_tech = "engineering=2;plasmatech=2"
+	toolspeed = 0.75
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -624,6 +625,7 @@
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "engineering=3;plasmatech=2"
+	w_class = 3
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"

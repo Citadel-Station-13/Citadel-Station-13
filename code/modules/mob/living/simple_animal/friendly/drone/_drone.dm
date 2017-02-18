@@ -26,7 +26,7 @@
 	maxHealth = 30
 	unsuitable_atmos_damage = 0
 	wander = 0
-	speed = 0
+	speed = 0.5
 	ventcrawler = VENTCRAWLER_ALWAYS
 	healable = 0
 	density = 0

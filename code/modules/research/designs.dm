@@ -389,6 +389,16 @@ other types of metals and chemistry for reagents).
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 
+/datum/design/autoimplanter
+	name = "Autoimplanter"
+	desc = "An autoimplanter for implanting yourself without the need of another person."
+	id = "autoimplanter"
+	req_tech = list("materials" = 7, "engineering" = 7, "powerstorage" = 7, "plasmatech" = 7, "biotech" = 7)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 30000, MAT_GLASS = 30000, MAT_DIAMOND = 20000, MAT_PLASMA = 20000, MAT_TITANIUM = 20000)
+	build_path = /obj/item/device/autoimplanter
+	category = list("Medical Designs")
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////
