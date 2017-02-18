@@ -28,9 +28,9 @@
 		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
 	else
 		user << "It's empty!"
-//^ Your ideas suck. Why not just make it automatic?
-//NOTE I decided to go for about 1/3 of a machine's capacity
 
+//NOTE I decided to go for about 1/3 of a machine's capacity
+//^ Your ideas suck. Why not just make it automatic?
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
@@ -69,6 +69,7 @@
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
+	charges = list(42, 13, 4)// of 109 standard, 12 contraband, 10 premium(?) (someone fucked this number up, who wants to recount?)
 	init_charges = list(40, 13, 4)
 
 /obj/item/weapon/vending_refill/kink
