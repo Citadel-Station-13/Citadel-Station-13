@@ -8,8 +8,7 @@
 	w_class 	= 3
 	color 		= null
 	can_masturbate_with = 1
-	var/mob/living/carbon/human/holder
-	var/size 	= 2 //arbitrary value derived from length for sprites.
+	size 	= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 	= 6	//inches
 	var/girth  	= 0
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
@@ -50,10 +49,6 @@
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner && !linked_balls)
-		var/obj/item/organ/genital/testicles/balls = owner.getorganslot("testicles")
-		if(balls)
-			balls.linked_penis = src
-			linked_balls = balls
+		linked_balls = owner.getorganslot("testicles")
 	else
-		if(istype(linked_balls, /obj/item/organ/genital/testicles))
-			linked_balls = null
+		linked_balls = null

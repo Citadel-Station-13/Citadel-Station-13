@@ -7,7 +7,7 @@
 	slot = "penis"
 	w_class = 3
 	shape = "knotted"
-	var/size = 3
+	size = 3
 	var/length = 6								//inches
 	var/girth  = 0
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//citadel_defines.dm for these defines

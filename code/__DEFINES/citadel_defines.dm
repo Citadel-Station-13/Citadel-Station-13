@@ -8,7 +8,7 @@
 
 //organ defines
 #define COCK_SIZE_MIN		1
-#define COCK_SIZE_MAX		24
+#define COCK_SIZE_MAX		20
 
 #define COCK_GIRTH_RATIO_MAX		1.25
 #define COCK_GIRTH_RATIO_DEF		0.75

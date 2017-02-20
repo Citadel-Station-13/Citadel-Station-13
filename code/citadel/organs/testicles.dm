@@ -7,23 +7,21 @@
 	slot = "testicles"
 	w_class = 3
 	var/internal = FALSE
-	var/size 				= BALLS_SIZE_DEF
+	size 				= BALLS_SIZE_DEF
 	var/sack_size			= BALLS_SACK_SIZE_DEF
-	var/cum_mult 			= CUM_RATE_MULT
-	var/cum_rate 			= CUM_RATE
-	var/cum_efficiency		= CUM_EFFICIENCY
-	var/cum_id 				= "semen"
-	var/balls_volume		= BALLS_VOLUME_BASE
-	var/producing			= TRUE
+	fluid_id 				= "semen"
+	producing			= TRUE
 	var/obj/item/organ/genital/penis/linked_penis
 
 /obj/item/organ/genital/testicles/New()
 	..()
-	create_reagents(balls_volume)
-	reagents.add_reagent(cum_id, balls_volume)
+	create_reagents(fluid_max_volume)
+	reagents.add_reagent(fluid_id, fluid_max_volume)
 
 /obj/item/organ/genital/testicles/on_life()
 	..()
+	if(fluid_id)
+		generate_cum()
 
 /obj/item/organ/genital/testicles/proc/generate_cum()
 	if(!owner && linked_penis)
@@ -36,10 +34,10 @@
 	if(!linked_penis)
 		if(istype(owner.getorganslot("penis"), /obj/item/organ/genital/penis))
 			owner.getorganslot("penis")
-	reagents.maximum_volume = balls_volume//update this before modifying values
-	reagents.isolate_reagent(cum_id)
-	if(reagents.total_volume < balls_volume)
-		reagents.add_reagent(cum_id, (cum_mult * cum_rate))//generate the cum
-		owner.nutrition = (owner.nutrition - cum_efficiency)//use some nutrition from the mob that's using it
+	reagents.maximum_volume = fluid_max_volume//update this before modifying values
+	reagents.isolate_reagent(fluid_id)
+	if(reagents.total_volume < fluid_max_volume)
+		reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
+		owner.nutrition = (owner.nutrition - fluid_efficiency)//use some nutrition from the mob that's using it
 	if(reagents.total_volume > reagents.maximum_volume)
-		reagents.remove_reagent(cum_id, (reagents.total_volume - reagents.maximum_volume))//if we went over the limit, fixit fixit fixit
+		reagents.remove_reagent(fluid_id, (reagents.total_volume - reagents.maximum_volume))//if we went over the limit, fixit fixit fixit

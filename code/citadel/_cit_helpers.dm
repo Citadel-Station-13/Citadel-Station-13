@@ -54,7 +54,6 @@ var/global/list/xeno_dorsal_list = list()
 var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
 var/global/list/breasts_size_list = list()
 var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie)
-	)
 
 //mentor stuff
 var/list/mentors = list()
@@ -102,7 +101,7 @@ var/list/mentors = list()
 
 /mob/living/carbon/human/proc/has_eggsack()
 	if(getorganslot("balls"))
-		if(istype(getorganslot("balls"), /obj/item/organ/eggsack))
+		if(istype(getorganslot("balls"), /obj/item/organ/genital/eggsack))
 			return 1
 	return 0
 

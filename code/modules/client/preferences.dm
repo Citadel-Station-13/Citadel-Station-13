@@ -532,6 +532,8 @@ var/list/preferences_datums = list()
 						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 					else
 						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+					dat += "<b>Shape:</b> <a href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a><BR>"
+					dat += "<b>Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inches</a><BR>"
 					//start balls
 					dat += "<h3>Testicles</h3>"
 					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
@@ -582,7 +584,7 @@ var/list/preferences_datums = list()
 //						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
 //					else
 //						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
-					dat += "<b>Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
+					dat += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
 
 				dat += "</td>"
 
@@ -1458,7 +1460,7 @@ var/list/preferences_datums = list()
 
 				//citadel code
 				if("cock_color")
-					var/new_cockcolor = input(user, "Penis Color:", "Character Preference") as color|null
+					var/new_cockcolor = input(user, "Penis color:", "Character Preference") as color|null
 					if(new_cockcolor)
 						var/temp_hsv = RGBtoHSV(new_cockcolor)
 						if(new_cockcolor == "#000000")
@@ -1467,6 +1469,17 @@ var/list/preferences_datums = list()
 							features["cock_color"] = sanitize_hexcolor(new_cockcolor)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+
+				if("cock_length")
+					var/new_length = input(user, "Penis length in inches:\n([COCK_SIZE_MIN]-[COCK_SIZE_MAX])", "Character Preference") as num|null
+					if(new_length)
+						features["cock_length"] = max(min( round(text2num(new_length)), COCK_SIZE_MAX),COCK_SIZE_MIN)
+
+				if("cock_shape")
+					var/new_shape
+					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in cock_shapes_list
+					if(new_shape)
+						features["cock_shape"] = new_shape
 
 				if("balls_color")
 					var/new_ballscolor = input(user, "Testicle Color:", "Character Preference") as color|null

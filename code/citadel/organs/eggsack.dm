@@ -1,4 +1,4 @@
-/obj/item/organ/eggsack
+/obj/item/organ/genital/eggsack
 	name 			= "egg sack"
 	desc 			= "An egg producing reproductive organ."
 	icon_state 		= "egg_sack"
