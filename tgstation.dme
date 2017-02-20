@@ -149,6 +149,7 @@
 #include "code\citadel\cit_genemods.dm"
 #include "code\citadel\cit_kegs.dm"
 #include "code\citadel\cit_reagents.dm"
+#include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\discordbot.dm"
 #include "code\citadel\organs\breasts.dm"
 #include "code\citadel\organs\eggsack.dm"
