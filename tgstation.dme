@@ -147,6 +147,7 @@
 #include "code\citadel\cit_areas.dm"
 #include "code\citadel\cit_arousal.dm"
 #include "code\citadel\cit_reagents.dm"
+#include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\discordbot.dm"
 #include "code\citadel\kegs.dm"
 #include "code\controllers\admin.dm"

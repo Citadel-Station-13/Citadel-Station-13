@@ -30,7 +30,7 @@
 		user << "It's empty!"
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
-
+//^ Your ideas suck. Why not just make it automatic?
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
@@ -69,8 +69,8 @@
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(35, 13, 4)// of 101 standard, 12 contraband, 10 premium(?)
-	init_charges = list(35, 13, 4)
+	charges = list(42, 13, 4)// of 109 standard, 12 contraband, 10 premium(?) (someone fucked this number up, who wants to recount?)
+	init_charges = list(42, 13, 4)
 
 /obj/item/weapon/vending_refill/kink
 	machine_name 	= "KinkMate"
