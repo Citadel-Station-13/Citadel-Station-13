@@ -418,7 +418,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
 	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
 	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
-	features["cock_length"]			= sanitize_integer(features["cock_size"], 1, 12, 6)
+	features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
 	//balls features
 	features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
 	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
