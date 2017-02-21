@@ -17,12 +17,16 @@
 	if(!pref_species)
 		var/rando_race = pick(config.roundstart_races)
 		pref_species = new rando_race()
-	backbag = 1
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(nude=FALSE)
 	// Silicons only need a very basic preview since there is no customization for them.
+	var/wide_icon = 0
+	var/stamp_x = 0
+	var/stamp_y = 1
+	if(features["taur"] != "None")
+		wide_icon = 1
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI)
@@ -41,45 +45,56 @@
 	// Determine what job is marked as 'High' priority, and dress them up as such.
 	var/datum/job/previewJob
 	var/highRankFlag = job_civilian_high | job_medsci_high | job_engsec_high
+	if(!nude)
+		if(job_civilian_low & ASSISTANT)
+			previewJob = SSjob.GetJob("Assistant")
+		else if(highRankFlag)
+			var/highDeptFlag
+			if(job_civilian_high)
+				highDeptFlag = CIVILIAN
+			else if(job_medsci_high)
+				highDeptFlag = MEDSCI
+			else if(job_engsec_high)
+				highDeptFlag = ENGSEC
 
-	if(job_civilian_low & ASSISTANT)
-		previewJob = SSjob.GetJob("Assistant")
-	else if(highRankFlag)
-		var/highDeptFlag
-		if(job_civilian_high)
-			highDeptFlag = CIVILIAN
-		else if(job_medsci_high)
-			highDeptFlag = MEDSCI
-		else if(job_engsec_high)
-			highDeptFlag = ENGSEC
-
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.flag == highRankFlag && job.department_flag == highDeptFlag)
-				previewJob = job
-				break
+			for(var/datum/job/job in SSjob.occupations)
+				if(job.flag == highRankFlag && job.department_flag == highDeptFlag)
+					previewJob = job
+					break
 
 	if(previewJob)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale(48+32, 16+32)
+	preview_icon.Scale((112), (32))
 	CHECK_TICK
 	mannequin.setDir(NORTH)
-	
 	var/icon/stamp = getFlatIcon(mannequin)
+	if(wide_icon)
+		stamp_x = 16
+	else
+		stamp_x = 32
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
+	if(wide_icon)
+		stamp_x = 48
+	else
+		stamp_x = 64
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
+	if(wide_icon)
+		stamp_x = -15
+	else
+		stamp_x = 1
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	CHECK_TICK
