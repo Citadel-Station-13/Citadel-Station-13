@@ -25,7 +25,7 @@
 
 /datum/sprite_accessory/penis/blunt
 	icon_state = "blunt"
-	name = "blunt"
+	name = "Blunt"
 
 /datum/sprite_accessory/penis/barbed
 	icon_state = "barbed"
