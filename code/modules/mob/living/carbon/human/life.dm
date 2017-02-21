@@ -28,6 +28,9 @@
 
 	if (notransform)
 		return
+	//citadel code
+	if(stat != DEAD)
+		handle_arousal()
 
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
