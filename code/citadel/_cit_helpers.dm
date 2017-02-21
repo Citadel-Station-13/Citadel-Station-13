@@ -64,12 +64,53 @@ var/list/mentors = list()
 		if(!src.holder)	return
 		message_admins("[key_name_admin(usr)] manually reloaded mentors")
 
+//Flavor Text
 /mob/living/carbon/human/verb/set_flavor()
 	set name = "Set Flavor Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
 	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavor text.", "Flavor text", null)  as text), 1)
+
+//LOOC toggles
+/client/verb/listen_looc()
+	set name = "Show/Hide LOOC"
+	set category = "Preferences"
+	set desc = "Toggles seeing LocalOutOfCharacter chat"
+	prefs.chat_toggles ^= CHAT_LOOC
+	prefs.save_preferences()
+	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
+	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/datum/admins/proc/togglelooc()
+	set category = "Server"
+	set desc="Fukken metagamers"
+	set name="Toggle LOOC"
+	toggle_looc()
+	log_admin("[key_name(usr)] toggled LOOC.")
+	message_admins("[key_name_admin(usr)] toggled LOOC.")
+	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/toggle_looc(toggle = null)
+	if(toggle != null) //if we're specifically en/disabling ooc
+		if(toggle != looc_allowed)
+			looc_allowed = toggle
+		else
+			return
+	else //otherwise just toggle it
+		looc_allowed = !looc_allowed
+	world << "<B>The LOOC channel has been globally [looc_allowed ? "enabled" : "disabled"].</B>"
+
+/datum/admins/proc/toggleloocdead()
+	set category = "Server"
+	set desc="Toggle dis bitch"
+	set name="Toggle Dead LOOC"
+	dlooc_allowed = !( dlooc_allowed )
+
+	log_admin("[key_name(usr)] toggled OOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	feedback_add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 
 /mob/living/carbon/proc/has_penis()
 	if(getorganslot("penis"))//slot shared with ovipositor
