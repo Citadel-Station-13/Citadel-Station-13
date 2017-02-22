@@ -1068,7 +1068,12 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
 	/obj/item/clothing/suit/jacket/letterman_red=1, /obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
-	/obj/item/clothing/under/casualhoodie/skirt=1)
+	/obj/item/clothing/under/casualhoodie/skirt=1,
+	/obj/item/clothing/under/bb_sweater=2,
+	/obj/item/clothing/under/bb_sweater/blue=2,
+	/obj/item/clothing/under/bb_sweater/green=2,
+	/obj/item/clothing/under/bb_sweater/purple =2,
+	/obj/item/clothing/under/bb_sweater/red=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
 	/obj/item/clothing/under/wedding/bride_orange=1, /obj/item/clothing/under/wedding/bride_purple=1, /obj/item/clothing/under/wedding/bride_blue=1,
 	 /obj/item/clothing/under/wedding/bride_red=1, /obj/item/clothing/under/wedding/bride_white=1, /obj/item/clothing/under/keyholesweater=1,
