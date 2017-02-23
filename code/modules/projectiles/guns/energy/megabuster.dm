@@ -8,7 +8,7 @@
 	clumsy_check = 0
 	needs_permit = 0
 	selfcharge = 1
-
+	icon = 'icons/obj/guns/VGguns.dmi'
 /obj/item/weapon/gun/energy/megabuster/proto
 	name = "Proto-buster"
 	icon_state = "protobuster"
@@ -17,6 +17,7 @@
 /obj/item/weapon/gun/energy/mmlbuster
 	name = "Buster Cannon"
 	desc = "An antique arm-mounted buster cannon."
+	icon = 'icons/obj/guns/VGguns.dmi'
 	icon_state = "mmlbuster"
 	item_state = "mmlbuster"
 	w_class = WEIGHT_CLASS_SMALL

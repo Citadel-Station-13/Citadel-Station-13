@@ -6,8 +6,10 @@
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	icon = 'icons/obj/VGprojectile.dmi'
 
 /obj/item/projectile/energy/megabuster
 	name = "buster pellet"
 	icon_state = "megabuster"
 	nodamage = 1
+	icon = 'icons/obj/VGprojectile.dmi'

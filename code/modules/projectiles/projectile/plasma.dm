@@ -1,4 +1,5 @@
 obj/item/projectile/energy/plasmabolt
+	icon = 'icons/obj/VGProjectile.dmi'
 	name = "plasma bolt"
 	icon_state = "plasma"
 	weaken = 0
