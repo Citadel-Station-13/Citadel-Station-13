@@ -190,38 +190,3 @@
 	return ..()
 
 
-obj/item/projectile/energy/plasmabolt
-	name = "plasma bolt"
-	icon_state = "plasma"
-	var/knockdown_chance = 0
-
-/obj/item/projectile/energy/plasmabolt/light
-	damage = 35
-	icon_state = "plasma2"
-	irradiate = 20
-	knockdown_chance = 30
-
-/obj/item/projectile/energy/plasmabolt/rifle
-	damage = 50
-	icon_state = "plasma3"
-	irradiate = 35
-	knockdown_chance = 50
-
-/obj/item/projectile/energy/plasmabolt/MP40k
-	damage = 35
-	eyeblur = 4
-	irradiate = 25
-	knockdown_chance = 40
-	icon_state = "plasma3"
-
-/obj/item/projectile/energy/buster
-	name = "buster shot"
-	icon_state = "buster"
-	nodamage = 0
-	damage = 20
-	damage_type = BURN
-
-/obj/item/projectile/energy/megabuster
-	name = "buster pellet"
-	icon_state = "megabuster"
-	nodamage = 1
