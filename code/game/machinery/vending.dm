@@ -1087,6 +1087,57 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list()
 	refill_canister = /obj/item/weapon/vending_refill/kink
 
+/obj/machinery/vending/nazivend
+	name = "Nazivend"
+	desc = "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorrilions lost.\""
+	icon_state = "nazi"
+	vend_reply = "SIEG HEIL!"
+	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
+	products = list(
+		/obj/item/clothing/head/stalhelm = 20,
+		/obj/item/clothing/head/panzer = 20,
+		/obj/item/clothing/suit/soldiercoat = 20,
+		/obj/item/clothing/under/soldieruniform = 20,
+		/obj/item/clothing/shoes/jackboots = 20
+		)
+	contraband = list(
+		/obj/item/clothing/head/naziofficer = 10,
+		/obj/item/clothing/suit/officercoat = 10,
+		/obj/item/clothing/under/officeruniform = 10,
+		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
+		/obj/item/weapon/gun/energy/plasma/MP40k = 4
+		)
+	premium = list()
+
+	refill_canister = /obj/item/weapon/vending_refill/nazi
+
+/obj/machinery/vending/sovietvend
+	name = "KomradeVendtink"
+	desc = "Rodina-mat' zovyot!"
+	icon_state = "soviet"
+	vend_reply = "The fascist and capitalist svin'ya shall fall, komrade!"
+	product_slogans = "Quality worth waiting in line for!; Get Hammer and Sickled!; Sosvietsky soyuz above all!; With capitalist pigsky, you would have paid a fortunetink! ; Craftink in Motherland herself!"
+	products = list(
+		/obj/item/clothing/under/soviet = 20,
+		/obj/item/clothing/head/ushanka = 20,
+		/obj/item/clothing/shoes/jackboots = 20,
+		/obj/item/clothing/head/squatter_hat = 20,
+		/obj/item/clothing/under/squatter_outfit = 20,
+		/obj/item/clothing/under/russobluecamooutfit = 20,
+		/obj/item/clothing/head/russobluecamohat = 20
+		)
+	contraband = list(
+		/obj/item/clothing/under/syndicate/tacticool = 4,
+		/obj/item/clothing/mask/balaclava = 4,
+		/obj/item/clothing/suit/russofurcoat = 4,
+		/obj/item/clothing/head/russofurhat = 4,
+		/obj/item/clothing/suit/space/hardsuit/soviet = 3,
+		/obj/item/weapon/gun/energy/laser/LaserAK = 4
+		)
+	premium = list()
+
+	refill_canister = /obj/item/weapon/vending_refill/soviet
+
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

@@ -1836,6 +1836,8 @@
 #include "code\modules\projectiles\guns\energy\energy_gun.dm"
 #include "code\modules\projectiles\guns\energy\kinetic_accelerator.dm"
 #include "code\modules\projectiles\guns\energy\laser.dm"
+#include "code\modules\projectiles\guns\energy\megabuster.dm"
+#include "code\modules\projectiles\guns\energy\plasma.dm"
 #include "code\modules\projectiles\guns\energy\pulse.dm"
 #include "code\modules\projectiles\guns\energy\special.dm"
 #include "code\modules\projectiles\guns\energy\stun.dm"
