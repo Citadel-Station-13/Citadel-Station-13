@@ -1087,8 +1087,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/under/bb_sweater/blue=2,
 	/obj/item/clothing/under/bb_sweater/green=2,
 	/obj/item/clothing/under/bb_sweater/purple =2,
-	/obj/item/clothing/under/bb_sweater/red=2
-	)
+	/obj/item/clothing/under/bb_sweater/red=2)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
 		/obj/item/clothing/under/wedding/bride_orange=1,
 		/obj/item/clothing/under/wedding/bride_purple=1,
@@ -1098,8 +1097,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/under/keyholesweater=1,
 	 	/obj/item/clothing/suit/doshjacket=1,
 		/obj/item/clothing/under/squatter_outfit = 1,
-		/obj/item/clothing/head/squatter_hat = 1
-		)
+		/obj/item/clothing/head/squatter_hat = 1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
