@@ -4,6 +4,8 @@ obj/item/projectile/energy/plasmabolt
 	weaken = 0
 	flag = "energy"
 	damage_type = BURN
+	hitsound = 'sound/weapons/sear.ogg'
+	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
 
 /obj/item/projectile/energy/plasmabolt/light
 	damage = 35
