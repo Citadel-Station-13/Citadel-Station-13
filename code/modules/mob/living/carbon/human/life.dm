@@ -137,10 +137,8 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-
 	if(ismob(loc))
-		thermal_protection = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //because lazy
-
+		thermal_protection = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //because lazy and insulated by being inside someone
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -166,7 +164,6 @@
 //This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
-
 	//Handle normal clothing
 	if(head)
 		if(head.max_heat_protection_temperature && head.max_heat_protection_temperature >= temperature)
@@ -251,11 +248,11 @@
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
 
+	if(ismob(loc))
+		return 1 //because lazy and being inside somemone insulates you from space
+
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
-
-	if(ismob(loc))
-		return 1 //because lazy
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -335,27 +332,50 @@
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
 
+/mob/living/carbon/human/proc/can_heartattack()
+	CHECK_DNA_AND_SPECIES(src)
+	if(NOBLOOD in dna.species.species_traits)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/undergoing_cardiac_arrest()
+	if(!can_heartattack())
+		return FALSE
+	var/obj/item/organ/heart/heart = getorganslot("heart")
+	if(istype(heart) && heart.beating)
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/human/proc/set_heartattack(status)
+	if(!can_heartattack())
+		return FALSE
+
+	var/obj/item/organ/heart/heart = getorganslot("heart")
+	if(!istype(heart))
+		return
+
+	heart.beating = !status
+
 
 /mob/living/carbon/human/proc/handle_heart()
-	CHECK_DNA_AND_SPECIES(src)
-	var/needs_heart = (!(NOBLOOD in dna.species.species_traits))
+	if(!can_heartattack())
+		return
+
 	var/we_breath = (!(NOBREATH in dna.species.species_traits))
 
-	if(heart_attack)
-		if(!needs_heart)
-			heart_attack = FALSE
-		else if(we_breath)
-			if(losebreath < 3)
-				losebreath += 2
-			adjustOxyLoss(5)
-			adjustBruteLoss(1)
-		else
-			// even though we don't require oxygen, our blood still needs
-			// circulation, and without it, our tissues die and start
-			// gaining toxins
-			adjustBruteLoss(3)
-			if(src.reagents)
-				src.reagents.add_reagent("toxin", 2)
+
+	if(!undergoing_cardiac_arrest())
+		return
+
+	// Cardiac arrest, unless corazone
+	if(reagents.get_reagent_amount("corazone"))
+		return
+
+	if(we_breath)
+		adjustOxyLoss(8)
+		Paralyse(4)
+	// Tissues die without blood circulation
+	adjustBruteLoss(2)
 
 /*
 Alcohol Poisoning Chart
