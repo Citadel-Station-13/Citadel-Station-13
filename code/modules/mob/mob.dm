@@ -27,8 +27,9 @@ var/next_mob_id = 0
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	hook_vr("mob_new",list(src))
 	prepare_huds()
+	can_ride_typecache = typecacheof(can_ride_typecache)
+	hook_vr("mob_new",list(src))
 	..()
 
 /atom/proc/prepare_huds()
@@ -953,3 +954,8 @@ var/next_mob_id = 0
 		if ("attack_log")
 			return debug_variable(var_name, attack_log, 0, src, FALSE)
 	. = ..()
+
+/mob/post_buckle_mob(mob/living/M)
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()
