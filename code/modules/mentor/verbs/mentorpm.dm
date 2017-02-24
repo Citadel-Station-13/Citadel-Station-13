@@ -19,7 +19,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_mentor_pm(whom, msg)
 	var/client/C
-	if(istype(whom,/mob))
+	if(ismob(whom))
 		var/mob/M = whom
 		C = M.client
 	else if(istext(whom))

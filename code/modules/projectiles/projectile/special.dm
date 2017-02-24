@@ -234,6 +234,12 @@
 	damage = 10
 	range = 6
 
+/obj/item/projectile/plasma/turret
+	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
+	name = "plasma beam"
+	damage = 6
+	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
+
 
 /obj/item/projectile/gravityrepulse
 	name = "repulsion bolt"
@@ -246,6 +252,7 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravityrepulse/New(var/obj/item/ammo_casing/energy/gravityrepulse/C)
 	..()
@@ -256,10 +263,11 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(A, src)))
 		A.throw_at(throwtarget,power+1,1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
 		new /obj/effect/overlay/temp/gravpush(F)
 
@@ -274,6 +282,7 @@
 	color = "#FF6600"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravityattract/New(var/obj/item/ammo_casing/energy/gravityattract/C)
 	..()
@@ -284,9 +293,10 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src || (firer && A == src.firer) || A.anchored)
+		if(A == src || (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(T, power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/F in range(T,power))
 		new /obj/effect/overlay/temp/gravpush(F)
 
@@ -301,6 +311,7 @@
 	color = "#101010"
 	var/turf/T
 	var/power = 4
+	var/list/thrown_items = list()
 
 /obj/item/projectile/gravitychaos/New(var/obj/item/ammo_casing/energy/gravitychaos/C)
 	..()
@@ -311,9 +322,10 @@
 	. = ..()
 	T = get_turf(src)
 	for(var/atom/movable/A in range(T, power))
-		if(A == src|| (firer && A == src.firer) || A.anchored)
+		if(A == src|| (firer && A == src.firer) || A.anchored || thrown_items[A])
 			continue
 		A.throw_at(get_edge_target_turf(A, pick(cardinal)), power+1, 1)
+		thrown_items[A] = A
 	for(var/turf/Z in range(T,power))
 		new /obj/effect/overlay/temp/gravpush(Z)
 

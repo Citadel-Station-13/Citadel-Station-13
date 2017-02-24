@@ -290,7 +290,7 @@ other types of metals and chemistry for reagents).
 	id = "bag_holding"
 	req_tech = list("bluespace" = 7, "materials" = 5, "engineering" = 5, "plasmatech" = 6)
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
+	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250, MAT_BLUESPACE = 2000)
 	build_path = /obj/item/weapon/storage/backpack/holding
 	category = list("Bluespace Designs")
 
@@ -320,7 +320,7 @@ other types of metals and chemistry for reagents).
 	id = "minerbag_holding"
 	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500) //quite cheap, for more convenience
+	materials = list(MAT_GOLD = 250, MAT_URANIUM = 500, MAT_BLUESPACE = 1000) //quite cheap, for more convenience
 	build_path = /obj/item/weapon/storage/bag/ore/holding
 	category = list("Bluespace Designs")
 

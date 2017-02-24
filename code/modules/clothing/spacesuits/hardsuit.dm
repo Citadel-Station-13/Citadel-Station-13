@@ -191,6 +191,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 90, fire = 100, acid = 90)
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
+	resistance_flags = ACID_PROOF
 
 /obj/item/clothing/suit/space/hardsuit/engine/elite
 	icon_state = "hardsuit-white"
@@ -202,6 +203,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/weapon/tank/jetpack/suit
+	resistance_flags = ACID_PROOF
 
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
@@ -482,12 +484,14 @@
 	armor = list(melee = 30, bullet = 15, laser = 30, energy = 10, bomb = 10, bio = 100, rad = 50, fire = 75, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security
 
+	//Head of Security's hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	name = "head of security's hardsuit helmet"
 	desc = "a special bulky helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-hos"
 	item_color = "hos"
 	armor = list(melee = 45, bullet = 25, laser = 30,energy = 10, bomb = 25, bio = 100, rad = 50, fire = 95, acid = 95)
+	jetpack = /obj/item/weapon/tank/jetpack/suit
 
 
 /obj/item/clothing/suit/space/hardsuit/security/hos
@@ -666,9 +670,6 @@
 	item_color = "ert_commander"
 
 
-
-
-
 //////Syndicate Version
 
 /obj/item/clothing/suit/space/hardsuit/shielded/syndi
@@ -721,8 +722,9 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	actions_types = list()
-	
-	
+
+
+	//VG Ports
 /obj/item/clothing/head/helmet/space/hardsuit/nazi
 	name = "nazi hardhelmet"
 	desc = "This is the face of das vaterland's top elite. Gas or energy are your only escapes."
