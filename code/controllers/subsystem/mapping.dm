@@ -115,6 +115,7 @@ var/datum/subsystem/mapping/SSmapping
 			space_ruins_templates[R.name] = R
 
 /datum/subsystem/mapping/proc/preloadShuttleTemplates()
+	var/list/unbuyable = generateMapList("config/unbuyableshuttles.txt")
 
 	for(var/item in subtypesof(/datum/map_template/shuttle))
 		var/datum/map_template/shuttle/shuttle_type = item
