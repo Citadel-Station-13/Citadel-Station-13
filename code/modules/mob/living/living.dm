@@ -17,6 +17,7 @@
 	medhud.add_to_hud(src)
 	faction |= "\ref[src]"
 
+
 /mob/living/prepare_huds()
 	..()
 	prepare_data_huds()
@@ -155,14 +156,13 @@
 			// In case of micros, we don't swap positions; instead occupying the same square!
 			if (handle_micro_bump_helping(src))
 				return
-
 			return 1
+
+	//okay, so we didn't switch. but should we push?
 
 	// Handle grabbing, stomping, and such of micros!
 	if(handle_micro_bump_other(M))
 		return
-
-	//okay, so we didn't switch. but should we push?
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
 		return 1
@@ -195,7 +195,12 @@
 					return
 		if(pulling == AM)
 			stop_pulling()
+		var/current_dir
+		if(isliving(AM))
+			current_dir = AM.dir
 		step(AM, t)
+		if(current_dir)
+			AM.setDir(current_dir)
 		now_pushing = 0
 
 //mob verbs are a lot faster than object verbs
