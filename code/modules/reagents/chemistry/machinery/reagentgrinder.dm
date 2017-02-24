@@ -63,7 +63,6 @@ var/list/blend_items = list (
 	/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
 
 	//Random Meme-tier stuff!!
-	/obj/item/organ/internal/butt = list("fartium" = 20),
 	/obj/item/weapon/storage/book/bible = list("holywater" = 100)
 )
 

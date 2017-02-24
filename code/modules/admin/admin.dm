@@ -576,7 +576,7 @@ var/global/BSACooldown = 0
 	if(ticker.current_state > GAME_STATE_PREGAME)
 		return alert("Too late... The game has already started!")
 	if(newtime)
-		ticker.GetTimeLeft() = newtime * 10
+		ticker.SetTimeLeft(newtime * 10)
 		if(newtime < 0)
 			world << "<b>The game start has been delayed.</b>"
 			log_admin("[key_name(usr)] delayed the round start.")

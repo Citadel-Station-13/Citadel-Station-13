@@ -1134,7 +1134,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
 		/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 		/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
-		/obj/item/clothing/suit/jacket/letterman_red=1
+		/obj/item/clothing/suit/jacket/letterman_red=1,
 		/obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
 		/obj/item/clothing/under/casualhoodie/skirt=1,
 		/obj/item/clothing/under/bb_sweater=2,
