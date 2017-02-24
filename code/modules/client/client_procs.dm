@@ -220,7 +220,7 @@ var/next_external_rsc = 0
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-
+	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
@@ -350,8 +350,7 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
@@ -372,8 +371,7 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if (!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(ckey)
@@ -576,6 +574,7 @@ var/next_external_rsc = 0
 			return FALSE
 		if ("key")
 			return FALSE
+
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

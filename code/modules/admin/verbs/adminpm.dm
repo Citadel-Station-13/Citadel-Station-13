@@ -232,7 +232,7 @@
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-	window_flash(C)
+	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 

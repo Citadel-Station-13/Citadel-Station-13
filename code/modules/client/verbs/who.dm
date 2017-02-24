@@ -2,44 +2,32 @@
 	set name = "Who"
 	set category = "OOC"
 
+	var/msg = ""
+
 	var/list/Lines = list()
-	var/msg = "--------\n"
 
 	if(length(admins) > 0)
 		Lines += "<b>Admins:</b>"
 		for(var/client/C in sortList(admins))
-			if(C.holder)
-				if(!C.holder.fakekey)
-					Lines += "<font color='#FF0000'>[C.key]</font>[show_info(C)]"
+			if(!C.holder.fakekey)
+				Lines += "\t <font color='#FF0000'>[C.key]</font>[show_info(C)]"
 
 	if(length(mentors) > 0)
 		Lines += "<b>Mentors:</b>"
 		for(var/client/C in sortList(clients))
 			var/mentor = mentor_datums[C.ckey]
 			if(mentor)
-				Lines += "<font color='#0033CC'>[C.key]</font>[show_info(C)]"
+				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)]"
 
-
-	var/player_text = ""
-	var/display_count = 0 //Used to detect as to whether or not we should display the players list
+	Lines += "<b>Players:</b>"
 	for(var/client/C in sortList(clients))
-		if(C.holder)
-			if(C.holder.fakekey)
-				display_count++
-				player_text += "[C.holder.fakekey][show_info(C)]\n"
-		else if(!check_mentor_other(C))
-			display_count++
-			player_text += "[C.key][show_info(C)]\n"
-
-	if(display_count > 0)
-		Lines += "<b>Players:</b>"
-		Lines += player_text
+		if(!check_mentor_other(C) || (C.holder && C.holder.fakekey))
+			Lines += "\t [C.key][show_info(C)]"
 
 	for(var/line in Lines)
 		msg += "[line]\n"
 
-	msg += "<b>Total Players: [length(clients)]</b>\n"
-	msg += "--------"
+	msg += "<b>Total Players: [length(Lines)]</b>"
 	src << msg
 
 /client/proc/show_info(var/client/C)
@@ -49,7 +37,7 @@
 	if(!src.holder)
 		return ""
 
-	var/entry = "\t[C.key]"
+	var/entry = ""
 	if(C.holder && C.holder.fakekey)
 		entry += " <i>(as [C.holder.fakekey])</i>"
 	if (isnewplayer(C.mob))
@@ -74,7 +62,6 @@
 	entry += " ([round(C.avgping, 1)]ms)"
 	return entry
 
-
 /client/verb/adminwho()
 	set category = "Admin"
 	set name = "Adminwho"
@@ -89,7 +76,7 @@
 
 			if(isobserver(C.mob))
 				msg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
+			else if(isnewplayer(C.mob))
 				msg += " - Lobby"
 			else
 				msg += " - Playing"
@@ -99,15 +86,16 @@
 			msg += "\n"
 	else
 		for(var/client/C in admins)
+			if(C.is_afk())
+				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-
+		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
 	src << msg
 
 /client/verb/mentorwho()
 	set category = "Mentor"
 	set name = "Mentorwho"
-
 	var/msg = "<b>Current Mentors:</b>\n"
 	for(var/client/C in mentors)
 		var/suffix = ""
@@ -121,7 +109,5 @@
 
 			if(C.is_afk())
 				suffix += " (AFK)"
-
 		msg += "\t[C][suffix]\n"
-
 	src << msg
