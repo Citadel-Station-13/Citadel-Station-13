@@ -32,8 +32,8 @@
 	random_icon_states = list("semen1", "semen2", "semen3", "semen4")
 
 /obj/effect/decal/cleanable/semen/New()
-	dir = pick(1,2,4,8)
 	..()
+	dir = pick(1,2,4,8)
 
 /datum/reagent/consumable/semen/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
@@ -63,13 +63,26 @@
 	bloodiness = null
 
 /obj/effect/decal/cleanable/femcum/New()
-	dir = pick(1,2,4,8)
 	..()
+	dir = pick(1,2,4,8)
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
 	if (F.blood_DNA)
 		blood_DNA |= F.blood_DNA.Copy()
 	..()
+
+/datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
+	if(!istype(T))
+		return
+	if(reac_volume < 3)
+		return
+
+	var/obj/effect/decal/cleanable/femcum/S = locate() in T
+	if(!S)
+		S = new(T)
+	S.reagents.add_reagent("semen", reac_volume)
+	if(data["blood_DNA"])
+		S.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 
 //aphrodisiac & anaphrodisiac
 

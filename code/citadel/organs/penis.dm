@@ -14,6 +14,7 @@
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
 	var/list/dickflags = list()
+	var/list/knotted_types = list("", "barbknot")
 	var/obj/item/organ/genital/testicles/linked_balls
 
 /obj/item/organ/genital/penis/New()
@@ -43,12 +44,17 @@
 	var/string = "penis_[shape]_[size]"
 	icon_state = sanitize_text(string)
 //	name = "[shape] penis"
+	desc = "That's a [lowertext(shape)] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
 	if(!owner)
 		return
 	color = sanitize_hexcolor(owner.dna.features["cock_color"], 6, 0)
 
 /obj/item/organ/genital/penis/update_link()
-	if(owner && !linked_balls)
-		linked_balls = owner.getorganslot("testicles")
+	if(owner)
+		linked_balls = (owner.getorganslot("testicles"))
+		if(linked_balls)
+			linked_balls.linked_penis = src
 	else
+		if(linked_balls)
+			linked_balls.linked_penis = null
 		linked_balls = null

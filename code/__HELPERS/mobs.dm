@@ -107,6 +107,7 @@
 		"xenodorsal" 		= "None",
 		"xenohead" 			= "None",
 		"xenotail" 			= "None",
+		"exhibitionist" 	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= "human",
 		"cock_length"		= 6,

@@ -134,6 +134,7 @@ var/list/preferences_datums = list()
 
 		//Mob preview
 	var/icon/preview_icon = null
+	var/icon/nude_preview_icon = null
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
@@ -154,7 +155,7 @@ var/list/preferences_datums = list()
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = BERANDOMJOB  //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
+	// 0 = character settings, 1 = game preferences, 2 = character appearance
 	var/current_tab = 0
 
 	var/flavor_text = ""
@@ -199,12 +200,17 @@ var/list/preferences_datums = list()
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	update_preview_icon()
+	if(current_tab == 2)
+		update_preview_icon(nude=TRUE)
+	else
+		update_preview_icon(nude=FALSE)
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
 
-	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a> "
+	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
+
 
 	if(!path)
 		dat += "<div class='notice'>Please create an account to save your preferences</div>"
@@ -243,7 +249,8 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
 			dat += "<b>Age:</b> <a href='?_src_=prefs;preference=age;task=input'>[age]</a><BR>"
-
+			dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+			dat += "<b>Exhibitionist:</b><a href='?_src_=prefs;preference=exhibitionist'>[features["exhibitionist"] == TRUE ? "Yes" : "No"]</a><BR>"
 			dat += "<b>Special Names:</b><BR>"
 			dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
 			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b>[custom_names["mime"]]</a><BR>"
@@ -260,337 +267,8 @@ var/list/preferences_datums = list()
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
 			dat += "</td></tr></table>"
-
-			dat += "<h2>Body</h2>"
-			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
-			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
-
-			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
-
-			if(config.mutant_races)
-				dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
-			else
-				dat += "<b>Species:</b> Human<BR>"
-
-			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
-			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
-			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
-			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-
-
 //			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
-			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-			if(lentext(flavor_text) <= 40)
-				if(!lentext(flavor_text))
-					dat += "\[...\]"
-				else
-					dat += "[flavor_text]"
-			else
-				dat += "[TextPreview(flavor_text)]...<br>"
 			dat += "<br>"
-
-			dat += "<br>"
-			if(pref_species.use_skintones)
-
-				dat += "<td valign='top' width='21%'>"
-
-				dat += "<h3>Skin Tone</h3>"
-
-				dat += "<a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
-
-				dat += "</td>"
-
-			if(HAIR in pref_species.species_traits)
-
-				dat += "<td valign='top' width='21%'>"
-
-				dat += "<h3>Hair Style</h3>"
-
-				dat += "<a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_hair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_hair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
-
-
-				dat += "</td><td valign='top' width='21%'>"
-
-				dat += "<h3>Facial Hair Style</h3>"
-
-				dat += "<a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
-				dat += "<a href='?_src_=prefs;preference=previous_facehair_style;task=input'>&lt;</a> <a href='?_src_=prefs;preference=next_facehair_style;task=input'>&gt;</a><BR>"
-				dat += "<span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
-
-				dat += "</td>"
-
-			if(EYECOLOR in pref_species.species_traits)
-
-				dat += "<td valign='top' width='21%'>"
-
-				dat += "<h3>Eye Color</h3>"
-
-				dat += "<span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
-
-				dat += "</td>"
-
-			if(config.mutant_races) //We don't allow mutant bodyparts for humans either unless this is true.
-
-				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
-
-					dat += "<td valign='top' width='21%'>"
-
-					dat += "<h3>Alien/Mutant Colors</h3>"
-
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
-
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
-
-					dat += "<span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
-
-					dat += "</td>"
-
-				if("tail_lizard" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("snout" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Snout</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Horns</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("frills" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Frills</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("spines" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Spines</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Body Markings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
-
-					dat += "</td>"
-
-				//Mammal bodyparts
-				if("mam_body_markings" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Mammal Body Markings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("mam_tail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
-
-				if("legs" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Legs</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("mam_ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Ears</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("taur" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Taur Body</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
-
-					dat += "</td>"
-
-//Xeno Bodyparts
-				if("xenohead" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Head/Caste</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("xenotail" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("xenodorsal" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Dorsal Tubes</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
-
-					dat += "</td>"
-
-			if(config.mutant_humans)
-
-				if("tail_human" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Tail</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("ears" in pref_species.mutant_bodyparts)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Ears</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
-
-					dat += "</td>"
-
-				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
-					dat += "<td valign='top' width='7%'>"
-
-					dat += "<h3>Wings</h3>"
-
-					dat += "<a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
-
-					dat += "</td>"
-
-			dat += "</tr></table>"
-			//citadel code
-			if(NOGENITALS in pref_species.species_traits)
-				dat += "<h2>Your species ([pref_species.name]) does not support genitals!</h2>"
-			else
-				dat += "<h2>Genitals</h2>"
-
-				dat += "<table width='100%'><tr><td width='20%' valign='top'>"
-
-				dat += "<td valign='top' width='20%'>"
-
-				dat += "<h3>Options</h3>"
-				dat += "<b>Arousal:</b><a href='?_src_=prefs;preference=arousable'>[arousable == TRUE ? "Enabled" : "Disabled"]</a><BR>"
-				if(pref_species.use_skintones)
-					dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["genitals_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
-
-				dat += "</td>"
-
-				dat += "<td valign='top' width='20%'>"
-
-				dat += "<h3>Penis</h3>"
-
-				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_cock"] == TRUE)
-					//start cock
-					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
-						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-					else
-						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
-					dat += "<b>Shape:</b> <a href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a><BR>"
-					dat += "<b>Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inches</a><BR>"
-					//start balls
-					dat += "<h3>Testicles</h3>"
-					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
-					if(features["has_balls"] == TRUE)
-						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
-
-				dat += "</td>"
-/*
-				dat += "<td valign='top' width='20%'>"
-
-				dat += "<h3>Ovipositor</h3>"
-
-				dat += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_ovi"])
-					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a><BR>"
-
-					dat += "<h3>Eggsack</h3>"
-
-					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
-					if(features["has_eggsack"] == TRUE)
-						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a><BR>"
-						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a><BR>"
-						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a><BR>"
-
-				dat += "</td>"
-*/
-				dat += "<td valign='top' width='20%'>"
-
-				dat += "<h3>Vagina</h3>"
-
-				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_vag"])
-					dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
-
-					//dat += "<h3>Clitoris</h3>"
-					//dat += "<b>Clit Diameter:</b><a href='?_src_=prefs;preference=clit_diam;task=input'>[features["vag_clit_diam"]]\"</a><BR>"
-					//dat += "<b>Clit Length:</b><a href='?_src_=prefs;preference=clit_len;task=input'>[features["vag_clit_len"]]\"</a><BR>"
-
-				dat += "</td>"
-
-				dat += "<td valign='top' width='20%'>"
-
-				dat += "<h3>Breasts</h3>"
-
-				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
-				if(features["has_breasts"])
-//					if(pref_species.use_skintones)
-//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
-//					else
-//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
-					dat += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><BR>"
-
-				dat += "</td>"
-
-
-				dat += "</td></tr></table>"
-
 
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
@@ -678,6 +356,7 @@ var/list/preferences_datums = list()
 				else
 					dat += "High"
 			dat += "</a><br>"
+//			dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["genitals_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -705,6 +384,127 @@ var/list/preferences_datums = list()
 
 			dat += "</td></tr></table>"
 
+		//Character Appearance
+		if(2)
+			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
+			dat += "<div class='statusDisplay'><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
+			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+			if(lentext(flavor_text) <= 40)
+				if(!lentext(flavor_text))
+					dat += "\[...\]"
+				else
+					dat += "[flavor_text]"
+			else
+				dat += "[TextPreview(flavor_text)]...<BR>"
+			if(config.mutant_races)//really don't need this check, but fuck un-tabbing all those lines
+				dat += "<h2>Body</h2>"
+				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
+				dat += "<b>Species:</b><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
+				dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A><BR>"
+				dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><BR>"
+				if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+					dat += "<b>Primary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+					dat += "<b>Secondary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+					dat += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+				if(pref_species.use_skintones)
+					dat += "<b>Skin Tone: </b><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+				if(HAIR in pref_species.species_traits)
+					dat += "<b>Hair Style: </b><a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
+					dat += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
+					dat += "<b>Facial Hair Style: </b><a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
+					dat += "<b>Facial Hair Color: </b><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
+				if(EYECOLOR in pref_species.species_traits)
+					dat += "<b>Eye Color: </b><span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
+				if("tail_lizard" in pref_species.mutant_bodyparts)
+					dat += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
+				else if("mam_tail" in pref_species.mutant_bodyparts)
+					dat += "<b>Tail: </b><a href='?_src_=prefs;preference=mam_tail;task=input'>[features["mam_tail"]]</a><BR>"
+				else if("tail_human" in pref_species.mutant_bodyparts)
+					dat += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_human;task=input'>[features["tail_human"]]</a><BR>"
+				if("snout" in pref_species.mutant_bodyparts)
+					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
+				if("horns" in pref_species.mutant_bodyparts)
+					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+				if("frills" in pref_species.mutant_bodyparts)
+					dat += "<b>Frills: </b><a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
+				if("spines" in pref_species.mutant_bodyparts)
+					dat += "<b>Spines: </b><a href='?_src_=prefs;preference=spines;task=input'>[features["spines"]]</a><BR>"
+				if("body_markings" in pref_species.mutant_bodyparts)
+					dat += "<b>Body Markings: </b><a href='?_src_=prefs;preference=body_markings;task=input'>[features["body_markings"]]</a><BR>"
+				else if("mam_body_markings" in pref_species.mutant_bodyparts)
+					dat += "<b>Body Markings: </b><a href='?_src_=prefs;preference=mam_body_markings;task=input'>[features["mam_body_markings"]]</a><BR>"
+				if("mam_ears" in pref_species.mutant_bodyparts)
+					dat += "<b>Ears: </b><a href='?_src_=prefs;preference=mam_ears;task=input'>[features["mam_ears"]]</a><BR>"
+				else if("ears" in pref_species.mutant_bodyparts)
+					dat += "<b>Ears: </b><a href='?_src_=prefs;preference=ears;task=input'>[features["ears"]]</a><BR>"
+				if("legs" in pref_species.mutant_bodyparts)
+					dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
+				if("taur" in pref_species.mutant_bodyparts)
+					dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
+				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+					dat += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
+				if("xenohead" in pref_species.mutant_bodyparts)
+					dat += "<b>Caste: </b><a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
+				if("xenotail" in pref_species.mutant_bodyparts)
+					dat += "<b>Tail: </b><a href='?_src_=prefs;preference=xenotail;task=input'>[features["xenotail"]]</a><BR>"
+				if("xenodorsal" in pref_species.mutant_bodyparts)
+					dat += "<b>Dorsal Tubes: </b><a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
+
+			dat += "</td><td width='300px' height='300px' valign='top'>"
+
+
+			dat += "<h2>Clothing & Equipment</h2>"
+//underwear will be refactored later so it fits in with other wearable equipment and isn't just an overlay
+//			dat += "<b>Underwear:</b><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><br>"
+//			dat += "<b>Undershirt:</b><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><br>"
+//			dat += "<b>Socks:</b><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><br>"
+			dat += "<b>Backpack:</b><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><br>"
+			dat += "<b>Uplink Location:</b><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><br>"
+
+			dat += "<h2>Genitals</h2>"
+			if(NOGENITALS in pref_species.species_traits)
+				dat += "<b>Your species ([pref_species.name]) does not support genitals!</b><br>"
+			else
+				dat += "<b>Has Penis:</b><a href='?_src_=prefs;preference=has_cock'>[features["has_cock"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_cock"] == TRUE)
+					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Penis Color:</b><span style='border: 1px solid #161616; background-color: #[features["cock_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=cock_color;task=input'>Change</a><BR>"
+//					dat += "<br>"
+					dat += "<b>Penis Shape:</b> <a href='?_src_=prefs;preference=cock_shape;task=input'>[features["cock_shape"]]</a><BR>"
+					dat += "<b>Penis Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a><BR>"
+					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_balls"] == TRUE)
+						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
+				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_vag"])
+					dat += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+					dat += "<b>Has Womb:</b><a href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a><BR>"
+				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
+				if(features["has_breasts"])
+//					if(pref_species.use_skintones)
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)"
+//					else
+//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a>"
+					dat += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><br>"
+				/*
+				dat += "<h3>Ovipositor</h3>"
+				dat += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a>"
+				if(features["has_ovi"])
+					dat += "<b>Ovi Color:</b><span style='border: 1px solid #161616; background-color: #[features["ovi_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ovi_color;task=input'>Change</a>"
+					dat += "<h3>Eggsack</h3>"
+					dat += "<b>Has Eggsack:</b><a href='?_src_=prefs;preference=has_eggsack'>[features["has_eggsack"] == TRUE ? "Yes" : "No"]</a><BR>"
+					if(features["has_eggsack"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eggsack_color;task=input'>Change</a>"
+						dat += "<b>Egg Color:</b><span style='border: 1px solid #161616; background-color: #[features["eggsack_egg_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=egg_color;task=input'>Change</a>"
+						dat += "<b>Egg Size:</b><a href='?_src_=prefs;preference=egg_size;task=input'>[features["eggsack_egg_size"]]\" Diameter</a>"
+
+				dat += "</td>"
+				*/
+
+
+			dat += "</td></tr></table>"
 	dat += "<hr><center>"
 
 	if(!IsGuestKey(user.key))
@@ -1254,24 +1054,33 @@ var/list/preferences_datums = list()
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
 					if(new_tail)
 						features["tail_lizard"] = new_tail
+						if(new_tail != "None")
+							features["taur"] = "None"
 
 				if("tail_human")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
 					if(new_tail)
 						features["tail_human"] = new_tail
+						if(new_tail != "None")
+							features["taur"] = "None"
 
 				if("mam_tail")
 					var/new_tail
 					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
 					if(new_tail)
 						features["mam_tail"] = new_tail
+						if(new_tail != "None")
+							features["taur"] = "None"
 
 				if("taur")
 					var/new_taur
 					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in taur_list
 					if(new_taur)
 						features["taur"] = new_taur
+						if(new_taur != "None")
+							features["mam_tail"] = "None"
+							features["xenotail"] = "None"
 
 /*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
 				if("mam_snout")
@@ -1523,6 +1332,16 @@ var/list/preferences_datums = list()
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+				if("vag_color")
+					var/new_vagcolor = input(user, "Vagina color:", "Character Preference") as color|null
+					if(new_vagcolor)
+						var/temp_hsv = RGBtoHSV(new_vagcolor)
+						if(new_vagcolor == "#000000")
+							features["vag_color"] = pref_species.default_color
+						else if((MUTCOLORS_PARTSONLY in pref_species.species_traits) || ReadHSV(temp_hsv)[3] >= ReadHSV("#202020")[3])
+							features["vag_color"] = sanitize_hexcolor(new_vagcolor)
+						else
+							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
 
 		else
@@ -1612,6 +1431,22 @@ var/list/preferences_datums = list()
 							features["has_breasts"] = TRUE
 						else
 							features["has_breasts"] = FALSE
+				if("has_vag")
+					switch(features["has_vag"])
+						if(TRUE)
+							features["has_vag"] = FALSE
+						if(FALSE)
+							features["has_vag"] = TRUE
+						else
+							features["has_vag"] = FALSE
+				if("has_womb")
+					switch(features["has_womb"])
+						if(TRUE)
+							features["has_womb"] = FALSE
+						if(FALSE)
+							features["has_womb"] = TRUE
+						else
+							features["has_womb"] = FALSE
 				if("exhibitionist")
 					switch(features["exhibitionist"])
 						if(TRUE)
@@ -1629,11 +1464,11 @@ var/list/preferences_datums = list()
 						gender = FEMALE
 					else
 						gender = MALE
-					underwear = random_underwear(gender)
-					undershirt = random_undershirt(gender)
-					socks = random_socks()
-					facial_hair_style = random_facial_hair_style(gender)
-					hair_style = random_hair_style(gender)
+					underwear = "Nude"
+					undershirt = "Nude"
+					socks = "Nude"
+					facial_hair_style = "Shaved"
+					hair_style = "Bald"
 
 				if("hotkeys")
 					hotkeys = !hotkeys

@@ -1,4 +1,5 @@
 /obj/item/organ/genital
+	color = "#fcccb3"
 	var/shape = "human"
 	var/sensitivity = 1
 	var/list/genital_flags = list()
@@ -7,7 +8,7 @@
 	var/fluid_id = null
 	var/fluid_max_volume = 50
 	var/fluid_efficiency = 1
-	var/fluid_rate = 5
+	var/fluid_rate = 1
 	var/fluid_mult = 1
 	var/producing = FALSE
 
@@ -26,8 +27,21 @@
 
 /obj/item/organ/genital/proc/update_link()
 
+
+/obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
+	..()
+	update()
+/obj/item/organ/genital/Remove(mob/living/carbon/M, special = 0)
+	..()
+	update()
+
 //proc to give a player their genitals and stuff when they log in
-/mob/living/carbon/human/proc/give_genitals()
+/mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
+	if(clean)
+		var/obj/item/organ/genital/GtoClean
+		for(GtoClean in internal_organs)
+			GtoClean.Remove(src)
+			qdel(GtoClean)
 	if(dna.features["has_cock"])
 		give_penis()
 		if(dna.features["has_balls"])
@@ -38,10 +52,10 @@
 			give_eggsack()
 	if(dna.features["has_breasts"])
 		give_breasts()
-	if(dna.features["has_vagina"])
+	if(dna.features["has_vag"])
 		give_vagina()
-	if(dna.features["has_womb"])
-		give_womb()
+		if(dna.features["has_womb"])
+			give_womb()
 
 /mob/living/carbon/human/proc/give_penis()
 	if(!dna)
@@ -55,14 +69,14 @@
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				P.color = skintone2hex(skin_tone)
 			else
-				P.color 			= dna.features["cock_color"]
-			P.length 			= dna.features["cock_length"]
-			P.girth_ratio 		= dna.features["cock_girth_ratio"]
-			P.shape 			= dna.features["cock_shape"]
+				P.color = dna.features["cock_color"]
+			P.length = dna.features["cock_length"]
+			P.girth_ratio = dna.features["cock_girth_ratio"]
+			P.shape = dna.features["cock_shape"]
 			P.update()
 
 /mob/living/carbon/human/proc/give_balls()
-	if(!has_dna())
+	if(!dna)
 		return FALSE
 	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
@@ -72,12 +86,12 @@
 		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 			T.color = skintone2hex(skin_tone)
 		else
-			T.color 	= dna.features["balls_color"]
-		T.size			= dna.features["bals_size"]
-		T.sack_size 	= dna.features["balls_sack_size"]
-		T.fluid_id		= dna.features["balls_cum_id"]
-		T.fluid_rate 	= dna.features["balls_cum_rate"]
-		T.fluid_mult	= dna.features["balls_cum_mult"]
+			T.color = dna.features["balls_color"]
+		T.size = dna.features["bals_size"]
+		T.sack_size = dna.features["balls_sack_size"]
+		T.fluid_id = dna.features["balls_fluid"]
+		T.fluid_rate = dna.features["balls_cum_rate"]
+		T.fluid_mult = dna.features["balls_cum_mult"]
 		T.fluid_efficiency = dna.features["balls_efficiency"]
 		T.update()
 
@@ -97,7 +111,27 @@
 /mob/living/carbon/human/proc/give_ovipositor()
 /mob/living/carbon/human/proc/give_eggsack()
 /mob/living/carbon/human/proc/give_vagina()
+	if(!has_dna())
+		return FALSE
+	if(NOGENITALS in dna.species.species_traits)
+		return FALSE
+	if(!getorganslot("vagina"))
+		var/obj/item/organ/genital/vagina/V = new
+		V.Insert(src)
+		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
+			V.color = skintone2hex(skin_tone)
+		else
+			V.color = dna.features["vag_color"]
+		V.update()
 /mob/living/carbon/human/proc/give_womb()
+	if(!has_dna())
+		return FALSE
+	if(NOGENITALS in dna.species.species_traits)
+		return FALSE
+	if(!getorganslot("womb"))
+		var/obj/item/organ/genital/womb/W = new
+		W.Insert(src)
+		W.update()
 
 
 /datum/species/proc/genitals_layertext(layer)
@@ -128,7 +162,7 @@
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
 	if(!H)
-		return usr << "Please report this to a developer: Error in proc /datum/species/proc/handle_genitals, missing arg 'H'"
+		CRASH("H = null")
 	if(!H.internal_organs.len)
 		return
 	if(NOGENITALS in species_traits)

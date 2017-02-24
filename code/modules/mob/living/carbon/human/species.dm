@@ -269,6 +269,7 @@
 			standing	+= img_eyes
 
 	//Underwear, Undershirts & Socks
+	/*This will be refactored at a later date
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/underwear = underwear_list[H.underwear]
 		if(underwear)
@@ -286,7 +287,7 @@
 		var/datum/sprite_accessory/socks/socks = socks_list[H.socks]
 		if(socks)
 			standing	+= image("icon"=socks.icon, "icon_state"="[socks.icon_state]", "layer"=-BODY_LAYER)
-
+	*/
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -394,9 +395,9 @@
 			bodyparts_to_add -= "mam_ears"
 
 	if("taur" in mutant_bodyparts)
-		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || !H.dna.features["mam_tail"] == "None" || !H.dna.features["mam_waggingtail"] == "None")
+		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "taur"
-
+		else
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE

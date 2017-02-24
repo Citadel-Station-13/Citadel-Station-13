@@ -379,14 +379,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
-		underwear		= sanitize_inlist(underwear, underwear_m)
-		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+//		underwear		= sanitize_inlist(underwear, underwear_m)
+//		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
-		underwear		= sanitize_inlist(underwear, underwear_f)
-		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-	socks			= sanitize_inlist(socks, socks_list)
+//		underwear		= sanitize_inlist(underwear, underwear_f)
+//		undershirt		= sanitize_inlist(undershirt, undershirt_f)
+//	socks			= sanitize_inlist(socks, socks_list)
+	underwear		= "Nude"
+	undershirt		= "Nude"
+	socks			= "Nude"
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
@@ -424,14 +427,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
 	features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
 	features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-	if(!features["balls_fluid"])
-		features["balls_fluid"] 	= "semen"
+	features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
 	//breasts features
 	features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
 	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
 	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-	if(!features["breasts_fluid"])
-		features["breasts_fluid"] 	= "milk"
+	features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], cum_id_list, "semen")
 	//vagina features
 	features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
 	features["vag_color"]			= sanitize_hexcolor(features["breasts_color"], 3, 0)

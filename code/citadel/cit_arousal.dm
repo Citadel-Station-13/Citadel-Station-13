@@ -39,6 +39,23 @@
 		S = dna.species
 		if(S && SSmob.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
 			adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
+			if(dna.features["exhibitionist"])
+				var/amt_nude = 0
+				if(is_chest_exposed() && (gender == FEMALE || getorganslot("breasts")))
+					amt_nude++
+				if(is_groin_exposed())
+					if(getorganslot("penis"))
+						amt_nude++
+					if(getorganslot("vagina"))
+						amt_nude++
+				var/mob/living/M
+				var/watchers = 0
+				for(M in view(world.view, src))
+					if(M.client && !M.stat && !M.eye_blind && (locate(src) in viewers(world.view,M)))
+						watchers++
+				if(watchers && amt_nude)
+					adjustArousalLoss((amt_nude * watchers) + S.arousal_gain_rate)
+
 
 /mob/living/proc/getArousalLoss()
 	return arousalloss
@@ -61,8 +78,8 @@
 	return ((100 / max_arousal) * arousalloss)
 
 /mob/living/proc/isPercentAroused(percentage)//returns true if the mob's arousal (measured in a percent of 100) is greater than the arg percentage.
-	if(!isnum(percentage))
-		return FALSE
+	if(!isnum(percentage) || percentage > 100 || percentage < 0)
+		CRASH("Provided percentage is invalid")
 	if(getPercentAroused() >= percentage)
 		return TRUE
 
@@ -178,6 +195,7 @@
 	var/free_hands = arms
 	var/total_cum = 0
 	var/finished = 0
+	var/mb_time = 30
 	mb_cd_timer = (world.time + mb_cd_length)
 	if(canbearoused && has_dna())
 		if(restrained())
@@ -186,7 +204,7 @@
 		if(stat)
 			src << "<span class='warning'>You must be conscious to do that!</span>"
 			return
-		if(getArousalLoss() < ((max_arousal / 100) * 33))
+		if(getArousalLoss() < 33)//flat number instead of percentage
 			src << "<span class='warning'>You aren't aroused enough for that!</span>"
 			return
 		if(!is_groin_exposed())
@@ -215,6 +233,7 @@
 					if(SC)
 						if(in_range(src, SC))
 							into_container = 1
+				SG.update()
 				switch(SG.type)
 
 					//Penis
@@ -229,7 +248,7 @@
 							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG] over [SC].</span>", \
 								"<span class='userdanger'>You start jerking off over [SC.name].</span>", \
 								"<span class='userdanger'>You start masturbating.</span>")
-							if(do_after(src, 30, target = src) && in_range(src, SC))
+							if(do_after(src, mb_time, target = src) && in_range(src, SC))
 								fluid_source.trans_to(SC, total_cum)
 								src.visible_message("<span class='danger'>[src] orgasms, [pick("cumming into", "emptying themself into")] [SC]!</span>", \
 									"<span class='green'>You cum into [SC].</span>", \
@@ -237,28 +256,30 @@
 								finished = 1
 
 						else//not into a container
-							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG.name].</span>", \
-								"<span class='userdanger'>You start jerking your [SG] off.</span>", \
+							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(dick_nouns)].</span>", \
+								"<span class='userdanger'>You start jerking off your [pick(dick_nouns)].</span>", \
 										"<span class='userdanger'>You start masturbating.</span>")
-							if(do_after(src, 30, target = src))
-								fluid_source.reaction(src.loc, TOUCH)
+							if(do_after(src, mb_time, target = src))
+								if(total_cum > 5)
+									fluid_source.reaction(src.loc, TOUCH, 1, 0)
+								fluid_source.clear_reagents()
 								src.visible_message("<span class='danger'>[src] orgasms, [pick("shooting cum", "draining their balls")][istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
-									"<span class='green'>You cum into [SC].</span>", \
+									"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
 									"<span class='green'>You have relieved yourself.</span>")
 								finished = 1
 
 					else//backup message, just in case
 						src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
 								"<span class='userdanger'>You start masturbating.</span>")
-						if(do_after(src, 30, target = src))
-							src.visible_message("<span class='danger'>[src] relieves themself!</span>", \
+						if(do_after(src, mb_time, target = src))
+							src.visible_message("<span class='danger'>[src] [pick("relieves themself!", "shudders and moans in orgasm!")]</span>", \
 								"<span class='userdanger'>You have relieved yourself.</span>")
 							finished = 1
 				if(finished)
 					setArousalLoss(min_arousal)
 
 		else
-			src << "<span class='warning'>You have no genitals.</span>"
+			src << "<span class='warning'>You have no genitals!</span>"
 			return
 
 /mob/living/carbon/proc/force_orgasm(intensity)

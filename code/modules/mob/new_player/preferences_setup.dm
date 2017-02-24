@@ -5,9 +5,6 @@
 		gender = gender_override
 	else
 		gender = pick(MALE,FEMALE)
-	underwear = random_underwear(gender)
-	undershirt = random_undershirt(gender)
-	socks = random_socks()
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)

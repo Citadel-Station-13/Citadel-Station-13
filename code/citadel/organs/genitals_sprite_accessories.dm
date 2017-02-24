@@ -23,14 +23,6 @@
 	icon_state = "flared"
 	name = "Flared"
 
-/datum/sprite_accessory/penis/blunt
-	icon_state = "blunt"
-	name = "Blunt"
-
-/datum/sprite_accessory/penis/barbed
-	icon_state = "barbed"
-	name = "Barbed"
-
 /datum/sprite_accessory/penis/barbknot
 	icon_state = "barbknot"
 	name = "Barbed, Knotted"
