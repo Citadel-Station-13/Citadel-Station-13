@@ -76,6 +76,7 @@
 	var/forumurl = "http://tgstation13.org/phpBB/index.php" //default forums
 	var/rulesurl = "http://www.tgstation13.org/wiki/Rules" // default rules
 	var/githuburl = "https://www.github.com/tgstation/-tg-station" //default github
+	var/githubrepoid
 
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
@@ -247,15 +248,6 @@
 	var/error_silence_time = 6000 // How long a unique error will be silenced for
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
-	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
-	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
-	// Discord crap.
-	var/discord_url = "hfdksjhfa.com"
-	var/discord_password
-	var/announce_watchlist = 0
-	var/announce_adminhelps = 0
-
-
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -367,7 +359,7 @@
 				if("servername")
 					config.server_name = value
 				if("serversqlname")
-					config.server_sql_name = 1
+					config.server_sql_name = value
 				if("stationname")
 					config.station_name = value
 				if("hostedby")
@@ -384,6 +376,8 @@
 					config.rulesurl = value
 				if("githuburl")
 					config.githuburl = value
+				if("githubrepoid")
+					config.githubrepoid = value
 				if("guest_jobban")
 					config.guest_jobban = 1
 				if("guest_ban")
