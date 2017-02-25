@@ -202,6 +202,7 @@
 							for(var/I in admintickets)
 								var/datum/adminticket/T = I
 								if(T.permckey == C.ckey && T.resolved == "No")
+									LAZYADD(T.logs, "<span class='danger'>[sendername] TO [C]: [msg] </span>")	//sender is still about, let's reply to them
 						else
 							adminhelp(reply)													//sender has left, adminhelp instead
 					return
