@@ -64,3 +64,10 @@
 #define MILK_RATE			5
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
+
+
+// Ticket defines because wew
+
+#define TICKET_RESOLVED		"Yes"
+#define TICKET_UNRESOLVED	"No"
+#define TICKET_UNASSIGNED	"N/A"
