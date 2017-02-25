@@ -8,7 +8,7 @@
 
 //organ defines
 #define COCK_SIZE_MIN		1
-#define COCK_SIZE_MAX		24
+#define COCK_SIZE_MAX		20
 
 #define COCK_GIRTH_RATIO_MAX		1.25
 #define COCK_GIRTH_RATIO_DEF		0.75
@@ -18,18 +18,16 @@
 #define KNOT_GIRTH_RATIO_DEF		2.1
 #define KNOT_GIRTH_RATIO_MIN		1.25
 
-#define BALLS_VOLUME_BASE	50
+#define BALLS_VOLUME_BASE	25
 #define BALLS_VOLUME_MULT	1
 
 #define BALLS_SIZE_MIN		1
-#define BALLS_SIZE_SMALL	2
-#define BALLS_SIZE_NORMAL	3
-#define BALLS_SIZE_BIG		4
-#define BALLS_SIZE_BIGGER	5
-#define BALLS_SIZE_BIGGEST	6
+#define BALLS_SIZE_DEF	3
 #define BALLS_SIZE_MAX		7
 
+#define BALLS_SACK_SIZE_MIN 1
 #define BALLS_SACK_SIZE_DEF	8
+#define BALLS_SACK_SIZE_MAX 40
 
 #define CUM_RATE			5
 #define CUM_RATE_MULT		1
@@ -60,6 +58,7 @@
 #define BREASTS_SIZE_HH		8.5//Largest size, ever. For now.
 
 #define BREASTS_SIZE_MIN 	BREASTS_SIZE_A
+#define BREASTS_SIZE_DEF	BREASTS_SIZE_C
 #define BREASTS_SIZE_MAX 	BREASTS_SIZE_HH
 
 #define MILK_RATE			5
