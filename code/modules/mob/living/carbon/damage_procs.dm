@@ -36,6 +36,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(AROUSAL)
+			adjustArousalLoss(damage * hit_percent)
 	return 1
 
 

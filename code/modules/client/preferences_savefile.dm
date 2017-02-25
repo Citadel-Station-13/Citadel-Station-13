@@ -8,14 +8,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
 	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
-
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
-
 	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
-
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
@@ -312,6 +309,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
 	S["feature_lizard_legs"]			>> features["legs"]
+	//cock features
+	S["feature_has_cock"]				>> features["has_cock"]
+	S["feature_cock_shape"]				>> features["cock_shape"]
+	S["feature_cock_color"]				>> features["cock_color"]
+	S["feature_cock_length"]			>> features["cock_length"]
+	S["feature_cock_girth"]				>> features["cock_girth"]
+	S["feature_has_sheath"]				>> features["sheath_color"]
+	//balls features
+	S["feature_has_balls"]				>> features["has_balls"]
+	S["feature_balls_color"]			>> features["balls_color"]
+	S["feature_balls_size"]				>> features["balls_size"]
+	S["feature_balls_sack_size"]		>> features["balls_sack_size"]
+	S["feature_balls_fluid"]			>> features["balls_fluid"]
+	//breasts features
+	S["feature_has_breasts"]			>> features["has_breasts"]
+	S["feature_breasts_size"]			>> features["breasts_size"]
+	S["feature_breasts_color"]			>> features["breasts_color"]
+	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
+	//vagina features
+	S["feature_has_vag"]				>> features["has_vag"]
+	S["feature_vag_color"]				>> features["vag_color"]
 	if(!config.mutant_humans)
 		features["tail_human"] = "none"
 		features["ears"] = "none"
@@ -361,14 +379,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_male_list)
-		underwear		= sanitize_inlist(underwear, underwear_m)
-		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
+//		underwear		= sanitize_inlist(underwear, underwear_m)
+//		undershirt 		= sanitize_inlist(undershirt, undershirt_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, facial_hair_styles_female_list)
-		underwear		= sanitize_inlist(underwear, underwear_f)
-		undershirt		= sanitize_inlist(undershirt, undershirt_f)
-	socks			= sanitize_inlist(socks, socks_list)
+//		underwear		= sanitize_inlist(underwear, underwear_f)
+//		undershirt		= sanitize_inlist(undershirt, undershirt_f)
+//	socks			= sanitize_inlist(socks, socks_list)
+	underwear		= "Nude"
+	undershirt		= "Nude"
+	socks			= "Nude"
 	age				= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
 	hair_color			= sanitize_hexcolor(hair_color, 3, 0)
 	facial_hair_color			= sanitize_hexcolor(facial_hair_color, 3, 0)
@@ -396,6 +417,25 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
 	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
+	//cock features
+	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
+	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
+	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
+	features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
+	//balls features
+	features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
+	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
+	features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
+	features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
+	features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
+	//breasts features
+	features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
+	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
+	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
+	features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], cum_id_list, "semen")
+	//vagina features
+	features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
+	features["vag_color"]			= sanitize_hexcolor(features["breasts_color"], 3, 0)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -468,6 +508,27 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["religion_name"]		<< custom_names["religion"]
 	S["deity_name"]			<< custom_names["deity"]
 	S["prefered_security_department"] << prefered_security_department
+	//cock features
+	S["feature_has_cock"]				<< features["has_cock"]
+	S["feature_cock_shape"]				<< features["cock_shape"]
+	S["feature_cock_color"]				<< features["cock_color"]
+	S["feature_cock_length"]			<< features["cock_length"]
+	S["feature_cock_girth"]				<< features["cock_girth"]
+	S["feature_has_sheath"]				<< features["sheath_color"]
+	//balls features
+	S["feature_has_balls"]				<< features["has_balls"]
+	S["feature_balls_color"]			<< features["balls_color"]
+	S["feature_balls_size"]				<< features["balls_size"]
+	S["feature_balls_sack_size"]		<< features["balls_sack_size"]
+	S["feature_balls_fluid"]			<< features["balls_fluid"]
+	//breasts features
+	S["feature_has_breasts"]			<< features["has_breasts"]
+	S["feature_breasts_size"]			<< features["breasts_size"]
+	S["feature_breasts_color"]			<< features["breasts_color"]
+	S["feature_breasts_fluid"]			<< features["breasts_fluid"]
+	//vagina features
+	S["feature_has_vag"]				<< features["has_vag"]
+	S["feature_vag_color"]				<< features["vag_color"]
 
 	//Jobs
 	S["joblessrole"]		<< joblessrole

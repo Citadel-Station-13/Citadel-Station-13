@@ -37,6 +37,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, wings_open_list)
 
+	//citadel code
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, mam_tails_list)
@@ -52,6 +53,9 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_head, xeno_head_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_tail, xeno_tail_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, xeno_dorsal_list)
+	//genitals
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, cock_shapes_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, breasts_size_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

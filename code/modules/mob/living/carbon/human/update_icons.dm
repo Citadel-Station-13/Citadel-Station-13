@@ -265,8 +265,11 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
-		overlays_standing[SHOES_LAYER]	= standing
+		if("taur" in dna.species.mutant_bodyparts)
+			switch(dna.features["taur"])
+				if(!"Naga" || "None")
+					var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
+					overlays_standing[SHOES_LAYER]	= standing
 
 	apply_overlay(SHOES_LAYER)
 

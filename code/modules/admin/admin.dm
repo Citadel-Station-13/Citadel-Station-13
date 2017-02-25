@@ -493,7 +493,7 @@ var/global/BSACooldown = 0
 	set name="Toggle Dead OOC"
 	dooc_allowed = !( dooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
+	log_admin("[key_name(usr)] toggled Dead OOC.")
 	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
 	feedback_add_details("admin_verb","TDOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /*

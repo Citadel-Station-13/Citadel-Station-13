@@ -9,6 +9,9 @@ var/changelog_hash = ""
 
 var/ooc_allowed = 1	// used with admin verbs to disable ooc - not a config option apparently
 var/dooc_allowed = 1
+//citadel code
+var/looc_allowed = 1
+var/dlooc_allowed = 1
 var/abandon_allowed = 1
 var/enter_allowed = 1
 var/guests_allowed = 1
