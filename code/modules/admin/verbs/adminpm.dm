@@ -137,7 +137,7 @@
 			for(var/I in admintickets)
 				var/datum/adminticket/T = I
 				if(T.permckey == src.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+					LAZYADD(T.logs, "<span class='notice'>[src] TO [C]: [msg] </span>")
 					ticket = T
 					break
 				else if(T.permckey == src.ckey)
@@ -153,7 +153,7 @@
 			for(var/I in admintickets)
 				var/datum/adminticket/T = I
 				if(T.permckey == src.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+					LAZYADD(T.logs, "<span class='notice'>[src] TO [C]: [msg] </span>")
 					ticket = T
 					break
 				else if(T.permckey == src.ckey)
@@ -174,7 +174,7 @@
 			for(var/I in admintickets)
 				var/datum/adminticket/T = I
 				if(T.permckey == C.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+					LAZYADD(T.logs, "<span class='danger'>[src] TO [C]: [msg] </span>")
 					ticket = T
 					break
 				else if(T.permckey == C.ckey)
@@ -202,7 +202,6 @@
 							for(var/I in admintickets)
 								var/datum/adminticket/T = I
 								if(T.permckey == C.ckey && T.resolved == "No")
-									T.logs += "<span class='danger'>[sendername] TO [C]: [msg] </span>"	//sender is still about, let's reply to them
 						else
 							adminhelp(reply)													//sender has left, adminhelp instead
 					return
