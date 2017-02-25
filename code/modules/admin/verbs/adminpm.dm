@@ -54,19 +54,19 @@
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
 
-		if(T.active == FALSE && T.replying == FALSE)
+		if(T.active == TICKET_INACTIVE && T.replying == TICKET_UNREPLIED)
 			message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. This is the first reply. ([T.uID])")
-			T.replying = TRUE
+			T.replying = TICKET_REPLIED
 			T.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
-		else if(T.replying)
+		else if(T.replying = TICKET_REPLIED)
 			src << "<b>Error, this ticket is already being replied to!</b>"
 			return
-		else if(T.admin != TICKET_UNASSIGNED && T.replying == FALSE)
+		else if(T.admin != TICKET_UNASSIGNED && T.replying == TICKET_UNREPLIED)
 			if(T.admin != src.ckey)
 				if(alert(src, "This adminhelp already has an admin assigned: [T.admin]! Are you sure you want to take it over?", "Conflict", "Yes", "No") == "Yes")
 					message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. Override: [T.admin]. ([T.uID])")
 					T.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
-					T.replying = TRUE
+					T.replying = TICKET_REPLIED
 		else
 			message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help. They did not have an active ahelp.")
 
@@ -77,15 +77,15 @@
 			if(ticket.admin != src.ckey)
 				message_admins("[key_name_admin(src)] has been unassigned from [key_name(C, 0, 0)]'s admin help. Cancelled reply. ([ticket.uID])")
 				ticket.user << "<b>[src.ckey] has been unassigned from your admin help. (reply cancelled)</b>"
-			ticket.replying = FALSE
+			ticket.replying = TICKET_UNREPLIED
 		else
 			message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help. No active ahelp.")
 		return
 
 	if(ticket)
-		ticket.replying = FALSE
+		ticket.replying = TICKET_UNREPLIED
 		ticket.admin = src.ckey
-		ticket.active = TRUE
+		ticket.active = TICKET_ACTIVE
 
 	cmd_admin_pm(whom, msg)
 

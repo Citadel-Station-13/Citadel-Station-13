@@ -1,21 +1,17 @@
-#define TICKET_RESOLVED		"Yes"
-#define TICKET_UNRESOLVED	"No"
-#define TICKET_UNASSIGNED	"N/A"
-
 /datum/adminticket
-	var/active = FALSE //Is the adminhelp active, eg admin responded?
-	var/admin = TICKET_UNASSIGNED //The handling admin? Like come on.
-	var/id = "" //ID of the ticket, very important as its used to find adminhelps.
-	var/logs = list() //The logs of the adminhelp.
-	var/mob //The mob adminhelping mob.
-	var/msg = "" //The adminhelp message.
-	var/permckey = "" //The perm ckey, never removed essentially.
-	var/permuser = "" //Same as above!
-	var/replying = FALSE //Is someone responding to the adminhelp?
-	var/resolved = TICKET_UNRESOLVED //Is it resolved? Its much easier to have a "Yes" or a "No", as you can directly concat it into strings making life that much easier.
-	var/uckey //The saved ckey of the adminhelping user.
-	var/uID = "" //The UNIQUE id, made by putting part of the ckey and the ID together. Used internally in code.
-	var/user = "" //The user of the ahelp.
+	var/active = TICKET_INACTIVE		//Is the adminhelp active, eg admin responded?
+	var/admin = TICKET_UNASSIGNED		//The handling admin? Like come on.
+	var/id = "" 						//ID of the ticket, very important as its used to find adminhelps.
+	var/logs = list() 					//The logs of the adminhelp.
+	var/mob								//The mob adminhelping mob.
+	var/msg	= "" 						//The adminhelp message.
+	var/permckey = "" 					//The perm ckey, never removed essentially.
+	var/permuser = "" 					//Same as above!
+	var/replying = TICKET_UNREPLIED 	//Is someone responding to the adminhelp?
+	var/resolved = TICKET_UNRESOLVED 	//Is it resolved? Its much easier to have a "Yes" or a "No", as you can directly concat it into strings making life that much easier.
+	var/uckey 							//The saved ckey of the adminhelping user.
+	var/uID = ""						//The UNIQUE id, made by putting part of the ckey and the ID together. Used internally in code.
+	var/user = "" 						//The user of the ahelp.
 
 
 /client/proc/list_ahelps(user, resolved)

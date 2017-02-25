@@ -66,8 +66,13 @@
 #define MILK_EFFICIENCY		1
 
 
-// Ticket defines because wew
-
+// Admin ticket things
 #define TICKET_RESOLVED		"Yes"
 #define TICKET_UNRESOLVED	"No"
 #define TICKET_UNASSIGNED	"N/A"
+
+#define TICKET_REPLIED		"Yes"
+#define TICKET_UNREPLIED	"No"
+
+#define TICKET_INACTIVE		"No"
+#define TICKET_ACTIVE		"Yes"
