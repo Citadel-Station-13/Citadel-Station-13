@@ -1,6 +1,10 @@
+#define TICKET_RESOLVED		"Yes"
+#define TICKET_UNRESOLVED	"No"
+#define TICKET_UNASSIGNED	"N/A"
+
 /datum/adminticket
-	var/active = "No" //Is the adminhelp active, eg admin responded?
-	var/admin = "N/A" //The handling admin? Like come on.
+	var/active = FALSE //Is the adminhelp active, eg admin responded?
+	var/admin = TICKET_UNASSIGNED //The handling admin? Like come on.
 	var/id = "" //ID of the ticket, very important as its used to find adminhelps.
 	var/logs = list() //The logs of the adminhelp.
 	var/mob //The mob adminhelping mob.
@@ -8,10 +12,11 @@
 	var/permckey = "" //The perm ckey, never removed essentially.
 	var/permuser = "" //Same as above!
 	var/replying = FALSE //Is someone responding to the adminhelp?
-	var/resolved = "No" //Is it resolved? Its much easier to have a "Yes" or a "No", as you can directly concat it into strings making life that much easier.
+	var/resolved = TICKET_UNRESOLVED //Is it resolved? Its much easier to have a "Yes" or a "No", as you can directly concat it into strings making life that much easier.
 	var/uckey //The saved ckey of the adminhelping user.
 	var/uID = "" //The UNIQUE id, made by putting part of the ckey and the ID together. Used internally in code.
 	var/user = "" //The user of the ahelp.
+
 
 /client/proc/list_ahelps(user, resolved)
 	if(!check_rights(R_ADMIN))
@@ -28,20 +33,20 @@
 			usr << "	<b>Message:</b> [T.msg]"
 			usr << "	<b>Handling Admin:</b> [T.admin]"
 			usr << "	<b>Replied To:</b> [T.active]/<b><a href='?src=\ref[T];view_logs=\ref[T]'>(LOGS)</a></b>"
-			if(T.resolved == "No")
+			if(T.resolved == TICKET_UNRESOLVED)
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Resolve)</a>"
 			else
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Unresolve)</a>"
 
 		else
 			user << "Current Unresolved Ahelps:"
-			if(T.resolved == "No")
+			if(T.resolved == TICKET_UNRESOLVED)
 				usr << "<span class='adminnotice'><b><font color=red>#[T.id] By:</font> <A HREF='?priv_msg=[T.permckey];ahelp_reply=1'>[key_name(T.permuser)]</A></b><b> Ckey:</b> [T.permckey] <b>Name:</b> [T.permuser] <b>Unique ID:</b> [T.uID]</span>"
 				usr << "	<b>Controls:</b> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)]"
 				usr << "	<b>Message:</b> [T.msg]"
 				usr << "	<b>Handling Admin:</b> [T.admin]"
 				usr << "	<b>Replied To:</b> [T.active]/<b><a href='?src=\ref[T];view_logs=\ref[T]'>(LOGS)</a></b>"
-				if(T.resolved == "No")
+				if(T.resolved == TICKET_UNRESOLVED)
 					usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Resolve)</a>"
 				else
 					usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Unresolve)</a>"
@@ -50,9 +55,9 @@
 	var/amount
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.resolved == "No")
+		if(T.resolved == TICKET_UNRESOLVED)
 			amount++
-		if(T.resolved == "Yes")
+		if(T.resolved == TICKET_RESOLVED)
 			amount++
 	return amount
 
@@ -83,7 +88,7 @@
 		usr << "	<b>Message:</b> [T.msg]"
 		usr << "	<b>Handling Admin:</b> [T.admin]"
 		usr << "	<b>Replied To:</b> [T.active]/<b><a href='?src=\ref[T];view_logs=\ref[T]'>(LOGS)</a></b>"
-		if(T.resolved == "No")
+		if(T.resolved == TICKET_UNRESOLVED)
 			usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Resolve)</a>"
 		else
 			usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Unresolve)</a>"
@@ -101,7 +106,7 @@
 
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.resolved == "No")
+		if(T.resolved == TICKET_UNRESOLVED)
 			count++
 
 	usr << "<b>Current Unresolved Ahelps:</b>"
@@ -112,13 +117,13 @@
 
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.resolved == "No")
+		if(T.resolved == TICKET_UNRESOLVED)
 			usr << "<span class='adminnotice'><b><font color=red>#[T.id] By:</font> <A HREF='?priv_msg=[T.permckey];ahelp_reply=1'>[key_name(T.permuser)]</b></A><b> Ckey:</b> [T.permckey] <b>Name:</b> [T.permuser] <b>Unique ID:</b> [T.uID]</span>"
 			usr << "	<b>Controls:</b> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)]"
 			usr << "	<b>Message:</b> [T.msg]"
 			usr << "	<b>Handling Admin:</b> [T.admin]"
 			usr << "	<b>Replied To:</b> [T.active]/<b><a href='?src=\ref[T];view_logs=\ref[T]'>(LOGS)</a></b>"
-			if(T.resolved == "No")
+			if(T.resolved == TICKET_UNRESOLVED)
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Resolve)</a>"
 			else
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Unresolve)</a>"
@@ -136,7 +141,7 @@
 
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.resolved == "No" && T.admin == ckey)
+		if(T.resolved == TICKET_UNRESOLVED && T.admin == ckey)
 			count++
 
 	if(count < 1)
@@ -144,13 +149,13 @@
 		return
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.resolved == "No" && T.admin == ckey)
+		if(T.resolved == TICKET_UNRESOLVED && T.admin == ckey)
 			usr << "<span class='adminnotice'><b><font color=red>#[T.id] By:</font> <A HREF='?priv_msg=[T.permckey];ahelp_reply=1'>[key_name(T.permuser)]</A></b><b> Ckey:</b> [T.permckey] <b>Name:</b> [T.permuser] <b>Unique ID:</b> [T.uID]</span>"
 			usr << "	<b>Controls:</b> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)]"
 			usr << "	<b>Message:</b> [T.msg]"
 			usr << "	<b>Handling Admin:</b> [T.admin]"
 			usr << "	<b>Replied To:</b> [T.active]/<b><a href='?src=\ref[T];view_logs=\ref[T]'>(LOGS)</a></b>"
-			if(T.resolved == "No")
+			if(T.resolved == TICKET_UNRESOLVED)
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Resolve)</a>"
 			else
 				usr << "	<b>Resolved:</b> [T.resolved] <a href='?src=\ref[T];resolve=\ref[T]'>(Unresolve)</a>"
@@ -178,7 +183,7 @@
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
 
-		if(T.permckey == ckey && T.resolved == "Yes")
+		if(T.permckey == ckey && T.resolved == TICKET_RESOLVED)
 			rpass = TRUE
 			usr << "<span class='adminnotice'><b><font color=red>Adminhelp ID: #[T.id] </font></b></span>"
 			usr << "	<b>Message:</b> [T.msg]"
@@ -195,7 +200,7 @@
 
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.permckey == ckey && T.resolved == "No")
+		if(T.permckey == ckey && T.resolved == TICKET_UNRESOLVED)
 			upass = TRUE
 			usr << "<span class='adminnotice'><b><font color=red>Adminhelp ID: #[T.id] </font></b></span>"
 			usr << "	<b>Message:</b> [T.msg]"
@@ -233,8 +238,8 @@
 	var/datum/adminticket/ticket
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.permckey == ckey && T.resolved != "Yes")
-			T.resolved = "Yes"
+		if(T.permckey == ckey && T.resolved != TICKET_RESOLVED)
+			T.resolved = TICKET_RESOLVED
 			pass = TRUE
 
 	switch(pass)
@@ -258,7 +263,7 @@
 	var/datum/adminticket/ticket
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
-		if(T.admin == ckey && T.resolved != "Yes")
+		if(T.admin == ckey && T.resolved != TICKET_RESOLVED)
 			count++
 
 		if(count >= 1)
@@ -266,7 +271,7 @@
 			message_admins("Adminhelp ID: #[T.id]([T.uID]) was resolved by [usr.ckey]")
 			ticket.user << "<b>Your adminhelp (#[T.id]) has been resolved by [usr.ckey]</b>"
 			ticket.user << 'sound/machines/twobeep.ogg'
-			ticket.resolved = "Yes"
+			ticket.resolved = TICKET_RESOLVED
 
 		if(count < 1)
 			usr << "<b>You are not currently handling any adminhelps!</b>"
