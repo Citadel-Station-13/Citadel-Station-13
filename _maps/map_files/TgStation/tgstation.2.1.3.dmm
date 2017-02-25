@@ -29945,7 +29945,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/mob/living/simple_animal/drone/snowflake,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bpS" = (
