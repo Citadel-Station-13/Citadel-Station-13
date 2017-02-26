@@ -102,7 +102,7 @@ var/last_irc_status = 0
 		status += "Players: [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name]."
 		send2irc("Status", status)
 		last_irc_status = world.time
-		send2maindiscord("**Server starting up**. [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name].`. Map is **Probably Box Station**")
+//		send2maindiscord("**Server starting up**. [clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [ticker.mode.name].`. Map is **Probably Box Station**")
 
 	else if("status" in input)
 		var/list/s = list()
