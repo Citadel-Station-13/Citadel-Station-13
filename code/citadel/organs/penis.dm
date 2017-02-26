@@ -6,7 +6,6 @@
 	zone 		= "groin"
 	slot 		= "penis"
 	w_class 	= 3
-	color 		= null
 	can_masturbate_with = 1
 	size 	= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 	= 6	//inches

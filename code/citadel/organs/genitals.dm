@@ -17,7 +17,9 @@
 	reagents = create_reagents(fluid_max_volume)
 
 /obj/item/organ/genital/proc/update()
-	return
+	update_size()
+	update_appearance()
+	update_link()
 
 /obj/item/organ/genital/proc/update_size()
 	return
@@ -26,11 +28,12 @@
 	return
 
 /obj/item/organ/genital/proc/update_link()
-
+	return
 
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
 	..()
 	update()
+
 /obj/item/organ/genital/Remove(mob/living/carbon/M, special = 0)
 	..()
 	update()
