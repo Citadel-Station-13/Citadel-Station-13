@@ -15,6 +15,7 @@
 	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
+
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
@@ -60,9 +61,6 @@
 	//Flight and floating
 	var/override_float = 0
 
-		//Eyes
-	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
-
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
@@ -71,6 +69,8 @@
 	var/lang_spoken = HUMAN
 	var/lang_understood = HUMAN
 
+	//Eyes
+	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	///////////
 	// PROCS //
 	///////////
@@ -141,7 +141,6 @@
 		else
 			lungs = new()
 		lungs.Insert(C)
-
 
 	if((NOHUNGER in species_traits) && appendix)
 		qdel(appendix)
@@ -253,6 +252,7 @@
 	var/list/standing	= list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
+
 
 	// eyes
 	var/has_eyes = TRUE
@@ -403,7 +403,6 @@
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None")
 			bodyparts_to_add -= "taur"
-		else
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
 	var/update_needed = FALSE
@@ -915,6 +914,7 @@
 			hunger_rate = 3 * HUNGER_FACTOR
 		H.nutrition = max(0, H.nutrition - hunger_rate)
 
+
 	if (H.nutrition > NUTRITION_LEVEL_FULL)
 		if(H.overeatduration < 600) //capped so people don't take forever to unfat
 			H.overeatduration++
@@ -1162,7 +1162,7 @@
 	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
 		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'> You slap [target] in the face! </span>",\
+			"<span class='notice'>You slap [target] in the face! </span>",\
 		"You hear a slap.")
 		target.endTailWag()
 		return FALSE
