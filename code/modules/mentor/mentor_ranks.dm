@@ -4,7 +4,6 @@
 	mentors.Cut()
 
 	if(!config.mentor_legacy_system)
-		establish_db_connection()
 		if(!dbcon.IsConnected())
 			world.log << "Failed to connect to database in load_mentors()."
 			diary << "Failed to connect to database in load_mentors()."

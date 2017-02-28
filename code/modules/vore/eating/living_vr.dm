@@ -22,7 +22,7 @@
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
 					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
-					return 0
+					return FALSE
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
 
@@ -30,7 +30,7 @@
 				if(!M.vore_organs)
 					M.vore_organs = list()
 				var/datum/belly/B = new /datum/belly(M)
-				B.immutable = 1
+				B.immutable = TRUE
 				B.name = "Stomach"
 				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
 				M.vore_organs[B.name] = B
