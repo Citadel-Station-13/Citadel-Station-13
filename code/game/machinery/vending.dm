@@ -993,7 +993,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
-          /obj/item/clothing/under/sailor=1,
+					/obj/item/clothing/under/sailor=1,
 					/obj/item/clothing/shoes/megaboots=1,/obj/item/clothing/gloves/megagloves=1,/obj/item/clothing/head/helmet/megahelmet=1,/obj/item/clothing/under/mega=1,
 					/obj/item/clothing/shoes/protoboots=1,/obj/item/clothing/gloves/protogloves=1,/obj/item/clothing/head/helmet/protohelmet = 1,/obj/item/clothing/under/proto = 1,
 					/obj/item/clothing/shoes/megaxboots = 1,/obj/item/clothing/gloves/megaxgloves = 1,/obj/item/clothing/head/helmet/megaxhelmet = 1,/obj/item/clothing/under/megax = 1,
@@ -1165,9 +1165,10 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
 	products = list(
-	/obj/item/clothing/under/maid = 5,
-	/obj/item/clothing/under/stripper_pink = 5, /obj/item/clothing/under/stripper_green = 5
-	)
+				/obj/item/clothing/under/maid = 5,
+				/obj/item/clothing/under/stripper_pink = 5,
+				/obj/item/clothing/under/stripper_green = 5
+				)
 	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
 					/obj/item/clothing/neck/petcollar=5,
 					/obj/item/clothing/under/mankini = 1
