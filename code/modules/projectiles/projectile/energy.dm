@@ -188,3 +188,5 @@
 /obj/item/projectile/energy/tesla_revolver/Destroy()
 	qdel(chain)
 	return ..()
+
+

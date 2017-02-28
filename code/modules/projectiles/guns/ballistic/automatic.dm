@@ -406,3 +406,5 @@
 	..()
 	icon_state = "oldrifle[magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""]"
 	return
+
+

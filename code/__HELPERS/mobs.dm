@@ -47,7 +47,7 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, socks_list)
 	return pick(socks_list)
 
-/proc/random_features()
+/proc/random_features(penis=0,balls=0,vagina=0,womb=0,breasts=0)
 	if(!tails_list_human.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, tails_list_human)
 	if(!tails_list_lizard.len)
@@ -68,9 +68,87 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, body_markings_list)
 	if(!wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
+	if(!cock_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, cock_shapes_list)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.gender == MALE)
+			penis = 1
+			balls = 1
+			vagina = 0
+			womb = 0
+			breasts = 0
+		if(H.gender == FEMALE)
+			penis = 0
+			balls = 0
+			vagina = 1
+			womb = 1
+			breasts = 1
 
-	//For now we will always return none for tail_human and ears.
-	return(list("mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"), "tail_lizard" = pick(tails_list_lizard), "tail_human" = "None", "wings" = "None", "snout" = pick(snouts_list), "horns" = pick(horns_list), "ears" = "None", "frills" = pick(frills_list), "spines" = pick(spines_list), "body_markings" = pick(body_markings_list), "legs" = "Normal Legs"))
+	return(list(
+		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"mcolor2" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"mcolor3" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"tail_lizard" = pick(tails_list_lizard),
+		"tail_human" = "None",
+		"wings" = "None",
+		"snout" = pick(snouts_list),
+		"horns" = pick(horns_list),
+		"ears" = "None",
+		"frills" = pick(frills_list),
+		"spines" = pick(spines_list),
+		"body_markings" = pick(body_markings_list),
+		"legs" = "Normal Legs",
+		"taur" = "None",
+		"mam_body_markings" = "None",
+		"mam_ears" 			= "None",
+		"mam_tail" 			= "None",
+		"mam_tail_animated" = "None",
+		"xenodorsal" 		= "None",
+		"xenohead" 			= "None",
+		"xenotail" 			= "None",
+		"exhibitionist" 	= FALSE,
+		"has_cock"			= FALSE,
+		"cock_shape"		= "human",
+		"cock_length"		= 6,
+		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
+		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"has_sheath"		= FALSE,
+		"sheath_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"has_balls" 		= FALSE,
+		"balls_internal" 	= FALSE,
+		"balls_color" 		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"balls_amount"		= 2,
+		"balls_sack_size"	= BALLS_SACK_SIZE_DEF,
+		"balls_size"		= BALLS_SIZE_DEF,
+		"balls_cum_rate"	= CUM_RATE,
+		"balls_cum_mult"	= CUM_RATE_MULT,
+		"balls_efficiency"	= CUM_EFFICIENCY,
+		"balls_fluid" 		= "semen",
+		"has_ovi"			= FALSE,
+		"ovi_shape"			= "knotted",
+		"ovi_length"		= 6,
+		"ovi_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"has_eggsack" 		= FALSE,
+		"eggsack_internal" 	= TRUE,
+		"eggsack_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"eggsack_size" 		= BALLS_SACK_SIZE_DEF,
+		"eggsack_egg_color" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"eggsack_egg_size" 	= EGG_GIRTH_DEF,
+		"has_breasts" 		= FALSE,
+		"breasts_color" 	= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"breasts_size" 		= pick(breasts_size_list),
+		"breasts_fluid" 	= "milk",
+		"has_vag"			= FALSE,
+		"vag_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
+		"vag_clits"			= 1,
+		"vag_clit_diam"		= 0.25,
+		"vag_clit_len"		= 0.25,
+		"has_womb"			= FALSE,
+		"womb_cum_rate"		= CUM_RATE,
+		"womb_cum_mult"		= CUM_RATE_MULT,
+		"womb_efficiency"	= CUM_EFFICIENCY,
+		"womb_fluid" 		= "femcum"))
 
 /proc/random_hair_style(gender)
 	switch(gender)

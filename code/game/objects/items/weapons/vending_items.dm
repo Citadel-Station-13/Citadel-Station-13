@@ -77,3 +77,15 @@
 	icon_state 		= "refill_kink"
 	charges 		= list(6, 4, 0)// of 30 standard, 0 contraband, 15 premium
 	init_charges 	= list(6, 4, 0)
+
+/obj/item/weapon/vending_refill/nazi
+	machine_name 	= "nazivend"
+	icon_state 		= "refill_nazi"
+	charges 		= list(33, 13, 0)
+	init_charges 	= list(33, 13, 0)
+
+/obj/item/weapon/vending_refill/soviet
+	machine_name 	= "sovietvend"
+	icon_state 		= "refill_soviet"
+	charges 		= list(47, 7, 0)
+	init_charges 	= list(47, 7, 0)
