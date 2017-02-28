@@ -230,19 +230,19 @@
 	set name = "Resolve My Adminhelp"
 	set desc = "Resolve my own adminhelp"
 
-	var/pass = FALSE
+	var/pass = 0
 	var/datum/adminticket/ticket
 	for(var/I in admintickets)
 		var/datum/adminticket/T = I
 		if(T.permckey == ckey && T.resolved != TICKET_RESOLVED)
 			T.resolved = TICKET_RESOLVED
-			pass = TRUE
+			pass = 1
 
 	switch(pass)
-		if(TRUE)
+		if(1)
 			src << "<b>You have resolved your current adminhelp.</b>"
 			message_admins("[src] has resolved his adminhelp (#[ticket.id])")
-		if(FALSE)
+		if(0)
 			src << "<b>Error, you do not have any active adminhelps.</b>"
 
 /client/proc/resolvehandlingahelp()
@@ -276,14 +276,14 @@
 	var/dat = "<h3>View Logs for ahelp [NuID]</h3>"
 	var/datum/adminticket/ticket
 
-	var/pass = FALSE
+	var/pass = 0
 
-	for(var/I in admintickets)
-		var/datum/adminticket/T = I
+	for(var/datum/adminticket/T in admintickets)
 		if(NuID == T.uID)
-			pass = TRUE
+			ticket = T
+			pass = 1
 
-	if(pass == FALSE)
+	if(pass == 0)
 		src << "Error, log system not found for [NuID]... "
 		return
 
