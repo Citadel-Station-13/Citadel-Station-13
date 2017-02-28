@@ -1,6 +1,6 @@
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
-	set name = "Mentorhelp"
+	set name = "mentorhelp"
 
 	//remove out adminhelp verb temporarily to prevent spamming of mentors.
 	src.verbs -= /client/verb/mentorhelp
@@ -27,6 +27,15 @@
 
 	src << "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>"
 	return
+
+/proc/get_mentor_counts()
+	. = list("total" = 0, "afk" = 0, "present" = 0)
+	for(var/client/X in mentors)
+		.["total"]++
+		if(X.is_afk())
+			.["afk"]++
+		else
+			.["present"]++
 
 /proc/key_name_mentor(var/whom, var/include_link = null, var/include_name = 0, var/include_follow = 0, var/char_name_only = 0)
 	var/mob/M

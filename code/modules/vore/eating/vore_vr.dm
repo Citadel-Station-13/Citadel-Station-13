@@ -32,9 +32,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
 	if(C.prefs_vr)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/vore_preferences
 	//Actual preferences
@@ -61,9 +61,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /proc/is_vore_predator(var/mob/living/O)
 	if(istype(O,/mob/living))
 		if(O.vore_organs.len > 0)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 //
 //	Belly searching for simplifying other procs
@@ -76,7 +76,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			if(A in B.internal_contents)
 				return(B)
 
-	return 0
+	return FALSE
 
 //
 // Save/Load Vore Preferences
@@ -91,7 +91,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(!path) return 0 //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore() //Make the file first
-		return 1
+		return TRUE
 
 	var/savefile/S = new /savefile(path)
 	if(!S) return 0 //Savefile object couldn't be created?

@@ -623,6 +623,7 @@
  */
 
 /*
+
 /obj/machinery/vending/[vendors name here]   // --vending machine template   :)
 	name = ""
 	desc = ""
@@ -631,6 +632,7 @@
 	products = list()
 	contraband = list()
 	premium = list()
+
 IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY CANISTER CHARGES in vending_items.dm
 */
 
@@ -699,6 +701,28 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/weapon/vending_refill/snack
 	var/chef_compartment_access = "28"
 
+/obj/machinery/vending/snack/random
+	name = "\improper Random Snackies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/snack/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/snack) - /obj/machinery/vending/snack/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/snack/blue
+	icon_state = "snackblue"
+
+/obj/machinery/vending/snack/orange
+	icon_state = "snackorange"
+
+/obj/machinery/vending/snack/green
+	icon_state = "snackgreen"
+
+/obj/machinery/vending/snack/teal
+	icon_state = "snackteal"
+
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
 	desc = "A vending machine which vends food, as required by section 47-C of the NT's Prisoner Ethical Treatment Agreement."
@@ -723,11 +747,66 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_ads = "Refreshing!;Hope you're thirsty!;Over 1 million drinks sold!;Thirsty? Why not cola?;Please, have a drink!;Drink up!;The best drinks in space."
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
-					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
-	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6)
+	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
 	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
+
+/obj/machinery/vending/cola/random
+	name = "\improper Random Drinkies"
+	desc = "Uh oh!"
+
+/obj/machinery/vending/cola/random/New()
+    ..()
+    var/T = pick(subtypesof(/obj/machinery/vending/cola) - /obj/machinery/vending/cola/random)
+    new T(get_turf(src))
+    qdel(src)
+
+/obj/machinery/vending/cola/blue
+	icon_state = "Cola_Machine"
+
+/obj/machinery/vending/cola/black
+	icon_state = "cola_black"
+
+/obj/machinery/vending/cola/red
+	icon_state = "red_cola"
+	name = "\improper Space Cola Vendor"
+	desc = "It vends cola, in space."
+	product_slogans = "Cola in space!"
+
+/obj/machinery/vending/cola/space_up
+	icon_state = "space_up"
+	name = "\improper Space-up! Vendor"
+	desc = "Indulge in an explosion of flavor."
+	product_slogans = "Space-up! Like a hull breach in your mouth."
+
+/obj/machinery/vending/cola/starkist
+	icon_state = "starkist"
+	name = "\improper Star-kist Vendor"
+	desc = "The taste of a star in liquid form."
+	product_slogans = "Drink the stars! Star-kist!"
+
+/obj/machinery/vending/cola/sodie
+	icon_state = "soda"
+
+/obj/machinery/vending/cola/pwr_game
+	icon_state = "pwr_game"
+	name = "\improper Pwr Game Vendor"
+	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
+	product_slogans = "The POWER that gamers crave! PWR GAME!"
+
+/obj/machinery/vending/cola/shamblers
+	name = "\improper Shambler's Vendor"
+	desc = "~Shake me up some of that Shambler's Juice!~"
+	icon_state = "shamblers_juice"
+	products = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/cola = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
+					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 10)
+	product_slogans = "~Shake me up some of that Shambler's Juice!~"
+	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
+
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -910,65 +989,39 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/suit/hooded/carp_costume = 1,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
 					/obj/item/clothing/suit/hooded/bee_costume = 1,
-					/obj/item/clothing/suit/snowman = 1,
-					/obj/item/clothing/head/snowman = 1,
+					/obj/item/clothing/suit/snowman = 1,/obj/item/clothing/head/snowman = 1,
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
 					/obj/item/clothing/under/sailor=1,
-					/obj/item/clothing/shoes/megaboots=1,
-					/obj/item/clothing/gloves/megagloves=1,
-					/obj/item/clothing/head/helmet/megahelmet=1,
-					/obj/item/clothing/under/mega=1,
-					/obj/item/clothing/shoes/protoboots=1,
-					/obj/item/clothing/gloves/protogloves=1,
-					/obj/item/clothing/head/helmet/protohelmet = 1,
-					/obj/item/clothing/under/proto = 1,
-					/obj/item/clothing/shoes/megaxboots = 1,
-					/obj/item/clothing/gloves/megaxgloves = 1,
-					/obj/item/clothing/head/helmet/megaxhelmet = 1,
-					/obj/item/clothing/under/megax = 1,
-					/obj/item/clothing/shoes/joeboots = 1,
-					/obj/item/clothing/gloves/joegloves = 1,
-					/obj/item/clothing/head/helmet/joehelmet = 1,
-					/obj/item/clothing/under/joe = 1,
+					/obj/item/clothing/shoes/megaboots=1,/obj/item/clothing/gloves/megagloves=1,/obj/item/clothing/head/helmet/megahelmet=1,/obj/item/clothing/under/mega=1,
+					/obj/item/clothing/shoes/protoboots=1,/obj/item/clothing/gloves/protogloves=1,/obj/item/clothing/head/helmet/protohelmet = 1,/obj/item/clothing/under/proto = 1,
+					/obj/item/clothing/shoes/megaxboots = 1,/obj/item/clothing/gloves/megaxgloves = 1,/obj/item/clothing/head/helmet/megaxhelmet = 1,/obj/item/clothing/under/megax = 1,
+					/obj/item/clothing/shoes/joeboots = 1,/obj/item/clothing/gloves/joegloves = 1,/obj/item/clothing/head/helmet/joehelmet = 1,/obj/item/clothing/under/joe = 1,
 					/obj/item/clothing/under/vault = 1,
 					/obj/item/clothing/under/roll = 1,
-					/obj/item/clothing/head/clownpiece = 1,
-					/obj/item/clothing/under/clownpiece = 1,
-					/obj/item/clothing/suit/clownpiece = 1
+					/obj/item/clothing/head/clownpiece = 1,/obj/item/clothing/under/clownpiece = 1,/obj/item/clothing/suit/clownpiece = 1
 					)
-	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
-					/obj/item/clothing/head/powdered_wig = 1,
+	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,
 					/obj/item/weapon/gun/magic/wand = 2,
 					/obj/item/clothing/glasses/sunglasses/garb = 2,
 					/obj/item/clothing/gloves/anchor_arms = 1,
 					/obj/item/clothing/suit/kaminacape = 1,
-					/obj/item/clothing/under/soldieruniform = 1,
-					/obj/item/clothing/head/stalhelm = 1,
-					/obj/item/clothing/suit/soldiercoat = 1,
+					/obj/item/clothing/under/soldieruniform = 1,/obj/item/clothing/head/stalhelm = 1,/obj/item/clothing/suit/soldiercoat = 1,
 					/obj/item/clothing/under/officeruniform = 1,
 					/obj/item/clothing/head/naziofficer = 1,
 					/obj/item/clothing/suit/officercoat = 1,
 					/obj/item/clothing/head/panzer = 1,
-					/obj/item/clothing/under/russobluecamooutfit = 1,
-					/obj/item/clothing/head/russobluecamohat = 1,
-					/obj/item/clothing/suit/russofurcoat = 1,
-					/obj/item/clothing/head/russofurhat = 1,
-					/obj/item/clothing/under/rottensuit = 1,
-					/obj/item/clothing/shoes/rottenshoes = 1,
-					/obj/item/clothing/head/helmet/biker = 1,
-					/obj/item/clothing/under/bikersuit = 1,
-					/obj/item/clothing/gloves/bikergloves = 1,
+					/obj/item/clothing/under/russobluecamooutfit = 1,/obj/item/clothing/head/russobluecamohat = 1,
+					/obj/item/clothing/suit/russofurcoat = 1,/obj/item/clothing/head/russofurhat = 1,
+					/obj/item/clothing/under/rottensuit = 1,/obj/item/clothing/shoes/rottenshoes = 1,
+					/obj/item/clothing/head/helmet/biker = 1,/obj/item/clothing/under/bikersuit = 1,/obj/item/clothing/gloves/bikergloves = 1,
 					/obj/item/clothing/under/jacketsuit = 1,
 					/obj/item/clothing/head/helmet/richard = 1,
 					/obj/item/clothing/under/vault13 = 1
 					)
-	premium = list(/obj/item/clothing/suit/pirate/captain = 2,
-					/obj/item/clothing/head/pirate/captain = 2,
-					/obj/item/clothing/head/helmet/roman = 1,
-					/obj/item/clothing/head/helmet/roman/legionaire = 1,
-					/obj/item/clothing/under/roman = 1,
+	premium = list(/obj/item/clothing/suit/pirate/captain = 2,/obj/item/clothing/head/pirate/captain = 2,
+					/obj/item/clothing/head/helmet/roman = 1,/obj/item/clothing/head/helmet/roman/legionaire = 1,/obj/item/clothing/under/roman = 1,
 					/obj/item/clothing/shoes/roman = 1,
 					/obj/item/weapon/shield/riot/roman = 1,
 					/obj/item/weapon/skub = 1
@@ -1058,36 +1111,38 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
-	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
-	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
-	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
-	/obj/item/clothing/under/sl_suit=1,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
-	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
-	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/jacket/miljacket = 1,
-	/obj/item/clothing/neck/tie/blue=1, /obj/item/clothing/neck/tie/red=1, /obj/item/clothing/neck/tie/black=1, /obj/item/clothing/neck/tie/horrible=1,
-	/obj/item/clothing/neck/scarf/red=1,/obj/item/clothing/neck/scarf/green=1,/obj/item/clothing/neck/scarf/darkblue=1,
-	/obj/item/clothing/neck/scarf/purple=1,/obj/item/clothing/neck/scarf/yellow=1,/obj/item/clothing/neck/scarf/orange=1,
-	/obj/item/clothing/neck/scarf/cyan=1,/obj/item/clothing/neck/scarf=1,/obj/item/clothing/neck/scarf/black=1,
-	/obj/item/clothing/neck/scarf/zebra=1,/obj/item/clothing/neck/scarf/christmas=1,/obj/item/clothing/neck/stripedredscarf=1,
-	/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
-	/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
-	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
-	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
-	/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
-	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
-	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
-	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
-	/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
-	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
-	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
-	/obj/item/clothing/suit/jacket/letterman_red=1, /obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
-	/obj/item/clothing/under/casualhoodie/skirt=1,
-	/obj/item/clothing/under/bb_sweater=2,
-	/obj/item/clothing/under/bb_sweater/blue=2,
-	/obj/item/clothing/under/bb_sweater/green=2,
-	/obj/item/clothing/under/bb_sweater/purple =2,
-	/obj/item/clothing/under/bb_sweater/red=2)
+		/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
+		/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
+		/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
+		/obj/item/clothing/under/sl_suit=1,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
+		/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
+		/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
+		/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/jacket/miljacket = 1,
+		/obj/item/clothing/neck/tie/blue=1, /obj/item/clothing/neck/tie/red=1, /obj/item/clothing/neck/tie/black=1, /obj/item/clothing/neck/tie/horrible=1,
+		/obj/item/clothing/neck/scarf/red=1,/obj/item/clothing/neck/scarf/green=1,/obj/item/clothing/neck/scarf/darkblue=1,
+		/obj/item/clothing/neck/scarf/purple=1,/obj/item/clothing/neck/scarf/yellow=1,/obj/item/clothing/neck/scarf/orange=1,
+		/obj/item/clothing/neck/scarf/cyan=1,/obj/item/clothing/neck/scarf=1,/obj/item/clothing/neck/scarf/black=1,
+		/obj/item/clothing/neck/scarf/zebra=1,/obj/item/clothing/neck/scarf/christmas=1,/obj/item/clothing/neck/stripedredscarf=1,
+		/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
+		/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
+		/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
+		/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
+		/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
+		/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
+		/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
+		/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
+		/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
+		/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
+		/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
+		/obj/item/clothing/suit/jacket/letterman_red=1,
+		/obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
+		/obj/item/clothing/under/casualhoodie/skirt=1,
+		/obj/item/clothing/under/bb_sweater=2,
+		/obj/item/clothing/under/bb_sweater/blue=2,
+		/obj/item/clothing/under/bb_sweater/green=2,
+		/obj/item/clothing/under/bb_sweater/purple =2,
+		/obj/item/clothing/under/bb_sweater/red=2
+		)
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
 		/obj/item/clothing/under/wedding/bride_orange=1,
 		/obj/item/clothing/under/wedding/bride_purple=1,
@@ -1097,7 +1152,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		/obj/item/clothing/under/keyholesweater=1,
 	 	/obj/item/clothing/suit/doshjacket=1,
 		/obj/item/clothing/under/squatter_outfit = 1,
-		/obj/item/clothing/head/squatter_hat = 1)
+		/obj/item/clothing/head/squatter_hat = 1
+		)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
@@ -1105,17 +1161,26 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/kink
 	name = "KinkMate"
 	desc = "A vending machine for all your unmentionable desires."
+	icon = 'icons/obj/citvending.dmi'
 	icon_state = "kink"
 	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
 	vend_reply = "Have fun, you shameless pervert!"
-	products = list(/obj/item/clothing/under/maid = 5, /obj/item/clothing/under/stripper_pink = 5, /obj/item/clothing/under/stripper_green = 5)
-	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5, /obj/item/clothing/neck/petcollar=5, /obj/item/clothing/under/mankini = 1)
+	products = list(
+				/obj/item/clothing/under/maid = 5,
+				/obj/item/clothing/under/stripper_pink = 5,
+				/obj/item/clothing/under/stripper_green = 5
+				)
+	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
+					/obj/item/clothing/neck/petcollar=5,
+					/obj/item/clothing/under/mankini = 1
+					)
 	premium = list()
 	refill_canister = /obj/item/weapon/vending_refill/kink
 
 /obj/machinery/vending/nazivend
 	name = "Nazivend"
 	desc = "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorrilions lost.\""
+	icon = 'icons/obj/citvending.dmi'
 	icon_state = "nazi"
 	vend_reply = "SIEG HEIL!"
 	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
@@ -1140,6 +1205,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/sovietvend
 	name = "KomradeVendtink"
 	desc = "Rodina-mat' zovyot!"
+	icon = 'icons/obj/citvending.dmi'
 	icon_state = "soviet"
 	vend_reply = "The fascist and capitalist svin'ya shall fall, komrade!"
 	product_slogans = "Quality worth waiting in line for!; Get Hammer and Sickled!; Sosvietsky soyuz above all!; With capitalist pigsky, you would have paid a fortunetink! ; Craftink in Motherland herself!"
@@ -1163,7 +1229,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	premium = list()
 
 	refill_canister = /obj/item/weapon/vending_refill/soviet
-
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

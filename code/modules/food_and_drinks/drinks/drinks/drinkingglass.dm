@@ -265,6 +265,14 @@
 				icon_state = "space-up_glass"
 				name = "glass of Space-up"
 				desc = "Space-up. It helps you keep your cool."
+			if("pwr_game")
+				icon_state = "glass_red"
+				name = "glass of Pwr Game"
+				desc = "Goes well with a Vlad's salad."
+			if("shamblers")
+				icon_state = "glass_red"
+				name = "glass of Shambler's Juice"
+				desc = "Mmm mm, shambly."
 			if("lemon_lime")
 				icon_state = "glass_yellow"
 				name = "glass of Lemon-Lime"
@@ -517,22 +525,6 @@
 				icon_state = "glass_yellow"
 				name = "Eggnog"
 				desc = "For enjoying the most wonderful time of the year."
-			if("aphro")
-				icon_state = "glass_aphro"
-				name = "glass of aphrodisiac"
-				desc = "For your love interest."
-			if("aphro+")
-				icon_state = "glass_aphro+"
-				name = "glass of strong aphrodisiac"
-				desc = "For your less interested love interest."
-			if("semen")
-				icon_state = "glass_semen"
-				name = "glass of semen"
-				desc = "Salty."
-			if("femcum")
-				icon_state = "glass_femcum"
-				name = "glass of female ejaculate"
-				desc = "A glass of female ejaculate."
 			else
 				icon_state ="glass_brown"
 				var/image/I = image(icon, "glassoverlay")
@@ -643,18 +635,6 @@
 				icon_state = "shotglassgreen"
 				name = "shot of absinthe"
 				desc = "I am stuck in the cycles of my guilt..."
-			if ("semen")
-				icon_state = "shotglasswhite"
-				name = "cum shot"
-				desc = "All those college years boil down to this."
-			if("aphro")
-				icon_state = "shotglassaphro"
-				name = "shot of love"
-				desc = "Guaranteed to put you in the mood."
-			if("aphro+")
-				icon_state = "shotglassaphro"
-				name = "strong shot of love"
-				desc = "Guaranteed to put you in the mood. Not recommended to take more than one unless you're dedicated."
 			else
 				icon_state = "shotglassbrown"
 				name = "shot of... what?"

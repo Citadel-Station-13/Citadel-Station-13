@@ -19,8 +19,8 @@
 	var/digest_brute = 1					// Brute damage per tick in digestion mode
 	var/digest_burn = 3						// Burn damage per tick in digestion mode
 	var/digest_tickrate = 9					// Modulus this of air controller tick number to iterate gurgles on
-	var/immutable = 0						// Prevents this belly from being deleted
-	var/escapable = 1						// Belly can be resisted out of at any time
+	var/immutable = FALSE					// Prevents this belly from being deleted
+	var/escapable = TRUE					// Belly can be resisted out of at any time
 	var/escapetime = 200					// Deciseconds, how long to escape this belly
 	var/escapechance = 45 					// % Chance of prey beginning to escape if prey struggles.
 	var/tmp/digest_mode = DM_HOLD				// Whether or not to digest. Default to not digest.
@@ -28,7 +28,7 @@
 	var/tmp/mob/living/owner					// The mob whose belly this is.
 	var/tmp/list/internal_contents = list()		// People/Things you've eaten into this belly!
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
-	var/tmp/emotePend = 0						// If there's already a spawned thing counting for the next emote
+	var/tmp/emotePend = FALSE					// If there's already a spawned thing counting for the next emote
 
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/list/struggle_messages_outside = list(
@@ -219,7 +219,7 @@
 // Default implementation calls M.death() and removes from internal contents.
 // Indigestable items are removed, and M is deleted.
 /datum/belly/proc/digestion_death(var/mob/living/M)
-	is_full = 1
+	is_full = TRUE
 	internal_contents.Remove(M)
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.

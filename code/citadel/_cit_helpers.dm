@@ -60,6 +60,10 @@ var/global/list/milk_id_list = list("milk")
 //mentor stuff
 var/list/mentors = list()
 
+//Looc stuff
+var/global/looc_allowed = 1
+var/global/dlooc_allowed = 1
+
 /client/proc/reload_mentors()
 		set name = "Reload Mentors"
 		set category = "Admin"
