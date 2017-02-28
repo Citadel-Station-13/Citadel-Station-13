@@ -15,7 +15,7 @@
 		real_name = name
 	var/datum/atom_hud/data/human/medical/advanced/medhud = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medhud.add_to_hud(src)
-	faction |= "\ref[src]"
+	faction += "\ref[src]"
 
 
 /mob/living/prepare_huds()
@@ -31,6 +31,7 @@
 		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
+	QDEL_NULL(riding_datum)
 
 	for(var/mob/living/simple_animal/drone/D in player_list)
 		for(var/image/I in staticOverlays)
@@ -156,10 +157,10 @@
 			// In case of micros, we don't swap positions; instead occupying the same square!
 			if (handle_micro_bump_helping(src))
 				return
+
 			return 1
 
 	//okay, so we didn't switch. but should we push?
-
 	// Handle grabbing, stomping, and such of micros!
 	if(handle_micro_bump_other(M))
 		return
@@ -925,3 +926,8 @@
 					  "[C] topples over [src]!", \
 					  "[C] leaps out of [src]'s way!")]</span>")
 	C.Weaken(2)
+
+/mob/living/post_buckle_mob(mob/living/M)
+	if(riding_datum)
+		riding_datum.handle_vehicle_offsets()
+		riding_datum.handle_vehicle_layer()

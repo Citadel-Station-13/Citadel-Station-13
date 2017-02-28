@@ -465,6 +465,12 @@ var/next_mob_id = 0
 	reset_perspective(null)
 	unset_machine()
 
+//suppress the .click macro so people can't use it to identify the location of items or aimbot
+/mob/verb/ClickSubstitute()
+	set hidden = 1
+	set name = ".click"
+	return
+
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
@@ -954,8 +960,3 @@ var/next_mob_id = 0
 		if ("attack_log")
 			return debug_variable(var_name, attack_log, 0, src, FALSE)
 	. = ..()
-
-/mob/post_buckle_mob(mob/living/M)
-	if(riding_datum)
-		riding_datum.handle_vehicle_offsets()
-		riding_datum.handle_vehicle_layer()
