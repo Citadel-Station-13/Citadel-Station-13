@@ -98,7 +98,7 @@
 		var/datum/adminticket/T = I
 		if(T.permckey == src.ckey && T.resolved == TICKET_UNRESOLVED)
 			if(alert(usr,"You already have an adminhelp open, would you like to bump it?", "Bump Adminhelp", "Yes", "No") == "Yes")
-				T.logs += "[src.ckey] has bumped this adminhelp!"
+				T.ticket_logs += "[src.ckey] has bumped this adminhelp!"
 				if(T.admin == TICKET_UNASSIGNED)
 					usr << "<b>Due to the fact your Adminhelp had no assigned admin, admins have been pinged.</b>"
 					message_admins("[src.ckey] has bumped their adminhelp #[T.id], still no assigned admin!")
