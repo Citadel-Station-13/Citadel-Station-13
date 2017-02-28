@@ -283,7 +283,7 @@
 		if(NuID == T.uID)
 			pass = TRUE
 
-	if(pass = FALSE)
+	if(pass == FALSE)
 		src << "Error, log system not found for [NuID]... "
 		return
 

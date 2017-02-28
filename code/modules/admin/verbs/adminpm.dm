@@ -58,7 +58,7 @@
 			message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. This is the first reply. ([T.uID])")
 			T.replying = TICKET_REPLIED
 			T.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
-		else if(T.replying = TICKET_REPLIED)
+		else if(T.replying == TICKET_REPLIED)
 			src << "<b>Error, this ticket is already being replied to!</b>"
 			return
 		else if(T.admin != TICKET_UNASSIGNED && T.replying == TICKET_UNREPLIED)
