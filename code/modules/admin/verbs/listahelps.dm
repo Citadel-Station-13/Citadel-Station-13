@@ -2,7 +2,7 @@
 	var/active = TICKET_INACTIVE		//Is the adminhelp active, eg admin responded?
 	var/admin = TICKET_UNASSIGNED		//The handling admin? Like come on.
 	var/id = "" 						//ID of the ticket, very important as its used to find adminhelps.
-	var/logs = list() 					//The logs of the adminhelp.
+	var/ticket_logs = list() 					//The logs of the adminhelp.
 	var/mob								//The mob adminhelping mob.
 	var/msg	= "" 						//The adminhelp message.
 	var/permckey = "" 					//The perm ckey, never removed essentially.
@@ -215,7 +215,7 @@
 	A.permckey = uckey
 	A.permuser = A.user
 	admintickets += A
-	A.logs += "<b>ADMINHELP:</b> [A.permckey]([A.permuser]): [A.msg]"
+	A.ticket_logs += "<b>ADMINHELP:</b> [A.permckey]([A.permuser]): [A.msg]"
 	A.mob = mob
 
 	var/index = 0
@@ -288,7 +288,7 @@
 		return
 
 	dat += "<table>"
-	for(var/text in ticket.logs)
+	for(var/text in ticket.ticket_logs)
 		dat += "<tr><td>[text]</td></tr>"
 	dat += "</table>"
 
@@ -304,9 +304,8 @@
 		return
 
 	if(href_list["view_logs"])
-		var/datum/adminticket/T = locate(href_list["view_logs"]) in admintickets
-		if(T && istype(T))
-			viewlogs(T.uID, usr)
+		var/datum/adminticket/T = locate(href_list["view_logs"])
+		viewlogs(T.uID, usr)
 	if(href_list["resolve"])
 		var/datum/adminticket/T = locate(href_list["resolve"]) in admintickets
 		if(T && istype(T))
