@@ -10,13 +10,11 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	stat_tag = "Ov"
 	currentrun = null
 	var/list/overlay_icon_state_caches
-	var/list/overlay_icon_cache
 	var/initialized = FALSE
 
 /datum/subsystem/processing/overlays/New()
 	NEW_SS_GLOBAL(SSoverlays)
 	LAZYINITLIST(overlay_icon_state_caches)
-	LAZYINITLIST(overlay_icon_cache)
 
 /datum/subsystem/processing/overlays/Initialize()
 	initialized = TRUE
@@ -29,7 +27,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 
 /datum/subsystem/processing/overlays/Recover()
 	overlay_icon_state_caches = SSoverlays.overlay_icon_state_caches
-	overlay_icon_cache = SSoverlays.overlay_icon_cache
 	processing = SSoverlays.processing
 
 /datum/subsystem/processing/overlays/fire()
@@ -52,7 +49,7 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		overlays.Cut()
 	flags &= ~OVERLAY_QUEUED
 
-/proc/iconstate2appearance(icon, iconstate)
+/atom/proc/iconstate2appearance(iconstate)
 	var/static/image/stringbro = new()
 	var/list/icon_states_cache = SSoverlays.overlay_icon_state_caches
 	var/list/cached_icon = icon_states_cache[icon]
@@ -68,33 +65,6 @@ var/datum/subsystem/processing/overlays/SSoverlays
 	var/cached_appearance = stringbro.appearance
 	cached_icon["[iconstate]"] = cached_appearance
 	return cached_appearance
-
-/proc/icon2appearance(icon)
-	var/static/image/iconbro = new()
-	var/list/icon_cache = SSoverlays.overlay_icon_cache
-	. = icon_cache[icon]
-	if (!.)
-		iconbro.icon = icon
-		. = iconbro.appearance
-		icon_cache[icon] = .
-
-/atom/proc/build_appearance_list(overlays)
-	var/static/image/appearance_bro = new()
-	if (!islist(overlays))
-		overlays = list(overlays)
-	else
-		listclearnulls(overlays)
-	for (var/i in 1 to length(overlays))
-		var/image/cached_overlay = overlays[i]
-		if (istext(cached_overlay))
-			overlays[i] = iconstate2appearance(icon, cached_overlay)
-		else if(istype(cached_overlay))
-			appearance_bro.appearance = cached_overlay
-			appearance_bro.dir = cached_overlay.dir
-			overlays[i] = appearance_bro.appearance
-		else	//icon probably
-			overlays[i] = icon2appearance(cached_overlay)
-	return overlays
 
 #define NOT_QUEUED_ALREADY (!(flags & OVERLAY_QUEUED))
 #define QUEUE_FOR_COMPILE flags |= OVERLAY_QUEUED; SSoverlays.processing += src;
@@ -116,10 +86,22 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		QUEUE_FOR_COMPILE
 
 /atom/proc/cut_overlay(list/overlays, priority)
+	var/static/image/appearance_bro = new()
 	if(!overlays)
 		return
 
-	overlays = build_appearance_list(overlays)
+	if (!islist(overlays))
+		overlays = list(overlays)
+	else
+		listclearnulls(overlays)
+	for (var/i in 1 to length(overlays))
+		if (istext(overlays[i]))
+			overlays[i] = iconstate2appearance(overlays[i])
+		else
+			var/image/I = overlays[i]
+			appearance_bro.appearance = overlays[i]
+			appearance_bro.dir = I.dir
+			overlays[i] = appearance_bro.appearance
 
 	var/list/cached_overlays = our_overlays	//sanic
 	var/list/cached_priority = priority_overlays
@@ -134,10 +116,22 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		QUEUE_FOR_COMPILE
 
 /atom/proc/add_overlay(list/overlays, priority = FALSE)
+	var/static/image/appearance_bro = new()
 	if(!overlays)
 		return
 
-	overlays = build_appearance_list(overlays)
+	if (!islist(overlays))
+		overlays = list(overlays)
+	else
+		listclearnulls(overlays)
+	for (var/i in 1 to length(overlays))
+		if (istext(overlays[i]))
+			overlays[i] = iconstate2appearance(overlays[i])
+		else
+			var/image/I = overlays[i]
+			appearance_bro.appearance = overlays[i]
+			appearance_bro.dir = I.dir
+			overlays[i] = appearance_bro.appearance
 
 	LAZYINITLIST(our_overlays)	//always initialized after this point
 	LAZYINITLIST(priority_overlays)
