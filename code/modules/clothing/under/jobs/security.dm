@@ -25,7 +25,7 @@
 	icon_state = "security"
 	item_state = "gy_suit"
 	item_color = "security"
-	
+
 
 /obj/item/clothing/under/rank/warden
 	name = "security suit"
@@ -132,6 +132,7 @@
 	item_state = "blueshift"
 	item_color = "blueshift"
 	can_adjust = 0
+
 
 /obj/item/clothing/under/rank/security/sneaksuit
 	name = "sneaking suit"

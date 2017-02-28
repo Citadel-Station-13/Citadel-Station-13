@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////
 /mob
 	var/use_me = 1
+	var/flavor_text = "" //tired of fucking double checking this
 
 /mob/verb/me_verb_subtle(message as text) //This would normally go in say.dm
 	set name = "Subtle"

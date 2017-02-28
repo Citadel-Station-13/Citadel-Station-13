@@ -6,7 +6,8 @@
 	if(!holder)
 		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
 		return
-	if( !ismob(M) || !M.client )	return
+	if( !ismob(M) || !M.client )
+		return
 	cmd_admin_pm(M.client,null)
 	feedback_add_details("admin_verb","APMM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -20,16 +21,15 @@
 	var/list/client/targets[0]
 	for(var/client/T)
 		if(T.mob)
-			if(istype(T.mob, /mob/new_player))
+			if(isnewplayer(T.mob))
 				targets["(New Player) - [T]"] = T
-			else if(istype(T.mob, /mob/dead/observer))
+			else if(isobserver(T.mob))
 				targets["[T.mob.name](Ghost) - [T]"] = T
 			else
 				targets["[T.mob.real_name](as [T.mob.name]) - [T]"] = T
 		else
 			targets["(No Mob) - [T]"] = T
-	var/list/sorted = sortList(targets)
-	var/target = input(src,"To whom shall we send a message?","Admin PM",null) in sorted|null
+	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
 	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -45,31 +45,30 @@
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
-		if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+		if(holder)
+			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 		return
 
 	var/datum/adminticket/ticket
 
-	for(var/datum/adminticket/T in admintickets)
-		if(T.permckey == C.ckey)
-			ticket = T
+	for(var/I in admintickets)
+		var/datum/adminticket/T = I
 
-	if(ticket)
-		if(ticket.active == "No" && ticket.replying == 0)
-			message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. This is the first reply. ([ticket.uID])")
-			ticket.replying = 1
-			ticket.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
-		else if(ticket.replying == 1)
+		if(T.active == TICKET_INACTIVE && T.replying == TICKET_UNREPLIED)
+			message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. This is the first reply. ([T.uID])")
+			T.replying = TICKET_REPLIED
+			T.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
+		else if(T.replying == TICKET_REPLIED)
 			src << "<b>Error, this ticket is already being replied to!</b>"
 			return
-		else if(ticket.admin != "N/A" && ticket.replying == 0)
-			if(ticket.admin != src.ckey)
-				if(alert(src, "This adminhelp already has an admin assigned: [ticket.admin]! Are you sure you want to take it over?", "Conflict", "Yes", "No") == "Yes")
-					message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. Override: [ticket.admin]. ([ticket.uID])")
-					ticket.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
-					ticket.replying = 1
-	else
-		message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help. They did not have an active ahelp.")
+		else if(T.admin != TICKET_UNASSIGNED && T.replying == TICKET_UNREPLIED)
+			if(T.admin != src.ckey)
+				if(alert(src, "This adminhelp already has an admin assigned: [T.admin]! Are you sure you want to take it over?", "Conflict", "Yes", "No") == "Yes")
+					message_admins("[key_name_admin(src)] has been assigned to [key_name(C, 0, 0)]'s admin help. Override: [T.admin]. ([T.uID])")
+					T.user << "<b>[src.ckey] has been assigned to your admin help, please await a reply.</b>"
+					T.replying = TICKET_REPLIED
+		else
+			message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help. They did not have an active ahelp.")
 
 	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 
@@ -78,15 +77,15 @@
 			if(ticket.admin != src.ckey)
 				message_admins("[key_name_admin(src)] has been unassigned from [key_name(C, 0, 0)]'s admin help. Cancelled reply. ([ticket.uID])")
 				ticket.user << "<b>[src.ckey] has been unassigned from your admin help. (reply cancelled)</b>"
-			ticket.replying = 0
+			ticket.replying = TICKET_UNREPLIED
 		else
 			message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help. No active ahelp.")
 		return
 
 	if(ticket)
-		ticket.replying = 0
+		ticket.replying = TICKET_UNREPLIED
 		ticket.admin = src.ckey
-		ticket.active = "Yes"
+		ticket.active = TICKET_ACTIVE
 
 	cmd_admin_pm(whom, msg)
 
@@ -113,7 +112,8 @@
 	if(!msg)
 		msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
 
-		if(!msg)	return
+		if(!msg)
+			return
 		if(!C)
 			if(holder)	src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
 			else		adminhelp(msg)	//admin we are replying to has vanished, adminhelp instead
@@ -125,7 +125,8 @@
 	//clean the message if it's not sent by a high-rank admin
 	if(!check_rights(R_SERVER|R_DEBUG,0))
 		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)	return
+		if(!msg)
+			return
 
 	msg = emoji_parse(msg)
 	var/keywordparsedmsg = keywords_lookup(msg)
@@ -133,26 +134,32 @@
 
 	if(C.holder)
 		if(holder)	//both are admins
-			for(var/datum/adminticket/T in admintickets)
-				if(T.permckey == src.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+			for(var/I in admintickets)
+				var/datum/adminticket/T = I
+				if(T.permckey == src.ckey && T.resolved == TICKET_UNRESOLVED)
+					T.ticket_logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
 					ticket = T
+					break
 				else if(T.permckey == src.ckey)
 					ticket = T
-			if(ticket && ticket.resolved == "No")
+					break
+			if(ticket && ticket.resolved == TICKET_UNRESOLVED)
 				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg] (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>)</font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg] (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>)</font>"
 			else
 				C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [keywordparsedmsg]</font>"
 		else		//recipient is an admin but sender is not
-			for(var/datum/adminticket/T in admintickets)
-				if(T.permckey == src.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+			for(var/I in admintickets)
+				var/datum/adminticket/T = I
+				if(T.permckey == src.ckey && T.resolved == TICKET_UNRESOLVED)
+					T.ticket_logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
 					ticket = T
+					break
 				else if(T.permckey == src.ckey)
 					ticket = T
-			if(ticket && ticket.resolved == "No")
+					break
+			if(ticket && ticket.resolved == TICKET_UNRESOLVED)
 				C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg] (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>)</font>"
 			else
 				C << "<font color='red'>Reply PM from-<b>[key_name(src, C, 1)]</b>: [keywordparsedmsg]</font>"
@@ -164,17 +171,19 @@
 
 	else
 		if(holder)	//sender is an admin but recipient is not. Do BIG RED TEXT
-			for(var/datum/adminticket/T in admintickets)
-				if(T.permckey == C.ckey && T.resolved == "No")
-					T.logs += "<span class='notice'>[src] TO [C]: [msg] </span>"
+			for(var/I in admintickets)
+				var/datum/adminticket/T = I
+				if(T.permckey == C.ckey && T.resolved == TICKET_UNRESOLVED)
+					T.ticket_logs += "<span class='danger'>[src] TO [C]: [msg] </span>"
 					ticket = T
+					break
 				else if(T.permckey == C.ckey)
 					ticket = T
-
+					break
 			C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 			C << "<font color='red'>Admin PM from-<b>[key_name(src, C, 0)]</b>: [msg]</font>"
 			C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-			if(ticket && ticket.resolved == "No")
+			if(ticket && ticket.resolved == TICKET_UNRESOLVED)
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg] (<a href='?src=\ref[ticket];resolve=\ref[ticket]'>R</a>)</font>"
 			else
 				src << "<font color='blue'>Admin PM to-<b>[key_name(C, src, 1)]</b>: [msg]</font>"
@@ -190,9 +199,10 @@
 					if(C && reply)
 						if(sender)
 							C.cmd_admin_pm(sender,reply)
-							for(var/datum/adminticket/T in admintickets)
-								if(T.permckey == C.ckey && T.resolved == "No")
-									T.logs += "<span class='danger'>[sendername] TO [C]: [msg] </span>"										//sender is still about, let's reply to them
+							for(var/I in admintickets)
+								var/datum/adminticket/T = I
+								if(T.permckey == C.ckey && T.resolved == TICKET_UNRESOLVED)
+									T.ticket_logs += "<span class='danger'>[sendername] TO [C]: [msg] </span>"	//sender is still about, let's reply to them
 						else
 							adminhelp(reply)													//sender has left, adminhelp instead
 					return
@@ -232,7 +242,7 @@
 	C << "<font color='red' size='4'><b>-- Administrator private message --</b></font>"
 	C << "<font color='red'>Admin PM from-<b><a href='?priv_msg=[stealthkey]'>[adminname]</A></b>: [msg]</font>"
 	C << "<font color='red'><i>Click on the administrator's name to reply.</i></font>"
-	window_flash(C)
+	window_flash(C, ignorepref = TRUE)
 	//always play non-admin recipients the adminhelp sound
 	C << 'sound/effects/adminhelp.ogg'
 
