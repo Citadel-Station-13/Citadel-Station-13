@@ -10,6 +10,9 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/lascarbine
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
+/obj/item/weapon/gun/energy/laser/carbine/nopin
+	pin = null
+
 /obj/item/weapon/stock_parts/cell/lascarbine
 	name = "laser carbine power supply"
 	maxcharge = 2500
@@ -21,5 +24,5 @@
 	req_tech = list("combat" = 5, "magnets" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 2500, MAT_METAL = 5000, MAT_GLASS = 5000)
-	build_path = /obj/item/weapon/gun/energy/laser/carbine
+	build_path = /obj/item/weapon/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
