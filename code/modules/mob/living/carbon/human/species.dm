@@ -117,6 +117,7 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+	var/obj/item/organ/eyes/eyes = C.getorganslot("eyes")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -126,9 +127,14 @@
 		heart.Insert(C)
 
 	if(lungs)
-		lungs.Remove(C)
 		qdel(lungs)
 		lungs = null
+
+	if(eyes)
+		qdel(eyes)
+		eyes = new mutanteyes
+		mutanteyes.Insert(C)
+
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
 			lungs = new mutantlungs()
@@ -136,8 +142,8 @@
 			lungs = new()
 		lungs.Insert(C)
 
+
 	if((NOHUNGER in species_traits) && appendix)
-		appendix.Remove(C)
 		qdel(appendix)
 	else if((!(NOHUNGER in species_traits)) && (!appendix))
 		appendix = new()
