@@ -84,7 +84,7 @@
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None") || ("mam_tail" in H.dna.species.mutant_bodyparts)))
+	if(H.dna && H.dna.species && ((H.dna.features["tail_lizard"] != "None") || (H.dna.features["tail_human"] != "None") || ("mam_tail" in H.dna.species.mutant_bodyparts)))
 		return TRUE
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
