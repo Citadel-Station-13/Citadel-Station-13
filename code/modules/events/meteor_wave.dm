@@ -3,9 +3,9 @@
 /datum/round_event_control/meteor_wave
 	name = "Meteor Wave: Normal"
 	typepath = /datum/round_event/meteor_wave
-	weight = 4
+	weight = 2
 	min_players = 5
-	max_occurrences = 3
+	max_occurrences = 2
 
 /datum/round_event/meteor_wave
 	startWhen		= 6
@@ -22,9 +22,9 @@
 /datum/round_event/meteor_wave/proc/determine_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"normal" = 50,
-			"threatening" = 40,
-			"catastrophic" = 10))
+			"normal" = 90,
+			"threatening" = 20,
+			"catastrophic" = 5))
 	switch(wave_name)
 		if("normal")
 			wave_type = meteors_normal
