@@ -13,6 +13,14 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
 
+/datum/sprite_accessory/tails/lizard/none
+	name = "None"
+	icon_state = "None"
+
+/datum/sprite_accessory/tails_animated/lizard/none
+	name = "None"
+	icon_state = "None"
+
 /******************************************
 ************ Human Ears/Tails *************
 *******************************************/
