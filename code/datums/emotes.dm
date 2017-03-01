@@ -36,10 +36,11 @@ var/global/list/emote_list = list()
 	var/msg = select_message_type(user)
 	if(params && message_param)
 		msg = select_param(user, params)
+	/*
 	if(findtext(msg, "their"))
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
-		msg = replacetext(msg, "them", user.p_them())
+		msg = replacetext(msg, "them", user.p_them())*/
 	if(findtext(msg, "%s"))
 		msg = replacetext(msg, "%s", user.p_s())
 
