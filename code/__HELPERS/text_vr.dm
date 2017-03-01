@@ -18,7 +18,7 @@ proc/TextPreview(var/string,var/len=40)
 		return "[copytext(string, 1, 37)]..."
 
 var/list/mentor_log = list (  )
-var/list/admintickets = list()
+//var/list/admintickets = list()
 var/global/list/whitelisted_species_list[0]
 /proc/log_mentor(text)
 		mentor_log.Add(text)

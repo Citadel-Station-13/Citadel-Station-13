@@ -197,10 +197,10 @@ var/next_external_rsc = 0
 		verbs += /client/proc/cmd_mentor_say
 		verbs += /client/proc/show_mentor_memo
 		mentors += src
-
+	/*
 	if(check_rights(R_ADMIN))
 		if(ahelp_count(0) > 0)
-			list_ahelps(src, 0)
+			list_ahelps(src, 0)*/
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]

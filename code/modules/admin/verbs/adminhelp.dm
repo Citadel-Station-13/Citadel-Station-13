@@ -91,48 +91,24 @@
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-
-	var/datum/adminticket/ticket
-	var/ref_client = "\ref[src]"
-	for(var/I in admintickets)
-		var/datum/adminticket/T = I
-		if(T.permckey == src.ckey && T.resolved == TICKET_UNRESOLVED)
-			if(alert(usr,"You already have an adminhelp open, would you like to bump it?", "Bump Adminhelp", "Yes", "No") == "Yes")
-				T.ticket_logs += "[src.ckey] has bumped this adminhelp!"
-				if(T.admin == TICKET_UNASSIGNED)
-					usr << "<b>Due to the fact your Adminhelp had no assigned admin, admins have been pinged.</b>"
-					message_admins("[src.ckey] has bumped their adminhelp #[T.id], still no assigned admin!")
-					msg = "<span class='adminnotice'><b><font color='red'>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=ticket;resolve=[T.id]'>R</a>):</b> [msg]</span>"
-					for(var/client/X in admins)
-						if(X.prefs.toggles & SOUND_ADMINHELP)
-							X << 'sound/effects/adminhelp.ogg'
-						X << msg
-				else
-					usr << "<b>Admins have been notified.</b>"
-					message_admins("[src.ckey] has bumped their adminhelp #[T.id].")
-				src.verbs -= /client/verb/adminhelp
-				adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
-				return
-			usr << "<b>Thank you for your patience.</b>"
-			return
-
-	src.verbs -= /client/verb/adminhelp
-	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE)
-
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)
+		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 	var/original_msg = msg
+
+	//remove our adminhelp verb temporarily to prevent spamming of admins.
+	src.verbs -= /client/verb/adminhelp
+	adminhelptimerid = addtimer(CALLBACK(src, .proc/giveadminhelpverb), 1200, TIMER_STOPPABLE) //2 minute cooldown of admin helps
 
 	msg = keywords_lookup(msg)
 
 	if(!mob)
 		return						//this doesn't happen
 
-	createticket(src, msg, src.ckey, mob)
-
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>) (<A HREF='?_src_=holder;resolve=[ticket]'>R</a>):</b> [msg]</span>"
+	var/ref_client = "\ref[src]"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
 
 	//send this msg to all admins
 
@@ -142,14 +118,13 @@
 		window_flash(X, ignorepref = TRUE)
 		X << msg
 
+
 	//show it to the person adminhelping too
 	src << "<span class='adminnotice'>PM to-<b>Admins</b>: [original_msg]</span>"
 
 	//send it to irc if nobody is on and tell us how many were on
 	var/admin_number_present = send2irc_adminless_only(ckey,original_msg)
-	send2irc(ckey,original_msg)
-
-	log_admin("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
+	log_admin_private("HELP: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 	if(admin_number_present <= 0)
 		src << "<span class='notice'>No active admins are online, your adminhelp was sent to the admin irc.</span>"
 	feedback_add_details("admin_verb","AH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -185,6 +160,7 @@
 		send2irc(source,final)
 		send2otherserver(source,final)
 
+
 /proc/send2irc(msg,msg2)
 	if(config.useircbot)
 		shell("python nudge.py [msg] [msg2]")
@@ -200,6 +176,7 @@
 		message["crossmessage"] = type
 
 		world.Export("[global.cross_address]?[list2params(message)]")
+
 
 /proc/ircadminwho()
 	var/list/message = list("Admins: ")
