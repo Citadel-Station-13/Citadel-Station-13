@@ -4,3 +4,14 @@ sound/ambience/title3.ogg
 sound/ambience/title4.ogg
 sound/misc/i_did_not_grief_them.ogg
 sound/ambience/clown.ogg
+sound/VGmusic/1.ogg
+sound/VGmusic/carmenmirandasghost.ogg
+sound/VGmusic/century21march.ogg
+sound/VGmusic/dawsonschristian.ogg
+sound/VGmusic/gaytony.ogg
+sound/VGmusic/gi.ogg
+sound/VGmusic/moonbaseoddity.ogg
+sound/VGmusic/space_asshole.ogg
+sound/VGmusic/space_oddity.ogg
+sound/VGmusic/starman.ogg
+sound/VGmusic/torvus.ogg
