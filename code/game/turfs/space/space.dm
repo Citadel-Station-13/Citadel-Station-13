@@ -64,7 +64,7 @@
 	..()
 	if(istype(C, /obj/item/stack/rods))
 		if(area_restriction && !istype(get_area(src), area_restriction))
- 			return
+			return
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
