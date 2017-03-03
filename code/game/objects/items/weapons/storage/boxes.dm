@@ -147,7 +147,7 @@
 /obj/item/weapon/storage/box/masks
 	name = "box of sterile masks"
 	desc = "This box contains sterile medical masks."
-	icon_state = "sterile"
+	illustration = "sterile"
 
 /obj/item/weapon/storage/box/masks/New()
 	..()
