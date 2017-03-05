@@ -85,6 +85,9 @@ var/datum/subsystem/ticker/ticker
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			world << "<span class='boldnotice'>Welcome to [station_name()]!</span>"
 			current_state = GAME_STATE_PREGAME
+			if(!modevoted)
+				send_gamemode_vote()
+				modevoted = TRUE
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -104,10 +107,6 @@ var/datum/subsystem/ticker/ticker
 			if(timeLeft < 0)
 				return
 			timeLeft -= wait
-
-			if(timeLeft <= config.lobby_countdown && !modevoted) //Vote for the round type
-				send_gamemode_vote()
-				modevoted = TRUE
 
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round()
