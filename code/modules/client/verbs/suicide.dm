@@ -2,7 +2,7 @@
 
 /mob/living/carbon/human/verb/suicide()
 	set hidden = 1
-		return
+	return
 	if(!canSuicide())
 		return
 	var/oldkey = ckey
