@@ -53120,7 +53120,7 @@
 /area/atmos)
 "cmq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 1;
+	dir = 4;
 	 filter_type = "o2";
 	 on = 1
 	},
@@ -58970,10 +58970,6 @@
 	 icon_state = "0-8"
 	},
 /obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	 name = "brig shutters"
-	},
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/engine/engineering)
