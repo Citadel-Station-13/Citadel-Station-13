@@ -12,9 +12,15 @@
 	var/fluid_mult = 1
 	var/producing = FALSE
 
-/obj/item/organ/genital/New()
+/obj/item/organ/genital/Initialize()
 	..()
 	reagents = create_reagents(fluid_max_volume)
+
+/obj/item/organ/genital/Destroy()
+	if(owner)
+		Remove(owner, 1)//this should remove references to it, so it can be GCd correctly
+	update_link()
+	. = ..()
 
 /obj/item/organ/genital/proc/update()
 	update_size()
@@ -22,13 +28,10 @@
 	update_link()
 
 /obj/item/organ/genital/proc/update_size()
-	return
 
 /obj/item/organ/genital/proc/update_appearance()
-	return
 
 /obj/item/organ/genital/proc/update_link()
-	return
 
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -43,7 +46,6 @@
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
-			GtoClean.Remove(src)
 			qdel(GtoClean)
 	if(dna.features["has_cock"])
 		give_penis()
