@@ -409,10 +409,11 @@
 	if(affecting && affecting.status == BODYPART_ROBOTIC && user.a_intent != INTENT_HARM)
 		if(src.remove_fuel(1))
 			playsound(loc, usesound, 50, 1)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
-			if(!do_mob(user, H, 50))
-				return
-			item_heal_robotic(H, user, 5, 0)
+			if(user == H)
+				user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
+				if(!do_mob(user, H, 50))
+					return
+			item_heal_robotic(H, user, 15, 0)
 	else
 		return ..()
 
@@ -579,7 +580,6 @@
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
 	origin_tech = "engineering=2;plasmatech=2"
-	toolspeed = 0.75
 
 /obj/item/weapon/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -625,7 +625,6 @@
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	origin_tech = "engineering=3;plasmatech=2"
-	w_class = 3
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"

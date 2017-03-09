@@ -759,7 +759,6 @@
 	construction_time = 100
 	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
-
 /*
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
@@ -792,4 +791,5 @@
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_PLASMA = 2000, MAT_TITANIUM = 2000)
 	construction_time = 100
 	category = list("Misc")
-	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)*/
+	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)
+*/

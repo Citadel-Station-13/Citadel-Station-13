@@ -10,8 +10,6 @@
 			<A href='?src=\ref[src];secrets=admin_log'>Admin Log</A><BR>
 			<A href='?src=\ref[src];secrets=show_admins'>Show Admin List</A><BR>
 			<A href='?src=\ref[src];secrets=mentor_log'>Mentor Log</A><BR>
-
-			<A href='?src=\ref[src];secrets=show_current_watchlist'>Show online players in the watchlist</A><BR>
 			<BR>
 			"}
 
@@ -59,6 +57,7 @@
 			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
 			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
 			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
 			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
 			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
@@ -101,14 +100,6 @@
 			if(!admin_log.len)
 				dat += "No-one has done anything this round!"
 			usr << browse(dat, "window=admin_log")
-
-		if("mentor_log")
-			var/dat = "<B>Mentor Log<HR></B>"
-			for(var/l in mentor_log)
-				dat += "<li>[l]</li>"
-			if(!mentor_log.len)
-				dat += "No mentors have done anything this round!"
-			usr << browse(dat, "window=mentor_log")
 
 		if("list_job_debug")
 			var/dat = "<B>Job Debug info.</B><HR>"
@@ -540,7 +531,16 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","OO")
 			usr.client.only_one()
+			send_to_playing_players('sound/misc/highlander.ogg')
 //				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+
+		if("delayed_onlyone")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","OO")
+			usr.client.only_one_delayed()
+			send_to_playing_players('sound/misc/highlander_delayed.ogg')
 
 		if("onlyme")
 			if(!check_rights(R_FUN))
@@ -597,6 +597,14 @@
 			message_admins("[key_name_admin(usr)] has removed everyone from \
 				purrbation.")
 			log_admin("[key_name(usr)] has removed everyone from purrbation.")
+
+		if("mentor_log")
+			var/dat = "<B>Mentor Log<HR></B>"
+			for(var/l in mentor_log)
+				dat += "<li>[l]</li>"
+			if(!mentor_log.len)
+				dat += "No mentors have done anything this round!"
+			usr << browse(dat, "window=mentor_log")
 
 	if(E)
 		E.processing = 0

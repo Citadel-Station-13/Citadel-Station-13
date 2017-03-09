@@ -196,7 +196,7 @@
 		src.shot_number = 0
 	var/obj/item/projectile/A = new projectile_type(src.loc)
 	A.setDir(src.dir)
-	playsound(src.loc, projectile_sound, 25, 1)
+	playsound(src.loc, projectile_sound, 100, 1, 7)
 	if(prob(35))
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(5, 1, src)

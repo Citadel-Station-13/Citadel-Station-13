@@ -55,7 +55,6 @@
 	key_third_person = "screeches"
 	message = "screeches."
 	mob_type_allowed_typecache = list(/mob/living/carbon/monkey, /mob/living/carbon/alien)
-	emote_type = EMOTE_AUDIBLE
 
 /datum/emote/living/carbon/sign
 	key = "sign"

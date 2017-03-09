@@ -51,10 +51,10 @@
   <ui-section label='Temperature'>
 		<span class='{{temperatureStatus(adata.cellTemperature)}}'>{{Math.round(adata.cellTemperature)}} K</span>
 	</ui-section>
-	<ui-section label='Door'>
-    <ui-button icon='{{data.isOpen ? "unlock" : "lock"}}' action='door'>{{data.isOpen ? "Open" : "Closed"}}</ui-button>
-    <ui-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}' action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</ui-button>
-	</ui-section>
+  <ui-section label='Door'>
+	<ui-button icon='{{data.isOpen ? "unlock" : "lock"}}' action='door'>{{data.isOpen ? "Open" : "Closed"}}</ui-button>
+	<ui-button icon='{{data.autoEject ? "sign-out" : "sign-in"}}' action='autoeject'>{{data.autoEject ? "Auto" : "Manual"}}</ui-button>
+  </ui-section>
 </ui-display>
 <ui-display title='Beaker' button>
   {{#partial button}}

@@ -4,13 +4,13 @@
 
 /////////////////////////// Auto-Emotes ///////////////////////////
 	if((digest_mode in emote_lists) && !emotePend)
-		emotePend = 1
+		emotePend = TRUE
 
 		spawn(emoteTime)
 			var/list/EL = emote_lists[digest_mode]
 			for(var/mob/living/M in internal_contents)
 				M << "<span class='notice'>[pick(EL)]</span>"
-			src.emotePend = 0
+			src.emotePend = FALSE
 
 ///////////////////////////// DM_HOLD /////////////////////////////
 	if(digest_mode == DM_HOLD)

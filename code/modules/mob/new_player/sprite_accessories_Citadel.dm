@@ -5,12 +5,21 @@
 	var/extra2 = 0
 	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
+//	var/list/ckeys_allowed = null
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
 	name = "Anthro Digitigrade Legs"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
+
+/datum/sprite_accessory/tails/lizard/none
+	name = "None"
+	icon_state = "None"
+
+/datum/sprite_accessory/tails_animated/lizard/none
+	name = "None"
+	icon_state = "None"
 
 /******************************************
 ************ Human Ears/Tails *************
@@ -316,6 +325,7 @@
 	icon_state = "datashark"
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
+//	ckeys_allowed = list("rubyflamewing")
 
 
 //Squirrel

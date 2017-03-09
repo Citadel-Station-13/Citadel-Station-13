@@ -108,6 +108,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 						 'sound/ambience/ambimaint3.ogg',
 						 'sound/ambience/ambimaint4.ogg',
 						 'sound/ambience/ambimaint5.ogg',
+						 'sound/ambience/ambimaint6.ogg',
+						 'sound/ambience/ambimaint7.ogg',
+						 'sound/ambience/ambimaint8.ogg',
+						 'sound/ambience/ambimaint9.ogg',
 						 'sound/voice/lowHiss2.ogg', //Xeno Breathing Hisses, Hahahaha I'm not even sorry.
 						 'sound/voice/lowHiss3.ogg',
 						 'sound/voice/lowHiss4.ogg')

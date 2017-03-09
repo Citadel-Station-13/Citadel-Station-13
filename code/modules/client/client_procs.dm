@@ -197,10 +197,10 @@ var/next_external_rsc = 0
 		verbs += /client/proc/cmd_mentor_say
 		verbs += /client/proc/show_mentor_memo
 		mentors += src
-
+	/*
 	if(check_rights(R_ADMIN))
 		if(ahelp_count(0) > 0)
-			list_ahelps(src, 0)
+			list_ahelps(src, 0)*/
 
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = preferences_datums[ckey]
@@ -220,7 +220,7 @@ var/next_external_rsc = 0
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday
-
+	winset(src, null, "command=\".configure graphics-hwmode on\"")
 	if (byond_version < config.client_error_version)		//Out of date client.
 		src << "<span class='danger'><b>Your version of byond is too old:</b></span>"
 		src << config.client_error_message
@@ -281,7 +281,7 @@ var/next_external_rsc = 0
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
-				send2admindiscord("New-user", "[key_name(src)] is connecting for the first time!")
+				send2irc("New-user", "[key_name(src)] is connecting for the first time!")
 
 		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
 
@@ -350,8 +350,7 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if(!dbcon.IsConnected())
+	if(!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(src.ckey)
@@ -372,13 +371,12 @@ var/next_external_rsc = 0
 	if (IsGuestKey(src.key))
 		return
 
-	establish_db_connection()
-	if (!dbcon.IsConnected())
+	if (!dbcon.Connect())
 		return
 
 	var/sql_ckey = sanitizeSQL(ckey)
 
-	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = '[address]' AND ckey != '[sql_ckey]'")
+	var/DBQuery/query_ip = dbcon.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_ip.Execute()
 	related_accounts_ip = ""
 	while(query_ip.NextRow())
@@ -402,12 +400,11 @@ var/next_external_rsc = 0
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 
-	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
+	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")
 	query_insert.Execute()
 
 	//Logging player access
-	var/serverip = "[world.internet_address]:[world.port]"
-	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
+	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON('[world.internet_address]'),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]');")
 	query_accesslog.Execute()
 
 /client/proc/check_randomizer(topic)
@@ -444,7 +441,7 @@ var/next_external_rsc = 0
 
 			if (!cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
-				send2admindiscord("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
+				send2irc("CidRandomizer", "[key_name(src)] has been detected as using a cid randomizer. Connection rejected.")
 				cidcheck_failedckeys[ckey] = TRUE
 				note_randomizer_user()
 
@@ -455,7 +452,7 @@ var/next_external_rsc = 0
 		else
 			if (cidcheck_failedckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
-				send2admindiscord("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
+				send2irc("CidRandomizer", "[key_name(src)] has been allowed to connect after showing they removed their cid randomizer.")
 				cidcheck_failedckeys -= ckey
 			if (cidcheck_spoofckeys[ckey])
 				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
@@ -576,6 +573,7 @@ var/next_external_rsc = 0
 			return FALSE
 		if ("key")
 			return FALSE
+
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

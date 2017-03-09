@@ -192,8 +192,6 @@ var/global/list/datum/stack_recipe/reinforced_glass_recipes = list ( \
 			var/mob/living/carbon/human/H = AM
 			if(PIERCEIMMUNE in H.dna.species.species_traits)
 				return
-			if(H.dna.species.id == "slime" || "jelly")
-				return
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))

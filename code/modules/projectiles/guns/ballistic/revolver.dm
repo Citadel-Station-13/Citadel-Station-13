@@ -100,6 +100,7 @@
 	options["Black Panther"] = "detective_panther"
 	options["Gold Trim"] = "detective_gold"
 	options["The Peacemaker"] = "detective_peacemaker"
+	options["The Spacemaker"] = "detective_future"
 	options["Cancel"] = null
 
 /obj/item/weapon/gun/ballistic/revolver/detective/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override = "")
