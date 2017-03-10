@@ -54,8 +54,10 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		close()
 		return
 	open()
-	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-	message_admins("Valve, [src.name], was manipulated by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
+	message_admins("Valve, [src.name], was manipulated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
 	log_admin("[key_name(usr)] manipulated a manual valve at [x], [y], [z]")
 
 
