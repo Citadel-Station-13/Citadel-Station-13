@@ -1168,11 +1168,13 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	products = list(
 				/obj/item/clothing/under/maid = 5,
 				/obj/item/clothing/under/stripper_pink = 5,
-				/obj/item/clothing/under/stripper_green = 5
+				/obj/item/clothing/under/stripper_green = 5,
+				/obj/item/weapon/dildo/custom = 5
 				)
 	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
-					/obj/item/clothing/neck/petcollar=5,
-					/obj/item/clothing/under/mankini = 1
+				/obj/item/clothing/neck/petcollar = 5,
+				/obj/item/clothing/under/mankini = 1,
+				/obj/item/weapon/dildo/flared/huge = 1
 					)
 	premium = list()
 	refill_canister = /obj/item/weapon/vending_refill/kink

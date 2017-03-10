@@ -147,4 +147,6 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
 
+.love					{color: #FF69Bf;}
+.lovebold				{color: #FF69Bf;	font-weight: bold;}
 </style>"}
