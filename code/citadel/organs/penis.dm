@@ -16,8 +16,7 @@
 	var/list/knotted_types = list("", "barbknot")
 	var/obj/item/organ/genital/testicles/linked_balls
 
-/obj/item/organ/genital/penis/New()
-	..()
+/obj/item/organ/genital/penis/Initialize()
 	update()
 
 /obj/item/organ/genital/penis/update()
@@ -40,13 +39,13 @@
 	girth = (length * girth_ratio)
 
 /obj/item/organ/genital/penis/update_appearance()
-	var/string = "penis_[shape]_[size]"
+	var/string = "penis_[lowertext(shape)]_[size]"
 	icon_state = sanitize_text(string)
 //	name = "[shape] penis"
 	desc = "That's a [lowertext(shape)] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
 	if(!owner)
 		return
-	color = sanitize_hexcolor(owner.dna.features["cock_color"], 6, 0)
+	color = "#[owner.dna.features["cock_color"]]"
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

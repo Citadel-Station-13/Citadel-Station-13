@@ -1,6 +1,7 @@
 /obj/item/organ/genital/vagina
 	name 					= "vagina"
 	desc 					= "A female reproductive organ."
+	icon					= 'code/citadel/icons/vagina.dmi'
 	icon_state 				= "vagina"
 	zone 					= "groin"
 	slot 					= "vagina"

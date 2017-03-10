@@ -20,7 +20,7 @@
 	if(owner)
 		Remove(owner, 1)//this should remove references to it, so it can be GCd correctly
 	update_link()
-	. = ..()
+	return ..()
 
 /obj/item/organ/genital/proc/update()
 	update_size()
@@ -74,7 +74,7 @@
 			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 				P.color = skintone2hex(skin_tone)
 			else
-				P.color = dna.features["cock_color"]
+				P.color = "#[dna.features["cock_color"]]"
 			P.length = dna.features["cock_length"]
 			P.girth_ratio = dna.features["cock_girth_ratio"]
 			P.shape = dna.features["cock_shape"]
@@ -88,10 +88,10 @@
 	if(!getorganslot("testicles"))
 		var/obj/item/organ/genital/testicles/T = new
 		T.Insert(src)
-		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-			T.color = skintone2hex(skin_tone)
-		else
-			T.color = dna.features["balls_color"]
+//		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
+//			T.color = skintone2hex(skin_tone)
+//		else
+//			T.color = "#[dna.features["balls_color"]]"
 		T.size = dna.features["bals_size"]
 		T.sack_size = dna.features["balls_sack_size"]
 		T.fluid_id = dna.features["balls_fluid"]
