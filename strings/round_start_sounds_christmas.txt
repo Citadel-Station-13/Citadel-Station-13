@@ -1,0 +1,2 @@
+sound/music/christmas/xmas.ogg
+sound/music/christmas/freezeezy_peak.ogg
