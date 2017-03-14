@@ -29,9 +29,8 @@
 	var/list/femcum_fluids = list("femcum")
 
 //Mob procs
-/mob/living/Life()
 /mob/living/proc/handle_arousal()
-	return
+
 
 /mob/living/carbon/handle_arousal()
 	if(canbearoused && dna)

@@ -5,6 +5,7 @@
 		#define MINETYPE "lavaland"
 
         #include "map_files\CitadelStation\CitadelStation-1.0.2.dmm"
+        
 #ifndef TRAVIS_MASS_MAP_BUILD
         #include "map_files\generic\z2.dmm"
         #include "map_files\generic\z3.dmm"
