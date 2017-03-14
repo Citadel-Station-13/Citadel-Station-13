@@ -50,6 +50,7 @@
 
 	internal_organs += new dna.species.mutanteyes()
 	internal_organs += new /obj/item/organ/brain
+	give_genitals()
 	..()
 
 /mob/living/carbon/human/OpenCraftingMenu()
@@ -624,6 +625,7 @@
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	update_body()
+	update_genitals()
 	update_hair()
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
