@@ -2481,7 +2481,7 @@
 "aVK" = (/obj/machinery/firealarm{dir = 8; pixel_x = -24; pixel_y = 0},/turf/open/floor/plasteel/brown{tag = "icon-brown (WEST)"; icon_state = "brown"; dir = 8},/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aVL" = (/obj/machinery/atmospherics/pipe/simple/supply/hidden{dir = 10},/turf/open/floor/plasteel,/area/quartermaster/miningdock{name = "\improper Mining Office"})
 "aVM" = (/obj/machinery/atmospherics/components/unary/vent_scrubber{dir = 2; name = "regular air scrubber"; on = 1},/obj/structure/cable{d1 = 2; d2 = 4; icon_state = "2-4"},/turf/open/floor/plasteel,/area/quartermaster/miningdock{name = "\improper Mining Office"})
-"aVN" = (/obj/machinery/power/apc{step_x = 27},/obj/structure/cable{tag = "icon-0-8"; icon_state = "0-8"},/turf/open/floor/plasteel/brown{tag = "icon-brown (EAST)"; icon_state = "brown"; dir = 4},/area/quartermaster/miningdock{name = "\improper Mining Office"})
+"aVN" = (/obj/machinery/power/apc{step_x = 26},/obj/structure/cable{tag = "icon-0-8"; icon_state = "0-8"},/turf/open/floor/plasteel/brown{tag = "icon-brown (EAST)"; icon_state = "brown"; dir = 4},/area/quartermaster/miningdock{name = "\improper Mining Storeroom"})
 "aVO" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/floor/plating,/area/maintenance/starboard)
 "aVP" = (/obj/structure/window/reinforced{dir = 8; pixel_x = 0},/turf/open/floor/plasteel{icon_plating = "asteroid"; icon_state = "asteroid"; name = "Asteroid"},/area/mine/explored)
 "aVQ" = (/obj/effect/turf_decal/stripes,/turf/open/floor/plating/airless/astplate,/area/mine/explored)
