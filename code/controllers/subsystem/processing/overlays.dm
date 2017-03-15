@@ -100,6 +100,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		else
 			var/image/I = overlays[i]
 			appearance_bro.appearance = I
+			if(isturf(src))
+				appearance_bro.dir = I.dir
 			overlays[i] = appearance_bro.appearance
 
 	var/list/cached_overlays = our_overlays	//sanic
@@ -129,6 +131,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 		else
 			var/image/I = overlays[i]
 			appearance_bro.appearance = I
+			if(isturf(src))
+				appearance_bro.dir = I.dir
 			overlays[i] = appearance_bro.appearance
 
 	LAZYINITLIST(our_overlays)	//always initialized after this point
