@@ -78,6 +78,7 @@
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
+		M.canbearoused = M.client.prefs.arousable
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
