@@ -22209,7 +22209,6 @@
 	})
 "aVN" = (
 /obj/machinery/power/apc{
-	step_x = 27
 	},
 /obj/structure/cable{
 	tag = "icon-0-8";
