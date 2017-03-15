@@ -160,6 +160,7 @@
 #include "code\citadel\organs\testicles.dm"
 #include "code\citadel\organs\vagina.dm"
 #include "code\citadel\organs\womb.dm"
+#include "code\citadel\toys\dildos.dm"
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\configuration_citadel.dm"
