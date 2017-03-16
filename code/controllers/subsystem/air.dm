@@ -219,7 +219,7 @@ var/datum/subsystem/air/SSair
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
 		if (T)
-			T.process_cell(fire_count)
+			T.process(fire_count)
 		if (MC_TICK_CHECK)
 			return
 
