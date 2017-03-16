@@ -218,7 +218,7 @@ var/datum/subsystem/air/SSair
 	while(currentrun.len)
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
-		if (T)
+		if (isturf(T))
 			T.process_cell(fire_count)
 		if (MC_TICK_CHECK)
 			return
