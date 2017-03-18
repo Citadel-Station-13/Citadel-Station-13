@@ -220,7 +220,6 @@ var/datum/subsystem/air/SSair
 		currentrun.len--
 		if (isturf(T))
 			T.process_cell(fire_count)
-
 		if (MC_TICK_CHECK)
 			return
 
