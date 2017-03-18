@@ -80,6 +80,8 @@
 		if(EAST)
 			angle = 90
 			state = ((x+p*y) % 15) + 1
+			if(state < 1)
+				state += 15
 		if(WEST)
 			angle = -90
 			state = ((x-p*y) % 15) + 1
@@ -87,6 +89,8 @@
 				state += 15
 		else
 			state =	((p*x+y) % 15) + 1
+			if(state < 1)
+				state += 15
 
 	icon_state = "speedspace_ns_[state]"
 	transform = turn(matrix(), angle)

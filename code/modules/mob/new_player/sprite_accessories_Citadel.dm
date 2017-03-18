@@ -202,6 +202,12 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
+/datum/sprite_accessory/snouts/otie
+	name = "Otie"
+	icon_state = "otie"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
+
 /******************************************
 ************ Actual Species ***************
 *******************************************/

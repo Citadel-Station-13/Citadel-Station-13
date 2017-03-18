@@ -99,8 +99,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			overlays[i] = iconstate2appearance(overlays[i])
 		else
 			var/image/I = overlays[i]
-			appearance_bro.appearance = I
-			if(ishuman(src) || istype(src,/obj/item))
+			appearance_bro.appearance = overlays[i]
+			if(ismob(src) || istype(src,/obj/item))
 				overlays[i] = appearance_bro.appearance
 			else
 				appearance_bro.dir = I.dir
@@ -132,8 +132,8 @@ var/datum/subsystem/processing/overlays/SSoverlays
 			overlays[i] = iconstate2appearance(overlays[i])
 		else
 			var/image/I = overlays[i]
-			appearance_bro.appearance = I
-			if(ishuman(src) || istype(src,/obj/item))
+			appearance_bro.appearance = overlays[i]
+			if(ismob(src) || istype(src,/obj/item))
 				overlays[i] = appearance_bro.appearance
 			else
 				appearance_bro.dir = I.dir

@@ -203,8 +203,9 @@ var/datum/subsystem/air/SSair
 	while (high_pressure_delta.len)
 		var/turf/open/T = high_pressure_delta[high_pressure_delta.len]
 		high_pressure_delta.len--
-		T.high_pressure_movements()
-		T.pressure_difference = 0
+		if (isturf(T))
+			T.high_pressure_movements()
+			T.pressure_difference = 0
 		if(MC_TICK_CHECK)
 			return
 
@@ -218,9 +219,8 @@ var/datum/subsystem/air/SSair
 	while(currentrun.len)
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
-		if (isturf(T))
+		if (T && isturf(T))
 			T.process_cell(fire_count)
-
 		if (MC_TICK_CHECK)
 			return
 
