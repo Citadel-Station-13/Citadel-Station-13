@@ -4,7 +4,7 @@
 
 		#define MINETYPE "lavaland"
 
-        #include "map_files\CitadelStation\CitadelStation-1.1.0.dmm"
+        #include "map_files\CitadelStation\CitadelStation-1.2.0.dmm"
 
 #ifndef TRAVIS_MASS_MAP_BUILD
         #include "map_files\generic\z2.dmm"
@@ -19,7 +19,7 @@
 		#include "map_files\generic\z11.dmm"
 
 		#define MAP_PATH "map_files/CitadelStation"
-        #define MAP_FILE "CitadelStation-1.1.0"
+        #define MAP_FILE "CitadelStation-1.2.0"
         #define MAP_NAME "Citadel Station"
 
 		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
