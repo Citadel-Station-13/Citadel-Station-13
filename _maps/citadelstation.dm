@@ -20,7 +20,7 @@
 
 		#define MAP_PATH "map_files/CitadelStation"
         #define MAP_FILE "CitadelStation-1.2.0"
-        #define MAP_NAME "Citadel Station 1.2.0"
+        #define MAP_NAME "Citadel Station"
 
 		#define MAP_TRANSITION_CONFIG DEFAULT_MAP_TRANSITION_CONFIG
 #endif
