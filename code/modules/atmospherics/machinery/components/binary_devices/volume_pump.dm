@@ -117,7 +117,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(..())
 		return
 	var/turf/T = get_turf(src)
-	var/area/A = get_area(src)
+	//var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
@@ -179,7 +179,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	if(..())
 		var/turf/T = get_turf(src)
-		var/area/A = get_area(src)
+		//var/area/A = get_area(src)
 		if(!(stat & NOPOWER) && on)
 			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
 		else
