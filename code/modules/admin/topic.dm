@@ -2329,4 +2329,4 @@
 			return
 		if(query_memoedits.NextRow())
 			var/edit_log = query_memoedits.item[1]
-			to_chat(usr, browse(edit_log,"window=mentormemoeditlist"))
+			usr << browse(edit_log,"window=mentormemoeditlist")

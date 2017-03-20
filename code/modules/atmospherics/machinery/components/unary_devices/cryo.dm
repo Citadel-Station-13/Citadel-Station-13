@@ -232,7 +232,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
-	to_chat(user "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
