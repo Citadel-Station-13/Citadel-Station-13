@@ -7,6 +7,7 @@ obj/item/projectile/energy/plasmabolt
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
 	hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	impact_effect_type = /obj/effect/overlay/temp/impact_effect/green_laser
 
 /obj/item/projectile/energy/plasmabolt/light
 	damage = 35
