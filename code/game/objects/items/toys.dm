@@ -1388,3 +1388,30 @@
 
 /obj/item/toy/dummy/GetVoice()
 	return doll_name
+	
+	/*
+ * Ash drake plushie
+ */
+
+/obj/item/plush_drake
+	name = "Ash drake plushie"
+	desc = "An adorable stuffed toy that resembles a fierce dragon."
+	icon = 'icons/obj/plush_drake.dmi'
+	icon_state = "plush_drake"
+	item_state = "ash_plush"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("burned", "bitten", "swooped")
+	resistance_flags = FLAMMABLE
+	//var/bitesound = 'sound/weapons/bite.ogg'
+
+//Attack mob
+/obj/item/plush_drake/attack(mob/M, mob/user)
+	//playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
+	return ..()
+
+//Attack self
+/obj/item/plush_drake/attack_self(mob/user)
+	//playsound(src.loc, bitesound, 20, 1)
+	user << "<span class='notice'>You pet [src]. D'awww.</span>"
+	return ..()
+
