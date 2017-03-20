@@ -158,12 +158,20 @@
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
+	if(NOGENITALS in species_traits)
+		C.canbearoused = FALSE
+	else
+		C.canbearoused = C.client.prefs.arousable
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(TRUE)
+	if(NOGENITALS in species_traits)
+		C.canbearoused = FALSE
+	else
+		C.canbearoused = C.client.prefs.arousable
 
 /datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
 	H.remove_overlay(HAIR_LAYER)
