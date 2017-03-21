@@ -55,7 +55,6 @@
 		new /datum/data/mining_equipment("Syringe Economy Pack",/obj/item/weapon/storage/box/medipens/survival,							2250),
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			250),
 		new /datum/data/mining_equipment("Stimpack Economy Pack",/obj/item/weapon/storage/box/medipens/utility,							1250),
-		new /datum/data/mining_equipment("Whetstone",			/obj/item/weapon/sharpener,												400),
 		)
 
 /datum/data/mining_equipment
