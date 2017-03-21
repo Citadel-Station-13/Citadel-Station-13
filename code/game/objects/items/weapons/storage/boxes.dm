@@ -190,7 +190,6 @@
 	desc = "a box with several survival pens inside, welcome to immortality!!"
 	illustration = "syringe"
 
-
 /obj/item/weapon/storage/box/medipens/survival/New()
 	..()
 	for(var/i in 1 to 5)
