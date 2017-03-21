@@ -267,8 +267,8 @@ Janitor
 
 	outfit = /datum/outfit/job/janitor
 
-	access = list(access_janitor)
-	minimal_access = list(access_janitor)
+	access = list(access_janitor, access_maint_tunnels)
+	minimal_access = list(access_janitor, access_maint_tunnels)
 
 /datum/outfit/job/janitor
 	name = "Janitor"
