@@ -30,8 +30,9 @@
 
 	var/list/possible_transtitons = list()
 	var/k = 1
-	for(var/a in map_transition_config)
-		if(map_transition_config[a] == CROSSLINKED) // Only pick z-levels connected to station space
+	var/list/config_list = SSmapping.config.transition_config
+	for(var/a in config_list)
+		if(config_list[a] == CROSSLINKED) // Only pick z-levels connected to station space
 			possible_transtitons += k
 		k++
 	var/_z = pick(possible_transtitons)
@@ -58,8 +59,8 @@
 	AM.newtonian_move(dir)
 
 //Overwrite because we dont want people building rods
-/turf/open/space/transit/attackby(obj/item/C, mob/user)
-	..(C, user, /area/shuttle)
+/turf/open/space/transit/attackby(obj/item/C, mob/user, params)
+	..(C, user, params, /area/shuttle)
 
 /turf/open/space/transit/Initialize()
 	..()
@@ -80,8 +81,6 @@
 		if(EAST)
 			angle = 90
 			state = ((x+p*y) % 15) + 1
-			if(state < 1)
-				state += 15
 		if(WEST)
 			angle = -90
 			state = ((x-p*y) % 15) + 1
@@ -89,8 +88,6 @@
 				state += 15
 		else
 			state =	((p*x+y) % 15) + 1
-			if(state < 1)
-				state += 15
 
 	icon_state = "speedspace_ns_[state]"
 	transform = turn(matrix(), angle)

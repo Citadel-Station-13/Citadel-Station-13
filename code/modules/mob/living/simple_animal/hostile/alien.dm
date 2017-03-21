@@ -12,7 +12,7 @@
 	response_harm = "hits"
 	speed = 0
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 4,
-							/obj/item/stack/sheet/animalhide/xeno = 1, /obj/item/organ/tongue/alien = 1)
+							/obj/item/stack/sheet/animalhide/xeno = 1)
 	maxHealth = 125
 	health = 125
 	harm_intent_damage = 5
@@ -33,9 +33,9 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	unique_name = 1
 	gold_core_spawnable = 0
-	devourable = 1
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
+	devourable = 1
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
