@@ -1402,16 +1402,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("burned", "bitten", "swooped")
 	resistance_flags = FLAMMABLE
-	//var/bitesound = 'sound/weapons/bite.ogg'
 
 //Attack mob
 /obj/item/plush_drake/attack(mob/M, mob/user)
-	//playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
 	return ..()
 
 //Attack self
 /obj/item/plush_drake/attack_self(mob/user)
-	//playsound(src.loc, bitesound, 20, 1)
 	user << "<span class='notice'>You pet [src]. D'awww.</span>"
 	return ..()
 
