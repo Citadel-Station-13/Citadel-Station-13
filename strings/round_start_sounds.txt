@@ -18,3 +18,5 @@ sound/music/torvus.ogg
 sound/music/shootingstars.ogg
 sound/music/oceanman.ogg
 sound/music/indeep.ogg
+sound/music/traveler.ogg
+sound/music/medsci1.ogg

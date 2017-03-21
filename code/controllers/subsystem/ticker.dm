@@ -1,4 +1,7 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define ROUND_START_MUSIC_LIST_APRIL_FOOLS "strings/round_start_sounds_april_fools.txt"
+#define ROUND_START_MUSIC_LIST_HALLOWEEN "strings/round_start_sounds_halloween.txt"
+#define ROUND_START_MUSIC_LIST_CHRISTMAS "strings/round_start_sounds_christmas.txt"
 
 var/round_start_time = 0
 
@@ -60,11 +63,17 @@ var/datum/subsystem/ticker/ticker
 
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
+	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
-		login_music = 'sound/ambience/clown.ogg'
-	else
-		var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
-		login_music = pick(music)
+		music = file2list(ROUND_START_MUSIC_LIST_APRIL_FOOLS, "\n")
+
+	if(SSevent.holidays && SSevent.holidays[HALLOWEEN])
+		music = file2list(ROUND_START_MUSIC_LIST_HALLOWEEN, "\n")
+
+	if(SSevent.holidays && SSevent.holidays[CHRISTMAS])
+		music = file2list(ROUND_START_MUSIC_LIST_CHRISTMAS, "\n")
+
+	login_music = pick(music)
 
 /datum/subsystem/ticker/Initialize(timeofday)
 	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
