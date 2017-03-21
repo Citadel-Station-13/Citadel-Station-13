@@ -127,8 +127,8 @@ Geneticist
 
 	outfit = /datum/outfit/job/geneticist
 
-	access = list(access_medical, access_morgue, access_chemistry, access_genetics, access_cloning, access_research, access_xenobiology, access_robotics, access_mineral_storeroom, access_tech_storage)
-	minimal_access = list(access_medical, access_morgue, access_genetics, access_cloning, access_research)
+	access = list(access_medical, access_morgue, access_chemistry, access_genetics, access_cloning, access_research, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_genetics, access_cloning,)
 
 /datum/outfit/job/geneticist
 	name = "Geneticist"
