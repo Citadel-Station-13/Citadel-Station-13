@@ -271,8 +271,6 @@ There are several things that need to be remembered:
 			switch(dna.features["taur"])
 				if(!"Naga" || "None")
 					overlays_standing[SHOES_LAYER]	= standing
-		else
-			overlays_standing[SHOES_LAYER]	= standing
 
 	apply_overlay(SHOES_LAYER)
 
