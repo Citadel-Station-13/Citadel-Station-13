@@ -5,10 +5,10 @@
 	name = "chasm"
 	desc = "Watch your step."
 	baseturf = /turf/open/chasm
-	smooth = SMOOTH_TRUE | SMOOTH_BORDER
+	smooth = SMOOTH_TRUE | SMOOTH_BORDER | SMOOTH_MORE
 	icon = 'icons/turf/floors/Chasms.dmi'
 	icon_state = "smooth"
-	canSmoothWith = list(/turf/open/floor/carpet, /turf/open/chasm)
+	canSmoothWith = list(/turf/open/floor/fakepit, /turf/open/chasm)
 	var/drop_x = 1
 	var/drop_y = 1
 	var/drop_z = 1
@@ -20,7 +20,6 @@
 /turf/open/chasm/process()
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
-
 
 /turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
@@ -48,6 +47,7 @@
 				to_chat(user, "<span class='warning'>You need one floor tile to build a floor!</span>")
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
+
 
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
