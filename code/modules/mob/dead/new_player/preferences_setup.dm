@@ -5,9 +5,6 @@
 		gender = gender_override
 	else
 		gender = pick(MALE,FEMALE)
-	underwear = random_underwear(gender)
-	undershirt = random_undershirt(gender)
-	socks = random_socks()
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
@@ -67,7 +64,7 @@
 		previewJob.equip(mannequin, TRUE)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale(48+32, 16+32)
+	preview_icon.Scale((112), (32))
 	CHECK_TICK
 	mannequin.setDir(NORTH)
 
