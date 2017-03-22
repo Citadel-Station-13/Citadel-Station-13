@@ -20,7 +20,12 @@
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(nude = 0)
+	var/wide_icon = 0
+	var/stamp_x = 0
+	var/stamp_y = 1
+	if(features["taur"] != "None")
+		wide_icon = 1
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -57,7 +62,7 @@
 				previewJob = job
 				break
 
-	if(previewJob)
+	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 	CHECK_TICK
@@ -68,17 +73,29 @@
 
 	var/icon/stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
+	if(wide_icon)
+		stamp_x = 16
+	else
+		stamp_x = 32
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
+	if(wide_icon)
+		stamp_x = 48
+	else
+		stamp_x = 64
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
+	if(wide_icon)
+		stamp_x = -15
+	else
+		stamp_x = 1
+	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	CHECK_TICK
