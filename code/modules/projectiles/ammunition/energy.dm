@@ -8,6 +8,18 @@
 	fire_sound = 'sound/weapons/Laser.ogg'
 	firing_effect_type = /obj/effect/overlay/temp/dir_setting/firing_effect/energy
 
+/obj/item/ammo_casing/energy/chameleon
+	e_cost = 0
+	var/list/projectile_vars = list()
+
+/obj/item/ammo_casing/energy/chameleon/ready_proj()
+	. = ..()
+	if(!BB)
+		newshot()
+	for(var/V in projectile_vars)
+		if(BB.vars[V])
+			BB.vars[V] = projectile_vars[V]
+
 /obj/item/ammo_casing/energy/laser
 	projectile_type = /obj/item/projectile/beam/laser
 	select_name = "kill"
@@ -222,31 +234,3 @@
 
 /obj/item/ammo_casing/energy/plasma/adv
 	projectile_type = /obj/item/projectile/plasma/adv
-
-/obj/item/ammo_casing/energy/plasmagun
-	projectile_type = /obj/item/projectile/energy/plasmabolt
-	e_cost = 50
-	fire_sound = 'sound/weapons/elecfire.ogg'
-
-/obj/item/ammo_casing/energy/plasmagun/rifle
-	projectile_type = /obj/item/projectile/energy/plasmabolt/rifle
-	e_cost = 150
-
-/obj/item/ammo_casing/energy/plasmagun/light
-	projectile_type = /obj/item/projectile/energy/plasmabolt/light
-	e_cost = 50
-
-/obj/item/ammo_casing/energy/plasmagun/MP40k
-	projectile_type = /obj/item/projectile/energy/plasmabolt/MP40k
-	e_cost = 75
-
-/obj/item/ammo_casing/energy/megabuster
-	projectile_type = /obj/item/projectile/energy/megabuster
-	fire_sound = 'sound/weapons/megabuster.ogg'
-	e_cost = 5
-
-/obj/item/ammo_casing/energy/buster
-	e_cost = 25
-	projectile_type = /obj/item/projectile/energy/buster
-	fire_sound = 'sound/weapons/mmlbuster.ogg'
-

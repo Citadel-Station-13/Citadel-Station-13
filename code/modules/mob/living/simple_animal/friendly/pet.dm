@@ -4,8 +4,8 @@
 	var/obj/item/clothing/neck/petcollar/pcollar = null
 	var/image/collar = null
 	var/image/pettag = null
-	devourable = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
+	devourable = 1
 
 /mob/living/simple_animal/pet/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
@@ -14,7 +14,7 @@
 		collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
 		pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
 		regenerate_icons()
-		user << "<span class='notice'>You put the [P] around [src]'s neck.</span>"
+		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
 		if(P.tagname)
 			real_name = "\proper [P.tagname]"
 			name = real_name
@@ -30,7 +30,7 @@
 	else
 		..()
 
-/mob/living/simple_animal/pet/New()
+/mob/living/simple_animal/pet/Initialize()
 	..()
 	if(pcollar)
 		pcollar = new(src)

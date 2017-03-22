@@ -81,7 +81,6 @@ PROBABILITY TRAITORCHAN 4
 PROBABILITY DOUBLE_AGENTS 3
 PROBABILITY NUCLEAR 2
 PROBABILITY REVOLUTION 2
-PROBABILITY SHADOWLING 2
 PROBABILITY GANG 2
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
@@ -107,13 +106,14 @@ CONTINUOUS TRAITORCHAN
 CONTINUOUS DOUBLE_AGENTS
 #CONTINUOUS NUCLEAR
 #CONTINUOUS REVOLUTION
-#CONTINUOUS SHADOWLING
 CONTINUOUS GANG
 CONTINUOUS CULT
+CONTINUOUS CLOCKWORK_CULT
 CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 CONTINUOUS MALFUNCTION
 CONTINUOUS BLOB
+CONTINUOUS ABDUCTION
 #CONTINUOUS RAGINMAGES
 #CONTINUOUS MONKEY
 
@@ -131,13 +131,14 @@ MIDROUND_ANTAG TRAITORCHAN
 MIDROUND_ANTAG DOUBLE_AGENTS
 #MIDROUND_ANTAG  NUCLEAR
 #MIDROUND_ANTAG  REVOLUTION
-#MIDROUND_ANTAG  SHADOWLING
 #MIDROUND_ANTAG  GANG
 MIDROUND_ANTAG CULT
+MIDROUND_ANTAG CLOCKWORK_CULT
 MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 MIDROUND_ANTAG MALFUNCTION
 MIDROUND_ANTAG BLOB
+MIDROUND_ANTAG ABDUCTION
 #MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
@@ -393,21 +394,11 @@ JOIN_WITH_MUTANT_RACE
 ## You probably want humans on your space station, but technically speaking you can turn them off without any ill effect
 ROUNDSTART_RACES human
 
-## Races because TG is racist
-ROUNDSTART_RACES canid
-ROUNDSTART_RACES felid
-ROUNDSTART_RACES xeno
-#ROUNDSTART_RACES avian
-ROUNDSTART_RACES rodent
-ROUNDSTART_RACES herbivorous
-ROUNDSTART_RACES exotic
-
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
-#ROUNDSTART_RACES shadowling
 
 ## Races that are better than humans in some ways, but worse in others
 #ROUNDSTART_RACES jelly
@@ -439,7 +430,7 @@ ASSISTANT_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
+STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
 #GREY_ASSISTANTS
@@ -486,3 +477,10 @@ LAVALAND_BUDGET 60
 
 ## Space Ruin Budged
 Space_Budget 16
+
+#Time in ds from when a player latejoins till the arrival shuttle docks at the station
+#Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
+ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+#Set this to 1 to prevent late join players from spawning if the arrivals shuttle is depressurized
+ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN 0
