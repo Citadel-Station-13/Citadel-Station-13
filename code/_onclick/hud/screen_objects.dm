@@ -667,7 +667,7 @@
 			L.say(pick(word_messages))
 
 /obj/screen/splash
-	icon = 'config/title_screens/images/blank.png'
+	icon = 'config/title_screens/images/title1.dmi'
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
