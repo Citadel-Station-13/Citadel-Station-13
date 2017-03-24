@@ -1,6 +1,6 @@
 /world
 	mob = /mob/dead/new_player
-	turf = /turf/basic
+	turf = /turf/open/space/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
@@ -40,7 +40,6 @@
 	load_mode()
 	load_motd()
 	load_admins()
-	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
@@ -104,13 +103,6 @@
 		s["players"] = clients.len
 		s["revision"] = revdata.commit
 		s["revision_date"] = revdata.date
-
-		var/mentors = 0
-		for(var/client/C in clients)
-			var/mentor = mentor_datums[C.ckey]
-			if(mentor)
-				mentors++
-		s["mentors"] = mentors
 
 		var/list/adm = get_admin_counts()
 		var/list/presentmins = adm["present"]
