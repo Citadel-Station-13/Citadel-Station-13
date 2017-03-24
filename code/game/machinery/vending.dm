@@ -96,7 +96,7 @@
 		position = (position == names_paths.len) ? 1 : (position + 1)
 		var/typepath = names_paths[position]
 
-		user << "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>"
+		to_chat(user, "<span class='notice'>You set the board to \"[names_paths[typepath]]\".</span>")
 		set_type(typepath)
 	else
 		return ..()
@@ -231,9 +231,9 @@
 					return
 				W.loc = src
 				food_load(W)
-				user << "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>"
+				to_chat(user, "<span class='notice'>You insert [W] into [src]'s chef compartment.</span>")
 		else
-			user << "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>"
+			to_chat(user, "<span class='notice'>[src]'s chef compartment does not accept junk food.</span>")
 
 	else if(istype(W, /obj/item/weapon/storage/bag/tray))
 		if(!compartment_access_check(user))
@@ -251,9 +251,9 @@
 			else
 				denied_items++
 		if(denied_items)
-			user << "<span class='notice'>[src] refuses some items.</span>"
+			to_chat(user, "<span class='notice'>[src] refuses some items.</span>")
 		if(loaded)
-			user << "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>"
+			to_chat(user, "<span class='notice'>You insert [loaded] dishes into [src]'s chef compartment.</span>")
 		updateUsrDialog()
 		return
 
@@ -263,7 +263,7 @@
 /obj/machinery/vending/snack/proc/compartment_access_check(user)
 	req_access_txt = chef_compartment_access
 	if(!allowed(user) && !emagged && scan_id)
-		user << "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>"
+		to_chat(user, "<span class='warning'>[src]'s chef compartment blinks red: Access denied.</span>")
 		req_access_txt = "0"
 		return 0
 	req_access_txt = "0"
@@ -271,7 +271,7 @@
 
 /obj/machinery/vending/snack/proc/iscompartmentfull(mob/user)
 	if(contents.len >= 30) // no more than 30 dishes can fit inside
-		user << "<span class='warning'>[src]'s chef compartment is full.</span>"
+		to_chat(user, "<span class='warning'>[src]'s chef compartment is full.</span>")
 		return 1
 	return 0
 
@@ -294,14 +294,14 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(anchored)
 			panel_open = !panel_open
-			user << "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>"
+			to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance panel.</span>")
 			cut_overlays()
 			if(panel_open)
 				add_overlay(image(icon, "[initial(icon_state)]-panel"))
 			playsound(src.loc, W.usesound, 50, 1)
 			updateUsrDialog()
 		else
-			user << "<span class='warning'>You must first secure [src].</span>"
+			to_chat(user, "<span class='warning'>You must first secure [src].</span>")
 		return
 	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
@@ -312,27 +312,27 @@
 			return
 		W.loc = src
 		coin = W
-		user << "<span class='notice'>You insert [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 		return
 	else if(istype(W, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
-			user << "<span class='notice'>It does nothing.</span>"
+			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
 			var/obj/item/weapon/vending_refill/canister = W
 			if(canister.charges[STANDARD_CHARGE] == 0)
-				user << "<span class='notice'>This [canister.name] is empty!</span>"
+				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
 				var/transfered = refill_inventory(canister,product_records,STANDARD_CHARGE)
 				transfered += refill_inventory(canister,coin_records,COIN_CHARGE)
 				transfered += refill_inventory(canister,hidden_records,CONTRABAND_CHARGE)
 				if(transfered)
-					user << "<span class='notice'>You loaded [transfered] items in \the [name].</span>"
+					to_chat(user, "<span class='notice'>You loaded [transfered] items in \the [name].</span>")
 				else
-					user << "<span class='notice'>The [name] is fully stocked.</span>"
+					to_chat(user, "<span class='notice'>The [name] is fully stocked.</span>")
 			return
 		else
-			user << "<span class='notice'>You should probably unscrew the service panel first.</span>"
+			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 	else
 		return ..()
 
@@ -359,7 +359,7 @@
 /obj/machinery/vending/emag_act(mob/user)
 	if(!emagged)
 		emagged  = 1
-		user << "<span class='notice'>You short out the product lock on [src].</span>"
+		to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
 
 /obj/machinery/vending/attack_ai(mob/user)
 	return attack_hand(user)
@@ -430,21 +430,21 @@
 		if(iscyborg(usr))
 			var/mob/living/silicon/robot/R = usr
 			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-				usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 				return
 		else
-			usr << "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>"
+			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
 			return
 
 	if(href_list["remove_coin"])
 		if(!coin)
-			usr << "<span class='notice'>There is no coin in this machine.</span>"
+			to_chat(usr, "<span class='notice'>There is no coin in this machine.</span>")
 			return
 
 		coin.loc = loc
 		if(!usr.get_active_held_item())
 			usr.put_in_hands(coin)
-		usr << "<span class='notice'>You remove [coin] from [src].</span>"
+		to_chat(usr, "<span class='notice'>You remove [coin] from [src].</span>")
 		coin = null
 
 
@@ -468,11 +468,11 @@
 
 	if((href_list["vend"]) && (vend_ready))
 		if(panel_open)
-			usr << "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>"
+			to_chat(usr, "<span class='notice'>The vending machine cannot dispense products while its service panel is open!</span>")
 			return
 
 		if((!allowed(usr)) && !emagged && scan_id)	//For SECURE VENDING MACHINES YEAH
-			usr << "<span class='warning'>Access denied.</span>"	//Unless emagged of course
+			to_chat(usr, "<span class='warning'>Access denied.</span>"	)
 			flick(icon_deny,src)
 			return
 
@@ -489,20 +489,20 @@
 				return
 		else if(R in coin_records)
 			if(!coin)
-				usr << "<span class='warning'>You need to insert a coin to get this item!</span>"
+				to_chat(usr, "<span class='warning'>You need to insert a coin to get this item!</span>")
 				vend_ready = 1
 				return
 			if(coin.string_attached)
 				if(prob(50))
 					if(usr.put_in_hands(coin))
-						usr << "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>"
+						to_chat(usr, "<span class='notice'>You successfully pull [coin] out before [src] could swallow it.</span>")
 						coin = null
 					else
-						usr << "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>"
+						to_chat(usr, "<span class='warning'>You couldn't pull [coin] out because your hands are full!</span>")
 						qdel(coin)
 						coin = null
 				else
-					usr << "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>"
+					to_chat(usr, "<span class='warning'>You weren't able to pull [coin] out fast enough, the machine ate it, string and all!</span>")
 					qdel(coin)
 					coin = null
 			else
@@ -514,7 +514,7 @@
 			return
 
 		if (R.amount <= 0)
-			usr << "<span class='warning'>Sold out.</span>"
+			to_chat(usr, "<span class='warning'>Sold out.</span>")
 			vend_ready = 1
 			return
 		else
@@ -673,7 +673,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 /obj/machinery/vending/assist
 	products = list(	/obj/item/device/assembly/prox_sensor = 5,/obj/item/device/assembly/igniter = 3,/obj/item/device/assembly/signaler = 4,
 						/obj/item/weapon/wirecutters = 1, /obj/item/weapon/cartridge/signal = 4)
-	contraband = list(/obj/item/device/flashlight = 5,/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2, /obj/item/device/assembly/health = 2)
+	contraband = list(/obj/item/device/assembly/timer = 2, /obj/item/device/assembly/voice = 2, /obj/item/device/assembly/health = 2)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
@@ -750,7 +750,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_up = 10,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/soda_cans/lemon_lime = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko = 6,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/shamblers = 6)
-	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1)
+	premium = list(/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/filled/nuka_cola = 1,/obj/item/weapon/reagent_containers/food/drinks/soda_cans/air = 1)
 	refill_canister = /obj/item/weapon/vending_refill/cola
 
 /obj/machinery/vending/cola/random
@@ -989,43 +989,14 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/suit/hooded/carp_costume = 1,
 					/obj/item/clothing/suit/hooded/ian_costume = 1,
 					/obj/item/clothing/suit/hooded/bee_costume = 1,
-					/obj/item/clothing/suit/snowman = 1,/obj/item/clothing/head/snowman = 1,
+					/obj/item/clothing/suit/snowman = 1,
+					/obj/item/clothing/head/snowman = 1,
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
-					/obj/item/clothing/under/sailor=1,
-					/obj/item/clothing/shoes/megaboots=1,/obj/item/clothing/gloves/megagloves=1,/obj/item/clothing/head/helmet/megahelmet=1,/obj/item/clothing/under/mega=1,
-					/obj/item/clothing/shoes/protoboots=1,/obj/item/clothing/gloves/protogloves=1,/obj/item/clothing/head/helmet/protohelmet = 1,/obj/item/clothing/under/proto = 1,
-					/obj/item/clothing/shoes/megaxboots = 1,/obj/item/clothing/gloves/megaxgloves = 1,/obj/item/clothing/head/helmet/megaxhelmet = 1,/obj/item/clothing/under/megax = 1,
-					/obj/item/clothing/shoes/joeboots = 1,/obj/item/clothing/gloves/joegloves = 1,/obj/item/clothing/head/helmet/joehelmet = 1,/obj/item/clothing/under/joe = 1,
-					/obj/item/clothing/under/vault = 1,
-					/obj/item/clothing/under/roll = 1,
-					/obj/item/clothing/head/clownpiece = 1,/obj/item/clothing/under/clownpiece = 1,/obj/item/clothing/suit/clownpiece = 1
-					)
-	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,
-					/obj/item/weapon/gun/magic/wand = 2,
-					/obj/item/clothing/glasses/sunglasses/garb = 2,
-					/obj/item/clothing/gloves/anchor_arms = 1,
-					/obj/item/clothing/suit/kaminacape = 1,
-					/obj/item/clothing/under/soldieruniform = 1,/obj/item/clothing/head/stalhelm = 1,/obj/item/clothing/suit/soldiercoat = 1,
-					/obj/item/clothing/under/officeruniform = 1,
-					/obj/item/clothing/head/naziofficer = 1,
-					/obj/item/clothing/suit/officercoat = 1,
-					/obj/item/clothing/head/panzer = 1,
-					/obj/item/clothing/under/russobluecamooutfit = 1,/obj/item/clothing/head/russobluecamohat = 1,
-					/obj/item/clothing/suit/russofurcoat = 1,/obj/item/clothing/head/russofurhat = 1,
-					/obj/item/clothing/under/rottensuit = 1,/obj/item/clothing/shoes/rottenshoes = 1,
-					/obj/item/clothing/head/helmet/biker = 1,/obj/item/clothing/under/bikersuit = 1,/obj/item/clothing/gloves/bikergloves = 1,
-					/obj/item/clothing/under/jacketsuit = 1,
-					/obj/item/clothing/head/helmet/richard = 1,
-					/obj/item/clothing/under/vault13 = 1
-					)
-	premium = list(/obj/item/clothing/suit/pirate/captain = 2,/obj/item/clothing/head/pirate/captain = 2,
-					/obj/item/clothing/head/helmet/roman = 1,/obj/item/clothing/head/helmet/roman/legionaire = 1,/obj/item/clothing/under/roman = 1,
-					/obj/item/clothing/shoes/roman = 1,
-					/obj/item/weapon/shield/riot/roman = 1,
-					/obj/item/weapon/skub = 1
-					)
+          /obj/item/clothing/under/sailor = 1)
+	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
+	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
@@ -1054,10 +1025,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	icon_state = "tool"
 	icon_deny = "tool-deny"
 	//req_access_txt = "12" //Maintenance access
-	products = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
-					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
-	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/color/fyellow = 2)
-	premium = list(/obj/item/clothing/gloves/color/yellow = 1)
+	products = list(
+		/obj/item/stack/cable_coil/random = 10,
+		/obj/item/weapon/crowbar = 5,
+		/obj/item/weapon/weldingtool = 3,
+		/obj/item/weapon/wirecutters = 5,
+		/obj/item/weapon/wrench = 5,
+		/obj/item/device/analyzer = 5,
+		/obj/item/device/t_scanner = 5,
+		/obj/item/weapon/screwdriver = 5,
+		/obj/item/device/flashlight/glowstick = 3,
+		/obj/item/device/flashlight/glowstick/red = 3,
+		/obj/item/device/flashlight = 5)
+	contraband = list(
+		/obj/item/weapon/weldingtool/hugetank = 2,
+		/obj/item/clothing/gloves/color/fyellow = 2)
+	premium = list(
+		/obj/item/clothing/gloves/color/yellow = 1)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
 
@@ -1111,126 +1095,33 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	product_slogans = "Dress for success!;Prepare to look swagalicious!;Look at all this free swag!;Why leave style up to fate? Use the ClothesMate!"
 	vend_reply = "Thank you for using the ClothesMate!"
 	products = list(/obj/item/clothing/head/that=2,/obj/item/clothing/head/fedora=1,/obj/item/clothing/glasses/monocle=1,
-		/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
-		/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
-		/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
-		/obj/item/clothing/under/sl_suit=1,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
-		/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
-		/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
-		/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/jacket/miljacket = 1,
-		/obj/item/clothing/neck/tie/blue=1, /obj/item/clothing/neck/tie/red=1, /obj/item/clothing/neck/tie/black=1, /obj/item/clothing/neck/tie/horrible=1,
-		/obj/item/clothing/neck/scarf/red=1,/obj/item/clothing/neck/scarf/green=1,/obj/item/clothing/neck/scarf/darkblue=1,
-		/obj/item/clothing/neck/scarf/purple=1,/obj/item/clothing/neck/scarf/yellow=1,/obj/item/clothing/neck/scarf/orange=1,
-		/obj/item/clothing/neck/scarf/cyan=1,/obj/item/clothing/neck/scarf=1,/obj/item/clothing/neck/scarf/black=1,
-		/obj/item/clothing/neck/scarf/zebra=1,/obj/item/clothing/neck/scarf/christmas=1,/obj/item/clothing/neck/stripedredscarf=1,
-		/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
-		/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
-		/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
-		/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
-		/obj/item/clothing/glasses/regular=2,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
-		/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
-		/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
-		/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
-		/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
-		/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
-		/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
-		/obj/item/clothing/suit/jacket/letterman_red=1,
-		/obj/item/clothing/under/wintercasualwear=1, /obj/item/clothing/under/casualwear=1, /obj/item/clothing/under/casualhoodie=1,
-		/obj/item/clothing/under/casualhoodie/skirt=1,
-		/obj/item/clothing/under/bb_sweater=2,
-		/obj/item/clothing/under/bb_sweater/blue=2,
-		/obj/item/clothing/under/bb_sweater/green=2,
-		/obj/item/clothing/under/bb_sweater/purple =2,
-		/obj/item/clothing/under/bb_sweater/red=2
-		)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
-		/obj/item/clothing/under/wedding/bride_orange=1,
-		/obj/item/clothing/under/wedding/bride_purple=1,
-		/obj/item/clothing/under/wedding/bride_blue=1,
-		/obj/item/clothing/under/wedding/bride_red=1,
-		/obj/item/clothing/under/wedding/bride_white=1,
-		/obj/item/clothing/under/keyholesweater=1,
-	 	/obj/item/clothing/suit/doshjacket=1,
-		/obj/item/clothing/under/squatter_outfit = 1,
-		/obj/item/clothing/head/squatter_hat = 1
-		)
+	/obj/item/clothing/suit/jacket=2, /obj/item/clothing/suit/jacket/puffer/vest=2, /obj/item/clothing/suit/jacket/puffer=2,
+	/obj/item/clothing/under/suit_jacket/navy=1,/obj/item/clothing/under/suit_jacket/really_black=1,/obj/item/clothing/under/suit_jacket/burgundy=1,
+	/obj/item/clothing/under/suit_jacket/charcoal=1, /obj/item/clothing/under/suit_jacket/white=1,/obj/item/clothing/under/kilt=1,/obj/item/clothing/under/overalls=1,
+	/obj/item/clothing/under/sl_suit=1,/obj/item/clothing/under/pants/jeans=3,/obj/item/clothing/under/pants/classicjeans=2,
+	/obj/item/clothing/under/pants/camo = 1,/obj/item/clothing/under/pants/blackjeans=2,/obj/item/clothing/under/pants/khaki=2,
+	/obj/item/clothing/under/pants/white=2,/obj/item/clothing/under/pants/red=1,/obj/item/clothing/under/pants/black=2,
+	/obj/item/clothing/under/pants/tan=2,/obj/item/clothing/under/pants/track=1,/obj/item/clothing/suit/jacket/miljacket = 1,
+	/obj/item/clothing/neck/tie/blue=1, /obj/item/clothing/neck/tie/red=1, /obj/item/clothing/neck/tie/black=1, /obj/item/clothing/neck/tie/horrible=1,
+	/obj/item/clothing/neck/scarf/red=1,/obj/item/clothing/neck/scarf/green=1,/obj/item/clothing/neck/scarf/darkblue=1,
+	/obj/item/clothing/neck/scarf/purple=1,/obj/item/clothing/neck/scarf/yellow=1,/obj/item/clothing/neck/scarf/orange=1,
+	/obj/item/clothing/neck/scarf/cyan=1,/obj/item/clothing/neck/scarf=1,/obj/item/clothing/neck/scarf/black=1,
+	/obj/item/clothing/neck/scarf/zebra=1,/obj/item/clothing/neck/scarf/christmas=1,/obj/item/clothing/neck/stripedredscarf=1,
+	/obj/item/clothing/neck/stripedbluescarf=1,/obj/item/clothing/neck/stripedgreenscarf=1,/obj/item/clothing/tie/waistcoat=1,
+	/obj/item/clothing/under/skirt/black=1,/obj/item/clothing/under/skirt/blue=1,/obj/item/clothing/under/skirt/red=1,/obj/item/clothing/under/skirt/purple=1,
+	/obj/item/clothing/under/sundress=2,/obj/item/clothing/under/stripeddress=1, /obj/item/clothing/under/sailordress=1, /obj/item/clothing/under/redeveninggown=1, /obj/item/clothing/under/blacktango=1,
+	/obj/item/clothing/under/plaid_skirt=1,/obj/item/clothing/under/plaid_skirt/blue=1,/obj/item/clothing/under/plaid_skirt/purple=1,/obj/item/clothing/under/plaid_skirt/green=1,
+	/obj/item/clothing/glasses/regular=1,/obj/item/clothing/glasses/regular/jamjar=1,/obj/item/clothing/head/sombrero=1,/obj/item/clothing/suit/poncho=1,
+	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
+	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
+	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
+	/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
+	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
+	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
+	/obj/item/clothing/suit/jacket/letterman_red=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
-
-
-/obj/machinery/vending/kink
-	name = "KinkMate"
-	desc = "A vending machine for all your unmentionable desires."
-	icon = 'icons/obj/citvending.dmi'
-	icon_state = "kink"
-	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
-	vend_reply = "Have fun, you shameless pervert!"
-	products = list(
-				/obj/item/clothing/under/maid = 5,
-				/obj/item/clothing/under/stripper_pink = 5,
-				/obj/item/clothing/under/stripper_green = 5,
-				/obj/item/weapon/dildo/custom = 5
-				)
-	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
-				/obj/item/clothing/neck/petcollar = 5,
-				/obj/item/clothing/under/mankini = 1,
-				/obj/item/weapon/dildo/flared/huge = 1
-					)
-	premium = list()
-	refill_canister = /obj/item/weapon/vending_refill/kink
-
-/obj/machinery/vending/nazivend
-	name = "Nazivend"
-	desc = "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorrilions lost.\""
-	icon = 'icons/obj/citvending.dmi'
-	icon_state = "nazi"
-	vend_reply = "SIEG HEIL!"
-	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
-	products = list(
-		/obj/item/clothing/head/stalhelm = 20,
-		/obj/item/clothing/head/panzer = 20,
-		/obj/item/clothing/suit/soldiercoat = 20,
-		/obj/item/clothing/under/soldieruniform = 20,
-		/obj/item/clothing/shoes/jackboots = 20
-		)
-	contraband = list(
-		/obj/item/clothing/head/naziofficer = 10,
-		/obj/item/clothing/suit/officercoat = 10,
-		/obj/item/clothing/under/officeruniform = 10,
-		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
-		/obj/item/weapon/gun/energy/plasma/MP40k = 4
-		)
-	premium = list()
-
-	refill_canister = /obj/item/weapon/vending_refill/nazi
-
-/obj/machinery/vending/sovietvend
-	name = "KomradeVendtink"
-	desc = "Rodina-mat' zovyot!"
-	icon = 'icons/obj/citvending.dmi'
-	icon_state = "soviet"
-	vend_reply = "The fascist and capitalist svin'ya shall fall, komrade!"
-	product_slogans = "Quality worth waiting in line for!; Get Hammer and Sickled!; Sosvietsky soyuz above all!; With capitalist pigsky, you would have paid a fortunetink! ; Craftink in Motherland herself!"
-	products = list(
-		/obj/item/clothing/under/soviet = 20,
-		/obj/item/clothing/head/ushanka = 20,
-		/obj/item/clothing/shoes/jackboots = 20,
-		/obj/item/clothing/head/squatter_hat = 20,
-		/obj/item/clothing/under/squatter_outfit = 20,
-		/obj/item/clothing/under/russobluecamooutfit = 20,
-		/obj/item/clothing/head/russobluecamohat = 20
-		)
-	contraband = list(
-		/obj/item/clothing/under/syndicate/tacticool = 4,
-		/obj/item/clothing/mask/balaclava = 4,
-		/obj/item/clothing/suit/russofurcoat = 4,
-		/obj/item/clothing/head/russofurhat = 4,
-		/obj/item/clothing/suit/space/hardsuit/soviet = 3,
-		/obj/item/weapon/gun/energy/laser/LaserAK = 4
-		)
-	premium = list()
-
-	refill_canister = /obj/item/weapon/vending_refill/soviet
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
