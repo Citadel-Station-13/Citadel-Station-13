@@ -14,7 +14,6 @@
 /atom/proc/set_light(var/l_range, var/l_power, var/l_color = NONSENSICAL_VALUE)
 	if(l_range > 0 && l_range < MINIMUM_USEFUL_LIGHT_RANGE)
 		l_range = MINIMUM_USEFUL_LIGHT_RANGE	//Brings the range up to 1.4, which is just barely brighter than the soft lighting that surrounds players.
-
 	if (l_power != null)
 		light_power = l_power
 
@@ -32,7 +31,7 @@
 // Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
 /atom/proc/update_light()
 	set waitfor = FALSE
-	if (qdeleted(src))
+	if (QDELETED(src))
 		return
 
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
@@ -50,17 +49,6 @@
 		else
 			light = new/datum/light_source(src, .)
 
-// Incase any lighting vars are on in the typepath we turn the light on in New().
-/atom/New()
-	. = ..()
-
-	if (light_power && light_range)
-		update_light()
-
-	if (opacity && isturf(loc))
-		var/turf/T = loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
-
 // Destroy our light source so we GC correctly.
 /atom/Destroy()
 	if (light)
@@ -71,10 +59,12 @@
 // If we have opacity, make sure to tell (potentially) affected light sources.
 /atom/movable/Destroy()
 	var/turf/T = loc
-	if (opacity && istype(T))
-		T.reconsider_lights()
-
 	. = ..()
+	if (opacity && istype(T))
+		var/old_has_opaque_atom = T.has_opaque_atom
+		T.recalc_atom_opacity()
+		if (old_has_opaque_atom != T.has_opaque_atom)
+			T.reconsider_lights()
 
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
@@ -97,7 +87,26 @@
 			T.reconsider_lights()
 
 
-/atom/movable/Moved(atom/OldLoc, Dir) //Implemented here because forceMove() doesn't call Move()
+/atom/movable/Moved(atom/OldLoc, Dir)
 	. = ..()
-	for (var/datum/light_source/L in src.light_sources) // Cycle through the light sources on this atom and tell them to update.
+	var/datum/light_source/L
+	var/thing
+	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
+		L = thing
 		L.source_atom.update_light()
+
+/atom/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("light_range")
+			set_light(l_range=var_value)
+			return
+
+		if ("light_power")
+			set_light(l_power=var_value)
+			return
+
+		if ("light_color")
+			set_light(l_color=var_value)
+			return
+
+	return ..()

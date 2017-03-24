@@ -36,11 +36,10 @@ var/global/list/emote_list = list()
 	var/msg = select_message_type(user)
 	if(params && message_param)
 		msg = select_param(user, params)
-	/*
 	if(findtext(msg, "their"))
 		msg = replacetext(msg, "their", user.p_their())
 	if(findtext(msg, "them"))
-		msg = replacetext(msg, "them", user.p_them())*/
+		msg = replacetext(msg, "them", user.p_them())
 	if(findtext(msg, "%s"))
 		msg = replacetext(msg, "%s", user.p_s())
 
@@ -51,6 +50,7 @@ var/global/list/emote_list = list()
 	if(!msg)
 		return FALSE
 
+	user.log_message(msg, INDIVIDUAL_EMOTE_LOG)
 	msg = "<b>[user]</b> " + msg
 
 	for(var/mob/M in dead_mob_list)
@@ -98,6 +98,8 @@ var/global/list/emote_list = list()
 		if(user.stat > stat_allowed  || (user.status_flags & FAKEDEATH))
 			return FALSE
 		if(restraint_check && user.restrained())
+			return FALSE
+		if(user.reagents && user.reagents.has_reagent("mimesbane"))
 			return FALSE
 
 

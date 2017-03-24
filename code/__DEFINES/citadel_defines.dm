@@ -76,3 +76,6 @@
 
 #define TICKET_INACTIVE		"No"
 #define TICKET_ACTIVE		"Yes"
+
+//Individual logging define
+#define INDIVIDUAL_LOOC_LOG "LOOC log"
