@@ -13,6 +13,7 @@ Format:
 endmap
 
 map tgstation2
+	default
 	#voteweight 1.5
 endmap
 
@@ -25,7 +26,7 @@ map pubbystation
 endmap
 
 map CitadelStation
-	default
+	#default
 	#voteweight 1.5
 endmap
 

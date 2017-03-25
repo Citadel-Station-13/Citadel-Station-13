@@ -110,22 +110,18 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(last)
 		QDEL_NULL(loader)
 
-/datum/controller/subsystem/mapping/proc/CreateSpace(zlevel)
-	while(world.maxz < zlevel)
-		CHECK_TICK
+/datum/controller/subsystem/mapping/proc/CreateSpace(MaxZLevel)
+	while(world.maxz < MaxZLevel)
 		++world.maxz
-	CHECK_TICK
-	for(var/T in block(locate(1, 1, zlevel), locate(world.maxx, world.maxy, zlevel)))
 		CHECK_TICK
-		new /turf/open/space(T)
 
 #define INIT_ANNOUNCE(X) to_chat(world, "<span class='boldannounce'>[X]</span>"); log_world(X)
 /datum/controller/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-    
+
 	var/start_time = REALTIMEOFDAY
-  
+
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
@@ -133,8 +129,7 @@ var/datum/controller/subsystem/mapping/SSmapping
 	if(config.minetype != "lavaland")
 		INIT_ANNOUNCE("WARNING: A map without lavaland set as it's minetype was loaded! This is being ignored! Update the maploader code!")
 
-	for(var/I in (world.maxz + 1) to ZLEVEL_SPACEMAX)
-		CreateSpace(I)
+	CreateSpace(ZLEVEL_SPACEMAX)
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
 		var/msg = "RED ALERT! The following map files failed to load: [FailedZs[1]]"
