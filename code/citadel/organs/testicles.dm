@@ -20,7 +20,7 @@
 	update()
 
 /obj/item/organ/genital/testicles/on_life()
-	if(fluid_id && producing)
+	if(fluid_id && producing && !QDELETED(src))
 		generate_cum()
 
 /obj/item/organ/genital/testicles/proc/generate_cum()
@@ -45,7 +45,7 @@
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
 
 /obj/item/organ/genital/testicles/update_link()
-	if(owner)
+	if(owner && !QDELETED(owner))
 		linked_penis = (owner.getorganslot("penis"))
 		if(linked_penis)
 			linked_penis.linked_balls = src

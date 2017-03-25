@@ -20,12 +20,9 @@
 /obj/item/organ/genital/penis/Initialize()
 	update()
 
-/obj/item/organ/genital/penis/update()
-	update_size()
-	update_appearance()
-	update_link()
-
 /obj/item/organ/genital/penis/update_size()
+	if(QDELETED(src))
+		return
 	if(length == cached_length)
 		return
 	switch(length)
@@ -43,22 +40,24 @@
 	cached_length = length
 
 /obj/item/organ/genital/penis/update_appearance()
+	if(QDELETED(src))
+		return
 	var/string = "penis_[lowertext(shape)]_[size]"
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
 	if(lowershape in knotted_types)
-		desc = "That's a [lowertext(shape)] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long, [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around the shaft\
+		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long, [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around the shaft\
 		and [round(length * knot_girth_ratio, 0.25)] inch[length > 1 ? "es" : ""] around the knot."
 	else
-		desc = "That's a [lowertext(shape)] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
+		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
 	color = "#[owner.dna.features["cock_color"]]"
 
 /obj/item/organ/genital/penis/update_link()
-	if(owner)
+	if(!QDELETED(owner))
 		linked_balls = (owner.getorganslot("testicles"))
-		if(linked_balls)
+		if(!QDELETED(linked_balls))
 			linked_balls.linked_penis = src
 	else
-		if(linked_balls)
+		if(!QDELETED(linked_balls))
 			linked_balls.linked_penis = null
 		linked_balls = null

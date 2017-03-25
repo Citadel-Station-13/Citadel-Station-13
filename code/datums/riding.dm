@@ -38,6 +38,8 @@
 //if they differ between directions, otherwise use the
 //generic variables
 /datum/riding/proc/handle_vehicle_offsets()
+	if(!ridden || QDELETED(ridden))
+		return
 	if(ridden.has_buckled_mobs())
 		for(var/m in ridden.buckled_mobs)
 			var/mob/living/buckled_mob = m

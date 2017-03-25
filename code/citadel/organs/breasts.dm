@@ -18,6 +18,8 @@
 	update()
 
 /obj/item/organ/genital/breasts/on_life()
+	if(!reagents || !owner)
+		return
 	reagents.maximum_volume = fluid_max_volume
 	if(fluid_id && producing)
 		generate_milk()

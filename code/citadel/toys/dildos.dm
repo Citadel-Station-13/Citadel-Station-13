@@ -60,6 +60,11 @@ obj/item/weapon/dildo/proc/update_appearance()
 	name = "[sizeword][dildo_shape] [can_customize ? "custom " : ""][dildo_type]"
 
 obj/item/weapon/dildo/AltClick(mob/living/user)
+	if(!isliving(user))
+		return
+	if(user.stat > 0)
+		return
+
 	customize(user)
 
 obj/item/weapon/dildo/proc/customize(mob/living/user)

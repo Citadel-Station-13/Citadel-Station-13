@@ -22,6 +22,8 @@
 	return ..()
 
 /obj/item/organ/genital/proc/update()
+	if(QDELETED(src))
+		return
 	update_size()
 	update_appearance()
 	update_link()
