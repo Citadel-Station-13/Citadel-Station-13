@@ -12,7 +12,6 @@
 	var/amount				= 2
 	producing				= TRUE
 
-/obj/item/organ/genital/breasts/New()
 	..()
 	create_reagents(fluid_max_volume)
 	reagents.add_reagent(fluid_id, fluid_max_volume)
@@ -29,4 +28,3 @@
 	if(owner.stat == DEAD)
 		return FALSE
 	reagents.isolate_reagent(fluid_id)
-	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))

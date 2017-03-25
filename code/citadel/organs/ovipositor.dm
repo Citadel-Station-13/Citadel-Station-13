@@ -13,5 +13,4 @@
 	var/girth_ratio = COCK_GIRTH_RATIO_DEF 		//citadel_defines.dm for these defines
 	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
 	var/list/oviflags = list()
-
 	var/obj/item/organ/eggsack/linked_eggsack

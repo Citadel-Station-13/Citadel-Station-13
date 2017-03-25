@@ -49,8 +49,9 @@
 		linked_penis = (owner.getorganslot("penis"))
 		if(linked_penis)
 			linked_penis.linked_balls = src
-	else if(linked_penis != null)
-		linked_penis.linked_balls = null
+	else
+		if(linked_penis)
+			linked_penis.linked_balls = null
 		linked_penis = null
 
 /obj/item/organ/genital/testicles/proc/send_full_message(msg = "Your balls finally feel full, again.")

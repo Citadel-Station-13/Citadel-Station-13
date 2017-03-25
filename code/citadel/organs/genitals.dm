@@ -13,13 +13,12 @@
 	var/producing = FALSE
 
 /obj/item/organ/genital/Initialize()
-	..()
 	reagents = create_reagents(fluid_max_volume)
 
 /obj/item/organ/genital/Destroy()
 	if(owner)
 		Remove(owner, 1)//this should remove references to it, so it can be GCd correctly
-	update_link()
+	update_link()//this should remove any other links it has
 	return ..()
 
 /obj/item/organ/genital/proc/update()
