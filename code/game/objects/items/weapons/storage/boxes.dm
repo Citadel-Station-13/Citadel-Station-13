@@ -179,7 +179,6 @@
 	desc = "A box with several stimpack medipens for the economical miner."
 	illustration = "syringe"
 
-
 /obj/item/weapon/storage/box/medipens/utility/New()
 	..()
 	for(var/i in 1 to 5)
