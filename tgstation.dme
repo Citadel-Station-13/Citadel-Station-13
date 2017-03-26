@@ -14,8 +14,8 @@
 
 // BEGIN_INCLUDE
 #include "_maps\basemap.dm"
-#include "_maps\citadelstation.dm"
 #include "_maps\loadallmaps.dm"
+#include "_maps\tgstation2.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\heap.dm"
