@@ -159,6 +159,10 @@
 		species_traits += DIGITIGRADE
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
+	if(NOAROUSAL in species_traits)
+		C.canbearoused = FALSE
+	else
+		C.canbearoused = C.client.prefs.arousable
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
