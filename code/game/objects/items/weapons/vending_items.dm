@@ -63,11 +63,30 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(31, 2, 3)// of 94 standard, 6 contraband, 9 premium
-	init_charges = list(27, 2, 3)
+	charges = list(39, 10, 3)// of 115 standard, 6 contraband, 9 premium
+	init_charges = list(39, 10, 3)
 
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(31, 4, 4)// of 101 standard, 12 contraband, 10 premium(?)
-	init_charges = list(31, 4, 4)
+	charges = list(36, 8, 4)// of 105 standard, 22 contraband, 10 premium(?)
+	init_charges = list(36, 8, 4)
+
+/obj/item/weapon/vending_refill/kink
+	machine_name = "KinkMate"
+	icon_state = "refill_kink"
+	charges = list(8, 5, 0)// of 20 standard, 12 contraband
+	init_charges = list(8, 5, 0)
+
+/obj/item/weapon/vending_refill/nazi
+	machine_name = "Nazivend"
+	icon_state = "refill_nazi"
+	charges = list(34, 13, 0)// of 100 standard, 37 contraband
+	init_charges = list(34, 13, 0)
+
+/obj/item/weapon/vending_refill/soviet
+	machine_name = "KomradeVendtink"
+	icon_state = "refill_soviet"
+	charges = list(48, 9, 0)// of 140 standard, 23 contraband
+	init_charges = list(48, 9, 0)
+

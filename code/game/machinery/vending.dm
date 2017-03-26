@@ -994,8 +994,29 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/joy = 1,
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
-          /obj/item/clothing/under/sailor = 1)
-	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
+          			/obj/item/clothing/under/sailor = 1,
+          			/obj/item/clothing/shoes/megaboots=1,/obj/item/clothing/gloves/megagloves=1,/obj/item/clothing/head/helmet/megahelmet=1,/obj/item/clothing/under/mega=1,
+					/obj/item/clothing/shoes/protoboots=1,/obj/item/clothing/gloves/protogloves=1,/obj/item/clothing/head/helmet/protohelmet = 1,/obj/item/clothing/under/proto = 1,
+					/obj/item/clothing/shoes/megaxboots = 1,/obj/item/clothing/gloves/megaxgloves = 1,/obj/item/clothing/head/helmet/megaxhelmet = 1,/obj/item/clothing/under/megax = 1,
+					/obj/item/clothing/shoes/joeboots = 1,/obj/item/clothing/gloves/joegloves = 1,/obj/item/clothing/head/helmet/joehelmet = 1,/obj/item/clothing/under/joe = 1,
+					/obj/item/clothing/under/vault = 1,
+					/obj/item/clothing/under/roll = 1,
+					/obj/item/clothing/head/clownpiece = 1,/obj/item/clothing/under/clownpiece = 1,/obj/item/clothing/suit/clownpiece = 1)
+	contraband = list(/obj/item/clothing/suit/judgerobe = 1,/obj/item/clothing/head/powdered_wig = 1,/obj/item/weapon/gun/magic/wand = 2,/obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2,
+					/obj/item/clothing/gloves/anchor_arms = 1,
+					/obj/item/clothing/suit/kaminacape = 1,
+					/obj/item/clothing/under/soldieruniform = 1,/obj/item/clothing/head/stalhelm = 1,/obj/item/clothing/suit/soldiercoat = 1,
+					/obj/item/clothing/under/officeruniform = 1,
+					/obj/item/clothing/head/naziofficer = 1,
+					/obj/item/clothing/suit/officercoat = 1,
+					/obj/item/clothing/head/panzer = 1,
+					/obj/item/clothing/under/russobluecamooutfit = 1,/obj/item/clothing/head/russobluecamohat = 1,
+					/obj/item/clothing/suit/russofurcoat = 1,/obj/item/clothing/head/russofurhat = 1,
+					/obj/item/clothing/under/rottensuit = 1,/obj/item/clothing/shoes/rottenshoes = 1,
+					/obj/item/clothing/head/helmet/biker = 1,/obj/item/clothing/under/bikersuit = 1,/obj/item/clothing/gloves/bikergloves = 1,
+					/obj/item/clothing/under/jacketsuit = 1,
+					/obj/item/clothing/head/helmet/richard = 1,
+					/obj/item/clothing/under/vault13 = 1)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/weapon/shield/riot/roman = 1, /obj/item/weapon/skub = 1)
 	refill_canister = /obj/item/weapon/vending_refill/autodrobe
 
@@ -1118,10 +1139,97 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/head/beanie=1, /obj/item/clothing/head/beanie/black=1, /obj/item/clothing/head/beanie/red=1, /obj/item/clothing/head/beanie/green=1, /obj/item/clothing/head/beanie/darkblue=1,
 	/obj/item/clothing/head/beanie/purple=1, /obj/item/clothing/head/beanie/yellow=1, /obj/item/clothing/head/beanie/orange=1, /obj/item/clothing/head/beanie/cyan=1, /obj/item/clothing/head/beanie/christmas=1,
 	/obj/item/clothing/head/beanie/striped=1, /obj/item/clothing/head/beanie/stripedred=1, /obj/item/clothing/head/beanie/stripedblue=1, /obj/item/clothing/head/beanie/stripedgreen=1,
-	/obj/item/clothing/suit/jacket/letterman_red=1)
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1)
+	/obj/item/clothing/suit/jacket/letterman_red=1,
+	/obj/item/clothing/under/wintercasualwear=1,
+	/obj/item/clothing/under/casualwear=1,
+	/obj/item/clothing/under/casualhoodie=1,
+	/obj/item/clothing/under/casualhoodie/skirt=1)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1,/obj/item/clothing/under/jabroni=1, /obj/item/clothing/suit/vapeshirt=1, /obj/item/clothing/under/geisha=1,
+	/obj/item/clothing/under/wedding/bride_orange=1,
+	/obj/item/clothing/under/wedding/bride_purple=1,
+	/obj/item/clothing/under/wedding/bride_blue=1,
+	/obj/item/clothing/under/wedding/bride_red=1,
+	/obj/item/clothing/under/wedding/bride_white=1,
+	/obj/item/clothing/under/keyholesweater=2,
+	/obj/item/clothing/suit/doshjacket=1,
+	/obj/item/clothing/under/squatter_outfit = 1,
+	/obj/item/clothing/head/squatter_hat = 1)
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=1,/obj/item/clothing/head/mailman=1,/obj/item/clothing/under/rank/mailman=1,/obj/item/clothing/suit/jacket/leather=1,/obj/item/clothing/suit/jacket/leather/overcoat=1,/obj/item/clothing/under/pants/mustangjeans=1,/obj/item/clothing/neck/necklace/dope=3,/obj/item/clothing/suit/jacket/letterman_nanotrasen=1)
 	refill_canister = /obj/item/weapon/vending_refill/clothing
+
+/obj/machinery/vending/kink
+	name = "KinkMate"
+	desc = "A vending machine for all your unmentionable desires."
+	icon = 'icons/obj/citvending.dmi'
+	icon_state = "kink"
+	product_slogans = "Kinky!;Sexy!;Check me out, big boy!"
+	vend_reply = "Have fun, you shameless pervert!"
+	products = list(/obj/item/clothing/under/maid = 5,
+					/obj/item/clothing/under/stripper_pink = 5,
+					/obj/item/clothing/under/stripper_green = 5,
+					/obj/item/weapon/dildo/custom = 5
+				)
+	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
+					/obj/item/clothing/neck/petcollar = 5,
+					/obj/item/clothing/under/mankini = 1,
+					/obj/item/weapon/dildo/flared/huge = 1
+				)
+	premium = list()
+	refill_canister = /obj/item/weapon/vending_refill/kink
+
+/obj/machinery/vending/nazivend
+	name = "Nazivend"
+	desc = "A vending machine containing Nazi German supplies. A label reads: \"Remember the gorrilions lost.\""
+	icon = 'icons/obj/citvending.dmi'
+	icon_state = "nazi"
+	vend_reply = "SIEG HEIL!"
+	product_slogans = "Das Vierte Reich wird zuruckkehren!;ENTFERNEN JUDEN!;Billiger als die Juden jemals geben!;Rader auf dem adminbus geht rund und rund.;Warten Sie, warum wir wieder hassen Juden?- *BZZT*"
+	products = list(
+		/obj/item/clothing/head/stalhelm = 20,
+		/obj/item/clothing/head/panzer = 20,
+		/obj/item/clothing/suit/soldiercoat = 20,
+		/obj/item/clothing/under/soldieruniform = 20,
+		/obj/item/clothing/shoes/jackboots = 20
+		)
+	contraband = list(
+		/obj/item/clothing/head/naziofficer = 10,
+		/obj/item/clothing/suit/officercoat = 10,
+		/obj/item/clothing/under/officeruniform = 10,
+		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
+		/obj/item/weapon/gun/energy/plasma/MP40k = 4
+		)
+	premium = list()
+
+	refill_canister = /obj/item/weapon/vending_refill/nazi
+
+/obj/machinery/vending/sovietvend
+	name = "KomradeVendtink"
+	desc = "Rodina-mat' zovyot!"
+	icon = 'icons/obj/citvending.dmi'
+	icon_state = "soviet"
+	vend_reply = "The fascist and capitalist svin'ya shall fall, komrade!"
+	product_slogans = "Quality worth waiting in line for!;Get Hammer and Sickled!;Sosvietsky soyuz above all!;With capitalist pigsky, you would have paid a fortunetink!;Craftink in Motherland herself!"
+	products = list(
+		/obj/item/clothing/under/soviet = 20,
+		/obj/item/clothing/head/ushanka = 20,
+		/obj/item/clothing/shoes/jackboots = 20,
+		/obj/item/clothing/head/squatter_hat = 20,
+		/obj/item/clothing/under/squatter_outfit = 20,
+		/obj/item/clothing/under/russobluecamooutfit = 20,
+		/obj/item/clothing/head/russobluecamohat = 20
+		)
+	contraband = list(
+		/obj/item/clothing/under/syndicate/tacticool = 4,
+		/obj/item/clothing/mask/balaclava = 4,
+		/obj/item/clothing/suit/russofurcoat = 4,
+		/obj/item/clothing/head/russofurhat = 4,
+		/obj/item/clothing/suit/space/hardsuit/soviet = 3,
+		/obj/item/weapon/gun/energy/laser/LaserAK = 4
+		)
+	premium = list()
+
+	refill_canister = /obj/item/weapon/vending_refill/soviet
+
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
