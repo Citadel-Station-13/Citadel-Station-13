@@ -691,6 +691,10 @@
 					config.forbid_peaceborg			= 1
 				if("silent_ai")
 					config.silent_ai 				= 1
+				if ("mentor_mobname_only")
+					config.mentors_mobname_only 	= 1
+				if ("mentor_legacy_system")
+					config.mentor_legacy_system 	= 1
 				if("silent_borg")
 					config.silent_borg				= 1
 				if("sandbox_autoclose")
