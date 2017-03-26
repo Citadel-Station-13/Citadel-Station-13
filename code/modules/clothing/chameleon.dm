@@ -497,7 +497,7 @@
 		return FALSE
 	for(var/V in gun_copy_vars)
 		if(vars[V] && G.vars[V])
-			chameleon_gun_vars[V] = G.vars[V]!
+			chameleon_gun_vars[V] = G.vars[V]
 			vars[V] = G.vars[V]
 	if(passthrough)
 		if(istype(G, /obj/item/weapon/gun/ballistic))
