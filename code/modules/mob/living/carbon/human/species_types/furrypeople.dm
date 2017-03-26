@@ -3,7 +3,7 @@ datum/species/mammal
 	id = "mammal"
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs", "taur")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
