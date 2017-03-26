@@ -13,11 +13,13 @@
 	producing				= TRUE
 
 /obj/item/organ/genital/breasts/Initialize()
-	..()
+	create_reagents(fluid_max_volume)
 	reagents.add_reagent(fluid_id, fluid_max_volume)
 	update()
 
 /obj/item/organ/genital/breasts/on_life()
+	if(QDELETED(src))
+		return
 	if(!reagents || !owner)
 		return
 	reagents.maximum_volume = fluid_max_volume
@@ -25,8 +27,6 @@
 		generate_milk()
 
 /obj/item/organ/genital/breasts/proc/generate_milk()
-	if(!owner)
-		return FALSE
 	if(owner.stat == DEAD)
 		return FALSE
 	reagents.isolate_reagent(fluid_id)

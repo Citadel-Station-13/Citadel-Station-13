@@ -58,15 +58,13 @@ obj/item/weapon/dildo/proc/update_appearance()
 	name = "[sizeword][dildo_shape] [can_customize ? "custom " : ""][dildo_type]"
 
 obj/item/weapon/dildo/AltClick(mob/living/user)
-	if(!initialized || QDELETED(src))
+	if(QDELETED(src))
 		return
 	if(!isliving(user))
 		return
 	if(isAI(user))
 		return
 	if(user.stat > 0)//unconscious or dead
-		return
-	if(!in_range(user, src))//need to be close
 		return
 	customize(user)
 
