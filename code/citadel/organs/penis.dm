@@ -42,6 +42,8 @@
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
 	if(lowershape in knotted_types)
+		if(lowershape == "barbknot")
+			lowershape = "barbed, knotted"
 		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long, [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around the shaft \
 		and [round(length * knot_girth_ratio, 0.25)] inch[length > 1 ? "es" : ""] around the knot."
 	else
