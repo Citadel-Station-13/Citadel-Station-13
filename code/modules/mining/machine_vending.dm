@@ -54,7 +54,7 @@
 		new /datum/data/mining_equipment("Survival Knife",		/obj/item/weapon/kitchen/knife/combat/survival,							350),
 		new /datum/data/mining_equipment("Survival Pen Economy Pack",/obj/item/weapon/storage/box/medipens/survival,							2000),
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			250),
-		new /datum/data/mining_equipment("Stimpack Economy Pack",/obj/item/weapon/storage/box/medipens/utility,							1000),
+		new /datum/data/mining_equipment("Stimpack Economy Pack",/obj/item/weapon/storage/box/medipens/utility,							1000)
 		)
 
 /datum/data/mining_equipment
