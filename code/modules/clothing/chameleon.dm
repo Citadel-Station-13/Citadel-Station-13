@@ -460,7 +460,7 @@
 			continue
 		vars[v] = initial(vars[v])
 	if(chambered.BB)
- 		qdel(chambered.BB)
+		qdel(chambered.BB)
 	chambered.newshot()
 
 /obj/item/weapon/gun/energy/laser/chameleon/proc/set_chameleon_ammo(obj/item/ammo_casing/AC, passthrough = TRUE, reset = FALSE)
