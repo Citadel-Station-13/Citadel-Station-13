@@ -247,8 +247,8 @@
 		dna.struc_enzymes = se
 		domutcheck()
 
-	give_genitals()
-	
+	give_genitals(1)
+
 	if(mrace || newfeatures || ui)
 		update_body()
 		update_hair()
