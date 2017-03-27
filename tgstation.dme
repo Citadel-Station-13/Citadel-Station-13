@@ -1170,7 +1170,6 @@
 #include "code\modules\clothing\neck\ties.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\standard.dm"
-#include "code\modules\clothing\outfits\vg_outfits.dm"
 #include "code\modules\clothing\shoes\bananashoes.dm"
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
