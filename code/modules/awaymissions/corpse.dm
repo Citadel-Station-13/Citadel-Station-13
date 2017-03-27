@@ -120,7 +120,8 @@
 		if (NOAROUSAL in H.dna.species.species_traits)
 			H.canbearoused = FALSE
 		else
-			H.canbearoused = H.client.prefs.arousable
+			if(H.client)
+				H.canbearoused = H.client.prefs.arousable
 	if(husk)
 		H.Drain()
 

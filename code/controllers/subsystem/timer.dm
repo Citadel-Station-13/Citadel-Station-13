@@ -82,6 +82,9 @@ var/datum/controller/subsystem/timer/SStimer
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
 				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
+				//Temporary fix
+				Recreate_MC()
+				message_admins("The timer SS has crashed. A full report can be found in the runtime viewer. MC restarted automatically.")
 
 			if (!timer.spent)
 				spent += timer
@@ -222,7 +225,7 @@ var/datum/controller/subsystem/timer/SStimer
 						ctts.Insert(src, I)
 						break
 		else
-			ctts += src	
+			ctts += src
 		return
 
 	//get the list of buckets
