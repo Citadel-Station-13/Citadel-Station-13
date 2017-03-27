@@ -20,7 +20,6 @@ cache:
     - $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}
 
 
-
 addons:
   apt:
     packages:

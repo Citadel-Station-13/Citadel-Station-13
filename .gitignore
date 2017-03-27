@@ -185,3 +185,10 @@ Temporary Items
 .apdisk
 
 *.before
+
+#Sublime
+*.sublime-project
+*.sublime-workspace
+
+#Visual studio stuff
+*.vscode/*

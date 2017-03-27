@@ -14,7 +14,6 @@
 	harm_intent_damage = 1
 	friendly = "nudges"
 	density = 0
-	devourable = 1
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -24,8 +23,9 @@
 	verb_ask = "flutters inquisitively"
 	verb_exclaim = "flutters intensely"
 	verb_yell = "flutters intensely"
+	devourable = 1
 
-/mob/living/simple_animal/butterfly/New()
+/mob/living/simple_animal/butterfly/Initialize()
 	..()
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)

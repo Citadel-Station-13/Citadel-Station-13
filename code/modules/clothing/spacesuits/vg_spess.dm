@@ -7,6 +7,7 @@
 	icon_state = "hardsuit0-nazi"
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
 	item_color = "nazi"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/nazi
 	name = "nazi hardsuit"
@@ -17,6 +18,7 @@
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/nazi
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/soviet
 	name = "soviet hardhelmet"
@@ -25,6 +27,7 @@
 	icon_state = "hardsuit0-soviet"
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
 	item_color = "soviet"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/soviet
 	name = "soviet hardsuit"
@@ -35,6 +38,7 @@
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/knight
 	name = "Space-Knight helm"
@@ -44,6 +48,7 @@
 	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_IMMUNITY_HELM_MAX_TEMP_PROTECT
 	item_color="knight"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/knight
 	name = "Space-Knight armour"
@@ -56,6 +61,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0.5
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/knight
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/knight/black
 	name = "Black Knight's helm"
@@ -64,6 +70,7 @@
 	item_state = "hardsuit0-blackknight"
 	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
 	item_color="blackknight"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/knight/black
 	name = "Black Knight's armour"
@@ -72,6 +79,7 @@
 	item_state = "hardsuit-blackknight"
 	armor = list(melee = 70, bullet = 65, laser = 50,energy = 25, bomb = 60, bio = 100, rad = 60)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/knight/black
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/knight/solaire
 	name = "Solar helm"
@@ -80,6 +88,7 @@
 	item_state = "hardsuit0-solaire"
 	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
 	item_color="solaire"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/knight/solaire
 	name = "Solar armour"
@@ -88,6 +97,7 @@
 	item_state = "hardsuit-solaire"
 	armor = list(melee = 60, bullet = 65, laser = 90,energy = 30, bomb = 60, bio = 100, rad = 100)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/knight/solaire
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/space/hardsuit/t51b
 	name = "T-51b Power Armor"
@@ -96,6 +106,7 @@
 	item_state = "hardsuit0-t51b"
 	armor = list(melee = 35, bullet = 35, laser = 40, energy = 40, bomb = 80, bio = 100, rad = 100)
 	item_color="t51b"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/suit/space/hardsuit/t51b
 	name = "T-51b Power Armor"
@@ -104,6 +115,7 @@
 	item_state = "hardsuit-t51b"
 	armor = list(melee = 35, bullet = 35, laser = 40, energy = 40, bomb = 80, bio = 100, rad = 100)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/t51b
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 
 /obj/item/clothing/head/helmet/space/bomberman
@@ -113,6 +125,7 @@
 	item_state = "bomberman"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	siemens_coefficient = 0
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 obj/item/clothing/suit/space/bomberman
 	name = "Bomberman's suit"
@@ -123,3 +136,4 @@ obj/item/clothing/suit/space/bomberman
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
 	siemens_coefficient = 0
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	icon = 'icons/obj/clothing/vg_clothes.dmi'

@@ -2,17 +2,20 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
 	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
+
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
+
 	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
+
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
@@ -122,6 +125,36 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BEASSISTANT
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
+	if(current_version < 18)//this should lower the amount of lag when you select or change something.
+		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
+		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], mam_ears_list)
+		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], mam_tails_list)
+		features["taur"]				= sanitize_inlist(features["taur"], taur_list)
+		//Xeno features
+		features["xenotail"] 			= sanitize_inlist(features["xenotail"], xeno_tail_list)
+		features["xenohead"] 			= sanitize_inlist(features["xenohead"], xeno_head_list)
+		features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
+		//cock features
+		features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
+		features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
+		features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
+		features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
+		//balls features
+		features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
+		features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
+		features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
+		features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
+		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
+		//breasts features
+		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
+		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
+		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
+		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
+		//vagina features
+		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
+		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
+		//womb features
+		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -273,7 +306,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	S["OOC_Notes"]			>> metadata
-	S["flavor_text"]		>> flavor_text
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
 	S["body_is_always_random"] >> be_random_body
@@ -290,16 +322,42 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				>> socks
 	S["backbag"]			>> backbag
 	S["uplink_loc"]			>> uplink_spawn_loc
-	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor"]					>> features["mcolor"]
-	S["feature_mcolor2"]				>> features["mcolor2"]
-	S["feature_mcolor3"]				>> features["mcolor3"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
 	S["feature_lizard_horns"]			>> features["horns"]
 	S["feature_lizard_frills"]			>> features["frills"]
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
+	S["feature_lizard_legs"]			>> features["legs"]
+	S["feature_human_tail"]				>> features["tail_human"]
+	S["feature_human_ears"]				>> features["ears"]
+	S["clown_name"]			>> custom_names["clown"]
+	S["mime_name"]			>> custom_names["mime"]
+	S["ai_name"]			>> custom_names["ai"]
+	S["cyborg_name"]		>> custom_names["cyborg"]
+	S["religion_name"]		>> custom_names["religion"]
+	S["deity_name"]			>> custom_names["deity"]
+	S["prefered_security_department"] >> prefered_security_department
+
+	//Jobs
+	S["joblessrole"]		>> joblessrole
+	S["job_civilian_high"]	>> job_civilian_high
+	S["job_civilian_med"]	>> job_civilian_med
+	S["job_civilian_low"]	>> job_civilian_low
+	S["job_medsci_high"]	>> job_medsci_high
+	S["job_medsci_med"]		>> job_medsci_med
+	S["job_medsci_low"]		>> job_medsci_low
+	S["job_engsec_high"]	>> job_engsec_high
+	S["job_engsec_med"]		>> job_engsec_med
+	S["job_engsec_low"]		>> job_engsec_low
+
+
+	//Citadel code
+	S["flavor_text"]					>> flavor_text
+	S["feature_exhibitionist"]			>> features["exhibitionist"]
+	S["feature_mcolor2"]				>> features["mcolor2"]
+	S["feature_mcolor3"]				>> features["mcolor3"]
 	S["feature_mam_body_markings"]		>> features["mam_body_markings"]
 	S["feature_mam_tail"]				>> features["mam_tail"]
 	S["feature_mam_ears"]				>> features["mam_ears"]
@@ -309,7 +367,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_tail"]				>> features["xenotail"]
 	S["feature_xeno_dors"]				>> features["xenodorsal"]
 	S["feature_xeno_head"]				>> features["xenohead"]
-	S["feature_lizard_legs"]			>> features["legs"]
 	//cock features
 	S["feature_has_cock"]				>> features["has_cock"]
 	S["feature_cock_shape"]				>> features["cock_shape"]
@@ -331,47 +388,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_color"]				>> features["vag_color"]
-	if(!config.mutant_humans)
-		features["tail_human"] = "none"
-		features["ears"] = "none"
-	else
-		S["feature_human_tail"]				>> features["tail_human"]
-		S["feature_human_ears"]				>> features["ears"]
-	S["clown_name"]			>> custom_names["clown"]
-	S["mime_name"]			>> custom_names["mime"]
-	S["ai_name"]			>> custom_names["ai"]
-	S["cyborg_name"]		>> custom_names["cyborg"]
-	S["religion_name"]		>> custom_names["religion"]
-	S["deity_name"]			>> custom_names["deity"]
-	S["prefered_security_department"] >> prefered_security_department
-
-
-	//Jobs
-	S["joblessrole"]		>> joblessrole
-	S["job_civilian_high"]	>> job_civilian_high
-	S["job_civilian_med"]	>> job_civilian_med
-	S["job_civilian_low"]	>> job_civilian_low
-	S["job_medsci_high"]	>> job_medsci_high
-	S["job_medsci_med"]		>> job_medsci_med
-	S["job_medsci_low"]		>> job_medsci_low
-	S["job_engsec_high"]	>> job_engsec_high
-	S["job_engsec_med"]		>> job_engsec_med
-	S["job_engsec_low"]		>> job_engsec_low
+	//womb features
+	S["feature_has_womb"]				>> features["has_womb"]
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
-	flavor_text		= sanitize_text(flavor_text, initial(flavor_text))
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(!features["mcolor"] || features["mcolor"] == "#000")
 		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor2"] || features["mcolor"] == "#000")
-		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
-	if(!features["mcolor3"] || features["mcolor"] == "#000")
-		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!real_name)
 		real_name = random_unique_name(gender)
 	be_random_name	= sanitize_integer(be_random_name, 0, 1, initial(be_random_name))
@@ -399,8 +427,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	backbag			= sanitize_inlist(backbag, backbaglist, initial(backbag))
 	uplink_spawn_loc = sanitize_inlist(uplink_spawn_loc, uplink_spawn_loc_list, initial(uplink_spawn_loc))
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 3, 0)
-	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
-	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
 	features["tail_lizard"]	= sanitize_inlist(features["tail_lizard"], tails_list_lizard)
 	features["tail_human"] 	= sanitize_inlist(features["tail_human"], tails_list_human, "None")
 	features["snout"]	= sanitize_inlist(features["snout"], snouts_list)
@@ -409,34 +435,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["frills"] 	= sanitize_inlist(features["frills"], frills_list)
 	features["spines"] 	= sanitize_inlist(features["spines"], spines_list)
 	features["body_markings"] 	= sanitize_inlist(features["body_markings"], body_markings_list)
-	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
-	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
-	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
-	features["taur"]		= sanitize_inlist(features["taur"], taur_list)
-	//Xeno features
-	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
-	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
-	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
 	features["feature_lizard_legs"]	= sanitize_inlist(features["legs"], legs_list, "Normal Legs")
-	//cock features
-	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
-	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
-	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
-	features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
-	//balls features
-	features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
-	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
-	features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
-	features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-	features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
-	//breasts features
-	features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
-	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
-	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-	features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
-	//vagina features
-	features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
-	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	job_civilian_high = sanitize_integer(job_civilian_high, 0, 65535, initial(job_civilian_high))
@@ -449,6 +448,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
+	//Citadel
+	flavor_text		= sanitize_text(flavor_text, initial(flavor_text))
+	if(!features["mcolor2"] || features["mcolor"] == "#000")
+		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features["mcolor3"] || features["mcolor"] == "#000")
+		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
+	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -479,12 +486,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]				<< socks
 	S["backbag"]			<< backbag
 	S["uplink_loc"]			<< uplink_spawn_loc
-	S["flavor_text"]			<< flavor_text
 	S["species"]			<< pref_species.id
-	S["feature_exhibitionist"]			<< features["exhibitionist"]
 	S["feature_mcolor"]					<< features["mcolor"]
-	S["feature_mcolor2"]				<< features["mcolor2"]
-	S["feature_mcolor3"]				<< features["mcolor3"]
 	S["feature_lizard_tail"]			<< features["tail_lizard"]
 	S["feature_human_tail"]				<< features["tail_human"]
 	S["feature_lizard_snout"]			<< features["snout"]
@@ -493,6 +496,32 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_frills"]			<< features["frills"]
 	S["feature_lizard_spines"]			<< features["spines"]
 	S["feature_lizard_body_markings"]	<< features["body_markings"]
+	S["feature_lizard_legs"]			<< features["legs"]
+	S["clown_name"]			<< custom_names["clown"]
+	S["mime_name"]			<< custom_names["mime"]
+	S["ai_name"]			<< custom_names["ai"]
+	S["cyborg_name"]		<< custom_names["cyborg"]
+	S["religion_name"]		<< custom_names["religion"]
+	S["deity_name"]			<< custom_names["deity"]
+	S["prefered_security_department"] << prefered_security_department
+
+	//Jobs
+	S["joblessrole"]		<< joblessrole
+	S["job_civilian_high"]	<< job_civilian_high
+	S["job_civilian_med"]	<< job_civilian_med
+	S["job_civilian_low"]	<< job_civilian_low
+	S["job_medsci_high"]	<< job_medsci_high
+	S["job_medsci_med"]		<< job_medsci_med
+	S["job_medsci_low"]		<< job_medsci_low
+	S["job_engsec_high"]	<< job_engsec_high
+	S["job_engsec_med"]		<< job_engsec_med
+	S["job_engsec_low"]		<< job_engsec_low
+
+	//Citadel
+	S["flavor_text"]			<< flavor_text
+	S["feature_exhibitionist"]			<< features["exhibitionist"]
+	S["feature_mcolor2"]				<< features["mcolor2"]
+	S["feature_mcolor3"]				<< features["mcolor3"]
 	S["feature_mam_body_markings"]		<< features["mam_body_markings"]
 	S["feature_mam_tail"]				<< features["mam_tail"]
 	S["feature_mam_ears"]				<< features["mam_ears"]
@@ -502,14 +531,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_xeno_tail"]				<< features["xenotail"]
 	S["feature_xeno_dors"]				<< features["xenodorsal"]
 	S["feature_xeno_head"]				<< features["xenohead"]
-	S["feature_lizard_legs"]			<< features["legs"]
-	S["clown_name"]			<< custom_names["clown"]
-	S["mime_name"]			<< custom_names["mime"]
-	S["ai_name"]			<< custom_names["ai"]
-	S["cyborg_name"]		<< custom_names["cyborg"]
-	S["religion_name"]		<< custom_names["religion"]
-	S["deity_name"]			<< custom_names["deity"]
-	S["prefered_security_department"] << prefered_security_department
 	//cock features
 	S["feature_has_cock"]				<< features["has_cock"]
 	S["feature_cock_shape"]				<< features["cock_shape"]
@@ -531,18 +552,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//vagina features
 	S["feature_has_vag"]				<< features["has_vag"]
 	S["feature_vag_color"]				<< features["vag_color"]
-
-	//Jobs
-	S["joblessrole"]		<< joblessrole
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	//womb features
+	S["feature_has_womb"]				<< features["has_womb"]
 
 	return 1
 

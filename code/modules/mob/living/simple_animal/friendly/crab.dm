@@ -9,7 +9,6 @@
 	emote_hear = list("clicks.")
 	emote_see = list("clacks.")
 	speak_chance = 1
-	devourable = 1
 	turns_per_move = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 1)
 	response_help  = "pets"
@@ -21,6 +20,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = 2
+	devourable = 1
 
 /mob/living/simple_animal/crab/Life()
 	..()

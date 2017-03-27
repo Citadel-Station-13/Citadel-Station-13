@@ -83,10 +83,8 @@
 	src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
-	while(!ticker.login_music) //wait for ticker init to set the login music
-		stoplag()
-	if(!ticker.login_music)
-		return
+	UNTIL(ticker.login_music) //wait for ticker init to set the login music
+
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
@@ -124,30 +122,6 @@
 				soundin = pick('sound/machines/terminal_button01.ogg', 'sound/machines/terminal_button02.ogg', 'sound/machines/terminal_button03.ogg', \
 								'sound/machines/terminal_button04.ogg', 'sound/machines/terminal_button05.ogg', 'sound/machines/terminal_button06.ogg', \
 								'sound/machines/terminal_button07.ogg', 'sound/machines/terminal_button08.ogg')
-/*			//Scream emote sounds //when they get ported again
-			if ("malescream")
-				soundin = pick('sound/voice/scream/scream_m1.ogg', 'sound/voice/scream/scream_m2.ogg')
-			if ("femscream")
-				soundin = pick('sound/voice/scream/scream_f1.ogg', 'sound/voice/scream/scream_f2.ogg', 'sound/voice/scream/scream_f3.ogg')
-			if ("drakescream")
-				soundin = pick('sound/voice/scream/drake1.ogg', 'sound/voice/scream/drake2.ogg')
-			if ("birdscream")
-				soundin = pick('sound/voice/scream/bird1.ogg', 'sound/voice/scream/bird2.ogg')
-			if ("mothscream")
-				soundin = pick('sound/voice/scream/moth1.ogg')
-*/
-			//Vore sounds
-			if ("digestion_sounds")
-				soundin = pick('sound/vore/digest1.ogg', 'sound/vore/digest2.ogg', 'sound/vore/digest3.ogg', \
-								'sound/vore/digest4.ogg', 'sound/vore/digest5.ogg', 'sound/vore/digest6.ogg', \
-								'sound/vore/digest7.ogg', 'sound/vore/digest8.ogg', 'sound/vore/digest9.ogg', \
-								'sound/vore/digest10.ogg','sound/vore/digest11.ogg', 'sound/vore/digest12.ogg')
-			if ("death_gurgles")
-				soundin = pick('sound/vore/death1.ogg', 'sound/vore/death2.ogg', 'sound/vore/death3.ogg', \
-								'sound/vore/death4.ogg', 'sound/vore/death5.ogg', 'sound/vore/death6.ogg', \
-								'sound/vore/death7.ogg', 'sound/vore/death8.ogg', 'sound/vore/death9.ogg', 'sound/vore/death10.ogg')
-			if ("struggle_sounds")
-				soundin = pick('sound/vore/squish1.ogg', 'sound/vore/squish2.ogg', 'sound/vore/squish3.ogg', 'sound/vore/squish4.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)

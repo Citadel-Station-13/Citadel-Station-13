@@ -14,18 +14,19 @@
 	if(!mob)	return						//this doesn't happen
 
 	var/show_char = config.mentors_mobname_only
-	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
+	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 0, show_char)]</b>: [msg]</font></span>"
+	var/admin_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[ADMIN_FULLMONTY(src.mob)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
 	for(var/client/X in mentors)
-		X << 'sound/items/bikehorn.ogg'
-		X << mentor_msg
+		to_chat(X, 'sound/items/bikehorn.ogg')
+		to_chat(X, mentor_msg)
 
 	for(var/client/A in admins)
-		A << 'sound/items/bikehorn.ogg'
-		A << mentor_msg
+		to_chat(A, 'sound/items/bikehorn.ogg')
+		to_chat(A, admin_msg)
 
-	src << "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>"
+	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 	return
 
 /proc/get_mentor_counts()
@@ -78,7 +79,7 @@
 		if(C && C.holder && C.holder.fakekey)
 			. += "Administrator"
 		else if (char_name_only && config.mentors_mobname_only)
-			if(istype(C.mob,/mob/new_player) || istype(C.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
+			if(istype(C.mob,/mob/dead/new_player) || istype(C.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
 				. += key
 			else if(C && C.mob) //If they're playing/in the round, only show the mob name
 				. += C.mob.name

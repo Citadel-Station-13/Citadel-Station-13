@@ -38,3 +38,23 @@
 	icon = 'icons/obj/guns/VGguns.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun/MP40k)
 	ammo_x_offset = 3
+
+//Laser rifles, technically lazer, but w/e
+
+/obj/item/weapon/gun/energy/laser/rifle
+	name = "laser rifle"
+	desc = "A laser rifle issued to high ranking members of a certain shadow corporation."
+	icon_state = "xcomlasergun"
+	item_state = null
+	icon = 'icons/obj/guns/VGguns.dmi'
+	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
+	ammo_x_offset = 4
+
+/obj/item/weapon/gun/energy/laser/LaserAK
+	name = "Laser AK470"
+	desc = "A laser AK. Death solves all problems -- No man, no problem."
+	icon_state = "LaserAK"
+	item_state = null
+	icon = 'icons/obj/guns/VGguns.dmi'
+	ammo_type = list(/obj/item/ammo_casing/energy/laser)
+	ammo_x_offset = 4
