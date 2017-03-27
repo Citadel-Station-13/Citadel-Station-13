@@ -6,6 +6,7 @@
 	var/atom/source_atom     // The atom that we belong to.
 
 	var/turf/source_turf     // The turf under the above.
+	var/turf/pixel_turf      // The turf the top_atom appears to over.
 	var/light_power    // Intensity of the emitter light.
 	var/light_range      // The range of the emitted light.
 	var/light_color    // The colour of the light, string, decomposed by parse_light_color()
@@ -44,6 +45,8 @@
 		top_atom.light_sources += src
 
 	source_turf = top_atom
+	pixel_turf = get_turf_pixel(top_atom) || source_turf
+
 	light_power = source_atom.light_power
 	light_range = source_atom.light_range
 	light_color = source_atom.light_color
@@ -62,13 +65,9 @@
 	destroyed = TRUE
 	force_update()
 	if (source_atom)
-		if (source_atom.light == src)
-			source_atom.light = null
+		source_atom.light_sources -= src
 
-		if (source_atom.light_sources)
-			source_atom.light_sources -= src
-
-	if (top_atom && top_atom.light_sources)
+	if (top_atom)
 		top_atom.light_sources    -= src
 
 // Fuck supporting force.
@@ -76,61 +75,41 @@
 	destroy()
 	return QDEL_HINT_IWILLGC
 
-
-#ifdef LIGHTING_INSTANT_UPDATES
-/datum/light_source/proc/effect_update()
-	if (check() || destroyed || force_update)
-		remove_lum()
-		if (!destroyed)
-			apply_lum()
-
-	else if (vis_update)	// We smartly update only tiles that became (in) visible to use.
-		smart_vis_update()
-
-	vis_update   = FALSE
-	force_update = FALSE
-	needs_update = FALSE
-#else
-
-// Call it dirty, I don't care.
-// This is here so there's no performance loss on non-instant updates from the fact that the engine can also do instant updates.
-// If you're wondering what's with the "BYOND" argument: BYOND won't let me have a () macro that has no arguments :|.
-#define effect_update(BYOND)            \
+// Yes this doesn't align correctly on anything other than 4 width tabs.
+// If you want it to go switch everybody to elastic tab stops.
+// Actually that'd be great if you could!
+#define EFFECT_UPDATE                   \
 	if (!needs_update)                  \
 	{                                   \
 		lighting_update_lights += src;  \
 		needs_update            = TRUE; \
 	}
-#endif
 
 // This proc will cause the light source to update the top atom, and add itself to the update queue.
 /datum/light_source/proc/update(var/atom/new_top_atom)
 	// This top atom is different.
 	if (new_top_atom && new_top_atom != top_atom)
-		if(top_atom != source_atom) // Remove ourselves from the light sources of that top atom.
+		if(top_atom != source_atom && top_atom.light_sources) // Remove ourselves from the light sources of that top atom.
 			top_atom.light_sources -= src
 
 		top_atom = new_top_atom
 
 		if (top_atom != source_atom)
-			if(!top_atom.light_sources)
-				top_atom.light_sources = list()
+			LAZYADD(top_atom.light_sources, src) // Add ourselves to the light sources of our new top atom.
 
-			top_atom.light_sources += src // Add ourselves to the light sources of our new top atom.
-
-	effect_update(null)
+	EFFECT_UPDATE
 
 // Will force an update without checking if it's actually needed.
 /datum/light_source/proc/force_update()
 	force_update = 1
 
-	effect_update(null)
+	EFFECT_UPDATE
 
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
 /datum/light_source/proc/vis_update()
 	vis_update = 1
 
-	effect_update(null)
+	EFFECT_UPDATE
 
 // Will check if we actually need to update, and update any variables that may need to be updated.
 /datum/light_source/proc/check()
@@ -142,13 +121,20 @@
 		top_atom = source_atom
 		. = 1
 
-	if (istype(top_atom, /turf))
+	if (isturf(top_atom))
 		if (source_turf != top_atom)
 			source_turf = top_atom
+			pixel_turf = source_turf
 			. = 1
 	else if (top_atom.loc != source_turf)
 		source_turf = top_atom.loc
+		pixel_turf = get_turf_pixel(top_atom)
 		. = 1
+	else
+		var/P = get_turf_pixel(top_atom)
+		if (P != pixel_turf)
+			. = 1
+			pixel_turf = get_turf_pixel(top_atom)
 
 	if (source_atom.light_power != light_power)
 		light_power = source_atom.light_power
@@ -182,9 +168,9 @@
 // If you're wondering what's with the backslashes, the backslashes cause BYOND to not automatically end the line.
 // As such this all gets counted as a single line.
 // The braces and semicolons are there to be able to do this on a single line.
-
+#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
 #define APPLY_CORNER(C)              \
-	. = LUM_FALLOFF(C, source_turf); \
+	. = LUM_FALLOFF(C, pixel_turf); \
                                      \
 	. *= light_power;                \
                                      \
@@ -208,7 +194,7 @@
 	);
 
 // This is the define used to calculate falloff.
-#define LUM_FALLOFF(C, T) (1 - CLAMP01(sqrt((C.x - T.x) ** 2 + (C.y - T.y) ** 2 + LIGHTING_HEIGHT) / max(1, light_range)))
+
 
 /datum/light_source/proc/apply_lum()
 	var/static/update_gen = 1
@@ -218,46 +204,46 @@
 	applied_lum_r = lum_r
 	applied_lum_g = lum_g
 	applied_lum_b = lum_b
-
-	FOR_DVIEW(var/turf/T, light_range, source_turf, INVISIBILITY_LIGHTING)
+	var/thing
+	var/datum/lighting_corner/C
+	FOR_DVIEW(var/turf/T, light_range+1, source_turf, INVISIBILITY_LIGHTING)
 		if (!T.lighting_corners_initialised)
 			T.generate_missing_corners()
 
-		for (var/datum/lighting_corner/C in T.get_corners())
+		for (thing in T.get_corners())
+			C = thing
 			if (C.update_gen == update_gen)
 				continue
 
 			C.update_gen = update_gen
-			C.affecting += src
+			LAZYADD(C.affecting,src)
 
 			if (!C.active)
+				effect_str[C] = 0
 				continue
 
 			APPLY_CORNER(C)
 
-		if (!T.affecting_lights)
-			T.affecting_lights = list()
-
-		T.affecting_lights += src
+		LAZYADD(T.affecting_lights, src)
 		affecting_turfs    += T
 
 	update_gen++
 
 /datum/light_source/proc/remove_lum()
 	applied = FALSE
-
-	for (var/turf/T in affecting_turfs)
-		if (!T.affecting_lights)
-			T.affecting_lights = list()
-		else
-			T.affecting_lights -= src
+	var/thing
+	for (thing in affecting_turfs)
+		var/turf/T = thing
+		LAZYREMOVE(T.affecting_lights, src)
 
 	affecting_turfs.Cut()
 
-	for (var/datum/lighting_corner/C in effect_str)
+	var/datum/lighting_corner/C
+	for (thing in effect_str)
+		C = thing
 		REMOVE_CORNER(C)
 
-		C.affecting -= src
+		LAZYREMOVE(C.affecting, src)
 
 	effect_str.Cut()
 
@@ -270,38 +256,48 @@
 /datum/light_source/proc/smart_vis_update()
 	var/list/datum/lighting_corner/corners = list()
 	var/list/turf/turfs                    = list()
-	FOR_DVIEW(var/turf/T, light_range, source_turf, 0)
+	var/thing
+	var/datum/lighting_corner/C
+	var/turf/T
+
+	FOR_DVIEW(T, light_range+1, source_turf, 0)
 		if (!T.lighting_corners_initialised)
 			T.generate_missing_corners()
-		corners |= T.get_corners()
-		turfs   += T
+		for (thing in T.get_corners(source_turf))
+			C = thing
+			corners[C] = 0
+		turfs += T
 
 	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
 	affecting_turfs += L
-	for (var/turf/T in L)
-		if (!T.affecting_lights)
-			T.affecting_lights = list(src)
-		else
-			T.affecting_lights += src
+	for (thing in L)
+		T = thing
+		LAZYADD(T.affecting_lights, src)
 
 	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
 	affecting_turfs -= L
-	for (var/turf/T in L)
-		T.affecting_lights -= src
+	for (thing in L)
+		T = thing
+		LAZYREMOVE(T.affecting_lights, src)
 
-	for (var/datum/lighting_corner/C in corners - effect_str) // New corners
-		C.affecting += src
+
+
+	for (thing in corners - effect_str) // New corners
+		C = thing
+		LAZYADD(C.affecting, src)
 		if (!C.active)
+			effect_str[C] = 0
 			continue
 
 		APPLY_CORNER(C)
 
-	for (var/datum/lighting_corner/C in effect_str - corners) // Old, now gone, corners.
+	for (thing in effect_str - corners) // Old, now gone, corners.
+		C = thing
 		REMOVE_CORNER(C)
-		C.affecting -= src
+		LAZYREMOVE(C.affecting, src)
 		effect_str -= C
 
-#undef effect_update
+#undef EFFECT_UPDATE
 #undef LUM_FALLOFF
 #undef REMOVE_CORNER
 #undef APPLY_CORNER

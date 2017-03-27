@@ -116,11 +116,13 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
 	if(..())
 		return
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+			investigate_log("Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
+			message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
 			. = TRUE
 		if("pressure")
@@ -137,8 +139,8 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
+				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 				log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
 	update_icon()
 
@@ -179,11 +181,13 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	if(..())
+		var/turf/T = get_turf(src)
+		var/area/A = get_area(src)
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
-			investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+			investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
+			message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] unwrenched a pump at [x], [y], [z]")
 			return 1
 

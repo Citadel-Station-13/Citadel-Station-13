@@ -247,7 +247,10 @@
 		excited_group.dismantle_cooldown = 0
 		atmos_cooldown = 0
 
-/turf/open/proc/high_pressure_movements()
+/turf/proc/high_pressure_movements()
+	return
+
+/turf/open/high_pressure_movements()
 	for(var/atom/movable/M in src)
 		M.experience_pressure_difference(pressure_difference, pressure_direction)
 
