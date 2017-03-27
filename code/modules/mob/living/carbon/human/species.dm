@@ -311,11 +311,10 @@
 
 
 	// eyes
-	var/has_eyes = TRUE
+	var/has_eyes = (H.getorgan(/obj/item/organ/eyes) && HD)
 
-	if(!H.getorgan(/obj/item/organ/eyes) && HD)
+	if(!has_eyes)
 		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
-		has_eyes = FALSE
 
 	if(!HUSK)
 		// lipstick
