@@ -162,7 +162,8 @@
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
 	else
-		C.canbearoused = C.client.prefs.arousable
+		if(C.client)
+			C.canbearoused = C.client.prefs.arousable
 
 /datum/species/proc/on_species_loss(mob/living/carbon/C)
 	if(C.dna.species.exotic_bloodtype)
