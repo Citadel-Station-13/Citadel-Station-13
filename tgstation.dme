@@ -1181,7 +1181,7 @@
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\plasmamen.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
-#include "code\modules\clothing\spacesuits\vg_spess.dm"
+#include "code\modules\clothing\spacesuits\vg_spacesuit.dm"
 #include "code\modules\clothing\suits\armor.dm"
 #include "code\modules\clothing\suits\bio.dm"
 #include "code\modules\clothing\suits\cloaks.dm"
