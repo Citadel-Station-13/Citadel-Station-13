@@ -352,7 +352,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			transit_requesters += M
 
 /datum/controller/subsystem/shuttle/proc/autoEnd()
-	if(world.time > 108000 && EMERGENCY_IDLE_OR_RECALLED) //3 hours
+	if(world.time > 72000 && EMERGENCY_IDLE_OR_RECALLED) //3 hours
 		SSshuttle.emergency.request(null, 1.5)
 		priority_announce("The shift has come to an end and the shuttle called.")
 		log_game("Round time limit reached. Shuttle has been auto-called.")
