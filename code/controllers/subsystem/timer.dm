@@ -79,12 +79,12 @@ var/datum/controller/subsystem/timer/SStimer
 		do
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
+				message_admins("The timer SS has crashed because a timer did not return a callback. MC restarted automatically. Timer hash: [timer.hash]")
 				qdel(timer)
 				bucket_resolution = null //force bucket recreation
-				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
-				//Temporary fix
 				Recreate_MC()
-				message_admins("The timer SS has crashed. A full report can be found in the runtime viewer. MC restarted automatically.")
+				//I really don't know if I should keep this crash log in; I feel like it might cause problems.
+//				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
 			if (!timer.spent)
 				spent += timer

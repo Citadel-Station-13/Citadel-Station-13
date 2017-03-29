@@ -133,7 +133,6 @@ var/list/preferences_datums = list()
 
 		//Mob preview
 	var/icon/preview_icon = null
-	var/icon/nude_preview_icon = null
 
 		//Jobs, uses bitflags
 	var/job_civilian_high = 0
