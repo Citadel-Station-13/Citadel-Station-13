@@ -238,11 +238,12 @@
 		return ..()
 
 //The captains display case requiring specops ID access is intentional.
+//Intentional why? Because of this, the captain has to SMASH his own display case to get his own gun. WHY? -ktccd
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(access_cent_specops)
+	req_access = list(access_captain)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
