@@ -47,7 +47,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/GameTime = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
+	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
 
 /datum/controller/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -354,7 +354,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			transit_requesters += M
 
 /datum/controller/subsystem/shuttle/proc/autoEnd()
-	if(world.time > GameTime && EMERGENCY_IDLE_OR_RECALLED) //3 hours
+	if(world.time > auto_call && EMERGENCY_IDLE_OR_RECALLED) //3 hours
 		SSshuttle.emergency.request(null, 1.5)
 		priority_announce("The shift has come to an end and the shuttle called.")
 		log_game("Round time limit reached. Shuttle has been auto-called.")
