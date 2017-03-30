@@ -354,7 +354,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			transit_requesters += M
 
 /datum/controller/subsystem/shuttle/proc/autoEnd()
-	world << world.time
 	if(world.time > GameTime && EMERGENCY_IDLE_OR_RECALLED) //3 hours
 		SSshuttle.emergency.request(null, 1.5)
 		priority_announce("The shift has come to an end and the shuttle called.")
