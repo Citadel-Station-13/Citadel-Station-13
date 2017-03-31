@@ -42750,6 +42750,16 @@
 /obj/item/weapon/shard,
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"bPV" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Maint Bar Access";
+	req_access_txt = "12"
+	},
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "bPW" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -62737,26 +62747,11 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/wood,
 /area/maintenance/aft)
-"ipA" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "maintenance access";
-	req_access_txt = "12"
-	},
-/obj/structure/barricade/wooden{
-	name = "wooden barricade (CLOSED)"
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "kmv" = (
 /obj/structure/table/wood/poker,
 /obj/item/toy/cards/deck,
 /obj/item/device/flashlight/lamp/green,
 /turf/open/floor/wood,
-/area/maintenance/aft)
-"kGj" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/plating,
 /area/maintenance/aft)
 "kVM" = (
 /obj/machinery/vending/cigarette,
@@ -62771,12 +62766,6 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/wood,
-/area/maintenance/aft)
-"qXK" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
 /area/maintenance/aft)
 "sNb" = (
 /obj/structure/table/wood,
@@ -62819,11 +62808,6 @@
 "Hst" = (
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/wood,
-/area/maintenance/aft)
-"MMG" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
 /area/maintenance/aft)
 "MYZ" = (
 /obj/machinery/vending/kink,
@@ -83318,7 +83302,7 @@ akD
 akD
 aaa
 bCq
-ipA
+bPV
 bCq
 bCq
 hho
@@ -84357,12 +84341,12 @@ bCq
 bYy
 bCq
 bCq
-kGj
+bLv
 bCq
 bCq
 bCq
 bCq
-bCq
+bLv
 cgH
 bLv
 aaa
@@ -84619,7 +84603,7 @@ bPS
 bPS
 bPR
 bPS
-bCq
+bLv
 cgH
 bLv
 aaa
@@ -84865,18 +84849,18 @@ bHE
 bHE
 bCq
 bHE
-bCq
-bCq
-bCq
-bCq
-bCq
+bLv
+bLv
+bLv
+bLv
+bLv
 bPS
 bPS
 foR
 sNb
 bPS
 bPT
-bCq
+bLv
 cgH
 bLv
 aaf
@@ -85122,7 +85106,7 @@ bHE
 bHE
 bTz
 bHE
-bCq
+bLv
 Udt
 bTs
 bPS
@@ -85133,7 +85117,7 @@ bSo
 sNb
 bPS
 bPS
-bCq
+bLv
 cgH
 bLv
 aaa
@@ -85379,7 +85363,7 @@ bHE
 bSs
 bCq
 bHE
-bCq
+bLv
 OQC
 bPS
 bPS
@@ -85390,7 +85374,7 @@ sZh
 qBu
 bPS
 bPS
-MMG
+bLv
 cgH
 bLv
 aaa
@@ -85636,7 +85620,7 @@ bRh
 bSr
 bCq
 bHE
-kGj
+bLv
 kVM
 bPS
 bSo
@@ -85647,7 +85631,7 @@ bSo
 sNb
 bPS
 bPS
-MMG
+bLv
 cgH
 bLv
 aaf
@@ -85893,7 +85877,7 @@ bCq
 bCq
 bCq
 bHE
-kGj
+bLv
 bPT
 PGz
 bPS
@@ -85904,7 +85888,7 @@ VYv
 sNb
 PGz
 nlI
-MMG
+bLv
 cgH
 bLv
 aaa
@@ -86150,7 +86134,7 @@ bLv
 aaa
 bLv
 bHE
-kGj
+bLv
 bPS
 foR
 bPS
@@ -86161,7 +86145,7 @@ bSo
 sNb
 bTs
 WKO
-bCq
+bLv
 cgH
 bLv
 aaa
@@ -86407,7 +86391,7 @@ bLv
 aaf
 bLv
 bUt
-bCq
+bLv
 bPS
 bTs
 bSo
@@ -86418,7 +86402,7 @@ bSo
 qBu
 bPS
 tOQ
-bCq
+bLv
 cgH
 bLv
 aaf
@@ -86664,7 +86648,7 @@ bCq
 aaa
 bLv
 bUs
-bCq
+bLv
 MYZ
 bPS
 Aex
@@ -86925,12 +86909,12 @@ bES
 bES
 bES
 bES
+bGp
+bGp
+bGp
+bGp
 bES
 bES
-bES
-qXK
-qXK
-qXK
 bES
 car
 cgH
