@@ -184,6 +184,16 @@
 	for(var/i in 1 to 5)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/stimpack(src)
 
+/obj/item/weapon/storage/box/medipens/survival
+	name = "Survival pen bundle"
+	desc = "a box with several survival pens inside, welcome to immortality!!"
+	illustration = "syringe"
+
+/obj/item/weapon/storage/box/medipens/survival/New()
+	..()
+	for(var/i in 1 to 5)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
+
 /obj/item/weapon/storage/box/beakers
 	name = "box of beakers"
 	illustration = "beaker"
