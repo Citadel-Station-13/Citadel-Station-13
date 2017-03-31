@@ -156,14 +156,17 @@
 	stop_pulling()
 
 	// Inform Admins
+	var/prey_braindead
+	var/prey_stat
+	if(prey.ckey)
+		prey_stat = prey.stat//only return this if they're not an unmonkey or whatever
+		if(!prey.client)//if they disconnected, tell us
+			prey_braindead = 1
 	if (pred == user)
-		message_admins("[key_name(pred)] ate [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
 		log_attack("[key_name(pred)] ate [key_name(prey)]")
-	else if (prey == !client && stat != DEAD)
-		message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
-		log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
 	else
-		message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		message_admins("[ADMIN_LOOKUPFLW(user)] forced [ADMIN_LOOKUPFLW(pred)] to eat [ADMIN_LOOKUPFLW(prey)].")
 		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
 	return TRUE
 

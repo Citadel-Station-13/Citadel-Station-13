@@ -20,24 +20,19 @@
 	update()
 
 /obj/item/organ/genital/testicles/on_life()
-	if(fluid_id && producing)
+	if(QDELETED(src))
+		return
+	if(reagents && producing)
 		generate_cum()
 
 /obj/item/organ/genital/testicles/proc/generate_cum()
 	reagents.maximum_volume = fluid_max_volume
 	if(reagents.total_volume >= reagents.maximum_volume)
-		if(sent_full_message < 0)
+		if(!sent_full_message)
 			send_full_message()
 			sent_full_message = 1
 		return FALSE
 	sent_full_message = 0
-	if(!owner && linked_penis)
-		if(linked_penis.linked_balls == src)
-			linked_penis.linked_balls = null
-		linked_penis = null
-		return FALSE
-	if(!reagents)
-		create_reagents(fluid_max_volume)
 	update_link()
 	if(!linked_penis)
 		return FALSE
@@ -45,12 +40,13 @@
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
 
 /obj/item/organ/genital/testicles/update_link()
-	if(owner)
+	if(owner && !QDELETED(src))
 		linked_penis = (owner.getorganslot("penis"))
 		if(linked_penis)
 			linked_penis.linked_balls = src
-	else if(linked_penis != null)
-		linked_penis.linked_balls = null
+	else
+		if(linked_penis)
+			linked_penis.linked_balls = null
 		linked_penis = null
 
 /obj/item/organ/genital/testicles/proc/send_full_message(msg = "Your balls finally feel full, again.")

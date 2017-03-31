@@ -62,6 +62,7 @@
 	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
+	mannequin.update_body()
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale((112), (32))

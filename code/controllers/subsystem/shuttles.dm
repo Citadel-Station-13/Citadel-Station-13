@@ -47,6 +47,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
+
 /datum/controller/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
 
@@ -279,6 +281,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
 
+
+
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
 	checkHostileEnvironment()
@@ -348,6 +352,14 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	else
 		if(!(M in transit_requesters))
 			transit_requesters += M
+
+/datum/controller/subsystem/shuttle/proc/autoEnd()
+	if(world.time > auto_call && EMERGENCY_IDLE_OR_RECALLED) //3 hours
+		SSshuttle.emergency.request(null, 1.5)
+		priority_announce("The shift has come to an end and the shuttle called.")
+		log_game("Round time limit reached. Shuttle has been auto-called.")
+		message_admins("Round time limit reached. Shuttle called.")
+
 
 /datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone

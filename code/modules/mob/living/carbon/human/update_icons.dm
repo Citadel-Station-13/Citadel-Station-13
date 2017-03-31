@@ -60,6 +60,7 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
+	dna.species.handle_genitals(src)
 	..()
 
 /mob/living/carbon/human/update_fire()
@@ -73,6 +74,7 @@ There are several things that need to be remembered:
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
 		update_body()
+		update_genitals()
 		update_hair()
 		update_inv_w_uniform()
 		update_inv_wear_id()
@@ -256,6 +258,11 @@ There are several things that need to be remembered:
 	if(get_num_legs() <2)
 		return
 
+	if("taur" in dna.species.mutant_bodyparts)
+		var/tpref = dna.features["taur"]
+		if(tpref == "Naga")
+			return
+
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_shoes]
 		inv.update_icon()
@@ -267,10 +274,7 @@ There are several things that need to be remembered:
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
 		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
-		if("taur" in dna.species.mutant_bodyparts)
-			switch(dna.features["taur"])
-				if(!"Naga" || "None")
-					overlays_standing[SHOES_LAYER]	= standing
+		overlays_standing[SHOES_LAYER] = standing
 
 	apply_overlay(SHOES_LAYER)
 

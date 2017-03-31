@@ -67,7 +67,6 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
-	equip(M)
 
 	if(ckey)
 		M.ckey = ckey
@@ -78,6 +77,7 @@
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
+	equip(M)
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -115,6 +115,13 @@
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
 		H.set_species(mob_species)
+	else
+		//If we're a human, we still need to handle our snowflake code anyway I guess.
+		if (NOAROUSAL in H.dna.species.species_traits)
+			H.canbearoused = FALSE
+		else
+			if(H.client)
+				H.canbearoused = H.client.prefs.arousable
 	if(husk)
 		H.Drain()
 

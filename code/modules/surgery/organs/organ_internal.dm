@@ -62,6 +62,7 @@
 	S.icon_state = icon_state
 	S.origin_tech = origin_tech
 	S.w_class = w_class
+	S.color = color
 
 	return S
 

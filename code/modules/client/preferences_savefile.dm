@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	17
+#define SAVEFILE_VERSION_MAX	18
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -125,6 +125,36 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BEASSISTANT
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
+	if(current_version < 18)//this should lower the amount of lag when you select or change something.
+		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
+		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], mam_ears_list)
+		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], mam_tails_list)
+		features["taur"]				= sanitize_inlist(features["taur"], taur_list)
+		//Xeno features
+		features["xenotail"] 			= sanitize_inlist(features["xenotail"], xeno_tail_list)
+		features["xenohead"] 			= sanitize_inlist(features["xenohead"], xeno_head_list)
+		features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
+		//cock features
+		features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
+		features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
+		features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
+		features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
+		//balls features
+		features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
+		features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
+		features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
+		features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
+		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
+		//breasts features
+		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
+		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
+		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
+		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
+		//vagina features
+		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
+		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
+		//womb features
+		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -300,12 +330,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	if(!config.mutant_humans)
-		features["tail_human"] = "none"
-		features["ears"] = "none"
-	else
-		S["feature_human_tail"]				>> features["tail_human"]
-		S["feature_human_ears"]				>> features["ears"]
+	S["feature_human_tail"]				>> features["tail_human"]
+	S["feature_human_ears"]				>> features["ears"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -362,6 +388,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
 	S["feature_vag_color"]				>> features["vag_color"]
+	//womb features
+	S["feature_has_womb"]				>> features["has_womb"]
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -428,35 +456,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 3, 0)
 	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 3, 0)
-	features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
-	features["mam_ears"] 	= sanitize_inlist(features["mam_ears"], mam_ears_list)
-	features["mam_tail"] 	= sanitize_inlist(features["mam_tail"], mam_tails_list)
-	features["taur"]		= sanitize_inlist(features["taur"], taur_list)
-	//Xeno features
-	features["xenotail"] 	= sanitize_inlist(features["xenotail"], xeno_tail_list)
-	features["xenohead"] 	= sanitize_inlist(features["xenohead"], xeno_head_list)
-	features["xenodorsal"] 	= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
-	//cock features
-	features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
-	features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
-	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
-	features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
-	//balls features
-	features["has_balls"] 			= sanitize_integer(features["has_balls"], 0, 1, 0)
-	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
-	features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
-	features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-	features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
-	//breasts features
-	features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
-	features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
-	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-	features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
-	//vagina features
-	features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
-	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
-
-
 	return 1
 
 /datum/preferences/proc/save_character()
@@ -553,6 +552,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//vagina features
 	S["feature_has_vag"]				<< features["has_vag"]
 	S["feature_vag_color"]				<< features["vag_color"]
+	//womb features
+	S["feature_has_womb"]				<< features["has_womb"]
 
 	return 1
 

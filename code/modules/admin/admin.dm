@@ -162,6 +162,9 @@ var/global/BSACooldown = 0
 		body += "<A href='?_src_=holder;tdome2=\ref[M]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;tdomeadmin=\ref[M]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;tdomeobserve=\ref[M]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;mentor=\ref[M]'>Make Mentor</A> | "
+		body += "<A href='?_src_=holder;removementor=\ref[M]'>Remove Mentor</A> | "
+
 
 	body += "<br>"
 	body += "</body></html>"
