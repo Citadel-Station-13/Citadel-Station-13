@@ -701,7 +701,8 @@ var/total_borer_hosts_needed = 10
 		controlling = TRUE
 
 		victim.verbs += /mob/living/carbon/proc/release_control
-		victim.verbs += /mob/living/carbon/proc/spawn_larvae
+		if(is_team_borer)
+			victim.verbs += /mob/living/carbon/proc/spawn_larvae
 		victim.verbs -= /mob/living/proc/borer_comm
 		victim.verbs += /mob/living/proc/trapped_mind_comm
 		GrantControlActions()
@@ -826,7 +827,8 @@ var/total_borer_hosts_needed = 10
 	controlling = FALSE
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
-	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
+	if(is_team_borer)
+		victim.verbs -= /mob/living/carbon/proc/spawn_larvae
 	victim.verbs += /mob/living/proc/borer_comm
 	victim.verbs -= /mob/living/proc/trapped_mind_comm
 	RemoveControlActions()
