@@ -62773,10 +62773,6 @@
 	},
 /turf/closed/wall,
 /area/maintenance/bar)
-"qSh" = (
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "uvo" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -84713,7 +84709,7 @@ bHE
 Pfx
 AMw
 Fsp
-qSh
+Fsp
 Qmz
 Fsp
 Fsp
