@@ -4,6 +4,7 @@
 	name = "\improper Unexplored Location"
 	icon_state = "away"
 	has_gravity = 1
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 
 /area/ruin/unpowered
@@ -14,6 +15,7 @@
 
 /area/ruin/powered
 	requires_power = 0
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 
 
@@ -27,30 +29,37 @@
 	icon_state = "away"
 
 /area/ruin/powered/snow_biodome
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 /area/ruin/powered/golem_ship
 	name = "Free Golem Ship"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 /area/ruin/powered/syndicate_lava_base
 	name = "Secret Base"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 // Ruins of "onehalf" ship
 
 /area/ruin/onehalf/hallway
 	name = "Hallway"
 	icon_state = "hallC"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 /area/ruin/onehalf/drone_bay
 	name = "Mining Drone Bay"
 	icon_state = "engine"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 /area/ruin/onehalf/dorms_med
 	name = "Crew Quarters"
 	icon_state = "Sleep"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 /area/ruin/onehalf/bridge
 	name = "Bridge"
 	icon_state = "bridge"
+	sound_environment = SOUND_ENVIRONMENT_STONEROOM
 
 
 
@@ -69,10 +78,12 @@
 
 /area/ruin/hotel
 	name = "Hotel"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/ruin/hotel/guestroom
 	name = "Hotel Guest Room"
 	icon_state = "Sleep"
+	sound_environment = SOUND_ENVIRONMENT_ROOM
 
 /area/ruin/hotel/security
 	name = "Hotel Security Post"
@@ -81,31 +92,38 @@
 /area/ruin/hotel/pool
 	name = "Hotel Pool Room"
 	icon_state = "fitness"
+	sound_environment = SOUND_ENVIRONMENT_BATHROOM
 
 /area/ruin/hotel/bar
 	name = "Hotel Bar"
 	icon_state = "cafeteria"
 
+
 /area/ruin/hotel/power
 	name = "Hotel Power Room"
 	icon_state = "engine_smes"
+	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
 /area/ruin/hotel/custodial
 	name = "Hotel Custodial Closet"
 	icon_state = "janitor"
+	sound_environment = SOUND_ENVIRONMENT_SEWER_PIPE
 
 /area/ruin/hotel/shuttle
 	name = "Hotel Shuttle"
 	icon_state = "shuttle"
 	requires_power = 0
 
+
 /area/ruin/hotel/dock
 	name = "Hotel Shuttle Dock"
 	icon_state = "start"
 
+
 /area/ruin/hotel/workroom
 	name = "Hotel Staff Room"
 	icon_state = "crew_quarters"
+	sound_environment = SOUND_ENVIRONMENT_LIVINGROOM
 
 
 
@@ -130,6 +148,7 @@
 /area/ruin/derelictoutpost
 	name = "Derelict Outpost"
 	icon_state = "green"
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 /area/ruin/derelictoutpost/cargostorage
 	name = "Derelict Outpost Cargo Storage"
@@ -163,6 +182,7 @@
 /area/ruin/turretedoutpost
 	name = "Turreted Outpost"
 	icon_state = "red"
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 
 //Ruin of old teleporter
@@ -171,6 +191,7 @@
 	name = "Old teleporter"
 	icon_state = "teleporter"
 	has_gravity = 0
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 
 //Ruin of mech transport

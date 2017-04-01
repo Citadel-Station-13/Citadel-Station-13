@@ -4,6 +4,7 @@
 	name = "Derelict Station"
 	icon_state = "storage"
 	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
@@ -108,6 +109,7 @@
 	icon_state = "DJ"
 	has_gravity = 1
 	blob_allowed = 0 //Nope, no winning on the DJ station as a blob. Gotta eat the main station.
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/djstation/solars
 	name = "DJ Station Solars"
@@ -122,3 +124,4 @@
 	icon_state = "teleporter"
 	music = "signal"
 	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY

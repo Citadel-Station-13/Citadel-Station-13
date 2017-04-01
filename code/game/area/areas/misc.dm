@@ -5,6 +5,7 @@
 	//icon = "ICON FILENAME"
 	//icon_state = "NAME OF ICON"
 	requires_power = 0
+	sound_environment = SOUND_ENVIRONMENT_CAVE
 
 /area/hell/trial1
 	name = "Hell Trial1"
@@ -21,6 +22,8 @@
 
 
 //Misc
+/area/wreck
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 /area/wreck/ai
 	name = "AI Chamber"
@@ -48,6 +51,7 @@
 /area/prison
 	name = "Prison Station"
 	icon_state = "brig"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/prison/arrival_airlock
 	name = "Prison Station Airlock"
