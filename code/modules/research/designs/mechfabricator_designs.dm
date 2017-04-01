@@ -760,6 +760,7 @@
 	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
 
+/*
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
 	desc = "A specialized hardsuit that is able to attach a flightpack and accessories.."
@@ -770,6 +771,7 @@
 	construction_time = 250
 	category = list("Misc")
 	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 2, "materials" = 4, "engineering" = 3, "powerstorage" = 2)
+	*/
 
 /datum/design/flightpack
 	name = "Flight Pack"
@@ -782,6 +784,7 @@
 	category = list("Misc")
 	req_tech = list("magnets" = 4, "combat" = 3, "plasmatech" = 4, "materials" = 5, "engineering" = 4, "powerstorage" = 4)
 
+/*
 /datum/design/flightshoes
 	name = "Flight Shoes"
 	desc = "Flight shoes, attachable to a flight suit to provide additional functions."
@@ -792,3 +795,4 @@
 	construction_time = 100
 	category = list("Misc")
 	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)
+	*/
