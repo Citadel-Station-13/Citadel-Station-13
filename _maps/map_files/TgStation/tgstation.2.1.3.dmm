@@ -47425,14 +47425,6 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/server)
-"cak" = (
-/obj/machinery/telecomms/hub/preset,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
-/area/tcommsat/server)
 "cal" = (
 /obj/machinery/door/airlock/glass_engineering{
 	cyclelinkeddir = 4;
@@ -62687,6 +62679,20 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"cRZ" = (
+/obj/machinery/telecomms/hub/preset,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/vault{
+	dir = 8;
+	name = "Mainframe Floor";
+	initial_gas_mix = "n2=100;TEMP=80"
+	},
+/area/tcommsat/server)
 "dfH" = (
 /obj/structure/window/reinforced,
 /obj/machinery/computer/slot_machine,
@@ -62696,6 +62702,16 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/wood,
+/area/maintenance/bar)
+"eeC" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
 /area/maintenance/bar)
 "elp" = (
 /obj/machinery/vending/kink,
@@ -62726,6 +62742,16 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"hjV" = (
+/obj/structure/window/reinforced,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "hKu" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -62759,19 +62785,37 @@
 /obj/machinery/vending/snack/random,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"kqI" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "lPa" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood,
 /area/maintenance/bar)
-"qcS" = (
+"twx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_x = 0
+	pixel_y = 0
 	},
 /turf/closed/wall,
+/area/maintenance/bar)
+"ulk" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
 /area/maintenance/bar)
 "uvo" = (
 /obj/structure/cable{
@@ -62819,10 +62863,6 @@
 /obj/machinery/computer/arcade,
 /turf/open/floor/wood,
 /area/maintenance/bar)
-"zmQ" = (
-/obj/structure/window/reinforced,
-/turf/open/floor/wood,
-/area/maintenance/bar)
 "zXD" = (
 /obj/structure/closet{
 	name = "Glasware Storage"
@@ -62842,16 +62882,6 @@
 /area/maintenance/bar)
 "Dat" = (
 /obj/structure/chair/stool,
-/turf/open/floor/wood,
-/area/maintenance/bar)
-"EWJ" = (
-/obj/structure/window/reinforced,
-/obj/machinery/computer/slot_machine,
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "Fsp" = (
@@ -62893,18 +62923,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/maintenance/bar)
-"LnP" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Maintenance Bar APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/structure/cable,
-/turf/open/floor/wood{
-	icon_state = "wood-broken"
-	},
-/area/maintenance/bar)
 "MIM" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
@@ -62921,6 +62939,21 @@
 "Qmz" = (
 /turf/open/floor/wood{
 	icon_state = "wood-broken5"
+	},
+/area/maintenance/bar)
+"SgX" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Maintenance Bar APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
 	},
 /area/maintenance/bar)
 "Shp" = (
@@ -86505,11 +86538,11 @@ bLv
 bUt
 Pfx
 MIM
-Qmz
-Dat
-Dat
-Dat
-Fsp
+eeC
+ulk
+ulk
+ulk
+kqI
 Dat
 dHs
 Fsp
@@ -86762,11 +86795,11 @@ bLv
 bUs
 Pfx
 elp
-zmQ
+hjV
 yUg
 dfH
-EWJ
-LnP
+dfH
+SgX
 Dat
 iCw
 Fsp
@@ -87019,10 +87052,10 @@ bTB
 bUv
 ZVf
 ZVf
+twx
 ZVf
 ZVf
 ZVf
-qcS
 ZVf
 Hio
 Hio
@@ -87276,10 +87309,10 @@ bTA
 bUu
 bVH
 bVH
-bVH
-bVH
-bVH
 uvo
+bVH
+bVH
+bVH
 cem
 bVH
 bVH
@@ -88564,7 +88597,7 @@ bWF
 bXC
 bXC
 bZp
-cak
+cRZ
 bWB
 bWB
 bWB
