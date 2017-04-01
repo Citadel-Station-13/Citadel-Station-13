@@ -62717,6 +62717,11 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"eIp" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/storage/pill_bottle/dice,
+/turf/open/floor/wood,
+/area/maintenance/bar)
 "gsu" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green,
@@ -62791,10 +62796,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/wood,
-/area/maintenance/bar)
-"lPa" = (
-/obj/structure/table/wood/poker,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "twx" = (
@@ -85255,7 +85256,7 @@ Pfx
 idC
 Qmz
 Dat
-lPa
+eIp
 yug
 Fsp
 Fsp
