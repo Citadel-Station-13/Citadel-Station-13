@@ -298,6 +298,7 @@
 obj/item/weapon/antag_spawner/syndi_borer
 	name = "syndicate brain-slug container"
 	desc = "Releases a modified cortical borer to assist the user."
+	icon = 'icons/obj/device.dmi' //Temporary? Doesn't really look like a container for xenofauna... but IDK what else could work.
 	icon_state = "locator"
 	
 obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owner)
@@ -315,6 +316,7 @@ obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owne
 		new_objective = new /datum/objective/syndi_borer
 		new_objective.owner = B.mind
 		new_objective.target = owner.mind
+		new_objective.explanation_text = "You are a modified cortical borer. You obey [owner.real_name] and must assist them in completing their objectives."
 		B.mind.objectives += new_objective
 		
 		to_chat(B, "<B>You are awake at last! Seek out whoever released you and aid them as best you can!</B>")

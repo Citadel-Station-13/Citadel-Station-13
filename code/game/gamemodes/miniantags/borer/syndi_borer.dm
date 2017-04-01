@@ -1,5 +1,6 @@
 /mob/living/simple_animal/borer/syndi_borer
 	var/mob/owner = null
+	is_team_borer = FALSE
 	borer_alert = "Serve as a syndicate cortical borer? (Warning, You can no longer be cloned!)"
 	
 /mob/living/simple_animal/borer/syndi_borer/Initialize(mapload, gen=1)
