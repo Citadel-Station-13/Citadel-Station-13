@@ -829,7 +829,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			to assist their host."
 	item = /obj/item/weapon/antag_spawner/syndi_borer
 	refundable = TRUE
-	cost = 5
+	cost = 10
+	surplus = 20 //Let's not have this be too common
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
