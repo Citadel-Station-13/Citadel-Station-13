@@ -110,10 +110,14 @@ var/total_borer_hosts_needed = 10
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
+	var/is_team_borer = TRUE
+	var/borer_alert = "Become a cortical borer? (Warning, You can no longer be cloned!)"
+
 /mob/living/simple_animal/borer/Initialize(mapload, gen=1)
 	..()
 	generation = gen
-	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
+	if(is_team_borer)
+		notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000,9999)]"
 	borer_chems += /datum/borer_chem/epinephrine
@@ -128,8 +132,9 @@ var/total_borer_hosts_needed = 10
 	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
-
-	borers += src
+	
+	if(is_team_borer)
+		borers += src
 
 	GrantBorerActions()
 
@@ -146,7 +151,7 @@ var/total_borer_hosts_needed = 10
 		return
 	if(stat != CONSCIOUS)
 		return
-	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
+	var/be_borer = alert(borer_alert,,"Yes","No")
 	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(key)
@@ -696,7 +701,8 @@ var/total_borer_hosts_needed = 10
 		controlling = TRUE
 
 		victim.verbs += /mob/living/carbon/proc/release_control
-		victim.verbs += /mob/living/carbon/proc/spawn_larvae
+		if(is_team_borer)
+			victim.verbs += /mob/living/carbon/proc/spawn_larvae
 		victim.verbs -= /mob/living/proc/borer_comm
 		victim.verbs += /mob/living/proc/trapped_mind_comm
 		GrantControlActions()
@@ -821,7 +827,8 @@ var/total_borer_hosts_needed = 10
 	controlling = FALSE
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
-	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
+	if(is_team_borer)
+		victim.verbs -= /mob/living/carbon/proc/spawn_larvae
 	victim.verbs += /mob/living/proc/borer_comm
 	victim.verbs -= /mob/living/proc/trapped_mind_comm
 	RemoveControlActions()
