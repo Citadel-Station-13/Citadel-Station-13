@@ -1,0 +1,13 @@
+# Your name.  
+author: "ktccd"
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes: 
+  - rscadd: "Syndicate agents can now purchase our Syndi(tm) brand cortical borers! Nigh-guaranteed to be loyal to you and aid you in your mission, these borers sport all the latest and greatest of borer technology, check your stealth-tools section now! (Reproductive capabilities may be void in certain states. Seller not responsible for providing souls to be housed in the borer, please contact your local Syndi(tm) retail outlet for further customer service, refunds are available)"
