@@ -30,7 +30,6 @@
 	icon_state = "biker_helmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/richard
 	name = "Richard"
@@ -39,7 +38,6 @@
 	icon_state = "richard"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/megahelmet
 	name = "DRN-001 Helmet"
@@ -48,7 +46,6 @@
 	item_state = "megahelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/protohelmet
 	name = "Prototype Helmet"
@@ -57,7 +54,6 @@
 	item_state = "protohelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/megaxhelmet
 	name = "Maverick Hunter Helmet"
@@ -66,7 +62,6 @@
 	item_state = "megaxhelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/joehelmet
 	name = "Sniper Helmet"
@@ -76,7 +71,6 @@
 	item_state = "joehelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/doomguy
 	name = "Doomguy's helmet"
@@ -87,7 +81,6 @@
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	armor = list(melee = 50, bullet = 40, laser = 40,energy = 40, bomb = 5, bio = 0, rad = 0)
 	siemens_coefficient = 1
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/neorussian
 	name = "neo-Russian helmet"
