@@ -28,5 +28,5 @@ datum/supply_pack/misc/reenactor
 	contains = list(/obj/item/clothing/under/soldieruniform,/obj/item/clothing/head/stalhelm,/obj/item/clothing/suit/soldiercoat,
 					/obj/item/clothing/under/officeruniform,/obj/item/clothing/head/naziofficer,/obj/item/clothing/suit/officercoat,
 					/obj/item/clothing/head/panzer,
-					/obj/item/clothing/suit/russofurcoat,/obj/item/clothing/head/russofurhat)
+					/obj/item/clothing/suit/russofurcoat,/obj/item/clothing/head/russofurhat,/obj/item/clothing/under/soviet)
 	crate_name = "historical reanactor crate"
