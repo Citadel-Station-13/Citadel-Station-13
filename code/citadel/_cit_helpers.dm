@@ -77,7 +77,11 @@ var/global/dlooc_allowed = 1
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavor text.", "Flavor text", null)  as text), 1)
+	var/new_flavor = (input(src, "Enter your new flavor text:", "Flavor text", null) as text|null)
+	if(new_flavor)
+		flavor_text = sanitize(new_flavor)
+
+	to_chat(src, "Your flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()
@@ -114,8 +118,8 @@ var/global/dlooc_allowed = 1
 	set name="Toggle Dead LOOC"
 	dlooc_allowed = !( dlooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	log_admin("[key_name(usr)] toggled Dead LOOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead LOOC.")
 	feedback_add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
