@@ -80,8 +80,7 @@ var/global/dlooc_allowed = 1
 	var/new_flavor = (input(src, "Enter your new flavor text:", "Flavor text", null) as text|null)
 	if(new_flavor)
 		flavor_text = sanitize(new_flavor)
-
-	to_chat(src, "Your flavor text has been updated.")
+		to_chat(src, "Your flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()
