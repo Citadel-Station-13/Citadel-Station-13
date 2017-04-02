@@ -19,7 +19,8 @@ datum/supply_pack/misc/memes
 					/obj/item/clothing/under/squatter_outfit,/obj/item/clothing/head/squatter_hat,
 					/obj/item/clothing/under/cia,
 					/obj/item/clothing/under/russobluecamooutfit,/obj/item/clothing/head/russobluecamohat,
-					/obj/item/clothing/under/rottensuit,/obj/item/clothing/shoes/rottenshoes)
+					/obj/item/clothing/under/rottensuit,/obj/item/clothing/shoes/rottenshoes,
+					/obj/item/clothing/suit/raincoat)
 	crate_name = "nanotrasen internet humor crate"
 
 datum/supply_pack/misc/reenactor
