@@ -45,6 +45,7 @@
 	item_state = "megahelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
+	flags_inv = HIDEEARS|HIDEHAIR
 
 /obj/item/clothing/head/helmet/protohelmet
 	name = "Prototype Helmet"
@@ -53,6 +54,7 @@
 	item_state = "protohelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
+	flags_inv = HIDEEARS|HIDEEYES|HIDEHAIR
 
 /obj/item/clothing/head/helmet/megaxhelmet
 	name = "Maverick Hunter Helmet"
@@ -61,6 +63,7 @@
 	item_state = "megaxhelmet"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	siemens_coefficient = 1
+	flags_inv = HIDEEARS|HIDEHAIR
 
 /obj/item/clothing/head/helmet/joehelmet
 	name = "Sniper Helmet"
@@ -98,7 +101,7 @@
 
 /obj/item/clothing/head/panzer
 	name = "Panzer Cap"
-	desc = "Ein Hut passen nur für die größten Tanks."
+	desc = "Ein Hut passen nur für die großten Tanks."
 	icon_state = "panzercap"
 	item_state = "panzercap"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
@@ -138,6 +141,7 @@
 	icon_state = "snakehead"
 	item_state = "snakehead"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 
 /obj/item/clothing/head/mummy_rags
 	name = "mummy rags"

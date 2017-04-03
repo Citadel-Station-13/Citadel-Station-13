@@ -54,6 +54,7 @@ obj/item/clothing/gloves/bikergloves
 	desc = "When you're a jerk, everybody loves you."
 	icon_state = "anchorarms"
 	item_state = "anchorarms"
+	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/gloves/neorussian
 	name = "neo-Russian gloves"
