@@ -13,7 +13,6 @@
 	flags = STOPSPRESSUREDMAGE
 	strip_delay = 80
 	dog_fashion = null
-	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
 /obj/item/clothing/head/helmet/aviatorhelmet
 	name = "Aviator Helmet"
