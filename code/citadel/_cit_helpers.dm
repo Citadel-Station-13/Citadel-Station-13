@@ -53,7 +53,9 @@ var/global/list/xeno_dorsal_list = list()
 
 	//Genitals and Arousal Lists
 var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
+var/global/list/breasts_shapes_list = list()
 var/global/list/breasts_size_list = list()
+var/global/list/vagina_shapes_list = list()
 var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie)
 var/global/list/dick_nouns = list("dick","cock","member","shaft")
 var/global/list/cum_id_list = list("semen")
