@@ -148,10 +148,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		//breasts features
 		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
 		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
+		features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], breasts_shapes_list, "pair")
 		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
 		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
 		//vagina features
 		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
+		features["vag_shape"]			= sanitize_inlist(features["vag_shape"], vagina_shapes_list, "human")
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
@@ -383,10 +385,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//breasts features
 	S["feature_has_breasts"]			>> features["has_breasts"]
 	S["feature_breasts_size"]			>> features["breasts_size"]
+	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
+	S["feature_vag_shape"]				>> features["vag_shape"]
 	S["feature_vag_color"]				>> features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
@@ -547,10 +551,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//breasts features
 	S["feature_has_breasts"]			<< features["has_breasts"]
 	S["feature_breasts_size"]			<< features["breasts_size"]
+	S["feature_breasts_shape"]			<< features["breasts_shape"]
 	S["feature_breasts_color"]			<< features["breasts_color"]
 	S["feature_breasts_fluid"]			<< features["breasts_fluid"]
 	//vagina features
 	S["feature_has_vag"]				<< features["has_vag"]
+	S["feature_vag_shape"]				<< features["vag_shape"]
 	S["feature_vag_color"]				<< features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				<< features["has_womb"]
