@@ -27,57 +27,15 @@
 	icon_state = "tapered"
 	name = "Tapered"
 
-//Vaginas
-/datum/sprite_accessory/vagina
-	icon = 'code/citadel/icons/vagina_onmob.dmi'
-	icon_state = null
-	name = "vagina"
-	gender_specific = 0
-	color_src = "vag_color"
-	locked = 0
-
-/datum/sprite_accessory/vagina/human
-	icon_state = "human"
-	name = "Human"
-
-/datum/sprite_accessory/vagina/gaping
-	icon_state = "gaping"
-	name = "Gaping"
-
-//I think this one is intended for arousal... but it would only work for human vaginas in this case...
-//So I'm leaving it as a selectable option until we can make/need variants for the sprites to change based on arousal.
-/datum/sprite_accessory/vagina/dripping
-	icon_state = "dripping"
-	name = "Dripping"
-
-/datum/sprite_accessory/vagina/tentacles
-	icon_state = "tentacle"
-	name = "Tentacle"
-
-/datum/sprite_accessory/vagina/dentata
-	icon_state = "dentata"
-	name = "Dentata"
-
-/datum/sprite_accessory/vagina/hairy
-	icon_state = "hairy"
-	name = "Hairy"
-
-
 //BREASTS BE HERE
 /datum/sprite_accessory/breasts
 	icon = 'code/citadel/icons/breasts_onmob.dmi'
 	icon_state = null
 	name = "breasts"
 	gender_specific = 0
-	color_src = "breasts_color"
+	color_src = MUTCOLORS2	//I'll have skin_tone override this if the species uses them
 	locked = 0
-
-
-/datum/sprite_accessory/breasts/pair
-	icon_state = "pair"
-	name = "Pair"
-
-/*!!ULTRACOMPRESSEDEDITION!!
+/*!!ULTRACOMPRESSEDEDITION!!*/
 /datum/sprite_accessory/breasts/a
 	icon_state = "a"
 	name = "A"
@@ -132,8 +90,6 @@
 	icon_state = "h"
 	name = "HH"
 	locked = 1
-*/// Sorry for ruining your things
-
 
 //OVIPOSITORS BE HERE
 /datum/sprite_accessory/ovipositor
@@ -143,6 +99,10 @@
 	gender_specific = 0			//Might be needed somewhere down the list.
 	color_src = "cock_color"
 	locked = 0
+
+/datum/sprite_accessory/ovipositor/knotted
+	icon_state = "none"
+	name = "None"
 
 /datum/sprite_accessory/ovipositor/knotted
 	icon_state = "knotted"
