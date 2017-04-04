@@ -38,7 +38,7 @@
 		if("gaping")
 			desc += "\nIt is gaping slightly open, though without much hair and "
 		if("dripping")
-			desc += "\nIt is gaping slightly, inflamed and "
+			desc += "\nIt is gaping slightly, inflamed with passion and "
 		else
 			desc += "\nIt has an exotic shape and is "
 	if(wetness)
