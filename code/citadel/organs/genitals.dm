@@ -100,14 +100,13 @@
 //			T.color = skintone2hex(skin_tone)
 //		else
 //			T.color = "#[dna.features["balls_color"]]"
-		if(T)
-			T.size = dna.features["balls_size"]
-			T.sack_size = dna.features["balls_sack_size"]
-			T.fluid_id = dna.features["balls_fluid"]
-			T.fluid_rate = dna.features["balls_cum_rate"]
-			T.fluid_mult = dna.features["balls_cum_mult"]
-			T.fluid_efficiency = dna.features["balls_efficiency"]
-			T.update()
+		T.size = dna.features["balls_size"]
+		T.sack_size = dna.features["balls_sack_size"]
+		T.fluid_id = dna.features["balls_fluid"]
+		T.fluid_rate = dna.features["balls_cum_rate"]
+		T.fluid_mult = dna.features["balls_cum_mult"]
+		T.fluid_efficiency = dna.features["balls_efficiency"]
+		T.update()
 
 /mob/living/carbon/human/proc/give_breasts()
 	if(!dna)
@@ -117,15 +116,9 @@
 	if(!getorganslot("breasts"))
 		var/obj/item/organ/genital/breasts/B = new
 		B.Insert(src)
-		if(B)
-			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				B.color = skintone2hex(skin_tone)
-			else
-				B.color = "#[dna.features["breasts_color"]]"
-			B.size = dna.features["breasts_size"]
-			B.shape = dna.features["breasts_shape"]
-			B.fluid_id = dna.features["breasts_fluid"]
-			B.update()
+		B.cup_size = dna.features["breasts_size"]
+		B.fluid_id = dna.features["breasts_fluid"]
+		B.update()
 
 
 /mob/living/carbon/human/proc/give_ovipositor()
@@ -138,14 +131,11 @@
 	if(!getorganslot("vagina"))
 		var/obj/item/organ/genital/vagina/V = new
 		V.Insert(src)
-		if(V)
-			if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
-				V.color = skintone2hex(skin_tone)
-			else
-				V.color = "[dna.features["vag_color"]]"
-			V.shape = "[dna.features["vag_shape"]]"
-			V.update()
-
+		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
+			V.color = skintone2hex(skin_tone)
+		else
+			V.color = "[dna.features["vag_color"]]"
+		V.update()
 /mob/living/carbon/human/proc/give_womb()
 	if(!dna)
 		return FALSE
@@ -154,8 +144,7 @@
 	if(!getorganslot("womb"))
 		var/obj/item/organ/genital/womb/W = new
 		W.Insert(src)
-		if(W)
-			W.update()
+		W.update()
 
 
 /datum/species/proc/genitals_layertext(layer)
@@ -194,12 +183,13 @@
 		return
 
 	var/list/genitals_to_add = list()
-	var/list/relevant_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/list/relevent_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
 	var/list/standing = list()
-	var/size = null
+	var/size
 
-	for(var/L in relevant_layers) //Less hardcode
-		H.remove_overlay(L)
+	H.remove_overlay(GENITALS_BEHIND_LAYER)
+	H.remove_overlay(GENITALS_ADJ_LAYER)
+	H.remove_overlay(GENITALS_FRONT_LAYER)
 
 	if(H.disabilities & HUSK)
 		return
@@ -208,27 +198,20 @@
 	if(H.is_groin_exposed(worn_stuff))
 		if(H.has_penis())
 			genitals_to_add += H.getorganslot("penis")
-		else
-			if(H.has_vagina()) //Sadly, a penis would cover the vagina and they use the same layer, so don't draw both.
-				genitals_to_add += H.getorganslot("vagina")
+		if(H.has_vagina())
+			genitals_to_add += H.getorganslot("vagina")
 	if(H.is_chest_exposed(worn_stuff))
 		if(H.has_breasts())
 			genitals_to_add += H.getorganslot("breasts")
 	var/image/I
 	//start applying overlays
-	for(var/layer in relevant_layers)
+	for(var/layer in relevent_layers)
 		var/layertext = genitals_layertext(layer)
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = cock_shapes_list[G.shape]
-					size = G.size
-				if(/obj/item/organ/genital/vagina)
-					S = vagina_shapes_list[G.shape]
-					size = G.size
-				if(/obj/item/organ/genital/breasts)
-					S = breasts_shapes_list[G.shape]
 					size = G.size
 
 			if(!S || S.icon_state == "none")
@@ -243,8 +226,6 @@
 					I.color = "#[H.dna.features["cock_color"]]"
 				if("breasts_color")
 					I.color = "#[H.dna.features["breasts_color"]]"
-				if("vag_color")
-					I.color = "#[H.dna.features["vag_color"]]"
 				if(MUTCOLORS)
 					if(fixed_mut_color)
 						I.color = "#[fixed_mut_color]"
@@ -265,5 +246,6 @@
 			H.overlays_standing[layer] = standing.Copy()
 			standing = list()
 
-	for(var/L in relevant_layers)
-		H.apply_overlay(L)
+	H.apply_overlay(GENITALS_BEHIND_LAYER)
+	H.apply_overlay(GENITALS_ADJ_LAYER)
+	H.apply_overlay(GENITALS_FRONT_LAYER)
