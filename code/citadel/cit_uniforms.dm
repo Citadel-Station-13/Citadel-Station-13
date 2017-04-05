@@ -6,6 +6,7 @@
 	item_color = "bb_turtle"
 	body_parts_covered = CHEST|ARMS
 	can_adjust = 1
+	icon = 'icons/obj/clothing/turtlenecks.dmi'
 
 /obj/item/clothing/under/bb_sweater/black
 	name = "black sweater"

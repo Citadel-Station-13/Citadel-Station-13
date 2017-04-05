@@ -902,4 +902,16 @@ var/global/list/possible_items_special = list()
 	command_staff_only = TRUE
 
 
+//Syndicate borer objective, relies on their owner getting a greentext, no matter if they themselves did anything really.
+/datum/objective/syndi_borer
+	explanation_text = "You are a modified syndicate cortical borer, assist your owner with their objectives."
+	martyr_compatible = 1
 
+/datum/objective/syndi_borer/check_completion()
+	if(target)
+		for(var/datum/objective/objective in target.objectives)
+			if(!objective.check_completion())
+				return 0
+		return 1
+	else
+		return 1 //Not sure if we should greentext if we somehow don't even have an owner.
