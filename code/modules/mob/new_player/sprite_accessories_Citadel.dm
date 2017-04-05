@@ -399,6 +399,22 @@
 	extra = 1
 	extra2 = 1
 
+// Glaceon
+/datum/sprite_accessory/mam_tails/glaceon
+	name = "Glaceon"
+	icon_state = "glaceon"
+//	ckeys_allowed = list("Alex123890")
+
+/datum/sprite_accessory/mam_ears/glaceon
+	name = "Glaceon"
+	icon_state = "glaceon"
+//	ckeys_allowed = list("Alex123890")
+
+/datum/sprite_accessory/mam_tails_animated/glaceon
+	name = "Glaceon"
+	icon_state = "glaceon"
+//	ckeys_allowed = list("Alex123890")
+
 
 /******************************************
 ************ Body Markings ****************
@@ -502,6 +518,14 @@
 	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
+	
+/datum/sprite_accessory/mam_body_markings/glaceon
+	name = "Glaceon"
+	icon_state = "glaceon"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+//	ckeys_allowed = list("Alex123890")
 
 /******************************************
 ************ Taur Bodies ******************
