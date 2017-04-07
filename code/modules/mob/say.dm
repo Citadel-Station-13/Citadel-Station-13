@@ -22,8 +22,8 @@
 	if(say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	var/list/replace_chars = list("\n"=" ","\t"=" ","#"=" ")
-	var/message = sanitize(stripped_multiline_input(src,"New lines are handled as spaces","Emote", "", max_length=(MAX_MESSAGE_LEN*2), no_trim=FALSE), replace_chars)
+	var/list/replace_chars = list("\n"=" ","\t"=" ")
+	var/message = copytext(sanitize((input(src,"New lines are handled as spaces","Emote", "") as message|null), replace_chars), 1, (MAX_MESSAGE_LEN*2))
 	usr.emote("me",1,message)
 
 /mob/proc/say_dead(var/message)

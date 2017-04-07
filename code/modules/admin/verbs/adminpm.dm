@@ -51,8 +51,9 @@
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
-	if (!msg)
+	var/list/replace_chars = list("\n"=" ","\t"=" ")
+	var/msg = copytext(sanitize((input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null), replace_chars), 1, MAX_MESSAGE_LEN)
+	if (!msg|| msg == " ")//if they hit enter and didn't hit cancel, don't send it
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
 	cmd_admin_pm(whom, msg)

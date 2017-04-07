@@ -94,7 +94,8 @@
 	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	var/list/replace_chars = list("\n"=" ","\t"=" ")
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN),replace_chars)
 	if(!msg)	return
 	var/original_msg = msg
 
