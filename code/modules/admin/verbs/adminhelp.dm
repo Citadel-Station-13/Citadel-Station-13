@@ -76,7 +76,7 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 

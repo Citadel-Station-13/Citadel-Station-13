@@ -51,7 +51,7 @@
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
@@ -79,7 +79,7 @@
 		if(!ircreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator") as text|null
+			msg = input(src,"Message:", "Private message to Administrator") as message|null
 
 		if(!msg)
 			return
@@ -98,7 +98,7 @@
 
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
 
 			if(!msg)
 				return
@@ -163,7 +163,7 @@
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
-						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as message|null		//show message and await a reply
 						if(C && reply)
 							if(sender)
 								C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
