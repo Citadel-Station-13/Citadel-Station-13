@@ -53,6 +53,7 @@
 		if(!C)
 			return
 
+		var/msg = "<font color='green' size='2'><b>Your Adminhelp has been marked as read and is under investigation.</b></font>"
 		to_chat(C, msg)
 
 		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as read and under investigation.")
