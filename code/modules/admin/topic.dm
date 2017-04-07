@@ -45,6 +45,20 @@
 		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as an IC issue.")
 		spamcooldown = world.time + 150 // 15 seconds
 
+	else if(href_list["markedread"])
+		if(world.time && spamcooldown > world.time)
+			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
+			return
+		var/client/C = locate(href_list["markedread"]) in clients
+		if(!C)
+			return
+
+		to_chat(C, msg)
+
+		message_admins("[key_name_admin(usr)] marked [C.key]'s admin help as read and under investigation.")
+		log_admin_private("[key_name(usr)] marked [C.key]'s admin help as read and under investigation.")
+		spamcooldown = world.time + 150 // 15 seconds
+
 	else if(href_list["stickyban"])
 		stickyban(href_list["stickyban"],href_list)
 
