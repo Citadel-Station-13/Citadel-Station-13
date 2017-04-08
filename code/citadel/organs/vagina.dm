@@ -24,8 +24,11 @@
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
 
-	desc = "That's a [lowershape] vagina. You estimate it could stretch about [round(cap_length, 0.25)] inch[cap_length > 1 ? "es" : ""] deep, around something [round(cap_girth, 0.25)] inch[cap_girth > 1 ? "es" : ""] thick \
-	and it has [clits > 1 ? "[clits] clits" : "a clit"], about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter."
+
+
+
+	desc = "That's a [lowershape] vagina. You estimate it to be around [round(cap_length, 0.5)] inch[cap_length > 1 ? "es" : ""] deep and could stretch around something [round(cap_girth, 0.5)] inch[cap_girth > 1 ? "es" : ""] in girth. \
+	It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter."
 	switch(lowershape)
 		if("tentacle")
 			desc += "\nIts opening is lined with several tentacles and "
