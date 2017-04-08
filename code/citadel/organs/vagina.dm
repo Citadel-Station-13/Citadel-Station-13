@@ -23,31 +23,31 @@
 	var/string = "vagina" //Keeping this code here, so making multiple sprites for the different kinds is easier.
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
+	var/details
 
-
-
-
-	desc = "That's a [lowershape] vagina. You estimate it to be around [round(cap_length, 0.5)] inch[cap_length > 1 ? "es" : ""] deep and could stretch around something [round(cap_girth, 0.5)] inch[cap_girth > 1 ? "es" : ""] in girth. \
-	It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter."
 	switch(lowershape)
 		if("tentacle")
-			desc += "\nIts opening is lined with several tentacles and "
+			details = "\nIts opening is lined with several tentacles and "
 		if("dentata")
-			desc += "\nThere's teeth inside it and it is "
+			details = "\nThere's teeth inside it and it is "
 		if("hairy")
-			desc += "\nIt has quite a bit of hair growing on it and is "
+			details = "\nIt has quite a bit of hair growing on it and is "
 		if("human")
-			desc += "\nIt is taut with smooth skin, though without much hair and "
+			details = "\nIt is taut with smooth skin, though without much hair and "
 		if("gaping")
-			desc += "\nIt is gaping slightly open, though without much hair and "
+			details = "\nIt is gaping slightly open, though without much hair and "
 		if("dripping")
-			desc += "\nIt is gaping slightly, inflamed with passion and "
+			details = "\nIt is gaping slightly, inflamed with passion and "
 		else
-			desc += "\nIt has an exotic shape and is "
+			details = "\nIt has an exotic shape and is "
 	if(wetness)
-		desc += "slick with female arousal."
+		details += "slick with female arousal."
 	else
-		desc += "not very wet."
+		details += "not very wet."
+
+	desc = "That's a [lowershape] vagina. You estimate it to be around [round(cap_length, 0.5)] inch[cap_length > 1 ? "es" : ""] deep and could stretch around something [round(cap_girth, 0.5)] inch[cap_girth > 1 ? "es" : ""] in girth. \
+	It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter.[details]"
+
 	if(owner)
 		color = "#[owner.dna.features["vag_color"]]"
 
