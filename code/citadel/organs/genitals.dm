@@ -220,16 +220,14 @@
 		var/layertext = genitals_layertext(layer)
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
+			size = G.size
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = cock_shapes_list[G.shape]
-					size = G.size
 				if(/obj/item/organ/genital/vagina)
 					S = vagina_shapes_list[G.shape]
-					size = G.size
 				if(/obj/item/organ/genital/breasts)
 					S = breasts_shapes_list[G.shape]
-					size = G.size
 
 			if(!S || S.icon_state == "none")
 				continue
