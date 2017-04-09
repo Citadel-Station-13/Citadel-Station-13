@@ -1,9 +1,7 @@
 #define HIGHLIGHT_DYNAMIC_TRANSIT 1
 
-var/datum/controller/subsystem/shuttle/SSshuttle
-
-/datum/controller/subsystem/shuttle
-	name = "Shuttles"
+SUBSYSTEM_DEF(shuttle)
+	name = "Shuttle"
 	wait = 10
 	init_order = 3
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
@@ -47,11 +45,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
-
-/datum/controller/subsystem/shuttle/New()
-	NEW_SS_GLOBAL(SSshuttle)
-
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
@@ -78,12 +71,12 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	..()
 
 /datum/controller/subsystem/shuttle/proc/setup_transit_zone()
-	if(transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
 	// transit zone
-	var/turf/A = get_turf(transit_markers[1])
-	var/turf/B = get_turf(transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		T.ChangeTurf(/turf/open/space)
@@ -92,11 +85,11 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 
 #ifdef HIGHLIGHT_DYNAMIC_TRANSIT
 /datum/controller/subsystem/shuttle/proc/color_space()
-	if(transit_markers.len == 0)
+	if(GLOB.transit_markers.len == 0)
 		WARNING("No /obj/effect/landmark/transit placed on the map!")
 		return
-	var/turf/A = get_turf(transit_markers[1])
-	var/turf/B = get_turf(transit_markers[2])
+	var/turf/A = get_turf(GLOB.transit_markers[1])
+	var/turf/B = get_turf(GLOB.transit_markers[2])
 	for(var/i in block(A, B))
 		var/turf/T = i
 		// Only dying the "pure" space, not the transit tiles
@@ -181,8 +174,8 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			return
 		emergency = backup_shuttle
 
-	if(world.time - round_start_time < config.shuttle_refuel_delay)
-		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
+	if(world.time - SSticker.round_start_time < config.shuttle_refuel_delay)
+		to_chat(user, "The emergency shuttle is refueling. Please wait another [abs(round(((world.time - SSticker.round_start_time) - config.shuttle_refuel_delay)/600))] minutes before trying again.")
 		return
 
 	switch(emergency.mode)
@@ -242,7 +235,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/canRecall()
 	if(!emergency || emergency.mode != SHUTTLE_CALL)
 		return
-	if(ticker.mode.name == "meteor")
+	if(SSticker.mode.name == "meteor")
 		return
 	var/security_num = seclevel2num(get_security_level())
 	switch(security_num)
@@ -260,7 +253,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	var/callShuttle = 1
 
-	for(var/thing in shuttle_caller_list)
+	for(var/thing in GLOB.shuttle_caller_list)
 		if(isAI(thing))
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.stat || !AI.client)
@@ -280,8 +273,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 			emergency.request(null, 2.5)
 			log_game("There is no means of calling the shuttle anymore. Shuttle automatically called.")
 			message_admins("All the communications consoles were destroyed and all AIs are inactive. Shuttle called.")
-
-
 
 /datum/controller/subsystem/shuttle/proc/registerHostileEnvironment(datum/bad)
 	hostileEnvironments[bad] = TRUE
@@ -359,7 +350,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		priority_announce("The shift has come to an end and the shuttle called.")
 		log_game("Round time limit reached. Shuttle has been auto-called.")
 		message_admins("Round time limit reached. Shuttle called.")
-
 
 /datum/controller/subsystem/shuttle/proc/generate_transit_dock(obj/docking_port/mobile/M)
 	// First, determine the size of the needed zone
@@ -469,6 +459,7 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
+	A.contents = proposed_zone
 	var/obj/docking_port/stationary/transit/new_transit_dock = new(midpoint)
 	new_transit_dock.assigned_turfs = proposed_zone
 	new_transit_dock.name = "Transit for [M.id]/[M.name]"
@@ -484,7 +475,6 @@ var/datum/controller/subsystem/shuttle/SSshuttle
 		var/turf/T = i
 		T.ChangeTurf(transit_path)
 		T.flags &= ~(UNUSED_TRANSIT_TURF)
-		A.contents += T
 
 	M.assigned_transit = new_transit_dock
 	return TRUE
