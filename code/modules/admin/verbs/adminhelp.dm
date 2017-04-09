@@ -76,7 +76,7 @@
 	src.verbs |= /client/verb/adminhelp
 	adminhelptimerid = 0
 
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 
@@ -94,7 +94,8 @@
 	//clean the input msg
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	var/list/replace_chars = list("\n"=" ","\t"=" ")
+	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN),replace_chars)
 	if(!msg)	return
 	var/original_msg = msg
 
@@ -107,8 +108,7 @@
 	if(!mob)
 		return						//this doesn't happen
 
-	var/ref_client = "\ref[src]"
-	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] [ADMIN_SMITE(mob)] (<A HREF='?_src_=holder;rejectadminhelp=[ref_client]'>REJT</A>) (<A HREF='?_src_=holder;icissue=[ref_client]'>IC</A>):</b> [msg]</span>"
+	msg = "<span class='adminnotice'><b><font color=red>HELP: </font><A HREF='?priv_msg=[ckey];ahelp_reply=1'>[key_name(src)]</A> [ADMIN_QUE(mob)] [ADMIN_PP(mob)] [ADMIN_VV(mob)] [ADMIN_SM(mob)] [ADMIN_FLW(mob)] [ADMIN_TP(mob)] [ADMIN_SMITE(mob)] [ADMIN_REJECT(src)] [ADMIN_IC(src)] [ADMIN_MARKREAD(src)]:</b> [msg]</span>"
 
 	//send this msg to all admins
 
