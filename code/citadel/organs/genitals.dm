@@ -236,28 +236,31 @@
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
-			switch(S.color_src)
-				if("cock_color")
-					I.color = "#[H.dna.features["cock_color"]]"
-				if("breasts_color")
-					I.color = "#[H.dna.features["breasts_color"]]"
-				if("vag_color")
-					I.color = "#[H.dna.features["vag_color"]]"
-				if(MUTCOLORS)
-					if(fixed_mut_color)
-						I.color = "#[fixed_mut_color]"
-					else
-						I.color = "#[H.dna.features["mcolor"]]"
-				if(MUTCOLORS2)
-					if(fixed_mut_color2)
-						I.color = "#[fixed_mut_color2]"
-					else
-						I.color = "#[H.dna.features["mcolor2"]]"
-				if(MUTCOLORS3)
-					if(fixed_mut_color3)
-						I.color = "#[fixed_mut_color3]"
-					else
-						I.color = "#[H.dna.features["mcolor3"]]"
+			if(use_skintones && H.dna.features["genitals_use_skintone"])
+				I.color = "#[skintone2hex(H.skin_tone)]"
+			else
+				switch(S.color_src)
+					if("cock_color")
+						I.color = "#[H.dna.features["cock_color"]]"
+					if("breasts_color")
+						I.color = "#[H.dna.features["breasts_color"]]"
+					if("vag_color")
+						I.color = "#[H.dna.features["vag_color"]]"
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
 			standing += I
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()

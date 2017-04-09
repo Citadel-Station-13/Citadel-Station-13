@@ -49,7 +49,13 @@
 	It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter.[details]"
 
 	if(owner)
-		color = "#[owner.dna.features["vag_color"]]"
+		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
+			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
+				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
+				color = "#[skintone2hex(H.skin_tone)]"
+		else
+			color = "#[owner.dna.features["vag_color"]]"
+
 
 /obj/item/organ/genital/vagina/update_link()
 	if(owner)

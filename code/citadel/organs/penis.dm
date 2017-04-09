@@ -49,7 +49,12 @@
 	else
 		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
 	if(owner)
-		color = "#[owner.dna.features["cock_color"]]"
+		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
+			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
+				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
+				color = "#[skintone2hex(H.skin_tone)]"
+		else
+			color = "#[owner.dna.features["cock_color"]]"
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)

@@ -858,11 +858,6 @@ var/list/preferences_datums = list()
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
-					if(pref_species.use_skintones && features["genitals_use_skintone"])
-						features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 				if("bag")
 					backbag = pick(backbaglist)
 				if("all")
@@ -1179,10 +1174,6 @@ var/list/preferences_datums = list()
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
-						features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
@@ -1375,16 +1366,8 @@ var/list/preferences_datums = list()
 							features["genitals_use_skintone"] = FALSE
 						if(FALSE)
 							features["genitals_use_skintone"] = TRUE
-							features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 						else
 							features["genitals_use_skintone"] = FALSE
-							features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 				if("arousable")
 					switch(arousable)
 						if(TRUE)

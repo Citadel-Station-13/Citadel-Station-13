@@ -50,4 +50,9 @@
 	else
 		desc += "\nThey do not seem to be producing liquids."
 	if(owner)
-		color = "#[owner.dna.features["breasts_color"]]"
+		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
+			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
+				var/mob/living/carbon/human/H = owner // only human mobs have skin_tone, which we need.
+				color = "#[skintone2hex(H.skin_tone)]"
+		else
+			color = "#[owner.dna.features["breasts_color"]]"
