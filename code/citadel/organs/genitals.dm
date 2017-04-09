@@ -206,11 +206,12 @@
 	//start scanning for genitals
 	var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	if(H.is_groin_exposed(worn_stuff))
+		//ORDER is important here. Vaginas first, theoretical testes after, and penis LAST.
+		//The latter is always drawn on top of the former.
+		if(H.has_vagina())
+			genitals_to_add += H.getorganslot("vagina")
 		if(H.has_penis())
 			genitals_to_add += H.getorganslot("penis")
-		else
-			if(H.has_vagina()) //Sadly, a penis would cover the vagina and they use the same layer, so don't draw both.
-				genitals_to_add += H.getorganslot("vagina")
 	if(H.is_chest_exposed(worn_stuff))
 		if(H.has_breasts())
 			genitals_to_add += H.getorganslot("breasts")
