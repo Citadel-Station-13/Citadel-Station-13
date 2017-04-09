@@ -8,7 +8,6 @@
 	size					= 1 //There is only 1 size right now
 	can_masturbate_with		= 1
 	w_class 				= 3
-	var/wetness				= FALSE
 	var/cap_length		= 8//D   E   P   T   H (cap = capacity)
 	var/cap_girth		= 12
 	var/cap_girth_ratio = 1.5
@@ -36,11 +35,9 @@
 			details = "\nIt is taut with smooth skin, though without much hair and "
 		if("gaping")
 			details = "\nIt is gaping slightly open, though without much hair and "
-		if("dripping")
-			details = "\nIt is gaping slightly, inflamed with passion and "
 		else
 			details = "\nIt has an exotic shape and is "
-	if(wetness)
+	if(aroused_state)
 		details += "slick with female arousal."
 	else
 		details += "not very wet."

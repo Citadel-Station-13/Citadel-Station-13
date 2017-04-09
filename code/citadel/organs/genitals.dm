@@ -11,6 +11,8 @@
 	var/fluid_rate = 1
 	var/fluid_mult = 1
 	var/producing = FALSE
+	var/aroused_state = FALSE //Boolean used in icon_state strings
+	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 
 /obj/item/organ/genital/Initialize()
 	reagents = create_reagents(fluid_max_volume)
@@ -233,7 +235,10 @@
 			if(!S || S.icon_state == "none")
 				continue
 			var/icon_string
-			icon_string = "[G.slot]_[S.icon_state]_[size]_[layertext]"
+			if(S.alt_aroused)
+			else
+				G.aroused_state = FALSE
+			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)

@@ -1,3 +1,7 @@
+/datum/sprite_accessory
+	var/alt_aroused = FALSE //CIT CODE if this is TRUE, then the genitals will use an alternate icon_state when aroused.
+
+
 //DICKS,COCKS,PENISES,WHATEVER YOU WANT TO CALL THEM
 /datum/sprite_accessory/penis
 	icon = 'code/citadel/icons/penis_onmob.dmi'
@@ -35,28 +39,27 @@
 	gender_specific = 0
 	color_src = "vag_color"
 	locked = 0
+	alt_aroused = FALSE //if this is TRUE, then the genitals will use an alternate sprite for aroused states
 
 /datum/sprite_accessory/vagina/human
 	icon_state = "human"
 	name = "Human"
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/gaping
 	icon_state = "gaping"
 	name = "Gaping"
-
-//I think this one is intended for arousal... but it would only work for human vaginas in this case...
-//So I'm leaving it as a selectable option until we can make/need variants for the sprites to change based on arousal.
-/datum/sprite_accessory/vagina/dripping
-	icon_state = "dripping"
-	name = "Dripping"
+	locked = 1 //Disabled for now, as we lack any framework to stretch genitals.
 
 /datum/sprite_accessory/vagina/tentacles
 	icon_state = "tentacle"
 	name = "Tentacle"
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/dentata
 	icon_state = "dentata"
 	name = "Dentata"
+	alt_aroused = TRUE
 
 /datum/sprite_accessory/vagina/hairy
 	icon_state = "hairy"
@@ -71,7 +74,6 @@
 	gender_specific = 0
 	color_src = "breasts_color"
 	locked = 0
-
 
 /datum/sprite_accessory/breasts/pair
 	icon_state = "pair"
