@@ -21,6 +21,7 @@
 	maxHealth = 60
 	health = 60
 	var/armored = FALSE
+	devourable = TRUE
 
 	obj_damage = 60
 	melee_damage_lower = 20
@@ -36,7 +37,6 @@
 
 	faction = list("russian")
 	gold_core_spawnable = 1
-	devourable = 1
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
