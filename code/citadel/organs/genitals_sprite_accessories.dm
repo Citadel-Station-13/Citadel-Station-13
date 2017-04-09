@@ -46,11 +46,6 @@
 	name = "Human"
 	alt_aroused = TRUE
 
-/datum/sprite_accessory/vagina/gaping
-	icon_state = "gaping"
-	name = "Gaping"
-	locked = 1 //Disabled for now, as we lack any framework to stretch genitals.
-
 /datum/sprite_accessory/vagina/tentacles
 	icon_state = "tentacle"
 	name = "Tentacle"

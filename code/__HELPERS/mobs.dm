@@ -70,6 +70,10 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, wings_list)
 	if(!cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, cock_shapes_list)
+	if(!vagina_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, vagina_shapes_list)
+	if(!breasts_shapes_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, breasts_shapes_list)
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(H.gender == MALE)
@@ -109,7 +113,7 @@
 		"xenotail" 			= "None",
 		"exhibitionist" 	= FALSE,
 		"has_cock"			= FALSE,
-		"cock_shape"		= "human",
+		"cock_shape"		= pick(cock_shapes_list),
 		"cock_length"		= 6,
 		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
 		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
