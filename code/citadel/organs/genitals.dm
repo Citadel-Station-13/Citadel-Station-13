@@ -236,6 +236,7 @@
 				continue
 			var/icon_string
 			if(S.alt_aroused)
+				G.aroused_state = H.isPercentAroused(G.aroused_amount)
 			else
 				G.aroused_state = FALSE
 			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
