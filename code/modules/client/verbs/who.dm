@@ -2,7 +2,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = ""
+	var/msg = "<b>Current Population:</b>\n"
 
 	var/list/Lines = list()
 
@@ -68,7 +68,7 @@
 
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)
@@ -85,7 +85,7 @@
 				msg += " (AFK)"
 			msg += "\n"
 	else
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
@@ -97,7 +97,7 @@
 	set category = "Mentor"
 	set name = "Mentorwho"
 	var/msg = "<b>Current Mentors:</b>\n"
-	for(var/client/C in mentors)
+	for(var/client/C in GLOB.mentors)
 		var/suffix = ""
 		if(holder)
 			if(isobserver(C.mob))
