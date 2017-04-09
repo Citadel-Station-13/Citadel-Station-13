@@ -13,11 +13,11 @@ var/list/mentor_datums = list()
 /datum/mentors/proc/associate(client/C)
 	if(istype(C))
 		owner = C
-		mentors |= C
+		GLOB.mentors |= C
 
 /datum/mentors/proc/disassociate()
 	if(owner)
-		mentors -= owner
+		GLOB.mentors -= owner
 		owner = null
 
 /client/proc/dementor()

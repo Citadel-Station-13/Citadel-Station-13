@@ -18,7 +18,7 @@
 	usr.reset_perspective(M)
 	src.verbs += /client/proc/mentor_unfollow
 
-	to_chat(admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>")
+	to_chat(GLOB.admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>")
 	to_chat(usr, "<span class='info'>You are now following [M]. Click the \"Stop Following\" button in the Mentor tab to stop.</span>")
 	log_mentor("[key_name(usr)] began following [key_name(M)]")
 
@@ -43,7 +43,7 @@
 		following = holder.following*/
 
 
-	to_chat(admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(following)]</span>")
+	to_chat(GLOB.admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(following)]</span>")
 	to_chat(usr, "<span class='info'>You are no longer following [following].</span>")
 	log_mentor("[key_name(usr)] stopped following [key_name(following)]")
 

@@ -227,7 +227,7 @@
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(SSmob.times_fired%6==1)
+	if(SSmobs.times_fired%6==1)
 		return //The accursed timer
 
 	for (var/I in vore_organs)

@@ -6,21 +6,21 @@
 
 	var/list/Lines = list()
 
-	if(length(admins) > 0)
+	if(length(GLOB.admins) > 0)
 		Lines += "<b>Admins:</b>"
-		for(var/client/C in sortList(admins))
+		for(var/client/C in sortList(GLOB.admins))
 			if(!C.holder.fakekey)
 				Lines += "\t <font color='#FF0000'>[C.key]</font>[show_info(C)]"
 
-	if(length(mentors) > 0)
+	if(length(GLOB.mentors) > 0)
 		Lines += "<b>Mentors:</b>"
-		for(var/client/C in sortList(clients))
+		for(var/client/C in sortList(GLOB.clients))
 			var/mentor = mentor_datums[C.ckey]
 			if(mentor)
 				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)]"
 
 	Lines += "<b>Players:</b>"
-	for(var/client/C in sortList(clients))
+	for(var/client/C in sortList(GLOB.clients))
 		if(!check_mentor_other(C) || (C.holder && C.holder.fakekey))
 			Lines += "\t [C.key][show_info(C)]"
 

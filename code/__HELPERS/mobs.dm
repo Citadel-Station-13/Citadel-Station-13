@@ -71,9 +71,9 @@
 
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.gender == MALE)
+//	if(ishuman(src))
+	//	var/mob/living/carbon/human/H = src
+	/*	if(H.gender == MALE) Fuck if I know how to fix this.
 			penis = 1
 			balls = 1
 			vagina = 0
@@ -84,7 +84,7 @@
 			balls = 0
 			vagina = 1
 			womb = 1
-			breasts = 1
+			breasts = 1 */
 
 	return(list(
 		"mcolor" = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -150,6 +150,7 @@
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
 		"womb_fluid" 		= "femcum"))
+
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)

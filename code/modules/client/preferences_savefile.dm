@@ -126,17 +126,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
 	if(current_version < 18)//this should lower the amount of lag when you select or change something.
-		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], mam_body_markings_list)
-		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], mam_ears_list)
-		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], mam_tails_list)
-		features["taur"]				= sanitize_inlist(features["taur"], taur_list)
+		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
+		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
+		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], GLOB.mam_tails_list)
+		features["taur"]				= sanitize_inlist(features["taur"], GLOB.taur_list)
 		//Xeno features
-		features["xenotail"] 			= sanitize_inlist(features["xenotail"], xeno_tail_list)
-		features["xenohead"] 			= sanitize_inlist(features["xenohead"], xeno_head_list)
-		features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], xeno_dorsal_list)
+		features["xenotail"] 			= sanitize_inlist(features["xenotail"], GLOB.xeno_tail_list)
+		features["xenohead"] 			= sanitize_inlist(features["xenohead"], GLOB.xeno_head_list)
+		features["xenodorsal"] 			= sanitize_inlist(features["xenodorsal"], GLOB.xeno_dorsal_list)
 		//cock features
 		features["has_cock"] 			= sanitize_integer(features["has_cock"], 0, 1, 0)
-		features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], cock_shapes_list, "Human")
+		features["cock_shape"] 			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, "Human")
 		features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, 0)
 		features["cock_length"]			= sanitize_integer(features["cock_length"], COCK_SIZE_MIN, COCK_SIZE_MAX, 6)
 		//balls features
@@ -147,7 +147,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
 		//breasts features
 		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
-		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], breasts_size_list, "C")
+		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, "C")
 		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
 		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
 		//vagina features
@@ -295,7 +295,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/species_id
 	S["species"]			>> species_id
 	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
-		var/newtype = roundstart_species[species_id]
+		var/newtype = GLOB.roundstart_species[species_id]
 		pref_species = new newtype()
 	else
 		var/rando_race = pick(config.roundstart_races)

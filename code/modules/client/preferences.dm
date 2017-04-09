@@ -438,7 +438,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 				if("taur" in pref_species.mutant_bodyparts)
 					dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
-				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+				if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
 					dat += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 				if("xenohead" in pref_species.mutant_bodyparts)
 					dat += "<b>Caste: </b><a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
@@ -996,7 +996,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_species
 
 					if(result)
-						var/newtype = roundstart_species[result]
+						var/newtype = GLOB.roundstart_species[result]
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
@@ -1277,7 +1277,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("cock_shape")
 					var/new_shape
-					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in cock_shapes_list
+					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in GLOB.cock_shapes_list
 					if(new_shape)
 						features["cock_shape"] = new_shape
 
@@ -1309,7 +1309,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 				if("breasts_size")
 					var/new_size
-					new_size = input(user, "Breast Size", "Character Preference") as null|anything in breasts_size_list
+					new_size = input(user, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
 					if(new_size)
 						features["breasts_size"] = new_size
 

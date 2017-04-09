@@ -17,12 +17,12 @@ proc/TextPreview(var/string,var/len=40)
 	else
 		return "[copytext(string, 1, 37)]..."
 
-GLOBAL_LIST_EMPTY(mentorlog)
-GLOBAL_PROTECT(mentorlog)
+GLOBAL_LIST_EMPTY(mentor_log)
+GLOBAL_PROTECT(mentor_log)
 
 //var/list/admintickets = list()
-GLOBAL_LIST_EMPTY(whitelisted_species_list)
+var/global/list/whitelisted_species_list = list()
 
 /proc/log_mentor(text)
-		mentor_log.Add(text)
+		GLOB.mentor_log.Add(text)
 		GLOB.diary << "\[[time_stamp()]]MENTOR: [text]"

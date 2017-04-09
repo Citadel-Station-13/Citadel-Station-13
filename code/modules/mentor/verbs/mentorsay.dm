@@ -13,10 +13,10 @@
 
 	if(check_rights(R_ADMIN,0))
 		msg = "<span class='mentoradmin'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
-		to_chat(mentors, msg)
-		to_chat(admins, msg)
+		to_chat(GLOB.mentors, msg)
+		to_chat(GLOB.admins, msg)
 
 	else
 		msg = "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(src, 0, 0)]</EM>: <span class='message'>[msg]</span></span>"
-		to_chat(mentors, msg)
-		to_chat(admins, msg)
+		to_chat(GLOB.mentors, msg)
+		to_chat(GLOB.admins, msg)

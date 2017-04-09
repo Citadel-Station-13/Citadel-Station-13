@@ -32,34 +32,34 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 	return whitelisted_species_list
 
 	//Mammal Species
-var/global/list/mam_body_markings_list = list()
-var/global/list/mam_ears_list = list()
-var/global/list/mam_tails_list = list()
-var/global/list/mam_tails_animated_list = list()
-var/global/list/taur_list = list()
+GLOBAL_LIST_EMPTY(mam_body_markings_list)
+GLOBAL_LIST_EMPTY(mam_ears_list)
+GLOBAL_LIST_EMPTY(mam_tails_list)
+GLOBAL_LIST_EMPTY(mam_tails_animated_list)
+GLOBAL_LIST_EMPTY(taur_list)
 
 	//Exotic Species
-var/global/list/exotic_tails_list = list()
-var/global/list/exotic_tails_animated_list = list()
-var/global/list/exotic_ears_list = list()
-var/global/list/exotic_head_list = list()
-var/global/list/exotic_back_list = list()
+GLOBAL_LIST_EMPTY(exotic_tails_list)
+GLOBAL_LIST_EMPTY(exotic_tails_animated_list)
+GLOBAL_LIST_EMPTY(exotic_ears_list)
+GLOBAL_LIST_EMPTY(exotic_head_list)
+GLOBAL_LIST_EMPTY(exotic_back_list)
 
 	//Xenomorph Species
-var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
-var/global/list/xeno_tail_list = list()
-var/global/list/xeno_dorsal_list = list()
+GLOBAL_LIST_EMPTY(xeno_head_list)
+GLOBAL_LIST_EMPTY(xeno_tail_list)
+GLOBAL_LIST_EMPTY(xeno_dorsal_list)
 
 
 	//Genitals and Arousal Lists
-var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
-var/global/list/breasts_size_list = list()
-var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie)
+GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
+GLOBAL_LIST_EMPTY(breasts_size_list)
+var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie) //Yer fuggin snowflake name list jfc
 var/global/list/dick_nouns = list("dick","cock","member","shaft")
 var/global/list/cum_id_list = list("semen")
 var/global/list/milk_id_list = list("milk")
 //mentor stuff
-var/list/mentors = list()
+GLOBAL_LIST_EMPTY(mentors)
 
 //Looc stuff
 var/global/looc_allowed = 1
@@ -185,7 +185,7 @@ var/global/dlooc_allowed = 1
 
 	log_admin("[src] gave everyone genitals.")
 	message_admins("[src] gave everyone genitals.")
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.gender == MALE)
 			H.give_penis()
 			H.give_balls()
@@ -201,7 +201,7 @@ var/global/dlooc_allowed = 1
 
 	log_admin("[src] turned everyone into mammals.")
 	message_admins("[src] turned everyone into mammals.")
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.dna)
 			continue
 		var/datum/dna/hdna = H.dna

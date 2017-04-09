@@ -45,6 +45,8 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
+	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
+
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!emergency)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
