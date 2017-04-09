@@ -21,7 +21,7 @@
 #################################
 
 # Your name.  
-author: "Jay"
+author: Tax_Master
 
 # Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
 delete-after: True
@@ -32,5 +32,4 @@ delete-after: True
 # Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
 # Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
 changes: 
-  - rscadd: "Added the Give verb in the IC tab."
- 
+  - tweak: "Due to an on-going dispute between NanoTrasen and clothing suppliers, the vending machines are not as stocked as previous shifts. To compensate, third-party suppliers are offering to sell crates of missing clothing with a 'standard' markup."
