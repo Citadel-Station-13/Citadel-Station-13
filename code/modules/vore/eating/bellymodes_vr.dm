@@ -86,8 +86,6 @@
 				//Send messages
 				owner << "<span class='warning'>" + digest_alert_owner + "</span>"
 				M << "<span class='userdanger'>" + digest_alert_prey + "</span>"
-				M.visible_message("<span class='userdanger'>[digest_alert_owner]</span>", "<span class='warning'>[digest_alert_prey]</span>",
-									"<span class='notice'>You watch as [owner]'s form lose its additions.</span>")
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				playsound(owner.loc, "death_gurgles", 50, 0, -5)
 				digestion_death(M)
