@@ -42,7 +42,7 @@
 				digest_alert_prey = replacetext(digest_alert_prey,"%belly",lowertext(name))
 
 				//Send messages
-				to_chat(owner, "<span class='warning'>"digest_alert_owner"</span>")
+				to_chat(owner, "<span class='warning'>[digest_alert_owner]</span>")
 				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>", "<span class='warning'>[digest_alert_prey]</span>")
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
@@ -84,7 +84,7 @@
 				digest_alert_prey = replacetext(digest_alert_prey,"%belly",lowertext(name))
 
 				//Send messages
-				to_chat(owner, "<span class='warning'>"digest_alert_owner"</span>")
+				to_chat(owner, "<span class='warning'>[digest_alert_owner]</span>")
 				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>", "<span class='warning'>[digest_alert_prey]</span>")
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				playsound(owner.loc, "death_gurgles", 50, 0, -5)
