@@ -11,6 +11,8 @@
 	var/fluid_rate = 1
 	var/fluid_mult = 1
 	var/producing = FALSE
+	var/aroused_state = FALSE //Boolean used in icon_state strings
+	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 
 /obj/item/organ/genital/Initialize()
 	reagents = create_reagents(fluid_max_volume)
@@ -206,11 +208,12 @@
 	//start scanning for genitals
 	var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
 	if(H.is_groin_exposed(worn_stuff))
+		//ORDER is important here. Vaginas first, theoretical testes after, and penis LAST.
+		//The latter is always drawn on top of the former.
+		if(H.has_vagina())
+			genitals_to_add += H.getorganslot("vagina")
 		if(H.has_penis())
 			genitals_to_add += H.getorganslot("penis")
-		else
-			if(H.has_vagina()) //Sadly, a penis would cover the vagina and they use the same layer, so don't draw both.
-				genitals_to_add += H.getorganslot("vagina")
 	if(H.is_chest_exposed(worn_stuff))
 		if(H.has_breasts())
 			genitals_to_add += H.getorganslot("breasts")
@@ -220,46 +223,51 @@
 		var/layertext = genitals_layertext(layer)
 		for(var/obj/item/organ/genital/G in genitals_to_add)
 			var/datum/sprite_accessory/S
+			size = G.size
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
 					S = cock_shapes_list[G.shape]
-					size = G.size
 				if(/obj/item/organ/genital/vagina)
 					S = vagina_shapes_list[G.shape]
-					size = G.size
 				if(/obj/item/organ/genital/breasts)
 					S = breasts_shapes_list[G.shape]
-					size = G.size
 
 			if(!S || S.icon_state == "none")
 				continue
 			var/icon_string
-			icon_string = "[G.slot]_[S.icon_state]_[size]_[layertext]"
+			if(S.alt_aroused)
+				G.aroused_state = H.isPercentAroused(G.aroused_amount)
+			else
+				G.aroused_state = FALSE
+			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
-			switch(S.color_src)
-				if("cock_color")
-					I.color = "#[H.dna.features["cock_color"]]"
-				if("breasts_color")
-					I.color = "#[H.dna.features["breasts_color"]]"
-				if("vag_color")
-					I.color = "#[H.dna.features["vag_color"]]"
-				if(MUTCOLORS)
-					if(fixed_mut_color)
-						I.color = "#[fixed_mut_color]"
-					else
-						I.color = "#[H.dna.features["mcolor"]]"
-				if(MUTCOLORS2)
-					if(fixed_mut_color2)
-						I.color = "#[fixed_mut_color2]"
-					else
-						I.color = "#[H.dna.features["mcolor2"]]"
-				if(MUTCOLORS3)
-					if(fixed_mut_color3)
-						I.color = "#[fixed_mut_color3]"
-					else
-						I.color = "#[H.dna.features["mcolor3"]]"
+			if(use_skintones && H.dna.features["genitals_use_skintone"])
+				I.color = "#[skintone2hex(H.skin_tone)]"
+			else
+				switch(S.color_src)
+					if("cock_color")
+						I.color = "#[H.dna.features["cock_color"]]"
+					if("breasts_color")
+						I.color = "#[H.dna.features["breasts_color"]]"
+					if("vag_color")
+						I.color = "#[H.dna.features["vag_color"]]"
+					if(MUTCOLORS)
+						if(fixed_mut_color)
+							I.color = "#[fixed_mut_color]"
+						else
+							I.color = "#[H.dna.features["mcolor"]]"
+					if(MUTCOLORS2)
+						if(fixed_mut_color2)
+							I.color = "#[fixed_mut_color2]"
+						else
+							I.color = "#[H.dna.features["mcolor2"]]"
+					if(MUTCOLORS3)
+						if(fixed_mut_color3)
+							I.color = "#[fixed_mut_color3]"
+						else
+							I.color = "#[H.dna.features["mcolor3"]]"
 			standing += I
 		if(LAZYLEN(standing))
 			H.overlays_standing[layer] = standing.Copy()

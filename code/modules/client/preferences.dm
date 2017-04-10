@@ -86,7 +86,7 @@ var/list/preferences_datums = list()
 		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
-		"cock_shape"		= "human",
+		"cock_shape"		= "Human",
 		"cock_length"		= 6,
 		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
 		"cock_color"		= "fff",
@@ -118,7 +118,7 @@ var/list/preferences_datums = list()
 		"breasts_shape"		= "pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
-		"vag_shape"			= "human",
+		"vag_shape"			= "Human",
 		"vag_color"			= "fff",
 		"vag_clits"			= 1,
 		"vag_clit_diam"		= 0.25,
@@ -406,7 +406,7 @@ var/list/preferences_datums = list()
 					dat += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 				if(pref_species.use_skintones)
 					dat += "<b>Skin Tone: </b><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
-					dat += "<b>Genitals use skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+					dat += "<b>Genitals Use Skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Enabled" : "Disabled"]</a><BR>"
 
 				if(HAIR in pref_species.species_traits)
 					dat += "<b>Hair Style: </b><a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
@@ -858,11 +858,6 @@ var/list/preferences_datums = list()
 					eye_color = random_eye_color()
 				if("s_tone")
 					skin_tone = random_skin_tone()
-					if(pref_species.use_skintones && features["genitals_use_skintone"])
-						features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 				if("bag")
 					backbag = pick(backbaglist)
 				if("all")
@@ -1179,10 +1174,6 @@ var/list/preferences_datums = list()
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
-						features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-						features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference") as color|null
@@ -1375,16 +1366,8 @@ var/list/preferences_datums = list()
 							features["genitals_use_skintone"] = FALSE
 						if(FALSE)
 							features["genitals_use_skintone"] = TRUE
-							features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 						else
 							features["genitals_use_skintone"] = FALSE
-							features["cock_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["breasts_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["vag_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
-							features["balls_color"] = sanitize_hexcolor(skintone2hex(skin_tone))
 				if("arousable")
 					switch(arousable)
 						if(TRUE)
