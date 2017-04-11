@@ -144,12 +144,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, 0)
 		features["balls_size"]			= sanitize_integer(features["balls_size"], BALLS_SIZE_MIN, BALLS_SIZE_MAX, BALLS_SIZE_DEF)
 		features["balls_sack_size"]		= sanitize_integer(features["balls_sack_size"], BALLS_SACK_SIZE_MIN, BALLS_SACK_SIZE_MAX, BALLS_SACK_SIZE_DEF)
-		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], cum_id_list, "semen")
+		features["balls_fluid"] 		= sanitize_inlist(features["balls_fluid"], GLOB.cum_id_list, "semen")
 		//breasts features
 		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
 		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, "C")
 		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
-		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], milk_id_list, "milk")
+		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], GLOB.milk_id_list, "milk")
 		//vagina features
 		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)

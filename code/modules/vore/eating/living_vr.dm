@@ -1,10 +1,10 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/digestable = 1					// Can the mob be digested inside a belly?
+	var/digestable = TRUE					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
-	var/devourable = 0					// Can the mob be vored at all?
-//	var/feeding = 0 					// Are we going to feed someone else?
+	var/devourable = FALSE					// Can the mob be vored at all?
+//	var/feeding = FALSE 					// Are we going to feed someone else?
 
 
 //
@@ -161,7 +161,7 @@
 	if(prey.ckey)
 		prey_stat = prey.stat//only return this if they're not an unmonkey or whatever
 		if(!prey.client)//if they disconnected, tell us
-			prey_braindead = 1
+			prey_braindead = TRUE
 	if (pred == user)
 		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
 		log_attack("[key_name(pred)] ate [key_name(prey)]")

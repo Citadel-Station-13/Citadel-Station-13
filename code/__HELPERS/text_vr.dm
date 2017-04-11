@@ -20,8 +20,7 @@ proc/TextPreview(var/string,var/len=40)
 GLOBAL_LIST_EMPTY(mentor_log)
 GLOBAL_PROTECT(mentor_log)
 
-//var/list/admintickets = list()
-var/global/list/whitelisted_species_list = list()
+GLOBAL_LIST_EMPTY(whitelisted_species_list)
 
 /proc/log_mentor(text)
 		GLOB.mentor_log.Add(text)

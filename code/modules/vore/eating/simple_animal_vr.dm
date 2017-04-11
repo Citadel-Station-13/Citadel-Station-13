@@ -1,6 +1,6 @@
 ///////////////////// Simple Animal /////////////////////
 /mob/living/simple_animal
-	var/isPredator = 0 					//Are they capable of performing and pre-defined vore actions for their species?
+	var/isPredator = FALSE 					//Are they capable of performing and pre-defined vore actions for their species?
 	var/swallowTime = 30 				//How long it takes to eat its prey in 1/10 of a second. The default is 3 seconds.
 	var/list/prey_excludes = list()		//For excluding people from being eaten.
 

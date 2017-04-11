@@ -15,7 +15,7 @@
 	if(length(GLOB.mentors) > 0)
 		Lines += "<b>Mentors:</b>"
 		for(var/client/C in sortList(GLOB.clients))
-			var/mentor = mentor_datums[C.ckey]
+			var/mentor = GLOB.mentor_datums[C.ckey]
 			if(mentor)
 				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)]"
 

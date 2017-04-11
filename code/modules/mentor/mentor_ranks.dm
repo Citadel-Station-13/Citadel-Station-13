@@ -1,6 +1,6 @@
 /proc/load_mentors()
 	//clear the datums references
-	mentor_datums.Cut()
+	GLOB.mentor_datums.Cut()
 	GLOB.mentors.Cut()
 
 	if(!config.mentor_legacy_system)

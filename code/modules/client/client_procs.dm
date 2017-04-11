@@ -192,7 +192,7 @@ GLOBAL_LIST(external_rsc_urls)
 		holder.owner = src
 
 	//Mentor Authorisation
-	var/mentor = mentor_datums[ckey]
+	var/mentor = GLOB.mentor_datums[ckey]
 	if(mentor)
 		verbs += /client/proc/cmd_mentor_say
 		verbs += /client/proc/show_mentor_memo

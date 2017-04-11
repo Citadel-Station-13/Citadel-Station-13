@@ -113,31 +113,31 @@ datum/design/sizeray
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(SIZESCALE_HUGE to INFINITY)
-				M.sizescale(SIZESCALE_BIG)
-			if(SIZESCALE_BIG to SIZESCALE_HUGE)
-				M.sizescale(SIZESCALE_NORMAL)
-			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
-				M.sizescale(SIZESCALE_SMALL)
-			if((0 - INFINITY) to SIZESCALE_NORMAL)
-				M.sizescale(SIZESCALE_TINY)
+			if(GLOB.SIZESCALE_HUGE to INFINITY)
+				M.sizescale(GLOB.SIZESCALE_BIG)
+			if(GLOB.SIZESCALE_BIG to GLOB.SIZESCALE_HUGE)
+				M.sizescale(GLOB.SIZESCALE_NORMAL)
+			if(GLOB.SIZESCALE_NORMAL to GLOB.SIZESCALE_BIG)
+				M.sizescale(GLOB.SIZESCALE_SMALL)
+			if((0 - INFINITY) to GLOB.SIZESCALE_NORMAL)
+				M.sizescale(GLOB.SIZESCALE_TINY)
 		M.update_transform()
-	return 1
+	return TRUE
 
 /obj/item/projectile/sizeray/growthray/on_hit(var/atom/target, var/blocked = 0)
 	if(istype(target, /mob/living))
 		var/mob/living/M = target
 		switch(M.size_multiplier)
-			if(SIZESCALE_BIG to SIZESCALE_HUGE)
-				M.sizescale(SIZESCALE_HUGE)
-			if(SIZESCALE_NORMAL to SIZESCALE_BIG)
-				M.sizescale(SIZESCALE_BIG)
-			if(SIZESCALE_SMALL to SIZESCALE_NORMAL)
-				M.sizescale(SIZESCALE_NORMAL)
-			if((0 - INFINITY) to SIZESCALE_TINY)
-				M.sizescale(SIZESCALE_SMALL)
+			if(GLOB.SIZESCALE_BIG to GLOB.SIZESCALE_HUGE)
+				M.sizescale(GLOB.SIZESCALE_HUGE)
+			if(GLOB.SIZESCALE_NORMAL to GLOB.SIZESCALE_BIG)
+				M.sizescale(GLOB.SIZESCALE_BIG)
+			if(GLOB.SIZESCALE_SMALL to GLOB.SIZESCALE_NORMAL)
+				M.sizescale(GLOB.SIZESCALE_NORMAL)
+			if((0 - INFINITY) to GLOB.SIZESCALE_TINY)
+				M.sizescale(GLOB.SIZESCALE_SMALL)
 		M.update_transform()
-	return 1
+	return TRUE
 
 /obj/item/ammo_casing/energy/laser/growthray
 	projectile_type = /obj/item/projectile/sizeray/growthray
@@ -156,10 +156,10 @@ datum/design/sizeray
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/shrinkray, /obj/item/ammo_casing/energy/laser/growthray)
 	origin_tech = "combat=1;magnets=2"
-	selfcharge = 1
+	selfcharge = TRUE
 	charge_delay = 5
 	ammo_x_offset = 2
-	clumsy_check = 1
+	clumsy_check = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if(W==src)

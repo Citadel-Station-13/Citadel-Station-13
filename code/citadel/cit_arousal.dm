@@ -255,8 +255,8 @@
 								finished = 1
 
 						else//not into a container
-							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(dick_nouns)].</span>", \
-								"<span class='userdanger'>You start jerking off your [pick(dick_nouns)].</span>", \
+							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(GLOB.dick_nouns)].</span>", \
+								"<span class='userdanger'>You start jerking off your [pick(GLOB.dick_nouns)].</span>", \
 										"<span class='userdanger'>You start masturbating.</span>")
 							if(do_after(src, mb_time, target = src))
 								if(total_cum > 5)

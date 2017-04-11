@@ -1,16 +1,16 @@
 
 //these aren't defines so they can stay in this file
-var/const/SIZESCALE_HUGE = 2
-var/const/SIZESCALE_BIG = 1.5
-var/const/SIZESCALE_NORMAL = 1
-var/const/SIZESCALE_SMALL = 0.85
-var/const/SIZESCALE_TINY = 0.60
+GLOBAL_VAR_INIT(SIZESCALE_HUGE, 2)
+GLOBAL_VAR_INIT(SIZESCALE_BIG, 1.5)
+GLOBAL_VAR_INIT(SIZESCALE_NORMAL, 1)
+GLOBAL_VAR_INIT(SIZESCALE_SMALL, 0.85)
+GLOBAL_VAR_INIT(SIZESCALE_TINY, 0.60)
 
 //average
-var/const/SIZESCALE_A_HUGEBIG = (SIZESCALE_HUGE + SIZESCALE_BIG) / 2
-var/const/SIZESCALE_A_BIGNORMAL = (SIZESCALE_BIG + SIZESCALE_NORMAL) / 2
-var/const/SIZESCALE_A_NORMALSMALL = (SIZESCALE_NORMAL + SIZESCALE_SMALL) / 2
-var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
+GLOBAL_VAR_INIT(SIZESCALE_A_HUGEBIG, (SIZESCALE_HUGE + SIZESCALE_BIG) / 2)
+GLOBAL_VAR_INIT(SIZESCALE_A_BIGNORMAL, (SIZESCALE_BIG + SIZESCALE_NORMAL) / 2)
+GLOBAL_VAR_INIT(SIZESCALE_A_NORMALSMALL,(SIZESCALE_NORMAL + SIZESCALE_SMALL) / 2)
+GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
 
 // Adding needed defines to /mob/living
 // Note: Polaris had this on /mob/living/carbon/human We need it higher up for animals and stuff.
@@ -52,7 +52,7 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 	var/matrix/sizescale = matrix() // Defines the matrix to change the player's size
 	sizescale.Scale(new_size) //Change the size of the matrix
 
-	if(new_size >= SIZESCALE_NORMAL)
+	if(new_size >= GLOB.SIZESCALE_NORMAL)
 		sizescale.Translate(0, -1 * (1 - new_size) * 16) //Move the player up in the tile so their feet align with the bottom
 
 	animate(src, transform = sizescale, time = 5) //Animate the player resizing
@@ -105,14 +105,14 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
  * // TODO - can the now_pushing = 0 be moved up? What does it do anyway?
  */
 /mob/living/proc/handle_micro_bump_helping(var/mob/living/tmob)
-	if(src.get_effective_size() <= SIZESCALE_A_SMALLTINY && tmob.get_effective_size() <= SIZESCALE_A_SMALLTINY)
+	if(src.get_effective_size() <= GLOB.SIZESCALE_A_SMALLTINY && tmob.get_effective_size() <= GLOB.SIZESCALE_A_SMALLTINY)
 		// Both small! Go ahead and
-		now_pushing = 0
-		src.forceMove(tmob.loc)
-		return 1
+		now_pushing = FALSE
+		src.forceMove(get_turf(tmob))
+		return TRUE
 	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-		now_pushing = 0
-		src.forceMove(tmob.loc)
+		now_pushing = FALSE
+		src.forceMove(get_turf(tmob))
 
 		if(src.get_effective_size() > tmob.get_effective_size())
 /*			var/mob/living/carbon/human/tmob = src
@@ -121,7 +121,7 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 				M << "[src]'s huge tail slithers past beside you!"
 			else
 */
-			src.forceMove(tmob.loc)
+			src.forceMove(get_turf(tmob))
 			src << "You carefully step over [tmob]."
 			tmob << "[src] steps over you carefully!"
 		if(tmob.get_effective_size() > src.get_effective_size())
@@ -131,10 +131,10 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 				M << "[src] bounds over your tail."
 			else
 */
-			src.forceMove(tmob.loc)
+			src.forceMove(get_turf(tmob))
 			src << "You run between [tmob]'s legs."
 			tmob << "[src] runs between your legs."
-		return 1
+		return TRUE
 
 /**
  * Handle bumping into someone without mutual help intent.
@@ -149,8 +149,8 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 	if(src.a_intent == "disarm" && src.canmove && !src.buckled)
 		// If bigger than them by at least 0.75, move onto them and print message.
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = 0
-			src.forceMove(tmob.loc)
+			now_pushing = FALSE
+			src.forceMove(get_turf(tmob))
 			tmob.Stun(4)
 /*
 			var/mob/living/carbon/human/H = src
@@ -165,8 +165,8 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
 
 	if(src.a_intent == "harm" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = 0
-			src.forceMove(tmob.loc)
+			now_pushing = FALSE
+			src.forceMove(get_turf(tmob))
 			tmob.adjustStaminaLoss(35)
 			tmob.adjustBruteLoss(5)
 /*			var/mob/living/carbon/human/M = src
@@ -182,9 +182,9 @@ var/const/SIZESCALE_A_SMALLTINY = (SIZESCALE_SMALL + SIZESCALE_TINY) / 2
  // until I figure out grabbing micros with the godawful pull code...
 	if(src.a_intent == "grab" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = 0
+			now_pushing = FALSE
 			tmob.adjustStaminaLoss(15)
-			src.forceMove(tmob.loc)
+			src.forceMove(get_turf(tmob))
 			src << "You press [tmob] beneath your foot!"
 			tmob << "[src] presses you beneath their foot!"
 /*

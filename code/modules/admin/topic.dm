@@ -49,7 +49,7 @@
 		if(world.time && spamcooldown > world.time)
 			to_chat(usr, "Please wait [max(round((spamcooldown - world.time)*0.1, 0.1), 0)] seconds.")
 			return
-		var/client/C = locate(href_list["markedread"]) in clients
+		var/client/C = locate(href_list["markedread"]) in GLOB.clients
 		if(!C)
 			return
 
