@@ -1,16 +1,15 @@
 
 //these aren't defines so they can stay in this file
-GLOBAL_VAR_INIT(SIZESCALE_HUGE, 2)
-GLOBAL_VAR_INIT(SIZESCALE_BIG, 1.5)
-GLOBAL_VAR_INIT(SIZESCALE_NORMAL, 1)
-GLOBAL_VAR_INIT(SIZESCALE_SMALL, 0.85)
-GLOBAL_VAR_INIT(SIZESCALE_TINY, 0.60)
+GLOBAL_VAR_CONST(SIZESCALE_HUGE, 2)
+GLOBAL_VAR_CONST(SIZESCALE_BIG, 1.5)
+GLOBAL_VAR_CONST(SIZESCALE_NORMAL, 1)
+GLOBAL_VAR_CONST(SIZESCALE_SMALL, 0.85)
+GLOBAL_VAR_CONST(SIZESCALE_TINY, 0.60)
 
-//average
-GLOBAL_VAR_INIT(SIZESCALE_A_HUGEBIG, (SIZESCALE_HUGE + SIZESCALE_BIG) / 2)
-GLOBAL_VAR_INIT(SIZESCALE_A_BIGNORMAL, (SIZESCALE_BIG + SIZESCALE_NORMAL) / 2)
-GLOBAL_VAR_INIT(SIZESCALE_A_NORMALSMALL,(SIZESCALE_NORMAL + SIZESCALE_SMALL) / 2)
-GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
+GLOBAL_VAR_CONST(SIZESCALE_A_HUGEBIG, (GLOB.SIZESCALE_HUGE + GLOB.SIZESCALE_BIG) / 2)
+GLOBAL_VAR_CONST(SIZESCALE_A_BIGNORMAL, (GLOB.SIZESCALE_BIG + GLOB.SIZESCALE_NORMAL) / 2)
+GLOBAL_VAR_CONST(SIZESCALE_A_NORMALSMALL,(GLOB.SIZESCALE_NORMAL + GLOB.SIZESCALE_SMALL) / 2)
+GLOBAL_VAR_CONST(SIZESCALE_A_SMALLTINY,(GLOB.SIZESCALE_SMALL + GLOB.SIZESCALE_TINY) / 2)
 
 // Adding needed defines to /mob/living
 // Note: Polaris had this on /mob/living/carbon/human We need it higher up for animals and stuff.
@@ -107,13 +106,11 @@ GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
 /mob/living/proc/handle_micro_bump_helping(var/mob/living/tmob)
 	if(src.get_effective_size() <= GLOB.SIZESCALE_A_SMALLTINY && tmob.get_effective_size() <= GLOB.SIZESCALE_A_SMALLTINY)
 		// Both small! Go ahead and
-		now_pushing = FALSE
+		now_pushing = 0
 		src.forceMove(get_turf(tmob))
-		return TRUE
+		return 1
 	if(abs(src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-		now_pushing = FALSE
-		src.forceMove(get_turf(tmob))
-
+		now_pushing = 0
 		if(src.get_effective_size() > tmob.get_effective_size())
 /*			var/mob/living/carbon/human/tmob = src
 			if(istype(tmob) && istype(tmob.tail_style, /datum/sprite_accessory/tail/taur/naga))
@@ -134,7 +131,7 @@ GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
 			src.forceMove(get_turf(tmob))
 			src << "You run between [tmob]'s legs."
 			tmob << "[src] runs between your legs."
-		return TRUE
+		return 1
 
 /**
  * Handle bumping into someone without mutual help intent.
@@ -149,7 +146,7 @@ GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
 	if(src.a_intent == "disarm" && src.canmove && !src.buckled)
 		// If bigger than them by at least 0.75, move onto them and print message.
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = FALSE
+			now_pushing = 0
 			src.forceMove(get_turf(tmob))
 			tmob.Stun(4)
 /*
@@ -165,7 +162,7 @@ GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
 
 	if(src.a_intent == "harm" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = FALSE
+			now_pushing = 0
 			src.forceMove(get_turf(tmob))
 			tmob.adjustStaminaLoss(35)
 			tmob.adjustBruteLoss(5)
@@ -182,11 +179,12 @@ GLOBAL_VAR_INIT(SIZESCALE_A_SMALLTINY,(SIZESCALE_SMALL + SIZESCALE_TINY) / 2)
  // until I figure out grabbing micros with the godawful pull code...
 	if(src.a_intent == "grab" && src.canmove && !src.buckled)
 		if((src.get_effective_size() - tmob.get_effective_size()) >= 0.20)
-			now_pushing = FALSE
+			now_pushing = 0
 			tmob.adjustStaminaLoss(15)
 			src.forceMove(get_turf(tmob))
 			src << "You press [tmob] beneath your foot!"
 			tmob << "[src] presses you beneath their foot!"
+		return 1
 /*
 			var/mob/living/carbon/human/M = src
 			if(istype(M) && !M.shoes)

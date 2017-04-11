@@ -135,13 +135,13 @@
 		if(TRUE)
 			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Digestable (Currently: OFF)</span></a>"
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
 
 	switch(user.devourable)
 		if(TRUE)
 			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
 		if(FALSE)
-			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable (Currently: OFF)</span></a>"
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
 
 	//Returns the dat html to the vore_look
 	return dat

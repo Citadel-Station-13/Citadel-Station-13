@@ -37,7 +37,7 @@
 
 	#ifdef TESTING
 	var/msg = "mentors Built:\n"
-	for(var/ckey in mentor_datums)
+	for(var/ckey in GLOB.mentor_datums)
 		msg += "\t[ckey] - mentor\n"
 	testing(msg)
 	#endif
