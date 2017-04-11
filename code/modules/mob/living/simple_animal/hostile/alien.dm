@@ -35,7 +35,7 @@
 	gold_core_spawnable = 0
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-	devourable = 1
+	devourable = TRUE
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"
@@ -170,7 +170,8 @@
 		if(istype(target, /obj/effect/decal/cleanable))
 			visible_message("[src] cleans up \the [target].")
 			qdel(target)
-			return
+			return TRUE
 		var/atom/movable/M = target
 		M.clean_blood()
 		visible_message("[src] polishes \the [target].")
+		return TRUE

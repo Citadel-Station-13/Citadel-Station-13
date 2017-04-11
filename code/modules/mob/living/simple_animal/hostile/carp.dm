@@ -16,6 +16,7 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
+	devourable = TRUE
 
 	harm_intent_damage = 8
 	obj_damage = 50
@@ -34,14 +35,13 @@
 	movement_type = FLYING
 	pressure_resistance = 200
 	gold_core_spawnable = 1
-	devourable = 1
 
 /mob/living/simple_animal/hostile/carp/Process_Spacemove(movement_dir = 0)
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
-	..()
-	if(ishuman(target))
+	. = ..()
+	if(. && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.adjustStaminaLoss(8)
 

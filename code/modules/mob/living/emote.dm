@@ -7,7 +7,8 @@
 		param = copytext(act, custom_param + 1, length(act) + 1)
 		act = copytext(act, 1, custom_param)
 
-	var/datum/emote/E = emote_list[act]
+	var/datum/emote/E
+	E = E.emote_list[act]
 	if(!E)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 		return
@@ -376,7 +377,6 @@
 	key = "me"
 	key_third_person = "custom"
 	message = null
-	mob_type_blacklist_typecache = list(/mob/living/brain)
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
@@ -426,10 +426,12 @@
 	var/list/keys = list()
 	var/list/message = list("Available emotes, you can use them with say \"*emote\": ")
 
+	var/datum/emote/E
+	var/list/emote_list = E.emote_list
 	for(var/e in emote_list)
 		if(e in keys)
 			continue
-		var/datum/emote/E = emote_list[e]
+		E = emote_list[e]
 		if(E.can_run_emote(user, TRUE))
 			keys += E.key
 

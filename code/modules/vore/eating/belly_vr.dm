@@ -24,7 +24,7 @@
 	var/escapetime = 200					// Deciseconds, how long to escape this belly
 	var/escapechance = 45 					// % Chance of prey beginning to escape if prey struggles.
 	var/tmp/digest_mode = DM_HOLD				// Whether or not to digest. Default to not digest.
-	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_DIGESTF)	// Possible digest modes
+	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL)	// Possible digest modes
 	var/tmp/mob/living/owner					// The mob whose belly this is.
 	var/tmp/list/internal_contents = list()		// People/Things you've eaten into this belly!
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)

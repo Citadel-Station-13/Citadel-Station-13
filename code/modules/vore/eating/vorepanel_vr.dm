@@ -74,8 +74,6 @@
 				spanstyle = ""
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
-			if(DM_DIGESTF)
-				spanstyle = "color:purple;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
 
@@ -134,16 +132,16 @@
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
 	switch(user.digestable)
-		if(1)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable</a>"
-		if(0)
-			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Digestable</span></a>"
+		if(TRUE)
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
+		if(FALSE)
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
 
 	switch(user.devourable)
-		if(1)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable</a>"
-		if(0)
-			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable</span></a>"
+		if(TRUE)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
+		if(FALSE)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -268,7 +266,7 @@
 			if("Eject")
 				if(user.stat)
 					user << "<span class='warning'>You can't do that in your state!</span>"
-					return 1
+					return TRUE
 
 				selected.release_specific_contents(tgt)
 				playsound(user, 'sound/effects/splat.ogg', 50, 1)
@@ -277,12 +275,12 @@
 			if("Move")
 				if(user.stat)
 					user << "<span class='warning'>You can't do that in your state!</span>"
-					return 1
+					return TRUE
 
 				var/choice = input("Move [tgt] where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
 
 				if(choice == "Cancel - Don't Move")
-					return 1
+					return TRUE
 				else
 					var/datum/belly/B = user.vore_organs[choice]
 					selected.internal_contents -= tgt
@@ -294,16 +292,16 @@
 
 	if(href_list["newbelly"])
 		if(user.vore_organs.len >= 10)
-			return 1
+			return TRUE
 
 		var/new_name = html_encode(input(usr,"New belly's name:","New Belly") as text|null)
 
 		if(length(new_name) > 12 || length(new_name) < 2)
 			usr << "<span class='warning'>Entered belly name is too long.</span>"
-			return 0
+			return FALSE
 		if(new_name in user.vore_organs)
 			usr << "<span class='warning'>No duplicate belly names, please.</span>"
-			return 0
+			return FALSE
 
 		var/datum/belly/NB = new(user)
 		NB.name = new_name
@@ -320,10 +318,10 @@
 
 		if(length(new_name) > 12 || length(new_name) < 2)
 			usr << "<span class='warning'>Entered belly name length invalid (must be longer than 2, shorter than 12).</span>"
-			return 0
+			return FALSE
 		if(new_name in user.vore_organs)
 			usr << "<span class='warning'>No duplicate belly names, please.</span>"
-			return 0
+			return FALSE
 
 		user.vore_organs[new_name] = selected
 		user.vore_organs -= selected.name
@@ -416,12 +414,12 @@
 		selected.vore_verb = new_verb
 
 	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in vore_sounds + "Cancel - No Changes"
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.vore_sounds + "Cancel - No Changes"
 
 		if(choice == "Cancel")
 			return 1
 
-		selected.vore_sound = vore_sounds[choice]
+		selected.vore_sound = GLOB.vore_sounds[choice]
 
 	if(href_list["b_soundtest"])
 		user << selected.vore_sound
@@ -456,9 +454,9 @@
 			if("Cancel")
 				return 1
 			if("Allow Digestion")
-				user.digestable = 1
+				user.digestable = TRUE
 			if("Prevent Digestion")
-				user.digestable = 0
+				user.digestable = FALSE
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.digestable = user.digestable
@@ -469,9 +467,9 @@
 			if("Cancel")
 				return 1
 			if("Allow Devourment")
-				user.devourable = 1
+				user.devourable = TRUE
 			if("Prevent Devourment")
-				user.devourable = 0
+				user.devourable = FALSE
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable

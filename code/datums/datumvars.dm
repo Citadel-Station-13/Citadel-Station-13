@@ -80,7 +80,6 @@
 			if(A.dir)
 				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
 			var/mob/living/M = A
-			//citadel arousal code
 			atomsnowflake += {"
 				<br><font size='1'><a href='?_src_=vars;datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
 				<br><font size='1'>
@@ -852,7 +851,7 @@
 
 			if(A.reagents)
 				var/chosen_id
-				var/list/reagent_options = sortList(chemical_reagents_list)
+				var/list/reagent_options = sortList(GLOB.chemical_reagents_list)
 				switch(alert(usr, "Choose a method.", "Add Reagents", "Enter ID", "Choose ID"))
 					if("Enter ID")
 						var/valid_id
@@ -1033,14 +1032,14 @@
 				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
 				return
 
-			var/result = input(usr, "Please choose a new species","Species") as null|anything in species_list
+			var/result = input(usr, "Please choose a new species","Species") as null|anything in GLOB.species_list
 
 			if(!H)
 				to_chat(usr, "Mob doesn't exist anymore")
 				return
 
 			if(result)
-				var/newtype = species_list[result]
+				var/newtype = GLOB.species_list[result]
 				H.set_species(newtype)
 
 		else if(href_list["editbodypart"])

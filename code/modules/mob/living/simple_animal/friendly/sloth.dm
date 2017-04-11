@@ -20,8 +20,7 @@
 	health = 50
 	maxHealth = 50
 	speed = 2
-	devourable = 1
-
+	devourable = TRUE
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

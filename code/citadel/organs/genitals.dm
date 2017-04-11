@@ -211,7 +211,7 @@
 			var/datum/sprite_accessory/S
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
-					S = cock_shapes_list[G.shape]
+					S = GLOB.cock_shapes_list[G.shape]
 					size = G.size
 
 			if(!S || S.icon_state == "none")
