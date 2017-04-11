@@ -1,10 +1,10 @@
 ##Citadel Station 13 <BR>
-Based and maintained from /tg/station
+Based and maintained from /tg/station.<BR>
 
 [![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/Citadel-Station-13/Citadel-Station-13)](http://www.krihelinator.xyz)
 
 
-**Upstream information** <BR>
+**Upstream Information** <BR>
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
@@ -14,7 +14,7 @@ Based and maintained from /tg/station
 **Forums:** http://citadel-station.net/forum/ <BR>
 **Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
 **Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
-**Discord:**  [here](https://discord.gg/3gJ9pnM) <BR>
+**Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
 
 ##DOWNLOADING
 
