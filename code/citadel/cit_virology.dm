@@ -160,6 +160,7 @@ Bonus
 	if(M.has_breasts())
 		var/obj/item/organ/genital/breasts/O = M.getorganslot("breasts")
 		var/size = breasts_size_list.find(O.size)
+		if(size != breasts_size_list(breasts_size_list.len)) //This should be the biggest size of breasts
 			O.size = breasts_size_list(size + 1)
 			O.update()
 			to_chat(M,"<span class='warning'>[pick("Your boobs suddenly gain several cupsizes!","You breasts rapidly expand outward.","You feel your chest grow much larger.")]</span>")
@@ -173,6 +174,7 @@ Bonus
 		var/mob/living/carbon/human/M = A.affected_mob
 		if(M)
 			switch(A.stage)
+				if(1,2,3,4)
 					to_chat(M,"<span class='notice'>[pick(big_thoughts)]</span>")
 				else
 					grow_genitalia(M)
@@ -182,6 +184,7 @@ Bonus
 
 /*
 //////////////////////////////////////
+Micro genitalia
 
 	Obviously noticable
 	Increases Resistance
@@ -234,6 +237,7 @@ Bonus
 		var/mob/living/carbon/human/M = A.affected_mob
 		if(M)
 			switch(A.stage)
+				if(1,2,3,4)
 					to_chat(M,"<span class='notice'>[pick(small_thoughts)]</span>")
 				else
 					shrink(M)
