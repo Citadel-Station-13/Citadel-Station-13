@@ -110,14 +110,10 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	var/datum/action/innate/borer/punish_victim/punish_victim_action = new
 	var/datum/action/innate/borer/jumpstart_host/jumpstart_host_action = new
 
-	var/is_team_borer = TRUE
-	var/borer_alert = "Become a cortical borer? (Warning, You can no longer be cloned!)"
-
 /mob/living/simple_animal/borer/Initialize(mapload, gen=1)
 	..()
 	generation = gen
-	if(is_team_borer)
-		notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
+	notify_ghosts("A cortical borer has been created in [get_area(src)]!", enter_link = "<a href=?src=\ref[src];ghostjoin=1>(Click to enter)</a>", source = src, action = NOTIFY_ATTACK)
 	real_name = "Cortical Borer [rand(1000,9999)]"
 	truename = "[borer_names[min(generation, borer_names.len)]] [rand(1000,9999)]"
 	borer_chems += /datum/borer_chem/epinephrine
@@ -133,8 +129,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
 
-	if(is_team_borer)
-		GLOB.borers += src
+	GLOB.borers += src
 
 	GrantBorerActions()
 
@@ -143,7 +138,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	host_brain = null
 	victim = null
-
+	
 	QDEL_NULL(talk_to_host_action)
 	QDEL_NULL(infest_host_action)
 	QDEL_NULL(toggle_hide_action)
@@ -157,7 +152,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	QDEL_NULL(freeze_victim_action)
 	QDEL_NULL(punish_victim_action)
 	QDEL_NULL(jumpstart_host_action)
-
+	
 	return ..()
 
 /mob/living/simple_animal/borer/Topic(href, href_list)//not entirely sure if this is even required
@@ -173,7 +168,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		return
 	if(stat != CONSCIOUS)
 		return
-	var/be_borer = alert(borer_alert,,"Yes","No")
+	var/be_borer = alert("Become a cortical borer? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_borer == "No" || !src || QDELETED(src))
 		return
 	if(key)
@@ -336,10 +331,10 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	if(message == "")
 		return
 
-/mob/living/simple_animal/borer/UnarmedAttack(mob/living/M)
-	healthscan(usr, M)
-	chemscan(usr, M)
-	return
+/mob/living/simple_animal/borer/UnarmedAttack(atom/A)
+	if(isliving(A))
+		healthscan(usr, A)
+		chemscan(usr, A)
 
 /mob/living/simple_animal/borer/ex_act()
 	if(victim)
@@ -493,7 +488,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	for(var/mob/living/carbon/C in view(1,src))
 		if(C.stat == CONSCIOUS)
 			choices += C
-
+			
 	if(!choices.len)
 		return
 	var/mob/living/carbon/M = choices.len > 1 ? input(src,"Who do you wish to dominate?") in null|choices : choices[1]
@@ -727,8 +722,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		controlling = TRUE
 
 		victim.verbs += /mob/living/carbon/proc/release_control
-		if(is_team_borer)
-			victim.verbs += /mob/living/carbon/proc/spawn_larvae
+		victim.verbs += /mob/living/carbon/proc/spawn_larvae
 		victim.verbs -= /mob/living/proc/borer_comm
 		victim.verbs += /mob/living/proc/trapped_mind_comm
 		GrantControlActions()
@@ -853,8 +847,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	controlling = FALSE
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
-	if(is_team_borer)
-		victim.verbs -= /mob/living/carbon/proc/spawn_larvae
+	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
 	victim.verbs += /mob/living/proc/borer_comm
 	victim.verbs -= /mob/living/proc/trapped_mind_comm
 	RemoveControlActions()
