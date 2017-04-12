@@ -9,9 +9,9 @@
 // Stance for hostile mobs to be in while devouring someone.
 #define HOSTILE_STANCE_EATING	99
 
-
+/*
 var/global/list/player_sizes_list = list("Macro" = SIZESCALE_HUGE, "Big" = SIZESCALE_BIG, "Normal" = SIZESCALE_NORMAL, "Small" = SIZESCALE_SMALL, "Tiny" = SIZESCALE_TINY)
-/* // moved to sound.dm
+ // moved to sound.dm
 
 var/global/list/digestion_sounds = list(
 		'sound/vore/digest1.ogg',
