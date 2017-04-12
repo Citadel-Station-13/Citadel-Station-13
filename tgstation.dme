@@ -2120,8 +2120,6 @@
 #include "code\modules\vore\eating\simple_animal_vr.dm"
 #include "code\modules\vore\eating\vore_vr.dm"
 #include "code\modules\vore\eating\vorepanel_vr.dm"
-#include "code\modules\vore\resizing\resize_vr.dm"
-#include "code\modules\vore\resizing\sizegun_vr.dm"
 #include "code\modules\VR\vr_human.dm"
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
