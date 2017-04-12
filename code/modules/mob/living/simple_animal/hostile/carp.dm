@@ -16,7 +16,6 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	devourable = TRUE
 
 	harm_intent_damage = 8
 	obj_damage = 50

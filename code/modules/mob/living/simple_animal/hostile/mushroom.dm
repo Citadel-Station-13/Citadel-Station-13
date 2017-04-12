@@ -35,7 +35,6 @@
 	var/faint_ticker = 0 //If we hit three, another mushroom's gonna eat us
 	var/image/cap_living = null //Where we store our cap icons so we dont generate them constantly to update our icon
 	var/image/cap_dead = null
-	devourable = TRUE
 
 /mob/living/simple_animal/hostile/mushroom/examine(mob/user)
 	..()

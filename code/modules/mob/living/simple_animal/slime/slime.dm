@@ -8,7 +8,6 @@
 	var/is_adult = 0
 	var/docile = 0
 	faction = list("slime","neutral")
-	devourable = TRUE
 
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"

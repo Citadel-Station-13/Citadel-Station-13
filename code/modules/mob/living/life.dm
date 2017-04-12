@@ -40,9 +40,6 @@
 	//stuff in the stomach
 	handle_stomach()
 
-	// Vore code for belly processes
-	handle_internal_contents()
-
 	update_gravity(mob_has_gravity())
 
 	if(machine)

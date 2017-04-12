@@ -20,7 +20,6 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
 	gold_core_spawnable = 2
-	devourable = 1
 
 /mob/living/simple_animal/crab/Life()
 	..()

@@ -21,7 +21,6 @@
 	maxHealth = 60
 	health = 60
 	var/armored = FALSE
-	devourable = TRUE
 
 	obj_damage = 60
 	melee_damage_lower = 20

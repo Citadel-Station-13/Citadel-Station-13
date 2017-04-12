@@ -28,7 +28,6 @@
 		GLOB.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
-	hook_vr("mob_new",list(src))
 	..()
 
 /atom/proc/prepare_huds()
@@ -111,7 +110,7 @@
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility)//if src is invisible to us (and isn't a turf),
+			if(M.see_invisible<invisibility || (T != loc && T != src))//if src is invisible to us or is inside something (and isn't a turf),
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else

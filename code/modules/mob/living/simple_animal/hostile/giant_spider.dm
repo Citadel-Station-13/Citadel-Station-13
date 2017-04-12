@@ -50,7 +50,6 @@
 	see_invisible = SEE_INVISIBLE_MINIMUM
 	see_in_dark = 4
 	var/playable_spider = FALSE
-	devourable = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
