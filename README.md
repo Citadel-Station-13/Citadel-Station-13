@@ -1,12 +1,21 @@
-## /tg/station
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation) [![Krihelimeter](http://www.krihelinator.xyz/badge/tgstation/tgstation)](http://www.krihelinator.xyz)
+##Citadel Station 13 <BR>
+Based and maintained from /tg/station.<BR>
 
+[![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/Citadel-Station-13/Citadel-Station-13)](http://www.krihelinator.xyz)
+
+
+**Upstream Information** <BR>
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
+**Citadel Station Information** <BR>
+**Forums:** http://citadel-station.net/forum/ <BR>
+**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
+**Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
+**Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
 
 ## DOWNLOADING
 
@@ -61,7 +70,8 @@ config/admin_ranks.txt
 The format is
 
 ```
-byondkey = Rank
+byondkey = Rank 
+((i.e. spessmans = Host ))
 ```
 
 where the admin rank must be properly capitalised.
@@ -85,7 +95,7 @@ the new version.
 
 ## MAPS
 
-/tg/station currently comes equipped with five maps.
+Citadel Station maintains their own map, but frequently uses /tg/station's currently maintained maps as well.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
