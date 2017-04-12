@@ -13,16 +13,19 @@
 	var/producing = FALSE
 
 /obj/item/organ/genital/Initialize()
-	..()
 	reagents = create_reagents(fluid_max_volume)
+	update()
 
 /obj/item/organ/genital/Destroy()
+	remove_ref()
 	if(owner)
 		Remove(owner, 1)//this should remove references to it, so it can be GCd correctly
-	update_link()
+	update_link()//this should remove any other links it has
 	return ..()
 
 /obj/item/organ/genital/proc/update()
+	if(QDELETED(src))
+		return
 	update_size()
 	update_appearance()
 	update_link()
@@ -32,6 +35,8 @@
 /obj/item/organ/genital/proc/update_appearance()
 
 /obj/item/organ/genital/proc/update_link()
+
+/obj/item/organ/genital/proc/remove_ref()
 
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -43,10 +48,13 @@
 
 //proc to give a player their genitals and stuff when they log in
 /mob/living/carbon/human/proc/give_genitals(clean=0)//clean will remove all pre-existing genitals. proc will then give them any genitals that are enabled in their DNA
+	if (NOGENITALS in dna.species.species_traits)
+		return
 	if(clean)
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
+
 	if(dna.features["has_cock"])
 		give_penis()
 		if(dna.features["has_balls"])
@@ -92,7 +100,7 @@
 //			T.color = skintone2hex(skin_tone)
 //		else
 //			T.color = "#[dna.features["balls_color"]]"
-		T.size = dna.features["bals_size"]
+		T.size = dna.features["balls_size"]
 		T.sack_size = dna.features["balls_sack_size"]
 		T.fluid_id = dna.features["balls_fluid"]
 		T.fluid_rate = dna.features["balls_cum_rate"]
@@ -101,7 +109,7 @@
 		T.update()
 
 /mob/living/carbon/human/proc/give_breasts()
-	if(!has_dna())
+	if(!dna)
 		return FALSE
 	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
@@ -116,7 +124,7 @@
 /mob/living/carbon/human/proc/give_ovipositor()
 /mob/living/carbon/human/proc/give_eggsack()
 /mob/living/carbon/human/proc/give_vagina()
-	if(!has_dna())
+	if(!dna)
 		return FALSE
 	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
@@ -126,10 +134,10 @@
 		if(dna.species.use_skintones && dna.features["genitals_use_skintone"])
 			V.color = skintone2hex(skin_tone)
 		else
-			V.color = dna.features["vag_color"]
+			V.color = "[dna.features["vag_color"]]"
 		V.update()
 /mob/living/carbon/human/proc/give_womb()
-	if(!has_dna())
+	if(!dna)
 		return FALSE
 	if(NOGENITALS in dna.species.species_traits)
 		return FALSE
@@ -163,19 +171,20 @@
 	update_genitals()
 
 /mob/living/carbon/human/proc/update_genitals()
-	dna.species.handle_genitals(src)
+	if(src && !QDELETED(src))
+		dna.species.handle_genitals(src)
 
 /datum/species/proc/handle_genitals(mob/living/carbon/human/H)
-	if(!H)
+	if(!H)//no args
 		CRASH("H = null")
-	if(!H.internal_organs.len)
+	if(!LAZYLEN(H.internal_organs))//if they have no organs, we're done
 		return
-	if(NOGENITALS in species_traits)
+	if(NOGENITALS in species_traits)//golems and such
 		return
 
-	var/list/genitals_to_add 	= list()
-	var/list/relevent_layers 	= list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
-	var/list/standing 			= list()
+	var/list/genitals_to_add = list()
+	var/list/relevent_layers = list(GENITALS_BEHIND_LAYER, GENITALS_ADJ_LAYER, GENITALS_FRONT_LAYER)
+	var/list/standing = list()
 	var/size
 
 	H.remove_overlay(GENITALS_BEHIND_LAYER)
@@ -185,12 +194,15 @@
 	if(H.disabilities & HUSK)
 		return
 	//start scanning for genitals
-	if(H.has_penis() && H.is_groin_exposed())
-		genitals_to_add += H.getorganslot("penis")
-	if(H.has_breasts() && H.is_chest_exposed())
-		genitals_to_add += H.getorganslot("breasts")
-	if(H.has_vagina() && H.is_groin_exposed())
-		genitals_to_add += H.getorganslot("vagina")
+	var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
+	if(H.is_groin_exposed(worn_stuff))
+		if(H.has_penis())
+			genitals_to_add += H.getorganslot("penis")
+		if(H.has_vagina())
+			genitals_to_add += H.getorganslot("vagina")
+	if(H.is_chest_exposed(worn_stuff))
+		if(H.has_breasts())
+			genitals_to_add += H.getorganslot("breasts")
 	var/image/I
 	//start applying overlays
 	for(var/layer in relevent_layers)
@@ -230,8 +242,9 @@
 					else
 						I.color = "#[H.dna.features["mcolor3"]]"
 			standing += I
-		H.overlays_standing[layer] = standing.Copy()
-		standing = list()
+		if(LAZYLEN(standing))
+			H.overlays_standing[layer] = standing.Copy()
+			standing = list()
 
 	H.apply_overlay(GENITALS_BEHIND_LAYER)
 	H.apply_overlay(GENITALS_ADJ_LAYER)

@@ -1,13 +1,20 @@
-##/tg/station v1.0.1
+##Citadel Station 13 <BR>
+Based and maintained from /tg/station.<BR>
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
+[![Build Status](https://api.travis-ci.org/Citadel-Station-13/Citadel-Station-13.png)](https://travis-ci.org/Citadel-Station-13/Citadel-Station-13) [![Krihelimeter](http://www.krihelinator.xyz/badge/Citadel-Station-13/Citadel-Station-13)](http://www.krihelinator.xyz)
 
 
+**Upstream Information** <BR>
 **Website:** http://www.tgstation13.org <BR>
 **Code:** https://github.com/tgstation/tgstation <BR>
 **Wiki** http://tgstation13.org/wiki/Main_Page <BR>
 **IRC:** irc://irc.rizon.net/coderbus or if you dont have an IRC client, you can click  [here](https://kiwiirc.com/client/irc.rizon.net:6667/?&theme=cli#coderbus).<BR>
 
+**Citadel Station Information** <BR>
+**Forums:** http://citadel-station.net/forum/ <BR>
+**Ban Appeals:** http://citadel-station.net/forum/forumdisplay.php?fid=8 <BR>
+**Code:** https://github.com/Citadel-Station-13/Citadel-Station-13 <BR>
+**Discord:**  [Here](https://discord.gg/3gJ9pnM). <BR>
 
 ##DOWNLOADING
 
@@ -62,7 +69,8 @@ config/admin_ranks.txt
 The format is
 
 ```
-byondkey = Rank
+byondkey = Rank 
+((i.e. spessmans = Host ))
 ```
 
 where the admin rank must be properly capitalised.
@@ -86,19 +94,18 @@ the new version.
 
 ##MAPS
 
-/tg/station currently comes equipped with seven maps.
+Citadel Station maintains their own map, but frequently uses /tg/station's currently maintained maps as well.
 
 * [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
-* [BirdStation](https://tgstation13.org/wiki/BirdStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
 * [PubbyStation](https://tgstation13.org/wiki/PubbyStation)
 
 
-All maps have their own code file that is in the base of the _maps directory. Instead of loading the map directly we instead use a code file to include the map and then include any other code changes that are needed for it. Follow this guideline when adding your own map, to your fork, for easy compatibility.
+All maps have their own code file that is in the base of the _maps directory. Maps are loaded dynamically when the game starts. Follow this guideline when adding your own map, to your fork, for easy compatibility.
 
-If you want to load a different map, just open the corresponding map's code file in Dream Maker, make sure all of the other map code files are unticked in the file tree, in the left side of the screen, and then make sure the map code file you want is ticked.
+The map that will be loaded for the upcoming round is determined by reading data/next_map.json, which is a copy of the json files found in the _maps tree. If this file does not exist, the default map from config/maps.txt will be loaded. Failing that, tgstation2 will be loaded. If you want to set a specific map to load next round you can use the Change Map verb in game before restarting the server or copy a json from _maps to data/next_map.json before starting the server. Also, for debugging purposes, ticking a corresponding map's code file in Dream Maker will force that map to load every round.
 
 If you are hosting a server, and want randomly picked maps to be played each round, you can enable map rotation in [config.txt](config/config.txt) and then set the maps to be picked in the [maps.txt](config/maps.txt) file.
 

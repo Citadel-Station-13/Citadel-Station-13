@@ -1,5 +1,6 @@
-//THIS FILE CONTAINS CONSTANTS, PROCS, DEFINES, AND OTHER THINGS//
-////////////////////////////////////////////////////////////////////
+//THIS FILE CONTAINS CONSTANTS, PROCS, AND OTHER THINGS//
+/////////////////////////////////////////////////////////
+
 /mob/proc/setClickCooldown(var/timeout)
 	next_move = max(world.time + timeout, next_move)
 
@@ -76,7 +77,10 @@ var/global/dlooc_allowed = 1
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavor text.", "Flavor text", null)  as text), 1)
+	var/new_flavor = (input(src, "Enter your new flavor text:", "Flavor text", null) as text|null)
+	if(new_flavor)
+		flavor_text = sanitize(new_flavor)
+		to_chat(src, "Your flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()
@@ -113,8 +117,8 @@ var/global/dlooc_allowed = 1
 	set name="Toggle Dead LOOC"
 	dlooc_allowed = !( dlooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
+	log_admin("[key_name(usr)] toggled Dead LOOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead LOOC.")
 	feedback_add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -154,14 +158,75 @@ var/global/dlooc_allowed = 1
 
 /mob/living/carbon/human/proc/is_bodypart_exposed(bodypart)
 
-/mob/living/carbon/proc/is_groin_exposed()
-	for(var/obj/item/I in get_equipped_items())
+/mob/living/carbon/proc/is_groin_exposed(var/list/L)
+	if(!L)
+		L = get_equipped_items()
+	for(var/obj/item/I in L)
 		if(I.body_parts_covered & GROIN)
 			return 0
 	return 1
 
-/mob/living/carbon/proc/is_chest_exposed()
-	for(var/obj/item/I in get_equipped_items())
+/mob/living/carbon/proc/is_chest_exposed(var/list/L)
+	if(!L)
+		L = get_equipped_items()
+	for(var/obj/item/I in L)
 		if(I.body_parts_covered & CHEST)
 			return 0
 	return 1
+
+////////////////////////
+//DANGER | DEBUG PROCS//
+////////////////////////
+
+/client/proc/give_humans_genitals()
+	set name = "Mass Give Genitals"
+	set category = "Dangerous"
+	set desc = "Gives every human mob genitals for testing purposes. WARNING: NOT FOR LIVE SERVER USAGE!!"
+
+	log_admin("[src] gave everyone genitals.")
+	message_admins("[src] gave everyone genitals.")
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(H.gender == MALE)
+			H.give_penis()
+			H.give_balls()
+		else
+			H.give_vagina()
+			H.give_womb()
+			H.give_breasts()
+
+/client/proc/test_mammal_overlays()
+	set name = "Mass Give Mammalitus"
+	set category = "Dangerous"
+	set desc = "Turns every human into a mammal with tails, ears, etc. WARNING: NOT FOR LIVE SERVER USAGE!!"
+
+	log_admin("[src] turned everyone into mammals.")
+	message_admins("[src] turned everyone into mammals.")
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(!H.dna)
+			continue
+		var/datum/dna/hdna = H.dna
+		H.set_species(/datum/species/mammal)
+		var/subspec = pick("Fox","Wolf","Fennec")
+		switch(subspec)
+			if("Wolf")
+				hdna.features["mam_tail"] = "Wolf"
+				hdna.features["mam_ears"] = "Wolf"
+				hdna.features["snout"] = "Wolf"
+				hdna.features["mam_body_markings"] = "Wolf"
+				hdna.features["mcolor"] = "555"
+				hdna.features["mcolor2"] = "999"
+				hdna.features["mcolor3"] = "999"
+			if("Fox")
+				hdna.features["mam_tail"] = "Fox"
+				hdna.features["mam_ears"] = "Fox"
+				hdna.features["snout"] = "Fox, Long"
+				hdna.features["mam_body_markings"] = "Fox"
+				hdna.features["mcolor"] = "f60"
+				hdna.features["mcolor2"] = "fff"
+				hdna.features["mcolor3"] = "fff"
+			if("Fennec")
+				hdna.features["mam_tail"] = "Fennec"
+				hdna.features["mam_ears"] = "Fennec"
+				hdna.features["snout"] = "Fox, Short"
+				hdna.features["mam_body_markings"] = "Fox"
+		H.regenerate_icons()

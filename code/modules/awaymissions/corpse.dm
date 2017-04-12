@@ -25,10 +25,10 @@
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
-		user << "<span class='warning'>This spawner is out of charges!</span>"
+		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
 		return
 	if(jobban_isbanned(user, "lavaland"))
-		user << "<span class='warning'>You are jobanned!</span>"
+		to_chat(user, "<span class='warning'>You are jobanned!</span>")
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -67,17 +67,17 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
-	equip(M)
 
 	if(ckey)
 		M.ckey = ckey
-		M << "[flavour_text]"
+		to_chat(M, "[flavour_text]")
 		var/datum/mind/MM = M.mind
 		if(objectives)
 			for(var/objective in objectives)
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
+	equip(M)
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -115,6 +115,13 @@
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
 		H.set_species(mob_species)
+	else
+		//If we're a human, we still need to handle our snowflake code anyway I guess.
+		if (NOAROUSAL in H.dna.species.species_traits)
+			H.canbearoused = FALSE
+		else
+			if(H.client)
+				H.canbearoused = H.client.prefs.arousable
 	if(husk)
 		H.Drain()
 

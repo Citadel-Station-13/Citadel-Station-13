@@ -76,3 +76,10 @@
 
 #define TICKET_INACTIVE		"No"
 #define TICKET_ACTIVE		"Yes"
+
+//Individual logging define
+#define INDIVIDUAL_LOOC_LOG "LOOC log"
+
+#define ADMIN_MARKREAD(client) "(<a href='?_src_=holder;markedread=\ref[client]'>MARK READ</a>)"//marks an adminhelp as read and under investigation
+#define ADMIN_IC(client) "(<a href='?_src_=holder;icissue=\ref[client]'>IC</a>)"//marks and adminhelp as an IC issue
+#define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer

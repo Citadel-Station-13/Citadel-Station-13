@@ -1,6 +1,6 @@
-var/datum/subsystem/vote/SSvote
+var/datum/controller/subsystem/vote/SSvote
 
-/datum/subsystem/vote
+/datum/controller/subsystem/vote
 	name = "Vote"
 	wait = 10
 
@@ -16,10 +16,10 @@ var/datum/subsystem/vote/SSvote
 	var/list/voting = list()
 	var/list/generated_actions = list()
 
-/datum/subsystem/vote/New()
+/datum/controller/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
 
-/datum/subsystem/vote/fire()	//called by master_controller
+/datum/controller/subsystem/vote/fire()	//called by master_controller
 	if(mode)
 		time_remaining = round((started_time + config.vote_period - world.time)/10)
 
@@ -37,7 +37,7 @@ var/datum/subsystem/vote/SSvote
 				client_popup.open(0)
 
 
-/datum/subsystem/vote/proc/reset()
+/datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	time_remaining = 0
 	mode = null
@@ -47,7 +47,7 @@ var/datum/subsystem/vote/SSvote
 	voting.Cut()
 	remove_action_buttons()
 
-/datum/subsystem/vote/proc/get_result()
+/datum/controller/subsystem/vote/proc/get_result()
 	//get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
@@ -82,7 +82,7 @@ var/datum/subsystem/vote/SSvote
 				. += option
 	return .
 
-/datum/subsystem/vote/proc/announce_result()
+/datum/controller/subsystem/vote/proc/announce_result()
 	var/list/winners = get_result()
 	var/text
 	if(winners.len > 0)
@@ -108,10 +108,10 @@ var/datum/subsystem/vote/SSvote
 		text += "<b>Vote Result: Inconclusive - No Votes!</b>"
 	log_vote(text)
 	remove_action_buttons()
-	world << "\n<font color='purple'>[text]</font>"
+	to_chat(world, "\n<font color='purple'>[text]</font>")
 	return .
 
-/datum/subsystem/vote/proc/result()
+/datum/controller/subsystem/vote/proc/result()
 	. = announce_result()
 	var/restart = 0
 	if(.)
@@ -133,7 +133,7 @@ var/datum/subsystem/vote/SSvote
 				else if(master_mode != .)
 					world.save_mode(.)
 					master_mode = .
-					world << "<span class='adminnotice'><b>The mode is now: [master_mode]</b></span>"
+					to_chat(world,"<span class='adminnotice'><b>The mode is now: [master_mode]</b></span>")
 
 	if(restart)
 		var/active_admins = 0
@@ -144,12 +144,12 @@ var/datum/subsystem/vote/SSvote
 		if(!active_admins)
 			world.Reboot("Restart vote successful.", "end_error", "restart vote")
 		else
-			world << "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>"
+			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
 			message_admins("A restart vote has passed, but there are active admins on with +server, so it has been canceled. If you wish, you may restart the server.")
 
 	return .
 
-/datum/subsystem/vote/proc/submit_vote(vote)
+/datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
 		if(config.vote_no_dead && usr.stat == DEAD && !usr.client.holder)
 			return 0
@@ -160,12 +160,12 @@ var/datum/subsystem/vote/SSvote
 				return vote
 	return 0
 
-/datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + config.vote_delay)
 			if(mode)
-				usr << "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>"
+				to_chat(usr, "<span class='warning'>There is already a vote in progress! please wait for it to finish.</span>")
 				return 0
 
 			var/admin = FALSE
@@ -174,7 +174,7 @@ var/datum/subsystem/vote/SSvote
 				admin = TRUE
 
 			if(next_allowed_time > world.time && !admin)
-				usr << "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>"
+				to_chat(usr, "<span class='warning'>A vote was initiated recently, you must wait roughly [(next_allowed_time-world.time)/10] seconds before a new vote can be started!</span>")
 				return 0
 
 		reset()
@@ -184,8 +184,7 @@ var/datum/subsystem/vote/SSvote
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("roundtype")
-				choices.Add("secret")
-				choices.Add("extended")
+				choices.Add("secret","extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -204,7 +203,7 @@ var/datum/subsystem/vote/SSvote
 		if(mode == "custom")
 			text += "\n[question]"
 		log_vote(text)
-		world << "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>"
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 		for(var/c in clients)
 			var/client/C = c
@@ -216,7 +215,7 @@ var/datum/subsystem/vote/SSvote
 		return 1
 	return 0
 
-/datum/subsystem/vote/proc/interface(client/C)
+/datum/controller/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
 	var/admin = 0
@@ -268,7 +267,7 @@ var/datum/subsystem/vote/SSvote
 	return .
 
 
-/datum/subsystem/vote/Topic(href,href_list[],hsrc)
+/datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)
 		return	//not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
@@ -298,7 +297,7 @@ var/datum/subsystem/vote/SSvote
 			submit_vote(round(text2num(href_list["vote"])))
 	usr.vote()
 
-/datum/subsystem/vote/proc/remove_action_buttons()
+/datum/controller/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
 		if(!QDELETED(V))

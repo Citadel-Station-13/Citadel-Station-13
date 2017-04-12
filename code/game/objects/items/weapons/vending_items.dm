@@ -25,12 +25,12 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
+		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
 	else
-		user << "It's empty!"
+		to_chat(user, "It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
-//^ Your ideas suck. Why not just make it automatic?
+
 /obj/item/weapon/vending_refill/boozeomat
 	machine_name = "Booze-O-Mat"
 	icon_state = "refill_booze"
@@ -51,8 +51,8 @@
 /obj/item/weapon/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
-	charges = list(20, 2, 1)//of 60 standard, 6 contraband, 1 premium
-	init_charges = list(20, 2, 1)
+	charges = list(30, 4, 1)//of 90 standard, 12 contraband, 1 premium
+	init_charges = list(30, 4, 1)
 
 /obj/item/weapon/vending_refill/cigarette
 	machine_name = "ShadyCigs Deluxe"
@@ -63,29 +63,11 @@
 /obj/item/weapon/vending_refill/autodrobe
 	machine_name = "AutoDrobe"
 	icon_state = "refill_costume"
-	charges = list(54, 23, 3)// of 94 standard, 6 contraband, 9 premium
-	init_charges = list(54, 23, 3)
+	charges = list(33, 2, 3)// of 97 standard, 6 contraband, 9 premium
+	init_charges = list(33, 2, 3)
 
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(42, 13, 4)// of 109 standard, 12 contraband, 10 premium(?) (someone fucked this number up, who wants to recount?)
-	init_charges = list(42, 13, 4)
-
-/obj/item/weapon/vending_refill/kink
-	machine_name 	= "KinkMate"
-	icon_state 		= "refill_kink"
-	charges 		= list(8, 5, 0)// of 20 standard, 12 contraband, 0 premium
-	init_charges 	= list(8, 5, 0)
-
-/obj/item/weapon/vending_refill/nazi
-	machine_name 	= "nazivend"
-	icon_state 		= "refill_nazi"
-	charges 		= list(33, 13, 0)
-	init_charges 	= list(33, 13, 0)
-
-/obj/item/weapon/vending_refill/soviet
-	machine_name 	= "sovietvend"
-	icon_state 		= "refill_soviet"
-	charges 		= list(47, 7, 0)
-	init_charges 	= list(47, 7, 0)
+	charges = list(39, 7, 4)// of 115 standard, 18 contraband, 10 premium(?)
+	init_charges = list(39, 7, 4)

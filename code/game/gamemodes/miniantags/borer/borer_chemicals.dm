@@ -4,14 +4,6 @@
 	var/chemuse = 30
 	var/quantity = 10
 
-/datum/borer_chem/aphrodisiac
-	chemname = "aphro"
-	chem_desc = "Increases arousal in host, if they're not in the mood yet."
-	
-/datum/borer_chem/anaphrodisiac
-	chemname = "anaphro"
-	chem_desc = "Decreases arousal in host, if they're getting a bit too frisky."
-	
 /datum/borer_chem/epinephrine
 	chemname = "epinephrine"
 	chem_desc = "Stabilizes critical condition and slowly restores oxygen damage. If overdosed, it will deal toxin and oxyloss damage."
