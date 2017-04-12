@@ -398,7 +398,21 @@
 	icon_state = "shepherd"
 	extra = 1
 	extra2 = 1
+	
+// Eevee
+/datum/sprite_accessory/mam_tails/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	extra = 1
+	extra_color_src = MUTCOLORS2
 
+/datum/sprite_accessory/mam_ears/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+
+/datum/sprite_accessory/mam_tails_animated/eevee
+	name = "Eevee"
+	icon_state = "eevee"
 
 /******************************************
 ************ Body Markings ****************
@@ -502,6 +516,11 @@
 	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
+	
+/datum/sprite_accessory/mam_body_markings/eevee
+	name = "Eevee"
+	icon_state = "eevee"
+	color_src = MUTCOLORS3
 
 /******************************************
 ************ Taur Bodies ******************
@@ -570,6 +589,10 @@
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
 	icon_state = "drider"
+	
+/datum/sprite_accessory/taur/eevee
+	name = "Eevee"
+	icon_state = "eevee"
 
 /******************************************
 *************** Ayyliums ******************
