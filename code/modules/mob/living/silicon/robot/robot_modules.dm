@@ -229,8 +229,17 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/weapon/reagent_containers/borghypo/epi,
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/weldingtool/largetank/cyborg,
+		/obj/item/weapon/wrench/cyborg,
 		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/extinguisher,
+		/obj/item/weapon/pickaxe,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)

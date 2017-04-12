@@ -57,8 +57,6 @@
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
-	if(ismob(loc))
-		return ONE_ATMOSPHERE //hopefully won't murderficate people in your guts by going for a spacewalk
 	else
 		return pressure
 
@@ -141,8 +139,6 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
-	if(ismob(loc))
-		thermal_protection = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT //because lazy and insulated by being inside someone
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -251,9 +247,6 @@
 
 	if(dna.check_mutation(COLDRES))
 		return 1 //Fully protected from the cold.
-
-	if(ismob(loc))
-		return 1 //because lazy and being inside somemone insulates you from space
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1

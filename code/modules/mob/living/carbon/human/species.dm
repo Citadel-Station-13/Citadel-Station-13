@@ -350,7 +350,7 @@
 			else
 				standing	+= image("icon"=undershirt.icon, "icon_state"="[undershirt.icon_state]", "layer"=-BODY_LAYER)
 
-	if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in GLOB.species_traits))
+	if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
 		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 		if(socks)
 			standing	+= image("icon"=socks.icon, "icon_state"="[socks.icon_state]", "layer"=-BODY_LAYER)
