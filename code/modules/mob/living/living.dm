@@ -154,15 +154,9 @@
 				M.pass_flags &= ~PASSMOB
 
 			now_pushing = 0
-			// In case of micros, we don't swap positions; instead occupying the same square!
-			if (handle_micro_bump_helping(src))
-				return
 			return 1
 
 	//okay, so we didn't switch. but should we push?
-	// Handle grabbing, stomping, and such of micros!
-	if(handle_micro_bump_other(M))
-		return
 	//not if he's not CANPUSH of course
 	if(!(M.status_flags & CANPUSH))
 		return 1
