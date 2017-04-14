@@ -347,6 +347,8 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	hook_vr("client_new",list(src))
+
 //////////////
 //DISCONNECT//
 //////////////
