@@ -19,8 +19,7 @@
 	response_harm = "kicks"
 	gold_core_spawnable = 2
 	devourable = TRUE
-	
-var/mob/living/simple_animal/mouse/movement_target
+	var/mob/living/simple_animal/mouse/movement_target
 	var/turns_since_scan = 0
 
 /mob/living/simple_animal/pet/fox/Life()
