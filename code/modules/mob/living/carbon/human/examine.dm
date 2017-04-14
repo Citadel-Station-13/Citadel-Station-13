@@ -142,7 +142,7 @@
 			if(!key)
 				var/foundghost = 0
 				if(mind)
-					for(var/mob/dead/observer/G in player_list)
+					for(var/mob/dead/observer/G in GLOB.player_list)
 						if(G.mind == mind)
 							foundghost = 1
 							if (G.can_reenter_corpse == 0)
@@ -257,9 +257,6 @@
 				msg += "[t_He] looks like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
-	for (var/I in src.vore_organs)
-		var/datum/belly/B = vore_organs[I]
-		msg += B.get_examine_msg()
 
 	msg += "</span>"
 
@@ -292,7 +289,7 @@
 		if(istype(H.glasses, /obj/item/clothing/glasses/hud) || CIH)
 			var/perpname = get_face_name(get_id_name(""))
 			if(perpname)
-				var/datum/data/record/R = find_record("name", perpname, data_core.general)
+				var/datum/data/record/R = find_record("name", perpname, GLOB.data_core.general)
 				if(R)
 					msg += "<span class='deptradio'>Rank:</span> [R.fields["rank"]]<br>"
 					msg += "<a href='?src=\ref[src];hud=1;photo_front=1'>\[Front photo\]</a> "
@@ -310,7 +307,7 @@
 						msg += "<a href='?src=\ref[src];hud=m;p_stat=1'>\[[health_r]\]</a>"
 						health_r = R.fields["m_stat"]
 						msg += "<a href='?src=\ref[src];hud=m;m_stat=1'>\[[health_r]\]</a><br>"
-					R = find_record("name", perpname, data_core.medical)
+					R = find_record("name", perpname, GLOB.data_core.medical)
 					if(R)
 						msg += "<a href='?src=\ref[src];hud=m;evaluation=1'>\[Medical evaluation\]</a><br>"
 
@@ -320,7 +317,7 @@
 					//|| !user.canmove || user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 						var/criminal = "None"
 
-						R = find_record("name", perpname, data_core.security)
+						R = find_record("name", perpname, GLOB.data_core.security)
 						if(R)
 							criminal = R.fields["criminal"]
 

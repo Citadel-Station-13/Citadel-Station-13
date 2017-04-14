@@ -226,11 +226,11 @@
 			size = G.size
 			switch(G.type)
 				if(/obj/item/organ/genital/penis)
-					S = cock_shapes_list[G.shape]
+					S = GLOB.cock_shapes_list[G.shape]
 				if(/obj/item/organ/genital/vagina)
-					S = vagina_shapes_list[G.shape]
+					S = GLOB.vagina_shapes_list[G.shape]
 				if(/obj/item/organ/genital/breasts)
-					S = breasts_shapes_list[G.shape]
+					S = GLOB.breasts_shapes_list[G.shape]
 
 			if(!S || S.icon_state == "none")
 				continue

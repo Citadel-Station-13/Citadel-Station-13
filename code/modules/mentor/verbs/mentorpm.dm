@@ -23,7 +23,7 @@
 		var/mob/M = whom
 		C = M.client
 	else if(istext(whom))
-		C = directory[whom]
+		C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
@@ -66,9 +66,9 @@
 	//we don't use message_Mentors here because the sender/receiver might get it too
 	var/show_char_sender = !check_mentor_other(src) && config.mentors_mobname_only
 	var/show_char_recip = !check_mentor_other(C) && config.mentors_mobname_only
-	for(var/client/X in mentors)
+	for(var/client/X in GLOB.mentors)
 		if(X.key!=key && X.key!=C.key)	//check client/X is an Mentor and isn't the sender or recipient
 			to_chat(X, "<B><font color='green'>Mentor PM: [key_name_mentor(src, X, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, X, 0, 0, show_char_recip)]:</B> \blue [msg]</font>") //inform X
-	for(var/client/A in admins)
+	for(var/client/A in GLOB.admins)
 		if(A.key!=key && A.key!=C.key)	//check client/A is an Mentor and isn't the sender or recipient
 			to_chat(A, "<B><font color='green'>Mentor PM: [key_name_mentor(src, A, 0, 0, show_char_sender)]-&gt;[key_name_mentor(C, A, 0, 0, show_char_recip)]:</B> \blue [msg]</font>") //inform A

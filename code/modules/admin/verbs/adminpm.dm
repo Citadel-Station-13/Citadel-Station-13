@@ -2,7 +2,7 @@
 
 
 //allows right clicking mobs to send an admin PM to their client, forwards the selected mob's client to cmd_admin_pm
-/client/proc/cmd_admin_pm_context(mob/M in mob_list)
+/client/proc/cmd_admin_pm_context(mob/M in GLOB.mob_list)
 	set category = null
 	set name = "Admin PM Mob"
 	if(!holder)
@@ -11,7 +11,7 @@
 	if( !ismob(M) || !M.client )
 		return
 	cmd_admin_pm(M.client,null)
-	feedback_add_details("admin_verb","APMM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Admin PM Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 //shows a list of clients we could send PMs to, then forwards our choice to cmd_admin_pm
 /client/proc/cmd_admin_pm_panel()
@@ -33,7 +33,7 @@
 			targets["(No Mob) - [T]"] = T
 	var/target = input(src,"To whom shall we send a message?","Admin PM",null) as null|anything in sortList(targets)
 	cmd_admin_pm(targets[target],null)
-	feedback_add_details("admin_verb","APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	feedback_add_details("admin_verb","Admin PM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
@@ -43,7 +43,7 @@
 	if(istext(whom))
 		if(cmptext(copytext(whom,1,2),"@"))
 			whom = findStealthKey(whom)
-		C = directory[whom]
+		C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(!C)
@@ -51,8 +51,9 @@
 			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
-	if (!msg)
+	var/list/replace_chars = list("\n"=" ","\t"=" ")
+	var/msg = copytext(sanitize((input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null), replace_chars), 1, MAX_MESSAGE_LEN)
+	if (!msg|| msg == " ")//if they hit enter and didn't hit cancel, don't send it
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s admin help.")
 		return
 	cmd_admin_pm(whom, msg)
@@ -72,14 +73,14 @@
 		if(whom == "IRCKEY")
 			irc = 1
 		else
-			C = directory[whom]
+			C = GLOB.directory[whom]
 	else if(istype(whom,/client))
 		C = whom
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator") as text|null
+			msg = input(src,"Message:", "Private message to Administrator") as message|null
 
 		if(!msg)
 			return
@@ -98,7 +99,7 @@
 
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+			msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
 
 			if(!msg)
 				return
@@ -163,7 +164,7 @@
 					spawn()	//so we don't hold the caller proc up
 						var/sender = src
 						var/sendername = key
-						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
+						var/reply = input(C, msg,"Admin PM from-[sendername]", "") as message|null		//show message and await a reply
 						if(C && reply)
 							if(sender)
 								C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
@@ -177,13 +178,13 @@
 
 	if(irc)
 		log_admin_private("PM: [key_name(src)]->IRC: [rawmsg]")
-		for(var/client/X in admins)
+		for(var/client/X in GLOB.admins)
 			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;IRC:</B> \blue [keywordparsedmsg]</font>" )
 	else
 		window_flash(C, ignorepref = TRUE)
 		log_admin_private("PM: [key_name(src)]->[key_name(C)]: [rawmsg]")
 		//we don't use message_admins here because the sender/receiver might get it too
-		for(var/client/X in admins)
+		for(var/client/X in GLOB.admins)
 			if(X.key!=key && X.key!=C.key)	//check client/X is an admin and isn't the sender or recipient
 				to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [keywordparsedmsg]</font>" )
 
@@ -192,7 +193,7 @@
 
 /proc/IrcPm(target,msg,sender)
 
-	var/client/C = directory[target]
+	var/client/C = GLOB.directory[target]
 
 	var/static/stealthkey
 	var/adminname = config.showircname ? "[sender](IRC)" : "Administrator"
@@ -229,12 +230,12 @@
 	var/i = 0
 	while(i == 0)
 		i = 1
-		for(var/P in stealthminID)
-			if(num == stealthminID[P])
+		for(var/P in GLOB.stealthminID)
+			if(num == GLOB.stealthminID[P])
 				num++
 				i = 0
 	var/stealth = "@[num2text(num)]"
-	stealthminID["IRCKEY"] = stealth
+	GLOB.stealthminID["IRCKEY"] = stealth
 	return	stealth
 
 #undef IRCREPLYCOUNT

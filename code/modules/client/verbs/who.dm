@@ -2,25 +2,25 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = ""
+	var/msg = "<b>Current Population:</b>\n"
 
 	var/list/Lines = list()
 
-	if(length(admins) > 0)
+	if(length(GLOB.admins) > 0)
 		Lines += "<b>Admins:</b>"
-		for(var/client/C in sortList(admins))
+		for(var/client/C in sortList(GLOB.admins))
 			if(!C.holder.fakekey)
 				Lines += "\t <font color='#FF0000'>[C.key]</font>[show_info(C)]"
 
-	if(length(mentors) > 0)
+	if(length(GLOB.mentors) > 0)
 		Lines += "<b>Mentors:</b>"
-		for(var/client/C in sortList(clients))
-			var/mentor = mentor_datums[C.ckey]
+		for(var/client/C in sortList(GLOB.clients))
+			var/mentor = GLOB.mentor_datums[C.ckey]
 			if(mentor)
 				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)]"
 
 	Lines += "<b>Players:</b>"
-	for(var/client/C in sortList(clients))
+	for(var/client/C in sortList(GLOB.clients))
 		if(!check_mentor_other(C) || (C.holder && C.holder.fakekey))
 			Lines += "\t [C.key][show_info(C)]"
 
@@ -68,7 +68,7 @@
 
 	var/msg = "<b>Current Admins:</b>\n"
 	if(holder)
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			msg += "\t[C] is a [C.holder.rank]"
 
 			if(C.holder.fakekey)
@@ -85,7 +85,7 @@
 				msg += " (AFK)"
 			msg += "\n"
 	else
-		for(var/client/C in admins)
+		for(var/client/C in GLOB.admins)
 			if(C.is_afk())
 				continue //Don't show afk admins to adminwho
 			if(!C.holder.fakekey)
@@ -97,7 +97,7 @@
 	set category = "Mentor"
 	set name = "Mentorwho"
 	var/msg = "<b>Current Mentors:</b>\n"
-	for(var/client/C in mentors)
+	for(var/client/C in GLOB.mentors)
 		var/suffix = ""
 		if(holder)
 			if(isobserver(C.mob))

@@ -28,7 +28,6 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-	devourable = 1
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
@@ -106,7 +105,6 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
-	devourable = 1
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -182,7 +180,6 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
-	devourable = 1
 
 /mob/living/simple_animal/chick/Initialize()
 	..()
@@ -202,9 +199,6 @@
 /mob/living/simple_animal/chick/holo/Life()
 	..()
 	amount_grown = 0
-
-var/const/MAX_CHICKENS = 50
-var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -240,7 +234,7 @@ var/global/chicken_count = 0
 	var/list/layMessage = list("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
-	devourable = 1
+	var/static/chicken_count = 0
 
 /mob/living/simple_animal/chicken/Initialize()
 	..()
@@ -251,11 +245,11 @@ var/global/chicken_count = 0
 	icon_dead = "[icon_prefix]_[body_color]_dead"
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
-	chicken_count += 1
+	++chicken_count
 
-/mob/living/simple_animal/chicken/death(gibbed)
-	..(gibbed)
-	chicken_count -= 1
+/mob/living/simple_animal/chicken/Destroy()
+	--chicken_count
+	return ..()
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user, params)
 	if(istype(O, food_type)) //feedin' dem chickens

@@ -36,7 +36,7 @@
 	if(canbearoused && dna)
 		var/datum/species/S
 		S = dna.species
-		if(S && SSmob.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
+		if(S && SSmobs.times_fired%36==2 && getArousalLoss() < max_arousal)//Totally stolen from breathing code. Do this every 36 ticks.
 			adjustArousalLoss(arousal_rate * S.arousal_gain_rate)
 			if(dna.features["exhibitionist"])
 				var/amt_nude = 0
@@ -256,8 +256,8 @@
 								finished = 1
 
 						else//not into a container
-							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(dick_nouns)].</span>", \
-								"<span class='userdanger'>You start jerking off your [pick(dick_nouns)].</span>", \
+							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(GLOB.dick_nouns)].</span>", \
+								"<span class='userdanger'>You start jerking off your [pick(GLOB.dick_nouns)].</span>", \
 										"<span class='userdanger'>You start masturbating.</span>")
 							if(do_after(src, mb_time, target = src))
 								if(total_cum > 5)
