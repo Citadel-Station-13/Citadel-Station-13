@@ -1326,7 +1326,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("breasts_shape")
 					var/new_shape
-					new_shape = input(user, "Breast Shape", "Character Preference") as null|anything in breasts_shapes_list
+					new_shape = input(user, "Breast Shape", "Character Preference") as null|anything in GLOB.breasts_shapes_list
 					if(new_shape)
 						features["breasts_shape"] = new_shape
 
@@ -1342,7 +1342,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 				if("vag_shape")
 					var/new_shape
-					new_shape = input(user, "Vagina Type", "Character Preference") as null|anything in vagina_shapes_list
+					new_shape = input(user, "Vagina Type", "Character Preference") as null|anything in GLOB.vagina_shapes_list
 					if(new_shape)
 						features["vag_shape"] = new_shape
 				if("vag_color")

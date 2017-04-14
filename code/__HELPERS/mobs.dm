@@ -71,7 +71,7 @@
 
 	if(!GLOB.cock_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
-  if(!GLOB.vagina_shapes_list.len)
+	if(!GLOB.vagina_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	if(!GLOB.breasts_shapes_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
@@ -114,7 +114,7 @@
 		"xenotail" 			= "None",
 		"exhibitionist" 	= FALSE,
 		"has_cock"			= FALSE,
-		"cock_shape"		= pick(cock_shapes_list),
+		"cock_shape"		= pick(GLOB.cock_shapes_list),
 		"cock_length"		= 6,
 		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
 		"cock_color"		= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
@@ -146,7 +146,7 @@
 		"breasts_shape"		= pick(GLOB.breasts_shapes_list),
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
-		"vag_shape"			= pick(vagina_shapes_list),
+		"vag_shape"			= pick(GLOB.vagina_shapes_list),
 		"vag_color"			= pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F"),
 		"vag_clits"			= 1,
 		"vag_clit_diam"		= 0.25,
