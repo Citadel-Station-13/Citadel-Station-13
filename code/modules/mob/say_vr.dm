@@ -98,7 +98,7 @@ proc/get_top_level_mob(var/mob/S)
 	user.log_message(message, INDIVIDUAL_EMOTE_LOG)
 	message = "<b>[user]</b> " + message
 
-	for(var/mob/M in dead_mob_list)
+	for(var/mob/M in GLOB.dead_mob_list)
 		if(!M.client || isnewplayer(M))
 			continue
 		var/T = get_turf(src)
@@ -118,7 +118,7 @@ proc/get_top_level_mob(var/mob/S)
 /mob/living/verb/subtle()
 	set name = "Subtle"
 	set category = "IC"
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	usr.emote("subtle")
