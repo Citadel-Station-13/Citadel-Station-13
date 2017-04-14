@@ -433,7 +433,7 @@
 /turf/closed/wall,
 /area/security/main)
 "abq" = (
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/security/hos)
 "abr" = (
 /obj/structure/grille,
@@ -6091,7 +6091,7 @@
 	name = "KEEP CLEAR: DOCKING AREA";
 	pixel_y = 0
 	},
-/turf/closed/wall,
+/turf/closed/wall/r_wall,
 /area/security/processing)
 "amL" = (
 /obj/structure/grille,
@@ -24205,8 +24205,9 @@
 /turf/closed/wall,
 /area/quartermaster/storage)
 "bcU" = (
-/obj/item/stack/tile/plasteel,
-/turf/open/space,
+/obj/structure/table/wood/poker,
+/obj/item/device/flashlight/lamp/green,
+/turf/open/floor/wood,
 /area/space/nearstation)
 "bcV" = (
 /obj/machinery/airalarm{
@@ -24653,8 +24654,9 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/quartermaster/storage)
 "bdV" = (
-/obj/item/stack/sheet/metal,
-/turf/open/floor/plating/airless,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
 /area/space/nearstation)
 "bdW" = (
 /obj/item/clothing/gloves/color/rainbow,
@@ -52011,8 +52013,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cjn" = (
-/obj/item/weapon/weldingtool,
-/turf/open/floor/plating/airless,
+/turf/open/floor/wood,
 /area/space/nearstation)
 "cjo" = (
 /obj/structure/closet/toolcloset,
@@ -60793,8 +60794,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "cCa" = (
-/obj/item/clothing/head/hardhat,
-/turf/open/floor/plating/airless,
+/obj/structure/chair/stool,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
 /area/space/nearstation)
 "cCb" = (
 /obj/structure/table,
@@ -64983,6 +64986,406 @@
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
+"cMP" = (
+/obj/machinery/camera/motion{
+	c_tag = "External Armory Camera";
+	dir = 1;
+	network = list("SS13")
+	},
+/turf/open/space/basic,
+/area/space)
+"cMQ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cMR" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance Bar";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cMS" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cMT" = (
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Incinerator Access";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cMU" = (
+/obj/machinery/vending/cola/random,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cMV" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cMW" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cMX" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/space/nearstation)
+"cMY" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cMZ" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNa" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNb" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/space/nearstation)
+"cNc" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNd" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNe" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNf" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/space/nearstation)
+"cNg" = (
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/space/nearstation)
+"cNh" = (
+/obj/structure/window/reinforced,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNi" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/closed/wall,
+/area/maintenance/aft)
+"cNj" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cNk" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/maintenance/aft)
+"cNl" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNm" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNn" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNo" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNp" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNq" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNr" = (
+/obj/structure/window/reinforced,
+/obj/machinery/computer/arcade,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNs" = (
+/obj/structure/table/wood/poker,
+/obj/item/weapon/storage/pill_bottle/dice,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNt" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNu" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNv" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNw" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNx" = (
+/obj/structure/window/reinforced,
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNy" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNz" = (
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNA" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/space/nearstation)
+"cNB" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNC" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cND" = (
+/obj/structure/chair/stool,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNE" = (
+/obj/structure/window/reinforced,
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNF" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cNG" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/space/nearstation)
+"cNH" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNI" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Maintenance Bar APC";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/space/nearstation)
+"cNJ" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNK" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/space/nearstation)
+"cNL" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNM" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNN" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNO" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cNP" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNQ" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNR" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNS" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNT" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNU" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/lootdrop/maintenance,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNV" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNW" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cNX" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNY" = (
+/obj/structure/chair/stool,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cNZ" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOa" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOb" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/space/nearstation)
+"cOc" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cOd" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/space/nearstation)
+"cOe" = (
+/obj/structure/table/wood,
+/obj/item/device/flashlight/lamp/green,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOf" = (
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOg" = (
+/obj/machinery/chem_dispenser/drinks/beer,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOh" = (
+/obj/structure/closet{
+	name = "Glasware Storage"
+	},
+/obj/item/weapon/storage/box/beakers,
+/obj/item/weapon/storage/box/drinkingglasses,
+/turf/open/floor/wood,
+/area/space/nearstation)
+"cOi" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cOj" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"cOk" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 
 (1,1,1) = {"
 aaa
@@ -86478,17 +86881,17 @@ bCq
 bCq
 bCq
 bCq
-bCq
-bCq
-bYy
-bCq
-bCq
-bLv
+cMT
 bCq
 bCq
 bCq
 bCq
-bLv
+cNF
+bCq
+bCq
+bCq
+bCq
+bCq
 cgH
 bLv
 aaa
@@ -86736,16 +87139,16 @@ bCq
 bHE
 bVG
 bHE
-bHE
-bHE
-bLv
-apQ
-aoV
-aoV
-aoV
-aoV
-aoV
-bLv
+bCq
+cNk
+bPS
+cNy
+cNG
+cjn
+cjn
+cNX
+cjn
+bCq
 cgH
 bLv
 aaa
@@ -86991,22 +87394,22 @@ bHE
 bHE
 bCq
 bHE
-bLv
-bLv
-bLv
-bLv
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-apQ
-bLv
+bCq
+bCq
+bCq
+bPS
+bSo
+cNz
+cjn
+bdV
+cjn
+cjn
+cOd
+bCq
 cgH
 bLv
 aaf
-cAj
+cjJ
 cjJ
 cjJ
 cjJ
@@ -87248,18 +87651,18 @@ bHE
 bHE
 bTz
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-aoV
-bLv
+bCq
+cMU
+cNb
+cNl
+cNs
+cNA
+cjn
+cjn
+cNP
+cNY
+cjn
+bCq
 cgH
 bLv
 aaa
@@ -87505,18 +87908,18 @@ bHE
 bSs
 bCq
 bHE
-bLv
-aoV
-aoV
-aoV
+bCq
+cMV
+cNc
+cNm
 bcU
-apQ
-aaH
+cNB
+cjn
 cCa
-aoV
-aoV
-aoV
-bLv
+cNQ
+cNZ
+cjn
+cOi
 cgH
 bLv
 aaa
@@ -87762,18 +88165,18 @@ bRh
 bSr
 bCq
 bHE
-bLv
-apQ
-apQ
-aoV
-aoV
-aaH
+cMQ
+cMW
+cNd
+cNn
+cNt
+cNC
 bdV
-aaH
-apQ
-apQ
-apQ
-bLv
+cNJ
+cNR
+cjn
+cjn
+cOj
 cgH
 bLv
 aaf
@@ -87933,11 +88336,11 @@ aaa
 aaa
 aaa
 aaa
-abc
-abc
-abc
+afA
+afA
+afA
 afu
-abc
+afA
 aaa
 aaa
 aaa
@@ -88019,18 +88422,18 @@ bCq
 bCq
 bCq
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
+cMR
+cMX
+cNe
+cNo
+cNu
 cjn
-bSu
-aaH
-aoV
-aoV
-aoV
-bLv
+cjn
+cNK
+cNS
+cOa
+cOe
+cOk
 cgH
 bLv
 aaa
@@ -88190,11 +88593,11 @@ aaa
 aaa
 aaa
 aaa
-abc
+afA
 aea
 aeH
 aft
-abc
+afA
 aaa
 aaa
 aaa
@@ -88276,18 +88679,18 @@ bLv
 aaa
 bLv
 bHE
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-aaH
-apQ
-aoV
-aoV
-aoV
-bLv
+cMS
+cMY
+cNf
+cNp
+cNv
+cjn
+cjn
+cNL
+cNT
+cOb
+cOf
+bCq
 cgH
 bLv
 aaa
@@ -88446,13 +88849,13 @@ abc
 abu
 abu
 abu
-abc
-abc
+afA
+afA
 aec
 aeJ
 afw
-abc
-abc
+afA
+afA
 aaf
 aaa
 aaf
@@ -88533,18 +88936,18 @@ bLv
 aaf
 bLv
 bUt
-bLv
-apQ
-apQ
-aoV
-aoV
-aoV
-aaH
-aoV
-aoV
-apQ
-apQ
-bLv
+bCq
+cMZ
+cNg
+cNq
+cNw
+cND
+cNH
+cNM
+cNU
+cjn
+cOg
+bCq
 cgH
 bLv
 aaf
@@ -88709,12 +89112,12 @@ aeb
 aeI
 afv
 agf
-abc
+afA
 aaf
 aaa
 aaa
-aiT
-aiT
+aiV
+aiV
 aiV
 akG
 cxJ
@@ -88790,17 +89193,17 @@ bCq
 aaa
 bLv
 bUs
-bLv
-aoV
-aoV
-aoV
-aoV
-aoV
-apQ
-aoV
-aoV
-aoV
-aoV
+bCq
+cNa
+cNh
+cNr
+cNx
+cNE
+cNI
+cNN
+cNV
+cjn
+cOh
 bCq
 cgH
 bCq
@@ -88966,17 +89369,17 @@ aee
 aeL
 afy
 agh
-abc
+afA
 aaf
 aaa
 aaf
-aiT
+aiV
 ajs
 akb
 akI
 akI
 amc
-aiT
+aiV
 ant
 akI
 aos
@@ -89049,14 +89452,14 @@ bTB
 bUv
 bES
 bES
+cNi
 bES
 bES
-bGp
-bGp
-bGp
-bGp
 bES
 bES
+cNO
+cNW
+cOc
 bES
 car
 cgH
@@ -89223,7 +89626,7 @@ aed
 aeK
 afx
 agg
-abc
+afA
 aaf
 aaa
 aaa
@@ -89306,11 +89709,11 @@ bTA
 bUu
 bVH
 bVH
+cNj
 bVH
 bVH
 bVH
-bVH
-bVH
+cem
 bVH
 bVH
 bVH
@@ -92057,9 +92460,9 @@ aiF
 agj
 aja
 ajG
-akQ
-agj
-agj
+amS
+aiX
+aiX
 amS
 anx
 anz
@@ -93085,9 +93488,9 @@ agn
 ajc
 ajI
 ako
-akQ
-agj
-agj
+amS
+aiX
+aiX
 amS
 any
 anz
@@ -94113,9 +94516,9 @@ aiL
 ajc
 ajI
 akq
-akQ
-agj
-agj
+amS
+aiX
+aiX
 amS
 anx
 anz
@@ -94354,7 +94757,7 @@ aaa
 aaf
 aaf
 aaT
-aaa
+cMP
 aaZ
 abI
 ack
@@ -94884,7 +95287,7 @@ aIF
 ajc
 ajI
 akp
-akQ
+amS
 alA
 amm
 amU
@@ -95638,7 +96041,7 @@ aaa
 aaf
 aaf
 aaa
-abp
+adR
 abP
 aco
 acO
@@ -95655,9 +96058,9 @@ adR
 aiQ
 ajI
 akt
-akQ
-agj
-agj
+amS
+aiX
+aiX
 aiX
 anB
 anz
@@ -96152,7 +96555,7 @@ aaa
 aaa
 aaf
 aaa
-abp
+adR
 abO
 acq
 acq
@@ -96666,7 +97069,7 @@ aaa
 aaa
 aaa
 aaf
-abp
+adR
 abR
 abP
 abP
@@ -96936,7 +97339,7 @@ agz
 ahb
 ahF
 clI
-abp
+adR
 ajh
 ajM
 akw
@@ -97193,7 +97596,7 @@ agB
 ahd
 ahI
 clS
-abp
+adR
 ajj
 ajP
 aky
@@ -97450,7 +97853,7 @@ afU
 ahc
 ahH
 aiq
-abp
+adR
 aji
 ajO
 akw
@@ -97707,7 +98110,7 @@ agC
 ahf
 ahK
 ait
-abp
+adR
 ajl
 ajR
 akw
@@ -97964,7 +98367,7 @@ afW
 ahe
 ahJ
 ais
-abp
+adR
 ajk
 ajQ
 akw
@@ -98221,7 +98624,7 @@ agE
 ahh
 ahM
 aiv
-abp
+adR
 aiY
 ajE
 ajH
@@ -98478,7 +98881,7 @@ afY
 ahg
 ahL
 aiu
-abp
+adR
 ajm
 ajS
 ajn
@@ -98735,7 +99138,7 @@ agG
 ahi
 ahN
 aix
-abp
+adR
 ajp
 ajU
 ajn
@@ -98988,11 +99391,11 @@ abo
 aeA
 afl
 aga
-abp
+adR
 ahj
-abp
+adR
 cAN
-abp
+adR
 ajo
 ajo
 ajo
@@ -99239,12 +99642,12 @@ aaa
 aaa
 aaa
 acw
-abp
-abp
 adR
-abp
+adR
+adR
+adR
 cxG
-abp
+adR
 adR
 ahl
 ahO
@@ -99502,7 +99905,7 @@ acU
 aeC
 afn
 agc
-abp
+adR
 ahk
 aoJ
 aib
@@ -99753,13 +100156,13 @@ aag
 aaa
 aaa
 aag
-abp
-abp
-abp
-abp
+adR
+adR
+adR
+adR
 afo
 abp
-abp
+adR
 ahn
 ahn
 aiA
