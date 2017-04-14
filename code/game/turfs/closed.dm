@@ -29,13 +29,22 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
-	icon = 'config/title_screens/images/title1.dmi'
+	icon = 'config/title_screens/images/blank.png'
 	icon_state = ""
 	layer = FLY_LAYER
 
 /turf/closed/indestructible/splashscreen/New()
-	SStitle.title_screen = src
+	SStitle.splash_turf = src
+	if(SStitle.icon)
+		icon = SStitle.icon
 	..()
+
+/turf/closed/indestructible/splashscreen/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		switch(var_name)
+			if("icon")
+				SStitle.icon = icon
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'

@@ -20,8 +20,6 @@ em						{font-style: normal;	font-weight: bold;}
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
-.mentoradmin			{color: #8A2BE2;	font-weight: bold;}
-.mentor					{color: #E236D8;	font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
@@ -41,6 +39,8 @@ em						{font-style: normal;	font-weight: bold;}
 .syndradio				{color: #6d3f40;}
 .centcomradio			{color: #686868;}
 .aiprivradio			{color: #ff00ff;}
+.redteamradio           {color: #ff0000;}
+.blueteamradio          {color: #0000ff;}
 
 .yell					{					font-weight: bold;}
 
@@ -146,7 +146,6 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
+.slime					{color: #00CED1;}
 
-.love					{color: #FF69Bf;}
-.lovebold				{color: #FF69Bf;	font-weight: bold;}
 </style>"}

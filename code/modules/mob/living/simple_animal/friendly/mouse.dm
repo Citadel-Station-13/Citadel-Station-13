@@ -24,7 +24,6 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = 2
 	var/chew_probability = 1
-	devourable = 1
 
 /mob/living/simple_animal/mouse/Initialize()
 	..()

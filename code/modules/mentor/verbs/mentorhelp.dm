@@ -18,11 +18,11 @@
 	var/admin_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[ADMIN_FULLMONTY(src.mob)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
-	for(var/client/X in mentors)
+	for(var/client/X in GLOB.mentors)
 		to_chat(X, 'sound/items/bikehorn.ogg')
 		to_chat(X, mentor_msg)
 
-	for(var/client/A in admins)
+	for(var/client/A in GLOB.admins)
 		to_chat(A, 'sound/items/bikehorn.ogg')
 		to_chat(A, admin_msg)
 
@@ -31,7 +31,7 @@
 
 /proc/get_mentor_counts()
 	. = list("total" = 0, "afk" = 0, "present" = 0)
-	for(var/client/X in mentors)
+	for(var/client/X in GLOB.mentors)
 		.["total"]++
 		if(X.is_afk())
 			.["afk"]++
@@ -58,7 +58,7 @@
 	else if(istext(whom))
 		key = whom
 		ckey = ckey(whom)
-		C = directory[ckey]
+		C = GLOB.directory[ckey]
 		if(C)
 			M = C.mob
 	else

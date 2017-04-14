@@ -1,4 +1,4 @@
-var/list/mentor_datums = list()
+GLOBAL_LIST(mentor_datums)
 
 /datum/mentors
 	var/client/owner	= null
@@ -8,28 +8,28 @@ var/list/mentor_datums = list()
 	if(!ckey)
 		del(src)
 		return
-	mentor_datums[ckey] = src
+	GLOB.mentor_datums[ckey] = src
 
 /datum/mentors/proc/associate(client/C)
 	if(istype(C))
 		owner = C
-		mentors |= C
+		GLOB.mentors |= C
 
 /datum/mentors/proc/disassociate()
 	if(owner)
-		mentors -= owner
+		GLOB.mentors -= owner
 		owner = null
 
 /client/proc/dementor()
-	var/mentor = mentor_datums[ckey]
-	mentor_datums -= ckey
+	var/mentor = GLOB.mentor_datums[ckey]
+	GLOB.mentor_datums -= ckey
 	qdel(mentor)
 
 	return 1
 
 /proc/check_mentor()
 	if(usr && usr.client)
-		var/mentor = mentor_datums[usr.client.ckey]
+		var/mentor = GLOB.mentor_datums[usr.client.ckey]
 		if(mentor || check_rights(R_ADMIN,0))
 			return 1
 
@@ -37,7 +37,7 @@ var/list/mentor_datums = list()
 
 /proc/check_mentor_other(var/client/C)
 	if(C)
-		var/mentor = mentor_datums[C.ckey]
+		var/mentor = GLOB.mentor_datums[C.ckey]
 		if(C.holder && C.holder.rank)
 			if(C.holder.rank.rights & R_ADMIN)
 				return 1

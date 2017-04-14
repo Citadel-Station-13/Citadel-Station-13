@@ -12,7 +12,7 @@
 	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
-	var/running_bob_animation = 0
+	var/running_bob_animation = FALSE
 
 	var/efficiency = 1
 	var/sleep_factor = 750
@@ -106,7 +106,7 @@
 			icon_state = "pod1"
 			var/up = 0 //used to see if we are going up or down, 1 is down, 2 is up
 			spawn(0) // Without this, the icon update will block. The new thread will die once the occupant leaves.
-				running_bob_animation = 1
+				running_bob_animation = TRUE
 				while(occupant)
 					overlays -= "lid1" //have to remove the overlays first, to force an update- remove cloning pod overlay
 					overlays -= pickle //remove mob overlay
@@ -134,7 +134,7 @@
 
 					sleep(7) //don't want to jiggle violently, just slowly bob
 					return
-				running_bob_animation = 0
+				running_bob_animation = FALSE
 		else
 			icon_state = "pod1"
 			overlays += "lid0" //have to remove the overlays first, to force an update- remove cloning pod overlay
@@ -160,7 +160,7 @@
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
 			radio.talk_into(src, "Patient fully restored", radio_channel)
 			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel)
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel,get_spans(), get_default_language())
 				open_machine()
 			return
 		else if(occupant.stat == DEAD) // We don't bother with dead people.
@@ -280,7 +280,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																	datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)

@@ -207,7 +207,7 @@
 		playsound(src.loc, I.usesound, 50, 1)
 		if(do_after(user, 30*I.toolspeed, target = src))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
+			new /obj/item/stack/sheet/mineral/wood(get_turf(src), 5)
 			qdel(src)
 
 	else if(istype(I, /obj/item/weapon/electronics/airlock))
@@ -238,15 +238,14 @@
 		return ..()
 
 //The captains display case requiring specops ID access is intentional.
-//Intentional why? Because of this, the captain has to SMASH his own display case to get his own gun. WHY? -ktccd
 //The lab cage and captains display case do not spawn with electronics, which is why req_access is needed.
 /obj/structure/displaycase/captain
 	alert = 1
 	start_showpiece_type = /obj/item/weapon/gun/energy/laser/captain
-	req_access = list(access_captain)
+	req_access = list(GLOB.access_captain)
 
 /obj/structure/displaycase/labcage
 	name = "lab cage"
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
-	req_access = list(access_rd)
+	req_access = list(GLOB.access_rd)

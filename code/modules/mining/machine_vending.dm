@@ -52,7 +52,6 @@
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
 		new /datum/data/mining_equipment("Survival Knife",		/obj/item/weapon/kitchen/knife/combat/survival,							350),
-		new /datum/data/mining_equipment("Survival Pen Economy Pack",/obj/item/weapon/storage/box/medipens/survival,							2000),
 		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			250),
 		new /datum/data/mining_equipment("Stimpack Economy Pack",/obj/item/weapon/storage/box/medipens/utility,							1000)
 		)
@@ -276,10 +275,10 @@
 /obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	if(istype(AM, /obj/item/weapon/card/id) && proximity)
 		var/obj/item/weapon/card/id/I = AM
-		I.access |=	access_mining
-		I.access |= access_mining_station
-		I.access |= access_mineral_storeroom
-		I.access |= access_cargo
+		I.access |=	GLOB.access_mining
+		I.access |= GLOB.access_mining_station
+		I.access |= GLOB.access_mineral_storeroom
+		I.access |= GLOB.access_cargo
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()

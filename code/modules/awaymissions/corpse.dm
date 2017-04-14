@@ -22,7 +22,7 @@
 	anchored = 1
 
 /obj/effect/mob_spawn/attack_ghost(mob/user)
-	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
+	if(SSticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
 		to_chat(user, "<span class='warning'>This spawner is out of charges!</span>")
@@ -38,13 +38,13 @@
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	..()
-	if(instant || (roundstart && (mapload || (ticker && ticker.current_state > GAME_STATE_SETTING_UP))))
+	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
 		create()
 	else
-		poi_list |= src
+		GLOB.poi_list |= src
 
 /obj/effect/mob_spawn/Destroy()
-	poi_list.Remove(src)
+	GLOB.poi_list.Remove(src)
 	. = ..()
 
 /obj/effect/mob_spawn/proc/special(mob/M)
@@ -67,6 +67,7 @@
 
 	M.adjustOxyLoss(oxy_damage)
 	M.adjustBruteLoss(brute_damage)
+	equip(M)
 
 	if(ckey)
 		M.ckey = ckey
@@ -77,7 +78,6 @@
 				MM.objectives += new/datum/objective(objective)
 		special(M)
 		MM.name = M.real_name
-	equip(M)
 	if(uses > 0)
 		uses--
 	if(!permanent && !uses)
@@ -115,13 +115,6 @@
 /obj/effect/mob_spawn/human/equip(mob/living/carbon/human/H)
 	if(mob_species)
 		H.set_species(mob_species)
-	else
-		//If we're a human, we still need to handle our snowflake code anyway I guess.
-		if (NOAROUSAL in H.dna.species.species_traits)
-			H.canbearoused = FALSE
-		else
-			if(H.client)
-				H.canbearoused = H.client.prefs.arousable
 	if(husk)
 		H.Drain()
 
@@ -265,7 +258,7 @@
 	back = /obj/item/weapon/storage/backpack
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 /obj/effect/mob_spawn/human/syndicatecommando
 	name = "Syndicate Commando"
@@ -279,7 +272,7 @@
 	pocket1 = /obj/item/weapon/tank/internals/emergency_oxygen
 	has_id = 1
 	id_job = "Operative"
-	id_access_list = list(access_syndicate)
+	id_access_list = list(GLOB.access_syndicate)
 
 ///////////Civilians//////////////////////
 
@@ -356,7 +349,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	has_id = 1
 	id_job = "Bartender"
-	id_access_list = list(access_bar)
+	id_access_list = list(GLOB.access_bar)
 
 /obj/effect/mob_spawn/human/bartender/alive
 	death = FALSE
@@ -393,7 +386,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses
 	has_id = 1
 	id_job = "Bridge Officer"
-	id_access_list = list(access_cent_captain)
+	id_access_list = list(GLOB.access_cent_captain)
 
 /obj/effect/mob_spawn/human/commander
 	name = "Commander"
@@ -408,7 +401,7 @@
 	pocket1 = /obj/item/weapon/lighter
 	has_id = 1
 	id_job = "Commander"
-	id_access_list = list(access_cent_captain)
+	id_access_list = list(GLOB.access_cent_captain)
 
 /obj/effect/mob_spawn/human/nanotrasensoldier
 	name = "Nanotrasen Private Security Officer"
@@ -421,7 +414,7 @@
 	back = /obj/item/weapon/storage/backpack/security
 	has_id = 1
 	id_job = "Private Security Force"
-	id_access_list = list(access_cent_specops)
+	id_access_list = list(GLOB.access_cent_specops)
 
 /obj/effect/mob_spawn/human/commander/alive
 	death = FALSE

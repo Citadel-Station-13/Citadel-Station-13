@@ -20,6 +20,7 @@
 
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
+	var/clean_on_move = FALSE
 
 	var/did_feedback = FALSE
 	var/feedback_key
@@ -217,7 +218,7 @@
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.notify_ai(2)
+	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
@@ -228,8 +229,17 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/weapon/reagent_containers/borghypo/epi,
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/weldingtool/largetank/cyborg,
+		/obj/item/weapon/wrench/cyborg,
 		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/extinguisher,
+		/obj/item/weapon/pickaxe,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
@@ -382,6 +392,7 @@
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
 	hat_offset = -5
+	clean_on_move = TRUE
 
 /obj/item/weapon/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"
