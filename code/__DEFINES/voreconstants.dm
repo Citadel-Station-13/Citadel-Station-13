@@ -9,11 +9,11 @@
 // Stance for hostile mobs to be in while devouring someone.
 #define HOSTILE_STANCE_EATING	99
 
+/* // removing sizeplay again
+GLOBAL_LIST_INIT(player_sizes_list, list("Macro" = SIZESCALE_HUGE, "Big" = SIZESCALE_BIG, "Normal" = SIZESCALE_NORMAL, "Small" = SIZESCALE_SMALL, "Tiny" = SIZESCALE_TINY))
+ // moved to sound.dm // Edited to make the new travis check go away
 
-var/global/list/player_sizes_list = list("Macro" = SIZESCALE_HUGE, "Big" = SIZESCALE_BIG, "Normal" = SIZESCALE_NORMAL, "Small" = SIZESCALE_SMALL, "Tiny" = SIZESCALE_TINY)
-/* // moved to sound.dm
-
-var/global/list/digestion_sounds = list(
+GLOBAL_LIST_INIT(digestion_sounds = list(
 		'sound/vore/digest1.ogg',
 		'sound/vore/digest2.ogg',
 		'sound/vore/digest3.ogg',
@@ -27,7 +27,7 @@ var/global/list/digestion_sounds = list(
 		'sound/vore/digest11.ogg',
 		'sound/vore/digest12.ogg')
 
-var/global/list/death_sounds = list(
+GLOBAL_LIST_INIT(death_sounds = list(
 		'sound/vore/death1.ogg',
 		'sound/vore/death2.ogg',
 		'sound/vore/death3.ogg',
@@ -39,7 +39,7 @@ var/global/list/death_sounds = list(
 		'sound/vore/death9.ogg',
 		'sound/vore/death10.ogg') */
 
-var/global/list/vore_sounds = list(
+GLOBAL_LIST_INIT(vore_sounds, list(
 		"Gulp" = 'sound/vore/gulp.ogg',
 		"Insert" = 'sound/vore/insert.ogg',
 		"Insertion1" = 'sound/vore/insertion1.ogg',
@@ -49,13 +49,15 @@ var/global/list/vore_sounds = list(
 		"Squish1" = 'sound/vore/squish1.ogg',
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
-		"Squish4" = 'sound/vore/squish4.ogg')
-/* also moved to sound.dmi
-var/global/list/struggle_sounds = list(
+		"Squish4" = 'sound/vore/squish4.ogg'))
+		
+GLOBAL_LIST_INIT(struggle_sounds, list(
 		"Squish1" = 'sound/vore/squish1.ogg',
 		"Squish2" = 'sound/vore/squish2.ogg',
 		"Squish3" = 'sound/vore/squish3.ogg',
-		"Squish4" = 'sound/vore/squish4.ogg')
+		"Squish4" = 'sound/vore/squish4.ogg'))
+
+/* also moved to sound.dmi
 
 /proc/log_debug(text)
 	if (config.log_debug)
