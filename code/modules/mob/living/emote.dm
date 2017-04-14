@@ -377,6 +377,7 @@
 	key = "me"
 	key_third_person = "custom"
 	message = null
+	mob_type_blacklist_typecache = list(/mob/living/brain)
 
 /datum/emote/living/custom/proc/check_invalid(mob/user, input)
 	. = TRUE
