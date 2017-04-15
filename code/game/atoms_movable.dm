@@ -1,8 +1,8 @@
-
 #ifndef PIXEL_SCALE
 #define PIXEL_SCALE 0
 #if DM_VERSION >= 512
 #error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
 #endif
 
 /atom/movable
