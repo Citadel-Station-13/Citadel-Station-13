@@ -54,10 +54,13 @@ GLOBAL_LIST_EMPTY(xeno_dorsal_list)
 	//Genitals and Arousal Lists
 GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
 GLOBAL_LIST_EMPTY(breasts_size_list)
+GLOBAL_LIST_EMPTY(breasts_shapes_list)
+GLOBAL_LIST_EMPTY(vagina_shapes_list)
 GLOBAL_LIST_INIT(cum_into_containers_list, /obj/item/weapon/reagent_containers/food/snacks/pie) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
 GLOBAL_LIST_INIT(cum_id_list,"semen")
 GLOBAL_LIST_INIT(milk_id_list,"milk")
+
 //mentor stuff
 GLOBAL_LIST_EMPTY(mentors)
 

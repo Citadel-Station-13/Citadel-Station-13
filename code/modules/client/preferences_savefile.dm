@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	18
+#define SAVEFILE_VERSION_MAX	19
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -125,7 +125,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BEASSISTANT
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
-	if(current_version < 18)//this should lower the amount of lag when you select or change something.
+	if(current_version < 19)//this should lower the amount of lag when you select or change something.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
 		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], GLOB.mam_tails_list)
@@ -148,10 +148,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		//breasts features
 		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
 		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, "C")
+		features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, "pair")
 		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
 		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], GLOB.milk_id_list, "milk")
 		//vagina features
 		features["has_vag"]				= sanitize_integer(features["has_vag"], 0, 1, 0)
+		features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, "Human")
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
@@ -383,10 +385,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//breasts features
 	S["feature_has_breasts"]			>> features["has_breasts"]
 	S["feature_breasts_size"]			>> features["breasts_size"]
+	S["feature_breasts_shape"]			>> features["breasts_shape"]
 	S["feature_breasts_color"]			>> features["breasts_color"]
 	S["feature_breasts_fluid"]			>> features["breasts_fluid"]
 	//vagina features
 	S["feature_has_vag"]				>> features["has_vag"]
+	S["feature_vag_shape"]				>> features["vag_shape"]
 	S["feature_vag_color"]				>> features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
@@ -547,10 +551,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//breasts features
 	S["feature_has_breasts"]			<< features["has_breasts"]
 	S["feature_breasts_size"]			<< features["breasts_size"]
+	S["feature_breasts_shape"]			<< features["breasts_shape"]
 	S["feature_breasts_color"]			<< features["breasts_color"]
 	S["feature_breasts_fluid"]			<< features["breasts_fluid"]
 	//vagina features
 	S["feature_has_vag"]				<< features["has_vag"]
+	S["feature_vag_shape"]				<< features["vag_shape"]
 	S["feature_vag_color"]				<< features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				<< features["has_womb"]

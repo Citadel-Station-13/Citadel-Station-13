@@ -81,6 +81,7 @@
 		CRASH("Provided percentage is invalid")
 	if(getPercentAroused() >= percentage)
 		return TRUE
+	return FALSE
 
 //H U D//
 /mob/living/proc/updatearousal()
