@@ -279,7 +279,7 @@ GLOBAL_LIST(external_rsc_urls)
 		add_admin_verbs()
 		to_chat(src, get_message_output("memo"))
 		adminGreet()
-		if((GLOB.comms_key == "default_pwd" || length(GLOB.comms_key) <= 6) && GLOB.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
+		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
 /*	if(mentor && !holder)
@@ -346,6 +346,8 @@ GLOBAL_LIST(external_rsc_urls)
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+
+	hook_vr("client_new",list(src))
 
 //////////////
 //DISCONNECT//
