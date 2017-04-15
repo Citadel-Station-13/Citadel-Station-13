@@ -42531,16 +42531,6 @@
 /obj/item/weapon/shard,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"bPV" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Maint Bar Access";
-	req_access_txt = "12"
-	},
-/obj/structure/barricade/wooden{
-	name = "wooden barricade (CLOSED)"
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "bPW" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
@@ -44088,16 +44078,6 @@
 /turf/open/floor/wood,
 /area/maintenance/aft)
 "bTv" = (
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"bTw" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	icon_state = "intact";
 	dir = 4
@@ -62578,6 +62558,15 @@
 /obj/machinery/computer/slot_machine,
 /turf/open/floor/wood,
 /area/maintenance/bar)
+"DEO" = (
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "Fjx" = (
 /obj/structure/window/reinforced/tinted/fulltile,
 /obj/structure/grille,
@@ -62666,6 +62655,19 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
+/area/maintenance/aft)
+"SPf" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
+/obj/structure/barricade/wooden{
+	name = "wooden barricade (CLOSED)"
+	},
+/turf/open/floor/plating,
 /area/maintenance/aft)
 "Wia" = (
 /obj/structure/chair/stool,
@@ -83149,10 +83151,10 @@ akD
 akD
 aaa
 bCq
-bPV
+DEO
 bCq
 bCq
-bTw
+SPf
 bCq
 bVD
 bWy
