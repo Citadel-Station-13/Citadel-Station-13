@@ -14,7 +14,7 @@
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT  0x10
 
-#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
+#define TIMER_NO_INVOKE_WARNING 200 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
 
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
 #define FLIGHTSUIT_PROCESSING_NONE 0
