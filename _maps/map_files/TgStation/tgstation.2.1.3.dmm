@@ -42540,11 +42540,6 @@
 /obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"bPY" = (
-/obj/structure/girder,
-/obj/structure/grille/broken,
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
 "bPZ" = (
 /obj/structure/chair{
 	dir = 1
@@ -44097,15 +44092,6 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"bTy" = (
-/obj/structure/grille,
-/obj/structure/window/fulltile,
-/obj/machinery/atmospherics/pipe/simple/general/hidden{
-	icon_state = "intact";
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/fsmaint2)
 "bTz" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
@@ -47257,12 +47243,6 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
-"car" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/closed/wall,
 /area/maintenance/aft)
 "cas" = (
 /obj/machinery/door/airlock/maintenance{
@@ -62403,11 +62383,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"cMQ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/tinted/fulltile,
-/turf/open/floor/plating,
-/area/maintenance/aft)
 "cMT" = (
 /obj/structure/barricade/wooden{
 	name = "wooden barricade (CLOSED)"
@@ -62417,16 +62392,6 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
-"cNi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/turf/closed/wall,
 /area/maintenance/aft)
 "cNj" = (
 /obj/structure/cable{
@@ -62442,17 +62407,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"cNO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/aft)
-"cOi" = (
-/obj/structure/window/reinforced/tinted/fulltile,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "dKy" = (
@@ -62480,6 +62434,17 @@
 "fvs" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/wood,
+/area/maintenance/bar)
+"gjU" = (
+/obj/structure/girder,
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"jsx" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/turf/closed/wall,
 /area/maintenance/bar)
 "kkt" = (
 /obj/structure/rack,
@@ -62614,6 +62579,9 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/aft)
+"Hbi" = (
+/turf/closed/wall,
+/area/maintenance/bar)
 "IBo" = (
 /obj/item/weapon/soap/nanotrasen,
 /obj/structure/rack,
@@ -62627,6 +62595,26 @@
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
+/area/maintenance/bar)
+"KgQ" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/maintenance/bar)
+"Lta" = (
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"NCT" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/turf/closed/wall,
 /area/maintenance/bar)
 "OBJ" = (
 /obj/machinery/vending/cola/random,
@@ -62652,6 +62640,21 @@
 "TYp" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/plating,
+/area/maintenance/bar)
+"Utr" = (
+/obj/structure/grille,
+/obj/structure/window/fulltile,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	icon_state = "intact";
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"Vdy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/bar)
 "VDk" = (
@@ -83682,7 +83685,7 @@ bCq
 bPW
 bCq
 bCq
-bTy
+Utr
 bCq
 bVF
 bWA
@@ -84193,23 +84196,23 @@ bxy
 apQ
 apQ
 bCq
-bPY
-apE
+gjU
+Lta
 bCq
 bCq
 bCq
 bCq
 cMT
-bCq
-bCq
-bCq
-bCq
-cMQ
-bCq
-bCq
-bCq
-bCq
-bCq
+Hbi
+Hbi
+Hbi
+Hbi
+TYp
+Hbi
+Hbi
+Hbi
+Hbi
+Hbi
 cgH
 bLv
 aaa
@@ -84457,7 +84460,7 @@ bCq
 bHE
 bVG
 bHE
-bCq
+Hbi
 FDL
 RfU
 RfU
@@ -84466,7 +84469,7 @@ RfU
 RfU
 xOQ
 RfU
-bCq
+Hbi
 cgH
 bLv
 aaa
@@ -84712,9 +84715,9 @@ bHE
 bHE
 bCq
 bHE
-bCq
-bCq
-bCq
+Hbi
+Hbi
+Hbi
 RfU
 pjZ
 RfU
@@ -84723,7 +84726,7 @@ dKy
 RfU
 RfU
 VNZ
-bCq
+Hbi
 cgH
 bLv
 aaf
@@ -84969,7 +84972,7 @@ bHE
 bHE
 bTz
 bHE
-bCq
+Hbi
 OBJ
 XSM
 pjZ
@@ -84980,7 +84983,7 @@ RfU
 pjZ
 pjZ
 RfU
-bCq
+Hbi
 cgH
 bLv
 aaa
@@ -85226,7 +85229,7 @@ bHE
 bSs
 bCq
 bHE
-bCq
+Hbi
 XGw
 RfU
 pjZ
@@ -85237,7 +85240,7 @@ XhJ
 nAk
 vGp
 RfU
-cOi
+KgQ
 cgH
 bLv
 aaa
@@ -85494,7 +85497,7 @@ pjZ
 vGp
 RfU
 RfU
-cOi
+KgQ
 cgH
 bLv
 aaf
@@ -85751,7 +85754,7 @@ Whs
 vGp
 FDL
 ohW
-cOi
+KgQ
 cgH
 bLv
 aaa
@@ -86008,7 +86011,7 @@ pjZ
 vGp
 XSM
 yxw
-bCq
+Hbi
 cgH
 bLv
 aaa
@@ -86254,7 +86257,7 @@ bLv
 aaf
 bLv
 bUt
-bCq
+Hbi
 fvs
 WvU
 CXh
@@ -86265,7 +86268,7 @@ pjZ
 nAk
 RfU
 uqc
-bCq
+Hbi
 cgH
 bLv
 aaf
@@ -86511,7 +86514,7 @@ bCq
 aaa
 bLv
 bUs
-bCq
+Hbi
 VDk
 DtL
 Gcm
@@ -86522,7 +86525,7 @@ pjZ
 vGp
 RfU
 Rqr
-bCq
+Hbi
 cgH
 bCq
 aaa
@@ -86768,18 +86771,18 @@ aaa
 aaa
 bTB
 bUv
-bES
-bES
-cNi
-bES
-bES
-bES
 dYx
-cNO
-cNO
-cNO
-bES
-car
+dYx
+NCT
+dYx
+dYx
+dYx
+dYx
+Vdy
+Vdy
+Vdy
+dYx
+jsx
 cgH
 bCq
 bCq
