@@ -1,0 +1,9 @@
+diff a/code/game/gamemodes/clock_cult/clock_structures/ratvar_the_clockwork_justicar.dm b/code/game/gamemodes/clock_cult/clock_structures/ratvar_the_clockwork_justicar.dm	(rejected hunks)
+@@ -15,6 +15,7 @@
+ 	var/atom/prey //Whatever Ratvar is chasing
+ 	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
+ 	var/proselytize_range = 10
++	dangerous_possession = TRUE
+ 
+ /obj/structure/destructible/clockwork/massive/ratvar/New()
+ 	..()

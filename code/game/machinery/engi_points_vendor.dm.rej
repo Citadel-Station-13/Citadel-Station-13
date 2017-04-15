@@ -1,0 +1,10 @@
+diff a/code/game/machinery/engi_points_vendor.dm b/code/game/machinery/engi_points_vendor.dm	(rejected hunks)
+@@ -93,7 +93,7 @@
+ 
+ 
+ /obj/machinery/construction_nuke/proc/set_payload()
+-	playsound(loc, 'sound/machines/terminal_prompt.ogg', 75, 1)
++	playsound(src, 'sound/machines/terminal_prompt.ogg', 75, 1)
+ 	if(timing || bomb_set)
+ 		to_chat(usr, "<span class='danger'>Error: Payload cannot be altered while the device is armed.</span>")
+ 		playsound(src, 'sound/machines/defib_failed.ogg', 75, 1)

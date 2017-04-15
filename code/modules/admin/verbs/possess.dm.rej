@@ -1,0 +1,22 @@
+diff a/code/modules/admin/verbs/possess.dm b/code/modules/admin/verbs/possess.dm	(rejected hunks)
+@@ -2,10 +2,9 @@
+ 	set name = "Possess Obj"
+ 	set category = "Object"
+ 
+-	if(istype(O,/obj/singularity))
+-		if(config.forbid_singulo_possession)
+-			to_chat(usr, "It is forbidden to possess singularities.")
+-			return
++	if(O.dangerous_possession && config.forbid_singulo_possession)
++		to_chat(usr, "[O] is too powerful for you to possess.")
++		return
+ 
+ 	var/turf/T = get_turf(O)
+ 
+@@ -50,4 +49,4 @@
+ 	set name = "Give Possessing Verbs"
+ 	M.verbs += /proc/possess
+ 	M.verbs += /proc/release
+-	feedback_add_details("admin_verb","GPV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+\ No newline at end of file
++	feedback_add_details("admin_verb","GPV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

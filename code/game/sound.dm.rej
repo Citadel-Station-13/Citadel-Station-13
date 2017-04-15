@@ -1,0 +1,17 @@
+diff a/code/game/sound.dm b/code/game/sound.dm	(rejected hunks)
+@@ -74,7 +74,7 @@
+ 
+ 	src << S
+ 
+-/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
++/mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1, channel = 0)
+ 	if(!client || ear_deaf > 0)
+ 		return
+ 	..()
+@@ -126,4 +126,4 @@
+ 
+ /proc/playsound_global(file, repeat=0, wait, channel, volume)
+ 	for(var/V in clients)
+-		V << sound(file, repeat, wait, channel, volume)
+\ No newline at end of file
++		V << sound(file, repeat, wait, channel, volume)

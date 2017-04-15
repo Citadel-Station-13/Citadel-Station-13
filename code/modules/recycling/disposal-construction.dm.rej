@@ -1,0 +1,10 @@
+diff a/code/modules/recycling/disposal-construction.dm b/code/modules/recycling/disposal-construction.dm	(rejected hunks)
+@@ -251,7 +251,7 @@
+ 
+ 					else if(ptype == DISP_END_BIN)
+ 						var/obj/machinery/disposal/bin/B = new /obj/machinery/disposal/bin(loc,src)
+-						B.mode = 0 // start with pump off
++						B.pressure_charging = FALSE // start with pump off
+ 						transfer_fingerprints_to(B)
+ 
+ 					else if(ptype == DISP_END_OUTLET)
