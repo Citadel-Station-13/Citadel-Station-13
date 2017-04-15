@@ -61,6 +61,8 @@
 
 	var/list/firedoors
 	var/firedoors_last_closed_on = 0
+	var/sound_environment = 1
+	var/sound_group = null
 
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/

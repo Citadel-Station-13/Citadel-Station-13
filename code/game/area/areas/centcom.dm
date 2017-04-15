@@ -10,6 +10,7 @@
 	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
 	flags = NONE
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/centcom/control
 	name = "Centcom Docks"
@@ -37,6 +38,7 @@
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = 0
 	has_gravity = 1
+	sound_environment = SOUND_ENVIRONMENT_ARENA
 
 /area/tdome/arena
 	name = "Thunderdome Arena"
@@ -75,6 +77,7 @@
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 //Abductors
 /area/abductor_ship
@@ -83,6 +86,7 @@
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 //Syndicates
 /area/syndicate_mothership
@@ -92,6 +96,7 @@
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Not... entirely sure this will ever come up... but if the bus makes blobs AND ops, it shouldn't aim for the ops to win.
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/syndicate_mothership/control
 	name = "Syndicate Control Room"
@@ -112,6 +117,7 @@
 	requires_power = 0
 	has_gravity = 1
 	flags = NO_DEATHRATTLE
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/ctf/control_room
 	name = "Control Room A"

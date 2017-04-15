@@ -3,6 +3,7 @@
 /area/mine
 	icon_state = "mining"
 	has_gravity = 1
+	sound_environment = SOUND_ENVIRONMENT_CAVE
 
 /area/mine/explored
 	name = "Mine"
@@ -34,49 +35,63 @@
 
 /area/mine/lobby
 	name = "Mining Station"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/storage
 	name = "Mining Station Storage"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/production
 	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/abandoned
 	name = "Abandoned Mining Station"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/living_quarters
 	name = "Mining Station Port Wing"
 	icon_state = "mining_living"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/eva
 	name = "Mining Station EVA"
 	icon_state = "mining_eva"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/maintenance
 	name = "Mining Station Communications"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/cafeteria
 	name = "Mining station Cafeteria"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/hydroponics
 	name = "Mining station Hydroponics"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/sleeper
 	name = "Mining station Emergency Sleeper"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/north_outpost
 	name = "North Mining Outpost"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/west_outpost
 	name = "West Mining Outpost"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/laborcamp
 	name = "Labor Camp"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 
 
@@ -86,6 +101,7 @@
 /area/lavaland
 	icon_state = "mining"
 	has_gravity = 1
+	sound_environment = SOUND_ENVIRONMENT_CAVE
 
 /area/lavaland/surface
 	name = "Lavaland"

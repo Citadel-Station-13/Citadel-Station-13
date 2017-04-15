@@ -9,6 +9,7 @@
 	always_unpowered = 0
 	valid_territory = 0
 	icon_state = "shuttle"
+	sound_environment = SOUND_ENVIRONMENT_HALLWAY
 
 /area/shuttle/transit
 	name = "Hyperspace"
@@ -19,6 +20,7 @@
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
+
 
 /area/shuttle/pod_2
 	name = "Escape Pod Two"

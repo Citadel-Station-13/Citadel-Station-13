@@ -399,3 +399,4 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
