@@ -1,0 +1,17 @@
+diff a/code/game/turfs/space/space.dm b/code/game/turfs/space/space.dm	(rejected hunks)
+@@ -12,7 +12,7 @@
+ 	var/destination_x
+ 	var/destination_y
+ 
+-	var/global/datum/gas_mixture/space/space_gas = new
++	var/global/datum/gas_mixture/immutable/space/space_gas = new
+ 	plane = PLANE_SPACE
+ 	light_power = 0.25
+ 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
+@@ -210,4 +210,4 @@
+ 			to_chat(user, "<span class='notice'>You build a floor.</span>")
+ 			ChangeTurf(/turf/open/floor/plating)
+ 			return TRUE
+-	return FALSE
+\ No newline at end of file
++	return FALSE
