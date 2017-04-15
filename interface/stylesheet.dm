@@ -150,4 +150,7 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
+
+.love					{color: #FF69Bf;}
+.lovebold				{color: #FF69Bf;	font-weight: bold;}
 </style>"}

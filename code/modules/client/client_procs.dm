@@ -68,7 +68,7 @@
 		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
-
+/*
 	if(href_list["mentor_msg"])
 		if(config.mentors_mobname_only)
 			var/mob/M = locate(href_list["mentor_msg"])
@@ -76,7 +76,7 @@
 		else
 			cmd_mentor_pm(href_list["mentor_msg"],null)
 		return
-
+*/
 	//Logs all hrefs
 	if(config && config.log_hrefs && GLOB.href_logfile)
 		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
