@@ -340,7 +340,7 @@
 									target="_parent._top"
 									onmouseclick="this.focus()"
 									style="background-color:#ffffff">
-									<option value>Select option</option>
+									<option value selected>Select option</option>
 									[dropdownoptions_html.Join()]
 								</select>
 							</form>
@@ -1084,7 +1084,7 @@
 					if("augment")
 						if(ishuman(C))
 							if(BP)
-								BP.change_bodypart_status(BODYPART_ROBOTIC, 1)
+								BP.change_bodypart_status(BODYPART_ROBOTIC, TRUE, TRUE)
 							else
 								to_chat(usr, "[C] doesn't have such bodypart.")
 						else
