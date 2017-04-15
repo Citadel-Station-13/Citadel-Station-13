@@ -40,7 +40,8 @@
 	load_mode()
 	load_motd()
 	load_admins()
-	load_mentors()
+//disabled to prevent runtimes until it's fixed
+//	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
 	LoadBans()
