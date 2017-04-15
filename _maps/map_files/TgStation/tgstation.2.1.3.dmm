@@ -58311,11 +58311,11 @@
 /area/engine/engineering)
 "czi" = (
 /obj/machinery/door/airlock/titanium,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czj" = (
 /obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/shuttle/white,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czk" = (
 /obj/machinery/door/airlock/external{
@@ -60260,6 +60260,12 @@
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
+	pixel_x = 23
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -72088,7 +72094,7 @@ cyV
 cyi
 cMh
 cyi
-czi
+cye
 cyi
 cyi
 cye
@@ -72597,7 +72603,7 @@ cyi
 cyJ
 cyc
 cyi
-czi
+cye
 cyi
 cMe
 cyi
@@ -73627,7 +73633,7 @@ cyc
 cyc
 cyc
 cyR
-czj
+cza
 cyR
 cyc
 cyc
@@ -91651,7 +91657,7 @@ ccw
 ccw
 ccw
 cdk
-cMN
+cMC
 cgR
 ckK
 clJ
@@ -91664,10 +91670,10 @@ cqg
 cqE
 cqZ
 crt
-cMG
+cMH
 cAm
-cMG
 cMK
+cMN
 cFO
 csC
 csQ
