@@ -237,8 +237,6 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg)) )
-			continue
 		BP.update_limb()
 
 	//LOAD ICONS
@@ -250,6 +248,7 @@
 	var/list/new_limbs = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg))) continue //skip their legs if they're a naga or taur to prevent weird pixels poking out
 		var/image/temp = BP.get_limb_icon()
 		if(temp)
 			new_limbs += temp
