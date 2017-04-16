@@ -1,6 +1,6 @@
 
 
-var/list/preferences_datums = list()
+GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 
@@ -86,7 +86,7 @@ var/list/preferences_datums = list()
 		"exhibitionist" 	= FALSE,
 		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
-		"cock_shape"		= "human",
+		"cock_shape"		= "Human",
 		"cock_length"		= 6,
 		"cock_girth_ratio"	= COCK_GIRTH_RATIO_DEF,
 		"cock_color"		= "fff",
@@ -115,8 +115,10 @@ var/list/preferences_datums = list()
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= "fff",
 		"breasts_size" 		= "C",
+		"breasts_shape"		= "pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
+		"vag_shape"			= "Human",
 		"vag_color"			= "fff",
 		"vag_clits"			= 1,
 		"vag_clit_diam"		= 0.25,
@@ -172,10 +174,10 @@ var/list/preferences_datums = list()
 
 /datum/preferences/New(client/C)
 	parent = C
-	custom_names["ai"] = pick(ai_names)
-	custom_names["cyborg"] = pick(ai_names)
-	custom_names["clown"] = pick(clown_names)
-	custom_names["mime"] = pick(mime_names)
+	custom_names["ai"] = pick(GLOB.ai_names)
+	custom_names["cyborg"] = pick(GLOB.ai_names)
+	custom_names["clown"] = pick(GLOB.clown_names)
+	custom_names["mime"] = pick(GLOB.mime_names)
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
@@ -292,7 +294,7 @@ var/list/preferences_datums = list()
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
-					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
 
 				if(unlock_content)
 					dat += "<b>BYOND Membership Publicity:</b> <a href='?_src_=prefs;preference=publicity'>[(toggles & MEMBER_PUBLIC) ? "Public" : "Hidden"]</a><br>"
@@ -353,7 +355,6 @@ var/list/preferences_datums = list()
 				else
 					dat += "High"
 			dat += "</a><br>"
-//			dat += "<b>Genital Colors:</b><a href='?_src_=prefs;preference=genitals_color_source'>[features["genitals_use_skintone"] == TRUE ? "Skin Tone" : "Custom"]</a><BR>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -364,13 +365,13 @@ var/list/preferences_datums = list()
 				src.be_special = list()
 
 
-			for (var/i in special_roles)
+			for (var/i in GLOB.special_roles)
 				if(jobban_isbanned(user, i))
 					dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;jobbancheck=[i]'>BANNED</a><br>"
 				else
 					var/days_remaining = null
-					if(config.use_age_restriction_for_jobs && ispath(special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
-						var/mode_path = special_roles[i]
+					if(config.use_age_restriction_for_jobs && ispath(GLOB.special_roles[i])) //If it's a game mode antag, check if the player meets the minimum age
+						var/mode_path = GLOB.special_roles[i]
 						var/datum/game_mode/temp_mode = new mode_path
 						days_remaining = temp_mode.get_remaining_days(user.client)
 
@@ -405,6 +406,8 @@ var/list/preferences_datums = list()
 					dat += "<b>Tertiary Color: </b><span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
 				if(pref_species.use_skintones)
 					dat += "<b>Skin Tone: </b><a href='?_src_=prefs;preference=s_tone;task=input'>[skin_tone]</a><BR>"
+					dat += "<b>Genitals Use Skintone:</b><a href='?_src_=prefs;preference=genital_colour'>[features["genitals_use_skintone"] == TRUE ? "Enabled" : "Disabled"]</a><BR>"
+
 				if(HAIR in pref_species.species_traits)
 					dat += "<b>Hair Style: </b><a href='?_src_=prefs;preference=hair_style;task=input'>[hair_style]</a><BR>"
 					dat += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
@@ -438,7 +441,7 @@ var/list/preferences_datums = list()
 					dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 				if("taur" in pref_species.mutant_bodyparts)
 					dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
-				if("wings" in pref_species.mutant_bodyparts && r_wings_list.len >1)
+				if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
 					dat += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
 				if("xenohead" in pref_species.mutant_bodyparts)
 					dat += "<b>Caste: </b><a href='?_src_=prefs;preference=xenohead;task=input'>[features["xenohead"]]</a><BR>"
@@ -473,18 +476,26 @@ var/list/preferences_datums = list()
 					dat += "<b>Penis Length:</b> <a href='?_src_=prefs;preference=cock_length;task=input'>[features["cock_length"]] inch(es)</a><BR>"
 					dat += "<b>Has Testicles:</b><a href='?_src_=prefs;preference=has_balls'>[features["has_balls"] == TRUE ? "Yes" : "No"]</a><BR>"
 					if(features["has_balls"] == TRUE)
-						dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
+						if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+							dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+						else
+							dat += "<b>Testicles Color:</b><span style='border: 1px solid #161616; background-color: #[features["balls_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=balls_color;task=input'>Change</a><BR>"
 				dat += "<b>Has Vagina:</b><a href='?_src_=prefs;preference=has_vag'>[features["has_vag"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_vag"])
-					dat += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
+					dat += "<b>Vagina Type:</b> <a href='?_src_=prefs;preference=vag_shape;task=input'>[features["vag_shape"]]</a><BR>"
+					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+						dat += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Vagina Color:</b><span style='border: 1px solid #161616; background-color: #[features["vag_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=vag_color;task=input'>Change</a><BR>"
 					dat += "<b>Has Womb:</b><a href='?_src_=prefs;preference=has_womb'>[features["has_womb"] == TRUE ? "Yes" : "No"]</a><BR>"
 				dat += "<b>Has Breasts:</b><a href='?_src_=prefs;preference=has_breasts'>[features["has_breasts"] == TRUE ? "Yes" : "No"]</a><BR>"
 				if(features["has_breasts"])
-//					if(pref_species.use_skintones)
-//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)"
-//					else
-//						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a>"
+					if(pref_species.use_skintones && features["genitals_use_skintone"] == TRUE)
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[skintone2hex(skin_tone)];'>&nbsp;&nbsp;&nbsp;</span>(Skin tone overriding)<BR>"
+					else
+						dat += "<b>Color:</b><span style='border: 1px solid #161616; background-color: #[features["breasts_color"]];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=breasts_color;task=input'>Change</a><BR>"
 					dat += "<b>Cup Size:</b><a href='?_src_=prefs;preference=breasts_size;task=input'>[features["breasts_size"]]</a><br>"
+					dat += "<b>Breast Shape:</b><a href='?_src_=prefs;preference=breasts_shape;task=input'>[features["breasts_shape"]]</a><br>"
 				/*
 				dat += "<h3>Ovipositor</h3>"
 				dat += "<b>Has Ovipositor:</b><a href='?_src_=prefs;preference=has_ovi'>[features["has_ovi"] == TRUE ? "Yes" : "No"]</a>"
@@ -575,7 +586,7 @@ var/list/preferences_datums = list()
 				else
 					HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 				continue
-			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
+			if((rank in GLOB.command_positions) || (rank == "AI"))//Bold head jobs
 				HTML += "<b><span class='dark'>[rank]</span></b>"
 			else
 				HTML += "<span class='dark'>[rank]</span>"
@@ -779,7 +790,7 @@ var/list/preferences_datums = list()
 	if(href_list["jobbancheck"])
 		var/job = sanitizeSQL(href_list["jobbancheck"])
 		var/sql_ckey = sanitizeSQL(user.ckey)
-		var/DBQuery/query_get_jobban = dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
+		var/DBQuery/query_get_jobban = GLOB.dbcon.NewQuery("SELECT reason, bantime, duration, expiration_time, a_ckey FROM [format_table_name("ban")] WHERE ckey = '[sql_ckey]' AND (bantype = 'JOB_PERMABAN'  OR (bantype = 'JOB_TEMPBAN' AND expiration_time > Now())) AND isnull(unbanned) AND job = '[job]'")
 		if(!query_get_jobban.warn_execute())
 			return
 		if(query_get_jobban.NextRow())
@@ -848,7 +859,7 @@ var/list/preferences_datums = list()
 				if("s_tone")
 					skin_tone = random_skin_tone()
 				if("bag")
-					backbag = pick(backbaglist)
+					backbag = pick(GLOB.backbaglist)
 				if("all")
 					random_character()
 
@@ -856,12 +867,12 @@ var/list/preferences_datums = list()
 			switch(href_list["preference"])
 				if("ghostform")
 					if(unlock_content)
-						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in ghost_forms
+						var/new_form = input(user, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
 						if(new_form)
 							ghost_form = new_form
 				if("ghostorbit")
 					if(unlock_content)
-						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in ghost_orbits
+						var/new_orbit = input(user, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND", null) as null|anything in GLOB.ghost_orbits
 						if(new_orbit)
 							ghost_orbit = new_orbit
 
@@ -918,23 +929,23 @@ var/list/preferences_datums = list()
 				if("hair_style")
 					var/new_hair_style
 					if(gender == MALE)
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_male_list
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_male_list
 					else
-						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in hair_styles_female_list
+						new_hair_style = input(user, "Choose your character's hair style:", "Character Preference")  as null|anything in GLOB.hair_styles_female_list
 					if(new_hair_style)
 						hair_style = new_hair_style
 
 				if("next_hair_style")
 					if (gender == MALE)
-						hair_style = next_list_item(hair_style, hair_styles_male_list)
+						hair_style = next_list_item(hair_style, GLOB.hair_styles_male_list)
 					else
-						hair_style = next_list_item(hair_style, hair_styles_female_list)
+						hair_style = next_list_item(hair_style, GLOB.hair_styles_female_list)
 
 				if("previous_hair_style")
 					if (gender == MALE)
-						hair_style = previous_list_item(hair_style, hair_styles_male_list)
+						hair_style = previous_list_item(hair_style, GLOB.hair_styles_male_list)
 					else
-						hair_style = previous_list_item(hair_style, hair_styles_female_list)
+						hair_style = previous_list_item(hair_style, GLOB.hair_styles_female_list)
 
 				if("facial")
 					var/new_facial = input(user, "Choose your character's facial-hair colour:", "Character Preference") as null|color
@@ -944,45 +955,45 @@ var/list/preferences_datums = list()
 				if("facial_hair_style")
 					var/new_facial_hair_style
 					if(gender == MALE)
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_male_list
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_male_list
 					else
-						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in facial_hair_styles_female_list
+						new_facial_hair_style = input(user, "Choose your character's facial-hair style:", "Character Preference")  as null|anything in GLOB.facial_hair_styles_female_list
 					if(new_facial_hair_style)
 						facial_hair_style = new_facial_hair_style
 
 				if("next_facehair_style")
 					if (gender == MALE)
-						facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_male_list)
+						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
 					else
-						facial_hair_style = next_list_item(facial_hair_style, facial_hair_styles_female_list)
+						facial_hair_style = next_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
 
 				if("previous_facehair_style")
 					if (gender == MALE)
-						facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_male_list)
+						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_male_list)
 					else
-						facial_hair_style = previous_list_item(facial_hair_style, facial_hair_styles_female_list)
+						facial_hair_style = previous_list_item(facial_hair_style, GLOB.facial_hair_styles_female_list)
 
 				if("underwear")
 					var/new_underwear
 					if(gender == MALE)
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_m
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_m
 					else
-						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in underwear_f
+						new_underwear = input(user, "Choose your character's underwear:", "Character Preference")  as null|anything in GLOB.underwear_f
 					if(new_underwear)
 						underwear = new_underwear
 
 				if("undershirt")
 					var/new_undershirt
 					if(gender == MALE)
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_m
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_m
 					else
-						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_f
+						new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in GLOB.undershirt_f
 					if(new_undershirt)
 						undershirt = new_undershirt
 
 				if("socks")
 					var/new_socks
-					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_list
+					new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in GLOB.socks_list
 					if(new_socks)
 						socks = new_socks
 
@@ -993,10 +1004,10 @@ var/list/preferences_datums = list()
 
 				if("species")
 
-					var/result = input(user, "Select a species", "Species Selection") as null|anything in roundstart_species
+					var/result = input(user, "Select a species", "Species Selection") as null|anything in GLOB.roundstart_species
 
 					if(result)
-						var/newtype = roundstart_species[result]
+						var/newtype = GLOB.roundstart_species[result]
 						pref_species = new newtype()
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						var/temp_hsv = RGBtoHSV(features["mcolor"])
@@ -1042,7 +1053,7 @@ var/list/preferences_datums = list()
 
 				if("tail_lizard")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_lizard
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_lizard
 					if(new_tail)
 						features["tail_lizard"] = new_tail
 						if(new_tail != "None")
@@ -1050,14 +1061,14 @@ var/list/preferences_datums = list()
 
 				if("tail_human")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in tails_list_human
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.tails_list_human
 					if(new_tail)
 						features["tail_human"] = new_tail
 						if(new_tail != "None")
 							features["taur"] = "None"
 				if("mam_tail")
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in mam_tails_list
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.mam_tails_list
 					if(new_tail)
 						features["mam_tail"] = new_tail
 						if(new_tail != "None")
@@ -1065,7 +1076,7 @@ var/list/preferences_datums = list()
 
 				if("taur")
 					var/new_taur
-					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in taur_list
+					new_taur = input(user, "Choose your character's tauric body:", "Character Preference") as null|anything in GLOB.taur_list
 					if(new_taur)
 						features["taur"] = new_taur
 						if(new_taur != "None")
@@ -1075,92 +1086,92 @@ var/list/preferences_datums = list()
 /*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
 				if("mam_snout")
 					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in mam_snouts_list
+					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.mam_snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
 */
 
 				if("snout")
 					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in snouts_list
+					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.snouts_list
 					if(new_snout)
 						features["snout"] = new_snout
 
 				if("horns")
 					var/new_horns
-					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in horns_list
+					new_horns = input(user, "Choose your character's horns:", "Character Preference") as null|anything in GLOB.horns_list
 					if(new_horns)
 						features["horns"] = new_horns
 
 				if("mam_ears")
 					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in mam_ears_list
+					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in GLOB.mam_ears_list
 					if(new_ears)
 						features["mam_ears"] = new_ears
 
 				if("ears")
 					var/new_ears
-					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in ears_list
+					new_ears = input(user, "Choose your character's ears:", "Character Preference") as null|anything in GLOB.ears_list
 					if(new_ears)
 						features["ears"] = new_ears
 
 				if("wings")
 					var/new_wings
-					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in r_wings_list
+					new_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.r_wings_list
 					if(new_wings)
 						features["wings"] = new_wings
 
 				if("frills")
 					var/new_frills
-					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in frills_list
+					new_frills = input(user, "Choose your character's frills:", "Character Preference") as null|anything in GLOB.frills_list
 					if(new_frills)
 						features["frills"] = new_frills
 
 				if("spines")
 					var/new_spines
-					new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in spines_list
+					new_spines = input(user, "Choose your character's spines:", "Character Preference") as null|anything in GLOB.spines_list
 					if(new_spines)
 						features["spines"] = new_spines
 
 				if("body_markings")
 					var/new_body_markings
-					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in body_markings_list
+					new_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in GLOB.body_markings_list
 					if(new_body_markings)
 						features["body_markings"] = new_body_markings
 
 				if("mam_body_markings")
 					var/new_mam_body_markings
-					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in mam_body_markings_list
+					new_mam_body_markings = input(user, "Choose your character's body markings:", "Character Preference") as null|anything in GLOB.mam_body_markings_list
 					if(new_mam_body_markings)
 						features["mam_body_markings"] = new_mam_body_markings
 
 				//Xeno Bodyparts
 				if("xenohead")//Head or caste type
 					var/new_head
-					new_head = input(user, "Choose your character's caste:", "Character Preference") as null|anything in xeno_head_list
+					new_head = input(user, "Choose your character's caste:", "Character Preference") as null|anything in GLOB.xeno_head_list
 					if(new_head)
 						features["xenohead"] = new_head
 
 				if("xenotail")//Currently one one type, more maybe later if someone sprites them. Might include animated variants in the future.
 					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in xeno_tail_list
+					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.xeno_tail_list
 					if(new_tail)
 						features["xenotail"] = new_tail
 
 				if("xenodorsal")
 					var/new_dors
-					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in xeno_dorsal_list
+					new_dors = input(user, "Choose your character's dorsal tube type:", "Character Preference") as null|anything in GLOB.xeno_dorsal_list
 					if(new_dors)
 						features["xenodorsal"] = new_dors
 
 				if("legs")
 					var/new_legs
-					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in legs_list
+					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
 					if(new_legs)
 						features["legs"] = new_legs
 
 				if("s_tone")
-					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in skin_tones
+					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
 					if(new_s_tone)
 						skin_tone = new_s_tone
 
@@ -1170,12 +1181,12 @@ var/list/preferences_datums = list()
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 
 				if("bag")
-					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
+					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in GLOB.backbaglist
 					if(new_backbag)
 						backbag = new_backbag
 
 				if("uplink_loc")
-					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in uplink_spawn_loc_list
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
 						uplink_spawn_loc = new_loc
 
@@ -1222,7 +1233,7 @@ var/list/preferences_datums = list()
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("sec_dept")
-					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in security_depts_prefs
+					var/department = input(user, "Choose your prefered security department:", "Security Departments") as null|anything in GLOB.security_depts_prefs
 					if(department)
 						prefered_security_department = department
 
@@ -1277,7 +1288,7 @@ var/list/preferences_datums = list()
 
 				if("cock_shape")
 					var/new_shape
-					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in cock_shapes_list
+					new_shape = input(user, "Penis shape:", "Character Preference") as null|anything in GLOB.cock_shapes_list
 					if(new_shape)
 						features["cock_shape"] = new_shape
 
@@ -1309,9 +1320,15 @@ var/list/preferences_datums = list()
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 				if("breasts_size")
 					var/new_size
-					new_size = input(user, "Breast Size", "Character Preference") as null|anything in breasts_size_list
+					new_size = input(user, "Breast Size", "Character Preference") as null|anything in GLOB.breasts_size_list
 					if(new_size)
 						features["breasts_size"] = new_size
+
+				if("breasts_shape")
+					var/new_shape
+					new_shape = input(user, "Breast Shape", "Character Preference") as null|anything in GLOB.breasts_shapes_list
+					if(new_shape)
+						features["breasts_shape"] = new_shape
 
 				if("breasts_color")
 					var/new_breasts_color = input(user, "Breast Color:", "Character Preference") as color|null
@@ -1323,6 +1340,11 @@ var/list/preferences_datums = list()
 							features["breasts_color"] = sanitize_hexcolor(new_breasts_color)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+				if("vag_shape")
+					var/new_shape
+					new_shape = input(user, "Vagina Type", "Character Preference") as null|anything in GLOB.vagina_shapes_list
+					if(new_shape)
+						features["vag_shape"] = new_shape
 				if("vag_color")
 					var/new_vagcolor = input(user, "Vagina color:", "Character Preference") as color|null
 					if(new_vagcolor)
@@ -1338,6 +1360,14 @@ var/list/preferences_datums = list()
 			switch(href_list["preference"])
 
 				//citadel code
+				if("genital_colour")
+					switch(features["genitals_use_skintone"])
+						if(TRUE)
+							features["genitals_use_skintone"] = FALSE
+						if(FALSE)
+							features["genitals_use_skintone"] = TRUE
+						else
+							features["genitals_use_skintone"] = FALSE
 				if("arousable")
 					switch(arousable)
 						if(TRUE)
@@ -1492,10 +1522,10 @@ var/list/preferences_datums = list()
 
 				if("lobby_music")
 					toggles ^= SOUND_LOBBY
-					if(toggles & SOUND_LOBBY)
-						user << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
+					if((toggles & SOUND_LOBBY) && user.client)
+						user.client.playtitlemusic()
 					else
-						user.stopLobbySound()
+						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 				if("ghost_ears")
 					chat_toggles ^= CHAT_GHOSTEARS
@@ -1521,12 +1551,12 @@ var/list/preferences_datums = list()
 				if("parallaxup")
 					parallax = Wrap(parallax + 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
+						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
 				if("parallaxdown")
 					parallax = Wrap(parallax - 1, PARALLAX_INSANE, PARALLAX_DISABLE + 1)
 					if (parent && parent.mob && parent.mob.hud_used)
-						parent.mob.hud_used.update_parallax_pref()
+						parent.mob.hud_used.update_parallax_pref(parent.mob)
 
 				if("save")
 					save_preferences()
@@ -1562,9 +1592,9 @@ var/list/preferences_datums = list()
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
 		if(!firstspace)	//we need a surname
-			real_name += " [pick(last_names)]"
+			real_name += " [pick(GLOB.last_names)]"
 		else if(firstspace == name_length)
-			real_name += "[pick(last_names)]"
+			real_name += "[pick(GLOB.last_names)]"
 
 	character.real_name = real_name
 	character.name = character.real_name

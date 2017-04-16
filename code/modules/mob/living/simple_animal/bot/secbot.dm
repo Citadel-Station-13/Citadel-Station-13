@@ -27,17 +27,27 @@
 	var/target_lastloc //Loc of target when arrested.
 	var/last_found //There's a delay
 	var/declare_arrests = 1 //When making an arrest, should it notify everyone on the security channel?
-	var/idcheck = 1 //If true, arrest people with no IDs
-	var/weaponscheck = 1 //If true, arrest people for weapons if they lack access
+	var/idcheck = 0 //If true, arrest people with no IDs
+	var/weaponscheck = 0 //If true, arrest people for weapons if they lack access
 	var/check_records = 1 //Does it check security records?
 	var/arrest_type = 0 //If true, don't handcuff
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Officer Beep O'sky"
 	desc = "It's Officer Beep O'sky! Powered by a potato and a shot of whiskey."
-	idcheck = 1
-	weaponscheck = 1
+	idcheck = 0
+	weaponscheck = 0
 	auto_patrol = 1
+
+/mob/living/simple_animal/bot/secbot/beepsky/jr
+	name = "Officer Pipsqueak"
+	desc = "It's Officer Beep O'sky's smaller, just-as aggressive cousin, Pipsqueak."
+
+/mob/living/simple_animal/bot/secbot/beepsky/jr/Initialize()
+	..()
+	resize = 0.8
+	update_transform()
+
 
 /mob/living/simple_animal/bot/secbot/beepsky/explode()
 	var/turf/Tsec = get_turf(src)
@@ -61,7 +71,7 @@
 		prev_access = access_card.access
 
 	//SECHUD
-	var/datum/atom_hud/secsensor = huds[DATA_HUD_SECURITY_ADVANCED]
+	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
 	secsensor.add_hud_to(src)
 
 /mob/living/simple_animal/bot/secbot/turn_on()
@@ -410,4 +420,4 @@ Auto Patrol: []"},
 	..()
 
 /obj/machinery/bot_core/secbot
-	req_access = list(access_security)
+	req_access = list(GLOB.access_security)

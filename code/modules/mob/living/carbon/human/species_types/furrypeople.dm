@@ -14,6 +14,8 @@ datum/species/mammal
 	if(H)
 		H.endTailWag()
 
+/datum/species/mammal/qualifies_for_rank(rank, list/features)
+	return TRUE
 
 //AVIAN//
 /datum/species/avian
@@ -32,6 +34,9 @@ datum/species/mammal
 	if(H)
 		H.endTailWag()
 
+/datum/species/avian/qualifies_for_rank(rank, list/features)
+	return TRUE
+
 //AQUATIC//
 /datum/species/aquatic
 	name = "Aquatic"
@@ -48,6 +53,10 @@ datum/species/mammal
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
+
+/datum/species/aquatic/qualifies_for_rank(rank, list/features)
+	return TRUE
+
 //INSECT//
 /datum/species/insect
 	name = "Insect"
@@ -65,6 +74,8 @@ datum/species/mammal
 	if(H)
 		H.endTailWag()
 
+/datum/species/insect/qualifies_for_rank(rank, list/features)
+	return TRUE
 //HERBIVOROUS//
 
 //EXOTIC//

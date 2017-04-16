@@ -65,18 +65,6 @@
 #define MILK_RATE_MULT		1
 #define MILK_EFFICIENCY		1
 
-
-// Admin ticket things
-#define TICKET_RESOLVED		"Yes"
-#define TICKET_UNRESOLVED	"No"
-#define TICKET_UNASSIGNED	"N/A"
-
-#define TICKET_REPLIED		"Yes"
-#define TICKET_UNREPLIED	"No"
-
-#define TICKET_INACTIVE		"No"
-#define TICKET_ACTIVE		"Yes"
-
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"
 
