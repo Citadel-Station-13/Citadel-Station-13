@@ -203,6 +203,8 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
+	else
+		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
