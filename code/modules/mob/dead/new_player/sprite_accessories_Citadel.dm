@@ -398,7 +398,7 @@
 	icon_state = "shepherd"
 	extra = 1
 	extra2 = 1
-	
+
 // Eevee
 /datum/sprite_accessory/mam_tails/eevee
 	name = "Eevee"
@@ -423,7 +423,7 @@
 /datum/sprite_accessory/mam_body_markings
 	extra = 1
 	extra2 = 1
-	icon = 'icons/mob/special/mam_body_markings.dmi'
+	icon = 'icons/mob/mam_body_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
 	name = "None"
@@ -518,7 +518,7 @@
 	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
-	
+
 /datum/sprite_accessory/mam_body_markings/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -528,10 +528,10 @@
 ************ Taur Bodies ******************
 *******************************************/
 /datum/sprite_accessory/taur
-	icon = 'icons/mob/special/mam_taur.dmi'
-	extra_icon = 'icons/mob/special/mam_taur.dmi'
+	icon = 'icons/mob/mam_taur.dmi'
+	extra_icon = 'icons/mob/mam_taur.dmi'
 	extra = 1
-	extra2_icon = 'icons/mob/special/mam_taur.dmi'
+	extra2_icon = 'icons/mob/mam_taur.dmi'
 	extra2 = 1
 	center = TRUE
 	dimension_x = 64
@@ -591,7 +591,7 @@
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
 	icon_state = "drider"
-	
+
 /datum/sprite_accessory/taur/eevee
 	name = "Eevee"
 	icon_state = "eevee"
