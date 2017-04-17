@@ -1066,12 +1066,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						features["tail_human"] = new_tail
 						if(new_tail != "None")
 							features["taur"] = "None"
+
 				if("mam_tail")
-					var/new_tail
-					new_tail = input(user, "Choose your character's tail:", "Character Preference") as null|anything in GLOB.mam_tails_list
-					if(new_tail)
-						features["mam_tail"] = new_tail
-						if(new_tail != "None")
+					var/list/snowflake_tail_styles = list("Tails")
+					for(var/path in GLOB.mam_tails_list)
+						var/datum/sprite_accessory/mam_tails/instance = GLOB.mam_tails_list[path]
+						if((!instance.ckeys_allowed) || (user.ckey in instance.ckeys_allowed))
+							snowflake_tail_styles[instance.name] = path
+
+					var/selection = input(user, "Choose your character's tail", "Character Preference") as null|anything in snowflake_tail_styles
+					if(selection && selection != "Tails")
+						features["mam_tail"] = snowflake_tail_styles[selection]
+						if(selection != "None")
 							features["taur"] = "None"
 
 				if("taur")
@@ -1082,14 +1088,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						if(new_taur != "None")
 							features["mam_tail"] = "None"
 							features["xenotail"] = "None"
-
-/*	Doesn't exist yet. will include facial overlays to mimic 5th port species heads.
-				if("mam_snout")
-					var/new_snout
-					new_snout = input(user, "Choose your character's snout:", "Character Preference") as null|anything in GLOB.mam_snouts_list
-					if(new_snout)
-						features["snout"] = new_snout
-*/
 
 				if("snout")
 					var/new_snout
