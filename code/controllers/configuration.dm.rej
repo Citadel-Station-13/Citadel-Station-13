@@ -1,0 +1,10 @@
+diff a/code/controllers/configuration.dm b/code/controllers/configuration.dm	(rejected hunks)
+@@ -768,6 +770,8 @@
+ 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+ 				if("arrivals_shuttle_require_safe_latejoin")
+ 					arrivals_shuttle_require_safe_latejoin = text2num(value)
++				if("mice_roundstart")
++					mice_roundstart = text2num(value)
+ 				else
+ 					GLOB.diary << "Unknown setting in configuration: '[name]'"
+ 
