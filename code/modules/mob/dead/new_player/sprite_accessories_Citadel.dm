@@ -323,16 +323,22 @@
 	name = "Shark"
 	icon_state = "shark"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/mam_tails_animated/shark
+	name = "Shark"
+	icon_state = "shark"
+	color_src = 0
 
 /datum/sprite_accessory/mam_tails/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
 //	ckeys_allowed = list("rubyflamewing")
 
+/datum/sprite_accessory/mam_tails_animated/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
+	color_src = 0
 
 //Squirrel
 /datum/sprite_accessory/mam_ears/squirrel
