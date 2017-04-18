@@ -227,19 +227,13 @@
 	var/oldkey = icon_render_key
 	var/istaur = 0
 	if(ishuman(src))
-		if("taur" in dna.species.mutant_bodyparts && dna.features["taur"] != "None")
+		if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None"))
 			istaur = 1
 	icon_render_key = generate_icon_render_key()
 	if(oldkey == icon_render_key)
 		return
 
 	remove_overlay(BODYPARTS_LAYER)
-
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg)) )
-			continue
-		BP.update_limb()
 
 	//LOAD ICONS
 	if(limb_icon_cache[icon_render_key])
@@ -250,6 +244,11 @@
 	var/list/new_limbs = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+
+		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg)))
+			continue
+		BP.update_limb()
+
 		var/image/temp = BP.get_limb_icon()
 		if(temp)
 			new_limbs += temp
