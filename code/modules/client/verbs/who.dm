@@ -2,65 +2,59 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Population:</b>\n"
+	var/msg = "<b>Current Players:</b>\n"
 
 	var/list/Lines = list()
 
-	if(length(GLOB.admins) > 0)
-		Lines += "<b>Admins:</b>"
-		for(var/client/C in sortList(GLOB.admins))
-			if(!C.holder.fakekey)
-				Lines += "\t <font color='#FF0000'>[C.key]</font>[show_info(C)]"
+	if(holder)
+		if (check_rights(R_ADMIN,0) && isobserver(src.mob))//If they have +ADMIN and are a ghost they can see players IC names and statuses.
+			var/mob/dead/observer/G = src.mob
+			if(!G.started_as_observer)//If you aghost to do this, KorPhaeron will deadmin you in your sleep.
+				log_admin("[key_name(usr)] checked advanced who in-round")
+			for(var/client/C in GLOB.clients)
+				var/entry = "\t[C.key]"
+				if(C.holder && C.holder.fakekey)
+					entry += " <i>(as [C.holder.fakekey])</i>"
+				if (isnewplayer(C.mob))
+					entry += " - <font color='darkgray'><b>In Lobby</b></font>"
+				else
+					entry += " - Playing as [C.mob.real_name]"
+					switch(C.mob.stat)
+						if(UNCONSCIOUS)
+							entry += " - <font color='darkgray'><b>Unconscious</b></font>"
+						if(DEAD)
+							if(isobserver(C.mob))
+								var/mob/dead/observer/O = C.mob
+								if(O.started_as_observer)
+									entry += " - <font color='gray'>Observing</font>"
+								else
+									entry += " - <font color='black'><b>DEAD</b></font>"
+							else
+								entry += " - <font color='black'><b>DEAD</b></font>"
+					if(is_special_character(C.mob))
+						entry += " - <b><font color='red'>Antagonist</font></b>"
+				entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
+				entry += " ([round(C.avgping, 1)]ms)"
+				Lines += entry
+		else//If they don't have +ADMIN, only show hidden admins
+			for(var/client/C in GLOB.clients)
+				var/entry = "\t[C.key]"
+				if(C.holder && C.holder.fakekey)
+					entry += " <i>(as [C.holder.fakekey])</i>"
+				entry += " ([round(C.avgping, 1)]ms)"
+				Lines += entry
+	else
+		for(var/client/C in GLOB.clients)
+			if(C.holder && C.holder.fakekey)
+				Lines += "[C.holder.fakekey] ([round(C.avgping, 1)]ms)"
+			else
+				Lines += "[C.key] ([round(C.avgping, 1)]ms)"
 
-	if(length(GLOB.mentors) > 0)
-		Lines += "<b>Mentors:</b>"
-		for(var/client/C in sortList(GLOB.clients))
-			var/mentor = GLOB.mentor_datums[C.ckey]
-			if(mentor)
-				Lines += "\t <font color='#0033CC'>[C.key]</font>[show_info(C)]"
-
-	Lines += "<b>Players:</b>"
-	for(var/client/C in sortList(GLOB.clients))
-		if(!check_mentor_other(C) || (C.holder && C.holder.fakekey))
-			Lines += "\t [C.key][show_info(C)]"
-
-	for(var/line in Lines)
+	for(var/line in sortList(Lines))
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	src << msg
-
-/client/proc/show_info(var/client/C)
-	if(!C)
-		return ""
-
-	if(!src.holder)
-		return ""
-
-	var/entry = ""
-	if(C.holder && C.holder.fakekey)
-		entry += " <i>(as [C.holder.fakekey])</i>"
-	if (isnewplayer(C.mob))
-		entry += " - <font color='darkgray'><b>In Lobby</b></font>"
-	else
-		entry += " - Playing as [C.mob.real_name]"
-		switch(C.mob.stat)
-			if(UNCONSCIOUS)
-				entry += " - <font color='darkgray'><b>Unconscious</b></font>"
-			if(DEAD)
-				if(isobserver(C.mob))
-					var/mob/dead/observer/O = C.mob
-					if(O.started_as_observer)
-						entry += " - <font color='gray'>Observing</font>"
-					else
-						entry += " - <font color='black'><b>DEAD</b></font>"
-				else
-					entry += " - <font color='black'><b>DEAD</b></font>"
-		if(is_special_character(C.mob))
-			entry += " - <b><font color='red'>Antagonist</font></b>"
-	entry += " (<A HREF='?_src_=holder;adminmoreinfo=\ref[C.mob]'>?</A>)"
-	entry += " ([round(C.avgping, 1)]ms)"
-	return entry
+	to_chat(src, msg)
 
 /client/verb/adminwho()
 	set category = "Admin"
@@ -91,23 +85,4 @@
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
 		msg += "<span class='info'>Adminhelps are also sent to IRC. If no admins are available in game adminhelp anyways and an admin on IRC will see it and respond.</span>"
-	src << msg
-
-/client/verb/mentorwho()
-	set category = "Mentor"
-	set name = "Mentorwho"
-	var/msg = "<b>Current Mentors:</b>\n"
-	for(var/client/C in GLOB.mentors)
-		var/suffix = ""
-		if(holder)
-			if(isobserver(C.mob))
-				suffix += " - Observing"
-			else if(istype(C.mob,/mob/dead/new_player))
-				suffix += " - Lobby"
-			else
-				suffix += " - Playing"
-
-			if(C.is_afk())
-				suffix += " (AFK)"
-		msg += "\t[C][suffix]\n"
 	to_chat(src, msg)

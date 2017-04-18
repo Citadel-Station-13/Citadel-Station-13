@@ -68,7 +68,7 @@
 		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
-
+/*
 	if(href_list["mentor_msg"])
 		if(config.mentors_mobname_only)
 			var/mob/M = locate(href_list["mentor_msg"])
@@ -76,7 +76,7 @@
 		else
 			cmd_mentor_pm(href_list["mentor_msg"],null)
 		return
-
+*/
 	//Logs all hrefs
 	if(config && config.log_hrefs && GLOB.href_logfile)
 		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
@@ -203,6 +203,8 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
+	else
+		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -549,10 +551,10 @@ GLOBAL_LIST(external_rsc_urls)
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
+/client/proc/is_afk(duration = config.inactivity_period)
 	if(inactivity > duration)
 		return inactivity
-	return 0
+	return FALSE
 
 // Byond seemingly calls stat, each tick.
 // Calling things each tick can get expensive real quick.

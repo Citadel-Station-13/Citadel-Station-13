@@ -426,10 +426,10 @@
 	var/mutativeness = 1
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production)
-	spawn_spacevine_piece(location, null, muts)
-	START_PROCESSING(SSobj, src)
 	vines = list()
 	growth_queue = list()
+	spawn_spacevine_piece(location, null, muts)
+	START_PROCESSING(SSobj, src)
 	vine_mutations_list = list()
 	init_subtypes(/datum/spacevine_mutation/, vine_mutations_list)
 	if(potency != null)
@@ -438,7 +438,7 @@
 		spread_cap *= production / 5
 		spread_multiplier /= production / 5
 
-/datum/spacevine_controller/vv_drop_down/vv_get_dropdown()
+/datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
 	.["Delete Vines"] = "?_src_=\ref[src];purge_vines=1"
@@ -494,7 +494,7 @@
 	if(!LAZYLEN(vines))
 		qdel(src) //space vines exterminated. Remove the controller
 		return
-	if(!LAZYLEN(growth_queue))
+	if(!growth_queue)
 		qdel(src) //Sanity check
 		return
 
