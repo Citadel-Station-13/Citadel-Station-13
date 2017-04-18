@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN	10
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX	19
+#define SAVEFILE_VERSION_MAX	20
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
@@ -125,7 +125,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BEASSISTANT
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
-	if(current_version < 19)//this should lower the amount of lag when you select or change something.
+	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
 		features["mam_tail"] 			= sanitize_inlist(features["mam_tail"], GLOB.mam_tails_list)
@@ -148,7 +148,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		//breasts features
 		features["has_breasts"]			= sanitize_integer(features["has_breasts"], 0, 1, 0)
 		features["breasts_size"]		= sanitize_inlist(features["breasts_size"], GLOB.breasts_size_list, "C")
-		features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, "pair")
+		features["breasts_shape"]		= sanitize_inlist(features["breasts_shape"], GLOB.breasts_shapes_list, "Pair")
 		features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, 0)
 		features["breasts_fluid"] 		= sanitize_inlist(features["breasts_fluid"], GLOB.milk_id_list, "milk")
 		//vagina features
