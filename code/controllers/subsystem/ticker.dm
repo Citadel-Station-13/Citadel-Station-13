@@ -83,7 +83,6 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			if(!modevoted)
 				send_gamemode_vote()
-				modevoted = TRUE
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
@@ -674,6 +673,7 @@ SUBSYSTEM_DEF(ticker)
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
 /datum/controller/subsystem/ticker/proc/send_gamemode_vote(var/)
+	SSticker.modevoted = TRUE
 	SSvote.initiate_vote("roundtype","server")
 
 /world/proc/has_round_started()
