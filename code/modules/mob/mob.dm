@@ -433,6 +433,7 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 	if (!( GLOB.abandon_allowed ))
+		if(!(client.holder))
 			return
 		log_game("[usr.name]/[usr.key] was allowed to bypass the respawn restriction because they are an admin.")
 		to_chat(src, "<span class='notice'>You have been allowed to bypass the respawn configuration due to being an admin.</span>")
