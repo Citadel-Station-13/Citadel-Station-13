@@ -70,3 +70,15 @@
 	if(linked_balls)
 		linked_balls.linked_penis = null
 		linked_balls = null
+
+/obj/item/organ/genital/penis/grow_size()
+	..()
+	. = (length != COCK_SIZE_MAX) //Only return true if we actually grew a size
+	length = Clamp(length + 1, COCK_SIZE_MIN, COCK_SIZE_MAX)
+	return
+
+/obj/item/organ/genital/penis/shrink_size()
+	..()
+	. = (length != COCK_SIZE_MIN)
+	length = Clamp(length - 1, COCK_SIZE_MIN, COCK_SIZE_MAX)
+	return

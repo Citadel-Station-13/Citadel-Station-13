@@ -42,7 +42,7 @@
 		else
 			desc = "That's breasts, they seem to be quite exotic."
 	if (size)
-		desc += " You estimate they're about [size]-cup size."
+		desc += " You estimate they're about [breastsize2cupsize(size)]-cup size."
 	else
 		desc += " You wouldn't measure them in cup sizes."
 	if(producing)
@@ -56,3 +56,16 @@
 				color = "#[skintone2hex(H.skin_tone)]"
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
+
+
+/obj/item/organ/genital/breasts/grow_size()
+	..()
+	. = (size != BREASTS_SIZE_MAX) //Only return true if we actually grew a size
+	size = Clamp(size + 1, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
+	return
+
+/obj/item/organ/genital/breasts/shrink_size()
+	..()
+	. = (size != BREASTS_SIZE_MIN)
+	size = Clamp(size - 1, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
+	return

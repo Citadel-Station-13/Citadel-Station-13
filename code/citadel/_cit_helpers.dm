@@ -178,6 +178,23 @@ GLOBAL_VAR_INIT(dlooc_allowed, 1)
 	return 1
 
 ////////////////////////
+//Breast size helpers //
+////////////////////////
+
+/proc/breastsize2cupsize(number)
+	if(GLOB.breasts_size_list)
+		return GLOB.breasts_size_list[number]
+	else
+		return "None" //No global list, no boobs
+
+/proc/cupsize2breastsize(cup)
+	if(GLOB.breasts_size_list)
+		return GLOB.breasts_size_list.Find(cup)
+	else
+		return 0 //No global list, no cupsizes
+
+
+////////////////////////
 //DANGER | DEBUG PROCS//
 ////////////////////////
 
