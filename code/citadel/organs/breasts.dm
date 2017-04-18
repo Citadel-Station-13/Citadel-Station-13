@@ -57,15 +57,15 @@
 		else
 			color = "#[owner.dna.features["breasts_color"]]"
 
-
-/obj/item/organ/genital/breasts/grow_size()
+/obj/item/organ/genital/breasts/AdjustSize(amt)
 	..()
-	. = (size != BREASTS_SIZE_MAX) //Only return true if we actually grew a size
-	size = Clamp(size + 1, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
+	var/old_size = size
+	size = Clamp(size + amt, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
+	. = (old_size != size)
 	return
 
-/obj/item/organ/genital/breasts/shrink_size()
+/obj/item/organ/genital/breasts/SetSize(new_size)
 	..()
-	. = (size != BREASTS_SIZE_MIN)
-	size = Clamp(size - 1, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
+	. = (new_size != size)
+	size = Clamp(new_size, BREASTS_SIZE_MIN, BREASTS_SIZE_MAX)
 	return
