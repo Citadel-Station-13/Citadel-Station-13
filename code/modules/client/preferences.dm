@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"has_breasts" 		= FALSE,
 		"breasts_color" 	= "fff",
 		"breasts_size" 		= "C",
-		"breasts_shape"		= "pair",
+		"breasts_shape"		= "Pair",
 		"breasts_fluid" 	= "milk",
 		"has_vag"			= FALSE,
 		"vag_shape"			= "Human",
