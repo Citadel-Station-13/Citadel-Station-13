@@ -1,0 +1,33 @@
+diff a/code/modules/admin/verbs/adminhelp.dm b/code/modules/admin/verbs/adminhelp.dm	(rejected hunks)
+@@ -471,7 +476,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
+ 			else 
+ 				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
+ 		else
+-			current_ticket.interactions += "[key_name_admin(usr)] opened a new ticket."
++			current_ticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
+ 			current_ticket.Close()
+ 
+ 	new /datum/admin_help(msg, src, FALSE)
+@@ -505,17 +510,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
+ //Use this proc when an admin takes action that may be related to an open ticket on what
+ //what can be a client, ckey, or mob
+ /proc/admin_ticket_log(what, message)
+-	var/client/C = what
++	var/client/C
+ 	var/mob/Mob = what
+ 	if(istype(Mob))
+ 		C = Mob.client
++	else
++		C = what
+ 	if(istype(C) && C.current_ticket)
+-		C.current_ticket.interactions += message
++		C.current_ticket.AddInteraction(message)
+ 		return C.current_ticket
+ 	if(istext(what))	//ckey
+ 		var/datum/admin_help/AH = GLOB.ahelp_tickets.CKey2ActiveTicket(what)
+ 		if(AH)
+-			AH.interactions += message
++			AH.AddInteraction(message)
+ 			return AH
+ 
+ //
