@@ -258,11 +258,6 @@ There are several things that need to be remembered:
 	if(get_num_legs() <2)
 		return
 
-	if("taur" in dna.species.mutant_bodyparts)
-		var/tpref = dna.features["taur"]
-		if(tpref == "Naga")
-			return
-
 	if(client && hud_used)
 		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_shoes]
 		inv.update_icon()

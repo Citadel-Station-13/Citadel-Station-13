@@ -429,8 +429,14 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
 		return
+	if (!( GLOB.abandon_allowed ))
+		if(!(client.holder))
+			return
+		log_game("[usr.name]/[usr.key] was allowed to bypass the respawn restriction because they are an admin.")
+		to_chat(src, "<span class='notice'>You have been allowed to bypass the respawn configuration due to being an admin.</span>")
 	if ((stat != 2 || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
@@ -439,9 +445,6 @@
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
