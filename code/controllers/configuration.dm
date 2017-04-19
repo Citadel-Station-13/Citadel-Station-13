@@ -66,9 +66,7 @@
 	var/respawn = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
-	var/inactivity_period = 3000		//time in ds until a player is considered inactive
-	var/afk_period = 6000				//time in ds until a player is considered afk and kickable
-	var/kick_inactive = FALSE			//force disconnect for inactive players
+	var/kick_inactive = 0				//force disconnect for inactive players
 	var/load_jobs_from_txt = 0
 	var/automute_on = 0					//enables automuting/spam prevention
 	var/minimal_access_threshold = 0	//If the number of players is larger than this threshold, minimal access will be turned on.
@@ -412,12 +410,10 @@
 					usewhitelist = TRUE
 				if("allow_metadata")
 					allow_Metadata = 1
-				if("inactivity_period")
-					inactivity_period = text2num(value) * 10 //documented as seconds in config.txt
-				if("afk_period")
-					afk_period = text2num(value) * 10 // ^^^
 				if("kick_inactive")
-					kick_inactive = TRUE
+					if(value < 1)
+						value = INACTIVITY_KICK
+					kick_inactive = value
 				if("load_jobs_from_txt")
 					load_jobs_from_txt = 1
 				if("forbid_singulo_possession")
@@ -774,10 +770,8 @@
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = text2num(value)
-				if ("mentor_mobname_only")
-					mentors_mobname_only 	= 1
-				if ("mentor_legacy_system")
-					mentor_legacy_system 	= 1
+				if("mice_roundstart")
+					mice_roundstart = text2num(value)
 				else
 					GLOB.diary << "Unknown setting in configuration: '[name]'"
 
