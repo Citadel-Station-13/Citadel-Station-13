@@ -5,7 +5,7 @@
 	var/extra2 = 0
 	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
-//	var/list/ckeys_allowed = null
+	var/list/ckeys_allowed = null
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
@@ -367,12 +367,13 @@
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
-//	ckeys_allowed = list("rubyflamewing")
+	ckeys_allowed = list("rubyflamewing")
 
 /datum/sprite_accessory/mam_tails_animated/shark/datashark
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
+	ckeys_allowed = list("rubyflamewing")
 
 /datum/sprite_accessory/mam_tails/shepherd
 	name = "Shepherd"
