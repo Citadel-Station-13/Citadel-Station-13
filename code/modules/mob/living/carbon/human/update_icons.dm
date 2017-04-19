@@ -544,9 +544,14 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "-not_coloured"
 
 	. += "-[gender]"
-
+	var/istaur = 0
+	if(ishuman(src))
+		if(("taur" in dna.species.mutant_bodyparts) && (dna.features["taur"] != "None"))
+			istaur = 1
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg)) )
+			continue
 		. += "-[BP.body_zone]"
 		if(BP.status == BODYPART_ORGANIC)
 			. += "-organic"
