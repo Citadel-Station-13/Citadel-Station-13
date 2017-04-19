@@ -5,7 +5,7 @@
 	var/extra2 = 0
 	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
-//	var/list/ckeys_allowed = null
+	var/list/ckeys_allowed = list()
 
 /* tbi eventually idk
 /datum/sprite_accessory/legs/digitigrade_mam
@@ -331,7 +331,7 @@
 	icon_state = "datashark"
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
-//	ckeys_allowed = list("rubyflamewing")
+	ckeys_allowed = list("rubyflamewing")
 
 
 //Squirrel
@@ -398,7 +398,7 @@
 	icon_state = "shepherd"
 	extra = 1
 	extra2 = 1
-	
+
 // Eevee
 /datum/sprite_accessory/mam_tails/eevee
 	name = "Eevee"
@@ -518,7 +518,7 @@
 	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
-	
+
 /datum/sprite_accessory/mam_body_markings/eevee
 	name = "Eevee"
 	icon_state = "eevee"
@@ -591,7 +591,7 @@
 /datum/sprite_accessory/taur/drider
 	name = "Drider"
 	icon_state = "drider"
-	
+
 /datum/sprite_accessory/taur/eevee
 	name = "Eevee"
 	icon_state = "eevee"
