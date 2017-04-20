@@ -21,9 +21,9 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(50))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(owner.loc,"digest_pred",75,0,-5,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",75,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M),"digest_prey",80, channel=CHANNEL_PREY)
+				M.playsound_direct("digest_prey",60)
 
 			//Pref protection!
 			if (!M.digestable)
@@ -49,9 +49,9 @@
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(owner.loc,"death_pred",75,0,-5,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"death_pred",50,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M),"death_prey",80, channel=CHANNEL_PREY)
+				M.playsound_direct("death_prey",60)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -68,9 +68,9 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(50))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(owner.loc,"digest_pred",75,0,-5,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",50,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local(get_turf(M),"digest_prey",80, channel=CHANNEL_PREY)
+				M.playsound_direct("digest_prey",60)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
