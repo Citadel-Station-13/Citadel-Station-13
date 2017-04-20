@@ -68,6 +68,7 @@
 		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
+
 /*
 	if(href_list["mentor_msg"])
 		if(config.mentors_mobname_only)
@@ -77,15 +78,13 @@
 			cmd_mentor_pm(href_list["mentor_msg"],null)
 		return
 */
+
 	//Logs all hrefs
 	if(config && config.log_hrefs && GLOB.href_logfile)
 		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
-		if (href_list["ahelp_reply"])
-			cmd_ahelp_reply(href_list["priv_msg"])
-			return
 		cmd_admin_pm(href_list["priv_msg"],null)
 		return
 
@@ -166,6 +165,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
+
+	GLOB.ahelp_tickets.ClientLogin(src)
 
 	//Admin Authorisation
 	var/localhost_addresses = list("127.0.0.1", "::1")
@@ -361,6 +362,8 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
+
+	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
 	if(movingmob != null)
