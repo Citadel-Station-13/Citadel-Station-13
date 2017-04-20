@@ -106,6 +106,7 @@
 		return 0
 	for (var/atom/movable/M in internal_contents)
 		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+		M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 		internal_contents.Remove(M)  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
@@ -123,6 +124,7 @@
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 	src.internal_contents.Add(M)  // Remove from the belly contents
 	var/datum/belly/B = check_belly(owner)
 	if(B)
