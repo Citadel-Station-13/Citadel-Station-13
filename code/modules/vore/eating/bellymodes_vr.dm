@@ -20,9 +20,10 @@
 	if(digest_mode == DM_DIGEST)
 		for (var/mob/living/M in internal_contents)
 			if(prob(50))
-				playsound(owner.loc, "digest_pred", 75, 0, -5)
-				var/preysound = pick(GLOB.digest_prey)
-				M << sound(preysound,volume=80)
+				M.stop_sound_channel(CHANNEL_PRED)
+				playsound(owner.loc,"digest_pred",75,0,-5,channel=CHANNEL_PRED)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local(get_turf(M),"digest_prey",80, channel=CHANNEL_PREY)
 
 			//Pref protection!
 			if (!M.digestable)
@@ -47,9 +48,10 @@
 				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>", "<span class='warning'>[digest_alert_prey]</span>")
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
-				playsound(owner.loc, "death_pred", 75, 0, -5)
-				var/preysound = pick(GLOB.death_prey)
-				M << sound(preysound,volume=80)
+				M.stop_sound_channel(CHANNEL_PRED)
+				playsound(owner.loc,"death_pred",75,0,-5,channel=CHANNEL_PRED)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local(get_turf(M),"death_prey",80, channel=CHANNEL_PREY)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -65,9 +67,10 @@
 	if(digest_mode == DM_HEAL)
 		for (var/mob/living/M in internal_contents)
 			if(prob(50))
-				playsound(owner.loc, "digest_pred", 75, 0, -5)
-				var/preysound = pick(GLOB.digest_prey)
-				M << sound(preysound,volume=80)
+				M.stop_sound_channel(CHANNEL_PRED)
+				playsound(owner.loc,"digest_pred",75,0,-5,channel=CHANNEL_PRED)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local(get_turf(M),"digest_prey",80, channel=CHANNEL_PREY)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))

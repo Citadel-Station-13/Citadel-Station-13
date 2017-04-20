@@ -59,14 +59,14 @@ GLOBAL_LIST_INIT(pred_vore_sounds, list(
 		"Squish4" = 'sound/vore/pred/squish_04.ogg',
 		"Rustle (cloth)" = 'sound/effects/rustle5.ogg',
 		"None" = null))
-
+/*
 GLOBAL_LIST_INIT(pred_struggle_sounds, list(
 		"Struggle1" = 'sound/vore/pred/struggle_01.ogg',
 		"Struggle2" = 'sound/vore/pred/struggle_02.ogg',
 		"Struggle3" = 'sound/vore/pred/struggle_03.ogg',
 		"Struggle4" = 'sound/vore/pred/struggle_04.ogg',
 		"Struggle5" = 'sound/vore/pred/struggle_05.ogg'))
-
+*/
 GLOBAL_LIST_INIT(prey_vore_sounds, list(
 		"Gulp" = 'sound/vore/prey/swallow_01.ogg',
 		"Swallow" = 'sound/vore/prey/swallow_02.ogg',
@@ -79,6 +79,7 @@ GLOBAL_LIST_INIT(prey_vore_sounds, list(
 		"Squish3" = 'sound/vore/prey/squish_03.ogg',
 		"Squish4" = 'sound/vore/prey/squish_04.ogg'))
 
+/*
 GLOBAL_LIST_INIT(prey_struggle_sounds, list(
 		"Struggle1" = 'sound/vore/prey/struggle_01.ogg',
 		"Struggle2" = 'sound/vore/prey/struggle_02.ogg',
@@ -117,13 +118,4 @@ GLOBAL_LIST_INIT(death_prey, list(
 		"death8"	= 'sound/vore/prey/death_08.ogg',
 		"death9"	= 'sound/vore/prey/death_09.ogg',
 		"death10"	= 'sound/vore/prey/death_10.ogg'))
-
-/*
-
-/proc/log_debug(text)
-	if (config.log_debug)
-		diary << "\[[time_stamp()]]DEBUG: [text][log_end]"
-
-	for(var/client/C in admins)
-		if(C.prefs.toggles & CHAT_DEBUGLOGS)
-			C << "DEBUG: [text]" */
+ */

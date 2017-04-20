@@ -141,6 +141,7 @@
 
 	prey.forceMove(owner)
 	internal_contents.Add(prey)
+	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 80, channel = 50)
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -221,7 +222,7 @@
 /datum/belly/proc/digestion_death(var/mob/living/M)
 	is_full = TRUE
 	internal_contents.Remove(M)
-
+	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if (is_vore_predator(M))
 		for (var/bellytype in M.vore_organs)
@@ -285,7 +286,7 @@
 //	for(var/mob/M in hearers(4, owner))
 //		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(R.loc, "pred_struggle_sounds", 50, 0, -5)
+	playsound(R.loc, "struggle_sound", 80, 0, -5)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name].</span>")
