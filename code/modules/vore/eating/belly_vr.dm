@@ -11,7 +11,7 @@
 /datum/belly
 	var/name								// Name of this location
 	var/inside_flavor						// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = 'sound/vore/gulp.ogg'	// Sound when ingesting someone
+	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'	// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 60		// Time in deciseconds to swallow anything else
@@ -285,7 +285,7 @@
 //	for(var/mob/M in hearers(4, owner))
 //		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(R.loc, "struggle_sounds", 50, 0, -5)
+	playsound(R.loc, "pred_struggle_sounds", 50, 0, -5)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name].</span>")
@@ -296,7 +296,7 @@
 					release_specific_contents(R)
 					to_chat(R, "<span class='warning'>You climb out of \the [name].</span>")
 					to_chat(owner, "<span class='warning'>[R] climbs out of your [name]!</span>")
-					for(var/mob/M in hearers(4, owner))
+					for(var/mob/M in viewers(4, owner))
 						M.visible_message("<span class='warning'>[R] climbs out of [owner]'s [name]!</span>", 2)
 					return
 				else if(!(R in internal_contents)) //Aren't even in the belly. Quietly fail.
