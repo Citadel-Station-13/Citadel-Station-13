@@ -238,7 +238,9 @@
 			return 0
 
 	new_xeno.ckey = ckey
-	message_admins("<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>")
+	var/msg = "<span class='notice'>[key_name_admin(usr)] has spawned [ckey] as a filthy xeno [alien_caste].</span>"
+	message_admins(msg)
+	admin_ticket_log(new_xeno, msg)
 	return 1
 
 /*
@@ -297,7 +299,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_xeno)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_xeno.key = G_found.key
 				to_chat(new_xeno, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_xeno.key] as a filthy xeno.</span>"
+				message_admins(msg)
+				admin_ticket_log(new_xeno, msg)
 				return	//all done. The ghost is auto-deleted
 
 		//check if they were a monkey
@@ -307,7 +311,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				G_found.mind.transfer_to(new_monkey)	//be careful when doing stuff like this! I've already checked the mind isn't in use
 				new_monkey.key = G_found.key
 				to_chat(new_monkey, "You have been fully respawned. Enjoy the game.")
-				message_admins("<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>")
+				var/msg = "<span class='adminnotice'>[key_name_admin(usr)] has respawned [new_monkey.key] as a filthy xeno.</span>"
+				message_admins(msg)
+				admin_ticket_log(new_monkey, msg)
 				return	//all done. The ghost is auto-deleted
 
 
@@ -404,7 +410,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
 				AnnounceArrival(new_character, new_character.mind.assigned_role)
 
-	message_admins("<span class='adminnotice'>[admin] has respawned [player_key] as [new_character.real_name].</span>")
+	var/msg = "<span class='adminnotice'>[admin] has respawned [player_key] as [new_character.real_name].</span>"
+	message_admins(msg)
+	admin_ticket_log(new_character, msg)
 
 	to_chat(new_character, "You have been fully respawned. Enjoy the game.")
 
@@ -1169,5 +1177,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(ADMIN_PUNISHMENT_BSA)
 			bluespace_artillery(target)
 
-	message_admins("[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment].")
+	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
+	message_admins(msg)
+	admin_ticket_log(target, msg)
 	log_admin("[key_name(usr)] punished [key_name(target)] with [punishment].")

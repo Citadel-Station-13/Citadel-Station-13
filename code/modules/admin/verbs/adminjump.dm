@@ -129,7 +129,9 @@
 	if(!M)
 		return
 	log_admin("[key_name(usr)] teleported [key_name(M)]")
-	message_admins("[key_name_admin(usr)] teleported [key_name(M)]")
+	var/msg = "[key_name_admin(usr)] teleported [key_name_admin(M)]"
+	message_admins(msg)
+	admin_ticket_log(M, msg)
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.loc = M.loc
