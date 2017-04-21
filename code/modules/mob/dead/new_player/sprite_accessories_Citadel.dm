@@ -258,6 +258,8 @@
 /datum/sprite_accessory/mam_tails_animated/eevee
 	name = "Eevee"
 	icon_state = "eevee"
+	extra = 1
+	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_ears/fennec
 	name = "Fennec"
