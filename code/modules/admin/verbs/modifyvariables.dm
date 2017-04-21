@@ -528,7 +528,7 @@ GLOBAL_PROTECT(VVpixelmovement)
 		variable = input("Which var?","Var") as null|anything in names
 		if(!variable)
 			return
-	
+
 	if(!O.can_vv_get(variable))
 		return
 
@@ -614,4 +614,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 	log_world("### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]")
 	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	var/msg = "[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]"
+	message_admins(msg)
+	admin_ticket_log(O, msg)

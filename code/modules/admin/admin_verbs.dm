@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(admin_verbs_default, AVerbsDefault())
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 //	/client/proc/mentor_memo,			/*mentor memo system. show/delete/write. +SERVER needed to delete mentor memos of others*/
+	/client/proc/cmd_admin_ticket_panel,
 	/client/proc/stop_sounds
 	)
 GLOBAL_PROTECT(admin_verbs_admin)
