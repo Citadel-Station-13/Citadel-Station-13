@@ -17,30 +17,7 @@ obj/item/weapon/dildo
 	var/random_color 	= TRUE
 	var/random_size 	= FALSE
 	var/random_shape 	= FALSE
-	//these lists are used to generate random icons, stats, and names
-	var/list/possible_colors = list(//mostly neon colors
-		"Cyan"		= "#00f9ff",//cyan
-		"Green"		= "#49ff00",//green
-		"Pink"		= "#ff4adc",//pink
-		"Yellow"	= "#fdff00",//yellow
-		"Blue"		= "#00d2ff",//blue
-		"Lime"		= "#89ff00",//lime
-		"Black"		= "#101010",//black
-		"Red"		= "#ff0000",//red
-		"Orange"	= "#ff9a00",//orange
-		"Purple"	= "#e300ff"//purple
-		)
-	var/list/possible_shapes = list(
-		"Human"		= "human",
-		"Knotted"	= "knotted",
-		"Plain"		= "plain",
-		"Flared"	= "flared"
-		)
-	var/list/possible_sizes = list(
-		"Small"		= 1,
-		"Medium"	= 2,
-		"Big"		= 3
-		)
+	//Lists moved to _cit_helpers.dm as globals so they're not instanced individually
 
 obj/item/weapon/dildo/proc/update_appearance()
 	icon_state = "[dildo_type]_[dildo_shape]_[dildo_size]"
@@ -72,22 +49,22 @@ obj/item/weapon/dildo/proc/customize(mob/living/user)
 	if(!can_customize)
 		return FALSE
 	if(src && !user.incapacitated() && in_range(user,src))
-		var/color_choice = input(user,"Choose a color for your dildo.","Dildo Color") as null|anything in possible_colors
+		var/color_choice = input(user,"Choose a color for your dildo.","Dildo Color") as null|anything in GLOB.dildo_colors
 		if(src && color_choice && !user.incapacitated() && in_range(user,src))
-			sanitize_inlist(color_choice, possible_colors, "Red")
-			color = possible_colors[color_choice]
+			sanitize_inlist(color_choice, GLOB.dildo_colors, "Red")
+			color = GLOB.dildo_colors[color_choice]
 	update_appearance()
 	if(src && !user.incapacitated() && in_range(user,src))
-		var/shape_choice = input(user,"Choose a shape for your dildo.","Dildo Shape") as null|anything in possible_shapes
+		var/shape_choice = input(user,"Choose a shape for your dildo.","Dildo Shape") as null|anything in GLOB.dildo_shapes
 		if(src && shape_choice && !user.incapacitated() && in_range(user,src))
-			sanitize_inlist(shape_choice, possible_colors, "Knotted")
-			dildo_shape = possible_shapes[shape_choice]
+			sanitize_inlist(shape_choice, GLOB.dildo_colors, "Knotted")
+			dildo_shape = GLOB.dildo_shapes[shape_choice]
 	update_appearance()
 	if(src && !user.incapacitated() && in_range(user,src))
-		var/size_choice = input(user,"Choose the size for your dildo.","Dildo Size") as null|anything in possible_sizes
+		var/size_choice = input(user,"Choose the size for your dildo.","Dildo Size") as null|anything in GLOB.dildo_sizes
 		if(src && size_choice && !user.incapacitated() && in_range(user,src))
-			sanitize_inlist(size_choice, possible_colors, "Medium")
-			dildo_size = possible_sizes[size_choice]
+			sanitize_inlist(size_choice, GLOB.dildo_colors, "Medium")
+			dildo_size = GLOB.dildo_sizes[size_choice]
 	update_appearance()
 	if(src && !user.incapacitated() && in_range(user,src))
 		var/transparency_choice = input(user,"Choose the transparency of your dildo. Lower is more transparent!(192-255)","Dildo Transparency") as null|num
@@ -98,15 +75,16 @@ obj/item/weapon/dildo/proc/customize(mob/living/user)
 	return TRUE
 
 obj/item/weapon/dildo/Initialize()
+	. = ..()
 	if(random_color == TRUE)
-		var/randcolor = pick(possible_colors)
-		color = possible_colors[randcolor]
+		var/randcolor = pick(GLOB.dildo_colors)
+		color = GLOB.dildo_colors[randcolor]
 	if(random_shape == TRUE)
-		var/randshape = pick(possible_shapes)
-		dildo_shape = possible_shapes[randshape]
+		var/randshape = pick(GLOB.dildo_shapes)
+		dildo_shape = GLOB.dildo_shapes[randshape]
 	if(random_size == TRUE)
-		var/randsize = pick(possible_sizes)
-		dildo_size = possible_sizes[randsize]
+		var/randsize = pick(GLOB.dildo_sizes)
+		dildo_size = GLOB.dildo_sizes[randsize]
 	update_appearance()
 	alpha		= rand(192, 255)
 	pixel_y 	= rand(-7,7)

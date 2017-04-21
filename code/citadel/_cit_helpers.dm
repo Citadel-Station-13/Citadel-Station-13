@@ -56,10 +56,34 @@ GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initialization
 GLOBAL_LIST_EMPTY(breasts_size_list)
 GLOBAL_LIST_EMPTY(breasts_shapes_list)
 GLOBAL_LIST_EMPTY(vagina_shapes_list)
-GLOBAL_LIST_INIT(cum_into_containers_list, /obj/item/weapon/reagent_containers/food/snacks/pie) //Yer fuggin snowflake name list jfc
+GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/weapon/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
 GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
 GLOBAL_LIST_INIT(cum_id_list,"semen")
 GLOBAL_LIST_INIT(milk_id_list,"milk")
+
+GLOBAL_LIST_INIT(dildo_shapes, list(
+		"Human"		= "human",
+		"Knotted"	= "knotted",
+		"Plain"		= "plain",
+		"Flared"	= "flared"
+		))
+GLOBAL_LIST_INIT(dildo_sizes, list(
+		"Small"		= 1,
+		"Medium"	= 2,
+		"Big"		= 3
+		))
+GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
+		"Cyan"		= "#00f9ff",//cyan
+		"Green"		= "#49ff00",//green
+		"Pink"		= "#ff4adc",//pink
+		"Yellow"	= "#fdff00",//yellow
+		"Blue"		= "#00d2ff",//blue
+		"Lime"		= "#89ff00",//lime
+		"Black"		= "#101010",//black
+		"Red"		= "#ff0000",//red
+		"Orange"	= "#ff9a00",//orange
+		"Purple"	= "#e300ff"//purple
+		))
 
 //mentor stuff
 GLOBAL_LIST_EMPTY(mentors)
