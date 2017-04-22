@@ -338,6 +338,54 @@
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
+/obj/item/weapon/robot_module/k9
+	name = "Security K-9 Unit module"
+	basic_modules = list(
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/dog,
+		/obj/item/weapon/dogborg/jaws/big,
+		/obj/item/weapon/dogborg/pounce,
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/gun/energy/disabler/cyborg)
+	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
+		/obj/item/clockwork/ratvarian_spear/cyborg)
+	cyborg_base_icon = "k9"
+	moduleselect_icon = "k9"
+	feedback_key = "cyborg_k9"
+	can_be_pushed = FALSE
+	hat_offset = INFINITY
+
+/obj/item/weapon/robot_module/k9/do_transform_animation()
+	..()
+	loc << "<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
+	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
+
+/obj/item/weapon/robot_module/medihound
+	name = "MediHound module"
+	basic_modules = list(
+		/obj/item/weapon/dogborg/jaws/small,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/dogborg/sleeper,
+		/obj/item/weapon/twohanded/shockpaddles/hound,
+		/obj/item/device/sensor_device)
+	emag_modules = list(/obj/item/weapon/dogborg/pounce)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
+		/obj/item/clockwork/ratvarian_spear/cyborg)
+	cyborg_base_icon = "medihound"
+	moduleselect_icon = "medihound"
+	feedback_key = "cyborg_medihound"
+	can_be_pushed = FALSE
+	hat_offset = INFINITY
+
+/obj/item/weapon/robot_module/medihound/do_transform_animation()
+	..()
+	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules

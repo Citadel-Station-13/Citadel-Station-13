@@ -1,13 +1,10 @@
-// Special tools and items for "Borgi" and "K-9 Unit"
-// PASTA SPAGHETTI FEST WOOHOOO!!! var/regrets = null
-
 /obj/item/weapon/dogborg/jaws/big
 	name = "combat jaws"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "jaws"
 	desc = "The jaws of the law."
 	flags = CONDUCT
-	force = 10
+	force = 12
 	throwforce = 0
 	hitsound = 'sound/weapons/bite.ogg'
 	attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
@@ -20,7 +17,7 @@
 	icon_state = "smalljaws"
 	desc = "The jaws of a small dog."
 	flags = CONDUCT
-	force = 5
+	force = 6
 	throwforce = 0
 	hitsound = 'sound/weapons/bite.ogg'
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
@@ -38,7 +35,7 @@
 			icon_state = "jaws"
 			desc = "The jaws of the law."
 			flags = CONDUCT
-			force = 10
+			force = 12
 			throwforce = 0
 			hitsound = 'sound/weapons/bite.ogg'
 			attack_verb = list("chomped", "bit", "ripped", "mauled", "enforced")
@@ -62,20 +59,19 @@
 //Cuffs
 
 /obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user)
-	if(isrobot(user))
-		if(!C.handcuffed)
-			playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
-			C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
-								"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
-			if(do_mob(user, C, 30))
-				if(!C.handcuffed)
-					C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
-					C.update_inv_handcuffed(0)
-					user << "<span class='notice'>You handcuff [C].</span>"
-					playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
-					add_logs(user, C, "handcuffed")
-			else
-				user << "<span class='warning'>You fail to handcuff [C]!</span>"
+	if(!C.handcuffed)
+		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
+		C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
+							"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
+		if(do_mob(user, C, 30))
+			if(!C.handcuffed)
+				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+				C.update_inv_handcuffed(0)
+				user << "<span class='notice'>You handcuff [C].</span>"
+				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+				add_logs(user, C, "handcuffed")
+		else
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 
 //Boop
@@ -95,7 +91,7 @@
 	user.visible_message("[user] sniffs around the air.", "<span class='warning'>You sniff the air for gas traces.</span>")
 
 	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
+	if(!istype(location))
 		return
 
 	var/datum/gas_mixture/environment = location.return_air()
@@ -103,15 +99,15 @@
 	var/pressure = environment.return_pressure()
 	var/total_moles = environment.total_moles()
 
-	user.show_message("<span class='info'><B>Results:</B></span>", 1)
+	to_chat(user, "<span class='info'><B>Results:</B></span>")
 	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
+		to_chat(user, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
 	else
-		user.show_message("<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>", 1)
+		to_chat(user, "<span class='alert'>Pressure: [round(pressure,0.1)] kPa</span>")
 	if(total_moles)
 		var/list/env_gases = environment.gases
 
-		environment.assert_gases(arglist(hardcoded_gases))
+		environment.assert_gases(arglist(GLOB.hardcoded_gases))
 		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
 		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
 		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
@@ -119,27 +115,32 @@
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
-			user << "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='info'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
 		else
-			user << "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='alert'>Nitrogen: [round(n2_concentration*100, 0.01)] %</span>")
 
 		if(abs(o2_concentration - O2STANDARD) < 2)
-			user << "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='info'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
 		else
-			user << "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='alert'>Oxygen: [round(o2_concentration*100, 0.01)] %</span>")
 
 		if(co2_concentration > 0.01)
-			user << "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='alert'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
 		else
-			user << "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='info'>CO2: [round(co2_concentration*100, 0.01)] %</span>")
 
 		if(plasma_concentration > 0.005)
-			user << "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='alert'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
 		else
-			user << "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>"
+			to_chat(user, "<span class='info'>Plasma: [round(plasma_concentration*100, 0.01)] %</span>")
 
-		user.show_message("<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>", 1)
-	return
+
+		for(var/id in env_gases)
+			if(id in GLOB.hardcoded_gases)
+				continue
+			var/gas_concentration = env_gases[id][MOLES]/total_moles
+			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
+		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
 
 //Delivery
@@ -262,7 +263,6 @@
 		if(do_after(user, src.cleanspeed, target = target))
 			user << "<span class='notice'>You clean \the [target.name].</span>"
 			target.color = initial(target.color)
-			target.set_opacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
@@ -382,13 +382,13 @@
 	else
 		dat += "<span class='linkOff'>Inject Epinephrine</span>"
 	if(patient && patient.health > min_health)
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
+		for(var/chem in injection_chems)
+			var/datum/reagent/C = GLOB.chemical_reagents_list[chem]
 			if(C)
 				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
 	else
-		for(var/re in injection_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
+		for(var/chem in injection_chems)
+			var/datum/reagent/C = GLOB.chemical_reagents_list[chem]
 			if(C)
 				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
 
@@ -473,7 +473,7 @@
 				var/mob/living/silicon/robot.R = user
 				R.cell.charge = R.cell.charge - 250 //-250 charge per sting.
 			var/units = round(patient.reagents.get_reagent_amount(chem))
-			user << "<span class='notice'>Occupant now has [units] unit\s of [chemical_reagents_list[chem]] in their bloodstream.</span>"
+			user << "<span class='notice'>Occupant now has [units] unit\s of [GLOB.chemical_reagents_list[chem]] in their bloodstream.</span>"
 
 /obj/item/weapon/dogborg/sleeper/process()
 	if(src.occupied == 0)
