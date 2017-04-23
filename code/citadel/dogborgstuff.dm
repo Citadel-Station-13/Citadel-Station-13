@@ -25,6 +25,10 @@
 	sharpness = IS_SHARP
 	var/emagged = 0
 
+/obj/item/weapon/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
+	..()
+	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
+
 /obj/item/weapon/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.emagged)
@@ -312,6 +316,10 @@
 /obj/item/weapon/dogborg/sleeper/Exit(atom/movable/O)
 	return 0
 
+/obj/item/weapon/dogborg/sleeper/attack(mob/M, mob/living/silicon/robot/user)
+	..()
+	user.do_attack_animation(M, ATTACK_EFFECT_BITE)
+
 /obj/item/weapon/dogborg/sleeper/afterattack(mob/living/carbon/target, mob/living/silicon/user, proximity)
 	if(!proximity)
 		return
@@ -324,6 +332,7 @@
 		if(!patient_insertion_check(target))
 			return
 		target.forceMove(src)
+		playsound(user.loc, 'sound/vore/gulp.ogg', 50, 1)
 		patient = target
 		hound = user
 		target.reset_perspective(src)
