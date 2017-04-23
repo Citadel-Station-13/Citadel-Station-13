@@ -32,6 +32,12 @@
 	update_appearance()
 	update_link()
 
+////Size-changing procs should return TRUE if size change happened, FALSE if not
+/obj/item/organ/genital/proc/AdjustSize()
+
+/obj/item/organ/genital/proc/SetSize()
+
+
 /obj/item/organ/genital/proc/update_size()
 
 /obj/item/organ/genital/proc/update_appearance()

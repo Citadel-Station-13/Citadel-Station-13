@@ -70,3 +70,16 @@
 	if(linked_balls)
 		linked_balls.linked_penis = null
 		linked_balls = null
+
+/obj/item/organ/genital/penis/AdjustSize(amt)
+	..()
+	var/old_length = length
+	length = Clamp(length + amt, COCK_SIZE_MIN, COCK_SIZE_MAX)
+	. = (old_length != length)
+	return
+
+/obj/item/organ/genital/penis/SetSize(new_length)
+	..()
+	. = (new_length != length)
+	length = Clamp(new_length, COCK_SIZE_MIN, COCK_SIZE_MAX)
+	return
