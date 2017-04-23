@@ -520,7 +520,7 @@
 	var/sleeper_g
 	var/sleeper_r
 
-#define MAX_K9_LEAP_DIST 3 //Dropped from 7 to 3 because waa waa
+#define MAX_K9_LEAP_DIST 1 //because something's definitely borked the pounce functioning from a distance.
 
 /obj/item/weapon/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot.R = user
@@ -531,7 +531,7 @@
 		src << "<span class='danger'>Your leg actuators are still recharging!</span>"
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
@@ -544,38 +544,49 @@
 
 	else
 		leaping = 1
+		weather_immunities += "lava"
 		pixel_y = 10
-		throw_at(A,MAX_K9_LEAP_DIST,1, spin=0, diagonals_first = 1)
+		update_icons()
+		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		leaping = 0
 		pixel_y = initial(pixel_y)
+		update_icons()
 		cell.charge = cell.charge - 500 //Doubled the energy consumption
+		weather_immunities -= "lava"
 		pounce_cooldown = !pounce_cooldown
 		spawn(pounce_cooldown_time)
 			pounce_cooldown = !pounce_cooldown
 
-/mob/living/silicon/robot/throw_impact(atom/A, params)
+/mob/living/silicon/robot/throw_impact(atom/A)
 
 	if(!leaping)
 		return ..()
 
 	if(A)
-		if(istype(A, /mob/living))
+		if(isliving(A))
 			var/mob/living/L = A
 			var/blocked = 0
 			if(ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if(H.check_shields(90, "the [name]", src, 1))
+				if(H.check_shields(0, "the [name]", src, attack_type = LEAP_ATTACK))
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(2)// NO LONGER enough to cuff em before they run off again, unless you're lucky. Requested nerf.
+				L.Weaken(7)//Racked nerfs back up to stunbaton levels to make up for the distance pouncing being fuckered.
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
+			else
+				Weaken(2, 1, 1)
 
+			leaping = 0
+			pounce_cooldown = !pounce_cooldown
+			spawn(pounce_cooldown_time) //3s by default
+				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>")
-			weakened = 2
+			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
+			Weaken(2, 1, 1)
 
 		if(leaping)
 			leaping = 0
+			update_icons()
 			update_canmove()
