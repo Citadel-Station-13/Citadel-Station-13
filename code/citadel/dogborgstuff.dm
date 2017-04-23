@@ -332,7 +332,7 @@
 		if(!patient_insertion_check(target))
 			return
 		target.forceMove(src)
-		playsound(user.loc, 'sound/vore/gulp.ogg', 50, 1)
+		playsound(user.loc, 'sound/vore/gulpold.ogg', 50, 1)
 		patient = target
 		hound = user
 		target.reset_perspective(src)
