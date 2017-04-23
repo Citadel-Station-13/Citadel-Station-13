@@ -288,7 +288,9 @@
 //	for(var/mob/M in hearers(4, owner))
 //		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(R.loc, "struggle_sound", 80, 0, -5)
+	playsound(get_turf(owner),"struggle_sound",75,0,-5,1,channel=51)
+	R.stop_sound_channel(51)
+	R.playsound_direct("prey_struggle_sound",60)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
 		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name].</span>")
