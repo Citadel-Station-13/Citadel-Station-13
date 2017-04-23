@@ -607,6 +607,10 @@
 		if(stat == DEAD)
 			icon_state = "k9-wreck"
 
+	if(module.cyborg_base_icon == "robot")
+		icon = 'icons/mob/robots.dmi'
+		pixel_x = initial(pixel_x)
+
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
