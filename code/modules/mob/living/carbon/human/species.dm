@@ -229,22 +229,22 @@
 				fhair_state += dynamic_fhair_suffix
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
 
-			var/image/img_facial = image("icon" = fhair_file, "icon_state" = fhair_state, "layer" = -HAIR_LAYER)
+			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
 
 			if(!forced_colour)
 				if(hair_color)
 					if(hair_color == "mutcolor")
-						img_facial.color = "#" + H.dna.features["mcolor"]
+						facial_overlay.color = "#" + H.dna.features["mcolor"]
 					else
-						img_facial.color = "#" + hair_color
+						facial_overlay.color = "#" + hair_color
 				else
-					img_facial.color = "#" + H.facial_hair_color
+					facial_overlay.color = "#" + H.facial_hair_color
 			else
-				img_facial.color = forced_colour
+				facial_overlay.color = forced_colour
 
-			img_facial.alpha = hair_alpha
+			facial_overlay.alpha = hair_alpha
 
-			standing += img_facial
+			standing += facial_overlay
 
 	if(H.head)
 		var/obj/item/I = H.head
@@ -262,9 +262,11 @@
 			hair_hidden = TRUE
 
 	if(!hair_hidden || dynamic_hair_suffix)
+		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
-				standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER)
+				hair_overlay.icon = 'icons/mob/human_face.dmi'
+				hair_overlay.icon_state = "debrained"
 
 		else if(H.hair_style && (HAIR in species_traits))
 			S = GLOB.hair_styles_list[H.hair_style]

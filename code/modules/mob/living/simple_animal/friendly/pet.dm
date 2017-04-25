@@ -47,5 +47,7 @@
 
 /mob/living/simple_animal/pet/regenerate_icons()
 	cut_overlays()
-	add_overlay(collar)
-	add_overlay(pettag)
+	if(collar)
+		add_overlay(collar)
+	if(pettag)
+		add_overlay(pettag)
