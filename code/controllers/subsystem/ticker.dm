@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(ticker)
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
