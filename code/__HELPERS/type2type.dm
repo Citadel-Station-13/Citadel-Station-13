@@ -69,7 +69,7 @@
 			else
 				. = "0" + .
 		i++
-names.dmnames.dm
+	return .
 
 //Splits the text of a file at seperator and returns them in a list.
 /world/proc/file2list(filename, seperator="\n")
