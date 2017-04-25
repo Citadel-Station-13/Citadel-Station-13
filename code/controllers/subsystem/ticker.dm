@@ -625,8 +625,8 @@ SUBSYSTEM_DEF(ticker)
 	if(selected_tip)
 		m = selected_tip
 	else
-		var/list/randomtips = file2list("config/tips.txt")
-		var/list/memetips = file2list("config/sillytips.txt")
+		var/list/randomtips = world.file2list("config/tips.txt")
+		var/list/memetips = world.file2list("config/sillytips.txt")
 		if(randomtips.len && prob(95))
 			m = pick(randomtips)
 		else if(memetips.len)
