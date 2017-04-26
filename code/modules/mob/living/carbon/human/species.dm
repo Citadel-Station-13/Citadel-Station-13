@@ -292,19 +292,20 @@
 				hair_overlay.icon_state = hair_state
 
 				if(!forced_colour)
- 					if(hair_color)
- 						if(hair_color == "mutcolor")
+					if(hair_color)
+						if(hair_color == "mutcolor")
 							hair_overlay.color = "#" + H.dna.features["mcolor"]
- 						else
+						else
 							hair_overlay.color = "#" + hair_color
- 					else
+					else
 						hair_overlay.color = "#" + H.hair_color
- 				else
+				else
 					hair_overlay.color = forced_colour
 				hair_overlay.alpha = hair_alpha
 				hair_overlay.pixel_y += hair_y_offset
 		if(hair_overlay.icon)
 			standing += hair_overlay
+
 	if(standing.len)
 		H.overlays_standing[HAIR_LAYER] = standing
 
@@ -319,21 +320,20 @@
 
 	if(!(H.disabilities & HUSK))
 		// lipstick
- 		if(H.lip_style && (LIPS in species_traits) && HD)
+		if(H.lip_style && (LIPS in species_traits) && HD)
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
 			lip_overlay.pixel_y += face_y_offset
 			standing += lip_overlay
 
 		// eyes
- 		if((EYECOLOR in species_traits) && HD)
+		if((EYECOLOR in species_traits) && HD)
 			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
 			eye_overlay.color = "#" + H.eye_color
 			eye_overlay.pixel_y += face_y_offset
 			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
-	/*This will be refactored at a later date
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 		if(underwear)
@@ -351,7 +351,7 @@
 		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 		if(socks)
 			standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
-	*/
+
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -601,7 +601,7 @@
 							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
 							accessory_overlay.color = "#[H.eye_color]"
- 				else
+				else
 					accessory_overlay.color = forced_colour
 			standing += accessory_overlay
 
