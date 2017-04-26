@@ -2,8 +2,8 @@
 	icon = 'icons/mob/pets.dmi'
 	mob_size = MOB_SIZE_SMALL
 	var/obj/item/clothing/neck/petcollar/pcollar = null
-	var/image/collar = null
-	var/image/pettag = null
+	var/collar = ""
+	var/pettag = ""
 	blood_volume = BLOOD_VOLUME_NORMAL
 	devourable = TRUE
 
@@ -11,8 +11,8 @@
 	if(istype(O, /obj/item/clothing/neck/petcollar) && !pcollar)
 		var/obj/item/clothing/neck/petcollar/P = O
 		pcollar = P
-		collar = image('icons/mob/pets.dmi', src, "[icon_state]collar")
-		pettag = image('icons/mob/pets.dmi', src, "[icon_state]tag")
+		collar = "[icon_state]collar"
+		pettag = "[icon_state]tag"
 		regenerate_icons()
 		to_chat(user, "<span class='notice'>You put the [P] around [src]'s neck.</span>")
 		if(P.tagname)
