@@ -140,7 +140,7 @@
 		return
 	new /obj/effect/particle_effect/smoke(user.loc)
 	user.forceMove(get_turf(linked))
-	feedback_add_details("warp_cube","[src.type]")
+	SSblackbox.add_details("warp_cube","[src.type]")
 	new /obj/effect/particle_effect/smoke(user.loc)
 
 /obj/item/device/warp_cube/red
