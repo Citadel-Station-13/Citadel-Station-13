@@ -520,7 +520,7 @@
 	var/sleeper_g
 	var/sleeper_r
 
-#define MAX_K9_LEAP_DIST 1 //because something's definitely borked the pounce functioning from a distance.
+#define MAX_K9_LEAP_DIST 4 //because something's definitely borked the pounce functioning from a distance.
 
 /obj/item/weapon/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot.R = user
@@ -548,9 +548,6 @@
 		pixel_y = 10
 		update_icons()
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
-		leaping = 0
-		pixel_y = initial(pixel_y)
-		update_icons()
 		cell.charge = cell.charge - 500 //Doubled the energy consumption
 		weather_immunities -= "lava"
 		pounce_cooldown = !pounce_cooldown
@@ -572,13 +569,12 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(7)//Racked nerfs back up to stunbaton levels to make up for the distance pouncing being fuckered.
+				L.Weaken(3)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
 				Weaken(2, 1, 1)
 
-			leaping = 0
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
@@ -588,5 +584,6 @@
 
 		if(leaping)
 			leaping = 0
+			pixel_y = initial(pixel_y)
 			update_icons()
 			update_canmove()
