@@ -67,6 +67,9 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
+	
+	//Ears
+	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
