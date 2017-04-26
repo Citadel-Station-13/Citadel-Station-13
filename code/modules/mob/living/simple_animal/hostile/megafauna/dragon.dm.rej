@@ -1,0 +1,76 @@
+diff a/code/modules/mob/living/simple_animal/hostile/megafauna/dragon.dm b/code/modules/mob/living/simple_animal/hostile/megafauna/dragon.dm	(rejected hunks)
+@@ -54,7 +61,7 @@ Difficulty: Medium
+ 	death_sound = 'sound/magic/demon_dies.ogg'
+ 
+ /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+-	..()
++	. = ..()
+ 	internal = new/obj/item/device/gps/internal/dragon(src)
+ 
+ /mob/living/simple_animal/hostile/megafauna/dragon/ex_act(severity, target)
+@@ -86,62 +98,15 @@ Difficulty: Medium
+ /mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
+ 	return 1
+ 
+-/obj/effect/overlay/temp/fireball
+-	icon = 'icons/obj/wizard.dmi'
+-	icon_state = "fireball"
+-	name = "fireball"
+-	desc = "Get out of the way!"
+-	layer = FLY_LAYER
+-	randomdir = 0
+-	duration = 12
+-	pixel_z = 500
+-
+-/obj/effect/overlay/temp/fireball/Initialize(loc)
+-	..()
+-	animate(src, pixel_z = 0, time = 12)
+-
+-/obj/effect/overlay/temp/target
+-	icon = 'icons/mob/actions.dmi'
+-	icon_state = "sniper_zoom"
+-	layer = BELOW_MOB_LAYER
+-	light_range = 2
+-	duration = 12
+-
+-/obj/effect/overlay/temp/dragon_swoop
+-	name = "certain death"
+-	desc = "Don't just stand there, move!"
+-	icon = 'icons/effects/96x96.dmi'
+-	icon_state = "landing"
+-	layer = BELOW_MOB_LAYER
+-	pixel_x = -32
+-	pixel_y = -32
+-	color = "#FF0000"
+-	duration = 10
+-
+-/obj/effect/overlay/temp/target/ex_act()
+-	return
+-
+-/obj/effect/overlay/temp/target/Initialize(loc)
+-	..()
+-	INVOKE_ASYNC(src, .proc/fall)
+-
+-/obj/effect/overlay/temp/target/proc/fall()
+-	var/turf/T = get_turf(src)
+-	playsound(T,'sound/magic/Fireball.ogg', 200, 1)
+-	new /obj/effect/overlay/temp/fireball(T)
+-	sleep(12)
+-	explosion(T, 0, 0, 1, 0, 0, 0, 1)
+-
+ /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
+-	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+-	ranged_cooldown = world.time + ranged_cooldown_time
+ 	if(swooping)
+-		fire_rain()
+ 		return
++	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
++	ranged_cooldown = world.time + ranged_cooldown_time
+ 
+ 	if(prob(15 + anger_modifier) && !client)
+ 		if(health < maxHealth/2)
+-			INVOKE_ASYNC(src, .proc/swoop_attack, 1)
++			INVOKE_ASYNC(src, .proc/swoop_attack, TRUE, null, 50)
+ 		else
+ 			fire_rain()
+ 
