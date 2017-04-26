@@ -34,7 +34,7 @@
 	density = 0
 
 
-/obj/vehicle/atv/turret/New()
+/obj/vehicle/atv/turret/Initialize()
 	. = ..()
 	turret = new(loc)
 	turret.base = src
