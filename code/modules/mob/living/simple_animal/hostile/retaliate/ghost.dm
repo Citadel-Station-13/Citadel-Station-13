@@ -39,9 +39,10 @@
 	var/random = TRUE //if you want random names for ghosts or not
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
-	..()
-	give_hair()
-	if(random)
+	. = ..()
+	if(!random)
+		give_hair()
+	else
 		switch(rand(0,1))
 			if(0)
 				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
