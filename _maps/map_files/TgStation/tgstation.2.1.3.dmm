@@ -13854,7 +13854,7 @@
 	dir = 4;
 	icon_state = "burst_r"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aEy" = (
 /obj/structure/shuttle/engine/heater{
@@ -13864,7 +13864,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aEz" = (
 /obj/machinery/power/apc{
@@ -14389,7 +14389,7 @@
 	dir = 4;
 	icon_state = "propulsion"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aFG" = (
 /turf/open/floor/plasteel/arrival{
@@ -16553,7 +16553,7 @@
 	dir = 4;
 	icon_state = "burst_l"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "aKj" = (
 /obj/machinery/door/firedoor,
@@ -57576,7 +57576,7 @@
 	dir = 8;
 	icon_state = "propulsion_l"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cxu" = (
 /turf/closed/wall/mineral/titanium,
@@ -57631,7 +57631,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cxE" = (
 /obj/machinery/door/airlock/titanium,
@@ -59635,7 +59635,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/shuttle/transport)
 "cCz" = (
 /obj/machinery/door/airlock/external,
@@ -61361,7 +61361,7 @@
 	name = "arrivals";
 	width = 7
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "cIh" = (
 /obj/machinery/door/airlock/external{

@@ -216,7 +216,7 @@ GLOBAL_LIST(external_rsc_urls)
 	var/alert_mob_dupe_login = FALSE
 	if(config.log_access)
 		for(var/I in GLOB.clients)
-			if(I == src)
+			if(!I || I == src)
 				continue
 			var/client/C = I
 			if(C.key && (C.key != key) )
@@ -290,8 +290,16 @@ GLOBAL_LIST(external_rsc_urls)
 
 	add_verbs_from_config()
 	set_client_age_from_db()
+	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
+	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
+		player_age = 0	
+	if(!IsGuestKey(key) && SSdbcore.IsConnected())
+		findJoinDate()
 
-	if (isnum(player_age) && player_age == -1) //first connection
+	sync_client_with_db(tdata)
+	
+	
+	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")

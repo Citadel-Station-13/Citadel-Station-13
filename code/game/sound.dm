@@ -138,6 +138,9 @@
 			if ("struggle_sound")
 				soundin = pick( 'sound/vore/pred/struggle_01.ogg','sound/vore/pred/struggle_02.ogg','sound/vore/pred/struggle_03.ogg',
 								'sound/vore/pred/struggle_04.ogg','sound/vore/pred/struggle_05.ogg')
+			if ("prey_struggle")
+				soundin = pick( 'sound/vore/prey/struggle_01.ogg','sound/vore/prey/struggle_02.ogg','sound/vore/prey/struggle_03.ogg',
+								'sound/vore/prey/struggle_04.ogg','sound/vore/prey/struggle_05.ogg')
 			if ("digest_pred")
 				soundin = pick( 'sound/vore/pred/digest_01.ogg','sound/vore/pred/digest_02.ogg','sound/vore/pred/digest_03.ogg',
 								'sound/vore/pred/digest_04.ogg','sound/vore/pred/digest_05.ogg','sound/vore/pred/digest_06.ogg',

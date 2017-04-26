@@ -17,9 +17,6 @@
 	var/list/knotted_types = list("knotted", "barbknot")
 	var/obj/item/organ/genital/testicles/linked_balls
 
-/obj/item/organ/genital/penis/Initialize()
-	update()
-
 /obj/item/organ/genital/penis/update_size()
 	if(length == cached_length)
 		return

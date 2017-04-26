@@ -489,7 +489,7 @@
 				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
-						TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
+						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
 						TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
@@ -924,3 +924,8 @@
 	if(riding_datum)
 		riding_datum.handle_vehicle_offsets()
 		riding_datum.handle_vehicle_layer()
+
+/mob/living/ConveyorMove()
+	if((movement_type & FLYING) && !stat)
+		return
+	..()

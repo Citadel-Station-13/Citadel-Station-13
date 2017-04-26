@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
-	init_order = 13
+	init_order = INIT_ORDER_TICKER
 
 	priority = 200
 	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(ticker)
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
-	var/list/music = file2list(ROUND_START_MUSIC_LIST, "\n")
+	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -625,8 +625,8 @@ SUBSYSTEM_DEF(ticker)
 	if(selected_tip)
 		m = selected_tip
 	else
-		var/list/randomtips = file2list("config/tips.txt")
-		var/list/memetips = file2list("config/sillytips.txt")
+		var/list/randomtips = world.file2list("config/tips.txt")
+		var/list/memetips = world.file2list("config/sillytips.txt")
 		if(randomtips.len && prob(95))
 			m = pick(randomtips)
 		else if(memetips.len)
