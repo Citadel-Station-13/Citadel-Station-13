@@ -654,7 +654,7 @@
 							extra_accessory_overlay.color = "#[H.eye_color]"
 				else
 					extra_accessory_overlay.color = forced_colour
-			standing += extra_accessory_overlay
+				standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
 				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
@@ -694,7 +694,7 @@
 							extra2_accessory_overlay.color = "#[H.eye_color]"
 				else
 					extra2_accessory_overlay.color = forced_colour
-			standing += extra2_accessory_overlay
+				standing += extra2_accessory_overlay
 
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
