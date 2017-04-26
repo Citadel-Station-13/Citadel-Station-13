@@ -25,7 +25,6 @@
 		darkness_view = 1
 		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
 		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
-		invis_update()
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
