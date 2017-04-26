@@ -181,7 +181,7 @@ Thus, the two variables affect pump operation are set in New():
 		var/turf/T = get_turf(src)
 		//var/area/A = get_area(src)
 		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
 			message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
