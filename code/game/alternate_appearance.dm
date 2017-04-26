@@ -29,13 +29,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	appearance_key = key
 
 /datum/atom_hud/alternate_appearance/Destroy()
-	if(!QDELETED(src))
-		for(var/v in hudusers)
-			remove_hud_from(v)
-		for(var/v in hudatoms)
-			remove_from_hud(v)
-		GLOB.active_alternate_appearances -= src
-	return ..()
+	for(var/v in hudusers)
+		remove_hud_from(v)
+	for(var/v in hudatoms)
+		remove_from_hud(v)
+	GLOB.active_alternate_appearances -= src
+ 	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
 	if(mobShouldSee(M))
