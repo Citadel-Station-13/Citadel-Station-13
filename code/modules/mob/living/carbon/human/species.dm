@@ -288,69 +288,69 @@
 					hair_state += dynamic_hair_suffix
 					hair_file = 'icons/mob/hair_extensions.dmi'
 
-				var/image/img_hair = image("icon" = hair_file, "icon_state" = hair_state, "layer" = -HAIR_LAYER)
+				hair_overlay.icon = hair_file
+				hair_overlay.icon_state = hair_state
 
 				if(!forced_colour)
-					if(hair_color)
-						if(hair_color == "mutcolor")
-							img_hair.color = "#" + H.dna.features["mcolor"]
-						else
-							img_hair.color = "#" + hair_color
-					else
-						img_hair.color = "#" + H.hair_color
-				else
-					img_hair.color = forced_colour
-				img_hair.alpha = hair_alpha
-
-				img_hair.pixel_y += hair_y_offset
-				standing += img_hair
-
+ 					if(hair_color)
+ 						if(hair_color == "mutcolor")
+							hair_overlay.color = "#" + H.dna.features["mcolor"]
+ 						else
+							hair_overlay.color = "#" + hair_color
+ 					else
+						hair_overlay.color = "#" + H.hair_color
+ 				else
+					hair_overlay.color = forced_colour
+				hair_overlay.alpha = hair_alpha
+				hair_overlay.pixel_y += hair_y_offset
+		if(hair_overlay.icon)
+			standing += hair_overlay
 	if(standing.len)
-		H.overlays_standing[HAIR_LAYER]	= standing
+		H.overlays_standing[HAIR_LAYER] = standing
 
 	H.apply_overlay(HAIR_LAYER)
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
 
-	var/list/standing	= list()
+	var/list/standing = list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
 	if(!(H.disabilities & HUSK))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits) && HD)
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
-			lips.color = H.lip_color
-			lips.pixel_y += face_y_offset
-			standing	+= lips
+ 		if(H.lip_style && (LIPS in species_traits) && HD)
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
+			lip_overlay.color = H.lip_color
+			lip_overlay.pixel_y += face_y_offset
+			standing += lip_overlay
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
-			img_eyes.color = "#" + H.eye_color
-			img_eyes.pixel_y += face_y_offset
-			standing	+= img_eyes
+ 		if((EYECOLOR in species_traits) && HD)
+			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			eye_overlay.color = "#" + H.eye_color
+			eye_overlay.pixel_y += face_y_offset
+			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	/*This will be refactored at a later date
 	if(H.underwear)
 		var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 		if(underwear)
-			standing	+= image("icon"=underwear.icon, "icon_state"="[underwear.icon_state]", "layer"=-BODY_LAYER)
+			standing += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 
 	if(H.undershirt)
 		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 		if(undershirt)
 			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	wear_female_version("[undershirt.icon_state]", undershirt.icon, BODY_LAYER)
+				standing += wear_female_version(undershirt.icon_state, undershirt.icon, -BODY_LAYER)
 			else
-				standing	+= image("icon"=undershirt.icon, "icon_state"="[undershirt.icon_state]", "layer"=-BODY_LAYER)
+				standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
 	if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
 		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 		if(socks)
-			standing	+= image("icon"=socks.icon, "icon_state"="[socks.icon_state]", "layer"=-BODY_LAYER)
+			standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 	*/
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
@@ -488,8 +488,6 @@
 
 	var/g = (H.gender == FEMALE) ? "f" : "m"
 
-	var/image/I
-
 	for(var/layer in relevant_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
 
@@ -554,7 +552,9 @@
 					S = /datum/sprite_accessory/slimecoon_snout*/
 			if(!S || S.icon_state == "none")
 				continue
-
+			
+			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+			
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "slimecoontail" || bodypart == "xenotail")
 				bodypart = "tail"
@@ -565,134 +565,135 @@
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
 
-
-			var/icon_string
-
 			if(S.gender_specific)
-				icon_string = "[g]_[bodypart]_[S.icon_state]_[layertext]"
+				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state]_[layertext]"
 			else
-				icon_string = "m_[bodypart]_[S.icon_state]_[layertext]"
-
-			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+				accessory_overlay.icon_state = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			if(S.center)
-				I = center_image(I,S.dimension_x,S.dimension_y)
+				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
 			if(!(H.disabilities & HUSK))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
-								I.color = "#[fixed_mut_color]"
+								accessory_overlay.color = "#[fixed_mut_color]"
 							else
-								I.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 						if(MUTCOLORS2)
 							if(fixed_mut_color2)
-								I.color = "#[fixed_mut_color2]"
+								accessory_overlay.color = "#[fixed_mut_color2]"
 							else
-								I.color = "#[H.dna.features["mcolor2"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
 						if(MUTCOLORS3)
 							if(fixed_mut_color3)
-								I.color = "#[fixed_mut_color3]"
+								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
-								I.color = "#[H.dna.features["mcolor3"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
 
 						if(HAIR)
 							if(hair_color == "mutcolor")
-								I.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 							else
-								I.color = "#[H.hair_color]"
+								accessory_overlay.color = "#[H.hair_color]"
 						if(FACEHAIR)
-							I.color = "#[H.facial_hair_color]"
+							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
-							I.color = "#[H.eye_color]"
-				else
-					I.color = forced_colour
-			standing += I
+							accessory_overlay.color = "#[H.eye_color]"
+ 				else
+					accessory_overlay.color = forced_colour
+			standing += accessory_overlay
 
 			if(S.hasinner)
+				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
-					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
+					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
 				else
-					icon_string = "m_[bodypart]inner_[S.icon_state]_[layertext]"
-
-				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+					inner_accessory_overlay.icon_state = "m_[bodypart]inner_[S.icon_state]_[layertext]"
 
 				if(S.center)
-					I = center_image(I,S.dimension_x,S.dimension_y)
+					inner_accessory_overlay = center_image(inner_accessory_overlay, S.dimension_x, S.dimension_y)
 
-				standing += I
+			standing += inner_accessory_overlay
+				
 			if(S.extra) //apply the extra overlay, if there is one
+				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
-					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
+					extra_accessory_overlay.icon_state = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
 				else
-					icon_string = "m_[bodypart]_extra_[S.icon_state]_[layertext]"
-
-				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+					extra_accessory_overlay.icon_state = "m_[bodypart]_extra_[S.icon_state]_[layertext]"
 
 				if(S.center)
-					I = center_image(I,S.dimension_x,S.dimension_y)
+					extra_accessory_overlay.icon_state = center_image(extra_accessory_overlay, S.dimension_x, S.dimension_y)
 
 				switch(S.extra_color_src) //change the color of the extra overlay
 					if(MUTCOLORS)
 						if(fixed_mut_color)
-							I.color = "#[fixed_mut_color]"
+							extra_accessory_overlay.color = "#[fixed_mut_color]"
 						else
-							I.color = "#[H.dna.features["mcolor"]]"
+							extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 					if(MUTCOLORS2)
 						if(fixed_mut_color2)
-							I.color = "#[fixed_mut_color2]"
+							extra_accessory_overlay.color = "#[fixed_mut_color2]"
 						else
-							I.color = "#[H.dna.features["mcolor2"]]"
+							extra_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
 					if(MUTCOLORS3)
 						if(fixed_mut_color3)
-							I.color = "#[fixed_mut_color3]"
+							extra_accessory_overlay.color = "#[fixed_mut_color3]"
 						else
-							I.color = "#[H.dna.features["mcolor3"]]"
+							extra_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
 					if(HAIR)
 						if(hair_color == "mutcolor")
-							I.color = "#[H.dna.features["mcolor"]]"
+							extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 						else
-							I.color = "#[H.hair_color]"
+							extra_accessory_overlay.color = "#[H.hair_color]"
 					if(FACEHAIR)
-						I.color = "#[H.facial_hair_color]"
+						extra_accessory_overlay.color = "#[H.facial_hair_color]"
 					if(EYECOLOR)
-						I.color = "#[H.eye_color]"
-				standing += I
+						extra_accessory_overlay.color = "#[H.eye_color]"
+				else
+					extra_accessory_overlay.color = forced_colour
+			standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
+				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
-					icon_string = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
+					extra2_accessory_overlay.icon_state = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
 				else
-					icon_string = "m_[bodypart]_extra2_[S.icon_state]_[layertext]"
-
-				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+					extra2_accessory_overlay.icon_state = "m_[bodypart]_extra2_[S.icon_state]_[layertext]"
 
 				if(S.center)
-					I = center_image(I,S.dimension_x,S.dimension_y)
+					extra2_accessory_overlay.icon_state = center_image(extra2_accessory_overlay, S.dimension_x, S.dimension_y)
 
-				switch(S.extra2_color_src) //change the color of the extra overlay
+				switch(S.extra_color_src) //change the color of the extra overlay
 					if(MUTCOLORS)
 						if(fixed_mut_color)
-							I.color = "#[fixed_mut_color]"
+							extra2_accessory_overlay.color = "#[fixed_mut_color]"
 						else
-							I.color = "#[H.dna.features["mcolor"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 					if(MUTCOLORS2)
 						if(fixed_mut_color2)
-							I.color = "#[fixed_mut_color2]"
+							extra2_accessory_overlay.color = "#[fixed_mut_color2]"
 						else
-							I.color = "#[H.dna.features["mcolor2"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
 					if(MUTCOLORS3)
 						if(fixed_mut_color3)
-							I.color = "#[fixed_mut_color3]"
+							extra2_accessory_overlay.color = "#[fixed_mut_color3]"
 						else
-							I.color = "#[H.dna.features["mcolor3"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
 					if(HAIR)
 						if(hair_color == "mutcolor")
-							I.color = "#[H.dna.features["mcolor"]]"
+							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 						else
-							I.color = "#[H.hair_color]"
-				standing += I
+							extra2_accessory_overlay.color = "#[H.hair_color]"
+					if(FACEHAIR)
+						extra2_accessory_overlay.color = "#[H.facial_hair_color]"
+					if(EYECOLOR)
+						extra2_accessory_overlay.color = "#[H.eye_color]"
+				else
+					extra2_accessory_overlay.color = forced_colour
+			standing += extra2_accessory_overlay
 
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
