@@ -591,7 +591,6 @@
 								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
 								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
-
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
@@ -606,7 +605,7 @@
 			standing += accessory_overlay
 
 			if(S.hasinner)
-				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+			var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
 				else
@@ -615,10 +614,10 @@
 				if(S.center)
 					inner_accessory_overlay = center_image(inner_accessory_overlay, S.dimension_x, S.dimension_y)
 
-			standing += inner_accessory_overlay
+				standing += inner_accessory_overlay
 				
 			if(S.extra) //apply the extra overlay, if there is one
-				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+			var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					extra_accessory_overlay.icon_state = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
 				else
@@ -626,38 +625,39 @@
 
 				if(S.center)
 					extra_accessory_overlay.icon_state = center_image(extra_accessory_overlay, S.dimension_x, S.dimension_y)
-
-				switch(S.extra_color_src) //change the color of the extra overlay
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							extra_accessory_overlay.color = "#[fixed_mut_color]"
-						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							extra_accessory_overlay.color = "#[fixed_mut_color2]"
-						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							extra_accessory_overlay.color = "#[fixed_mut_color3]"
-						else
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
-					if(HAIR)
-						if(hair_color == "mutcolor")
-							extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-						else
-							extra_accessory_overlay.color = "#[H.hair_color]"
-					if(FACEHAIR)
-						extra_accessory_overlay.color = "#[H.facial_hair_color]"
-					if(EYECOLOR)
-						extra_accessory_overlay.color = "#[H.eye_color]"
+					
+				if(!forced_colour)
+					switch(S.extra_color_src) //change the color of the extra overlay
+						if(MUTCOLORS)
+							if(fixed_mut_color)
+								extra_accessory_overlay.color = "#[fixed_mut_color]"
+							else
+								extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+						if(MUTCOLORS2)
+							if(fixed_mut_color2)
+								extra_accessory_overlay.color = "#[fixed_mut_color2]"
+							else
+								extra_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+						if(MUTCOLORS3)
+							if(fixed_mut_color3)
+								extra_accessory_overlay.color = "#[fixed_mut_color3]"
+							else
+								extra_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+						if(HAIR)
+							if(hair_color == "mutcolor")
+								extra_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							else
+								extra_accessory_overlay.color = "#[H.hair_color]"
+						if(FACEHAIR)
+							extra_accessory_overlay.color = "#[H.facial_hair_color]"
+						if(EYECOLOR)
+							extra_accessory_overlay.color = "#[H.eye_color]"
 				else
 					extra_accessory_overlay.color = forced_colour
 			standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
-				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+			var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					extra2_accessory_overlay.icon_state = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
 				else
@@ -665,32 +665,33 @@
 
 				if(S.center)
 					extra2_accessory_overlay.icon_state = center_image(extra2_accessory_overlay, S.dimension_x, S.dimension_y)
-
-				switch(S.extra_color_src) //change the color of the extra overlay
-					if(MUTCOLORS)
-						if(fixed_mut_color)
-							extra2_accessory_overlay.color = "#[fixed_mut_color]"
-						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-					if(MUTCOLORS2)
-						if(fixed_mut_color2)
-							extra2_accessory_overlay.color = "#[fixed_mut_color2]"
-						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
-					if(MUTCOLORS3)
-						if(fixed_mut_color3)
-							extra2_accessory_overlay.color = "#[fixed_mut_color3]"
-						else
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
-					if(HAIR)
-						if(hair_color == "mutcolor")
-							extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
-						else
-							extra2_accessory_overlay.color = "#[H.hair_color]"
-					if(FACEHAIR)
-						extra2_accessory_overlay.color = "#[H.facial_hair_color]"
-					if(EYECOLOR)
-						extra2_accessory_overlay.color = "#[H.eye_color]"
+					
+				if(!forced_colour)
+					switch(S.extra_color_src) //change the color of the extra overlay
+						if(MUTCOLORS)
+							if(fixed_mut_color)
+								extra2_accessory_overlay.color = "#[fixed_mut_color]"
+							else
+								extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+						if(MUTCOLORS2)
+							if(fixed_mut_color2)
+								extra2_accessory_overlay.color = "#[fixed_mut_color2]"
+							else
+								extra2_accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
+						if(MUTCOLORS3)
+							if(fixed_mut_color3)
+								extra2_accessory_overlay.color = "#[fixed_mut_color3]"
+							else
+								extra2_accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
+						if(HAIR)
+							if(hair_color == "mutcolor")
+								extra2_accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							else
+								extra2_accessory_overlay.color = "#[H.hair_color]"
+						if(FACEHAIR)
+							extra2_accessory_overlay.color = "#[H.facial_hair_color]"
+						if(EYECOLOR)
+							extra2_accessory_overlay.color = "#[H.eye_color]"
 				else
 					extra2_accessory_overlay.color = forced_colour
 			standing += extra2_accessory_overlay
