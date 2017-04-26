@@ -605,7 +605,7 @@
 			standing += accessory_overlay
 
 			if(S.hasinner)
-			var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
 				else
@@ -617,7 +617,7 @@
 				standing += inner_accessory_overlay
 				
 			if(S.extra) //apply the extra overlay, if there is one
-			var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+				var/mutable_appearance/extra_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					extra_accessory_overlay.icon_state = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
 				else
@@ -657,7 +657,7 @@
 			standing += extra_accessory_overlay
 
 			if(S.extra2) //apply the extra overlay, if there is one
-			var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+				var/mutable_appearance/extra2_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
 					extra2_accessory_overlay.icon_state = "[g]_[bodypart]_extra2_[S.icon_state]_[layertext]"
 				else
