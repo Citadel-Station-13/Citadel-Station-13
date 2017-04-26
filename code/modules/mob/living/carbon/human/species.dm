@@ -67,6 +67,9 @@
 
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
+	
+	//Ears
+	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
@@ -127,6 +130,7 @@
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+	var/obj/item/organ/ears/ears = C.getorganslot("ears")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -143,6 +147,11 @@
 		qdel(eyes)
 		eyes = new mutanteyes
 		eyes.Insert(C)
+
+	if(ears)
+		qdel(ears)
+		ears = new mutantears
+		ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
