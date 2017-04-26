@@ -362,6 +362,34 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
+		
+		if (!GLOB.admins.len && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
+			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
+				var/cheesy_message = pick(
+					"I have no admins online!",\
+					"I'm all alone... :(",\
+					"I'm feeling lonely. :(",\
+					"I'm so lonely. :(",\
+					"Why does nobody love me? :(",\
+					"I want a man. :(",\
+					"Where has everyone gone?",\
+					"I need a hug. :(",\
+					"Someone come hold me. :(",\
+					"I need someone on me :(",\
+					"What happened? Where has everyone gone?",\
+					"My nipples are so stiff, but Zelda ain't here. :(",\
+					"Leon senpai, play more Spessmans. :(",\
+					"If only Serdy were here...",\
+					"Panic bunker can't keep my love for you out.",\
+					"Cebu needs to Awoo herself back into my heart.",\
+					"I don't even have a Turry to snuggle viciously here.",\
+					"MOM, WHERE ARE YOU???",\
+					"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
+					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
+					"Forever alone :("\
+				)
+				
+				send2irc("Server", "[cheesy_message] (No admins online)")
 
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
