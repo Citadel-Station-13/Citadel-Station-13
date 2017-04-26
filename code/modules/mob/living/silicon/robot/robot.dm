@@ -200,7 +200,9 @@
 	"Medical" = /obj/item/weapon/robot_module/medical, \
 	"Miner" = /obj/item/weapon/robot_module/miner, \
 	"Janitor" = /obj/item/weapon/robot_module/janitor, \
-	"Service" = /obj/item/weapon/robot_module/butler)
+	"Service" = /obj/item/weapon/robot_module/butler, \
+	"MediHound" = /obj/item/weapon/robot_module/medihound, \
+	"Security K9" = /obj/item/weapon/robot_module/k9)
 	if(!config.forbid_peaceborg)
 		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
@@ -584,6 +586,31 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
+
+	if(module.cyborg_base_icon == "medihound")
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		if(sleeper_g == 1)
+			add_overlay("sleeper_g")
+		if(sleeper_r == 1)
+			add_overlay("sleeper_r")
+		if(stat == DEAD)
+			icon_state = "medihound-wreck"
+
+	if(module.cyborg_base_icon == "k9")
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		if(laser == 1)
+			add_overlay("laser")
+		if(disabler == 1)
+			add_overlay("disabler")
+		if(stat == DEAD)
+			icon_state = "k9-wreck"
+
+	if(module.cyborg_base_icon == "robot")
+		icon = 'icons/mob/robots.dmi'
+		pixel_x = initial(pixel_x)
+
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
