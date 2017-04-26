@@ -15,6 +15,7 @@
 	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
 
 /obj/item/organ/genital/Initialize()
+	. = ..()
 	reagents = create_reagents(fluid_max_volume)
 	update()
 

@@ -13,9 +13,8 @@
 	shape					= "pair"
 
 /obj/item/organ/genital/breasts/Initialize()
-	create_reagents(fluid_max_volume)
+	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)
-	update()
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))
