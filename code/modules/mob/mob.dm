@@ -29,6 +29,9 @@
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
 	hook_vr("mob_new",list(src))
+	for(var/v in GLOB.active_alternate_appearances)
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
 	..()
 
 /atom/proc/prepare_huds()
@@ -70,7 +73,7 @@
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -429,8 +432,14 @@
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( GLOB.abandon_allowed ))
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
 		return
+	if (!( GLOB.abandon_allowed ))
+		if(!(client.holder))
+			return
+		log_game("[usr.name]/[usr.key] was allowed to bypass the respawn restriction because they are an admin.")
+		to_chat(src, "<span class='notice'>You have been allowed to bypass the respawn configuration due to being an admin.</span>")
 	if ((stat != 2 || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
@@ -439,9 +448,6 @@
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
@@ -574,7 +580,6 @@
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
@@ -596,6 +601,8 @@
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
 			GLOB.cameranet.stat_entry()
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -965,10 +972,6 @@
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")

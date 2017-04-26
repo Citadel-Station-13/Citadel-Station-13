@@ -231,7 +231,7 @@
 						return TRUE
 
 					selected.release_all_contents()
-					playsound(user, 'sound/effects/splat.ogg', 50, 1)
+					playsound(user, 'sound/vore/pred/escape.ogg', volume=80)
 					user.loc << "<span class='danger'>Everything is released from [user]!</span>"
 
 				if("Move all")
@@ -252,7 +252,7 @@
 							to_chat(tgt, "<span class='warning'>You're squished from [user]'s [selected] to their [B]!</span>")
 
 						for(var/mob/hearer in range(1,user))
-							hearer << sound('sound/vore/squish2.ogg',volume=80)
+							hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
 			return TRUE
 
 
@@ -288,7 +288,7 @@
 
 					to_chat(tgt, "<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(B.name)]!</span>")
 					for(var/mob/hearer in range(1,user))
-						hearer << sound('sound/vore/squish2.ogg',volume=80)
+						hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
 
 	if(href_list["newbelly"])
 		if(user.vore_organs.len >= 10)
@@ -414,12 +414,12 @@
 		selected.vore_verb = new_verb
 
 	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.vore_sounds + "Cancel - No Changes"
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.pred_vore_sounds + "Cancel - No Changes"
 
 		if(choice == "Cancel")
 			return 1
 
-		selected.vore_sound = GLOB.vore_sounds[choice]
+		selected.vore_sound = GLOB.pred_vore_sounds[choice]
 
 	if(href_list["b_soundtest"])
 		user << selected.vore_sound

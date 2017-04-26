@@ -37,6 +37,7 @@
 			return
 
 	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+	mob.log_message("(LOCAL): [msg]", INDIVIDUAL_OOC_LOG)
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
 	for(var/mob/M in heard)
