@@ -243,7 +243,7 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
-	if(current_state < GAME_STATE_PLAYING)
+	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()

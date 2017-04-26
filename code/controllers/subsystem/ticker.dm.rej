@@ -1,0 +1,17 @@
+diff a/code/controllers/subsystem/ticker.dm b/code/controllers/subsystem/ticker.dm	(rejected hunks)
+@@ -667,11 +667,11 @@ SUBSYSTEM_DEF(ticker)
+ 		return
+ 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+ 
++/datum/controller/subsystem/ticker/proc/HasRoundStarted()
++	return current_state >= GAME_STATE_PLAYING
+ 
+-/world/proc/has_round_started()
+-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+-		return TRUE
+-	return FALSE
++/datum/controller/subsystem/ticker/proc/IsRoundInProgress()
++	return current_state == GAME_STATE_PLAYING
+ 
+ /datum/controller/subsystem/ticker/Recover()
+ 	current_state = SSticker.current_state
