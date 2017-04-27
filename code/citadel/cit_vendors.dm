@@ -76,6 +76,7 @@
 
 	refill_canister = /obj/item/weapon/vending_refill/soviet
 
+
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
