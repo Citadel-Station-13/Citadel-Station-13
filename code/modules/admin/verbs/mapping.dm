@@ -41,7 +41,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/disable_communication,
 	/client/proc/print_pointers,
 	/client/proc/cmd_show_at_list,
-	/client/proc/cmd_show_at_list,
+	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs
 ))
 
