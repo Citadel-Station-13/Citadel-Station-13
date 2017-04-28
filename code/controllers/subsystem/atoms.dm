@@ -12,6 +12,9 @@ SUBSYSTEM_DEF(atoms)
 	var/old_initialized
 
 	var/list/late_loaders
+	var/list/created_atoms
+
+	var/list/BadInitializeCalls = list()
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
@@ -27,7 +30,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 
 	LAZYINITLIST(late_loaders)
-	
+
 	var/count
 	var/list/mapload_arg = list(TRUE)
 	if(atoms)
@@ -57,10 +60,10 @@ SUBSYSTEM_DEF(atoms)
 			A.LateInitialize()
 		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
-	
+
 	if(atoms)
 		. = created_atoms + atoms
-		created_atoms = null 
+		created_atoms = null
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
@@ -74,7 +77,7 @@ SUBSYSTEM_DEF(atoms)
 
 	if(start_tick != world.time)
 		BadInitializeCalls[the_type] |= BAD_INIT_SLEPT
-	
+
 	var/qdeleted = FALSE
 
 	if(result != INITIALIZE_HINT_NORMAL)
@@ -89,12 +92,12 @@ SUBSYSTEM_DEF(atoms)
 				qdeleted = TRUE
 			else
 				BadInitializeCalls[the_type] |= BAD_INIT_NO_HINT
-				
+
 	if(!A)	//possible harddel
 		qdeleted = TRUE
 	else if(!A.initialized)
 		BadInitializeCalls[the_type] |= BAD_INIT_DIDNT_INIT
-	
+
 	return qdeleted || QDELETED(A)
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
@@ -129,3 +132,27 @@ SUBSYSTEM_DEF(atoms)
 		else if(B.quality == MINOR_NEGATIVE)
 			GLOB.not_good_mutations |= B
 		CHECK_TICK
+
+/datum/controller/subsystem/atoms/proc/InitLog()
+	. = ""
+	for(var/path in BadInitializeCalls)
+		. += "Path : [path] \n"
+		var/fails = BadInitializeCalls[path]
+		if(fails & BAD_INIT_DIDNT_INIT)
+			. += "- Didn't call atom/Initialize()\n"
+		if(fails & BAD_INIT_NO_HINT)
+			. += "- Didn't return an Initialize hint\n"
+		if(fails & BAD_INIT_QDEL_BEFORE)
+			. += "- Qdel'd in New()\n"
+		if(fails & BAD_INIT_SLEPT)
+			. += "- Slept during Initialize()\n"
+
+/datum/controller/subsystem/atoms/Shutdown()
+	var/initlog = InitLog()
+	if(initlog)
+		log_world(initlog)
+
+#undef BAD_INIT_QDEL_BEFORE
+#undef BAD_INIT_DIDNT_INIT
+#undef BAD_INIT_SLEPT
+#undef BAD_INIT_NO_HINT
