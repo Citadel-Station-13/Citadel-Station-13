@@ -31,8 +31,8 @@
 	. = ..()
 	deltimer(timerid)
 
-/obj/effect/overlay/temp/New()
-	..()
+/obj/effect/overlay/temp/Initialize()
+	. = ..()
 	if(randomdir)
 		setDir(pick(GLOB.cardinal))
 
