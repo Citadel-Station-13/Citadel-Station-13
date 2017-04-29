@@ -80,12 +80,12 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
+	SSblackbox.set_details("round_start","[time2text(world.realtime)]")
 	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
+		SSblackbox.set_details("game_mode","[SSticker.mode]")
 	if(GLOB.revdata.commit)
-		feedback_set_details("revision","[GLOB.revdata.commit]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+		SSblackbox.set_details("revision","[GLOB.revdata.commit]")
+	SSblackbox.set_details("server_ip","[world.internet_address]:[world.port]")
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()

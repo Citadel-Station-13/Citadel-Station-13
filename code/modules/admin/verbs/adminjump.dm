@@ -110,7 +110,7 @@
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	M.forceMove(loc)
-	feedback_add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","Get Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/Getkey()
 	set category = "Admin"
@@ -156,4 +156,4 @@
 			admin_ticket_log(M, msg)
 		else
 			to_chat(src, "Failed to move mob to a valid location.")
-		feedback_add_details("admin_verb","Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		SSblackbox.add_details("admin_verb","Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
