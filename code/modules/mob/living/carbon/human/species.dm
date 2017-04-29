@@ -143,15 +143,16 @@
 		qdel(lungs)
 		lungs = null
 
-	if(eyes)
-		qdel(eyes)
-		eyes = new mutanteyes
-		eyes.Insert(C)
+	if(C.get_bodypart("head"))
+		if(eyes)
+			qdel(eyes)
+			eyes = new mutanteyes
+			eyes.Insert(C)
 
-	if(ears)
-		qdel(ears)
-		ears = new mutantears
-		ears.Insert(C)
+		if(ears)
+			qdel(ears)
+			ears = new mutantears
+			ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
