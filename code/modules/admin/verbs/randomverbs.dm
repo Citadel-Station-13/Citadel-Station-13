@@ -505,7 +505,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(src)] has changed Central Command's name to [input]")
 	log_admin("[key_name(src)] has changed the Central Command name to: [input]")
 
-/client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
+/client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
 	set category = "Admin"
 	set name = "Delete"
 
@@ -522,6 +522,10 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			T.ChangeTurf(T.baseturf)
 		else
 			qdel(O)
+
+			T.ChangeTurf(T.baseturf)
+		else
+			qdel(D)
 
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"

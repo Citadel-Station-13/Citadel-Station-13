@@ -166,8 +166,10 @@ GLOBAL_LIST_INIT(admin_verbs_debug, AVerbsDebug())
 	//citadel code
 	/client/proc/give_humans_genitals,
 	/client/proc/test_mammal_overlays,
-	/client/proc/pump_random_event
+	/client/proc/pump_random_event,
+	/client/proc/cmd_display_init_log
 	)
+
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess,/proc/release))
 GLOBAL_PROTECT(admin_verbs_permissions)

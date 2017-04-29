@@ -30,6 +30,7 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/new_player/proc/new_player_panel()
 
@@ -302,7 +303,7 @@
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
 		return 0
-	
+
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE

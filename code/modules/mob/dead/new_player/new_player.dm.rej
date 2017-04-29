@@ -1,0 +1,9 @@
+diff a/code/modules/mob/dead/new_player/new_player.dm b/code/modules/mob/dead/new_player/new_player.dm	(rejected hunks)
+@@ -30,6 +30,7 @@
+ 		loc = pick(newplayer_start)
+ 	else
+ 		loc = locate(1,1,1)
++	return INITIALIZE_HINT_NORMAL
+ 
+ /mob/dead/new_player/proc/new_player_panel()
+ 
