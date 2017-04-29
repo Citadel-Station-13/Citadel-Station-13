@@ -1,0 +1,60 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -41755,58 +41743,6 @@
+ "bvf" = (
+ /turf/closed/wall/r_wall,
+ /area/engine/supermatter)
+-"bvg" = (
+-/obj/machinery/light{
+-	dir = 1
+-	},
+-/turf/open/floor/plasteel/neutral/side{
+-	dir = 1
+-	},
+-/area/shuttle/escape)
+-"bvh" = (
+-/obj/structure/chair{
+-	dir = 8
+-	},
+-/obj/effect/turf_decal/bot,
+-/obj/machinery/light/small{
+-	dir = 4
+-	},
+-/turf/open/floor/plasteel,
+-/area/shuttle/escape)
+-"bvi" = (
+-/obj/structure/chair{
+-	dir = 4
+-	},
+-/obj/effect/turf_decal/bot,
+-/obj/machinery/light/small{
+-	dir = 8
+-	},
+-/turf/open/floor/plasteel,
+-/area/shuttle/escape)
+-"bvj" = (
+-/obj/structure/chair{
+-	dir = 8
+-	},
+-/obj/effect/turf_decal/bot,
+-/obj/machinery/light/small{
+-	dir = 4
+-	},
+-/turf/open/floor/plasteel,
+-/area/shuttle/escape)
+-"bvk" = (
+-/obj/structure/chair{
+-	dir = 4
+-	},
+-/obj/effect/turf_decal/bot,
+-/obj/machinery/light/small{
+-	dir = 8
+-	},
+-/turf/open/floor/plasteel,
+-/area/shuttle/escape)
+-"bvl" = (
+-/obj/machinery/light,
+-/turf/open/floor/plasteel/neutral/side,
+-/area/shuttle/escape)
+ 
+ (1,1,1) = {"
+ aaa
