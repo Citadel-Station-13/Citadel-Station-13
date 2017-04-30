@@ -119,7 +119,6 @@
 	name = "incomplete artificial golem shell"
 	has_owner = TRUE
 
-
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
 	r_hand = /obj/item/weapon/gun/ballistic/automatic/sniper_rifle
