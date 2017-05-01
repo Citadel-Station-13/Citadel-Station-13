@@ -57,8 +57,16 @@ Possible to do for anyone motivated enough:
 	holopads += src
 
 /obj/machinery/holopad/Destroy()
-	for (var/mob/living/silicon/ai/master in masters)
-		clear_holo(master)
+	if(outgoing_call)
+		LAZYADD(holo_calls, outgoing_call)
+
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
+		HC.ConnectionFailure(src)
+	LAZYCLEARLIST(holo_calls)
+
+	for (var/I in masters)
+		clear_holo(I)
 	holopads -= src
 	return ..()
 
@@ -128,12 +136,49 @@ Possible to do for anyone motivated enough:
 			temp = "A request for AI presence was already sent recently.<BR>"
 			temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
 
-	else if(href_list["mainmenu"])
+	else if(href_list["Holocall"])
+		if(outgoing_call)
+			return
+
+		temp = "You must stand on the holopad to make a call!<br>"
+		temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+		if(usr.loc == loc)
+			var/list/callnames = list()
+			for(var/I in holopads)
+				var/area/A = get_area(I)
+				if(A)
+					LAZYADD(callnames[A], I)
+			callnames -= get_area(src)
+			
+			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in callnames
+			if(QDELETED(usr) || !result || outgoing_call)
+				return
+
+			if(usr.loc == loc)
+				temp = "Dialing...<br>"
+				temp += "<A href='?src=\ref[src];mainmenu=1'>Main Menu</A>"
+				new /datum/holocall(usr, src, callnames[result])
+	
+	else if(href_list["connectcall"])
+		var/datum/holocall/call_to_connect = locate(href_list["connectcall"])
+		if(!QDELETED(call_to_connect))
+			call_to_connect.Answer(src)
 		temp = ""
 
-	updateDialog()
-	add_fingerprint(usr)
+	else if(href_list["disconnectcall"])
+		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"])
+		if(!QDELETED(call_to_disconnect))
+			call_to_disconnect.Disconnect(src)
+		temp = ""
 
+	else if(href_list["mainmenu"])
+		temp = ""
+		if(outgoing_call)
+			outgoing_call.Disconnect()
+
+	updateDialog()
+
+//do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
 	if (!istype(user))
 		return
@@ -148,39 +193,75 @@ Possible to do for anyone motivated enough:
 		clear_holo(user)
 
 /obj/machinery/holopad/process()
-	if(masters.len)//If there is a hologram.
-		for (var/mob/living/silicon/ai/master in masters)
-			if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
-				if(!(stat & NOPOWER))//If the  machine has power.
-					if(HOLOPAD_MODE == RANGE_BASED)
-						if(get_dist(master.eyeobj, src) <= holo_range)
-							return TRUE
-						else
-							var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, master.eyeobj)
-							if(get_dist(pad_close, master.eyeobj) <= holo_range)
-								var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
-								unset_holo(master)
-								pad_close.set_holo(master, h)
-								return TRUE
+	for(var/I in masters)
+		var/mob/living/master = I
+		var/mob/living/silicon/ai/AI = master
+		if(!istype(AI))
+			AI = null
 
-					else if (HOLOPAD_MODE == AREA_BASED)
+		if(!QDELETED(master) && !master.incapacitated() && master.client && (!AI || AI.eyeobj))//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
+			if(is_operational())//If the  machine has power.
+				if(AI)	//ais are range based
+					if(get_dist(AI.eyeobj, src) <= holo_range)
+						continue
+					else
+						var/obj/machinery/holopad/pad_close = get_closest_atom(/obj/machinery/holopad, holopads, AI.eyeobj)
+						if(get_dist(pad_close, AI.eyeobj) <= holo_range)
+							var/obj/effect/overlay/holo_pad_hologram/h = masters[master]
+							unset_holo(master)
+							pad_close.set_holo(master, h)
+							continue
+				else
+					continue
+		clear_holo(master)//If not, we want to get rid of the hologram.
 
-						var/area/holo_area = get_area(src)
-						var/area/eye_area = get_area(master.eyeobj)
+	if(outgoing_call)
+		outgoing_call.Check()
 
-						if(eye_area in holo_area.related)
-							return TRUE
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
+		if(HC.connected_holopad != src)
+			if(force_answer_call && world.time > (HC.call_start_time + (HOLOPAD_MAX_DIAL_TIME / 2)))
+				HC.Answer(src)
+				break
+			if(outgoing_call)
+				HC.Disconnect(src)//can't answer calls while calling
+			else
+				playsound(src, 'sound/machines/twobeep.ogg', 100)	//bring, bring!
 
-			clear_holo(master)//If not, we want to get rid of the hologram.
-	return TRUE
+/obj/machinery/holopad/proc/activate_holo(mob/living/user)
+	var/mob/living/silicon/ai/AI = user
+	if(!istype(AI))
+		AI = null
 
-/obj/machinery/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
-		if (istype(user.current, /obj/machinery/holopad))
+	if(is_operational() && (!AI || AI.eyeobj.loc == loc))//If the projector has power and client eye is on it
+		if (AI && istype(AI.current, /obj/machinery/holopad))
 			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
-		create_holo(user)//Create one.
-		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+
+		var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
+		if(AI)
+			Hologram.icon = AI.holo_icon
+		else	//make it like real life
+			Hologram.icon = user.icon
+			Hologram.icon_state = user.icon_state
+			Hologram.copy_overlays(user, TRUE)
+			//codersprite some holo effects here
+			Hologram.alpha = 100
+			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+			Hologram.Impersonation = user
+
+		Hologram.languages_spoken = user.languages_spoken
+		Hologram.mouse_opacity = 0//So you can't click on it.
+		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+		Hologram.anchored = 1//So space wind cannot drag it.
+		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
+		Hologram.set_light(2)	//hologram lighting
+
+		set_holo(user, Hologram)
+		visible_message("A holographic image of [user] flicks to life right before your eyes!")
+
+		return Hologram
 	else
 		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
 
