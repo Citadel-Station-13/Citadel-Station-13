@@ -527,6 +527,14 @@
 				target.Dizzy(10)
 				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
 				GiveHint(target,user)
+			if("groin")
+				if(target.canbearoused)
+					to_chat(user, "<span class='notice'>You rub the groin on [src]. You're weird.</span>")
+					target.adjustArousalLoss(5)
+					to_chat(target, "<span class='warning'>You suddenly feel hot... and quite </span><span class='notice'><i>good</i></span>")
+					if(prob(33))
+						target.emote(pick("moan","blush"))
+					GiveHint(target, user)
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/update_targets()
