@@ -16,7 +16,8 @@
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
-	reagents = create_reagents(fluid_max_volume)
+	if(!reagents)
+		create_reagents(fluid_max_volume)
 	update()
 
 /obj/item/organ/genital/Destroy()
