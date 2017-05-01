@@ -30,10 +30,9 @@
 /datum/status_effect/proc/start_ticking()
 	if(!src)
 		return
-	if(!owner)
+	if(!owner || !on_apply())
 		qdel(src)
 		return
-	on_apply()
 	if(duration != -1)
 		duration = world.time + initial(duration)
 	tick_interval = world.time + initial(tick_interval)
