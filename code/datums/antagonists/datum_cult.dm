@@ -27,6 +27,7 @@
 
 /datum/antagonist/cult/on_removal()
 	. = ..()
+	SSticker.mode.update_cult_icons_removed(owner)
 	to_chat(owner, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Dark One and all your memories as its servant.</span>")
 	owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(!silent)
