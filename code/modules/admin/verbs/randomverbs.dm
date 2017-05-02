@@ -108,8 +108,8 @@
 	for(var/mob/M in view(range,A))
 		to_chat(M, msg)
 
-	log_admin("LocalNarrate: [key_name(usr)] at ([get_area(A)]): [msg]")
-	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>[get_area(A)]</a>):</b> [msg]<BR></span>")
+	log_admin("LocalNarrate: [key_name(usr)] at [get_area(A)][COORD(A)]: [msg]")
+	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at [get_area(A)][ADMIN_JMP(A)]:</b> [msg]<BR></span>")
 	SSblackbox.add_details("admin_verb","Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
@@ -513,16 +513,21 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
-		log_admin("[key_name(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
-		message_admins("[key_name_admin(usr)] deleted [O] at ([O.x],[O.y],[O.z])")
+	admin_delete(A)
+
+/client/proc/admin_delete(datum/D)
+	var/atom/A = D
+	var/coords = istype(A) ? " at ([A.x], [A.y], [A.z])" : ""
+	if (alert(src, "Are you sure you want to delete:\n[D]\nat[coords]?", "Confirmation", "Yes", "No") == "Yes")
+		log_admin("[key_name(usr)] deleted [D][coords]")
+		message_admins("[key_name_admin(usr)] deleted [D][coords]")
 		SSblackbox.add_details("admin_verb","Delete") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-		if(isturf(O))
-			var/turf/T = O
+		if(isturf(D))
+			var/turf/T = D
 			T.ChangeTurf(T.baseturf)
 		else
-			qdel(O)
-			
+			qdel(D)
+
 /client/proc/cmd_admin_list_open_jobs()
 	set category = "Admin"
 	set name = "Manage Job Slots"
