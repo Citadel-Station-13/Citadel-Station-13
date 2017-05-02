@@ -27,6 +27,7 @@
 	. += "---"
 	.["Call Proc"] = "?_src_=vars;proc_call=\ref[src]"
 	.["Mark Object"] = "?_src_=vars;mark_object=\ref[src]"
+	.["Delete"] = "?_src_=vars;delete=\ref[src]"
 
 
 /datum/proc/on_reagent_change()
@@ -93,7 +94,6 @@
 					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=arousal'>[M.getArousalLoss()]</a>
 				</font>
 			"}
 		else
@@ -446,7 +446,7 @@
 		var/list/L = value
 		var/list/items = list()
 
-		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > 500))
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? 50 : 150)))
 			for (var/i in 1 to L.len)
 				var/key = L[i]
 				var/val
@@ -525,6 +525,16 @@
 
 		if(T)
 			callproc_datum(T)
+
+	else if(href_list["delete"])
+		if(!check_rights(R_DEBUG, 0))
+			return
+
+		var/datum/D = locate(href_list["delete"])
+		if(!D)
+			to_chat(usr, "Unable to locate item!")
+		admin_delete(D)
+		href_list["datumrefresh"] = href_list["delete"]
 
 	else if(href_list["regenerateicons"])
 		if(!check_rights(0))
@@ -1155,8 +1165,6 @@
 					L.adjustCloneLoss(amount)
 				if("stamina")
 					L.adjustStaminaLoss(amount)
-				if("arousal")
-					L.adjustArousalLoss(amount)
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
@@ -1167,3 +1175,4 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
+
