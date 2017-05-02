@@ -243,7 +243,7 @@ SUBSYSTEM_DEF(ticker)
 	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
-	if(current_state < GAME_STATE_PLAYING)
+	if(!HasRoundStarted())
 		LAZYADD(round_start_events, cb)
 	else
 		cb.InvokeAsync()
@@ -672,14 +672,15 @@ SUBSYSTEM_DEF(ticker)
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
+/datum/controller/subsystem/ticker/proc/HasRoundStarted()
+	return current_state >= GAME_STATE_PLAYING
+
+/datum/controller/subsystem/ticker/proc/IsRoundInProgress()
+	return current_state == GAME_STATE_PLAYING
+
 /proc/send_gamemode_vote()
 	SSticker.modevoted = TRUE
 	SSvote.initiate_vote("roundtype","server")
-
-/world/proc/has_round_started()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
