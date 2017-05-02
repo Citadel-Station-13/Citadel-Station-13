@@ -672,6 +672,12 @@ SUBSYSTEM_DEF(ticker)
 		return
 	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
 
+/datum/controller/subsystem/ticker/proc/HasRoundStarted()
+	return current_state >= GAME_STATE_PLAYING
+
+/datum/controller/subsystem/ticker/proc/IsRoundInProgress()
+	return current_state == GAME_STATE_PLAYING
+
 /proc/send_gamemode_vote()
 	SSticker.modevoted = TRUE
 	SSvote.initiate_vote("roundtype","server")
