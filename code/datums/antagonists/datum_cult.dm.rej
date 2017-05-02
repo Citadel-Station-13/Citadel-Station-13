@@ -1,0 +1,9 @@
+diff a/code/datums/antagonists/datum_cult.dm b/code/datums/antagonists/datum_cult.dm	(rejected hunks)
+@@ -11,6 +11,7 @@
+ 		return
+ 	if(jobban_isbanned(owner.current, ROLE_CULTIST))
+ 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner.current, ROLE_CULTIST, ROLE_CULTIST), 0)
++	SSticker.mode.update_cult_icons_added(owner)
+ 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
+ 
+ /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
