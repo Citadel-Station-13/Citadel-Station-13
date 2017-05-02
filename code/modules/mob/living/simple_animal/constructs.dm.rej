@@ -1,9 +1,0 @@
-diff a/code/modules/mob/living/simple_animal/constructs.dm b/code/modules/mob/living/simple_animal/constructs.dm	(rejected hunks)
-@@ -35,7 +35,6 @@
- 
- /mob/living/simple_animal/hostile/construct/Initialize()
- 	. = ..()
--	updateglow()
- 	update_health_hud()
- 	for(var/spell in construct_spells)
- 		AddSpell(new spell(null))
