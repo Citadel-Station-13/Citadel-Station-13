@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/cult/runes.dm b/code/game/gamemodes/cult/runes.dm	(rejected hunks)
+@@ -520,7 +520,7 @@ var/list/teleport_runes = list()
+ 
+ //Rite of Resurrection: Requires the corpse of a cultist and that there have been less revives than the number of people sacrificed
+ /obj/effect/rune/raise_dead
+-	cultist_name = "Raise Dead"
++	cultist_name = "Resurrect Cultist"
+ 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
+ 	invocation = null //Depends on the name of the user - see below
+ 	icon_state = "1"
