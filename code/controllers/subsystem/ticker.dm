@@ -682,11 +682,6 @@ SUBSYSTEM_DEF(ticker)
 	SSticker.modevoted = TRUE
 	SSvote.initiate_vote("roundtype","server")
 
-/world/proc/has_round_started()
-	if (SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
-		return TRUE
-	return FALSE
-
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
