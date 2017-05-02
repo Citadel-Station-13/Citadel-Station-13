@@ -21,7 +21,7 @@
 #define ui_inventory "WEST:6,SOUTH:5"
 
 //Middle left indicators
-#define ui_lingchemdisplay "WEST:6,CENTER-1:15"
+#define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
 #define ui_crafting	"12:-10,1:5"
 #define ui_building "12:-10,1:21"
