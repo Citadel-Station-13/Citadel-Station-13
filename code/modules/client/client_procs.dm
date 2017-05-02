@@ -292,13 +292,13 @@ GLOBAL_LIST(external_rsc_urls)
 	set_client_age_from_db()
 	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		player_age = 0	
+		player_age = 0
 	if(!IsGuestKey(key) && SSdbcore.IsConnected())
 		findJoinDate()
 
 	sync_client_with_db(tdata)
-	
-	
+
+
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")

@@ -1,0 +1,10 @@
+diff a/code/controllers/subsystem/blackbox.dm b/code/controllers/subsystem/blackbox.dm	(rejected hunks)
+@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(blackbox)
+ 	msg_service = SSblackbox.msg_service
+ 	msg_cargo = SSblackbox.msg_cargo
+ 	msg_other = SSblackbox.msg_other
+-	
++
+ 	feedback = SSblackbox.feedback
+ 
+ //no touchie
