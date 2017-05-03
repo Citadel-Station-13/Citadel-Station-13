@@ -1,0 +1,10 @@
+diff a/code/game/machinery/Sleeper.dm b/code/game/machinery/Sleeper.dm	(rejected hunks)
+@@ -162,7 +162,7 @@
+ 			. = TRUE
+ 		if("inject")
+ 			var/chem = params["chem"]
+-			if(!is_operational() || mob_occupant)
++			if(!is_operational() || !mob_occupant)
+ 				return
+ 			if(mob_occupant.health < min_health && chem != "epinephrine")
+ 				return
