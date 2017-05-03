@@ -5,10 +5,18 @@
 	qdel(communion)
 	return ..()
 
+/datum/antagonist/cult/can_be_owned(datum/mind/new_owner)
+	. = ..()
+	if(.)
+		. = is_convertable_to_cult(new_owner.current)
+
 /datum/antagonist/cult/on_gain()
 	. = ..()
-	if(!owner)
-		return
+	SSticker.mode.cult += owner
+	SSticker.mode.update_cult_icons_added(owner)
+	if(istype(SSticker.mode, /datum/game_mode/cult))
+		var/datum/game_mode/cult/C = SSticker.mode
+		C.memorize_cult_objectives(owner)
 	if(jobban_isbanned(owner.current, ROLE_CULTIST))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, owner.current, ROLE_CULTIST, ROLE_CULTIST), 0)
 	owner.current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
