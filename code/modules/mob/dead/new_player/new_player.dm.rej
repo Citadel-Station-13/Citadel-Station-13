@@ -1,0 +1,10 @@
+diff a/code/modules/mob/dead/new_player/new_player.dm b/code/modules/mob/dead/new_player/new_player.dm	(rejected hunks)
+@@ -303,7 +300,7 @@
+ 	if(!IsJobAvailable(rank))
+ 		alert(src, "[rank] is not available. Please try another.")
+ 		return 0
+-	
++
+ 	if(SSticker.late_join_disabled)
+ 		alert(src, "An administrator has disabled late join spawning.")
+ 		return FALSE
