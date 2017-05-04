@@ -256,6 +256,8 @@
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
+	var/is_locked = TRUE
+
 	alert = TRUE
 	integrity_failure = 0
 
@@ -330,6 +332,10 @@
 			QDEL_NULL(showpiece)
 		else
 			..()
+
+/obj/item/key/displaycase
+	name = "display case key"
+	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
 	name = "Cheap replica"
