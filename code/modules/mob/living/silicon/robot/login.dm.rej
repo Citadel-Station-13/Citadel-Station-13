@@ -1,0 +1,6 @@
+diff a/code/modules/mob/living/silicon/robot/login.dm b/code/modules/mob/living/silicon/robot/login.dm	(rejected hunks)
+@@ -5,3 +5,4 @@
+ 	show_laws(0)
+ 	if(mind)
+ 		SSticker.mode.remove_revolutionary(mind)
++		SSticker.mode.remove_gangster(mind,1,remove_bosses=1)
