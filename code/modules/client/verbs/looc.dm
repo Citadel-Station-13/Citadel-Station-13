@@ -3,7 +3,7 @@
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		usr << "\red Speech is currently admin-disabled."
 		return
 
@@ -20,10 +20,10 @@
 		return
 
 	if(!holder)
-		if(!ooc_allowed)
+		if(!GLOB.ooc_allowed)
 			src << "\red OOC is globally muted"
 			return
-		if(!dooc_allowed && (mob.stat == DEAD))
+		if(!GLOB.dooc_allowed && (mob.stat == DEAD))
 			usr << "\red OOC for dead mobs has been turned off."
 			return
 		if(prefs.muted & MUTE_OOC)
@@ -37,16 +37,17 @@
 			return
 
 	log_ooc("(LOCAL) [mob.name]/[key] : [msg]")
+	mob.log_message("(LOCAL): [msg]", INDIVIDUAL_OOC_LOG)
 
 	var/list/heard = get_hearers_in_view(7, get_top_level_mob(src.mob))
 	for(var/mob/M in heard)
 		if(!M.client)
 			continue
 		var/client/C = M.client
-		if (C in admins)
+		if (C in GLOB.admins)
 			continue //they are handled after that
 
-		if (istype(M,/mob/dead/observer))
+		if (isobserver(M))
 			continue //Also handled later.
 
 		if(C.prefs.toggles & CHAT_OOC)
@@ -59,7 +60,7 @@
 //					display_name = holder.fakekey
 			C << "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[src.mob.name]:</EM> <span class='message'>[msg]</span></span></font>"
 
-	for(var/client/C in admins)
+	for(var/client/C in GLOB.admins)
 		if(C.prefs.toggles & CHAT_OOC)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
@@ -70,7 +71,7 @@
 		if(!G.client)
 			continue
 		var/client/C = G.client
-		if (C in admins)
+		if (C in GLOB.admins)
 			continue //handled earlier.
 		if(C.prefs.toggles & CHAT_OOC)
 			var/prefix = "(G)LOOC"

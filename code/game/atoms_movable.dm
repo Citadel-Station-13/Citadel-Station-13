@@ -1,3 +1,10 @@
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
@@ -6,11 +13,13 @@
 	var/throw_speed = 2 //How many tiles to move per ds when being thrown. Float values are fully supported
 	var/throw_range = 7
 	var/mob/pulledby = null
-	var/languages_spoken = 0 //For say() and Hear()
-	var/languages_understood = 0
+	var/list/languages
+	var/list/initial_languages = list(/datum/language/common)
+	var/only_speaks_language = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
+	var/verb_whisper = "whispers"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
 	var/atom/inertia_last_loc
@@ -22,7 +31,7 @@
 	var/list/client_mobs_in_contents // This contains all the client mobs within this container
 	var/list/acted_explosions	//for explosion dodging
 	glide_size = 8
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND|PIXEL_SCALE
 	var/datum/forced_movement/force_moving = null	//handled soley by forced_movement.dm
 	var/floating = FALSE
 
@@ -34,6 +43,11 @@
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
 	return ..()
+
+/atom/movable/Initialize(mapload)
+	. = ..()
+	for(var/L in initial_languages)
+		grant_language(L)
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -103,7 +117,44 @@
 			O.Check()
 	if (orbiting)
 		orbiting.Check()
+
+	if(flags & CLEAN_ON_MOVE)
+		clean_on_move()
+
+	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
+	if(proximity_monitor)
+		proximity_monitor.HandleMove()
+
 	return 1
+
+/atom/movable/proc/clean_on_move()
+	var/turf/tile = loc
+	if(isturf(tile))
+		tile.clean_blood()
+		for(var/A in tile)
+			if(is_cleanable(A))
+				qdel(A)
+			else if(istype(A, /obj/item))
+				var/obj/item/cleaned_item = A
+				cleaned_item.clean_blood()
+			else if(ishuman(A))
+				var/mob/living/carbon/human/cleaned_human = A
+				if(cleaned_human.lying)
+					if(cleaned_human.head)
+						cleaned_human.head.clean_blood()
+						cleaned_human.update_inv_head()
+					if(cleaned_human.wear_suit)
+						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.update_inv_wear_suit()
+					else if(cleaned_human.w_uniform)
+						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.update_inv_w_uniform()
+					if(cleaned_human.shoes)
+						cleaned_human.shoes.clean_blood()
+						cleaned_human.update_inv_shoes()
+					cleaned_human.clean_blood()
+					cleaned_human.wash_cream()
+					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
 	var/inform_admins = HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE)
@@ -124,6 +175,8 @@
 
 	if(stationloving && force)
 		STOP_PROCESSING(SSinbounds, src)
+
+	QDEL_NULL(proximity_monitor)
 
 	. = ..()
 	if(loc)
@@ -234,6 +287,7 @@
 	return pass_flags&passflag
 
 /atom/movable/proc/throw_impact(atom/hit_atom, throwingdatum)
+	set waitfor = 0
 	return hit_atom.hitby(src)
 
 /atom/movable/hitby(atom/movable/AM, skipcatch, hitpush = 1, blocked)
@@ -381,7 +435,8 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
+	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2) //Putting back my non offset breaking method
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -413,7 +468,7 @@
 	if(!I)
 		return
 
-	flick_overlay(I, clients, 5) // 5 ticks/half a second
+	flick_overlay(I, GLOB.clients, 5) // 5 ticks/half a second
 
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
@@ -486,8 +541,8 @@
 /atom/movable/proc/relocate()
 	var/targetturf = find_safe_turf(ZLEVEL_STATION)
 	if(!targetturf)
-		if(blobstart.len > 0)
-			targetturf = get_turf(pick(blobstart))
+		if(GLOB.blobstart.len > 0)
+			targetturf = get_turf(pick(GLOB.blobstart))
 		else
 			throw EXCEPTION("Unable to find a blobstart landmark")
 
@@ -507,7 +562,7 @@
 		return
 	else
 		var/turf/currentturf = get_turf(src)
-		get(src, /mob) << "<span class='danger'>You can't help but feel that you just lost something back there...</span>"
+		to_chat(get(src, /mob), "<span class='danger'>You can't help but feel that you just lost something back there...</span>")
 		var/turf/targetturf = relocate()
 		log_game("[src] has been moved out of bounds in [COORD(currentturf)]. Moving it to [COORD(targetturf)].")
 		if(HAS_SECONDARY_FLAG(src, INFORM_ADMINS_ON_RELOCATE))
@@ -518,3 +573,58 @@
 	var/turf/currentturf = get_turf(src)
 	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
 		. = TRUE
+
+
+/* Language procs */
+/atom/movable/proc/grant_language(datum/language/dt)
+	LAZYINITLIST(languages)
+	languages[dt] = TRUE
+
+/atom/movable/proc/grant_all_languages(omnitongue=FALSE)
+	for(var/la in subtypesof(/datum/language))
+		grant_language(la)
+
+	if(omnitongue)
+		SET_SECONDARY_FLAG(src, OMNITONGUE)
+
+/atom/movable/proc/get_random_understood_language()
+	var/list/possible = list()
+	for(var/dt in languages)
+		possible += dt
+	. = safepick(possible)
+
+/atom/movable/proc/remove_language(datum/language/dt)
+	LAZYREMOVE(languages, dt)
+
+/atom/movable/proc/remove_all_languages()
+	LAZYCLEARLIST(languages)
+
+/atom/movable/proc/has_language(datum/language/dt)
+	. = is_type_in_typecache(dt, languages)
+
+/atom/movable/proc/can_speak_in_language(datum/language/dt)
+	. = has_language(dt)
+	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
+		. = . && ispath(only_speaks_language, dt)
+
+/atom/movable/proc/get_default_language()
+	// if no language is specified, and we want to say() something, which
+	// language do we use?
+	var/datum/language/chosen_langtype
+	var/highest_priority
+
+	for(var/lt in languages)
+		var/datum/language/langtype = lt
+		if(!can_speak_in_language(langtype))
+			continue
+
+		var/pri = initial(langtype.default_priority)
+		if(!highest_priority || (pri > highest_priority))
+			chosen_langtype = langtype
+			highest_priority = pri
+
+	. = chosen_langtype
+/atom/movable/proc/ConveyorMove(movedir)
+	set waitfor = FALSE
+	if(!anchored && has_gravity())
+		step(src, movedir)

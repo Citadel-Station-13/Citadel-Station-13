@@ -32,14 +32,13 @@
 
 //Human Overlays Indexes/////////
 //citadel code
-#define MUTATIONS_LAYER			31		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		30		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define GENITALS_BEHIND_LAYER	29
-#define BODYPARTS_LAYER			28		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
-#define BODY_ADJ_LAYER			27		//certain mutantrace features (snout, body markings) that must appear above the body parts
-#define GENITALS_ADJ_LAYER		26
-#define BODY_LAYER				25		//underwear, undershirts, socks, eyes, lips(makeup)
-#define GENITALS_FRONT_LAYER	24
+#define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
+#define BODY_BEHIND_LAYER		29		//certain mutantrace features (tail when looking south) that must appear behind the body parts
+#define GENITALS_BEHIND_LAYER	28
+#define BODYPARTS_LAYER			27		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
+#define BODY_ADJ_LAYER			26		//certain mutantrace features (snout, body markings) that must appear above the body parts
+#define GENITALS_ADJ_LAYER		25
+#define BODY_LAYER				24		//underwear, undershirts, socks, eyes, lips(makeup)
 #define FRONT_MUTATIONS_LAYER	23		//mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
 #define DAMAGE_LAYER			22		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			21
@@ -49,7 +48,7 @@
 #define EARS_LAYER				17
 #define SUIT_LAYER				16
 #define BODY_TAUR_LAYER			15
-#define GENITALS_FRONT_LAYER	14
+#define GENITALS_FRONT_LAYER	14		//Draws some genitalia above clothes and the TAUR body if need be.
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11
@@ -63,7 +62,7 @@
 #define HANDS_LAYER				3
 #define BODY_FRONT_LAYER		2
 #define FIRE_LAYER				1		//If you're on fire
-#define TOTAL_LAYERS			31		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
+#define TOTAL_LAYERS			30		//KEEP THIS UP-TO-DATE OR SHIT WILL BREAK ;_;
 
 //Human Overlay Index Shortcuts for alternate_worn_layer, layers
 //Because I *KNOW* somebody will think layer+1 means "above"
@@ -149,7 +148,7 @@
 #define STAGE_FIVE 9
 #define STAGE_SIX 11 //From supermatter shard
 
-//ticker.current_state values
+//SSticker.current_state values
 #define GAME_STATE_STARTUP		0
 #define GAME_STATE_PREGAME		1
 #define GAME_STATE_SETTING_UP	2
@@ -188,7 +187,7 @@
 //Key:
 //"entered-[blood_state]-[dir_of_image]"
 //or: "exited-[blood_state]-[dir_of_image]"
-var/list/bloody_footprints_cache = list()
+GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 
 //Bloody shoes/footprints
 #define MAX_SHOE_BLOODINESS			100
@@ -202,6 +201,21 @@ var/list/bloody_footprints_cache = list()
 #define BLOOD_STATE_XENO			"xeno"
 #define BLOOD_STATE_OIL				"oil"
 #define BLOOD_STATE_NOT_BLOODY		"no blood whatsoever"
+
+//suit sensors: sensor_mode defines
+
+#define SENSOR_OFF 0
+#define SENSOR_LIVING 1
+#define SENSOR_VITALS 2
+#define SENSOR_COORDS 3
+
+//suit sensors: has_sensor defines
+
+#define BROKEN_SENSORS -1
+#define NO_SENSORS 0
+#define HAS_SENSORS 1
+#define LOCKED_SENSORS 2
+
 //Turf wet states
 #define TURF_DRY		0
 #define TURF_WET_WATER	1
@@ -221,13 +235,6 @@ var/list/bloody_footprints_cache = list()
 #define POLLTYPE_IRV		"IRV"
 
 
-
-//lighting area defines
-#define DYNAMIC_LIGHTING_DISABLED 0 //dynamic lighting disabled (area stays at full brightness)
-#define DYNAMIC_LIGHTING_ENABLED 1 //dynamic lighting enabled
-#define DYNAMIC_LIGHTING_FORCED 2 //dynamic lighting enabled even if the area doesn't require power
-#define DYNAMIC_LIGHTING_IFSTARLIGHT 3 //dynamic lighting enabled only if starlight is.
-#define IS_DYNAMIC_LIGHTING(A) ( A.dynamic_lighting == DYNAMIC_LIGHTING_IFSTARLIGHT ? config.starlight : A.dynamic_lighting )
 
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
@@ -253,7 +260,7 @@ var/list/bloody_footprints_cache = list()
 
 #define GHOST_ACCS_DEFAULT_OPTION	GHOST_ACCS_FULL
 
-var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL) //So save files can be sanitized properly.
+GLOBAL_LIST_INIT(ghost_accs_options, list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST_ACCS_FULL)) //So save files can be sanitized properly.
 
 #define GHOST_OTHERS_SIMPLE 			1
 #define GHOST_OTHERS_DEFAULT_SPRITE		50
@@ -269,7 +276,7 @@ var/global/list/ghost_accs_options = list(GHOST_ACCS_NONE, GHOST_ACCS_DIR, GHOST
 #define GHOST_MAX_VIEW_RANGE_MEMBER 14
 
 
-var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING) //Same as ghost_accs_options.
+GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DEFAULT_SPRITE, GHOST_OTHERS_THEIR_SETTING)) //Same as ghost_accs_options.
 
 //Color Defines
 #define OOC_COLOR  "#002eb8"
@@ -332,9 +339,9 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 
 //debug printing macros
-#define debug_world(msg) if (Debug2) to_chat(world, "DEBUG: [msg]")
-#define debug_admins(msg) if (Debug2) to_chat(admins, "DEBUG: [msg]")
-#define debug_world_log(msg) if (Debug2) log_world("DEBUG: [msg]")
+#define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
+#define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
 #define COORD(A) "([A.x],[A.y],[A.z])"
 #define INCREMENT_TALLY(L, stat) if(L[stat]){L[stat]++}else{L[stat] = 1}

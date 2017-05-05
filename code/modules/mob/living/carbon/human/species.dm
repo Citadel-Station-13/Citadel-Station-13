@@ -17,13 +17,17 @@
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
 	var/sexes = 1		// whether or not the race has sexual characteristics. at the moment this is only 0 for skeletons and shadows
+
+	var/face_y_offset = 0
+	var/hair_y_offset = 0
+
 	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
-	var/skinned_type = /obj/item/stack/sheet/animalhide/generic
+	var/skinned_type = null
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
@@ -64,13 +68,14 @@
 	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 
+	//Ears
+	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
+
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
 	var/fixed_mut_color3 = ""
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
-	var/lang_spoken = HUMAN
-	var/lang_understood = HUMAN
 
 	///////////
 	// PROCS //
@@ -90,21 +95,21 @@
 
 	var/randname
 	if(gender == MALE)
-		randname = pick(first_names_male)
+		randname = pick(GLOB.first_names_male)
 	else
-		randname = pick(first_names_female)
+		randname = pick(GLOB.first_names_female)
 
 	if(lastname)
 		randname += " [lastname]"
 	else
-		randname += " [pick(last_names)]"
+		randname += " [pick(GLOB.last_names)]"
 
 	return randname
 
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
-	if(rank in command_positions)
+	if(rank in GLOB.command_positions)
 		return 0
 	return 1
 
@@ -115,10 +120,17 @@
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
 
+	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
+	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
+		species_traits += DIGITIGRADE
+	if(DIGITIGRADE in species_traits)
+		C.Digitigrade_Leg_Swap(FALSE)
+
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
 	var/obj/item/organ/eyes/eyes = C.getorganslot("eye_sight")
+	var/obj/item/organ/ears/ears = C.getorganslot("ears")
 
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
@@ -135,6 +147,11 @@
 		qdel(eyes)
 		eyes = new mutanteyes
 		eyes.Insert(C)
+
+	if(ears)
+		qdel(ears)
+		ears = new mutantears
+		ears.Insert(C)
 
 	if((!(NOBREATH in species_traits)) && !lungs)
 		if(mutantlungs)
@@ -155,10 +172,7 @@
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
-	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
+
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
 	else
@@ -205,7 +219,7 @@
 			facialhair_hidden = TRUE
 
 	if(H.facial_hair_style && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
-		S = facial_hair_styles_list[H.facial_hair_style]
+		S = GLOB.facial_hair_styles_list[H.facial_hair_style]
 		if(S)
 
 			//List of all valid dynamic_fhair_suffixes
@@ -224,22 +238,22 @@
 				fhair_state += dynamic_fhair_suffix
 				fhair_file = 'icons/mob/facialhair_extensions.dmi'
 
-			var/image/img_facial = image("icon" = fhair_file, "icon_state" = fhair_state, "layer" = -HAIR_LAYER)
+			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
 
 			if(!forced_colour)
 				if(hair_color)
 					if(hair_color == "mutcolor")
-						img_facial.color = "#" + H.dna.features["mcolor"]
+						facial_overlay.color = "#" + H.dna.features["mcolor"]
 					else
-						img_facial.color = "#" + hair_color
+						facial_overlay.color = "#" + hair_color
 				else
-					img_facial.color = "#" + H.facial_hair_color
+					facial_overlay.color = "#" + H.facial_hair_color
 			else
-				img_facial.color = forced_colour
+				facial_overlay.color = forced_colour
 
-			img_facial.alpha = hair_alpha
+			facial_overlay.alpha = hair_alpha
 
-			standing += img_facial
+			standing += facial_overlay
 
 	if(H.head)
 		var/obj/item/I = H.head
@@ -257,12 +271,14 @@
 			hair_hidden = TRUE
 
 	if(!hair_hidden || dynamic_hair_suffix)
+		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
 		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
 			if(!(NOBLOOD in species_traits))
-				standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "debrained", "layer" = -HAIR_LAYER)
+				hair_overlay.icon = 'icons/mob/human_face.dmi'
+				hair_overlay.icon_state = "debrained"
 
 		else if(H.hair_style && (HAIR in species_traits))
-			S = hair_styles_list[H.hair_style]
+			S = GLOB.hair_styles_list[H.hair_style]
 			if(S)
 
 				//List of all valid dynamic_hair_suffixes
@@ -281,74 +297,70 @@
 					hair_state += dynamic_hair_suffix
 					hair_file = 'icons/mob/hair_extensions.dmi'
 
-				var/image/img_hair = image("icon" = hair_file, "icon_state" = hair_state, "layer" = -HAIR_LAYER)
+				hair_overlay.icon = hair_file
+				hair_overlay.icon_state = hair_state
 
 				if(!forced_colour)
 					if(hair_color)
 						if(hair_color == "mutcolor")
-							img_hair.color = "#" + H.dna.features["mcolor"]
+							hair_overlay.color = "#" + H.dna.features["mcolor"]
 						else
-							img_hair.color = "#" + hair_color
+							hair_overlay.color = "#" + hair_color
 					else
-						img_hair.color = "#" + H.hair_color
+						hair_overlay.color = "#" + H.hair_color
 				else
-					img_hair.color = forced_colour
-				img_hair.alpha = hair_alpha
-
-				standing += img_hair
+					hair_overlay.color = forced_colour
+				hair_overlay.alpha = hair_alpha
+				hair_overlay.pixel_y += hair_y_offset
+		if(hair_overlay.icon)
+			standing += hair_overlay
 
 	if(standing.len)
-		H.overlays_standing[HAIR_LAYER]	= standing
+		H.overlays_standing[HAIR_LAYER] = standing
 
 	H.apply_overlay(HAIR_LAYER)
 
 /datum/species/proc/handle_body(mob/living/carbon/human/H)
 	H.remove_overlay(BODY_LAYER)
 
-	var/list/standing	= list()
+	var/list/standing = list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-
-	// eyes
-	var/has_eyes = (H.getorgan(/obj/item/organ/eyes) && HD)
-
-	if(!has_eyes)
-		standing += image("icon"='icons/mob/human_face.dmi', "icon_state" = "eyes_missing", "layer" = -BODY_LAYER)
-
-	if(!HUSK)
+	if(!(H.disabilities & HUSK))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits) && HD)
-			var/image/lips = image("icon"='icons/mob/human_face.dmi', "icon_state"="lips_[H.lip_style]", "layer" = -BODY_LAYER)
-			lips.color = H.lip_color
-			standing	+= lips
+			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
+			lip_overlay.color = H.lip_color
+			lip_overlay.pixel_y += face_y_offset
+			standing += lip_overlay
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD && has_eyes)
-			var/image/img_eyes = image("icon" = 'icons/mob/human_face.dmi', "icon_state" = "eyes", "layer" = -BODY_LAYER)
-			img_eyes.color = "#" + H.eye_color
-			standing	+= img_eyes
+		if((EYECOLOR in species_traits) && HD)
+			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+			eye_overlay.color = "#" + H.eye_color
+			eye_overlay.pixel_y += face_y_offset
+			standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
-	/*This will be refactored at a later date
 	if(H.underwear)
-		var/datum/sprite_accessory/underwear/underwear = underwear_list[H.underwear]
+		var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 		if(underwear)
-			standing	+= image("icon"=underwear.icon, "icon_state"="[underwear.icon_state]", "layer"=-BODY_LAYER)
+			standing += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 
 	if(H.undershirt)
-		var/datum/sprite_accessory/undershirt/undershirt = undershirt_list[H.undershirt]
+		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 		if(undershirt)
 			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing	+=	wear_female_version("[undershirt.icon_state]", undershirt.icon, BODY_LAYER)
+				standing += wear_female_version(undershirt.icon_state, undershirt.icon, -BODY_LAYER)
 			else
-				standing	+= image("icon"=undershirt.icon, "icon_state"="[undershirt.icon_state]", "layer"=-BODY_LAYER)
+				standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
 	if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
-		var/datum/sprite_accessory/socks/socks = socks_list[H.socks]
+		var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 		if(socks)
-			standing	+= image("icon"=socks.icon, "icon_state"="[socks.icon_state]", "layer"=-BODY_LAYER)
-	*/
+			standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+
 	if(standing.len)
 		H.overlays_standing[BODY_LAYER] = standing
 
@@ -357,12 +369,11 @@
 
 /datum/species/proc/handle_mutant_bodyparts(mob/living/carbon/human/H, forced_colour)
 	var/list/bodyparts_to_add = mutant_bodyparts.Copy()
-	var/list/relevent_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER)
+	var/list/relevant_layers = list(BODY_BEHIND_LAYER, BODY_ADJ_LAYER, BODY_FRONT_LAYER, BODY_TAUR_LAYER)
 	var/list/standing	= list()
 
-	H.remove_overlay(BODY_BEHIND_LAYER)
-	H.remove_overlay(BODY_ADJ_LAYER)
-	H.remove_overlay(BODY_FRONT_LAYER)
+	for(var/L in relevant_layers)
+		H.remove_overlay(L)
 
 	if(!mutant_bodyparts)
 		return
@@ -488,60 +499,60 @@
 
 	var/image/I
 
-	for(var/layer in relevent_layers)
+	for(var/layer in relevant_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
 
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/S
 			switch(bodypart)
 				if("tail_lizard")
-					S = tails_list_lizard[H.dna.features["tail_lizard"]]
+					S = GLOB.tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("waggingtail_lizard")
-					S.= animated_tails_list_lizard[H.dna.features["tail_lizard"]]
+					S.= GLOB.animated_tails_list_lizard[H.dna.features["tail_lizard"]]
 				if("tail_human")
-					S = tails_list_human[H.dna.features["tail_human"]]
+					S = GLOB.tails_list_human[H.dna.features["tail_human"]]
 				if("waggingtail_human")
-					S.= animated_tails_list_human[H.dna.features["tail_human"]]
+					S.= GLOB.animated_tails_list_human[H.dna.features["tail_human"]]
 				if("spines")
-					S = spines_list[H.dna.features["spines"]]
+					S = GLOB.spines_list[H.dna.features["spines"]]
 				if("waggingspines")
-					S.= animated_spines_list[H.dna.features["spines"]]
+					S.= GLOB.animated_spines_list[H.dna.features["spines"]]
 				if("snout")
-					S = snouts_list[H.dna.features["snout"]]
+					S = GLOB.snouts_list[H.dna.features["snout"]]
 				if("frills")
-					S = frills_list[H.dna.features["frills"]]
+					S = GLOB.frills_list[H.dna.features["frills"]]
 				if("horns")
-					S = horns_list[H.dna.features["horns"]]
+					S = GLOB.horns_list[H.dna.features["horns"]]
 				if("ears")
-					S = ears_list[H.dna.features["ears"]]
+					S = GLOB.ears_list[H.dna.features["ears"]]
 				if("body_markings")
-					S = body_markings_list[H.dna.features["body_markings"]]
+					S = GLOB.body_markings_list[H.dna.features["body_markings"]]
 				if("wings")
-					S = wings_list[H.dna.features["wings"]]
+					S = GLOB.wings_list[H.dna.features["wings"]]
 				if("wingsopen")
-					S = wings_open_list[H.dna.features["wings"]]
+					S = GLOB.wings_open_list[H.dna.features["wings"]]
 				if("legs")
-					S = legs_list[H.dna.features["legs"]]
+					S = GLOB.legs_list[H.dna.features["legs"]]
 
 				//Mammal Bodyparts (Canid/Felid, others maybe in the future)
 				if("mam_tail")
-					S = mam_tails_list[H.dna.features["mam_tail"]]
+					S = GLOB.mam_tails_list[H.dna.features["mam_tail"]]
 				if("mam_waggingtail")
-					S.= mam_tails_animated_list[H.dna.features["mam_tail"]]
+					S.= GLOB.mam_tails_animated_list[H.dna.features["mam_tail"]]
 				if("mam_body_markings")
-					S = mam_body_markings_list[H.dna.features["mam_body_markings"]]
+					S = GLOB.mam_body_markings_list[H.dna.features["mam_body_markings"]]
 				if("mam_ears")
-					S = mam_ears_list[H.dna.features["mam_ears"]]
+					S = GLOB.mam_ears_list[H.dna.features["mam_ears"]]
 				if("taur")
-					S = taur_list[H.dna.features["taur"]]
+					S = GLOB.taur_list[H.dna.features["taur"]]
 
 				//Xeno Bodyparts
 				if("xenodorsal")
-					S = xeno_dorsal_list[H.dna.features["xenodorsal"]]
+					S = GLOB.xeno_dorsal_list[H.dna.features["xenodorsal"]]
 				if("xenohead")
-					S = xeno_head_list[H.dna.features["xenohead"]]
+					S = GLOB.xeno_head_list[H.dna.features["xenohead"]]
 				if("xenotail")
-					S = xeno_tail_list[H.dna.features["xenotail"]]
+					S = GLOB.xeno_tail_list[H.dna.features["xenotail"]]
 
 				//Slimecoon Bodyparts
 			/*	if("slimecoontail")
@@ -553,6 +564,8 @@
 			if(!S || S.icon_state == "none")
 				continue
 
+			var/mutable_appearance/accessory_overlay = mutable_appearance(S.icon, layer = -layer)
+
 			//A little rename so we don't have to use tail_lizard or tail_human when naming the sprites.
 			if(bodypart == "tail_lizard" || bodypart == "tail_human" || bodypart == "mam_tail" || bodypart == "slimecoontail" || bodypart == "xenotail")
 				bodypart = "tail"
@@ -563,63 +576,61 @@
 			if(bodypart == "xenohead")
 				bodypart = "xhead"
 
-
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[g]_[bodypart]_[S.icon_state]_[layertext]"
+				accessory_overlay.icon_state = "[g]_[bodypart]_[S.icon_state]_[layertext]"
 			else
-				icon_string = "m_[bodypart]_[S.icon_state]_[layertext]"
+				accessory_overlay.icon_state = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 
 			if(S.center)
-				I = center_image(I,S.dimension_x,S.dimension_y)
+				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
 			if(!(H.disabilities & HUSK))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
 							if(fixed_mut_color)
-								I.color = "#[fixed_mut_color]"
+								accessory_overlay.color = "#[fixed_mut_color]"
 							else
-								I.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 						if(MUTCOLORS2)
 							if(fixed_mut_color2)
-								I.color = "#[fixed_mut_color2]"
+								accessory_overlay.color = "#[fixed_mut_color2]"
 							else
-								I.color = "#[H.dna.features["mcolor2"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor2"]]"
 						if(MUTCOLORS3)
 							if(fixed_mut_color3)
-								I.color = "#[fixed_mut_color3]"
+								accessory_overlay.color = "#[fixed_mut_color3]"
 							else
-								I.color = "#[H.dna.features["mcolor3"]]"
-
+								accessory_overlay.color = "#[H.dna.features["mcolor3"]]"
 						if(HAIR)
 							if(hair_color == "mutcolor")
-								I.color = "#[H.dna.features["mcolor"]]"
+								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
 							else
-								I.color = "#[H.hair_color]"
+								accessory_overlay.color = "#[H.hair_color]"
 						if(FACEHAIR)
-							I.color = "#[H.facial_hair_color]"
+							accessory_overlay.color = "#[H.facial_hair_color]"
 						if(EYECOLOR)
-							I.color = "#[H.eye_color]"
+							accessory_overlay.color = "#[H.eye_color]"
 				else
-					I.color = forced_colour
-			standing += I
+					accessory_overlay.color = forced_colour
+			standing += accessory_overlay
 
 			if(S.hasinner)
+				var/mutable_appearance/inner_accessory_overlay = mutable_appearance(S.icon, layer = -layer)
 				if(S.gender_specific)
-					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
+					inner_accessory_overlay.icon_state = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
 				else
-					icon_string = "m_[bodypart]inner_[S.icon_state]_[layertext]"
-
-				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+					inner_accessory_overlay.icon_state = "m_[bodypart]inner_[S.icon_state]_[layertext]"
 
 				if(S.center)
-					I = center_image(I,S.dimension_x,S.dimension_y)
+					inner_accessory_overlay = center_image(inner_accessory_overlay, S.dimension_x, S.dimension_y)
 
-				standing += I
+				standing += inner_accessory_overlay
+
 			if(S.extra) //apply the extra overlay, if there is one
 				if(S.gender_specific)
 					icon_string = "[g]_[bodypart]_extra_[S.icon_state]_[layertext]"
@@ -695,9 +706,8 @@
 		H.overlays_standing[layer] = standing.Copy()
 		standing = list()
 
-	H.apply_overlay(BODY_BEHIND_LAYER)
-	H.apply_overlay(BODY_ADJ_LAYER)
-	H.apply_overlay(BODY_FRONT_LAYER)
+	for(var/L in relevant_layers)
+		H.apply_overlay(L)
 
 
 //This exists so sprite accessories can still be per-layer without having to include that layer's
@@ -710,6 +720,8 @@
 			return "ADJ"
 		if(BODY_FRONT_LAYER)
 			return "FRONT"
+		if(BODY_TAUR_LAYER)
+			return "TAUR"
 
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
@@ -1035,6 +1047,8 @@
 	return 1
 
 /datum/species/proc/go_bald(mob/living/carbon/human/H)
+	if(QDELETED(H))	//may be called from a timer
+		return
 	H.facial_hair_style = "Shaved"
 	H.hair_style = "Bald"
 	H.update_hair()
@@ -1198,9 +1212,9 @@
 			target.visible_message("<span class='danger'>[user] has weakened [target]!</span>", \
 							"<span class='userdanger'>[user] has weakened [target]!</span>")
 			target.apply_effect(4, WEAKEN, armor_block)
-			target.forcesay(hit_appends)
+			target.forcesay(GLOB.hit_appends)
 		else if(target.lying)
-			target.forcesay(hit_appends)
+			target.forcesay(GLOB.hit_appends)
 
 
 
@@ -1223,7 +1237,6 @@
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		add_logs(user, target, "disarmed")
 
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
@@ -1234,24 +1247,26 @@
 			target.visible_message("<span class='danger'>[user] has pushed [target]!</span>",
 				"<span class='userdanger'>[user] has pushed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
 			target.apply_effect(2, WEAKEN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
-			target.forcesay(hit_appends)
+			target.forcesay(GLOB.hit_appends)
+			add_logs(user, target, "disarmed", " pushing them to the ground")
+
 			return
 
-		var/talked = 0	// BubbleWrap
-
 		if(randn <= 60)
-			//BubbleWrap: Disarming breaks a pull
+			var/obj/item/I = null
 			if(target.pulling)
 				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
-				talked = 1
 				target.stop_pulling()
-			//End BubbleWrap
 
-			if(!talked)	//BubbleWrap
+			else
+				I = target.get_active_held_item()
 				if(target.drop_item())
 					target.visible_message("<span class='danger'>[user] has disarmed [target]!</span>", \
 						"<span class='userdanger'>[user] has disarmed [target]!</span>", null, COMBAT_MESSAGE_RANGE)
+				else
+					I = null
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+			add_logs(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
 			return
 
 
@@ -1347,7 +1362,7 @@
 						H.adjust_blurriness(10)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
-						ticker.mode.remove_revolutionary(H.mind)
+						SSticker.mode.remove_revolutionary(H.mind)
 
 				if(bloody)	//Apply blood
 					if(H.wear_mask)
@@ -1376,7 +1391,7 @@
 						H.update_inv_w_uniform()
 
 		if(Iforce > 10 || Iforce >= 5 && prob(33))
-			H.forcesay(hit_appends)	//forcesay checks stat already.
+			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
 /datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
@@ -1480,7 +1495,7 @@
 					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
 				else
 					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
-	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(mutations_list[COLDRES] in H.dna.mutations))
+	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)
 				H.throw_alert("temp", /obj/screen/alert/cold, 1)

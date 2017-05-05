@@ -36,7 +36,6 @@
 
 	faction = list("russian")
 	gold_core_spawnable = 1
-	devourable = 1
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -72,9 +71,7 @@
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
-		var/image/B = image(icon = 'icons/mob/animal.dmi', icon_state = "armor_bear")
-		if(B)
-			add_overlay(B)
+		add_overlay("armor_bear")
 
 /obj/item/bear_armor
 	name = "pile of bear armor"

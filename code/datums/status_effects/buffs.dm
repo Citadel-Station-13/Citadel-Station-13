@@ -44,6 +44,7 @@
 	id = "vanguard"
 	duration = 200
 	tick_interval = 0 //tick as fast as possible
+	status_type = STATUS_EFFECT_REPLACE
 	alert_type = /obj/screen/alert/status_effect/vanguard
 	var/datum/progressbar/progbar
 
@@ -58,7 +59,8 @@
 	if(istype(L)) //this is probably more safety than actually needed
 		var/vanguard = L.stun_absorption["vanguard"]
 		desc = initial(desc)
-		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."
+		desc += "<br><b>[vanguard["stuns_absorbed"] * 2]</b> seconds of stuns held back.\
+		[GLOB.ratvar_awakens ? "":"<br><b>[round(min(vanguard["stuns_absorbed"] * 0.25, 20)) * 2]</b> seconds of stun will affect you."]"
 	..()
 
 /datum/status_effect/vanguard_shield/Destroy()
@@ -70,6 +72,8 @@
 	add_logs(owner, null, "gained Vanguard stun immunity")
 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+	owner.SetStunned(0, FALSE)
+	owner.SetWeakened(0)
 	progbar = new(owner, duration, owner)
 	progbar.bar.color = list("#FAE48C", "#FAE48C", "#FAE48C", rgb(0,0,0))
 	progbar.update(duration - world.time)
@@ -88,7 +92,7 @@
 		for(var/i in owner.stun_absorption)
 			if(owner.stun_absorption[i]["end_time"] > world.time && owner.stun_absorption[i]["priority"] > vanguard["priority"])
 				otheractiveabsorptions = TRUE
-		if(!ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
+		if(!GLOB.ratvar_awakens && stuns_blocked && !otheractiveabsorptions)
 			vanguard["end_time"] = 0 //so it doesn't absorb the stuns we're about to apply
 			owner.Stun(stuns_blocked)
 			owner.Weaken(stuns_blocked)

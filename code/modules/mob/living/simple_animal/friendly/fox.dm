@@ -13,14 +13,12 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	ventcrawler = VENTCRAWLER_ALWAYS
-	pass_flags = PASSTABLE
-	mob_size = MOB_SIZE_SMALL
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 3)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
 	gold_core_spawnable = 2
+	devourable = TRUE
 	var/mob/living/simple_animal/mouse/movement_target
 	var/turns_since_scan = 0
 

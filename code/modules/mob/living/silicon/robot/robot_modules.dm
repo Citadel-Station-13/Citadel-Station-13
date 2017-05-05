@@ -20,6 +20,7 @@
 
 	var/can_be_pushed = TRUE
 	var/magpulsing = FALSE
+	var/clean_on_move = FALSE
 
 	var/did_feedback = FALSE
 	var/feedback_key
@@ -217,19 +218,28 @@
 		R.SetLockdown(0)
 	R.anchored = FALSE
 	R.notransform = FALSE
-	R.notify_ai(2)
+	R.notify_ai(NEW_MODULE)
 	if(R.hud_used)
 		R.hud_used.update_robot_modules_display()
 	if(feedback_key && !did_feedback)
-		feedback_inc(feedback_key, 1)
+		SSblackbox.inc(feedback_key, 1)
 
 /obj/item/weapon/robot_module/standard
 	name = "Standard"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/weapon/reagent_containers/borghypo/epi,
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/weldingtool/largetank/cyborg,
+		/obj/item/weapon/wrench/cyborg,
 		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/extinguisher,
+		/obj/item/weapon/pickaxe,
+		/obj/item/device/t_scanner/adv_mining_scanner,
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/borg/cyborghug)
 	emag_modules = list(/obj/item/weapon/melee/energy/sword/cyborg)
@@ -261,6 +271,7 @@
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
+		/obj/item/weapon/organ_storage,
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
@@ -277,7 +288,7 @@
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
-		/obj/item/weapon/rcd/borg,
+		/obj/item/weapon/construction/rcd/borg,
 		/obj/item/weapon/pipe_dispenser,
 		/obj/item/weapon/extinguisher,
 		/obj/item/weapon/weldingtool/largetank/cyborg,
@@ -327,6 +338,54 @@
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+
+/obj/item/weapon/robot_module/k9
+	name = "Security K-9 Unit module"
+	basic_modules = list(
+		/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/dog,
+		/obj/item/weapon/dogborg/jaws/big,
+		/obj/item/weapon/dogborg/pounce,
+		/obj/item/clothing/mask/gas/sechailer/cyborg,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/gun/energy/disabler/cyborg)
+	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
+		/obj/item/clockwork/ratvarian_spear/cyborg)
+	cyborg_base_icon = "k9"
+	moduleselect_icon = "k9"
+	feedback_key = "cyborg_k9"
+	can_be_pushed = FALSE
+	hat_offset = INFINITY
+
+/obj/item/weapon/robot_module/k9/do_transform_animation()
+	..()
+	loc << "<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
+	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
+
+/obj/item/weapon/robot_module/medihound
+	name = "MediHound module"
+	basic_modules = list(
+		/obj/item/weapon/dogborg/jaws/small,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/healthanalyzer,
+		/obj/item/weapon/dogborg/sleeper,
+		/obj/item/weapon/twohanded/shockpaddles/hound,
+		/obj/item/device/sensor_device)
+	emag_modules = list(/obj/item/weapon/dogborg/pounce)
+	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
+		/obj/item/clockwork/ratvarian_spear/cyborg)
+	cyborg_base_icon = "medihound"
+	moduleselect_icon = "medihound"
+	feedback_key = "cyborg_medihound"
+	can_be_pushed = FALSE
+	hat_offset = INFINITY
+
+/obj/item/weapon/robot_module/medihound/do_transform_animation()
+	..()
+	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
@@ -382,6 +441,7 @@
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
 	hat_offset = -5
+	clean_on_move = TRUE
 
 /obj/item/weapon/reagent_containers/spray/cyborg_drying
 	name = "drying agent spray"

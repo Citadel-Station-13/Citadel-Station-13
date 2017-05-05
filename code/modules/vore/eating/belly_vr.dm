@@ -11,20 +11,20 @@
 /datum/belly
 	var/name								// Name of this location
 	var/inside_flavor						// Flavor text description of inside sight/sound/smells/feels.
-	var/vore_sound = 'sound/vore/gulp.ogg'	// Sound when ingesting someone
+	var/vore_sound = 'sound/vore/pred/swallow_01.ogg'	// Sound when ingesting someone
 	var/vore_verb = "ingest"				// Verb for eating with this in messages
 	var/human_prey_swallow_time = 100		// Time in deciseconds to swallow /mob/living/carbon/human
 	var/nonhuman_prey_swallow_time = 60		// Time in deciseconds to swallow anything else
 	var/emoteTime = 300						// How long between stomach emotes at prey
-	var/digest_brute = 1					// Brute damage per tick in digestion mode
-	var/digest_burn = 3						// Burn damage per tick in digestion mode
+	var/digest_brute = 0					// Brute damage per tick in digestion mode
+	var/digest_burn = 1						// Burn damage per tick in digestion mode
 	var/digest_tickrate = 9					// Modulus this of air controller tick number to iterate gurgles on
 	var/immutable = FALSE					// Prevents this belly from being deleted
 	var/escapable = TRUE					// Belly can be resisted out of at any time
 	var/escapetime = 200					// Deciseconds, how long to escape this belly
 	var/escapechance = 45 					// % Chance of prey beginning to escape if prey struggles.
 	var/tmp/digest_mode = DM_HOLD				// Whether or not to digest. Default to not digest.
-	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL,DM_DIGESTF)	// Possible digest modes
+	var/tmp/list/digest_modes = list(DM_HOLD,DM_DIGEST,DM_HEAL)	// Possible digest modes
 	var/tmp/mob/living/owner					// The mob whose belly this is.
 	var/tmp/list/internal_contents = list()		// People/Things you've eaten into this belly!
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
@@ -106,6 +106,7 @@
 		return 0
 	for (var/atom/movable/M in internal_contents)
 		M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+		M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 		internal_contents.Remove(M)  // Remove from the belly contents
 
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
@@ -123,6 +124,7 @@
 		return FALSE // They weren't in this belly anyway
 
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
+	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 	src.internal_contents.Add(M)  // Remove from the belly contents
 	var/datum/belly/B = check_belly(owner)
 	if(B)
@@ -141,6 +143,7 @@
 
 	prey.forceMove(owner)
 	internal_contents.Add(prey)
+	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 80, channel = 50)
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -221,7 +224,7 @@
 /datum/belly/proc/digestion_death(var/mob/living/M)
 	is_full = TRUE
 	internal_contents.Remove(M)
-
+	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = 50)
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
 	if (is_vore_predator(M))
 		for (var/bellytype in M.vore_organs)
@@ -232,7 +235,7 @@
 			for (var/mob/subprey in belly.internal_contents)
 				subprey.loc = owner
 				internal_contents.Add(subprey)
-				subprey << "As [M] melts away around you, you find yourself in [owner]'s [name]"
+				to_chat(subprey, "As [M] melts away around you, you find yourself in [owner]'s [name]")
 
 	//Drop all items into the belly.
 	for(var/obj/item/W in M)
@@ -254,8 +257,8 @@
 	R.setClickCooldown(50)
 
 	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
-		R << "<span class='warning'>You attempt to climb out of \the [name]. (This will take around [escapetime/10] seconds.)</span>"
-		owner << "<span class='warning'>Someone is attempting to climb out of your [name]!</span>"
+		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name]. (This will take around [escapetime/10] seconds.)</span>")
+		to_chat(owner, "<span class='warning'>Someone is attempting to climb out of your [name]!</span>")
 
 		if(do_after(R, escapetime, owner))
 			if((owner.stat || escapable) && (R in internal_contents)) //Can still escape?
@@ -264,8 +267,8 @@
 			else if(!(R in internal_contents)) //Aren't even in the belly. Quietly fail.
 				return
 			else //Belly became inescapable or mob revived
-				R << "<span class='warning'>Your attempt to escape [name] has failed!</span>"
-				owner << "<span class='notice'>The attempt to escape from your [name] has failed!</span>"
+				to_chat(R, "<span class='warning'>Your attempt to escape [name] has failed!</span>")
+				to_chat(owner, "<span class='notice'>The attempt to escape from your [name] has failed!</span>")
 				return
 			return
 	var/struggle_outer_message = pick(struggle_messages_outside)
@@ -285,30 +288,32 @@
 //	for(var/mob/M in hearers(4, owner))
 //		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(R.loc, "struggle_sounds", 50, 0, -5)
+	playsound(get_turf(owner),"struggle_sound",75,0,-5,1,channel=51)
+	R.stop_sound_channel(51)
+	R.playsound_direct("prey_struggle_sound",60)
 
 	if(escapable && R.a_intent != "help") //If the stomach has escapable enabled and the person is actually trying to kick out
-		R << "<span class='warning'>You attempt to climb out of \the [name].</span>"
-		owner << "<span class='warning'>Someone is attempting to climb out of your [name]!</span>"
+		to_chat(R, "<span class='warning'>You attempt to climb out of \the [name].</span>")
+		to_chat(owner, "<span class='warning'>Someone is attempting to climb out of your [name]!</span>")
 		if(prob(escapechance)) //Let's have it check to see if the prey escapes first.
 			if(do_after(R, escapetime))
 				if((escapable) && (R in internal_contents)) //Does the owner still have escapable enabled?
 					release_specific_contents(R)
-					R << "<span class='warning'>You climb out of \the [name].</span>"
-					owner << "<span class='warning'>[R] climbs out of your [name]!</span>"
-					for(var/mob/M in hearers(4, owner))
+					to_chat(R, "<span class='warning'>You climb out of \the [name].</span>")
+					to_chat(owner, "<span class='warning'>[R] climbs out of your [name]!</span>")
+					for(var/mob/M in viewers(4, owner))
 						M.visible_message("<span class='warning'>[R] climbs out of [owner]'s [name]!</span>", 2)
 					return
 				else if(!(R in internal_contents)) //Aren't even in the belly. Quietly fail.
 					return
 			else //Belly became inescapable.
-				R << "<span class='warning'>Your attempt to escape [name] has failed!</span>"
-				owner << "<span class='notice'>The attempt to escape from your [name] has failed!</span>"
+				to_chat(R, "<span class='warning'>Your attempt to escape [name] has failed!</span>")
+				to_chat(owner, "<span class='notice'>The attempt to escape from your [name] has failed!/span>")
 				return
 
 		else //Nothing interesting happened.
-			R << "<span class='warning'>But make no progress in escaping [owner]'s [name].</span>"
-			owner << "<span class='warning'>But appears to be unable to make any progress in escaping your [name].</span>"
+			to_chat(R, "<span class='warning'>But make no progress in escaping [owner]'s [name].</span>")
+			to_chat(owner, "<span class='warning'>But appears to be unable to make any progress in escaping your [name].</span>")
 			return
 	else
 		return

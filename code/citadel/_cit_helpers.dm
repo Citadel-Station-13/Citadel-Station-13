@@ -25,45 +25,72 @@ proc/get_racelist(var/mob/user)//This proc returns a list of species that 'user'
 		var/datum/species/S = new spath()
 		var/list/wlist = S.whitelist
 		if(S.whitelisted && (wlist.Find(user.ckey) || wlist.Find(user.key) || user.client.holder))  //If your ckey is on the species whitelist or you're an admin:
-			whitelisted_species_list[S.id] = S.type 											//Add the species to their available species list.
+			GLOB.whitelisted_species_list[S.id] = S.type 											//Add the species to their available species list.
 		else if(!S.whitelisted && S.roundstart)														//Normal roundstart species will be handled here.
-			whitelisted_species_list[S.id] = S.type
+			GLOB.whitelisted_species_list[S.id] = S.type
 
-	return whitelisted_species_list
+	return GLOB.whitelisted_species_list
 
 	//Mammal Species
-var/global/list/mam_body_markings_list = list()
-var/global/list/mam_ears_list = list()
-var/global/list/mam_tails_list = list()
-var/global/list/mam_tails_animated_list = list()
-var/global/list/taur_list = list()
+GLOBAL_LIST_EMPTY(mam_body_markings_list)
+GLOBAL_LIST_EMPTY(mam_ears_list)
+GLOBAL_LIST_EMPTY(mam_tails_list)
+GLOBAL_LIST_EMPTY(mam_tails_animated_list)
+GLOBAL_LIST_EMPTY(taur_list)
 
 	//Exotic Species
-var/global/list/exotic_tails_list = list()
-var/global/list/exotic_tails_animated_list = list()
-var/global/list/exotic_ears_list = list()
-var/global/list/exotic_head_list = list()
-var/global/list/exotic_back_list = list()
+GLOBAL_LIST_EMPTY(exotic_tails_list)
+GLOBAL_LIST_EMPTY(exotic_tails_animated_list)
+GLOBAL_LIST_EMPTY(exotic_ears_list)
+GLOBAL_LIST_EMPTY(exotic_head_list)
+GLOBAL_LIST_EMPTY(exotic_back_list)
 
 	//Xenomorph Species
-var/global/list/xeno_head_list = list() //I forgot the ' = list()' part for the longest time and couldn't figure out what was wrong. *facepalm
-var/global/list/xeno_tail_list = list()
-var/global/list/xeno_dorsal_list = list()
+GLOBAL_LIST_EMPTY(xeno_head_list)
+GLOBAL_LIST_EMPTY(xeno_tail_list)
+GLOBAL_LIST_EMPTY(xeno_dorsal_list)
 
 
 	//Genitals and Arousal Lists
-var/global/list/cock_shapes_list = list()//global_lists.dm for the list initializations
-var/global/list/breasts_size_list = list()
-var/global/list/cum_into_containers_list = list(/obj/item/weapon/reagent_containers/food/snacks/pie)
-var/global/list/dick_nouns = list("dick","cock","member","shaft")
-var/global/list/cum_id_list = list("semen")
-var/global/list/milk_id_list = list("milk")
+GLOBAL_LIST_EMPTY(cock_shapes_list)//global_lists.dm for the list initializations //Now also _DATASTRUCTURES globals.dm
+GLOBAL_LIST_EMPTY(breasts_size_list)
+GLOBAL_LIST_EMPTY(breasts_shapes_list)
+GLOBAL_LIST_EMPTY(vagina_shapes_list)
+GLOBAL_LIST_INIT(cum_into_containers_list, list(/obj/item/weapon/reagent_containers/food/snacks/pie)) //Yer fuggin snowflake name list jfc
+GLOBAL_LIST_INIT(dick_nouns, list("dick","cock","member","shaft"))
+GLOBAL_LIST_INIT(cum_id_list,"semen")
+GLOBAL_LIST_INIT(milk_id_list,"milk")
+
+GLOBAL_LIST_INIT(dildo_shapes, list(
+		"Human"		= "human",
+		"Knotted"	= "knotted",
+		"Plain"		= "plain",
+		"Flared"	= "flared"
+		))
+GLOBAL_LIST_INIT(dildo_sizes, list(
+		"Small"		= 1,
+		"Medium"	= 2,
+		"Big"		= 3
+		))
+GLOBAL_LIST_INIT(dildo_colors, list(//mostly neon colors
+		"Cyan"		= "#00f9ff",//cyan
+		"Green"		= "#49ff00",//green
+		"Pink"		= "#ff4adc",//pink
+		"Yellow"	= "#fdff00",//yellow
+		"Blue"		= "#00d2ff",//blue
+		"Lime"		= "#89ff00",//lime
+		"Black"		= "#101010",//black
+		"Red"		= "#ff0000",//red
+		"Orange"	= "#ff9a00",//orange
+		"Purple"	= "#e300ff"//purple
+		))
+
 //mentor stuff
-var/list/mentors = list()
+GLOBAL_LIST_EMPTY(mentors)
 
 //Looc stuff
-var/global/looc_allowed = 1
-var/global/dlooc_allowed = 1
+GLOBAL_VAR_INIT(looc_allowed, 1)
+GLOBAL_VAR_INIT(dlooc_allowed, 1)
 
 /client/proc/reload_mentors()
 		set name = "Reload Mentors"
@@ -77,7 +104,10 @@ var/global/dlooc_allowed = 1
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavor text.", "Flavor text", null)  as text), 1)
+	var/new_flavor = (input(src, "Enter your new flavor text:", "Flavor text", null) as text|null)
+	if(new_flavor)
+		flavor_text = sanitize(new_flavor)
+		to_chat(src, "Your flavor text has been updated.")
 
 //LOOC toggles
 /client/verb/listen_looc()
@@ -87,7 +117,7 @@ var/global/dlooc_allowed = 1
 	prefs.chat_toggles ^= CHAT_LOOC
 	prefs.save_preferences()
 	src << "You will [(prefs.chat_toggles & CHAT_LOOC) ? "now" : "no longer"] see messages on the LOOC channel."
-	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/togglelooc()
 	set category = "Server"
@@ -96,27 +126,27 @@ var/global/dlooc_allowed = 1
 	toggle_looc()
 	log_admin("[key_name(usr)] toggled LOOC.")
 	message_admins("[key_name_admin(usr)] toggled LOOC.")
-	feedback_add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_verb","TLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /proc/toggle_looc(toggle = null)
 	if(toggle != null) //if we're specifically en/disabling ooc
-		if(toggle != looc_allowed)
-			looc_allowed = toggle
+		if(toggle != GLOB.looc_allowed)
+			GLOB.looc_allowed = toggle
 		else
 			return
 	else //otherwise just toggle it
-		looc_allowed = !looc_allowed
-	world << "<B>The LOOC channel has been globally [looc_allowed ? "enabled" : "disabled"].</B>"
+		GLOB.looc_allowed = !GLOB.looc_allowed
+	world << "<B>The LOOC channel has been globally [GLOB.looc_allowed ? "enabled" : "disabled"].</B>"
 
 /datum/admins/proc/toggleloocdead()
 	set category = "Server"
 	set desc="Toggle dis bitch"
 	set name="Toggle Dead LOOC"
-	dlooc_allowed = !( dlooc_allowed )
+	GLOB.dlooc_allowed = !( GLOB.dlooc_allowed )
 
-	log_admin("[key_name(usr)] toggled OOC.")
-	message_admins("[key_name_admin(usr)] toggled Dead OOC.")
-	feedback_add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	log_admin("[key_name(usr)] toggled Dead LOOC.")
+	message_admins("[key_name_admin(usr)] toggled Dead LOOC.")
+	SSblackbox.add_details("admin_verb","TDLOOC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /mob/living/carbon/proc/has_penis()
@@ -182,7 +212,7 @@ var/global/dlooc_allowed = 1
 
 	log_admin("[src] gave everyone genitals.")
 	message_admins("[src] gave everyone genitals.")
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.gender == MALE)
 			H.give_penis()
 			H.give_balls()
@@ -198,7 +228,7 @@ var/global/dlooc_allowed = 1
 
 	log_admin("[src] turned everyone into mammals.")
 	message_admins("[src] turned everyone into mammals.")
-	for(var/mob/living/carbon/human/H in mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.dna)
 			continue
 		var/datum/dna/hdna = H.dna

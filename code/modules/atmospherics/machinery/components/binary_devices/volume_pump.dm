@@ -95,7 +95,7 @@ Thus, the two variables affect pump operation are set in New():
 	return 1
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																		datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
@@ -181,7 +181,7 @@ Thus, the two variables affect pump operation are set in New():
 		var/turf/T = get_turf(src)
 		//var/area/A = get_area(src)
 		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
 			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
 			message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")

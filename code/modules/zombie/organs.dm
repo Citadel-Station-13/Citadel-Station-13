@@ -3,6 +3,7 @@
 	desc = "A black web of pus and vicera."
 	zone = "head"
 	slot = "zombie_infection"
+	icon_state = "blacktumor"
 	origin_tech = "biotech=5"
 	var/datum/species/old_species
 	var/living_transformation_time = 3
@@ -12,14 +13,14 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/New(loc)
+/obj/item/organ/zombie_infection/Initialize()
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
-	zombie_infection_list += src
+	GLOB.zombie_infection_list += src
 
 /obj/item/organ/zombie_infection/Destroy()
-	zombie_infection_list -= src
+	GLOB.zombie_infection_list -= src
 	. = ..()
 
 /obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)

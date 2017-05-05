@@ -51,10 +51,6 @@
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,								600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
-		new /datum/data/mining_equipment("Survival Knife",		/obj/item/weapon/kitchen/knife/combat/survival,							350),
-		new /datum/data/mining_equipment("Survival Pen Economy Pack",/obj/item/weapon/storage/box/medipens/survival,							2000),
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			250),
-		new /datum/data/mining_equipment("Stimpack Economy Pack",/obj/item/weapon/storage/box/medipens/utility,							1000)
 		)
 
 /datum/data/mining_equipment
@@ -140,7 +136,7 @@
 			else
 				inserted_id.mining_points -= prize.cost
 				new prize.equipment_path(src.loc)
-				feedback_add_details("mining_equipment_bought",
+				SSblackbox.add_details("mining_equipment_bought",
 					"[src.type]|[prize.equipment_path]")
 				// Add src.type to keep track of free golem purchases
 				// seperately.
@@ -193,7 +189,7 @@
 		if("Mining Conscription Kit")
 			new /obj/item/weapon/storage/backpack/dufflebag/mining_conscript(loc)
 
-	feedback_add_details("mining_voucher_redeemed", selection)
+	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
 
 /obj/machinery/mineral/equipment_vendor/ex_act(severity, target)
@@ -276,10 +272,10 @@
 /obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
 	if(istype(AM, /obj/item/weapon/card/id) && proximity)
 		var/obj/item/weapon/card/id/I = AM
-		I.access |=	access_mining
-		I.access |= access_mining_station
-		I.access |= access_mineral_storeroom
-		I.access |= access_cargo
+		I.access |=	GLOB.access_mining
+		I.access |= GLOB.access_mining_station
+		I.access |= GLOB.access_mineral_storeroom
+		I.access |= GLOB.access_cargo
 		to_chat(user, "You upgrade [I] with mining access.")
 		qdel(src)
 	..()

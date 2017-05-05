@@ -17,9 +17,11 @@ proc/TextPreview(var/string,var/len=40)
 	else
 		return "[copytext(string, 1, 37)]..."
 
-var/list/mentor_log = list (  )
-//var/list/admintickets = list()
-var/global/list/whitelisted_species_list[0]
+GLOBAL_LIST_EMPTY(mentor_log)
+GLOBAL_PROTECT(mentor_log)
+
+GLOBAL_LIST_EMPTY(whitelisted_species_list)
+
 /proc/log_mentor(text)
-		mentor_log.Add(text)
-		diary << "\[[time_stamp()]]MENTOR: [text]"
+		GLOB.mentor_log.Add(text)
+		GLOB.diary << "\[[time_stamp()]]MENTOR: [text]"

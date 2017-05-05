@@ -1,8 +1,9 @@
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
-	all_clockwork_mobs -= src
+	GLOB.mob_list -= src
+	GLOB.dead_mob_list -= src
+	GLOB.living_mob_list -= src
+	GLOB.all_clockwork_mobs -= src
+	GLOB.mob_directory -= tag
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -19,17 +20,22 @@
 	..()
 	return QDEL_HINT_HARDDEL
 
-var/next_mob_id = 0
 /mob/Initialize()
 	tag = "mob_[next_mob_id++]"
-	mob_list += src
+	GLOB.mob_list += src
+	GLOB.mob_directory[tag] = src
 	if(stat == DEAD)
-		dead_mob_list += src
+		GLOB.dead_mob_list += src
 	else
-		living_mob_list += src
+		GLOB.living_mob_list += src
 	prepare_huds()
 	can_ride_typecache = typecacheof(can_ride_typecache)
 	hook_vr("mob_new",list(src))
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
 	..()
 
 /atom/proc/prepare_huds()
@@ -71,7 +77,7 @@ var/next_mob_id = 0
 				msg = alt_msg
 				type = alt_type
 
-		if(type & 2 && ear_deaf)//Hearing related
+		if(type & 2 && !can_hear())//Hearing related
 			if(!alt_msg)
 				return
 			else
@@ -112,7 +118,7 @@ var/next_mob_id = 0
 			if(self_message)
 				msg = self_message
 		else
-			if(M.see_invisible<invisibility)//if src is invisible to us (and isn't a turf),
+			if(M.see_invisible<invisibility)//if src is invisible
 				if(blind_message) // then people see blind message if there is one, otherwise nothing.
 					msg = blind_message
 				else
@@ -430,9 +436,15 @@ var/next_mob_id = 0
 	set name = "Respawn"
 	set category = "OOC"
 
-	if (!( abandon_allowed ))
+	if(!client)
+		log_game("[usr.key] AM failed due to disconnect.")
 		return
-	if ((stat != 2 || !( ticker )))
+	if (!( GLOB.abandon_allowed ))
+		if(!(client.holder))
+			return
+		log_game("[usr.name]/[usr.key] was allowed to bypass the respawn restriction because they are an admin.")
+		to_chat(src, "<span class='notice'>You have been allowed to bypass the respawn configuration due to being an admin.</span>")
+	if ((stat != 2 || !( SSticker )))
 		to_chat(usr, "<span class='boldnotice'>You must be dead to use this!</span>")
 		return
 
@@ -440,9 +452,6 @@ var/next_mob_id = 0
 
 	to_chat(usr, "<span class='boldnotice'>Please roleplay correctly!</span>")
 
-	if(!client)
-		log_game("[usr.key] AM failed due to disconnect.")
-		return
 	client.screen.Cut()
 	client.screen += client.void
 	if(!client)
@@ -575,12 +584,12 @@ var/next_mob_id = 0
 			if(ETA)
 				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
 
-
 	if(client && client.holder)
 		if(statpanel("MC"))
 			stat("Location:", "([x], [y], [z])")
 			stat("CPU:", "[world.cpu]")
 			stat("Instances:", "[world.contents.len]")
+			GLOB.stat_entry()
 			config.stat_entry()
 			stat(null)
 			if(Master)
@@ -595,7 +604,9 @@ var/next_mob_id = 0
 				stat(null)
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
 					SS.stat_entry()
-			cameranet.stat_entry()
+			GLOB.cameranet.stat_entry()
+		if(statpanel("Tickets"))
+			GLOB.ahelp_tickets.stat_entry()
 
 	if(listed_turf && client)
 		if(!TurfAdjacent(listed_turf))
@@ -873,7 +884,7 @@ var/next_mob_id = 0
 	return FALSE
 
 
-//This will update a mob's name, real_name, mind.name, data_core records, pda, id and traitor text
+//This will update a mob's name, real_name, mind.name, GLOB.data_core records, pda, id and traitor text
 //Calling this proc without an oldname will only update the mob and skip updating the pda, id and records ~Carn
 /mob/proc/fully_replace_character_name(oldname,newname)
 	if(!newname)
@@ -890,14 +901,14 @@ var/next_mob_id = 0
 		//update our pda and id if we have them on our person
 		replace_identification_name(oldname,newname)
 
-		for(var/datum/mind/T in ticker.minds)
+		for(var/datum/mind/T in SSticker.minds)
 			for(var/datum/objective/obj in T.objectives)
 				// Only update if this player is a target
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 	return 1
 
-//Updates data_core records with new name , see mob/living/carbon/human
+//Updates GLOB.data_core records with new name , see mob/living/carbon/human
 /mob/proc/replace_records_name(oldname,newname)
 	return
 
@@ -931,15 +942,24 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
+/mob/proc/update_sight()
+	sync_lighting_plane_alpha()
+
+/mob/proc/sync_lighting_plane_alpha()
+	if(hud_used)
+		var/obj/screen/plane_master/lighting/L = hud_used.plane_masters["[LIGHTING_PLANE]"]
+		if (L)
+			L.alpha = lighting_alpha
+
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				dead_mob_list -= src
-				living_mob_list += src
+				GLOB.dead_mob_list -= src
+				GLOB.living_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				living_mob_list -= src
-				dead_mob_list += src
+				GLOB.living_mob_list -= src
+				GLOB.dead_mob_list += src
 	. = ..()
 	switch(var_name)
 		if("weakened")
@@ -956,14 +976,12 @@ var/next_mob_id = 0
 			set_eye_damage(var_value)
 		if("eye_blurry")
 			set_blurriness(var_value)
-		if("ear_deaf")
-			setEarDamage(-1, var_value)
-		if("ear_damage")
-			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
+		if("lighting_alpha")
+			sync_lighting_plane_alpha()
 
 
 /mob/proc/is_literate()

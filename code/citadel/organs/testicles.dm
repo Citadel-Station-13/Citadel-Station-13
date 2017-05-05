@@ -15,9 +15,8 @@
 	var/obj/item/organ/genital/penis/linked_penis
 
 /obj/item/organ/genital/testicles/Initialize()
-	create_reagents(fluid_max_volume)
+	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)
-	update()
 
 /obj/item/organ/genital/testicles/on_life()
 	if(QDELETED(src))

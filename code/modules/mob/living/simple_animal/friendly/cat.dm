@@ -29,6 +29,7 @@
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
+	devourable = TRUE
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	..()
@@ -94,9 +95,9 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
-	if(!cats_deployed && ticker.current_state >= GAME_STATE_SETTING_UP)
+	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
 		Deploy_The_Cats()
-	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
+	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
 		Write_Memory()
 	..()
 
