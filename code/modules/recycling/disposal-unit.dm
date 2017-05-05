@@ -26,9 +26,8 @@
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
 
-/obj/machinery/disposal/New(loc, var/obj/structure/disposalconstruct/make_from)
-	..()
-
+/obj/machinery/disposal/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	if(make_from)
 		setDir(make_from.dir)
 		make_from.loc = 0
@@ -391,7 +390,7 @@
 		if(contents.len)
 			if(full_pressure)
 				spawn(0)
-					feedback_inc("disposal_auto_flush",1)
+					SSblackbox.inc("disposal_auto_flush",1)
 					flush()
 		flush_count = 0
 
@@ -445,8 +444,8 @@
 	icon_state = "intake"
 	pressure_charging = FALSE // the chute doesn't need charging and always works
 
-/obj/machinery/disposal/deliveryChute/New(loc,var/obj/structure/disposalconstruct/make_from)
-	..()
+/obj/machinery/disposal/deliveryChute/Initialize(mapload, obj/structure/disposalconstruct/make_from)
+	. = ..()
 	stored.ptype = DISP_END_CHUTE
 	spawn(5)
 		trunk = locate() in loc

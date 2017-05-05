@@ -116,7 +116,7 @@
 
 		s["map_name"] = SSmapping.config.map_name
 
-		if(key_valid && SSticker && SSticker.mode)
+		if(key_valid && SSticker.HasRoundStarted())
 			s["real_mode"] = SSticker.mode.name
 			// Key-authed callers may know the truth behind the "secret"
 
@@ -209,12 +209,11 @@
 	WORLD_REBOOT(0)
 #undef WORLD_REBOOT
 
+
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	feedback_set_details("[feedback_c]","[feedback_r]")
+	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	feedback_set("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
-	if(GLOB.blackbox)
-		GLOB.blackbox.save_all_data_to_sql()
+	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
 	Master.Shutdown()	//run SS shutdowns
 	RoundEndAnimation(round_end_sound_sent)
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -317,3 +316,6 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
+/world/proc/has_round_started()
+	return SSticker.HasRoundStarted()
