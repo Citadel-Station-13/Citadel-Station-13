@@ -55,7 +55,7 @@
 		stat |= BROKEN
 
 	update_icon()
-	
+
 /obj/machinery/power/generator/Destroy()
 	SSair.atmos_machinery -= src
 	return ..()
@@ -67,20 +67,19 @@
 	else
 		cut_overlays()
 
-		if(lastgenlev != 0)
-			add_overlay("teg-op[lastgenlev]")
+		var/L = min(round(lastgenlev/100000),11)
+		if(L != 0)
+			add_overlay(image('icons/obj/power.dmi', "teg-op[L]"))
 
 		add_overlay("teg-oc[lastcirc]")
 
 
 #define GENRATE 800		// generator output coefficient from Q
 
-/obj/machinery/power/generator/process()
+/obj/machinery/power/generator/process_atmos()
 
 	if(!cold_circ || !hot_circ)
 		return
-
-	lastgen = 0
 
 	if(powernet)
 		//to_chat(world, "cold_circ and hot_circ pass")
@@ -127,7 +126,7 @@
 		if(cold_air)
 			var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
 			cold_circ_air1.merge(cold_air)
-			
+
 		update_icon()
 
 	var/circ = "[cold_circ && cold_circ.last_pressure_delta > 0 ? "1" : "0"][hot_circ && hot_circ.last_pressure_delta > 0 ? "1" : "0"]"
@@ -136,7 +135,7 @@
 		update_icon()
 
 	src.updateDialog()
-	
+
 /obj/machinery/power/generator/process()
 	//Setting this number higher just makes the change in power output slower, it doesnt actualy reduce power output cause **math**
 	var/power_output = round(lastgen / 10)
@@ -162,7 +161,7 @@
 		var/datum/gas_mixture/hot_circ_air2 = hot_circ.AIR2
 
 		t += "<div class='statusDisplay'>"
-		
+
 		var/displaygen = lastgenlev
 		if(displaygen < 1000000) //less than a MW
 			displaygen /= 1000
@@ -170,7 +169,7 @@
 		else
 			displaygen /= 1000000
 			t += "Output: [round(displaygen,0.01)] MW"
-		
+
 		t += "<BR>"
 
 		t += "<B><font color='blue'>Cold loop</font></B><BR>"
