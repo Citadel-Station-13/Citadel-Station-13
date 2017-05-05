@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/carbon/human/species_types/golems.dm b/code/modules/mob/living/carbon/human/species_types/golems.dm	(rejected hunks)
+@@ -3,6 +3,7 @@
+ 	name = "Golem"
+ 	id = "iron golem"
+ 	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
++	mutant_organs = list(/obj/item/organ/adamantine_resonator)
+ 	speedmod = 2
+ 	armor = 55
+ 	siemens_coeff = 0
