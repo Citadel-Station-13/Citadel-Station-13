@@ -31,11 +31,19 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/master = null
+	var/seeking = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	for(var/X in actions)
+		var/datum/action/A = X
+		qdel(A)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
