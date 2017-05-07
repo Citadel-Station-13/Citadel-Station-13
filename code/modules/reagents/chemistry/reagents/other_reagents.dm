@@ -1568,6 +1568,13 @@
 	M.update_transform()
 	..()
 
+/datum/reagent/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	description = "the petroleum based components of plastic."
+	color = "#f7eded"
+	taste_description = "plastic"
+
 /datum/reagent/glitter
 	name = "generic glitter"
 	id = "glitter"
