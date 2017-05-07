@@ -2501,7 +2501,7 @@
 "afq" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /obj/structure/chair{
@@ -7787,8 +7787,8 @@
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid3";
-	name = "asteroid"
+	id = "pod_lavaland3";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -17330,7 +17330,6 @@
 /area/hallway/primary/central)
 "aMf" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -17836,7 +17835,6 @@
 /area/hallway/primary/central)
 "aNB" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -53823,8 +53821,8 @@
 "cpe" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -54079,7 +54077,7 @@
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = 0;
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /obj/structure/chair{
@@ -57394,8 +57392,8 @@
 "cwV" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -57508,7 +57506,7 @@
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = 0;
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /obj/structure/chair{
@@ -58424,7 +58422,7 @@
 "czL" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid4";
+	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
 /obj/structure/chair{
@@ -58455,8 +58453,8 @@
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
