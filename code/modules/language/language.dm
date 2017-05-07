@@ -1,4 +1,4 @@
-#define SCRAMBLE_CACHE_LEN 20
+#define SCRAMBLE_CACHE_LEN 50 //maximum of 50 specific scrambled lines per language
 
 /*
 	Datum based languages. Easily editable and modular.
