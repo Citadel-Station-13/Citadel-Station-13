@@ -32,7 +32,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 /world/proc/AVerbsAdmin()
 	return list(
-	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
@@ -182,9 +181,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/deadmin,
-	/client/proc/deadchat,
-	/client/proc/toggleprayers,
-	/client/proc/toggle_hear_radio,
 	/datum/admins/proc/show_traitor_panel,
 	/datum/admins/proc/toggleenter,
 	/datum/admins/proc/toggleguests,
@@ -397,13 +393,6 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
 			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
-
-/client/proc/player_panel_new()
-	set name = "Player Panel"
-	set category = "Admin"
-	if(holder)
-		holder.player_panel_new()
-	SSblackbox.add_details("admin_verb","Player Panel New") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"

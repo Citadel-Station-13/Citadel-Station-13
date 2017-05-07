@@ -88,15 +88,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	if(current_version < 11)
-		chat_toggles = TOGGLES_DEFAULT_CHAT
-		toggles = TOGGLES_DEFAULT
-	if(current_version < 12)
-		ignoring = list()
-	if(current_version < 15)
-		toggles |= SOUND_ANNOUNCEMENTS
 
 
 //should this proc get fairly long (say 3 versions long),
@@ -106,16 +97,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //It's only really meant to avoid annoying frequent players
 //if your savefile is 3 months out of date, then 'tough shit'.
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(pref_species && !(pref_species.id in GLOB.roundstart_species))
-		var/rando_race = pick(config.roundstart_races)
-		pref_species = new rando_race()
-
-	if(current_version < 13 || !istext(backbag))
-		switch(backbag)
-			if(2)
-				backbag = DSATCHEL
-			else
-				backbag = DBACKPACK
 	if(current_version < 16)
 		var/berandom
 		S["userandomjob"] >> berandom
@@ -231,6 +212,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_orbit 	= sanitize_inlist(ghost_orbit, GLOB.ghost_orbits, initial(ghost_orbit))
 	ghost_accs		= sanitize_inlist(ghost_accs, GLOB.ghost_accs_options, GHOST_ACCS_DEFAULT_OPTION)
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
+	menuoptions		= SANITIZE_LIST(menuoptions)
+	be_special		= SANITIZE_LIST(be_special)
+
 
 	return 1
 
@@ -565,7 +549,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
-/*
+
+#ifdef TESTING
 //DEBUG
 //Some crude tools for testing savefiles
 //path is the savefile path
@@ -576,4 +561,5 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /client/verb/savefile_import(path as text)
 	var/savefile/S = new /savefile(path)
 	S.ImportText("/",file("[path].txt"))
-*/
+
+#endif
