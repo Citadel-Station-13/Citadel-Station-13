@@ -38,7 +38,7 @@
 				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/rice = list("rice" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/donut/New = list("sprinkles" = -2, "sugar" = 1),
+				/obj/item/weapon/reagent_containers/food/snacks/donut = list("sprinkles" = -2, "sugar" = 1),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
 				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
@@ -91,10 +91,9 @@
 
 		var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/Initialize()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/Destroy()
 	if(beaker)

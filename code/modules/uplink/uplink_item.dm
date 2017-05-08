@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
-		feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
+		SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 		return new item(loc)
 
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
@@ -1100,6 +1100,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
+	surplus = 50
 
 /datum/uplink_item/implants/freedom
 	name = "Freedom Implant"
@@ -1158,7 +1159,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/cyber_implants/spawn_item(turf/loc, obj/item/device/uplink/U)
 	if(item)
 		if(istype(item, /obj/item/organ))
-			feedback_add_details("traitor_uplink_items_bought", "[item]|[cost]")
+			SSblackbox.add_details("traitor_uplink_items_bought", "[item]|[cost]")
 			return new /obj/item/weapon/storage/box/cyber_implants(loc, item)
 		else
 			return ..()
@@ -1326,7 +1327,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		new I.item(C)
 		U.purchase_log += "<big>\icon[I.item]</big>"
 
-	feedback_add_details("traitor_uplink_items_bought", "[name]|[cost]")
+	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C
 
 /datum/uplink_item/badass/random
@@ -1352,6 +1353,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
 		U.spent_telecrystals += I.cost
-		feedback_add_details("traitor_uplink_items_bought","[name]|[I.cost]")
-		feedback_add_details("traitor_random_uplink_items_gotten","[I.name]")
+		SSblackbox.add_details("traitor_uplink_items_bought","[name]|[I.cost]")
+		SSblackbox.add_details("traitor_random_uplink_items_gotten","[I.name]")
 		return new I.item(loc)

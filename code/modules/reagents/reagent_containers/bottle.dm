@@ -9,8 +9,8 @@
 	volume = 30
 
 
-/obj/item/weapon/reagent_containers/glass/bottle/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/Initialize()
+	. = ..()
 	if(!icon_state)
 		icon_state = "bottle"
 	update_icon()
@@ -57,6 +57,12 @@
 	desc = "A small bottle of cyanide. Bitter almonds?"
 	icon_state = "bottle12"
 	list_reagents = list("cyanide" = 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/spewium
+	name = "spewium bottle"
+	desc = "A small bottle of spewium."
+	icon_state = "bottle12"
+	list_reagents = list("spewium" = 30)
 
 /obj/item/weapon/reagent_containers/glass/bottle/morphine
 	name = "morphine bottle"
@@ -139,8 +145,8 @@
 	icon_state = "bottle16"
 	var/extra_reagent = null
 
-/obj/item/weapon/reagent_containers/glass/bottle/traitor/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bottle/traitor/Initialize()
+	. = ..()
 	extra_reagent = pick("polonium", "histamine", "formaldehyde", "venom", "neurotoxin2", "cyanide")
 	reagents.add_reagent("[extra_reagent]", 3)
 

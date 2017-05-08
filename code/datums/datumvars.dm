@@ -94,7 +94,6 @@
 					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=arousal'>[M.getArousalLoss()]</a>
 				</font>
 			"}
 		else
@@ -1166,8 +1165,6 @@
 					L.adjustCloneLoss(amount)
 				if("stamina")
 					L.adjustStaminaLoss(amount)
-				if("arousal")
-					L.adjustArousalLoss(amount)
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
@@ -1178,3 +1175,4 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
+
