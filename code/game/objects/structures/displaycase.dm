@@ -277,6 +277,8 @@
 
 	if(!user.Adjacent(src)) //no TK museology
 		return
+	if(user.a_intent == INTENT_HARM)
+		return ..()
 
 	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
 		if(added_roundstart)
