@@ -82,7 +82,7 @@
 		getFlatIcon(A,defdir=4)
 	catch
 		return 0
-	return 1
+	return TRUE
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
@@ -275,6 +275,10 @@
 /obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
+		return
+
+	if(!(user.mind && user.mind.assigned_role == "Curator"))
+		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the curator for help.</span>")
 		return
 
 	if(!added_roundstart)
