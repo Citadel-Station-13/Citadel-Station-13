@@ -81,7 +81,7 @@
 	try
 		getFlatIcon(A,defdir=4)
 	catch
-		return 0
+		return FALSE
 	return TRUE
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
@@ -255,6 +255,8 @@
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
+	var/is_locked = TRUE
+
 	alert = TRUE
 	integrity_failure = 0
 
@@ -277,8 +279,16 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 
-	if(!(user.mind && user.mind.assigned_role == "Curator"))
-		to_chat(user, "<span class='danger'>You're not sure how to work this. Maybe you should ask the curator for help.</span>")
+	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
+		if(added_roundstart)
+			is_locked = !is_locked
+			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
+		else
+			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+		return
+
+	if(is_locked)
+		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
@@ -318,6 +328,7 @@
 				to_chat(user, "You are too far to set the plaque's text.")
 
 		SSpersistence.SaveTrophy(src)
+		return TRUE
 
 	else
 		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
@@ -332,6 +343,10 @@
 			QDEL_NULL(showpiece)
 		else
 			..()
+
+/obj/item/key/displaycase
+	name = "display case key"
+	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
 	name = "Cheap replica"
