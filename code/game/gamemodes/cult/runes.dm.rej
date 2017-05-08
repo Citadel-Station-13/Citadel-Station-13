@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/cult/runes.dm b/code/game/gamemodes/cult/runes.dm	(rejected hunks)
+@@ -482,7 +480,7 @@ structure_check() searches for nearby cultist structures required for the invoca
+ 	sleep(40)
+ 	if(src)
+ 		color = "#FF0000"
+-	SSticker.mode.eldergod = 0
++	SSticker.mode.eldergod = FALSE
+ 	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+ 
+ /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
