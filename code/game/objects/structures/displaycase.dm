@@ -82,7 +82,7 @@
 		getFlatIcon(A,defdir=4)
 	catch
 		return 0
-	return TRUE
+	return 1
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
@@ -248,6 +248,8 @@
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(GLOB.access_rd)
 
+
+
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
@@ -276,6 +278,18 @@
 /obj/structure/displaycase/trophy/attackby(obj/item/weapon/W, mob/user, params)
 
 	if(!user.Adjacent(src)) //no TK museology
+		return
+
+	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
+		if(added_roundstart)
+			is_locked = !is_locked
+			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
+		else
+			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+		return
+
+	if(is_locked)
+		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
 		return
 
 	if(!added_roundstart)
@@ -316,6 +330,7 @@
 				to_chat(user, "You are too far to set the plaque's text.")
 
 		SSpersistence.SaveTrophy(src)
+		return TRUE
 
 	else
 		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
