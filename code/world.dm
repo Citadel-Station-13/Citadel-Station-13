@@ -136,11 +136,7 @@
 		if(!key_valid)
 			return "Bad Key"
 		else
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
-			for(var/client/C in GLOB.clients)
-				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					to_chat(C, "<span class='announce'>PR: [input["announce"]]</span>")
-#undef CHAT_PULLR
+			AnnouncePR(input["announce"], json_decode(input["payload"]))
 
 	else if("crossmessage" in input)
 		if(!key_valid)
@@ -175,6 +171,25 @@
 			return ircadminwho()
 	else if("server_hop" in input)
 		show_server_hop_transfer_screen(input["server_hop"])
+
+#define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
+									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+/world/proc/AnnouncePR(announcement, list/payload)
+	var/static/list/PRcounts = list()	//PR id -> number of times announced this round
+	var/id = "[payload["pull_request"]["id"]]"
+	if(!PRcounts[id])
+		PRcounts[id] = 1
+	else
+		++PRcounts[id]
+		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
+			return
+
+#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+	for(var/client/C in GLOB.clients)
+		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
+			C << "<span class='announce'>PR: [announcement]</span>"
+#undef CHAT_PULLR
 
 #define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
@@ -226,7 +241,7 @@
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE
 	var/round_end_sound
-	if(!SSticker && SSticker.round_end_sound)
+	if(SSticker.round_end_sound)
 		round_end_sound = SSticker.round_end_sound
 		if (!round_end_sound_sent)
 			for(var/thing in GLOB.clients)

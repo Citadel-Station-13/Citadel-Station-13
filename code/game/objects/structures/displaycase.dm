@@ -82,7 +82,7 @@
 		getFlatIcon(A,defdir=4)
 	catch
 		return 0
-	return 1
+	return TRUE
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
@@ -247,8 +247,6 @@
 	desc = "A glass lab container for storing interesting creatures."
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(GLOB.access_rd)
-
-
 
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
