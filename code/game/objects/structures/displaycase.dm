@@ -258,6 +258,7 @@
 
 	alert = TRUE
 	integrity_failure = 0
+	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
