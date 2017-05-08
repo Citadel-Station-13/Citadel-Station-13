@@ -9154,7 +9154,7 @@
 	},
 /obj/effect/landmark/start/shaft_miner,
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/quartermaster/miningdock)
@@ -30558,7 +30558,7 @@
 /area/maintenance/starboard)
 "aXL" = (
 /obj/machinery/door/morgue{
-	name = "Librarian's Study";
+	name = "Curator's Study";
 	req_access_txt = "37"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,

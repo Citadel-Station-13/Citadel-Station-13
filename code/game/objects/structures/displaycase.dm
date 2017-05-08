@@ -82,8 +82,8 @@
 	try
 		getFlatIcon(A,defdir=4)
 	catch
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
@@ -146,8 +146,7 @@
 				to_chat(user,  "<span class='notice'>You [open ? "close":"open"] the [src]</span>")
 				toggle_lock(user)
 	else if(open && !showpiece)
-		if(user.drop_item())
-			W.loc = src
+		if(user.transferItemToLoc(W, src))
 			showpiece = W
 			to_chat(user, "<span class='notice'>You put [W] on display</span>")
 			update_icon()
@@ -249,17 +248,16 @@
 	start_showpiece_type = /obj/item/clothing/mask/facehugger/lamarr
 	req_access = list(GLOB.access_rd)
 
-
-
 /obj/structure/displaycase/trophy
 	name = "trophy display case"
 	desc = "Store your trophies of accomplishment in here, and they will stay forever."
 	var/trophy_message = ""
 	var/placer_key = ""
 	var/added_roundstart = TRUE
+	var/is_locked = TRUE
+
 	alert = TRUE
 	integrity_failure = 0
-	openable = FALSE
 
 /obj/structure/displaycase/trophy/Initialize()
 	. = ..()
@@ -280,6 +278,18 @@
 	if(!user.Adjacent(src)) //no TK museology
 		return
 
+	if(user.is_holding_item_of_type(/obj/item/key/displaycase))
+		if(added_roundstart)
+			is_locked = !is_locked
+			to_chat(user, "You [!is_locked ? "un" : ""]lock the case.")
+		else
+			to_chat(user, "<span class='danger'>The lock is stuck shut!</span>")
+		return
+
+	if(is_locked)
+		to_chat(user, "<span class='danger'>The case is shut tight with an old fashioned physical lock. Maybe you should ask the curator for the key?</span>")
+		return
+
 	if(!added_roundstart)
 		to_chat(user, "You've already put something new in this case.")
 		return
@@ -293,14 +303,13 @@
 			to_chat(user, "<span class='danger'>The case rejects the [W].</span>")
 			return
 
-	if(user.drop_item())
+	if(user.transferItemToLoc(W, src))
 
 		if(showpiece)
 			to_chat(user, "You press a button, and [showpiece] descends into the floor of the case.")
 			QDEL_NULL(showpiece)
 
 		to_chat(user, "You insert [W] into the case.")
-		W.forceMove(src)
 		showpiece = W
 		added_roundstart = FALSE
 		update_icon()
@@ -318,6 +327,7 @@
 				to_chat(user, "You are too far to set the plaque's text.")
 
 		SSpersistence.SaveTrophy(src)
+		return TRUE
 
 	else
 		to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you can't put it in the [src.name]!</span>")
@@ -332,6 +342,10 @@
 			QDEL_NULL(showpiece)
 		else
 			..()
+
+/obj/item/key/displaycase
+	name = "display case key"
+	desc = "The key to the curator's display cases."
 
 /obj/item/showpiece_dummy
 	name = "Cheap replica"
