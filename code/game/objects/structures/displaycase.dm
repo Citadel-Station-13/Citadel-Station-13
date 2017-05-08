@@ -82,7 +82,7 @@
 		getFlatIcon(A,defdir=4)
 	catch
 		return 0
-	return 1
+	return TRUE
 
 /obj/structure/displaycase/proc/get_flat_icon_directional(atom/A)
 	//Get flatIcon even if dir is mismatched for directionless icons
