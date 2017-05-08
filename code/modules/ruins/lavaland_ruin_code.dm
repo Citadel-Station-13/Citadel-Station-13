@@ -103,6 +103,9 @@
 
 		if(istype(O, /obj/item/stack/medical/gauze) || istype(O, /obj/item/stack/sheet/cloth))
 			species = /datum/species/golem/cloth
+		
+		if(istype(O, /obj/item/stack/sheet/plastic))
+			species = /datum/species/golem/plastic
 
 		if(species)
 			if(O.use(10))
