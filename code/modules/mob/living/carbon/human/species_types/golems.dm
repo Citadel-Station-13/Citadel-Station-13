@@ -20,6 +20,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 
 	var/prefix = "Iron"
@@ -54,8 +55,9 @@
 	name = "Adamantine Golem"
 	id = "adamantine golem"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
+	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
 	fixed_mut_color = "4ed"
-	info_text = "As an <span class='danger'>Adamantine Golem</span>, you don't have any special traits."
+	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
 //Explodes on death
@@ -643,6 +645,7 @@
 
 	if(P.is_hot())
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
+
 		fire_act()
 /datum/species/golem/plastic
 	name = "Plastic"
