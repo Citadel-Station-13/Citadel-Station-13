@@ -45,10 +45,10 @@
 			M.gib()
 
 
-/obj/machinery/gibber/New()
-	..()
+/obj/machinery/gibber/Initialize()
+	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gibber(null)
+	var/obj/item/weapon/circuitboard/machine/gibber/B = new
 	B.apply_default_parts(src)
 
 /obj/item/weapon/circuitboard/machine/gibber
