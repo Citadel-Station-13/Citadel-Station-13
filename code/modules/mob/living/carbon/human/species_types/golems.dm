@@ -9,7 +9,7 @@
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = ""
@@ -645,4 +645,19 @@
 
 	if(P.is_hot())
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
+
 		fire_act()
+/datum/species/golem/plastic
+	name = "Plastic"
+	id = "plastic golem"
+	prefix = "Plastic"
+	fixed_mut_color = "fff"
+	info_text = "As a <span class='danger'>Plastic Golem</span>, you are capable of ventcrawling, and passing through plastic flaps."
+
+/datum/species/golem/plastic/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.ventcrawler = VENTCRAWLER_NUDE
+
+/datum/species/golem/plastic/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.ventcrawler = initial(C.ventcrawler)
