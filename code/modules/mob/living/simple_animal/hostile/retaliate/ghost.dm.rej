@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/simple_animal/hostile/retaliate/ghost.dm b/code/modules/mob/living/simple_animal/hostile/retaliate/ghost.dm	(rejected hunks)
+@@ -41,6 +41,7 @@
+ /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
+ 	. = ..()
+ 	give_hair()
++	set_light(1, 2) // same glowing as visible player ghosts
+ 	if(random)
+ 		switch(rand(0,1))
+ 			if(0)
