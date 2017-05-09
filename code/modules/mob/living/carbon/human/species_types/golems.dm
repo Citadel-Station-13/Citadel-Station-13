@@ -20,6 +20,7 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
+	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 
 	var/prefix = "Iron"
