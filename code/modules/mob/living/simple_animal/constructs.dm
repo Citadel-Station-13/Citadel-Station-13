@@ -58,7 +58,10 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(isconstruct(M)) //is it a construct?
+		var/mob/living/simple_animal/hostile/construct/C = M
+		if(!C.can_repair_constructs || (C == src && !C.can_repair_self))
+			return
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)
@@ -197,6 +200,8 @@
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
 						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
 						and shells to place those soulstones into.</b>"
+	can_repair_constructs = TRUE
+	can_repair_self = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
