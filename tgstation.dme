@@ -13,9 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
-#include "_maps\loadallmaps.dm"
-#include "_maps\tgstation2.dm"
+#include "_maps\runtimestation.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -1176,6 +1174,7 @@
 #include "code\modules\clothing\gloves\miscellaneous.dm"
 #include "code\modules\clothing\gloves\vg_gloves.dm"
 #include "code\modules\clothing\head\beanie.dm"
+#include "code\modules\clothing\head\cit_hats.dm"
 #include "code\modules\clothing\head\collectable.dm"
 #include "code\modules\clothing\head\hardhat.dm"
 #include "code\modules\clothing\head\helmet.dm"
