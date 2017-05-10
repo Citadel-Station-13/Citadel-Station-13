@@ -167,6 +167,8 @@
 #include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\cit_vendors.dm"
 #include "code\citadel\dogborgstuff.dm"
+#include "code\citadel\custom_loadout\custom_items.dm"
+#include "code\citadel\custom_loadout\load_to_mob.dm"
 #include "code\citadel\organs\breasts.dm"
 #include "code\citadel\organs\eggsack.dm"
 #include "code\citadel\organs\genitals.dm"
