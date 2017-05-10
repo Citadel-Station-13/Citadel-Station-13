@@ -42,6 +42,7 @@
 	. = ..()
 	if(!random)
 		give_hair()
+	set_light(1, 2)
 	else
 		switch(rand(0,1))
 			if(0)
