@@ -314,6 +314,6 @@ GLOBAL_LIST_INIT(gang_colors_pool, list("red","orange","yellow","green","blue","
 		else
 			G.is_dominating = FALSE
 			SSticker.mode.explosion_in_progress = 1
-			ticker.station_explosion_cinematic(1,"gang war", null)
+			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = pick(winners)
