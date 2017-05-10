@@ -1,9 +1,0 @@
-diff a/code/modules/research/designs/biogenerator_designs.dm b/code/modules/research/designs/biogenerator_designs.dm	(rejected hunks)
-@@ -140,6 +140,7 @@
- 	category = list("initial","Leather and Cloth")
- 
- /datum/design/janibelt
-+	name = "Janitorial Belt"
- 	id = "janibelt"
- 	build_type = BIOGENERATOR
- 	materials = list(MAT_BIOMASS = 300)
