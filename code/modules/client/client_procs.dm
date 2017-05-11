@@ -80,8 +80,7 @@
 */
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && GLOB.href_logfile)
-		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -292,13 +291,13 @@ GLOBAL_LIST(external_rsc_urls)
 	set_client_age_from_db()
 	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		player_age = 0	
+		player_age = 0
 	if(!IsGuestKey(key) && SSdbcore.IsConnected())
 		findJoinDate()
 
 	sync_client_with_db(tdata)
-	
-	
+
+
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
@@ -370,7 +369,7 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-		
+
 		if (!GLOB.admins.len && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
@@ -396,7 +395,7 @@ GLOBAL_LIST(external_rsc_urls)
 					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
 					"Forever alone :("\
 				)
-				
+
 				send2irc("Server", "[cheesy_message] (No admins online)")
 
 	GLOB.ahelp_tickets.ClientLogout(src)
