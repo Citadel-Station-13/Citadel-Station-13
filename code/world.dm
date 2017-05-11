@@ -55,6 +55,7 @@
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 //disabled to prevent runtimes until it's fixed
 //	load_mentors()
 	if(config.usewhitelist)
@@ -338,6 +339,7 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
+
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()
