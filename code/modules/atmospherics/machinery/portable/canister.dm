@@ -448,5 +448,3 @@
 				holding = null
 				. = TRUE
 	update_icon()
-
-
