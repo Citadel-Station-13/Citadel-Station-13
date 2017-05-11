@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(blackbox)
 	msg_cargo = SSblackbox.msg_cargo
 	msg_other = SSblackbox.msg_other
 
+
 	feedback = SSblackbox.feedback
 
 //no touchie

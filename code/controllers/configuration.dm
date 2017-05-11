@@ -766,8 +766,8 @@
 					mentors_mobname_only 	= 1
 				if ("mentor_legacy_system")
 					mentor_legacy_system 	= 1
-				else
-					GLOB.diary << "Unknown setting in configuration: '[name]'"
+			//	else
+			//		GLOB.world_game_log << "Adding game mode [M.name] ([M.config_tag]) to configuration."
 
 	fps = round(fps)
 	if(fps <= 0)
