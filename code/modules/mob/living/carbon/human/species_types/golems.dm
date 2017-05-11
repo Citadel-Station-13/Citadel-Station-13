@@ -60,7 +60,7 @@
 	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
 	prefix = "Adamantine"
 
-//Explodes on death
+//The suicide bombers of golemkind
 /datum/species/golem/plasma
 	name = "Plasma Golem"
 	id = "plasma golem"
@@ -81,6 +81,32 @@
 	if(H.fire_stacks < 2) //flammable
 		H.adjust_fire_stacks(1)
 	..()
+
+/datum/species/golem/plasma/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	if(ishuman(C))
+		ignite = new
+		ignite.Grant(C)
+
+/datum/species/golem/plasma/on_species_loss(mob/living/carbon/C)
+	if(ignite)
+		ignite.Remove(C)
+	..()
+
+/datum/action/innate/ignite
+	name = "Ignite"
+	desc = "Set yourself aflame, bringing yourself closer to exploding!"
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "sacredflame"
+
+/datum/action/innate/ignite/Activate()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		if(H.fire_stacks)
+			to_chat(owner, "<span class='notice'>You ignite yourself!</span>")
+		else
+			to_chat(owner, "<span class='warning'>You try ignite yourself, but fail!</span>")
+		H.IgniteMob() //firestacks are already there passively
 
 //Harder to hurt
 /datum/species/golem/diamond
