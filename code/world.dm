@@ -40,6 +40,7 @@
 	load_mode()
 	load_motd()
 	load_admins()
+	load_menu()
 //disabled to prevent runtimes until it's fixed
 //	load_mentors()
 	if(config.usewhitelist)
@@ -335,6 +336,3 @@
 
 /world/proc/has_round_started()
 	return SSticker.HasRoundStarted()
-/world/proc/load_menu()
-	for (var/typepath in (typesof(/datum/menu)-/datum/menu))
-		new typepath()
