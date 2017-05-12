@@ -131,7 +131,7 @@
 	id = "pistol_ammo"
 	cost = 10
 	item_path = /obj/item/ammo_box/magazine/m10mm
-	
+
 /datum/gang_item/weapon/sniper
 	name = ".50cal Sniper Rifle"
 	id = "sniper"
@@ -156,8 +156,8 @@
 	id = "uzi_ammo"
 	cost = 40
 	item_path = /obj/item/ammo_box/magazine/uzim9mm
-	
-	
+
+
 ///////////////////
 //EQUIPMENT
 ///////////////////
@@ -171,7 +171,7 @@
 	id = "spraycan"
 	cost = 5
 	item_path = /obj/item/toy/crayon/spraycan/gang
-	
+
 /datum/gang_item/equipment/sharpener
 	name = "Sharpener"
 	id = "whetstone"
