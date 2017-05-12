@@ -1,0 +1,11 @@
+diff a/code/game/machinery/computer/cloning.dm b/code/game/machinery/computer/cloning.dm	(rejected hunks)
+@@ -185,8 +184,7 @@
+ 
+ 			// Scanner
+ 			if (!isnull(src.scanner))
+-
+-				var/mob/living/scanner_occupant = scanner.occupant
++				var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
+ 
+ 				dat += "<h3>Scanner Functions</h3>"
+ 

@@ -9,6 +9,7 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
@@ -97,6 +98,13 @@
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 
 		open_machine()
+
+/obj/machinery/dna_scannernew/proc/locate_computer(type_)
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		var/C = locate(type_, get_step(src, dir))
+		if(C)
+			return C
+	return null
 
 /obj/machinery/dna_scannernew/close_machine()
 	if(!state_open)
