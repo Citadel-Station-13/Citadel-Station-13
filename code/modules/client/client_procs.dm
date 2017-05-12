@@ -326,10 +326,6 @@ GLOBAL_LIST(external_rsc_urls)
 	else //We failed to get an age for this user, let admins know they need to keep an eye on them
 		message_admins("Failed to get BYOND account age for [key_name_admin(src)]")
 
-	if(!IsGuestKey(key) && SSdbcore.IsConnected())
-		findJoinDate()
-
-	sync_client_with_db(tdata)
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 
