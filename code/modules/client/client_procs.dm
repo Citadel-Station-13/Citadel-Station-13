@@ -80,8 +80,7 @@
 */
 
 	//Logs all hrefs
-	if(config && config.log_hrefs && GLOB.href_logfile)
-		GLOB.href_logfile << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
+	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
 	// Admin PM
 	if(href_list["priv_msg"])
@@ -360,6 +359,27 @@ GLOBAL_LIST(external_rsc_urls)
 		tooltips = new /datum/tooltip(src)
 
 	hook_vr("client_new",list(src))
+
+	var/list/topmenus = GLOB.menulist[/datum/menu]
+	for (var/thing in topmenus)
+		var/datum/menu/topmenu = thing
+		var/topmenuname = "[topmenu]"
+		if (topmenuname == "[topmenu.type]")
+			var/list/tree = splittext(topmenuname, "/")
+			topmenuname = tree[tree.len]
+		winset(src, "[topmenu.type]", "parent=menu;name=[url_encode(topmenuname)]")
+		var/list/entries = topmenu.Generate_list(src)
+		for (var/child in entries)
+			winset(src, "[url_encode(child)]", "[entries[child]]")
+			if (!ispath(child, /datum/menu))
+				var/atom/verb/verbpath = child
+				if (copytext(verbpath.name,1,2) != "@")
+					new child(src)
+
+	for (var/thing in prefs.menuoptions)
+		var/datum/menu/menuitem = GLOB.menulist[thing]
+		if (menuitem)
+			menuitem.Load_checked(src)
 
 //////////////
 //DISCONNECT//
