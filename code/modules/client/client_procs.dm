@@ -310,7 +310,8 @@ GLOBAL_LIST(external_rsc_urls)
 			if (config.irc_first_connection_alert)
 				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
 
-		player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack
+		else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
+			player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack				message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
 
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
@@ -319,9 +320,9 @@ GLOBAL_LIST(external_rsc_urls)
 	if(config.use_account_age_for_jobs && account_age >= 0)
 		player_age = account_age
 	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
-		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (config.irc_first_connection_alert)
-			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
@@ -390,7 +391,7 @@ GLOBAL_LIST(external_rsc_urls)
 		holder.owner = null
 		GLOB.admins -= src
 
-		if (!GLOB.admins.len && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
+		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
 					"I have no admins online!",\
