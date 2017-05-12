@@ -288,17 +288,12 @@ GLOBAL_LIST(external_rsc_urls)
 /*	if(mentor && !holder)
 		mentor_memo_output("Show") */
 
-	add_verbs_from_config()
+	add_verbs_from_config(tdata)
 	set_client_age_from_db()
 	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		player_age = 0	
-	if(!IsGuestKey(key) && SSdbcore.IsConnected())
-		findJoinDate()
+		player_age = 0
 
-	sync_client_with_db(tdata)
-	
-	
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if (config.panic_bunker && !holder && !(ckey in GLOB.deadmins))
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
@@ -320,6 +315,16 @@ GLOBAL_LIST(external_rsc_urls)
 
 	else if (isnum(player_age) && player_age < config.notify_new_player_age)
 		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
+
+
+	if(config.use_account_age_for_jobs && account_age >= 0)
+		player_age = account_age
+	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
+		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+		if (config.irc_first_connection_alert)
+			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account day[(account_age==1?"":"s")] old, created on [account_join_date].")
+	else //We failed to get an age for this user, let admins know they need to keep an eye on them
+		message_admins("Failed to get BYOND account age for [key_name_admin(src)]")
 
 	if(!IsGuestKey(key) && SSdbcore.IsConnected())
 		findJoinDate()
@@ -370,7 +375,7 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-		
+
 		if (!GLOB.admins.len && SSticker.current_state == GAME_STATE_PLAYING) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
@@ -396,7 +401,7 @@ GLOBAL_LIST(external_rsc_urls)
 					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
 					"Forever alone :("\
 				)
-				
+
 				send2irc("Server", "[cheesy_message] (No admins online)")
 
 	GLOB.ahelp_tickets.ClientLogout(src)
