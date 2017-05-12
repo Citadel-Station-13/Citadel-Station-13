@@ -96,7 +96,7 @@
 	category = list("Medical Designs")
 
 /datum/design/bluespacebodybag
-	name = "Bluespace Body Bag"
+	name = "Bluespace body bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	id = "bluespacebodybag"
 	req_tech = list("bluespace" = 5, "materials" = 4, "plasmatech" = 4)
@@ -106,7 +106,7 @@
 	category = list("Medical Designs")
 
 /datum/design/plasmarefiller
-	name = "Plasma-Man Jumpsuit Refill"
+	name = "Plasma-man jumpsuit refill"
 	desc = "A refill pack for the auto-extinguisher on Plasma-man suits."
 	id = "plasmarefiller"
 	req_tech = list("materials" = 2, "plasmatech" = 3) //Why did this have no plasmatech
@@ -191,7 +191,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_breather
-	name = "Breathing Tube Implant"
+	name = "Breathing Tube implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."
 	id = "ci-breather"
 	req_tech = list("materials" = 2, "biotech" = 3)
@@ -202,7 +202,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_toolset
-	name = "Toolset Arm Implant"
+	name = "Toolset Arm implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm."
 	id = "ci-toolset"
 	req_tech = list("materials" = 3, "engineering" = 4, "biotech" = 4, "powerstorage" = 4)
@@ -213,7 +213,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_medical_hud
-	name = "Medical HUD Implant"
+	name = "Medical HUD implant"
 	desc = "These cybernetic eyes will display a medical HUD over everything you see. Wiggle eyes to control."
 	id = "ci-medhud"
 	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 4)
@@ -224,7 +224,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_security_hud
-	name = "Security HUD Implant"
+	name = "Security HUD implant"
 	desc = "These cybernetic eyes will display a security HUD over everything you see. Wiggle eyes to control."
 	id = "ci-sechud"
 	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 4, "combat" = 3)
@@ -235,7 +235,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_xray
-	name = "X-Ray Eyes"
+	name = "X-Ray eyes"
 	desc = "These cybernetic eyes will give you X-ray vision. Blinking is futile."
 	id = "ci-xray"
 	req_tech = list("materials" = 7, "programming" = 5, "biotech" = 7, "magnets" = 5,"plasmatech" = 6)
@@ -246,7 +246,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thermals
-	name = "Thermal Eyes"
+	name = "Thermal eyes"
 	desc = "These cybernetic eyes will give you Thermal vision. Vertical slit pupil included."
 	id = "ci-thermals"
 	req_tech = list("materials" = 6, "programming" = 4, "biotech" = 7, "magnets" = 5,"plasmatech" = 4)
@@ -257,7 +257,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antidrop
-	name = "Anti-Drop Implant"
+	name = "Anti-Drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	id = "ci-antidrop"
 	req_tech = list("materials" = 5, "programming" = 6, "biotech" = 5)
@@ -268,7 +268,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_antistun
-	name = "CNS Rebooter Implant"
+	name = "CNS Rebooter implant"
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	id = "ci-antistun"
 	req_tech = list("materials" = 6, "programming" = 5, "biotech" = 6)
@@ -279,7 +279,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment
-	name = "Nutriment Pump Implant"
+	name = "Nutriment pump implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	id = "ci-nutriment"
 	req_tech = list("materials" = 3, "powerstorage" = 4, "biotech" = 3)
@@ -290,7 +290,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_nutriment_plus
-	name = "Nutriment Pump Implant PLUS"
+	name = "Nutriment pump implant PLUS"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are hungry."
 	id = "ci-nutrimentplus"
 	req_tech = list("materials" = 5, "powerstorage" = 4, "biotech" = 4)
@@ -301,7 +301,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_reviver
-	name = "Reviver Implant"
+	name = "Reviver implant"
 	desc = "This implant will attempt to revive you if you lose consciousness. For the faint of heart!"
 	id = "ci-reviver"
 	req_tech = list("materials" = 5, "programming" = 4, "biotech" = 5)
@@ -312,7 +312,7 @@
 	category = list("Misc", "Medical Designs")
 
 /datum/design/cyberimp_thrusters
-	name = "Thrusters Set Implant"
+	name = "Thrusters set implant"
 	desc = "This implant will allow you to use gas from environment or your internals for propulsion in zero-gravity areas."
 	id = "ci-thrusters"
 	req_tech = list("materials" = 5, "biotech" = 5, "magnets" = 4, "engineering" = 7)

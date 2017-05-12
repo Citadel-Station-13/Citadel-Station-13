@@ -381,7 +381,9 @@
 	var/obj/item/stack/tile/plasteel/T = new (Tsec)
 	T.amount = 1
 
-	do_sparks(3, TRUE, src)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 	..()
 
 /obj/machinery/bot_core/floorbot

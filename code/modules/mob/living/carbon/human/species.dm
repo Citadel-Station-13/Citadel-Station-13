@@ -119,8 +119,6 @@
 		var/obj/item/thing = C.get_item_by_slot(slot_id)
 		if(thing && (!thing.species_exception || !is_type_in_list(src,thing.species_exception)))
 			C.dropItemToGround(thing)
-	if(C.hud_used)
-		C.hud_used.update_locked_slots()
 
 	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
 	if(("legs" in C.dna.species.mutant_bodyparts) && C.dna.features["legs"] == "Digitigrade Legs")
@@ -354,7 +352,7 @@
 		var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[H.undershirt]
 		if(undershirt)
 			if(H.dna.species.sexes && H.gender == FEMALE)
-				standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
+				standing += wear_female_version(undershirt.icon_state, undershirt.icon, -BODY_LAYER)
 			else
 				standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 

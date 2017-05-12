@@ -53,5 +53,7 @@
 	ranged = 1
 
 /mob/living/simple_animal/hostile/hivebot/death(gibbed)
-	do_sparks(3, TRUE, src)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 	..(1)

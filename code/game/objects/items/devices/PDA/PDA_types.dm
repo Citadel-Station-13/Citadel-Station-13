@@ -161,11 +161,11 @@
 	icon_state = "pda-roboticist"
 	default_cartridge = /obj/item/weapon/cartridge/roboticist
 
-/obj/item/device/pda/curator
-	name = "curator PDA"
+/obj/item/device/pda/librarian
+	name = "librarian PDA"
 	icon_state = "pda-library"
 	icon_alert = "pda-r-library"
-	default_cartridge = /obj/item/weapon/cartridge/curator
+	default_cartridge = /obj/item/weapon/cartridge/librarian
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = 1 //Quiet in the library!

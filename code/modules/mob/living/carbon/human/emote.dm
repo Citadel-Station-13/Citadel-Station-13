@@ -171,8 +171,5 @@
 		dna.species.mutant_bodyparts -= "wingsopen"
 		dna.species.mutant_bodyparts |= "wings"
 	update_body()
-	if(isturf(loc))
-		var/turf/T = loc
-		T.Entered(src)
 
 //Ayy lmao

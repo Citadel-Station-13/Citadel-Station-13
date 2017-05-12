@@ -16,16 +16,21 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 40, acid = 0)
 
 
-/obj/machinery/meter/Initialize(mapload)
-	. = ..()
+/obj/machinery/meter/New()
+	..()
 	SSair.atmos_machinery += src
-	if (mapload && !target)
-		target = locate(/obj/machinery/atmospherics/pipe) in loc
+	src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+	return 1
 
 /obj/machinery/meter/Destroy()
 	SSair.atmos_machinery -= src
 	src.target = null
 	return ..()
+
+/obj/machinery/meter/Initialize(mapload)
+	..()
+	if (mapload && !target)
+		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process_atmos()
 	if(!target)

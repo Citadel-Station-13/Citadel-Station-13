@@ -6,7 +6,6 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	anchored      = TRUE
 
 	icon             = LIGHTING_ICON
-	icon_state       = "transparent"
 	color            = LIGHTING_BASE_MATRIX
 	plane            = LIGHTING_PLANE
 	mouse_opacity    = 0
@@ -17,7 +16,7 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_object/Initialize(mapload)
+/atom/movable/lighting_object/Initialize(mapload, var/no_update = FALSE)
 	. = ..()
 	verbs.Cut()
 	GLOB.all_lighting_objects += src
@@ -29,8 +28,10 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-	needs_update = TRUE
-	GLOB.lighting_update_objects += src
+	if (no_update)
+		return
+
+	update()
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
@@ -68,17 +69,10 @@ GLOBAL_LIST_EMPTY(all_lighting_objects) // Global list of lighting objects.
 
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
-
-	var/list/corners = T.corners
-	var/datum/lighting_corner/cr = dummy_lighting_corner
-	var/datum/lighting_corner/cg = dummy_lighting_corner
-	var/datum/lighting_corner/cb = dummy_lighting_corner
-	var/datum/lighting_corner/ca = dummy_lighting_corner
-	if (corners) //done this way for speed
-		cr = corners[3] || dummy_lighting_corner
-		cg = corners[2] || dummy_lighting_corner
-		cb = corners[4] || dummy_lighting_corner
-		ca = corners[1] || dummy_lighting_corner
+	var/datum/lighting_corner/cr  = T.corners[3] || dummy_lighting_corner
+	var/datum/lighting_corner/cg  = T.corners[2] || dummy_lighting_corner
+	var/datum/lighting_corner/cb  = T.corners[4] || dummy_lighting_corner
+	var/datum/lighting_corner/ca  = T.corners[1] || dummy_lighting_corner
 
 	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 

@@ -168,8 +168,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uplink_spawn_loc = UPLINK_PDA
 
-	var/list/menuoptions
-
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
 	var/flavor_text = ""
@@ -196,7 +194,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	if(!loaded_preferences_successfully)
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
-	menuoptions = list()
 	return
 
 /datum/preferences/proc/ShowChoices(mob/user)

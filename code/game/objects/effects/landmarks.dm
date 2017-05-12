@@ -94,7 +94,7 @@
 	name = "Head of Personnel"
 
 /obj/effect/landmark/start/librarian
-	name = "Curator"
+	name = "Librarian"
 
 /obj/effect/landmark/start/lawyer
 	name = "Lawyer"

@@ -27963,6 +27963,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel{
+	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -28812,6 +28813,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
+	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -45370,12 +45372,12 @@
 	name = "Port Maintenance"
 	})
 "bBr" = (
+/obj/structure/table/wood,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bBs" = (
@@ -47033,6 +47035,7 @@
 	name = "\improper Auxiliary Restrooms"
 	})
 "bEw" = (
+/obj/structure/table/wood,
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32;
 	pixel_y = 0
@@ -47041,7 +47044,6 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "bEx" = (
@@ -53662,12 +53664,6 @@
 	pixel_x = 30;
 	pixel_y = 0
 	},
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
 /turf/open/floor/engine/cult,
 /area/library)
 "bPY" = (
@@ -82487,7 +82483,7 @@
 /area/chapel/office)
 "cMa" = (
 /obj/structure/table/wood,
-/obj/item/weapon/spellbook/oneuse/smoke/lesser{
+/obj/item/weapon/spellbook/oneuse/smoke{
 	name = "mysterious old book of "
 	},
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater{
@@ -95337,14 +95333,6 @@
 	icon_state = "xenomaint";
 	name = "Xeno Maintenance"
 	})
-"dmD" = (
-/obj/structure/displaycase/trophy,
-/turf/open/floor/wood,
-/area/library)
-"dmE" = (
-/obj/structure/displaycase/trophy,
-/turf/open/floor/wood,
-/area/library)
 
 (1,1,1) = {"
 aaa
@@ -114493,7 +114481,7 @@ bwa
 bxU
 bzD
 bBr
-bSx
+bCT
 bEw
 bzE
 bHR
@@ -114749,9 +114737,9 @@ bue
 bwb
 bxV
 bzE
-dmD
-bzE
-dmD
+bBs
+bCU
+bBs
 bzE
 bHR
 bJz
@@ -128204,7 +128192,7 @@ cRi
 cRi
 daP
 cLE
-dlV
+cRi
 aaa
 aaa
 aaf
@@ -128460,7 +128448,7 @@ daF
 daJ
 cRi
 bvT
-cRi
+dlV
 cRi
 cRi
 cRi
@@ -128717,7 +128705,7 @@ cSn
 cSn
 cRi
 dmq
-cRi
+dlV
 cZv
 cZv
 cRi
@@ -129745,7 +129733,7 @@ cSn
 daN
 cRi
 dmr
-cRi
+dlV
 cZv
 dbw
 cRi
@@ -130002,7 +129990,7 @@ daI
 daM
 cRi
 cTA
-cRi
+dlV
 cRi
 cRi
 cRi

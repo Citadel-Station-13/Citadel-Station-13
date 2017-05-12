@@ -154,5 +154,4 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 
 .love					{color: #FF69Bf;}
 .lovebold				{color: #FF69Bf;	font-weight: bold;}
-.resonate				{color: #298F85;}
 </style>"}

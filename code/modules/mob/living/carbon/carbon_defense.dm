@@ -119,7 +119,9 @@
 				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
 				"<span class='userdanger'>The [M.name] has shocked [src]!</span>")
 
-				do_sparks(5, TRUE, src)
+				var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+				s.set_up(5, 1, src)
+				s.start()
 				var/power = M.powerlevel + rand(0,3)
 				Weaken(power)
 				if(stuttering < power)

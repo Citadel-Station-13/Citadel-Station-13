@@ -88,7 +88,7 @@
 
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 50
+	cost = 25
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 

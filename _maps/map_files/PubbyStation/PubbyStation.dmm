@@ -15105,7 +15105,7 @@
 /area/maintenance/apmaint)
 "aEl" = (
 /obj/structure/closet/coffin,
-/obj/item/toy/figure/curator,
+/obj/item/toy/figure/librarian,
 /turf/open/floor/plating,
 /area/maintenance/apmaint)
 "aEm" = (

@@ -477,15 +477,26 @@
 	..()
 
 //Adamantine
-/datum/chemical_reaction/slime/adamantine
-	name = "Adamantine"
-	id = "adamantine"
+/datum/chemical_reaction/slime/slimegolem
+	name = "Slime Golem"
+	id = "m_golem"
 	required_reagents = list("plasma" = 1)
 	required_container = /obj/item/slime_extract/adamantine
 	required_other = 1
 
-/datum/chemical_reaction/slime/adamantine/on_reaction(datum/reagents/holder)
-	new /obj/item/stack/sheet/mineral/adamantine(get_turf(holder.my_atom))
+/datum/chemical_reaction/slime/slimegolem/on_reaction(datum/reagents/holder)
+	new /obj/effect/golemrune(get_turf(holder.my_atom))
+	..()
+
+/datum/chemical_reaction/slime/slimegolem2
+	name = "Slime Golem 2"
+	id = "m_golem2"
+	required_reagents = list("iron" = 1)
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/slime/slimegolem2/on_reaction(datum/reagents/holder)
+	new /obj/item/golem_shell/artificial(get_turf(holder.my_atom))
 	..()
 
 //Bluespace

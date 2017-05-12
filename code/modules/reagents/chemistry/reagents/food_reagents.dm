@@ -60,10 +60,7 @@
 	// data for nutriment is one or more (flavour -> ratio)
 	// where all the ratio values adds up to 1
 
-	var/list/taste_amounts = list()
-	if(data)
-		taste_amounts = data.Copy()
-
+	var/list/taste_amounts = data.Copy()
 	counterlist_scale(taste_amounts, volume)
 
 	var/list/other_taste_amounts = newdata.Copy()
@@ -527,12 +524,6 @@
 		M.heal_bodypart_damage(3,1)
 	..()
 
-/datum/reagent/consumable/mayonnaise
-	name = "Mayonnaise"
-	id = "mayonnaise"
-	description = "An white and oily mixture of mixed egg yolks."
-	color = "#DFDFDF"
-	taste_description = "mayonnaise"
 
 ////Lavaland Flora Reagents////
 

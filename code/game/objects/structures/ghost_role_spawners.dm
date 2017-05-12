@@ -155,6 +155,8 @@
 	name = "dust-caked golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
+	anchored = 1
+	density = 1
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 

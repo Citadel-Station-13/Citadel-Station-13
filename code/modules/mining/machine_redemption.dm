@@ -84,7 +84,7 @@
 	if(D.make_reagents.len)
 		return 0
 
-	var/build_amount = 0
+	var/build_amount = 1
 
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
@@ -93,15 +93,7 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		var/smeltable_sheets = round(redemption_mat.amount / M)
-
-		if(!smeltable_sheets)
-			return 0
-
-		if(!build_amount)
-			build_amount = smeltable_sheets
-
-		build_amount = min(build_amount, smeltable_sheets)
+		build_amount = min(build_amount, round(redemption_mat.amount / M))
 
 	return build_amount
 
@@ -160,7 +152,6 @@
 	if(exchange_parts(user, W))
 		return
 	if(default_pry_open(W))
-		materials.retrieve_all()
 		return
 	if(default_unfasten_wrench(user, W))
 		return

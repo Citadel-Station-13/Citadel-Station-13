@@ -237,7 +237,6 @@
 /obj/item/borg/upgrade/selfrepair/proc/check_dropped()
 	if(loc != cyborg)
 		toggle_action.Remove(cyborg)
-		QDEL_NULL(toggle_action)
 		cyborg = null
 		deactivate()
 

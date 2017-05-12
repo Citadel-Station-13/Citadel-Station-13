@@ -530,7 +530,9 @@
 	if(emagged && prob(25))
 		playsound(loc, 'sound/voice/minsult.ogg', 50, 0)
 
-	do_sparks(3, TRUE, src)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)

@@ -71,7 +71,7 @@
 			if("select", "delete", "update")
 				select_types = query_tree[query_tree[1]]
 
-		from_objs = world.SDQL_from_objs(query_tree["from"])
+		from_objs = SDQL_from_objs(query_tree["from"])
 
 		var/list/objs = list()
 
@@ -101,7 +101,7 @@
 			if("call")
 				for(var/datum/d in objs)
 					try
-						world.SDQL_var(d, query_tree["call"][1], source = d)
+						SDQL_var(d, query_tree["call"][1], source = d)
 					catch(var/exception/e)
 						runtime_tracker += SDQL_parse_exception(e)
 						runtimes++
@@ -177,6 +177,15 @@
 	returning += "Description: [E.desc]<BR>"
 	return returning
 
+/proc/SDQL_callproc_global(procname,args_list)
+	set waitfor = FALSE
+	WrapAdminProcCall(GLOBAL_PROC, procname, args_list)
+
+/proc/SDQL_callproc(thing, procname, args_list)
+	set waitfor = FALSE
+	if(hascall(thing, procname))
+		WrapAdminProcCall(thing, procname, args_list)
+
 /proc/SDQL_parse(list/query_list)
 	var/datum/SDQL_parser/parser = new()
 	var/list/querys = list()
@@ -240,10 +249,15 @@
 
 
 
-/world/proc/SDQL_from_objs(list/tree)
+/proc/SDQL_from_objs(list/tree)
 	if("world" in tree)
-		return src
-	return SDQL_expression(src, tree)
+		if(IsAdminAdvancedProcCall())
+			var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+			log_admin(msg)
+			message_admins(msg)
+			return
+		return world
+	return SDQL_expression(world, tree)
 
 /proc/SDQL_get_all(type, location)
 	var/list/out = list()
@@ -403,12 +417,12 @@
 				result = dummy
 			val += result
 	else
-		val = world.SDQL_var(object, expression, i, object)
+		val = SDQL_var(object, expression, i, object)
 		i = expression.len
 
 	return list("val" = val, "i" = i)
 
-/world/proc/SDQL_var(datum/object, list/expression, start = 1, source)
+/proc/SDQL_var(datum/object, list/expression, start = 1, source)
 	var/v
 	var/long = start < expression.len
 	if(object == world && long && expression[start + 1] == ".")
@@ -442,6 +456,11 @@
 				else
 					return null
 			if("world")
+				if(IsAdminAdvancedProcCall())
+					var/msg = "WARNING: Attempt to retrieve world reference made by [usr]!"
+					log_admin(msg)
+					message_admins(msg)
+					return
 				v = world
 			if("global")
 				v = GLOB

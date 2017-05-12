@@ -4,7 +4,6 @@
 	desc = "I see you!"
 	zone = "eyes"
 	slot = "eye_sight"
-	gender = PLURAL
 
 	var/sight_flags = 0
 	var/see_in_dark = 2

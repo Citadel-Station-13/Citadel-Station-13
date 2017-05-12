@@ -17330,6 +17330,7 @@
 /area/hallway/primary/central)
 "aMf" = (
 /turf/open/floor/plasteel{
+	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -17835,6 +17836,7 @@
 /area/hallway/primary/central)
 "aNB" = (
 /turf/open/floor/plasteel{
+	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -19013,12 +19015,6 @@
 /turf/open/floor/wood,
 /area/library)
 "aQr" = (
-/obj/structure/closet/crate,
-/obj/item/clothing/shoes/workboots/mining,
-/obj/item/clothing/under/rank/curator/treasure_hunter,
-/obj/item/clothing/suit/curator,
-/obj/item/clothing/head/curator,
-/obj/item/weapon/storage/backpack/satchel/explorer,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/library)
@@ -19514,7 +19510,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aRO" = (
-/obj/structure/displaycase/trophy,
+/obj/structure/bookcase/random/nonfiction,
 /turf/open/floor/wood,
 /area/library)
 "aRP" = (
@@ -106511,7 +106507,7 @@ aIt
 aPd
 aIt
 aRO
-aRO
+aIt
 aUC
 aVP
 aXu
@@ -106768,7 +106764,7 @@ aNV
 aPd
 aIt
 aRO
-aRO
+aIt
 aIt
 aVQ
 aXu

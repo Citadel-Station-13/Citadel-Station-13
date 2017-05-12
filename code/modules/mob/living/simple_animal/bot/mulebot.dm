@@ -719,7 +719,9 @@
 		cell.update_icon()
 		cell = null
 
-	do_sparks(3, TRUE, src)
+	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	s.set_up(3, 1, src)
+	s.start()
 
 	new /obj/effect/decal/cleanable/oil(loc)
 	..()
