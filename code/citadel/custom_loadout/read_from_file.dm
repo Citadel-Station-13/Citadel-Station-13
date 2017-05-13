@@ -1,5 +1,4 @@
 
-#define CUSTOM_ITEM_LIST_FILE 'config/custom_items.txt'
 GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist.
 
 //File should be in the format of Ckey|things, where things is in the form of itempath1=amount;itempath2=amount;itempath3=amount
@@ -7,7 +6,7 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 
 /proc/reload_custom_item_list(custom_filelist)
 	if(!custom_filelist)
-		custom_filelist = CUSTOM_ITEM_LIST_FILE
+		custom_filelist = "config/custom_items.txt"
 	GLOB.custom_item_list = list()
 	var/list/file_lines = world.file2list(custom_filelist)
 	for(var/line in file_lines)
@@ -40,7 +39,9 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 	return GLOB.custom_item_list
 
 /proc/parse_custom_items_by_key(ckey)
+	world << "parse_custom_items_by_key([ckey])"
 	if(!ckey || !GLOB.custom_item_list[ckey])
+		world << "parse_custom_items_by_key: no ckey match"
 		return null
 	var/list/items = GLOB.custom_item_list[ckey]
 	for(var/I in items)

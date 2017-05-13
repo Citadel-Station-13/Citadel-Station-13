@@ -8,21 +8,26 @@
 #define LOADING_TO_HUMAN 1
 
 /proc/handle_roundstart_items(mob/living/M)
-	if(!M.ckey || !istype(M))
+	world << "handle_roundstart_items([M])"
+	if(!istype(M) || !M.ckey)
+		world << "handle_roundstart_items: [M] has no ckey."
 		return FALSE
 	var/list/items = parse_custom_items_by_key(M.ckey)
 	if(isnull(items))
+		world << "handle_roundstart_items: itemlist null."
 		return FALSE
-	load_itemlist_to_mob(M, items, TRUE, TRUE, FALSE)
+	return load_itemlist_to_mob(M, items, TRUE, TRUE, FALSE)
 
 //Just incase there's extra mob selections in the future.....
 /proc/load_itemlist_to_mob(mob/living/L, list/itemlist, drop_on_floor_if_full = TRUE, load_to_all_slots = TRUE, replace_slots = FALSE)
+	world << "load_itemlist_to_mob([L], [itemlist], [drop_on_floor_if_full], [load_to_all_slots], [replace_slots])"
 	if(!istype(L) || !islist(itemlist))
 		return FALSE
 	var/loading_mode = DROP_TO_FLOOR
 	var/turf/current_turf = get_turf(L)
 	if(ishuman(L))
 		loading_mode = LOADING_TO_HUMAN
+	world << "load_itemlist_to_mob:loading_mode [loading_mode] current_turf [current_turf]"
 	switch(loading_mode)
 		if(DROP_TO_FLOOR)
 			for(var/I in itemlist)
