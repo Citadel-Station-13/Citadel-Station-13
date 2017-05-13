@@ -7,6 +7,14 @@
 #define DROP_TO_FLOOR 0
 #define LOADING_TO_HUMAN 1
 
+/proc/handle_roundstart_items(mob/living/M)
+	if(!M.ckey || !istype(M))
+		return FALSE
+	var/list/items = parse_custom_items_by_key(M.ckey)
+	if(isnull(items))
+		return FALSE
+	load_itemlist_to_mob(M, items, TRUE, TRUE, FALSE)
+
 //Just incase there's extra mob selections in the future.....
 /proc/load_itemlist_to_mob(mob/living/L, list/itemlist, drop_on_floor_if_full = TRUE, load_to_all_slots = TRUE, replace_slots = FALSE)
 	if(!istype(L) || !islist(itemlist))
