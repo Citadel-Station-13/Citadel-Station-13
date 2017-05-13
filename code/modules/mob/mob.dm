@@ -36,7 +36,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	..()
+	. = ..()
 
 /atom/proc/prepare_huds()
 	hud_list = list()

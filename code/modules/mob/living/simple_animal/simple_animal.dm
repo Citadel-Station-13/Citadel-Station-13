@@ -89,7 +89,7 @@
 	var/tame = 0
 
 /mob/living/simple_animal/Initialize()
-	..()
+	. = ..()
 	GLOB.simple_animals += src
 	handcrafting = new()
 	if(gender == PLURAL)
