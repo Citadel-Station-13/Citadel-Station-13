@@ -321,7 +321,9 @@
 			return
 		else
 			connected_message("Authorized Ejection")
+
 			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
+
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
@@ -378,8 +380,10 @@
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
 		mess = TRUE
+
 		for(var/obj/item/O in unattached_flesh)
 			qdel(O)
+      
 		icon_state = "pod_g"
 		if(mob_occupant.mind != clonemind)
 			clonemind.transfer_to(mob_occupant)
@@ -395,10 +399,12 @@
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
+
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
 		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
+    
 		go_out()
 	..()
 

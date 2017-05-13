@@ -10,7 +10,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,25)
+	var/loot = rand(1,26)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -33,7 +33,7 @@
 		if(9)
 			new /obj/item/organ/brain/alien(src)
 		if(10)
-			new /obj/item/organ/heart/cursed(src)
+			new /obj/item/organ/heart/cursed/wizard(src)
 		if(11)
 			new /obj/item/ship_in_a_bottle(src)
 		if(12)
@@ -65,6 +65,8 @@
 			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
 		if(25)
 			new /obj/item/weapon/spellbook/oneuse/summonitem(src)
+		if(26)
+			new /obj/item/book_of_babel(src)
 
 
 
@@ -86,7 +88,7 @@
 		user.sight |= SEE_MOBS
 		icon_state = "lantern"
 		wisp.orbit(user, 20)
-		feedback_add_details("wisp_lantern","Freed")
+		SSblackbox.add_details("wisp_lantern","Freed")
 
 	else
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
@@ -101,7 +103,7 @@
 		wisp.stop_orbit()
 		wisp.loc = src
 		icon_state = "lantern-blue"
-		feedback_add_details("wisp_lantern","Returned")
+		SSblackbox.add_details("wisp_lantern","Returned")
 
 /obj/item/device/wisp_lantern/Initialize()
 	..()
@@ -140,7 +142,7 @@
 		return
 	new /obj/effect/particle_effect/smoke(user.loc)
 	user.forceMove(get_turf(linked))
-	feedback_add_details("warp_cube","[src.type]")
+	SSblackbox.add_details("warp_cube","[src.type]")
 	new /obj/effect/particle_effect/smoke(user.loc)
 
 /obj/item/device/warp_cube/red
@@ -228,7 +230,7 @@
 
 /obj/item/device/immortality_talisman/attack_self(mob/user)
 	if(cooldown < world.time)
-		feedback_add_details("immortality_talisman","Activated") // usage
+		SSblackbox.add_details("immortality_talisman","Activated") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in [user.p_their()] place!</span>")
 		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
@@ -341,6 +343,24 @@
 				M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
 			add_fingerprint(usr)
+
+
+
+
+//Book of Babel
+
+/obj/item/book_of_babel
+	name = "Book of Babel"
+	desc = "An ancient tome written in countless tongues."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "book1"
+	w_class = 2
+
+/obj/item/book_of_babel/attack_self(mob/user)
+	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
+	user.grant_all_languages(omnitongue=TRUE)
+	new /obj/effect/decal/cleanable/ash(get_turf(user))
+	qdel(src)
 
 
 //Boat
