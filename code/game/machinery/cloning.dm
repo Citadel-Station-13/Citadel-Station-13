@@ -311,16 +311,17 @@
 			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
 		return
 
+	var/mob/living/mob_occupant = occupant
 	if(W.GetID())
 		if(!check_access(W))
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
 			return
-		if(!(occupant || mess))
+		if(!(mob_occupant || mess))
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
 		else
 			connected_message("Authorized Ejection")
-			SPEAK("An authorized ejection of [occupant.real_name] has occurred.")
+			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
 			go_out()
 	else
@@ -377,24 +378,27 @@
 		SPEAK("Critical error! Please contact a Thinktronic Systems \
 			technician, as your warranty may be affected.")
 		mess = TRUE
+		for(var/obj/item/O in unattached_flesh)
+			qdel(O)
 		icon_state = "pod_g"
-		if(occupant.mind != clonemind)
-			clonemind.transfer_to(occupant)
-		occupant.grab_ghost() // We really just want to make you suffer.
-		flash_color(occupant, flash_color="#960000", flash_time=100)
-		to_chat(occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
+		if(mob_occupant.mind != clonemind)
+			clonemind.transfer_to(mob_occupant)
+		mob_occupant.grab_ghost() // We really just want to make you suffer.
+		flash_color(mob_occupant, flash_color="#960000", flash_time=100)
+		to_chat(mob_occupant, "<span class='warning'><b>Agony blazes across your consciousness as your body is torn apart.</b><br><i>Is this what dying is like? Yes it is.</i></span>")
 		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
-		occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
-		QDEL_IN(occupant, 40)
+		mob_occupant << sound('sound/hallucinations/veryfar_noise.ogg',0,1,50)
+		QDEL_IN(mob_occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 
 /obj/machinery/clonepod/emp_act(severity)
-	if(prob(100/(severity*efficiency)))
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant && prob(100/(severity*efficiency)))
 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
-		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [occupant.real_name] prematurely." ,0))
+		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
 		go_out()
 	..()
 
