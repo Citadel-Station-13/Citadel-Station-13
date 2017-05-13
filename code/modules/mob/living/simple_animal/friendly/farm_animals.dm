@@ -300,8 +300,7 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	reagents = new(50)
-	reagents.my_atom = src
+	create_reagents(50)
 	reagents.add_reagent("milk", 20)
 	..()
 
