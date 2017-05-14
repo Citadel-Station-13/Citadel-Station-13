@@ -48,15 +48,20 @@
 		var/path = text2path(item)
 		if(!path)
 			continue
-		var/atom/movable/loaded_atom = new path
-		if(!istype(loaded_atom))
-			QDEL_NULL(loaded_atom)
-			continue
-		if(!istype(loaded_atom, /obj/item))
-			loaded_atom.forceMove(T)
-			continue
-		var/obj/item/loaded = loaded_atom
-		if(!loaded.equip_to_best_slot(H, TRUE))
-			if(!H.put_in_hands(loaded))
-				loaded.forceMove(T)
+		var/amount = itemlist[item]
+		for(var/i in 1 to amount)
+			var/atom/movable/loaded_atom = new path
+			if(!istype(loaded_atom))
+				QDEL_NULL(loaded_atom)
+				continue
+			if(!istype(loaded_atom, /obj/item))
+				loaded_atom.forceMove(T)
+				continue
+			var/obj/item/loaded = loaded_atom
+			var/obj/item/weapon/storage/S = H.get_item_by_slot(slot_back)
+			if(istype(S))
+				S.handle_item_insertion(loaded, TRUE, H)	//Force it into their backpack
+				continue
+			if(!H.put_in_hands(loaded))						//They don't have one/somehow that failed, put it in their hands
+				loaded.forceMove(T)				//Guess we're just dumping it on the floor!
 	return TRUE

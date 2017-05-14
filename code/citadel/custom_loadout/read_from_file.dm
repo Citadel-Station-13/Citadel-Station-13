@@ -21,9 +21,11 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 		GLOB.custom_item_list[key] = list()
 		var/list/item_separation = splittext(items, ";")
 		for(var/item_string in item_separation)
+			world << "itemstring [item_string]"
 			var/list/amount_separation = splittext(item_string, "=")
+			world << "separated [item_string] == [english_list(amount_separation)]"
 			var/path_to_item = amount_separation[1]
-			if(!ispath(path_to_item))
+			if(!ispath(text2path(path_to_item)))
 				GLOB.custom_item_list[key] += "ERROR"
 			var/amount_of_item = amount_separation[2]
 			if(!amount_of_item)
