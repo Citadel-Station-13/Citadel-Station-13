@@ -1,32 +1,31 @@
 /datum/game_mode
 	var/list/datum/mind/cult = list()
 	var/list/cult_objectives = list()
+	var/eldergod = 1 //for the summon god objective
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
 /proc/is_sacrifice_target(datum/mind/mind)
-	if(SSticker.mode.name == "cult")
-		var/datum/game_mode/cult/cult_mode = SSticker.mode
-		if(mind == cult_mode.sacrifice_target)
-			return 1
-	return 0
+	if(mind == GLOB.sac_mind)
+		return TRUE
+	return FALSE
 
 /proc/is_convertable_to_cult(mob/living/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 	if(M.mind)
 		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
-			return 0
+			return FALSE
 		if(is_sacrifice_target(M.mind))
-			return 0
+			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
-		return 0 //can't convert machines, shielded, or ratvar's dogs
-	return 1
+		return FALSE //can't convert machines, shielded, or ratvar's dogs
+	return TRUE
 
 /datum/game_mode/cult
 	name = "cult"
@@ -34,10 +33,10 @@
 	antag_flag = ROLE_CULTIST
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
-	required_players = 1
-	required_enemies = 1
-	recommended_enemies = 1
-	enemy_minimum_age = 0
+	required_players = 24
+	required_enemies = 4
+	recommended_enemies = 4
+	enemy_minimum_age = 14
 
 	announce_span = "cult"
 	announce_text = "Some crew members are trying to start a cult to Nar-Sie!\n\
@@ -79,23 +78,6 @@
 	return (cultists_to_cult.len>=required_enemies)
 
 
-/datum/game_mode/cult/proc/memorize_cult_objectives(datum/mind/cult_mind)
-	for(var/obj_count = 1,obj_count <= cult_objectives.len,obj_count++)
-		var/explanation
-		switch(cult_objectives[obj_count])
-			if("survive")
-				explanation = "Our knowledge must live on. Make sure at least [acolytes_needed] acolytes escape on the shuttle to spread their work on an another station."
-			if("sacrifice")
-				if(GLOB.sac_mind)
-					explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
-				else
-					explanation = "The veil has already been weakened here, proceed to the next objective."
-					GLOB.sac_complete = TRUE
-			if("eldergod")
-				explanation = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie' with nine acolytes on it. You must do this after sacrificing your target."
-		to_chat(cult_mind.current, "<B>Objective #[obj_count]</B>: [explanation]")
-		cult_mind.memory += "<B>Objective #[obj_count]</B>: [explanation]<BR>"
-
 /datum/game_mode/cult/post_setup()
 	modePlayer += cultists_to_cult
 	if("sacrifice" in cult_objectives)
@@ -111,7 +93,8 @@
 				message_admins("Cult Sacrifice: ERROR -  Null target chosen!")
 			else
 				var/datum/job/sacjob = SSjob.GetJob(GLOB.sac_mind.assigned_role)
-				var/icon/reshape = get_flat_human_icon(null, sacjob, GLOB.sac_mind.current.client.prefs)
+				var/datum/preferences/sacface = GLOB.sac_mind.current.client.prefs
+				var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
 				reshape.Shift(SOUTH, 4)
 				reshape.Shift(EAST, 1)
 				reshape.Crop(7,4,26,31)
@@ -249,16 +232,12 @@
 						SSblackbox.add_details("cult_objective","cult_survive|FAIL|[acolytes_needed]")
 						SSticker.news_report = CULT_FAILURE
 				if("sacrifice")
-					if(sacrifice_target)
-						if(sacrifice_target in GLOB.sacrificed)
-							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='greenannounce'>Success!</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
-						else if(sacrifice_target && sacrifice_target.current)
-							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='boldannounce'>Fail.</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
-						else
-							explanation = "Sacrifice [sacrifice_target.name], the [sacrifice_target.assigned_role]. <span class='boldannounce'>Fail (Gibbed).</span>"
-							SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL|GIBBED")
+					if(GLOB.sac_complete)
+						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='greenannounce'>Success!</span>"
+						SSblackbox.add_details("cult_objective","cult_sacrifice|SUCCESS")
+					else
+						explanation = "Sacrifice [GLOB.sac_mind], the [GLOB.sac_mind.assigned_role]. <span class='boldannounce'>Fail.</span>"
+						SSblackbox.add_details("cult_objective","cult_sacrifice|FAIL")
 				if("eldergod")
 					if(!eldergod)
 						explanation = "Summon Nar-Sie. <span class='greenannounce'>Success!</span>"
