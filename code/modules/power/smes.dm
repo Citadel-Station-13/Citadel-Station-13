@@ -191,12 +191,11 @@
 		cell.charge = (charge / capacity) * cell.maxcharge
 
 /obj/machinery/power/smes/Destroy()
-	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
-		var/area/A = get_area(src)
-		var/turf/T = get_turf(src)
-		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
-		log_game("SMES deleted at [A][COORD(T)]")
-		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]","singulo")
+	if(SSticker && SSticker.IsRoundInProgress())
+		var/area/area = get_area(src)
+		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
+		log_game("SMES deleted at ([area.name])")
+		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
 	if(terminal)
 		disconnect_terminal()
 	return ..()

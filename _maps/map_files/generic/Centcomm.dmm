@@ -5586,7 +5586,7 @@
 /area/centcom/ferry)
 "ot" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/under/rank/librarian/curator,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
 /obj/item/clothing/under/skirt/black,
 /obj/item/clothing/under/shorts/black,
 /obj/item/clothing/under/pants/track,
@@ -14881,6 +14881,20 @@
 /area/centcom/evac)
 "Md" = (
 /obj/machinery/computer/emergency_shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Me" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"Mf" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
@@ -64444,7 +64458,7 @@ Fa
 Fh
 Fh
 Fh
-Fh
+Me
 Fh
 Fh
 Fa
@@ -65729,7 +65743,7 @@ Fa
 Md
 Fp
 FC
-Fh
+Mf
 Fh
 Fh
 Fa
