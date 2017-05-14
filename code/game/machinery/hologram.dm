@@ -61,6 +61,7 @@ GLOBAL_LIST_EMPTY(holopads)
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
 		LAZYADD(holo_calls, outgoing_call)
+		outgoing_call = null
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
@@ -319,7 +320,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		if(HC.connected_holopad == src && speaker != HC.hologram)
-			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans, message_mode)
+			HC.user.Hear(message, speaker, message_language, raw_message, radio_freq, spans)
 
 	if(outgoing_call && speaker == outgoing_call.user)
 		outgoing_call.hologram.say(raw_message)
