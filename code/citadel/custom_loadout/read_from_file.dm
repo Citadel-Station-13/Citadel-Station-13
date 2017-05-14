@@ -11,6 +11,9 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 	var/list/file_lines = world.file2list(custom_filelist)
 	for(var/line in file_lines)
 		var/list/key_separation = splittext(line, "|")
+		if((!istype(key_separation))||(key_separation.len > 2)||(key_separation.len < 1))
+			stack_trace("Warning: Roundstart items configuration file improperly formatted!")
+			continue
 		var/key = key_separation[1]
 		var/items = key_separation[2]
 		if(!key)
@@ -20,10 +23,16 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 			continue
 		GLOB.custom_item_list[key] = list()
 		var/list/item_separation = splittext(items, ";")
+		if((!istype(item_separation))||(item_separation.len < 1))
+			stack_trace("Warning: Roundstart items configuration file improperly formatted!")
+			continue
 		for(var/item_string in item_separation)
 			world << "itemstring [item_string]"
 			var/list/amount_separation = splittext(item_string, "=")
 			world << "separated [item_string] == [english_list(amount_separation)]"
+			if((!istype(amount_separation))||(amount_separation.len > 2)||(amount_separation.len < 1))
+				stack_trace("Warning: Roundstart items configuration file improperly formatted!")
+				continue
 			var/path_to_item = amount_separation[1]
 			if(!ispath(text2path(path_to_item)))
 				GLOB.custom_item_list[key] += "ERROR"
@@ -51,3 +60,8 @@ GLOBAL_LIST(custom_item_list)	//Assoc list in form of ckey = delimited paramlist
 			items -= I
 			continue
 	return items
+
+/proc/debug_roundstart_items()
+	reload_custom_item_list()
+	for(var/mob/M in world)
+		handle_roundstart_items(M)
