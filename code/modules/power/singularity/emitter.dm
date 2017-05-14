@@ -98,9 +98,10 @@
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker && SSticker.current_state == GAME_STATE_PLAYING)
-		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+		var/turf/T = get_turf(src)
+		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Emitter deleted at [COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]","singulo")
 	QDEL_NULL(sparks)
 	return ..()
 
