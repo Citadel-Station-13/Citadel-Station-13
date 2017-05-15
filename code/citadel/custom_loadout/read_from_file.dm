@@ -24,6 +24,8 @@ GLOBAL_LIST(custom_item_list)
 			var/ckey_str = ckey(copytext(line, 1, ckey_str_sep))
 			var/job_str = copytext(line, ckey_str_sep+1, job_str_sep)
 			var/item_str = copytext(line, job_str_sep+1, item_str_sep)
+			if(!ckey_str || !job_str || !item_str || !length(ckey_str) || length(job_str) || length(item_str))
+				throw EXCEPTION("Errored Line")
 			world << "DEBUG: Line process: [line]"
 			world << "DEBUG: [ckey_str_sep], [job_str_sep], [item_str_sep], [ckey_str], [job_str], [item_str]."
 			if(!islist(GLOB.custom_item_list[ckey_str]))
@@ -40,10 +42,13 @@ GLOBAL_LIST(custom_item_list)
 				var/path = copytext(item_string, 1, path_str_sep)	//Path to spawn
 				var/amount = copytext(item_string, path_str_sep+1)	//Amount to spawn
 				world << "DEBUG: Item string [item_string] processed"
+				amount = text2num(amount)
 				path = text2path(path)
+				if(!ispath(path) || !isnum(amount))
+					throw EXCEPTION("Errored line")
 				world << "DEBUG: [path_str_sep], [path], [amount]"
 				for(var/job in jobs)
-					if(GLOB.custom_item_list[ckey_str][job][path])		//Doesn't exist, make it exist!
+					if(!GLOB.custom_item_list[ckey_str][job][path])		//Doesn't exist, make it exist!
 						GLOB.custom_item_list[ckey_str][job][path] = amount
 					else
 						GLOB.custom_item_list[ckey_str][job][path] += amount	//Exists, we want more~

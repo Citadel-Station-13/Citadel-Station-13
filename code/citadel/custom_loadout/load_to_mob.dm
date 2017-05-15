@@ -10,7 +10,9 @@
 /proc/handle_roundstart_items(mob/living/M)
 	world << "handle_roundstart_items([M])"
 	if(!istype(M) || !M.ckey || !M.mind)
-	world << "handle_roundstart_items: [M] has either no ckey or no mind!"
+		world << "handle_roundstart_items: [M] has either no ckey or no mind!"
+		if(!M.mind)
+			world << "[M] has no mind!"
 		return FALSE
 	var/list/items = parse_custom_items_by_key_and_job(M.ckey, M.mind.assigned_role)
 	if(M.mind.special_role)
@@ -52,8 +54,9 @@
 		return FALSE
 	var/turf/T = get_turf(H)
 	for(var/item in itemlist)
-		if(!ispath(item))
-			item = text2path(item)
+		var/path = item
+		if(!ispath(path))
+			path = text2path(path)
 		if(!path)
 			continue
 		var/amount = itemlist[item]

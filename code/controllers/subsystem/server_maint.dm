@@ -8,6 +8,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/list/currentrun
 
 /datum/controller/subsystem/server_maint/Initialize(timeofday)
+	reload_custom_roundstart_items_list()
 	if (config.hub)
 		world.visibility = 1
 	..()

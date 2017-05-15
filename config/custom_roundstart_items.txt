@@ -5,4 +5,6 @@
 //Recommend defining one job per line, but do what you want.
 test1|testjob1/test job 2/ALL|/obj/item/weapon/gun/energy/laser=3;/obj/item/weapon/gun/energy/laser/retro=1;/obj/item/weapon/gun/energy=2
 test1|testjob1|/obj/item/device/aicard=3;/obj/item/device/flightpack=1;/obj/item/weapon/gun/energy=3
+kevinz000|ALL|/obj/item/weapon/bikehorn/airhorn=1
+kevinz000|Clown|/obj/item/weapon/bikehorn=1
 
