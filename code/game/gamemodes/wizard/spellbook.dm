@@ -109,7 +109,7 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	cost = 3
+	cost = 40
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -119,6 +119,7 @@
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
+	cost = 6
 
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
@@ -140,6 +141,7 @@
 	name = "Time Stop"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -202,6 +204,7 @@
 	name = "Bind Soul"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
@@ -277,7 +280,7 @@
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
-
+/* // these have never been fun, like, ever.
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -287,12 +290,13 @@
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/weapon/gun/magic/staff/animate
-	category = "Assistance"
+	category = "Assistance" */
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
+	cost = 4
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"

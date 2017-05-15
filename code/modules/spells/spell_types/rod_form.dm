@@ -4,7 +4,7 @@
 	clothes_req = 1
 	human_req = 0
 	charge_max = 250
-	cooldown_min = 100
+	cooldown_min = 200
 	range = -1
 	include_user = 1
 	invocation = "CLANG!"
@@ -12,6 +12,7 @@
 	action_icon_state = "immrod"
 
 /obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets,mob/user = usr)
+`	return
 	for(var/mob/living/M in targets)
 		var/turf/start = get_turf(M)
 		var/obj/effect/immovablerod/wizard/W = new(start, get_ranged_target_turf(M, M.dir, (15 + spell_level * 3)))
