@@ -1,0 +1,9 @@
+diff a/code/game/objects/items/weapons/pneumaticCannon.dm b/code/game/objects/items/weapons/pneumaticCannon.dm	(rejected hunks)
+@@ -231,6 +231,7 @@
+ 			qdel(I)
+ 			return loaded
+ 		loaded++
++		CHECK_TICK
+ 
+ /obj/item/weapon/pneumatic_cannon/pie
+ 	name = "pie cannon"
