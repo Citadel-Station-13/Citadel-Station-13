@@ -9,10 +9,17 @@
 
 /proc/handle_roundstart_items(mob/living/M)
 	world << "handle_roundstart_items([M])"
-	if(!istype(M) || !M.ckey)
-		world << "handle_roundstart_items: [M] has no ckey."
+	if(!istype(M) || !M.ckey || !M.mind)
+	world << "handle_roundstart_items: [M] has either no ckey or no mind!"
 		return FALSE
-	var/list/items = parse_custom_items_by_key(M.ckey)
+	var/list/items = parse_custom_items_by_key_and_job(M.ckey, M.mind.assigned_role)
+	if(M.mind.special_role)
+		var/list/items_special = parse_custom_items_by_key_and_job(M.ckey, M.mind.special_role)	//And this way you can have snowflake antags!
+		for(var/thing in items_special)
+			if(!items[thing])
+				items[thing] = items_special[thing]	//don't have it, make it have it!
+			else
+				items[thing] += items_special[thing]	//More~
 	if(isnull(items))
 		world << "handle_roundstart_items: itemlist null."
 		return FALSE
@@ -45,7 +52,8 @@
 		return FALSE
 	var/turf/T = get_turf(H)
 	for(var/item in itemlist)
-		var/path = text2path(item)
+		if(!ispath(item))
+			item = text2path(item)
 		if(!path)
 			continue
 		var/amount = itemlist[item]
