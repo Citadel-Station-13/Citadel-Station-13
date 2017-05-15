@@ -1,0 +1,12 @@
+diff a/code/modules/food_and_drinks/kitchen_machinery/processor.dm b/code/modules/food_and_drinks/kitchen_machinery/processor.dm	(rejected hunks)
+@@ -100,6 +100,10 @@
+ 
+ /datum/food_processor_process/potato
+ 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
++	output = /obj/item/weapon/reagent_containers/food/snacks/tatortot
++
++/datum/food_processor_process/potatowedges
++	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+ 	output = /obj/item/weapon/reagent_containers/food/snacks/fries
+ 
+ /datum/food_processor_process/carrot

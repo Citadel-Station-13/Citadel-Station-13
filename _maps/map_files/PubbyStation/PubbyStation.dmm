@@ -14960,6 +14960,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/sign/map{
+	icon_state = "map-pubby";
+	pixel_y = 32
+	},
 /turf/open/floor/plasteel/blue/corner{
 	dir = 1
 	},
@@ -41045,9 +41049,8 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Telecoms)";
+	dir = 0;
+	name = "Station Intercom (General)";
 	pixel_x = 0;
 	pixel_y = 26
 	},
@@ -49486,6 +49489,10 @@
 "bVn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/structure/sign/map{
+	icon_state = "map-pubby";
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4

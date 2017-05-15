@@ -1,38 +1,10 @@
 diff a/code/game/machinery/cloning.dm b/code/game/machinery/cloning.dm	(rejected hunks)
-@@ -311,15 +311,15 @@
- 			to_chat(user, "<font color = #666633>-% Successfully stored \ref[P.buffer] [P.buffer.name] in buffer %-</font color>")
- 		return
- 
-+	var/mob/living/mob_occupant = occupant
- 	if(W.GetID())
- 		if(!check_access(W))
- 			to_chat(user, "<span class='danger'>Access Denied.</span>")
- 			return
--		if(!(occupant || mess))
-+		if(!(mob_occupant || mess))
- 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
- 			return
- 		else
--			var/mob/living/mob_occupant
- 			connected_message("Authorized Ejection")
- 			SPEAK("An authorized ejection of [clonemind.name] has occurred.")
- 			to_chat(user, "<span class='notice'>You force an emergency ejection. </span>")
-@@ -395,16 +395,10 @@
- 		go_out()
- 
- /obj/machinery/clonepod/emp_act(severity)
--<<<<<<< HEAD
--	if((occupant || mess) && prob(100/(severity*efficiency)))
--		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
--		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [clonemind.name] prematurely." ,0))
--=======
--	if(isliving(occupant) && prob(100/(severity*efficiency)))
--		var/mob/living/mob_occupant = occupant
-+	var/mob/living/mob_occupant = occupant
-+	if(mob_occupant && prob(100/(severity*efficiency)))
- 		connected_message(Gibberish("EMP-caused Accidental Ejection", 0))
- 		SPEAK(Gibberish("Exposure to electromagnetic fields has caused the ejection of [mob_occupant.real_name] prematurely." ,0))
-->>>>>>> Changes /obj/machinery to have atom/movable occupants
- 		go_out()
- 	..()
- 
+@@ -134,7 +134,7 @@
+ 		if(!G)
+ 			return FALSE
+ 	if(clonemind.damnation_type) //Can't clone the damned.
+-		addtimer(0, "horrifyingsound", src)
++		addtimer(src, "horrifyingsound", 0)
+ 		mess = 1
+ 		icon_state = "pod_g"
+ 		update_icon()
