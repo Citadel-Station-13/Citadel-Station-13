@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "pod0"
+	icon_state = "cell-off"
 	density = 1
 	anchored = 1
 	obj_integrity = 350
@@ -12,7 +12,6 @@
 	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
-	var/running_bob_animation = FALSE
 
 	var/efficiency = 1
 	var/sleep_factor = 750
@@ -88,59 +87,17 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	handle_update_icon()
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/handle_update_icon() //making another proc to avoid spam in update_icon
-	overlays.Cut() //empty the overlay proc, just in case
-
 	if(panel_open)
-		icon_state = "pod0-o"
+		icon_state = "cell-o"
 	else if(state_open)
-		icon_state = "pod0"
+		icon_state = "cell-open"
 	else if(on && is_operational())
 		if(occupant)
-			var/image/pickle = image(occupant.icon, occupant.icon_state)
-			pickle.overlays = occupant.overlays
-			pickle.pixel_y = 22
-			overlays += pickle
-			icon_state = "pod1"
-			var/up = 0 //used to see if we are going up or down, 1 is down, 2 is up
-			spawn(0) // Without this, the icon update will block. The new thread will die once the occupant leaves.
-				running_bob_animation = TRUE
-				while(occupant)
-					overlays -= "lid1" //have to remove the overlays first, to force an update- remove cloning pod overlay
-					overlays -= pickle //remove mob overlay
-
-					switch(pickle.pixel_y) //this looks messy as fuck but it works, switch won't call itself twice
-
-						if(23) //inbetween state, for smoothness
-							switch(up) //this is set later in the switch, to keep track of where the mob is supposed to go
-								if(2) //2 is up
-									pickle.pixel_y = 24 //set to highest
-
-								if(1) //1 is down
-									pickle.pixel_y = 22 //set to lowest
-
-						if(22) //mob is at it's lowest
-							pickle.pixel_y = 23 //set to inbetween
-							up = 2 //have to go up
-
-						if(24) //mob is at it's highest
-							pickle.pixel_y = 23 //set to inbetween
-							up = 1 //have to go down
-
-					overlays += pickle //re-add the mob to the icon
-					overlays += "lid1" //re-add the overlay of the pod, they are inside it, not floating
-
-					sleep(7) //don't want to jiggle violently, just slowly bob
-					return
-				running_bob_animation = FALSE
+			icon_state = "cell-occupied"
 		else
-			icon_state = "pod1"
-			overlays += "lid0" //have to remove the overlays first, to force an update- remove cloning pod overlay
+			icon_state = "cell-on"
 	else
-		icon_state = "pod0"
-		overlays += "lid0" //if no occupant, just put the lid overlay on, and ignore the rest
+		icon_state = "cell-off"
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -153,25 +110,26 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
-	if(occupant)
-		if(occupant.health >= 100) // Don't bother with fully healed people.
+	if(isliving(occupant))
+		var/mob/living/mob_occupant
+		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
-			playsound(T, 'sound/machines/cryo_warning.ogg', volume, 1) // Bug the doctors.
-			radio.talk_into(src, "Patient fully restored", radio_channel)
+			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
+			radio.talk_into(src, "Patient fully restored", radio_channel, get_spans(), get_default_language())
 			if(autoeject) // Eject if configured.
-				radio.talk_into(src, "Auto ejecting patient now", radio_channel,get_spans(), get_default_language())
+				radio.talk_into(src, "Auto ejecting patient now", radio_channel, get_spans(), get_default_language())
 				open_machine()
 			return
-		else if(occupant.stat == DEAD) // We don't bother with dead people.
+		else if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 			return
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return
 		if(air1.gases.len)
-			if(occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				occupant.Sleeping((occupant.bodytemperature / sleep_factor) * 100)
-				occupant.Paralyse((occupant.bodytemperature / paralyze_factor) * 100)
+			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 100)
+				mob_occupant.Paralyse((mob_occupant.bodytemperature / paralyze_factor) * 100)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
@@ -191,20 +149,21 @@
 		on = FALSE
 		update_icon()
 		return
-	if(occupant)
+	if(isliving(occupant))
+		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/mob/living/carbon/human/H = occupant
 		if(istype(H))
 			cold_protection = H.get_cold_protection(air1.temperature)
 
-		var/temperature_delta = air1.temperature - occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
+		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
 		if(abs(temperature_delta) > 1)
 			var/air_heat_capacity = air1.heat_capacity()
 			var/heat = ((1 - cold_protection) / 10 + conduction_coefficient) \
 						* temperature_delta * \
 						(air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
-			occupant.bodytemperature = max(occupant.bodytemperature + heat / heat_capacity, TCMB)
+			mob_occupant.bodytemperature = max(mob_occupant.bodytemperature + heat / heat_capacity, TCMB)
 
 		air1.gases["o2"][MOLES] -= 0.5 / efficiency // Magically consume gas? Why not, we run on cryo magic.
 
@@ -242,7 +201,7 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "[occupant] is inside [src]!")
+			to_chat(user, "Someone's inside [src]!")
 		else
 			to_chat(user, "You can barely make out a form floating in [src].")
 	else
@@ -265,9 +224,11 @@
 		I.loc = src
 		user.visible_message("[user] places [I] in [src].", \
 							"<span class='notice'>You place [I] in [src].</span>")
+		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
+		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "pod0-o", "pod0", I))
+		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
 		if(exchange_parts(user, I))
 			return
@@ -294,17 +255,18 @@
 	data["autoEject"] = autoeject
 
 	var/list/occupantData = list()
-	if(occupant)
-		occupantData["name"] = occupant.name
-		occupantData["stat"] = occupant.stat
-		occupantData["health"] = occupant.health
-		occupantData["maxHealth"] = occupant.maxHealth
+	if(isliving(occupant))
+		var/mob/living/mob_occupant = occupant
+		occupantData["name"] = mob_occupant.name
+		occupantData["stat"] = mob_occupant.stat
+		occupantData["health"] = mob_occupant.health
+		occupantData["maxHealth"] = mob_occupant.maxHealth
 		occupantData["minHealth"] = HEALTH_THRESHOLD_DEAD
-		occupantData["bruteLoss"] = occupant.getBruteLoss()
-		occupantData["oxyLoss"] = occupant.getOxyLoss()
-		occupantData["toxLoss"] = occupant.getToxLoss()
-		occupantData["fireLoss"] = occupant.getFireLoss()
-		occupantData["bodyTemperature"] = occupant.bodytemperature
+		occupantData["bruteLoss"] = mob_occupant.getBruteLoss()
+		occupantData["oxyLoss"] = mob_occupant.getOxyLoss()
+		occupantData["toxLoss"] = mob_occupant.getToxLoss()
+		occupantData["fireLoss"] = mob_occupant.getFireLoss()
+		occupantData["bodyTemperature"] = mob_occupant.bodytemperature
 	data["occupant"] = occupantData
 
 
