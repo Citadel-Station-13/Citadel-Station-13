@@ -1,0 +1,9 @@
+diff a/code/modules/mob/login.dm b/code/modules/mob/login.dm	(rejected hunks)
+@@ -69,4 +69,5 @@
+ 				AA.display_to(list(src))
+ 
+ 	update_client_colour()
+-	client.click_intercept = null
+\ No newline at end of file
++	if(client)
++		client.click_intercept = null

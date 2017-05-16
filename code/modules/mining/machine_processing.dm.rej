@@ -1,0 +1,10 @@
+diff a/code/modules/mining/machine_processing.dm b/code/modules/mining/machine_processing.dm	(rejected hunks)
+@@ -124,7 +124,7 @@
+ 		dat+="---No Materials Loaded---"
+ 
+ 
+-	user << browse("[dat]", "window=console_processing_unit")
++	user << browse(dat, "window=console_processing_unit")
+ 
+ 
+ 

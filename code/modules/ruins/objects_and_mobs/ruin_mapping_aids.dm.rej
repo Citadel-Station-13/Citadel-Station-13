@@ -1,0 +1,10 @@
+diff a/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm b/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm	(rejected hunks)
+@@ -11,4 +11,5 @@
+ 	var/area/thearea = get_area(src)
+ 	for(var/turf/T in get_area_turfs(thearea, z))
+ 		if(T.baseturf != T.type) //Don't break indestructible walls and the like
+-			T.baseturf = baseturf
+\ No newline at end of file
++			T.baseturf = baseturf
++	qdel(src)
+\ No newline at end of file

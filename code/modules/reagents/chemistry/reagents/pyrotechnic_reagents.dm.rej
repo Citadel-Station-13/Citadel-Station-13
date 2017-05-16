@@ -1,0 +1,9 @@
+diff a/code/modules/reagents/chemistry/reagents/pyrotechnic_reagents.dm b/code/modules/reagents/chemistry/reagents/pyrotechnic_reagents.dm	(rejected hunks)
+@@ -222,5 +222,4 @@
+ 		shock_timer = 0
+ 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
+ 		playsound(M, "sparks", 50, 1)
+-	..()
+-
++	..()
+\ No newline at end of file

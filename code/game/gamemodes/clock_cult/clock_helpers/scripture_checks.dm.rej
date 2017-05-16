@@ -1,0 +1,12 @@
+diff a/code/game/gamemodes/clock_cult/clock_helpers/scripture_checks.dm b/code/game/gamemodes/clock_cult/clock_helpers/scripture_checks.dm	(rejected hunks)
+@@ -28,10 +28,3 @@
+ //changes construction value
+ /proc/change_construction_value(amount)
+ 	clockwork_construction_value += amount
+-
+-//throws the no cache alert if there are no caches and clears it otherwise
+-/proc/cache_check(mob/M)
+-	if(!clockwork_caches)
+-		M.throw_alert("nocache", /obj/screen/alert/clockwork/nocache)
+-	else
+-		M.clear_alert("nocache")

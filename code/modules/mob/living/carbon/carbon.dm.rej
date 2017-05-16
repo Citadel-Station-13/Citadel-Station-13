@@ -1,0 +1,12 @@
+diff a/code/modules/mob/living/carbon/carbon.dm b/code/modules/mob/living/carbon/carbon.dm	(rejected hunks)
+@@ -371,6 +371,10 @@
+ 			legcuffed = null
+ 			update_inv_legcuffed()
+ 			return
++		else
++			unEquip(I)
++			I.dropped()
++			return
+ 		return TRUE
+ 
+ /mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
