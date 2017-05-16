@@ -1,0 +1,17 @@
+diff a/code/game/gamemodes/cult/cult_comms.dm b/code/game/gamemodes/cult/cult_comms.dm	(rejected hunks)
+@@ -152,7 +152,7 @@
+ 	return TRUE
+ 
+ /datum/action/innate/cult/master/IsAvailable()
+-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER || !SSticker.mode.eldergod))
++	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER) || GLOB.cult_narsie)
+ 		return 0
+ 	return ..()
+ 
+@@ -298,4 +298,4 @@
+ 			if(GLOB.blood_target)
+ 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
+ 			B.current.client.images -= GLOB.blood_target_image
+-	QDEL_NULL(GLOB.blood_target)
+\ No newline at end of file
++	QDEL_NULL(GLOB.blood_target)

@@ -305,8 +305,20 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
+	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
+		GLOB.cult_narsie.resize(1.1)
+		GLOB.cult_narsie.souls_needed -= src
+		GLOB.cult_narsie.souls += 1
+		if((GLOB.cult_narsie.souls == GLOB.cult_narsie.soul_goal) && (GLOB.cult_narsie.resolved == FALSE))
+			GLOB.cult_narsie.resolved = TRUE
+			world << sound('sound/machines/Alarm.ogg')
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
-		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		if(iscultist(src))
+			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/chosen, src, null, 1)
+		else
+			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
 	else
 		switch(rand(1, 10))
 			if(1)

@@ -58,7 +58,7 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(istype(M, /mob/living/simple_animal/hostile/construct/builder) || istype(M, /mob/living/simple_animal/hostile/construct/harvester/chosen))
 		if(health < maxHealth)
 			adjustHealth(-5)
 			if(src != M)

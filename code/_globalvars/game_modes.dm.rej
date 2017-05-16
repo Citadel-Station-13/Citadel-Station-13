@@ -1,0 +1,10 @@
+diff a/code/_globalvars/game_modes.dm b/code/_globalvars/game_modes.dm	(rejected hunks)
+@@ -13,4 +13,5 @@ GLOBAL_VAR_INIT(sac_image, null)
+ GLOBAL_VAR_INIT(cult_vote_called, FALSE)
+ GLOBAL_VAR_INIT(cult_mastered, FALSE)
+ GLOBAL_VAR_INIT(reckoning_complete, FALSE)
+-GLOBAL_VAR_INIT(sac_complete, FALSE)
+\ No newline at end of file
++GLOBAL_VAR_INIT(sac_complete, FALSE)
++GLOBAL_DATUM(cult_narsie, /obj/singularity/narsie/large/cult)
+\ No newline at end of file
