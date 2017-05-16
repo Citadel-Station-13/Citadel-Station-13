@@ -6,6 +6,9 @@ GLOBAL_PROTECT(deadmins)
 GLOBAL_LIST_EMPTY(directory)							//all ckeys with associated client
 GLOBAL_LIST_EMPTY(stealthminID)						//reference list with IDs that store ckeys, for stealthmins
 
+//There's a bunch of ckey stuff here, so I'm putting this here, too.
+GLOBAL_LIST_INIT(custom_item_ckeys, world.file2list("code/citadel/custom_player_items/player_ckeys.txt"))
+
 //Since it didn't really belong in any other category, I'm putting this here
 //This is for procs to replace all the goddamn 'in world's that are chilling around the code
 

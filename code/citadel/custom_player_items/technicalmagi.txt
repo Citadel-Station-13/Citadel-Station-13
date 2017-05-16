@@ -1,0 +1,2 @@
+Naomi Reids:All:/obj/item/clothing/under/bb_sweater/black/naomi
+Naomi Reids:All:/obj/item/clothing/neck/petcollar/naomi

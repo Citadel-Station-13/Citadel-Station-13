@@ -416,6 +416,23 @@ SUBSYSTEM_DEF(job)
 	if(config.minimal_access_threshold)
 		to_chat(M, "<FONT color='blue'><B>As this station was initially staffed with a [config.jobs_have_minimal_access ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></font>")
 
+	if(M.mind.key in GLOB.custom_item_ckeys)
+		message_admins("[M.mind.key] has a custom item file! Loading...")
+		var/list/itemspawns = world.file2list("code/citadel/custom_player_items/[M.mind.key].txt")
+		message_admins("Custom item found! Let's figure out what it's doing.")
+		for(var/string in itemspawns)
+			message_admins("Item Found! [string]")
+			var/list/item = splittext(string,":")
+			if(item[1] != M.mind.name)
+				message_admins("Name Mismatch ([M.name], [item[1]]), no item!")
+				continue
+			if(item[2] != rank & item[2] != "All")
+				message_admins("Job mismatch ([rank], [item[2]]), no item!")
+				continue
+			message_admins("All checks passed! Trying to spawn [item[3]]!")
+			var/customitem = spawn_atom_to_turf(text2path(item[3]),M,1,FALSE)
+			M.equip_to_slot_or_del(customitem, slot_in_backpack)
+
 	if(job && H)
 		job.after_spawn(H, M)
 
