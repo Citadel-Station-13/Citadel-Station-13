@@ -65,11 +65,9 @@
 	//Flight and floating
 	var/override_float = 0
 
-	//Eyes
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
-
-	//Ears
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
+	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
