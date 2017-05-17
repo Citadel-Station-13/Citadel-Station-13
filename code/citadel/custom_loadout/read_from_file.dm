@@ -24,7 +24,7 @@ GLOBAL_LIST(custom_item_list)
 			var/ckey_str = ckey(copytext(line, 1, ckey_str_sep))
 			var/job_str = copytext(line, ckey_str_sep+1, job_str_sep)
 			var/item_str = copytext(line, job_str_sep+1, item_str_sep)
-			if(!ckey_str || !job_str || !item_str || !length(ckey_str) || length(job_str) || length(item_str))
+			if(!ckey_str || !job_str || !item_str || !length(ckey_str) || !length(job_str) || !length(item_str))
 				throw EXCEPTION("Errored Line")
 			world << "DEBUG: Line process: [line]"
 			world << "DEBUG: [ckey_str_sep], [job_str_sep], [item_str_sep], [ckey_str], [job_str], [item_str]."
