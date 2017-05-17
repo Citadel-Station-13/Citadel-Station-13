@@ -44,9 +44,7 @@
 	var/datum/job/assigned_job
 
 	var/list/datum/objective/objectives = list()
-	var/list/datum/objective/special_verbs = list()
 
-	var/list/cult_words = list()
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/datum/faction/faction 			//associated faction
@@ -286,7 +284,7 @@
 	creator.faction |= current.faction
 
 	if(creator.mind.special_role)
-		message_admins("[key_name_admin(current)](<A HREF='?_src_=holder;adminmoreinfo=\ref[current]'>?</A>) has been created by [key_name_admin(creator)](<A HREF='?_src_=holder;adminmoreinfo=\ref[creator]'>?</A>), an antagonist.")
+		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalities change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
@@ -1451,15 +1449,8 @@
 		special_role = "Cultist"
 		to_chat(current, "<font color=\"purple\"><b><i>You catch a glimpse of the Realm of Nar-Sie, The Geometer of Blood. You now see how flimsy the world is, you see that it should be open to the knowledge of Nar-Sie.</b></i></font>")
 		to_chat(current, "<font color=\"purple\"><b><i>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back.</b></i></font>")
-		var/datum/game_mode/cult/cult = SSticker.mode
-
-		if (istype(cult))
-			cult.memorize_cult_objectives(src)
-		else
-			var/explanation = "Summon Nar-Sie via the use of the appropriate rune (Hell join self). It will only work if nine cultists stand on and around it."
-			to_chat(current, "<B>Objective #1</B>: [explanation]")
-			memory += "<B>Objective #1</B>: [explanation]<BR>"
-
+		var/datum/antagonist/cult/C
+		C.cult_memorization(src)
 	var/mob/living/carbon/human/H = current
 	if (!SSticker.mode.equip_cultist(current))
 		to_chat(H, "Spawning an amulet from your Master failed.")

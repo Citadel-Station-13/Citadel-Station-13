@@ -112,6 +112,7 @@
 	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at [get_area(A)][ADMIN_JMP(A)]:</b> [msg]<BR></span>")
 	SSblackbox.add_details("admin_verb","Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+
 /client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
@@ -350,7 +351,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	if(G_found.mind && !G_found.mind.active)
 		G_found.mind.transfer_to(new_character)	//be careful when doing stuff like this! I've already checked the mind isn't in use
-		new_character.mind.special_verbs = list()
 	else
 		new_character.mind_initialize()
 	if(!new_character.mind.assigned_role)
