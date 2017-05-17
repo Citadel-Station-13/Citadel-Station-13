@@ -10,9 +10,10 @@
 	var/taste_sensitivity = 15 // lower is more sensitive.
 
 /obj/item/organ/tongue/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/common,
+		/datum/language/draconic,
 		/datum/language/monkey,
 		/datum/language/ratvar
 	))
@@ -33,7 +34,7 @@
 	if(say_mod && M.dna && M.dna.species)
 		M.dna.species.say_mod = initial(M.dna.species.say_mod)
 
-/obj/item/organ/tongue/can_speak_in_language(datum/language/dt)
+/obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	. = is_type_in_typecache(dt, languages_possible)
 
 /obj/item/organ/tongue/lizard
@@ -123,10 +124,11 @@
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
-	..()
+	. = ..()
 	languages_possible = typecacheof(list(
 		/datum/language/xenocommon,
 		/datum/language/common,
+		/datum/language/draconic,
 		/datum/language/ratvar,
 		/datum/language/monkey))
 
@@ -175,7 +177,7 @@
 
 /obj/item/organ/tongue/bone/plasmaman/get_spans()
 	return
-	
+
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
@@ -185,16 +187,8 @@
 	attack_verb = list("beeped", "booped")
 	taste_sensitivity = 25 // not as good as an organic tongue
 
-/obj/item/organ/tongue/robot/Initialize(mapload)
-	..()
-	languages_possible = typecacheof(list(
-		/datum/language/xenocommon,
-		/datum/language/common,
-		/datum/language/ratvar,
-		/datum/language/monkey,
-		/datum/language/drone,
-		/datum/language/machine,
-		/datum/language/swarmer))
+/obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
+	. = TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/tongue/robot/get_spans()
 	return ..() | SPAN_ROBOT

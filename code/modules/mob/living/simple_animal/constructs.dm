@@ -15,6 +15,7 @@
 	status_flags = CANPUSH
 	attack_sound = 'sound/weapons/punch1.ogg'
 	see_in_dark = 7
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
@@ -30,11 +31,19 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
+	var/master = null
+	var/seeking = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
+
+/mob/living/simple_animal/hostile/construct/Destroy()
+	for(var/X in actions)
+		var/datum/action/A = X
+		qdel(A)
+	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -84,6 +93,10 @@
 /mob/living/simple_animal/hostile/construct/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
 	return 0
 
+/mob/living/simple_animal/hostile/construct/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+	. = ..()
+	if(updating_health)
+		update_health_hud()
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/hostile/construct/armored
@@ -113,6 +126,38 @@
 /mob/living/simple_animal/hostile/construct/armored/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+
+///////////////////////Master-Tracker///////////////////////
+
+/datum/action/innate/seek_master
+	name = "Seek your Master"
+	desc = "You and your master share a soul-link that informs you of their location"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/mob/living/simple_animal/hostile/construct/the_construct
+
+/datum/action/innate/seek_master/Grant(var/mob/living/C)
+	the_construct = C
+	..()
+
+/datum/action/innate/seek_master/Activate()
+	if(!the_construct.master)
+		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		the_construct.seeking = FALSE
+		return
+	if(tracking)
+		tracking = FALSE
+		the_construct.seeking = FALSE
+		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		return
+	else
+		tracking = TRUE
+		the_construct.seeking = TRUE
+		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
+
 
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -157,7 +202,30 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
+	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	var/attack_refund = 10 //1 second per attack
+	var/crit_refund = 50 //5 seconds when putting a target into critical
+	var/kill_refund = 250 //full refund on kills
+
+/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
+	var/prev_stat
+	if(isliving(target) && !iscultist(target))
+		var/mob/living/L = target
+		prev_stat = L.stat
+
+	. = ..()
+
+	if(. && isnum(prev_stat))
+		var/mob/living/L = target
+		var/refund = 0
+		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
+			refund += kill_refund
+		else if(L.InCritical() && prev_stat == CONSCIOUS) //you knocked them into critical
+			refund += crit_refund
+		if(L.stat != DEAD && prev_stat != DEAD)
+			refund += attack_refund
+		for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/S in mob_spell_list)
+			S.charge_counter = min(S.charge_counter + refund, S.charge_max)
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -268,3 +336,22 @@
 /mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+
+
+
+/////////////////////////////ui stuff/////////////////////////////
+
+/mob/living/simple_animal/hostile/construct/update_health_hud()
+	if(hud_used)
+		if(health >= maxHealth)
+			hud_used.healths.icon_state = "[icon_state]_health0"
+		else if(health > maxHealth*0.8)
+			hud_used.healths.icon_state = "[icon_state]_health2"
+		else if(health > maxHealth*0.6)
+			hud_used.healths.icon_state = "[icon_state]_health3"
+		else if(health > maxHealth*0.4)
+			hud_used.healths.icon_state = "[icon_state]_health4"
+		else if(health > maxHealth*0.2)
+			hud_used.healths.icon_state = "[icon_state]_health5"
+		else
+			hud_used.healths.icon_state = "[icon_state]_health6"

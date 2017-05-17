@@ -52,8 +52,8 @@
 		"toxin"
 	)
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/Initialize()
+	. = ..()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -244,8 +244,8 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/Initialize()
+	. = ..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_dispenser(null)
 	B.apply_default_parts(src)
 
@@ -367,3 +367,9 @@
 	desc = "Creates and dispenses mutagen."
 	dispensable_reagents = list("mutagen")
 	emagged_reagents = list("plasma")
+
+
+/obj/machinery/chem_dispenser/mutagensaltpeter
+	name = "mutagen and saltpeter dispenser"
+	desc = "Creates and dispenses mutagen and even saltpeter."
+	dispensable_reagents = list("mutagen", "saltpetre")
