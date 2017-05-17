@@ -182,14 +182,14 @@
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list()
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 	dangerous = TRUE
 
 /datum/supply_pack/emergency/syndicate/fill(obj/structure/closet/crate/C)
-	var/crate_value = 50
+	var/crate_value = 30
 	var/list/uplink_items = get_uplink_items(SSticker.mode)
 	while(crate_value)
 		var/category = pick(uplink_items)
@@ -1687,15 +1687,6 @@
 					/obj/item/toy/crayon/rainbow,
 					/obj/item/toy/crayon/rainbow)
 	crate_name = "art supply crate"
-
-/datum/supply_pack/misc/soapstone
-	name = "Librarian Engraving/Scribbling Crate"
-	crate_name = "librarian engraving/scribbling crate"
-	cost = 3000
-	contains = list(/obj/item/soapstone)
-	access = GLOB.access_library
-	crate_type = /obj/structure/closet/crate/secure
-
 
 /datum/supply_pack/misc/bsa
 	name = "Bluespace Artillery Parts"

@@ -12384,7 +12384,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint)
+/area/gateway)
 "aBj" = (
 /obj/structure/rack{
 	dir = 8;
@@ -19013,6 +19013,12 @@
 /turf/open/floor/wood,
 /area/library)
 "aQr" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/library)
@@ -19508,7 +19514,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aRO" = (
-/obj/structure/bookcase/random/nonfiction,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "aRP" = (
@@ -22139,7 +22145,7 @@
 "aYa" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Locker Room Maintenance APC";
+	name = "Aft Port Maintenance APC";
 	pixel_x = -27;
 	pixel_y = 2
 	},
@@ -25152,7 +25158,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/quartermaster/storage)
 "bfl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -27638,11 +27644,6 @@
 /area/bridge/meeting_room)
 "bkY" = (
 /obj/effect/landmark/blobstart,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -59561,7 +59562,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/security/detectives_office)
 "cCo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -88785,7 +88786,7 @@ bda
 bca
 bgJ
 aZP
-bjD
+bjB
 bkY
 bmo
 bnP
@@ -99633,7 +99634,7 @@ bVu
 bVu
 bVu
 bVu
-apQ
+bVu
 bVu
 csw
 csw
@@ -106505,7 +106506,7 @@ aIt
 aPd
 aIt
 aRO
-aIt
+aRO
 aUC
 aVP
 aXu
@@ -106762,7 +106763,7 @@ aNV
 aPd
 aIt
 aRO
-aIt
+aRO
 aIt
 aVQ
 aXu
