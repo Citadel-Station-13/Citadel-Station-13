@@ -16,8 +16,6 @@
 	// If key is null, then the language isn't real or learnable.
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
-	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
-	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/list/spans = list()
 	var/static/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
