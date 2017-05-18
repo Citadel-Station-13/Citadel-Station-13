@@ -42,7 +42,7 @@
 		else
 			log_world("Your server failed to establish a connection with the database.")
 	if(!GLOB.round_id)
-		GLOB.log_directory += "[time_stamp()]"
+		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
 	GLOB.world_runtime_log = file("[GLOB.log_directory]/runtime.log")
@@ -54,17 +54,19 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
-
+	
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
 	load_menu()
-//disabled to prevent runtimes until it's fixed
-//	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
+//disabled to prevent runtimes until it's fixed
+//	load_mentors()
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -205,6 +207,7 @@
 #undef CHAT_PULLR
 
 #define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
+
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -236,7 +239,6 @@
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	WORLD_REBOOT(0)
 #undef WORLD_REBOOT
-
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	SSblackbox.set_details("[feedback_c]","[feedback_r]")
