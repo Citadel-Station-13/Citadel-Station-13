@@ -61,7 +61,6 @@ GLOBAL_LIST_EMPTY(holopads)
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
 		LAZYADD(holo_calls, outgoing_call)
-		outgoing_call = null
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
@@ -295,7 +294,9 @@ GLOBAL_LIST_EMPTY(holopads)
 			Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 			Hologram.Impersonation = user
 
-		Hologram.languages = user.languages
+
+		Hologram.language_holder = user.get_language_holder()
+
 		Hologram.mouse_opacity = 0//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 		Hologram.anchored = 1//So space wind cannot drag it.
