@@ -295,7 +295,7 @@
 	gib()
 	return(gain)
 
-/mob/living/narsie_act()
+/mob/living/narsie_act(var/obj/singularity/narsie/large/cult/NS)
 	if(status_flags & GODMODE)
 		return
 
@@ -305,6 +305,12 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
+	if(src in NS.souls_needed)
+		NS.souls += 1
+		NS.resize(1.1)
+		if(NS.souls == NS.soul_goal)
+			SSticker.station_explosion_cinematic(1,"cult")
+			SSticker.force_ending = 1
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.resize(1.1)
 		GLOB.cult_narsie.souls_needed -= src
