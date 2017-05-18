@@ -1,0 +1,10 @@
+diff a/code/controllers/subsystem/vote.dm b/code/controllers/subsystem/vote.dm	(rejected hunks)
+@@ -116,7 +116,7 @@ SUBSYSTEM_DEF(vote)
+ 					restart = 1
+ 			if("gamemode")
+ 				if(GLOB.master_mode != .)
+-					world.save_mode(.)
++					SSticker.save_mode(.)
+ 					if(SSticker.HasRoundStarted())
+ 						restart = 1
+ 					else

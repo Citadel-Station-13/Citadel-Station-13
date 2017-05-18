@@ -16,6 +16,32 @@
 /world/New()
 	log_world("World loaded at [time_stamp()]")
 
+	SetupExternalRSC()
+
+	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
+
+	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
+
+	config = new
+
+	SetRoundID()
+
+	SetupLogs()
+
+	GLOB.revdata.DownloadPRDetails()
+
+	load_motd()
+	load_admins()
+	load_menu()
+	if(config.usewhitelist)
+		load_whitelist()
+	LoadBans()
+
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
+
+	Master.Initialize(10, FALSE)
+
+/world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
@@ -25,10 +51,8 @@
 		else
 			external_rsc_urls.Cut(i,i+1)
 #endif
-	GLOB.config_error_log = file("data/logs/config_error.log") //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
-	config = new
-	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+
+/world/proc/SetRoundID()
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
@@ -38,10 +62,14 @@
 			query_feedback_max_id.Execute()
 			if(query_feedback_max_id.NextRow())
 				GLOB.round_id = query_feedback_max_id.item[1]
-				GLOB.log_directory += "[GLOB.round_id]"
 		else
 			log_world("Your server failed to establish a connection with the database.")
-	if(!GLOB.round_id)
+
+/world/proc/SetupLogs()
+	GLOB.log_directory = "data/logs/[time2text(world.realtime, "YYYY/MM/DD")]/round-"
+	if(GLOB.round_id)
+		GLOB.log_directory += "[GLOB.round_id]"
+	else
 		GLOB.log_directory += "[replacetext(time_stamp(), ":", ".")]"
 	GLOB.world_game_log = file("[GLOB.log_directory]/game.log")
 	GLOB.world_attack_log = file("[GLOB.log_directory]/attack.log")
@@ -241,17 +269,10 @@
 #undef WORLD_REBOOT
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	SSblackbox.set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	SSblackbox.set_val("ahelp_unresolved", GLOB.ahelp_tickets.active_tickets.len)
-	Master.Shutdown()	//run SS shutdowns
-	RoundEndAnimation(round_end_sound_sent)
-	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
 	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	for(var/thing in GLOB.clients)
-		var/client/C = thing
-		if(C && config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
-			C << link("byond://[config.server]")
+	RoundEndAnimation(round_end_sound_sent)
+	Master.Shutdown()	//run SS shutdowns
 
 /world/proc/RoundEndAnimation(round_end_sound_sent)
 	set waitfor = FALSE

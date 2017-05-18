@@ -1,0 +1,9 @@
+diff a/code/controllers/subsystem/ticker.dm b/code/controllers/subsystem/ticker.dm	(rejected hunks)
+@@ -60,6 +60,7 @@ SUBSYSTEM_DEF(ticker)
+ 	var/list/round_start_events
+ 
+ /datum/controller/subsystem/ticker/Initialize(timeofday)
++	load_mode()
+ 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+ 	login_music = pick(music)
+ 
