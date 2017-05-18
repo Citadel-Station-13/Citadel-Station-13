@@ -286,12 +286,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
@@ -328,7 +331,7 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
-	..()
+	. = ..()
 	pixel_x = 0
 	pixel_y = 0
 

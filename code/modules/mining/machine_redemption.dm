@@ -73,18 +73,18 @@
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
 
-	else if(!materials.has_space(material_amount)) //if there is no space, eject it
+	else if(!materials.has_space(material_amount * sheet_per_ore)) //if there is no space, eject it
 		unload_mineral(O)
 
 	else
-		materials.insert_item(O) //insert it
+		materials.insert_item(O, sheet_per_ore) //insert it
 		qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	if(D.make_reagents.len)
 		return 0
 
-	var/build_amount = 1
+	var/build_amount = 0
 
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
@@ -93,7 +93,15 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		build_amount = min(build_amount, round(redemption_mat.amount / M))
+		var/smeltable_sheets = round(redemption_mat.amount / M)
+
+		if(!smeltable_sheets)
+			return 0
+
+		if(!build_amount)
+			build_amount = smeltable_sheets
+
+		build_amount = min(build_amount, smeltable_sheets)
 
 	return build_amount
 
@@ -152,6 +160,7 @@
 	if(exchange_parts(user, W))
 		return
 	if(default_pry_open(W))
+		materials.retrieve_all()
 		return
 	if(default_unfasten_wrench(user, W))
 		return
