@@ -121,8 +121,8 @@
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
-				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
+				message_admins("Emitter turned off by [ADMIN_LOOKUPFLW(user)] in [ADMIN_COORDJMP(src)]",0,1)
+				log_game("Emitter turned off by [key_name(user)] in [COORD(src)]")
 				investigate_log("turned <font color='red'>off</font> by [key_name(user)] at [get_area(src)]","singulo")
 			else
 				src.active = 1
