@@ -5,11 +5,6 @@
 	icon = 'icons/mob/human.dmi'
 	icon_state = "caucasian_m"
 
-	 // ME TARZAN, YOU JANEBOT
-	initial_languages = list(/datum/language/common)
-
-
-
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
@@ -58,9 +53,10 @@
 	if(!(NOBLOOD in dna.species.species_traits))
 		internal_organs += new /obj/item/organ/heart
 
-	internal_organs += new dna.species.mutanteyes()
+	internal_organs += new dna.species.mutanteyes
 	internal_organs += new dna.species.mutantears
 	internal_organs += new /obj/item/organ/brain
+	internal_organs += new dna.species.mutanttongue
 	give_genitals()
 	..()
 
