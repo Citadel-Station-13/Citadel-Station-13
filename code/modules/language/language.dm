@@ -1,4 +1,4 @@
-#define SCRAMBLE_CACHE_LEN 20
+#define SCRAMBLE_CACHE_LEN 50 //maximum of 50 specific scrambled lines per language
 
 /*
 	Datum based languages. Easily editable and modular.
@@ -19,7 +19,7 @@
 	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
 	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/list/spans = list()
-	var/static/list/scramble_cache = list()
+	var/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
 
 	// if you are seeing someone speak popcorn language, then something is wrong.

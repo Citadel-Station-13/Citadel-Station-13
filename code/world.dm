@@ -54,17 +54,19 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
-
+	
+	if(GLOB.round_id)
+		log_game("Round ID: [GLOB.round_id]")
 
 	GLOB.revdata.DownloadPRDetails()
 	load_mode()
 	load_motd()
 	load_admins()
 	load_menu()
-//disabled to prevent runtimes until it's fixed
-//	load_mentors()
 	if(config.usewhitelist)
 		load_whitelist()
+//disabled to prevent runtimes until it's fixed
+//	load_mentors()
 	LoadBans()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
@@ -205,6 +207,7 @@
 #undef CHAT_PULLR
 
 #define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
+
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
 		if (usr)
@@ -236,7 +239,6 @@
 	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	WORLD_REBOOT(0)
 #undef WORLD_REBOOT
-
 
 /world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
 	SSblackbox.set_details("[feedback_c]","[feedback_r]")
@@ -280,11 +282,12 @@
 	world << sound(round_end_sound)
 
 /world/proc/load_mode()
-	var/list/Lines = world.file2list("data/mode.txt")
-	if(Lines.len)
-		if(Lines[1])
-			GLOB.master_mode = Lines[1]
-			GLOB.world_game_log << "Saved mode is '[GLOB.master_mode]'"
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")	
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -344,7 +347,3 @@
 		s += ": [jointext(features, ", ")]"
 
 	status = s
-
-
-/world/proc/has_round_started()
-	return SSticker.HasRoundStarted()
