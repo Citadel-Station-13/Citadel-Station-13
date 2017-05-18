@@ -1,0 +1,14 @@
+diff a/code/modules/admin/admin_investigate.dm b/code/modules/admin/admin_investigate.dm	(rejected hunks)
+@@ -1,4 +1,4 @@
+-atom/proc/investigate_log(message, subject)
++/atom/proc/investigate_log(message, subject)
+ 	if(!message || !subject)
+ 		return
+ 	var/F = file("[GLOB.log_directory]/[subject].html")
+@@ -18,4 +18,4 @@ atom/proc/investigate_log(message, subject)
+ 			if(!fexists(F))
+ 				to_chat(src, "<span class='danger'>No [subject] logfile was found.</span>")
+ 				return
+-			src << browse(F,"window=investigate[subject];size=800x300")
+\ No newline at end of file
++			src << browse(F,"window=investigate[subject];size=800x300")
