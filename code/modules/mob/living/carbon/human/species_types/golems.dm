@@ -2,14 +2,14 @@
 	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
 	name = "Golem"
 	id = "iron golem"
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	speedmod = 2
 	armor = 55
 	siemens_coeff = 0
 	punchdamagelow = 5
 	punchdamagehigh = 14
 	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform, slot_s_store)
+	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = ""
@@ -20,7 +20,6 @@
 	dangerous_existence = TRUE
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
-	mutant_organs = list(/obj/item/organ/adamantine_resonator)
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
 
 	var/prefix = "Iron"
@@ -55,9 +54,8 @@
 	name = "Adamantine Golem"
 	id = "adamantine golem"
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
-	mutant_organs = list(/obj/item/organ/adamantine_resonator, /obj/item/organ/vocal_cords/adamantine)
 	fixed_mut_color = "4ed"
-	info_text = "As an <span class='danger'>Adamantine Golem</span>, you possess special vocal cords allowing you to \"resonate\" messages to all golems."
+	info_text = "As an <span class='danger'>Adamantine Golem</span>, you don't have any special traits."
 	prefix = "Adamantine"
 
 //Explodes on death
@@ -67,7 +65,7 @@
 	fixed_mut_color = "a3d"
 	meat = /obj/item/weapon/ore/plasma
 	//Can burn and takes damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	info_text = "As a <span class='danger'>Plasma Golem</span>, you explode on death!"
 	burnmod = 1.5
 	prefix = "Plasma"
@@ -196,7 +194,7 @@
 	fixed_mut_color = "49311c"
 	meat = /obj/item/stack/sheet/mineral/wood
 	//Can burn and take damage from heat
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS,NO_UNDERWEAR)
 	armor = 30
 	burnmod = 1.25
 	heatmod = 1.5
@@ -506,7 +504,7 @@
 	limbs_id = "cultgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Runic Golem</span>, you possess eldritch powers granted by the Elder God Nar'Sie."
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors
 	prefix = "Runic"
 
 	var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/golem/phase_shift
@@ -555,7 +553,7 @@
 	limbs_id = "clothgolem"
 	sexes = FALSE
 	info_text = "As a <span class='danger'>Cloth Golem</span>, you are able to reform yourself after death, provided your remains aren't burned or destroyed. You are, of course, very flammable."
-	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER) //no mutcolors, and can burn
+	species_traits = list(NOBREATH,RESISTCOLD,RESISTPRESSURE,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,NO_UNDERWEAR) //no mutcolors, and can burn
 	armor = 15 //feels no pain, but not too resistant
 	burnmod = 2 // don't get burned
 	speedmod = 1 // not as heavy as stone
@@ -645,8 +643,8 @@
 
 	if(P.is_hot())
 		visible_message("<span class='danger'>[src] bursts into flames!</span>")
-
 		fire_act()
+
 /datum/species/golem/plastic
 	name = "Plastic"
 	id = "plastic golem"
