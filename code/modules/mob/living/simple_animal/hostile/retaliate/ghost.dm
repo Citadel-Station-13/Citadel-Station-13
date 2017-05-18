@@ -40,9 +40,9 @@
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize()
 	. = ..()
+	set_light(1, 2)
 	if(!random)
 		give_hair()
-	set_light(1, 2)
 	else
 		switch(rand(0,1))
 			if(0)
