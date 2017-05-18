@@ -23,7 +23,7 @@
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",75,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_direct("digest_prey",60)
+				M.playsound_local("digest_prey",60)
 
 			//Pref protection!
 			if (!M.digestable)
@@ -51,7 +51,7 @@
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"death_pred",50,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_direct("death_prey",60)
+				M.playsound_local("death_prey",60)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -70,7 +70,7 @@
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",50,0,-6,1,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_direct("digest_prey",60)
+				M.playsound_local("digest_prey",60)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
