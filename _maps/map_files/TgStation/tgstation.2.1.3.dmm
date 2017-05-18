@@ -2501,7 +2501,7 @@
 "afq" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
+	possible_destinations = "pod_lavaland3";
 	shuttleId = "pod3"
 	},
 /obj/structure/chair{
@@ -7787,8 +7787,8 @@
 "aqG" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid3";
-	name = "asteroid"
+	id = "pod_lavaland3";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -12384,7 +12384,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint)
+/area/gateway)
 "aBj" = (
 /obj/structure/rack{
 	dir = 8;
@@ -17330,7 +17330,6 @@
 /area/hallway/primary/central)
 "aMf" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L13";
 	name = "floor"
 	},
@@ -17836,7 +17835,6 @@
 /area/hallway/primary/central)
 "aNB" = (
 /turf/open/floor/plasteel{
-	desc = "";
 	icon_state = "L14"
 	},
 /area/hallway/primary/central)
@@ -19015,6 +19013,12 @@
 /turf/open/floor/wood,
 /area/library)
 "aQr" = (
+/obj/structure/closet/crate,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/under/rank/curator/treasure_hunter,
+/obj/item/clothing/suit/curator,
+/obj/item/clothing/head/curator,
+/obj/item/weapon/storage/backpack/satchel/explorer,
 /obj/machinery/light/small,
 /turf/open/floor/engine/cult,
 /area/library)
@@ -19510,7 +19514,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aRO" = (
-/obj/structure/bookcase/random/nonfiction,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/library)
 "aRP" = (
@@ -22141,7 +22145,7 @@
 "aYa" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Locker Room Maintenance APC";
+	name = "Aft Port Maintenance APC";
 	pixel_x = -27;
 	pixel_y = 2
 	},
@@ -25154,7 +25158,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/quartermaster/storage)
 "bfl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -27640,11 +27644,6 @@
 /area/bridge/meeting_room)
 "bkY" = (
 /obj/effect/landmark/blobstart,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -53823,8 +53822,8 @@
 "cpe" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_asteroid2";
-	name = "asteroid"
+	id = "pod_lavaland2";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -54079,7 +54078,7 @@
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = 0;
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid2";
+	possible_destinations = "pod_lavaland2";
 	shuttleId = "pod2"
 	},
 /obj/structure/chair{
@@ -57394,8 +57393,8 @@
 "cwV" = (
 /obj/docking_port/stationary/random{
 	dir = 8;
-	id = "pod_asteroid1";
-	name = "asteroid"
+	id = "pod_lavaland1";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -57508,7 +57507,7 @@
 /obj/machinery/computer/shuttle/pod{
 	pixel_x = 0;
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid1";
+	possible_destinations = "pod_lavaland1";
 	shuttleId = "pod1"
 	},
 /obj/structure/chair{
@@ -58424,7 +58423,7 @@
 "czL" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
-	possible_destinations = "pod_asteroid4";
+	possible_destinations = "pod_lavaland4";
 	shuttleId = "pod4"
 	},
 /obj/structure/chair{
@@ -58455,8 +58454,8 @@
 "czN" = (
 /obj/docking_port/stationary/random{
 	dir = 4;
-	id = "pod_asteroid4";
-	name = "asteroid"
+	id = "pod_lavaland4";
+	name = "lavaland"
 	},
 /turf/open/space,
 /area/space)
@@ -59563,7 +59562,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/security/detectives_office)
 "cCo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -88802,7 +88801,7 @@ bda
 bca
 bgJ
 aZP
-bjD
+bjB
 bkY
 bmo
 bnP
@@ -99650,7 +99649,7 @@ bVu
 bVu
 bVu
 bVu
-apQ
+bVu
 bVu
 csw
 csw
@@ -106522,7 +106521,7 @@ aIt
 aPd
 aIt
 aRO
-aIt
+aRO
 aUC
 aVP
 aXu
@@ -106779,7 +106778,7 @@ aNV
 aPd
 aIt
 aRO
-aIt
+aRO
 aIt
 aVQ
 aXu
