@@ -603,9 +603,16 @@
 	. = is_type_in_typecache(dt, languages)
 
 /atom/movable/proc/can_speak_in_language(datum/language/dt)
-	. = has_language(dt)
-	if(only_speaks_language && !HAS_SECONDARY_FLAG(src, OMNITONGUE))
-		. = . && ispath(only_speaks_language, dt)
+	var/datum/language_holder/H = get_language_holder()
+
+	if(!H.has_language(dt))
+		return FALSE
+	else if(H.omnitongue)
+		return TRUE
+	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
+		return TRUE
+	else
+		return FALSE
 
 /atom/movable/proc/get_default_language()
 	// if no language is specified, and we want to say() something, which
