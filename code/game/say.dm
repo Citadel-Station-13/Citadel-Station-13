@@ -35,10 +35,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return 1
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, message_mode)
-	var/rendered = compose_message(src, message_language, message, , spans)
+	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
 	for(var/_AM in get_hearers_in_view(range, source))
 		var/atom/movable/AM = _AM
-		AM.Hear(rendered, src, message_language, message, , spans)
+		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
 //To get robot span classes, stuff like that.
 /atom/movable/proc/get_spans()
@@ -58,11 +58,10 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/endspanpart = "</span>"
 
 	//Message
-	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans)]</span></span>"
+	var/messagepart = " <span class='message'>[lang_treat(speaker, message_language, raw_message, spans, message_mode)]</span></span>"
 
 	var/languageicon = ""
-  
-	var/datum/language/D = get_language_instance(message_language)
+	var/datum/language/D = GLOB.language_datum_instances[message_language]
 	if(istype(D) && D.display_icon(src))
 		languageicon = "[D.get_icon()] "
 
@@ -144,7 +143,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "0"
 
 /atom/movable/proc/GetVoice()
-	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
+	return name
 
 /atom/movable/proc/IsVocal()
 	return 1
