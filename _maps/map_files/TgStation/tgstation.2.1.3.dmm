@@ -62007,11 +62007,26 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 2;
+ 	pixel_y = -5
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = -3;
+ 	pixel_y = 3
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 2;
+ 	pixel_y = -3
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = -2;
+ 	pixel_y = -1
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
