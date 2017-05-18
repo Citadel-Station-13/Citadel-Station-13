@@ -71,9 +71,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	qdel(src)
 
 /obj/item/stack/sheet/metal/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/sheet/metal/fifty
 	amount = 50
@@ -286,12 +285,15 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 		return
 	..()
 
-/obj/item/stack/sheet/runed_metal/fifty
-	amount = 50
-
 /obj/item/stack/sheet/runed_metal/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.runed_metal_recipes
 	return ..()
+
+/obj/item/stack/sheet/runed_metal/fifty
+	amount = 50
+
+/obj/item/stack/sheet/runed_metal/five
+	amount = 5
 
 /*
  * Brass
@@ -322,9 +324,8 @@ GLOBAL_LIST_INIT(brass_recipes, list ( \
 	turf_type = /turf/open/floor/clockwork
 
 /obj/item/stack/tile/brass/narsie_act()
-	if(prob(20))
-		new /obj/item/stack/sheet/runed_metal(loc, amount)
-		qdel(src)
+	new /obj/item/stack/sheet/runed_metal(loc, amount)
+	qdel(src)
 
 /obj/item/stack/tile/brass/Initialize(mapload, new_amount, merge = TRUE)
 	recipes = GLOB.brass_recipes
