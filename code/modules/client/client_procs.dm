@@ -305,25 +305,19 @@ GLOBAL_LIST(external_rsc_urls)
 			qdel(src)
 			return 0
 
+
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
 			if (config.irc_first_connection_alert)
 				send2irc_adminless_only("New-user", "[key_name(src)] is connecting for the first time!")
-
-		else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
-			player_age = 0 // set it from -1 to 0 so the job selection code doesn't have a panic attack				message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
-
-	else if (isnum(player_age) && player_age < config.notify_new_player_age)
-		message_admins("New user: [key_name_admin(src)] just connected with an age of [player_age] day[(player_age==1?"":"s")]")
-
-
+	else if (isnum(cached_player_age) && cached_player_age < config.notify_new_player_age)
+		message_admins("New user: [key_name_admin(src)] just connected with an age of [cached_player_age] day[(player_age==1?"":"s")]")
 	if(config.use_account_age_for_jobs && account_age >= 0)
 		player_age = account_age
 	if(account_age >= 0 && account_age < config.notify_new_player_account_age)
 		message_admins("[key_name_admin(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
 		if (config.irc_first_connection_alert)
 			send2irc_adminless_only("new_byond_user", "[key_name(src)] (IP: [address], ID: [computer_id]) is a new BYOND account [account_age] day[(account_age==1?"":"s")] old, created on [account_join_date].")
-
 	get_message_output("watchlist entry", ckey)
 	check_ip_intel()
 

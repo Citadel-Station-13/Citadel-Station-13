@@ -25,7 +25,7 @@
 	var/arousal_gain_rate = 1 //Rate at which this species becomes aroused
 	var/arousal_lose_rate = 1 //Multiplier for how easily arousal can be relieved
 	var/list/cum_fluids = list("semen")
-	var/list/milk_fludis = list("milk")
+	var/list/milk_fluids = list("milk")
 	var/list/femcum_fluids = list("femcum")
 
 //Mob procs
