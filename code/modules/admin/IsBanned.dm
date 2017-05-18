@@ -63,6 +63,7 @@
 
 		if(!SSdbcore.Connect())
 			log_world("Ban database connection failure. Key [ckeytext] not checked")
+			message_admins(msg)
 			GLOB.diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
