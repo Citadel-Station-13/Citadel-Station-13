@@ -62,9 +62,9 @@
 		var/ckeytext = ckey(key)
 
 		if(!SSdbcore.Connect())
-			log_world("Ban database connection failure. Key [ckeytext] not checked")
+			var/msg = "Ban database connection failure. Key [ckeytext] not checked"
+			log_world(msg)
 			message_admins(msg)
-			GLOB.diary << "Ban database connection failure. Key [ckeytext] not checked"
 			return
 
 		var/ipquery = ""
@@ -74,6 +74,7 @@
 
 		if(computer_id)
 			cidquery = " OR computerid = '[computer_id]' "
+
 		var/datum/DBQuery/query_ban_check = SSdbcore.NewQuery("SELECT ckey, a_ckey, reason, expiration_time, duration, bantime, bantype FROM [format_table_name("ban")] WHERE (ckey = '[ckeytext]' [ipquery] [cidquery]) AND (bantype = 'PERMABAN' OR bantype = 'ADMIN_PERMABAN' OR ((bantype = 'TEMPBAN' OR bantype = 'ADMIN_TEMPBAN') AND expiration_time > Now())) AND isnull(unbanned)")
 		if(!query_ban_check.Execute())
 			return
