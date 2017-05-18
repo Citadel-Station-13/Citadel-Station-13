@@ -1,4 +1,3 @@
-
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
