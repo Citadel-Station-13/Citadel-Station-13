@@ -424,7 +424,7 @@
 	switch(ignore_category ? askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never for this round", StealFocus=0, Timeout=poll_time) : askuser(M,Question,"Please answer in [poll_time/10] seconds!","Yes","No", StealFocus=0, Timeout=poll_time))
 		if(1)
 			to_chat(M, "<span class='notice'>Choice registered: Yes.</span>")
-			if((world.time-time_passed)>poll_time)
+			if(time_passed + poll_time <= world.time)
 				to_chat(M, "<span class='danger'>Sorry, you answered too late to be considered!</span>")
 				M << 'sound/machines/buzz-sigh.ogg'
 				candidates -= M
@@ -449,7 +449,7 @@
 	for(var/mob/dead/observer/G in GLOB.player_list)
 		candidates += G
 
-return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
+	return pollCandidates(Question, jobbanType, gametypeCheck, be_special_flag, poll_time, ignore_category, flashwindow, candidates)
 
 /proc/pollCandidates(Question, jobbanType, datum/game_mode/gametypeCheck, be_special_flag = 0, poll_time = 300, ignore_category = null, flashwindow = TRUE, list/group = null)
 	var/time_passed = world.time
