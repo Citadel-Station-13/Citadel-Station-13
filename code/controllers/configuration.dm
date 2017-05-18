@@ -127,6 +127,7 @@
 	var/forbid_peaceborg = 0
 	var/panic_bunker = 0				// prevents new people it hasn't seen before from connecting
 	var/notify_new_player_age = 0		// how long do we notify admins of a new player
+	var/notify_new_player_account_age = 0		// how long do we notify admins of a new byond account
 	var/irc_first_connection_alert = 0	// do we notify the irc channel when somebody is connecting for the first time?
 
 	var/traitor_scaling_coeff = 6		//how much does the amount of players get divided by to determine traitors
@@ -257,6 +258,8 @@
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
+
+	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
 
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
@@ -472,6 +475,8 @@
 					panic_bunker = 1
 				if("notify_new_player_age")
 					notify_new_player_age = text2num(value)
+				if("notify_new_player_account_age")
+					notify_new_player_account_age = text2num(value)
 				if("irc_first_connection_alert")
 					irc_first_connection_alert = 1
 				if("check_randomizer")
@@ -761,13 +766,15 @@
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
 				if("arrivals_shuttle_require_safe_latejoin")
-					arrivals_shuttle_require_safe_latejoin = text2num(value)
+					arrivals_shuttle_require_safe_latejoin = TRUE
+				if("mice_roundstart")
+					mice_roundstart = text2num(value)
 				if ("mentor_mobname_only")
 					mentors_mobname_only 	= 1
 				if ("mentor_legacy_system")
 					mentor_legacy_system 	= 1
-			//	else
-			//		GLOB.config_error_log << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				else
+					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
 
 	fps = round(fps)
 	if(fps <= 0)
