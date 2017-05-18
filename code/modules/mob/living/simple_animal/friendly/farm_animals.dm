@@ -32,7 +32,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
-	..()
+	. = ..()
+
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
@@ -51,12 +52,14 @@
 			src.visible_message("<span class='notice'>[src] calms down.</span>")
 	if(stat == CONSCIOUS)
 		udder.generateMilk()
-		eat_plants()
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
+			SV.eat(src)
 		if(!pulledby)
 			for(var/direction in shuffle(list(1,2,4,8,5,6,9,10)))
 				var/step = get_step(src, direction)
 				if(step)
-					if(locate(/obj/structure/spacevine) in step || locate(/obj/structure/glowshroom) in step)
+					if(locate(/obj/structure/spacevine) in step)
 						Move(step, get_dir(src, step))
 
 /mob/living/simple_animal/hostile/retaliate/goat/Retaliate()
@@ -66,22 +69,9 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Move()
 	..()
 	if(!stat)
-		eat_plants()
-
-/mob/living/simple_animal/hostile/retaliate/goat/proc/eat_plants()
-	var/eaten = FALSE
-	var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
-	if(SV)
-		SV.eat(src)
-		eaten = TRUE
-
-	var/obj/structure/glowshroom/GS = locate(/obj/structure/glowshroom) in loc
-	if(GS)
-		qdel(GS)
-		eaten = TRUE
-
-	if(eaten && prob(10))
-		say("Nom")
+		var/obj/structure/spacevine/SV = locate(/obj/structure/spacevine) in loc
+		if(SV)
+			SV.eat(src)
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user, params)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -121,7 +111,7 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -196,7 +186,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/chick/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
@@ -252,7 +242,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/chicken/Initialize()
-	..()
+	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
 	icon_state = "[icon_prefix]_[body_color]"
@@ -311,9 +301,10 @@
 	name = "udder"
 
 /obj/item/udder/Initialize()
-	create_reagents(50)
+	reagents = new(50)
+	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
-	..()
+	. = ..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))
