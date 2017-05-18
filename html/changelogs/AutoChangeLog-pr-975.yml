@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Cryopod icon states"
+  - tweak: "Adjusted Wizard spell power costs"

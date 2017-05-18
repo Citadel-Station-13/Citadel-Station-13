@@ -230,7 +230,15 @@
 	name = "blood sparks"
 	icon_state = "bloodsparkles"
 
-/obj/effect/overlay/temp/dir_setting/cult/phase
+/obj/effect/overlay/temp/cult/blood  // The traditional teleport
+	name = "blood jaunt"
+	duration = 12
+	icon_state = "bloodin"
+
+/obj/effect/overlay/temp/cult/blood/out
+	icon_state = "bloodout"
+
+/obj/effect/overlay/temp/dir_setting/cult/phase  // The veil shifter teleport
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
@@ -611,6 +619,18 @@
 	icon_state = "shieldsparkles"
 	duration = 6
 
+/obj/effect/overlay/temp/heart
+	name = "heart"
+	icon = 'icons/mob/animal.dmi'
+	icon_state = "heart"
+	duration = 25
+
+/obj/effect/overlay/temp/heart/Initialize(mapload)
+	. = ..()
+	pixel_x = rand(-4,4)
+	pixel_y = rand(-4,4)
+
+	animate(src, pixel_y = pixel_y + 32, alpha = 0, time = 25)
 
 /obj/effect/overlay/palmtree_r
 	name = "Palm tree"

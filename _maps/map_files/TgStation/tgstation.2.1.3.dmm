@@ -12384,7 +12384,7 @@
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/maintenance/fpmaint)
+/area/gateway)
 "aBj" = (
 /obj/structure/rack{
 	dir = 8;
@@ -22145,7 +22145,7 @@
 "aYa" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Locker Room Maintenance APC";
+	name = "Aft Port Maintenance APC";
 	pixel_x = -27;
 	pixel_y = 2
 	},
@@ -25158,7 +25158,7 @@
 	icon_state = "1-8"
 	},
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/quartermaster/storage)
 "bfl" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
@@ -27089,7 +27089,7 @@
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "bjQ" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bjR" = (
@@ -27644,11 +27644,6 @@
 /area/bridge/meeting_room)
 "bkY" = (
 /obj/effect/landmark/blobstart,
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -40912,7 +40907,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMo" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMp" = (
@@ -44811,7 +44806,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bVa" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
 	},
@@ -59567,7 +59562,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/port)
+/area/security/detectives_office)
 "cCo" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -62012,11 +62007,26 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
-/obj/item/weapon/grenade/plastic/c4,
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 2;
+ 	pixel_y = -5
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = -3;
+ 	pixel_y = 3
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 2;
+ 	pixel_y = -3
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = -2;
+ 	pixel_y = -1
+ 	},
+/obj/item/weapon/grenade/plastic/c4{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -88791,7 +88801,7 @@ bda
 bca
 bgJ
 aZP
-bjD
+bjB
 bkY
 bmo
 bnP
@@ -99639,7 +99649,7 @@ bVu
 bVu
 bVu
 bVu
-apQ
+bVu
 bVu
 csw
 csw
