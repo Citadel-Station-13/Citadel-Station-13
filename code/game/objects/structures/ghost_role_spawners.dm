@@ -48,6 +48,11 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis!</b>")
+
+	new_spawn.grant_language(/datum/language/draconic)
+	var/datum/language_holder/holder = new_spawn.get_language_holder()
+	holder.selected_default_language = /datum/language/draconic
+
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
 		H.underwear = "Nude"
@@ -160,8 +165,6 @@
 	name = "dust-caked free golem shell"
 	desc = "A humanoid shape, empty, lifeless, and full of potential."
 	mob_name = "a free golem"
-	anchored = 1
-	density = 1
 	can_transfer = FALSE
 	mob_species = /datum/species/golem/adamantine
 
