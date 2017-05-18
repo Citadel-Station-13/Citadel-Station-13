@@ -28,7 +28,7 @@
 	stop_automated_movement_when_pulled = 1
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
-	devourable = TRUE
+	devourable = true
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
@@ -107,7 +107,7 @@
 	var/obj/item/udder/udder = null
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
-	devourable = TRUE
+	devourable = true
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -183,10 +183,10 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = 2
-	devourable = TRUE
+	devourable = true
 
 /mob/living/simple_animal/chick/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
@@ -239,10 +239,10 @@
 	var/list/validColors = list("brown","black","white")
 	gold_core_spawnable = 2
 	var/static/chicken_count = 0
-	devourable = TRUE
+	devourable = true
 
 /mob/living/simple_animal/chicken/Initialize()
-	..()
+	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
 	icon_state = "[icon_prefix]_[body_color]"
