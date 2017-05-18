@@ -186,8 +186,6 @@
 			if (!isnull(src.scanner))
 				var/mob/living/scanner_occupant = get_mob_or_brainmob(scanner.occupant)
 
-				var/mob/living/scanner_occupant = scanner.occupant
-
 				dat += "<h3>Scanner Functions</h3>"
 
 				dat += "<div class='statusDisplay'>"
