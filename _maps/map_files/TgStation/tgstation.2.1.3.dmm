@@ -27089,7 +27089,7 @@
 /turf/open/floor/plasteel,
 /area/assembly/chargebay)
 "bjQ" = (
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/chemistry/preloaded,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "bjR" = (
@@ -40907,7 +40907,7 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMo" = (
-/obj/machinery/smartfridge/extract,
+/obj/machinery/smartfridge/extract/preloaded,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "bMp" = (
@@ -44806,7 +44806,7 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "bVa" = (
-/obj/machinery/smartfridge/chemistry/virology,
+/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
 	},
