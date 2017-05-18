@@ -34,17 +34,14 @@
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
 	var/master = null
 	var/seeking = FALSE
+	var/can_repair_constructs = FALSE
+	var/can_repair_self = FALSE
 
 /mob/living/simple_animal/hostile/construct/Initialize()
 	. = ..()
+	update_health_hud()
 	for(var/spell in construct_spells)
 		AddSpell(new spell(null))
-
-/mob/living/simple_animal/hostile/construct/Destroy()
-	for(var/X in actions)
-		var/datum/action/A = X
-		qdel(A)
-	..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	..()
@@ -131,38 +128,6 @@
 	AIStatus = AI_ON
 	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
 
-
-///////////////////////Master-Tracker///////////////////////
-
-/datum/action/innate/seek_master
-	name = "Seek your Master"
-	desc = "You and your master share a soul-link that informs you of their location"
-	background_icon_state = "bg_demon"
-	buttontooltipstyle = "cult"
-	button_icon_state = "cult_mark"
-	var/tracking = FALSE
-	var/mob/living/simple_animal/hostile/construct/the_construct
-
-/datum/action/innate/seek_master/Grant(var/mob/living/C)
-	the_construct = C
-	..()
-
-/datum/action/innate/seek_master/Activate()
-	if(!the_construct.master)
-		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
-		the_construct.seeking = FALSE
-		return
-	if(tracking)
-		tracking = FALSE
-		the_construct.seeking = FALSE
-		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
-		return
-	else
-		tracking = TRUE
-		the_construct.seeking = TRUE
-		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
-
-
 /mob/living/simple_animal/hostile/construct/armored/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		var/reflectchance = 80 - round(P.damage/3)
@@ -206,30 +171,7 @@
 	attacktext = "slashes"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
-	var/attack_refund = 10 //1 second per attack
-	var/crit_refund = 50 //5 seconds when putting a target into critical
-	var/kill_refund = 250 //full refund on kills
-
-/mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
-	var/prev_stat
-	if(isliving(target) && !iscultist(target))
-		var/mob/living/L = target
-		prev_stat = L.stat
-
-	. = ..()
-
-	if(. && isnum(prev_stat))
-		var/mob/living/L = target
-		var/refund = 0
-		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
-			refund += kill_refund
-		else if(L.InCritical() && prev_stat == CONSCIOUS) //you knocked them into critical
-			refund += crit_refund
-		if(L.stat != DEAD && prev_stat != DEAD)
-			refund += attack_refund
-		for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/S in mob_spell_list)
-			S.charge_counter = min(S.charge_counter + refund, S.charge_max)
+	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -327,22 +269,81 @@
 	icon_living = "harvester"
 	maxHealth = 60
 	health = 60
-	melee_damage_lower = 1
-	melee_damage_upper = 5
-	retreat_distance = 2 //AI harvesters will move in and out of combat, like wraiths, but shittier
-	attacktext = "prods"
-	environment_smash = 3
-	attack_sound = 'sound/weapons/tap.ogg'
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-							/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-							/obj/effect/proc_holder/spell/targeted/smoke/disable)
-	playstyle_string = "<B>You are a Harvester. You are not strong, but your powers of domination will assist you in your role: \
+	sight = SEE_MOBS
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+	attacktext = "butchers"
+	attack_sound = 'sound/weapons/bladeslice.ogg'
+	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
+							/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
+	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth.</B>"
+	can_repair_constructs = TRUE
 
-/mob/living/simple_animal/hostile/construct/harvester/hostile //actually hostile, will move around, hit things
-	AIStatus = AI_ON
-	environment_smash = 1 //only token destruction, don't smash the cult wall NO STOP
+/mob/living/simple_animal/hostile/construct/harvester/Bump(atom/AM)
+	. = ..()
+	if(istype(AM, /turf/closed/wall/mineral/cult) && AM != loc) //we can go through cult walls
+		var/atom/movable/stored_pulling = pulling
+		if(stored_pulling)
+			stored_pulling.setDir(get_dir(stored_pulling.loc, loc))
+			stored_pulling.forceMove(loc)
+		forceMove(AM)
+		if(stored_pulling)
+			start_pulling(stored_pulling, TRUE) //drag anything we're pulling through the wall with us by magic
 
+/mob/living/simple_animal/hostile/construct/harvester/AttackingTarget()
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		var/list/parts = list()
+		var/undismembermerable_limbs = 0
+		for(var/X in C.bodyparts)
+			var/obj/item/bodypart/BP = X
+			if(BP.body_part != HEAD && BP.body_part != CHEST)
+				if(BP.dismemberable)
+					parts += BP
+				else
+					undismembermerable_limbs++
+		if(!LAZYLEN(parts))
+			if(undismembermerable_limbs) //they have limbs we can't remove, and no parts we can, attack!
+				return ..()
+			to_chat(src, "<span class='cultlarge'>\"Bring [C.p_them()] to me.\"</span>")
+			return FALSE
+		do_attack_animation(C)
+		var/obj/item/bodypart/BP = pick(parts)
+		BP.dismember()
+		return FALSE
+	. = ..()
+
+
+///////////////////////Master-Tracker///////////////////////
+
+/datum/action/innate/seek_master
+	name = "Seek your Master"
+	desc = "You and your master share a soul-link that informs you of their location"
+	background_icon_state = "bg_demon"
+	buttontooltipstyle = "cult"
+	button_icon_state = "cult_mark"
+	var/tracking = FALSE
+	var/mob/living/simple_animal/hostile/construct/the_construct
+
+/datum/action/innate/seek_master/Grant(var/mob/living/C)
+	the_construct = C
+	..()
+
+/datum/action/innate/seek_master/Activate()
+	if(!the_construct.master)
+		to_chat(the_construct, "<span class='cultitalic'>You have no master to seek!</span>")
+		the_construct.seeking = FALSE
+		return
+	if(tracking)
+		tracking = FALSE
+		the_construct.seeking = FALSE
+		to_chat(the_construct, "<span class='cultitalic'>You are no longer tracking your master.</span>")
+		return
+	else
+		tracking = TRUE
+		the_construct.seeking = TRUE
+		to_chat(the_construct, "<span class='cultitalic'>You are now tracking your master.</span>")
 
 
 /////////////////////////////ui stuff/////////////////////////////
