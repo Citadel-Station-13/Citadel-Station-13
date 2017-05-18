@@ -38,9 +38,6 @@
 		notify_ghosts("Nar-Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
 	narsie_spawn_animation()
 
-
-
-
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
 	var/list/souls_needed = list()
 	var/soul_goal = 0
@@ -75,8 +72,6 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
-
-
 /obj/singularity/narsie/large/cult/consume(atom/A)
 	A.narsie_act(src)
 
@@ -86,11 +81,8 @@
 /proc/cult_ending_helper(var/no_explosion = 0)
 	SSticker.station_explosion_cinematic(no_explosion, "cult", null)
 
-
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, null, 0, loc_override = src.loc)
-	new /obj/effect/particle_effect/smoke/sleeping(src.loc)
-
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = src.loc)
 
 /obj/singularity/narsie/process()
 	if(clashing)
@@ -104,7 +96,6 @@
 		move()
 	if(prob(25))
 		mezzer()
-
 
 /obj/singularity/narsie/Process_Spacemove()
 	return clashing
@@ -126,7 +117,8 @@
 
 
 /obj/singularity/narsie/consume(atom/A)
-	A.narsie_act()
+	if(isturf(A))
+		A.narsie_act()
 
 
 /obj/singularity/narsie/ex_act() //No throwing bombs at her either.

@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "cell-off"
+	icon_state = "pod0"
 	density = 1
 	anchored = 1
 	obj_integrity = 350
@@ -12,6 +12,7 @@
 	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
+	var/running_bob_animation = FALSE
 
 	var/efficiency = 1
 	var/sleep_factor = 750
@@ -87,17 +88,59 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
+	handle_update_icon()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/handle_update_icon() //making another proc to avoid spam in update_icon
+	overlays.Cut() //empty the overlay proc, just in case
+
 	if(panel_open)
-		icon_state = "cell-o"
+		icon_state = "pod0-o"
 	else if(state_open)
-		icon_state = "cell-open"
+		icon_state = "pod0"
 	else if(on && is_operational())
 		if(occupant)
-			icon_state = "cell-occupied"
+			var/image/pickle = image(occupant.icon, occupant.icon_state)
+			pickle.overlays = occupant.overlays
+			pickle.pixel_y = 22
+			overlays += pickle
+			icon_state = "pod1"
+			var/up = 0 //used to see if we are going up or down, 1 is down, 2 is up
+			spawn(0) // Without this, the icon update will block. The new thread will die once the occupant leaves.
+				running_bob_animation = TRUE
+				while(occupant)
+					overlays -= "lid1" //have to remove the overlays first, to force an update- remove cloning pod overlay
+					overlays -= pickle //remove mob overlay
+
+					switch(pickle.pixel_y) //this looks messy as fuck but it works, switch won't call itself twice
+
+						if(23) //inbetween state, for smoothness
+							switch(up) //this is set later in the switch, to keep track of where the mob is supposed to go
+								if(2) //2 is up
+									pickle.pixel_y = 24 //set to highest
+
+								if(1) //1 is down
+									pickle.pixel_y = 22 //set to lowest
+
+						if(22) //mob is at it's lowest
+							pickle.pixel_y = 23 //set to inbetween
+							up = 2 //have to go up
+
+						if(24) //mob is at it's highest
+							pickle.pixel_y = 23 //set to inbetween
+							up = 1 //have to go down
+
+					overlays += pickle //re-add the mob to the icon
+					overlays += "lid1" //re-add the overlay of the pod, they are inside it, not floating
+
+					sleep(7) //don't want to jiggle violently, just slowly bob
+					return
+				running_bob_animation = FALSE
 		else
-			icon_state = "cell-on"
+			icon_state = "pod1"
+			overlays += "lid0" //have to remove the overlays first, to force an update- remove cloning pod overlay
 	else
-		icon_state = "cell-off"
+		icon_state = "pod0"
+		overlays += "lid0" //if no occupant, just put the lid overlay on, and ignore the rest
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -133,8 +176,8 @@
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
-					beaker.reagents.reaction(occupant, VAPOR)
+					beaker.reagents.trans_to(mob_occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+					beaker.reagents.reaction(mob_occupant, VAPOR)
 					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
 				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 					reagent_transfer = 0
@@ -201,7 +244,7 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "Someone's inside [src]!")
+			to_chat(user, "[occupant] is inside [src]!")
 		else
 			to_chat(user, "You can barely make out a form floating in [src].")
 	else
@@ -226,9 +269,10 @@
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
+
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
+		if(default_deconstruction_screwdriver(user, "pod0-o", "pod0", I))
 			return
 		if(exchange_parts(user, I))
 			return

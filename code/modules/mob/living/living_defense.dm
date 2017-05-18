@@ -319,16 +319,13 @@
 			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/chosen, src, null, 1)
 		else
 			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
-	else
-		switch(rand(1, 10))
+		switch(rand(1, 6))
 			if(1)
 				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
 			if(2)
 				new /mob/living/simple_animal/hostile/construct/wraith/hostile(get_turf(src))
 			if(3 to 6)
 				new /mob/living/simple_animal/hostile/construct/builder/hostile(get_turf(src))
-			if(6 to 10)
-				new /mob/living/simple_animal/hostile/construct/harvester/hostile(get_turf(src))
 	spawn_dust()
 	gib()
 	return TRUE
