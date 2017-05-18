@@ -148,8 +148,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -247,7 +246,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "warps everything above it to another chosen teleport rune."
 	invocation = "Sas'so c'arta forbici!"
 	icon_state = "2"
-	color = "#551A8B"
+	color = RUNE_COLOR_TELEPORT
 	req_keyword = TRUE
 	var/listkey
 
@@ -307,10 +306,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			A.forceMove(target)
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
+		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -322,7 +322,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	req_cultists_text = "2 for conversion, 3 for living sacrifices and sacrifice targets."
 	invocation = "Mah'weyh pleggh at e'ntrath!"
 	icon_state = "3"
-	color = "#FFFFFF"
+	color = RUNE_COLOR_OFFER
 	req_cultists = 1
 	allow_excess_invokers = TRUE
 	rune_in_use = FALSE
@@ -479,9 +479,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	var/turf/T = get_turf(src)
 	sleep(40)
 	if(src)
-		color = "#FF0000"
+		color = RUNE_COLOR_RED
 	SSticker.mode.eldergod = FALSE
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn even if the rune has been removed
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
@@ -502,7 +502,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_desc = "requires the corpse of a cultist placed upon the rune. Provided there have been sufficient sacrifices, they will be revived."
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	var/static/revives_used = 0
 
 /obj/effect/rune/raise_dead/examine(mob/user)
@@ -889,7 +889,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Gal'h'rfikk harfrandid mud'gib!" //how the fuck do you pronounce this
 	icon_state = "6"
 	construct_invoke = 0
-	color = "#C80000"
+	color = RUNE_COLOR_MEDIUMRED
 	var/ghost_limit = 5
 	var/ghosts = 0
 
