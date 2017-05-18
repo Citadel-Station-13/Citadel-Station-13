@@ -296,3 +296,10 @@
 /obj/item/weapon/storage/box/syndie_kit/mimery/PopulateContents()
 	new /obj/item/weapon/spellbook/oneuse/mimery_blockade(src)
 	new /obj/item/weapon/spellbook/oneuse/mimery_guns(src)
+
+/obj/item/weapon/storage/box/syndie_kit/holoparasite
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/holoparasite/PopulateContents()
+	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/weapon/paper/guardian(src)
