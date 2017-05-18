@@ -6,10 +6,10 @@ DAMAGE_MULTIPLIER 1
 ### REVIVAL ###
 
 # whether pod plants work or not
-REVIVAL_POD_PLANTS 1
+REVIVAL_POD_PLANTS
 
 # whether cloning tubes work or not
-REVIVAL_CLONING 1
+REVIVAL_CLONING
 
 # amount of time (in hundredths of seconds) for which a brain retains the "spark of life" after the person's death (set to -1 for infinite)
 REVIVAL_BRAIN_LIFE -1
@@ -166,7 +166,7 @@ MIDROUND_ANTAG ABDUCTION
 #MIN_POP GANG 20
 #MAX_POP GANG -1
 
-#MIN_POP CULT 24
+#MIN_POP CULT 0
 #MAX_POP CULT -1
 
 #MIN_POP CLOCKWORK_CULT 24
