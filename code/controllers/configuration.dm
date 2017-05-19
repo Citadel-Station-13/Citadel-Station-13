@@ -278,6 +278,7 @@
 	votable_modes += "secret"
 
 	Reload()
+	reload_custom_roundstart_items_list()
 
 /datum/configuration/proc/Reload()
 	load("config/config.txt")

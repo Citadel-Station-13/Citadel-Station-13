@@ -71,8 +71,10 @@ GLOBAL_LIST(custom_item_list)
 		if((j == job) || (j == "ALL") || (job == "ALL"))	//job matches or is all jobs or we want everything.
 			for(var/i in list[j])		//for item in job-item list
 				if(!ret[i])
+					world << "DEBUG: [i] initialized to return list"
 					ret[i] = list[j][i]		//add to return with return value if not there
 				else
+					world << "DEBUG: [i] added to return list"
 					ret[i] += list[j][i]	//else, add to that item in return value!
 	return ret	//If done properly, you'll have a list of item typepaths with how many to spawn.
 
