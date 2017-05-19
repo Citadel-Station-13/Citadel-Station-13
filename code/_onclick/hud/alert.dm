@@ -456,7 +456,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/clockwork/infodump/MouseEntered(location,control,params)
 	if(GLOB.ratvar_awakens)
-		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>RATVAR.</b></font>"
+		desc = "<font size=3><b>CHETR<br>NYY<br>HAGEHUGF-NAQ-UBABE<br>MOUSEVAR.</b></font>"
 	else
 		var/servants = 0
 		var/validservants = 0
@@ -491,7 +491,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 						textlist += "<b><font color=[get_component_color_bright(i)]>[G.required_components[i]]</font></b> "
 				textlist += "<br>"
 			else
-				textlist += "Seconds until Ratvar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
+				textlist += "Seconds until Mousevar's arrival: <b>[G.get_arrival_text(TRUE)]</b><br>"
 			break
 		if(unconverted_ais_exist)
 			if(unconverted_ais_exist > 1)

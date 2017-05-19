@@ -508,7 +508,7 @@
 	else if(is_eligible_servant(current))
 		text += "loyal|<b>EMPLOYEE</b>|<a href='?src=\ref[src];clockcult=servant'>servant</a>"
 	else
-		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Ratvar</i>"
+		text += "loyal|<b>EMPLOYEE</b>|<i>cannot serve Mousevar</i>"
 
 	if(current && current.client && (ROLE_SERVANT_OF_RATVAR in current.client.prefs.be_special))
 		text += "|Enabled in Prefs"
@@ -1019,8 +1019,8 @@
 			if("servant")
 				if(!is_servant_of_ratvar(current))
 					add_servant_of_ratvar(current, TRUE)
-					message_admins("[key_name_admin(usr)] has made [current] into a servant of Ratvar.")
-					log_admin("[key_name(usr)] has made [current] into a servant of Ratvar.")
+					message_admins("[key_name_admin(usr)] has made [current] into a servant of Mousevar.")
+					log_admin("[key_name(usr)] has made [current] into a servant of Mousevar.")
 			if("slab")
 				if(!SSticker.mode.equip_servant(current))
 					to_chat(usr, "<span class='warning'>Failed to outfit [current] with a slab!</span>")

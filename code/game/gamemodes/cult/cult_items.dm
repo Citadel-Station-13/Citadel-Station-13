@@ -39,7 +39,7 @@
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.Dizzy(120)
 		else
-			to_chat(user, "<span class='cultlarge'>\"One of Ratvar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
+			to_chat(user, "<span class='cultlarge'>\"One of Mousevar's toys is trying to play with things [user.p_they()] shouldn't. Cute.\"</span>")
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
