@@ -48,9 +48,6 @@
 #define FLUX_ANOMALY "flux_anomaly"
 #define PYRO_ANOMALY "pyro_anomaly"
 
-#define SPEAK(message) radio.talk_into(src, message, null, get_spans(), get_default_language())
-
-
 /obj/machinery/power/supermatter_shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
@@ -114,6 +111,9 @@
 	var/config_hallucination_power = 0.1
 
 	var/obj/item/device/radio/radio
+	var/radio_key = /obj/item/device/encryptionkey/headset_eng
+	var/engineering_channel = "Engineering"
+	var/common_channel = null
 
 	//for logging
 	var/has_been_powered = 0
@@ -129,16 +129,20 @@
 
 /obj/machinery/power/supermatter_shard/Initialize()
 	. = ..()
+	SSair.atmos_machinery += src
 	countdown = new(src)
 	countdown.start()
 	GLOB.poi_list |= src
 	radio = new(src)
+	radio.keyslot = new radio_key
 	radio.listening = 0
+	radio.recalculateChannels()
 	investigate_log("has been created.", "supermatter")
 
 
 /obj/machinery/power/supermatter_shard/Destroy()
 	investigate_log("has been destroyed.", "supermatter")
+	SSair.atmos_machinery -= src
 	QDEL_NULL(radio)
 	GLOB.poi_list -= src
 	QDEL_NULL(countdown)
@@ -181,7 +185,7 @@
 			E.energy = power
 		qdel(src)
 
-/obj/machinery/power/supermatter_shard/process()
+/obj/machinery/power/supermatter_shard/process_atmos()
 	var/turf/T = loc
 
 	if(isnull(T))		// We have a null turf...something is wrong, stop processing this entity.
@@ -296,6 +300,7 @@
 
 	if(produces_gas)
 		env.merge(removed)
+		air_update_turf()
 
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
@@ -337,27 +342,27 @@
 			var/stability = num2text(round((damage / explosion_point) * 100))
 
 			if(damage > emergency_point)
-				SPEAK("[emergency_alert] Instability: [stability]%")
+				radio.talk_into(src, "[emergency_alert] Instability: [stability]%", common_channel, get_spans(), get_default_language())
 				lastwarning = REALTIMEOFDAY
 				if(!has_reached_emergency)
 					investigate_log("has reached the emergency point for the first time.", "supermatter")
-					message_admins("[src] has reached the emergency point <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+					message_admins("[src] has reached the emergency point [ADMIN_JMP(src)].")
 					has_reached_emergency = 1
 			else if(damage >= damage_archived) // The damage is still going up
-				SPEAK("[warning_alert] Instability: [stability]%")
+				radio.talk_into(src, "[warning_alert] Instability: [stability]%", engineering_channel, get_spans(), get_default_language())
 				lastwarning = REALTIMEOFDAY - (WARNING_DELAY * 5)
 
 			else                                                 // Phew, we're safe
-				SPEAK("[safe_alert] Instability: [stability]%")
+				radio.talk_into(src, "[safe_alert] Instability: [stability]%", engineering_channel, get_spans(), get_default_language())
 				lastwarning = REALTIMEOFDAY
 
 			if(power > POWER_PENALTY_THRESHOLD)
-				SPEAK("Warning: Hyperstructure has reached dangerous power level.")
+				radio.talk_into(src, "Warning: Hyperstructure has reached dangerous power level.", engineering_channel, get_spans(), get_default_language())
 				if(powerloss_inhibitor < 0.5)
-					SPEAK("DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.")
+					radio.talk_into(src, "DANGER: CHARGE INERTIA CHAIN REACTION IN PROGRESS.", engineering_channel, get_spans(), get_default_language())
 
 			if(combined_gas > MOLE_PENALTY_THRESHOLD)
-				SPEAK("Warning: Critical coolant mass reached.")
+				radio.talk_into(src, "Warning: Critical coolant mass reached.", engineering_channel, get_spans(), get_default_language())
 
 		if(damage > explosion_point)
 			for(var/mob in GLOB.living_mob_list)
@@ -388,7 +393,7 @@
 		power += Proj.damage * config_bullet_energy
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", "supermatter")
-			message_admins("[src] has been powered for the first time <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = 1
 	else if(takes_damage)
 		damage += Proj.damage * config_bullet_energy
@@ -487,7 +492,7 @@
 /obj/machinery/power/supermatter_shard/proc/Consume(atom/movable/AM)
 	if(isliving(AM))
 		var/mob/living/user = AM
-		message_admins("[src] has consumed [key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>(JMP)</a>.")
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		matter_power += 200

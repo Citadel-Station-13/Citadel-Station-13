@@ -1,4 +1,3 @@
-
 ////////////////////////////////
 /proc/message_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
@@ -36,6 +35,12 @@
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?_src_=holder;revive=\ref[M]'>Heal</A>\] "
+
+	if(M.client)
+		body += "<br>\[<b>Player Age:</b> [M.client.player_age]\]\[<b>Byond Age:</b> [M.client.account_age]\]"
+		body += "<br><b>Show related accounts by:</b> "
+		body += "\[ <a href='?_src_=holder;showrelatedacc=cid;client=\ref[M.client]'>CID</a> | "
+		body += "<a href='?_src_=holder;showrelatedacc=ip;client=\ref[M.client]'>IP</a> \]"
 
 	body += "<br><br>\[ "
 	body += "<a href='?_src_=vars;Vars=\ref[M]'>VV</a> - "
@@ -699,7 +704,7 @@
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
-	if(istype(M) && M.mind && M.mind.devilinfo)
+	if(is_devil(M))
 		to_chat(usr, SSticker.mode.printdevilinfo(M.mind))
 	else
 		to_chat(usr, "<b>[M] is not a devil.")

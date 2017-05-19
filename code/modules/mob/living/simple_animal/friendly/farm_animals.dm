@@ -32,7 +32,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
-	..()
+	. = ..()
+
 /mob/living/simple_animal/hostile/retaliate/goat/Destroy()
 	qdel(udder)
 	udder = null
@@ -110,7 +111,7 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
 	qdel(udder)
@@ -185,7 +186,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/chick/Initialize()
-	..()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
@@ -241,7 +242,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/chicken/Initialize()
-	..()
+	. = ..()
 	if(!body_color)
 		body_color = pick(validColors)
 	icon_state = "[icon_prefix]_[body_color]"
@@ -303,7 +304,7 @@
 	reagents = new(50)
 	reagents.my_atom = src
 	reagents.add_reagent("milk", 20)
-	..()
+	. = ..()
 
 /obj/item/udder/proc/generateMilk()
 	if(prob(5))

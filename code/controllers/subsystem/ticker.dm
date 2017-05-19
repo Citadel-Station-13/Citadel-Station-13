@@ -5,7 +5,8 @@ SUBSYSTEM_DEF(ticker)
 	init_order = INIT_ORDER_TICKER
 
 	priority = 200
-	flags = SS_FIRE_IN_LOBBY|SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
+	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/force_ending = 0					//Round was ended by admin intervention
@@ -109,6 +110,7 @@ SUBSYSTEM_DEF(ticker)
 
 			if(timeLeft <= 0)
 				current_state = GAME_STATE_SETTING_UP
+				Master.SetRunLevel(RUNLEVEL_SETUP)
 				if(start_immediately)
 					fire()
 
@@ -116,6 +118,7 @@ SUBSYSTEM_DEF(ticker)
 			if(!setup())
 				//setup failed
 				current_state = GAME_STATE_STARTUP
+				Master.SetRunLevel(RUNLEVEL_LOBBY)
 
 		if(GAME_STATE_PLAYING)
 			mode.process(wait * 0.1)
@@ -128,6 +131,7 @@ SUBSYSTEM_DEF(ticker)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
+				Master.SetRunLevel(RUNLEVEL_POSTGAME)
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -204,8 +208,6 @@ SUBSYSTEM_DEF(ticker)
 
 	transfer_characters()	//transfer keys to the new mobs
 
-	Master.RoundStart()	//let the party begin...
-
 	for(var/I in round_start_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
@@ -218,6 +220,7 @@ SUBSYSTEM_DEF(ticker)
 	world << sound('sound/AI/welcome.ogg')
 
 	current_state = GAME_STATE_PLAYING
+	Master.SetRunLevel(RUNLEVEL_GAME)
 
 	if(SSevents.holidays)
 		to_chat(world, "<font color='blue'>and...</font>")
@@ -625,8 +628,8 @@ SUBSYSTEM_DEF(ticker)
 	if(selected_tip)
 		m = selected_tip
 	else
-		var/list/randomtips = world.file2list("config/tips.txt")
-		var/list/memetips = world.file2list("config/sillytips.txt")
+		var/list/randomtips = world.file2list("strings/tips.txt")
+		var/list/memetips = world.file2list("strings/sillytips.txt")
 		if(randomtips.len && prob(95))
 			m = pick(randomtips)
 		else if(memetips.len)
