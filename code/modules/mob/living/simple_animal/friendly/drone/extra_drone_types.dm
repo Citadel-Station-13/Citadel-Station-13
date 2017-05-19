@@ -114,13 +114,13 @@
 	initial_language_holder = /datum/language_holder/clockmob
 	light_color = "#E42742"
 	heavy_emp_damage = 0
-	laws = "0. Purge all untruths and honor Ratvar."
+	laws = "0. Purge all untruths and honor Mousevar."
 	default_storage = /obj/item/weapon/storage/toolbox/brass/prefilled
 	seeStatic = 0
 	hacked = TRUE
 	visualAppearence = CLOCKDRONE
 	can_be_held = FALSE
-	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
+	flavortext = "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Mousevar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert brass \
 	to liquified alloy, a set of relatively fast tools, </b><span class='heavy_brass'>can communicate over the Hierophant Network with :b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create.</b>"
 

@@ -50,7 +50,7 @@
 				return TRUE
 			if(is_servant_of_ratvar(L))
 				if(L != ranged_ability_user)
-					to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Ratvar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>")
+					to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_they(TRUE)] already serve[L.p_s()] Mousevar. [text2ratvar("Perhaps [ranged_ability_user.p_theyre()] into bondage?")]\"</span>")
 				return TRUE
 			if(L.stat == DEAD)
 				to_chat(ranged_ability_user, "<span class='sevtug'>\"[L.p_theyre(TRUE)] dead, idiot.\"</span>")
@@ -100,7 +100,7 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Mousevar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")
@@ -194,7 +194,7 @@
 	if(isliving(target) && (target in view(7, get_turf(ranged_ability_user))))
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
-			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Ratvar.\"</span>")
+			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L] does not yet serve Mousevar.\"</span>")
 			return TRUE
 		if(L.stat == DEAD)
 			to_chat(ranged_ability_user, "<span class='inathneq'>\"[L.p_they(TRUE)] [L.p_are()] dead. [text2ratvar("Oh, child. To have your life cut short...")]\"</span>")

@@ -1,8 +1,8 @@
-//Ratvar himself. Impossible to damage by most standard means, He will dominate the station and all upon it.
+//Mousevar himself. Impossible to damage by most standard means, He will dominate the station and all upon it.
 /obj/structure/destructible/clockwork/massive/ratvar
-	name = "Ratvar, the Clockwork Justiciar"
+	name = "Mousevar, the Clockwork Justiciar"
 	desc = "<span class='userdanger'>What is what is what are what real what is all a lie all a lie it's all a lie why how can what is</span>"
-	clockwork_desc = "<span class='large_brass'><b><i>Ratvar, the Clockwork Justiciar, your master eternal.</i></b></span>"
+	clockwork_desc = "<span class='large_brass'><b><i>Mousevar, the Clockwork Justiciar, your master eternal.</i></b></span>"
 	icon = 'icons/effects/512x512.dmi'
 	icon_state = "ratvar"
 	pixel_x = -235
@@ -12,8 +12,8 @@
 	light_power = 0.7
 	light_range = 15
 	light_color = "#BE8700"
-	var/atom/prey //Whatever Ratvar is chasing
-	var/clashing = FALSE //If Ratvar is FUCKING FIGHTING WITH NAR-SIE
+	var/atom/prey //Whatever Mousevar is chasing
+	var/clashing = FALSE //If Mousevar is FUCKING FIGHTING WITH NAR-SIE
 	var/proselytize_range = 10
 	dangerous_possession = TRUE
 
@@ -27,7 +27,7 @@
 	send_to_playing_players('sound/effects/ratvar_reveal.ogg')
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
-	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
+	notify_ghosts("The Justiciar's light calls to you! Reach out to Mousevar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
 	INVOKE_ASYNC(SSshuttle.emergency, /obj/docking_port/mobile/emergency..proc/request, null, 0, 0)
 
 /obj/structure/destructible/clockwork/massive/ratvar/Destroy()
@@ -89,7 +89,7 @@
 				<span class='userdanger'>You feel tremendous relief as the crushing focus relents...</span>")
 			prey = null
 		else
-			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Ratvar ruthlessly chases down his target
+			dir_to_step_in = get_dir(src, prey) //Unlike Nar-Sie, Mousevar ruthlessly chases down his target
 	step(src, dir_to_step_in)
 
 /obj/structure/destructible/clockwork/massive/ratvar/narsie_act()
@@ -97,7 +97,7 @@
 		return FALSE
 	clashing = TRUE
 	to_chat(world, "<span class='heavy_brass'><font size=5>\"[pick("BLOOD GOD!!!", "NAR-SIE!!!", "AT LAST, YOUR TIME HAS COME!")]\"</font></span>")
-	to_chat(world, "<span class='cult'><font size=5>\"<b>Ratvar?! How?!</b>\"</font></span>")
+	to_chat(world, "<span class='cult'><font size=5>\"<b>Mousevar?! How?!</b>\"</font></span>")
 	for(var/obj/singularity/narsie/N in range(15, src))
 		if(N.clashing)
 			continue
@@ -138,7 +138,7 @@
 	switch(winner)
 		if("Ratvar")
 			send_to_playing_players("<span class='heavy_brass'><font size=5>\"[pick("DIE! DIE! DIE!", "FILTH!!!", "SUFFER!!!", text2ratvar("ROT FOR CENTURIES AS I HAVE!!"))]\"</font></span>\n\
-			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Ratv-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
+			<span class='cult'><font size=5>\"<b>[pick("Nooooo...", "Not die. To y-", "Die. Mousev-", "Sas tyen re-")]\"</b></font></span>") //nar-sie get out
 			send_to_playing_players('sound/magic/clockwork/anima_fragment_attack.ogg')
 			send_to_playing_players('sound/magic/demon_dies.ogg')
 			clashing = FALSE

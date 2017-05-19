@@ -83,7 +83,7 @@
 	component_id = GEIS_CAPACITOR
 	cultist_message = "\"Try not to lose your mind - I'll need it. Heh heh...\""
 	servant_of_ratvar_messages = list("\"Disgusting.\"" = FALSE, "\"Well, aren't you an inquisitive fellow?\"" = FALSE, "A foul presence pervades your mind, then vanishes." = FALSE, \
-	"\"The fact that Ratvar has to depend on simpletons like you is appalling.\"" = FALSE)
+	"\"The fact that Mousevar has to depend on simpletons like you is appalling.\"" = FALSE)
 	message_span = "sevtug"
 
 /obj/item/clockwork/component/geis_capacitor/fallen_armor
@@ -111,7 +111,7 @@
 	component_id = REPLICANT_ALLOY
 	cultist_message = "The alloy takes on the appearance of a screaming face for a moment."
 	servant_of_ratvar_messages = list("\"There's always something to be done. Get to it.\"" = FALSE, "\"Idle hands are worse than broken ones. Get to work.\"" = FALSE, \
-	"A detailed image of Ratvar appears in the alloy for a moment." = FALSE)
+	"A detailed image of Mousevar appears in the alloy for a moment." = FALSE)
 	message_span = "nezbere"
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment

@@ -6,7 +6,7 @@
 /datum/clockwork_scripture/invoke_inathneq
 	descname = "Area Invulnerability"
 	name = "Invoke Inath-neq, the Resonant Cogwheel"
-	desc = "Taps the limitless power of Inath-neq, one of Ratvar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
+	desc = "Taps the limitless power of Inath-neq, one of Mousevar's four generals. The benevolence of Inath-Neq will grant complete invulnerability to all Servants in range for fifteen seconds."
 	invocations = list("I call upon you, Vanguard!!", "Let the Resonant Cogs turn once more!!", "Grant me and my allies the strength to vanquish our foes!!")
 	channel_time = 100
 	consumed_components = list(VANGUARD_COGWHEEL = 10, GEIS_CAPACITOR = 3, REPLICANT_ALLOY = 3, HIEROPHANT_ANSIBLE = 3)
@@ -40,7 +40,7 @@
 /datum/clockwork_scripture/invoke_sevtug
 	descname = "Global Hallucination"
 	name = "Invoke Sevtug, the Formless Pariah"
-	desc = "Taps the limitless power of Sevtug, one of Ratvar's four generals. The mental manipulation ability of the Pariah allows its wielder to cause mass hallucinations and confusion \
+	desc = "Taps the limitless power of Sevtug, one of Mousevar's four generals. The mental manipulation ability of the Pariah allows its wielder to cause mass hallucinations and confusion \
 	for all non-servant humans on the same z-level as them. The power of this scripture falls off somewhat with distance, and certain things may reduce its effects."
 	invocations = list("I call upon you, Fright!!", "Let your power shatter the sanity of the weak-minded!!", "Let your tendrils hold sway over all!!")
 	channel_time = 150
@@ -62,7 +62,7 @@
 		return FALSE
 	if(!slab.no_cost && GLOB.ratvar_awakens)
 		to_chat(invoker, "<span class='sevtug'>\"[text2ratvar("Do you really think anything I can do right now will compare to Engine's power?")]\"</span>\n\
-		<span class='warning'>Sevtug will not grant his power while Ratvar's dwarfs his own!</span>")
+		<span class='warning'>Sevtug will not grant his power while Mousevar's dwarfs his own!</span>")
 		return FALSE
 	return TRUE
 
@@ -104,7 +104,7 @@
 /datum/clockwork_scripture/invoke_nezbere
 	descname = "Global Structure Buff"
 	name = "Invoke Nezbere, the Brass Eidolon"
-	desc = "Taps the limitless power of Nezbere, one of Ratvar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
+	desc = "Taps the limitless power of Nezbere, one of Mousevar's four generals. The restless toil of the Eidolon will empower a wide variety of clockwork apparatus for a full minute - notably, \
 	clockwork proselytizers will charge very rapidly."
 	invocations = list("I call upon you, Armorer!!", "Let your machinations reign on this miserable station!!", "Let your power flow through the tools of your master!!")
 	channel_time = 150
@@ -124,7 +124,7 @@
 		return FALSE
 	if(!slab.no_cost && GLOB.ratvar_awakens)
 		to_chat(invoker, "<span class='nezbere'>\"[text2ratvar("Our master is here already. You do not require my help, friend.")]\"</span>\n\
-		<span class='warning'>There is no need for Nezbere's assistance while Ratvar is risen!</span>")
+		<span class='warning'>There is no need for Nezbere's assistance while Mousevar is risen!</span>")
 		return FALSE
 	return TRUE
 
@@ -149,7 +149,7 @@
 /datum/clockwork_scripture/invoke_nzcrentr
 	descname = "Area Lightning Blast"
 	name = "Invoke Nzcrentr, the Eternal Thunderbolt"
-	desc = "Taps the limitless power of Nzcrentr, one of Ratvar's four generals. Nzcrentr will grant you a tiny fraction of its boundless power. After several seconds, all non-Servants near you \
+	desc = "Taps the limitless power of Nzcrentr, one of Mousevar's four generals. Nzcrentr will grant you a tiny fraction of its boundless power. After several seconds, all non-Servants near you \
 	will be struck by devastating lightning bolts."
 	invocations = list("I call upon you, Amperage!!", "Let your energy flow through me!!", "Let your boundless power shatter stars!!")
 	channel_time = 100

@@ -2,7 +2,7 @@
 /obj/structure/destructible/clockwork/massive/celestial_gateway
 	name = "ark of the Clockwork Justicar"
 	desc = "A massive, thrumming rip in spacetime."
-	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Ratvar and withstand the massive amount of energy he emits."
+	clockwork_desc = "A portal to the Celestial Derelict. Massive and intimidating, it is the only thing that can both transport Mousevar and withstand the massive amount of energy he emits."
 	obj_integrity = 500
 	max_integrity = 500
 	mouse_opacity = 2
@@ -163,14 +163,14 @@
 					to_chat(user, "<span class='[get_component_span(i)]'>[get_component_name(i)][i != REPLICANT_ALLOY ? "s":""]:</span> \
 					<span class='[get_component_span(i)]_large'>[required_components[i]]</span>")
 		else
-			to_chat(user, "<span class='big'><b>Seconds until Ratvar's arrival:</b> [get_arrival_text(TRUE)]</span>")
+			to_chat(user, "<span class='big'><b>Seconds until Mousevar's arrival:</b> [get_arrival_text(TRUE)]</span>")
 			switch(progress_in_seconds)
 				if(-INFINITY to GATEWAY_REEBE_FOUND)
 					to_chat(user, "<span class='heavy_brass'>It's still opening.</span>")
 				if(GATEWAY_REEBE_FOUND to GATEWAY_RATVAR_COMING)
 					to_chat(user, "<span class='heavy_brass'>It's reached the Celestial Derelict and is drawing power from it.</span>")
 				if(GATEWAY_RATVAR_COMING to INFINITY)
-					to_chat(user, "<span class='heavy_brass'>Ratvar is coming through the gateway!</span>")
+					to_chat(user, "<span class='heavy_brass'>Mousevar is coming through the gateway!</span>")
 	else
 		switch(progress_in_seconds)
 			if(-INFINITY to GATEWAY_REEBE_FOUND)

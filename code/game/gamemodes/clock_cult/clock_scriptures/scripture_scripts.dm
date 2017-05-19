@@ -205,7 +205,7 @@
 /datum/clockwork_scripture/create_object/soul_vessel
 	descname = "Clockwork Posibrain"
 	name = "Soul Vessel"
-	desc = "Forms an ancient positronic brain with an overriding directive to serve Ratvar."
+	desc = "Forms an ancient positronic brain with an overriding directive to serve Mousevar."
 	invocations = list("Herd the souls of...", "...the blasphemous damned!")
 	channel_time = 30
 	consumed_components = list(VANGUARD_COGWHEEL = 1, GEIS_CAPACITOR = 2)
@@ -223,9 +223,9 @@
 
 //Clockwork Proselytizer: Creates a clockwork proselytizer, used to convert objects and repair clockwork structures.
 /datum/clockwork_scripture/create_object/clockwork_proselytizer
-	descname = "Converts Objects to Ratvarian"
+	descname = "Converts Objects to Mousevarian"
 	name = "Clockwork Proselytizer"
-	desc = "Forms a device that, when used on certain objects, converts them into their Ratvarian equivalents. It requires power to function."
+	desc = "Forms a device that, when used on certain objects, converts them into their Mousevarian equivalents. It requires power to function."
 	invocations = list("With this device...", "...his presence shall be made known.")
 	channel_time = 20
 	consumed_components = list(GEIS_CAPACITOR = 1, REPLICANT_ALLOY = 2)
@@ -238,14 +238,14 @@
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 7
 	quickbind = TRUE
-	quickbind_desc = "Creates a Clockwork Proselytizer, which can convert various objects to Ratvarian variants."
+	quickbind_desc = "Creates a Clockwork Proselytizer, which can convert various objects to Mousevarian variants."
 
 
 //Function Call: Grants the invoker the ability to call forth a Ratvarian spear that deals significant damage to silicons.
 /datum/clockwork_scripture/function_call
 	descname = "Permanent Summonable Spear"
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
+	desc = "Grants the invoker the ability to call forth a powerful Mousevarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
 	vanish three minutes after being summoned."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
@@ -258,13 +258,13 @@
 
 /datum/clockwork_scripture/function_call/check_special_requirements()
 	for(var/datum/action/innate/function_call/F in invoker.actions)
-		to_chat(invoker, "<span class='warning'>You have already bound a Ratvarian spear to yourself!</span>")
+		to_chat(invoker, "<span class='warning'>You have already bound a Mousevarian spear to yourself!</span>")
 		return FALSE
 	return invoker.can_hold_items()
 
 /datum/clockwork_scripture/function_call/scripture_effects()
 	invoker.visible_message("<span class='warning'>A shimmer of yellow light infuses [invoker]!</span>", \
-	"<span class='brass'>You bind a Ratvarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
+	"<span class='brass'>You bind a Mousevarian spear to yourself. Use the \"Function Call\" action button to call it forth.</span>")
 	var/datum/action/innate/function_call/F = new()
 	F.Grant(invoker)
 	return TRUE
@@ -272,7 +272,7 @@
 //Function Call action: Calls forth a Ratvarian spear once every 3 minutes.
 /datum/action/innate/function_call
 	name = "Function Call"
-	desc = "Allows you to summon a Ratvarian spear to fight enemies."
+	desc = "Allows you to summon a Mousevarian spear to fight enemies."
 	button_icon_state = "ratvarian_spear"
 	background_icon_state = "bg_clock"
 	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS

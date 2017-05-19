@@ -87,8 +87,8 @@ Credit where due:
 ///////////////
 
 /datum/game_mode
-	var/list/servants_of_ratvar = list() //The Enlightened servants of Ratvar
-	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar." //The description of the current objective
+	var/list/servants_of_ratvar = list() //The Enlightened servants of Mousevar
+	var/clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Mousevar." //The description of the current objective
 
 /datum/game_mode/clockwork_cult
 	name = "clockwork cult"
@@ -101,8 +101,8 @@ Credit where due:
 	protected_jobs = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain") //Silicons can eventually be converted
 	restricted_jobs = list("Chaplain", "Captain")
 	announce_span = "brass"
-	announce_text = "Servants of Ratvar are trying to summon the Justiciar!\n\
-	<span class='brass'>Servants</span>: Take over the station and summon Ratvar.\n\
+	announce_text = "Servants of Mousevar are trying to summon the Justiciar!\n\
+	<span class='brass'>Servants</span>: Take over the station and summon Mousevar.\n\
 	<span class='notice'>Crew</span>: Stop the servants before they can summon the Clockwork Justiciar."
 	var/servants_to_serve = list()
 	var/roundstart_player_count
@@ -123,7 +123,7 @@ Credit where due:
 		servants_to_serve += servant
 		antag_candidates -= servant
 		modePlayer += servant
-		servant.special_role = "Servant of Ratvar"
+		servant.special_role = "Servant of Mousevar"
 		servant.restricted_roles = restricted_jobs
 		starter_servants--
 	return 1
@@ -131,7 +131,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult/post_setup()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
-		log_game("[servant.key] was made an initial servant of Ratvar")
+		log_game("[servant.key] was made an initial servant of Mousevar")
 		var/mob/living/L = servant.current
 		greet_servant(L)
 		equip_servant(L)
@@ -142,8 +142,8 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
 	if(!M)
 		return 0
-	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
-	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
+	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Mousevar, the Clockwork Justiciar.</span>\n\
+	Rusting eternally in the Celestial Derelict, Mousevar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You may not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
 	to_chat(M, greeting_text)
 	M.playsound_local('sound/ambience/antag/ClockCultAlr.ogg',100,0)
@@ -164,7 +164,7 @@ Credit where due:
 		if(!S.forceMove(get_turf(L)))
 			qdel(S)
 	if(S && !QDELETED(S))
-		to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
+		to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Mousevar and how to best complete your \
 		tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
 		and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
 		to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
@@ -175,8 +175,8 @@ Credit where due:
 	if(!L || !istype(L) || !L.mind)
 		return 0
 	var/datum/mind/M = L.mind
-	to_chat(M.current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
-	M.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>"
+	to_chat(M.current, "<b>This is Mousevar's will:</b> [CLOCKCULT_OBJECTIVE]")
+	M.memory += "<b>Mousevar's will:</b> [CLOCKCULT_OBJECTIVE]<br>"
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
@@ -198,29 +198,29 @@ Credit where due:
 	if(istype(SSticker.mode, /datum/game_mode/clockwork_cult)) //Possibly hacky?
 		var/datum/game_mode/clockwork_cult/C = SSticker.mode
 		if(C.check_clockwork_victory())
-			text += "<span class='large_brass'><b>Ratvar's servants have succeeded in fulfilling His goals!</b></span>"
-			SSblackbox.set_details("round_end_result", "win - servants completed their objective (summon ratvar)")
+			text += "<span class='large_brass'><b>Mousevar's servants have succeeded in fulfilling His goals!</b></span>"
+			SSblackbox.set_details("round_end_result", "win - servants completed their objective (summon mousevar)")
 		else
 			var/half_victory = FALSE
 			var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = locate() in GLOB.all_clockwork_objects
 			if(G)
 				half_victory = TRUE
 			if(half_victory)
-				text += "<span class='large_brass'><b>The crew escaped before Ratvar could rise, but the gateway \
+				text += "<span class='large_brass'><b>The crew escaped before Mousevar could rise, but the gateway \
 				was successfully constructed!</b></span>"
-				SSblackbox.set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon ratvar)")
+				SSblackbox.set_details("round_end_result", "halfwin - servants constructed the gateway but their objective was not completed (summon mousevar)")
 			else
-				text += "<span class='userdanger'>Ratvar's servants have failed!</span>"
-				SSblackbox.set_details("round_end_result", "loss - servants failed their objective (summon ratvar)")
+				text += "<span class='userdanger'>Mousevar's servants have failed!</span>"
+				SSblackbox.set_details("round_end_result", "loss - servants failed their objective (summon mousevar)")
 		text += "<br><b>The servants' objective was:</b> <br>[CLOCKCULT_OBJECTIVE]"
-		text += "<br>Ratvar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
+		text += "<br>Mousevar's servants had <b>[GLOB.clockwork_caches]</b> Tinkerer's Caches."
 		text += "<br><b>Construction Value(CV)</b> was: <b>[GLOB.clockwork_construction_value]</b>"
 		var/list/scripture_states = scripture_unlock_check()
 		for(var/i in scripture_states)
 			if(i != SCRIPTURE_DRIVER)
 				text += "<br><b>[i] scripture</b> was: <b>[scripture_states[i] ? "UN":""]LOCKED</b>"
 	if(servants_of_ratvar.len)
-		text += "<br><b>Ratvar's servants were:</b>"
+		text += "<br><b>Mousevar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
 	to_chat(world, text)

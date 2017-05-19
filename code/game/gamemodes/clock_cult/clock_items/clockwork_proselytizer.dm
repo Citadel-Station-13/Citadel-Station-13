@@ -2,7 +2,7 @@
 /obj/item/clockwork/clockwork_proselytizer
 	name = "clockwork proselytizer"
 	desc = "An odd, L-shaped device that hums with energy."
-	clockwork_desc = "A device that allows the replacing of mundane objects with Ratvarian variants. It requires power to function."
+	clockwork_desc = "A device that allows the replacing of mundane objects with Mousevarian variants. It requires power to function."
 	icon_state = "clockwork_proselytizer"
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 5
@@ -36,7 +36,7 @@
 	return ..()
 
 /obj/item/clockwork/clockwork_proselytizer/scarab/debug
-	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Ratvarian variant."
+	clockwork_desc = "A cogscarab's internal proselytizer. It can convert nearly any object into a Mousevarian variant."
 	uses_power = FALSE
 	debug = TRUE
 
@@ -269,7 +269,7 @@
 		var/mob/living/L = target
 		if(!is_servant_of_ratvar(L))
 			if(!silent)
-				to_chat(user, "<span class='warning'>[L] does not serve Ratvar!</span>")
+				to_chat(user, "<span class='warning'>[L] does not serve Mousevar!</span>")
 			return FALSE
 		if(L.health >= L.maxHealth || (L.flags & GODMODE))
 			if(!silent)

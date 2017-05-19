@@ -340,12 +340,12 @@
 		production_text += production_text_addon
 		production_text = production_text.Join()
 
-		textlist = list("<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Ratvar.</center></b></font><br>\
+		textlist = list("<font color=#BE8700 size=3><b><center>Chetr nyy hagehguf-naq-ubabe Mousevar.</center></b></font><br>\
 		\
-		First and foremost, you serve Ratvar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
-		scale of things than your life. Ratvar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
+		First and foremost, you serve Mousevar, the Clockwork Justicar, in any ways he sees fit. This is with no regard to your personal well-being, and you would do well to think of the larger \
+		scale of things than your life. Mousevar wishes retribution upon those that trapped him in Reebe - the Nar-Sian cultists - and you are to help him obtain it.<br><br>\
 		\
-		Ratvar, being trapped in Reebe, the Celestial Derelict, cannot directly affect the mortal plane. However, links, such as this Clockwork Slab, can be created to draw \
+		Mousevar, being trapped in Reebe, the Celestial Derelict, cannot directly affect the mortal plane. However, links, such as this Clockwork Slab, can be created to draw \
 		<b><font color=#BE8700>Components</font></b>, fragments of the Justicar, from Reebe, and those Components can be used to draw power and material from Reebe through arcane chants \
 		known as <b><font color=#BE8700>Scripture</font></b>.<br><br>\
 		\
@@ -387,7 +387,7 @@
 		textlist += "<br>\
 		Examine the slab or swap to Recital to check the number of components it has available.<br><br>\
 		\
-		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Ratvar.</center></b></font>"
+		<font color=#BE8700 size=3><b><center>Purge all untruths and honor Mousevar.</center></b></font>"
 	return textlist.Join()
 
 /obj/item/clockwork/slab/ui_data(mob/user) //we display a lot of data via TGUI

@@ -7,7 +7,7 @@
 	descname = "Structure, Win Condition"
 	name = "Ark of the Clockwork Justiciar"
 	desc = "Tears apart a rift in spacetime to Reebe, the Celestial Derelict, using a massive amount of components.\n\
-	This gateway will, after some time, call forth Ratvar from his exile and massively empower all scriptures and tools."
+	This gateway will, after some time, call forth Mousevar from his exile and massively empower all scriptures and tools."
 	invocations = list("ARMORER! FRIGHT! AMPERAGE! VANGUARD! I CALL UPON YOU!!", \
 	"THE TIME HAS COME FOR OUR MASTER TO BREAK THE CHAINS OF EXILE!!", \
 	"LEND US YOUR AID! ENGINE COMES!!")
@@ -37,6 +37,6 @@
 			to_chat(invoker, "<span class='warning'>You must be on the station to activate the Ark!</span>")
 			return FALSE
 		if(GLOB.clockwork_gateway_activated)
-			to_chat(invoker, "<span class='warning'>Ratvar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")
+			to_chat(invoker, "<span class='warning'>Mousevar's recent banishment renders him too weak to be wrung forth from Reebe!</span>")
 			return FALSE
 	return ..()
