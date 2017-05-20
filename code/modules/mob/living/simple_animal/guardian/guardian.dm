@@ -590,7 +590,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
-	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it</span>"
+	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
@@ -674,7 +674,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
-	activation_message = "<span class='holoparasite'>You finish eating the fishsticks!. Delicious!>"
+	activation_message = "<span class='holoparasite'>You finish eating the fishsticks! Delicious!>"
 	allowmultiple = TRUE
 	allowling = TRUE
 	random = TRUE
