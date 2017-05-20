@@ -212,7 +212,7 @@
 	name = "dart"
 	icon_state = "cbbolt"
 	damage = 6
-	var/piercing = 0
+	var/piercing = FALSE
 
 /obj/item/projectile/bullet/dart/New()
 	..()
@@ -223,15 +223,15 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null, 0, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 				..()
 				reagents.reaction(M, INJECT)
 				reagents.trans_to(M, reagents.total_volume)
-				return 1
+				return TRUE
 			else
 				blocked = 100
-				target.visible_message("<span class='danger'>The [name] was deflected!</span>", \
-									   "<span class='userdanger'>You were protected against the [name]!</span>")
+				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
+									   "<span class='userdanger'>You were protected against \the [src]!</span>")
 
 	..(target, blocked)
 	reagents.set_reacting(TRUE)
