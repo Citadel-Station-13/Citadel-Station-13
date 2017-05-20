@@ -467,7 +467,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/activation_message = "<span class='holoparasite'>...And draw a card! The rest of the deck rapidly flashes to ash!</span>"
+	var/activation_message = "<span class='holoparasite'>The rest of the deck rapidly flashes to ash!</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
