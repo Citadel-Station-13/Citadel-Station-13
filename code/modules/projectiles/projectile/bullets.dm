@@ -178,9 +178,9 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
-			if(M.canbearoused) // if they're prude, don't let them be lewd - checks if mob can actually be aroused
-				M.adjustArousalLoss(5)
-				to_chat(M, "<span class='love'>You feel slightly hornier...</span>")
+		if(M.canbearoused) // if they're prude, don't let them be lewd - checks if mob can actually be aroused
+			M.adjustArousalLoss(5)
+			to_chat(M, "<span class='love'>You feel slightly hornier...</span>")
 
 /obj/item/projectile/bullet/dildo/New()
 	..()
