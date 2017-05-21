@@ -1,41 +1,32 @@
-Skip to content
-This repository
-Search
-Pull requests
-Issues
-Gist
- @Poojawa
- Sign out
- Watch 2
-  Star 0
- Fork 1,393 lordpidey/-tg-station
-forked from tgstation/tgstation
- Code  Pull requests 0  Projects 0  Wiki  Pulse  Graphs
-Tree: 05fabef926 Find file Copy path-tg-station/code/datums/mind.dm
-839a7ee  5 days ago
- Mike Long Adds ninja to traitor panel.
-81 contributors @Ikarrus @ChangelingRain @RemieRichards @tkdrg @theOperand @Cheridan @phil235 @lordpidey @Cyberboss @AnturK @Perakp @lzimann @KorPhaeron @Robustin @Razharas @Giacom @AndrewJacksonThe2nd @MrPerson @Incoming5643 @neersighted @optimumtact @duncathan @Core0verload @coiax @Shadowlight213 @Jordie0608 and others
-RawBlameHistory     
-1659 lines (1428 sloc)  62.1 KB
 /*	Note from Carnie:
 		The way datum/mind stuff works has been changed a lot.
 		Minds now represent IC characters rather than following a client around constantly.
+
 	Guidelines for using minds properly:
+
 	-	Never mind.transfer_to(ghost). The var/current and var/original of a mind must always be of type mob/living!
 		ghost.mind is however used as a reference to the ghost's corpse
+
 	-	When creating a new mob for an existing IC character (e.g. cloning a dead guy or borging a brain of a human)
 		the existing mind of the old mob should be transfered to the new mob like so:
+
 			mind.transfer_to(new_mob)
+
 	-	You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
 		By setting key or ckey explicitly after transfering the mind with transfer_to you will cause bugs like DCing
 		the player.
+
 	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
+
 	-	When creating a new mob which will be a new IC character (e.g. putting a shade in a construct or randomly selecting
 		a ghost to become a xeno during an event). Simply assign the key or ckey like you've always done.
+
 			new_mob.key = key
+
 		The Login proc will handle making a new mob for that mobtype (including setting up stuff like mind.name). Simple!
 		However if you want that mind to have any special properties like being a traitor etc you will have to do that
 		yourself.
+
 */
 
 /datum/mind
@@ -1665,5 +1656,3 @@ RawBlameHistory
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
-Contact GitHub API Training Shop Blog About
-© 2017 GitHub, Inc. Terms Privacy Security Status Help
