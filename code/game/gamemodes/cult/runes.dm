@@ -148,8 +148,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/proc/fail_invoke()
 	//This proc contains the effects of a rune if it is not invoked correctly, through either invalid wording or not enough cultists. By default, it's just a basic fizzle.
-	visible_message("<span class='warning'>The markings pulse with a \
-		small flash of red light, then fall dark.</span>")
+	visible_message("<span class='warning'>The markings pulse with a small flash of red light, then fall dark.</span>")
 	var/oldcolor = color
 	color = rgb(255, 0, 0)
 	animate(src, color = oldcolor, time = 5)
@@ -307,10 +306,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 			A.forceMove(target)
 	if(movedsomething)
 		..()
-		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>")
+		visible_message("<span class='warning'>There is a sharp crack of inrushing air, and everything above the rune disappears!</span>", null, "<i>You hear a sharp crack.</i>")
 		to_chat(user, "<span class='cult'>You[moveuserlater ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"].</span>")
 		if(moveuserlater)
 			user.forceMove(target)
+		target.visible_message("<span class='warning'>There is a boom of outrushing air as something appears above the rune!</span>", null, "<i>You hear a boom.</i>")
 	else
 		fail_invoke()
 
@@ -478,10 +478,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	send_to_playing_players('sound/effects/dimensional_rend.ogg')
 	var/turf/T = get_turf(src)
 	sleep(40)
+	SSticker.mode.eldergod = FALSE
 	if(src)
 		color = "#FF0000"
-	SSticker.mode.eldergod = FALSE
-	new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
+	deltimer(GLOB.blood_target_reset_timer)
+	new /obj/singularity/narsie/large/cult(T) //Causes Nar-Sie to spawn and makes it the blood target even if the rune has been removed
+
 
 /obj/effect/rune/narsie/attackby(obj/I, mob/user, params)	//Since the narsie rune takes a long time to make, add logging to removal.
 	if((istype(I, /obj/item/weapon/tome) && iscultist(user)))
