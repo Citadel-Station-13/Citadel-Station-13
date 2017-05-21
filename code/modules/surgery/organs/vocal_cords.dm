@@ -51,7 +51,7 @@
 			if(C.getorganslot("adamantine_resonator"))
 				to_chat(C, msg)
 		if(isobserver(m))
-			var/link = FOLLOW_LINK(m, src)
+			var/link = FOLLOW_LINK(m, owner)
 			to_chat(m, "[link] [msg]")
 
 //Colossus drop, forces the listeners to obey certain commands
@@ -181,12 +181,13 @@
 
 	for(var/V in listeners)
 		var/mob/living/L = V
-		if(L.mind && L.mind.devilinfo && findtext(message, L.mind.devilinfo.truename))
-			var/start = findtext(message, L.mind.devilinfo.truename)
-			listeners = list(L) //let's be honest you're never going to find two devils with the same name
+		var/datum/antagonist/devil/devilinfo = is_devil(L)
+		if(devilinfo && findtext(message, devilinfo.truename))
+			var/start = findtext(message, devilinfo.truename)
+			listeners = list(L) //Devil names are unique.
 			power_multiplier *= 5 //if you're a devil and god himself addressed you, you fucked up
 			//Cut out the name so it doesn't trigger commands
-			message = copytext(message, 0, start)+copytext(message, start + length(L.mind.devilinfo.truename), length(message) + 1)
+			message = copytext(message, 0, start)+copytext(message, start + length(devilinfo.truename), length(message) + 1)
 			break
 		else if(dd_hasprefix(message, L.real_name))
 			specific_listeners += L //focus on those with the specified name
@@ -362,8 +363,9 @@
 		cooldown = COOLDOWN_MEME
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.mind && L.mind.devilinfo)
-				L.say("[L.mind.devilinfo.truename]")
+			if(is_devil(L))
+				var/datum/antagonist/devil/devilinfo = is_devil(L)
+				L.say("[devilinfo.truename]")
 			else
 				L.say("[L.real_name]")
 			sleep(5) //So the chat flows more naturally

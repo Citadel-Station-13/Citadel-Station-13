@@ -414,7 +414,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
+			var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
 				new_stand = pick(candidates)
@@ -467,6 +467,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
+	var/activation_message = "<span class='holoparasite'>The rest of the deck rapidly flashes to ash!</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -489,12 +490,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
 		theghost = pick(candidates)
 		spawn_guardian(user, theghost.key)
+		to_chat(user, "[activation_message]")
+		qdel(src)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE
@@ -587,6 +590,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it.</span>"
 
 /obj/item/weapon/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
@@ -599,7 +603,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/weapon/paper/guardian
 	name = "Holoparasite Guide"
-	icon_state = "paper_words"
+	icon_state = "alienpaper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
@@ -670,6 +674,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
+	activation_message = "<span class='holoparasite'>You finish eating the fishsticks! Delicious!>"
 	allowmultiple = TRUE
 	allowling = TRUE
 	random = TRUE
