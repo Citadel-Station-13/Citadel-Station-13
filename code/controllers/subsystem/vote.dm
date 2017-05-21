@@ -125,7 +125,7 @@ SUBSYSTEM_DEF(vote)
 				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
 			if("gamemode")
 				if(GLOB.master_mode != .)
-					world.save_mode(.)
+					SSticker.save_mode(.)
 					if(SSticker.HasRoundStarted())
 						restart = 1
 					else

@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(server_maint)
 	wait = 6
 	flags = SS_POST_FIRE_TIMING
 	priority = 10
+	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 
@@ -16,7 +17,7 @@ SUBSYSTEM_DEF(server_maint)
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
 	if(!resumed)
 		src.currentrun = GLOB.clients.Copy()
-
+	
 	var/list/currentrun = src.currentrun
 	var/round_started = SSticker.HasRoundStarted()
 

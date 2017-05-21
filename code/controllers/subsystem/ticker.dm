@@ -64,6 +64,7 @@ SUBSYSTEM_DEF(ticker)
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
+	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
@@ -285,7 +286,7 @@ SUBSYSTEM_DEF(ticker)
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
+			if(mode && !override )
 				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
@@ -295,6 +296,17 @@ SUBSYSTEM_DEF(ticker)
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("cult")
+					cinematic.icon_state = null
+					flick("intro_cult",cinematic)
+					sleep(25)
+					world << sound('sound/magic/enter_blood.ogg')
+					sleep(28)
+					world << sound('sound/machines/terminal_off.ogg')
+					sleep(20)
+					flick("station_corrupted",cinematic)
+					world << sound('sound/effects/ghost.ogg')
+					actually_blew_up = FALSE
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
@@ -343,6 +355,13 @@ SUBSYSTEM_DEF(ticker)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
+				if("cult") //Station nuked (nuke,explosion,summary)
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_explode_fade_red",cinematic)
+					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
+					cinematic.icon_state = "summary_cult"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
 					sleep(35)
