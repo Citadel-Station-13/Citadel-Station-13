@@ -56,7 +56,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), MAX(round_id)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
+			var/datum/DBQuery/query_feedback_create_round = SSdbcore.NewQuery("INSERT INTO [format_table_name("feedback")] SELECT null, Now(), IFNULL(MAX(round_id),0)+1, \"server_ip\", 0, \"[world.internet_address]:[world.port]\" FROM [format_table_name("feedback")]")
 			query_feedback_create_round.Execute()
 			var/datum/DBQuery/query_feedback_max_id = SSdbcore.NewQuery("SELECT MAX(round_id) FROM [format_table_name("feedback")]")
 			query_feedback_max_id.Execute()
@@ -85,23 +85,6 @@
 	
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
-
-	GLOB.revdata.DownloadPRDetails()
-	load_mode()
-	load_motd()
-	load_admins()
-	load_menu()
-	if(config.usewhitelist)
-		load_whitelist()
-//disabled to prevent runtimes until it's fixed
-//	load_mentors()
-	LoadBans()
-
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
-	GLOB.data_core = new /datum/datacore()
-
-	Master.Initialize(10, FALSE)
 
 #define IRC_STATUS_THROTTLE 50
 /world/Topic(T, addr, master, key)
@@ -228,13 +211,9 @@
 		if(PRcounts[id] > PR_ANNOUNCEMENTS_PER_ROUND)
 			return
 
-#define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
+	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
 	for(var/client/C in GLOB.clients)
-		if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-			C << "<span class='announce'>PR: [announcement]</span>"
-#undef CHAT_PULLR
-
-#define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
+		C.AnnouncePR(final_composed)
 
 /world/Reboot(reason = 0, fast_track = FALSE)
 	if (reason || fast_track) //special reboot, do none of the normal stuff
@@ -242,78 +221,11 @@
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
-		WORLD_REBOOT(1)
-	var/delay
-	if(time)
-		delay = time
 	else
-		delay = config.round_end_countdown * 10
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
-		return
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
-	var/round_end_sound_sent = FALSE
-	if(SSticker.round_end_sound)
-		round_end_sound_sent = TRUE
-		for(var/thing in GLOB.clients)
-			var/client/C = thing
-			if (!C)
-				continue
-			C.Export("##action=load_rsc", SSticker.round_end_sound)
-	sleep(delay)
-	if(SSticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
-		return
-	OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	WORLD_REBOOT(0)
-#undef WORLD_REBOOT
-
-/world/proc/OnReboot(reason, feedback_c, feedback_r, round_end_sound_sent)
-	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
-	to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
-	RoundEndAnimation(round_end_sound_sent)
-	Master.Shutdown()	//run SS shutdowns
-
-/world/proc/RoundEndAnimation(round_end_sound_sent)
-	set waitfor = FALSE
-	var/round_end_sound
-	if(SSticker.round_end_sound)
-		round_end_sound = SSticker.round_end_sound
-		if (!round_end_sound_sent)
-			for(var/thing in GLOB.clients)
-				var/client/C = thing
-				if (!C)
-					continue
-				C.Export("##action=load_rsc", round_end_sound)
-	else
-		round_end_sound = pick(\
-		'sound/roundend/newroundsexy.ogg',
-		'sound/roundend/apcdestroyed.ogg',
-		'sound/roundend/bangindonk.ogg',
-		'sound/roundend/leavingtg.ogg',
-		'sound/roundend/its_only_game.ogg',
-		'sound/roundend/yeehaw.ogg',
-		'sound/roundend/disappointed.ogg'\
-		)
-
-	for(var/thing in GLOB.clients)
-		var/obj/screen/splash/S = new(thing, FALSE)
-		S.Fade(FALSE,FALSE)
-
-	world << sound(round_end_sound)
-
-/world/proc/load_mode()
-	var/mode = trim(file2text("data/mode.txt"))
-	if(mode)
-		GLOB.master_mode = mode
-	else
-		GLOB.master_mode = "extended"
-	log_game("Saved mode is '[GLOB.master_mode]'")	
-
-/world/proc/save_mode(the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
+		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
+		Master.Shutdown()	//run SS shutdowns
+	log_world("World rebooted at [time_stamp()]"); 
+	..()
 
 /world/proc/load_motd()
 	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
