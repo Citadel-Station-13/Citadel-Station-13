@@ -142,14 +142,14 @@
 /obj/item/weapon/antag_spawner/nuke_ops/proc/check_usability(mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] is out of power!</span>")
-		return 0
+		return FALSE
 	if(!(user.mind in SSticker.mode.syndicates))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
-		return 0
+		return FALSE
 	if(user.z != ZLEVEL_CENTCOM)
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /obj/item/weapon/antag_spawner/nuke_ops/attack_self(mob/user)
