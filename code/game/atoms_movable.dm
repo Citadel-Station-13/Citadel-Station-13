@@ -1,3 +1,4 @@
+
 #ifndef PIXEL_SCALE
 #define PIXEL_SCALE 0
 #if DM_VERSION >= 512
@@ -15,7 +16,6 @@
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
 	var/datum/language_holder/language_holder
-	var/datum/language_menu/language_menu = null
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -42,8 +42,31 @@
 		return FALSE	//PLEASE no.
 	if((var_name in careful_edits) && (var_value % world.icon_size) != 0)
 		return FALSE
+	switch(var_name)
+		if("x")
+			var/turf/T = locate(var_value, y, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("y")
+			var/turf/T = locate(x, var_value, z)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("z")
+			var/turf/T = locate(x, y, var_value)
+			if(T)
+				forceMove(T)
+				return TRUE
+			return FALSE
+		if("loc")
+			if(var_value == null || istype(var_value, /atom))
+				forceMove(var_value)
+				return TRUE
+			return FALSE
 	return ..()
-
 
 /atom/movable/Move(atom/newloc, direct = 0)
 	if(!loc || !newloc) return 0
@@ -432,8 +455,7 @@
 		pixel_x_diff = -8
 
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, time = 2)
-	//animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = final_pixel_y, time = 2) //Putting back my non offset breaking method
+	animate(pixel_x = initial(pixel_x), pixel_y = final_pixel_y, time = 2)
 
 /atom/movable/proc/do_item_attack_animation(atom/A, visual_effect_icon, obj/item/used_item)
 	var/image/I
@@ -580,7 +602,6 @@
 		language_holder = new initial_language_holder(src)
 		return language_holder
 
-
 /atom/movable/proc/grant_language(datum/language/dt)
 	var/datum/language_holder/H = get_language_holder()
 	H.grant_language(dt)
@@ -605,6 +626,10 @@
 	var/datum/language_holder/H = get_language_holder()
 	. = H.has_language(dt)
 
+/atom/movable/proc/copy_known_languages_from(thing, replace=FALSE)
+	var/datum/language_holder/H = get_language_holder()
+	. = H.copy_known_languages_from(thing, replace)
+
 // Whether an AM can speak in a language or not, independent of whether
 // it KNOWS the language
 /atom/movable/proc/could_speak_in_language(datum/language/dt)
@@ -615,7 +640,9 @@
 
 	if(!H.has_language(dt))
 		return FALSE
-	else if(H.omnitongue || could_speak_in_language(dt))
+	else if(H.omnitongue)
+		return TRUE
+	else if(could_speak_in_language(dt) && (!H.only_speaks_language || H.only_speaks_language == dt))
 		return TRUE
 	else
 		return FALSE
@@ -626,12 +653,10 @@
 	var/datum/language_holder/H = get_language_holder()
 
 	if(H.selected_default_language)
-		if(H.has_language(H.selected_default_language))
+		if(can_speak_in_language(H.selected_default_language))
 			return H.selected_default_language
 		else
 			H.selected_default_language = null
-
-
 
 	var/datum/language/chosen_langtype
 	var/highest_priority
@@ -645,6 +670,7 @@
 		if(!highest_priority || (pri > highest_priority))
 			chosen_langtype = langtype
 			highest_priority = pri
+
 	H.selected_default_language = .
 	. = chosen_langtype
 

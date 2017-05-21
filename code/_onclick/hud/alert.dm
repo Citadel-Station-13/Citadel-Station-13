@@ -287,35 +287,35 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			GLOB.blood_target = null
 		else
 			blood_target = GLOB.blood_target
-	if(Cviewer)
-		if(Cviewer.seeking && Cviewer.master)
-			blood_target = Cviewer.master
-	if(!blood_target && !GLOB.sac_complete)
-		if(icon_state == "runed_sense0")
-			return
-		animate(src, transform = null, time = 1, loop = 0)
-		angle = 0
-		cut_overlays()
-		icon_state = "runed_sense0"
-		desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
-		add_overlay(GLOB.sac_image)
-		return
-	if(!blood_target && GLOB.sac_complete)
-		if(icon_state == "runed_sense1")
-			return
-		animate(src, transform = null, time = 1, loop = 0)
-		angle = 0
-		cut_overlays()
-		icon_state = "runed_sense1"
-		desc = "The sacrifice is complete, prepare to summon Nar-Sie!"
-		add_overlay(narnar)
-		return
+	if(Cviewer && Cviewer.seeking && Cviewer.master)
+		blood_target = Cviewer.master
+		desc = "Your blood sense is leading you to [Cviewer.master]"
 	if(!blood_target)
+		if(!GLOB.sac_complete)
+			if(icon_state == "runed_sense0")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense0"
+			desc = "Nar-Sie demands that [GLOB.sac_mind] be sacrificed before the summoning ritual can begin."
+			add_overlay(GLOB.sac_image)
+		else
+			if(icon_state == "runed_sense1")
+				return
+			animate(src, transform = null, time = 1, loop = 0)
+			angle = 0
+			cut_overlays()
+			icon_state = "runed_sense1"
+			desc = "The sacrifice is complete, bring the wrath of Nar-Sie upon the crew!"
+			add_overlay(narnar)
 		return
 	var/turf/P = get_turf(blood_target)
 	var/turf/Q = get_turf(mob_viewer)
 	var/area/A = get_area(P)
 	if(P.z != Q.z) //The target is on a different Z level, we cannot sense that far.
+		icon_state = "runed_sense2"
+		desc = "[blood_target] is no longer in your sector, you cannot sense its presence here."
 		return
 	desc = "You are currently tracking [blood_target] in [A.name]."
 	var/target_angle = Get_Angle(Q, P)
@@ -703,4 +703,3 @@ so as to remain in compliance with the most up-to-date laws."
 	severity = 0
 	master = null
 	screen_loc = ""
-

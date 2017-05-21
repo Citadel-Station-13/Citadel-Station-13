@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
-
+	
 	var/list/msg_common = list()
 	var/list/msg_science = list()
 	var/list/msg_command = list()
