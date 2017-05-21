@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(blackbox)
 
 	if (!SSdbcore.Connect())
 		return
-
+    
 	var/list/sqlrowlist = list()
 
 	for (var/datum/feedback_variable/FV in feedback)
@@ -95,7 +95,6 @@ SUBSYSTEM_DEF(blackbox)
 		return
 
 	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
-
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	switch(freq)
