@@ -153,8 +153,8 @@
 		return
 	var/datum/gas_mixture/air1 = AIR1
 	var/turf/T = get_turf(src)
-	if(isliving(occupant))
-		var/mob/living/mob_occupant
+	if(occupant)
+		var/mob/living/mob_occupant = occupant
 		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
@@ -176,8 +176,8 @@
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
-					beaker.reagents.trans_to(mob_occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
-					beaker.reagents.reaction(mob_occupant, VAPOR)
+					beaker.reagents.trans_to(occupant, 1, 10 * efficiency) // Transfer reagents, multiplied because cryo magic.
+					beaker.reagents.reaction(occupant, VAPOR)
 					air1.gases["o2"][MOLES] -= 2 / efficiency // Lets use gas for this.
 				if(++reagent_transfer >= 10 * efficiency) // Throttle reagent transfer (higher efficiency will transfer the same amount but consume less from the beaker).
 					reagent_transfer = 0
@@ -192,7 +192,7 @@
 		on = FALSE
 		update_icon()
 		return
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/mob/living/carbon/human/H = occupant
@@ -244,7 +244,7 @@
 	..()
 	if(occupant)
 		if(on)
-			to_chat(user, "[occupant] is inside [src]!")
+			to_chat(user, "Someone's inside [src]!")
 		else
 			to_chat(user, "You can barely make out a form floating in [src].")
 	else
@@ -299,7 +299,7 @@
 	data["autoEject"] = autoeject
 
 	var/list/occupantData = list()
-	if(isliving(occupant))
+	if(occupant)
 		var/mob/living/mob_occupant = occupant
 		occupantData["name"] = mob_occupant.name
 		occupantData["stat"] = mob_occupant.stat
