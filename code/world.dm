@@ -236,8 +236,8 @@
 
 #define WORLD_REBOOT(X) log_world("World rebooted at [time_stamp()]"); ..(X); return;
 
-/world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
-	if (reason == 1) //special reboot, do none of the normal stuff
+/world/Reboot(reason = 0, fast_track = FALSE)
+	if (reason || fast_track) //special reboot, do none of the normal stuff
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
