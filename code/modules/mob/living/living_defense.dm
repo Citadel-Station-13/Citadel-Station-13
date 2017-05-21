@@ -295,7 +295,7 @@
 	gib()
 	return(gain)
 
-/mob/living/narsie_act(var/obj/singularity/narsie/large/cult/NS)
+/mob/living/narsie_act()
 	if(status_flags & GODMODE)
 		return
 
@@ -305,12 +305,6 @@
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
 		return FALSE
-	if(src in NS.souls_needed)
-		NS.souls += 1
-		NS.resize(1.1)
-		if(NS.souls == NS.soul_goal)
-			SSticker.station_explosion_cinematic(1,"cult")
-			SSticker.force_ending = 1
 	if(GLOB.cult_narsie && GLOB.cult_narsie.souls_needed[src])
 		GLOB.cult_narsie.resize(1.1)
 		GLOB.cult_narsie.souls_needed -= src
@@ -321,10 +315,8 @@
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper, 1), 120)
 			addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 270)
 	if(client)
-		if(iscultist(src))
-			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester/chosen, src, null, 1)
-		else
-			makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, null, 0)
+		makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, src, cultoverride = TRUE)
+	else
 		switch(rand(1, 6))
 			if(1)
 				new /mob/living/simple_animal/hostile/construct/armored/hostile(get_turf(src))
