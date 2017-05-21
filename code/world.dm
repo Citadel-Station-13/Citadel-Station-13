@@ -32,6 +32,7 @@
 
 	load_motd()
 	load_admins()
+	load_mentors()
 	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
