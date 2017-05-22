@@ -1,9 +1,0 @@
-diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
-@@ -14,7 +14,6 @@
- 
- // BEGIN_INCLUDE
- #include "_maps\basemap.dm"
--#include "_maps\loadallmaps.dm"
- #include "code\_compile_options.dm"
- #include "code\world.dm"
- #include "code\__DATASTRUCTURES\globals.dm"
