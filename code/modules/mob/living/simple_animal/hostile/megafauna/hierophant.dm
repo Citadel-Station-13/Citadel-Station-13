@@ -479,7 +479,7 @@ Difficulty: Hard
 	var/currently_seeking = FALSE
 	var/friendly_fire_check = FALSE //if blasts produced apply friendly fire
 	var/monster_damage_boost = TRUE
-	var/damage = 10 
+	var/damage = 10
 
 /obj/effect/temp_visual/hierophant/chaser/Initialize(mapload, new_caster, new_target, new_speed, is_friendly_fire)
 	. = ..()
@@ -526,8 +526,6 @@ Difficulty: Hard
 
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
 	new /obj/effect/temp_visual/hierophant/blast(loc, caster, friendly_fire_check)
-	B.damage = damage
-	B.monster_damage_boost = monster_damage_boost
 
 /obj/effect/temp_visual/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'
