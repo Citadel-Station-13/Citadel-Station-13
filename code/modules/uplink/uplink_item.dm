@@ -929,6 +929,15 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
+/datum/uplink_item/device_tools/syndietome
+	name = "Syndicate Tome"
+	desc = "Using rare artifacts acquired at great cost, the syndicate has reverse engineered \
+			the seemingly magical books of a certain cult. Though lacking the esoteric abilities \
+			of the originals, these inferior copies are still quite useful, being able to provide \
+			both weal and woe on the battlefield, even if they do occasionally bite off a finger."
+	item = /obj/item/weapon/storage/book/bible/syndicate
+	cost = 9
+
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
 	desc = "These goggles can be turned to resemble common eyewears throughout the station. \
@@ -968,6 +977,24 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/weapon/aiModule/syndicate
 	cost = 14
+
+/datum/uplink_item/device_tools/briefcase_launchpad
+	name = "Briefcase Launchpad"
+	desc = "A briefcase containing a launchpad, a device able to teleport items and people to and from targets up to three tiles away from the briefcase. \
+			Also includes a remote control. Touch the briefcase with the remote to link it."
+	surplus = 0
+	item = /obj/item/briefcase_launchpad
+	cost = 6
+
+/datum/uplink_item/device_tools/briefcase_launchpad/buy(mob/user, obj/item/device/uplink/U)
+	var/obj/item/device/launchpad_remote/L = new(get_turf(user)) //free remote
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.put_in_hands(L))
+			to_chat(H, "[L] materializes into your hands!")
+		else
+			to_chat(H, "\The [L] materializes onto the floor.")
+	return ..()
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"
@@ -1249,6 +1276,14 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	restricted_roles = list("Chaplain")
 	surplus = 5 //Very low chance to get it in a surplus crate even without being the chaplain
 
+/datum/uplink_item/role_restricted/pie_cannon
+	name = "Banana Cream Pie Cannon"
+	desc = "A special pie cannon for a special clown, this gadget can hold up to 20 pies and automatically fabricates one every two seconds!"
+	cost = 10
+	item = /obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	restricted_roles = list("Clown")
+	surplus = 0	//No fun unless you're the clown!
+
 /datum/uplink_item/role_restricted/ancient_jumpsuit
 	name = "Ancient Jumpsuit"
 	desc = "A tattered old jumpsuit that will provide absolutely no benefit to you. It fills the wearer with a strange compulsion to blurt out 'glorf'."
@@ -1264,6 +1299,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 2
 	restricted_roles = list("Curator")
 	limited_stock = 1 // please don't spam deadchat
+	
+/datum/uplink_item/role_restricted/modified_syringe_gun
+	name = "Modified Syringe Gun"
+	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
+	item = /obj/item/weapon/gun/syringe/dna
+	cost = 14
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 // Pointless
 /datum/uplink_item/badass

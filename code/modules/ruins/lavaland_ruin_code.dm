@@ -40,7 +40,7 @@
 	category = list("Imported")
 
 /obj/item/golem_shell
-	name = "incomplete golem shell"
+	name = "incomplete free golem shell"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "construct"
 	desc = "The incomplete body of a golem. Add ten sheets of any mineral to finish."
@@ -113,7 +113,7 @@
 		if(species)
 			if(O.use(10))
 				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
-				new shell_type(get_turf(src), species, has_owner, user)
+				new shell_type(get_turf(src), species, user)
 				qdel(src)
 			else
 				to_chat(user, "You need at least ten sheets to finish a golem.")
@@ -121,9 +121,9 @@
 			to_chat(user, "You can't build a golem out of this kind of material.")
 
 //made with xenobiology, the golem obeys its creator
-/obj/item/golem_shell/artificial
-	name = "incomplete artificial golem shell"
-	has_owner = TRUE
+/obj/item/golem_shell/servant
+	name = "incomplete servant golem shell"
+	shell_type = /obj/effect/mob_spawn/human/golem/servant
 
 ///Syndicate Listening Post
 /obj/effect/mob_spawn/human/lavaland_syndicate
@@ -143,6 +143,7 @@
 	has_id = 1
 	flavour_text = "<font size=3>You are a syndicate agent, employed in a top secret research facility developing biological weapons. Unfortunately, your hated enemy, Nanotrasen, has begun mining in this sector. <b>Continue your research as best you can, and try to keep a low profile. Do not abandon the base without good cause.</b> The base is rigged with explosives should the worst happen, do not let the base fall into enemy hands!</b>"
 	id_access_list = list(GLOB.access_syndicate)
+	faction = list("syndicate")
 
 /obj/effect/mob_spawn/human/lavaland_syndicate/comms
 	name = "Syndicate Comms Agent"

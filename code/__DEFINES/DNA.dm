@@ -81,9 +81,6 @@
 #define DNA_MUTANTTAIL_BLOCK		17
 #define DNA_MUTANTWING_BLOCK		18
 #define DNA_WINGCOLOR_BLOCK			19
-//#define DNA_SUBSPECIES_BLOCK		20
-//#define DNA_TAUR_BLOCK				21 //Taurs will be tails for now, easier - Pooj
-
 #define DNA_STRUC_ENZYMES_BLOCKS	19
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
@@ -128,9 +125,9 @@
 #define EASYLIMBATTACHMENT 23
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
-#define MUTCOLORS2		26
-#define MUTCOLORS3		27
+#define NO_UNDERWEAR	26
+#define MUTCOLORS2		27
+#define MUTCOLORS3		28
 //citadel code
-#define NOAROUSAL		28//Stops all arousal effects
-#define NOGENITALS		29//Cannot create, use, or otherwise have genitals
-//#define SUBSPECIES		28
+#define NOAROUSAL		29//Stops all arousal effects
+#define NOGENITALS		30//Cannot create, use, or otherwise have genitals
