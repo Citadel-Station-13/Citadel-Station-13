@@ -254,16 +254,34 @@
 									"<span class='green'>You cum into [SC].</span>", \
 									"<span class='green'>You have relieved yourself.</span>")
 								finished = 1
-
+								
+					if(/obj/item/organ/genital/vagina)
+						var/obj/item/organ/genital/vagina/V = SG
+						if(!V.linked_womb)
+							src << "<span class='warning'>No womb!</span>"
+							return
+						fluid_source = V.linked_womb.reagents
+						total_cum = fluid_source.total_volume
+						if(into_container)//into a glass or beaker or whatever
+							src.visible_message("<span class='danger'>[src] starts fingering their vagina over [SC].</span>", \
+								"<span class='userdanger'>You start fingering over [SC.name].</span>", \
+								"<span class='userdanger'>You start masturbating.</span>")
+							if(do_after(src, mb_time, target = src) && in_range(src, SC))
+								fluid_source.trans_to(SC, total_cum)
+								src.visible_message("<span class='danger'>[src] orgasms, [pick("cumming into", "emptying themself into")] [SC]!</span>", \
+									"<span class='green'>You cum into [SC].</span>", \
+									"<span class='green'>You have relieved yourself.</span>")
+								finished = 1
+								
 						else//not into a container
-							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [pick(GLOB.dick_nouns)].</span>", \
-								"<span class='userdanger'>You start jerking off your [pick(GLOB.dick_nouns)].</span>", \
+							src.visible_message("<span class='danger'>[src] starts fingering their vagina.</span>", \
+								"<span class='userdanger'>You start fingering your vagina.</span>", \
 										"<span class='userdanger'>You start masturbating.</span>")
 							if(do_after(src, mb_time, target = src))
 								if(total_cum > 5)
 									fluid_source.reaction(src.loc, TOUCH, 1, 0)
 								fluid_source.clear_reagents()
-								src.visible_message("<span class='danger'>[src] orgasms, [pick("shooting cum", "draining their balls")][istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
+								src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
 									"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
 									"<span class='green'>You have relieved yourself.</span>")
 								finished = 1
