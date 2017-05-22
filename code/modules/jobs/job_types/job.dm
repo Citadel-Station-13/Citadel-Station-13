@@ -75,8 +75,6 @@
 		H.dna.features["ears"] = "None"
 		H.regenerate_icons()
 
-	handle_roundstart_items(H)
-
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
 		return src.minimal_access.Copy()

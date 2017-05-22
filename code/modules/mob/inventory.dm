@@ -354,8 +354,8 @@
 		dropItemToGround(I)
 	drop_all_held_items()
 
-/obj/item/proc/equip_to_best_slot(var/mob/M, override_held_check = FALSE)
-	if((src != M.get_active_held_item()) && !override_held_check)
+/obj/item/proc/equip_to_best_slot(var/mob/M)
+	if(src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
