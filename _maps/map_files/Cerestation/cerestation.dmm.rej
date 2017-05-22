@@ -1,0 +1,5763 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -93652,72 +93652,144 @@
+ 	},
+ /area/hallway/primary/starboard/fore)
+ "dxs" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/turf/open/space,
++/area/solar/asteroid/fore)
++"dxt" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/turf/open/space,
++/area/solar/asteroid/fore)
++"dxu" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 4;
++	icon_state = "1-4"
++	},
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxv" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxw" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxx" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxy" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxz" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxA" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxB" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxC" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxD" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/command)
++"dxE" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 2;
++	d2 = 4;
++	icon_state = "2-4"
++	},
++/turf/open/space,
++/area/solar/asteroid/fore)
++"dxF" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxt" = (
++"dxG" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxu" = (
++"dxH" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxv" = (
++"dxI" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxw" = (
++"dxJ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxx" = (
++"dxK" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxy" = (
++"dxL" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxz" = (
++"dxM" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxA" = (
++"dxN" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxB" = (
++"dxO" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxC" = (
++"dxP" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxD" = (
++"dxQ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxE" = (
++"dxR" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxF" = (
++"dxS" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxG" = (
++"dxT" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/neast)
+-"dxH" = (
++"dxU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxI" = (
++"dxV" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxJ" = (
++"dxW" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dxK" = (
++"dxX" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dxL" = (
++"dxY" = (
+ /obj/effect/turf_decal/stripes/asteroid/line{
+ 	icon_state = "ast_warn";
+ 	dir = 8
+@@ -93726,282 +93798,282 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxM" = (
++"dxZ" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxN" = (
++"dya" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxO" = (
++"dyb" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxP" = (
++"dyc" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxQ" = (
++"dyd" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dxR" = (
++"dye" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dxS" = (
++"dyf" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dxT" = (
++"dyg" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxU" = (
++"dyh" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxV" = (
++"dyi" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxW" = (
++"dyj" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dxX" = (
++"dyk" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxY" = (
++"dyl" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dxZ" = (
++"dym" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dya" = (
++"dyn" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyb" = (
++"dyo" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyc" = (
++"dyp" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyd" = (
++"dyq" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dye" = (
++"dyr" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyf" = (
++"dys" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyg" = (
++"dyt" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyh" = (
++"dyu" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyi" = (
++"dyv" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyj" = (
++"dyw" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyk" = (
++"dyx" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dyl" = (
++"dyy" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dym" = (
++"dyz" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyn" = (
++"dyA" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyo" = (
++"dyB" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dyp" = (
++"dyC" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dyq" = (
++"dyD" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyr" = (
++"dyE" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dys" = (
++"dyF" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyt" = (
++"dyG" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyu" = (
++"dyH" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyv" = (
++"dyI" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyw" = (
++"dyJ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyx" = (
++"dyK" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyy" = (
++"dyL" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/neast)
+-"dyz" = (
++"dyM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyA" = (
++"dyN" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyB" = (
++"dyO" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyC" = (
++"dyP" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyD" = (
++"dyQ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyE" = (
++"dyR" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyF" = (
++"dyS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyG" = (
++"dyT" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dyH" = (
++"dyU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyI" = (
++"dyV" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyJ" = (
++"dyW" = (
+ /obj/structure/closet/crate,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dyK" = (
++"dyX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyL" = (
++"dyY" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyM" = (
++"dyZ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyN" = (
++"dza" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyO" = (
++"dzb" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyP" = (
++"dzc" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyQ" = (
++"dzd" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyR" = (
++"dze" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyS" = (
++"dzf" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dyT" = (
++"dzg" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyU" = (
++"dzh" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyV" = (
++"dzi" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/neast)
+-"dyW" = (
++"dzj" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dyX" = (
++"dzk" = (
+ /obj/machinery/atmospherics/pipe/simple/general/visible{
+ 	dir = 5
+ 	},
+ /turf/closed/wall/r_wall,
+ /area/engine/engineering)
+-"dyY" = (
++"dzl" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dyZ" = (
++"dzm" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dza" = (
++"dzn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzb" = (
++"dzo" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzc" = (
++"dzp" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzd" = (
++"dzq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dze" = (
++"dzr" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzf" = (
++"dzs" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94011,7 +94083,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzg" = (
++"dzt" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94021,7 +94093,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzh" = (
++"dzu" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -94031,7 +94103,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzi" = (
++"dzv" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -94041,16 +94113,16 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzj" = (
++"dzw" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzk" = (
++"dzx" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dzl" = (
++"dzy" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94060,24 +94132,24 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzm" = (
++"dzz" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dzn" = (
++"dzA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzo" = (
++"dzB" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzp" = (
++"dzC" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 4;
+@@ -94087,7 +94159,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzq" = (
++"dzD" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -94097,56 +94169,56 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzr" = (
++"dzE" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dzs" = (
++"dzF" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzt" = (
++"dzG" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzu" = (
++"dzH" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzv" = (
++"dzI" = (
+ /obj/effect/turf_decal/stripes/asteroid/line,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzw" = (
++"dzJ" = (
+ /obj/effect/turf_decal/stripes/asteroid/line,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzx" = (
++"dzK" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzy" = (
++"dzL" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dzz" = (
++"dzM" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dzA" = (
++"dzN" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dzB" = (
++"dzO" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzC" = (
++"dzP" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94156,52 +94228,52 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzD" = (
++"dzQ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dzE" = (
++"dzR" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dzF" = (
++"dzS" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzG" = (
++"dzT" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzH" = (
++"dzU" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzI" = (
++"dzV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzJ" = (
++"dzW" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzK" = (
++"dzX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzL" = (
++"dzY" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzM" = (
++"dzZ" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzN" = (
++"dAa" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94211,10 +94283,10 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzO" = (
++"dAb" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dzP" = (
++"dAc" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94224,13 +94296,13 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzQ" = (
++"dAd" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzR" = (
++"dAe" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 4;
+@@ -94245,7 +94317,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzS" = (
++"dAf" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -94255,13 +94327,13 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzT" = (
++"dAg" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzU" = (
++"dAh" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94271,52 +94343,52 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dzV" = (
++"dAi" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dzW" = (
++"dAj" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dzX" = (
++"dAk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dzY" = (
++"dAl" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dzZ" = (
++"dAm" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAa" = (
++"dAn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAb" = (
++"dAo" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAc" = (
++"dAp" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAd" = (
++"dAq" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAe" = (
++"dAr" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dAf" = (
++"dAs" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94326,33 +94398,33 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAg" = (
++"dAt" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAh" = (
++"dAu" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAi" = (
++"dAv" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAj" = (
++"dAw" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAk" = (
++"dAx" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAl" = (
++"dAy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dAm" = (
++"dAz" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dAn" = (
++"dAA" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 4;
+@@ -94362,29 +94434,29 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAo" = (
++"dAB" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAp" = (
++"dAC" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAq" = (
++"dAD" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dAr" = (
++"dAE" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dAs" = (
++"dAF" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAt" = (
++"dAG" = (
+ /obj/structure/closet/firecloset/full,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAu" = (
++"dAH" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94394,29 +94466,29 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAv" = (
++"dAI" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAw" = (
++"dAJ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAx" = (
++"dAK" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAy" = (
++"dAL" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAz" = (
++"dAM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAA" = (
++"dAN" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAB" = (
++"dAO" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAC" = (
++"dAP" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94426,33 +94498,33 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAD" = (
++"dAQ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAE" = (
++"dAR" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAF" = (
++"dAS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAG" = (
++"dAT" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dAH" = (
++"dAU" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAI" = (
++"dAV" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAJ" = (
++"dAW" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAK" = (
++"dAX" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94462,22 +94534,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAL" = (
++"dAY" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAM" = (
++"dAZ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAN" = (
++"dBa" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAO" = (
++"dBb" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAP" = (
++"dBc" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAQ" = (
++"dBd" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94487,22 +94559,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAR" = (
++"dBe" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dAS" = (
++"dBf" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dAT" = (
++"dBg" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dAU" = (
++"dBh" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAV" = (
++"dBi" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAW" = (
++"dBj" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94512,43 +94584,43 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dAX" = (
++"dBk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dAY" = (
++"dBl" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dAZ" = (
++"dBm" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBa" = (
++"dBn" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBb" = (
++"dBo" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dBc" = (
++"dBp" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBd" = (
++"dBq" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBe" = (
++"dBr" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBf" = (
++"dBs" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBg" = (
++"dBt" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBh" = (
++"dBu" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBi" = (
++"dBv" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 4;
+@@ -94558,7 +94630,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBj" = (
++"dBw" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -94568,22 +94640,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBk" = (
++"dBx" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBl" = (
++"dBy" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBm" = (
++"dBz" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dBn" = (
++"dBA" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBo" = (
++"dBB" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94593,37 +94665,37 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBp" = (
++"dBC" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBq" = (
++"dBD" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBr" = (
++"dBE" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBs" = (
++"dBF" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dBt" = (
++"dBG" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBu" = (
++"dBH" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBv" = (
++"dBI" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBw" = (
++"dBJ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBx" = (
++"dBK" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94633,52 +94705,52 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBy" = (
++"dBL" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBz" = (
++"dBM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBA" = (
++"dBN" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBB" = (
++"dBO" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBC" = (
++"dBP" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dBD" = (
++"dBQ" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBE" = (
++"dBR" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBF" = (
++"dBS" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBG" = (
++"dBT" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBH" = (
++"dBU" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94688,63 +94760,63 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBI" = (
++"dBV" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBJ" = (
++"dBW" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dBK" = (
++"dBX" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBL" = (
++"dBY" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBM" = (
++"dBZ" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBN" = (
++"dCa" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBO" = (
++"dCb" = (
+ /obj/structure/closet/crate,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBP" = (
++"dCc" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBQ" = (
++"dCd" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBR" = (
++"dCe" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBS" = (
++"dCf" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBT" = (
++"dCg" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBU" = (
++"dCh" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94754,26 +94826,26 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dBV" = (
++"dCi" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dBW" = (
++"dCj" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dBX" = (
++"dCk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dBY" = (
++"dCl" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dBZ" = (
++"dCm" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCa" = (
++"dCn" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94783,73 +94855,73 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dCb" = (
++"dCo" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dCc" = (
++"dCp" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dCd" = (
++"dCq" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCe" = (
++"dCr" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCf" = (
++"dCs" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCg" = (
++"dCt" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCh" = (
++"dCu" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCi" = (
++"dCv" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCj" = (
++"dCw" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCk" = (
++"dCx" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dCl" = (
++"dCy" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dCm" = (
++"dCz" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCn" = (
++"dCA" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCo" = (
++"dCB" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCp" = (
++"dCC" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCq" = (
++"dCD" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCr" = (
++"dCE" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCs" = (
++"dCF" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94859,41 +94931,41 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dCt" = (
++"dCG" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dCu" = (
++"dCH" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCv" = (
++"dCI" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCw" = (
++"dCJ" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCx" = (
++"dCK" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCy" = (
++"dCL" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCz" = (
++"dCM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCA" = (
++"dCN" = (
+ /obj/structure/closet/crate,
+ /obj/effect/spawner/lootdrop/maintenance,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dCB" = (
++"dCO" = (
+ /obj/structure/disposalpipe/segment{
+ 	dir = 4
+ 	},
+@@ -94901,25 +94973,25 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCC" = (
++"dCP" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCD" = (
++"dCQ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCE" = (
++"dCR" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCF" = (
++"dCS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCG" = (
++"dCT" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCH" = (
++"dCU" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94929,43 +95001,43 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dCI" = (
++"dCV" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dCJ" = (
++"dCW" = (
+ /obj/structure/closet/emcloset,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCK" = (
++"dCX" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCL" = (
++"dCY" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCM" = (
++"dCZ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCN" = (
++"dDa" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCO" = (
++"dDb" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCP" = (
++"dDc" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCQ" = (
++"dDd" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCR" = (
++"dDe" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCS" = (
++"dDf" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -94975,7 +95047,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dCT" = (
++"dDg" = (
+ /obj/machinery/door/airlock/maintenance{
+ 	name = "Port Asteroid Maintenance";
+ 	req_access_txt = "12"
+@@ -94984,28 +95056,28 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCU" = (
++"dDh" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCV" = (
++"dDi" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCW" = (
++"dDj" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dCX" = (
++"dDk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dCY" = (
++"dDl" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dCZ" = (
++"dDm" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDa" = (
++"dDn" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -95015,20 +95087,20 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dDb" = (
++"dDo" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDc" = (
++"dDp" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDd" = (
++"dDq" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDe" = (
++"dDr" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -95038,7 +95110,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dDf" = (
++"dDs" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -95048,7 +95120,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dDg" = (
++"dDt" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -95058,111 +95130,111 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dDh" = (
++"dDu" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dDi" = (
++"dDv" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDj" = (
++"dDw" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDk" = (
++"dDx" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDl" = (
++"dDy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDm" = (
++"dDz" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDn" = (
++"dDA" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDo" = (
++"dDB" = (
+ /obj/machinery/light/small,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDp" = (
++"dDC" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dDq" = (
++"dDD" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDr" = (
++"dDE" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDs" = (
++"dDF" = (
+ /obj/structure/closet/crate,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/east)
+-"dDt" = (
++"dDG" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dDu" = (
++"dDH" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dDv" = (
++"dDI" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/east)
+-"dDw" = (
++"dDJ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dDx" = (
++"dDK" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dDy" = (
++"dDL" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/port/west)
+-"dDz" = (
++"dDM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDA" = (
++"dDN" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDB" = (
++"dDO" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dDC" = (
++"dDP" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dDD" = (
++"dDQ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/east)
+-"dDE" = (
++"dDR" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/port/east)
+-"dDF" = (
++"dDS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dDG" = (
++"dDT" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDH" = (
++"dDU" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDI" = (
++"dDV" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDJ" = (
++"dDW" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDK" = (
++"dDX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDL" = (
++"dDY" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDM" = (
++"dDZ" = (
+ /obj/machinery/door/airlock/glass,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	icon_state = "neutralcorner";
+@@ -95170,35 +95242,35 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDN" = (
++"dEa" = (
+ /obj/machinery/door/airlock/glass,
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDO" = (
++"dEb" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDP" = (
++"dEc" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDQ" = (
++"dEd" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDR" = (
++"dEe" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDS" = (
++"dEf" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDT" = (
++"dEg" = (
+ /obj/structure/sign/map/left/ceres{
+ 	pixel_x = -32
+ 	},
+@@ -95208,40 +95280,40 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDU" = (
++"dEh" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDV" = (
++"dEi" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDW" = (
++"dEj" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDX" = (
++"dEk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dDY" = (
++"dEl" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dDZ" = (
++"dEm" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEa" = (
++"dEn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEb" = (
++"dEo" = (
+ /obj/machinery/door/airlock/glass_external{
+ 	cyclelinkeddir = 2
+ 	},
+@@ -95251,42 +95323,42 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEc" = (
++"dEp" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEd" = (
++"dEq" = (
+ /turf/open/floor/plasteel/neutral/corner{
+ 	icon_state = "neutralcorner";
+ 	dir = 8;
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEe" = (
++"dEr" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEf" = (
++"dEs" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEg" = (
++"dEt" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEh" = (
++"dEu" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEi" = (
++"dEv" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEj" = (
++"dEw" = (
+ /obj/machinery/firealarm{
+ 	dir = 8;
+ 	pixel_x = -24
+@@ -95297,43 +95369,43 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEk" = (
++"dEx" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEl" = (
++"dEy" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEm" = (
++"dEz" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEn" = (
++"dEA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEo" = (
++"dEB" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEp" = (
++"dEC" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEq" = (
++"dED" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEr" = (
++"dEE" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEs" = (
++"dEF" = (
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+ 	dir = 1
+ 	},
+@@ -95341,12 +95413,12 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEt" = (
++"dEG" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEu" = (
++"dEH" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 6
+ 	},
+@@ -95356,7 +95428,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEv" = (
++"dEI" = (
+ /obj/machinery/atmospherics/components/unary/vent_pump{
+ 	dir = 8;
+ 	layer = 2.4;
+@@ -95366,39 +95438,39 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEw" = (
++"dEJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEx" = (
++"dEK" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEy" = (
++"dEL" = (
+ /obj/structure/closet/emcloset,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEz" = (
++"dEM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEA" = (
++"dEN" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEB" = (
++"dEO" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEC" = (
++"dEP" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dED" = (
++"dEQ" = (
+ /obj/machinery/status_display{
+ 	density = 0;
+ 	layer = 4
+@@ -95407,7 +95479,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEE" = (
++"dER" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	icon_state = "neutralcorner";
+@@ -95415,22 +95487,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEF" = (
++"dES" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEG" = (
++"dET" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEH" = (
++"dEU" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEI" = (
++"dEV" = (
+ /obj/structure/table,
+ /obj/machinery/light/small{
+ 	dir = 4
+@@ -95439,28 +95511,28 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEJ" = (
++"dEW" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEK" = (
++"dEX" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEL" = (
++"dEY" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEM" = (
++"dEZ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEN" = (
++"dFa" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEO" = (
++"dFb" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	icon_state = "neutralcorner";
+@@ -95468,22 +95540,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEP" = (
++"dFc" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEQ" = (
++"dFd" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dER" = (
++"dFe" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dES" = (
++"dFf" = (
+ /obj/structure/rack,
+ /obj/item/clothing/suit/space/fragile,
+ /obj/item/clothing/head/helmet/space/fragile,
+@@ -95491,27 +95563,34 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dET" = (
++"dFg" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEU" = (
++"dFh" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEV" = (
++"dFi" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEW" = (
++"dFj" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dEX" = (
++"dFk" = (
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFl" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFm" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEY" = (
++"dFn" = (
+ /obj/structure/table,
+ /obj/item/weapon/wrench,
+ /obj/item/clothing/glasses/meson,
+@@ -95522,12 +95601,12 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dEZ" = (
++"dFo" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFa" = (
++"dFp" = (
+ /obj/machinery/door/firedoor,
+ /obj/effect/turf_decal/stripes/line,
+ /obj/effect/turf_decal/stripes/line{
+@@ -95537,310 +95616,404 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFb" = (
++"dFq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFc" = (
++"dFr" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFd" = (
++"dFs" = (
+ /obj/structure/tank_dispenser/oxygen,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFe" = (
++"dFt" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFf" = (
++"dFu" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFg" = (
++"dFv" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFh" = (
++"dFw" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFi" = (
++"dFx" = (
++/obj/structure/lattice,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFy" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFj" = (
++"dFz" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFk" = (
++"dFA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFl" = (
++"dFB" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFm" = (
++"dFC" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFn" = (
++"dFD" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFo" = (
++"dFE" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFp" = (
++"dFF" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFq" = (
++"dFG" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFr" = (
++"dFH" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFs" = (
++"dFI" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFt" = (
++"dFJ" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFK" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFu" = (
++"dFL" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFv" = (
++"dFM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFw" = (
++"dFN" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFx" = (
++"dFO" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFy" = (
++"dFP" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFz" = (
++"dFQ" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFR" = (
++/obj/structure/lattice,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dFS" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFA" = (
++"dFT" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFB" = (
++"dFU" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFC" = (
++"dFV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFD" = (
++"dFW" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFE" = (
++"dFX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFF" = (
++"dFY" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFG" = (
++"dFZ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFH" = (
++"dGa" = (
++/obj/structure/lattice,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGb" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 4;
++	icon_state = "1-4"
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGc" = (
++/obj/structure/lattice/catwalk,
++/obj/item/stack/cable_coil{
++	amount = 2
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGd" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8";
++	pixel_y = 0
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGe" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8";
++	pixel_y = 0
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGf" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFI" = (
++"dGg" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFJ" = (
++"dGh" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFK" = (
++"dGi" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFL" = (
++"dGj" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFM" = (
++"dGk" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFN" = (
++"dGl" = (
++/obj/structure/lattice,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGm" = (
++/obj/structure/lattice,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFO" = (
++"dGo" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFP" = (
++"dGp" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFQ" = (
++"dGq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFR" = (
++"dGr" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFS" = (
++"dGs" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFT" = (
++"dGt" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGu" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFU" = (
++"dGv" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFV" = (
++"dGw" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFW" = (
++"dGx" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dFX" = (
++"dGy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFY" = (
++"dGz" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dFZ" = (
++"dGA" = (
++/obj/structure/lattice/catwalk,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGB" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGa" = (
++"dGC" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGb" = (
++"dGD" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGc" = (
++"dGE" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGd" = (
++"dGF" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGe" = (
++"dGG" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGf" = (
++"dGH" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGg" = (
++"dGI" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGh" = (
++"dGJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGi" = (
++"dGK" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGj" = (
++"dGL" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGk" = (
++"dGM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGl" = (
++"dGN" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGm" = (
++"dGO" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGn" = (
++"dGP" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGo" = (
++"dGQ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dGp" = (
++"dGR" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dGq" = (
++"dGS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dGr" = (
++"dGT" = (
++/obj/structure/lattice/catwalk,
++/obj/item/stack/cable_coil{
++	amount = 2
++	},
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dGU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGs" = (
++"dGV" = (
+ /obj/machinery/light/small{
+ 	dir = 8
+ 	},
+@@ -95848,112 +96021,116 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGt" = (
++"dGW" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGu" = (
++"dGX" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGv" = (
++"dGY" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGw" = (
++"dGZ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGx" = (
++"dHa" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGy" = (
++"dHb" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGz" = (
++"dHc" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGA" = (
++"dHd" = (
++/obj/structure/lattice/catwalk,
++/turf/open/space,
++/area/solar/asteroid/aft)
++"dHe" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGB" = (
++"dHf" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGC" = (
++"dHg" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGD" = (
++"dHh" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGE" = (
++"dHi" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGF" = (
++"dHj" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGG" = (
++"dHk" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGH" = (
++"dHl" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGI" = (
++"dHm" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGJ" = (
++"dHn" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGK" = (
++"dHo" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGL" = (
++"dHp" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGM" = (
++"dHq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGN" = (
++"dHr" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGO" = (
++"dHs" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGP" = (
++"dHt" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGQ" = (
++"dHu" = (
+ /obj/machinery/status_display{
+ 	density = 0;
+ 	layer = 4
+@@ -95962,96 +96139,96 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGR" = (
++"dHv" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGS" = (
++"dHw" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGT" = (
++"dHx" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGU" = (
++"dHy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGV" = (
++"dHz" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dGW" = (
++"dHA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGX" = (
++"dHB" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGY" = (
++"dHC" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dGZ" = (
++"dHD" = (
+ /obj/structure/closet/crate,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dHa" = (
++"dHE" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dHb" = (
++"dHF" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dHc" = (
++"dHG" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+-"dHd" = (
++"dHH" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHe" = (
++"dHI" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHf" = (
++"dHJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHg" = (
++"dHK" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dHh" = (
++"dHL" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dHi" = (
++"dHM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHj" = (
++"dHN" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHk" = (
++"dHO" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/port/west)
+-"dHl" = (
++"dHP" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHm" = (
++"dHQ" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHn" = (
++"dHR" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96061,7 +96238,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHo" = (
++"dHS" = (
+ /obj/machinery/atmospherics/components/unary/vent_pump{
+ 	dir = 8;
+ 	layer = 2.4;
+@@ -96071,17 +96248,17 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHp" = (
++"dHT" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHq" = (
++"dHU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHr" = (
++"dHV" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plasteel/neutral/corner{
+@@ -96090,17 +96267,17 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHs" = (
++"dHW" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHt" = (
++"dHX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHu" = (
++"dHY" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plasteel/neutral/corner{
+@@ -96109,49 +96286,49 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHv" = (
++"dHZ" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHw" = (
++"dIa" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHx" = (
++"dIb" = (
+ /turf/open/floor/plasteel/neutral{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHy" = (
++"dIc" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard/aft)
+-"dHz" = (
++"dId" = (
+ /obj/structure/table,
+ /obj/machinery/cell_charger,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHA" = (
++"dIe" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHB" = (
++"dIf" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHC" = (
++"dIg" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHD" = (
++"dIh" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+@@ -96159,66 +96336,66 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHE" = (
++"dIi" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHF" = (
++"dIj" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHG" = (
++"dIk" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHH" = (
++"dIl" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHI" = (
++"dIm" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHJ" = (
++"dIn" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHK" = (
++"dIo" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHL" = (
++"dIp" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHM" = (
++"dIq" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHN" = (
++"dIr" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dHO" = (
++"dIs" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dHP" = (
++"dIt" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHQ" = (
++"dIu" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHR" = (
++"dIv" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHS" = (
++"dIw" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96228,7 +96405,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHT" = (
++"dIx" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96238,7 +96415,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHU" = (
++"dIy" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96249,7 +96426,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHV" = (
++"dIz" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96259,7 +96436,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHW" = (
++"dIA" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96269,7 +96446,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHX" = (
++"dIB" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96279,7 +96456,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHY" = (
++"dIC" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96289,7 +96466,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dHZ" = (
++"dID" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96299,7 +96476,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIa" = (
++"dIE" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96309,7 +96486,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIb" = (
++"dIF" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96319,7 +96496,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIc" = (
++"dIG" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96330,7 +96507,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dId" = (
++"dIH" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96340,7 +96517,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIe" = (
++"dII" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96350,7 +96527,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIf" = (
++"dIJ" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96360,7 +96537,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIg" = (
++"dIK" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 8;
+@@ -96370,12 +96547,12 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIh" = (
++"dIL" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIi" = (
++"dIM" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+@@ -96383,12 +96560,12 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIj" = (
++"dIN" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIk" = (
++"dIO" = (
+ /obj/machinery/computer/station_alert,
+ /obj/structure/cable/orange{
+ 	d2 = 2;
+@@ -96398,7 +96575,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIl" = (
++"dIP" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -96408,7 +96585,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIm" = (
++"dIQ" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 8;
+@@ -96418,45 +96595,45 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIn" = (
++"dIR" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIo" = (
++"dIS" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIp" = (
++"dIT" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIq" = (
++"dIU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIr" = (
++"dIV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIs" = (
++"dIW" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIt" = (
++"dIX" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIu" = (
++"dIY" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIv" = (
++"dIZ" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 4;
+@@ -96466,42 +96643,42 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIw" = (
++"dJa" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIx" = (
++"dJb" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIy" = (
++"dJc" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIz" = (
++"dJd" = (
+ /obj/machinery/power/smes/engineering,
+ /obj/structure/cable/orange,
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIA" = (
++"dJe" = (
+ /obj/structure/closet/crate,
+ /obj/effect/spawner/lootdrop/maintenance,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIB" = (
++"dJf" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIC" = (
++"dJg" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dID" = (
++"dJh" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 4;
+@@ -96511,7 +96688,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIE" = (
++"dJi" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 8;
+@@ -96521,42 +96698,42 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIF" = (
++"dJj" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIG" = (
++"dJk" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIH" = (
++"dJl" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dII" = (
++"dJm" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIJ" = (
++"dJn" = (
+ /obj/effect/turf_decal/stripes/asteroid/line,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIK" = (
++"dJo" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIL" = (
++"dJp" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIM" = (
++"dJq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIN" = (
++"dJr" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96566,22 +96743,22 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIO" = (
++"dJs" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIP" = (
++"dJt" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIQ" = (
++"dJu" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIR" = (
++"dJv" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIS" = (
++"dJw" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96591,19 +96768,19 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIT" = (
++"dJx" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIU" = (
++"dJy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIV" = (
++"dJz" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIW" = (
++"dJA" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dIX" = (
++"dJB" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96613,23 +96790,23 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dIY" = (
++"dJC" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dIZ" = (
++"dJD" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJa" = (
++"dJE" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJb" = (
++"dJF" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJc" = (
++"dJG" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96640,41 +96817,41 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJd" = (
++"dJH" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJe" = (
++"dJI" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJf" = (
++"dJJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJg" = (
++"dJK" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJh" = (
++"dJL" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJi" = (
++"dJM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJj" = (
++"dJN" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJk" = (
++"dJO" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJl" = (
++"dJP" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96684,43 +96861,43 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJm" = (
++"dJQ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJn" = (
++"dJR" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJo" = (
++"dJS" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJp" = (
++"dJT" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJq" = (
++"dJU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJr" = (
++"dJV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJs" = (
++"dJW" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJt" = (
++"dJX" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJu" = (
++"dJY" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJv" = (
++"dJZ" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 8;
+@@ -96730,33 +96907,33 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJw" = (
++"dKa" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJx" = (
++"dKb" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJy" = (
++"dKc" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJz" = (
++"dKd" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJA" = (
++"dKe" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJB" = (
++"dKf" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJC" = (
++"dKg" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96767,51 +96944,51 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJD" = (
++"dKh" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJE" = (
++"dKi" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJF" = (
++"dKj" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJG" = (
++"dKk" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJH" = (
++"dKl" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJI" = (
++"dKm" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJJ" = (
++"dKn" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJK" = (
++"dKo" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJL" = (
++"dKp" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJM" = (
++"dKq" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJN" = (
++"dKr" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJO" = (
++"dKs" = (
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 4;
+@@ -96821,7 +96998,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJP" = (
++"dKt" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -96831,38 +97008,38 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJQ" = (
++"dKu" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJR" = (
++"dKv" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJS" = (
++"dKw" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJT" = (
++"dKx" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJU" = (
++"dKy" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dJV" = (
++"dKz" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJW" = (
++"dKA" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dJX" = (
++"dKB" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJY" = (
++"dKC" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -96872,37 +97049,37 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dJZ" = (
++"dKD" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKa" = (
++"dKE" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKb" = (
++"dKF" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKc" = (
++"dKG" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKd" = (
++"dKH" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKe" = (
++"dKI" = (
+ /obj/structure/closet/crate,
+ /obj/effect/spawner/lootdrop/maintenance,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKf" = (
++"dKJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKg" = (
++"dKK" = (
+ /obj/machinery/door/airlock/maintenance{
+ 	name = "Aft Asteroid Maintenance";
+ 	req_access_txt = "12"
+@@ -96911,33 +97088,33 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKh" = (
++"dKL" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKi" = (
++"dKM" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKj" = (
++"dKN" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKk" = (
++"dKO" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKl" = (
++"dKP" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKm" = (
++"dKQ" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKn" = (
++"dKR" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -96947,75 +97124,75 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKo" = (
++"dKS" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKp" = (
++"dKT" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKq" = (
++"dKU" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKr" = (
++"dKV" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKs" = (
++"dKW" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKt" = (
++"dKX" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKu" = (
++"dKY" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKv" = (
++"dKZ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKw" = (
++"dLa" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKx" = (
++"dLb" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKy" = (
++"dLc" = (
+ /obj/structure/closet,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKz" = (
++"dLd" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKA" = (
++"dLe" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKB" = (
++"dLf" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKC" = (
++"dLg" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKD" = (
++"dLh" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKE" = (
++"dLi" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKF" = (
++"dLj" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97025,7 +97202,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKG" = (
++"dLk" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -97035,138 +97212,138 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKH" = (
++"dLl" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKI" = (
++"dLm" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKJ" = (
++"dLn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKK" = (
++"dLo" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKL" = (
++"dLp" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKM" = (
++"dLq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKN" = (
++"dLr" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKO" = (
++"dLs" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKP" = (
++"dLt" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKQ" = (
++"dLu" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKR" = (
++"dLv" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKS" = (
++"dLw" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKT" = (
++"dLx" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKU" = (
++"dLy" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKV" = (
++"dLz" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dKW" = (
++"dLA" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKX" = (
++"dLB" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dKY" = (
++"dLC" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dKZ" = (
++"dLD" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLa" = (
++"dLE" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLb" = (
++"dLF" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLc" = (
++"dLG" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLd" = (
++"dLH" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLe" = (
++"dLI" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLf" = (
++"dLJ" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLg" = (
++"dLK" = (
+ /obj/structure/closet,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLh" = (
++"dLL" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLi" = (
++"dLM" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLj" = (
++"dLN" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLk" = (
++"dLO" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLl" = (
++"dLP" = (
+ /obj/structure/closet/firecloset/full,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLm" = (
++"dLQ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLn" = (
++"dLR" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -97176,64 +97353,64 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLo" = (
++"dLS" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLp" = (
++"dLT" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLq" = (
++"dLU" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLr" = (
++"dLV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLs" = (
++"dLW" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLt" = (
++"dLX" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLu" = (
++"dLY" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLv" = (
++"dLZ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLw" = (
++"dMa" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLx" = (
++"dMb" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLy" = (
++"dMc" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLz" = (
++"dMd" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLA" = (
++"dMe" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLB" = (
++"dMf" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLC" = (
++"dMg" = (
+ /obj/machinery/door/airlock/maintenance{
+ 	name = "Aft Asteroid Maintenance";
+ 	req_access_txt = "12"
+@@ -97242,25 +97419,25 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLD" = (
++"dMh" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLE" = (
++"dMi" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLF" = (
++"dMj" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dLG" = (
++"dMk" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLH" = (
++"dMl" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97271,7 +97448,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLI" = (
++"dMm" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97281,7 +97458,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLJ" = (
++"dMn" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97291,7 +97468,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLK" = (
++"dMo" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97301,7 +97478,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLL" = (
++"dMp" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97311,7 +97488,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLM" = (
++"dMq" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97321,7 +97498,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLN" = (
++"dMr" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97331,7 +97508,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLO" = (
++"dMs" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97341,7 +97518,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLP" = (
++"dMt" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97351,7 +97528,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLQ" = (
++"dMu" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97361,7 +97538,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLR" = (
++"dMv" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97371,7 +97548,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLS" = (
++"dMw" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97381,7 +97558,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLT" = (
++"dMx" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97391,7 +97568,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLU" = (
++"dMy" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97401,7 +97578,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLV" = (
++"dMz" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97411,7 +97588,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLW" = (
++"dMA" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -97421,86 +97598,86 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dLX" = (
++"dMB" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLY" = (
++"dMC" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dLZ" = (
++"dMD" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMa" = (
++"dME" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMb" = (
++"dMF" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMc" = (
++"dMG" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMd" = (
++"dMH" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMe" = (
++"dMI" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMf" = (
++"dMJ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMg" = (
++"dMK" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMh" = (
++"dML" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMi" = (
++"dMM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMj" = (
++"dMN" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMk" = (
++"dMO" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMl" = (
++"dMP" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMm" = (
++"dMQ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMn" = (
++"dMR" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMo" = (
++"dMS" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMp" = (
++"dMT" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMq" = (
++"dMU" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMr" = (
++"dMV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMs" = (
++"dMW" = (
+ /obj/machinery/door/airlock/maintenance{
+ 	name = "Aft Asteroid Maintenance";
+ 	req_access_txt = "12"
+@@ -97509,117 +97686,117 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMt" = (
++"dMX" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMu" = (
++"dMY" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMv" = (
++"dMZ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMw" = (
++"dNa" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMx" = (
++"dNb" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMy" = (
++"dNc" = (
+ /obj/effect/turf_decal/stripes/asteroid/line,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMz" = (
++"dNd" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMA" = (
++"dNe" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMB" = (
++"dNf" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMC" = (
++"dNg" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMD" = (
++"dNh" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dME" = (
++"dNi" = (
+ /obj/structure/closet/crate,
+ /obj/effect/spawner/lootdrop/maintenance,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMF" = (
++"dNj" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMG" = (
++"dNk" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMH" = (
++"dNl" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMI" = (
++"dNm" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMJ" = (
++"dNn" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMK" = (
++"dNo" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dML" = (
++"dNp" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMM" = (
++"dNq" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMN" = (
++"dNr" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMO" = (
++"dNs" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dMP" = (
++"dNt" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMQ" = (
++"dNu" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMR" = (
++"dNv" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMS" = (
++"dNw" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMT" = (
++"dNx" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMU" = (
++"dNy" = (
+ /obj/structure/cable/orange{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -97629,7 +97806,7 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMV" = (
++"dNz" = (
+ /obj/structure/cable/orange{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -97639,763 +97816,763 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMW" = (
++"dNA" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dMX" = (
++"dNB" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMY" = (
++"dNC" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dMZ" = (
++"dND" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNa" = (
++"dNE" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNb" = (
++"dNF" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNc" = (
++"dNG" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNd" = (
++"dNH" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNe" = (
++"dNI" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNf" = (
++"dNJ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNg" = (
++"dNK" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNh" = (
++"dNL" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNi" = (
++"dNM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNj" = (
++"dNN" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNk" = (
++"dNO" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNl" = (
++"dNP" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNm" = (
++"dNQ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNn" = (
++"dNR" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNo" = (
++"dNS" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNp" = (
++"dNT" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNq" = (
++"dNU" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNr" = (
++"dNV" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNs" = (
++"dNW" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNt" = (
++"dNX" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNu" = (
++"dNY" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNv" = (
++"dNZ" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNw" = (
++"dOa" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNx" = (
++"dOb" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNy" = (
++"dOc" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNz" = (
++"dOd" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNA" = (
++"dOe" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNB" = (
++"dOf" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNC" = (
++"dOg" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dND" = (
++"dOh" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dNE" = (
++"dOi" = (
+ /obj/structure/closet/firecloset/full,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dNF" = (
++"dOj" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNG" = (
++"dOk" = (
+ /obj/structure/closet/firecloset/full,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNH" = (
++"dOl" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNI" = (
++"dOm" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNJ" = (
++"dOn" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNK" = (
++"dOo" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNL" = (
++"dOp" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNM" = (
++"dOq" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNN" = (
++"dOr" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNO" = (
++"dOs" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNP" = (
++"dOt" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dNQ" = (
++"dOu" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dNR" = (
++"dOv" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNS" = (
++"dOw" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNT" = (
++"dOx" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNU" = (
++"dOy" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNV" = (
++"dOz" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNW" = (
++"dOA" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNX" = (
++"dOB" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNY" = (
++"dOC" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dNZ" = (
++"dOD" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOa" = (
++"dOE" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOb" = (
++"dOF" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOc" = (
++"dOG" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOd" = (
++"dOH" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOe" = (
++"dOI" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOf" = (
++"dOJ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOg" = (
++"dOK" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOh" = (
++"dOL" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOi" = (
++"dOM" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOj" = (
++"dON" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOk" = (
++"dOO" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOl" = (
++"dOP" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOm" = (
++"dOQ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOn" = (
++"dOR" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOo" = (
++"dOS" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOp" = (
++"dOT" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dOq" = (
++"dOU" = (
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/aft/science)
+-"dOr" = (
++"dOV" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOs" = (
++"dOW" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOt" = (
++"dOX" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOu" = (
++"dOY" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOv" = (
++"dOZ" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOw" = (
++"dPa" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOx" = (
++"dPb" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOy" = (
++"dPc" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOz" = (
++"dPd" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOA" = (
++"dPe" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOB" = (
++"dPf" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOC" = (
++"dPg" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOD" = (
++"dPh" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOE" = (
++"dPi" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOF" = (
++"dPj" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOG" = (
++"dPk" = (
+ /obj/structure/reagent_dispensers/fueltank,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOH" = (
++"dPl" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOI" = (
++"dPm" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOJ" = (
++"dPn" = (
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOK" = (
++"dPo" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOL" = (
++"dPp" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOM" = (
++"dPq" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dON" = (
++"dPr" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOO" = (
++"dPs" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dOP" = (
++"dPt" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOQ" = (
++"dPu" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOR" = (
++"dPv" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOS" = (
++"dPw" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOT" = (
++"dPx" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOU" = (
++"dPy" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOV" = (
++"dPz" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOW" = (
++"dPA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOX" = (
++"dPB" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOY" = (
++"dPC" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dOZ" = (
++"dPD" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPa" = (
++"dPE" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPb" = (
++"dPF" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPc" = (
++"dPG" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPd" = (
++"dPH" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPe" = (
++"dPI" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPf" = (
++"dPJ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPg" = (
++"dPK" = (
+ /obj/effect/spawner/lootdrop/grille_or_trash,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPh" = (
++"dPL" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPi" = (
++"dPM" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPj" = (
++"dPN" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPk" = (
++"dPO" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPl" = (
++"dPP" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPm" = (
++"dPQ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPn" = (
++"dPR" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPo" = (
++"dPS" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPp" = (
++"dPT" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPq" = (
++"dPU" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPr" = (
++"dPV" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPs" = (
++"dPW" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPt" = (
++"dPX" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPu" = (
++"dPY" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPv" = (
++"dPZ" = (
+ /obj/structure/girder,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPw" = (
++"dQa" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPx" = (
++"dQb" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPy" = (
++"dQc" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPz" = (
++"dQd" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPA" = (
++"dQe" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPB" = (
++"dQf" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPC" = (
++"dQg" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPD" = (
++"dQh" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPE" = (
++"dQi" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPF" = (
++"dQj" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPG" = (
++"dQk" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPH" = (
++"dQl" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPI" = (
++"dQm" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPJ" = (
++"dQn" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPK" = (
++"dQo" = (
+ /turf/closed/mineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPL" = (
++"dQp" = (
+ /turf/closed/mineral/random/labormineral,
+ /area/maintenance/asteroid/aft/science)
+-"dPM" = (
++"dQq" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPN" = (
++"dQr" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPO" = (
++"dQs" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPP" = (
++"dQt" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPQ" = (
++"dQu" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPR" = (
++"dQv" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPS" = (
++"dQw" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPT" = (
++"dQx" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPU" = (
++"dQy" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPV" = (
++"dQz" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPW" = (
++"dQA" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPX" = (
++"dQB" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPY" = (
++"dQC" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dPZ" = (
++"dQD" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQa" = (
++"dQE" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQb" = (
++"dQF" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQc" = (
++"dQG" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQd" = (
++"dQH" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQe" = (
++"dQI" = (
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQf" = (
++"dQJ" = (
+ /turf/closed/wall/rust{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQg" = (
++"dQK" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQh" = (
++"dQL" = (
+ /turf/open/floor/plasteel/floorgrime{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQi" = (
++"dQM" = (
+ /obj/structure/reagent_dispensers/fueltank,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQj" = (
++"dQN" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQk" = (
++"dQO" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQl" = (
++"dQP" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/maintenance/asteroid/aft/science)
+-"dQm" = (
++"dQQ" = (
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -118329,35 +118506,35 @@ btk
+ bEX
+ dei
+ bTq
+-dzO
+-dzR
+-dzU
++dAb
++dAe
++dAh
+ bNs
+-dAf
+-dAn
+-dAt
+-dAB
+-dAJ
+-dAP
+-dAV
++dAs
++dAA
++dAG
++dAO
++dAW
+ dBc
+ dBi
+-dBo
+-dBx
+-dBH
+-bXy
++dBp
++dBv
++dBB
++dBK
+ dBU
+-dCa
++bXy
++dCh
++dCn
+ bZm
+-dCs
++dCF
+ bJH
+-dCH
+-dCS
+-dDa
++dCU
++dDf
++dDn
+ cby
+-dDg
++dDt
+ bCH
+-dDw
++dDJ
+ aXo
+ aaa
+ aad
+@@ -134248,7 +134425,7 @@ bjE
+ biK
+ bjD
+ bpj
+-dyX
++dzk
+ cGa
+ btF
+ bvc
