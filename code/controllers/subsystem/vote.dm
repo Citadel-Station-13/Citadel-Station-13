@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(vote)
 	wait = 10
 
 	flags = SS_KEEP_TIMING|SS_NO_INIT
-	
+
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/initiator = null
@@ -120,7 +120,7 @@ SUBSYSTEM_DEF(vote)
 				if(SSticker && SSticker.mode)//Don't change the mode if the round already started.
 					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
 				GLOB.master_mode = .
-				world.save_mode(.)
+				SSticker.save_mode(.)
 				to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
 			if("gamemode")

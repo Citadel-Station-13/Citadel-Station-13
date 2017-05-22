@@ -32,7 +32,7 @@
 
 	load_motd()
 	load_admins()
-	load_mentors()
+//	load_mentors()
 	load_menu()
 	if(config.usewhitelist)
 		load_whitelist()
@@ -83,7 +83,7 @@
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
-	
+
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
 
@@ -225,7 +225,7 @@
 	else
 		to_chat(world, "<span class='boldannounce'>Rebooting world...</span>")
 		Master.Shutdown()	//run SS shutdowns
-	log_world("World rebooted at [time_stamp()]"); 
+	log_world("World rebooted at [time_stamp()]");
 	..()
 
 /world/proc/load_motd()
