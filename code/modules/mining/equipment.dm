@@ -556,7 +556,8 @@
 		return
 	if(proximity_flag && isliving(target))
 		var/mob/living/L = target
-		if(!L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
+		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
 			return
 		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
 		var/backstab_dir = get_dir(user, L)
