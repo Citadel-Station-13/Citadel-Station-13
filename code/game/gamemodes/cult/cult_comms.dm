@@ -152,7 +152,7 @@
 	return TRUE
 
 /datum/action/innate/cult/master/IsAvailable()
-	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER))
+	if(!owner.mind || !owner.mind.has_antag_datum(ANTAG_DATUM_CULT_MASTER) || GLOB.cult_narsie)
 		return 0
 	return ..()
 
@@ -298,4 +298,5 @@
 			if(GLOB.blood_target)
 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")
 			B.current.client.images -= GLOB.blood_target_image
-	QDEL_NULL(GLOB.blood_target)
+	QDEL_NULL(GLOB.blood_target_image)
+	GLOB.blood_target = null

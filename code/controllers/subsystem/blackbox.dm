@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
-
+	
 	var/list/msg_common = list()
 	var/list/msg_science = list()
 	var/list/msg_command = list()
@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(blackbox)
 		if (sqlrowlist != "")
 			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
-		sqlrowlist += "(null, Now(), [GLOB.round_id], \"[sanitizeSQL(FV.get_variable())]\", [FV.get_value()], \"[sanitizeSQL(FV.get_details())]\")"
+		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
 
 	if (sqlrowlist == "")
 		return
