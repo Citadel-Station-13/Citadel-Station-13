@@ -28,14 +28,27 @@
 		/datum/gang_item/function/gang_ping,
 		/datum/gang_item/function/recall,
 		/datum/gang_item/function/outfit,
+		/datum/gang_item/weapon/shuriken,
 		/datum/gang_item/weapon/switchblade,
+		/datum/gang_item/weapon/improvised,
+		/datum/gang_item/weapon/ammo/improvised_ammo,
+		/datum/gang_item/weapon/surplus,
+		/datum/gang_item/weapon/ammo/surplus_ammo,
 		/datum/gang_item/weapon/pistol,
 		/datum/gang_item/weapon/ammo/pistol_ammo,
+		/datum/gang_item/weapon/sniper,
+		/datum/gang_item/weapon/ammo/sniper_ammo,
+		/datum/gang_item/weapon/machinegun,
 		/datum/gang_item/weapon/uzi,
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/spraycan,
+		/datum/gang_item/equipment/sharpener,
+		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
+		/datum/gang_item/equipment/frag,
+		/datum/gang_item/equipment/stimpack,
 		/datum/gang_item/equipment/implant_breaker,
+		/datum/gang_item/equipment/wetwork_boots,
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/gangtool,
 		/datum/gang_item/equipment/necklace,
@@ -141,7 +154,7 @@
 
 		if(outfit_path)
 			var/obj/item/clothing/outfit = new outfit_path(user.loc)
-			outfit.armor = list(melee = 20, bullet = 30, laser = 10, energy = 10, bomb = 20, bio = 0, rad = 0, fire = 30, acid = 30)
+			outfit.armor = list(melee = 20, bullet = 35, laser = 10, energy = 10, bomb = 30, bio = 0, rad = 0, fire = 30, acid = 30)
 			outfit.desc += " Tailored for the [name] Gang to offer the wearer moderate protection against ballistics and physical trauma."
 			outfit.gang = src
 			user.put_in_hands(outfit)
