@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
 	flags = SS_NO_TICK_CHECK
-
+	
 	var/list/msg_common = list()
 	var/list/msg_science = list()
 	var/list/msg_command = list()
@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(blackbox)
 	msg_service = SSblackbox.msg_service
 	msg_cargo = SSblackbox.msg_cargo
 	msg_other = SSblackbox.msg_other
+
 
 	feedback = SSblackbox.feedback
 
@@ -84,16 +85,19 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
-	var/list/sqlrowlist = list()
+	var/sqlrowlist = ""
 
 	for (var/datum/feedback_variable/FV in feedback)
-		sqlrowlist += list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'")
+		if (sqlrowlist != "")
+			sqlrowlist += ", " //a comma (,) at the start of the first row to insert will trigger a SQL error
 
-	if (!length(sqlrowlist))
+		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
+
+	if (sqlrowlist == "")
 		return
 
-	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
-
+	var/datum/DBQuery/query_feedback_save = SSdbcore.NewQuery("INSERT DELAYED IGNORE INTO [format_table_name("feedback")] VALUES " + sqlrowlist)
+	query_feedback_save.Execute()
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	switch(freq)
