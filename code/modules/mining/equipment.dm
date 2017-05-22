@@ -447,10 +447,10 @@
 			minerals += M
 	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/overlay/temp/mining_overlay/C = new /obj/effect/overlay/temp/mining_overlay(M)
+			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
 
-/obj/effect/overlay/temp/mining_overlay
+/obj/effect/temp_visual/mining_overlay
 	layer = FLASH_LAYER
 	icon = 'icons/turf/smoothrocks.dmi'
 	anchored = 1
@@ -529,6 +529,7 @@
 	return ..()
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
+
 	if(isliving(target))
 		var/mob/living/L = target
 		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
@@ -538,6 +539,7 @@
 		var/turf/closed/mineral/M = target_turf
 		new /obj/effect/overlay/temp/kinetic_blast(M)
 		M.gets_drilled(firer)
+
 	..()
 
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
@@ -559,7 +561,7 @@
 		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
 		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
 			return
-		new /obj/effect/overlay/temp/kinetic_blast(get_turf(L))
+		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
 		var/backstab_dir = get_dir(user, L)
 		var/def_check = L.getarmor(type = "bomb")
 		if((user.dir & backstab_dir) && (L.dir & backstab_dir))
@@ -567,6 +569,7 @@
 			playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 		else
 			L.apply_damage(50, BRUTE, blocked = def_check)
+
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
 	if(!charged)
