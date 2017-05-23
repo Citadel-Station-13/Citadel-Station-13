@@ -285,6 +285,7 @@
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
 	loadsql("config/dbconfig.txt")
+	reload_custom_roundstart_items_list()
 	if (maprotation)
 		loadmaplist("config/maps.txt")
 
