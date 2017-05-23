@@ -362,23 +362,28 @@
 /**********************Mining Scanners**********************/
 
 /obj/item/device/mining_scanner
-	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
+	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
 	w_class = WEIGHT_CLASS_SMALL
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/cooldown = 35
-	var/current_cooldown = 0
+	var/cooldown = 0
 	origin_tech = "engineering=1;magnets=1"
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)
 		return
-	if(current_cooldown <= world.time)
-		current_cooldown = world.time + cooldown
-		mineral_scan_pulse(get_turf(user))
+	if(!cooldown)
+		cooldown = TRUE
+		addtimer(CALLBACK(src, .proc/clear_cooldown), 40)
+		var/list/mobs = list()
+		mobs |= user
+		mineral_scan_pulse(mobs, get_turf(user))
+
+/obj/item/device/mining_scanner/proc/clear_cooldown()
+	cooldown = FALSE
 
 
 //Debug item to identify all ore spread quickly
@@ -391,7 +396,7 @@
 	qdel(src)
 
 /obj/item/device/t_scanner/adv_mining_scanner
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. This one has an extended range."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results. This one has an extended range."
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
@@ -399,47 +404,77 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
-	var/current_cooldown = 0
+	var/on_cooldown = 0
 	var/range = 7
+	var/meson = TRUE
 	origin_tech = "engineering=3;magnets=3"
+
+/obj/item/device/t_scanner/adv_mining_scanner/material
+	meson = FALSE
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results. This one has an extended range."
 
 /obj/item/device/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
-	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear meson scanners for optimal results."
 	range = 4
 	cooldown = 50
 
-/obj/item/device/t_scanner/adv_mining_scanner/scan()
-	if(current_cooldown <= world.time)
-		current_cooldown = world.time + cooldown
-		var/turf/t = get_turf(src)
-		mineral_scan_pulse(t, range)
+/obj/item/device/t_scanner/adv_mining_scanner/lesser/material
+	desc = "A scanner that automatically checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations. Wear material scanners for optimal results."
+	meson = FALSE
 
-/proc/mineral_scan_pulse(turf/T, range = world.view)
+/obj/item/device/t_scanner/adv_mining_scanner/scan()
+	if(!on_cooldown)
+		on_cooldown = 1
+		spawn(cooldown)
+			on_cooldown = 0
+		var/turf/t = get_turf(src)
+		var/list/mobs = recursive_mob_check(t, 1,0,0)
+		if(!mobs.len)
+			return
+		if(meson)
+			mineral_scan_pulse(mobs, t, range)
+		else
+			mineral_scan_pulse_material(mobs, t, range)
+
+//For use with mesons
+/proc/mineral_scan_pulse(list/mobs, turf/T, range = world.view)
 	var/list/minerals = list()
 	for(var/turf/closed/mineral/M in range(range, T))
 		if(M.scan_state)
 			minerals += M
-	if(LAZYLEN(minerals))
+	if(minerals.len)
+		for(var/mob/user in mobs)
+			if(user.client)
+				var/client/C = user.client
+				for(var/turf/closed/mineral/M in minerals)
+					var/turf/F = get_turf(M)
+					var/image/I = image('icons/turf/smoothrocks.dmi', loc = F, icon_state = M.scan_state, layer = FLASH_LAYER)
+					I.plane = FULLSCREEN_PLANE
+					C.images += I
+					spawn(30)
+						if(C)
+							C.images -= I
+
+//For use with material scanners
+/proc/mineral_scan_pulse_material(list/mobs, turf/T, range = world.view)
+	var/list/minerals = list()
+	for(var/turf/closed/mineral/M in range(range, T))
+		if(M.scan_state)
+			minerals += M
+	if(minerals.len)
 		for(var/turf/closed/mineral/M in minerals)
-			var/obj/effect/temp_visual/mining_overlay/oldC = locate(/obj/effect/temp_visual/mining_overlay) in M
-			if(oldC)
-				qdel(oldC)
 			var/obj/effect/temp_visual/mining_overlay/C = new /obj/effect/temp_visual/mining_overlay(M)
 			C.icon_state = M.scan_state
 
 /obj/effect/temp_visual/mining_overlay
-	plane = FULLSCREEN_PLANE
 	layer = FLASH_LAYER
-	icon = 'icons/effects/ore_visuals.dmi'
-	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
-	duration = 35
-	pixel_x = -224
-	pixel_y = -224
-
-/obj/effect/temp_visual/mining_overlay/Initialize()
-	. = ..()
-	animate(src, alpha = 0, time = duration, easing = EASE_IN)
+	icon = 'icons/turf/smoothrocks.dmi'
+	anchored = 1
+	mouse_opacity = 0
+	duration = 30
+	pixel_x = -4
+	pixel_y = -4
 
 
 /**********************Xeno Warning Sign**********************/
@@ -492,69 +527,79 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
-	var/charged = TRUE
-	var/charge_time = 14
+	var/charged = 1
+	var/charge_time = 16
+	var/atom/mark = null
+	var/mutable_appearance/marked_underlay
 
 /obj/item/projectile/destabilizer
 	name = "destabilizing force"
 	icon_state = "pulse1"
-	nodamage = TRUE
 	damage = 0 //We're just here to mark people. This is still a melee weapon.
 	damage_type = BRUTE
 	flag = "bomb"
 	range = 6
+	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced =  null
 	log_override = TRUE
-	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
-
-/obj/item/projectile/destabilizer/Destroy()
-	hammer_synced = null
-	return ..()
 
 /obj/item/projectile/destabilizer/on_hit(atom/target, blocked = 0)
-
-	if(isliving(target))
-		var/mob/living/L = target
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
-		CM.hammer_synced = hammer_synced
-	var/target_turf = get_turf(target)
-	if(ismineralturf(target_turf))
-		var/turf/closed/mineral/M = target_turf
-		new /obj/effect/temp_visual/kinetic_blast(M)
-		M.gets_drilled(firer)
-
+	if(hammer_synced)
+		if(hammer_synced.mark == target)
+			return ..()
+		if(isliving(target))
+			if(hammer_synced.mark && hammer_synced.marked_underlay)
+				hammer_synced.mark.underlays -= hammer_synced.marked_underlay
+				hammer_synced.marked_underlay = null
+			var/mob/living/L = target
+			if(L.mob_size >= MOB_SIZE_LARGE)
+				hammer_synced.mark = L
+				hammer_synced.marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+				hammer_synced.marked_underlay.pixel_x = -L.pixel_x
+				hammer_synced.marked_underlay.pixel_y = -L.pixel_y
+				L.underlays += hammer_synced.marked_underlay
+		var/target_turf = get_turf(target)
+		if(ismineralturf(target_turf))
+			var/turf/closed/mineral/M = target_turf
+			new /obj/effect/temp_visual/kinetic_blast(M)
+			M.gets_drilled(firer)
 	..()
 
 /obj/item/weapon/twohanded/required/mining_hammer/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag && charged)//Mark a target, or mine a tile.
-		var/turf/proj_turf = user.loc
+		var/turf/proj_turf = get_turf(src)
 		if(!isturf(proj_turf))
 			return
-		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(proj_turf)
-		D.preparePixelProjectile(target, get_turf(target), user)
+		var/datum/gas_mixture/environment = proj_turf.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure > 50)
+			playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+			return
+		var/obj/item/projectile/destabilizer/D = new /obj/item/projectile/destabilizer(user.loc)
+		D.preparePixelProjectile(target,get_turf(target), user)
 		D.hammer_synced = src
 		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, 1)
 		D.fire()
-		charged = FALSE
+		charged = 0
 		icon_state = "mining_hammer1_uncharged"
 		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 		return
-	if(proximity_flag && isliving(target))
+	if(proximity_flag && target == mark && isliving(target))
 		var/mob/living/L = target
-		var/datum/status_effect/crusher_mark/CM = L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)
-		if(!CM || CM.hammer_synced != src || !L.remove_status_effect(STATUS_EFFECT_CRUSHERMARK))
-			return
 		new /obj/effect/temp_visual/kinetic_blast(get_turf(L))
-		var/backstab_dir = get_dir(user, L)
-		var/def_check = L.getarmor(type = "bomb")
-		if((user.dir & backstab_dir) && (L.dir & backstab_dir))
-			L.apply_damage(80, BRUTE, blocked = def_check)
-			playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
-		else
-			L.apply_damage(50, BRUTE, blocked = def_check)
-
+		mark = 0
+		if(L.mob_size >= MOB_SIZE_LARGE)
+			L.underlays -= marked_underlay
+			QDEL_NULL(marked_underlay)
+			var/backstab_dir = get_dir(user, L)
+			var/def_check = L.getarmor(type = "bomb")
+			if((user.dir & backstab_dir) && (L.dir & backstab_dir))
+				L.apply_damage(80, BRUTE, blocked = def_check)
+				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+			else
+				L.apply_damage(50, BRUTE, blocked = def_check)
 
 /obj/item/weapon/twohanded/required/mining_hammer/proc/Recharge()
 	if(!charged)
-		charged = TRUE
+		charged = 1
 		icon_state = "mining_hammer1"
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
