@@ -332,3 +332,4 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 			SSticker.station_explosion_cinematic(1,"gang war", null)
 			SSticker.mode.explosion_in_progress = 0
 			SSticker.force_ending = TRUE
+

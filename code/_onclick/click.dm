@@ -114,7 +114,7 @@
 		W.attack_self(src)
 		update_inv_hands()
 		return
-	
+
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(DirectAccess(A))
@@ -125,7 +125,7 @@
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
-	
+
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
@@ -325,9 +325,11 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user))
+		if(world.time < user.next_move)
+			return FALSE
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.martial_art)
-		H.next_click = world.time + CLICK_CD_MELEE
+		H.changeNext_move(CLICK_CD_MELEE)
 	else
 		..()
 /*
