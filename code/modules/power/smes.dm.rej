@@ -1,0 +1,10 @@
+diff a/code/modules/power/smes.dm b/code/modules/power/smes.dm	(rejected hunks)
+@@ -196,7 +196,7 @@
+ 		var/turf/T = get_turf(src)
+ 		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
+ 		log_game("SMES deleted at [A][COORD(T)]")
+-		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]","singulo")
++		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
+ 	if(terminal)
+ 		disconnect_terminal()
+ 	return ..()

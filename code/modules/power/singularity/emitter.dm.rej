@@ -1,0 +1,10 @@
+diff a/code/modules/power/singularity/emitter.dm b/code/modules/power/singularity/emitter.dm	(rejected hunks)
+@@ -101,7 +101,7 @@
+ 		var/turf/T = get_turf(src)
+ 		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+ 		log_game("Emitter deleted at [COORD(T)]")
+-		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]","singulo")
++		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
+ 	QDEL_NULL(sparks)
+ 	return ..()
+ 

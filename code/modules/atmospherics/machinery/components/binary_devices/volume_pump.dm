@@ -162,7 +162,7 @@ Thus, the two variables affect pump operation are set in New():
 		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()

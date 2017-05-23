@@ -165,7 +165,7 @@ Thus, the two variables affect pump operation are set in New():
 		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
