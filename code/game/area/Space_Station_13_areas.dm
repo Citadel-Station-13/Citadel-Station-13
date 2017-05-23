@@ -97,12 +97,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //STATION13
 
-/area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
- 	flags = NONE
-
 //Maintenance
+
 /area/maintenance
 	ambientsounds = list('sound/ambience/ambimaint1.ogg',
 						 'sound/ambience/ambimaint2.ogg',
@@ -220,15 +216,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/hallway/primary/aft
 	name = "Aft Primary Hallway"
 	icon_state = "hallA"
-
+	
 /area/hallway/primary/port
 	name = "Port Primary Hallway"
 	icon_state = "hallP"
-
+	
 /area/hallway/primary/central
 	name = "Central Primary Hallway"
 	icon_state = "hallC"
-
+	
 /area/hallway/secondary/exit
 	name = "Escape Shuttle Hallway"
 	icon_state = "escape"
@@ -291,7 +287,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //Crew
 
-/area/crew_quarters
+/area/crew_quarters/dorms
+//	/area/crew_quarters
 	name = "Dormitories"
 	icon_state = "Sleep"
 	safe = 1
@@ -498,7 +495,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //MedBay
 
-/area/medical/medbay
+/area/medical
+	name = "Medical"
+	icon_state = "medbay3"
+	
+/area/medical/abandoned
+//	/area/medical/abandoned_medbay
+	name = "Abandoned Medbay"
+	icon_state = "medbay3"
+	music = 'sound/ambience/signal.ogg'
+
+/area/medical/medbay/central
+//	/area/medical/medbay
 	name = "Medbay Central"
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
@@ -588,7 +596,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Genetics Lab"
 	icon_state = "genetics"
 
-/area/medical/genetics_cloning
+/area/medical/genetics/cloning
+//	/area/medical/genetics_cloning
 	name = "Cloning Lab"
 	icon_state = "cloning"
 
@@ -596,7 +605,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Medbay Treatment Center"
 	icon_state = "exam_room"
 
+	
 //Security
+
+/area/security
+	name = "Security"
+	icon_state = "security"
 
 /area/security/main
 	name = "Security Office"
@@ -605,6 +619,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/brig
 	name = "Brig"
 	icon_state = "brig"
+	
+/area/security/courtroom
+//	/area/crew_quarters/courtroom
+	name = "Courtroom"
+	icon_state = "courtroom"
 
 /area/security/prison
 	name = "Prison Wing"
@@ -657,7 +676,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Security Checkpoint"
 	icon_state = "checkpoint1"
 
-/area/security/checkpoint2
+/area/security/checkpoint/checkpoint2
+//	/area/security/checkpoint2
 	name = "Security Checkpoint"
 	icon_state = "security"
 
@@ -672,7 +692,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/checkpoint/medical
 	name = "Security Post - Medbay"
 	icon_state = "checkpoint1"
-
+	
 /area/security/checkpoint/science
 	name = "Security Post - Science"
 	icon_state = "checkpoint1"
@@ -799,9 +819,22 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Art Supply Storage"
 	icon_state = "storage"
 
-/area/storage/auxillary
-	name = "Auxillary Storage"
+/area/storage/auxiliary
+//	/area/storage/auxillary
+	name = "Auxiliary Storage"
 	icon_state = "auxstorage"
+	
+/area/storage/atmos
+//	/area/maintenance/storage
+	name = "Atmospherics Storage"
+	icon_state = "atmos"
+	valid_territory = 0
+	
+/area/storage/tcom
+//	/area/maintenance/storage/tcom_storage
+	name = "Telecoms Storage"
+	icon_state = "green"
+	valid_territory = 0
 
 /area/storage/eva
 	name = "EVA Storage"
@@ -811,11 +844,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Secure Storage"
 	icon_state = "storage"
 
-/area/storage/emergency
+/area/storage/emergency/starboard
+//	/area/storage/emergency
 	name = "Starboard Emergency Storage"
 	icon_state = "emergencystorage"
 
-/area/storage/emergency2
+/area/storage/emergency/port
+//	/area/storage/emergency2
 	name = "Port Emergency Storage"
 	icon_state = "emergencystorage"
 
@@ -867,9 +902,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Solar Panel Control"
 	icon_state = "yellow"
 
-/area/construction/Storage
+/area/construction/storage
 	name = "Construction Site Storage"
 	icon_state = "yellow"
+	
+/area/construction/storage/wing
+//	/area/construction/Storage
+	name = "Storage Wing"
+	icon_state = "yellow"
+	
 
 //AI
 /area/ai_monitored/security/armory
@@ -987,14 +1028,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
 
-/area/chapel/asteroid
-	name = "Chapel Asteroid"
-	icon_state = "explored"
-
-/area/chapel/dock
-	name = "Chapel Dock"
-	icon_state = "construction"
-
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1003,28 +1036,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 //SPACE STATION 13
 GLOBAL_LIST_INIT(the_station_areas, list (
-	/area/atmos,
-	/area/maintenance,
-	/area/hallway,
-	/area/bridge,
-	/area/crew_quarters,
-	/area/holodeck,
+	/area/assembly,				
+	/area/bridge,		
+	/area/chapel,		
+	/area/construction,		
+	/area/crew_quarters,		
+	/area/engine,		
+	/area/hallway,		
+	/area/holodeck,		
+	/area/hydroponics,		
+	/area/janitor,		
+	/area/lawoffice,		
+	/area/library,		
+	/area/maintenance,		
+	/area/medical,		
 //	/area/mint,		//not present on map
-	/area/library,
-	/area/chapel,
-	/area/lawoffice,
-	/area/engine,
-	/area/solar,
-	/area/assembly,
-	/area/teleporter,
-	/area/medical,
-	/area/security,
-	/area/quartermaster,
-	/area/janitor,
-	/area/hydroponics,
-	/area/toxins,
-	/area/storage,
-	/area/construction,
+	/area/quartermaster,		
+	/area/science,	// /area/toxins/	
+	/area/security,		
+	/area/solar,		
+	/area/storage,		
+	/area/teleporter,		
 	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
 //	/area/ai_monitored/storage/secure,	//not present on map
 //	/area/ai_monitored/storage/emergency,	//not present on map
