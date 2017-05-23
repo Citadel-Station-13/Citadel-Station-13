@@ -1,0 +1,12 @@
+diff a/code/datums/riding.dm b/code/datums/riding.dm	(rejected hunks)
+@@ -323,9 +309,7 @@
+ 		H.stop_pulling()
+ 
+ /datum/riding/human/get_offsets(pass_index) // list(dir = x, y, layer)
+-	switch(pass_index)
+-		if(1)
+-			return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
++	return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
+ 
+ 
+ /datum/riding/human/handle_vehicle_layer()
