@@ -1,0 +1,67 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -5592,7 +5592,7 @@
+ 	dir = 4
+ 	},
+ /turf/open/floor/plating,
+-/area/maintenance/port/fore)
++/area/maintenance/disposal)
+ "akm" = (
+ /obj/structure/cable/yellow{
+ 	d1 = 4;
+@@ -64455,7 +64455,7 @@
+ 	},
+ /obj/effect/turf_decal/delivery,
+ /turf/open/floor/plasteel,
+-/area/maintenance/starboard/aft)
++/area/science/research)
+ "cmM" = (
+ /obj/machinery/door/airlock{
+ 	name = "Research Emergency Storage";
+@@ -92545,7 +92545,7 @@
+ 	req_access_txt = "12"
+ 	},
+ /turf/open/floor/plating,
+-/area/maintenance/starboard/fore)
++/area/crew_quarters/locker)
+ "dtF" = (
+ /turf/closed/wall,
+ /area/maintenance/starboard/fore)
+@@ -106896,13 +106896,13 @@ aaa
+ aaa
+ aaf
+ aaf
+-dpZ
++dne
+ avK
+-drn
++dne
+ aaf
+ aaf
+-dsa
+-dsj
++dne
++dne
+ aDb
+ cVE
+ cVL
+@@ -107152,14 +107152,14 @@ aaf
+ aaf
+ aaa
+ aaf
+-dpy
+-dqa
++dne
++dne
+ avJ
+-dro
+-drB
++dne
++dne
+ aip
+-dsb
+-dsk
++dne
++dnk
+ aDb
+ cVH
+ cVM

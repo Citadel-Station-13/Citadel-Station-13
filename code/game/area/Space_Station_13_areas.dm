@@ -16,10 +16,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
-/area/engine/supermatter
-	name = "Supermatter Engine"
-	icon_state = "engine_sm"
-
 /area/ai_monitored	//stub defined ai_monitored.dm
 
 /area/ai_monitored/turret_protected
