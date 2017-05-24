@@ -1,0 +1,53 @@
+diff a/code/datums/explosion.dm b/code/datums/explosion.dm	(rejected hunks)
+@@ -1,10 +1,48 @@
+-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, smoke = 1)
+-	set waitfor = 0
+-	src = null //so we don't abort once src is deleted
++GLOBAL_LIST_EMPTY(explosions)
++//Against my better judgement, I will return the explosion datum
++//If I see any GC errors for it I will find you
++//and I will gib you
++//	--Cyberboss
++/proc/explosion(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = TRUE, ignorecap = FALSE, flame_range = 0 , silent = FALSE, smoke = FALSE)
++	return new /datum/explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
++
++//This datum creates 3 threads
++//1 GatherSpiralTurfsProc runs spiral_range_turfs(tick_checked = TRUE) to populate the affected_turfs list
++//2 CaculateExplosionBlock adds the blockings to the cached_exp_block list
++//3 The main thread explodes the prepared turfs
++
++/datum/explosion
++	var/explosion_id
++	var/started_at
++	var/running = TRUE
++	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
++	var/static/id_counter = 0
++
++#define EX_PREPROCESS_EXIT_CHECK \
++	if(!running) {\
++		stopped = 2;\
++		qdel(src);\
++		return;\
++	}
++
++#define EX_PREPROCESS_CHECK_TICK \
++	if(TICK_CHECK) {\
++		stoplag();\
++		EX_PREPROCESS_EXIT_CHECK\
++	}
++
++/datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
++	set waitfor = FALSE
++
++	var/id = ++id_counter
++	explosion_id = id
++
+ 	epicenter = get_turf(epicenter)
+ 	if(!epicenter)
+ 		return
+ 
++	GLOB.explosions += src
++
+ 	// Archive the uncapped explosion for the doppler array
+ 	var/orig_dev_range = devastation_range
+ 	var/orig_heavy_range = heavy_impact_range

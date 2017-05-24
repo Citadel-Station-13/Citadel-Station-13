@@ -1,0 +1,24 @@
+diff a/code/modules/admin/admin_verbs.dm b/code/modules/admin/admin_verbs.dm	(rejected hunks)
+@@ -515,11 +515,11 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
+ 			var/flash_range = input("Flash range (in tiles):") as null|num
+ 			if(flash_range == null)
+ 				return
+-			if(devastation_range > SSexplosion.devastation_cap || heavy_impact_range > SSexplosion.heavy_cap || light_impact_range > SSexplosion.light_cap || flash_range > SSexplosion.flash_cap)
++			if(devastation_range > GLOB.MAX_EX_DEVESTATION_RANGE || heavy_impact_range > GLOB.MAX_EX_HEAVY_RANGE || light_impact_range > GLOB.MAX_EX_LIGHT_RANGE || flash_range > GLOB.MAX_EX_FLASH_RANGE)
+ 				if(alert("Bomb is bigger than the maxcap. Continue?",,"Yes","No") != "Yes")
+ 					return
+ 			epicenter = mob.loc //We need to reupdate as they may have moved again
+-			SSexplosion.Create(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
++			explosion(epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, TRUE, TRUE)
+ 	message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+ 	log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
+ 	feedback_add_details("admin_verb","Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
+ 	var/ex_power = input("Explosive Power:") as null|num
+ 	var/turf/epicenter = mob.loc
+ 	if(ex_power && epicenter)
+-		SSexplosion.CreateDynamic(epicenter, ex_power)
++		dyn_explosion(epicenter, ex_power)
+ 		message_admins("[ADMIN_LOOKUPFLW(usr)] creating an admin explosion at [epicenter.loc].")
+ 		log_admin("[key_name(usr)] created an admin explosion at [epicenter.loc].")
+ 		feedback_add_details("admin_verb","Drop Dynamic Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
