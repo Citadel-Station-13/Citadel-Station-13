@@ -388,11 +388,11 @@
 		return FALSE	// This stops people from being able to really power up the supermatter
 				// Then bring it inside to explode instantly upon landing on a valid turf.
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
-		investigate_log("has been hit by [Proj] fired by [Proj.firer]", "supermatter")
+		investigate_log("has been hit by [Proj] fired by [Proj.firer]", INVESTIGATE_SUPERMATTER)
 	if(Proj.flag != "bullet")
 		power += Proj.damage * config_bullet_energy
 		if(!has_been_powered)
-			investigate_log("has been powered for the first time.", "supermatter")
+			investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = TRUE
 	else if(takes_damage)

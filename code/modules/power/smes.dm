@@ -195,7 +195,7 @@
 		var/area/area = get_area(src)
 		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
 		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])","singulo")
+		investigate_log("<font color='red'>deleted</font> at ([area.name])", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()

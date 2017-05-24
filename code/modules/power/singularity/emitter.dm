@@ -100,7 +100,7 @@
 	if(SSticker && SSticker.IsRoundInProgress())
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]","singulo")
+		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 

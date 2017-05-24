@@ -121,7 +121,7 @@ Thus, the two variables affect pump operation are set in New():
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
+			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
 			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
 
@@ -140,7 +140,7 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
+				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
 				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 				log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
 	update_icon()
@@ -183,7 +183,7 @@ Thus, the two variables affect pump operation are set in New():
 		if(!(stat & NOPOWER) && on)
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
+			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
 			message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] unwrenched a volume pump at [x], [y], [z]")
 
