@@ -240,6 +240,7 @@
 
 /obj/item/device/gangtool/spare/lt
 	promotable = 1
+
 ///////////// Internal tool used by gang regulars ///////////
 
 /obj/item/device/gangtool/soldier
