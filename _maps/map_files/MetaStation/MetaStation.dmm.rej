@@ -1,0 +1,23 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -73035,6 +73035,7 @@
+ 	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
++/obj/effect/landmark/xmastree/rdrod,
+ /turf/open/floor/plasteel/warnwhite{
+ 	dir = 8
+ 	},
+@@ -78465,9 +78466,12 @@
+ 	},
+ /obj/structure/table,
+ /obj/item/weapon/paper_bin{
+-	pixel_x = -2;
++	pixel_x = 6;
+ 	pixel_y = 4
+ 	},
++/obj/item/weapon/paper/morguereminder{
++	pixel_x = -4
++	},
+ /obj/effect/landmark{
+ 	name = "revenantspawn"
+ 	},

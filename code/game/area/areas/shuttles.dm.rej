@@ -1,0 +1,9 @@
+diff a/code/game/area/areas/shuttles.dm b/code/game/area/areas/shuttles.dm	(rejected hunks)
+@@ -7,6 +7,7 @@
+ 	luminosity = 1
+ 	lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
+ 	has_gravity = 1
++	always_unpowered = 0
+ 	valid_territory = 0
+ 	icon_state = "shuttle"
+ 

@@ -1,0 +1,19 @@
+diff a/code/modules/mob/living/simple_animal/hostile/megafauna/megafauna.dm b/code/modules/mob/living/simple_animal/hostile/megafauna/megafauna.dm	(rejected hunks)
+@@ -13,7 +13,7 @@
+ 	luminosity = 3
+ 	faction = list("mining", "boss")
+ 	weather_immunities = list("lava","ash")
+-	flying = 1
++	movement_type = FLYING
+ 	robust_searching = 1
+ 	ranged_ignores_vision = TRUE
+ 	stat_attack = 2
+@@ -75,7 +75,7 @@
+ 	if(isliving(target))
+ 		var/mob/living/L = target
+ 		if(L.stat != DEAD)
+-			if(ranged && ranged_cooldown <= world.time)
++			if(!client && ranged && ranged_cooldown <= world.time)
+ 				OpenFire()
+ 		else
+ 			devour(L)

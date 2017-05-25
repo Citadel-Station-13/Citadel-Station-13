@@ -1,0 +1,10 @@
+diff a/code/__DEFINES/machines.dm b/code/__DEFINES/machines.dm	(rejected hunks)
+@@ -32,4 +32,5 @@
+ #define MC_NET "NET"
+ #define MC_PRINT "PRINT"
+ #define MC_CELL "CELL"
+-#define MC_CHARGE "CHARGE"
+\ No newline at end of file
++#define MC_CHARGE "CHARGE"
++#define MC_AI "AI"
+\ No newline at end of file

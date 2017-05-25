@@ -1,0 +1,9 @@
+diff a/code/game/turfs/simulated/floor/reinf_floor.dm b/code/game/turfs/simulated/floor/reinf_floor.dm	(rejected hunks)
+@@ -150,7 +150,6 @@
+ /turf/open/floor/engine/cult/airless
+ 	initial_gas_mix = "TEMP=2.7"
+ 
+-
+ /turf/open/floor/engine/vacuum
+ 	name = "vacuum floor"
+ 	initial_gas_mix = "TEMP=2.7"
