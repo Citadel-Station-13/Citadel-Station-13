@@ -181,6 +181,7 @@
 		marked_underlay.pixel_x = -owner.pixel_x
 		marked_underlay.pixel_y = -owner.pixel_y
 		owner.underlays += marked_underlay
+		return TRUE
 	return FALSE
 
 /datum/status_effect/crusher_mark/Destroy()
