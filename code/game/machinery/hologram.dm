@@ -293,7 +293,7 @@ Possible to do for anyone motivated enough:
 			Hologram.Impersonation = user
 
 
-		Hologram.language_holder = user.get_language_holder()
+		Hologram.copy_known_languages_from(user,replace = TRUE)
 
 		Hologram.mouse_opacity = 0//So you can't click on it.
 		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
