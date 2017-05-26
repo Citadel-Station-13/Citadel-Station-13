@@ -1,0 +1,45 @@
+diff a/code/game/area/Space_Station_13_areas.dm b/code/game/area/Space_Station_13_areas.dm	(rejected hunks)
+@@ -203,20 +203,27 @@ NOTE: there are two lists of areas in the end of this file: centcom and station
+ 	name = "Aft Maintenance"
+ 	icon_state = "amaint"
+ 	
+-/area/maintenance/port
+-//	/area/maintenance/fpmaint2/port_maintenance
+-	name = "Port Maintenance"
+-	icon_state = "pmaint"
++/area/maintenance/aft/secondary
++	name = "Aft Maintenance"
++	icon_state = "amaint_2"
+ 	
+ /area/maintenance/central
+ //	/area/maintenance/maintcentral
+ 	name = "Central Maintenance"
+ 	icon_state = "maintcentral"
+ 	
++/area/maintenance/central/secondary
++	name = "Central Maintenance"
++	icon_state = "maintcentral"
++	
+ /area/maintenance/fore
+ 	name = "Fore Maintenance"
+ 	icon_state = "fmaint"
+ 	
++/area/maintenance/fore/secondary
++	name = "Fore Maintenance"
++	icon_state = "fmaint_2"
++	
+ /area/maintenance/starboard
+ 	name = "Starboard Maintenance"
+ 	icon_state = "smaint"
+@@ -235,6 +242,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station
+ 	name = "Starboard Bow Maintenance"
+ 	icon_state = "fsmaint"
+ 	
++/area/maintenance/port
++//	/area/maintenance/fpmaint2/port_maintenance
++	name = "Port Maintenance"
++	icon_state = "pmaint"
++	
+ /area/maintenance/port/central
+ 	name = "Central Port Maintenance"
+ 	icon_state = "maintcentral"

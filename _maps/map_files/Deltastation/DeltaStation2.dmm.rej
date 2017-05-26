@@ -1,0 +1,28 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -616,7 +616,7 @@
+ /area/construction/mining/aux_base)
+ "abu" = (
+ /obj/machinery/door/airlock/engineering{
+-	name = "Fore Starboard Solar Access";
++	name = "Starboard Bow Solar Access";
+ 	req_access_txt = "10"
+ 	},
+ /obj/structure/cable/white{
+@@ -90172,7 +90172,7 @@
+ /area/maintenance/starboard/aft)
+ "dwa" = (
+ /obj/machinery/door/airlock/engineering{
+-	name = "Aft Starboard Solar Access";
++	name = "Starboard Quarter Solar Access";
+ 	req_access_txt = "10"
+ 	},
+ /obj/structure/cable/white{
+@@ -102524,7 +102524,7 @@
+ /area/maintenance/solars/port/aft)
+ "dVC" = (
+ /obj/machinery/door/airlock/engineering{
+-	name = "Aft Port Solar Access";
++	name = "Port Quarter Solar Access";
+ 	req_access_txt = "10"
+ 	},
+ /obj/structure/cable/white{
