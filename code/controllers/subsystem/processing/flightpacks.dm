@@ -5,7 +5,7 @@ PROCESSING_SUBSYSTEM_DEF(flightpacks)
 	stat_tag = "FM"
 	flags = SS_NO_INIT|SS_TICKER|SS_KEEP_TIMING
 
-	var/flightsuit_processing = FLIGHTSUIT_PROCESSING_NONE
+	var/flightsuit_processing = FLIGHTSUIT_PROCESSING_FULL
 
 /datum/controller/subsystem/processing/flightpacks/Initialize()
 	sync_flightsuit_processing()
