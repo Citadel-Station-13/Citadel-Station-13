@@ -545,7 +545,6 @@
 	emagged = TRUE
 	installation = /obj/item/weapon/gun/energy/laser
 
-
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
@@ -561,6 +560,14 @@
 	base_icon_state = "syndie"
 	faction = "syndicate"
 	emp_vunerable = 0
+
+/obj/machinery/porta_turret/syndicate/energy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
+	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -1100,4 +1107,4 @@
 	if(target == user || target == get_turf(src))
 		return
 	target_turf = get_turf(target)
-	fire_helper(target_turf)
+	fire_helper(user)
