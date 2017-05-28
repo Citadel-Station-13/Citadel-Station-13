@@ -188,3 +188,5 @@
 		for(var/implant_type in implants)
 			var/obj/item/weapon/implant/I = new implant_type(H)
 			I.implant(H, null, silent=TRUE)
+
+	handle_roundstart_items(H)
