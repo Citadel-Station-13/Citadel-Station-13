@@ -1,0 +1,10 @@
+diff a/code/modules/projectiles/projectile/bullets.dm b/code/modules/projectiles/projectile/bullets.dm	(rejected hunks)
+@@ -244,7 +248,7 @@
+ 	name = "\improper DNA injector"
+ 	icon_state = "syringeproj"
+ 	var/obj/item/weapon/dnainjector/injector
+-	
++
+ /obj/item/projectile/bullet/dnainjector/on_hit(atom/target, blocked = 0)
+ 	if(iscarbon(target))
+ 		var/mob/living/carbon/M = target
