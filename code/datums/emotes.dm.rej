@@ -1,0 +1,10 @@
+diff a/code/datums/emotes.dm b/code/datums/emotes.dm	(rejected hunks)
+@@ -35,6 +35,8 @@
+ 	if(params && message_param)
+ 		msg = select_param(user, params)
+ 
++	msg = replace_pronoun(user, msg)
++
+ 	var/mob/living/L = user
+ 	for(var/obj/item/weapon/implant/I in L.implants)
+ 		I.trigger(key, L)

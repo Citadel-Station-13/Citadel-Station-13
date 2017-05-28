@@ -61,6 +61,15 @@
 		user.visible_message(msg)
 	log_emote("[key_name(user)] : [msg]")
 
+/datum/emote/proc/replace_pronoun(mob/user, message)
+	if(findtext(message, "their"))
+		message = replacetext(message, "their", user.p_their())
+	if(findtext(message, "them"))
+		message = replacetext(message, "them", user.p_them())
+	if(findtext(message, "%s"))
+		message = replacetext(message, "%s", user.p_s())
+	return message
+
 /datum/emote/proc/select_message_type(mob/user)
 	. = message
 	if(!muzzle_ignore && user.is_muzzled() && emote_type == EMOTE_AUDIBLE)
