@@ -161,7 +161,6 @@
 #include "code\citadel\_cit_helpers.dm"
 #include "code\citadel\cit_areas.dm"
 #include "code\citadel\cit_arousal.dm"
-#include "code\citadel\cit_clothing.dm"
 #include "code\citadel\cit_genemods.dm"
 #include "code\citadel\cit_guns.dm"
 #include "code\citadel\cit_kegs.dm"
