@@ -525,7 +525,9 @@ Difficulty: Hard
 			targetturf = get_turf(target)
 
 /obj/effect/temp_visual/hierophant/chaser/proc/make_blast()
-	new /obj/effect/temp_visual/hierophant/blast(loc, caster, friendly_fire_check)
+	var/obj/effect/temp_visual/hierophant/blast/B = new(loc, caster, friendly_fire_check)
+	B.damage = damage
+	B.monster_damage_boost = monster_damage_boost
 
 /obj/effect/temp_visual/hierophant/telegraph
 	icon = 'icons/effects/96x96.dmi'

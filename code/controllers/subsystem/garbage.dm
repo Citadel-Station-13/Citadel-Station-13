@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(garbage)
 		for(var/path in sleptDestroy)
 			dellog += "Path : [path] \n"
 			dellog += "Sleeps : [sleptDestroy[path]] \n"
-		text2file("[GLOB.log_directory]/qdel.log", dellog.Join())
+		text2file(dellog.Join(), "[GLOB.log_directory]/qdel.log")
 
 /datum/controller/subsystem/garbage/fire()
 	HandleToBeQueued()
@@ -164,8 +164,8 @@ SUBSYSTEM_DEF(garbage)
 	if (time > highest_del_time)
 		highest_del_time = time
 	if (time > 10)
-		log_game("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete)")
-		message_admins("Error: [type]([refID]) took longer then 1 second to delete (took [time/10] seconds to delete).")
+		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
 	
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)

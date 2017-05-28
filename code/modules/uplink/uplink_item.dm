@@ -725,16 +725,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/weapon/grenade/clusterbuster/soap
 	cost = 6
 
-/datum/uplink_item/stealthy_weapons/door_charge
-	name = "Explosive Airlock Charge"
-	desc = "A small, easily concealable device. It can be applied to an open airlock panel, booby-trapping it. \
-			The next person to use that airlock will trigger an explosion, knocking them down and destroying \
-			the airlock maintenance panel."
-	item = /obj/item/device/doorCharge
-	cost = 2
-	surplus = 10
-	exclude_modes = list(/datum/game_mode/nuclear)
-
 // Stealth Items
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"
@@ -914,8 +904,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 3
 
 /datum/uplink_item/device_tools/military_belt
-	name = "Military Belt"
-	desc = "A robust seven-slot red belt that is capable of holding all manner of tatical equipment."
+	name = "Chest Rig"
+	desc = "A robust seven-slot set of webbing that is capable of holding all manner of tatical equipment."
 	item = /obj/item/weapon/storage/belt/military
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear)
