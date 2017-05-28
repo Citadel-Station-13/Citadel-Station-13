@@ -1,0 +1,9 @@
+diff a/code/game/area/areas/mining.dm b/code/game/area/areas/mining.dm	(rejected hunks)
+@@ -86,6 +86,7 @@
+ /area/lavaland
+ 	icon_state = "mining"
+ 	has_gravity = 1
++	flags = NONE
+ 
+ /area/lavaland/surface
+ 	name = "Lavaland"

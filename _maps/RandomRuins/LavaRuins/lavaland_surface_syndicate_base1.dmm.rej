@@ -1,0 +1,10 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm	(rejected hunks)
+@@ -726,7 +726,7 @@
+ 	},
+ /area/ruin/powered/syndicate_lava_base)
+ "bM" = (
+-/obj/machinery/smartfridge/chemistry/virology,
++/obj/machinery/smartfridge/chemistry/virology/preloaded,
+ /turf/open/floor/plasteel/podhatch{
+ 	tag = "icon-podhatch (EAST)";
+ 	icon_state = "podhatch";
