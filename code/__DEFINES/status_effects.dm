@@ -30,7 +30,6 @@
 // DEBUFFS //
 /////////////
 
-#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
 #define STATUS_EFFECT_BELLIGERENT /datum/status_effect/belligerent //forces the affected to walk, doing damage if they try to run
 
 #define STATUS_EFFECT_MANIAMOTOR /datum/status_effect/maniamotor //disrupts, damages, and confuses the affected as long as they're in range of the motor
