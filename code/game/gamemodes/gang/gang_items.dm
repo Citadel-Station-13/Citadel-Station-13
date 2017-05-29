@@ -326,6 +326,7 @@
 	if(spawn_msg)
 		to_chat(user, spawn_msg)
 
+
 /datum/gang_item/equipment/wetwork_boots
 	name = "Wetwork boots"
 	id = "wetwork"
