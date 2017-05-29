@@ -75,6 +75,13 @@ Possible to do for anyone motivated enough:
 		stat &= ~NOPOWER
 	else
 		stat |= ~NOPOWER
+		if(outgoing_call)
+			outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/obj_break()
+	. = ..()
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
