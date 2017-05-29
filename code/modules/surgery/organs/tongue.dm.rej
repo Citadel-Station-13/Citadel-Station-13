@@ -1,0 +1,9 @@
+diff a/code/modules/surgery/organs/tongue.dm b/code/modules/surgery/organs/tongue.dm	(rejected hunks)
+@@ -17,6 +17,7 @@
+ 		/datum/language/codespeak,
+ 		/datum/language/monkey,
+ 		/datum/language/narsie,
++		/datum/language/beachbum,
+ 		/datum/language/ratvar
+ 	))
+ 
