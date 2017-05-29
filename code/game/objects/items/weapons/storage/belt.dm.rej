@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/weapons/storage/belt.dm b/code/game/objects/items/weapons/storage/belt.dm	(rejected hunks)
+@@ -200,7 +200,7 @@
+ 		/obj/item/weapon/storage/pill_bottle,
+ 		/obj/item/weapon/ore,
+ 		/obj/item/weapon/reagent_containers/food/drinks,
+-		/obj/item/organ/hivelord_core,
++		/obj/item/organ/regenerative_core,
+ 		/obj/item/device/wormhole_jaunter,
+ 		/obj/item/weapon/storage/bag/plants,
+ 		/obj/item/stack/marker_beacon

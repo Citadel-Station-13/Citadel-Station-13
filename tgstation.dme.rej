@@ -1,0 +1,15 @@
+diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
+@@ -1446,11 +1446,13 @@
+ #include "code\modules\mining\satchel_ore_boxdm.dm"
+ #include "code\modules\mining\shelters.dm"
+ #include "code\modules\mining\equipment\explorer_gear.dm"
++#include "code\modules\mining\equipment\goliath_hide.dm"
+ #include "code\modules\mining\equipment\kinetic_crusher.dm"
+ #include "code\modules\mining\equipment\lazarus_injector.dm"
+ #include "code\modules\mining\equipment\marker_beacons.dm"
+ #include "code\modules\mining\equipment\mineral_scanner.dm"
+ #include "code\modules\mining\equipment\mining_tools.dm"
++#include "code\modules\mining\equipment\regenerative_core.dm"
+ #include "code\modules\mining\equipment\resonator.dm"
+ #include "code\modules\mining\equipment\survival_pod.dm"
+ #include "code\modules\mining\equipment\vendor_items.dm"
