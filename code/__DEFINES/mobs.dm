@@ -114,13 +114,6 @@
 #define SNPC_MARTYR 3
 #define SNPC_PSYCHO 4
 
-//Individual logging defines
-#define INDIVIDUAL_ATTACK_LOG "Attack log"
-#define INDIVIDUAL_SAY_LOG "Say log"
-#define INDIVIDUAL_EMOTE_LOG "Emote log"
-#define INDIVIDUAL_OOC_LOG "OOC log"
-#define INDIVIDUAL_SHOW_ALL_LOG "All logs"
-
 #define TK_MAXRANGE 15
 
 #define NO_SLIP_WHEN_WALKING 1
@@ -131,3 +124,8 @@
 #define MAX_CHICKENS 50
 
 #define UNHEALING_EAR_DAMAGE 100
+
+
+#define INCORPOREAL_MOVE_BASIC 1
+#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
