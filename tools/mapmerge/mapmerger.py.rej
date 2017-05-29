@@ -1,0 +1,10 @@
+diff a/tools/mapmerge/mapmerger.py b/tools/mapmerge/mapmerger.py	(rejected hunks)
+@@ -4,7 +4,7 @@
+ 
+ #main("../../_maps/")
+ def main(map_folder, tgm=0):
+-    valid_indices = map_helpers.prompt_maps(map_folder, "merge", tgm)
++    maps = map_helpers.prompt_maps(map_folder, "merge", tgm)
+ 
+     print("\nMerging these maps:")
+     for i in maps.indices:

@@ -52,8 +52,8 @@ def main(map_folder, tgm=0):
         print("\nAborted map merge.")
         sys.exit()
     else:
-        for i in valid_indices:
-            path_str = str(list_of_files[i])
+        for i in maps.indices:
+            path_str = str(maps.files[i])
             shutil.copyfile(path_str, path_str + ".before")
             path_str_pretty = path_str[len(map_folder):]
             try:
