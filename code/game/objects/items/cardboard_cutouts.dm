@@ -142,6 +142,10 @@
 			icon_state = "cutout_fukken_xeno"
 			if(prob(25))
 				alpha = 75 //Spooky sneaking!
+		if("Xenomorph Maid")
+			name = "lusty xenomorph maid ([rand(1, 999)])"
+			desc = "A cardboard cutout of a xenomorph maid."
+			icon_state = "cutout_lusty"
 		if("Swarmer")
 			name = "Swarmer ([rand(1, 999)])"
 			desc = "A cardboard cutout of a swarmer."

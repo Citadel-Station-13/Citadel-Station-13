@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/cardboard_cutouts.dm b/code/game/objects/items/cardboard_cutouts.dm	(rejected hunks)
+@@ -10,7 +10,7 @@
+ 	// add an entry in change_appearance() if you add to here
+ 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
+ 		"Traitor", "Nuke Op", "Cultist", "Clockwork Cultist",
+-		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Swarmer",
++		"Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Xenomorph Maid", "Swarmer",
+ 		"Ash Walker", "Deathsquad Officer", "Ian", "Slaughter Demon",
+ 		"Laughter Demon", "Private Security Officer")
+ 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
