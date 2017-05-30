@@ -1,0 +1,11 @@
+diff a/code/game/gamemodes/devil/true_devil/_true_devil.dm b/code/game/gamemodes/devil/true_devil/_true_devil.dm	(rejected hunks)
+@@ -60,8 +60,7 @@
+ 	stat = DEAD
+ 	..(gibbed)
+ 	drop_all_held_items()
+-	spawn (0)
+-		mind.devilinfo.beginResurrectionCheck(src)
++	INVOKE_ASYNC(mind.devilinfo, /datum/devilinfo/proc/beginResurrectionCheck, src)
+ 
+ 
+ /mob/living/carbon/true_devil/examine(mob/user)
