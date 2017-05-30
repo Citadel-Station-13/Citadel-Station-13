@@ -1,0 +1,10 @@
+diff a/config/unbuyableshuttles.txt b/config/unbuyableshuttles.txt	(rejected hunks)
+@@ -15,4 +15,6 @@
+ #_maps/shuttles/emergency_mini.dmm
+ #_maps/shuttles/emergency_imfedupwiththisworld.dmm
+ #_maps/shuttles/emergency_goon.dmm
+-#_maps/shuttles/emergency_wabbajack.dmm
+\ No newline at end of file
++#_maps/shuttles/emergency_wabbajack.dmm
++#_maps/shuttles/emergency_arena.dmm
++#_maps/shuttles/emergency_raven.dmm

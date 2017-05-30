@@ -1,0 +1,10 @@
+diff a/code/game/objects/effects/effect_system/effects_sparks.dm b/code/game/objects/effects/effect_system/effects_sparks.dm	(rejected hunks)
+@@ -9,7 +9,7 @@
+ 	name = "sparks"
+ 	icon_state = "sparks"
+ 	anchored = 1
+-	luminosity = 1
++	light_range = 1
+ 
+ /obj/effect/particle_effect/sparks/New()
+ 	..()

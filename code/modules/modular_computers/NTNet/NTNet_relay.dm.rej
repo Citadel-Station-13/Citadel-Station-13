@@ -1,0 +1,18 @@
+diff a/code/modules/modular_computers/NTNet/NTNet_relay.dm b/code/modules/modular_computers/NTNet/NTNet_relay.dm	(rejected hunks)
+@@ -118,12 +118,12 @@
+ 		D.target = null
+ 		D.error = "Connection to quantum relay severed"
+ 
+-	..()
++	return ..()
+ 
+ /obj/item/weapon/circuitboard/machine/ntnet_relay
+-	name = "circuit board (NTNet Relay)"
++	name = "NTNet Relay (Machine Board)"
+ 	build_path = /obj/machinery/ntnet_relay
+ 	origin_tech = "programming=3;bluespace=3;magnets=2"
+ 	req_components = list(
+ 							/obj/item/stack/cable_coil = 2,
+-							/obj/item/weapon/stock_parts/subspace/filter = 1)
+\ No newline at end of file
++							/obj/item/weapon/stock_parts/subspace/filter = 1)

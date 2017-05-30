@@ -1,0 +1,12 @@
+diff a/code/game/objects/items/weapons/implants/implantpad.dm b/code/game/objects/items/weapons/implants/implantpad.dm	(rejected hunks)
+@@ -35,9 +35,8 @@
+ /obj/item/weapon/implantpad/attackby(obj/item/weapon/implantcase/C, mob/user, params)
+ 	if(istype(C, /obj/item/weapon/implantcase))
+ 		if(!case)
+-			if(!user.unEquip(C))
++			if(!user.transferItemToLoc(C, src))
+ 				return
+-			C.loc = src
+ 			case = C
+ 		update_icon()
+ 	else

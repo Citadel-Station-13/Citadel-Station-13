@@ -1,0 +1,17 @@
+diff a/code/modules/food_and_drinks/recipes/tablecraft/recipes_misc.dm b/code/modules/food_and_drinks/recipes/tablecraft/recipes_misc.dm	(rejected hunks)
+@@ -315,4 +315,13 @@
+ 		/obj/item/weapon/reagent_containers/food/snacks/meat/cutlet = 1,
+ 	)
+ 	result = /obj/item/weapon/reagent_containers/food/snacks/taco/plain
+-	category = CAT_MISCFOOD
+\ No newline at end of file
++	category = CAT_MISCFOOD
++
++/datum/crafting_recipe/food/branrequests
++	name = "Bran Requests Cereal"
++	reqs = list(
++		/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = 1,
++		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
++	)
++	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
++	category = CAT_MISCFOOD

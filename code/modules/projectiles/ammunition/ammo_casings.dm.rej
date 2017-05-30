@@ -1,0 +1,10 @@
+diff a/code/modules/projectiles/ammunition/ammo_casings.dm b/code/modules/projectiles/ammunition/ammo_casings.dm	(rejected hunks)
+@@ -296,7 +296,7 @@
+ 
+ /obj/item/ammo_casing/shotgun/dart/New()
+ 	..()
+-	flags |= OPENCONTAINER
++	container_type |= OPENCONTAINER
+ 	create_reagents(30)
+ 	reagents.set_reacting(FALSE)
+ 

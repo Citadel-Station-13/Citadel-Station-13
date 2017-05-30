@@ -1,0 +1,9 @@
+diff a/code/datums/diseases/advance/symptoms/itching.dm b/code/datums/diseases/advance/symptoms/itching.dm	(rejected hunks)
+@@ -30,5 +30,5 @@ BONUS
+ 	..()
+ 	if(prob(SYMPTOM_ACTIVATION_PROB))
+ 		var/mob/living/M = A.affected_mob
+-		M << "<span class='warning'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>"
++		to_chat(M, "<span class='warning'>Your [pick("back", "arm", "leg", "elbow", "head")] itches.</span>")
+ 	return
+\ No newline at end of file

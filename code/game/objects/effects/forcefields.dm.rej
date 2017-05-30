@@ -1,0 +1,11 @@
+diff a/code/game/objects/effects/forcefields.dm b/code/game/objects/effects/forcefields.dm	(rejected hunks)
+@@ -23,3 +23,8 @@
+ /obj/effect/forcefield/mime/New()
+ 	..()
+ 	QDEL_IN(src, timeleft)
++
++/obj/effect/forcefield/mime/advanced
++	name = "invisible blockade"
++	desc = "You're goona be here a while."
++	timeleft = 600
+\ No newline at end of file

@@ -1,0 +1,8 @@
+diff a/code/modules/mob/login.dm b/code/modules/mob/login.dm	(rejected hunks)
+@@ -71,3 +71,5 @@
+ 	update_client_colour()
+ 	if(client)
+ 		client.click_intercept = null
++
++	client.view = world.view // Resets the client.view in case it was changed.
+\ No newline at end of file

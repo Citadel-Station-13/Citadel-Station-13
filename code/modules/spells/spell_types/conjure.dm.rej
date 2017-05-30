@@ -1,0 +1,10 @@
+diff a/code/modules/spells/spell_types/conjure.dm b/code/modules/spells/spell_types/conjure.dm	(rejected hunks)
+@@ -65,7 +65,7 @@
+ 	cooldown_min = 10
+ 
+ /obj/effect/proc_holder/spell/targeted/conjure_item/cast(list/targets, mob/user = usr)
+-	if (item && !qdeleted(item))
++	if (item && !QDELETED(item))
+ 		qdel(item)
+ 		item = null
+ 	else

@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/silicon/ai/laws.dm b/code/modules/mob/living/silicon/ai/laws.dm	(rejected hunks)
+@@ -13,7 +13,7 @@
+ 		who = world
+ 	else
+ 		who = src
+-	who << "<b>Obey these laws:</b>"
++	to_chat(who, "<b>Obey these laws:</b>")
+ 
+ 	src.laws_sanity_check()
+ 	src.laws.show_laws(who)

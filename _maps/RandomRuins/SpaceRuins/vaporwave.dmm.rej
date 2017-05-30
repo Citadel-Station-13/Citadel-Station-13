@@ -1,0 +1,13 @@
+diff a/_maps/RandomRuins/SpaceRuins/vaporwave.dmm b/_maps/RandomRuins/SpaceRuins/vaporwave.dmm	(rejected hunks)
+@@ -153,9 +153,10 @@
+ 	},
+ /area/ruin/unpowered/no_grav)
+ "G" = (
+-/turf/open/floor/plating/astplate/warning{
++/turf/open/floor/plating/astplate{
+ 	initial_gas_mix = "TEMP=2.7"
+ 	},
++/obj/effect/turf_decal/stripes/asteroid/line,
+ /area/ruin/unpowered/no_grav)
+ "H" = (
+ /obj/effect/overlay/palmtree_l,

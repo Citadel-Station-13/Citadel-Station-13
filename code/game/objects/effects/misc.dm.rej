@@ -1,0 +1,17 @@
+diff a/code/game/objects/effects/misc.dm b/code/game/objects/effects/misc.dm	(rejected hunks)
+@@ -22,4 +22,12 @@
+ 	name = "mobl"
+ 	var/master = null
+ 
+-	var/list/container = list(  )
+\ No newline at end of file
++	var/list/container = list(  )
++
++//Makes a tile fully lit no matter what
++/obj/effect/fullbright
++	icon = 'icons/effects/alphacolors.dmi'
++	icon_state = "white"
++	plane = LIGHTING_PLANE
++	layer = LIGHTING_LAYER
++	blend_mode = BLEND_ADD
+\ No newline at end of file

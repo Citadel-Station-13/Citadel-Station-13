@@ -1,0 +1,9 @@
+diff a/code/modules/spells/spell_types/devil_boons.dm b/code/modules/spells/spell_types/devil_boons.dm	(rejected hunks)
+@@ -41,4 +41,4 @@
+ 	for(var/mob/C in targets)
+ 		if(!C.client)
+ 			continue
+-		C.client.view = input("Select view range:", "Range", 4) in ranges
+\ No newline at end of file
++		C.client.change_view(input("Select view range:", "Range", 4) in ranges)
+\ No newline at end of file

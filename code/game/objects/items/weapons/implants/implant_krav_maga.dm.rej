@@ -1,0 +1,19 @@
+diff a/code/game/objects/items/weapons/implants/implant_krav_maga.dm b/code/game/objects/items/weapons/implants/implant_krav_maga.dm	(rejected hunks)
+@@ -26,15 +26,10 @@
+ 
+ /obj/item/weapon/implanter/krav_maga
+ 	name = "implanter (krav maga)"
+-
+-/obj/item/weapon/implanter/krav_maga/New()
+-	imp = new /obj/item/weapon/implant/krav_maga(src)
+-	..()
++	imp_type = /obj/item/weapon/implant/krav_maga
+ 
+ /obj/item/weapon/implantcase/krav_maga
+ 	name = "implant case - 'Krav Maga'"
+ 	desc = "A glass case containing an implant that can teach the user the arts of Krav Maga."
++	imp_type = /obj/item/weapon/implant/krav_maga
+ 
+-/obj/item/weapon/implantcase/krav_maga/New()
+-	imp = new /obj/item/weapon/implant/krav_maga(src)
+-	..()

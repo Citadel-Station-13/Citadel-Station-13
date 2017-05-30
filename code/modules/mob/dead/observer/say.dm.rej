@@ -1,0 +1,8 @@
+diff a/code/modules/mob/dead/observer/say.dm b/code/modules/mob/dead/observer/say.dm	(rejected hunks)
+@@ -18,5 +18,5 @@
+ 		else
+ 			speaker = V.source
+ 	var/link = FOLLOW_LINK(src, speaker)
+-	src << "[link] [message]"
++	to_chat(src, "[link] [message]")
+ 

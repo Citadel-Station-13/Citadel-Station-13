@@ -1,0 +1,20 @@
+diff a/code/game/objects/items/weapons/implants/implant_clown.dm b/code/game/objects/items/weapons/implants/implant_clown.dm	(rejected hunks)
+@@ -15,16 +15,9 @@
+ 
+ /obj/item/weapon/implanter/sad_trombone
+ 	name = "implanter (sad_trombone)"
+-
+-/obj/item/weapon/implanter/sad_trombone/New()
+-	imp = new /obj/item/weapon/implant/sad_trombone(src)
+-	..()
+-
++	imp_type = /obj/item/weapon/implant/sad_trombone
+ 
+ /obj/item/weapon/implantcase/sad_trombone
+ 	name = "implant case - 'Sad Trombone'"
+ 	desc = "A glass case containing a sad trombone implant."
+-
+-/obj/item/weapon/implantcase/sad_trombone/New()
+-	imp = new /obj/item/weapon/implant/sad_trombone(src)
+-	..()
++	imp_type = /obj/item/weapon/implant/sad_trombone

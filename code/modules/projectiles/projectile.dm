@@ -78,7 +78,7 @@
 		return "chest"
 
 /obj/item/projectile/proc/prehit(atom/target)
-	return
+	return TRUE
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	var/turf/target_loca = get_turf(target)
@@ -155,13 +155,14 @@
 
 	var/turf/target_turf = get_turf(A)
 
-	prehit(A)
+	if(!prehit(A))
+		return FALSE
 	var/permutation = A.bullet_act(src, def_zone) // searches for return value, could be deleted after run so check A isn't null
 	if(permutation == -1 || forcedodge)// the bullet passes through a dense object!
 		loc = target_turf
 		if(A)
 			permutated.Add(A)
-		return 0
+		return FALSE
 	else
 		if(A && A.density && !ismob(A) && !(A.flags & ON_BORDER)) //if we hit a dense non-border obj or dense turf then we also hit one of the mobs on that tile.
 			var/list/mobs_list = list()
@@ -169,7 +170,8 @@
 				mobs_list += L
 			if(mobs_list.len)
 				var/mob/living/picked_mob = pick(mobs_list)
-				prehit(picked_mob)
+				if(!prehit(picked_mob))
+					return FALSE
 				picked_mob.bullet_act(src, def_zone)
 	qdel(src)
 
@@ -277,7 +279,6 @@
 				Range()
 			sleep(config.run_speed * 0.9)
 
-
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
 	src.loc = get_turf(user)
@@ -308,8 +309,8 @@
 			//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 			var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 
-			var/ox = round(screenview/2) //"origin" x
-			var/oy = round(screenview/2) //"origin" y
+			var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
+			var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
 			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
 			// to_chat(world, "Angle: [angle]")

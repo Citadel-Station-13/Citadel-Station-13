@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/carbon/alien/larva/update_icons.dm b/code/modules/mob/living/carbon/alien/larva/update_icons.dm	(rejected hunks)
+@@ -1,6 +1,6 @@
+ 
+ /mob/living/carbon/alien/larva/regenerate_icons()
+-	overlays = list()
++	cut_overlays()
+ 	update_icons()
+ 
+ /mob/living/carbon/alien/larva/update_icons()

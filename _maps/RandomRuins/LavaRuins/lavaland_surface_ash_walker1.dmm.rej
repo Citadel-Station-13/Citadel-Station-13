@@ -1,0 +1,44 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm	(rejected hunks)
+@@ -90,6 +90,7 @@
+ /obj/item/seeds/glowshroom,
+ /obj/item/seeds/glowshroom,
+ /obj/item/weapon/reagent_containers/glass/bucket,
++/obj/item/weapon/storage/bag/plants/portaseeder,
+ /turf/open/floor/engine/cult{
+ 	baseturf = /turf/open/floor/plating/lava/smooth
+ 	},
+@@ -281,26 +282,26 @@
+ /obj/structure/ore_box,
+ /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+ /area/lavaland/surface/outdoors)
+-"R" = (
+-/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
++"O" = (
++/obj/item/weapon/reagent_containers/glass/bowl,
+ /turf/open/floor/engine/cult{
+ 	baseturf = /turf/open/floor/plating/lava/smooth
+ 	},
+ /area/ruin/unpowered)
+-"Q" = (
+-/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
++"P" = (
++/obj/machinery/iv_drip,
+ /turf/open/floor/engine/cult{
+ 	baseturf = /turf/open/floor/plating/lava/smooth
+ 	},
+ /area/ruin/unpowered)
+-"P" = (
+-/obj/machinery/iv_drip,
++"Q" = (
++/mob/living/simple_animal/hostile/asteroid/gutlunch/guthen,
+ /turf/open/floor/engine/cult{
+ 	baseturf = /turf/open/floor/plating/lava/smooth
+ 	},
+ /area/ruin/unpowered)
+-"O" = (
+-/obj/item/weapon/reagent_containers/glass/bowl,
++"R" = (
++/mob/living/simple_animal/hostile/asteroid/gutlunch/gubbuck,
+ /turf/open/floor/engine/cult{
+ 	baseturf = /turf/open/floor/plating/lava/smooth
+ 	},

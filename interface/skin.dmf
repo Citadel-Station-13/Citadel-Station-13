@@ -691,6 +691,14 @@ macro "robot-default"
 		name = "CTRL+NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
@@ -965,6 +973,14 @@ macro "robot-hotkeys"
 		name = "NUMPAD8"
 		command = "body-toggle-head"
 		is-disabled = false
+	elem
+		name = "CTRL+ADD"
+		command = "Add-View-Range 1"
+		is-disabled = false
+	elem
+		name = "CTRL+SUBTRACT"
+		command = "Add-View-Range -1"
+		is_disabled = false
 	elem 
 		name = "F1"
 		command = "adminhelp"
