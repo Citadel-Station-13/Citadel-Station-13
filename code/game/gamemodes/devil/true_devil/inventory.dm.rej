@@ -1,0 +1,27 @@
+diff a/code/game/gamemodes/devil/true_devil/inventory.dm b/code/game/gamemodes/devil/true_devil/inventory.dm	(rejected hunks)
+@@ -1,5 +1,5 @@
+-/mob/living/carbon/true_devil/unEquip(obj/item/I, force)
+-	if(..(I,force))
++/mob/living/carbon/true_devil/doUnEquip(obj/item/I, force)
++	if(..())
+ 		update_inv_hands()
+ 		return 1
+ 	return 0
+@@ -47,12 +47,13 @@
+ 	apply_overlay(DEVIL_HANDS_LAYER)
+ 
+ /mob/living/carbon/true_devil/remove_overlay(cache_index)
+-	if(devil_overlays[cache_index])
+-		overlays -= devil_overlays[cache_index]
++	var/I = devil_overlays[cache_index]
++	if(I)
++		cut_overlay(I)
+ 		devil_overlays[cache_index] = null
+ 
+ 
+ /mob/living/carbon/true_devil/apply_overlay(cache_index)
+ 	var/image/I = devil_overlays[cache_index]
+ 	if(I)
+-		add_overlay(I)
+\ No newline at end of file
++		add_overlay(I)

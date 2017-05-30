@@ -1,0 +1,9 @@
+diff a/tgui/src/tgui.js b/tgui/src/tgui.js	(rejected hunks)
+@@ -48,6 +48,6 @@ loadCSS('font-awesome.min.css')
+ // Handle font loads.
+ import FontFaceObserver from 'fontfaceobserver'
+ const fontawesome = new FontFaceObserver('FontAwesome')
+-fontawesome.load('\uf240')
++fontawesome.check('\uf240')
+   .then(() => document.body.classList.add('icons'))
+   .catch(() => document.body.classList.add('no-icons'))

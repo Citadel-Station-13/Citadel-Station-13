@@ -1,0 +1,49 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm b/_maps/RandomRuins/LavaRuins/lavaland_biodome_beach.dmm	(rejected hunks)
+@@ -158,11 +158,13 @@
+ /turf/open/floor/plating/beach/sand,
+ /area/ruin/powered)
+ "aB" = (
+-/turf/open/floor/plasteel/asteroid/warning{
++/turf/open/floor/plasteel/asteroid{
+ 	baseturf = /turf/open/floor/plating/beach/sand;
+-	dir = 1;
+ 	tag = "icon-asteroidwarning (NORTH)"
+ 	},
++/obj/effect/turf_decal/stripes/asteroid/line{
++	dir = 1
++	},
+ /area/ruin/powered)
+ "aC" = (
+ /turf/open/floor/wood,
+@@ -208,11 +210,13 @@
+ /obj/item/weapon/tank/internals/emergency_oxygen,
+ /obj/item/trash/candy,
+ /obj/item/toy/talking/owl,
+-/turf/open/floor/plasteel/asteroid/warning{
++/turf/open/floor/plasteel/asteroid{
+ 	baseturf = /turf/open/floor/plating/beach/sand;
+-	dir = 1;
+ 	tag = "icon-asteroidwarning (NORTH)"
+ 	},
++/obj/effect/turf_decal/stripes/asteroid/line{
++	dir = 1
++	},
+ /area/ruin/powered)
+ "aK" = (
+ /turf/open/floor/plasteel/asteroid{
+@@ -277,11 +281,13 @@
+ /area/ruin/powered)
+ "aW" = (
+ /obj/structure/chair/stool,
+-/turf/open/floor/plasteel/asteroid/warning{
++/turf/open/floor/plasteel/asteroid{
+ 	baseturf = /turf/open/floor/plating/beach/sand;
+-	dir = 1;
+ 	tag = "icon-asteroidwarning (NORTH)"
+ 	},
++/obj/effect/turf_decal/stripes/asteroid/line{
++	dir = 1
++	},
+ /area/ruin/powered)
+ "aX" = (
+ /obj/structure/closet/secure_closet/freezer/meat,

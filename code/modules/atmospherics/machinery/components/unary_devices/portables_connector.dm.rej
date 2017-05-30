@@ -1,0 +1,10 @@
+diff a/code/modules/atmospherics/machinery/components/unary_devices/portables_connector.dm b/code/modules/atmospherics/machinery/components/unary_devices/portables_connector.dm	(rejected hunks)
+@@ -30,7 +30,7 @@
+ /obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
+ 	if(..())
+ 		if(connected_device)
+-			user << "<span class='warning'>You cannot unwrench this [src], detach [connected_device] first!</span>"
++			to_chat(user, "<span class='warning'>You cannot unwrench this [src], detach [connected_device] first!</span>")
+ 		else
+ 			return 1
+ 

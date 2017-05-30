@@ -1,0 +1,7 @@
+diff a/_maps/RandomRuins/SpaceRuins/derelict6.dmm b/_maps/RandomRuins/SpaceRuins/derelict6.dmm	(rejected hunks)
+@@ -1,4 +1,4 @@
+-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
++//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+ "aa" = (
+ /turf/open/space,
+ /area/space)

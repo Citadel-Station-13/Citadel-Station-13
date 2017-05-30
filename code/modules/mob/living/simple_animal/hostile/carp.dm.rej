@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/simple_animal/hostile/carp.dm b/code/modules/mob/living/simple_animal/hostile/carp.dm	(rejected hunks)
+@@ -31,7 +31,7 @@
+ 	maxbodytemp = 1500
+ 
+ 	faction = list("carp")
+-	flying = 1
++	movement_type = FLYING
+ 	pressure_resistance = 200
+ 	gold_core_spawnable = 1
+ 

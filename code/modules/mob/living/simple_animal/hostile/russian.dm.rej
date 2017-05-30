@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/simple_animal/hostile/russian.dm b/code/modules/mob/living/simple_animal/hostile/russian.dm	(rejected hunks)
+@@ -1,6 +1,7 @@
+ /mob/living/simple_animal/hostile/russian
+ 	name = "Russian"
+ 	desc = "For the Motherland!"
++	icon = 'icons/mob/simple_human.dmi'
+ 	icon_state = "russianmelee"
+ 	icon_living = "russianmelee"
+ 	icon_dead = "russianmelee_dead"

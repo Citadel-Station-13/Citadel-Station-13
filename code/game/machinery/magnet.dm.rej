@@ -1,0 +1,10 @@
+diff a/code/game/machinery/magnet.dm b/code/game/machinery/magnet.dm	(rejected hunks)
+@@ -134,7 +134,7 @@
+ 				on = !on
+ 
+ 				if(on)
+-					addtimer(src, "magnetic_process", 0)
++					INVOKE_ASYNC(src, .proc/magnetic_process)
+ 
+ 
+ 

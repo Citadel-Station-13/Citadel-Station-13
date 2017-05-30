@@ -1,0 +1,7 @@
+diff a/code/modules/mob/living/carbon/alien/larva/inventory.dm b/code/modules/mob/living/carbon/alien/larva/inventory.dm	(rejected hunks)
+@@ -1,3 +1,3 @@
+ //can't unequip since it can't equip anything
+-/mob/living/carbon/alien/larva/unEquip(obj/item/W)
++/mob/living/carbon/alien/larva/doUnEquip(obj/item/W)
+ 	return
+\ No newline at end of file

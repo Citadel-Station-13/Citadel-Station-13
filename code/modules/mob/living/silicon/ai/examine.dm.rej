@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/silicon/ai/examine.dm b/code/modules/mob/living/silicon/ai/examine.dm	(rejected hunks)
+@@ -19,6 +19,6 @@
+ 			msg += "[src]Core.exe has stopped responding! NTOS is searching for a solution to the problem...\n"
+ 	msg += "*---------*</span>"
+ 
+-	user << msg
++	to_chat(user, msg)
+ 
+ 	..()
+\ No newline at end of file

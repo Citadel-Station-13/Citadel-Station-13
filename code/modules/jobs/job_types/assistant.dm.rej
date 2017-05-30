@@ -1,0 +1,9 @@
+diff a/code/modules/jobs/job_types/assistant.dm b/code/modules/jobs/job_types/assistant.dm	(rejected hunks)
+@@ -32,6 +32,7 @@ Assistant
+ 
+ /datum/outfit/job/assistant
+ 	name = "Assistant"
++	jobtype = /datum/job/assistant
+ 
+ /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
+ 	..()

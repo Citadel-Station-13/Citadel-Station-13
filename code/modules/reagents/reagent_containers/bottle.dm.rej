@@ -1,0 +1,23 @@
+diff a/code/modules/reagents/reagent_containers/bottle.dm b/code/modules/reagents/reagent_containers/bottle.dm	(rejected hunks)
+@@ -37,7 +37,7 @@
+ 				filling.icon_state = "[icon_state]100"
+ 
+ 		filling.color = mix_color_from_reagents(reagents.reagent_list)
+-		overlays += filling
++		add_overlay(filling)
+ 
+ 
+ /obj/item/weapon/reagent_containers/glass/bottle/epinephrine
+@@ -234,6 +234,12 @@
+ 	icon_state = "bottle12"
+ 	list_reagents = list("atropine" = 30)
+ 
++/obj/item/weapon/reagent_containers/glass/bottle/romerol
++	name = "romerol bottle"
++	desc = "A small bottle of Romerol. The REAL zombie powder."
++	icon_state = "bottle12"
++	list_reagents = list("romerol" = 30)
++
+ /obj/item/weapon/reagent_containers/glass/bottle/flu_virion
+ 	name = "Flu virion culture bottle"
+ 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."

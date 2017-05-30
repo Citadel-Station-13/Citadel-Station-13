@@ -1,0 +1,10 @@
+diff a/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm b/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm	(rejected hunks)
+@@ -6,7 +6,7 @@
+ 	icon_state = "syndballoon"
+ 	var/baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+ 
+-/obj/effect/baseturf_helper/initialize()
++/obj/effect/baseturf_helper/Initialize()
+ 	..()
+ 	var/area/thearea = get_area(src)
+ 	for(var/turf/T in get_area_turfs(thearea, z))

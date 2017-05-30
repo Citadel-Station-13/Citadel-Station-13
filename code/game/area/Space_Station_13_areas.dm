@@ -370,6 +370,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
  	icon_state = "library"
  	flags = NONE
 
+/area/library/abandoned_library
+ 	name = "Abandoned Library"
+ 	icon_state = "library"
+ 	flags = NONE
+
 /area/chapel
 	icon_state = "chapel"
 	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
@@ -628,6 +633,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/security/detectives_office
 	name = "Detective's Office"
+	icon_state = "detective"
+	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
+
+/area/security/detectives_office/private_investigators_office
+	name = "Private Investigator's Office"
 	icon_state = "detective"
 	ambientsounds = list('sound/ambience/ambidet1.ogg','sound/ambience/ambidet2.ogg')
 

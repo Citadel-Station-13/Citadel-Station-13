@@ -1,0 +1,9 @@
+diff a/code/modules/events/holiday/friday13th.dm b/code/modules/events/holiday/friday13th.dm	(rejected hunks)
+@@ -15,4 +15,4 @@
+ 
+ /datum/round_event/fridaythethirteen/announce()
+ 	for(var/mob/living/L in player_list)
+-		L << "<span class='warning'>You are feeling unlucky today.</span>"
+\ No newline at end of file
++		to_chat(L, "<span class='warning'>You are feeling unlucky today.</span>")
+\ No newline at end of file

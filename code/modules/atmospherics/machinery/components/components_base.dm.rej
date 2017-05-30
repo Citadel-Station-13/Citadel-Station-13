@@ -1,0 +1,9 @@
+diff a/code/modules/atmospherics/machinery/components/components_base.dm b/code/modules/atmospherics/machinery/components/components_base.dm	(rejected hunks)
+@@ -167,6 +167,6 @@ UI Stuff
+ /obj/machinery/atmospherics/components/ui_status(mob/user)
+ 	if(allowed(user))
+ 		return ..()
+-	user << "<span class='danger'>Access denied.</span>"
++	to_chat(user, "<span class='danger'>Access denied.</span>")
+ 	return UI_CLOSE
+ 

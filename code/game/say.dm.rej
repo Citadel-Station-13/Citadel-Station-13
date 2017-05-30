@@ -1,0 +1,9 @@
+diff a/code/game/say.dm b/code/game/say.dm	(rejected hunks)
+@@ -170,7 +170,3 @@ var/list/freqtospan = list(
+ 
+ /atom/movable/virtualspeaker/GetRadio()
+ 	return radio
+-
+-/atom/movable/virtualspeaker/Destroy()
+-	..()
+-	return QDEL_HINT_PUTINPOOL

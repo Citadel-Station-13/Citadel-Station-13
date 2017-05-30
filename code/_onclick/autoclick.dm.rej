@@ -1,0 +1,12 @@
+diff a/code/_onclick/autoclick.dm b/code/_onclick/autoclick.dm	(rejected hunks)
+@@ -21,6 +25,10 @@
+ 		active_mousedown_item = null
+ 
+ /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
++	mouseParams = params
++	mouseLocation = over_location
++	mouseObject = over_object
++	mouseControlObject = over_control
+ 	if(selected_target[1] && over_object.IsAutoclickable())
+ 		selected_target[1] = over_object
+ 		selected_target[2] = params

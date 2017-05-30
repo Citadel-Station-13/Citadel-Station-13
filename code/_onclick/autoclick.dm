@@ -1,5 +1,10 @@
 /client
 	var/list/atom/selected_target[2]
+	var/obj/item/active_mousedown_item = null
+	var/mouseParams = ""
+	var/mouseLocation = null
+	var/mouseObject = null
+	var/mouseControlObject = null
 
 /client/MouseDown(object, location, control, params)
 	var/delay = mob.CanMobAutoclick(object, location, params)
@@ -27,7 +32,30 @@
 	if(h)
 		. = h.CanItemAutoclick(object, location, params)
 
+/mob/proc/canMobMousedown(object, location, params)
+
+/mob/living/carbon/canMobMousedown(atom/object, location, params)
+	var/obj/item/H = get_active_held_item()
+	if(H)
+		. = H.canItemMouseDown(object, location, params)
+
 /obj/item/proc/CanItemAutoclick(object, location, params)
+
+/obj/item/proc/canItemMouseDown(object, location, params)
+	if(canMouseDown)
+		return src
+
+/obj/item/proc/onMouseDown(object, location, params, mob)
+	return
+
+/obj/item/proc/onMouseUp(object, location, params, mob)
+	return
+
+/obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
+	return
+
+/obj/item
+	var/canMouseDown = FALSE
 
 /obj/item/weapon/gun
 	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
@@ -43,3 +71,10 @@
 
 /obj/screen/click_catcher/IsAutoclickable()
 	. = 1
+
+//Please don't roast me too hard
+/client/MouseMove(object,location,control,params)
+	mouseParams = params
+	mouseLocation = location
+	mouseObject = object
+	mouseControlObject = control

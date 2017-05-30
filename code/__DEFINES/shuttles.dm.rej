@@ -1,0 +1,14 @@
+diff a/code/__DEFINES/shuttles.dm b/code/__DEFINES/shuttles.dm	(rejected hunks)
+@@ -38,4 +38,9 @@
+ 
+ #define SHUTTLE_TRANSIT_BORDER 8
+ 
+-#define PARALLAX_LOOP_TIME 25
+\ No newline at end of file
++#define PARALLAX_LOOP_TIME 25
++#define HYPERSPACE_END_TIME 5
++
++#define HYPERSPACE_WARMUP 1
++#define HYPERSPACE_LAUNCH 2
++#define HYPERSPACE_END 3
+\ No newline at end of file

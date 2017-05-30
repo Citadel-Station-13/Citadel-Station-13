@@ -1,0 +1,7 @@
+diff a/code/_globalvars/logging.dm b/code/_globalvars/logging.dm	(rejected hunks)
+@@ -1,4 +1,5 @@
+ var/diary = null
++var/runtime_diary = null
+ var/diaryofmeanpeople = null
+ var/href_logfile = null
+ 

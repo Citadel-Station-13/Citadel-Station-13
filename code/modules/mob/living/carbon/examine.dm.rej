@@ -1,0 +1,7 @@
+diff a/code/modules/mob/living/carbon/examine.dm b/code/modules/mob/living/carbon/examine.dm	(rejected hunks)
+@@ -87,4 +87,4 @@
+ 
+ 	msg += "*---------*</span>"
+ 
+-	user << msg
++	to_chat(user, msg)

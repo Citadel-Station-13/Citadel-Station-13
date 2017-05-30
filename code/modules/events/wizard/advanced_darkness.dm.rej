@@ -1,0 +1,7 @@
+diff a/code/modules/events/wizard/advanced_darkness.dm b/code/modules/events/wizard/advanced_darkness.dm	(rejected hunks)
+@@ -13,4 +13,4 @@
+ /datum/round_event/wizard/darkness/start()
+ 	if(!started)
+ 		started = TRUE
+-		SSweather.run_weather("advanced darkness")
++		SSweather.run_weather("advanced darkness", ZLEVEL_STATION)

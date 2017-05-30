@@ -1,0 +1,7 @@
+diff a/code/game/objects/items/devices/pipe_painter.dm b/code/game/objects/items/devices/pipe_painter.dm	(rejected hunks)
+@@ -37,4 +37,4 @@
+ 
+ /obj/item/device/pipe_painter/examine()
+ 	..()
+-	usr << "It is set to [mode]."
++	to_chat(usr, "It is set to [mode].")

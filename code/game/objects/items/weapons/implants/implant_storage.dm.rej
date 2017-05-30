@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/weapons/implants/implant_storage.dm b/code/game/objects/items/weapons/implants/implant_storage.dm	(rejected hunks)
+@@ -47,7 +47,4 @@
+ 
+ /obj/item/weapon/implanter/storage
+ 	name = "implanter (storage)"
+-
+-/obj/item/weapon/implanter/storage/New()
+-	imp = new /obj/item/weapon/implant/storage(src)
+-	..()
++	imp_type = /obj/item/weapon/implant/storage

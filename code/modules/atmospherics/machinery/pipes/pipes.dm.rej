@@ -1,0 +1,10 @@
+diff a/code/modules/atmospherics/machinery/pipes/pipes.dm b/code/modules/atmospherics/machinery/pipes/pipes.dm	(rejected hunks)
+@@ -86,7 +86,7 @@
+ 			qdel(meter)
+ 	. = ..()
+ 
+-	if(parent && !qdeleted(parent))
++	if(parent && !QDELETED(parent))
+ 		qdel(parent)
+ 	parent = null
+ 

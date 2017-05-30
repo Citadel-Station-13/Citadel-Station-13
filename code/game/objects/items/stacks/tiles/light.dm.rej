@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/stacks/tiles/light.dm b/code/game/objects/items/stacks/tiles/light.dm	(rejected hunks)
+@@ -25,7 +25,6 @@
+ 		amount--
+ 		new/obj/item/stack/light_w(user.loc)
+ 		if(amount <= 0)
+-			user.unEquip(src, 1)
+ 			qdel(src)
+ 	else
+ 		return ..()
+\ No newline at end of file
