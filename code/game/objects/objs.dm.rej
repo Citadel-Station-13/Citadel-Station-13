@@ -1,0 +1,8 @@
+diff a/code/game/objects/objs.dm b/code/game/objects/objs.dm	(rejected hunks)
+@@ -180,3 +180,6 @@
+ 
+ /obj/proc/check_uplink_validity()
+ 	return 1
++
++/obj/proc/on_mob_move(dir, mob)
++	return

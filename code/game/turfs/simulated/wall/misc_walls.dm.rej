@@ -1,0 +1,9 @@
+diff a/code/game/turfs/simulated/wall/misc_walls.dm b/code/game/turfs/simulated/wall/misc_walls.dm	(rejected hunks)
+@@ -44,6 +44,7 @@
+ 	name = "clockwork wall"
+ 	desc = "A huge chunk of warm metal. The clanging of machinery emanates from within."
+ 	explosion_block = 2
++	hardness = 10
+ 	sheet_type = /obj/item/stack/sheet/brass
+ 	var/obj/effect/clockwork/overlay/wall/realappearence
+ 	var/obj/structure/destructible/clockwork/cache/linkedcache

@@ -102,7 +102,7 @@
 	else
 		for(var/datum/action/A in actions)
 			button_number++
-			A.UpdateButtonIcon()
+			A.UpdateButtonIcon(hud_used)
 			var/obj/screen/movable/action_button/B = A.button
 			if(!B.moved)
 				B.screen_loc = hud_used.ButtonNumberToScreenCoords(button_number)

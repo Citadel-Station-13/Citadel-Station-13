@@ -1,0 +1,9 @@
+diff a/code/game/objects/structures/watercloset.dm b/code/game/objects/structures/watercloset.dm	(rejected hunks)
+@@ -139,6 +139,7 @@
+ 			else
+ 				hiddenitem.forceMove(get_turf(src))
+ 			user << "<span class='notice'>You fish [hiddenitem] out of the drain enclosure.</span>"
++			hiddenitem = null
+ 	else
+ 		..()
+ 

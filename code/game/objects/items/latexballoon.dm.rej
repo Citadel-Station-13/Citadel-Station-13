@@ -1,0 +1,8 @@
+diff a/code/game/objects/items/latexballoon.dm b/code/game/objects/items/latexballoon.dm	(rejected hunks)
+@@ -52,5 +52,5 @@
+ 		var/obj/item/weapon/tank/T = W
+ 		blow(T, user)
+ 		return
+-	if (is_sharp(W) || W.is_hot() || is_pointed(W))
++	if (W.is_sharp() || W.is_hot() || is_pointed(W))
+ 		burst()
