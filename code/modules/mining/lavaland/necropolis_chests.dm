@@ -821,7 +821,9 @@
 			timer = world.time + cooldown_time
 			if(isliving(target) && chaser_timer <= world.time) //living and chasers off cooldown? fire one!
 				chaser_timer = world.time + chaser_cooldown
-				new /obj/effect/temp_visual/hierophant/chaser(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				var/obj/effect/temp_visual/hierophant/chaser/C = new(get_turf(user), user, target, chaser_speed, friendly_fire_check)
+				C.damage = 30
+				C.monster_damage_boost = FALSE
 				add_logs(user, target, "fired a chaser at", src)
 			else
 				INVOKE_ASYNC(src, .proc/cardinal_blasts, T, user) //otherwise, just do cardinal blast

@@ -319,12 +319,18 @@
 	icon_state = "sleeper"
 	flavour_text = "You are a beach bum!"
 
+
 /datum/outfit/beachbum
 	name = "Beach Bum"
 	glasses = /obj/item/clothing/glasses/sunglasses
 	uniform = /obj/item/clothing/under/shorts/red
 	r_pocket = /obj/item/weapon/storage/wallet/random
 
+/datum/outfit/beachbum/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	..()
+	if(visualsOnly)
+		return
+	H.dna.add_mutation(STONER)
 
 /////////////////Officers+Nanotrasen Security//////////////////////
 
