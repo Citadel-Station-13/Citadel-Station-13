@@ -26675,17 +26675,17 @@
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
-/area/toxins/lab)
+/area/science/lab)
 "biV" = (
 /obj/structure/chair/stool,
 /obj/effect/landmark/start/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
-/area/toxins/lab)
+/area/science/lab)
 "biW" = (
 /turf/open/floor/plasteel/white,
-/area/toxins/lab)
+/area/science/lab
 "biY" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -31242,17 +31242,13 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 5
 	},
-/area/medical/research{
-	name = "Research Division"
-	})
+/area/science/research)
 "bsA" = (
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
-/area/medical/research{
-	name = "Research Division"
-	})
+
 "bsC" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/white,
@@ -33276,9 +33272,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 9
 	},
-/area/medical/research{
-	name = "Research Division"
-	})
+/area/science/research)
 "bwQ" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
