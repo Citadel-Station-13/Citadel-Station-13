@@ -60,6 +60,8 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
+	var/mode_result = "undefined"
+	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
