@@ -132,8 +132,6 @@
 	back = /obj/item/weapon/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
-	var/list/implants = null
-
 	var/backpack = /obj/item/weapon/storage/backpack
 	var/satchel  = /obj/item/weapon/storage/backpack/satchel
 	var/dufflebag = /obj/item/weapon/storage/backpack/dufflebag
@@ -185,8 +183,3 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
-	if(implants)
-		for(var/implant_type in implants)
-			var/obj/item/weapon/implant/I = new implant_type(H)
-			I.implant(H, null, silent=TRUE)
