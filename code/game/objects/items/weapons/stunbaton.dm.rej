@@ -1,0 +1,21 @@
+diff a/code/game/objects/items/weapons/stunbaton.dm b/code/game/objects/items/weapons/stunbaton.dm	(rejected hunks)
+@@ -34,15 +34,15 @@
+ 
+ /obj/item/weapon/melee/baton/loaded/New() //this one starts with a cell pre-installed.
+ 	..()
+-	bcell = new(src)
++	cell = new(src)
+ 	update_icon()
+ 
+ /obj/item/weapon/melee/baton/proc/deductcharge(chrgdeductamt)
+-	if(bcell)
++	if(cell)
+ 		//Note this value returned is significant, as it will determine
+ 		//if a stun is applied or not
+-		. = bcell.use(chrgdeductamt)
+-		if(status && bcell.charge < hitcost)
++		. = cell.use(chrgdeductamt)
++		if(status && cell.charge < hitcost)
+ 			//we're below minimum, turn off
+ 			status = 0
+ 			update_icon()

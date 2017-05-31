@@ -13,9 +13,12 @@
 
 	var/stunforce = 7
 	var/status = 0
-	var/obj/item/weapon/stock_parts/cell/high/bcell = null
+	var/obj/item/weapon/stock_parts/cell/high/cell
 	var/hitcost = 1000
 	var/throw_hit_chance = 35
+
+/obj/item/weapon/melee/baton/get_cell()
+	return cell
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -50,22 +53,22 @@
 /obj/item/weapon/melee/baton/update_icon()
 	if(status)
 		icon_state = "[initial(name)]_active"
-	else if(!bcell)
+	else if(!cell)
 		icon_state = "[initial(name)]_nocell"
 	else
 		icon_state = "[initial(name)]"
 
 /obj/item/weapon/melee/baton/examine(mob/user)
 	..()
-	if(bcell)
-		to_chat(user, "<span class='notice'>The baton is [round(bcell.percent())]% charged.</span>")
+	if(cell)
+		to_chat(user, "<span class='notice'>The baton is [round(cell.percent())]% charged.</span>")
 	else
 		to_chat(user, "<span class='warning'>The baton does not have a power source installed.</span>")
 
 /obj/item/weapon/melee/baton/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
-		if(bcell)
+		if(cell)
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
 			if(C.maxcharge < hitcost)
@@ -73,15 +76,15 @@
 				return
 			if(!user.transferItemToLoc(W, src))
 				return
-			bcell = W
+			cell = W
 			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
-		if(bcell)
-			bcell.updateicon()
-			bcell.loc = get_turf(src.loc)
-			bcell = null
+		if(cell)
+			cell.update_icon()
+			cell.forceMove(get_turf(src))
+			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			status = 0
 			update_icon()
@@ -89,13 +92,13 @@
 		return ..()
 
 /obj/item/weapon/melee/baton/attack_self(mob/user)
-	if(bcell && bcell.charge > hitcost)
+	if(cell && cell.charge > hitcost)
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "on" : "off"].</span>")
 		playsound(loc, "sparks", 75, 1, -1)
 	else
 		status = 0
-		if(!bcell)
+		if(!cell)
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
