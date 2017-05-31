@@ -746,6 +746,15 @@ SUBSYSTEM_DEF(ticker)
 	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 
+	switch (current_state)
+		if(GAME_STATE_SETTING_UP)
+			Master.SetRunLevel(RUNLEVEL_SETUP)
+		if(GAME_STATE_PLAYING)
+			Master.SetRunLevel(RUNLEVEL_GAME)
+		if(GAME_STATE_FINISHED)
+			Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
+
 	modevoted = SSticker.modevoted
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
@@ -850,14 +859,16 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
 
 	var/start_wait = world.time
-	UNTIL(round_end_sound_sent && (world.time - start_wait) > (delay * 2))	//don't wait forever
+	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
 	sleep(delay - (world.time - start_wait))
 
 	if(delay_end)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
+
 	if(end_string)
 		end_state = end_string
+
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 
