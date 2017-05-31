@@ -44,11 +44,12 @@
 //cleans up ALL references :)
 /datum/holocall/Destroy()
 	user.reset_perspective()
-	if(user.client)
+	if(!QDELETED(eye) && user.client)
 		for(var/datum/camerachunk/chunk in eye.visibleCameraChunks)
-			user.client.images -= chunk.obscured
+			chunk.remove(eye)
+		qdel(eye)
+	eye = null
 	user.remote_control = null
-	QDEL_NULL(eye)
 	
 	user = null
 	if(hologram)

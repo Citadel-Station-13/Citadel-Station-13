@@ -53,7 +53,6 @@
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
@@ -91,7 +90,6 @@
 		/datum/gang_item/weapon/ammo/uzi_ammo,
 		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/spraycan,
-		/datum/gang_item/equipment/sharpener,
 		/datum/gang_item/equipment/emp,
 		/datum/gang_item/equipment/c4,
 		/datum/gang_item/equipment/frag,
@@ -204,7 +202,9 @@
 		return
 	var/added_names = ""
 	var/lost_names = ""
-
+	
+	SSticker.mode.shuttle_check() // See if its time to start wrapping things up
+	
 	//Re-add territories that were reclaimed, so if they got tagged over, they can still earn income if they tag it back before the next status report
 	var/list/reclaimed_territories = territory_new & territory_lost
 	territory |= reclaimed_territories
