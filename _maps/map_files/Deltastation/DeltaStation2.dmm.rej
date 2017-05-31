@@ -1,0 +1,11 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -105112,6 +105115,9 @@
+ 	name = "Starboard Primary Hallway APC";
+ 	pixel_y = -26
+ 	},
++/obj/structure/cable/white{
++	icon_state = "0-8"
++	},
+ /turf/open/floor/plasteel/neutral/corner,
+ /area/hallway/primary/starboard)
+ "eiG" = (
