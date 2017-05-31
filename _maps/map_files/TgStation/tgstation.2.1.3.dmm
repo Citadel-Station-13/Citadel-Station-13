@@ -20049,9 +20049,7 @@
 /area/hallway/secondary/exit)
 "aTq" = (
 /turf/closed/wall,
-/area/security/vacantoffice{
-	name = "Vacant Office A"
-	})
+/area/security/vacantoffice/a)
 "aTr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
