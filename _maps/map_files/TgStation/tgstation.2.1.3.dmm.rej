@@ -1,0 +1,34 @@
+diff a/_maps/map_files/TgStation/tgstation.2.1.3.dmm b/_maps/map_files/TgStation/tgstation.2.1.3.dmm	(rejected hunks)
+@@ -7320,6 +7320,7 @@
+ /area/maintenance/fore/secondary)
+ "apv" = (
+ /obj/machinery/door/airlock/maintenance{
++	name = "Fitness Maitenance";
+ 	req_access_txt = "12"
+ 	},
+ /obj/structure/cable{
+@@ -8040,6 +8041,7 @@
+ /area/maintenance/department/crew_quarters/dorms)
+ "arh" = (
+ /obj/machinery/door/airlock/maintenance{
++	name = "Dormitories Maintenance";
+ 	req_access_txt = "12"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+@@ -12658,7 +12661,7 @@
+ /area/security/checkpoint/checkpoint2)
+ "aBL" = (
+ /obj/machinery/door/airlock/maintenance{
+-	name = "Garden Maintenance";
++	name = "Tool Storage Maintenance";
+ 	req_access_txt = "12"
+ 	},
+ /obj/structure/cable{
+@@ -23983,6 +23986,7 @@
+ /area/crew_quarters/toilet/locker)
+ "bcu" = (
+ /obj/machinery/door/airlock/maintenance{
++	name = "Locker Room Maintenance";
+ 	req_access_txt = "12"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,

@@ -1,0 +1,19 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -53843,7 +53843,7 @@
+ /area/maintenance/solars/port/aft)
+ "bTo" = (
+ /obj/machinery/door/airlock/engineering{
+-	name = "Aft Port Solar Access";
++	name = "Port Quarter Solar Access";
+ 	req_access_txt = "10"
+ 	},
+ /obj/structure/cable/yellow{
+@@ -78080,7 +78080,7 @@
+ /area/maintenance/solars/starboard/aft)
+ "cKQ" = (
+ /obj/machinery/door/airlock/engineering{
+-	name = "Aft Starboard Solar Access";
++	name = "Starboard Quarter Solar Access";
+ 	req_access_txt = "10"
+ 	},
+ /obj/structure/cable/yellow{

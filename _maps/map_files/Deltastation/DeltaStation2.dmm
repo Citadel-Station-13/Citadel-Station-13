@@ -912,7 +912,7 @@
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 2;
-	name = "Fore Starboard Solar APC";
+	name = "Starboard Bow Solar APC";
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -930,7 +930,7 @@
 "abO" = (
 /obj/machinery/power/solar_control{
 	id = "forestarboard";
-	name = "Fore Starboard Solar Control";
+	name = "Starboard Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable,
@@ -5089,7 +5089,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Fore Starboard Maintenance APC";
+	name = "Starboard Bow Maintenance APC";
 	pixel_x = 0;
 	pixel_y = 25
 	},
@@ -10921,7 +10921,7 @@
 /obj/machinery/light/small,
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Fore Port Maintenance APC";
+	name = "Port Bow Maintenance APC";
 	pixel_y = -26
 	},
 /obj/structure/cable/white,
@@ -15811,7 +15811,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/atmos{
-	name = "Fore Port Solar Access";
+	name = "Port Bow Solar Access";
 	req_access_txt = "0";
 	req_one_access = null;
 	req_one_access_txt = "13; 24"
@@ -16485,7 +16485,7 @@
 "aGf" = (
 /obj/machinery/power/solar_control{
 	id = "foreport";
-	name = "Fore Port Solar Control";
+	name = "Port Bow Solar Control";
 	track = 0
 	},
 /obj/structure/cable,
@@ -16511,7 +16511,7 @@
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 2;
-	name = "Fore Port Solar APC";
+	name = "Port Bow Solar APC";
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -94664,7 +94664,7 @@
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 2;
-	name = "Aft Starboard Solar APC";
+	name = "Starboard Quarter Solar APC";
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -94675,7 +94675,7 @@
 "dxl" = (
 /obj/machinery/power/solar_control{
 	id = "aftstarboard";
-	name = "Aft Starboard Solar Control";
+	name = "Starboard Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable,
@@ -101309,7 +101309,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Aft Port Maintenance APC";
+	name = "Port Quarter Maintenance APC";
 	pixel_x = 0;
 	pixel_y = 25
 	},
@@ -107426,7 +107426,7 @@
 "dWh" = (
 /obj/machinery/power/solar_control{
 	id = "aftport";
-	name = "Aft Port Solar Control";
+	name = "Port Quarter Solar Control";
 	track = 0
 	},
 /obj/structure/cable,
@@ -107452,7 +107452,7 @@
 /obj/machinery/power/apc{
 	cell_type = 10000;
 	dir = 2;
-	name = "Aft Port Solar APC";
+	name = "Port Quarter Solar APC";
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/stripes/line{
