@@ -1,0 +1,10 @@
+diff a/code/game/area/areas/misc.dm b/code/game/area/areas/misc.dm	(rejected hunks)
+@@ -118,7 +118,7 @@
+ 	
+ /area/prison/execution_room
+ 	name = "Prisoner Education Chamber"
+-	icon_state = "armory"
++	icon_state = "execution_room"
+ 
+ /area/prison/cell_block/a
+ //	/area/prison/cell_block/A

@@ -53876,7 +53876,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cpj" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54546,7 +54546,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cqK" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -54709,7 +54709,7 @@
 "crk" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crl" = (
 /obj/structure/table,
 /obj/item/device/taperecorder{
@@ -54846,7 +54846,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crC" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -54866,7 +54866,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crD" = (
 /obj/structure/cable{
 	d2 = 8;
@@ -54874,7 +54874,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54894,7 +54894,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crF" = (
 /obj/structure/cable{
 	icon_state = "0-4";
@@ -54902,7 +54902,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54916,7 +54916,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "crH" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -55337,7 +55337,7 @@
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "csZ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -55347,7 +55347,7 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/solar/starboard)
+/area/solar/starboard/aft)
 "cta" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 4;
@@ -111237,17 +111237,17 @@ aaa
 aaa
 aaS
 aaa
-crj
+cMQ
 crB
-crS
+cNa
 aaa
 crj
 crB
 crS
 aaa
-crj
+cNk
 crB
-crS
+cNu
 aaa
 aaS
 aaa
@@ -111494,17 +111494,17 @@ aaa
 aaa
 aba
 aaf
-crj
+cMR
 crC
-crS
+cNb
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNl
 crC
-crS
+cNv
 aaf
 aaS
 aaa
@@ -111751,17 +111751,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMS
 crC
-crS
+cNc
 aaf
 crj
 crC
 crS
 aaf
-crj
+cNm
 crC
-crS
+cNw
 aaa
 aaS
 aaa
@@ -112008,17 +112008,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMT
 crC
-crS
+cNd
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNn
 crC
-crS
+cNx
 aaf
 aaf
 aaa
@@ -112265,17 +112265,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMU
 crC
-crS
+cNe
 aaa
 crj
 crC
 crS
 aaa
-crj
+cNo
 crC
-crS
+cNy
 aaa
 aaf
 aaS
@@ -113293,17 +113293,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMV
 crE
-crS
+cNf
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNp
 crE
-crS
+cNz
 aaa
 aaf
 aaS
@@ -113550,17 +113550,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMW
 crE
-crS
+cNg
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNq
 crE
-crS
+cNA
 aaf
 aaf
 aaa
@@ -113807,17 +113807,17 @@ aaa
 aaa
 aaf
 aaa
-crj
+cMX
 crE
-crS
+cNh
 aaf
 crj
 crE
 crS
 aaf
-crj
+cNr
 crE
-crS
+cNB
 aaa
 aaS
 aaa
@@ -114064,17 +114064,17 @@ aaf
 aaf
 aaf
 aaf
-crj
+cMY
 crE
-crS
+cNi
 aaa
 crj
 crE
 crS
 aaa
-crj
+cNs
 crE
-crS
+cNC
 aaf
 aaS
 aaa
@@ -114321,17 +114321,17 @@ aaa
 aaa
 aba
 aaa
-crj
+cMZ
 crG
-crS
+cNj
 aaa
 crj
 crG
 crS
 aaa
-crj
+cNt
 crG
-crS
+cND
 aaa
 aaS
 aaa
