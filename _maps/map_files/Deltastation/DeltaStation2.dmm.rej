@@ -1,0 +1,177 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -1194,7 +1194,6 @@
+ 	department = "Construction";
+ 	departmentType = 0;
+ 	name = "Construction RC";
+-	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -4646,7 +4640,6 @@
+ /obj/machinery/power/apc{
+ 	dir = 1;
+ 	name = "Starboard Bow Maintenance APC";
+-	pixel_x = 0;
+ 	pixel_y = 24
+ 	},
+ /obj/effect/decal/cleanable/dirt,
+@@ -34124,7 +34041,6 @@
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -24
+ 	},
+ /obj/structure/reagent_dispensers/peppertank{
+@@ -37066,7 +36972,6 @@
+ 	desc = "A sign that shows there are doors here. There are doors everywhere!";
+ 	icon_state = "doors";
+ 	name = "WARNING: BLAST DOORS";
+-	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants{
+@@ -42091,7 +41985,6 @@
+ /area/crew_quarters/heads/captain)
+ "bGI" = (
+ /obj/machinery/status_display{
+-	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
+ /turf/open/floor/plasteel/vault{
+@@ -43008,7 +42899,6 @@
+ 	cell_type = 10000;
+ 	dir = 1;
+ 	name = "Telecoms Monitoring APC";
+-	pixel_x = 0;
+ 	pixel_y = 28
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -44784,7 +44667,6 @@
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -24
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+@@ -45151,7 +45032,6 @@
+ "bMS" = (
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -26
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -53237,7 +53094,6 @@
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -26
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+@@ -57679,7 +57523,6 @@
+ "ckZ" = (
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -26
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -59013,7 +58853,6 @@
+ /area/hallway/secondary/command)
+ "cnY" = (
+ /obj/structure/sign/electricshock{
+-	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+@@ -63274,7 +63104,6 @@
+ /area/bridge/showroom/corporate)
+ "cwM" = (
+ /obj/machinery/status_display{
+-	pixel_x = 0;
+ 	pixel_y = 32
+ 	},
+ /turf/open/floor/plasteel/vault{
+@@ -65738,7 +65558,6 @@
+ /area/ai_monitored/storage/eva)
+ "cBx" = (
+ /obj/machinery/status_display{
+-	pixel_x = 0;
+ 	pixel_y = -32
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+@@ -65783,7 +65602,6 @@
+ "cBB" = (
+ /obj/machinery/firealarm{
+ 	dir = 1;
+-	pixel_x = 0;
+ 	pixel_y = -26
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -89216,7 +88985,6 @@
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/item/device/radio/intercom{
+ 	name = "Station Intercom";
+-	pixel_x = 0;
+ 	pixel_y = -26
+ 	},
+ /obj/machinery/light,
+@@ -89672,7 +89438,6 @@
+ /obj/machinery/power/apc{
+ 	dir = 1;
+ 	name = "Abandoned Theatre APC";
+-	pixel_x = 0;
+ 	pixel_y = 24
+ 	},
+ /turf/open/floor/plating,
+@@ -89864,7 +89628,6 @@
+ /area/science/mixing)
+ "dzN" = (
+ /obj/item/device/assembly/signaler{
+-	pixel_x = 0;
+ 	pixel_y = 8
+ 	},
+ /obj/item/device/assembly/signaler{
+@@ -91634,7 +91395,6 @@
+ /area/crew_quarters/heads/cmo)
+ "dDk" = (
+ /obj/machinery/computer/security/telescreen/entertainment{
+-	pixel_x = 0;
+ 	pixel_y = -32
+ 	},
+ /turf/open/floor/plasteel/cmo,
+@@ -94664,7 +94422,6 @@
+ /obj/machinery/power/apc{
+ 	dir = 1;
+ 	name = "Port Quarter Maintenance APC";
+-	pixel_x = 0;
+ 	pixel_y = 24
+ 	},
+ /obj/structure/cable/white{
+@@ -94684,7 +94441,6 @@
+ /area/maintenance/port/aft)
+ "dJM" = (
+ /obj/structure/toilet{
+-	icon_state = "toilet00";
+ 	dir = 8
+ 	},
+ /obj/effect/decal/cleanable/dirt,
+@@ -96870,7 +96619,6 @@
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/item/device/radio/intercom{
+ 	name = "Station Intercom";
+-	pixel_x = 0;
+ 	pixel_y = 26
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+@@ -104611,7 +104340,6 @@
+ 	cell_type = 5000;
+ 	dir = 1;
+ 	name = "Departure Lounge APC";
+-	pixel_x = 0;
+ 	pixel_y = 28
+ 	},
+ /obj/machinery/camera{
