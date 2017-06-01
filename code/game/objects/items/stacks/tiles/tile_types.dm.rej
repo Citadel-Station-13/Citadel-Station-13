@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/stacks/tiles/tile_types.dm b/code/game/objects/items/stacks/tiles/tile_types.dm	(rejected hunks)
+@@ -111,6 +111,8 @@
+ 	icon_state = "tile-carpet-black"
+ 	turf_type = /turf/open/floor/carpet/black
+ 
++/obj/item/stack/tile/carpet/black/fifty
++	amount = 50
+ 
+ /obj/item/stack/tile/fakespace
+ 	name = "astral carpet"
