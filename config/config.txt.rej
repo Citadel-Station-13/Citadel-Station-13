@@ -1,0 +1,43 @@
+diff a/config/config.txt b/config/config.txt	(rejected hunks)
+@@ -1,13 +1,13 @@
+-## Server name: This appears at the top of the screen in-game and in the BYOND hub. Activate and replace 'tgstation' with the name of your choice.
++## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
+ # SERVERNAME tgstation
+ 
+ ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
+ # SERVERSQLNAME tgstation
+ 
+-## Station name: The name of the station as it is referred to in-game. If deactivated, the game will generate a random name instead.
++## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
+ STATIONNAME Space Station 13
+ 
+-## Put on byond hub: activate this to put your server on the byond hub.
++## Put on byond hub: Uncomment this to put your server on the byond hub.
+ #HUB
+ 
+ ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
+@@ -16,20 +16,20 @@ LOBBY_COUNTDOWN 120
+ ## Round End Time: This is the amount of time after the round ends that players have to murder death kill each other.
+ ROUND_END_COUNTDOWN 90
+ 
+-## Deactivate this if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
++## Comment this out if you want to use the SQL based admin system, the legacy system uses admins.txt. You need to set up your database to use the SQL based system.
+ ADMIN_LEGACY_SYSTEM
+ 
+-## Deactivate this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
++## Comment this out if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
+ BAN_LEGACY_SYSTEM
+ 
+-## Activate this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
++## Uncomment this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
+ ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
+ ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
+ ## NOTE: If you have just set-up the database keep this DISABLED, as player age is determined from the first time they connect to the server with the database up. If you just set it up, it means
+ ## you have noone older than 0 days, since noone has been logged yet. Only turn this on once you have had the database up for 30 days.
+ #USE_AGE_RESTRICTION_FOR_JOBS
+ 
+-## Activate this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
++## Uncomment this to have the job system use the player's account creation date, rather than the when they first joined the server for job timers.
+ #USE_ACCOUNT_AGE_FOR_JOBS
+ 
+ ## log OOC channel

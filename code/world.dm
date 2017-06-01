@@ -110,8 +110,9 @@
 				n++
 		return n
 
-	else if("ircstatus" in input)
-		if(world.time - last_irc_status < IRC_STATUS_THROTTLE)
+	else if("ircstatus" in input)	//tgs2 support
+		var/static/last_irc_status = 0
+		if(world.time - last_irc_status < 50)
 			return
 		var/list/adm = get_admin_counts()
 		var/list/allmins = adm["total"]
@@ -179,20 +180,20 @@
 			if(input["crossmessage"] == "News_Report")
 				minor_announce(input["message"], "Breaking Update From [input["message_sender"]]")
 
-	else if("adminmsg" in input)
+	else if("adminmsg" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
 			return IrcPm(input["adminmsg"],input["msg"],input["sender"])
 
-	else if("namecheck" in input)
+	else if("namecheck" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
 			log_admin("IRC Name Check: [input["sender"]] on [input["namecheck"]]")
 			message_admins("IRC name checking on [input["namecheck"]] from [input["sender"]]")
 			return keywords_lookup(input["namecheck"],1)
-	else if("adminwho" in input)
+	else if("adminwho" in input)	//tgs2 support
 		if(!key_valid)
 			return "Bad Key"
 		else
