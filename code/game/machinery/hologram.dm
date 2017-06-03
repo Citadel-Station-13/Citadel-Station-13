@@ -74,7 +74,7 @@ Possible to do for anyone motivated enough:
 	if (powered())
 		stat &= ~NOPOWER
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
