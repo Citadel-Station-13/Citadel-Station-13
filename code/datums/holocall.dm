@@ -51,7 +51,7 @@
 		user.remote_control = null
 		user = null
 	QDEL_NULL(eye)
-	
+
 	if(hologram)
 		hologram.HC = null
 		hologram = null
