@@ -29,6 +29,9 @@
 	update_icon()
 	return
 
+/obj/item/weapon/defibrillator/get_cell()
+	return cell
+
 /obj/item/weapon/defibrillator/loaded/Initialize() //starts with hicap
 	. = ..()
 	paddles = make_paddles()
