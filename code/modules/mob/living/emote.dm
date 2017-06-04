@@ -87,6 +87,7 @@
 	message_larva = "lets out a sickly hiss of air and falls limply to the floor..."
 	message_monkey = "lets out a faint chimper as it collapses and stops moving..."
 	message_simple =  "stops moving..."
+	playsound(user.loc, 'sound/voice/oof.ogg', 80, 1, 1) //Defenitley not copypasta
 	stat_allowed = UNCONSCIOUS
 
 /datum/emote/living/deathgasp/run_emote(mob/user, params)
