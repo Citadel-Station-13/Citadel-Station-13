@@ -1,0 +1,10 @@
+diff a/code/modules/events/devil.dm b/code/modules/events/devil.dm	(rejected hunks)
+@@ -30,7 +28,7 @@
+ 	var/datum/mind/Mind = create_devil_mind(key)
+ 	Mind.active = 1
+ 
+-	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
++	var/mob/living/carbon/human/devil = create_event_devil()
+ 	Mind.transfer_to(devil)
+ 	SSticker.mode.finalize_devil(Mind, FALSE)
+ 	SSticker.mode.add_devil_objectives(src, 2)
