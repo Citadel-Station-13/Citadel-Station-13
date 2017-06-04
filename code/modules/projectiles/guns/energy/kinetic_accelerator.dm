@@ -313,7 +313,7 @@
 	. = ..()
 	if(.)
 		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
-			if(AOE.stats_stolen)
+			if(AOE.stats_stolen || AOE == src)
 				continue
 			modifier += AOE.modifier //take its modifiers
 			AOE.modifier = 0
