@@ -1,0 +1,9 @@
+diff a/config/game_options.txt b/config/game_options.txt	(rejected hunks)
+@@ -139,7 +137,6 @@ MIDROUND_ANTAG WIZARD
+ MIDROUND_ANTAG MALFUNCTION
+ MIDROUND_ANTAG BLOB
+ MIDROUND_ANTAG ABDUCTION
+-#MIDROUND_ANTAG  RAGINMAGES
+ #MIDROUND_ANTAG  MONKEY
+ 
+ ## Uncomment these for overrides of the minimum / maximum number of players in a round type. 
