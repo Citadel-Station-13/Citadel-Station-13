@@ -41,6 +41,8 @@
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
+	Master.Initialize(10, FALSE)
+
 	if(config.irc_announce_new_game)
 		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
