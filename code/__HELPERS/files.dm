@@ -22,9 +22,13 @@
 
 		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
 			break
-
-	var/extension = copytext(path,-4,0)
-	if( !fexists(path) || !(extension in valid_extensions) )
+	var/extensions
+	for(var/i in valid_extensions)
+		if(extensions)
+			extensions += "|"
+		extensions += valid_extensions[i]
+	var/regex/valid_ext = new("\\.([extensions])$", "i")
+	if( !fexists(path) || !(valid_ext.Find(path)) )
 		to_chat(src, "<font color='red'>Error: browse_files(): File not found/Invalid file([path]).</font>")
 		return
 
