@@ -166,6 +166,9 @@
 /obj/item/device/gangtool/proc/recall(mob/user)
 	if(!can_use(user))
 		return 0
+		
+	if(SSticker.mode.forced_shuttle)
+		return 0
 
 	if(SSshuttle.emergencyNoRecall)
 		return 0

@@ -8,6 +8,7 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 /datum/game_mode
 	var/list/datum/gang/gangs = list()
 	var/datum/gang_points/gang_points
+	var/forced_shuttle = FALSE
 
 /proc/is_gangster(var/mob/living/M)
 	return istype(M) && M.mind && M.mind.gang_datum
@@ -333,6 +334,8 @@ GLOBAL_LIST_INIT(gang_outfit_pool, list(/obj/item/clothing/suit/jacket/leather,/
 
 	if(world.time > next_point_time)
 		next_point_time = world.time + next_point_interval
+		SSticker.mode.shuttle_check()
+
 
 	if(winners.len)
 		if(winners.len > 1) //Edge Case: If more than one dominator complete at the same time
