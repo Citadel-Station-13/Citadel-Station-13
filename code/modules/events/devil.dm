@@ -28,7 +28,7 @@
 	var/datum/mind/Mind = create_devil_mind(key)
 	Mind.active = 1
 
-	var/mob/living/carbon/human/devil = create_event_devil(spawn_loc)
+	var/mob/living/carbon/human/devil = create_event_devil()
 	Mind.transfer_to(devil)
 	add_devil(devil, ascendable = FALSE)
 
