@@ -378,6 +378,8 @@ SUBSYSTEM_DEF(job)
 				continue
 			S = sloc
 			break
+		if(S)
+			SendToAtom(H, S, buckle = FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
 			S = get_turf(pick(GLOB.latejoin))
