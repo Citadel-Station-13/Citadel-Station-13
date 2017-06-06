@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - experiment: "Explosions will no longer have a start up delay"
