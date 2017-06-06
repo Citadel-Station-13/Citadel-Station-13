@@ -1,7 +1,0 @@
-diff a/code/modules/food_and_drinks/recipes/tablecraft/recipes_misc.dm b/code/modules/food_and_drinks/recipes/tablecraft/recipes_misc.dm	(rejected hunks)
-@@ -324,4 +324,4 @@
- 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
- 	)
- 	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
--	category = CAT_MISCFOOD
-+	subcategory = CAT_MISCFOOD
