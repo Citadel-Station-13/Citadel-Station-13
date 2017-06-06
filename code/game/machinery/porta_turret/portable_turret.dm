@@ -87,7 +87,9 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
-		underlays += image('icons/obj/turrets.dmi',icon_state = "basedark")
+		var/mutable_appearance/base = mutable_appearance('icons/obj/turrets.dmi', "basedark")
+		base.layer = NOT_HIGH_OBJ_LAYER
+		underlays += base
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
@@ -1100,4 +1102,4 @@
 	if(target == user || target == get_turf(src))
 		return
 	target_turf = get_turf(target)
-	fire_helper(target_turf)
+	fire_helper(user)

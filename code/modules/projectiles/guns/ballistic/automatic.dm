@@ -244,6 +244,7 @@
 	icon_state = "bulldog"
 	item_state = "bulldog"
 	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
 	origin_tech = "combat=6;materials=4;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
@@ -261,8 +262,8 @@
 	update_icon()
 
 /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog/update_icon()
+	cut_overlays()
 	if(magazine)
-		cut_overlays()
 		add_overlay("[magazine.icon_state]")
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 
@@ -378,6 +379,11 @@
 	desc = "An illegally modified .50 cal sniper rifle with supression compatibility. Quickscoping still doesn't work."
 	pin = /obj/item/device/firing_pin/implant/pindicate
 	origin_tech = "combat=7;syndicate=6"
+
+/obj/item/weapon/gun/ballistic/automatic/sniper_rifle/gang
+	name = "black market sniper rifle"
+	desc = "A long ranged weapon that does significant damage. It is well worn from years of service."
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds/gang
 
 // Old Semi-Auto Rifle //
 
