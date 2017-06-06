@@ -1,12 +1,93 @@
 diff a/_maps/map_files/TgStation/tgstation.2.1.3.dmm b/_maps/map_files/TgStation/tgstation.2.1.3.dmm	(rejected hunks)
-@@ -20207,9 +20151,7 @@
- /area/shuttle/syndicate)
- "aTq" = (
- /turf/closed/wall,
--/area/security/vacantoffice{
--	name = "Vacant Office A"
--	})
-+/area/security/vacantoffice/a)
- "aTr" = (
- /obj/machinery/door/firedoor,
- /obj/machinery/status_display{
+@@ -61028,10 +61028,8 @@
+ /area/space/nearstation)
+ "cDv" = (
+ /obj/effect/turf_decal/stripes/line,
+-/obj/machinery/atmospherics/components/trinary/filter/flipped{
+-	critical_machine = 1;
+-	dir = 4;
+-	icon_state = "filter_off_f"
++/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
++	dir = 4
+ 	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+@@ -62040,15 +62038,13 @@
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFL" = (
+-/obj/machinery/atmospherics/components/trinary/filter{
+-	critical_machine = 1;
+-	dir = 4;
+-	filter_type = "co2";
+-	on = 1
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 1
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/critical{
++	dir = 4;
++	filter_type = "co2"
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFM" = (
+@@ -62064,15 +62060,13 @@
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFN" = (
+-/obj/machinery/atmospherics/components/trinary/filter{
+-	critical_machine = 1;
+-	dir = 4;
+-	filter_type = "o2";
+-	on = 1
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 5
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/critical{
++	dir = 4;
++	filter_type = "o2"
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFO" = (
+@@ -62092,15 +62086,13 @@
+ /turf/open/floor/plasteel/black,
+ /area/engine/engineering)
+ "cFP" = (
+-/obj/machinery/atmospherics/components/trinary/filter{
+-	critical_machine = 1;
+-	dir = 4;
+-	filter_type = "plasma";
+-	on = 1
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 9
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/critical{
++	dir = 4;
++	filter_type = "plasma"
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFQ" = (
+@@ -62116,15 +62108,12 @@
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFR" = (
+-/obj/machinery/atmospherics/components/trinary/filter{
+-	critical_machine = 1;
+-	dir = 4;
+-	filter_type = "";
+-	on = 1
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 1
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/critical{
++	dir = 4
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "cFS" = (
