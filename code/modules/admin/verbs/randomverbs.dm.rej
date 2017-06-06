@@ -1,0 +1,8 @@
+diff a/code/modules/admin/verbs/randomverbs.dm b/code/modules/admin/verbs/randomverbs.dm	(rejected hunks)
+@@ -1205,4 +1208,4 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
+ 		return
+ 
+ 	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
+-	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
+\ No newline at end of file
++	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
