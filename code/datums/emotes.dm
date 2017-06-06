@@ -38,6 +38,8 @@
 	if(findtext(msg, "%s"))
 		msg = replacetext(msg, "%s", user.p_s())
 
+	msg = replace_pronoun(user, msg)
+
 	var/mob/living/L = user
 	for(var/obj/item/weapon/implant/I in L.implants)
 		I.trigger(key, L)
