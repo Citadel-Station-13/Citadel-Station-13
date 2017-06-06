@@ -1,0 +1,10 @@
+diff a/code/modules/mining/lavaland/necropolis_chests.dm b/code/modules/mining/lavaland/necropolis_chests.dm	(rejected hunks)
+@@ -70,7 +70,7 @@
+ 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
+ 			new /obj/item/weapon/bedsheet/cult(src)
+ 		if(28)
+-			new /obj/item/borg/upgrade/modkit/bounty(src)
++			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
+ 
+ //KA modkit design discs
+ /obj/item/weapon/disk/design_disk/modkit_disc
