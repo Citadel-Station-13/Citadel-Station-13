@@ -40,3 +40,12 @@
 
 #define STATUS_EFFECT_SUMMONEDGHOST /datum/status_effect/cultghost //is a cult ghost and can't use manifest runes
 #define STATUS_EFFECT_CRUSHERMARK /datum/status_effect/crusher_mark //if struck with a proto-kinetic crusher, takes a ton of damage
+
+
+/////////////
+// NEUTRAL //
+/////////////
+
+#define STATUS_EFFECT_SIGILMARK /datum/status_effect/sigil_mark
+
+#define STATUS_EFFECT_CRUSHERDAMAGETRACKING /datum/status_effect/crusher_damage //tracks total kinetic crusher damage on a target
