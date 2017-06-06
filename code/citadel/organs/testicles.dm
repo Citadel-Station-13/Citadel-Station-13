@@ -16,7 +16,7 @@
 
 /obj/item/organ/genital/testicles/Initialize()
 	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
+/*	reagents.add_reagent(fluid_id, fluid_max_volume)
 
 /obj/item/organ/genital/testicles/on_life()
 	if(QDELETED(src))
@@ -37,7 +37,7 @@
 		return FALSE
 	reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
-
+*/
 /obj/item/organ/genital/testicles/update_link()
 	if(owner && !QDELETED(src))
 		linked_penis = (owner.getorganslot("penis"))

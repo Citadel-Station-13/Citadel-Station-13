@@ -14,7 +14,7 @@
 
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
-	reagents.add_reagent(fluid_id, fluid_max_volume)
+/*	reagents.add_reagent(fluid_id, fluid_max_volume)
 
 /obj/item/organ/genital/breasts/on_life()
 	if(QDELETED(src))
@@ -30,7 +30,7 @@
 		return FALSE
 	reagents.isolate_reagent(fluid_id)
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))
-
+*/
 /obj/item/organ/genital/breasts/update_appearance()
 	var/string = "breasts_[lowertext(shape)]_[size]"
 	icon_state = sanitize_text(string)
