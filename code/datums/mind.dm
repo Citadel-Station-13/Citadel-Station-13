@@ -68,6 +68,7 @@
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	martial_art = default_martial_art
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -1288,7 +1289,6 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1447,7 +1447,7 @@
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
-			current.loc = pick(GLOB.latejoin)
+			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)
