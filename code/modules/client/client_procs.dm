@@ -430,8 +430,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!SSdbcore.Connect())
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
- 	query_log_connection.Execute()
+	var/datum/DBQuery/query_get_related_ip = SSdbcore.NewQuery("SELECT ckey FROM [format_table_name("player")] WHERE ip = INET_ATON('[address]') AND ckey != '[sql_ckey]'")
 	query_get_related_ip.Execute()
 	related_accounts_ip = ""
 	while(query_get_related_ip.NextRow())

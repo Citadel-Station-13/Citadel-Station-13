@@ -28,7 +28,6 @@ SUBSYSTEM_DEF(blackbox)
 			playercount += 1
 	var/admincount = GLOB.admins.len
 	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
- 	query_record_playercount.Execute()
 	query_record_playercount.Execute()
 
 /datum/controller/subsystem/blackbox/Recover()
