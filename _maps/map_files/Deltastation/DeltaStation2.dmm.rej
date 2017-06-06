@@ -1,0 +1,1473 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -105501,7 +106926,7 @@
+ 	dir = 8;
+ 	icon_state = "diagonalWall3"
+ 	},
+-/area/space)
++/area/shuttle/syndicate)
+ "ejD" = (
+ /turf/closed/wall/mineral/plastitanium,
+ /area/space)
+@@ -107174,6 +108599,176 @@
+ 	icon_state = "diagonalWall3"
+ 	},
+ /area/space)
++"epb" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epc" = (
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epd" = (
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epe" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epf" = (
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epg" = (
++/obj/machinery/door/airlock/external{
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"eph" = (
++/obj/machinery/door/airlock/maintenance_hatch{
++	name = "Maintenance Hatch";
++	req_access_txt = "12"
++	},
++/obj/structure/cable/white{
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/turf_decal/stripes/line{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/port/fore)
++"epi" = (
++/obj/machinery/door/firedoor,
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/primary/port)
++"epj" = (
++/obj/machinery/door/airlock/glass{
++	name = "Holodeck Access"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/crew_quarters/fitness/recreation)
++"epk" = (
++/obj/machinery/door/airlock/glass{
++	name = "Holodeck Access"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/crew_quarters/fitness/recreation)
++"epl" = (
++/obj/machinery/door/firedoor,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/science/xenobiology)
++"epm" = (
++/obj/machinery/door/firedoor,
++/obj/structure/cable/white{
++	icon_state = "4-8"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/science/xenobiology)
++"epn" = (
++/obj/machinery/door/firedoor,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/science/xenobiology)
+ 
+ (1,1,1) = {"
+ aaa
+@@ -109788,16 +111512,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -110039,22 +111754,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -110296,22 +111994,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -110553,22 +112235,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -110803,29 +112469,8 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -111060,26 +112705,7 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -111317,28 +112943,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -111574,28 +113191,6 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+@@ -111831,28 +113426,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -112088,28 +113683,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -112345,28 +113940,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -112602,26 +114197,26 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -112859,29 +114454,29 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -113125,20 +114720,20 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -113382,20 +114977,20 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -113642,17 +115237,17 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -113900,16 +115495,16 @@ aaa
+ aaa
+ aaa
+ aaa
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
+-adm
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
++aaa
+ aaa
+ aaa
+ aaa
+@@ -116224,16 +117819,16 @@ aaa
+ aaa
+ aaa
+ aaa
+-emc
+-emt
+-emK
+-enb
+-ens
+-enH
+-enY
+-eon
+-eoC
+-eoR
++ejC
++adn
++adn
++adn
++adn
++adn
++adn
++adn
++adn
++aes
+ aaa
+ aaa
+ aaa
+@@ -116475,22 +118070,22 @@ aaa
+ aaa
+ aaa
+ aaa
+-ekH
+-ekR
+-elb
+-elp
+-elB
+-elP
+-emd
+-emu
+-emL
+-enc
+-ent
+-enI
+-enZ
+-eoo
+-eoD
+-eoS
++ejC
++adn
++adn
++adn
++adn
++adn
++adn
++aiN
++ajI
++aiN
++alK
++amN
++anW
++aoz
++aoC
++apA
+ aaa
+ aaa
+ aaa
+@@ -116732,22 +118327,22 @@ aaa
+ aaa
+ aaa
+ aaa
+-ekI
+-ekS
+-elc
+-elq
+-elC
+-elQ
+-eme
+-emv
+-emM
+-end
+-enu
+-enJ
+-eoa
+-eop
+-eoE
+-eoT
++adn
++afv
++afK
++afK
++afK
++aho
++adn
++agG
++aeh
++aeG
++aeG
++amO
++aeG
++aoA
++aoC
++apB
+ aaa
+ aaa
+ aaa
+@@ -116989,22 +118584,22 @@ aaa
+ aaa
+ aaa
+ aaa
+-ekJ
+-ekT
+-eld
+-elr
+-elD
+-elR
+-emf
+-emw
+-emN
+-ene
+-env
+-enK
+-eob
+-eoq
+-eoF
+-eoU
++adn
++aeG
++aeG
++aeG
++aeG
++aeG
++aia
++ehe
++aeh
++akK
++alL
++amP
++anX
++aoB
++aoC
++apC
+ aaa
+ aaa
+ aaa
+@@ -117240,28 +118835,28 @@ aaa
+ aaa
+ aaa
+ ejC
+-ejL
+-ejU
+-ekd
+-ekm
++adn
++adn
++adn
++aes
+ aaa
+ aaa
+-ekK
+-ekU
+-ele
+-els
+-elE
+-elS
+-emg
+-emx
+-emO
+-enf
+-enw
+-enL
+-eoc
+-eor
+-eoG
+-eoV
++adn
++aeG
++aeG
++aeG
++aeG
++aeG
++adn
++aiO
++aeh
++akL
++age
++amQ
++adn
++adn
++adn
++aeI
+ aaa
+ aaa
+ aaa
+@@ -117496,26 +119091,26 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejD
+-ejM
+-ejV
+-eke
+-ekn
+-ekv
++adn
++adA
++adT
++aeh
++adn
++aeE
+ aaa
+-ekL
+-ekV
+-elf
+-elt
+-elF
+-elT
+-emh
+-emy
+-emP
+-eng
+-enx
+-enM
+-eod
++adn
++afw
++afL
++ehd
++agG
++ahp
++adn
++aiP
++aeh
++akL
++age
++amR
++adn
+ aaa
+ aaa
+ aaa
+@@ -117753,28 +119348,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejE
+-ejN
+-ejW
+-ekf
+-eko
+-ekw
+-ekC
+-ekM
+-ekW
+-elg
+-elu
+-elG
+-brL
+-emi
+-emz
+-emQ
+-enh
+-brL
+-enN
+-eoe
+-eos
+-eoH
++ado
++adB
++adU
++aeh
++adn
++adn
++adn
++adn
++adn
++adn
++adn
++agH
++agb
++adn
++adn
++adn
++akM
++agb
++adn
++adn
++adn
++aes
+ aaa
+ aaa
+ aaa
+@@ -118010,28 +119605,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejF
+-ejO
+-ejX
+-ekg
+-ekp
+-ekx
+-ekD
+-ekN
+-ekX
+-elh
+-brL
+-elH
+-elU
+-emj
+-emA
+-emR
+-eni
+-eny
+-enO
+-brL
+-eot
+-eoI
++ado
++adC
++adV
++aeh
++aet
++aeF
++aeT
++ehb
++aeT
++aeT
++agb
++aeG
++aeG
++aeG
++aeG
++ehf
++akL
++age
++aeh
++agb
++aoC
++apA
+ aaa
+ aaa
+ aaa
+@@ -118267,28 +119862,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejG
+-ejP
+-ejY
+-ekh
+-ekq
+-eky
+-ekE
+-ekO
+-ekY
+-eli
+-elv
+-elI
+-elV
+-emk
+-emB
+-emS
+-enj
+-enz
+-enP
+-eof
+-eou
+-eoJ
++ado
++adD
++adW
++aeh
++aeu
++aeG
++adV
++adV
++adV
++aeG
++agc
++aeG
++adV
++adV
++adV
++adV
++akL
++age
++aeh
++anY
++aoC
++apB
+ aaa
+ aaa
+ aaa
+@@ -118524,28 +120119,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejH
+-ejQ
+-ejZ
+-eki
+-ekr
+-ekz
+-ekF
+-ekP
+-ekZ
+-elj
+-brL
+-elJ
+-elW
+-eml
+-emC
+-emT
+-enk
+-enA
+-enQ
+-brL
+-eov
+-eoK
++ado
++adE
++adV
++aeh
++adn
++aeH
++aeU
++ehc
++aeU
++aeU
++agb
++aeG
++aeG
++aeG
++aeG
++ehg
++akL
++age
++aeh
++agb
++aoC
++apC
+ aaa
+ aaa
+ aaa
+@@ -118781,28 +120376,28 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejI
+-ejR
+-eka
+-ekj
+-eks
+-ekA
+-ekG
+-ekQ
+-ela
+-elk
+-elw
+-elK
+-brL
+-emm
+-emD
+-emU
+-enl
+-brL
+-enR
+-eog
+-eow
+-eoL
++ado
++adF
++adX
++aeh
++adn
++adn
++adn
++afk
++adn
++adn
++adn
++agI
++agb
++adn
++adn
++adn
++akM
++agb
++adn
++adn
++adn
++aev
+ aaa
+ aaa
+ aaa
+@@ -119038,26 +120633,26 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejJ
+-ejS
+-ekb
+-ekk
+-ekt
+-ekB
++adn
++adG
++adY
++aeh
++adn
++aeI
+ aaa
+ aaa
+ aaa
+-ell
+-elx
+-elL
+-elX
+-emn
+-emE
+-emV
+-enm
+-enB
+-enS
+-eoh
++adn
++agd
++aeG
++ahq
++adn
++aiQ
++aeh
++akL
++age
++amS
++adn
+ aaa
+ aaa
+ aaa
+@@ -119295,29 +120890,29 @@ aaa
+ aaa
+ aaa
+ aaa
+-ejK
+-ejT
+-ekc
+-ekl
+-eku
++adp
++adn
++adn
++adn
++aev
+ aaa
+ aaa
+ aaa
+ aaa
+-elm
+-ely
+-elM
+-elY
+-emo
+-emF
+-emW
+-enn
+-enC
+-enT
+-eoi
+-eox
+-eoM
+-eoW
++afM
++age
++aeG
++ahq
++adn
++aiR
++aeh
++akL
++age
++amT
++adn
++adn
++adn
++aeE
+ aaa
+ aaa
+ aaa
+@@ -119561,20 +121156,20 @@ aaa
+ aaa
+ aaa
+ aaa
+-eln
+-elz
+-elN
+-elZ
+-emp
+-emG
+-emX
+-eno
+-enD
+-enU
+-eoj
+-eoy
+-eoN
+-eoX
++afN
++agf
++aeG
++ahr
++aet
++aiS
++aeh
++akN
++alM
++amP
++aeG
++aoE
++aoC
++apA
+ aaa
+ aaa
+ aaa
+@@ -119818,20 +121413,20 @@ aaa
+ aaa
+ aaa
+ aaa
+-elo
+-elA
+-elO
+-ema
+-emq
+-emH
+-emY
+-enp
+-enE
+-enV
+-eok
+-eoz
+-eoO
+-eoY
++adp
++adn
++adn
++adn
++adn
++aiT
++aeh
++aeG
++aeG
++amU
++aeG
++aoF
++aoC
++apB
+ aaa
+ aaa
+ aaa
+@@ -120078,17 +121673,17 @@ aaa
+ aaa
+ aaa
+ aaa
+-emb
+-emr
+-emI
+-emZ
+-enq
+-enF
+-enW
+-eol
+-eoA
+-eoP
+-eoZ
++ahs
++adn
++aiU
++aeh
++akO
++alN
++amV
++ehg
++aoE
++aoC
++apC
+ aaa
+ aaa
+ aaa
+@@ -120336,16 +121931,16 @@ aaa
+ aaa
+ aaa
+ aaa
+-ems
+-emJ
+-ena
+-enr
+-enG
+-enX
+-eom
+-eoB
+-eoQ
+-epa
++adp
++adn
++adn
++adn
++adn
++adn
++adn
++adn
++adn
++aev
+ aaa
+ aaa
+ aaa
