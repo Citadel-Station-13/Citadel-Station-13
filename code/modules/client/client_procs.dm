@@ -364,13 +364,13 @@ GLOBAL_LIST(external_rsc_urls)
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
 			winset(src, "[url_encode(child)]", "[entries[child]]")
-			if (!ispath(child, /datum/menu))
+			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
-		var/datum/menu/menuitem = GLOB.menulist[thing]
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
 
