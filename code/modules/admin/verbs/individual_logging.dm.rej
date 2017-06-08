@@ -1,0 +1,11 @@
+diff a/code/modules/admin/verbs/individual_logging.dm b/code/modules/admin/verbs/individual_logging.dm	(rejected hunks)
+@@ -26,6 +26,6 @@
+ 		if(reversed)
+ 			reversed = reverseRange(reversed.Copy())
+ 			for(var/entry in reversed)
+-				dat += "<font size=2px>[entry]: [reversed[entry]]</font><br>"
++				dat += "<font size=2px>[entry]: [reversed[entry]]</font><hr>"
+ 
+-	usr << browse(dat, "window=invidual_logging;size=600x480")
+\ No newline at end of file
++	usr << browse(dat, "window=invidual_logging;size=600x480")
