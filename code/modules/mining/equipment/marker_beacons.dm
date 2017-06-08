@@ -56,14 +56,14 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 		var/obj/structure/marker_beacon/M = new(user.loc, picked_color)
 		transfer_fingerprints_to(M)
 
-/obj/item/stack/marker_beacon/AltClick(mob/user)
-	if(user.incapacitated())
+/obj/item/stack/marker_beacon/AltClick(mob/living/user)
+	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
-	if(user.incapacitated() || !in_range(src, user))
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
 		return
 	if(input_color)
 		picked_color = input_color
@@ -128,15 +128,15 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	else
 		return ..()
 
-/obj/structure/marker_beacon/AltClick(mob/user)
+/obj/structure/marker_beacon/AltClick(mob/living/user)
 	..()
-	if(user.incapacitated())
+	if(user.incapacitated() || !istype(user))
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
 	var/input_color = input(user, "Choose a color.", "Beacon Color") as null|anything in GLOB.marker_beacon_colors
-	if(user.incapacitated() || !in_range(src, user))
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
 		return
 	if(input_color)
 		picked_color = input_color
