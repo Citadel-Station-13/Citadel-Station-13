@@ -111,7 +111,7 @@
 	if(!message || !can_use(user))
 		return
 	if(user.z > 2)
-		to_chat(user, "<span class='info'>\icon[src]Error: Station out of range.</span>")
+		to_chat(user, "<span class='info'>[bicon(src)]Error: Station out of range.</span>")
 		return
 	var/list/members = list()
 	members += gang.gangsters

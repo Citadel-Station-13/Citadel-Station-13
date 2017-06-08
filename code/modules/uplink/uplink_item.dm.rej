@@ -1,0 +1,10 @@
+diff a/code/modules/uplink/uplink_item.dm b/code/modules/uplink/uplink_item.dm	(rejected hunks)
+@@ -1312,7 +1312,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
+ 			continue
+ 		crate_value -= I.cost
+ 		new I.item(C)
+-		U.purchase_log += "<big>\icon[I.item]</big>"
++		U.purchase_log += "<big>[bicon(I.item)]</big>"
+ 
+ 	return C
+ 
