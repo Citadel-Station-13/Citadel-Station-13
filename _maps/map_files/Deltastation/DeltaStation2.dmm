@@ -36915,6 +36915,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bxt" = (
@@ -45677,6 +45680,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "bOh" = (
@@ -45687,6 +45693,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/storage/primary)
@@ -59167,6 +59176,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "coE" = (
@@ -64715,6 +64727,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/library)
 "czM" = (
@@ -67149,6 +67164,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "cEI" = (
@@ -69334,6 +69352,9 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
@@ -78086,6 +78107,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/science/research)
 "dbt" = (
@@ -78717,6 +78741,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -79455,6 +79482,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/research)
@@ -81264,6 +81294,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "diw" = (
@@ -81271,12 +81304,18 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
 "dix" = (
 /obj/machinery/pipedispenser/disposal/transit_tube,
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
@@ -136724,7 +136763,7 @@ akm
 ajl
 bKc
 aip
-aol
+eph
 bQf
 bSn
 bUr
@@ -137162,14 +137201,14 @@ aaf
 aaf
 aaf
 aax
-ach
+epb
 aax
 aaf
 aaa
 aaa
 aaf
 aax
-ach
+epb
 aax
 aaf
 aaf
@@ -137676,14 +137715,14 @@ aax
 aaD
 abT
 aax
-acj
+epc
 aax
 acC
 acT
 ack
 adq
 aax
-ach
+epb
 aax
 abR
 aaD
@@ -163735,10 +163774,10 @@ cqf
 cqf
 cqf
 cqf
-cEE
+epj
 cqf
 cqf
-cIU
+epk
 cqf
 cqf
 cqf
