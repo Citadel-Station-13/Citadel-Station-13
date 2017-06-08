@@ -1,4 +1,4 @@
-#define WHITELISTFILE "config/whitelist.txt"
+#define WHITELISTFILE "config/whitelist.txt, gamedata/config/whitelist.txt"
 
 GLOBAL_LIST(whitelist)
 GLOBAL_PROTECT(whitelist)

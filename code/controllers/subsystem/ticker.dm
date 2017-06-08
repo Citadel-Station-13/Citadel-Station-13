@@ -239,6 +239,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
+	GLOB.start_state = new /datum/station_state()
+	GLOB.start_state.count(1)
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -438,7 +440,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/mob/dead/new_player/player in GLOB.mob_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -852,7 +854,8 @@ SUBSYSTEM_DEF(ticker)
 	if(!delay)
 		delay = config.round_end_countdown * 10
 
-	if(delay_end)
+	var/skip_delay = check_rights()
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
@@ -862,7 +865,7 @@ SUBSYSTEM_DEF(ticker)
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
 	sleep(delay - (world.time - start_wait))
 
-	if(delay_end)
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 

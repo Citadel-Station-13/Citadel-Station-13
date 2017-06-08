@@ -1,0 +1,10 @@
+diff a/code/datums/holocall.dm b/code/datums/holocall.dm	(rejected hunks)
+@@ -42,6 +43,8 @@
+ 
+ //cleans up ALL references :)
+ /datum/holocall/Destroy()
++	QDEL_NULL(hangup)
++
+ 	var/user_good = !QDELETED(user)
+ 	if(user_good)
+ 		user.reset_perspective()

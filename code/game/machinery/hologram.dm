@@ -58,12 +58,11 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/Destroy()
 	if(outgoing_call)
-		LAZYADD(holo_calls, outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		HC.ConnectionFailure(src)
-	LAZYCLEARLIST(holo_calls)
 
 	for (var/I in masters)
 		clear_holo(I)
@@ -74,7 +73,14 @@ Possible to do for anyone motivated enough:
 	if (powered())
 		stat &= ~NOPOWER
 	else
-		stat |= ~NOPOWER
+		stat |= NOPOWER
+		if(outgoing_call)
+			outgoing_call.ConnectionFailure(src)
+
+/obj/machinery/holopad/obj_break()
+	. = ..()
+	if(outgoing_call)
+		outgoing_call.ConnectionFailure(src)
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
@@ -99,25 +105,10 @@ Possible to do for anyone motivated enough:
 		return
 	return ..()
 
-/obj/machinery/holopad/proc/CheckCallClose()
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		if(usr == HC.eye)
-			HC.Disconnect(HC.calling_holopad)	//disconnect via clicking the called holopad
-			return TRUE
-	return FALSE
-
-/obj/machinery/holopad/Click(location,control,params)
-	if(!CheckCallClose())
-		return ..()
-
 /obj/machinery/holopad/AltClick(mob/living/carbon/human/user)
 	if(isAI(user))
 		hangup_all_calls()
 		return
-
-	if(!CheckCallClose())
-		interact(user)
 
 /obj/machinery/holopad/interact(mob/living/carbon/human/user) //Carn: Hologram requests.
 	if(!istype(user))

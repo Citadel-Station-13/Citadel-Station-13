@@ -91,11 +91,10 @@
 		if(sql)
 			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
 			query_round_game_mode.Execute()
+
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
 	return 1
 
 
