@@ -1847,10 +1847,7 @@
 	pixel_x = -28
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/sec{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,
@@ -73653,7 +73650,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/weapon/storage/backpack/dufflebag/med,
+/obj/item/weapon/storage/backpack/duffelbag/med,
 /obj/item/device/flashlight/pen{
 	pixel_x = 4;
 	pixel_y = 3
@@ -82887,10 +82884,7 @@
 /area/shuttle/abandoned)
 "cYD" = (
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/med{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgicaldrill,/obj/item/weapon/razor);
-	desc = "A large dufflebag for holding extra medical supplies - this one seems to be designed for holding surgical tools.";
-	name = "surgical dufflebag";
+/obj/item/weapon/storage/backpack/duffelbag/med/surgery{
 	pixel_y = 4
 	},
 /turf/open/floor/mineral/titanium,

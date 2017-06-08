@@ -1,0 +1,27 @@
+diff a/code/modules/uplink/uplink_item.dm b/code/modules/uplink/uplink_item.dm	(rejected hunks)
+@@ -455,9 +455,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
+ 	include_modes = list(/datum/game_mode/nuclear)
+ 
+ /datum/uplink_item/ammo/shotgun/bag
+-	name = "12g Ammo Duffle Bag"
+-	desc = "A duffle bag filled with enough 12g ammo to supply an entire team, at a discounted price."
+-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
++	name = "12g Ammo Duffel Bag"
++	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
++	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/shotgun
+ 	cost = 12
+ 
+ /datum/uplink_item/ammo/smg
+@@ -469,9 +469,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
+ 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+ 
+ /datum/uplink_item/ammo/smg/bag
+-	name = ".45 Ammo Duffle Bag"
+-	desc = "A duffle bag filled with enough .45 ammo to supply an entire team, at a discounted price."
+-	item = /obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
++	name = ".45 Ammo Duffel Bag"
++	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
++	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg
+ 	cost = 20
+ 	include_modes = list(/datum/game_mode/nuclear)
+ 
