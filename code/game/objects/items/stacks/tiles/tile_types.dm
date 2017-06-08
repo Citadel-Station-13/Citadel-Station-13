@@ -112,6 +112,9 @@
 	icon_state = "tile-carpet-black"
 	turf_type = /turf/open/floor/carpet/black
 
+/obj/item/stack/tile/carpet/black/fifty
+	amount = 50
+
 
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
