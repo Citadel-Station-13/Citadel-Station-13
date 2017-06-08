@@ -14,6 +14,7 @@
 	if(type == INDIVIDUAL_SHOW_ALL_LOG)
 		dat += "<center>Displaying all logs of [key_name(M)]</center><br><hr>"
 		for(var/log_type in M.logging)
+ 			dat += "<center><b>[log_type]</b></center><br>"
 			var/list/reversed = M.logging[log_type]
 			if(islist(reversed))
 				reversed = reverseRange(reversed.Copy())
