@@ -1,0 +1,9 @@
+diff a/code/game/objects/structures/crates_lockers/closets/secure/security.dm b/code/game/objects/structures/crates_lockers/closets/secure/security.dm	(rejected hunks)
+@@ -11,7 +11,6 @@
+ 	else
+ 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
+ 	new /obj/item/clothing/neck/cloak/cap(src)
+-	new /obj/item/weapon/storage/daki(src) 
+ 	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
+ 	new /obj/item/clothing/head/crown/fancy(src)
+ 	new /obj/item/clothing/suit/captunic(src)
