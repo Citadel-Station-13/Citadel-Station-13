@@ -351,19 +351,12 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/turf/TT = T
 			while(TT != epicenter)
 				TT = get_step_towards(TT,epicenter)
-				if(TT.density && TT.explosion_block)
+				if(TT.density)
 					dist += TT.explosion_block
-
-				for(var/obj/machinery/door/D in TT)
-					if(D.density && D.explosion_block)
-						dist += D.explosion_block
-
-				for(var/obj/structure/window/W in TT)
-					if(W.explosion_block && W.fulltile)
-						dist += W.explosion_block
-
-				for(var/obj/structure/blob/B in T)
-					dist += B.explosion_block
+				
+				for(var/obj/O in T)
+					var/the_block = O.explosion_block
+					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
 
 		if(dist < dev)
 			T.color = "red"
