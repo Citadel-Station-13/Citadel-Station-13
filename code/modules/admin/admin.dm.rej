@@ -1,0 +1,10 @@
+diff a/code/modules/admin/admin.dm b/code/modules/admin/admin.dm	(rejected hunks)
+@@ -434,7 +434,7 @@
+ 			if("Hard Restart (No Delay, No Feeback Reason)")
+ 				world.Reboot()
+ 			if("Hardest Restart (No actions, just reboot)")
+-				world.Reboot(fast_track = TRUE)		
++				world.Reboot(fast_track = TRUE)
+ 			if("Service Restart (Force restart DD)")
+ 				GLOB.reboot_mode = REBOOT_MODE_HARD
+ 				world.ServiceReboot()
