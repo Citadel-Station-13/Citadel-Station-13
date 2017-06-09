@@ -2239,7 +2239,7 @@
 			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
 	else if(href_list["showrelatedacc"])
 		var/client/C = locate(href_list["client"]) in GLOB.clients
-		var/list/thing_to_check
+		var/thing_to_check
 		if(href_list["showrelatedacc"] == "cid")
 			thing_to_check = C.related_accounts_cid
 		else
