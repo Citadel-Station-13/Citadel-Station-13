@@ -1,0 +1,10 @@
+diff a/code/controllers/subsystem/ticker.dm b/code/controllers/subsystem/ticker.dm	(rejected hunks)
+@@ -83,6 +83,8 @@ SUBSYSTEM_DEF(ticker)
+ 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
+ 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+ 			current_state = GAME_STATE_PREGAME
++			//Everyone who wants to be an observer is now spawned
++			create_observers()
+ 			fire()
+ 		if(GAME_STATE_PREGAME)
+ 				//lobby stats for statpanels
