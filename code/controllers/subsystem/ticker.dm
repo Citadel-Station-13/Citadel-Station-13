@@ -20,6 +20,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/login_music							//music played in pregame lobby
 	var/round_end_sound						//music/jingle played when the world reboots
+	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
@@ -59,10 +60,13 @@ SUBSYSTEM_DEF(ticker)
 
 	var/round_start_time = 0
 	var/list/round_start_events
+	var/mode_result = "undefined"
+	var/end_state = "undefined"
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
+	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
 	login_music = pick(music)
 
@@ -235,6 +239,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
+	GLOB.start_state = new /datum/station_state()
+	GLOB.start_state.count(1)
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -284,7 +290,7 @@ SUBSYSTEM_DEF(ticker)
 	//Now animate the cinematic
 	switch(station_missed)
 		if(NUKE_NEAR_MISS)	//nuke was nearby but (mostly) missed
-			if( mode && !override )
+			if(mode && !override )
 				override = mode.name
 			switch( override )
 				if("nuclear emergency") //Nuke wasn't on station when it blew up
@@ -294,6 +300,17 @@ SUBSYSTEM_DEF(ticker)
 					station_explosion_detonation(bomb)
 					flick("station_intact_fade_red",cinematic)
 					cinematic.icon_state = "summary_nukefail"
+				if("cult")
+					cinematic.icon_state = null
+					flick("intro_cult",cinematic)
+					sleep(25)
+					world << sound('sound/magic/enter_blood.ogg')
+					sleep(28)
+					world << sound('sound/machines/terminal_off.ogg')
+					sleep(20)
+					flick("station_corrupted",cinematic)
+					world << sound('sound/effects/ghost.ogg')
+					actually_blew_up = FALSE
 				if("gang war") //Gang Domination (just show the override screen)
 					cinematic.icon_state = "intro_malf_still"
 					flick("intro_malf",cinematic)
@@ -342,6 +359,13 @@ SUBSYSTEM_DEF(ticker)
 					world << sound('sound/effects/explosionfar.ogg')
 					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
 					cinematic.icon_state = "summary_selfdes"
+				if("cult") //Station nuked (nuke,explosion,summary)
+					flick("intro_nuke",cinematic)
+					sleep(35)
+					flick("station_explode_fade_red",cinematic)
+					world << sound('sound/effects/explosionfar.ogg')
+					station_explosion_detonation(bomb)	//TODO: no idea what this case could be
+					cinematic.icon_state = "summary_cult"
 				if("no_core") //Nuke failed to detonate as it had no core
 					flick("intro_nuke",cinematic)
 					sleep(35)
@@ -416,7 +440,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/mob/dead/new_player/player in GLOB.mob_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -557,43 +581,6 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
-	//Borers
-	var/borerwin = FALSE
-	if(GLOB.borers.len)
-		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
-				var/turf/location = get_turf(B)
-				if(location.z == ZLEVEL_CENTCOM && B.victim)
-					borertext += "escaped with host"
-				else
-					borertext += "failed"
-				borertext += ")"
-		to_chat(world, borertext)
-
-		var/total_borers = 0
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.victim) && B.stat != DEAD)
-				total_borers++
-		if(total_borers)
-			var/total_borer_hosts = 0
-			for(var/mob/living/carbon/C in GLOB.mob_list)
-				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
-				var/turf/location = get_turf(C)
-				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
-					total_borer_hosts++
-			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
-				borerwin = TRUE
-			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
-			if(borerwin)
-				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
-			else
-				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
-
-	CHECK_TICK
-
 	mode.declare_station_goal_completion()
 
 	CHECK_TICK
@@ -619,9 +606,9 @@ SUBSYSTEM_DEF(ticker)
 
 	sleep(50)
 	if(mode.station_was_nuked)
-		world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+		Reboot("Station destroyed by Nuclear Device.", "nuke")
 	else
-		world.Reboot("Round ended.", "end_proper", "proper completion")
+		Reboot("Round ended.", "proper completion")
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
@@ -724,6 +711,15 @@ SUBSYSTEM_DEF(ticker)
 	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 
+	switch (current_state)
+		if(GAME_STATE_SETTING_UP)
+			Master.SetRunLevel(RUNLEVEL_SETUP)
+		if(GAME_STATE_PLAYING)
+			Master.SetRunLevel(RUNLEVEL_GAME)
+		if(GAME_STATE_FINISHED)
+			Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
+
 	modevoted = SSticker.modevoted
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
@@ -788,3 +784,72 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+/datum/controller/subsystem/ticker/proc/load_mode()
+	var/mode = trim(file2text("data/mode.txt"))
+	if(mode)
+		GLOB.master_mode = mode
+	else
+		GLOB.master_mode = "extended"
+	log_game("Saved mode is '[GLOB.master_mode]'")
+
+/datum/controller/subsystem/ticker/proc/save_mode(the_mode)
+	var/F = file("data/mode.txt")
+	fdel(F)
+	F << the_mode
+
+/datum/controller/subsystem/ticker/proc/SetRoundEndSound(the_sound)
+	set waitfor = FALSE
+	round_end_sound_sent = FALSE
+	round_end_sound = fcopy_rsc(the_sound)
+	for(var/thing in GLOB.clients)
+		var/client/C = thing
+		if (!C)
+			continue
+		C.Export("##action=load_rsc", round_end_sound)
+	round_end_sound_sent = TRUE
+
+/datum/controller/subsystem/ticker/proc/Reboot(reason, end_string, delay)
+	set waitfor = FALSE
+	if(usr && !check_rights(R_SERVER, TRUE))
+		return
+
+	if(!delay)
+		delay = config.round_end_countdown * 10
+
+	var/skip_delay = check_rights()
+	if(delay_end && !skip_delay)
+		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
+		return
+
+	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [(delay >= 10 && delay < 20) ? "second" : "seconds"]. [reason]</span>")
+
+	var/start_wait = world.time
+	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
+	sleep(delay - (world.time - start_wait))
+
+	if(delay_end && !skip_delay)
+		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
+		return
+
+	if(end_string)
+		end_state = end_string
+
+
+	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
+
+	world.Reboot()
+
+/datum/controller/subsystem/ticker/Shutdown()
+	if(!round_end_sound)
+		round_end_sound = pick(\
+		'sound/roundend/newroundsexy.ogg',
+		'sound/roundend/apcdestroyed.ogg',
+		'sound/roundend/bangindonk.ogg',
+		'sound/roundend/leavingtg.ogg',
+		'sound/roundend/its_only_game.ogg',
+		'sound/roundend/yeehaw.ogg',
+		'sound/roundend/disappointed.ogg'\
+		)
+
+	world << sound(round_end_sound)

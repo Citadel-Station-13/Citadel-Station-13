@@ -80,7 +80,7 @@
 	var/obj/effect/decal/cleanable/femcum/S = locate() in T
 	if(!S)
 		S = new(T)
-	S.reagents.add_reagent("semen", reac_volume)
+	S.reagents.add_reagent("femcum", reac_volume)
 	if(data["blood_DNA"])
 		S.blood_DNA[data["blood_DNA"]] = data["blood_type"]
 

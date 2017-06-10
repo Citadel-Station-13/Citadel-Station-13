@@ -50,7 +50,8 @@
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
-
+	var/datum/martial_art/martial_art = null
+	var/static/default_martial_art = new/datum/martial_art
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
@@ -67,6 +68,7 @@
 /datum/mind/New(var/key)
 	src.key = key
 	soulOwner = src
+	martial_art = default_martial_art
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -326,7 +328,8 @@
 		"traitor", // "traitorchan",
 		"monkey",
 		"clockcult",
-		"devil"
+		"devil",
+		"ninja"
 	)
 	var/text = ""
 
@@ -614,9 +617,27 @@
 		text += "|Disabled in Prefs"
 	sections["devil"] = text
 
+/** NINJA ***/
+	text = "ninja"
+	if(SSticker.mode.config_tag == "ninja")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	var/datum/antagonist/ninja/ninjainfo = has_antag_datum(ANTAG_DATUM_NINJA)
+	if(ninjainfo)
+		if(ninjainfo.helping_station)
+			text += "<a href='?src=\ref[src];ninja=clear'>employee</a> | syndicate | <b>NANOTRASEN</b> | <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
+		else
+			text += "<a href='?src=\ref[src];ninja=clear'>employee</a> | <b>SYNDICATE</b> | nanotrasen | <b><a href='?src=\ref[src];ninja=equip'>EQUIP</a></b>"
+	else
+		text += "<b>EMPLOYEE</b> | <a href='?src=\ref[src];ninja=syndicate'>syndicate</a> | <a href='?src=\ref[src];ninja=nanotrasen'>nanotrasen</a> | <a href='?src=\ref[src];ninja=random'>random allegiance</a>"
+	if(current && current.client && (ROLE_NINJA in current.client.prefs.be_special))
+		text += " | Enabled in Prefs"
+	else
+		text += " | Disabled in Prefs"
+	sections["ninja"] = text
 
-	/** SILICON ***/
 
+/** SILICON ***/
 	if(issilicon(current))
 		text = "silicon"
 		var/mob/living/silicon/robot/robot = current
@@ -968,7 +989,7 @@
 		if(!G || (src in G.bosses))
 			return
 		SSticker.mode.remove_gangster(src,0,2,1)
-		G.bosses += src
+		G.bosses[src] = GANGSTER_BOSS_STARTING_INFLUENCE
 		gang_datum = G
 		special_role = "[G.name] Gang Boss"
 		G.add_gang_hud(src)
@@ -1202,7 +1223,28 @@
 				else
 					to_chat(usr, "<span class='warning'>This only works on humans!</span>")
 					return
-
+	else if(href_list["ninja"])
+		var/datum/antagonist/ninja/ninjainfo = has_antag_datum(ANTAG_DATUM_NINJA)
+		switch(href_list["ninja"])
+			if("clear")
+				remove_ninja(current)
+				message_admins("[key_name_admin(usr)] has de-ninja'ed [current].")
+				log_admin("[key_name(usr)] has de-ninja'ed [current].")
+			if("equip")
+				ninjainfo.equip_space_ninja()
+				return
+			if("nanotrasen")
+				add_ninja(current, ANTAG_DATUM_NINJA_FRIENDLY)
+				message_admins("[key_name_admin(usr)] has friendly ninja'ed [current].")
+				log_admin("[key_name(usr)] has friendly ninja'ed [current].")
+			if("syndicate")
+				add_ninja(current, ANTAG_DATUM_NINJA)
+				message_admins("[key_name_admin(usr)] has syndie ninja'ed [current].")
+				log_admin("[key_name(usr)] has syndie ninja'ed [current].")
+			if("random")
+				add_ninja(current)
+				message_admins("[key_name_admin(usr)] has random ninja'ed [current].")
+				log_admin("[key_name(usr)] has random ninja'ed [current].")
 	else if(href_list["abductor"])
 		switch(href_list["abductor"])
 			if("clear")
@@ -1247,7 +1289,6 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1330,7 +1371,7 @@
 		obj_count++
 
 /datum/mind/proc/find_syndicate_uplink()
-	var/list/L = current.get_contents()
+	var/list/L = current.GetAllContents()
 	for (var/obj/item/I in L)
 		if (I.hidden_uplink)
 			return I.hidden_uplink
@@ -1406,7 +1447,7 @@
 		special_role = "Wizard"
 		assigned_role = "Wizard"
 		if(!GLOB.wizardstart.len)
-			current.loc = pick(GLOB.latejoin)
+			SSjob.SendToLateJoin(current)
 			to_chat(current, "HOT INSERTION, GO GO GO")
 		else
 			current.loc = pick(GLOB.wizardstart)

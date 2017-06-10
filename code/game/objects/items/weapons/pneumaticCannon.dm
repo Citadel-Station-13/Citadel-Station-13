@@ -185,17 +185,6 @@
 	maxWeightClass = 7
 	gasPerThrow = 5
 
-/datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
-	name = "Pneumatic Cannon"
-	result = /obj/item/weapon/pneumatic_cannon/ghetto
-	tools = list(/obj/item/weapon/weldingtool,
-				 /obj/item/weapon/wrench)
-	reqs = list(/obj/item/stack/sheet/metal = 4,
-				/obj/item/stack/packageWrap = 8,
-				/obj/item/pipe = 2)
-	time = 300
-	category = CAT_WEAPON
-
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
 		if(!src.tank)
@@ -244,7 +233,7 @@
 	range_multiplier = 3
 	fire_mode = PCANNON_FIFO
 	throw_amount = 1
-	maxWeightClass = 100	//50 pies. :^)
+	maxWeightClass = 150	//50 pies. :^)
 	clumsyCheck = FALSE
 
 /obj/item/weapon/pneumatic_cannon/pie/can_load_item(obj/item/I, mob/user)
@@ -252,3 +241,22 @@
 		return ..()
 	to_chat(user, "<span class='warning'>[src] only accepts pies!</span>")
 	return FALSE
+
+/obj/item/weapon/pneumatic_cannon/pie/selfcharge
+	automatic = TRUE
+	var/charge_amount = 1
+	var/charge_ticks = 1
+	var/charge_tick = 0
+	maxWeightClass = 60	//20 pies.
+
+/obj/item/weapon/pneumatic_cannon/pie/selfcharge/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/pneumatic_cannon/pie/selfcharge/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/pneumatic_cannon/pie/selfcharge/process()
+	if(++charge_tick >= charge_ticks)
+		fill_with_type(/obj/item/weapon/reagent_containers/food/snacks/pie/cream, charge_amount)

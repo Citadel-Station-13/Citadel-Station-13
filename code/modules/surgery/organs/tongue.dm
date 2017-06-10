@@ -15,6 +15,7 @@
 		/datum/language/common,
 		/datum/language/draconic,
 		/datum/language/monkey,
+		/datum/language/beachbum,
 		/datum/language/narsie,
 	))
 

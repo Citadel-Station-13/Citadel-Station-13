@@ -107,7 +107,6 @@
 
 /datum/language_holder/construct
 	languages = list(/datum/language/common, /datum/language/narsie)
-	only_speaks_language = /datum/language/narsie
 
 /datum/language_holder/drone
 	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
@@ -125,7 +124,7 @@
 
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
-	shadow_languages = list(/datum/language/machine, /datum/language/draconic)
+	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)
 
 /datum/language_holder/universal/New()
 	..()

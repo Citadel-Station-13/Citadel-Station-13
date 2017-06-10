@@ -16,6 +16,7 @@
 		  It requires an organic host as a home base and source of fuel." //This is the description of the actual injector. Feel free to change this for uplink purposes//
 	item = /obj/item/weapon/storage/box/syndie_kit/holoparasite
 	refundable = TRUE
-	cost = 10 //I'm working off the borer. Price subject to change
+	cost = 15 //I'm working off the borer. Price subject to change
 	surplus = 20 //Nobody needs a ton of parasites
 	exclude_modes = list(/datum/game_mode/nuclear)
+	refund_path = /obj/item/weapon/guardiancreator/tech/choose/traitor
