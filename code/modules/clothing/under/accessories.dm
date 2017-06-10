@@ -1,10 +1,10 @@
 /obj/item/clothing/accessory //Ties moved to neck slot items, but as there are still things like medals and armbands, this accessory system is being kept as-is
-	name = "tie"
-	desc = "A neosilk clip-on tie."
-	icon = 'icons/obj/clothing/ties.dmi'
-	icon_state = "bluetie"
+	name = "Accessory"
+	desc = "Something has gone wrong!"
+	icon = 'icons/obj/clothing/accessories.dmi'
+	icon_state = "plasma"
 	item_state = ""	//no inhands
-	item_color = "bluetie"
+	item_color = "plasma" //On accessories, this controls the worn sprite. That's a bit weird.
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/minimize_when_attached = TRUE // TRUE if shown as a small icon in corner, FALSE if overlayed
@@ -12,12 +12,12 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
 	if(pockets) // Attach storage to jumpsuit
 		if(U.pockets) // storage items conflict
-			return 0
+			return FALSE
 
 		pockets.loc = U
 		U.pockets = pockets
 
-	U.hastie = src
+	U.attached_accessory = src
 	loc = U
 	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
@@ -30,7 +30,10 @@
 	for(var/armor_type in armor)
 		U.armor[armor_type] += armor[armor_type]
 
-	return 1
+	if(isliving(user))
+		on_uniform_equip(U, user)
+
+	return TRUE
 
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
@@ -41,6 +44,9 @@
 	for(var/armor_type in armor)
 		U.armor[armor_type] -= armor[armor_type]
 
+	if(isliving(user))
+		on_uniform_dropped(U, user)
+
 	if(minimize_when_attached)
 		transform *= 2
 		pixel_x -= 8
@@ -48,13 +54,17 @@
 	layer = initial(layer)
 	plane = initial(plane)
 	U.cut_overlays()
-	U.hastie = null
+	U.attached_accessory = null
 
 /obj/item/clothing/accessory/proc/on_uniform_equip(obj/item/clothing/under/U, user)
 	return
 
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
+
+/obj/item/clothing/accessory/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>\The [src] can be attached to a uniform. Alt-click to remove it once attached.</span>")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -94,7 +104,7 @@
 				user.visible_message("[user] is trying to pin [src] on [M]'s chest.", \
 									 "<span class='notice'>You try to pin [src] on [M]'s chest.</span>")
 			if(do_after(user, delay, target = M))
-				if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
+				if(U.attach_accessory(src, user, 0)) //Attach it, do not notify the user of the attachment
 					if(user == M)
 						to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 					else
@@ -112,10 +122,6 @@
 	name = "bronze heart medal"
 	desc = "A bronze heart-shaped medal awarded for sacrifice. It is often awarded posthumously or for severe injury in the line of duty."
 	icon_state = "bronze_heart"
-
-/obj/item/clothing/accessory/medal/nobel_science
-	name = "nobel sciences award"
-	desc = "A bronze medal which represents significant contributions to the field of science or engineering."
 
 /obj/item/clothing/accessory/medal/silver
 	name = "silver medal"
@@ -147,6 +153,26 @@
 /obj/item/clothing/accessory/medal/gold/heroism
 	name = "medal of exceptional heroism"
 	desc = "An extremely rare golden medal awarded only by Centcom. To receive such a medal is the highest honor and as such, very few exist. This medal is almost never awarded to anybody but commanders."
+
+/obj/item/clothing/accessory/medal/plasma
+	name = "plasma medal"
+	desc = "An eccentric medal made of plasma."
+	icon_state = "plasma"
+	item_color = "plasma"
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = -10, acid = 0) //It's made of plasma. Of course it's flammable.
+	materials = list(MAT_PLASMA=1000)
+
+/obj/item/clothing/accessory/medal/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 300)
+		atmos_spawn_air("plasma=20;TEMP=[exposed_temperature]")
+		visible_message("<span class='danger'> \The [src] bursts into flame!</span>","<span class='userdanger'>Your [src] bursts into flame!</span>")
+		qdel(src)
+
+/obj/item/clothing/accessory/medal/plasma/nobel_science
+	name = "nobel sciences award"
+	desc = "A plasma medal which represents significant contributions to the field of science or engineering."
+
+
 
 ////////////
 //Armbands//
@@ -208,17 +234,6 @@
 	icon_state = "lawyerbadge"
 	item_color = "lawyerbadge"
 
-/obj/item/clothing/accessory/lawyers_badge/attach(obj/item/clothing/under/U, user)
-	if(!..())
-		return 0
-	if(isliving(U.loc))
-		on_uniform_equip(U, user)
-
-/obj/item/clothing/accessory/lawyers_badge/detach(obj/item/clothing/under/U, user)
-	..()
-	if(isliving(U.loc))
-		on_uniform_dropped(U, user)
-
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, user)
 	var/mob/living/L = user
 	if(L)
@@ -228,3 +243,14 @@
 	var/mob/living/L = user
 	if(L)
 		L.bubble_icon = initial(L.bubble_icon)
+
+////////////////
+//OONGA BOONGA//
+////////////////
+
+/obj/item/clothing/accessory/talisman
+	name = "bone talisman"
+	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
+	icon_state = "talisman"
+	item_color = "talisman"
+	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 20, bio = 20, rad = 5, fire = 0, acid = 25)
