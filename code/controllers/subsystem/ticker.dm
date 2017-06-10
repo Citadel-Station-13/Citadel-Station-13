@@ -239,6 +239,8 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/PostSetup()
 	set waitfor = 0
 	mode.post_setup()
+	GLOB.start_state = new /datum/station_state()
+	GLOB.start_state.count(1)
 	//Cleanup some stuff
 	for(var/obj/effect/landmark/start/S in GLOB.landmarks_list)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
@@ -438,7 +440,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
-	for(var/mob/dead/new_player/player in GLOB.player_list)
+	for(var/mob/dead/new_player/player in GLOB.mob_list)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
@@ -576,43 +578,6 @@ SUBSYSTEM_DEF(ticker)
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
-
-	CHECK_TICK
-
-	//Borers
-	var/borerwin = FALSE
-	if(GLOB.borers.len)
-		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
-				var/turf/location = get_turf(B)
-				if(location.z == ZLEVEL_CENTCOM && B.victim)
-					borertext += "escaped with host"
-				else
-					borertext += "failed"
-				borertext += ")"
-		to_chat(world, borertext)
-
-		var/total_borers = 0
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.victim) && B.stat != DEAD)
-				total_borers++
-		if(total_borers)
-			var/total_borer_hosts = 0
-			for(var/mob/living/carbon/C in GLOB.mob_list)
-				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
-				var/turf/location = get_turf(C)
-				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
-					total_borer_hosts++
-			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
-				borerwin = TRUE
-			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
-			if(borerwin)
-				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
-			else
-				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
 
 	CHECK_TICK
 
@@ -852,7 +817,8 @@ SUBSYSTEM_DEF(ticker)
 	if(!delay)
 		delay = config.round_end_countdown * 10
 
-	if(delay_end)
+	var/skip_delay = check_rights()
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
 		return
 
@@ -862,7 +828,7 @@ SUBSYSTEM_DEF(ticker)
 	UNTIL(round_end_sound_sent || (world.time - start_wait) > (delay * 2))	//don't wait forever
 	sleep(delay - (world.time - start_wait))
 
-	if(delay_end)
+	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
 
