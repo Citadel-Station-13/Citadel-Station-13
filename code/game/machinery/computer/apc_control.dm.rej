@@ -1,0 +1,10 @@
+diff a/code/game/machinery/computer/apc_control.dm b/code/game/machinery/computer/apc_control.dm	(rejected hunks)
+@@ -128,7 +128,7 @@
+ 		if(active_apc)
+ 			to_chat(usr, "<span class='robot danger'>[bicon(src)] Disconnected from [active_apc].</span>")
+ 			active_apc.say("Remote access canceled. Interface locked.")
+-			playsound(active_apc, 'sound/machines/BoltsDown.ogg', 25, 0)
++			playsound(active_apc, 'sound/machines/boltsdown.ogg', 25, 0)
+ 			playsound(active_apc, 'sound/machines/terminal_alert.ogg', 50, 0)
+ 			active_apc.locked = TRUE
+ 			active_apc.update_icon()

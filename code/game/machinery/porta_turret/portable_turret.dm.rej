@@ -1,0 +1,10 @@
+diff a/code/game/machinery/porta_turret/portable_turret.dm b/code/game/machinery/porta_turret/portable_turret.dm	(rejected hunks)
+@@ -567,7 +567,7 @@
+ 	icon_state = "standard_stun"
+ 	base_icon_state = "standard"
+ 	stun_projectile = /obj/item/projectile/energy/electrode
+-	stun_projectile_sound = 'sound/weapons/Taser.ogg'
++	stun_projectile_sound = 'sound/weapons/taser.ogg'
+ 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
+ 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+ 
