@@ -217,7 +217,7 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
- 	powerefficiency = 0.001
+	powerefficiency = 0.001
 	amount = 5
 	recharge_delay = 30
 	dispensable_reagents = list()
