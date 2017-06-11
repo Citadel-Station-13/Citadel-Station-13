@@ -151,7 +151,7 @@
 				var/actual = min(amount, (cell.charge * powerefficiency)*10, free)
 
 				R.add_reagent(reagent, actual)
-				energy = max(energy - actual / 10, 0)
+				cell.use((actual / 10) / powerefficiency)
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
