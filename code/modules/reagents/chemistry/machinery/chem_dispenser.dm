@@ -284,7 +284,7 @@
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	var/time = 0
 	var/i
-+	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
+	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
 		cell = P
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		time += M.rating
