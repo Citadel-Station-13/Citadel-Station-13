@@ -25,7 +25,7 @@
 	. = scripture_unlock_check()
 	for(var/i in .)
 		if(.[i] != previous_states[i])
-			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>") //maybe admins fucked with scripture states?
+			hierophant_message("<span class='large_brass'><i>Hierophant Network:</i> <b>[i] Scripture has been [.[i] ? "un":""]locked.</b></span>")
 			update_slab_info()
 
 /proc/get_unconverted_ais()
@@ -63,3 +63,6 @@
 //changes construction value
 /proc/change_construction_value(amount)
 	GLOB.clockwork_construction_value += amount
+
+/proc/can_recite_scripture(mob/living/L)
+	return (is_servant_of_ratvar(L) && L.stat == CONSCIOUS && L.can_speak_vocal() && (GLOB.ratvar_awakens || (ishuman(L) || issilicon(L))))

@@ -362,6 +362,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "You shouldn't be seeing this description unless you're very fast. If you're very fast, good job!"
 	icon_state = "no-servants-caches"
 
+
 /obj/screen/alert/clockwork/scripture_reqs/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
