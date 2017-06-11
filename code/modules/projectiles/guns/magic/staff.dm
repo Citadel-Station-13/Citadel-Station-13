@@ -67,6 +67,17 @@
 	max_charges = 4
 	recharge_rate = 8
 
+// new dildo bullet staff! adds horniness
+/obj/item/weapon/gun/magic/staff/dildo
+	name = "knotted staff"
+	desc = "This is pretty lewd."
+	fire_sound = 'sound/magic/Staff_Healing.ogg'
+	ammo_type = /obj/item/ammo_casing/magic/dildo
+	icon_state = "knot_staff"
+	item_state = "knot_staff"
+	max_charges = 4
+	recharge_rate = 8
+
 /obj/item/weapon/gun/magic/staff/spellblade
 	name = "spellblade"
 	desc = "A deadly combination of laziness and boodlust, this blade allows the user to dismember their enemies without all the hard work of actually swinging the sword."

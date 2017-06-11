@@ -164,6 +164,28 @@
 	..()
 	SpinAnimation()
 
+// new dildo bullet! adds horniness - basically just the magic banana without the stun, and inflicts arousalloss
+/obj/item/projectile/bullet/dildo
+	damage = 0
+	forcedodge = 1
+	nodamage = 1
+	name = "dildo"
+	icon = 'code/citadel/icons/dildo.dmi'
+	icon_state = "dildo_knotted_3"
+	range = 200
+
+/obj/item/projectile/bullet/dildo/on_hit(atom/target, blocked = 0)
+	. = ..()
+	if(iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(M.canbearoused) // if they're prude, don't let them be lewd - checks if mob can actually be aroused
+			M.adjustArousalLoss(5)
+			to_chat(M, "<span class='love'>You feel slightly hornier...</span>")
+
+/obj/item/projectile/bullet/dildo/New()
+	..()
+	SpinAnimation()
+
 /obj/item/projectile/bullet/meteorshot/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(istype(target, /atom/movable))
