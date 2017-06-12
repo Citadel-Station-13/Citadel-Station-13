@@ -17,6 +17,24 @@
 	alert_type = null
 	var/total_damage = 0
 
+/datum/status_effect/syphon_mark/on_apply()
+	if(owner.stat == DEAD)
+		return FALSE
+	return ..()
+
+/datum/status_effect/syphon_mark/proc/get_kill()
+	if(reward_target)
+		reward_target.get_kill(owner)
+
+/datum/status_effect/syphon_mark/tick()
+	if(owner.stat == DEAD)
+		get_kill()
+		qdel(src)
+
+/datum/status_effect/syphon_mark/on_remove()
+	get_kill()
+	. = ..()
+
 /datum/status_effect/syphon_mark
 	id = "syphon_mark"
 	duration = 50
@@ -29,10 +47,6 @@
 	if(owner.stat == DEAD)
 		return FALSE
 	return ..()
-
-/datum/status_effect/syphon_mark/proc/get_kill()
-	if(reward_target)
-		reward_target.get_kill(owner)
 
 /datum/status_effect/syphon_mark/tick()
 	if(owner.stat == DEAD)
