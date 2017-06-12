@@ -124,6 +124,10 @@
 			new /obj/effect/mob_spawn/human/corpse/damaged(T)
 	..(gibbed)
 
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/tendril
+	fromtendril = TRUE
+
+
 //Legion skull
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion
 	name = "legion"
