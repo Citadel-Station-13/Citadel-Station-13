@@ -14,7 +14,7 @@
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'
+	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
@@ -123,7 +123,7 @@
 	eyeobj.loc = src.loc
 	rename_self("ai")
 
-	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"default"))
+	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))
 
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
