@@ -1,0 +1,15 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -15127,12 +15124,7 @@
+ /obj/item/weapon/storage/secure/briefcase{
+ 	contents = newlist(/obj/item/clothing/suit/armor/vest,/obj/item/weapon/gun/ballistic/automatic/pistol,/obj/item/weapon/suppressor,/obj/item/weapon/melee/classic_baton/telescopic,/obj/item/clothing/mask/balaclava,/obj/item/bodybag,/obj/item/weapon/soap/nanotrasen)
+ 	},
+-/obj/item/weapon/storage/backpack/duffelbag{
+-	contents = newlist(/obj/item/clothing/under/lawyer/blacksuit,/obj/item/clothing/accessory/waistcoat,/obj/item/clothing/suit/toggle/lawyer/black,/obj/item/clothing/shoes/laceup,/obj/item/clothing/gloves/color/black,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/head/fedora);
+-	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back.";
+-	icon_state = "duffel-syndieammo";
+-	item_state = "duffel-syndieammo"
+-	},
++/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman,
+ /obj/item/weapon/card/id/silver{
+ 	access = list(12);
+ 	assignment = "Reaper";
