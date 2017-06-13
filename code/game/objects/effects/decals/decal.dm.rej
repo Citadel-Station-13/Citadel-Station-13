@@ -1,0 +1,8 @@
+diff a/code/game/objects/effects/decals/decal.dm b/code/game/objects/effects/decals/decal.dm	(rejected hunks)
+@@ -67,4 +67,4 @@
+ 	icon_state = "sandyplating"
+ 
+ /obj/effect/turf_decal/plaque
+-	icon_state = "plaque"
+\ No newline at end of file
++	icon_state = "plaque"
