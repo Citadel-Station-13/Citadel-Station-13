@@ -122,7 +122,7 @@
 			icon_state = "cutout_cultist"
 		if("Clockwork Cultist")
 			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-			desc = "A cardboard cutout of a servant of Ratvar."
+			desc = "A cardboard cutout of a servant of Mousevar."
 			icon_state = "cutout_servant"
 		if("Revolutionary")
 			name = "Unknown"

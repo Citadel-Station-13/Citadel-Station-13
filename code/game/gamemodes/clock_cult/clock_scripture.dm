@@ -12,8 +12,8 @@ Judgement: 12 servants, 5 caches, 300 CV, and any existing AIs are converted or 
 /datum/clockwork_scripture
 	var/descname = "useless" //a simple name for the scripture's effect
 	var/name = "scripture"
-	var/desc = "Ancient Ratvarian lore. This piece seems particularly mundane."
-	var/list/invocations = list() //Spoken over time in the ancient language of Ratvar. See clock_unsorted.dm for more details on the language and how to make it.
+	var/desc = "Ancient Mousevarian lore. This piece seems particularly mundane."
+	var/list/invocations = list() //Spoken over time in the ancient language of Mousevar. See clock_unsorted.dm for more details on the language and how to make it.
 	var/channel_time = 10 //In deciseconds, how long a ritual takes to chant
 	var/list/consumed_components = list(BELLIGERENT_EYE = 0, VANGUARD_COGWHEEL = 0, GEIS_CAPACITOR = 0, REPLICANT_ALLOY = 0, HIEROPHANT_ANSIBLE = 0) //Components consumed
 	var/obj/item/clockwork/slab/slab //The parent clockwork slab

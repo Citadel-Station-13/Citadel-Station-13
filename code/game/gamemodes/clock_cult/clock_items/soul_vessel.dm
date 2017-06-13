@@ -13,9 +13,9 @@
 	fail_message = "<span class='warning'>The cogwheel creaks and grinds to a halt. Maybe you could try again?</span>"
 	new_role = "Soul Vessel"
 	welcome_message = "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>\n\
-	<b>You are a soul vessel - a clockwork mind created by Ratvar, the Clockwork Justiciar.\n\
-	You answer to Ratvar and his servants. It is your discretion as to whether or not to answer to anyone else.\n\
-	The purpose of your existence is to further the goals of the servants and Ratvar himself. Above all else, serve Ratvar.</b>"
+	<b>You are a soul vessel - a clockwork mind created by Mousevar, the Clockwork Justiciar.\n\
+	You answer to Mousevar and his servants. It is your discretion as to whether or not to answer to anyone else.\n\
+	The purpose of your existence is to further the goals of the servants and Mousevar himself. Above all else, serve Mousevar.</b>"
 	new_mob_message = "<span class='brass'>The soul vessel emits a jet of steam before its cogwheel smooths out.</span>"
 	dead_message = "<span class='deadsay'>Its cogwheel, scratched and dented, lies motionless.</span>"
 	possible_names = list("Judge", "Guard", "Servant", "Smith", "Auger")

@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
 
 //Objective text define
-#define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
+#define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Mousevar."
 
 //misc clockcult stuff
 #define MARAUDER_EMERGE_THRESHOLD 65 //marauders cannot emerge unless host is at this% or less health

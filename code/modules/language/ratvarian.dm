@@ -1,5 +1,5 @@
 /datum/language/ratvar
-	name = "Ratvarian"
+	name = "Mousevarian"
 	desc = "A timeless language full of power and incomprehensible to the unenlightened."
 	var/static/random_speech_verbs = list("clanks", "clinks", "clunks", "clangs")
 	ask_verb = "requests"

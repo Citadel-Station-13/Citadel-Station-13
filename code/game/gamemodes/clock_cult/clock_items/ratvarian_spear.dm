@@ -2,7 +2,7 @@
 /obj/item/clockwork/ratvarian_spear
 	name = "ratvarian spear"
 	desc = "A razor-sharp spear made of brass. It thrums with barely-contained energy."
-	clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons."
+	clockwork_desc = "A powerful spear of Mousevarian making. It's more effective against enemy cultists and silicons."
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "ratvarian_spear"
 	item_state = "ratvarian_spear"
@@ -31,7 +31,7 @@
 		force = initial(force)
 		throwforce = initial(throwforce)
 		armour_penetration = 0
-		clockwork_desc = "A powerful spear of Ratvarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
+		clockwork_desc = "A powerful spear of Mousevarian making. It's more effective against enemy cultists and silicons, though it won't last for long."
 		deltimer(timerid)
 		timerid = addtimer(CALLBACK(src, .proc/break_spear), RATVARIAN_SPEAR_DURATION, TIMER_STOPPABLE)
 

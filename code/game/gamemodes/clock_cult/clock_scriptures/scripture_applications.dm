@@ -28,7 +28,7 @@
 /datum/clockwork_scripture/fellowship_armory
 	descname = "Area Servant Armor"
 	name = "Fellowship Armory"
-	desc = "Equips the invoker and all visible Servants with Ratvarian armor. This armor provides high melee resistance but a weakness to lasers. \
+	desc = "Equips the invoker and all visible Servants with Mousevarian armor. This armor provides high melee resistance but a weakness to lasers. \
 	It grows faster to invoke with more adjacent Servants."
 	invocations = list("Shield us...", "...with the...", "... fragments of Engine!")
 	channel_time = 100
@@ -40,7 +40,7 @@
 	primary_component = VANGUARD_COGWHEEL
 	sort_priority = 2
 	quickbind = TRUE
-	quickbind_desc = "Attempts to armor all nearby Servants with powerful Ratvarian armor."
+	quickbind_desc = "Attempts to armor all nearby Servants with powerful Mousevarian armor."
 	var/static/list/ratvarian_armor_typecache = typecacheof(list(
 	/obj/item/clothing/suit/armor/clockwork,
 	/obj/item/clothing/head/helmet/clockwork,
@@ -76,7 +76,7 @@
 		if(remove_item_if_better(I, L))
 			do_message += L.equip_to_slot_or_del(new/obj/item/clothing/shoes/clockwork(null), slot_shoes)
 		if(do_message)
-			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Ratvarian armor.</span>")
+			L.visible_message("<span class='warning'>Strange armor appears on [L]!</span>", "<span class='heavy_brass'>A bright shimmer runs down your body, equipping you with Mousevarian armor.</span>")
 			playsound(L, 'sound/magic/clockwork/fellowship_armory.ogg', 15*do_message, 1) //get sound loudness based on how much we equipped
 			affected++
 	return affected

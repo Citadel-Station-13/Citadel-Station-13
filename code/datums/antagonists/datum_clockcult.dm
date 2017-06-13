@@ -21,11 +21,11 @@
 		. = is_eligible_servant(new_owner.current)
 		if(!silent && new_owner.current)
 			if(issilicon(new_owner.current))
-				to_chat(new_owner.current, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the \
+				to_chat(new_owner.current, "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Mousevar, the \
 				Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 			else
 				to_chat(new_owner.current, "<span class='heavy_brass'>[iscarbon(new_owner.current) ? "Your mind is racing! Your body feels incredibly light! ":""]Your world glows a brilliant \
-				yellow! All at once it comes to you. Ratvar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
+				yellow! All at once it comes to you. Mousevar, the Clockwork Justiciar, lies in exile, derelict and forgotten in an unseen realm.</span>")
 			if(!.)
 				new_owner.current.visible_message("<span class='boldwarning'>[new_owner.current] seems to resist an unseen force!</span>")
 				to_chat(new_owner.current, "<span class='userdanger'>And yet, you somehow push it all away.</span>")
@@ -43,8 +43,8 @@
 	SSticker.mode.update_servant_icons_added(owner)
 	if(jobban_isbanned(current, ROLE_SERVANT_OF_RATVAR))
 		addtimer(CALLBACK(SSticker.mode, /datum/game_mode.proc/replace_jobbaned_player, current, ROLE_SERVANT_OF_RATVAR, ROLE_SERVANT_OF_RATVAR), 0)
-	owner.special_role = "Servant of Ratvar"
-	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.special_role = "Servant of Mousevar"
+	owner.current.log_message("<font color=#BE8700>Has been converted to the cult of Mousevar!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(issilicon(current))
 		if(iscyborg(current) && !silent)
 			to_chat(current, "<span class='boldwarning'>You have been desynced from your master AI.</span>")
@@ -55,8 +55,8 @@
 	else if(isbrain(current) || isclockmob(current))
 		to_chat(current, "<span class='nezbere'>You can communicate with other servants by using the Hierophant Network action button in the upper left.</span>")
 	..()
-	to_chat(current, "<b>This is Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]")
-	owner.memory += "<b>Ratvar's will:</b> [CLOCKCULT_OBJECTIVE]<br>" //Memorize the objectives
+	to_chat(current, "<b>This is Mousevar's will:</b> [CLOCKCULT_OBJECTIVE]")
+	owner.memory += "<b>Mousevar's will:</b> [CLOCKCULT_OBJECTIVE]<br>" //Memorize the objectives
 
 /datum/antagonist/clockcult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -150,9 +150,9 @@
 	if(!silent)
 		owner.current.visible_message("<span class='big'>[owner] seems to have remembered their true allegiance!</span>", \
 		"<span class='userdanger'>A cold, cold darkness flows through your mind, extinguishing the Justiciar's light and all of your memories as his servant.</span>")
-	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Ratvar!</font>", INDIVIDUAL_ATTACK_LOG)
+	owner.current.log_message("<font color=#BE8700>Has renounced the cult of Mousevar!</font>", INDIVIDUAL_ATTACK_LOG)
 	owner.wipe_memory()
 	owner.special_role = null
 	if(iscyborg(owner.current))
-		to_chat(owner.current, "<span class='warning'>Despite your freedom from Ratvar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
+		to_chat(owner.current, "<span class='warning'>Despite your freedom from Mousevar's influence, you are still irreparably damaged and no longer possess certain functions such as AI linking.</span>")
 	. = ..()

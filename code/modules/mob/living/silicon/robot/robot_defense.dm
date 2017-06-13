@@ -110,7 +110,7 @@
 	if(is_servant_of_ratvar(src))
 		to_chat(src, "<span class='nezbere'>\"[text2ratvar("You will serve Engine above all else")]!\"</span>\n\
 		<span class='danger'>ALERT: Subversion attempt denied.</span>")
-		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Ratvar.")
+		log_game("[key_name(user)] attempted to emag cyborg [key_name(src)], but they serve only Mousevar.")
 		return
 
 	if(syndicate)

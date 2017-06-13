@@ -29,7 +29,7 @@
 	but can only exit if your master calls your true name or if they are exceptionally damaged. \
 	\n\n\
 	Stay near your host to protect and heal them; being too far from your host will rapidly cause you massive damage. Recall to your host if you are too weak and believe you cannot continue \
-	fighting safely. As a final note, you should probably avoid harming any fellow servants of Ratvar.</span>"
+	fighting safely. As a final note, you should probably avoid harming any fellow servants of Mousevar.</span>"
 
 /mob/living/simple_animal/hostile/clockwork/marauder/Initialize()
 	. = ..()
