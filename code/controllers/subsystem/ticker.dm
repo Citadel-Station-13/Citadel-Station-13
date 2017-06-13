@@ -583,6 +583,14 @@ SUBSYSTEM_DEF(ticker)
 
 	mode.declare_station_goal_completion()
 
+	//medals, placed far down so that people can actually see the commendations.
+	if(GLOB.commendations)
+		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
+		for (var/com in GLOB.commendations)
+			to_chat(world, com)
+
+	CHECK_TICK
+
 	CHECK_TICK
 
 	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
