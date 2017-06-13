@@ -1395,9 +1395,6 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 
 #define UNTIL(X) while(!(X)) stoplag()
 
-/proc/to_chat(target, message)
-	target << message
-
 /proc/pass()
 	return
 
