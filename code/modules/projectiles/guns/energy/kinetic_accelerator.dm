@@ -174,6 +174,10 @@
 	var/turf/target_turf = get_turf(target)
 	if(!isturf(target_turf))
 		return
+	if(kinetic_gun)
+		var/list/mods = kinetic_gun.get_modkits()
+		for(var/obj/item/borg/upgrade/modkit/M in mods)
+			M.projectile_prehit(src, target, kinetic_gun)
 	var/datum/gas_mixture/environment = target_turf.return_air()
 	var/pressure = environment.return_pressure()
 	if(pressure > 50)
