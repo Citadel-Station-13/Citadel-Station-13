@@ -107,6 +107,12 @@
 	flags = NODROP
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
+/obj/item/clothing/head/beret/black
+	name = "black beret"
+	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
+	icon_state = "beretblack"
+
+
 //Security
 
 /obj/item/clothing/head/HoS
@@ -124,6 +130,10 @@
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/syndicate
+	name = "syndicate beret"
+	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
