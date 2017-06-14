@@ -292,7 +292,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 	add_verbs_from_config()
 	set_client_age_from_db(tdata)
-	var/cached_player_age = player_age //we have to cache this because other shit may change it and we need it's current value now down below.
+	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
 
@@ -356,9 +356,9 @@ GLOBAL_LIST(external_rsc_urls)
 
 	hook_vr("client_new",list(src))
 
-	var/list/topmenus = GLOB.menulist[/datum/menu]
+	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)
-		var/datum/menu/topmenu = thing
+		var/datum/verbs/menu/topmenu = thing
 		var/topmenuname = "[topmenu]"
 		if (topmenuname == "[topmenu.type]")
 			var/list/tree = splittext(topmenuname, "/")
@@ -367,13 +367,13 @@ GLOBAL_LIST(external_rsc_urls)
 		var/list/entries = topmenu.Generate_list(src)
 		for (var/child in entries)
 			winset(src, "[url_encode(child)]", "[entries[child]]")
-			if (!ispath(child, /datum/menu))
+			if (!ispath(child, /datum/verbs/menu))
 				var/atom/verb/verbpath = child
 				if (copytext(verbpath.name,1,2) != "@")
 					new child(src)
 
 	for (var/thing in prefs.menuoptions)
-		var/datum/menu/menuitem = GLOB.menulist[thing]
+		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
 
@@ -493,6 +493,9 @@ GLOBAL_LIST(external_rsc_urls)
 		account_join_date = "Error"
 	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),COALESCE(INET_ATON('[world.internet_address]'), 0),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
+	if(new_player)
+		player_age = -1
+	. = player_age
 
 /client/proc/findJoinDate()
 	var/list/http = world.Export("http://byond.com/members/[ckey]?format=text")

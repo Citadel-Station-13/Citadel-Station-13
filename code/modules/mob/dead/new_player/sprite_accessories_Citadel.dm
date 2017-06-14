@@ -414,6 +414,21 @@
 	name = "Wolf"
 	icon_state = "wolf"
 
+/datum/sprite_accessory/mam_tails/gulimon
+	name = "Gulimon"
+	icon_state = "gulimon"
+	extra = 1
+
+/datum/sprite_accessory/mam_tails_animated/gulimon
+	name = "Gulimon"
+	icon_state = "gulimon"
+	extra = 1
+
+/datum/sprite_accessory/mam_ears/gulimon
+	name = "Gulimon"
+	icon_state = "gulimon"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /******************************************
 ************ Body Markings ****************
 *******************************************/
@@ -528,6 +543,13 @@
 	icon_state = "wolf"
 	color_src = MUTCOLORS2
 	gender_specific = 1
+
+/datum/sprite_accessory/mam_body_markings/gulimon
+	name = "Gulimon"
+	icon_state = "gulimon"
+	extra = 1
+	extra2 = 1
+	icon = 'icons/mob/mam_body_markings.dmi'
 
 /******************************************
 ************ Taur Bodies ******************
