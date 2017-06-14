@@ -352,6 +352,7 @@
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/weapon/soap/tongue,
 		/obj/item/device/analyzer/nose,
+		/obj/item/device/dogborg/sleeper/K9,
 		/obj/item/weapon/gun/energy/disabler/cyborg)
 	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
@@ -367,6 +368,17 @@
 	loc << "<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
 	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
 
+/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
+	if(T)
+		if(T.cell.charge < T.cell.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.cell.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
+
 /obj/item/weapon/robot_module/medihound
 	name = "MediHound module"
 	basic_modules = list(
@@ -374,7 +386,7 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/weapon/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/weapon/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper,
 		/obj/item/weapon/twohanded/shockpaddles/hound,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/weapon/dogborg/pounce)
@@ -391,16 +403,36 @@
 	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
 	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
 
-/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/weapon/robot_module/scrubpup
+	name = "Janitor"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/dogborg/jaws/small,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/lightreplacer/cyborg,
+		/obj/item/device/dogborg/sleeper/compactor)
+	emag_modules = list(/obj/item/weapon/dogborg/pounce)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/janitor,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "scrubpup"
+	moduleselect_icon = "scrubpup"
+	feedback_key = "cyborg_scrubpup"
+	hat_offset = INFINITY
+	clean_on_move = TRUE
+
+/obj/item/weapon/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
-	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
+	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
+	if(LR)
+		for(var/i in 1 to coeff)
+			LR.Charge(R)
+
+/obj/item/weapon/robot_module/scrubpup/do_transform_animation()
+	..()
+	loc << "<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly.</span>"
+
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "Peacekeeper"
