@@ -132,6 +132,12 @@ Difficulty: Hard
 		if(spawned_beacon && loc == spawned_beacon.loc && did_reset)
 			arena_trap(src)
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/CanAttack(atom/the_target)
+	. = ..()
+	if(istype(the_target, /mob/living/simple_animal/hostile/asteroid/hivelordbrood)) //ignore temporary targets in favor of more permenant targets
+		return FALSE
+
+
 /mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
 	if(src && . > 0 && !blinking)
