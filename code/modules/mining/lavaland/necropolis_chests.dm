@@ -11,7 +11,7 @@
 	desc = "It's watching you suspiciously."
 
 /obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,27)
+	var/loot = rand(1,28)
 	switch(loot)
 		if(1)
 			new /obj/item/device/shared_storage/red(src)
@@ -69,6 +69,8 @@
 		if(27)
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/weapon/bedsheet/cult(src)
+		if(28)
+			new /obj/item/weapon/disk/design_disk/modkit_disc/bounty(src)
 
 //KA modkit design discs
 /obj/item/weapon/disk/design_disk/modkit_disc
@@ -1096,7 +1098,9 @@
 	for(var/i in 1 to range)
 		if(!J)
 			return
-		new /obj/effect/temp_visual/hierophant/blast(J, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(J, user, friendly_fire_check)
+		B.damage = 30
+		B.monster_damage_boost = FALSE
 		previousturf = J
 		J = get_step(previousturf, dir)
 
@@ -1107,4 +1111,5 @@
 	playsound(T,'sound/effects/bin_close.ogg', 200, 1)
 	sleep(2)
 	for(var/t in RANGE_TURFS(1, T))
-		new /obj/effect/temp_visual/hierophant/blast(t, user, friendly_fire_check)
+		var/obj/effect/temp_visual/hierophant/blast/B = new(t, user, friendly_fire_check)
+		B.damage = 15 //keeps monster damage boost due to lower damage
