@@ -1,0 +1,9 @@
+diff a/code/modules/surgery/organs/eyes.dm b/code/modules/surgery/organs/eyes.dm	(rejected hunks)
+@@ -130,7 +130,6 @@
+ 	eye.forceMove(src)
+ 	..()
+ 
+-
+ // Welding shield implant
+ /obj/item/organ/eyes/robotic/shield
+ 	name = "shielded robotic eyes"
