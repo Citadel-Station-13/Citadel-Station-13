@@ -1440,7 +1440,7 @@
 		qdel(H)
 
 /datum/mind/proc/make_Traitor()
-	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR))
+	if(!(has_antag_datum(ANTAG_DATUM_TRAITOR)))
 		var/datum/antagonist/traitor/traitordatum = add_antag_datum(ANTAG_DATUM_TRAITOR)
 		return traitordatum
 		
