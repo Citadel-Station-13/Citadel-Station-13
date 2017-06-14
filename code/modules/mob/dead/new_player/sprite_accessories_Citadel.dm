@@ -414,19 +414,19 @@
 	name = "Wolf"
 	icon_state = "wolf"
 
-/datum/sprite_accessory/mam_tails/gulimon
-	name = "Gulimon"
-	icon_state = "gulimon"
+/datum/sprite_accessory/mam_tails/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 	extra = 1
 
-/datum/sprite_accessory/mam_tails_animated/gulimon
-	name = "Gulimon"
-	icon_state = "gulimon"
+/datum/sprite_accessory/mam_tails_animated/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 	extra = 1
 
-/datum/sprite_accessory/mam_ears/gulimon
-	name = "Gulimon"
-	icon_state = "gulimon"
+/datum/sprite_accessory/mam_ears/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
@@ -544,9 +544,9 @@
 	color_src = MUTCOLORS2
 	gender_specific = 1
 
-/datum/sprite_accessory/mam_body_markings/gulimon
-	name = "Gulimon"
-	icon_state = "gulimon"
+/datum/sprite_accessory/mam_body_markings/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
 	extra = 1
 	extra2 = 1
 	icon = 'icons/mob/mam_body_markings.dmi'
