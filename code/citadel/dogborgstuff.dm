@@ -25,10 +25,6 @@
 	sharpness = IS_SHARP
 	var/emagged = 0
 
-/obj/item/weapon/dogborg/jaws/New()
-	..()
-	flags |= NOBLUDGEON //No more attack messages
-
 /obj/item/weapon/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
 	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
