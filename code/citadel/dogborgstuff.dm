@@ -309,17 +309,6 @@
 
 //Sleeper
 
-var/list/important_items = list(
-		/obj/item/weapon/hand_tele,
-		/obj/item/weapon/card/id/captains_spare,
-		/obj/item/device/aicard,
-		/obj/item/device/paicard,
-		/obj/item/weapon/gun,
-		/obj/item/weapon/pinpointer,
-		/obj/item/clothing/shoes/magboots,
-		/obj/item/clothing/head/helmet/space,
-		/obj/item/weapon/disk/nuclear)
-
 /obj/item/device/dogborg/sleeper
 	name = "Medbelly"
 	desc = "Equipment for medical hound. A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves."
@@ -336,6 +325,16 @@ var/list/important_items = list(
 	var/list/injection_chems = list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
 	var/eject_port = "ingestion"
 	var/list/items_preserved = list()
+	var/list/important_items = list(
+		/obj/item/weapon/hand_tele,
+		/obj/item/weapon/card/id/captains_spare,
+		/obj/item/device/aicard,
+		/obj/item/device/paicard,
+		/obj/item/weapon/gun,
+		/obj/item/weapon/pinpointer,
+		/obj/item/clothing/shoes/magboots,
+		/obj/item/clothing/head/helmet/space,
+		/obj/item/weapon/disk/nuclear)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
