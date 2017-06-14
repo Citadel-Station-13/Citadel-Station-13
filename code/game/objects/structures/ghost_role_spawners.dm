@@ -435,6 +435,5 @@
 	suit_store = /obj/item/weapon/gun/ballistic/revolver/mateba
 	back = /obj/item/weapon/storage/backpack/satchel/leather
 	head = /obj/item/clothing/head/HoS/syndicate
-
-  mask = /obj/item/clothing/mask/cigarette/cigar/havana
+  	mask = /obj/item/clothing/mask/cigarette/cigar/havana
 	glasses = /obj/item/clothing/glasses/thermal/eyepatch
