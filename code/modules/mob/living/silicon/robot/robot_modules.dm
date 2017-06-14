@@ -386,7 +386,7 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/weapon/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper/,
+		/obj/item/device/dogborg/sleeper,
 		/obj/item/weapon/twohanded/shockpaddles/hound,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/weapon/dogborg/pounce)
