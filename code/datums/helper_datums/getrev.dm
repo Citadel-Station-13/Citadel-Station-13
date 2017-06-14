@@ -5,15 +5,16 @@
 	var/has_pr_details = FALSE	//tgs2 support
 	var/date
 
-/datum/getrev/New()
-	if(fexists(SERVICE_PR_TEST_JSON))
-		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
-	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
-		var/list/tmp = world.file2list("..\\prtestjob.lk")
-		for(var/I in tmp)
-			if(I)
-				testmerge |= I
-
+ /datum/getrev/New()
+	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
+ 		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+#ifdef SERVERTOOLS
+ 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
+ 		var/list/tmp = world.file2list("..\\prtestjob.lk")
+ 		for(var/I in tmp)
+ 			if(I)
+ 				testmerge |= I
+#endif
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
