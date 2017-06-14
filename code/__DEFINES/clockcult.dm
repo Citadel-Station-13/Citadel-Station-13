@@ -37,15 +37,15 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 #define JUDGEMENT_CV_REQ 300
 
 //general component/cooldown things
-#define SLAB_PRODUCTION_TIME 900 //how long(deciseconds) slabs require to produce a single component; defaults to 1 minute 30 seconds
+#define SLAB_PRODUCTION_TIME 450 //how long(deciseconds) slabs require to produce a single component; defaults to 45 seconds
 
-#define SLAB_SERVANT_SLOWDOWN 300 //how much each servant above 5 slows down slab-based generation; defaults to 30 seconds per sevant
+#define SLAB_SERVANT_SLOWDOWN 150 //how much each servant above 5 slows down slab-based generation; defaults to 15 seconds per sevant
 
-#define SLAB_SLOWDOWN_MAXIMUM 2700 //maximum slowdown from additional servants; defaults to 4 minutes 30 seconds
+#define SLAB_SLOWDOWN_MAXIMUM 1350 //maximum slowdown from additional servants; defaults to 2 minutes 15 seconds
 
-#define CACHE_PRODUCTION_TIME 600 //how long(deciseconds) caches require to produce a component; defaults to 1 minute
+#define CACHE_PRODUCTION_TIME 300 //how long(deciseconds) caches require to produce a component; defaults to 30 seconds
 
-#define ACTIVE_CACHE_SLOWDOWN 100 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 10 seconds
+#define ACTIVE_CACHE_SLOWDOWN 50 //how many additional deciseconds caches take to produce a component for each linked cache; defaults to 5 seconds
 
 #define LOWER_PROB_PER_COMPONENT 10 //how much each component in the cache reduces the weight of getting another of that component type
 
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 //clockcult power defines
 #define MIN_CLOCKCULT_POWER 25 //the minimum amount of power clockcult machines will handle gracefully
 
-#define CLOCKCULT_POWER_UNIT (MIN_CLOCKCULT_POWER*100) //standard power amount for clockwork proselytizer costs
+#define CLOCKCULT_POWER_UNIT (MIN_CLOCKCULT_POWER*100) //standard power amount for replica fabricator costs
 
 #define POWER_STANDARD (CLOCKCULT_POWER_UNIT*0.2) //how much power is in anything else; doesn't matter as much as the following
 
@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define POWER_PLASTEEL (CLOCKCULT_POWER_UNIT*0.05) //how much power is in one sheet of plasteel
 
-#define RATVAR_POWER_CHECK "ratvar?" //when passed into can_use_power(), converts it into a check for if ratvar has woken/the proselytizer is debug
+#define RATVAR_POWER_CHECK "ratvar?" //when passed into can_use_power(), converts it into a check for if ratvar has woken/the fabricator is debug
 
 //Ark defines
 #define GATEWAY_SUMMON_RATE 1 //the time amount the Gateway to the Celestial Derelict gets each process tick; defaults to 1 per tick
@@ -87,9 +87,9 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define GATEWAY_RATVAR_ARRIVAL 300 //when progress is at or above this, game over ratvar's here everybody go home
 
-#define ARK_SUMMON_COST 3 //how many of each component an Ark costs to summon
+#define ARK_SUMMON_COST 5 //how many of each component an Ark costs to summon
 
-#define ARK_CONSUME_COST 7 //how many of each component an Ark needs to consume to activate
+#define ARK_CONSUME_COST 15 //how many of each component an Ark needs to consume to activate
 
 //Objective text define
 #define CLOCKCULT_OBJECTIVE "Construct the Ark of the Clockwork Justicar and free Ratvar."
@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(all_scripture) //a list containing scripture instances; not us
 
 #define SIGIL_ACCESS_RANGE 2 //range at which transmission sigils can access power
 
-#define PROSELYTIZER_REPAIR_PER_TICK 4 //how much a proselytizer repairs each tick, and also how many deciseconds each tick is
+#define FABRICATOR_REPAIR_PER_TICK 4 //how much a fabricator repairs each tick, and also how many deciseconds each tick is
 
 #define OCULAR_WARDEN_EXCLUSION_RANGE 3 //the range at which ocular wardens cannot be placed near other ocular wardens
 

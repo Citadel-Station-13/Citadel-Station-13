@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Peacekeeper cyborgs now have projectile dampening fields."

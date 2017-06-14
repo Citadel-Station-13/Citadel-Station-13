@@ -94,7 +94,6 @@
 					CLONE:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
 					BRAIN:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
 					STAMINA:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
-					AROUSAL:<font size='1'><a href='?_src_=vars;mobToDamage=[refid];adjustDamage=arousal'>[M.getArousalLoss()]</a>
 				</font>
 			"}
 		else
@@ -738,18 +737,6 @@
 			src.give_disease(M)
 			href_list["datumrefresh"] = href_list["give_spell"]
 
-		else if(href_list["ninja"])
-			if(!check_rights(R_FUN))
-				return
-
-			var/mob/M = locate(href_list["ninja"])
-			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
-				return
-
-			src.cmd_admin_ninjafy(M)
-			href_list["datumrefresh"] = href_list["ninja"]
-
 		else if(href_list["gib"])
 			if(!check_rights(R_FUN))
 				return
@@ -1166,8 +1153,6 @@
 					L.adjustCloneLoss(amount)
 				if("stamina")
 					L.adjustStaminaLoss(amount)
-				if("arousal")
-					L.adjustArousalLoss(amount)
 				else
 					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
 					return
@@ -1178,3 +1163,4 @@
 				message_admins(msg)
 				admin_ticket_log(L, msg)
 				href_list["datumrefresh"] = href_list["mobToDamage"]
+

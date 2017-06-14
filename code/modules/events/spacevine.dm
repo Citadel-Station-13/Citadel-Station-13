@@ -362,8 +362,6 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		override += SM.on_eat(src, eater)
 	if(!override)
-		if(prob(10))
-			eater.say("Nom")
 		qdel(src)
 
 /obj/structure/spacevine/attackby(obj/item/weapon/W, mob/user, params)
@@ -557,6 +555,10 @@
 /obj/structure/spacevine/proc/spread()
 	var/direction = pick(GLOB.cardinal)
 	var/turf/stepturf = get_step(src,direction)
+
+	if(istype(stepturf, /turf/open/space/transit))
+		return
+
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_spread(src, stepturf)
 		stepturf = get_step(src,direction) //in case turf changes, to make sure no runtimes happen

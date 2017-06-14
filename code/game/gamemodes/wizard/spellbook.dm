@@ -57,10 +57,10 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				feedback_add_details("wizard_spell_improved", "[name]|[aspell.level]")
+				SSblackbox.add_details("wizard_spell_improved", "[name]|[aspell.level]")
 				return 1
 	//No same spell found - just learn it
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
 	return 1
@@ -109,7 +109,6 @@
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
-	cost = 3
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
@@ -119,6 +118,7 @@
 /datum/spellbook_entry/disintegrate
 	name = "Disintegrate"
 	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
+	cost = 6
 
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
@@ -140,6 +140,7 @@
 	name = "Time Stop"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
@@ -202,6 +203,7 @@
 	name = "Bind Soul"
 	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
 	category = "Defensive"
+	cost = 4
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
@@ -253,7 +255,7 @@
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
-	category = "Offensive"
+	category = "Defensive"
 	cost = 1
 
 
@@ -266,7 +268,7 @@
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	new item_path(get_turf(user))
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	return 1
 
 /datum/spellbook_entry/item/GetInfo()
@@ -277,7 +279,7 @@
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
 	return dat
-
+/* // these have never been fun, like, ever.
 /datum/spellbook_entry/item/staffchange
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
@@ -287,12 +289,13 @@
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/weapon/gun/magic/staff/animate
-	category = "Assistance"
+	category = "Assistance" */
 
 /datum/spellbook_entry/item/staffchaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
+	cost = 4
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
@@ -465,7 +468,7 @@
 		return TRUE
 
 /datum/spellbook_entry/summon/ghosts/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	new /datum/round_event/wizard/ghost()
 	active = TRUE
 	to_chat(user, "<span class='notice'>You have cast summon ghosts!</span>")
@@ -482,7 +485,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_guns)
 
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(0, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -499,7 +502,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_magic)
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	rightandwrong(1, user, 25)
 	active = 1
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -517,7 +520,7 @@
 	return (SSticker.mode.name != "ragin' mages" && !config.no_summon_events)
 
 /datum/spellbook_entry/summon/events/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
-	feedback_add_details("wizard_spell_learned", name)
+	SSblackbox.add_details("wizard_spell_learned", name)
 	summonevents()
 	times++
 	playsound(get_turf(user), 'sound/magic/CastSummon.ogg', 50, 1)
@@ -778,6 +781,9 @@
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
 
+/obj/item/weapon/spellbook/oneuse/smoke/lesser //Chaplain smoke book
+	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
+
 /obj/item/weapon/spellbook/oneuse/smoke/recoil(mob/user)
 	..()
 	to_chat(user,"<span class='caution'>Your stomach rumbles...</span>")
@@ -785,6 +791,7 @@
 		user.nutrition -= 200
 		if(user.nutrition <= 0)
 			user.nutrition = 0
+
 
 /obj/item/weapon/spellbook/oneuse/blind
 	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind

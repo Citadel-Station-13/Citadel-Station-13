@@ -49,6 +49,9 @@
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(locate(/obj/structure/table) in src)
 		return FALSE
+	if(locate(/obj/structure/falsewall) in contents)
+		to_chat(user, "<span class='warning'>There is a false wall in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
+		return
 	if(is_blocked_turf(src, TRUE))
 		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
@@ -90,7 +93,7 @@
 			no_delete = TRUE
 			use(amount_temp)
 		amount_temp *= 12.5 //each tile is 12.5 power so this is 2 tiles to 25 power
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
 	if(amount_temp >= 20)
 		var/sheets_to_make = round(amount_temp * 0.05) //and 20 to 1 brass
 		var/used = sheets_to_make * 20
@@ -108,7 +111,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
@@ -126,7 +129,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 5)
 		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
@@ -144,7 +147,7 @@
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
@@ -162,7 +165,7 @@
 /obj/item/stack/tile/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -286,6 +289,28 @@
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 
+//Hitting a sigil of transmission will try to charge from it.
+/obj/effect/clockwork/sigil/transmission/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	. = TRUE
+	var/list/charge_values = list()
+	if(!proselytizer.sigil_charge_checks(charge_values, src, user))
+		return
+	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts draining glowing orange energy from [src]...</span>", \
+	"<span class='alloy'>You start recharging your [proselytizer.name]...</span>")
+	proselytizer.recharging = src
+	while(proselytizer && user && src)
+		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
+			break
+		modify_charge(charge_values["power_gain"])
+		proselytizer.modify_stored_power(charge_values["power_gain"])
+		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
+
+	if(proselytizer)
+		proselytizer.recharging = null
+		if(user)
+			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops draining glowing orange energy from [src].</span>", \
+			"<span class='alloy'>You finish recharging your [proselytizer.name]. It now contains <b>[proselytizer.get_power()]W/[proselytizer.get_max_power()]W</b> power.</span>")
+
 //Proselytizer mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/proselytizer_heal(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	var/list/repair_values = list()
@@ -353,16 +378,16 @@
 
 //Convert shards and gear bits directly to power
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -POWER_STANDARD, "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -POWER_STANDARD, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.08), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.08), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.06), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.06), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.04), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.04), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/small/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.02), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.02), "spawn_dir" = SOUTH)

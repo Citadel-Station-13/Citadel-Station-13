@@ -24,4 +24,4 @@ GLOBAL_LIST_EMPTY(whitelisted_species_list)
 
 /proc/log_mentor(text)
 		GLOB.mentor_log.Add(text)
-		GLOB.diary << "\[[time_stamp()]]MENTOR: [text]"
+		GLOB.world_game_log << "\[[time_stamp()]]MENTOR: [text]"

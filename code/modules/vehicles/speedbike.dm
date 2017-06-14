@@ -15,20 +15,11 @@
 	overlay = overlay ||  mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
 
-/obj/effect/overlay/temp/speedbike_trail
-	name = "speedbike trails"
-	icon_state = "ion_fade"
-	layer = BELOW_MOB_LAYER
-	duration = 10
-	randomdir = 0
 
-/obj/effect/overlay/temp/speedbike_trail/New(loc,move_dir)
-	..()
-	setDir(move_dir)
 
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
-		new /obj/effect/overlay/temp/speedbike_trail(loc,move_dir)
+		new /obj/effect/temp_visual/dir_setting/speedbike_trail(loc,move_dir)
 	. = ..()
 
 /obj/vehicle/space/speedbike/red
@@ -44,6 +35,7 @@
 	icon_state = "speedwagon"
 	layer = LYING_MOB_LAYER
 	overlay_state = "speedwagon_cover"
+	max_buckled_mobs = 4
 	var/crash_all = FALSE //CHAOS
 	pixel_y = -48 //to fix the offset when Initialized()
 	pixel_x = -48

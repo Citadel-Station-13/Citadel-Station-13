@@ -80,17 +80,20 @@
 		report = config.intercept
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
 
-	feedback_set_details("round_start","[time2text(world.realtime)]")
-	if(SSticker && SSticker.mode)
-		feedback_set_details("game_mode","[SSticker.mode]")
-	if(GLOB.revdata.commit)
-		feedback_set_details("revision","[GLOB.revdata.commit]")
-	feedback_set_details("server_ip","[world.internet_address]:[world.port]")
+	if(SSdbcore.Connect())
+		var/sql
+		if(SSticker && SSticker.mode)
+			sql += "game_mode = '[SSticker.mode]'"
+		if(GLOB.revdata.originmastercommit)
+			if(sql)
+				sql += ", "
+			sql += "commit_hash = '[GLOB.revdata.originmastercommit]'"
+		if(sql)
+			var/datum/DBQuery/query_round_game_mode = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET [sql] WHERE id = [GLOB.round_id]")
+			query_round_game_mode.Execute()
 	if(report)
 		addtimer(CALLBACK(src, .proc/send_intercept, 0), rand(waittime_l, waittime_h))
 	generate_station_goals()
-	GLOB.start_state = new /datum/station_state()
-	GLOB.start_state.count(1)
 	return 1
 
 
@@ -234,11 +237,11 @@
 			if(ishuman(M))
 				if(!M.stat)
 					surviving_humans++
-					if(M.z == 2)
+					if(M.z == ZLEVEL_CENTCOM)
 						escaped_humans++
 			if(!M.stat)
 				surviving_total++
-				if(M.z == 2)
+				if(M.z == ZLEVEL_CENTCOM)
 					escaped_total++
 
 
@@ -246,18 +249,57 @@
 				ghosts++
 
 	if(clients > 0)
-		feedback_set("round_end_clients",clients)
+		SSblackbox.set_val("round_end_clients",clients)
 	if(ghosts > 0)
-		feedback_set("round_end_ghosts",ghosts)
+		SSblackbox.set_val("round_end_ghosts",ghosts)
 	if(surviving_humans > 0)
-		feedback_set("survived_human",surviving_humans)
+		SSblackbox.set_val("survived_human",surviving_humans)
 	if(surviving_total > 0)
-		feedback_set("survived_total",surviving_total)
+		SSblackbox.set_val("survived_total",surviving_total)
 	if(escaped_humans > 0)
-		feedback_set("escaped_human",escaped_humans)
+		SSblackbox.set_val("escaped_human",escaped_humans)
 	if(escaped_total > 0)
-		feedback_set("escaped_total",escaped_total)
+		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
+	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+		datum_cult_completion()
+
+	if(GLOB.borers.len)
+		var/borerwin = FALSE
+		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
+			if((B.key || B.controlling) && B.stat != DEAD)
+				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
+				var/turf/location = get_turf(B)
+				if(location.z == ZLEVEL_CENTCOM && B.victim)
+					borertext += "escaped with host"
+				else
+					borertext += "failed"
+				borertext += ")"
+		to_chat(world, borertext)
+
+		var/total_borers = 0
+		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
+			if((B.key || B.victim) && B.stat != DEAD)
+				total_borers++
+		if(total_borers)
+			var/total_borer_hosts = 0
+			for(var/mob/living/carbon/C in GLOB.mob_list)
+				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+				var/turf/location = get_turf(C)
+				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+					total_borer_hosts++
+			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
+				borerwin = TRUE
+			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
+			if(borerwin)
+				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
+			else
+				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
+
+		CHECK_TICK
+
 	return 0
 
 

@@ -23,7 +23,7 @@
 
 	var/persistence_replacement //have something WAY too amazing to live to the next round? Set a new path here. Overuse of this var will make me upset.
 	var/unique_rename = FALSE // can you customize the description/name of the thing?
-	
+
 	var/dangerous_possession = FALSE	//Admin possession yes/no
 
 /obj/vv_edit_var(vname, vval)
@@ -182,7 +182,10 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob)
+/obj/proc/on_mob_move(dir, mob, oldLoc)
+	return
+
+/obj/proc/on_mob_turn(dir, mob)
 	return
 
 /obj/vv_get_dropdown()
@@ -193,3 +196,6 @@
 	..()
 	if(unique_rename)
 		to_chat(user, "<span class='notice'>Use a pen on it to rename it or change its description.</span>")
+
+/obj/proc/gang_contraband_value()
+	return 0

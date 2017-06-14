@@ -43,6 +43,13 @@
 	name = "Asteroid 5"
 	description = "Oh my god, another giant rock!"
 
+/datum/map_template/ruin/space/deep_storage
+	id = "deep-storage"
+	suffix = "deepstorage.dmm"
+	name = "Survivalist Bunker"
+	description = "Assume the best, prepare for the worst. Generally, you should do so by digging a three man heavily fortified bunker into a giant unused asteroid. \
+	Then make it self sufficient, mask any evidence of construction, hook it covertly into the telecommunications network and hope for the best."
+
 /datum/map_template/ruin/space/bigderelict1
 	id = "bigderelict1"
 	suffix = "bigderelict1.dmm"
@@ -235,9 +242,3 @@
 	suffix = "miracle.dmm"
 	name = "Ordinary Space Tile"
 	description = "Absolutely nothing strange going on here please move along, plenty more space to see right this way!"
-
-/datum/map_template/ruin/space/dragoon
-	id = "dragoon"
-	suffix = "dragoontomb.dmm"
-	name = "Sky Bulge Tomb"
-	description = "A tomb of a dice-loving dragoon in space. Turns out he got too good and jumped too high. Contains the Sky Bulge, which when thrown, warps the thrower."

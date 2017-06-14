@@ -104,12 +104,8 @@
 
 	authorized += ID
 
-	message_admins("[key_name_admin(user.client)] \
-		(<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) \
-		(<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) \
-		has authorized early shuttle launch", 0, 1)
-	log_game("[key_name(user)] has authorized early shuttle launch in \
-		([x],[y],[z])")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has authorized early shuttle launch", 0, 1)
+	log_game("[key_name(user)] has authorized early shuttle launch in [COORD(src)]")
 	// Now check if we're on our way
 	. = TRUE
 	process()
@@ -239,7 +235,9 @@
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
 		return
-
+	if(SSshuttle.emergencyNoRecall)
+		return
+	
 	invertTimer()
 	mode = SHUTTLE_RECALL
 
@@ -299,7 +297,9 @@
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				feedback_add_details("emergency_shuttle", src.name)
+				if(SSdbcore.Connect())
+					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
+					query_round_shuttle_name.Execute()
 
 				// Gangs only have one attempt left if the shuttle has
 				// docked with the station to prevent suffering from
@@ -421,8 +421,8 @@
 		to_chat(usr, "<span class='warning'>Escape pods will only launch during \"Code Red\" security alert.</span>")
 		return 1
 
-/obj/docking_port/mobile/pod/New()
-	..()
+/obj/docking_port/mobile/pod/Initialize()
+	. = ..()
 	if(id == "pod")
 		WARNING("[type] id has not been changed from the default. Use the id convention \"pod1\" \"pod2\" etc.")
 
@@ -501,8 +501,7 @@
 	icon_state = "safe"
 	var/unlocked = FALSE
 
-/obj/item/weapon/storage/pod/New()
-	..()
+/obj/item/weapon/storage/pod/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/head/helmet/space/orange(src)
 	new /obj/item/clothing/suit/space/orange(src)
@@ -542,13 +541,13 @@
 	dir = EAST
 	roundstart_move = "backup_away"
 
-/obj/docking_port/mobile/emergency/backup/New()
+/obj/docking_port/mobile/emergency/backup/Initialize()
 	// We want to be a valid emergency shuttle
 	// but not be the main one, keep whatever's set
 	// valid.
 	// backup shuttle ignores `timid` because THERE SHOULD BE NO TOUCHING IT
 	var/current_emergency = SSshuttle.emergency
-	..()
+	. = ..()
 	SSshuttle.emergency = current_emergency
 	SSshuttle.backup_shuttle = src
 

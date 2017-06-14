@@ -178,7 +178,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/xeno/throw_impact(A)
 	update_icon("alienh_pounce")
-	if(A == target)
+	if(A == target && target.stat!=DEAD)
 		target.Weaken(5)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
@@ -286,7 +286,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		bubblegum = new(wall, target)
 		sleep(10) //ominous wait
 		var/charged = FALSE //only get hit once
-		while(get_turf(bubblegum) != landing && target)
+		while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
 			bubblegum.forceMove(get_step_towards(bubblegum, landing))
 			bubblegum.setDir(get_dir(bubblegum, landing))
 			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
@@ -356,9 +356,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/i=0,i<hits,i++)
 				target.playsound_local(null, 'sound/weapons/Laser.ogg', 25, 1)
 				if(prob(75))
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
 				else
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 		if(2) //Esword fight
@@ -372,9 +372,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/i=0,i<hits,i++)
 				target.playsound_local(null, get_sfx("gunshot"), 25)
 				if(prob(75))
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
 				else
-					addtimer(CALLBACK(target, /atom/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
+					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 		if(4) //Stunprod + cablecuff
@@ -437,7 +437,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/list/image/delusions = list()
 
 /obj/effect/hallucination/delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
-	..()
+	. = ..()
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
@@ -530,7 +530,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
-	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\

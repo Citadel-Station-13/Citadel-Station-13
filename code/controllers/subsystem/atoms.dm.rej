@@ -1,9 +1,0 @@
-diff a/code/controllers/subsystem/atoms.dm b/code/controllers/subsystem/atoms.dm	(rejected hunks)
-@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(atoms)
- 	var/old_initialized
- 
- 	var/list/late_loaders
-+	var/list/created_atoms
- 
- 	var/list/BadInitializeCalls = list()
- 

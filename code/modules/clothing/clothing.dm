@@ -83,7 +83,7 @@
 		C.use(1)
 		update_clothes_damaged_state(FALSE)
 		obj_integrity = max_integrity
-		to_chat(user, "<span class='notice'>You fix the damages on [src] with [C].</span>")
+		to_chat(user, "<span class='notice'>You fix the damage on [src] with [C].</span>")
 		return 1
 	if(pockets)
 		var/i = pockets.attackby(W, user, params)
@@ -161,7 +161,9 @@
 /obj/item/clothing/obj_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
-
+	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
+		var/mob/M = loc
+		M.visible_message("<span class='warning'>[M]'s [name] starts to fall apart!", "<span class='warning'>Your [name] starts to fall apart!")
 
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
 	var/index = "\ref[initial(icon)]-[initial(icon_state)]"
@@ -269,6 +271,8 @@ BLIND     // can't see anything
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
+	icon_state = "top_hat"
+	item_state = "that"
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	var/blockTracking = 0 //For AI tracking
@@ -519,13 +523,13 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
-	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = 1
-	var/sensor_mode = 0	/* 1 = Report living/dead, 2 = Report detailed damages, 3 = Report location */
+	var/sensor_mode = NO_SENSORS
 	var/can_adjust = 1
 	var/adjusted = NORMAL_STYLE
 	var/alt_covers_chest = 0 // for adjusted/rolled-down jumpsuits, 0 = exposes chest and arms, 1 = exposes arms only
-	var/obj/item/clothing/tie/hastie = null
+	var/obj/item/clothing/accessory/attached_accessory
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 
 /obj/item/clothing/under/worn_overlays(isinhands = FALSE)
@@ -537,25 +541,35 @@ BLIND     // can't see anything
 			. += mutable_appearance('icons/effects/item_damage.dmi', "damageduniform")
 		if(blood_DNA)
 			. += mutable_appearance('icons/effects/blood.dmi', "uniformblood")
-		if(hastie)
-			var/tie_color = hastie.item_color
-			if(!tie_color)
-				tie_color = hastie.icon_state
-			var/mutable_appearance/tie = mutable_appearance('icons/mob/ties.dmi', "[tie_color]")
-			tie.alpha = hastie.alpha
-			tie.color = hastie.color
-			. += tie
+		if(attached_accessory)
+			var/accessory_color = attached_accessory.item_color
+			if(!accessory_color)
+				accessory_color = attached_accessory.icon_state
+			var/mutable_appearance/accessory = mutable_appearance('icons/mob/accessories.dmi', "[accessory_color]")
+			accessory.alpha = attached_accessory.alpha
+			accessory.color = attached_accessory.color
+			. += accessory
+
+/obj/item/clothing/under/attackby(obj/item/W, mob/user, params)
+	if((has_sensor == BROKEN_SENSORS) && istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+		C.use(1)
+		has_sensor = HAS_SENSORS
+		to_chat(user,"<span class='notice'>You repair the suit sensors on [src] with [C].</span>")
+		return 1
 
 /obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
 		M.update_inv_w_uniform()
+	if(has_sensor > NO_SENSORS)
+		has_sensor = BROKEN_SENSORS
 
 /obj/item/clothing/under/New()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(0, 1, 1, 2, 2, 2, 3, 3)
+		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
 	adjusted = NORMAL_STYLE
 	..()
 
@@ -573,29 +587,30 @@ BLIND     // can't see anything
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
-	if(hastie && slot != slot_hands)
-		hastie.on_uniform_equip(src, user)
+	if(attached_accessory && slot != slot_hands)
+		attached_accessory.on_uniform_equip(src, user)
 
 /obj/item/clothing/under/dropped(mob/user)
-	if(hastie)
-		hastie.on_uniform_dropped(src, user)
+	if(attached_accessory)
+		attached_accessory.on_uniform_dropped(src, user)
 	..()
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
-	if(!attachTie(I, user))
+	if(!attach_accessory(I, user))
 		..()
 
-/obj/item/clothing/under/proc/attachTie(obj/item/I, mob/user, notifyAttach = 1)
-	if(istype(I, /obj/item/clothing/tie))
-		var/obj/item/clothing/tie/T = I
-		if(hastie)
+/obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
+	. = FALSE
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(attached_accessory)
 			if(user)
 				to_chat(user, "<span class='warning'>[src] already has an accessory.</span>")
-			return 0
+			return
 		else
 			if(user && !user.drop_item())
 				return
-			if(!T.attach(src, user))
+			if(!A.attach(src, user))
 				return
 
 			if(user && notifyAttach)
@@ -605,21 +620,21 @@ BLIND     // can't see anything
 				var/mob/living/carbon/human/H = loc
 				H.update_inv_w_uniform()
 
-			return 1
+			return TRUE
 
-/obj/item/clothing/under/proc/removetie(mob/user)
+/obj/item/clothing/under/proc/remove_accessory(mob/user)
 	if(!isliving(user))
 		return
 	if(!can_use(user))
 		return
 
-	if(hastie)
-		var/obj/item/clothing/tie/T = hastie
-		hastie.detach(src, user)
-		if(user.put_in_hands(T))
-			to_chat(user, "<span class='notice'>You detach [T] from [src].</span>")
+	if(attached_accessory)
+		var/obj/item/clothing/accessory/A = attached_accessory
+		attached_accessory.detach(src, user)
+		if(user.put_in_hands(A))
+			to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
 		else
-			to_chat(user, "<span class='notice'>You detach [T] from [src] and it falls on the floor.</span>")
+			to_chat(user, "<span class='notice'>You detach [A] from [src] and it falls on the floor.</span>")
 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
@@ -633,17 +648,20 @@ BLIND     // can't see anything
 			to_chat(user, "Alt-click on [src] to wear it normally.")
 		else
 			to_chat(user, "Alt-click on [src] to wear it casually.")
-	switch(sensor_mode)
-		if(0)
-			to_chat(user, "Its sensors appear to be disabled.")
-		if(1)
-			to_chat(user, "Its binary life sensors appear to be enabled.")
-		if(2)
-			to_chat(user, "Its vital tracker appears to be enabled.")
-		if(3)
-			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-	if(hastie)
-		to_chat(user, "\A [hastie] is attached to it.")
+	if (has_sensor == BROKEN_SENSORS)
+		to_chat(user, "Its sensors appear to be shorted out.")
+	else if(has_sensor > NO_SENSORS)
+		switch(sensor_mode)
+			if(SENSOR_OFF)
+				to_chat(user, "Its sensors appear to be disabled.")
+			if(SENSOR_LIVING)
+				to_chat(user, "Its binary life sensors appear to be enabled.")
+			if(SENSOR_VITALS)
+				to_chat(user, "Its vital tracker appears to be enabled.")
+			if(SENSOR_COORDS)
+				to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
+	if(attached_accessory)
+		to_chat(user, "\A [attached_accessory] is attached to it.")
 
 /proc/generate_female_clothing(index,t_color,icon,type)
 	var/icon/female_clothing_icon	= icon("icon"=icon, "icon_state"=t_color)
@@ -661,10 +679,13 @@ BLIND     // can't see anything
 		return
 	if (!can_use(M))
 		return
-	if(src.has_sensor >= 2)
+	if(src.has_sensor == LOCKED_SENSORS)
 		to_chat(usr, "The controls are locked.")
 		return 0
-	if(src.has_sensor <= 0)
+	if(src.has_sensor == BROKEN_SENSORS)
+		to_chat(usr, "The sensors have shorted out!")
+		return 0
+	if(src.has_sensor <= NO_SENSORS)
 		to_chat(usr, "This suit does not have any sensors.")
 		return 0
 
@@ -701,8 +722,8 @@ BLIND     // can't see anything
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
-		if(hastie)
-			removetie(user)
+		if(attached_accessory)
+			remove_accessory(user)
 		else
 			rolldown()
 

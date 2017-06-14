@@ -25,7 +25,7 @@
 	return ..()
 
 /obj/structure/chair/proc/RemoveFromLatejoin()
-	GLOB.latejoin -= src	//These may be here due to the arrivals shuttle
+	SSjob.latejoin_trackers -= src	//These may be here due to the arrivals shuttle
 
 /obj/structure/chair/deconstruct()
 	// If we have materials, and don't have the NOCONSTRUCT flag
@@ -37,10 +37,9 @@
 	return attack_hand(user)
 
 /obj/structure/chair/narsie_act()
-	if(prob(20))
-		var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/structure/chair/wood/W = new/obj/structure/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
@@ -239,10 +238,9 @@
 	var/obj/structure/chair/origin_type = /obj/structure/chair
 
 /obj/item/chair/narsie_act()
-	if(prob(20))
-		var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
-		W.setDir(dir)
-		qdel(src)
+	var/obj/item/chair/wood/W = new/obj/item/chair/wood(get_turf(src))
+	W.setDir(dir)
+	qdel(src)
 
 /obj/item/chair/attack_self(mob/user)
 	plant(user)

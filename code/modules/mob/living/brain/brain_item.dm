@@ -50,7 +50,8 @@
 		if(C.has_brain_worms())
 			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
 			B.leave_victim() //Should remove borer if the brain is removed - RR
-	transfer_identity(C)
+	if(!gc_destroyed || (owner && !owner.gc_destroyed))
+		transfer_identity(C)
 	C.update_hair()
 
 /obj/item/organ/brain/prepare_eat()
@@ -59,6 +60,8 @@
 /obj/item/organ/brain/proc/transfer_identity(mob/living/L)
 	name = "[L.name]'s brain"
 	if(brainmob || decoy_override)
+		return
+	if(!L.mind)
 		return
 	brainmob = new(src)
 	brainmob.name = L.real_name
@@ -69,6 +72,11 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
+		if(L.disabilities & NOCLONE)
+			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
+		var/obj/item/organ/zombie_infection/ZI = L.getorganslot("zombie_infection")
+		if(ZI)
+			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
 	if(L.mind && L.mind.current)
 		L.mind.transfer_to(brainmob)
 	to_chat(brainmob, "<span class='notice'>You feel slightly disoriented. That's normal when you're just a brain.</span>")

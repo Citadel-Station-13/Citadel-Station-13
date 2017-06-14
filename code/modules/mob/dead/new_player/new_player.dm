@@ -16,12 +16,6 @@
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()
-	if(initialized)
-		stack_trace("Warning: [src]([type]) initialized multiple times!")
-	initialized = TRUE
-	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
-
 	if(client && SSticker.state == GAME_STATE_STARTUP)
 		var/obj/screen/splash/S = new(client, TRUE, TRUE)
 		S.Fade(TRUE)
@@ -30,7 +24,10 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
-	return INITIALIZE_HINT_NORMAL
+	. = ..()
+
+/mob/dead/new_player/prepare_huds()
+	return
 
 /mob/dead/new_player/proc/new_player_panel()
 
@@ -143,13 +140,12 @@
 				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-			qdel(mind)
-
+			QDEL_NULL(mind)
 			qdel(src)
 			return 1
 
 	if(href_list["late_join"])
-		if(!SSticker || SSticker.current_state != GAME_STATE_PLAYING)
+		if(!SSticker || !SSticker.IsRoundInProgress())
 			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
@@ -308,11 +304,13 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
+		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
@@ -325,27 +323,14 @@
 	if(isliving(equip))	//Borgs get borged in the equip, so we need to make sure we handle the new mob.
 		character = equip
 
-	var/D
-	if(GLOB.latejoin.len)
-		D = get_turf(pick(GLOB.latejoin))
-	if(!D)
-		for(var/turf/T in get_area_turfs(/area/shuttle/arrival))
-			if(!T.density)
-				var/clear = 1
-				for(var/obj/O in T)
-					if(O.density)
-						clear = 0
-						break
-				if(clear)
-					D = T
-					continue
+	SSjob.SendToLateJoin(character)
 
-	character.loc = D
+	if(!arrivals_docked)
+		var/obj/screen/splash/Spl = new(character.client, TRUE)
+		Spl.Fade(TRUE)
+		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+
 	character.update_parallax_teleport()
-
-	var/atom/movable/chair = locate(/obj/structure/chair) in character.loc
-	if(chair)
-		chair.buckle_mob(character)
 
 	SSticker.minds += character.mind
 
@@ -374,7 +359,6 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
-	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -473,6 +457,8 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		new_character = null
+		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"
