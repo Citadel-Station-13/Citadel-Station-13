@@ -415,12 +415,12 @@
 		dat += "<span class='linkOff'>Inject Epinephrine</span>"
 	if(patient && patient.health > min_health)
 		for(var/re in injection_chems)
-			var/datum/reagent/C = injection_chems[re]
+			var/datum/reagent/C = GLOB.chemical_reagents_list[re]
 			if(C)
 				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
 	else
 		for(var/re in injection_chems)
-			var/datum/reagent/C = injection_chems[re]
+			var/datum/reagent/C = GLOB.chemical_reagents_list[re]
 			if(C)
 				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
 
