@@ -1,0 +1,16 @@
+diff a/code/modules/mob/dead/new_player/new_player.dm b/code/modules/mob/dead/new_player/new_player.dm	(rejected hunks)
+@@ -1,4 +1,4 @@
+-#define LINKIFY_READY(string, value) "<a href='byond://?src=\ref[src];ready=[value]'>[string]</a>"
++#define LINKIFY_READY(string, value) "<a href='byond://?src=\ref[src];ready=[value]'>[string]</a>"
+ 
+ /mob/dead/new_player
+ 	var/ready = 0
+@@ -119,7 +119,7 @@
+ 			if(!SSticker.current_state < GAME_STATE_PREGAME && tready == PLAYER_READY_TO_OBSERVE)
+ 				ready = tready
+ 				make_me_an_observer()
+-				return
++				return
+ 
+ 	if(href_list["refresh"])
+ 		src << browse(null, "window=playersetup") //closes the player setup window
