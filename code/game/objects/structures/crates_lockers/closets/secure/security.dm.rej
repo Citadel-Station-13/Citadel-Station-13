@@ -1,0 +1,10 @@
+diff a/code/game/objects/structures/crates_lockers/closets/secure/security.dm b/code/game/objects/structures/crates_lockers/closets/secure/security.dm	(rejected hunks)
+@@ -82,8 +84,6 @@
+ 	new /obj/item/weapon/gun/energy/e_gun/hos(src)
+ 	new /obj/item/device/flashlight/seclite(src)
+ 	new /obj/item/weapon/pinpointer(src)
+-	new /obj/item/clothing/under/rank/head_of_security/grey(src)
+-	new /obj/item/weapon/storage/lockbox/medal/sec(src)
+ 
+ /obj/structure/closet/secure_closet/warden
+ 	name = "\proper warden's locker"
