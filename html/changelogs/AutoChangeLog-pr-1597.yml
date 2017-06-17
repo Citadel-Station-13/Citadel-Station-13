@@ -1,0 +1,4 @@
+author: "Digimon"
+delete-after: True
+changes: 
+  - rscadd: "Added guilmon as a selectable race"
