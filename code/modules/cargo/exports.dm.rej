@@ -1,0 +1,26 @@
+diff a/code/modules/cargo/exports.dm b/code/modules/cargo/exports.dm	(rejected hunks)
+@@ -71,11 +71,14 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
+ 	var/total_cost = 0
+ 	var/total_amount = 0
+ 	var/init_cost
+-	
++
+ /datum/export/New()
+ 	..()
+ 	SSprocessing.processing += src
+ 	init_cost = cost
++	export_types = typecacheof(export_types)
++	exclude_types = typecacheof(exclude_types)
++
+ 
+ /datum/export/Destroy()
+ 	SSprocessing.processing -= src
+@@ -127,7 +130,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
+ 		total_amount += amount*MINERAL_MATERIAL_AMOUNT
+ 	else
+ 		total_amount += amount
+-	
++
+ 	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
+ 	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
+ 	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
