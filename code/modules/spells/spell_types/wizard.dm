@@ -261,7 +261,7 @@
 
 	action_icon_state = "repulse"
 
-/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 2)
+/obj/effect/proc_holder/spell/aoe_turf/repulse/cast(list/targets,mob/user = usr, var/stun_amt = 20)
 	var/list/thrownatoms = list()
 	var/atom/throwtarget
 	var/distfromcaster
@@ -280,14 +280,14 @@
 		if(distfromcaster == 0)
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Weaken(5)
+				M.Knockdown(100)
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			new sparkle_path(get_turf(AM), get_dir(user, AM)) //created sparkles will disappear on their own
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Weaken(stun_amt)
+				M.Knockdown(stun_amt)
 				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
@@ -309,7 +309,7 @@
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
-	..(targets, user, 3)
+	..(targets, user, 30)
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame
 	name = "Sacred Flame"

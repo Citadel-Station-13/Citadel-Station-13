@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/carbon/alien/larva/update_icons.dm b/code/modules/mob/living/carbon/alien/larva/update_icons.dm	(rejected hunks)
+@@ -16,7 +16,7 @@
+ 		icon_state = "larva[state]_cuff"
+ 	else if(stat == UNCONSCIOUS || lying || resting)
+ 		icon_state = "larva[state]_sleep"
+-	else if (paralysis)
++	else if (stun)
+ 		icon_state = "larva[state]_stun"
+ 	else
+ 		icon_state = "larva[state]"

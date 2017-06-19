@@ -210,7 +210,7 @@
 		message = copytext(message, 0, 1)+copytext(message, 1 + length(found_string), length(message) + 1)
 
 	var/static/regex/stun_words = regex("stop|wait|stand still|hold on|halt")
-	var/static/regex/weaken_words = regex("drop|fall|trip|weaken")
+	var/static/regex/knockdown_words = regex("drop|fall|trip|knockdown")
 	var/static/regex/sleep_words = regex("sleep|slumber|rest")
 	var/static/regex/vomit_words = regex("vomit|throw up")
 	var/static/regex/silence_words = regex("shut up|silence|ssh|quiet|hush")
@@ -486,9 +486,9 @@
 			var/mob/living/L = V
 			if(L.resting)
 				L.lay_down() //aka get up
-			L.SetStunned(0)
-			L.SetWeakened(0)
-			L.SetParalysis(0) //i said get up i don't care if you're being tazed
+			L.SetStun(0)
+			L.SetKnockdown(0)
+			L.SetUnconscious(0) //i said get up i don't care if you're being tazed
 
 	//SIT
 	else if((findtext(message, sit_words)))

@@ -1,0 +1,10 @@
+diff a/code/modules/flufftext/Hallucination.dm b/code/modules/flufftext/Hallucination.dm	(rejected hunks)
+@@ -297,7 +297,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
+ 		shake_camera(target, 2, 1)
+ 		if(bubblegum.Adjacent(target) && !charged)
+ 			charged = TRUE
+-			target.Knockdown(40)
++			target.Knockdown(80)
+ 			target.adjustStaminaLoss(40)
+ 			step_away(target, bubblegum)
+ 			shake_camera(target, 4, 3)

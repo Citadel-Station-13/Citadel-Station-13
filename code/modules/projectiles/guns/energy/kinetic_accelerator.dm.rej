@@ -1,0 +1,10 @@
+diff a/code/modules/projectiles/guns/energy/kinetic_accelerator.dm b/code/modules/projectiles/guns/energy/kinetic_accelerator.dm	(rejected hunks)
+@@ -184,7 +184,7 @@
+ 		var/datum/gas_mixture/environment = target_turf.return_air()
+ 		var/pressure = environment.return_pressure()
+ 		if(pressure > 50)
+-			name = "knockdown [name]"
++			name = "weakened [name]"
+ 			damage = damage * pressure_decrease
+ 			pressure_decrease_active = TRUE
+ 

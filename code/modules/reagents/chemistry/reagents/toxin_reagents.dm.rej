@@ -1,0 +1,10 @@
+diff a/code/modules/reagents/chemistry/reagents/toxin_reagents.dm b/code/modules/reagents/chemistry/reagents/toxin_reagents.dm	(rejected hunks)
+@@ -565,7 +565,7 @@
+ 
+ /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/M)
+ 	if(current_cycle >= 10)
+-		M.Stun(20, 0)
++		M.Stun(40, 0)
+ 		. = 1
+ 	if(prob(20))
+ 		M.losebreath += 4

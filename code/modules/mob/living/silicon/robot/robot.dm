@@ -959,7 +959,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+		if(unconscious || stun || knockdown || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)

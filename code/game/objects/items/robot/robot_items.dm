@@ -329,7 +329,7 @@
 					C.stuttering += 10
 					C.Jitter(10)
 				if(2)
-					C.Weaken(2)
+					C.Knockdown(40)
 					C.confused += 10
 					C.stuttering += 15
 					C.Jitter(25)
@@ -505,7 +505,7 @@
 //Peacekeeper Cyborg Projectile Dampenening Field
 /obj/item/borg/projectile_dampen
 	name = "Hyperkinetic Dampening projector"
-	desc = "A device that projects a dampening field that weakens kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
+	desc = "A device that projects a dampening field that weakenss kinetic energy above a certain threshold. <span class='boldnotice'>Projects a field that drains power per second \
 		while active, that will weaken and slow damaging projectiles inside its field.</span> Still being a prototype, it tends to induce a charge on ungrounded metallic surfaces."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "shield"

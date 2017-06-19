@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/simple_animal/bot/secbot.dm b/code/modules/mob/living/simple_animal/bot/secbot.dm	(rejected hunks)
+@@ -221,7 +221,7 @@ Auto Patrol: []"},
+ 			playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
+ 			back_to_idle()
+ 
+-/mob/living/simple_animal/bot/secbot/proc/paralyse_attack(mob/living/carbon/C)
++/mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/C)
+ 	playsound(loc, 'sound/weapons/egloves.ogg', 50, 1, -1)
+ 	icon_state = "secbot-c"
+ 	spawn(2)
