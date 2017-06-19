@@ -1370,7 +1370,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			continue
 		crate_value -= I.cost
 		new I.item(C)
-		U.purchase_log += "<big>\icon[I.item]</big>"
+		U.purchase_log += "<big>[bicon(I.item)]</big>"
 
 	SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
 	return C

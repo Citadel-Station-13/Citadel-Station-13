@@ -244,6 +244,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 
+	chatOutput.start() // Starts the chat
+
 	if(alert_mob_dupe_login)
 		set waitfor = FALSE
 		alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
