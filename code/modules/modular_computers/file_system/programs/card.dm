@@ -42,6 +42,9 @@
 /datum/computer_file/program/card_mod/New()
 	..()
 	change_position_cooldown = config.id_console_jobslot_delay
+	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
+
+/datum/computer_file/program/card_mod/proc/SetConfigCooldown()
 
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)

@@ -142,6 +142,9 @@
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
 
+/obj/mecha/get_cell()
+	return cell
+
 
 /obj/mecha/Destroy()
 	go_out()
