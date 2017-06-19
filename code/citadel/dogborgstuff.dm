@@ -318,7 +318,7 @@
 	var/cleaning = 0
 	var/patient_laststat = null
 	var/mob_energy = 30000 //Energy gained from digesting mobs (including PCs)
-	var/list/injection_chems = list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
+	var/list/injection_chems = list("antitoxin", "morphine", "salbutamol", "bicaridine", "kelotane"),
 	var/eject_port = "ingestion"
 	var/list/items_preserved = list()
 	var/list/important_items = list(
