@@ -214,7 +214,7 @@
 			user << "<span class='notice'>You finish licking off \the [target.name].</span>"
 			qdel(target)
 			var/mob/living/silicon/robot.R = user
-			R.cell.charge = R.cell.charge + 50
+			R.cell.give(50)
 	else if(istype(target,/obj/item)) //hoo boy. danger zone man
 		if(istype(target,/obj/item/trash))
 			user.visible_message("[user] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
@@ -222,7 +222,7 @@
 				user << "<span class='notice'>You finish off \the [target.name].</span>"
 				qdel(target)
 				var/mob/living/silicon/robot.R = user
-				R.cell.charge = R.cell.charge + 250
+				R.cell.give(50)
 			return
 		if(istype(target,/obj/item/weapon/stock_parts/cell))
 			user.visible_message("[user] begins cramming \the [target.name] down its throat.", "<span class='warning'>You begin cramming \the [target.name] down your throat...</span>")
@@ -241,7 +241,7 @@
 				user << "<span class='notice'>You finish off \the [target.name].</span>"
 				qdel(I)
 				var/mob/living/silicon/robot.R = user
-				R.cell.charge = R.cell.charge + 500
+				R.cell.give(500)
 			return
 		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
@@ -261,7 +261,7 @@
 			L.visible_message("<span class='danger'>[user] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[user] has shocked you with its tongue! You can feel the betrayal.</span>")
 			playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
-			R.cell.charge = R.cell.charge - 666
+			R.cell.use(666)
 		else
 			user.visible_message("<span class='warning'>\the [user] affectionally licks \the [target]'s face!</span>", "<span class='notice'>You affectionally lick \the [target]'s face!</span>")
 			playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
@@ -299,7 +299,7 @@
 		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
 		return
 	if(src.cooldown == 0)
-		R.cell.charge = R.cell.charge - 1000
+		R.cell.use(1000)
 	return ..()
 
 
@@ -398,7 +398,10 @@
 		update_patient()
 
 /obj/item/device/dogborg/sleeper/proc/drain(var/amt = 3) //Slightly reduced cost (before, it was always injecting inaprov)
-	hound.cell.charge = hound.cell.charge - amt
+	if (amt > 0)
+		hound.cell.give(amt)
+	else
+		hound.cell.use(amt)
 
 /obj/item/device/dogborg/sleeper/attack_self(mob/user)
 	if(..())
@@ -742,7 +745,7 @@
 					//Spill(T) //Needs the spill proc to be added
 					qdel(T)
 					src.update_patient()
-					src.hound.cell.charge += 120 //10 charge? that was such a practically nonexistent number it hardly gave any purpose for this bit :v *cranks up*
+					src.hound.cell.give(30) //10 charge? that was such a practically nonexistent number it hardly gave any purpose for this bit :v *cranks up*
 		return
 
 
@@ -872,7 +875,7 @@
 		pixel_y = 10
 		update_icons()
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
-		cell.charge = cell.charge - 500 //Doubled the energy consumption
+		cell.use(500) //Doubled the energy consumption
 		weather_immunities -= "lava"
 		pounce_cooldown = !pounce_cooldown
 		spawn(pounce_cooldown_time)
