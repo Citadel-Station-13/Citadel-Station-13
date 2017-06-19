@@ -12,7 +12,7 @@
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/weapon/storage/daki(src)
-	new /obj/item/weapon/storage/backpack/dufflebag/captain(src)
+	new /obj/item/weapon/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
 	new /obj/item/clothing/under/captainparade(src)
