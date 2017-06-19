@@ -43,12 +43,12 @@ GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
+#define Gduffelbag "Grey duffelbag"
 #define LSATCHEL "Leather Satchel"
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
-GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL))
+#define Dduffelbag "Department duffelbag"
+GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, Dduffelbag, GBACKPACK, GSATCHEL, Gduffelbag, LSATCHEL))
 
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
