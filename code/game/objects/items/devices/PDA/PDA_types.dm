@@ -22,7 +22,7 @@
 	icon_state = "NONE"
 	ttone = "data"
 	fon = 0
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/ai/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
