@@ -214,7 +214,7 @@
 			user << "<span class='notice'>You finish licking off \the [target.name].</span>"
 			qdel(target)
 			var/mob/living/silicon/robot.R = user
-			R.cell.give(50)
+			R.cell.give(250)
 	else if(istype(target,/obj/item)) //hoo boy. danger zone man
 		if(istype(target,/obj/item/trash))
 			user.visible_message("[user] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
