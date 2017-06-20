@@ -201,7 +201,7 @@
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
 	// Applies other trait effects (teleporting, etc) to the target by on_slip.
 	name = "Slippery Skin"
-	rate = 0.1
+	rate = 1.6
 	examine_line = "<span class='info'>It has a very slippery skin.</span>"
 
 /datum/plant_gene/trait/slip/on_cross(obj/item/weapon/reagent_containers/food/snacks/grown/G, atom/target)
