@@ -17,7 +17,7 @@
 		return
 
 	if(!(prefs.toggles & CHAT_OOC))
-		src << "<span class='danger'> You have OOC muted."
+		src << "<span class='danger'> You have OOC muted."</span>
 		return
 
 	if(!holder)
