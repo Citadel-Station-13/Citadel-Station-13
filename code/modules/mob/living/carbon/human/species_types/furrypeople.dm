@@ -205,3 +205,15 @@ datum/species/mammal
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
+
+datum/species/guilmon
+	name = "Guilmon"
+	id = "guilmon"
+	default_color = "4B4B4B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
+	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1

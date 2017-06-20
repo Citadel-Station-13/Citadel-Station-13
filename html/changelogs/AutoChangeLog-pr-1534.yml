@@ -1,0 +1,11 @@
+author: "LetterJay"
+delete-after: True
+changes: 
+  - rscadd: "Adds the NT75 Electromagnetic Power Inducer, a tool which can be used to quickly recharge many devices! They can be found in Electrical Closets, the CE's locker, ordered by cargo, or created in RnD."
+  - experiment: "Gang turrets now follow the mouse of the person using them! Yay!"
+  - rscadd: "Nanotrasen's mining operations have created far more corpses than an entire galaxy of cooks could hope to deal with. To solve this, we decided to just dump them all from orbit onto the barren lava planet. Unfortunately, the creatures called \"Legion\" have infested a great number of them, and you can now commonly find the bodies of former Nanotrasen employees left behind. Additionally, there are reports of natives, other settlers, and even stranger things found among the corpses."
+  - rscadd: "Goliaths, Watchers, and Legions have a small chance of dropping a kinetic crusher trophy item when killed with a kinetic crusher. Like the boss trophy items, these give various effects."
+  - tweak: "Kinetic crushers recharge very slightly slower.
+balance: Rod Form now costs 2 points, from 3.
+balance: Rod Form now does 70 damage, from 160, but gains 20 damage, per upgrade, when upgraded. This means you'll need to spend 6 points on it to instantly crit people from full health.
+balance: Clockcult scripture tiers can no longer be lost by dipping below their requirements once they are unlocked."

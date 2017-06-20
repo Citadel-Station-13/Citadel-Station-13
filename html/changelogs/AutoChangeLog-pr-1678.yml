@@ -1,0 +1,4 @@
+author: "Jay"
+delete-after: True
+changes: 
+  - bugfix: "Fixes examine text"

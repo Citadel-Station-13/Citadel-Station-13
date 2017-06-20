@@ -765,7 +765,7 @@
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return 0
@@ -785,7 +785,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_neck)
 			if(H.wear_neck)
 				return 0
@@ -797,13 +797,13 @@
 				return 0
 			if( !(I.slot_flags & SLOT_BACK) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_suit)
 			if(H.wear_suit)
 				return 0
 			if( !(I.slot_flags & SLOT_OCLOTHING) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_gloves)
 			if(H.gloves)
 				return 0
@@ -811,7 +811,7 @@
 				return 0
 			if(num_arms < 2)
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_shoes)
 			if(H.shoes)
 				return 0
@@ -823,7 +823,7 @@
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>The footwear around here isn't compatible with your feet!</span>")
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_belt)
 			if(H.belt)
 				return 0
@@ -833,7 +833,7 @@
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_glasses)
 			if(H.glasses)
 				return 0
@@ -841,7 +841,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_head)
 			if(H.head)
 				return 0
@@ -849,7 +849,7 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_ears)
 			if(H.ears)
 				return 0
@@ -857,13 +857,13 @@
 				return 0
 			if(!H.get_bodypart("head"))
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_w_uniform)
 			if(H.w_uniform)
 				return 0
 			if( !(I.slot_flags & SLOT_ICLOTHING) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_wear_id)
 			if(H.wear_id)
 				return 0
@@ -873,7 +873,7 @@
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
-			return 1
+			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
 			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
 				return 0
@@ -944,6 +944,12 @@
 					return 1
 			return 0
 	return 0 //Unsupported slot
+
+/datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
+	if(!I.equip_delay_self || bypass_equip_delay_self)
+		return TRUE
+	H.visible_message("<span class='notice'>[H] start putting on [I]...</span>", "<span class='notice'>You start putting on [I]...</span>")
+	return do_after(H, I.equip_delay_self, target = H)
 
 /datum/species/proc/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
@@ -1509,19 +1515,24 @@
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(H.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT && !(RESISTHOT in species_traits))
 		//Body temperature is too hot.
+		var/burn_damage
 		switch(H.bodytemperature)
 			if(360 to 400)
 				H.throw_alert("temp", /obj/screen/alert/hot, 1)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_1*heatmod, BURN)
+				burn_damage = HEAT_DAMAGE_LEVEL_1
 			if(400 to 460)
 				H.throw_alert("temp", /obj/screen/alert/hot, 2)
-				H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+				burn_damage = HEAT_DAMAGE_LEVEL_2
 			if(460 to INFINITY)
 				H.throw_alert("temp", /obj/screen/alert/hot, 3)
 				if(H.on_fire)
-					H.apply_damage(HEAT_DAMAGE_LEVEL_3*heatmod, BURN)
+					burn_damage = HEAT_DAMAGE_LEVEL_3
 				else
-					H.apply_damage(HEAT_DAMAGE_LEVEL_2*heatmod, BURN)
+					burn_damage = HEAT_DAMAGE_LEVEL_2
+		burn_damage *= heatmod
+		if((prob(burn_damage) * 10) / 4)	//40% for level 3 damage on humans
+			H.emote("scream")
+		H.apply_damage(burn_damage, BURN)
 	else if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT && !(GLOB.mutations_list[COLDRES] in H.dna.mutations))
 		switch(H.bodytemperature)
 			if(200 to 260)

@@ -6,7 +6,7 @@
 	heat_protection = CHEST|GROIN
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	strip_delay = 60
-	put_on_delay = 40
+	equip_delay_other = 40
 	obj_integrity = 250
 	max_integrity = 250
 	resistance_flags = 0
@@ -77,13 +77,19 @@
 
 /obj/item/clothing/suit/armor/vest/capcarapace
 	name = "captain's carapace"
-	desc = "An fireproof armored chestpiece reinforced with ceramic plates and plasteel pauldrons to provide additional protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest, although it does chafe your nipples."
+	desc = "A fireproof armored chestpiece reinforced with ceramic plates and plasteel pauldrons to provide additional protection whilst still offering maximum mobility and flexibility. Issued only to the station's finest, although it does chafe your nipples."
 	icon_state = "capcarapace"
 	item_state = "armor"
 	body_parts_covered = CHEST|GROIN
 	armor = list(melee = 50, bullet = 40, laser = 50, energy = 10, bomb = 25, bio = 0, rad = 0, fire = 100, acid = 90)
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate
+	name = "syndicate captain's vest"
+	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
+	icon_state = "syndievest"
+
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
@@ -101,7 +107,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor = list(melee = 50, bullet = 10, laser = 10, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 80, acid = 80)
 	strip_delay = 80
-	put_on_delay = 60
+	equip_delay_other = 60
 
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
@@ -120,7 +126,7 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 15, bullet = 60, laser = 10, energy = 10, bomb = 40, bio = 0, rad = 0, fire = 50, acid = 50)
 	strip_delay = 70
-	put_on_delay = 50
+	equip_delay_other = 50
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
