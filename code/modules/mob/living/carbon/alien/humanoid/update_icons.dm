@@ -4,6 +4,7 @@
 	for(var/I in overlays_standing)
 		add_overlay(I)
 
+	var/asleep = IsSleeping()
 	if(stat == DEAD)
 		//If we mostly took damage from fire
 		if(fireloss > 125)

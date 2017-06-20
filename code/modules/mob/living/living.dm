@@ -281,7 +281,7 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(sleeping)
+	if(IsSleeping())
 		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
 		return
 	else
