@@ -1,3 +1,5 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
@@ -27,6 +29,8 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
+
+	var/running_bob_anim = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -228,6 +232,7 @@
 			var/mob/living/L = M
 			L.update_canmove()
 	occupant = null
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -363,3 +368,4 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+#undef CRYOMOBS
