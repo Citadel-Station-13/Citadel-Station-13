@@ -1,0 +1,17 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -102363,7 +101909,6 @@
+ 	dir = 2
+ 	},
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+-	icon_state = "manifold";
+ 	dir = 4
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+@@ -114375,7 +113891,6 @@
+ 	dir = 9
+ 	},
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+-	icon_state = "manifold";
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel,

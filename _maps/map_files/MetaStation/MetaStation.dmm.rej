@@ -1,0 +1,31 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -85313,8 +85244,7 @@
+ 	dir = 4
+ 	},
+ /obj/machinery/light{
+-	dir = 4;
+-	icon_state = "tube1"
++	dir = 4
+ 	},
+ /obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
+ /turf/open/floor/engine,
+@@ -85410,8 +85340,7 @@
+ 	dir = 4
+ 	},
+ /obj/machinery/light{
+-	dir = 4;
+-	icon_state = "tube1"
++	dir = 4
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/green/visible,
+ /turf/open/floor/engine,
+@@ -91121,8 +91037,7 @@
+ 	dir = 4
+ 	},
+ /obj/machinery/light{
+-	dir = 4;
+-	icon_state = "tube1"
++	dir = 4
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
+ /turf/open/floor/engine,

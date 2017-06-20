@@ -1,0 +1,11 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -26143,8 +26125,7 @@
+ /area/engine/engineering)
+ "aPJ" = (
+ /obj/machinery/light{
+-	dir = 4;
+-	icon_state = "tube1"
++	dir = 4
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4

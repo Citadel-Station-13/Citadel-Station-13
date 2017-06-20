@@ -1,0 +1,15 @@
+diff a/_maps/map_files/generic/Centcomm.dmm b/_maps/map_files/generic/Centcomm.dmm	(rejected hunks)
+@@ -147,12 +146,10 @@
+ /obj/effect/holodeck_effect/mobspawner/penguin,
+ /obj/effect/holodeck_effect/mobspawner/penguin,
+ /obj/item/toy/snowball{
+-	pixel_x = 0;
+ 	pixel_y = 6
+ 	},
+ /obj/item/toy/snowball{
+-	pixel_x = 5;
+-	pixel_y = 0
++	pixel_x = 5
+ 	},
+ /obj/item/toy/snowball{
+ 	pixel_x = -4
