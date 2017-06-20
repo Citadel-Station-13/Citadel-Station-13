@@ -1,0 +1,10 @@
+diff a/code/_globalvars/lists/objects.dm b/code/_globalvars/lists/objects.dm	(rejected hunks)
+@@ -32,4 +32,6 @@ GLOBAL_LIST_EMPTY(ladders)
+ GLOBAL_LIST_EMPTY(trophy_cases)
+ 
+ GLOBAL_LIST_EMPTY(wire_color_directory)
+-GLOBAL_LIST_EMPTY(wire_name_directory)
+\ No newline at end of file
++GLOBAL_LIST_EMPTY(wire_name_directory)
++
++GLOBAL_LIST_EMPTY(ai_status_displays)
