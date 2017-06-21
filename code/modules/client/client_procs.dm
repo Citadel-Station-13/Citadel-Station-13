@@ -300,7 +300,6 @@ GLOBAL_LIST(external_rsc_urls)
 		mentor_memo_output("Show") */
 
 	add_verbs_from_config()
-	set_client_age_from_db(tdata)
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
