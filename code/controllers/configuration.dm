@@ -265,6 +265,8 @@
 
 	var/irc_announce_new_game = FALSE
 
+	var/list/policies = list()
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -288,6 +290,7 @@
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
+	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
 	if (maprotation)
 		loadmaplist("config/maps.txt")
