@@ -140,8 +140,7 @@
 				observer.name = observer.real_name
 			observer.update_icon()
 			observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
-			qdel(mind)
-
+			QDEL_NULL(mind)
 			qdel(src)
 			return 1
 
@@ -305,11 +304,13 @@
 		alert(src, "An administrator has disabled late join spawning.")
 		return FALSE
 
+	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
 		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
+		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
 	//Remove the player from the join queue if he was in one and reset the timer
 	SSticker.queued_players -= src
@@ -323,6 +324,12 @@
 		character = equip
 
 	SSjob.SendToLateJoin(character)
+
+	if(!arrivals_docked)
+		var/obj/screen/splash/Spl = new(character.client, TRUE)
+		Spl.Fade(TRUE)
+		character.playsound_local(get_turf(character), 'sound/voice/ApproachingTG.ogg', 25)
+
 	character.update_parallax_teleport()
 
 	SSticker.minds += character.mind
@@ -352,7 +359,6 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
-	qdel(src)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -451,6 +457,8 @@
 	if(.)
 		new_character.key = key		//Manually transfer the key to log them in
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		new_character = null
+		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
 	var/dat = "<html><body>"

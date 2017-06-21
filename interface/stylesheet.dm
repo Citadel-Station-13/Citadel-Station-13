@@ -1,3 +1,11 @@
+/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/// !!!!!!!!!!HEY LISTEN!!!!!!!!!!!!!!!!!!!!!!!!
+/// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// If you modify this file you ALSO need to modify code/modules/goonchat/browserAssets/browserOutput.css
+// BUT you have to use PX font sizes with are on a x8 scale of these font sizes
+// Sample font-size: DM: 8 CSS: 64px
+
 /client/script = {"<style>
 body					{font-family: Verdana, sans-serif;}
 
@@ -20,6 +28,7 @@ em						{font-style: normal;	font-weight: bold;}
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
+.looc					{					font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
