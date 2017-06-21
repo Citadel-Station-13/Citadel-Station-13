@@ -116,7 +116,9 @@
 
 		successful = TRUE
 
+		to_chat(ranged_ability_user, "<span class='brass'>You bathe [L == ranged_ability_user ? "yourself":"[L]"] in Inath-neq's power!</span>")
 		var/targetturf = get_turf(L)
+		var/has_holy_water = (L.reagents && L.reagents.has_reagent("holywater"))
 		if(totaldamage)
 			L.adjustBruteLoss(-brutedamage)
 			L.adjustFireLoss(-burndamage)
