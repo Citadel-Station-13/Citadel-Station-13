@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
+	var/auto_call = 99000 //time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!arrivals)
