@@ -557,8 +557,8 @@
 	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"

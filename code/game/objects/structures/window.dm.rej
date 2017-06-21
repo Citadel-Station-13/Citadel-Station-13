@@ -1,0 +1,10 @@
+diff a/code/game/objects/structures/window.dm b/code/game/objects/structures/window.dm	(rejected hunks)
+@@ -73,7 +73,7 @@
+ 		debris += new /obj/item/weapon/shard(src)
+ 	if(rods)
+ 		debris += new /obj/item/stack/rods(src, rods)
+-		
++
+ 	//windows only block while reinforced and fulltile, so we'll use the proc
+ 	real_explosion_block = explosion_block
+ 	explosion_block = EXPLOSION_BLOCK_PROC
