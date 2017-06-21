@@ -86,6 +86,8 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			current_state = GAME_STATE_PREGAME
+			//Everyone who wants to be an observer is now spawned
+			create_observers()
 			if(!modevoted)
 				send_gamemode_vote()
 			fire()
@@ -97,7 +99,7 @@ SUBSYSTEM_DEF(ticker)
 			totalPlayersReady = 0
 			for(var/mob/dead/new_player/player in GLOB.player_list)
 				++totalPlayers
-				if(player.ready)
+				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
 			if(start_immediately)
@@ -131,7 +133,7 @@ SUBSYSTEM_DEF(ticker)
 			scripture_states = scripture_unlock_alert(scripture_states)
 			SSshuttle.autoEnd()
 
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
@@ -408,7 +410,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready && player.mind)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
 		else
@@ -584,7 +586,7 @@ SUBSYSTEM_DEF(ticker)
 	mode.declare_station_goal_completion()
 
 	//medals, placed far down so that people can actually see the commendations.
-	if(GLOB.commendations)
+	if(GLOB.commendations.len)
 		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
 		for (var/com in GLOB.commendations)
 			to_chat(world, com)
@@ -611,6 +613,9 @@ SUBSYSTEM_DEF(ticker)
 
 	//Collects persistence features
 	SSpersistence.CollectData()
+
+	//stop collecting feedback during grifftime
+	SSblackbox.Seal()
 
 	sleep(50)
 	if(mode.station_was_nuked)
@@ -792,6 +797,13 @@ SUBSYSTEM_DEF(ticker)
 		start_at = world.time + newtime
 	else
 		timeLeft = newtime
+
+//Everyone who wanted to be an observer gets made one now
+/datum/controller/subsystem/ticker/proc/create_observers()
+	for(var/mob/dead/new_player/player in GLOB.player_list)
+		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
+			//Break chain since this has a sleep input in it
+			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
 
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
