@@ -1,9 +1,12 @@
 diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
-@@ -215,6 +215,7 @@
- #include "code\datums\dog_fashion.dm"
- #include "code\datums\emotes.dm"
- #include "code\datums\forced_movement.dm"
-+#include "code\datums\holocall.dm"
- #include "code\datums\hud.dm"
- #include "code\datums\map_config.dm"
- #include "code\datums\martial.dm"
+@@ -240,9 +240,9 @@
+ #include "code\datums\antagonists\antag_datum.dm"
+ #include "code\datums\antagonists\datum_clockcult.dm"
+ #include "code\datums\antagonists\datum_cult.dm"
+-#include "code\datums\antagonists\devil.dm"
+ #include "code\datums\antagonists\datum_internal_affairs.dm"
+ #include "code\datums\antagonists\datum_traitor.dm"
++#include "code\datums\antagonists\devil.dm"
+ #include "code\datums\antagonists\ninja.dm"
+ #include "code\datums\diseases\_disease.dm"
+ #include "code\datums\diseases\_MobProcs.dm"
