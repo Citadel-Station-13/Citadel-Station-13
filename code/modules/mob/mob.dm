@@ -376,9 +376,9 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(ismob(pulling))
-			var/mob/M = pulling
-			M.update_canmove()// mob gets up if it was lyng down in a chokehold
+		if(isliving(pulling))
+			var/mob/living/L = pulling
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
