@@ -95,7 +95,6 @@
 		message_simple = S.deathmessage
 	. = ..()
 	message_simple = initial(message_simple)
-	playsound(user.loc, 'sound/voice/oof.ogg', 80, 1, 1)//Defenitley not copypasta
 	if(. && isalienadult(user))
 		playsound(user.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
