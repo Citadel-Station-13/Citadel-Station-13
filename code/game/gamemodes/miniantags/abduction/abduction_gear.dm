@@ -83,7 +83,7 @@
 		M.cut_overlays()
 		M.regenerate_icons()
 
-/obj/item/clothing/suit/armor/abductor/vest/hit_reaction()
+/obj/item/clothing/suit/armor/abductor/vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	DeactivateStealth()
 	return 0
 
