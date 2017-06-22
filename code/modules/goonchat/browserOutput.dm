@@ -276,7 +276,7 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client

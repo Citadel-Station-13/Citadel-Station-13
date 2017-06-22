@@ -939,7 +939,7 @@
 	if(ishuman(occupant))
 		mob_container = occupant
 		RemoveActions(occupant, human_occupant=1)
-	else if(istype(occupant, /mob/living/brain))
+	else if(isbrain(occupant))
 		var/mob/living/brain/brain = occupant
 		RemoveActions(brain)
 		mob_container = brain.container
