@@ -1,19 +1,297 @@
 diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
-@@ -101529,7 +109389,7 @@ cpo
- cqk
- cri
- cqk
--dky
-+dkx
- ctm
- cua
- cKv
-@@ -101786,7 +109646,7 @@ cpo
- cql
- crj
- csf
--dkz
-+dkx
- ctn
- cub
- cuu
+@@ -25992,16 +25988,15 @@
+ 	},
+ /area/maintenance/asteroid/fore/cargo_south)
+ "aWb" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 4;
+ 	icon_state = "1-4"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "aWc" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26026,7 +26020,7 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/com_serv)
+ "aWe" = (
+ /obj/structure/grille,
+@@ -26063,7 +26057,6 @@
+ /turf/open/floor/plasteel/black,
+ /area/ai_monitored/nuke_storage)
+ "aWi" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26093,10 +26085,9 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/com_engi)
+ "aWk" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 8;
+@@ -26183,7 +26175,6 @@
+ /turf/open/floor/plating/airless,
+ /area/space)
+ "aWs" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26228,7 +26219,6 @@
+ /turf/open/floor/circuit,
+ /area/ai_monitored/nuke_storage)
+ "aWx" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26254,7 +26243,7 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/com_engi)
+ "aWz" = (
+ /obj/machinery/power/solar_control{
+@@ -26546,10 +26534,10 @@
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 5
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "aWX" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26577,10 +26564,9 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/med_cargo)
+ "aWZ" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -26631,46 +26616,46 @@
+ 	d2 = 8;
+ 	icon_state = "1-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/command)
+ "aXe" = (
+-/obj/structure/lattice/catwalk,
+ /obj/machinery/power/tracker,
+ /obj/structure/cable{
+ 	d2 = 8;
+ 	icon_state = "0-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/command)
+ "aXf" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 2;
+ 	d2 = 4;
+ 	icon_state = "2-4"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "aXg" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 4;
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/fore)
+ "aXh" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 8;
+ 	icon_state = "1-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/fore)
+ "aXi" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -26686,19 +26671,19 @@
+ 	d2 = 8;
+ 	icon_state = "1-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/command)
+ "aXj" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d2 = 4;
+ 	icon_state = "0-4"
+ 	},
+ /obj/machinery/power/tracker,
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/fore)
+ "aXk" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 4;
+ 	d2 = 8;
+@@ -27091,7 +27077,6 @@
+ /turf/open/floor/plating/asteroid,
+ /area/maintenance/asteroid/port/west)
+ "aYk" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -27159,7 +27144,6 @@
+ 	},
+ /area/crew_quarters/rehab_dome)
+ "aYr" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -27189,10 +27172,9 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/com_engi)
+ "aYt" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 2;
+ 	d2 = 8;
+@@ -27366,10 +27348,10 @@
+ 	d2 = 4;
+ 	icon_state = "2-4"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "aYQ" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -54617,7 +54588,6 @@
+ 	},
+ /area/maintenance/asteroid/central)
+ "bVb" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -54973,7 +54942,6 @@
+ 	},
+ /area/engine/atmos)
+ "bVD" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -58155,10 +58121,10 @@
+ 	dir = 4;
+ 	icon_state = "pipe-c"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "ccf" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -83830,12 +83792,11 @@
+ /turf/open/space/basic,
+ /area/space)
+ "cXt" = (
+-/obj/structure/lattice/catwalk,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/space)
+ "cXu" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -83863,10 +83823,9 @@
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+-/turf/open/space,
++/turf/open/floor/plating,
+ /area/hallway/secondary/bridges/cargo_ai)
+ "cXw" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -88985,28 +88941,28 @@
+ 	},
+ /area/hallway/primary/starboard/aft)
+ "djs" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 4;
+ 	icon_state = "1-4"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/aft)
+ "djt" = (
+-/obj/structure/lattice/catwalk,
+ /obj/item/stack/cable_coil{
+ 	amount = 2
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/aft)
+ "dju" = (
+-/obj/structure/lattice/catwalk,
+ /obj/structure/cable{
+ 	d1 = 4;
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/structure/lattice/catwalk,
+ /turf/open/space,
+ /area/solar/asteroid/aft)
+ "djv" = (
