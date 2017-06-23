@@ -1,9 +1,9 @@
 diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
-@@ -215,6 +215,7 @@
- #include "code\datums\dog_fashion.dm"
- #include "code\datums\emotes.dm"
- #include "code\datums\forced_movement.dm"
-+#include "code\datums\holocall.dm"
- #include "code\datums\hud.dm"
- #include "code\datums\map_config.dm"
- #include "code\datums\martial.dm"
+@@ -68,6 +68,7 @@
+ #include "code\__DEFINES\subsystems.dm"
+ #include "code\__DEFINES\tgui.dm"
+ #include "code\__DEFINES\tick.dm"
++#include "code\__DEFINES\time.dm"
+ #include "code\__DEFINES\typeids.dm"
+ #include "code\__DEFINES\vv.dm"
+ #include "code\__DEFINES\wires.dm"
