@@ -74,8 +74,6 @@
 				spanstyle = ""
 			if(DM_DIGEST)
 				spanstyle = "color:red;"
-			if(DM_DIGESTF)
-				spanstyle = "color:purple;"
 			if(DM_HEAL)
 				spanstyle = "color:green;"
 
@@ -134,16 +132,16 @@
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 
 	switch(user.digestable)
-		if(1)
-			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable</a>"
-		if(0)
-			dat += "<a href='?src=\ref[src];toggledg=1'><span style='color:green;'>Toggle Digestable</span></a>"
+		if(TRUE)
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
+		if(FALSE)
+			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: OFF)</a>"
 
 	switch(user.devourable)
-		if(1)
-			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable</a>"
-		if(0)
-			dat += "<a href='?src=\ref[src];toggledvor=1'><span style='color:green;'>Toggle Devourable</span></a>"
+		if(TRUE)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: ON)</a>"
+		if(FALSE)
+			dat += "<a href='?src=\ref[src];toggledvor=1'>Toggle Devourable (Currently: OFF)</a>"
 
 	//Returns the dat html to the vore_look
 	return dat
@@ -169,34 +167,34 @@
 					M.examine(user)
 
 				if("Help Out") //Help the inside-mob out
-					user << "<font color='green'>You begin to push [M] to freedom!</font>"
-					M << "[usr] begins to push you to freedom!"
+					to_chat(user, "<font color='green'>You begin to push [M] to freedom!</font>")
+					to_chat(M, "[usr] begins to push you to freedom!")
 					M.loc << "<span class='warning'>Someone is trying to escape from inside you!</span>"
 					sleep(50)
 					if(prob(33))
 						OB.release_specific_contents(M)
-						usr << "<font color='green'>You manage to help [M] to safety!</font>"
-						M << "<font color='green'>[user] pushes you free!</font>"
+						to_chat(usr, "<font color='green'>You manage to help [M] to safety!</font>")
+						to_chat(M, "<font color='green'>[user] pushes you free!</font>")
 						M.loc << "<span class='alert'>[M] forces free of the confines of your body!</span>"
 					else
-						user << "<span class='alert'>[M] slips back down inside despite your efforts.</span>"
-						M << "<span class='alert'> Even with [user]'s help, you slip back inside again.</span>"
+						to_chat(user, "<span class='alert'>[M] slips back down inside despite your efforts.</span>")
+						to_chat(M, "<span class='alert'> Even with [user]'s help, you slip back inside again.</span>")
 						M.loc << "<font color='green'>Your body efficiently shoves [M] back where they belong.</font>"
 
 				if("Devour") //Eat the inside mob
 					if(!user.vore_selected)
-						user << "<span class='warning'>Pick a belly on yourself first!</span>"
-						return 1
+						to_chat(user, "<span class='warning'>Pick a belly on yourself first!</span>")
+						return TRUE
 
 					var/datum/belly/TB = user.vore_organs[user.vore_selected]
-					user << "<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>"
-					M << "<span class='warning'>[user] begins to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>"
+					to_chat(user, "<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
+					to_chat(M, "<span class='warning'>[user] begins to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
 					M.loc << "<span class='warning'>Someone inside you is eating someone else!</span>"
 
 					sleep(TB.nonhuman_prey_swallow_time)
 					if((user in OB.internal_contents) && (M in OB.internal_contents))
-						user << "<span class='warning'>You manage to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>"
-						M << "<span class='warning'>[user] manages to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>"
+						to_chat(user, "<span class='warning'>You manage to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
+						to_chat(M, "<span class='warning'>[user] manages to [lowertext(TB.vore_verb)] you into their [lowertext(TB.name)]!</span>")
 						M.loc << "<span class='warning'>Someone inside you has eaten someone else!</span>"
 						M.loc = user
 						TB.nom_mob(M)
@@ -211,8 +209,8 @@
 
 				if("Use Hand")
 					if(user.stat)
-						user << "<span class='warning'>You can't do that in your state!</span>"
-						return 1
+						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
+						return TRUE
 
 					user.ClickOn(T)
 					sleep(5) //Seems to exit too fast for the panel to update
@@ -229,33 +227,33 @@
 
 				if("Eject all")
 					if(user.stat)
-						user << "<span class='warning'>You can't do that in your state!</span>"
-						return 1
+						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
+						return TRUE
 
 					selected.release_all_contents()
-					playsound(user, 'sound/effects/splat.ogg', 50, 1)
+					playsound(user, 'sound/vore/pred/escape.ogg', volume=80)
 					user.loc << "<span class='danger'>Everything is released from [user]!</span>"
 
 				if("Move all")
 					if(user.stat)
-						user << "<span class='warning'>You can't do that in your state!</span>"
-						return 1
+						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
+						return TRUE
 
 					var/choice = input("Move all where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
 
 					if(choice == "Cancel - Don't Move")
-						return 1
+						return TRUE
 					else
 						var/datum/belly/B = user.vore_organs[choice]
 						for(var/atom/movable/tgt in selected.internal_contents)
 							selected.internal_contents -= tgt
 							B.internal_contents += tgt
 
-							tgt << "<span class='warning'>You're squished from [user]'s [selected] to their [B]!</span>"
+							to_chat(tgt, "<span class='warning'>You're squished from [user]'s [selected] to their [B]!</span>")
 
 						for(var/mob/hearer in range(1,user))
-							hearer << sound('sound/vore/squish2.ogg',volume=80)
-			return 1
+							hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
+			return TRUE
 
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
@@ -267,8 +265,8 @@
 
 			if("Eject")
 				if(user.stat)
-					user << "<span class='warning'>You can't do that in your state!</span>"
-					return 1
+					to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
+					return TRUE
 
 				selected.release_specific_contents(tgt)
 				playsound(user, 'sound/effects/splat.ogg', 50, 1)
@@ -276,34 +274,34 @@
 
 			if("Move")
 				if(user.stat)
-					user << "<span class='warning'>You can't do that in your state!</span>"
-					return 1
+					to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
+					return TRUE
 
 				var/choice = input("Move [tgt] where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
 
 				if(choice == "Cancel - Don't Move")
-					return 1
+					return TRUE
 				else
 					var/datum/belly/B = user.vore_organs[choice]
 					selected.internal_contents -= tgt
 					B.internal_contents += tgt
 
-					tgt << "<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(B.name)]!</span>"
+					to_chat(tgt, "<span class='warning'>You're squished from [user]'s [lowertext(selected.name)] to their [lowertext(B.name)]!</span>")
 					for(var/mob/hearer in range(1,user))
-						hearer << sound('sound/vore/squish2.ogg',volume=80)
+						hearer << sound('sound/vore/pred/stomachmove.ogg',volume=80)
 
 	if(href_list["newbelly"])
 		if(user.vore_organs.len >= 10)
-			return 1
+			return TRUE
 
 		var/new_name = html_encode(input(usr,"New belly's name:","New Belly") as text|null)
 
 		if(length(new_name) > 12 || length(new_name) < 2)
-			usr << "<span class='warning'>Entered belly name is too long.</span>"
-			return 0
+			to_chat(usr, "<span class='warning'>Entered belly name is too long.</span>")
+			return FALSE
 		if(new_name in user.vore_organs)
-			usr << "<span class='warning'>No duplicate belly names, please.</span>"
-			return 0
+			to_chat(usr, "<span class='warning'>No duplicate belly names, please.</span>")
+			return FALSE
 
 		var/datum/belly/NB = new(user)
 		NB.name = new_name
@@ -319,11 +317,11 @@
 		var/new_name = html_encode(input(usr,"Belly's new name:","New Name") as text|null)
 
 		if(length(new_name) > 12 || length(new_name) < 2)
-			usr << "<span class='warning'>Entered belly name length invalid (must be longer than 2, shorter than 12).</span>"
-			return 0
+			to_chat(usr, "<span class='warning'>Entered belly name length invalid (must be longer than 2, shorter than 12).</span>")
+			return FALSE
 		if(new_name in user.vore_organs)
-			usr << "<span class='warning'>No duplicate belly names, please.</span>"
-			return 0
+			to_chat(usr, "<span class='warning'>No duplicate belly names, please.</span>")
+			return FALSE
 
 		user.vore_organs[new_name] = selected
 		user.vore_organs -= selected.name
@@ -349,7 +347,7 @@
 		new_desc = readd_quotes(new_desc)
 
 		if(length(new_desc) > 1024)
-			usr << "<span class='warning'>Entered belly desc too long. 1024 character limit.</span>"
+			to_chat(usr, "<span class='warning'>Entered belly desc too long. 1024 character limit.</span>")
 			return FALSE
 
 		selected.inside_flavor = new_desc
@@ -404,35 +402,35 @@
 					selected.struggle_messages_inside = initial(selected.struggle_messages_inside)
 
 			if("Cancel - No Changes")
-				return 1
+				return TRUE
 
 	if(href_list["b_verb"])
 		var/new_verb = html_encode(input(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb") as text|null)
 
 		if(length(new_verb) > 12 || length(new_verb) < 2)
-			usr << "<span class='warning'>Entered verb length invalid (must be longer than 2, shorter than 12).</span>"
+			to_chat(usr, "<span class='warning'>Entered verb length invalid (must be longer than 2, shorter than 12).</span>")
 			return FALSE
 
 		selected.vore_verb = new_verb
 
 	if(href_list["b_sound"])
-		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in vore_sounds + "Cancel - No Changes"
+		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.pred_vore_sounds + "Cancel - No Changes"
 
 		if(choice == "Cancel")
 			return 1
 
-		selected.vore_sound = vore_sounds[choice]
+		selected.vore_sound = GLOB.pred_vore_sounds[choice]
 
 	if(href_list["b_soundtest"])
 		user << selected.vore_sound
 
 	if(href_list["b_del"])
 		if(selected.internal_contents.len)
-			usr << "<span class='warning'>Can't delete bellies with contents!</span>"
+			to_chat(usr, "<span class='warning'>Can't delete bellies with contents!</span>")
 		else if(selected.immutable)
-			usr << "<span class='warning'>This belly is marked as undeletable.</span>"
+			to_chat(usr, "<span class='warning'>This belly is marked as undeletable.</span>")
 		else if(user.vore_organs.len == 1)
-			usr << "<span class='warning'>You must have at least one belly.</span>"
+			to_chat(usr, "<span class='warning'>You must have at least one belly.</span>")
 		else
 			var/alert = alert("Are you sure you want to delete [selected]?","Confirmation","Delete","Cancel")
 			if(alert == "Delete" && !selected.internal_contents.len)
@@ -443,10 +441,10 @@
 
 	if(href_list["saveprefs"])
 		if(user.save_vore_prefs())
-			user << "<span class='notice'>Belly Preferences saved!</span>"
+			to_chat(user, "<span class='notice'>Belly Preferences saved!</span>")
 
 		else
-			user << "<span class='warning'>ERROR: Belly Preferences were not saved!</span>"
+			to_chat(user, "<span class='warning'>ERROR: Belly Preferences were not saved!</span>")
 			log_admin("Could not save vore prefs on USER: [user].")
 
 
@@ -456,9 +454,9 @@
 			if("Cancel")
 				return 1
 			if("Allow Digestion")
-				user.digestable = 1
+				user.digestable = TRUE
 			if("Prevent Digestion")
-				user.digestable = 0
+				user.digestable = FALSE
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.digestable = user.digestable
@@ -469,9 +467,9 @@
 			if("Cancel")
 				return 1
 			if("Allow Devourment")
-				user.devourable = 1
+				user.devourable = TRUE
 			if("Prevent Devourment")
-				user.devourable = 0
+				user.devourable = FALSE
 
 		if(user.client.prefs_vr)
 			user.client.prefs_vr.devourable = user.devourable

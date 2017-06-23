@@ -49,10 +49,16 @@
 /turf/open/floor/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(locate(/obj/structure/table) in src)
 		return FALSE
+	if(locate(/obj/structure/falsewall) in contents)
+		to_chat(user, "<span class='warning'>There is a false wall in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
+		return
 	if(is_blocked_turf(src, TRUE))
-		user << "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>"
+		to_chat(user, "<span class='warning'>Something is in the way, preventing you from proselytizing [src] into a clockwork wall.</span>")
 		return TRUE
-	return list("operation_time" = 100, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
+	var/operation_time = 100
+	if(proselytizer.speed_multiplier > 0)
+		operation_time /= proselytizer.speed_multiplier
+	return list("operation_time" = operation_time, "new_obj_type" = /turf/closed/wall/clockwork, "power_cost" = POWER_WALL_MINUS_FLOOR, "spawn_dir" = SOUTH)
 
 //False wall conversion
 /obj/structure/falsewall/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -80,14 +86,14 @@
 	if(proselytizer.metal_to_power)
 		var/no_delete = FALSE
 		if(amount_temp < 2)
-			user << "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>"
+			to_chat(user, "<span class='warning'>You need at least <b>2</b> floor tiles to convert into power.</span>")
 			return TRUE
 		if(IsOdd(amount_temp))
 			amount_temp--
 			no_delete = TRUE
 			use(amount_temp)
 		amount_temp *= 12.5 //each tile is 12.5 power so this is 2 tiles to 25 power
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -amount_temp, "spawn_dir" = SOUTH, "no_target_deletion" = no_delete)
 	if(amount_temp >= 20)
 		var/sheets_to_make = round(amount_temp * 0.05) //and 20 to 1 brass
 		var/used = sheets_to_make * 20
@@ -98,14 +104,14 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>20</b> floor tiles to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>20</b> floor tiles to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/rods/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_ROD), "spawn_dir" = SOUTH)
 	if(get_amount() >= 10)
 		var/sheets_to_make = round(get_amount() * 0.1)
 		var/used = sheets_to_make * 10
@@ -116,14 +122,14 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>10</b> rods to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>10</b> rods to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/sheet/metal/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_METAL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 5)
 		var/sheets_to_make = round(get_amount() * 0.2)
 		var/used = sheets_to_make * 5
@@ -134,14 +140,14 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>5</b> sheets of metal to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>5</b> sheets of metal to convert into brass.</span>")
 	return TRUE
 
 /obj/item/stack/sheet/plasteel/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
 	if(proselytizer.metal_to_power)
-		return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
+		return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_PLASTEEL), "spawn_dir" = SOUTH)
 	if(get_amount() >= 2)
 		var/sheets_to_make = round(get_amount() * 0.5)
 		var/used = sheets_to_make * 2
@@ -152,14 +158,14 @@
 		new /obj/item/stack/tile/brass(get_turf(src), sheets_to_make)
 		use(used)
 	else
-		user << "<span class='warning'>You need at least <b>2</b> sheets of plasteel to convert into brass.</span>"
+		to_chat(user, "<span class='warning'>You need at least <b>2</b> sheets of plasteel to convert into brass.</span>")
 	return TRUE
 
 //Brass directly to power
 /obj/item/stack/tile/brass/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	if(source)
 		return FALSE
-	return list("operation_time" = amount, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(amount*POWER_FLOOR), "spawn_dir" = SOUTH)
 
 //Airlock conversion
 /obj/machinery/door/airlock/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
@@ -263,42 +269,18 @@
 //Hitting a clockwork structure will try to repair it.
 /obj/structure/destructible/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(!can_be_repaired)
-		user << "<span class='warning'>[src] cannot be repaired!</span>"
-		return
-	if(obj_integrity >= max_integrity)
-		user << "<span class='warning'>[src] is at maximum integrity!</span>"
-		return
-	var/amount_to_heal = max_integrity - obj_integrity
-	var/healing_for_cycle = min(amount_to_heal, repair_amount)
-	var/power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-	if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-		user << "<span class='warning'>You need at least <b>[power_required]W</b> power to start repairing [src], and at least \
-		<b>[round(amount_to_heal*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair it!</span>"
+	var/list/repair_values = list()
+	if(!proselytizer.proselytizer_repair_checks(repair_values, src, user))
 		return
 	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts covering [src] in glowing orange energy...</span>", \
 	"<span class='alloy'>You start repairing [src]...</span>")
-	//hugeass while because we need to re-check after the do_after
 	proselytizer.repairing = src
-	while(proselytizer && user && src && obj_integrity < max_integrity)
-		amount_to_heal = max_integrity - obj_integrity
-		if(amount_to_heal <= 0)
+	while(proselytizer && user && src)
+		if(!do_after(user, repair_values["healing_for_cycle"] * proselytizer.speed_multiplier, target = src, \
+			extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytizer_repair_checks, repair_values, src, user, TRUE)))
 			break
-		healing_for_cycle = min(amount_to_heal, repair_amount)
-		power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-		if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)) || \
-		!do_after(user, healing_for_cycle * proselytizer.speed_multiplier, target = src) || \
-		!proselytizer || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-			break
-		amount_to_heal = max_integrity - obj_integrity
-		if(amount_to_heal <= 0)
-			break
-		healing_for_cycle = min(amount_to_heal, repair_amount)
-		power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-		if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-			break
-		obj_integrity = Clamp(obj_integrity + healing_for_cycle, 0, max_integrity)
-		proselytizer.modify_stored_power(-power_required)
+		obj_integrity = Clamp(obj_integrity + repair_values["healing_for_cycle"], 0, max_integrity)
+		proselytizer.modify_stored_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(proselytizer)
@@ -307,44 +289,42 @@
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops covering [src] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairing [src]. It is now at <b>[obj_integrity]/[max_integrity]</b> integrity.</span>")
 
+//Hitting a sigil of transmission will try to charge from it.
+/obj/effect/clockwork/sigil/transmission/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
+	. = TRUE
+	var/list/charge_values = list()
+	if(!proselytizer.sigil_charge_checks(charge_values, src, user))
+		return
+	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts draining glowing orange energy from [src]...</span>", \
+	"<span class='alloy'>You start recharging your [proselytizer.name]...</span>")
+	proselytizer.recharging = src
+	while(proselytizer && user && src)
+		if(!do_after(user, 10, target = src, extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/sigil_charge_checks, charge_values, src, user, TRUE)))
+			break
+		modify_charge(charge_values["power_gain"])
+		proselytizer.modify_stored_power(charge_values["power_gain"])
+		playsound(src, 'sound/effects/light_flicker.ogg', charge_values["power_gain"] * 0.1, 1)
+
+	if(proselytizer)
+		proselytizer.recharging = null
+		if(user)
+			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops draining glowing orange energy from [src].</span>", \
+			"<span class='alloy'>You finish recharging your [proselytizer.name]. It now contains <b>[proselytizer.get_power()]W/[proselytizer.get_max_power()]W</b> power.</span>")
+
 //Proselytizer mob heal proc, to avoid as much copypaste as possible.
 /mob/living/proc/proselytizer_heal(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	if(!is_servant_of_ratvar(src))
-		user << "<span class='warning'>[src] does not serve Ratvar!</span>"
-		return FALSE
-	if(health >= maxHealth || (flags & GODMODE))
-		user << "<span class='warning'>[src == user ? "You" : "[src]"] [src == user ? "are" : "is"] at maximum health!</span>"
-		return FALSE
-	var/amount_to_heal = maxHealth - health
-	var/healing_for_cycle = min(amount_to_heal, 4)
-	var/power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-	if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-		user << "<span class='warning'>You need at least <b>[power_required]W</b> power to start repairing[src == user ? " yourself" : " [src]"], and at least \
-		<b>[round(amount_to_heal*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)]W</b> to fully repair [src == user ? "yourself" : "[p_them()]"]!</span>"
-		return FALSE
+	var/list/repair_values = list()
+	if(!proselytizer.proselytizer_repair_checks(repair_values, src, user))
+		return
 	user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 	"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
-	//hugeass while because we need to re-check after the do_after
 	proselytizer.repairing = src
-	while(proselytizer && user && src && health < maxHealth)
-		amount_to_heal = maxHealth - health
-		if(amount_to_heal <= 0)
+	while(proselytizer && user && src)
+		if(!do_after(user, repair_values["healing_for_cycle"] * proselytizer.speed_multiplier, target = src, \
+			extra_checks = CALLBACK(proselytizer, /obj/item/clockwork/clockwork_proselytizer.proc/proselytizer_repair_checks, repair_values, src, user, TRUE)))
 			break
-		healing_for_cycle = min(amount_to_heal, 4)
-		power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-		if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)) || \
-		!do_after(user, healing_for_cycle * proselytizer.speed_multiplier, target = src) || \
-		!proselytizer || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-			break
-		amount_to_heal = maxHealth - health
-		if(amount_to_heal <= 0)
-			break
-		healing_for_cycle = min(amount_to_heal, 4)
-		power_required = round(healing_for_cycle*MIN_CLOCKCULT_POWER, MIN_CLOCKCULT_POWER)
-		if(!healing_for_cycle || (!proselytizer.can_use_power(RATVAR_POWER_CHECK) && !proselytizer.can_use_power(power_required)))
-			break
-		proselytizer_heal_tick(healing_for_cycle)
-		proselytizer.modify_stored_power(-power_required)
+		proselytizer_heal_tick(repair_values["healing_for_cycle"])
+		proselytizer.modify_stored_power(-repair_values["power_required"])
 		playsound(src, 'sound/machines/click.ogg', 50, 1)
 
 	if(proselytizer)
@@ -362,14 +342,18 @@
 //Hitting a ratvar'd silicon will also try to repair it.
 /mob/living/silicon/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(proselytizer_heal(user, proselytizer) && user)
+	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
+		return FALSE
+	else if(proselytizer_heal(user, proselytizer) && user)
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[abs(HEALTH_THRESHOLD_DEAD - health)]/[abs(HEALTH_THRESHOLD_DEAD - maxHealth)]</b> health.</span>")
 
 //Same with clockwork mobs.
 /mob/living/simple_animal/hostile/clockwork/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
-	if(proselytizer_heal(user, proselytizer) && user)
+	if(health == maxHealth) //if we're at maximum health, prosel the turf under us
+		return FALSE
+	else if(proselytizer_heal(user, proselytizer) && user)
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 		"<span class='alloy'>You finish repairin[src == user ? "g yourself. You are":"g [src]. [p_they(TRUE)] [p_are()]"] now at <b>[health]/[maxHealth]</b> health.</span>")
 
@@ -377,33 +361,33 @@
 /mob/living/simple_animal/drone/cogscarab/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
 	. = TRUE
 	if(stat == DEAD)
-		try_reactivate(user)
+		try_reactivate(user) //if we're at maximum health, prosel the turf under us
 		return
-	if(health < maxHealth && !(flags & GODMODE))
+	if(health == maxHealth)
+		return FALSE
+	else if(!(flags & GODMODE))
 		user.visible_message("<span class='notice'>[user]'s [proselytizer.name] starts coverin[src == user ? "g [user.p_them()]" : "g [src]"] in glowing orange energy...</span>", \
 		"<span class='alloy'>You start repairin[src == user ? "g yourself" : "g [src]"]...</span>")
-		if(do_after(user,80*proselytizer.speed_multiplier, target=src))
+		proselytizer.repairing = src
+		if(do_after(user, (maxHealth - health)*2, target=src))
 			adjustHealth(-maxHealth)
 			user.visible_message("<span class='notice'>[user]'s [proselytizer.name] stops coverin[src == user ? "g [user.p_them()]" : "g [src]"] with glowing orange energy.</span>", \
 			"<span class='alloy'>You finish repairin[src == user ? "g yourself" : "g [src]"].</span>")
-	else
-		user << "<span class='warning'>[src == user ? "You" : "[src]"] [src == user ? "are" : "is"] at maximum health!</span>"
+		if(proselytizer)
+			proselytizer.repairing = null
 
-//Convert shards and replicant alloy directly to power
+//Convert shards and gear bits directly to power
 /obj/item/clockwork/alloy_shards/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -POWER_STANDARD, "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -POWER_STANDARD, "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/gear_bit/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.08), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.08), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/large/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.06), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.06), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/medium/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.04), "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.04), "spawn_dir" = SOUTH)
 
 /obj/item/clockwork/alloy_shards/small/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.02), "spawn_dir" = SOUTH)
-
-/obj/item/clockwork/component/replicant_alloy/proselytize_vals(mob/living/user, obj/item/clockwork/clockwork_proselytizer/proselytizer)
-	return list("operation_time" = 0, "new_obj_type" = /obj/effect/overlay/temp/ratvar/beam/itemconsume, "power_cost" = -CLOCKCULT_POWER_UNIT, "spawn_dir" = SOUTH)
+	return list("operation_time" = 0, "new_obj_type" = /obj/effect/temp_visual/ratvar/beam/itemconsume, "power_cost" = -(CLOCKCULT_POWER_UNIT*0.02), "spawn_dir" = SOUTH)

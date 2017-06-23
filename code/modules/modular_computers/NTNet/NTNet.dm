@@ -1,4 +1,4 @@
-var/global/datum/ntnet/ntnet_global = new()
+GLOBAL_DATUM_INIT(ntnet_global, /datum/ntnet, new)
 
 
 // This is the NTNet datum. There can be only one NTNet datum in game at once. Modular computers read data from this.
@@ -26,9 +26,9 @@ var/global/datum/ntnet/ntnet_global = new()
 
 // If new NTNet datum is spawned, it replaces the old one.
 /datum/ntnet/New()
-	if(ntnet_global && (ntnet_global != src))
-		ntnet_global = src // There can be only one.
-	for(var/obj/machinery/ntnet_relay/R in machines)
+	if(GLOB.ntnet_global && (GLOB.ntnet_global != src))
+		GLOB.ntnet_global = src // There can be only one.
+	for(var/obj/machinery/ntnet_relay/R in GLOB.machines)
 		relays.Add(R)
 		R.NTNet = src
 	build_software_lists()
@@ -53,7 +53,7 @@ var/global/datum/ntnet/ntnet_global = new()
 // Checks whether NTNet operates. If parameter is passed checks whether specific function is enabled.
 /datum/ntnet/proc/check_function(specific_action = 0)
 	if(!relays || !relays.len) // No relays found. NTNet is down
-		return 0
+		return FALSE
 
 	var/operating = 0
 
@@ -65,7 +65,7 @@ var/global/datum/ntnet/ntnet_global = new()
 			break
 
 	if(setting_disabled)
-		return 0
+		return FALSE
 
 	switch(specific_action)
 		if(NTNET_SOFTWAREDOWNLOAD)
@@ -120,7 +120,7 @@ var/global/datum/ntnet/ntnet_global = new()
 // Updates maximal amount of stored logs. Use this instead of setting the number, it performs required checks.
 /datum/ntnet/proc/update_max_log_count(lognumber)
 	if(!lognumber)
-		return 0
+		return FALSE
 	// Trim the value if necessary
 	lognumber = max(MIN_NTNET_LOGS, min(lognumber, MAX_NTNET_LOGS))
 	setting_maxlogcount = lognumber

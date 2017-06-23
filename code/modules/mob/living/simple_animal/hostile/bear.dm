@@ -21,7 +21,6 @@
 	maxHealth = 60
 	health = 60
 	var/armored = FALSE
-	devourable = 1
 
 	obj_damage = 60
 	melee_damage_lower = 20
@@ -72,9 +71,7 @@
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()
 	if(armored)
-		var/image/B = image(icon = 'icons/mob/animal.dmi', icon_state = "armor_bear")
-		if(B)
-			add_overlay(B)
+		add_overlay("armor_bear")
 
 /obj/item/bear_armor
 	name = "pile of bear armor"
@@ -87,7 +84,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/bear) && proximity_flag)
 		var/mob/living/simple_animal/hostile/bear/A = target
 		if(A.armored)
-			user << "<span class='warning'>[A] has already been armored up!</span>"
+			to_chat(user, "<span class='warning'>[A] has already been armored up!</span>")
 			return
 		A.armored = TRUE
 		A.maxHealth += 60
@@ -96,7 +93,7 @@
 		A.melee_damage_lower += 5
 		A.melee_damage_upper += 5
 		A.update_icons()
-		user << "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>"
+		to_chat(user, "<span class='info'>You strap the armor plating to [A] and sharpen [A.p_their()] claws with the nail filer. This was a great idea.</span>")
 		qdel(src)
 
 

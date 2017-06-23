@@ -30,12 +30,12 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	update_parents()
 	var/datum/pipeline/parent1 = PARENT1
 	parent1.reconcile_air()
-	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", "atmos")
+	investigate_log("was opened by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/binary/valve/proc/close()
 	open = 0
 	update_icon_nopipes()
-	investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", "atmos")
+	investigate_log("was closed by [usr ? key_name(usr) : "a remote signal"]", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/binary/valve/proc/normalize_dir()
 	if(dir==SOUTH)
@@ -54,8 +54,10 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 		close()
 		return
 	open()
-	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-	message_admins("Valve, [src.name], was manipulated by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
+	investigate_log("Valve, [src.name], was manipiulated by [key_name(usr)] at [x], [y], [z], [A]", "atmos")
+	message_admins("Valve, [src.name], was manipulated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
 	log_admin("[key_name(usr)] manipulated a manual valve at [x], [y], [z]")
 
 

@@ -14,10 +14,10 @@
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
 		if(!S.brainmob)
-			user << "<span class='warning'>[S] is inactive! Turn it on or capture a mind first.</span>"
+			to_chat(user, "<span class='warning'>[S] is inactive! Turn it on or capture a mind first.</span>")
 			return 0
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
-			user << "<span class='warning'>[S]'s trapped consciousness appears inactive!</span>"
+			to_chat(user, "<span class='warning'>[S]'s trapped consciousness appears inactive!</span>")
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
@@ -34,7 +34,7 @@
 /obj/structure/destructible/clockwork/shell/cogscarab
 	name = "cogscarab shell"
 	desc = "A small brass shell with a cube-shaped receptable in its center. It gives off an aura of obsessive perfectionism."
-	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt proselytizer."
+	clockwork_desc = "A dormant receptable that, when powered with a soul vessel, will become a weak construct with an inbuilt fabricator."
 	icon_state = "clockdrone_shell"
 	mobtype = /mob/living/simple_animal/drone/cogscarab
 	spawn_message = "'s eyes blink open, glowing bright red."

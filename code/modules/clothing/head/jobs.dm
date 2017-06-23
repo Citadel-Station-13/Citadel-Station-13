@@ -6,7 +6,7 @@
 	icon_state = "chef"
 	desc = "The commander in chef's head wear."
 	strip_delay = 10
-	put_on_delay = 10
+	equip_delay_other = 10
 	dog_fashion = /datum/dog_fashion/head/chef
 
 /obj/item/clothing/head/chefhat/suicide_act(mob/user)
@@ -88,10 +88,10 @@
 		if(candy_cooldown < world.time)
 			var/obj/item/weapon/reagent_containers/food/snacks/candy_corn/CC = new /obj/item/weapon/reagent_containers/food/snacks/candy_corn(src)
 			M.put_in_hands(CC)
-			M << "You slip a candy corn from your hat."
+			to_chat(M, "You slip a candy corn from your hat.")
 			candy_cooldown = world.time+1200
 		else
-			M << "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash."
+			to_chat(M, "You just took a candy corn! You should wait a couple minutes, lest you burn through your stash.")
 
 
 //Mime
@@ -107,6 +107,12 @@
 	flags = NODROP
 	dog_fashion = null //THIS IS FOR SLAUGHTER, NOT PUPPIES
 
+/obj/item/clothing/head/beret/black
+	name = "black beret"
+	desc = "A black beret, perfect for war veterans and dark, brooding, anti-hero mimes."
+	icon_state = "beretblack"
+
+
 //Security
 
 /obj/item/clothing/head/HoS
@@ -116,10 +122,18 @@
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 10, bomb = 25, bio = 10, rad = 0, fire = 50, acid = 60)
 	strip_delay = 80
 
+/obj/item/clothing/head/HoS/syndicate
+	name = "syndicate cap"
+	desc = "A black cap fit for a high ranking syndicate officer."
+
 /obj/item/clothing/head/HoS/beret
 	name = "head of security beret"
 	desc = "A robust beret for the Head of Security, for looking stylish while not sacrificing protection."
 	icon_state = "hosberetblack"
+
+/obj/item/clothing/head/HoS/beret/syndicate
+	name = "syndicate beret"
+	desc = "A black beret with thick armor padding inside. Stylish and robust."
 
 /obj/item/clothing/head/warden
 	name = "warden's police hat"
@@ -159,3 +173,4 @@
 	desc = "You got red text today kid, but it doesn't mean you have to like it."
 	icon_state = "curator"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
+	pockets = /obj/item/weapon/storage/internal/pocket/small

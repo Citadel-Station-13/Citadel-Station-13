@@ -1,65 +1,21 @@
-datum/species/canid
-	name = "Canid"
-	id = "canid"
+datum/species/mammal
+	name = "Mammal"
+	id = "mammal"
 	default_color = "4B4B4B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-//	subspecies = list("fox")
-	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "legs", "taur")
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
 
-/datum/species/canid/spec_death(gibbed, mob/living/carbon/human/H)
+/datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		H.endTailWag()
 
-//FELID//
-
-/datum/species/felid
-	name = "Felid"
-	id = "felid"
-	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "snout", "legs", "taur")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "Belly", "mam_ears" = "Big Cat", "mam_tail" = "Big Cat", "taur" = "None")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
-
-/datum/species/tajaran/spec_death(gibbed, mob/living/carbon/human/H)
-	if(H)
-		H.endTailWag()
-
-//Mammal//
-/datum/species/ailurus
-	name = "Ailurus"
-	id = "ailurus"
-	default_color = "4B4B4B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "ailurus")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
-
-/datum/species/capra
-	name = "Capra"
-	id = "capra"
-	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "capra")
-	attack_verb = "claw"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
-
-
-
+/datum/species/mammal/qualifies_for_rank(rank, list/features)
+	return TRUE
 
 //AVIAN//
 /datum/species/avian
@@ -67,51 +23,59 @@ datum/species/canid
 	id = "avian"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("beak", "wings", "avian_tail", "taur")
-	default_features = list("beak" = "None", "wings" = "None", "taur" = "None")
-	attack_verb = "peck"
-	attack_sound = 'sound/weapons/slash.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 0 //no sprites yet
-	blacklisted = 1
-
-/datum/species/avian
-	name = "Hawk"
-	id = "hawk"
-	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("wings" = "hawk")
+	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings")
+	default_features = list("snout" = "Sharp", "wings" = "None", "taur" = "None", "mam_body_markings" = "Hawk")
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
 
+/datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+/datum/species/avian/qualifies_for_rank(rank, list/features)
+	return TRUE
+
 //AQUATIC//
-/datum/species/shark
-	name = "Shark"
-	id = "shark"
+/datum/species/aquatic
+	name = "Aquatic"
+	id = "aquatic"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark")
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None", "mam_ears" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
+
+/datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
+
+/datum/species/aquatic/qualifies_for_rank(rank, list/features)
+	return TRUE
 
 //INSECT//
-/datum/species/moth
-	name = "Moth"
-	id = "moth"
+/datum/species/insect
+	name = "Insect"
+	id = "insect"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail")
+	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+	roundstart = 1
 
+/datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		H.endTailWag()
 
+/datum/species/insect/qualifies_for_rank(rank, list/features)
+	return TRUE
 //HERBIVOROUS//
 
 //EXOTIC//
@@ -200,14 +164,14 @@ datum/species/canid
 /datum/species/yautja/before_equip_job(datum/job/J, mob/living/carbon/human/H, visualsOnly = FALSE)
 	var/datum/outfit/yautja_basic/O = new /datum/outfit/yautja_basic//Just basic gear. Doesn't include anything that gives any meaningful advantage.
 	H.equipOutfit(O, visualsOnly)
-	return 0*/
+	return 0
 
 /datum/species/octopus
 	blacklisted = 1
 /datum/species/carp
 	blacklisted = 1
 /datum/species/horse
-	blacklisted = 1
+	blacklisted = 1*/
 
 ///////////////////
 //DONATOR SPECIES//
@@ -225,18 +189,31 @@ datum/species/canid
 	mutant_bodyparts = list("slimecoontail", "slimecoonears", "slimecoonsnout")
 	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
 
+// Fat Shark <3
 
 /datum/species/shark/datashark
 	name = "DataShark"
 	id = "datashark"
 	default_color = "BCAC9B"
-	species_traits = list(EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail")
-	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "datashark")
+	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_body_markings")
+	default_features = list("mam_tail" = "datashark", "mam_body_markings" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1 //no sprites yet
+//	roundstart = 1
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
+
+datum/species/guilmon
+	name = "Guilmon"
+	id = "guilmon"
+	default_color = "4B4B4B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
+	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1

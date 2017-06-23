@@ -20,14 +20,14 @@
 /obj/item/clothing/mask/breath/AltClick(mob/user)
 	..()
 	if(!user.canUseTopic(src, be_close=TRUE))
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	else
 		adjustmask(user)
 
 /obj/item/clothing/mask/breath/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click [src] to adjust it.</span>"
+	to_chat(user, "<span class='notice'>Alt-click [src] to adjust it.</span>")
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."
@@ -35,4 +35,4 @@
 	icon_state = "medical"
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
-	put_on_delay = 10
+	equip_delay_other = 10

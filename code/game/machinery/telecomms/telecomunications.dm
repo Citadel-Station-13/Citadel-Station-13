@@ -12,7 +12,7 @@
 	Look at radio.dm for the prequel to this code.
 */
 
-var/global/list/obj/machinery/telecomms/telecomms_list = list()
+GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms
 	icon = 'icons/obj/machines/telecomms.dmi'
@@ -86,7 +86,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"verb_say" = signal.data["verb_say"],
 			"verb_ask" = signal.data["verb_ask"],
 			"verb_exclaim" = signal.data["verb_exclaim"],
-			"verb_yell" = signal.data["verb_yell"]
+			"verb_yell" = signal.data["verb_yell"],
+			"language" = signal.data["language"]
 			)
 
 			// Keep the "original" signal constant
@@ -123,17 +124,17 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	..()
 
 /obj/machinery/telecomms/proc/is_freq_listening(datum/signal/signal)
-	// return 1 if found, 0 if not found
+	// return TRUE if found, FALSE if not found
 	if(!signal)
-		return 0
+		return FALSE
 	if((signal.frequency in freq_listening) || (!freq_listening.len))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 
 /obj/machinery/telecomms/New()
-	telecomms_list += src
+	GLOB.telecomms_list += src
 	..()
 
 	//Set the listening_level if there's none.
@@ -155,13 +156,13 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			for(var/obj/machinery/telecomms/T in urange(20, src, 1))
 				add_link(T)
 		else
-			for(var/obj/machinery/telecomms/T in telecomms_list)
+			for(var/obj/machinery/telecomms/T in GLOB.telecomms_list)
 				add_link(T)
 
 
 /obj/machinery/telecomms/Destroy()
-	telecomms_list -= src
-	for(var/obj/machinery/telecomms/comm in telecomms_list)
+	GLOB.telecomms_list -= src
+	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
 		comm.links -= src
 	links = list()
 	return ..()
@@ -170,12 +171,11 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 /obj/machinery/telecomms/proc/add_link(obj/machinery/telecomms/T)
 	var/turf/position = get_turf(src)
 	var/turf/T_position = get_turf(T)
-	if((position.z == T_position.z) || (src.long_range_link && T.long_range_link))
+	if((position.z == T_position.z) || (long_range_link && T.long_range_link))
 		if(src != T)
 			for(var/x in autolinkers)
 				if(x in T.autolinkers)
 					links |= T
-					break
 
 /obj/machinery/telecomms/update_icon()
 	if(on)

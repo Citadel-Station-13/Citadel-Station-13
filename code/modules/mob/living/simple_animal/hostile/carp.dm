@@ -16,7 +16,7 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	devourable = 1
+	devourable = TRUE
 
 	harm_intent_damage = 8
 	obj_damage = 50
@@ -40,8 +40,8 @@
 	return 1	//No drifting in space for space carp!	//original comments do not steal
 
 /mob/living/simple_animal/hostile/carp/AttackingTarget()
-	..()
-	if(ishuman(target))
+	. = ..()
+	if(. && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		H.adjustStaminaLoss(8)
 

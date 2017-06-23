@@ -19,6 +19,18 @@
 	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
 		var/obj/item/weapon/storage/bag/tray/T = O
 		T.do_quick_empty()
+	else if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+		laser = 0
+		update_icons()
+	else if(istype(O,/obj/item/weapon/gun/energy/disabler/cyborg))
+		disabler = 0
+		update_icons()
+	else if(istype(O,/obj/item/device/dogborg/sleeper))
+		sleeper_g = 0
+		sleeper_r = 0
+		update_icons()
+		var/obj/item/device/dogborg/sleeper/S = O
+		S.go_out()
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
@@ -48,8 +60,14 @@
 	if(!(O in module.modules))
 		return
 	if(activated(O))
-		src << "<span class='warning'>That module is already activated.</span>"
+		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
+	if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+		laser = 1
+		update_icons()
+	if(istype(O,/obj/item/weapon/gun/energy/disabler/cyborg))
+		disabler = 1
+		update_icons()
 	if(!held_items[1])
 		held_items[1] = O
 		O.screen_loc = inv1.screen_loc
@@ -63,7 +81,7 @@
 		O.screen_loc = inv3.screen_loc
 		. = TRUE
 	else
-		src << "<span class='warning'>You need to disable a module first!</span>"
+		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	if(.)
 		O.equipped(src, slot_hands)
 		O.mouse_opacity = initial(O.mouse_opacity)

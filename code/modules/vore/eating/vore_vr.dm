@@ -32,14 +32,14 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /hook/client_new/proc/add_prefs_vr(client/C)
 	C.prefs_vr = new/datum/vore_preferences(C)
 	if(C.prefs_vr)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /datum/vore_preferences
 	//Actual preferences
-	var/digestable = 1
-	var/devourable = 0
+	var/digestable = TRUE
+	var/devourable = FALSE
 	var/list/belly_prefs = list()
 
 	//Mechanically required
@@ -61,9 +61,9 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 /proc/is_vore_predator(var/mob/living/O)
 	if(istype(O,/mob/living))
 		if(O.vore_organs.len > 0)
-			return 1
+			return TRUE
 
-	return 0
+	return FALSE
 
 //
 //	Belly searching for simplifying other procs
@@ -76,25 +76,25 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 			if(A in B.internal_contents)
 				return(B)
 
-	return 0
+	return FALSE
 
 //
 // Save/Load Vore Preferences
 //
 /datum/vore_preferences/proc/load_vore()
-	if(!client || !client_ckey) return 0 //No client, how can we save?
+	if(!client || !client_ckey) return FALSE //No client, how can we save?
 
 	slot = client.prefs.default_slot
 
 	path = client.prefs.path
 
-	if(!path) return 0 //Path couldn't be set?
+	if(!path) return FALSE //Path couldn't be set?
 	if(!fexists(path)) //Never saved before
 		save_vore() //Make the file first
-		return 1
+		return TRUE
 
 	var/savefile/S = new /savefile(path)
-	if(!S) return 0 //Savefile object couldn't be created?
+	if(!S) return FALSE //Savefile object couldn't be created?
 
 	S.cd = "/character[slot]"
 
@@ -103,23 +103,23 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	S["belly_prefs"] >> belly_prefs
 
 	if(isnull(digestable))
-		digestable = 1
+		digestable = TRUE
 	if(isnull(devourable))
-		devourable = 0
+		devourable = FALSE
 	if(isnull(belly_prefs))
 		belly_prefs = list()
 
-	return 1
+	return TRUE
 
 /datum/vore_preferences/proc/save_vore()
-	if(!path)				return 0
-	if(!slot)				return 0
+	if(!path)				return FALSE
+	if(!slot)				return FALSE
 	var/savefile/S = new /savefile(path)
-	if(!S)					return 0
+	if(!S)					return FALSE
 	S.cd = "/character[slot]"
 
 	S["digestable"] << digestable
 	S["devourable"] << devourable
 	S["belly_prefs"] << belly_prefs
 
-	return 1
+	return TRUE

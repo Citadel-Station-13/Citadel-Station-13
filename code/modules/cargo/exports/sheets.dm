@@ -69,7 +69,7 @@
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 305 // 2000u of plasma + 2000u of metal.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
@@ -79,9 +79,16 @@
 	message = "of reinforced glass"
 	export_types = list(/obj/item/stack/sheet/rglass)
 
+// Bluespace Polycrystals. About as common on the asteroid as
+
+/datum/export/stack/bscrystal
+	cost = 750
+	message = "of bluespace crystals"
+	export_types = list(/obj/item/stack/sheet/bluespace_crystal)
+
 // Wood. Quite expensive in the grim and dark 26 century.
 /datum/export/stack/wood
-	cost = 25
+	cost = 50
 	unit_name = "wood plank"
 	export_types = list(/obj/item/stack/sheet/mineral/wood)
 

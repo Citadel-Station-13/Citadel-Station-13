@@ -1,6 +1,6 @@
 /client/verb/mentorhelp(msg as text)
 	set category = "Mentor"
-	set name = "Mentorhelp"
+	set name = "mentorhelp"
 
 	//remove out adminhelp verb temporarily to prevent spamming of mentors.
 	src.verbs -= /client/verb/mentorhelp
@@ -14,19 +14,29 @@
 	if(!mob)	return						//this doesn't happen
 
 	var/show_char = config.mentors_mobname_only
-	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>: [msg]</font></span>"
+	var/mentor_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 0, show_char)]</b>: [msg]</font></span>"
+	var/admin_msg = "<span class='mentornotice'><b><font color='purple'>MENTORHELP:</b> <b>[ADMIN_FULLMONTY(src.mob)]</b>: [msg]</font></span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
-	for(var/client/X in mentors)
-		X << 'sound/items/bikehorn.ogg'
-		X << mentor_msg
+	for(var/client/X in GLOB.mentors)
+		to_chat(X, 'sound/items/bikehorn.ogg')
+		to_chat(X, mentor_msg)
 
-	for(var/client/A in admins)
-		A << 'sound/items/bikehorn.ogg'
-		A << mentor_msg
+	for(var/client/A in GLOB.admins)
+		to_chat(A, 'sound/items/bikehorn.ogg')
+		to_chat(A, admin_msg)
 
-	src << "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>"
+	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 	return
+
+/proc/get_mentor_counts()
+	. = list("total" = 0, "afk" = 0, "present" = 0)
+	for(var/client/X in GLOB.mentors)
+		.["total"]++
+		if(X.is_afk())
+			.["afk"]++
+		else
+			.["present"]++
 
 /proc/key_name_mentor(var/whom, var/include_link = null, var/include_name = 0, var/include_follow = 0, var/char_name_only = 0)
 	var/mob/M
@@ -48,7 +58,7 @@
 	else if(istext(whom))
 		key = whom
 		ckey = ckey(whom)
-		C = directory[ckey]
+		C = GLOB.directory[ckey]
 		if(C)
 			M = C.mob
 	else
@@ -69,7 +79,7 @@
 		if(C && C.holder && C.holder.fakekey)
 			. += "Administrator"
 		else if (char_name_only && config.mentors_mobname_only)
-			if(istype(C.mob,/mob/new_player) || istype(C.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
+			if(istype(C.mob,/mob/dead/new_player) || istype(C.mob, /mob/dead/observer)) //If they're in the lobby or observing, display their ckey
 				. += key
 			else if(C && C.mob) //If they're playing/in the round, only show the mob name
 				. += C.mob.name

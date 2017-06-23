@@ -95,7 +95,7 @@ Thus, the two variables affect pump operation are set in New():
 	return 1
 
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
-																		datum/tgui/master_ui = null, datum/ui_state/state = default_state)
+																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
@@ -116,11 +116,13 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
 		return
+	var/turf/T = get_turf(src)
+	//var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
+			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
 
 			. = TRUE
@@ -138,8 +140,8 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
+				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 				log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
 	update_icon()
 
@@ -160,7 +162,7 @@ Thus, the two variables affect pump operation are set in New():
 		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
-		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
+		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -176,11 +178,13 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	if(..())
+		var/turf/T = get_turf(src)
+		//var/area/A = get_area(src)
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		else
-			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", "atmos")
-			message_admins("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]")
+			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
+			message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
 			log_admin("[key_name(usr)] unwrenched a volume pump at [x], [y], [z]")
 
 			return 1

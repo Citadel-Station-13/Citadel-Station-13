@@ -21,6 +21,7 @@
 	icon_state = "tophat"
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head
+	throwforce = 1
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
@@ -279,3 +280,9 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
+
+/obj/item/clothing/head/hunter
+	name = "hunter hat"
+	desc = "It's a flimsy looking hat."
+	item_state = "hunter_hat"
+	icon_state = "hunter_hat"

@@ -6,13 +6,10 @@
 	gender = PLURAL //"That's some lava."
 	baseturf = /turf/open/floor/plating/lava //lava all the way down
 	slowdown = 2
-	luminosity = 1
-	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
-	//if anything matching this typecache is found in the lava, we don't burn things
 
-/turf/open/floor/plating/lava/New()
-	..()
-	safeties_typecache = typecacheof(safeties_typecache)
+	light_range = 2
+	light_power = 0.75
+	light_color = LIGHT_COLOR_LAVA
 
 /turf/open/floor/plating/lava/ex_act()
 	return
@@ -41,6 +38,11 @@
 /turf/open/floor/plating/lava/make_plating()
 	return
 
+/turf/open/floor/plating/lava/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
+
 /turf/open/floor/plating/lava/GetHeatCapacity()
 	. = 700000
 
@@ -51,7 +53,9 @@
 
 
 /turf/open/floor/plating/lava/proc/is_safe()
-	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	//if anything matching this typecache is found in the lava, we don't burn things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
 	return LAZYLEN(found_safeties)
 
 
@@ -109,6 +113,12 @@
 /turf/open/floor/plating/lava/break_tile()
 	return
 
+/turf/open/floor/plating/lava/pry_tile()
+	return
+
+/turf/open/floor/plating/lava/try_replace_tile()
+	return
+
 /turf/open/floor/plating/lava/burn_tile()
 	return
 
@@ -122,7 +132,7 @@
 
 
 /turf/open/floor/plating/lava/smooth/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 

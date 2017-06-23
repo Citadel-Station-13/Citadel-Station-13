@@ -35,7 +35,7 @@ Bonus
 		var/mob/living/M = A.affected_mob
 		switch(A.stage)
 			if(1, 2, 3, 4)
-				M << "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>"
+				to_chat(M, "<span class='warning'>[pick("You feel nauseous.", "You feel like you're going to throw up!")]</span>")
 			else
 				Vomit(M)
 
@@ -75,7 +75,7 @@ Bonus
 	severity = 5
 
 /datum/symptom/vomit/blood/Vomit(mob/living/carbon/M)
-	M.vomit(0, 1)
+	M.vomit(0,TRUE)
 
 
 /*
@@ -103,4 +103,4 @@ Bonus
 	level = 4
 
 /datum/symptom/vomit/projectile/Vomit(mob/living/carbon/M)
-	M.vomit(6,0,1,5,1)
+	M.vomit(6, distance = 5)

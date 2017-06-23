@@ -36,6 +36,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(AROUSAL)
+			adjustArousalLoss(damage * hit_percent)
 	return 1
 
 
@@ -145,8 +147,8 @@
 		parts -= picked
 	if(updating_health)
 		updatehealth()
-		if(update)
-			update_damage_overlays()
+	if(update)
+		update_damage_overlays()
 
 // damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute, burn, updating_health = 1)

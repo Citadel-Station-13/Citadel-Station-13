@@ -40,10 +40,10 @@ List of nuances:
 #define RATVAR_ET_REPLACEMENT		"$1-$2"
 #define RATVAR_TE_MATCH				regex("(\[tT]\[eE])(\\w)","g")
 #define RATVAR_TE_REPLACEMENT		"$1-$2"
-#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])","g")
-#define RATVAR_PRE_AND_REPLACEMENT	"$1-$2"
-#define RATVAR_POST_AND_MATCH		regex("(\[aA]\[nN]\[dD])\\s(\\w)","g")
-#define RATVAR_POST_AND_REPLACEMENT	"$1-$2"
+#define RATVAR_PRE_AND_MATCH		regex("(\\w)\\s(\[aA]\[nN]\[dD])(\\W)","g")
+#define RATVAR_PRE_AND_REPLACEMENT	"$1-$2$3"
+#define RATVAR_POST_AND_MATCH		regex("(\\W)(\[aA]\[nN]\[dD])\\s(\\w)","g")
+#define RATVAR_POST_AND_REPLACEMENT	"$1$2-$3"
 #define RATVAR_TO_MATCH				regex("(\\s)(\[tT]\[oO])\\s(\\w)","g")
 #define RATVAR_TO_REPLACEMENT		"$1$2-$3"
 #define RATVAR_MY_MATCH 			regex("(\\s)(\[mM]\[yY])\\s(\\w)","g")
@@ -89,26 +89,23 @@ List of nuances:
 	return remove_ratvarian_regex(text)
 
 /proc/remove_ratvarian_regex(ratvarian)
-	var/text 	= replacetext(ratvarian, 		REVERSE_RATVAR_HYPHEN_GUA_MATCH,	 		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_POST_AND_MATCH,	 	REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,			REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_TE_MATCH,				REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT)
-	text 		= replacetext(text, 			REVERSE_RATVAR_HYPHEN_ET_MATCH,				REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
-	return replacetext(text, 					REVERSE_RATVAR_HYPHEN_OF_MATCH,				REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
+	var/text 	= replacetext(ratvarian, 	REVERSE_RATVAR_HYPHEN_GUA_MATCH,		REVERSE_RATVAR_HYPHEN_GUA_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_PRE_AND_MATCH,	REVERSE_RATVAR_HYPHEN_PRE_AND_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_POST_AND_MATCH,	REVERSE_RATVAR_HYPHEN_POST_AND_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TO_MY_MATCH,		REVERSE_RATVAR_HYPHEN_TO_MY_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_TE_MATCH,			REVERSE_RATVAR_HYPHEN_TE_REPLACEMENT)
+	text 		= replacetext(text, 		REVERSE_RATVAR_HYPHEN_ET_MATCH,			REVERSE_RATVAR_HYPHEN_ET_REPLACEMENT)
+	return replacetext(text, 				REVERSE_RATVAR_HYPHEN_OF_MATCH,			REVERSE_RATVAR_HYPHEN_OF_REPLACEMENT)
 
 //Causes the mob or AM in question to speak a message; it assumes that the message is already translated to ratvar speech using text2ratvar()
 /proc/clockwork_say(atom/movable/AM, message, whisper=FALSE)
 	var/list/spans = list(SPAN_ROBOT)
 
-	var/old_languages_spoken = AM.languages_spoken
-	AM.languages_spoken = HUMAN //anyone who can understand HUMAN will hear weird shitty ratvar speak, otherwise it'll get starred out
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!whisper)
-			L.say(message, "clock", spans)
+			L.say(message, "clock", spans, language=/datum/language/common)
 		else
-			L.whisper(message)
+			L.whisper(message, "clock", spans, language=/datum/language/common)
 	else
-		AM.say(message)
-	AM.languages_spoken = old_languages_spoken
+		AM.say(message, language=/datum/language/common)

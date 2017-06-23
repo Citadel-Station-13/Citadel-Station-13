@@ -10,6 +10,10 @@
 	if(!(resistance_flags & FIRE_PROOF)) //non fire proof decal or being burned by lava
 		qdel(src)
 
+/obj/effect/decal/HandleTurfChange(turf/T)
+	..()
+	if(T == loc && (isspaceturf(T) || isclosedturf(T) || islava(T) || istype(T, /turf/open/water) || istype(T, /turf/open/chasm)))
+		qdel(src)
 
 /obj/effect/turf_decal
 	var/group = TURF_DECAL_PAINT
@@ -21,13 +25,12 @@
 /obj/effect/turf_decal/proc/get_decal()
 	return image(icon='icons/turf/decals.dmi',icon_state=icon_state,dir=dir,layer=TURF_LAYER)
 
-/obj/effect/turf_decal/Initialize(mapload)
+/obj/effect/turf_decal/Initialize()
+	..()
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
 	T.add_decal(get_decal(),group)
-	qdel(src)
-
 
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"
@@ -55,3 +58,12 @@
 
 /obj/effect/turf_decal/loading_area
 	icon_state = "loading_area"
+
+/obj/effect/turf_decal/sand
+	icon_state = "sandyfloor"
+
+/obj/effect/turf_decal/sand/plating
+	icon_state = "sandyplating"
+
+/obj/effect/turf_decal/plaque
+	icon_state = "plaque"

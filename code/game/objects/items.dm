@@ -1,4 +1,8 @@
-var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_state" = "fire")
+GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/effects/fire.dmi', "fire"))
+
+GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
+// if true, everyone item when created will have its name changed to be
+// more... RPG-like.
 
 /obj/item
 	name = "item"
@@ -55,8 +59,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/list/allowed = null //suit storage stuff.
 	var/obj/item/device/uplink/hidden_uplink = null
-	var/strip_delay = 40
-	var/put_on_delay = 20
+	var/equip_delay_self = 0 //In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
+	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
+	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
@@ -90,6 +95,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
+	var/reach = 1 //In tiles, how far this weapon can reach; 1 for adjacent, which is default
 
 	//The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
 	var/list/slot_equipment_priority = null // for default list, see /mob/proc/equip_to_appropriate_slot()
@@ -98,13 +104,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	// non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
-/obj/item/New()
+	var/datum/rpg_loot/rpg_loot = null
+
+
+	//Tooltip vars
+	var/in_inventory = FALSE//is this item equipped into an inventory slot or hand of a mob?
+	var/force_string //string form of an item's force. Edit this var only to set a custom force string
+	var/last_force_string_check = 0
+	var/tip_timer
+	var/force_string_override
+
+/obj/item/Initialize()
 	if (!materials)
 		materials = list()
-	..()
+	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
+
+	if(GLOB.rpg_loot_items)
+		rpg_loot = new(src)
+
+	if(force_string)
+		force_string_override = TRUE
 
 /obj/item/Destroy()
 	flags &= ~DROPDEL	//prevent reqdels
@@ -113,6 +135,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
 	for(var/X in actions)
 		qdel(X)
+	QDEL_NULL(rpg_loot)
 	return ..()
 
 /obj/item/device
@@ -160,7 +183,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		pronoun = "It is"
 	var/size = weightclass2text(src.w_class)
-	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
+	to_chat(user, "[pronoun] a [size] item." )
 
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
@@ -181,7 +204,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
 		msg += "*--------*"
-		user << msg
+		to_chat(user, msg)
 
 
 /obj/item/attack_self(mob/user)
@@ -209,9 +232,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(C))
 			if(C.gloves && (C.gloves.max_heat_protection_temperature > 360))
 				extinguish()
-				user << "<span class='notice'>You put out the fire on [src].</span>"
+				to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
 			else
-				user << "<span class='warning'>You burn your hand on [src]!</span>"
+				to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
@@ -223,7 +246,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/mob/living/carbon/C = user
 		if(istype(C))
 			if(!C.gloves || (!(C.gloves.resistance_flags & (UNACIDABLE|ACID_PROOF))))
-				user << "<span class='warning'>The acid on [src] burns your hand!</span>"
+				to_chat(user, "<span class='warning'>The acid on [src] burns your hand!</span>")
 				var/obj/item/bodypart/affecting = C.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
 				if(affecting && affecting.receive_damage( 0, 5 ))		// 5 burn damage
 					C.update_damage_overlays()
@@ -234,7 +257,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = 0
+	if(throwing)
+		throwing.finalize(FALSE)
 	if(loc == user)
 		if(!user.dropItemToGround(src))
 			return
@@ -255,7 +279,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src, user.loc)
 
-	throwing = 0
+	if(throwing)
+		throwing.finalize(FALSE)
 	if(loc == user)
 		if(!user.dropItemToGround(src))
 			return
@@ -271,7 +296,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.dropItemToGround(src)
-		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
+		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 	attack_paw(A)
 
@@ -289,53 +314,64 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(unique_rename && istype(W, /obj/item/weapon/pen))
-		rewrite(user)
-	else
-		if(istype(W,/obj/item/weapon/storage))
-			var/obj/item/weapon/storage/S = W
-			if(S.use_to_pickup)
-				if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-					if(isturf(src.loc))
-						var/list/rejections = list()
-						var/success = 0
-						var/failure = 0
+	if(istype(W,/obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = W
+		if(S.use_to_pickup)
+			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
+				if(isturf(loc))
+					var/list/rejections = list()
 
-						for(var/obj/item/I in src.loc)
-							if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
-								failure = 1
-								continue
-							if(I.type in rejections) // To limit bag spamming: any given type only complains once
-								continue
-							if(!S.can_be_inserted(I, stop_messages = 1))	// Note can_be_inserted still makes noise when the answer is no
-								if(S.contents.len >= S.storage_slots)
-									break
-								rejections += I.type	// therefore full bags are still a little spammy
-								failure = 1
-								continue
+					var/list/things = loc.contents.Copy()
+					if (S.collection_mode == 2)
+						things = typecache_filter_list(things, typecacheof(type))
 
-							success = 1
-							S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
-						if(success && !failure)
-							user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
-						else if(success)
-							user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
-						else
-							user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
+					var/len = things.len
+					if(!len)
+						to_chat(user, "<span class='notice'>You failed to pick up anything with [S].</span>")
+						return
+					var/datum/progressbar/progress = new(user, len, loc)
 
-				else if(S.can_be_inserted(src))
-					S.handle_item_insertion(src)
+					while (do_after(user, 10, TRUE, S, FALSE, CALLBACK(src, .proc/handle_mass_pickup, S, things, loc, rejections, progress)))
+						sleep(1)
 
+					qdel(progress)
+
+					to_chat(user, "<span class='notice'>You put everything you could [S.preposition] [S].</span>")
+
+			else if(S.can_be_inserted(src))
+				S.handle_item_insertion(src)
+
+/obj/item/proc/handle_mass_pickup(obj/item/weapon/storage/S, list/things, atom/thing_loc, list/rejections, datum/progressbar/progress)
+	for(var/obj/item/I in things)
+		things -= I
+		if(I.loc != thing_loc)
+			continue
+		if(I.type in rejections) // To limit bag spamming: any given type only complains once
+			continue
+		if(!S.can_be_inserted(I, stop_messages = TRUE))	// Note can_be_inserted still makes noise when the answer is no
+			if(S.contents.len >= S.storage_slots)
+				break
+			rejections += I.type	// therefore full bags are still a little spammy
+			continue
+
+		S.handle_item_insertion(I, TRUE)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
+
+		if (TICK_CHECK)
+			progress.update(progress.goal - things.len)
+			return TRUE
+
+	progress.update(progress.goal - things.len)
+	return FALSE
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, atom/movable/AM)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 	return 0
 
-/obj/item/proc/talk_into(mob/M, input, channel, spans)
+/obj/item/proc/talk_into(mob/M, input, channel, spans, datum/language/language)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
@@ -344,9 +380,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		A.Remove(user)
 	if(DROPDEL & flags)
 		qdel(src)
+	in_inventory = FALSE
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	in_inventory = TRUE
 	return
 
 
@@ -372,6 +410,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
@@ -383,11 +422,11 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 //if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
-/obj/item/proc/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+/obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
 		return 0
 
-	return M.can_equip(src, slot, disable_warning)
+	return M.can_equip(src, slot, disable_warning, bypass_equip_delay_self)
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -422,22 +461,22 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
 		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
-			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
+			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
 			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
+		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
 		return
 
 	if(isbrain(M))
-		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
+		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
 	src.add_fingerprint(user)
@@ -468,29 +507,29 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
-			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
+			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
-				M << "<span class='danger'>You become nearsighted!</span>"
+				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_item())
-					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
+					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
 		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
-				M << "<span class='danger'>You go blind!</span>"
+				to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/clean_blood()
 	. = ..()
 	if(.)
 		if(initial(icon) && initial(icon_state))
 			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = blood_splatter_icons[index]
+			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
 			if(blood_splatter_icon)
-				overlays -= blood_splatter_icon
+				cut_overlay(blood_splatter_icon)
 
 /obj/item/clothing/gloves/clean_blood()
 	. = ..()
@@ -504,6 +543,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))
+		if(is_hot() && isliving(A))
+			var/mob/living/L = A
+			L.IgniteMob()
 		var/itempush = 1
 		if(w_class < 4)
 			itempush = 0 //too light to push anything
@@ -519,6 +561,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if (callback) //call the original callback
 		. = callback.Invoke()
 	throw_speed = initial(throw_speed) //explosions change this.
+	in_inventory = FALSE
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -603,3 +646,39 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 /obj/item/proc/microwave_act(obj/machinery/microwave/M)
 	if(M && M.dirty < 100)
 		M.dirty++
+
+/obj/item/proc/on_mob_death(mob/living/L, gibbed)
+
+/obj/item/proc/set_force_string()
+	switch(force)
+		if(0 to 4)
+			force_string = "very low"
+		if(4 to 7)
+			force_string = "low"
+		if(7 to 10)
+			force_string = "medium"
+		if(10 to 11)
+			force_string = "high"
+		if(11 to 20) //12 is the force of a toolbox
+			force_string = "robust"
+		if(20 to 25)
+			force_string = "very robust"
+		else
+			force_string = "exceptionally robust"
+	last_force_string_check = force
+
+/obj/item/proc/openTip(location, control, params, user)
+	if(last_force_string_check != force && !force_string_override)
+		set_force_string()
+	openToolTip(user,src,params,title = name,content = "[desc]<br>[force ? "<b>Force:</b> [force_string]" : ""]",theme = "")
+
+/obj/item/MouseEntered(location, control, params)
+	if(in_inventory && usr.client.prefs.enable_tips)
+		var/timedelay = usr.client.prefs.tip_delay/100
+		var/user = usr
+		tip_timer = addtimer(CALLBACK(src, .proc/openTip, location, control, params, user), timedelay, TIMER_STOPPABLE)//timer takes delay in deciseconds, but the pref is in milliseconds. dividing by 100 converts it.
+
+/obj/item/MouseExited()
+	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
+	closeToolTip(usr)
+

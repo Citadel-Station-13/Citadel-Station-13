@@ -56,7 +56,7 @@
 /datum/export/organ/alien/abductor
 	cost = 2500
 	unit_name = "abductor gland"
-	export_types = list(/obj/item/organ/gland)
+	export_types = list(/obj/item/organ/heart/gland)
 
 /datum/export/organ/alien/changeling_egg
 	cost = 50000 // Holy. Fuck.
@@ -66,10 +66,10 @@
 
 /datum/export/organ/hivelord
 	cost = 1500
-	unit_name = "active hivelord core"
-	export_types = list(/obj/item/organ/hivelord_core)
+	unit_name = "active regenerative core"
+	export_types = list(/obj/item/organ/regenerative_core)
 
-/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/hivelord_core/C)
+/datum/export/organ/alien/plasmavessel/get_cost(obj/item/organ/regenerative_core/C)
 	if(C.inert)
 		return ..() / 3
 	if(C.preserved)

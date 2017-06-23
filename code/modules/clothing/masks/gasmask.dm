@@ -78,7 +78,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
+		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -100,25 +100,27 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 
-/obj/item/clothing/mask/gas/mime/attack_self(mob/user)
-	cycle_mask(user)
 
-/obj/item/clothing/mask/gas/mime/proc/cycle_mask(mob/user)
-	switch(icon_state)
-		if("mime")
-			icon_state = "sadmime"
-		if("sadmime")
-			icon_state = "scaredmime"
-		if("scaredmime")
-			icon_state = "sexymime"
-		if("sexymime")
-			icon_state = "mime"
-	user.update_inv_wear_mask()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
-	return 1
+/obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated())
+		return
+
+	var/list/options = list()
+	options["Blanc"] = "mime"
+	options["Triste"] = "sadmime"
+	options["Effrayé"] = "scaredmime"
+	options["Excité"] ="sexymime"
+
+	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+
+	if(src && choice && !user.incapacitated() && in_range(user,src))
+		icon_state = options[choice]
+		user.update_inv_wear_mask()
+		for(var/X in actions)
+			var/datum/action/A = X
+			A.UpdateButtonIcon()
+		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
+		return 1
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -164,12 +166,13 @@
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
-	desc = "A creepy wooden mask. Surprisingly expresive for a poorly carved bit of wood."
+	desc = "A creepy wooden mask. Surprisingly expressive for a poorly carved bit of wood."
 	icon_state = "tiki_eyebrow"
 	item_state = "tiki_eyebrow"
 	resistance_flags = FLAMMABLE
 	obj_integrity = 100
 	max_integrity = 100
+	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
 
 
@@ -186,10 +189,9 @@ obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
-		item_state = options[choice]
 		user.update_inv_wear_mask()
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		M << "The Tiki Mask has now changed into the [choice] Mask!"
+		to_chat(M, "The Tiki Mask has now changed into the [choice] Mask!")
 		return 1

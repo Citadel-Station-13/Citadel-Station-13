@@ -1,0 +1,4 @@
+author: "LetterJay"
+delete-after: True
+changes: 
+  - imageadd: "fixed missing sprite for the laser carbine"

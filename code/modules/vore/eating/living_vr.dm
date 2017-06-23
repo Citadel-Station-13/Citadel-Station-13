@@ -1,10 +1,10 @@
 ///////////////////// Mob Living /////////////////////
 /mob/living
-	var/digestable = 1					// Can the mob be digested inside a belly?
+	var/digestable = TRUE					// Can the mob be digested inside a belly?
 	var/datum/belly/vore_selected		// Default to no vore capability.
 	var/list/vore_organs = list()		// List of vore containers inside a mob
-	var/devourable = 0					// Can the mob be vored at all?
-//	var/feeding = 0 					// Are we going to feed someone else?
+	var/devourable = FALSE					// Can the mob be vored at all?
+//	var/feeding = FALSE					// Are we going to feed someone else?
 
 
 //
@@ -22,7 +22,7 @@
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
 					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
-					return 0
+					return FALSE
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
 
@@ -30,7 +30,7 @@
 				if(!M.vore_organs)
 					M.vore_organs = list()
 				var/datum/belly/B = new /datum/belly(M)
-				B.immutable = 1
+				B.immutable = TRUE
 				B.name = "Stomach"
 				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
 				M.vore_organs[B.name] = B
@@ -73,13 +73,13 @@
 //		if(!feeding(src))
 //			return
 		if(!is_vore_predator(prey))
-			user << "<span class='notice'>They aren't voracious enough.</span>"
+			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
 		feed_self_to_grabbed(user, src)
 
 	if(user == src) //you click yourself
 		if(!is_vore_predator(src))
-			user << "<span class='notice'>You aren't voracious enough.</span>"
+			to_chat(user, "<span class='notice'>You aren't voracious enough.</span>")
 			return
 		user.feed_grabbed_to_self(src, prey)
 
@@ -87,7 +87,7 @@
 //		if(!feeding(src))
 //			return
 		if(!is_vore_predator(src))
-			user << "<span class='notice'>They aren't voracious enough.</span>"
+			to_chat(user, "<span class='notice'>They aren't voracious enough.</span>")
 			return
 		feed_grabbed_to_other(user, prey, src)
 //
@@ -123,7 +123,7 @@
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		return
 	if (!prey.devourable)
-		user << "This can't be eaten!"
+		to_chat(user, "This can't be eaten!")
 		return
 	// The belly selected at the time of noms
 	var/datum/belly/belly_target = pred.vore_organs[belly]
@@ -156,14 +156,17 @@
 	stop_pulling()
 
 	// Inform Admins
+	var/prey_braindead
+	var/prey_stat
+	if(prey.ckey)
+		prey_stat = prey.stat//only return this if they're not an unmonkey or whatever
+		if(!prey.client)//if they disconnected, tell us
+			prey_braindead = 1
 	if (pred == user)
-		message_admins("[key_name(pred)] ate [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		message_admins("[ADMIN_LOOKUPFLW(pred)] ate [ADMIN_LOOKUPFLW(prey)][!prey_braindead ? "" : " (BRAINDEAD)"][prey_stat ? " (DEAD/UNCONSCIOUS)" : ""].")
 		log_attack("[key_name(pred)] ate [key_name(prey)]")
-	else if (prey == !client && stat != DEAD)
-		message_admins("[key_name(pred)] ate [key_name(prey)] (braindead) ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
-		log_attack("[key_name(pred)] ate [key_name(prey)] (braindead)")
 	else
-		message_admins("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)]. ([pred ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[pred.x];Y=[pred.y];Z=[pred.z]'>JMP</a>" : "null"])")
+		message_admins("[ADMIN_LOOKUPFLW(user)] forced [ADMIN_LOOKUPFLW(pred)] to eat [ADMIN_LOOKUPFLW(prey)].")
 		log_attack("[key_name(user)] forced [key_name(pred)] to eat [key_name(prey)].")
 	return TRUE
 
@@ -224,7 +227,7 @@
 //	Proc for updating vore organs and digestion/healing/absorbing
 //
 /mob/living/proc/handle_internal_contents()
-	if(SSmob.times_fired%6==1)
+	if(SSmobs.times_fired%6==1)
 		return //The accursed timer
 
 	for (var/I in vore_organs)
@@ -264,7 +267,7 @@
 			pred.update_icons()
 
 	else
-		src << "<span class='alert'>You aren't inside anything, you clod.</span>"
+		to_chat(src, "<span class='alert'>You aren't inside anything, you clod.</span>")
 
 //
 //	Verb for saving vore preferences to save file

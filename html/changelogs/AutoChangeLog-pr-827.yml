@@ -1,0 +1,4 @@
+author: "Jay"
+delete-after: True
+changes: 
+  - rscadd: "Adds finger snapping emote. Use say *snap"

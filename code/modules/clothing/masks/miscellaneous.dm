@@ -6,13 +6,13 @@
 	flags_cover = MASKCOVERSMOUTH
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0.90
-	put_on_delay = 20
+	equip_delay_other = 20
 
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		if(src == C.wear_mask)
-			user << "<span class='warning'>You need help taking this off!</span>"
+			to_chat(user, "<span class='warning'>You need help taking this off!</span>")
 			return
 	..()
 
@@ -57,7 +57,7 @@
 
 /obj/item/clothing/mask/pig/attack_self(mob/user)
 	voicechange = !voicechange
-	user << "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>"
+	to_chat(user, "<span class='notice'>You turn the voice box [voicechange ? "on" : "off"]!</span>")
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(voicechange)
