@@ -1,6 +1,6 @@
 /mob/living/carbon/proc/dream()
 	set waitfor = 0
-	dreaming = 1
+	dreaming = TRUE
 	var/list/dreams = list(
 		"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
 		"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",

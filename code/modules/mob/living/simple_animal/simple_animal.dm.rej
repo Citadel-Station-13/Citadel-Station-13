@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/simple_animal/simple_animal.dm b/code/modules/mob/living/simple_animal/simple_animal.dm	(rejected hunks)
+@@ -387,7 +387,7 @@
+ 		..()
+ 
+ /mob/living/simple_animal/update_canmove()
+-	if(IsUnconscious() || IsStun() || knockdown || stat || resting)
++	if(IsUnconscious() || IsStun() || IsKnockdown() || stat || resting)
+ 		drop_all_held_items()
+ 		canmove = 0
+ 	else if(buckled)

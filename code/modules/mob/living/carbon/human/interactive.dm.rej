@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/carbon/human/interactive.dm b/code/modules/mob/living/carbon/human/interactive.dm	(rejected hunks)
+@@ -450,7 +450,7 @@
+ 		return 1
+ 	if(restrained())
+ 		return 1
+-	if(unconscious)
++	if(IsUnconscious())
+ 		return 1
+ 	if(IsStun())
+ 		return 1
