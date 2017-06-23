@@ -11,14 +11,13 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	var/loaded       = FALSE // Has the client loaded the browser output area?
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
-	var/list/connectionHistory //Contains the connection history passed from chat cookie
 	var/broken       = FALSE
+	var/list/connectionHistory //Contains the connection history passed from chat cookie
 
 /datum/chatOutput/New(client/C)
 	owner = C
 	messageQueue = list()
 	connectionHistory = list()
-	// log_world("chatOutput: New()")
 
 /datum/chatOutput/proc/start()
 	//Check for existing chat
@@ -26,11 +25,14 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 		return FALSE
 
 	if(!winexists(owner, "browseroutput")) // Oh goddamnit.
-		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
+		set waitfor = FALSE
 		broken = TRUE
-		return FALSE
+		message_admins("Couldn't start chat for [key_name_admin(owner)]!")
+		. = FALSE
+		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
+		return
 
-	if(winget(owner, "browseroutput", "is-disabled") == "false") //Already setup
+	if(winget(owner, "browseroutput", "is-visible") == "true") //Already setup
 		doneLoading()
 
 	else //Not setup
@@ -43,33 +45,11 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(!owner)
 		return
 
-	var/static/list/chatResources = list(
-		"code/modules/html_interface/js/jquery.min.js",
-		"goon/browserassets/js/json2.min.js",
-		"goon/browserassets/js/browserOutput.js",
-		"tgui/assets/fonts/fontawesome-webfont.eot",
-		"tgui/assets/fonts/fontawesome-webfont.svg",
-		"tgui/assets/fonts/fontawesome-webfont.ttf",
-		"tgui/assets/fonts/fontawesome-webfont.woff",
-		"goon/browserassets/css/font-awesome.css",
-		"goon/browserassets/css/browserOutput.css"
-	)
+	var/datum/asset/stuff = get_asset_datum(/datum/asset/simple/goonchat)
+	stuff.register()
+	stuff.send(owner)
 
-	// to_chat(world.log, "chatOutput: load()")
-	for(var/attempts in 1 to 5)
-		for(var/asset in chatResources)
-			owner << browse_rsc(file(asset))
-
-		//log_world("Sending main chat window to client [owner.ckey]")
-		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
-		sleep(14 + (chatResources.len * 7))
-		if(!owner || loaded)
-			break
-
-	if(owner && !loaded)
-		doneLoading() // try doing this manually
-		CRASH("[owner] failed to load chat. Attempting doneLoading() manually")
-	// log_world("chatOutput: [owner.ckey] load() completed")
+	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
@@ -102,13 +82,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if(data)
 		ehjax_send(data = data)
 
+
 //Called on chat output done-loading by JS.
 /datum/chatOutput/proc/doneLoading()
 	if(loaded)
 		return
 
+	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
-	winset(owner, "browseroutput", "is-disabled=false")
+	winset(owner, "output", "is-disabled=true;is-visible=false")
+	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+
+
 	for(var/message in messageQueue)
 		to_chat(owner, message)
 
@@ -173,14 +158,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /datum/chatOutput/proc/debug(error)
 	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
-#ifdef TESTING
-/client/verb/debug_chat()
-	set hidden = TRUE
-	chatOutput.ehjax_send(data = list("firebug" = TRUE))
-#endif
 //Global chat procs
-
-GLOBAL_LIST_EMPTY(bicon_cache)
 
 //Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
 // exporting it as text, and then parsing the base64 from that.
@@ -193,85 +171,93 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/bicon(obj)
-	if (!obj)
+/proc/bicon(thing)
+	if (!thing)
 		return
 
-	if (isicon(obj))
+	if (isicon(thing))
 		//Icons get pooled constantly, references are no good here.
 		/*if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
 			bicon_cache["\ref[obj]"] = icon2base64(obj)
 		return "<img class='icon misc' src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"*/
-		return "<img class='icon misc' src='data:image/png;base64,[icon2base64(obj)]'>"
+		return "<img class='icon misc' src='data:image/png;base64,[icon2base64(thing)]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = obj
+	var/atom/A = thing
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-	if (!GLOB.bicon_cache[key]) // Doesn't exist, make it.
+
+	var/static/list/bicon_cache = list()
+	if (!bicon_cache[key]) // Doesn't exist, make it.
 		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
+		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
-		GLOB.bicon_cache[key] = icon2base64(I, key)
+		bicon_cache[key] = icon2base64(I, key)
 
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[GLOB.bicon_cache[key]]'>"
+	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
 //Costlier version of bicon() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_bicon(obj)
-	if (!obj)
+/proc/costly_bicon(thing)
+	if (!thing)
 		return
 
-	if (isicon(obj))
-		return bicon(obj)
+	if (isicon(thing))
+		return bicon(thing)
 
-	var/icon/I = getFlatIcon(obj)
+	var/icon/I = getFlatIcon(thing)
 	return bicon(I)
 
 /proc/to_chat(target, message)
-	if(isnull(target))
+	if(!target)
 		return
+
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
-	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || istype(target, /client) || istype(target, /datum/log) || target == world))
+	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
-		if (!istype(target, /atom)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
-			CRASH("DEBUG: Boutput called with invalid message")
+		CRASH("Invalid message! [message]")
+	
+	if(!istext(message))
 		return
 
-	//Otherwise, we're good to throw it at the user
-	else if (istext(message))
-		if (istext(target))
+	if(target == world)
+		target = GLOB.clients
+	
+	var/list/targets
+	if(!islist(target))
+		targets = list(target)
+	else
+		targets = target 
+		if(!targets.len)
 			return
+	var/original_message = message
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = replacetext(message, "\improper", "")
+	message = replacetext(message, "\proper", "")
+	message = replacetext(message, "\n", "<br>")
+	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
 
-		//Some macros remain in the string even after parsing and fuck up the eventual output
-		if (findtext(message, "\improper"))
-			message = replacetext(message, "\improper", "")
-		if (findtext(message, "\proper"))
-			message = replacetext(message, "\proper", "")
-
+	for(var/I in targets)
 		//Grab us a client if possible
-		var/client/C = grab_client(target)
+		var/client/C = grab_client(I)
 
-		if (C && C.chatOutput)
-			if(C.chatOutput.broken) // A player who hasn't updated his skin file.
-				to_chat(C, message)
-				return TRUE
-			if(!C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
-				//Client sucks at loading things, put their messages in a queue
-				C.chatOutput.messageQueue.Add(message)
-				return
+		if (!C)
+			continue
 
-		if(istype(target, /datum/log))
-			var/datum/log/L = target
-			L.log += (message + "\n")
+		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
+			C << original_message
+			return TRUE
+
+		if(!C.chatOutput.loaded)
+			//Client sucks at loading things, put their messages in a queue
+			C.chatOutput.messageQueue += message
+			//But also send it to their output window since that shows until goonchat loads
+			C << original_message
 			return
-
-		message = replacetext(message, "\n", "<br>")
-		message = replacetext(message, "\t", "&nbsp;&nbsp;&nbsp;&nbsp;")
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
-		target << output(url_encode(url_encode(message)), "browseroutput:output")
+		C << output(url_encode(url_encode(message)), "browseroutput:output")
 
 /proc/grab_client(target)
 	if(istype(target, /client))
@@ -284,6 +270,3 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 		var/datum/mind/M = target
 		if(M.current && M.current.client)
 			return M.current.client
-
-/datum/log	//exists purely to capture to_chat() output
-	var/log = ""
