@@ -1,10 +1,9 @@
 diff a/code/game/objects/items/devices/PDA/PDA.dm b/code/game/objects/items/devices/PDA/PDA.dm	(rejected hunks)
-@@ -630,7 +630,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
- 		L = get(src, /mob/living/silicon)
- 
- 	if(L && L.stat != UNCONSCIOUS)
--		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
-+		to_chat(L, "[bicon(src)] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
- 
- 	update_icon()
- 	add_overlay(image(icon, icon_alert))
+@@ -41,7 +41,6 @@ GLOBAL_LIST_EMPTY(PDAs)
+ 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
+ 	var/notehtml = ""
+ 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
+-	var/cart = "" //A place to stick cartridge menu information
+ 	var/detonatable = TRUE // Can the PDA be blown up?
+ 	var/hidden = 0 // Is the PDA hidden from the PDA list?
+ 	var/emped = 0
