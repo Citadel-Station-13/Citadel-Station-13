@@ -51,3 +51,27 @@
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
 	else
 		return ..()
+
+/obj/structure/closet/secure_closet/personal/proc/reset_lock(usr)
+	if (opened && !broken)
+		registered_name = null
+		desc = initial(desc)
+		to_chat(usr,"<span class='danger'>The lock has been reset.")
+	else if(!opened)
+		to_chat(usr,"<span class='danger'>The locker must be open!")
+	else if(broken)
+		to_chat(usr,"<span class='danger'>The lock is broken!")
+
+/obj/structure/closet/secure_closet/personal/verb/verb_resetlock()
+	set src in oview(1)
+	set category = "Object"
+	set name = "Reset Lock"
+
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
+
+	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
+		reset_lock(usr)
+	else
+		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
+
