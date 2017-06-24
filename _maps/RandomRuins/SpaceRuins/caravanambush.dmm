@@ -179,7 +179,6 @@
 /area/template_noop)
 "aE" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (EAST)";
 	icon_state = "pile";
 	dir = 4
 	},
@@ -256,7 +255,6 @@
 /area/ruin/unpowered/no_grav)
 "aT" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular";
 	icon_state = "singular"
 	},
 /turf/template_noop,
@@ -270,7 +268,6 @@
 /area/ruin/powered)
 "aV" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-singular";
 	icon_state = "singular"
 	},
 /obj/effect/decal/cleanable/shreds,
@@ -395,7 +392,6 @@
 /area/ruin/unpowered)
 "bq" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile (WEST)";
 	icon_state = "pile";
 	dir = 8
 	},
@@ -453,7 +449,6 @@
 /area/ruin/unpowered)
 "bA" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-pile";
 	icon_state = "pile"
 	},
 /turf/template_noop,
@@ -515,7 +510,6 @@
 /area/ruin/unpowered)
 "bK" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
 	icon_state = "plating";
 	dir = 1
 	},
@@ -551,7 +545,6 @@
 /area/ruin/powered)
 "bQ" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (NORTH)";
 	icon_state = "plating";
 	dir = 1
 	},
@@ -626,9 +619,7 @@
 /area/ruin/unpowered)
 "ca" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
-	dir = 8;
-	icon_state = "burst_l";
-	tag = "icon-burst_l (EAST)"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -659,7 +650,6 @@
 /area/ruin/powered)
 "cg" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (EAST)";
 	icon_state = "plating";
 	dir = 4
 	},
@@ -847,9 +837,7 @@
 /area/ruin/unpowered)
 "cF" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
-	dir = 8;
-	icon_state = "burst_r";
-	tag = "icon-burst_r (EAST)"
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered)
@@ -931,7 +919,6 @@
 /area/ruin/unpowered)
 "cR" = (
 /obj/structure/fluff/broken_flooring{
-	tag = "icon-plating (WEST)";
 	icon_state = "plating";
 	dir = 8
 	},

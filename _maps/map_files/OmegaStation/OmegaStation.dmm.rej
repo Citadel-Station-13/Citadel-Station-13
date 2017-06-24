@@ -1,0 +1,131 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -1658,8 +1658,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -10051,8 +10034,7 @@
+ 	},
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 1;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 4;
+@@ -13497,8 +13473,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 8;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -14108,8 +14083,7 @@
+ 	},
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 1;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 4;
+@@ -14924,8 +14897,7 @@
+ "axS" = (
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -19784,8 +19750,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -20933,8 +20897,7 @@
+ /obj/effect/decal/cleanable/dirt,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 1;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/effect/turf_decal/stripes/line,
+ /obj/machinery/atmospherics/pipe/simple/green/visible{
+@@ -21447,8 +21410,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 8;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -21953,8 +21915,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -28438,8 +28393,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -32136,8 +32084,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 8;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -34310,8 +34254,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 8;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -36176,8 +36116,7 @@
+ "bjq" = (
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 1;
+-	on = 1;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/structure/cable/white{
+ 	d1 = 4;

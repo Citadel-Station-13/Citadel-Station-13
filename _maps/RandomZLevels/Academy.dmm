@@ -201,7 +201,6 @@
 /area/awaymission/academy/headmaster)
 "aD" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/carpet,
@@ -536,7 +535,6 @@
 /area/awaymission/academy/headmaster)
 "bL" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -747,7 +745,6 @@
 /area/awaymission/academy/classrooms)
 "cr" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -912,7 +909,6 @@
 /area/awaymission/academy/classrooms)
 "cS" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -990,7 +986,6 @@
 /area/awaymission/academy/classrooms)
 "dd" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -1068,7 +1063,6 @@
 /area/awaymission/academy/classrooms)
 "dr" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
@@ -1550,7 +1544,6 @@
 /area/awaymission/academy/classrooms)
 "eP" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
@@ -1616,7 +1609,6 @@
 "fa" = (
 /obj/structure/table,
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /obj/item/weapon/reagent_containers/food/snacks/burger/spell,
@@ -1986,9 +1978,7 @@
 "fS" = (
 /obj/structure/window/reinforced,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "fT" = (
 /obj/structure/table/reinforced,
@@ -2189,7 +2179,6 @@
 /area/awaymission/academy/classrooms)
 "gv" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/white/side{
@@ -2198,7 +2187,6 @@
 /area/awaymission/academy/classrooms)
 "gw" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -2209,14 +2197,12 @@
 /area/awaymission/academy/academycellar)
 "gy" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/grimy,
 /area/awaymission/academy/academyaft)
 "gz" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/vault{
@@ -2307,9 +2293,7 @@
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing,
 /obj/effect/turf_decal/delivery,
-/turf/open/floor/plasteel{
-	name = "floor"
-	},
+/turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
 "gL" = (
 /mob/living/simple_animal/hostile/bear,
@@ -2793,7 +2777,6 @@
 /area/awaymission/academy/academyaft)
 "hQ" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -2874,7 +2857,6 @@
 /area/awaymission/academy/academyaft)
 "id" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/hydrofloor,
@@ -2991,7 +2973,6 @@
 /area/awaymission/academy/academyaft)
 "iv" = (
 /obj/structure/sink{
-	icon_state = "sink";
 	dir = 8;
 	pixel_x = -12;
 	pixel_y = 2
@@ -3002,7 +2983,6 @@
 /area/awaymission/academy/academyaft)
 "iw" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -3011,21 +2991,18 @@
 /area/awaymission/academy/academyaft)
 "ix" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iy" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 4
 	},
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
 "iz" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -3066,7 +3043,6 @@
 /area/awaymission/academy/academyaft)
 "iE" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /obj/structure/rack,
@@ -3234,9 +3210,7 @@
 	},
 /area/awaymission/academy/academyaft)
 "iY" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_l"
-	},
+/obj/structure/shuttle/engine/propulsion/left,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "iZ" = (
@@ -3244,9 +3218,7 @@
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "ja" = (
-/obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion_r"
-	},
+/obj/structure/shuttle/engine/propulsion/right,
 /turf/open/space,
 /area/awaymission/academy/academyaft)
 "jb" = (
@@ -3368,7 +3340,6 @@
 /area/awaymission/academy/academyaft)
 "jm" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/carpet,
@@ -4324,7 +4295,6 @@
 /area/awaymission/academy/academyengine)
 "mp" = (
 /obj/machinery/light{
-	icon_state = "tube1";
 	dir = 8
 	},
 /turf/open/floor/plasteel,

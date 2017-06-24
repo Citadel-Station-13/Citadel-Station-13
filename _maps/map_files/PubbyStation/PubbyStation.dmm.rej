@@ -1,0 +1,23 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -2891,9 +2887,7 @@
+ "agz" = (
+ /obj/machinery/atmospherics/components/unary/vent_pump{
+ 	dir = 1;
+-	external_pressure_bound = 101.325;
+-	on = 1;
+-	pressure_checks = 1
++	on = 1
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/general/hidden{
+ 	dir = 4
+@@ -45492,9 +45462,7 @@
+ 	},
+ /obj/machinery/atmospherics/components/unary/vent_pump{
+ 	dir = 4;
+-	external_pressure_bound = 101.325;
+-	on = 1;
+-	pressure_checks = 1
++	on = 1
+ 	},
+ /turf/open/floor/plasteel/yellow/side{
+ 	dir = 8

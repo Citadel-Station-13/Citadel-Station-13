@@ -1,0 +1,9 @@
+diff a/_maps/RandomZLevels/spacebattle.dmm b/_maps/RandomZLevels/spacebattle.dmm	(rejected hunks)
+@@ -2535,7 +2535,6 @@
+ "io" = (
+ /obj/structure/sink{
+ 	dir = 4;
+-	icon_state = "sink";
+ 	pixel_x = 11
+ 	},
+ /turf/open/floor/plasteel/freezer,

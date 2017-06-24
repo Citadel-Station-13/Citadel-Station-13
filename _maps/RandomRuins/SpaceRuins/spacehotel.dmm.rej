@@ -1,0 +1,9 @@
+diff a/_maps/RandomRuins/SpaceRuins/spacehotel.dmm b/_maps/RandomRuins/SpaceRuins/spacehotel.dmm	(rejected hunks)
+@@ -4525,7 +4522,6 @@
+ /area/ruin/hotel/security)
+ "ly" = (
+ /turf/open/floor/plasteel/red/corner{
+-	icon_state = "redcorner";
+ 	dir = 8
+ 	},
+ /area/ruin/hotel/security)

@@ -1,0 +1,9 @@
+diff a/_maps/RandomZLevels/caves.dmm b/_maps/RandomZLevels/caves.dmm	(rejected hunks)
+@@ -1284,7 +1282,6 @@
+ 	})
+ "cM" = (
+ /obj/machinery/light{
+-	tag = "icon-tube1 (WEST)";
+ 	dir = 8
+ 	},
+ /turf/open/floor/plating{

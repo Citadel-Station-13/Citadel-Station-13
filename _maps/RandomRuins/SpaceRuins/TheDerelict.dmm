@@ -298,7 +298,6 @@
 /area/derelict/solar_control)
 "aI" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -1541,9 +1540,7 @@
 /area/derelict/bridge/access)
 "er" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating,
 /area/derelict/bridge)
@@ -2271,17 +2268,13 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "gv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
@@ -2906,9 +2899,7 @@
 /area/derelict/medical/chapel)
 "iz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/derelict/medical/chapel)
@@ -3112,9 +3103,7 @@
 /area/derelict/arrival)
 "je" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
@@ -3566,9 +3555,7 @@
 /area/derelict/hallway/primary)
 "ko" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -4061,7 +4048,6 @@
 /area/derelict/atmospherics)
 "lL" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	icon_state = "connector_map";
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
@@ -4377,9 +4363,7 @@
 /area/derelict/hallway/primary)
 "mK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
@@ -4653,9 +4637,7 @@
 /area/derelict/hallway/secondary)
 "nw" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
@@ -4822,7 +4804,6 @@
 /area/template_noop)
 "nU" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{
@@ -4940,9 +4921,7 @@
 /area/derelict/se_solar)
 "oj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
+	on = 1
 	},
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)

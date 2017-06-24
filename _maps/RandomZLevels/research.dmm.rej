@@ -1,0 +1,19 @@
+diff a/_maps/RandomZLevels/research.dmm b/_maps/RandomZLevels/research.dmm	(rejected hunks)
+@@ -4174,7 +4174,7 @@
+ 	},
+ /obj/machinery/airalarm{
+ 	dir = 8;
+-	pixel_x = 32;
++	pixel_x = 32
+ 	},
+ /turf/open/floor/plasteel/yellowsiding{
+ 	dir = 4
+@@ -4586,7 +4586,7 @@
+ "mX" = (
+ /obj/machinery/airalarm{
+ 	dir = 8;
+-	pixel_x = 32;
++	pixel_x = 32
+ 	},
+ /turf/open/floor/plasteel/whitegreen/corner{
+ 	dir = 1

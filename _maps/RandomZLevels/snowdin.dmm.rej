@@ -1,0 +1,9 @@
+diff a/_maps/RandomZLevels/snowdin.dmm b/_maps/RandomZLevels/snowdin.dmm	(rejected hunks)
+@@ -4937,7 +4930,6 @@
+ "mU" = (
+ /obj/structure/sink{
+ 	dir = 4;
+-	icon_state = "sink";
+ 	pixel_x = 11
+ 	},
+ /obj/structure/mirror{

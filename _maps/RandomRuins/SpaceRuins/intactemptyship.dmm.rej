@@ -1,0 +1,9 @@
+diff a/_maps/RandomRuins/SpaceRuins/intactemptyship.dmm b/_maps/RandomRuins/SpaceRuins/intactemptyship.dmm	(rejected hunks)
+@@ -32,7 +31,6 @@
+ 	dir = 4
+ 	},
+ /obj/structure/shuttle/engine/heater{
+-	tag = "icon-heater (WEST)";
+ 	dir = 8
+ 	},
+ /turf/open/floor/plating/airless,

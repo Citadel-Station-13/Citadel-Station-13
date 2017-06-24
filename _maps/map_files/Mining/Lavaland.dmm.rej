@@ -1,0 +1,9 @@
+diff a/_maps/map_files/Mining/Lavaland.dmm b/_maps/map_files/Mining/Lavaland.dmm	(rejected hunks)
+@@ -496,7 +496,6 @@
+ 	pixel_x = -23
+ 	},
+ /obj/machinery/light{
+-	icon_state = "tube1";
+ 	dir = 8
+ 	},
+ /obj/structure/table,
