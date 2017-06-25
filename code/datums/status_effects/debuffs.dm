@@ -83,8 +83,13 @@
 	"Move towards the mania motor.", "Come closer.", "Get over here already!", "Keep your eyes on the motor.")
 	var/static/list/flee_messages = list("Oh, NOW you flee.", "Get back here!", "If you were smarter, you'd come back.", "Only fools run.", "You'll be back.")
 	var/static/list/turnoff_messages = list("Why would they turn it-", "What are these idi-", "Fools, fools, all of-", "Are they trying to c-", "All this effort just f-")
-	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"", "\"D*dn't **ey mak* an **te***c*i*n le**?\"", "\"The** f**ls for**t t* make a ***** *f-\"", \
-	"\"No, *O, you **re so cl***-\"", "You hear a yell of frustration, cut off by static.")
+	var/static/list/powerloss_messages = list("\"Oh, the id**ts di***t s***e en**** pow**...\"" = TRUE, "\"D*dn't **ey mak* an **te***c*i*n le**?\"" = TRUE, "\"The** f**ls for**t t* make a ***** *f-\"" = TRUE, \
+	"\"No, *O, you **re so cl***-\"" = TRUE, "You hear a yell of frustration, cut off by static." = FALSE)
+
+/datum/status_effect/maniamotor/on_creation(mob/living/new_owner, obj/structure/destructible/clockwork/powered/mania_motor/new_motor)
+	. = ..()
+	if(.)
+		motor = new_motor
 
 /datum/status_effect/maniamotor/Destroy()
 	motor = null
@@ -103,7 +108,8 @@
 			if(motor.total_accessable_power() > motor.mania_cost)
 				to_chat(owner, "<span class='sevtug[span_part]'>\"[text2ratvar(pick(turnoff_messages))]\"</span>")
 			else
-				to_chat(owner, "<span class='sevtug[span_part]'>[text2ratvar(pick(powerloss_messages))]</span>")
+				var/pickedmessage = pick(powerloss_messages)
+				to_chat(owner, "<span class='sevtug[span_part]'>[powerloss_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 			warned_turnoff = TRUE
 		severity = max(severity - 2, 0)
 		if(!severity)
@@ -164,6 +170,11 @@
 	alert_type = null
 	var/mutable_appearance/marked_underlay
 	var/obj/item/weapon/twohanded/required/mining_hammer/hammer_synced
+
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/mining_hammer/new_hammer_synced)
+	. = ..()
+	if(.)
+		hammer_synced = new_hammer_synced
 
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)

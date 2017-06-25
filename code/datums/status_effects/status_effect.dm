@@ -42,6 +42,16 @@
 		A.attached_effect = src //so the alert can reference us, if it needs to
 		linked_alert = A //so we can reference the alert, if we need to
 	START_PROCESSING(SSfastprocess, src)
+	return TRUE
+
+/datum/status_effect/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	if(owner)
+		owner.clear_alert(id)
+		LAZYREMOVE(owner.status_effects, src)
+		on_remove()
+		owner = null
+	return ..()
 
 /datum/status_effect/process()
 	if(!owner)
