@@ -2038,9 +2038,7 @@
 	},
 /area/derelict/singularity_engine)
 "fM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/singularity_engine)
 "fN" = (
@@ -2797,9 +2795,7 @@
 	},
 /area/derelict/medical/chapel)
 "ih" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/chapel,
 /area/derelict/medical/chapel)
 "ii" = (
@@ -3208,9 +3204,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "jr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless{
 	icon_state = "damaged2"
 	},
@@ -3877,9 +3871,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
 "lf" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/primary)
@@ -4341,9 +4333,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/secondary)
 "mE" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating/airless,
 /area/derelict/hallway/primary)
 "mF" = (
@@ -4478,9 +4468,7 @@
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/hallway/secondary)
 "nc" = (
@@ -4836,9 +4824,7 @@
 /turf/open/floor/plating/airless,
 /area/derelict/se_solar)
 "nW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/airless,
 /area/derelict/se_solar)
 "nX" = (
