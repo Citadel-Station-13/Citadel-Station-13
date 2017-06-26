@@ -414,9 +414,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "ba" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bb" = (
@@ -518,9 +516,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/table,
 /obj/item/weapon/screwdriver/power,
 /obj/item/weapon/wirecutters/power,
@@ -617,9 +613,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -919,9 +914,7 @@
 /area/hallway/primary/central)
 "cp" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/blue/side{
 	dir = 10
 	},
@@ -1034,9 +1027,8 @@
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/entry)
 "cH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/arrival{
 	dir = 8
@@ -1140,9 +1132,8 @@
 /obj/effect/turf_decal/stripes/corner,
 /area/construction)
 "cX" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /obj/effect/turf_decal/stripes/line,
@@ -1171,9 +1162,8 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "db" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	on = 1
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/storage/primary)
