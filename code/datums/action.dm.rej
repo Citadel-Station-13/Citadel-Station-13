@@ -1,0 +1,10 @@
+diff a/code/datums/action.dm b/code/datums/action.dm	(rejected hunks)
+@@ -73,7 +73,7 @@
+ 		if(owner.restrained())
+ 			return 0
+ 	if(check_flags & AB_CHECK_STUN)
+-		if(owner.knockdown || owner.IsStun()
++		if(owner.knockdown || owner.IsStun())
+ 			return 0
+ 	if(check_flags & AB_CHECK_LYING)
+ 		if(owner.lying)

@@ -14,6 +14,8 @@
 	maxHealth = 20
 	pass_flags = PASSMOB
 
+	status_flags = (CANPUSH | CANSTUN)
+
 	radio_key = /obj/item/device/encryptionkey/headset_med
 	radio_channel = "Medical"
 
@@ -77,6 +79,9 @@
 	if(!on)
 		icon_state = "medibot0"
 		return
+	if(IsStun())
+		icon_state = "medibota"
+		return
 	if(mode == BOT_HEALING)
 		icon_state = "medibots[stationary_mode]"
 		return
@@ -96,6 +101,10 @@
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
+
+/mob/living/simple_animal/bot/medbot/update_canmove()
+	. = ..()
+	update_icon()
 
 /mob/living/simple_animal/bot/medbot/bot_reset()
 	..()
