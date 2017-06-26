@@ -5,7 +5,7 @@
 	cost = 500
 	unit_name = "crate"
 	export_types = list(/obj/structure/closet/crate)
-	exclude_types = list(/obj/structure/closet/crate/large)
+	exclude_types = list(/obj/structure/closet/crate/large, /obj/structure/closet/crate/wooden)
 
 /datum/export/large/crate/total_printout() // That's why a goddamn metal crate costs that much.
 	. = ..()
