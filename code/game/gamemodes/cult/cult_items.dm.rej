@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/cult/cult_items.dm b/code/game/gamemodes/cult/cult_items.dm	(rejected hunks)
+@@ -283,7 +283,7 @@
+ 	icon_state ="shuttlecurse"
+ 	var/global/curselimit = 0
+ 
+-/obj/item/device/shuttle_curse/attack_self(mob/user)
++/obj/item/device/shuttle_curse/attack_self(mob/living/user)
+ 	if(!iscultist(user))
+ 		user.dropItemToGround(src, TRUE)
+ 		user.Knockdown(100)

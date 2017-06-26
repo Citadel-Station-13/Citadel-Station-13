@@ -63,7 +63,7 @@
 
 ///////////////////Options for using captured souls///////////////////////////////////////
 
-/obj/item/device/soulstone/attack_self(mob/user)
+/obj/item/device/soulstone/attack_self(mob/living/user)
 	if(!in_range(src, user))
 		return
 	if(!iscultist(user) && !iswizard(user) && !usability)

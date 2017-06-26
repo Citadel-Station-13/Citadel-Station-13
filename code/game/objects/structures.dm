@@ -48,7 +48,7 @@
 	. = ..()
 	if(!climbable)
 		return
-	if(ismob(O) && user == O && iscarbon(user))
+	if(user == O && iscarbon(O))
 		if(user.canmove)
 			climb_structure(user)
 			return

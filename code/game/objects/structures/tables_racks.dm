@@ -198,7 +198,7 @@
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & FLYING))
 		table_shatter(M)
 
-/obj/structure/table/glass/proc/table_shatter(mob/M)
+/obj/structure/table/glass/proc/table_shatter(mob/living/L)
 	visible_message("<span class='warning'>[src] breaks!</span>",
 		"<span class='danger'>You hear breaking glass.</span>")
 	var/turf/T = get_turf(src)

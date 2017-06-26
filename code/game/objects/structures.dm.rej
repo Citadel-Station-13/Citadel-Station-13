@@ -1,0 +1,10 @@
+diff a/code/game/objects/structures.dm b/code/game/objects/structures.dm	(rejected hunks)
+@@ -6,7 +6,7 @@
+ 	var/climb_time = 20
+ 	var/climb_stun = 20
+ 	var/climbable = FALSE
+-	var/mob/structureclimber
++	var/mob/living/structureclimber
+ 	var/broken = 0 //similar to machinery's stat BROKEN
+ 
+ /obj/structure/Initialize()
