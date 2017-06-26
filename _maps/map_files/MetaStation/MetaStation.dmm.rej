@@ -1,0 +1,143 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -85763,19 +85759,19 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 8
+ 	},
+-/obj/machinery/atmospherics/components/trinary/filter/critical{
+-	dir = 1
++/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
++	dir = 8
+ 	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "deJ" = (
+-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+-	icon_state = "manifold";
+-	dir = 4
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
++	filter_type = "freon";
++	name = "gas filter (freon)"
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "deK" = (
+@@ -85901,20 +85892,16 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 9
+ 	},
+-/obj/machinery/atmospherics/components/trinary/filter/critical{
+-	dir = 1;
+-	filter_type = "o2"
++/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
++	dir = 8
+ 	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "dfe" = (
+-/obj/machinery/atmospherics/pipe/manifold/general/visible{
+-	icon_state = "manifold";
+-	dir = 4
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 5
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/flipped/critical,
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "dff" = (
+@@ -85999,25 +85986,27 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 8
+ 	},
+-/obj/machinery/atmospherics/components/trinary/filter/critical{
+-	dir = 1;
+-	filter_type = "co2"
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	icon_state = "intact";
++	dir = 5
+ 	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "dfu" = (
+-/obj/machinery/atmospherics/pipe/simple/general/visible{
+-	dir = 9
+-	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4
+ 	},
++/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
++	filter_type = "n2"
++	},
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "dfz" = (
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4
+ 	},
++/obj/machinery/meter,
++/obj/machinery/atmospherics/pipe/simple/orange/visible,
+ /turf/open/floor/engine,
+ /area/engine/engineering)
+ "dfA" = (
+@@ -91615,6 +91601,48 @@
+ "dBv" = (
+ /turf/closed/wall,
+ /area/engine/gravity_generator)
++"dBw" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/obj/machinery/atmospherics/pipe/simple/cyan/visible,
++/turf/open/floor/engine,
++/area/engine/engineering)
++"dBx" = (
++/obj/effect/turf_decal/delivery,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
++/turf/open/floor/plasteel/black,
++/area/engine/engineering)
++"dBy" = (
++/obj/machinery/atmospherics/pipe/simple/green/visible{
++	dir = 4
++	},
++/turf/closed/wall/r_wall,
++/area/engine/supermatter)
++"dBz" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/obj/machinery/light{
++	dir = 4;
++	icon_state = "tube1"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
++/turf/open/floor/engine,
++/area/engine/engineering)
++"dBA" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/obj/machinery/atmospherics/pipe/simple/green/visible,
++/turf/open/floor/engine,
++/area/engine/engineering)
++"dBB" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/turf/open/floor/engine,
++/area/engine/engineering)
+ 
+ (1,1,1) = {"
+ aaa
+@@ -133081,7 +133109,7 @@ apg
+ aqs
+ arM
+ dBu
+-dBv
++dBu
+ avv
+ axY
+ axU

@@ -1,19 +1,206 @@
 diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
-@@ -101529,7 +109389,7 @@ cpo
- cqk
- cri
- cqk
--dky
-+dkx
- ctm
- cua
- cKv
-@@ -101786,7 +109646,7 @@ cpo
- cql
- crj
- csf
--dkz
-+dkx
- ctn
- cub
- cuu
+@@ -36730,6 +36731,9 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/machinery/atmospherics/pipe/simple/yellow/visible{
++	dir = 6
++	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -37565,13 +37575,8 @@
+ /area/engine/engineering)
+ "bqt" = (
+ /obj/effect/turf_decal/stripes/line,
+-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+-	dir = 8;
+-	filter_type = "co2";
+-	icon_state = "filter_off_f";
+-	name = "gas filter (CO2)";
+-	on = 1;
+-	tag = "icon-filter_off_f (WEST)"
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	dir = 5
+ 	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+@@ -37591,14 +37595,8 @@
+ /area/engine/engineering)
+ "bqv" = (
+ /obj/effect/turf_decal/stripes/line,
+-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+-	dir = 8;
+-	filter_type = "o2";
+-	icon_state = "filter_off_f";
+-	name = "gas filter (O2)";
+-	on = 1;
+-	tag = "icon-filter_off_f (WEST)"
+-	},
++/obj/machinery/meter,
++/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -37608,15 +37606,14 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 6
+ 	},
+-/obj/machinery/atmospherics/pipe/simple/general/visible{
+-	dir = 4
+-	},
+-/obj/machinery/meter,
+ /obj/machinery/camera{
+ 	c_tag = "SM North";
+ 	dir = 1;
+ 	network = list("SS13","CE")
+ 	},
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	dir = 4
++	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -37652,14 +37648,7 @@
+ /area/engine/engineering)
+ "bqz" = (
+ /obj/effect/turf_decal/stripes/line,
+-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
+-	dir = 8;
+-	filter_type = "";
+-	icon_state = "filter_off_f";
+-	name = "gas filter (Custom)";
+-	on = 1;
+-	tag = "icon-filter_off_f (WEST)"
+-	},
++/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -39387,8 +39376,9 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/machinery/door/poddoor/shutters{
+-	id = "SM1"
++/obj/machinery/door/poddoor/shutters/preopen{
++	id = "SM1";
++	name = "Radiation Chamber Shutters"
+ 	},
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -39481,8 +39471,9 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/machinery/door/poddoor/shutters{
+-	id = "SM2"
++/obj/machinery/door/poddoor/shutters/preopen{
++	id = "SM2";
++	name = "Radiation Chamber Shutters"
+ 	},
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -42364,12 +42360,12 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4
+ 	},
+-/obj/machinery/atmospherics/pipe/simple/general/visible,
+ /obj/structure/cable/yellow{
+ 	d1 = 1;
+ 	d2 = 2;
+ 	icon_state = "1-2"
+ 	},
++/obj/machinery/atmospherics/pipe/simple/green/visible,
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -43617,6 +43610,10 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/machinery/atmospherics/pipe/simple/green/visible{
++	dir = 5;
++	initialize_directions = 12
++	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -43626,14 +43623,15 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 1
+ 	},
+-/obj/machinery/atmospherics/pipe/simple/general/visible{
+-	dir = 4
+-	},
+ /obj/structure/cable{
+ 	d1 = 4;
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/machinery/atmospherics/pipe/simple/green/visible{
++	dir = 4;
++	initialize_directions = 12
++	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -43674,6 +43669,10 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
++/obj/machinery/atmospherics/pipe/simple/green/visible{
++	dir = 4;
++	initialize_directions = 12
++	},
+ /turf/open/floor/engine{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless;
+ 	name = "reinforced floor"
+@@ -97449,6 +97451,47 @@
+ /obj/structure/grille/broken,
+ /turf/open/floor/plating,
+ /area/maintenance/asteroid/starboard)
++"dzc" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/machinery/atmospherics/components/trinary/filter/critical{
++	dir = 4;
++	filter_type = "freon";
++	name = "gas filter (freon)"
++	},
++/turf/open/floor/engine{
++	baseturf = /turf/open/floor/plating/asteroid/airless;
++	name = "reinforced floor"
++	},
++/area/engine/engineering)
++"dzd" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/machinery/meter,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
++	icon_state = "intact";
++	dir = 8
++	},
++/turf/open/floor/engine{
++	baseturf = /turf/open/floor/plating/asteroid/airless;
++	name = "reinforced floor"
++	},
++/area/engine/engineering)
++"dze" = (
++/obj/effect/turf_decal/delivery,
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	dir = 4
++	},
++/turf/open/floor/plasteel/black{
++	baseturf = /turf/open/floor/plating/asteroid/airless
++	},
++/area/engine/engineering)
++"dzf" = (
++/obj/machinery/atmospherics/pipe/simple/cyan/visible,
++/turf/closed/wall/r_wall,
++/area/engine/supermatter)
+ 
+ (1,1,1) = {"
+ aaa
