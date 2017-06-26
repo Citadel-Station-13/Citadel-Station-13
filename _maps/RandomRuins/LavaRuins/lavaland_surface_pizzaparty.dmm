@@ -225,7 +225,6 @@
 /area/space)
 "C" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (EAST)";
 	icon_state = "wooden_chair_wings";
 	dir = 4
 	},
@@ -292,7 +291,6 @@
 /area/ruin/unpowered)
 "K" = (
 /obj/structure/chair/wood/wings{
-	tag = "icon-wooden_chair_wings (NORTH)";
 	icon_state = "wooden_chair_wings";
 	dir = 1
 	},

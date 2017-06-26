@@ -1,0 +1,45 @@
+diff a/_maps/RandomZLevels/moonoutpost19.dmm b/_maps/RandomZLevels/moonoutpost19.dmm	(rejected hunks)
+@@ -3233,9 +3173,7 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/structure/alien/weeds{
+-	icon_state = "weeds2"
+-	},
++/obj/structure/alien/weeds,
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 8
+ 	},
+@@ -3324,9 +3258,7 @@
+ 	name = "Acid-Proof mounted igniter";
+ 	pixel_y = 25
+ 	},
+-/obj/structure/alien/weeds{
+-	icon_state = "weeds1"
+-	},
++/obj/structure/alien/weeds,
+ /obj/structure/alien/resin/wall,
+ /turf/open/floor/engine,
+ /area/awaycontent/a2{
+@@ -4586,9 +4470,7 @@
+ 	d2 = 2;
+ 	icon_state = "1-2"
+ 	},
+-/obj/structure/alien/weeds{
+-	icon_state = "weeds2"
+-	},
++/obj/structure/alien/weeds,
+ /turf/open/floor/plasteel/whitepurple/corner{
+ 	dir = 2;
+ 	heat_capacity = 1e+006
+@@ -5437,9 +5293,7 @@
+ 	name = "Acid-Proof mounted igniter";
+ 	pixel_y = -25
+ 	},
+-/obj/structure/alien/weeds{
+-	icon_state = "weeds2"
+-	},
++/obj/structure/alien/weeds,
+ /obj/structure/alien/resin/wall,
+ /turf/open/floor/engine,
+ /area/awaycontent/a2{

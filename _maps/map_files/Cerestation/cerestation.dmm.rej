@@ -1,19 +1,12 @@
 diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
-@@ -101529,7 +109389,7 @@ cpo
- cqk
- cri
- cqk
--dky
-+dkx
- ctm
- cua
- cKv
-@@ -101786,7 +109646,7 @@ cpo
- cql
- crj
- csf
--dkz
-+dkx
- ctn
- cub
- cuu
+@@ -88301,9 +88146,7 @@
+ "dls" = (
+ /obj/machinery/atmospherics/components/unary/vent_scrubber{
+ 	dir = 4;
+-	on = 1;
+-	scrub_N2O = 0;
+-	scrub_Toxins = 0
++	on = 1
+ 	},
+ /obj/machinery/light{
+ 	dir = 8

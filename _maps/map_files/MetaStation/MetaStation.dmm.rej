@@ -1,0 +1,34 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -10178,9 +10172,7 @@
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/effect/turf_decal/delivery,
+-/turf/open/floor/plasteel{
+-	name = "floor"
+-	},
++/turf/open/floor/plasteel,
+ /area/engine/gravity_generator)
+ "ath" = (
+ /obj/machinery/power/smes{
+@@ -17056,9 +17028,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/structure/disposalpipe/segment,
+ /obj/effect/turf_decal/delivery,
+-/turf/open/floor/plasteel{
+-	name = "floor"
+-	},
++/turf/open/floor/plasteel,
+ /area/quartermaster/warehouse)
+ "aFL" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+@@ -25200,9 +25140,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/item/weapon/storage/firstaid/regular,
+ /obj/effect/turf_decal/delivery,
+-/turf/open/floor/plasteel{
+-	name = "floor"
+-	},
++/turf/open/floor/plasteel,
+ /area/quartermaster/storage)
+ "aVI" = (
+ /obj/effect/landmark/lightsout,

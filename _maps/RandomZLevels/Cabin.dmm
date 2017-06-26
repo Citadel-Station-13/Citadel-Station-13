@@ -155,7 +155,6 @@
 /area/awaymission/cabin)
 "aB" = (
 /obj/structure/toilet{
-	icon_state = "toilet00";
 	dir = 8
 	},
 /obj/machinery/light/small{
@@ -180,7 +179,6 @@
 /area/awaymission/cabin)
 "aE" = (
 /obj/machinery/power/terminal{
-	icon_state = "term";
 	dir = 1
 	},
 /obj/structure/cable{

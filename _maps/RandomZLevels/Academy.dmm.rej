@@ -1,0 +1,25 @@
+diff a/_maps/RandomZLevels/Academy.dmm b/_maps/RandomZLevels/Academy.dmm	(rejected hunks)
+@@ -218,7 +217,6 @@
+ 	icon_state = "1-2"
+ 	},
+ /obj/machinery/light{
+-	icon_state = "tube1";
+ 	dir = 8
+ 	},
+ /turf/open/floor/carpet,
+@@ -2957,7 +2937,6 @@
+ "iA" = (
+ /obj/structure/sink{
+ 	dir = 4;
+-	icon_state = "sink";
+ 	pixel_x = 11
+ 	},
+ /turf/open/floor/plasteel/cafeteria{
+@@ -3270,7 +3248,6 @@
+ 	icon_state = "1-2"
+ 	},
+ /obj/machinery/light{
+-	icon_state = "tube1";
+ 	dir = 4
+ 	},
+ /turf/open/floor/carpet,

@@ -1,0 +1,9 @@
+diff a/_maps/map_files/TgStation/tgstation.2.1.3.dmm b/_maps/map_files/TgStation/tgstation.2.1.3.dmm	(rejected hunks)
+@@ -51276,7 +51276,6 @@
+ 	dir = 1;
+ 	external_pressure_bound = 0;
+ 	frequency = 1441;
+-	icon_state = "vent_map";
+ 	id_tag = "air_out";
+ 	internal_pressure_bound = 2000;
+ 	on = 1;
