@@ -1,0 +1,21 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -2366,8 +2322,7 @@
+ 	freerange = 0;
+ 	frequency = 1459;
+ 	name = "Station Intercom (General)";
+-	pixel_x = -28;
+-	pixel_y = 0
++	pixel_x = -28
+ 	},
+ /obj/structure/table,
+ /obj/item/weapon/storage/backpack/duffelbag/sec/surgery{
+@@ -31069,8 +30594,7 @@
+ 	dir = 8
+ 	},
+ /obj/structure/window/reinforced{
+-	dir = 4;
+-	pixel_x = 0
++	dir = 4
+ 	},
+ /turf/open/floor/plating/airless,
+ /area/shuttle/transport)

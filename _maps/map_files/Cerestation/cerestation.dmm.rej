@@ -1,19 +1,58 @@
 diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
-@@ -101529,7 +109389,7 @@ cpo
- cqk
- cri
- cqk
--dky
-+dkx
- ctm
- cua
- cKv
-@@ -101786,7 +109646,7 @@ cpo
- cql
- crj
- csf
--dkz
-+dkx
- ctn
- cub
- cuu
+@@ -1088,8 +1081,7 @@
+ 	dir = 2;
+ 	icon = 'icons/mob/robots.dmi';
+ 	icon_state = "robot_old";
+-	name = "Cyborg Statue";
+-	pixel_x = 0
++	name = "Cyborg Statue"
+ 	},
+ /turf/open/floor/circuit{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -1134,8 +1126,7 @@
+ 	dir = 2;
+ 	icon = 'icons/mob/robots.dmi';
+ 	icon_state = "robot_old";
+-	name = "Cyborg Statue";
+-	pixel_x = 0
++	name = "Cyborg Statue"
+ 	},
+ /turf/open/floor/circuit{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -66973,12 +66853,8 @@
+ /area/science/lab)
+ "crC" = (
+ /obj/item/weapon/folder/white,
+-/obj/item/weapon/disk/tech_disk{
+-	pixel_x = 0
+-	},
+-/obj/item/weapon/disk/tech_disk{
+-	pixel_x = 0
+-	},
++/obj/item/weapon/disk/tech_disk,
++/obj/item/weapon/disk/tech_disk,
+ /obj/item/weapon/disk/design_disk,
+ /obj/item/weapon/disk/design_disk,
+ /obj/structure/table/glass,
+@@ -69918,9 +69789,7 @@
+ 	pixel_x = 6;
+ 	pixel_y = -4
+ 	},
+-/obj/item/device/assembly/timer{
+-	pixel_x = 0
+-	},
++/obj/item/device/assembly/timer,
+ /obj/structure/table/reinforced,
+ /turf/open/floor/plasteel/whitepurple/side{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -82924,9 +82778,7 @@
+ /turf/open/floor/plating/airless,
+ /area/maintenance/disposal/incinerator)
+ "cVu" = (
+-/obj/structure/sign/fire{
+-	pixel_x = 0
+-	},
++/obj/structure/sign/fire,
+ /turf/closed/wall/r_wall,
+ /area/maintenance/disposal/incinerator)
+ "cVv" = (
