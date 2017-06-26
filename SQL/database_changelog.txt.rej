@@ -1,0 +1,34 @@
+diff a/SQL/database_changelog.txt b/SQL/database_changelog.txt	(rejected hunks)
+@@ -2,7 +2,7 @@
+ 
+ Modified table 'poll_option', removing the column 'percentagecalc'.
+ 
+-ALTER TABLE `feedback`.`poll_option` DROP COLUMN `percentagecalc`
++ALTER TABLE `poll_option` DROP COLUMN `percentagecalc`
+ 
+ Remember to add a prefix to the table name if you use them.
+ 
+@@ -13,11 +13,11 @@ Remember to add a prefix to the table name if you use them.
+ Modified table 'death', adding column 'round_id', removing column 'gender' and replacing column 'coord' with the columns 'x_coord', 'y_coord' and 'z_coord'.
+ 
+ START TRANSACTION;
+-ALTER TABLE `feedback`.`death` DROP COLUMN `gender`, ADD COLUMN `x_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `coord`, ADD COLUMN `y_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `x_coord`, ADD COLUMN `z_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `y_coord`, ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`;
++ALTER TABLE `death` DROP COLUMN `gender`, ADD COLUMN `x_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `coord`, ADD COLUMN `y_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `x_coord`, ADD COLUMN `z_coord` SMALLINT(5) UNSIGNED NOT NULL AFTER `y_coord`, ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`;
+ SET SQL_SAFE_UPDATES = 0;
+-UPDATE `feedback`.`death` SET `x_coord` = SUBSTRING_INDEX(`coord`, ',', 1), `y_coord` = SUBSTRING_INDEX(SUBSTRING_INDEX(`coord`, ',', 2), ',', -1), `z_coord` = SUBSTRING_INDEX(`coord`, ',', -1);
++UPDATE `death` SET `x_coord` = SUBSTRING_INDEX(`coord`, ',', 1), `y_coord` = SUBSTRING_INDEX(SUBSTRING_INDEX(`coord`, ',', 2), ',', -1), `z_coord` = SUBSTRING_INDEX(`coord`, ',', -1);
+ SET SQL_SAFE_UPDATES = 1;
+-ALTER TABLE `feedback`.`death` DROP COLUMN `coord`;
++ALTER TABLE `death` DROP COLUMN `coord`;
+ COMMIT;
+ 
+ Remember to add a prefix to the table name if you use them.
+@@ -36,7 +36,7 @@ UPDATE death SET coord = CONCAT(SUBSTRING_INDEX(coord, ',', 2), ', ', CASE TRIM(
+ 
+ Modified table 'ban', adding the column 'round_id'.
+ 
+-ALTER TABLE `feedback`.`ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
++ALTER TABLE `ban` ADD COLUMN `round_id` INT(11) NOT NULL AFTER `server_port`
+ 
+ Remember to add a prefix to the table name if you use them.
+ 
