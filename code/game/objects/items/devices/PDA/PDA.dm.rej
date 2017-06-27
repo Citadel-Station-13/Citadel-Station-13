@@ -1,9 +1,0 @@
-diff a/code/game/objects/items/devices/PDA/PDA.dm b/code/game/objects/items/devices/PDA/PDA.dm	(rejected hunks)
-@@ -41,7 +41,6 @@ GLOBAL_LIST_EMPTY(PDAs)
- 	var/note = "Congratulations, your station has chosen the Thinktronic 5230 Personal Data Assistant!" //Current note in the notepad function
- 	var/notehtml = ""
- 	var/notescanned = 0 // True if what is in the notekeeper was from a paper.
--	var/cart = "" //A place to stick cartridge menu information
- 	var/detonatable = TRUE // Can the PDA be blown up?
- 	var/hidden = 0 // Is the PDA hidden from the PDA list?
- 	var/emped = 0
