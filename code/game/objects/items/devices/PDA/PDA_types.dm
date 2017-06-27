@@ -117,7 +117,7 @@
 	name = "captain PDA"
 	default_cartridge = /obj/item/weapon/cartridge/captain
 	icon_state = "pda-captain"
-	detonate = 0
+	detonatable = FALSE
 
 /obj/item/device/pda/cargo
 	name = "cargo technician PDA"
