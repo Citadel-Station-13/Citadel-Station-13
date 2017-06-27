@@ -827,7 +827,10 @@
 		if(slot_belt)
 			if(H.belt)
 				return 0
-			if(!H.w_uniform && !nojumpsuit)
+
+			var/obj/item/bodypart/O = H.get_bodypart("chest")
+
+			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
@@ -867,7 +870,9 @@
 		if(slot_wear_id)
 			if(H.wear_id)
 				return 0
-			if(!H.w_uniform && !nojumpsuit)
+
+			var/obj/item/bodypart/O = H.get_bodypart("chest")
+			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
@@ -879,7 +884,10 @@
 				return 0
 			if(H.l_store)
 				return 0
-			if(!H.w_uniform && !nojumpsuit)
+
+			var/obj/item/bodypart/O = H.get_bodypart("l_leg")
+
+			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0
@@ -892,7 +900,10 @@
 				return 0
 			if(H.r_store)
 				return 0
-			if(!H.w_uniform && !nojumpsuit)
+
+			var/obj/item/bodypart/O = H.get_bodypart("r_leg")
+
+			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
 				if(!disable_warning)
 					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
 				return 0

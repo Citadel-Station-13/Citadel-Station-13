@@ -13,7 +13,8 @@
 	force_wielded = 20
 	throwforce = 5
 	throw_speed = 4
-	luminosity = 4
+	light_range = 5
+	light_power = 1
 	armour_penetration = 10
 	materials = list(MAT_METAL=1150, MAT_GLASS=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -175,8 +176,9 @@
 		if(istype(T, denied_type) || istype(src, T.denied_type))
 			to_chat(user, "<span class='warning'>You can't seem to attach [src] to [H]. Maybe remove a few trophies?</span>")
 			return FALSE
+	if(!user.transferItemToLoc(src, H))
+		return
 	H.trophies += src
-	forceMove(H)
 	to_chat(user, "<span class='notice'>You attach [src] to [H].</span>")
 	return TRUE
 
