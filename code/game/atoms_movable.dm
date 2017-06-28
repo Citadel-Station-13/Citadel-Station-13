@@ -197,6 +197,8 @@
 
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
+	
+	unbuckle_all_mobs(force=1)
 
 	. = ..()
 	if(loc)
@@ -679,3 +681,7 @@
 	set waitfor = FALSE
 	if(!anchored && has_gravity())
 		step(src, movedir)
+
+//Returns an atom's power cell, if it has one. Overload for individual items.
+/atom/movable/proc/get_cell()
+	return

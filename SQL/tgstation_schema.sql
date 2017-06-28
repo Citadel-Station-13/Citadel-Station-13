@@ -119,6 +119,7 @@ CREATE TABLE `connection_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
 --
 -- Table structure for table `death`
 --
@@ -129,10 +130,13 @@ DROP TABLE IF EXISTS `death`;
 CREATE TABLE `death` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pod` varchar(50) NOT NULL,
-  `coord` varchar(32) NOT NULL,
+  `x_coord` smallint(5) unsigned NOT NULL,
+  `y_coord` smallint(5) unsigned NOT NULL,
+  `z_coord` smallint(5) unsigned NOT NULL,
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -140,7 +144,6 @@ CREATE TABLE `death` (
   `byondkey` varchar(32) NOT NULL,
   `laname` varchar(96) DEFAULT NULL,
   `lakey` varchar(32) DEFAULT NULL,
-  `gender` enum('neuter','male','female','plural') NOT NULL,
   `bruteloss` smallint(5) unsigned NOT NULL,
   `brainloss` smallint(5) unsigned NOT NULL,
   `fireloss` smallint(5) unsigned NOT NULL,
@@ -151,6 +154,7 @@ CREATE TABLE `death` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `feedback`
