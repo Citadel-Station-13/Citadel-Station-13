@@ -35,7 +35,7 @@
 	return TRUE
 
 /datum/language/proc/get_icon()
-	return "<img class=icon src=\ref[icon] iconstate='[icon_state]'>"
+	return "[bicon(icon(icon, icon_state))]"
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
@@ -55,6 +55,18 @@
 		full_name += " [capitalize(lowertext(new_name))]"
 
 	return "[trim(full_name)]"
+
+/datum/language/proc/check_cache(input)
+	var/lookup = check_cache(input)
+	if(lookup)
+		return lookup
+
+/datum/language/proc/add_to_cache(input, scrambled_text)
+	add_to_cache(input, scrambled_text)
+
+
+	return scrambled_text
+
 
 /datum/language/proc/scramble(input)
 

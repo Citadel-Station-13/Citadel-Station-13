@@ -183,6 +183,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
+	S["menuoptions"]		>> menuoptions
+	S["enable_tips"]		>> enable_tips
+	S["tip_delay"]			>> tip_delay
 	S["parallax"]			>> parallax
 	S["menuoptions"]			>> menuoptions
 	//citadel code
@@ -249,6 +252,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["clientfps"]			<< clientfps
 	S["parallax"]			<< parallax
 	S["menuoptions"]		<< menuoptions
+	S["enable_tips"]		<< enable_tips
+	S["tip_delay"]			<< tip_delay
 	//citadel code
 	S["arousable"]			<< arousable
 
