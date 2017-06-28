@@ -216,7 +216,7 @@
 /datum/design/rglass
 	name = "Reinforced Glass"
 	id = "rglass"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | SMELTER
 	materials = list(MAT_METAL = 1000, MAT_GLASS = MINERAL_MATERIAL_AMOUNT)
 	build_path = /obj/item/stack/sheet/rglass
 	category = list("initial","Construction")
@@ -791,7 +791,7 @@
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
 	build_path = /obj/item/device/modular_computer/tablet
 	category = list("initial","Misc")
-	
+
 /datum/design/slime_scanner
 	name = "Slime Scanner"
 	id = "slime_scanner"
@@ -799,4 +799,3 @@
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
-	
