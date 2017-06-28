@@ -2,9 +2,7 @@ sound/ambience/title1.ogg
 sound/ambience/title2.ogg
 sound/ambience/title3.ogg
 sound/ambience/title4.ogg
-sound/misc/i_did_not_grief_them.ogg
-sound/ambience/clown.ogg
-sound/music/1.ogg
+sound/ambience/clown.oggsound/music/1.ogg
 sound/music/carmenmirandasghost.ogg
 sound/music/century21march.ogg
 sound/music/dawsonschristian.ogg
