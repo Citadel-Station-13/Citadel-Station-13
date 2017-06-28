@@ -1,0 +1,15 @@
+diff a/_maps/map_files/TgStation/tgstation.2.1.3.dmm b/_maps/map_files/TgStation/tgstation.2.1.3.dmm	(rejected hunks)
+@@ -19077,12 +19077,7 @@
+ /turf/open/floor/wood,
+ /area/library)
+ "aQr" = (
+-/obj/structure/closet/crate,
+-/obj/item/clothing/shoes/workboots/mining,
+-/obj/item/clothing/under/rank/curator/treasure_hunter,
+-/obj/item/clothing/suit/curator,
+-/obj/item/clothing/head/curator,
+-/obj/item/weapon/storage/backpack/satchel/explorer,
++/obj/structure/closet/wardrobe/curator,
+ /obj/machinery/light/small,
+ /turf/open/floor/engine/cult,
+ /area/library)
