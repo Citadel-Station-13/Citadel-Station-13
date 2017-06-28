@@ -1516,9 +1516,6 @@
 	icon_state = "4-8";
 	pixel_y = 0
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/AIsatextAS)
 "adr" = (
@@ -2381,10 +2378,10 @@
 	pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/backpack/dufflebag/sec{
+/obj/item/weapon/storage/backpack/duffelbag/sec{
 	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
-	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
-	name = "dufflebag";
+	desc = "A large duffelbag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
+	name = "duffelbag";
 	pixel_y = 5
 	},
 /obj/item/clothing/mask/balaclava,
@@ -3305,7 +3302,6 @@
 	name = "Prison Wing";
 	req_access_txt = "1"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -3326,7 +3322,6 @@
 /area/security/prison)
 "ahf" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/door/airlock/glass_security{
 	name = "Prison Wing";
 	req_access_txt = "1"
@@ -12775,9 +12770,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/heads/hop)
 "aAk" = (
@@ -21762,19 +21754,11 @@
 /obj/item/weapon/soap,
 /obj/structure/table/wood,
 /obj/item/weapon/bikehorn,
+/obj/item/toy/cattoy,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aSY" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/crayons{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/reagent_containers/food/snacks/pie/cream{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/toy/cattoy,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/theatre)
 "aSZ" = (
@@ -26849,7 +26833,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Diner"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -26865,7 +26848,6 @@
 /obj/machinery/door/airlock/glass{
 	name = "Diner"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -36271,7 +36253,7 @@
 	},
 /obj/effect/landmark/blobstart,
 /obj/item/weapon/melee/baton/cattleprod{
-	bcell = new /obj/item/weapon/stock_parts/cell/high()
+	cell = new /obj/item/weapon/stock_parts/cell/high()
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/exam_room)
@@ -45842,7 +45824,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -48897,7 +48878,7 @@
 /area/hallway/primary/central)
 "bWU" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy,
+/obj/item/weapon/storage/fancy/donut_box,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -53229,7 +53210,6 @@
 "cho" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -69752,7 +69732,7 @@ cdi
 cdz
 cdi
 ceb
-cex
+cdi
 ceO
 cdi
 ccZ
@@ -74304,7 +74284,7 @@ aEz
 aEz
 aEz
 aEz
-cht
+chu
 chA
 chG
 chI
@@ -74565,7 +74545,7 @@ chu
 chB
 chH
 chJ
-chO
+aNF
 chy
 chF
 aMT
@@ -74807,10 +74787,10 @@ atX
 awA
 agv
 ayy
-azF
-azF
-azF
-azF
+aCZ
+aCZ
+aCZ
+aCZ
 aCZ
 aDB
 aEw
@@ -85929,7 +85909,7 @@ bKT
 bLz
 bKT
 bMG
-bNn
+bNg
 bNI
 bOc
 bMb
@@ -93114,7 +93094,7 @@ bLR
 bZp
 bBF
 bCP
-bDI
+bJl
 bCP
 bHI
 bCP

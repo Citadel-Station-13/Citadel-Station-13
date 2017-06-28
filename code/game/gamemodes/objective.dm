@@ -658,7 +658,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		var/n_p = 1 //autowin
 		if (SSticker.current_state == GAME_STATE_SETTING_UP)
 			for(var/mob/dead/new_player/P in GLOB.player_list)
-				if(P.client && P.ready && P.mind!=owner)
+				if(P.client && P.ready == PLAYER_READY_TO_PLAY && P.mind!=owner)
 					n_p ++
 		else if (SSticker.IsRoundInProgress())
 			for(var/mob/living/carbon/human/P in GLOB.player_list)
@@ -701,7 +701,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		explanation_text = "Destroy [target.name], the experimental AI."
 	else
 		explanation_text = "Free Objective"
-	
+
 /datum/objective/destroy/internal
 	var/stolen = FALSE 		//Have we already eliminated this target?
 
