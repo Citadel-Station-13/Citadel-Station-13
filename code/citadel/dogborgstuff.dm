@@ -755,24 +755,24 @@
 		return
 	if(target.anchored)
 		return
-	if (!target.devourable)
-		to_chat(user, "The target registers an error code. Unable to insert into [src.name].")
-		return
 	if(ishuman(target))
 		var/mob/living/carbon/human/brigman = target
+		if (!brigman.devourable)
+			to_chat(user, "The target registers an error code. Unable to insert into [src.name].")
+			return
 		if(patient)
 			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
 			return
 		if(brigman.buckled)
 			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src.name].</span>")
 			return
-		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src.name].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src.name].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
 		if(do_after(user, 30, brigman) && !patient && !brigman.buckled)
 			brigman.forceMove(src)
 			brigman.reset_perspective(src)
 			update_patient()
 			START_PROCESSING(SSobj, src)
-			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
+			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [brigman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
 		return
 	return
@@ -799,13 +799,9 @@
 		return
 	if(target.anchored)
 		return
-	if (!target.devourable)
-		to_chat(user, "The target registers an error code.")
-		return
 	if(length(contents) > (max_item_count - 1))
 		to_chat(user,"<span class='warning'>Your [src.name] is full. Eject or process contents to continue.</span>")
 		return
-	
 	if(istype(target,/obj/item))
 		var/obj/item/target_obj = target
 		if(target_obj.type in important_items)
@@ -826,6 +822,9 @@
 
 	else if(ishuman(target))
 		var/mob/living/carbon/human/trashman = target
+		if (!trashman.devourable)
+			to_chat(user, "The target registers an error code.")
+			return
 		if(patient)
 			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
 			return
