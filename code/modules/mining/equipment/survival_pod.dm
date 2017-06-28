@@ -93,6 +93,7 @@
 	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/survival/survival.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/survival/survival_overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_pod
 	opacity = FALSE
 	glass = TRUE
@@ -308,7 +309,7 @@
 						/obj/item/weapon/melee/supermatter_sword,
 						/obj/item/weapon/shield/changeling,
 						/obj/item/weapon/lava_staff,
-						/obj/item/weapon/katana/energy,
+						/obj/item/weapon/dash/energy_katana,
 						/obj/item/weapon/hierophant_club,
 						/obj/item/weapon/his_grace,
 						/obj/item/weapon/gun/ballistic/minigun,

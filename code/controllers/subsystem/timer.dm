@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(timer)
 		WARNING(msg)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
-		
+
 		log_world("Active timers at tick [world.time]:")
 		for(var/I in processing)
 			var/datum/timedevent/TE = I
@@ -365,10 +365,13 @@ SUBSYSTEM_DEF(timer)
 	var/datum/timedevent/timer = new(callback, timeToRun, flags, hash)
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
+	return TIMER_ID_NULL
 
 /proc/deltimer(id)
 	if (!id)
 		return FALSE
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
 	if (!istext(id))
 		if (istype(id, /datum/timedevent))
 			qdel(id)
