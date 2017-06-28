@@ -97,6 +97,9 @@
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
 
+/mob/living/silicon/robot/get_cell()
+	return cell
+
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
@@ -195,6 +198,10 @@
 	if(module.type != /obj/item/weapon/robot_module)
 		return
 
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
+		return
+
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
 	"Engineering" = /obj/item/weapon/robot_module/engineering, \
 	"Medical" = /obj/item/weapon/robot_module/medical, \
@@ -202,7 +209,8 @@
 	"Janitor" = /obj/item/weapon/robot_module/janitor, \
 	"Service" = /obj/item/weapon/robot_module/butler, \
 	"MediHound" = /obj/item/weapon/robot_module/medihound, \
-	"Security K9" = /obj/item/weapon/robot_module/k9)
+	"Security K9" = /obj/item/weapon/robot_module/k9, \
+	"Scrub Puppy" = /obj/item/weapon/robot_module/scrubpup)
 	if(!config.forbid_peaceborg)
 		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
@@ -591,9 +599,9 @@
 		icon = 'icons/mob/widerobot.dmi'
 		pixel_x = -16
 		if(sleeper_g == 1)
-			add_overlay("sleeper_g")
+			add_overlay("msleeper_g")
 		if(sleeper_r == 1)
-			add_overlay("sleeper_r")
+			add_overlay("msleeper_r")
 		if(stat == DEAD)
 			icon_state = "medihound-wreck"
 
@@ -604,8 +612,22 @@
 			add_overlay("laser")
 		if(disabler == 1)
 			add_overlay("disabler")
+		if(sleeper_g == 1)
+			add_overlay("ksleeper_g")
+		if(sleeper_r == 1)
+			add_overlay("ksleeper_r")
 		if(stat == DEAD)
 			icon_state = "k9-wreck"
+
+	if(module.cyborg_base_icon == "scrubpup")
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		if(sleeper_g == 1)
+			add_overlay("jsleeper_g")
+		if(sleeper_r == 1)
+			add_overlay("jsleeper_r")
+		if(stat == DEAD)
+			icon_state = "scrubpup-wreck"
 
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
@@ -1136,7 +1158,7 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)

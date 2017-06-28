@@ -25,6 +25,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/area/emergencyLastCallLoc
 	var/emergencyCallAmount = 0		//how many times the escape shuttle was called
 	var/emergencyNoEscape
+	var/emergencyNoRecall = FALSE
 	var/list/hostileEnvironments = list()
 
 		//supply shuttle stuff
@@ -46,7 +47,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 72000 //time before in deciseconds in which the shuttle is auto called. Default is 2 hours.
+	var/auto_call = 99000 //time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!arrivals)
@@ -222,7 +223,7 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
 		return
-	emergency.cancel(/area/centcom)
+	emergency.cancel()
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
@@ -543,3 +544,8 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))
 			return TRUE
+
+/datum/controller/subsystem/shuttle/proc/get_containing_shuttle(atom/A)
+	for(var/obj/docking_port/mobile/M in mobile)
+		if(M.is_in_shuttle_bounds(A))
+			return M
