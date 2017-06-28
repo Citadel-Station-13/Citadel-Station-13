@@ -32,7 +32,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//Something's wrong here
 	var/list/medium = list("fake_alert"=15,"items"=10,"items_other"=10,"dangerflash"=10,"bolts"=5,"flood"=5,"husks"=10,"battle"=15,"self_delusion"=10)
 	//AAAAH
-	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"borer"=10,"delusion"=20,"koolaid"=10)
+	var/list/major = list("fake"=20,"death"=10,"xeno"=10,"singulo"=10,"delusion"=20,"koolaid"=10)
 
 	handling_hal = 1
 	while(hallucination > 20)
@@ -764,8 +764,6 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	switch(hal_type)
 		if("xeno")
 			new /obj/effect/hallucination/xeno_attack(src.loc,src)
-		if("borer")
-			new /obj/effect/hallucination/borer(src.loc,src)
 		if("singulo")
 			new /obj/effect/hallucination/singularity_scare(src.loc,src)
 		if("koolaid")
