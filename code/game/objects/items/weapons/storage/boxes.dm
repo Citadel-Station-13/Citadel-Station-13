@@ -891,8 +891,8 @@
 
 /obj/item/weapon/storage/box/medipens/Surival_box
 	name = "Survival Pen Pack"
-	Desc = "A pack of survival Pens to keep even the most retarded of miners alive"
-	illustation = "syringe"
+	desc = "A pack of survival Pens to keep even the most retarded of miners alive"
+	illustration = "syringe"
 
 /obj/item/weapon/storage/box/medipens/Surival_box/PopulateContents()
 	for(var/i in 1 to 10)
