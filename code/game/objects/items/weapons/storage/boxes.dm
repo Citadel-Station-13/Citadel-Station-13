@@ -887,3 +887,13 @@
 /obj/item/weapon/storage/box/fountainpens/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/pen/fountain(src)
+
+
+/obj/item/weapon/storage/box/medipens/Surival_box
+	name = "Survival Pen Pack"
+	Desc = "A pack of survival Pens to keep even the most retarded of miners alive"
+	illustation = "syringe"
+
+/obj/item/weapon/storage/box/medipens/Surival_box/PopulateContents()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival

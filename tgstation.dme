@@ -166,7 +166,6 @@
 #include "code\citadel\cit_guns.dm"
 #include "code\citadel\cit_kegs.dm"
 #include "code\citadel\cit_reagents.dm"
-#include "code\citadel\Cit_sota.dm"
 #include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\cit_vendors.dm"
 #include "code\citadel\dogborgstuff.dm"
