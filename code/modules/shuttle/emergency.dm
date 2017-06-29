@@ -378,9 +378,9 @@
 							M.parallax_slowdown()
 
 			if(time_left <= 0)
- 				//move each escape pod to its corresponding escape dock
- 				for(var/A in SSshuttle.mobile)
- 					var/obj/docking_port/mobile/M = A
+				//move each escape pod to its corresponding escape dock
+				for(var/A in SSshuttle.mobile)
+					var/obj/docking_port/mobile/M = A
 					M.on_emergency_dock()
 
 				// now move the actual emergency shuttle to centcomm
