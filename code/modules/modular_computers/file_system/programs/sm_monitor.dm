@@ -74,7 +74,7 @@
 			active = null
 			return
 
-		data["active"] = 1
+		data["active"] = TRUE
 		data["SM_integrity"] = active.get_integrity()
 		data["SM_power"] = active.power
 		data["SM_ambienttemp"] = air.temperature
