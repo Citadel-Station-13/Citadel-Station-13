@@ -437,3 +437,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 #define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
 #define GANGSTER_BOSS_STARTING_INFLUENCE 20
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+#define BEAT_CHANNEL 150
