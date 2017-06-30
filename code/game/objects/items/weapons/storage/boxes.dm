@@ -896,4 +896,4 @@
 
 /obj/item/weapon/storage/box/medipens/Surival_box/PopulateContents()
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival
+		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
