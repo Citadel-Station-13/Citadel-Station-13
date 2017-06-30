@@ -894,6 +894,6 @@
 	desc = "A pack of survival Pens to keep even the most retarded of miners alive"
 	illustration = "syringe"
 
-/obj/item/weapon/storage/box/medipens/surival_box/PopulatecContents()
+/obj/item/weapon/storage/box/medipens/surival_box/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/medipen/survival(src)
