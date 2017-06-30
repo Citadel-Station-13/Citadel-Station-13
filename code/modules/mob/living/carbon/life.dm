@@ -16,10 +16,11 @@
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
-
 
 	if(stat != DEAD)
 		return 1
@@ -29,6 +30,7 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
+
 /mob/living/carbon/handle_breathing(times_fired)
 	if((times_fired % 4) == 2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
