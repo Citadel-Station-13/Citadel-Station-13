@@ -268,7 +268,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client
