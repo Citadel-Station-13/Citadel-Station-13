@@ -360,7 +360,7 @@
 			AdjustSleeping(1)
 			Paralyse(5)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
