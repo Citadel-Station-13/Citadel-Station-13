@@ -47,6 +47,25 @@
 	var/obj/S = ..()
 	S.icon_state = "heart-off"
 	return S
+	
+/obj/item/organ/heart/on_life()
+	if(owner.client)
+		var/sound/slowbeat = sound('sound/health/slowbeat.ogg', repeat = TRUE)
+
+		var/sound/fastbeat = sound('sound/health/fastbeat.ogg', repeat = TRUE)
+		var/mob/living/carbon/H = owner
+		if(H.health <= HEALTH_THRESHOLD_CRIT && beat != BEAT_SLOW)
+			beat = BEAT_SLOW
+			H.playsound_local(get_turf(H), slowbeat,40,0, channel = CHANNEL_HEARTBEAT)
+			to_chat(owner, "<span class = 'notice'>You feel your heart slow down...</span>")
+		if(beat == BEAT_SLOW && H.health > HEALTH_THRESHOLD_CRIT)
+			H.stop_sound_channel(CHANNEL_HEARTBEAT)
+			beat = BEAT_NONE
+
+		if(H.jitteriness)
+			if(!beat || beat == BEAT_SLOW)
+				H.playsound_local(get_turf(H),fastbeat,40,0, channel = CHANNEL_HEARTBEAT)
+				beat = BEAT_FAST
 
 
 /obj/item/organ/heart/cursed
