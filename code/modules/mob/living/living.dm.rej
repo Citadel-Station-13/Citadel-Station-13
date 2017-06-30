@@ -1,0 +1,16 @@
+diff a/code/modules/mob/living/living.dm b/code/modules/mob/living/living.dm	(rejected hunks)
+@@ -368,10 +368,10 @@
+ 	setCloneLoss(0, 0)
+ 	setBrainLoss(0)
+ 	setStaminaLoss(0, 0)
+-	SetUnconscious(0, 0)
+-	SetStun(0, 0)
+-	SetKnockdown(0, 0)
+-	SetSleeping(0, 0)
++	SetUnconscious(0, FALSE)
++	SetStun(0, FALSE)
++	SetKnockdown(0, FALSE)
++	SetSleeping(0, FALSE)
+ 	radiation = 0
+ 	nutrition = NUTRITION_LEVEL_FED + 50
+ 	bodytemperature = 310
