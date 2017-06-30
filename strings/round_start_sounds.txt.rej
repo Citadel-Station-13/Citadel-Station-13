@@ -1,0 +1,10 @@
+diff a/strings/round_start_sounds.txt b/strings/round_start_sounds.txt	(rejected hunks)
+@@ -1,6 +1,5 @@
+ sound/ambience/title1.ogg
+ sound/ambience/title2.ogg
+ sound/ambience/title3.ogg
+-sound/ambience/title4.ogg
+ sound/misc/i_did_not_grief_them.ogg
+-sound/ambience/clown.ogg
+\ No newline at end of file
++sound/ambience/clown.ogg
