@@ -21,8 +21,8 @@
 //citadel code
 #define AROUSAL 32
 
-#define STUN		"stun"
-#define WEAKEN		"weaken"
+#define KNOCKDOWN	"knockdown"
+#define UNCONSCIOUS	"unconscious"
 #define PARALYZE	"paralize"
 #define IRRADIATE	"irradiate"
 #define STUTTER		"stutter"
