@@ -175,7 +175,7 @@
  		if("Private Security Officer")
  			name = "Private Security Officer"
  			desc = "A cardboard cutout of a private security officer."
- 			icon_state = "cutout_ntsec
+ 			icon_state = "cutout_ntsec"
 
 	return 1
 
