@@ -1,9 +1,0 @@
-diff a/code/game/objects/items/weapons/clown_items.dm b/code/game/objects/items/weapons/clown_items.dm	(rejected hunks)
-@@ -139,7 +138,6 @@
- 	honksound = 'sound/items/airhorn2.ogg'
- 	cooldowntime = 50
- 	origin_tech = "materials=4;engineering=4"
--	force_string = "HOOOOOOOONK!"
- 
- /obj/item/weapon/bikehorn/golden
- 	name = "golden bike horn"
