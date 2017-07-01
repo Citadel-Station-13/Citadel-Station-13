@@ -135,3 +135,4 @@
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5
