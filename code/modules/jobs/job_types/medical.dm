@@ -38,6 +38,7 @@ Chief Medical Officer
 	suit_store = /obj/item/device/flashlight/pen
 	backpack_contents = list(/obj/item/weapon/melee/classic_baton/telescopic=1)
 
+	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel/med
 	dufflebag = /obj/item/weapon/storage/backpack/dufflebag/med
