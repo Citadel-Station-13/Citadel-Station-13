@@ -148,11 +148,24 @@ Auto Patrol: []"},
 			update_controls()
 
 /mob/living/simple_animal/bot/secbot/proc/retaliate(mob/living/carbon/human/H)
-	threatlevel = H.assess_threat(src)
+	var/judgement_criteria = judgement_criteria()
+	threatlevel = H.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 	threatlevel += 6
 	if(threatlevel >= 4)
 		target = H
 		mode = BOT_HUNT
+
+/mob/living/simple_animal/bot/secbot/proc/judgement_criteria()
+    var/final = FALSE 
+    if(idcheck)
+        final = final|JUDGE_IDCHECK
+    if(check_records)
+        final = final|JUDGE_RECORDCHECK
+    if(weaponscheck)
+        final = final|JUDGE_WEAPONCHECK
+    if(emagged)
+        final = final|JUDGE_EMAGGED
+    return final
 
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
 	if((H.a_intent == INTENT_HARM) || (H.a_intent == INTENT_DISARM))
@@ -352,6 +365,7 @@ Auto Patrol: []"},
 
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
 	anchored = 0
+	var/judgement_criteria = judgement_criteria()
 	for (var/mob/living/carbon/C in view(7,src)) //Let's find us a criminal
 		if((C.stat) || (C.handcuffed))
 			continue
@@ -359,7 +373,7 @@ Auto Patrol: []"},
 		if((C.name == oldtarget_name) && (world.time < last_found + 100))
 			continue
 
-		threatlevel = C.assess_threat(src)
+		threatlevel = C.assess_threat(judgement_criteria, weaponcheck=CALLBACK(src, .proc/check_for_weapons))
 
 		if(!threatlevel)
 			continue
