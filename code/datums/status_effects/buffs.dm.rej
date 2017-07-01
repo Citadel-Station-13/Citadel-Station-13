@@ -1,0 +1,19 @@
+diff a/code/datums/status_effects/buffs.dm b/code/datums/status_effects/buffs.dm	(rejected hunks)
+@@ -70,7 +70,7 @@
+ 	return ..()
+ 
+ /datum/status_effect/vanguard_shield/on_apply()
+-	add_logs(owner, null, "gained Vanguard stun immunity")
++	owner.log_message("gained Vanguard stun immunity", INDIVIDUAL_ATTACK_LOG)
+ 	owner.add_stun_absorption("vanguard", 200, 1, "'s yellow aura momentarily intensifies!", "Your ward absorbs the stun!", " radiating with a soft yellow light!")
+ 	owner.visible_message("<span class='warning'>[owner] begins to faintly glow!</span>", "<span class='brass'>You will absorb all stuns for the next twenty seconds.</span>")
+ 	owner.SetStun(0, FALSE)
+@@ -133,7 +133,7 @@
+ 	return ..()
+ 
+ /datum/status_effect/inathneqs_endowment/on_remove()
+-	add_logs(owner, null, "lost Inath-neq's invulnerability")
++	owner.log_message("lost Inath-neq's invulnerability", INDIVIDUAL_ATTACK_LOG)
+ 	owner.visible_message("<span class='warning'>The light around [owner] flickers and dissipates!</span>", "<span class='boldwarning'>You feel Inath-neq's power fade from your body!</span>")
+ 	owner.status_flags &= ~GODMODE
+ 	playsound(owner, 'sound/magic/ethereal_exit.ogg', 50, 1)
