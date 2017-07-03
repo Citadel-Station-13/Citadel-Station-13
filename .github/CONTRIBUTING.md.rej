@@ -1,0 +1,13 @@
+diff a/.github/CONTRIBUTING.md b/.github/CONTRIBUTING.md	(rejected hunks)
+@@ -240,9 +243,9 @@ This prevents nesting levels from getting deeper then they need to be.
+ 
+ * You are expected to help maintain the code that you add, meaning that if there is a problem then you are likely to be approached in order to fix any issues, runtimes, or bugs.
+ 
+-* Do not divide when you can easily do the same thing with multiplication. (ie `4/2` should be done as `4*0.5`)
++* Do not divide when you can easily convert it to multiplication. (ie `4/2` should be done as `4*0.5`)
+ 
+-#### Grammar and syntax enforcement
++#### Enforced not enforced
+ The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
+ 
+ * English/British spelling on var/proc names
