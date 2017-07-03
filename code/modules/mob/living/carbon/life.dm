@@ -16,6 +16,8 @@
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+	if(stat == DEAD)
+		stop_sound_channel(CHANNEL_HEARTBEAT)
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
@@ -28,6 +30,7 @@
 ///////////////
 
 //Start of a breath chain, calls breathe()
+
 /mob/living/carbon/handle_breathing(times_fired)
 	if((times_fired % 4) == 2 || failed_last_breath)
 		breathe() //Breathe per 4 ticks, unless suffocating
@@ -359,10 +362,16 @@
 			AdjustSleeping(20)
 			Unconscious(100)
 
-	//Jitteryness
+	//Jitteriness
 	if(jitteriness)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
+		var/obj/item/organ/heart/heart = getorgan(/obj/item/organ/heart)
+		if(heart)
+			if(!heart.beat || heart.beat == BEAT_SLOW)
+				stop_sound_channel(BEAT_CHANNEL)
+				playsound_local(src,'sound/health/fastbeat.ogg',40,0, channel = BEAT_CHANNEL)
+				heart.beat = BEAT_FAST
 
 	if(stuttering)
 		stuttering = max(stuttering-1, 0)
@@ -396,3 +405,4 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+>>>>>>> Citadel-Station-13/master

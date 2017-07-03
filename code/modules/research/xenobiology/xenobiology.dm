@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	origin_tech = "biotech=3"
+	container_type = INJECTABLE
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -401,10 +402,10 @@
 
 	if(L.gender == MALE)
 		L.gender = FEMALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more feminine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 	else
 		L.gender = MALE
-		L.visible_message("<span class='notice'>[L] suddenly looks more masculine!</span>")
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
 	L.regenerate_icons()
 	qdel(src)
 
@@ -561,13 +562,15 @@
 
 /obj/effect/timestop/Initialize()
 	. = ..()
-	for(var/mob/living/M in GLOB.player_list)
-		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
-			immune |= M
+	for(var/M in GLOB.living_mob_list)
+		var/mob/living/L = M
+		for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in L.mind.spell_list) //People who can stop time are immune to timestop
+			immune |= L
 	timestop()
 
 
 /obj/effect/timestop/proc/timestop()
+	set waitfor = FALSE
 	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))

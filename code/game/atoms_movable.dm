@@ -197,6 +197,8 @@
 
 	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
+	
+	unbuckle_all_mobs(force=1)
 
 	. = ..()
 	if(loc)
@@ -590,7 +592,7 @@
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 

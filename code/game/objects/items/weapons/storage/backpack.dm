@@ -27,6 +27,9 @@
  * Backpack Types
  */
 
+/obj/item/weapon/storage/backpack/old
+	max_combined_w_class = 12
+
 /obj/item/weapon/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of Blue Space."
@@ -316,48 +319,48 @@
 			new R(src)
 		revealed = 1
 
-/obj/item/weapon/storage/backpack/dufflebag
-	name = "dufflebag"
-	desc = "A large dufflebag for holding extra things."
-	icon_state = "duffle"
-	item_state = "duffle"
+/obj/item/weapon/storage/backpack/duffelbag
+	name = "duffelbag"
+	desc = "A large duffelbag for holding extra things."
+	icon_state = "duffel"
+	item_state = "duffel"
 	slowdown = 1
 	max_combined_w_class = 30
 
-/obj/item/weapon/storage/backpack/dufflebag/captain
-	name = "captain's dufflebag"
-	desc = "A large dufflebag for holding extra captainly goods."
-	icon_state = "duffle-captain"
-	item_state = "duffle-captain"
+/obj/item/weapon/storage/backpack/duffelbag/captain
+	name = "captain's duffelbag"
+	desc = "A large duffelbag for holding extra captainly goods."
+	icon_state = "duffel-captain"
+	item_state = "duffel-captain"
 	resistance_flags = 0
 
-/obj/item/weapon/storage/backpack/dufflebag/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra medical supplies."
-	icon_state = "duffle-med"
-	item_state = "duffle-med"
+/obj/item/weapon/storage/backpack/duffelbag/med
+	name = "medical duffelbag"
+	desc = "A large duffelbag for holding extra medical supplies."
+	icon_state = "duffel-med"
+	item_state = "duffel-med"
 
-/obj/item/weapon/storage/backpack/dufflebag/sec
-	name = "security dufflebag"
-	desc = "A large dufflebag for holding extra security supplies and ammunition."
-	icon_state = "duffle-sec"
-	item_state = "duffle-sec"
+/obj/item/weapon/storage/backpack/duffelbag/sec
+	name = "security duffelbag"
+	desc = "A large duffelbag for holding extra security supplies and ammunition."
+	icon_state = "duffel-sec"
+	item_state = "duffel-sec"
 
-/obj/item/weapon/storage/backpack/dufflebag/engineering
-	name = "industrial dufflebag"
-	desc = "A large dufflebag for holding extra tools and supplies."
-	icon_state = "duffle-eng"
-	item_state = "duffle-eng"
+/obj/item/weapon/storage/backpack/duffelbag/engineering
+	name = "industrial duffelbag"
+	desc = "A large duffelbag for holding extra tools and supplies."
+	icon_state = "duffel-eng"
+	item_state = "duffel-eng"
 	resistance_flags = 0
 
-/obj/item/weapon/storage/backpack/dufflebag/drone
-	name = "drone dufflebag"
-	desc = "A large dufflebag for holding tools and hats."
-	icon_state = "duffle-drone"
-	item_state = "duffle-drone"
+/obj/item/weapon/storage/backpack/duffelbag/drone
+	name = "drone duffelbag"
+	desc = "A large duffelbag for holding tools and hats."
+	icon_state = "duffel-drone"
+	item_state = "duffel-drone"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/weapon/storage/backpack/dufflebag/drone/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/drone/PopulateContents()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -366,38 +369,38 @@
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/multitool(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/clown
-	name = "clown's dufflebag"
-	desc = "A large dufflebag for holding lots of funny gags!"
-	icon_state = "duffle-clown"
-	item_state = "duffle-clown"
+/obj/item/weapon/storage/backpack/duffelbag/clown
+	name = "clown's duffelbag"
+	desc = "A large duffelbag for holding lots of funny gags!"
+	icon_state = "duffel-clown"
+	item_state = "duffel-clown"
 
-/obj/item/weapon/storage/backpack/dufflebag/clown/cream_pie/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/clown/cream_pie/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/reagent_containers/food/snacks/pie/cream(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie
-	name = "suspicious looking dufflebag"
-	desc = "A large dufflebag for holding extra tactical supplies."
-	icon_state = "duffle-syndie"
-	item_state = "duffle-syndie"
+/obj/item/weapon/storage/backpack/duffelbag/syndie
+	name = "suspicious looking duffelbag"
+	desc = "A large duffelbag for holding extra tactical supplies."
+	icon_state = "duffel-syndie"
+	item_state = "duffel-syndie"
 	origin_tech = "syndicate=1"
 	silent = 1
 	slowdown = 0
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med
-	name = "medical dufflebag"
-	desc = "A large dufflebag for holding extra tactical medical supplies."
-	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med
+	name = "medical duffelbag"
+	desc = "A large duffelbag for holding extra tactical medical supplies."
+	icon_state = "duffel-syndiemed"
+	item_state = "duffel-syndiemed"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery
-	name = "surgery dufflebag"
-	desc = "A suspicious looking dufflebag for holding surgery tools."
-	icon_state = "duffle-syndiemed"
-	item_state = "duffle-syndiemed"
+/obj/item/weapon/storage/backpack/duffelbag/syndie/surgery
+	name = "surgery duffelbag"
+	desc = "A suspicious looking duffelbag for holding surgery tools."
+	icon_state = "duffel-syndiemed"
+	item_state = "duffel-syndiemed"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/surgery/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/surgery/PopulateContents()
 	new /obj/item/weapon/scalpel(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/retractor(src)
@@ -409,69 +412,69 @@
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/device/mmi/syndie(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo
-	name = "ammunition dufflebag"
-	desc = "A large dufflebag for holding extra weapons ammunition and supplies."
-	icon_state = "duffle-syndieammo"
-	item_state = "duffle-syndieammo"
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo
+	name = "ammunition duffelbag"
+	desc = "A large duffelbag for holding extra weapons ammunition and supplies."
+	icon_state = "duffel-syndieammo"
+	item_state = "duffel-syndieammo"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun
-	desc = "A large dufflebag, packed to the brim with Bulldog shotgun ammo."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/shotgun
+	desc = "A large duffelbag, packed to the brim with Bulldog shotgun ammo."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/shotgun/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/shotgun/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/ammo_box/magazine/m12g/slug(src)
 	new /obj/item/ammo_box/magazine/m12g/dragon(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg
-	desc = "A large dufflebag, packed to the brim with C20r magazines."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg
+	desc = "A large duffelbag, packed to the brim with C20r magazines."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/ammo/smg/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg/PopulateContents()
 	for(var/i in 1 to 9)
 		new /obj/item/ammo_box/magazine/smgm45(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle
-	desc = "A large dufflebag containing a C20r, some magazines, and a cheap looking suppressor."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/c20rbundle
+	desc = "A large duffelbag containing a C20r, some magazines, and a cheap looking suppressor."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c20rbundle/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/c20rbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/ammo_box/magazine/smgm45(src)
 	new /obj/item/weapon/gun/ballistic/automatic/c20r(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle
-	desc = "A large dufflebag containing a Bulldog, several drums, and a collapsed hardsuit."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/bulldogbundle
+	desc = "A large duffelbag containing a Bulldog, several drums, and a collapsed hardsuit."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/bulldogbundle/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/bulldogbundle/PopulateContents()
 	new /obj/item/ammo_box/magazine/m12g(src)
 	new /obj/item/weapon/gun/ballistic/automatic/shotgun/bulldog(src)
 	new /obj/item/ammo_box/magazine/m12g/buckshot(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
-	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/medicalbundle
+	desc = "A large duffelbag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
 	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle
-	desc = "A large dufflebag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/medicalbundle
+	desc = "A large duffelbag containing a medical equipment, a Donksoft machine gun, a big jumbo box of darts, and a knock-off pair of magboots."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/medicalbundle/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/medicalbundle/PopulateContents()
 	new /obj/item/clothing/shoes/magboots/syndie(src)
 	new /obj/item/weapon/storage/firstaid/tactical(src)
 	new /obj/item/weapon/gun/ballistic/automatic/l6_saw/toy(src)
 	new /obj/item/ammo_box/foambox/riot(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle
-	desc = "A large dufflebag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/bioterrorbundle
+	desc = "A large duffelbag containing a deadly chemicals, a chemical spray, chemical grenade, a Donksoft assault rifle, riot grade darts, a minature syringe gun, and a box of syringes"
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/med/bioterrorbundle/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/med/bioterrorbundle/PopulateContents()
 	new /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror(src)
 	new /obj/item/weapon/storage/box/syndie_kit/chemical(src)
 	new /obj/item/weapon/gun/syringe/syndicate(src)
@@ -480,18 +483,18 @@
 	new /obj/item/ammo_box/foambox/riot(src)
 	new /obj/item/weapon/grenade/chem_grenade/bioterrorfoam(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/c4/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/c4/PopulateContents()
 	for(var/i in 1 to 10)
 		new /obj/item/weapon/grenade/plastic/c4(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/x4/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/x4/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/grenade/plastic/x4(src)
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter
-	desc = "A large dufflebag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
+/obj/item/weapon/storage/backpack/duffelbag/syndie/firestarter
+	desc = "A large duffelbag containing New Russian pyro backpack sprayer, a pistol, a pipebomb, fireproof hardsuit, ammo, and other equipment."
 
-/obj/item/weapon/storage/backpack/dufflebag/syndie/firestarter/PopulateContents()
+/obj/item/weapon/storage/backpack/duffelbag/syndie/firestarter/PopulateContents()
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/weapon/watertank/operator(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)

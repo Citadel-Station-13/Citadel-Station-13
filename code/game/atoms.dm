@@ -49,7 +49,7 @@
 		created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
-//Called from base of New if the map is being loaded. mapload = FALSE
+//Called from base of New if the map is not being loaded. mapload = FALSE
 //This base must be called or derivatives must set initialized to TRUE
 //must not sleep
 //Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
@@ -185,6 +185,19 @@
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
 
+/atom/proc/is_injectable(allowmobs = TRUE)
+	if(isliving(src) && allowmobs)
+		var/mob/living/L = src
+		return L.can_inject()
+	if(container_type & OPENCONTAINER)
+		return TRUE
+	return container_type & INJECTABLE
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
+		return TRUE
+	return container_type & DRAWABLE
+
 /atom/proc/allow_drop()
 	return 1
 
@@ -244,7 +257,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	to_chat(user, "[bicon(src)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)

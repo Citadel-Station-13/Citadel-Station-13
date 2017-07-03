@@ -24,6 +24,8 @@ GLOBAL_PROTECT(reboot_mode)
 		if(REBOOT_MODE_SHUTDOWN)
 			to_chat(src, "<span class='boldannounce'>The server is shutting down...</span>")
 			ServiceEndProcess()
+		else
+			ExportService(SERVICE_REQUEST_WORLD_REBOOT)	//just let em know
 
 /world/proc/ServiceCommand(list/params)
 	var/sCK = RunningService()
@@ -35,7 +37,7 @@ GLOBAL_PROTECT(reboot_mode)
 	var/command = params[SERVICE_CMD_PARAM_COMMAND]
 	if(!command)
 		return "No command!"
-	
+
 	var/static/last_irc_status = 0
 	switch(command)
 		if(SERVICE_CMD_HARD_REBOOT)
@@ -71,7 +73,7 @@ GLOBAL_PROTECT(reboot_mode)
 			if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
 				return
 			last_irc_status = rtod
-			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : "byond://[address]:[port]"]" 
+			return "[GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [config.server ? config.server : world.internet_address]" 
 		if(SERVICE_CMD_ADMIN_MSG)
 			return IrcPm(params[SERVICE_CMD_PARAM_TARGET], params[SERVICE_CMD_PARAM_MESSAGE], params[SERVICE_CMD_PARAM_SENDER])
 

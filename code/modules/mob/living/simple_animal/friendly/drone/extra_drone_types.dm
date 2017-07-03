@@ -100,7 +100,6 @@
 	name = "derelict drone"
 	default_hatmask = /obj/item/clothing/head/ushanka
 
-
 /mob/living/simple_animal/drone/cogscarab
 	name = "cogscarab"
 	desc = "A strange, drone-like machine. It constantly emits the hum of gears."
