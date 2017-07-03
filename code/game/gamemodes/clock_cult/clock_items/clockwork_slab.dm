@@ -1,8 +1,8 @@
 /obj/item/clockwork/slab //Clockwork slab: The most important tool in Ratvar's arsenal. Allows scripture recital, tutorials, and generates components.
 	name = "clockwork slab"
 	desc = "A strange metal tablet. A clock in the center turns around and around."
-	clockwork_desc = "A link between the Celestial Derelict and the mortal plane. Contains limitless knowledge, fabricates components, and outputs a stream of information that only a trained eye can detect.\n\
-	Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants.\n\
+	clockwork_desc = "A link between you and the Celestial Derelict. It produces components,  contains information, and is your most vital tool as a Servant.\n\
+	Use the <span class='brass'>Hierophant Network</span> action button to discreetly talk with other Servants.\n\
 	Clockwork slabs will only make components if held or if inside an item held by a human, and when making a component will prevent all other slabs held from making components.\n\
 	Hitting a slab, a Servant with a slab, or a cache will <b>transfer</b> this slab's components into the target, the target's slab, or the global cache, respectively."
 	icon_state = "dread_ipad"
@@ -21,6 +21,7 @@
 	var/list/quickbound = list(/datum/clockwork_scripture/ranged_ability/geis_prep, /datum/clockwork_scripture/create_object/replicant, \
 	/datum/clockwork_scripture/create_object/tinkerers_cache) //quickbound scripture, accessed by index
 	var/maximum_quickbound = 5 //how many quickbound scriptures we can have
+	var/recollection_category = "Default"
 	actions_types = list(/datum/action/item_action/clock/hierophant)
 
 /obj/item/clockwork/slab/starter
@@ -230,10 +231,10 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You cannot speak into the slab!</span>")
 		return FALSE
-	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
+	var/message = stripped_input(user, "Enter a message to send to your fellow Servants.", "Hierophant")
 	if(!message || !user || !user.canUseTopic(src) || !user.can_speak_vocal())
 		return FALSE
-	clockwork_say(user, text2ratvar("Servants, hear my words. [html_decode(message)]"), TRUE)
+	clockwork_say(user, text2ratvar("Servants, hear my words: [html_decode(message)]"), TRUE)
 	titled_hierophant_message(user, message)
 	return TRUE
 
@@ -292,6 +293,7 @@
 	scripture_to_recite.run_scripture()
 	return TRUE
 
+
 //Guide to Serving Ratvar
 /obj/item/clockwork/slab/proc/recollection()
 	var/list/textlist = list("If you're seeing this, file a bug report.")
@@ -311,7 +313,7 @@
 			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
 		var/production_text_addon = ""
 		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
-			production_text_addon = ", which increases for each human or silicon servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+			production_text_addon = ", which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
 		production_time = production_time/600
 		var/list/production_text
 		if(round(production_time))
@@ -463,7 +465,18 @@
 			data["scripture"] += list(temp_info)
 	data["recollection"] = recollecting
 	if(recollecting)
+		data["recollection_categories"] = list(\
+		list("name" = "Getting Started", "desc" = "First-time servant? Read this first."), \
+		list("name" = "Basics", "desc" = "A primer on how to play as a servant."), \
+		list("name" = "Terminology", "desc" = "Common acronyms, words, and terms."), \
+		list("name" = "Components", "desc" = "Information on components, your primary resource."), \
+		list("name" = "Scripture", "desc" = "Information on scripture, ancient tools used by the cult."), \
+		list("name" = "Power", "desc" = "The power system that certain objects use to function."), \
+		list("name" = "Conversion", "desc" = "Converting the crew, cyborgs, and very walls to your cause."), \
+		)
 		data["rec_text"] = recollection()
+		data["rec_section"] = get_recollection_text(recollection_category)
+		data["rec_binds"] = get_recollection_quickbinds()
 	return data
 
 /obj/item/clockwork/slab/ui_act(action, params)
@@ -501,6 +514,9 @@
 						S = quickbound[target_index]
 					if(S != path)
 						quickbind_to_slot(path, target_index)
+		if("rec_category")
+			recollection_category = params["category"]
+			ui_interact(usr)
 	return 1
 
 /obj/item/clockwork/slab/proc/quickbind_to_slot(datum/clockwork_scripture/scripture, index) //takes a typepath(typecast for initial()) and binds it to a slot
