@@ -20,7 +20,7 @@
 		if(3)
 			new /obj/item/device/soulstone/anybody(src)
 		if(4)
-			new /obj/item/weapon/katana/cursed(src)
+			new /obj/item/weapon/katana(src)
 		if(5)
 			new /obj/item/clothing/glasses/godeye(src)
 		if(6)
