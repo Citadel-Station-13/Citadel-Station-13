@@ -65,11 +65,11 @@
 
 /obj/item/clockwork/slab/cyborg/security //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_void/cyborg)
+	/datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/peacekeeper //four scriptures, plus a spear
 	quickbound = list(/datum/clockwork_scripture/channeled/belligerent, /datum/clockwork_scripture/ranged_ability/judicial_marker, /datum/clockwork_scripture/channeled/taunting_tirade, \
-	/datum/clockwork_scripture/channeled/volt_void/cyborg)
+	/datum/clockwork_scripture/channeled/volt_blaster)
 
 /obj/item/clockwork/slab/cyborg/janitor //five scriptures, plus a proselytizer
 	quickbound = list(/datum/clockwork_scripture/create_object/replicant, /datum/clockwork_scripture/create_object/sigil_of_transgression, \
