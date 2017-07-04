@@ -163,6 +163,7 @@
 
 /obj/effect/clockwork/sigil/submission/accession/post_channel(mob/living/L)
 	if(L.isloyal())
+		L.log_message("<font color=#BE8700>Had their mindshield implant broken by a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
 		delete_on_finish = TRUE
 		L.visible_message("<span class='warning'>[L] visibly trembles!</span>", \
 		"<span class='sevtug'>[text2ratvar("You will be mine and his. This puny trinket will not stop me.")]</span>")

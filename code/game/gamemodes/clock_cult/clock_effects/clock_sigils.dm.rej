@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/clock_cult/clock_effects/clock_sigils.dm b/code/game/gamemodes/clock_cult/clock_effects/clock_sigils.dm	(rejected hunks)
+@@ -121,7 +121,7 @@
+ 	if(is_eligible_servant(L))
+ 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
+ 	if(add_servant_of_ratvar(L))
+-		L.log_message("<font color=#AF0AAF>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
++		L.log_message("<font color=#BE8700>Conversion was done with a [sigil_name].</font>", INDIVIDUAL_ATTACK_LOG)
+ 	L.Knockdown(60) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
+ 	if(iscarbon(L))
+ 		var/mob/living/carbon/C = L
