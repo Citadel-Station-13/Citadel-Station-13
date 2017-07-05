@@ -60,7 +60,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
-	dna.species.handle_genitals(src)
 	..()
 
 /mob/living/carbon/human/update_fire()
@@ -74,7 +73,6 @@ There are several things that need to be remembered:
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
 		update_body()
-		update_genitals()
 		update_hair()
 		update_inv_w_uniform()
 		update_inv_wear_id()
