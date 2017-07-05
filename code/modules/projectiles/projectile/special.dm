@@ -229,19 +229,19 @@
 			return -1
 
 /obj/item/projectile/plasma/adv
-	damage = 7
+	damage = 28
 	range = 5
 	mine_range = 5
 
 /obj/item/projectile/plasma/adv/mech
-	damage = 10
+	damage = 40
 	range = 9
 	mine_range = 3
 
 /obj/item/projectile/plasma/turret
 	//Between normal and advanced for damage, made a beam so not the turret does not destroy glass
 	name = "plasma beam"
-	damage = 6
+	damage = 24
 	range = 7
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
