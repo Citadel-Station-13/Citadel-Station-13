@@ -1,0 +1,10 @@
+diff a/code/modules/hydroponics/grown/misc.dm b/code/modules/hydroponics/grown/misc.dm	(rejected hunks)
+@@ -164,4 +164,5 @@
+ 	species = "cactus"
+ 	plantname = "Fruiting Cactus"
+ 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/ash_flora/cactus_fruit
+-	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+\ No newline at end of file
++	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
++	growthstages = 2
+\ No newline at end of file
