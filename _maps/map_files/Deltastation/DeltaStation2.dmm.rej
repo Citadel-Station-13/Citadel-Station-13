@@ -1,0 +1,408 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -112563,6 +112581,7 @@
+ /area/hallway/secondary/entry)
+ "epc" = (
+ /obj/machinery/door/airlock/external{
++	cyclelinkeddir = 2;
+ 	name = "External Docking Port"
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+@@ -112815,6 +112834,319 @@
+ /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+ /turf/closed/wall/r_wall,
+ /area/engine/supermatter)
++"epB" = (
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Solar Access";
++	req_access_txt = "10; 13"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/solars/starboard/fore)
++"epC" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 1;
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/entry)
++"epD" = (
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Solar Access";
++	req_access_txt = "10";
++	req_one_access = null;
++	req_one_access_txt = "13; 24"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/solars/port/fore)
++"epE" = (
++/obj/machinery/door/firedoor,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/door/airlock/glass_command{
++	cyclelinkeddir = 8;
++	name = "Bridge Access";
++	req_access_txt = "19"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/turf/open/floor/plasteel/vault{
++	dir = 8
++	},
++/area/bridge)
++"epF" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/hatch{
++	cyclelinkeddir = 8;
++	name = "MiniSat Exterior Access";
++	req_one_access_txt = "32;19"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/turf/open/floor/plasteel/vault{
++	dir = 8
++	},
++/area/engine/transit_tube)
++"epG" = (
++/obj/machinery/door/firedoor,
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/glass_security{
++	cyclelinkeddir = 8;
++	name = "Brig";
++	req_access_txt = "63"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/security/brig)
++"epH" = (
++/obj/machinery/door/firedoor,
++/obj/machinery/door/airlock/glass_security{
++	cyclelinkeddir = 8;
++	name = "Brig";
++	req_access_txt = "63"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/security/brig)
++"epI" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Containment Access";
++	req_access_txt = "10; 13"
++	},
++/obj/effect/decal/cleanable/dirt,
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"epJ" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Containment Access";
++	req_access_txt = "10; 13"
++	},
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"epK" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Airlock";
++	req_access_txt = "13"
++	},
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/port)
++"epL" = (
++/obj/machinery/door/firedoor,
++/obj/machinery/door/airlock/research{
++	cyclelinkeddir = 1;
++	name = "Research Division Access";
++	req_access_txt = "47"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/structure/disposalpipe/segment,
++/obj/effect/turf_decal/stripes/line{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/turf/open/floor/plasteel,
++/area/science/research)
++"epM" = (
++/obj/machinery/door/firedoor,
++/obj/machinery/door/airlock/research{
++	cyclelinkeddir = 1;
++	name = "Research Division Access";
++	req_access_txt = "47"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/disposalpipe/segment,
++/obj/effect/turf_decal/stripes/line{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/turf/open/floor/plasteel,
++/area/science/research)
++"epN" = (
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Solar Access";
++	req_access_txt = "10; 13"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/solars/starboard/aft)
++"epO" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/exit/departure_lounge)
++"epP" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/exit/departure_lounge)
++"epQ" = (
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Solar Access";
++	req_access_txt = "10; 13"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/solars/port/aft)
++"epR" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Docking Port"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/exit/departure_lounge)
++"epS" = (
++/obj/machinery/door/airlock/external{
++	cyclelinkeddir = 8;
++	name = "External Docking Port";
++	req_access_txt = "63"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/security/checkpoint/checkpoint2)
+ 
+ (1,1,1) = {"
+ aaa
+@@ -144475,14 +144807,14 @@ aaf
+ aaf
+ aaf
+ aax
+-epb
++egV
+ aax
+ aaf
+ aaa
+ aaa
+ aaf
+ aax
+-epb
++egV
+ aax
+ aaf
+ aaf
+@@ -144989,14 +145321,14 @@ aax
+ aaD
+ abT
+ aax
+-epc
++egU
+ aax
+ acC
+ acT
+ ack
+ adq
+ aax
+-epb
++egW
+ aax
+ abR
+ aaD
+@@ -147315,8 +147647,8 @@ edp
+ edp
+ een
+ epc
+-aci
+-epc
++ack
++epC
+ agl
+ agN
+ ahu
+@@ -148330,14 +148662,14 @@ aaf
+ aaf
+ aaf
+ aax
+-epb
++egV
+ aax
+ aaf
+ aaf
+ aaf
+ aaf
+ aax
+-epc
++egT
+ aax
+ aaf
+ aaf
+@@ -148844,14 +149176,14 @@ aax
+ aaD
+ abR
+ aax
+-epc
++egU
+ aax
+ acE
+ acV
+ adg
+ adr
+ aax
+-epb
++egW
+ aax
+ abT
+ aaD
