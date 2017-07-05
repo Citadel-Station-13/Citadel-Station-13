@@ -324,6 +324,4 @@
 		/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/branrequests
-	category = CAT_MISCFOOD
-	
-	
+	subcategory = CAT_MISCFOOD

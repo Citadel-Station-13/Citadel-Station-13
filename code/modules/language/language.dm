@@ -16,8 +16,8 @@
 	// If key is null, then the language isn't real or learnable.
 	var/flags                         // Various language flags.
 	var/list/syllables                // Used when scrambling text for a non-speaker.
-	var/list/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
-	var/list/space_chance = 55        // Likelihood of getting a space in the random scramble string
+	var/sentence_chance = 5      // Likelihood of making a new sentence after each syllable.
+	var/space_chance = 55        // Likelihood of getting a space in the random scramble string
 	var/list/spans = list()
 	var/list/scramble_cache = list()
 	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
@@ -57,16 +57,17 @@
 	return "[trim(full_name)]"
 
 /datum/language/proc/check_cache(input)
-	var/lookup = check_cache(input)
+	var/lookup = scramble_cache[input]
 	if(lookup)
-		return lookup
+		scramble_cache -= input
+		scramble_cache[input] = lookup
+	. = lookup
 
 /datum/language/proc/add_to_cache(input, scrambled_text)
-	add_to_cache(input, scrambled_text)
-
-
-	return scrambled_text
-
+	// Add it to cache, cutting old entries if the list is too long
+	scramble_cache[input] = scrambled_text
+	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
+		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
 
 /datum/language/proc/scramble(input)
 
@@ -74,10 +75,8 @@
 		return stars(input)
 
 	// If the input is cached already, move it to the end of the cache and return it
-	var/lookup = scramble_cache[input]
+	var/lookup = check_cache(input)
 	if(lookup)
-		scramble_cache -= input
-		scramble_cache[input] = lookup
 		return lookup
 
 	var/input_size = length(input)
@@ -105,10 +104,7 @@
 	if(input_ending in list("!","?","."))
 		scrambled_text += input_ending
 
-	// Add it to cache, cutting old entries if the list is too long
-	scramble_cache[input] = scrambled_text
-	if(scramble_cache.len > SCRAMBLE_CACHE_LEN)
-		scramble_cache.Cut(1, scramble_cache.len-SCRAMBLE_CACHE_LEN-1)
+	add_to_cache(input, scrambled_text)
 
 	return scrambled_text
 

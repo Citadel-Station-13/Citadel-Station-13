@@ -176,7 +176,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
 
-
 /client/proc/enable_debug_verbs()
 	set category = "Debug"
 	set name = "Debug verbs - Enable"

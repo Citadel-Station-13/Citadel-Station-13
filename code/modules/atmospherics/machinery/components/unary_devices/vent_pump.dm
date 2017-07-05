@@ -32,15 +32,18 @@
 	var/radio_filter_in
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
-	on = 1
-	icon_state = "vent_out"
+	on = TRUE
+	icon_state = "vent_map_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon
 	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 4000
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on
-	on = 1
-	icon_state = "vent_in"
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -56,12 +59,25 @@
 	if(SSradio)
 		SSradio.remove_object(src,frequency)
 	radio_connection = null
-
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = EQUIP
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on
+	on = TRUE
+	icon_state = "vent_map_on"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon
+	pump_direction = SIPHONING
+	pressure_checks = INT_BOUND
+	internal_pressure_bound = 2000
+	external_pressure_bound = 0
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on
+	on = TRUE
+	icon_state = "vent_map_siphon_on"
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
@@ -252,7 +268,7 @@
 			to_chat(user, "<span class='notice'>You begin welding the vent...</span>")
 			if(do_after(user, 20*W.toolspeed, target = src))
 				if(!src || !WT.isOn()) return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 				if(!welded)
 					user.visible_message("[user] welds the vent shut.", "<span class='notice'>You weld the vent shut.</span>", "<span class='italics'>You hear welding.</span>")
 					welded = 1

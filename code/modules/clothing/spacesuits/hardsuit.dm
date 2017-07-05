@@ -269,7 +269,7 @@
 	playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, 1)
 	toggle_hardsuit_mode(user)
 	user.update_inv_head()
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.head_update(src, forced = 1)
 	for(var/X in actions)
@@ -550,7 +550,6 @@
 	icon_state = "hardsuit0-ancient"
 	item_state = "anc_helm"
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 5, "energy" = 0, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 75)
-	tint = 2
 	item_color = "ancient"
 	resistance_flags = FIRE_PROOF
 
@@ -565,9 +564,12 @@
 	resistance_flags = FIRE_PROOF
 	var/footstep = 1
 
-obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+/obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
+	var/mob/living/carbon/human/H = loc
+	if(!istype(H) || H.wear_suit != src)
+		return
 	if(footstep > 1)
-		playsound(src, "suitstep", 50, 1)
+		playsound(src, "servostep", 100, 1)
 		footstep = 0
 	else
 		footstep++
@@ -590,7 +592,7 @@ obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
 	var/shield_state = "shield-old"
 	var/shield_on = "shield-old"
 
-/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, attack_text)
+/obj/item/clothing/suit/space/hardsuit/shielded/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	recharge_cooldown = world.time + recharge_delay
 	if(current_charges > 0)
 		var/datum/effect_system/spark_spread/s = new
@@ -615,7 +617,7 @@ obj/item/clothing/suit/space/hardsuit/ancient/on_mob_move()
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
 		current_charges = Clamp((current_charges + recharge_rate), 0, max_charges)
-		playsound(loc, 'sound/magic/Charge.ogg', 50, 1)
+		playsound(loc, 'sound/magic/charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 			STOP_PROCESSING(SSobj, src)
