@@ -41,8 +41,6 @@ GLOBAL_VAR_INIT(security_level, 0)
 					if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_BLUE
-				for(var/mob/M in GLOB.player_list)
-					M << sound('sound/misc/voybluealert.ogg')
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()
@@ -56,8 +54,6 @@ GLOBAL_VAR_INIT(security_level, 0)
 							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
-				for(var/mob/M in GLOB.player_list)
-					M << sound('sound/misc/voyalert.ogg')
 				GLOB.security_level = SEC_LEVEL_RED
 
 				/*	- At the time of commit, setting status displays didn't work properly
@@ -78,8 +74,6 @@ GLOBAL_VAR_INIT(security_level, 0)
 					else if(GLOB.security_level == SEC_LEVEL_BLUE)
 						SSshuttle.emergency.modTimer(0.5)
 				GLOB.security_level = SEC_LEVEL_DELTA
-				for(var/mob/M in GLOB.player_list)
-					M << sound('sound/misc/deltakalaxon.ogg')
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(FA.z == ZLEVEL_STATION)
 						FA.update_icon()

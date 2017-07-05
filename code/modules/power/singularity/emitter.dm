@@ -98,9 +98,10 @@
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker && SSticker.IsRoundInProgress())
-		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]", INVESTIGATE_SINGULO)
+		var/turf/T = get_turf(src)
+		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Emitter deleted at [COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -392,7 +393,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 

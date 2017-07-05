@@ -68,6 +68,7 @@
 		recharged -= 1
 
 /obj/machinery/chem_dispenser/proc/recharge()
+	if(stat & (BROKEN|NOPOWER)) return
 	var/usedpower = cell.give( 1 / powerefficiency) //Should always be a gain of one on the UI.
 	if(usedpower)
 		use_power(2500)
@@ -211,7 +212,6 @@
 	cell.emp_act()
 	visible_message("<span class='danger'> The [src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
-
 
 /obj/machinery/chem_dispenser/constructable
 	name = "portable chem dispenser"

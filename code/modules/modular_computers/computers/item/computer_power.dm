@@ -31,7 +31,6 @@
 	if(battery_module && battery_module.battery)
 		return battery_module.battery
 
-
 // Used in following function to reduce copypaste
 /obj/item/device/modular_computer/proc/power_failure()
 	if(enabled) // Shut down the computer

@@ -145,7 +145,7 @@
 	projectile_type = /obj/item/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = 500
-	fire_sound = 'sound/weapons/Kenetic_accel.ogg' // fine spelling there chap
+	fire_sound = 'sound/weapons/kenetic_accel.ogg' // fine spelling there chap
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -172,18 +172,13 @@
 	return ..()
 
 /obj/item/projectile/kinetic/prehit(atom/target)
-	var/turf/target_turf = get_turf(target)
-	if(!isturf(target_turf))
-		return
 	. = ..()
 	if(.)
 		if(kinetic_gun)
 			var/list/mods = kinetic_gun.get_modkits()
 			for(var/obj/item/borg/upgrade/modkit/M in mods)
 				M.projectile_prehit(src, target, kinetic_gun)
-		var/datum/gas_mixture/environment = target_turf.return_air()
-		var/pressure = environment.return_pressure()
-		if(pressure > 50)
+		if(!lavaland_equipment_pressure_check(get_turf(target)))
 			name = "weakened [name]"
 			damage = damage * pressure_decrease
 			pressure_decrease_active = TRUE
@@ -261,7 +256,7 @@
 			if(!user.transferItemToLoc(src, KA))
 				return
 			to_chat(user, "<span class='notice'>You install the modkit.</span>")
-			playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(loc, 'sound/items/screwdriver.ogg', 100, 1)
 			KA.modkits += src
 		else
 			to_chat(user, "<span class='notice'>The modkit you're trying to install would conflict with an already installed modkit. Use a crowbar to remove existing modkits.</span>")
@@ -280,7 +275,6 @@
 //use this one for effects you want to trigger before mods that do damage
 /obj/item/borg/upgrade/modkit/proc/projectile_strike_predamage(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 //and this one for things that don't need to trigger before other damage-dealing mods
-
 /obj/item/borg/upgrade/modkit/proc/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 
 //Range
@@ -449,8 +443,7 @@
 			if(SM.reward_target == src) //we want to allow multiple people with bounty modkits to use them, but we need to replace our own marks so we don't multi-reward
 				SM.reward_target = null
 				qdel(SM)
-		var/datum/status_effect/syphon_mark/SM = L.apply_status_effect(STATUS_EFFECT_SYPHONMARK)
-		SM.reward_target = src
+		L.apply_status_effect(STATUS_EFFECT_SYPHONMARK, src)
 
 /obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/item/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/weapon/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))
@@ -471,11 +464,10 @@
 	else
 		bounties_reaped[L.type] = min(bounties_reaped[L.type] + (modifier * bonus_mod), maximum_bounty)
 
-
 //Indoors
 /obj/item/borg/upgrade/modkit/indoors
 	name = "decrease pressure penalty"
-	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in a high pressure environment."
+	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
 	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2

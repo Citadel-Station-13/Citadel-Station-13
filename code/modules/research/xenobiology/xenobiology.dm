@@ -333,7 +333,7 @@
 	if(!istype(C))
 		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
-	if(istype(C, /obj/item))
+	if(isitem(C))
 		var/obj/item/I = C
 		if(I.slowdown <= 0)
 			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
@@ -571,14 +571,14 @@
 
 /obj/effect/timestop/proc/timestop()
 	set waitfor = FALSE
-	playsound(get_turf(src), 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
+	playsound(get_turf(src), 'sound/magic/timeparadox2.ogg', 100, 1, -1)
 	for(var/i in 1 to duration-1)
 		for(var/atom/A in orange (freezerange, src.loc))
 			if(isliving(A))
 				var/mob/living/M = A
 				if(M in immune)
 					continue
-				M.Stun(10, 1, 1)
+				M.Stun(200, 1, 1)
 				M.anchored = 1
 				if(ishostile(M))
 					var/mob/living/simple_animal/hostile/H = M
@@ -608,7 +608,7 @@
 
 
 /obj/effect/timestop/proc/unfreeze_mob(mob/living/M)
-	M.AdjustStunned(-10, 1, 1)
+	M.AdjustStun(-200, 1, 1)
 	M.anchored = 0
 	if(ishostile(M))
 		var/mob/living/simple_animal/hostile/H = M
