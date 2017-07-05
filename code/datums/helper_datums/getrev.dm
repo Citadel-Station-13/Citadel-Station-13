@@ -5,15 +5,15 @@
 	var/has_pr_details = FALSE	//tgs2 support
 	var/date
 
- /datum/getrev/New()
+/datum/getrev/New()
 	if(world.RunningService() && fexists(SERVICE_PR_TEST_JSON))
- 		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
+		testmerge = json_decode(file2text(SERVICE_PR_TEST_JSON))
 #ifdef SERVERTOOLS
- 	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
- 		var/list/tmp = world.file2list("..\\prtestjob.lk")
- 		for(var/I in tmp)
- 			if(I)
- 				testmerge |= I
+	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
+		var/list/tmp = world.file2list("..\\prtestjob.lk")
+		for(var/I in tmp)
+			if(I)
+				testmerge |= I
 #endif
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
@@ -40,7 +40,6 @@
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-
 /datum/getrev/proc/DownloadPRDetails()
 	if(!config.githubrepoid)
 		if(testmerge.len)
@@ -74,9 +73,9 @@
 		return ""
 	. = header ? "The following pull requests are currently test merged:<br>" : ""
 	for(var/line in testmerge)
-		var/cm = testmerge[line]["commit"]
-		var/details
+		var/details 
 		if(world.RunningService())
+			var/cm = testmerge[line]["commit"]
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["author"]) + " at commit " + html_encode(copytext(cm, 1, min(length(cm), 7)))
 		else if(has_pr_details)	//tgs2 support
 			details = ": '" + html_encode(testmerge[line]["title"]) + "' by " + html_encode(testmerge[line]["user"]["login"])
