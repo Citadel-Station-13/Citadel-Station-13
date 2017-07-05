@@ -9,10 +9,11 @@
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
 	icon_state = "vent_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	can_unwrench = 1
 	welded = 0
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 	var/id_tag = null
 	var/on = 0

@@ -2,6 +2,12 @@
 
 //Misc mob defines
 
+//Ready states at roundstart for mob/dead/new_player
+#define PLAYER_NOT_READY 0
+#define PLAYER_READY_TO_PLAY 1
+#define PLAYER_READY_TO_OBSERVE 2
+
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -129,3 +135,4 @@
 #define INCORPOREAL_MOVE_BASIC 1
 #define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
 #define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+#define MEGAFAUNA_DEFAULT_RECOVERY_TIME 5

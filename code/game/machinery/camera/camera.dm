@@ -7,7 +7,7 @@
 	desc = "It's used to monitor rooms."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "camera"
-	use_power = 2
+	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
@@ -159,9 +159,10 @@
 
 		else if(istype(W, /obj/item/stack/sheet/mineral/plasma))
 			if(!isEmpProof())
+				var/obj/item/stack/sheet/mineral/plasma/P = W
 				upgradeEmpProof()
 				to_chat(user, "[msg]")
-				qdel(W)
+				P.use(1)
 			else
 				to_chat(user, "[msg2]")
 			return

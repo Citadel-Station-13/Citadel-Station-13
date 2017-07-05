@@ -44,7 +44,7 @@
 
 	icon_state = "apc0"
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	req_access = null
 	obj_integrity = 200
 	max_integrity = 200
@@ -92,6 +92,10 @@
 	var/update_state = -1
 	var/update_overlay = -1
 	var/icon_update_needed = FALSE
+
+/obj/machinery/power/apc/get_cell()
+	return cell
+
 
 /obj/machinery/power/apc/connect_to_network()
 	//Override because the APC does not directly connect to the network; it goes through a terminal.
@@ -622,14 +626,10 @@
 		return
 	if(usr == user && opened && (!issilicon(user)))
 		if(cell)
+			user.visible_message("[user] removes \the [cell] from [src]!","<span class='notice'>You remove \the [cell].</span>")
 			user.put_in_hands(cell)
-			cell.add_fingerprint(user)
-			cell.updateicon()
-
+			cell.update_icon()
 			src.cell = null
-			user.visible_message("[user.name] removes the power cell from [src.name]!",\
-								 "<span class='notice'>You remove the power cell.</span>")
-			//to_chat(user, "You remove the power cell.")
 			charging = 0
 			src.update_icon()
 		return
