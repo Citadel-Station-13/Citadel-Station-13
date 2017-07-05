@@ -1,0 +1,15 @@
+diff a/code/modules/mob/living/silicon/ai/ai.dm b/code/modules/mob/living/silicon/ai/ai.dm	(rejected hunks)
+@@ -701,10 +701,10 @@
+ 						holo_icon = getHologramIcon(icon(icon_list[input], input))
+ 		else
+ 			var/list/icon_list = list(
+-				"default" = 'icons/mob/AI.dmi',
+-				"floating face" = 'icons/mob/AI.dmi',
++				"default" = 'icons/mob/ai.dmi',
++				"floating face" = 'icons/mob/ai.dmi',
+ 				"xeno queen" = 'icons/mob/alien.dmi',
+-				"horror" = 'icons/mob/AI.dmi'
++				"horror" = 'icons/mob/ai.dmi'
+ 				)
+ 
+ 			input = input("Please select a hologram:") as null|anything in icon_list
