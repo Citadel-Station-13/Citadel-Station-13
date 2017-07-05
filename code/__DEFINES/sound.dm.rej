@@ -1,8 +1,0 @@
-diff a/code/__DEFINES/sound.dm b/code/__DEFINES/sound.dm	(rejected hunks)
-@@ -9,5 +9,5 @@
- //THIS SHOULD ALWAYS BE THE LOWEST ONE!
- //KEEP IT UPDATED
- 
--#define CHANNEL_HIGHEST_AVAILABLE 1019
-+#define CHANNEL_HIGHEST_AVAILABLE 1018
- 
