@@ -66,7 +66,8 @@
 	name = "stone tile"
 	icon = 'icons/turf/boss_floors.dmi'
 	icon_state = "pristine_tile1"
-	layer = OVER_LATTICE_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
+	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/tile_key = "pristine_tile"
 	var/tile_random_sprite_max = 24
@@ -74,6 +75,12 @@
 /obj/structure/stone_tile/Initialize(mapload)
 	. = ..()
 	icon_state = "[tile_key][rand(1, tile_random_sprite_max)]"
+
+/obj/structure/stone_tile/Destroy(force)
+	if(force)
+		. = ..()
+	else
+		return QDEL_HINT_LETMELIVE
 
 /obj/structure/stone_tile/block
 	name = "stone block"
