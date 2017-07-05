@@ -72,16 +72,6 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-/*
-	if(href_list["mentor_msg"])
-		if(config.mentors_mobname_only)
-			var/mob/M = locate(href_list["mentor_msg"])
-			cmd_mentor_pm(M,null)
-		else
-			cmd_mentor_pm(href_list["mentor_msg"],null)
-		return
-*/
-
 	//Logs all hrefs
 	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
@@ -201,13 +191,6 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.admins |= src
 		holder.owner = src
 
-	//Mentor Authorisation
-/*	var/mentor = GLOB.mentor_datums[ckey]
-	if(mentor)
-		verbs += /client/proc/cmd_mentor_say
-		verbs += /client/proc/show_mentor_memo
-		GLOB.mentors |= src */
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
@@ -296,9 +279,6 @@ GLOBAL_LIST(external_rsc_urls)
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
-/*	if(mentor && !holder)
-		mentor_memo_output("Show") */
-
 	add_verbs_from_config()
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
@@ -314,7 +294,6 @@ GLOBAL_LIST(external_rsc_urls)
 				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
-
 
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
@@ -361,8 +340,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	hook_vr("client_new",list(src))
-
 	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)
 		var/datum/verbs/menu/topmenu = thing
@@ -383,6 +360,8 @@ GLOBAL_LIST(external_rsc_urls)
 		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
+			
+	hook_vr("client_new",list(src))
 
 //////////////
 //DISCONNECT//
@@ -394,21 +373,10 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
 					"I have no admins online!",\
-					"I'm all alone... :(",\
-					"I'm feeling lonely. :(",\
-					"I'm so lonely. :(",\
-					"Why does nobody love me? :(",\
-					"I want a man. :(",\
-					"Where has everyone gone?",\
-					"I need a hug. :(",\
-					"Someone come hold me. :(",\
-					"I need someone on me :(",\
-					"What happened? Where has everyone gone?",\
 					"My nipples are so stiff, but Zelda ain't here. :(",\
 					"Leon senpai, play more Spessmans. :(",\
 					"If only Serdy were here...",\
@@ -418,7 +386,10 @@ GLOBAL_LIST(external_rsc_urls)
 					"MOM, WHERE ARE YOU???",\
 					"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
 					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-					"Forever alone :("\
+					"Oh good, no-one around to watch me lick Goofball's nipples.",\
+					"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
+					"i shure hop dere are no PRED arund!!!!",\
+					"NO PRED CAN eVER CATCH MI"					
 				)
 
 				send2irc("Server", "[cheesy_message] (No admins online)")
