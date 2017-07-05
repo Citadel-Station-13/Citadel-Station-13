@@ -172,11 +172,11 @@
 			desc = "A cardboard cutout of a laughter demon."
 			icon = 'icons/mob/mob.dmi'
 			icon_state = "bowmon"
-		if("Private Security Officer")
-			name = "Private Security Officer"
-			desc = "A cardboard cutout of a private security officer."
-			icon = 'icons/mob/mob.dmi'
-			icon_state = "cutout_ntsec"
+ 		if("Private Security Officer")
+ 			name = "Private Security Officer"
+ 			desc = "A cardboard cutout of a private security officer."
+ 			icon_state = "cutout_ntsec"
+
 	return 1
 
 /obj/item/cardboard_cutout/setDir(newdir)
