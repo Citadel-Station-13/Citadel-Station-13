@@ -1,0 +1,9 @@
+diff a/code/modules/surgery/organs/helpers.dm b/code/modules/surgery/organs/helpers.dm	(rejected hunks)
+@@ -7,7 +7,6 @@
+ /mob/proc/getorganslot(slot)
+ 	return
+ 
+-
+ /mob/living/carbon/getorgan(typepath)
+ 	return (locate(typepath) in internal_organs)
+ 

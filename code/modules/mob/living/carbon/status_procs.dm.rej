@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/carbon/status_procs.dm b/code/modules/mob/living/carbon/status_procs.dm	(rejected hunks)
+@@ -15,7 +15,6 @@
+ 				overlay_fullscreen("eye_damage", /obj/screen/fullscreen/impaired, 1)
+ 
+ /mob/living/carbon/set_eye_damage(amount)
+-<<<<<<< HEAD
+ 	var/obj/item/organ/eyes/eyes = getorganslot("eyes_sight")
+ 	if (!eyes)
+ 		return 
