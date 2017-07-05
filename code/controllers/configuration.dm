@@ -265,6 +265,8 @@
 
 	var/irc_announce_new_game = FALSE
 
+	var/list/policies = list()
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -288,6 +290,7 @@
 /datum/configuration/proc/Reload()
 	load("config/config.txt")
 	load("config/game_options.txt","game_options")
+	load("config/policies.txt", "policies")
 	loadsql("config/dbconfig.txt")
 	if (maprotation)
 		loadmaplist("config/maps.txt")
@@ -777,12 +780,10 @@
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
-				if ("mentor_mobname_only")
-					mentors_mobname_only 	= 1
-				if ("mentor_legacy_system")
-					mentor_legacy_system 	= 1
 				else
 					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
+		else if(type == "policies")
+			policies[name] = value
 
 	fps = round(fps)
 	if(fps <= 0)

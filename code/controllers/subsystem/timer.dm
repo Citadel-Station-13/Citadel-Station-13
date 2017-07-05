@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(timer)
 		WARNING(msg)
 		if(bucket_auto_reset)
 			bucket_resolution = 0
-
+		
 		log_world("Active timers at tick [world.time]:")
 		for(var/I in processing)
 			var/datum/timedevent/TE = I
