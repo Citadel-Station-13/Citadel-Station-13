@@ -23,14 +23,14 @@
 	var/combat = 0 //can we revive through space suits?
 	var/grab_ghost = FALSE // Do we pull the ghost back into their body?
 
+/obj/item/weapon/defibrillator/get_cell()
+	return cell
+
 /obj/item/weapon/defibrillator/Initialize() //starts without a cell for rnd
 	. = ..()
 	paddles = make_paddles()
 	update_icon()
 	return
-
-/obj/item/weapon/defibrillator/get_cell()
-	return cell
 
 /obj/item/weapon/defibrillator/loaded/Initialize() //starts with hicap
 	. = ..()
@@ -123,7 +123,7 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(cell)
 			cell.update_icon()
-			cell.loc = get_turf(src.loc)
+			cell.forceMove(get_turf(src))
 			cell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			update_icon()
@@ -400,7 +400,7 @@
 	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
 	M.adjustStaminaLoss(50)
-	M.Weaken(5)
+	M.Knockdown(100)
 	M.updatehealth() //forces health update before next life tick
 	playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 50, 1, -1)
 	M.emote("gasp")
@@ -446,7 +446,7 @@
 				return
 			user.visible_message("<span class='boldannounce'><i>[user] shocks [H] with \the [src]!</span>", "<span class='warning'>You shock [H] with \the [src]!</span>")
 			playsound(get_turf(src), 'sound/machines/defib_zap.ogg', 100, 1, -1)
-			playsound(loc, 'sound/weapons/Egloves.ogg', 100, 1, -1)
+			playsound(loc, 'sound/weapons/egloves.ogg', 100, 1, -1)
 			H.emote("scream")
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
 				if(!H.stat)
@@ -455,7 +455,7 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, "chest")
 			add_logs(user, H, "overloaded the heart of", defib)
-			H.Weaken(5)
+			H.Knockdown(100)
 			H.Jitter(100)
 			if(req_defib)
 				defib.deductcharge(revivecost)

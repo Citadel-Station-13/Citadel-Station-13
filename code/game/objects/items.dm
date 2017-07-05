@@ -365,7 +365,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
-/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, atom/movable/AM)
+/obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(prob(final_block_chance))
 		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
@@ -441,7 +441,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 //This proc is executed when someone clicks the on-screen UI button.
 //The default action is attack_self().
-//Checks before we get to here are: mob is alive, mob is not restrained, paralyzed, asleep, resting, laying, item is on the mob.
+//Checks before we get to here are: mob is alive, mob is not restrained, stunned, asleep, resting, laying, item is on the mob.
 /obj/item/proc/ui_action_click(mob/user, actiontype)
 	attack_self(user)
 
@@ -504,7 +504,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	if(M.eye_damage >= 10)
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	if (!eyes)
+		return
+	if(eyes.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
@@ -516,9 +519,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				if(M.drop_item())
 					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
 			M.adjust_blurriness(10)
-			M.Paralyse(1)
-			M.Weaken(2)
-		if (prob(M.eye_damage - 10 + 1))
+			M.Unconscious(20)
+			M.Knockdown(40)
+		if (prob(eyes.eye_damage - 10 + 1))
 			if(M.become_blind())
 				to_chat(M, "<span class='danger'>You go blind!</span>")
 

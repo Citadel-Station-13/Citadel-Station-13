@@ -136,11 +136,10 @@
 			add_logs(ranged_ability_user, L, "purged of holy water with Sentinel's Compromise")
 			L.visible_message("<span class='warning'>A blue light washes over [L], causing [L.p_them()] to briefly glow!</span>", \
 			"<span class='heavy_brass'>You feel Inath-neq's power purging the darkness within you!</span>")
-		playsound(targetturf, 'sound/magic/Staff_Healing.ogg', 50, 1)
+		playsound(targetturf, 'sound/magic/staff_healing.ogg', 50, 1)
 
 		if(has_holy_water)
 			L.reagents.remove_reagent("holywater", 1000)
-			to_chat(L, "<span class='heavy_brass'>Ratvar's light flares, banishing the darkness. Your devotion remains intact!</span>")
 
 		remove_ranged_ability()
 

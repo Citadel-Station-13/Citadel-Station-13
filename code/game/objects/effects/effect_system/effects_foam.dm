@@ -104,7 +104,7 @@
 /obj/effect/particle_effect/foam/Crossed(atom/movable/AM)
 	if(istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		M.slip(5, 2, src)
+		M.slip(100, src)
 
 /obj/effect/particle_effect/foam/metal/Crossed(atom/movable/AM)
 	return
@@ -276,6 +276,10 @@
 		for(var/obj/item/Item in O)
 			Item.extinguish()
 
+/obj/structure/foamedmetal/resin/CanPass(atom/movable/mover, turf/target, height)
+	if(istype(mover) && mover.checkpass(PASSGLASS))
+		return TRUE
+	. = ..()
 
 #undef ALUMINUM_FOAM
 #undef IRON_FOAM

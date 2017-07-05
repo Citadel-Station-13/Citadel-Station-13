@@ -75,11 +75,11 @@
 	var/obj/item/weapon/note //Any papers pinned to the airlock
 	var/detonated = 0
 	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/AirlockClose.ogg'
-	var/doorDeni = 'sound/machines/DeniedBeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/BoltsUp.ogg'
-	var/boltDown = 'sound/machines/BoltsDown.ogg'
-	var/noPower = 'sound/machines/DoorClick.ogg'
+	var/doorClose = 'sound/machines/airlockclose.ogg'
+	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/boltsup.ogg'
+	var/boltDown = 'sound/machines/boltsdown.ogg'
+	var/noPower = 'sound/machines/doorclick.ogg'
 
 	var/airlock_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
@@ -259,7 +259,7 @@
 	addtimer(CALLBACK(src, .proc/reset_hallucinate_shock_animation, user, shock_image, electrocution_skeleton_anim), 40)
 	user.playsound_local(get_turf(src), "sparks", 100, 1)
 	user.staminaloss += 50
-	user.Stun(2)
+	user.Stun(40)
 	user.jitteriness += 1000
 	user.do_jitter_animation(user.jitteriness)
 	addtimer(CALLBACK(src, .proc/hallucinate_shock_drop, user), 20)
@@ -271,8 +271,7 @@
 
 /obj/machinery/door/airlock/proc/hallucinate_shock_drop(mob/living/user)
 	user.jitteriness = max(user.jitteriness - 990, 10) //Still jittery, but vastly less
-	user.Stun(3)
-	user.Weaken(3)
+	user.Knockdown(60)
 
 /obj/machinery/door/airlock/proc/isElectrified()
 	if(src.secondsElectrified != NOT_ELECTRIFIED)
@@ -746,8 +745,7 @@
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
 									"<span class='userdanger'>You headbutt the airlock!</span>")
-				H.Stun(5)
-				H.Weaken(5)
+				H.Knockdown(100)
 				H.apply_damage(10, BRUTE, "head")
 			else
 				visible_message("<span class='danger'>[user] headbutts the airlock. Good thing [user.p_theyre()] wearing a helmet.</span>")
@@ -1177,7 +1175,7 @@
 								"<span class='italics'>You hear welding.</span>")
 				playsound(loc, W.usesound, 40, 1)
 				if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 					welded = !welded
 					user.visible_message("[user.name] has [welded? "welded shut":"unwelded"] [src].", \
 										"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
@@ -1190,7 +1188,7 @@
 									"<span class='italics'>You hear welding.</span>")
 					playsound(loc, W.usesound, 40, 1)
 					if(do_after(user,40*W.toolspeed, 1, target = src, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
-						playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
+						playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 						obj_integrity = max_integrity
 						stat &= ~BROKEN
 						user.visible_message("[user.name] has repaired [src].", \
@@ -1202,7 +1200,7 @@
 /obj/machinery/door/airlock/proc/weld_checks(obj/item/weapon/weldingtool/W, mob/user)
 	return !operating && density && user && W && W.isOn() && user.loc
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/user)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user)
 	var/beingcrowbarred = null
 	if(istype(I, /obj/item/weapon/crowbar) )
 		beingcrowbarred = 1
@@ -1214,7 +1212,7 @@
 		if(!do_after(user, 150*I.toolspeed, target = src))
 			to_chat(user, "<span class='warning'>You slip and [charge] detonates!</span>")
 			charge.ex_act(1)
-			user.Weaken(3)
+			user.Knockdown(60)
 			return
 		user.visible_message("<span class='notice'>[user] removes [charge] from [src].</span>", \
 							 "<span class='notice'>You gently pry out [charge] from [src] and unhook its wires.</span>")
@@ -1302,7 +1300,7 @@
 		detonated = 1
 		charge = null
 		for(var/mob/living/carbon/human/H in orange(2,src))
-			H.Paralyse(8)
+			H.Unconscious(160)
 			H.adjust_fire_stacks(20)
 			H.IgniteMob() //Guaranteed knockout and ignition for nearby people
 			H.apply_damage(40, BRUTE, "chest")

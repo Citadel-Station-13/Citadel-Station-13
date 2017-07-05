@@ -2,6 +2,7 @@
 /obj/item/device/pda/clown
 	name = "clown PDA"
 	default_cartridge = /obj/item/weapon/cartridge/virus/clown
+	inserted_item = /obj/item/toy/crayon/rainbow
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
@@ -9,7 +10,7 @@
 /obj/item/device/pda/clown/Crossed(AM as mob|obj)
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
-		if(M.slip(0, 6, src, NO_SLIP_WHEN_WALKING))
+		if(M.slip(120, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
 				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
 					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
@@ -80,6 +81,7 @@
 /obj/item/device/pda/mime
 	name = "mime PDA"
 	default_cartridge = /obj/item/weapon/cartridge/virus/mime
+	inserted_item = /obj/item/toy/crayon/mime
 	icon_state = "pda-mime"
 	silent = 1
 	ttone = "silence"

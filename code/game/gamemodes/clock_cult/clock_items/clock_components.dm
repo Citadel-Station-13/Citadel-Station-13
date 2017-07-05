@@ -220,5 +220,5 @@
 /obj/item/clockwork/alloy_shards/pinion_lock
 	name = "pinion lock"
 	desc = "A dented and scratched gear. It's very heavy."
-	clockwork_desc = "A broken gear lock for pinion airlocks"
+	clockwork_desc = "A broken gear lock for pinion airlocks."
 	icon_state = "pinion_lock"
