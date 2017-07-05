@@ -1,0 +1,6 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - tweak: "Changed borg vore sounds to generic bin sounds on ingesting.
+balance: Added a host of items to blacklist of dog item destruction/eating. Mainly theft items and spacesuits.
+balance: Janiborg and K-9 should comply with devourment settings, Medihound is still exception due to ambulance stuff."
