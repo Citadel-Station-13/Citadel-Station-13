@@ -256,7 +256,7 @@
 			if(R.cell.charge <= 666)
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
-			L.Weaken(4)
+			L.Knockdown(80)
 			L.apply_effect(STUTTER, 4)
 			L.visible_message("<span class='danger'>[user] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[user] has shocked you with its tongue! You can feel the betrayal.</span>")
@@ -475,8 +475,6 @@
 		dat += "<span style='[toxcolor]'>\t-Toxin Content %: [patient.getToxLoss()]</span><BR>"
 		dat += "<span style='[burncolor]'>\t-Burn Severity %: [patient.getFireLoss()]</span><BR>"
 
-		if(round(patient.paralysis / 4) >= 1)
-			dat += text("<HR>Patient paralyzed for: []<BR>", round(patient.paralysis / 4) >= 1 ? "[round(patient.paralysis / 4)] seconds" : "None")
 		if(patient.getBrainLoss())
 			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div><br>"
 		if(patient.getCloneLoss())
@@ -569,8 +567,9 @@
 		if(patient.health < 0)
 			patient.adjustOxyLoss(-1) //Heal some oxygen damage if they're in critical condition
 			patient.updatehealth()
-		patient.AdjustStunned(-4)
-		patient.AdjustWeakened(-4)
+		patient.AdjustStun(-80)
+		patient.AdjustKnockdown(-80)
+		patient.AdjustUnconscious(-80)
 		src.drain()
 		if((patient.reagents.get_reagent_amount("epinephrine") < 5) && (patient.health < patient.maxHealth)) //Stop pumping full HP people full of drugs. Don't heal people you're digesting, meanie.
 			patient.reagents.add_reagent("epinephrine", 5)
@@ -896,18 +895,18 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(3)
+				L.Knockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Weaken(2, 1, 1)
+				Knockdown(40, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Weaken(2, 1, 1)
+			Knockdown(40, 1, 1)
 
 		if(leaping)
 			leaping = 0

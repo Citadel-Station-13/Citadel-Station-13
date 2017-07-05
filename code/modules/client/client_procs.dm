@@ -360,7 +360,7 @@ GLOBAL_LIST(external_rsc_urls)
 		var/datum/verbs/menu/menuitem = GLOB.menulist[thing]
 		if (menuitem)
 			menuitem.Load_checked(src)
-			
+
 	hook_vr("client_new",list(src))
 
 //////////////
@@ -377,20 +377,30 @@ GLOBAL_LIST(external_rsc_urls)
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
 					"I have no admins online!",\
+					"I'm all alone... :(",\
+					"I'm feeling lonely. :(",\
+					"I'm so lonely. :(",\
+					"Why does nobody love me? :(",\
+					"I want a man. :(",\
+					"Where has everyone gone?",\
+					"I need a hug. :(",\
+					"Someone come hold me. :(",\
+					"I need someone on me :(",\
+					"What happened? Where has everyone gone?",\
 					"My nipples are so stiff, but Zelda ain't here. :(",\
 					"Leon senpai, play more Spessmans. :(",\
 					"If only Serdy were here...",\
 					"Panic bunker can't keep my love for you out.",\
 					"Cebu needs to Awoo herself back into my heart.",\
 					"I don't even have a Turry to snuggle viciously here.",\
-					"MOM, WHERE ARE YOU???",\
+					"MOM, WHERE ARE YOU??? D:",\
 					"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
 					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-					"Oh good, no-one around to watch me lick Goofball's nipples.",\
+					"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
 					"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
 					"i shure hop dere are no PRED arund!!!!",\
-					"NO PRED CAN eVER CATCH MI"					
-				)
+					"NO PRED CAN eVER CATCH MI"\
+					)
 
 				send2irc("Server", "[cheesy_message] (No admins online)")
 
