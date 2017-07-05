@@ -1,0 +1,27 @@
+diff a/code/game/machinery/porta_turret/portable_turret.dm b/code/game/machinery/porta_turret/portable_turret.dm	(rejected hunks)
+@@ -554,20 +554,20 @@
+ 	has_cover = 0
+ 	scan_range = 9
+ 	req_access = list(GLOB.access_syndicate)
+-	paralyse_projectile = /obj/item/projectile/bullet
++	stun_projectile = /obj/item/projectile/bullet
+ 	lethal_projectile = /obj/item/projectile/bullet
+ 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+-	paralyse_projectile_sound = 'sound/weapons/gunshot.ogg'
++	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
+ 	icon_state = "syndie_off"
+ 	base_icon_state = "syndie"
+ 	faction = "syndicate"
+ 	emp_vunerable = 0
+ 
+ /obj/machinery/porta_turret/syndicate/energy
+-	icon_state = "standard_paralyse"
++	icon_state = "standard_stun"
+ 	base_icon_state = "standard"
+-	paralyse_projectile = /obj/item/projectile/energy/electrode
+-	paralyse_projectile_sound = 'sound/weapons/taser.ogg'
++	stun_projectile = /obj/item/projectile/energy/electrode
++	stun_projectile_sound = 'sound/weapons/taser.ogg'
+ 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
+ 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+ 

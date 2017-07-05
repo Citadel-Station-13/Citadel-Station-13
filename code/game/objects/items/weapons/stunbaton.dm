@@ -106,7 +106,7 @@
 	if(status && user.disabilities & CLUMSY && prob(50))
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Weaken(stunforce*3)
+		user.Knockdown(stunforce*3)
 		deductcharge(hitcost)
 		return
 
@@ -180,7 +180,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stunforce = 5
+	stunforce = 100
 	hitcost = 2000
 	throw_hit_chance = 10
 	slot_flags = SLOT_BACK

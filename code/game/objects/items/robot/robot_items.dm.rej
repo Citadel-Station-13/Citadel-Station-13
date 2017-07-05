@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/robot/robot_items.dm b/code/game/objects/items/robot/robot_items.dm	(rejected hunks)
+@@ -22,7 +22,7 @@
+ 			return
+ 
+ 	user.do_attack_animation(M)
+-	M.Knockdown(50)
++	M.Knockdown(100)
+ 	M.apply_effect(STUTTER, 5)
+ 
+ 	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \

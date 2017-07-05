@@ -357,7 +357,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			L.visible_message("<span class='warning'>[L]'s eyes glow a defiant yellow!</span>", \
 			"<span class='cultlarge'>\"Stop resisting. You <i>will</i> be mi-\"</span>\n\
 			<span class='large_brass'>\"Give up and you will feel pain unlike anything you've ever felt!\"</span>")
-			L.Weaken(4)
+			L.Knockdown(80)
 		else if(is_convertable)
 			do_convert(L, invokers)
 	else
@@ -615,7 +615,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			for(var/M in invokers)
 				var/mob/living/L = M
 				to_chat(L, "<span class='userdanger'>You chant in unison and a colossal burst of energy knocks you backward!</span>")
-				L.Weaken(2)
+				L.Knockdown(40)
 	qdel(src) //delete before pulsing because it's a delay reee
 	empulse(E, 9*invokers.len, 12*invokers.len) // Scales now, from a single room to most of the station depending on # of chanters
 
@@ -670,10 +670,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 		if(affecting.key)
 			affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \
 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
-			affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
-			affecting.Weaken(3)
-			break
-		if(affecting.stat == UNCONSCIOUS)
+			user.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
+			user.Knockdown(30)
+			rune_in_use = FALSE
+			affecting = null
+			return
+		if(user.stat == UNCONSCIOUS)
 			if(prob(1))
 				var/mob/dead/observer/G = affecting.get_ghost()
 				to_chat(G, "<span class='cultitalic'>You feel the link between you and your body weakening... you must hurry!</span>")

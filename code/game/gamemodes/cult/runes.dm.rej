@@ -1,0 +1,10 @@
+diff a/code/game/gamemodes/cult/runes.dm b/code/game/gamemodes/cult/runes.dm	(rejected hunks)
+@@ -671,7 +671,7 @@ structure_check() searches for nearby cultist structures required for the invoca
+ 			affecting.visible_message("<span class='warning'>[affecting] slowly relaxes, the glow around [affecting.p_them()] dimming.</span>", \
+ 								 "<span class='danger'>You are re-united with your physical form. [src] releases its hold over you.</span>")
+ 			affecting.remove_atom_colour(ADMIN_COLOUR_PRIORITY, RUNE_COLOR_DARKRED)
+-			affecting.Knockdown(30)
++			affecting.Knockdown(60)
+ 			break
+ 		if(affecting.stat == UNCONSCIOUS)
+ 			if(prob(1))

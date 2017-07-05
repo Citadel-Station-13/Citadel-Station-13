@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/simple_animal/bot/ed209bot.dm b/code/modules/mob/living/simple_animal/bot/ed209bot.dm	(rejected hunks)
+@@ -522,7 +522,7 @@ Auto Patrol[]"},
+ 	spawn(2)
+ 		icon_state = "[lasercolor]ed209[on]"
+ 	var/threat = 5
+-	C.Knockdown(50)
++	C.Knockdown(100)
+ 	C.stuttering = 5
+ 	if(ishuman(C))
+ 		var/mob/living/carbon/human/H = C
