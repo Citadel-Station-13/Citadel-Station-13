@@ -40843,8 +40843,7 @@
 /area/medical/medbay/central)
 "bvF" = (
 /obj/machinery/sleeper{
-	dir = 4;
-	icon_state = "sleeper-open"
+	dir = 4
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -86400,7 +86399,6 @@
 /area/shuttle/escape)
 "dbr" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -86469,7 +86467,6 @@
 /area/shuttle/escape)
 "dbA" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
@@ -86563,7 +86560,6 @@
 /area/shuttle/escape)
 "dbI" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/plasteel/whiteblue/side,
@@ -86578,7 +86574,6 @@
 /area/shuttle/escape)
 "dbK" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{

@@ -3438,7 +3438,6 @@
 /area/awaymission/snowdin/sekret)
 "jq" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 4
 	},
 /turf/open/floor/plasteel/cmo{
@@ -3471,7 +3470,6 @@
 /area/awaymission/snowdin/sekret)
 "ju" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -3572,7 +3570,6 @@
 /area/awaymission/snowdin/sekret)
 "jH" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/cmo{

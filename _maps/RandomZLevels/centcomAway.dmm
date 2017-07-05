@@ -852,7 +852,6 @@
 /area/awaymission/centcomAway/hangar)
 "cN" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -1432,7 +1431,6 @@
 /area/awaymission/centcomAway/general)
 "eH" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
