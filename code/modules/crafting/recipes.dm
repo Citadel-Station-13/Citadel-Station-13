@@ -379,6 +379,19 @@
 	result = /obj/item/toy/sword
 	category = CAT_MISC
 
+/datum/crafting_recipe/blackcarpet
+	name = "Black Carpet"
+	reqs = list(/obj/item/stack/tile/carpet = 50, /obj/item/toy/crayon/black = 1)
+	result = /obj/item/stack/tile/carpet/black/fifty
+	category = CAT_MISC
+
+/datum/crafting_recipe/showercurtain
+	name = "Shower Curtains"
+	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
+	result = /obj/structure/curtain
+	category = CAT_MISC
+
+
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"
 	result = /obj/item/weapon/bombcore/chemical
@@ -414,7 +427,7 @@
 
 /datum/crafting_recipe/bonetalisman
 	name = "Bone Talisman"
-	result = /obj/item/clothing/neck/talisman
+	result = /obj/item/clothing/accessory/talisman
 	time = 20
 	reqs = list(/obj/item/stack/sheet/bone = 2,
 				 /obj/item/stack/sheet/sinew = 1)

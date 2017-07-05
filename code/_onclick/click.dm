@@ -325,6 +325,8 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user))
+		if(world.time < user.next_move)
+			return
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
 		H.changeNext_move(CLICK_CD_MELEE)

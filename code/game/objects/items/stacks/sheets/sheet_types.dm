@@ -140,6 +140,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, one_per_turf = 1, on_floor = 1), \
@@ -148,6 +149,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("tiki mask", /obj/item/clothing/mask/gas/tiki_mask, 2), \
 	new/datum/stack_recipe("honey frame", /obj/item/honey_frame, 5, time = 10),\
 	new/datum/stack_recipe("ore box", /obj/structure/ore_box, 4, time = 50, one_per_turf = 1, on_floor = 1),\
+	new/datum/stack_recipe("wooden crate", /obj/structure/closet/crate/wooden, 6, time = 50, one_per_turf = 1, on_floor = 1),\
 	new/datum/stack_recipe("baseball bat", /obj/item/weapon/melee/baseball_bat, 5, time = 15),\
 	))
 
@@ -179,7 +181,7 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	null, \
 	new/datum/stack_recipe("backpack", /obj/item/weapon/storage/backpack, 4), \
-	new/datum/stack_recipe("dufflebag", /obj/item/weapon/storage/backpack/dufflebag, 6), \
+	new/datum/stack_recipe("duffelbag", /obj/item/weapon/storage/backpack/duffelbag, 6), \
 	null, \
 	new/datum/stack_recipe("plant bag", /obj/item/weapon/storage/bag/plants, 4), \
 	new/datum/stack_recipe("book bag", /obj/item/weapon/storage/bag/books, 4), \

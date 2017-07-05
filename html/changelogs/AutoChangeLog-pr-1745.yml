@@ -1,0 +1,4 @@
+author: "ganglyalexander"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to reset owner of locker"

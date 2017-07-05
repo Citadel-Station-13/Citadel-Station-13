@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - imageadd: "Overhauled cryotube code to be cleaner."
