@@ -50,7 +50,7 @@
 	var/datum/faction/faction 			//associated faction
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
-	var/datum/martial_art/martial_art = null
+	var/datum/martial_art/martial_art
 	var/static/default_martial_art = new/datum/martial_art
 	var/miming = 0 // Mime's vow of silence
 	var/list/antag_datums
@@ -117,7 +117,7 @@
 		C.last_mind = src
 	transfer_antag_huds(hud_to_transfer)				//inherit the antag HUD
 	transfer_actions(new_character)
-
+	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
 
@@ -146,6 +146,7 @@
 	if(A)
 		A.on_removal()
 		return TRUE
+
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
 	for(var/a in antag_datums)
@@ -316,7 +317,6 @@
 
 			if(!silent) to_chat(traitor_mob, "[employer] has cunningly disguised a Syndicate Uplink as your [P.name]. Simply twist the top of the pen [P.traitor_unlock_degrees] from its starting position to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Degrees:</B> [P.traitor_unlock_degrees] ([P.name]).")
-
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
 
@@ -1149,7 +1149,7 @@
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
 
 			if("initialdna")
-				if( !changeling || !changeling.stored_profiles.len || !istype(current, /mob/living/carbon))
+				if( !changeling || !changeling.stored_profiles.len || !iscarbon(current))
 					to_chat(usr, "<span class='danger'>Resetting DNA failed!</span>")
 				else
 					var/mob/living/carbon/C = current
@@ -1233,7 +1233,6 @@
 					log_admin("[key_name(usr)] has forged objectives for [current] as part of autoobjectives.")
 					traitordatum.forge_traitor_objectives()
 					to_chat(usr, "<span class='notice'>The objectives for traitor [key] have been generated. You can edit them and anounce manually.</span>")
-
 
 	else if(href_list["devil"])
 		var/datum/antagonist/devil/devilinfo = has_antag_datum(ANTAG_DATUM_DEVIL)
@@ -1624,6 +1623,15 @@
 			spell_list -= S
 			qdel(S)
 
+/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
+	if(!ishuman(new_character))
+		return
+	if(martial_art)
+		if(martial_art.base) //Is the martial art temporary?
+			martial_art.remove(new_character)
+		else
+			martial_art.teach(new_character)
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
@@ -1642,6 +1650,7 @@
 			if(istype(S, type))
 				continue
 		S.charge_counter = delay
+		S.updateButtonIcon()
 		INVOKE_ASYNC(S, /obj/effect/proc_holder/spell.proc/start_recharge)
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter)
