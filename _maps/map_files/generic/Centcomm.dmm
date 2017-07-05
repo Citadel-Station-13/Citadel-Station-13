@@ -1102,7 +1102,6 @@
 	dir = 8
 	},
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -1119,7 +1118,6 @@
 /area/holodeck/rec_center/medical)
 "dn" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 1
 	},
 /turf/open/floor/holofloor{
@@ -9588,7 +9586,6 @@
 /area/centcom/control)
 "xM" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -13088,7 +13085,6 @@
 /area/centcom/evac)
 "Gt" = (
 /obj/machinery/sleeper{
-	icon_state = "sleeper-open";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
