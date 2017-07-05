@@ -28,7 +28,6 @@ em						{font-style: normal;	font-weight: bold;}
 .ooc					{					font-weight: bold;}
 .adminobserverooc		{color: #0099cc;	font-weight: bold;}
 .adminooc				{color: #700038;	font-weight: bold;}
-.looc					{					font-weight: bold;}
 
 .adminobserver			{color: #996600;	font-weight: bold;}
 .admin					{color: #386aff;	font-weight: bold;}
@@ -134,7 +133,6 @@ h1.alert, h2.alert		{color: #000000;}
 .alien					{color: #543354;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
-.borer					{color: #543354;	font-style: italic;}
 .changeling				{color: #800080;	font-style: italic;}
 
 .interface				{color: #330033;}
@@ -144,6 +142,7 @@ h1.alert, h2.alert		{color: #000000;}
 .robot					{font-family: "Courier New", cursive, sans-serif;}
 
 .command_headset		{font-weight: bold; font-size: 3;}
+.small					{font-size: 1;}
 .big					{font-size: 3;}
 .reallybig				{font-size: 4;}
 .greentext				{color: #00FF00;	font-size: 3;}
@@ -160,8 +159,5 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
-
-.love					{color: #FF69Bf;}
-.lovebold				{color: #FF69Bf;	font-weight: bold;}
 .resonate				{color: #298F85;}
 </style>"}
