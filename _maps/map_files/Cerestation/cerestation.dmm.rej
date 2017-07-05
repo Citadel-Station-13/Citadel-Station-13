@@ -1,0 +1,12 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -97448,6 +97441,10 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/hallway/primary/starboard)
++"dzb" = (
++/obj/structure/grille/broken,
++/turf/open/floor/plating,
++/area/maintenance/asteroid/starboard)
+ 
+ (1,1,1) = {"
+ aaa
