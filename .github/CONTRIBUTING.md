@@ -78,7 +78,7 @@ The use of this is not allowed in this project as it makes finding definitions v
 
 The previous code made compliant:
 
-```c++
+```DM
 /datum/datum1
 		var/varname1
 		var/varname2
@@ -110,7 +110,7 @@ In byond this is optional, but omitting it makes finding definitions harder.
 ### Do not use text/string based type paths
 It is rarely allowed to put type paths in a text format, as there are no compile errors if the type path no longer exists. Here is an example:
 
-```C++
+```DM
 //Good
 var/path_type = /obj/item/weapon/baseball_bat
 
@@ -168,7 +168,7 @@ This is bad:
 				do stuff
 ````
 This is good:
-````
+````DM
 /datum/datum1/proc/proc1()
 	if (!thing1)
 		return
