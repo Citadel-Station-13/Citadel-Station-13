@@ -250,6 +250,11 @@
 	if(.)
 		hammer_synced = new_hammer_synced
 
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/weapon/twohanded/required/mining_hammer/new_hammer_synced)
+	. = ..()
+	if(.)
+		hammer_synced = new_hammer_synced
+
 /datum/status_effect/crusher_mark/on_apply()
 	if(owner.mob_size >= MOB_SIZE_LARGE)
 		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
