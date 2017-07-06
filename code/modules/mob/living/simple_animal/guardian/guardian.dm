@@ -497,7 +497,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		theghost = pick(candidates)
 		spawn_guardian(user, theghost.key)
 		to_chat(user, "[activation_message]")
-  		qdel(src)
+		qdel(src)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE
