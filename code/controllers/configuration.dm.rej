@@ -1,0 +1,10 @@
+diff a/code/controllers/configuration.dm b/code/controllers/configuration.dm	(rejected hunks)
+@@ -779,6 +782,8 @@
+ 					mice_roundstart = text2num(value)
+ 				else
+ 					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
++		else if(type == "policies")
++			policies[name] = value
+ 
+ 	fps = round(fps)
+ 	if(fps <= 0)
