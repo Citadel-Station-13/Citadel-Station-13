@@ -470,6 +470,7 @@
 	id = /obj/item/weapon/card/id/away/old/sec
 	r_pocket = /obj/item/weapon/restraints/handcuffs
 	l_pocket = /obj/item/device/assembly/flash/handheld
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsec/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
@@ -493,6 +494,7 @@
 	id = /obj/item/weapon/card/id/away/old/eng
 	gloves = /obj/item/clothing/gloves/color/fyellow/old
 	l_pocket = /obj/item/weapon/tank/internals/emergency_oxygen
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldeng/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
@@ -515,6 +517,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/weapon/card/id/away/old/sci
 	l_pocket = /obj/item/stack/medical/bruise_pack
+	assignedrole = "Ancient Crew"
 
 /obj/effect/mob_spawn/human/oldsci/Destroy()
 	new/obj/structure/showcase/oldpod/used(get_turf(src))
