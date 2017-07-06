@@ -455,7 +455,6 @@
 	var/time_passed = world.time
 	if (!Question)
 		Question = "Would you like to be a special role?"
-
 	var/list/result = list()
 	for(var/m in group)
 		var/mob/M = m
@@ -554,3 +553,11 @@
 
 /proc/GetBluePart(const/hexa)
 	return hex2num(copytext(hexa, 6, 8))
+
+/proc/lavaland_equipment_pressure_check(turf/T)
+	if(!istype(T))
+		return
+	var/datum/gas_mixture/environment = T.return_air()
+	var/pressure = environment.return_pressure()
+	if(pressure <= LAVALAND_EQUIPMENT_EFFECT_PRESSURE)
+		return TRUE

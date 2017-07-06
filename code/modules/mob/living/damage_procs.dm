@@ -96,10 +96,10 @@
 	switch(effecttype)
 		if(STUN)
 			Stun(effect * hit_percent)
-		if(WEAKEN)
-			Weaken(effect * hit_percent)
-		if(PARALYZE)
-			Paralyse(effect * hit_percent)
+		if(KNOCKDOWN)
+			Knockdown(effect * hit_percent)
+		if(UNCONSCIOUS)
+			Unconscious(effect * hit_percent)
 		if(IRRADIATE)
 			radiation += max(effect * hit_percent, 0)
 		if(SLUR)
@@ -117,15 +117,15 @@
 	return 1
 
 
-/mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0)
 	if(blocked >= 100)
 		return 0
 	if(stun)
 		apply_effect(stun, STUN, blocked)
-	if(weaken)
-		apply_effect(weaken, WEAKEN, blocked)
-	if(paralyze)
-		apply_effect(paralyze, PARALYZE, blocked)
+	if(knockdown)
+		apply_effect(knockdown, KNOCKDOWN, blocked)
+	if(unconscious)
+		apply_effect(unconscious, UNCONSCIOUS, blocked)
 	if(irradiate)
 		apply_effect(irradiate, IRRADIATE, blocked)
 	if(slur)
@@ -243,6 +243,7 @@
 
 /mob/living/proc/setStaminaLoss(amount, updating_stamina = TRUE, forced = FALSE)
 	return
+
 
 // heal ONE external organ, organ gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn, updating_health = 1)

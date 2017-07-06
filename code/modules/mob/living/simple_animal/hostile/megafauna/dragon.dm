@@ -42,7 +42,7 @@ Difficulty: Medium
 	icon_living = "dragon"
 	icon_dead = "dragon_dead"
 	friendly = "stares down"
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	speak_emote = list("roars")
 	armour_penetration = 40
 	melee_damage_lower = 40
@@ -128,7 +128,7 @@ Difficulty: Medium
 			new /obj/effect/temp_visual/target(turf)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/fire_walls()
-	playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
+	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, 1)
 
 	for(var/d in GLOB.cardinal)
 		INVOKE_ASYNC(src, .proc/fire_wall, d)
@@ -306,7 +306,7 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/target/proc/fall(list/flame_hit)
 	var/turf/T = get_turf(src)
-	playsound(T,'sound/magic/Fireball.ogg', 80, 1)
+	playsound(T,'sound/magic/fleshtostone.ogg', 80, 1)
 	new /obj/effect/temp_visual/fireball(T)
 	sleep(duration)
 	if(ismineralturf(T))
@@ -337,7 +337,7 @@ Difficulty: Medium
 	duration = 5
 
 /obj/effect/temp_visual/dragon_flight
-	icon = 'icons/mob/lavaland/dragon.dmi'
+	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
 	pixel_x = -16

@@ -70,7 +70,7 @@
 			refresh()
 			return
 		var/datum/gas_mixture/air = T.return_air()
-		if(!istype(air))
+		if(!air)
 			active = null
 			return
 
@@ -81,19 +81,18 @@
 		data["SM_ambientpressure"] = air.return_pressure()
 		//data["SM_EPR"] = round((air.total_moles / air.group_multiplier) / 23.1, 0.01)
 		var/list/gasdata = list()
-		var/list/gaseslist = list("o2","co2","n2","plasma","n2o")
 
 
 		if(air.total_moles())
-			for(var/gasid in gaseslist)
+			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
-				"name"= gasid,
+				"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 				"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
 
 		else
-			for(var/gasid in gaseslist)
+			for(var/gasid in air.gases)
 				gasdata.Add(list(list(
-					"name"= gasid,
+					"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
 					"amount" = 0)))
 
 		data["gases"] = gasdata

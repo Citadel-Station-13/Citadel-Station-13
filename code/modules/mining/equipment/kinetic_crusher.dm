@@ -34,7 +34,7 @@
 	to_chat(user, "<span class='notice'>Does <b>80</b> damage if the target is backstabbed, instead of <b>50</b>.</span>")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
-		to_chat(user, "<span class='notice'>It has \a [T] attached, which causes [T.effect_desc()].</span>")
+		to_chat(user, "<span class='notice'>It has \a [T] attached, which cause [T.effect_desc()].</span>")
 
 /obj/item/weapon/twohanded/required/kinetic_crusher/attackby(obj/item/A, mob/living/user)
 	if(istype(A, /obj/item/weapon/crowbar))
@@ -101,7 +101,7 @@
 				if(!QDELETED(C))
 					C.total_damage += 80 //cheat a little and add the total before killing it, so certain mobs don't have much lower chances of giving an item
 				L.apply_damage(80, BRUTE, blocked = def_check)
-				playsound(user, 'sound/weapons/Kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
+				playsound(user, 'sound/weapons/kenetic_accel.ogg', 100, 1) //Seriously who spelled it wrong
 			else
 				if(!QDELETED(C))
 					C.total_damage += 50
@@ -133,9 +133,8 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		var/had_effect = (L.has_status_effect(STATUS_EFFECT_CRUSHERMARK)) //used as a boolean
-		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK)
+		var/datum/status_effect/crusher_mark/CM = L.apply_status_effect(STATUS_EFFECT_CRUSHERMARK, hammer_synced)
 		if(hammer_synced)
-			CM.hammer_synced = hammer_synced
 			for(var/t in hammer_synced.trophies)
 				var/obj/item/crusher_trophy/T = t
 				T.on_mark_application(target, CM, had_effect)
@@ -199,6 +198,7 @@
 	bonus_value = 2
 	var/missing_health_ratio = 0.1
 	var/missing_health_desc = 10
+
 /obj/item/crusher_trophy/goliath_tentacle/effect_desc()
 	return "mark detonation to do <b>[bonus_value]</b> more damage for every <b>[missing_health_desc]</b> health you are missing"
 
@@ -209,7 +209,7 @@
 	if(missing_health > 0)
 		target.adjustBruteLoss(missing_health) //and do that much damage
 
-/watcher
+//watcher
 /obj/item/crusher_trophy/watcher_wing
 	name = "watcher wing"
 	desc = "A wing ripped from a watcher. Suitable as a trophy for a kinetic crusher."
@@ -250,6 +250,18 @@
 	if(.)
 		H.charge_time += bonus_value
 
+//blood-drunk hunter
+/obj/item/crusher_trophy/miner_eye
+	name = "eye of a blood-drunk hunter"
+	desc = "Its pupil is collapsed and turned to mush. Suitable as a trophy for a kinetic crusher."
+	icon_state = "hunter_eye"
+	denied_type = /obj/item/crusher_trophy/miner_eye
+
+/obj/item/crusher_trophy/miner_eye/effect_desc()
+	return "mark detonation to grant stun immunity and <b>90%</b> damage reduction for <b>1</b> second"
+
+/obj/item/crusher_trophy/miner_eye/on_mark_detonation(mob/living/target, mob/living/user)
+	user.apply_status_effect(STATUS_EFFECT_BLOODDRUNK)
 
 //ash drake
 /obj/item/crusher_trophy/tail_spike
@@ -264,7 +276,7 @@
 	for(var/mob/living/L in oview(2, user))
 		if(L.stat == DEAD)
 			continue
-		playsound(L, 'sound/magic/Fireball.ogg', 20, 1)
+		playsound(L, 'sound/magic/fireball.ogg', 20, 1)
 		new /obj/effect/temp_visual/fire(L.loc)
 		addtimer(CALLBACK(src, .proc/pushback, L, user), 1) //no free backstabs, we push AFTER module stuff is done
 		L.adjustBruteLoss(bonus_value)
@@ -310,7 +322,7 @@
 //colossus
 /obj/item/crusher_trophy/blaster_tubes
 	name = "blaster tubes"
-	desc = "The blaster tubes from a colossus's arm.  Suitable as a trophy for a kinetic crusher."
+	desc = "The blaster tubes from a colossus's arm. Suitable as a trophy for a kinetic crusher."
 	icon_state = "blaster_tubes"
 	gender = PLURAL
 	denied_type = /obj/item/crusher_trophy/blaster_tubes

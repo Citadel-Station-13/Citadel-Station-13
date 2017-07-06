@@ -32,7 +32,7 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(SSticker && SSticker.mode)
+	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)

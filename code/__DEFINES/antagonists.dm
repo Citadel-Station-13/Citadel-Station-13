@@ -8,9 +8,6 @@
 #define ANTAG_DATUM_NINJA_RANDOM		/datum/antagonist/ninja/randomAllegiance/
 #define ANTAG_DATUM_TRAITOR 			/datum/antagonist/traitor
 #define ANTAG_DATUM_TRAITOR_CUSTOM 		/datum/antagonist/traitor/custom
-#define ANTAG_DATUM_IAA				/datum/antagonist/traitor/internal_affairs
-#define ANTAG_DATUM_TRAITOR 			/datum/antagonist/traitor
-#define ANTAG_DATUM_TRAITOR_CUSTOM 		/datum/antagonist/traitor/custom
 #define ANTAG_DATUM_TRAITOR_HUMAN		/datum/antagonist/traitor/human
 #define ANTAG_DATUM_TRAITOR_HUMAN_CUSTOM	/datum/antagonist/traitor/human/custom
 #define ANTAG_DATUM_TRAITOR_AI			/datum/antagonist/traitor/AI

@@ -16,7 +16,7 @@
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
-	
+
 /obj/machinery/transformer/Initialize()
 	// On us
 	. = ..()
@@ -91,7 +91,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_icon()
 
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 

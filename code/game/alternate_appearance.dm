@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	for(var/v in hudatoms)
 		remove_from_hud(v)
 	GLOB.active_alternate_appearances -= src
- 	return ..()
+	return ..()
 
 /datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
 	if(mobShouldSee(M))

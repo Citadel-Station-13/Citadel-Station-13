@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(menulist)
 
 /datum/verbs/menu/GetList()
 	return GLOB.menulist
-	
+
 /datum/verbs/menu/HandleVerb(list/entry, verbpath, client/C)
 	var/datum/verbs/menu/verb_true_parent = GLOB.menulist[verblist[verbpath]]
 	var/true_checkbox = verb_true_parent.checkbox

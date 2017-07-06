@@ -41,7 +41,7 @@
 		if(!L)
 			if(R.use(1))
 				to_chat(user, "<span class='notice'>You construct a lattice.</span>")
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				ReplaceWithLattice()
 			else
 				to_chat(user, "<span class='warning'>You need one rod to build a lattice.</span>")
@@ -52,7 +52,7 @@
 			var/obj/item/stack/tile/plasteel/S = C
 			if(S.use(1))
 				qdel(L)
-				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
+				playsound(src, 'sound/weapons/genhit.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You build a floor.</span>")
 				ChangeTurf(/turf/open/floor/plating)
 			else
@@ -113,7 +113,7 @@
 		AM.forceMove(T)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L.Weaken(5)
+			L.Knockdown(100)
 			L.adjustBruteLoss(30)
 
 
@@ -142,7 +142,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.notransform = TRUE
-		L.Stun(10)
+		L.Stun(200)
 		L.resting = TRUE
 	var/oldtransform = AM.transform
 	var/oldcolor = AM.color

@@ -19,10 +19,10 @@
 		if(istype(w_uniform,/obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
 			if(U.attached_accessory)
-				accessory_msg += " with \icon[U.attached_accessory] \a [U.attached_accessory]"
+				accessory_msg += " with [bicon(U.attached_accessory)] \a [U.attached_accessory]"
 
 		if(w_uniform.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing \icon[w_uniform] [w_uniform.gender==PLURAL?"some":"a"] blood-stained [w_uniform.name][accessory_msg]!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][accessory_msg].\n"
 
@@ -258,9 +258,11 @@
 				msg += "[t_He] looks like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
+				
 	for (var/I in src.vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		msg += B.get_examine_msg()
+
 
 	msg += "</span>"
 
@@ -332,7 +334,7 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
-
+		
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

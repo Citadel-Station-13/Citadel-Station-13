@@ -10,7 +10,7 @@
 	riding_datum = new/datum/riding/atv
 
 /obj/vehicle/atv/Initialize()
-	.=..()
+	. = ..()
 	atvcover = atvcover || mutable_appearance(icon, "atvcover", ABOVE_MOB_LAYER)
 
 

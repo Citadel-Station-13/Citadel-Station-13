@@ -145,14 +145,14 @@
 			back = /obj/item/weapon/storage/backpack //Grey backpack
 		if(GSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel //Grey satchel
-		if(Gduffelbag)
-			back = /obj/item/weapon/storage/backpack/duffelbag //Grey duffelbag
+		if(GDUFFELBAG)
+			back = /obj/item/weapon/storage/backpack/duffelbag //Grey Duffel bag
 		if(LSATCHEL)
 			back = /obj/item/weapon/storage/backpack/satchel/leather //Leather Satchel
 		if(DSATCHEL)
 			back = satchel //Department satchel
-		if(Dduffelbag)
-			back = duffelbag //Department duffelbag
+		if(DDUFFELBAG)
+			back = duffelbag //Department duffel bag
 		else
 			back = backpack //Department backpack
 

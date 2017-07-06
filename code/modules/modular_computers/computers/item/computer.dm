@@ -49,7 +49,6 @@
 	var/comp_light_color			//The color of that light
 
 
-
 /obj/item/device/modular_computer/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)

@@ -385,6 +385,7 @@ SUBSYSTEM_DEF(job)
 			log_world("Couldn't find a round start spawn point for [rank]")
 			SendToLateJoin(H)
 
+
 	if(H.mind)
 		H.mind.assigned_role = rank
 

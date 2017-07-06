@@ -15,8 +15,6 @@
 	overlay = overlay ||  mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
 
-
-
 /obj/vehicle/space/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
 		new /obj/effect/temp_visual/dir_setting/speedbike_trail(loc,move_dir)
@@ -50,7 +48,7 @@
 			playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
-			H.Weaken(5)
+			H.Knockdown(100)
 			H.adjustStaminaLoss(30)
 			H.apply_damage(rand(20,35), BRUTE)
 			if(!crash_all)

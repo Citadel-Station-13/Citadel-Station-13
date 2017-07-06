@@ -56,6 +56,7 @@ Contents:
 	var/s_bombs = 10//Number of starting ninja smoke bombs.
 	var/a_boost = 3//Number of adrenaline boosters.
 
+
 /obj/item/clothing/suit/space/space_ninja/get_cell()
 	return cell
 

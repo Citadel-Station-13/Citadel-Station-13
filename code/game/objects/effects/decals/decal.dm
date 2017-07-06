@@ -31,6 +31,7 @@
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
 	T.add_decal(get_decal(),group)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"

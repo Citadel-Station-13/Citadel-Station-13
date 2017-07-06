@@ -547,7 +547,6 @@
 	emagged = TRUE
 	installation = /obj/item/weapon/gun/energy/laser
 
-
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
@@ -557,8 +556,8 @@
 	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
@@ -568,10 +567,9 @@
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
-
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
