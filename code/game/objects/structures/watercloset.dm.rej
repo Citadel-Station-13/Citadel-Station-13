@@ -1,0 +1,10 @@
+diff a/code/game/objects/structures/watercloset.dm b/code/game/objects/structures/watercloset.dm	(rejected hunks)
+@@ -281,7 +281,7 @@
+ 			var/mob/living/L = O
+ 			if(wash_mob(L)) //it's a carbon mob.
+ 				var/mob/living/carbon/C = L
+-				C.slip(4,null,NO_SLIP_WHEN_WALKING)
++				C.slip(80,null,NO_SLIP_WHEN_WALKING)
+ 		else
+ 			wash_obj(O)
+ 
