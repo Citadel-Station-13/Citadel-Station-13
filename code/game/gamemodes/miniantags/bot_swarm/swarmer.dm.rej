@@ -1,0 +1,29 @@
+diff a/code/game/gamemodes/miniantags/bot_swarm/swarmer.dm b/code/game/gamemodes/miniantags/bot_swarm/swarmer.dm	(rejected hunks)
+@@ -547,22 +526,22 @@
+ 	icon_state = "ui_light"
+ 	layer = MOB_LAYER
+ 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
+-	var/lon_range = 1
+ 	light_color = LIGHT_COLOR_CYAN
+ 	obj_integrity = 30
+ 	max_integrity = 30
+-	anchored = 1
++	anchored = TRUE
++	var/lon_range = 1
+ 
+ /obj/structure/swarmer/Initialize(mapload)
+-	..()
++	. = ..()
+ 	set_light(lon_range)
+ 
+ /obj/structure/swarmer/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+ 	switch(damage_type)
+ 		if(BRUTE)
+-			playsound(loc, 'sound/weapons/egloves.ogg', 80, 1)
++			playsound(src, 'sound/weapons/egloves.ogg', 80, 1)
+ 		if(BURN)
+-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
++			playsound(src, 'sound/items/welder.ogg', 100, 1)
+ 
+ /obj/structure/swarmer/emp_act()
+ 	qdel(src)
