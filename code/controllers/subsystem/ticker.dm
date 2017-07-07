@@ -61,7 +61,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
-	
+
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
@@ -87,11 +87,11 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
-			if(!modevoted)
-				send_gamemode_vote()
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
+			if(!modevoted)
+				send_gamemode_vote()
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -664,10 +664,13 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
-	
+
 /proc/send_gamemode_vote()
-	SSticker.modevoted = TRUE
-	SSvote.initiate_vote("roundtype","server")
+	if(SSticker.current_state == GAME_STATE_PREGAME)
+		if(SSticker.timeLeft < 900)
+			SSticker.timeLeft = 900
+		SSticker.modevoted = TRUE
+		SSvote.initiate_vote("roundtype","server")
 
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
@@ -707,7 +710,7 @@ SUBSYSTEM_DEF(ticker)
 	queued_players = SSticker.queued_players
 	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
-	
+
 	modevoted = SSticker.modevoted
 
 	switch (current_state)
