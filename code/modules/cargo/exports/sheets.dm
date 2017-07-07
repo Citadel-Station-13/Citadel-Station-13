@@ -69,7 +69,7 @@
 
 // Plasteel. Lightweight, strong and contains some plasma too.
 /datum/export/stack/plasteel
-	cost = 85
+	cost = 305 // 2000u of plasma + 2000u of metal.
 	message = "of plasteel"
 	export_types = list(/obj/item/stack/sheet/plasteel)
 
@@ -110,10 +110,6 @@
 	cost = 0.2
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
-
-/datum/export/stack/cable/get_cost(O)
-	return round(..())
-
 
 // Weird Stuff
 

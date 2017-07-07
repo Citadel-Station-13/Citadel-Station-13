@@ -41,11 +41,10 @@
 
 /datum/computer_file/program/card_mod/New()
 	..()
-	change_position_cooldown = config.id_console_jobslot_delay
 	addtimer(CALLBACK(src, .proc/SetConfigCooldown), 0)
 
 /datum/computer_file/program/card_mod/proc/SetConfigCooldown()
-
+	change_position_cooldown = config.id_console_jobslot_delay
 
 /datum/computer_file/program/card_mod/event_idremoved(background, slot)
 	if(!slot || slot == 2)// slot being false means both are removed

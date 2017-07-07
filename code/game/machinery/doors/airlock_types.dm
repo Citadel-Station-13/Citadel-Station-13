@@ -379,20 +379,20 @@
 /obj/machinery/door/airlock/cult/canAIControl(mob/user)
 	return (iscultist(user) && !isAllPowerCut())
 
-/obj/machinery/door/airlock/cult/allowed(mob/M)
+/obj/machinery/door/airlock/cult/allowed(mob/living/L)
 	if(!density)
 		return 1
-	if(friendly || iscultist(M) || istype(M, /mob/living/simple_animal/shade) || isconstruct(M))
+	if(friendly || iscultist(L) || istype(L, /mob/living/simple_animal/shade) || isconstruct(L))
 		new openingoverlaytype(loc)
 		return 1
 	else
 		new /obj/effect/temp_visual/cult/sac(loc)
 		var/atom/throwtarget
-		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
-		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
-		flash_color(M, flash_color="#960000", flash_time=20)
-		M.Weaken(2)
-		M.throw_at(throwtarget, 5, 1,src)
+		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
+		L << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		flash_color(L, flash_color="#960000", flash_time=20)
+		L.Knockdown(40)
+		L.throw_at(throwtarget, 5, 1,src)
 		return 0
 
 /obj/machinery/door/airlock/cult/narsie_act()
@@ -496,7 +496,7 @@
 	return
 
 /obj/machinery/door/airlock/clockwork/deconstruct(disassembled = TRUE)
-	playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 	if(!(flags & NODECONSTRUCT))
 		var/turf/T = get_turf(src)
 		if(disassembled)
@@ -516,7 +516,7 @@
 			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_SECURE)
 				return 1
 			user.visible_message("<span class='notice'>[user] loosens [src]'s cogwheel!</span>", "<span class='notice'>[src]'s cogwheel pops off and dangles loosely.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_LOOSE
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins tightening [src]'s cogwheel...</span>", "<span class='notice'>You begin tightening [src]'s cogwheel into place...</span>")
@@ -524,7 +524,7 @@
 			if(!do_after(user, 75*I.toolspeed, target = src) || construction_state != GEAR_LOOSE)
 				return 1
 			user.visible_message("<span class='notice'>[user] tightens [src]'s cogwheel!</span>", "<span class='notice'>You firmly tighten [src]'s cogwheel into place.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
 			construction_state = GEAR_SECURE
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))

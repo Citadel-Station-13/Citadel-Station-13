@@ -6,7 +6,7 @@
 		return 0
 
 	var/obj/item/bodypart/BP = null
-	if(islimb(def_zone)) //we specified a bodypart object
+	if(isbodypart(def_zone)) //we specified a bodypart object
 		BP = def_zone
 	else
 		if(!def_zone)
@@ -36,6 +36,7 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		//citadel code
 		if(AROUSAL)
 			adjustArousalLoss(damage * hit_percent)
 	return 1

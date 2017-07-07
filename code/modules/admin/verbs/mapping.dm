@@ -21,7 +21,6 @@
 
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/do_not_use_these, 			//-errorage
 	/client/proc/camera_view, 				//-errorage
 	/client/proc/sec_camera_report, 		//-errorage
 	/client/proc/intercom_view, 			//-errorage
@@ -57,12 +56,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 
 /obj/effect/debugging/marker/Move()
 	return 0
-
-/client/proc/do_not_use_these()
-	set category = "Mapping"
-	set name = "-None of these are for ingame use!!"
-
-	..()
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -182,7 +175,6 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 		to_chat(usr, "[count] AT markers placed.")
 
 	SSblackbox.add_details("admin_verb","Show Roundstart Active Turf Markers")
-
 
 /client/proc/enable_debug_verbs()
 	set category = "Debug"

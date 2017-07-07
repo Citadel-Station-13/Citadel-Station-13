@@ -30,7 +30,7 @@
 /obj/singularity/narsie/large/Initialize()
 	. = ..()
 	send_to_playing_players("<span class='narsie'>NAR-SIE HAS RISEN</span>")
-	send_to_playing_players(pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
+	sound_to_playing_players("im_here")
 
 	var/area/A = get_area(src)
 	if(A)
@@ -52,6 +52,7 @@
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
 	GLOB.cult_narsie = src
+	deltimer(GLOB.blood_target_reset_timer)
 	GLOB.blood_target = src
 	resize(0.6)
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
@@ -59,7 +60,7 @@
 			var/mob/living/L = cult_mind.current
 			L.narsie_act()
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player) && isliving(player))
+		if(player.stat != DEAD && player.loc.z == ZLEVEL_STATION && !iscultist(player))
 			souls_needed[player] = TRUE
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.6)
 	INVOKE_ASYNC(src, .proc/begin_the_end)
@@ -76,7 +77,7 @@
 	sleep(1150)
 	if(resolved == FALSE)
 		resolved = TRUE
-		world << sound('sound/machines/Alarm.ogg')
+		world << sound('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/cult_ending_helper), 120)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/ending_helper), 220)
 
@@ -125,7 +126,7 @@
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
 				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
-				M.apply_effect(3, STUN)
+				M.apply_effect(60, STUN)
 
 
 /obj/singularity/narsie/consume(atom/A)
@@ -196,7 +197,7 @@
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 1
 	for(var/atom/X in urange(consume_range,src,1))
-		if(isturf(X) || istype(X, /atom/movable))
+		if(isturf(X) || ismovableatom(X))
 			consume(X)
 //	if(defer_powernet_rebuild != 2)
 //		defer_powernet_rebuild = 0
@@ -211,4 +212,6 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
+
+
 

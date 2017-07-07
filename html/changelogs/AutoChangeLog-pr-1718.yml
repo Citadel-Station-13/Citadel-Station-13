@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Dressers are now constructable, and unanchorable with a wrench."

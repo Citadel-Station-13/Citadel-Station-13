@@ -117,8 +117,13 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	animate(src, pixel_y = 2, time = 10, loop = -1)
 
-
 	GLOB.dead_mob_list += src
+
+	for(var/v in GLOB.active_alternate_appearances)
+		if(!v)
+			continue
+		var/datum/atom_hud/alternate_appearance/AA = v
+		AA.onNewMob(src)
 
 	. = ..()
 
@@ -244,6 +249,7 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(can_reenter_corpse = 1)
 	if(key)
 		if(!cmptext(copytext(key,1,2),"@")) // Skip aghosts.
+			stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 			var/mob/dead/observer/ghost = new(src)	// Transfer safety to observer spawning proc.
 			SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 			ghost.can_reenter_corpse = can_reenter_corpse
@@ -298,6 +304,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		if(SSticker.HasRoundStarted())
+			for(var/datum/gang/G in SSticker.mode.gangs)
+				if(G.is_dominating)
+					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -771,7 +780,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	register_pai()
 
 /mob/dead/observer/proc/register_pai()
-	if(istype(src, /mob/dead/observer))
+	if(isobserver(src))
 		if(SSpai)
 			SSpai.recruitWindow(src)
 	else

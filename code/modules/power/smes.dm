@@ -20,7 +20,7 @@
 	icon_state = "smes"
 	density = 1
 	anchored = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
 
@@ -142,7 +142,7 @@
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			if(C.get_amount() < 10 || !C)
@@ -192,10 +192,11 @@
 
 /obj/machinery/power/smes/Destroy()
 	if(SSticker && SSticker.IsRoundInProgress())
-		var/area/area = get_area(src)
-		message_admins("SMES deleted at (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>[area.name]</a>)")
-		log_game("SMES deleted at ([area.name])")
-		investigate_log("<font color='red'>deleted</font> at ([area.name])", INVESTIGATE_SINGULO)
+		var/area/A = get_area(src)
+		var/turf/T = get_turf(src)
+		message_admins("SMES deleted at [A][ADMIN_JMP(T)]")
+		log_game("SMES deleted at [A][COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [A][COORD(T)]", INVESTIGATE_SINGULO)
 	if(terminal)
 		disconnect_terminal()
 	return ..()

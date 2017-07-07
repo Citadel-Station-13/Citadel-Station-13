@@ -13,6 +13,7 @@
 	speak_emote = list("clanks", "clinks", "clunks", "clangs")
 	verb_ask = "requests"
 	verb_exclaim = "proclaims"
+	verb_whisper = "imparts"
 	verb_yell = "harangues"
 	initial_language_holder = /datum/language_holder/clockmob
 	bubble_icon = "clock"
@@ -37,7 +38,7 @@
 /mob/living/simple_animal/hostile/clockwork/examine(mob/user)
 	var/t_He = p_they(TRUE)
 	var/t_s = p_s()
-	var/msg = "<span class='brass'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='brass'>*---------*\nThis is [bicon(src)] \a <b>[src]</b>!\n"
 	msg += "[desc]\n"
 	if(health < maxHealth)
 		msg += "<span class='warning'>"

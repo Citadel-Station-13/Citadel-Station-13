@@ -181,6 +181,7 @@
 			I.add_overlay(mutable_appearance('icons/mob/robots.dmi', "robot_e")) //gotta look realistic
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "standard_borg_disguise", I) //you look like a robot to robots! (including yourself because you're totally a robot)
 
+
 /obj/item/clothing/suit/snowman
 	name = "snowman outfit"
 	desc = "Two white spheres covered in white glitter. 'Tis the season."
@@ -317,6 +318,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	equip_delay_self = 50
 	strip_delay = 60
 	breakouttime = 3000
 

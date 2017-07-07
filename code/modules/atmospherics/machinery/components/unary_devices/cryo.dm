@@ -1,22 +1,24 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "pod0"
+	icon_state = "pod-off"
 	density = 1
 	anchored = 1
 	obj_integrity = 350
 	max_integrity = 350
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
 
 	var/on = FALSE
 	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
-	var/running_bob_animation = FALSE
 
 	var/efficiency = 1
 	var/sleep_factor = 750
-	var/paralyze_factor = 1000
+	var/unconscious_factor = 1000
 	var/heat_capacity = 20000
 	var/conduction_coefficient = 0.30
 
@@ -26,6 +28,8 @@
 	var/obj/item/device/radio/radio
 	var/radio_key = /obj/item/device/encryptionkey/headset_med
 	var/radio_channel = "Medical"
+
+	var/running_bob_anim = FALSE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
@@ -59,7 +63,7 @@
 
 	efficiency = initial(efficiency) * C
 	sleep_factor = initial(sleep_factor) * C
-	paralyze_factor = initial(paralyze_factor) * C
+	unconscious_factor = initial(unconscious_factor) * C
 	heat_capacity = initial(heat_capacity) / C
 	conduction_coefficient = initial(conduction_coefficient) * C
 
@@ -88,59 +92,72 @@
 		beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	handle_update_icon()
+	cut_overlays()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/handle_update_icon() //making another proc to avoid spam in update_icon
-	overlays.Cut() //empty the overlay proc, just in case
+	if(state_open)
+		icon_state = "pod-open"
+	else if(occupant)
+		var/image/occupant_overlay
+
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = mutable_appearance(CRYOMOBS, "monkey")
+
+		else if(isalienadult(occupant))
+
+			if(isalienroyal(occupant)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+
+			else if(isalienhunter(occupant)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+
+			else if(isaliensentinel(occupant)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+
+			else // Drone (or any other alien that isn't any of the above)
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.copy_overlays(occupant)
+
+		else // Anything else
+			occupant_overlay = image(CRYOMOBS, "generic")
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 22
+
+		if(on && is_operational() && !running_bob_anim)
+			icon_state = "pod-on"
+			running_bob_anim = TRUE
+			run_bob_anim(TRUE, occupant_overlay)
+		else
+			icon_state = "pod-off"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-off")
+	else if(on && is_operational())
+		icon_state = "pod-on"
+		add_overlay("cover-on")
+	else
+		icon_state = "pod-off"
+		add_overlay("cover-off")
 
 	if(panel_open)
-		icon_state = "pod0-o"
-	else if(state_open)
-		icon_state = "pod0"
-	else if(on && is_operational())
-		if(occupant)
-			var/image/pickle = image(occupant.icon, occupant.icon_state)
-			pickle.overlays = occupant.overlays
-			pickle.pixel_y = 22
-			overlays += pickle
-			icon_state = "pod1"
-			var/up = 0 //used to see if we are going up or down, 1 is down, 2 is up
-			spawn(0) // Without this, the icon update will block. The new thread will die once the occupant leaves.
-				running_bob_animation = TRUE
-				while(occupant)
-					overlays -= "lid1" //have to remove the overlays first, to force an update- remove cloning pod overlay
-					overlays -= pickle //remove mob overlay
+		add_overlay("pod-panel")
 
-					switch(pickle.pixel_y) //this looks messy as fuck but it works, switch won't call itself twice
-
-						if(23) //inbetween state, for smoothness
-							switch(up) //this is set later in the switch, to keep track of where the mob is supposed to go
-								if(2) //2 is up
-									pickle.pixel_y = 24 //set to highest
-
-								if(1) //1 is down
-									pickle.pixel_y = 22 //set to lowest
-
-						if(22) //mob is at it's lowest
-							pickle.pixel_y = 23 //set to inbetween
-							up = 2 //have to go up
-
-						if(24) //mob is at it's highest
-							pickle.pixel_y = 23 //set to inbetween
-							up = 1 //have to go down
-
-					overlays += pickle //re-add the mob to the icon
-					overlays += "lid1" //re-add the overlay of the pod, they are inside it, not floating
-
-					sleep(7) //don't want to jiggle violently, just slowly bob
-					return
-				running_bob_animation = FALSE
-		else
-			icon_state = "pod1"
-			overlays += "lid0" //have to remove the overlays first, to force an update- remove cloning pod overlay
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
+	if(!on || !occupant || !is_operational())
+		running_bob_anim = FALSE
+		return
+	cut_overlays()
+	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(anim_up)
+		occupant_overlay.pixel_y++
 	else
-		icon_state = "pod0"
-		overlays += "lid0" //if no occupant, just put the lid overlay on, and ignore the rest
+		occupant_overlay.pixel_y--
+	add_overlay(occupant_overlay)
+	add_overlay("cover-on")
+	addtimer(CALLBACK(src, .proc/run_bob_anim, anim_up, occupant_overlay), 7, TIMER_UNIQUE)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -155,7 +172,7 @@
 	var/turf/T = get_turf(src)
 	if(occupant)
 		var/mob/living/mob_occupant = occupant
-		if(mob_occupant.health >= 100) // Don't bother with fully healed people.
+		if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 			on = FALSE
 			update_icon()
 			playsound(T, 'sound/machines/cryo_warning.ogg', volume) // Bug the doctors.
@@ -171,8 +188,8 @@
 			return
 		if(air1.gases.len)
 			if(mob_occupant.bodytemperature < T0C) // Sleepytime. Why? More cryo magic.
-				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 100)
-				mob_occupant.Paralyse((mob_occupant.bodytemperature / paralyze_factor) * 100)
+				mob_occupant.Sleeping((mob_occupant.bodytemperature / sleep_factor) * 2000)
+				mob_occupant.Unconscious((mob_occupant.bodytemperature / unconscious_factor) * 2000)
 
 			if(beaker)
 				if(reagent_transfer == 0) // Magically transfer reagents. Because cryo magic.
@@ -227,6 +244,7 @@
 			var/mob/living/L = M
 			L.update_canmove()
 	occupant = null
+	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)
@@ -269,10 +287,9 @@
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cyro containing [reagentlist]")
-
 		return
 	if(!on && !occupant && !state_open)
-		if(default_deconstruction_screwdriver(user, "pod0-o", "pod0", I))
+		if(default_deconstruction_screwdriver(user, "cell-o", "cell-off", I))
 			return
 		if(exchange_parts(user, I))
 			return
@@ -362,3 +379,5 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+#undef CRYOMOBS

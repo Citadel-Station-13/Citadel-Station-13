@@ -30,7 +30,6 @@ SUBSYSTEM_DEF(ticker)
 	var/list/scripture_states = list(SCRIPTURE_DRIVER = TRUE, \
 	SCRIPTURE_SCRIPT = FALSE, \
 	SCRIPTURE_APPLICATION = FALSE, \
-	SCRIPTURE_REVENANT = FALSE, \
 	SCRIPTURE_JUDGEMENT = FALSE) //list of clockcult scripture states for announcements
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
@@ -62,7 +61,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/round_start_events
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
-
+	
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
@@ -86,6 +85,8 @@ SUBSYSTEM_DEF(ticker)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
 			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
 			current_state = GAME_STATE_PREGAME
+			//Everyone who wants to be an observer is now spawned
+			create_observers()
 			if(!modevoted)
 				send_gamemode_vote()
 			fire()
@@ -97,7 +98,7 @@ SUBSYSTEM_DEF(ticker)
 			totalPlayersReady = 0
 			for(var/mob/dead/new_player/player in GLOB.player_list)
 				++totalPlayers
-				if(player.ready)
+				if(player.ready == PLAYER_READY_TO_PLAY)
 					++totalPlayersReady
 
 			if(start_immediately)
@@ -131,11 +132,12 @@ SUBSYSTEM_DEF(ticker)
 			scripture_states = scripture_unlock_alert(scripture_states)
 			SSshuttle.autoEnd()
 
-			if(!mode.explosion_in_progress && mode.check_finished() || force_ending)
+			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, "<span class='boldannounce'>Starting game...</span>")
@@ -221,7 +223,7 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
-	world << sound('sound/AI/welcome.ogg')
+	world << sound('sound/ai/welcome.ogg')
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -249,7 +251,7 @@ SUBSYSTEM_DEF(ticker)
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
-	send2irc("Server", "Round of [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
+	send2irc("Server", "Round [GLOB.round_id ? "#[GLOB.round_id]:" : "of"] [hide_mode ? "secret":"[mode.name]"] has started[allmins.len ? ".":" with no active admins online!"]")
 
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)
 	if(!HasRoundStarted())
@@ -408,7 +410,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if(player.ready && player.mind)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
 			GLOB.joined_player_list += player.ckey
 			player.create_character(FALSE)
 		else
@@ -583,34 +585,21 @@ SUBSYSTEM_DEF(ticker)
 
 	mode.declare_station_goal_completion()
 
+	CHECK_TICK
 	//medals, placed far down so that people can actually see the commendations.
-	if(GLOB.commendations)
+	if(GLOB.commendations.len)
 		to_chat(world, "<b><font size=3>Medal Commendations:</font></b>")
 		for (var/com in GLOB.commendations)
 			to_chat(world, com)
 
 	CHECK_TICK
 
-	CHECK_TICK
-
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len || SSgarbage.sleptDestroy.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-			if(path in SSgarbage.sleptDestroy)
-				dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-				SSgarbage.sleptDestroy -= path
-		for(var/path in SSgarbage.sleptDestroy)
-			dellog += "Path : [path] \n"
-			dellog += "Sleeps : [SSgarbage.sleptDestroy[path]] \n"
-		log_world(dellog)
-
-	CHECK_TICK
-
 	//Collects persistence features
-	SSpersistence.CollectData()
+	if(mode.allow_persistence_save)
+		SSpersistence.CollectData()
+
+	//stop collecting feedback during grifftime
+	SSblackbox.Seal()
 
 	sleep(50)
 	if(mode.station_was_nuked)
@@ -675,7 +664,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
-
+	
 /proc/send_gamemode_vote()
 	SSticker.modevoted = TRUE
 	SSvote.initiate_vote("roundtype","server")
@@ -718,6 +707,8 @@ SUBSYSTEM_DEF(ticker)
 	queued_players = SSticker.queued_players
 	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
+	
+	modevoted = SSticker.modevoted
 
 	switch (current_state)
 		if(GAME_STATE_SETTING_UP)
@@ -726,9 +717,6 @@ SUBSYSTEM_DEF(ticker)
 			Master.SetRunLevel(RUNLEVEL_GAME)
 		if(GAME_STATE_FINISHED)
 			Master.SetRunLevel(RUNLEVEL_POSTGAME)
-
-
-	modevoted = SSticker.modevoted
 
 /datum/controller/subsystem/ticker/proc/send_news_report()
 	var/news_message
@@ -793,6 +781,13 @@ SUBSYSTEM_DEF(ticker)
 	else
 		timeLeft = newtime
 
+//Everyone who wanted to be an observer gets made one now
+/datum/controller/subsystem/ticker/proc/create_observers()
+	for(var/mob/dead/new_player/player in GLOB.player_list)
+		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
+			//Break chain since this has a sleep input in it
+			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
+
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
 	if(mode)
@@ -839,10 +834,8 @@ SUBSYSTEM_DEF(ticker)
 	if(delay_end && !skip_delay)
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		return
-
 	if(end_string)
 		end_state = end_string
-
 
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 

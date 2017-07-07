@@ -50,6 +50,7 @@
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
+	devourable = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
@@ -177,7 +178,7 @@
 						if(O.anchored)
 							continue
 
-						if(istype(O, /obj/item) || istype(O, /obj/structure) || istype(O, /obj/machinery))
+						if(isitem(O) || istype(O, /obj/structure) || istype(O, /obj/machinery))
 							cocoon_target = O
 							busy = MOVING_TO_TARGET
 							stop_automated_movement = 1

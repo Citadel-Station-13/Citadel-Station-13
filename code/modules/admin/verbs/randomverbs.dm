@@ -112,7 +112,6 @@
 	message_admins("<span class='adminnotice'><b> LocalNarrate: [key_name_admin(usr)] at [get_area(A)][ADMIN_JMP(A)]:</b> [msg]<BR></span>")
 	SSblackbox.add_details("admin_verb","Local Narrate") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /client/proc/cmd_admin_godmode(mob/M in GLOB.mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
@@ -302,7 +301,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 					else//If we don't know what special role they have, for whatever reason, or they're a larva.
 						create_xeno(G_found.ckey)
 						return
-				
+
 				if(!T)
 					SSjob.SendToLateJoin(new_xeno, FALSE)
 
@@ -374,10 +373,13 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/player_key = G_found.key
 
 	//Now for special roles and equipment.
+	var/datum/antagonist/traitor/traitordatum = new_character.mind.has_antag_datum(ANTAG_DATUM_TRAITOR)
+	if(traitordatum)
+		SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
+		traitordatum.equip()
+
+
 	switch(new_character.mind.special_role)
-		if("traitor")
-			SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)
-			SSticker.mode.equip_traitor(new_character)
 		if("Wizard")
 			new_character.loc = pick(GLOB.wizardstart)
 			//SSticker.mode.learn_basic_spells(new_character)
@@ -402,12 +404,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
 					new_character = new_character.Robotize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				if("AI")
 					new_character = new_character.AIize()
-					if(new_character.mind.special_role=="traitor")
-						SSticker.mode.add_law_zero(new_character)
 				else
 					SSjob.EquipRank(new_character, new_character.mind.assigned_role, 1)//Or we simply equip them.
 
@@ -485,7 +483,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/announce_command_report = TRUE
 	switch(confirm)
 		if("Yes")
-			priority_announce(input, null, 'sound/AI/commandreport.ogg')
+			priority_announce(input, null, 'sound/ai/commandreport.ogg')
 			announce_command_report = FALSE
 		if("Cancel")
 			return
@@ -1057,7 +1055,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			continue
 
 		M.audible_message("<span class='italics'>...wabbajack...wabbajack...</span>")
-		playsound(M.loc, 'sound/magic/Staff_Change.ogg', 50, 1, -1)
+		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, 1, -1)
 
 		wabbajack(M)
 

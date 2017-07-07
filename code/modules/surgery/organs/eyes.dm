@@ -8,6 +8,7 @@
 
 	var/sight_flags = 0
 	var/see_in_dark = 2
+	var/eye_damage = 0
 	var/tint = 0
 	var/eye_color = "" //set to a hex code to override a mob's eye color
 	var/old_eye_color = "fff"
@@ -110,17 +111,24 @@
 	icon_state = "flashlight_eyes"
 	flash_protect = 2
 	tint = INFINITY
+	var/obj/item/device/flashlight/eyelight/eye
 
 /obj/item/organ/eyes/robotic/flashlight/emp_act(severity)
 	return
 
 /obj/item/organ/eyes/robotic/flashlight/Insert(var/mob/living/carbon/M, var/special = 0)
 	..()
-	M.set_light(M.light_range + 15, M.light_power + 1)
+	if(!eye)
+		eye = new /obj/item/device/flashlight/eyelight()
+	eye.on = TRUE
+	eye.forceMove(M)
+	eye.update_brightness(M)
 
 
 /obj/item/organ/eyes/robotic/flashlight/Remove(var/mob/living/carbon/M, var/special = 0)
-	M.set_light(M.light_range -15, M.light_power - 1)
+	eye.on = FALSE
+	eye.update_brightness(M)
+	eye.forceMove(src)
 	..()
 
 // Welding shield implant

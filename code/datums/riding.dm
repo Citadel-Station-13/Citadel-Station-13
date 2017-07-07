@@ -40,6 +40,8 @@
 			passindex++
 			var/mob/living/buckled_mob = m
 			var/list/offsets = get_offsets(passindex)
+			var/rider_dir = get_rider_dir(passindex)
+			buckled_mob.setDir(rider_dir)
 			dir_loop:
 				for(var/offsetdir in offsets)
 					if(offsetdir == ridden_dir)
@@ -55,6 +57,11 @@
 //Override this to set your vehicle's various pixel offsets
 /datum/riding/proc/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list("[NORTH]" = list(0, 0), "[SOUTH]" = list(0, 0), "[EAST]" = list(0, 0), "[WEST]" = list(0, 0))
+
+//Override this to set the passengers/riders dir based on which passenger they are.
+//ie: rider facing the vehicle's dir, but passenger 2 facing backwards, etc.
+/datum/riding/proc/get_rider_dir(pass_index)
+	return ridden.dir
 
 //KEYS
 /datum/riding/proc/keycheck(mob/user)
@@ -97,9 +104,6 @@
 
 /datum/riding/proc/Process_Spacemove(direction)
 	if(ridden.has_gravity())
-		return 1
-
-	if(ridden.pulledby)
 		return 1
 
 	return 0
@@ -301,7 +305,7 @@
 /datum/riding/human/ride_check(mob/living/M)
 	var/mob/living/carbon/human/H = ridden	//IF this runtimes I'm blaming the admins.
 	if(M.incapacitated(FALSE, TRUE) || H.incapacitated(FALSE, TRUE))
-		M.visible_message("<span class='boldwarning'>[M] falls off of [ridden]!</span>")
+		M.visible_message("<span class='warning'>[M] falls off [ridden]!</span>")
 		Unbuckle(M)
 		return FALSE
 	if(M.restrained(TRUE))
@@ -314,6 +318,7 @@
 /datum/riding/human/get_offsets(pass_index) // list(dir = x, y, layer)
 	return list("[NORTH]" = list(0, 6), "[SOUTH]" = list(0, 6), "[EAST]" = list(-6, 4), "[WEST]" = list( 6, 4))
 
+
 /datum/riding/human/handle_vehicle_layer()
 	if(ridden.buckled_mobs && ridden.buckled_mobs.len)
 		if(ridden.dir == SOUTH)
@@ -325,9 +330,8 @@
 
 /datum/riding/human/force_dismount(mob/living/user)
 	ridden.unbuckle_mob(user)
-	user.Weaken(3)
-	user.Stun(3)
-	user.visible_message("<span class='boldwarning'>[ridden] pushes [user] off of them!</span>")
+	user.Knockdown(60)
+	user.visible_message("<span class='warning'>[ridden] pushes [user] off of them!</span>")
 
 /datum/riding/cyborg
 	keytype = null
@@ -335,7 +339,7 @@
 /datum/riding/cyborg/ride_check(mob/user)
 	if(user.incapacitated())
 		var/kick = TRUE
-		if(istype(ridden, /mob/living/silicon/robot))
+		if(iscyborg(ridden))
 			var/mob/living/silicon/robot/R = ridden
 			if(R.module && R.module.ride_allow_incapacitated)
 				kick = FALSE
@@ -343,7 +347,7 @@
 			to_chat(user, "<span class='userdanger'>You fall off of [ridden]!</span>")
 			Unbuckle(user)
 			return
-	if(istype(user, /mob/living/carbon))
+	if(iscarbon(user))
 		var/mob/living/carbon/carbonuser = user
 		if(!carbonuser.get_num_arms())
 			Unbuckle(user)
@@ -379,9 +383,9 @@
 	var/turf/target = get_edge_target_turf(ridden, ridden.dir)
 	var/turf/targetm = get_step(get_turf(ridden), ridden.dir)
 	M.Move(targetm)
-	M.visible_message("<span class='boldwarning'>[M] is thrown clear of [ridden]!</span>")
+	M.visible_message("<span class='warning'>[M] is thrown clear of [ridden]!</span>")
 	M.throw_at(target, 14, 5, ridden)
-	M.Weaken(3)
+	M.Knockdown(60)
 
 /datum/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1)
 	var/amount_equipped = 0

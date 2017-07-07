@@ -72,16 +72,6 @@
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second</span>")
 			return
 
-/*
-	if(href_list["mentor_msg"])
-		if(config.mentors_mobname_only)
-			var/mob/M = locate(href_list["mentor_msg"])
-			cmd_mentor_pm(M,null)
-		else
-			cmd_mentor_pm(href_list["mentor_msg"],null)
-		return
-*/
-
 	//Logs all hrefs
 	GLOB.world_href_log << "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>"
 
@@ -104,6 +94,12 @@
 			return
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
+
+	switch(href_list["action"])
+		if("openLink")
+			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
 
@@ -153,6 +149,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
+	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -194,13 +191,6 @@ GLOBAL_LIST(external_rsc_urls)
 		GLOB.admins |= src
 		holder.owner = src
 
-	//Mentor Authorisation
-/*	var/mentor = GLOB.mentor_datums[ckey]
-	if(mentor)
-		verbs += /client/proc/cmd_mentor_say
-		verbs += /client/proc/show_mentor_memo
-		GLOB.mentors |= src */
-
 	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = GLOB.preferences_datums[ckey]
 	if(!prefs)
@@ -239,6 +229,8 @@ GLOBAL_LIST(external_rsc_urls)
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
 	. = ..()	//calls mob.Login()
+
+	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
 		set waitfor = FALSE
@@ -287,11 +279,7 @@ GLOBAL_LIST(external_rsc_urls)
 		if((global.comms_key == "default_pwd" || length(global.comms_key) <= 6) && global.comms_allowed) //It's the default value or less than 6 characters long, but it somehow didn't disable comms.
 			to_chat(src, "<span class='danger'>The server's API key is either too short or is the default value! Consider changing it immediately!</span>")
 
-/*	if(mentor && !holder)
-		mentor_memo_output("Show") */
-
 	add_verbs_from_config()
-	set_client_age_from_db(tdata)
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		player_age = 0
@@ -306,7 +294,6 @@ GLOBAL_LIST(external_rsc_urls)
 				src << link("[config.panic_address]?redirect")
 			qdel(src)
 			return 0
-
 
 		if (config.notify_new_player_age >= 0)
 			message_admins("New user: [key_name_admin(src)] is connecting here for the first time.")
@@ -353,8 +340,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	hook_vr("client_new",list(src))
-
 	var/list/topmenus = GLOB.menulist[/datum/verbs/menu]
 	for (var/thing in topmenus)
 		var/datum/verbs/menu/topmenu = thing
@@ -376,6 +361,8 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
+	hook_vr("client_new",list(src))
+
 //////////////
 //DISCONNECT//
 //////////////
@@ -386,7 +373,6 @@ GLOBAL_LIST(external_rsc_urls)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
@@ -407,11 +393,14 @@ GLOBAL_LIST(external_rsc_urls)
 					"Panic bunker can't keep my love for you out.",\
 					"Cebu needs to Awoo herself back into my heart.",\
 					"I don't even have a Turry to snuggle viciously here.",\
-					"MOM, WHERE ARE YOU???",\
+					"MOM, WHERE ARE YOU??? D:",\
 					"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
 					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-					"Forever alone :("\
-				)
+					"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
+					"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
+					"i shure hop dere are no PRED arund!!!!",\
+					"NO PRED CAN eVER CATCH MI"\
+					)
 
 				send2irc("Server", "[cheesy_message] (No admins online)")
 
@@ -490,7 +479,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),COALESCE(INET_ATON('[world.internet_address]'), 0),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1
@@ -583,8 +572,8 @@ GLOBAL_LIST(external_rsc_urls)
 	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
 	var/url = winget(src, null, "url")
 	//special javascript to make them reconnect under a new window.
-	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
-	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
+	src << browse({"<a id='link' href="byond://[url]?token=[token]">byond://[url]?token=[token]</a><script type="text/javascript">document.getElementById("link").click();window.location="byond://winset?command=.quit"</script>"}, "border=0;titlebar=0;size=1x1;window=redirect")
+	to_chat(src, {"<a href="byond://[url]?token=[token]">You will be automatically taken to the game, if not, click here to be taken manually</a>"})
 
 /client/proc/note_randomizer_user()
 	var/const/adminckey = "CID-Error"

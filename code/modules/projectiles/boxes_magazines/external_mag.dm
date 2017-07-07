@@ -28,6 +28,7 @@
 	else
 		icon_state = "75-0"
 
+
 /obj/item/ammo_box/magazine/m10mm/fire
 	name = "pistol magazine (10mm incendiary)"
 	icon_state = "9x19pI"
