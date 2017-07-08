@@ -188,6 +188,8 @@ GLOBAL_VAR_INIT(dlooc_allowed, 1)
 /mob/living/carbon/proc/is_groin_exposed(var/list/L)
 	if(!L)
 		L = get_equipped_items()
+	if(underwear != "Nude")
+		return FALSE
 	for(var/obj/item/I in L)
 		if(I.body_parts_covered & GROIN)
 			return 0
@@ -196,6 +198,8 @@ GLOBAL_VAR_INIT(dlooc_allowed, 1)
 /mob/living/carbon/proc/is_chest_exposed(var/list/L)
 	if(!L)
 		L = get_equipped_items()
+	if(undershirt != "Nude")
+		return FALSE
 	for(var/obj/item/I in L)
 		if(I.body_parts_covered & CHEST)
 			return 0
