@@ -1,0 +1,58 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -113134,6 +113149,56 @@
+ 	dir = 4
+ 	},
+ /area/construction/mining/aux_base)
++"epU" = (
++/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"epV" = (
++/obj/effect/turf_decal/stripes/line,
++/obj/machinery/atmospherics/pipe/simple/orange/visible{
++	dir = 5
++	},
++/turf/open/floor/plasteel,
++/area/engine/atmos)
++"epW" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/machinery/atmospherics/pipe/simple/orange/visible{
++	dir = 4
++	},
++/turf/open/floor/plating,
++/area/engine/atmos)
++"epX" = (
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	dir = 10
++	},
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"epY" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 9
++	},
++/turf/closed/wall/r_wall,
++/area/engine/atmos)
++"epZ" = (
++/obj/machinery/atmospherics/pipe/simple/cyan/visible,
++/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
++	dir = 8
++	},
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"eqa" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/machinery/atmospherics/pipe/simple/cyan/visible{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/engine/atmos)
+ 
+ (1,1,1) = {"
+ aaa
