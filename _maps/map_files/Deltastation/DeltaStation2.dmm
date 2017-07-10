@@ -98008,13 +98008,14 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
 /area/crew_quarters/theatre/abandoned)
 "dHc" = (
+/obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dHd" = (
@@ -113149,9 +113150,55 @@
 	},
 /area/construction/mining/aux_base)
 "epU" = (
-/obj/machinery/vending/kink,
+/obj/machinery/atmospherics/pipe/manifold4w/general/visible,
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"epV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
+"epW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/atmospherics/pipe/simple/orange/visible{
+	dir = 4
+	},
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/engine/atmos)
+"epX" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"epY" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/engine/atmos)
+"epZ" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/plasteel/neutral,
+/area/engine/atmos)
+"eqa" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -143558,7 +143605,7 @@ aib
 asx
 atw
 auQ
-epU
+aic
 awX
 aye
 azn
@@ -162941,7 +162988,7 @@ dCb
 dDu
 dEp
 dFs
-dFs
+dHa
 dHU
 aaf
 dJp
