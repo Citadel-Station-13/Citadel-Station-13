@@ -1,10 +1,1 @@
-diff a/code/modules/ruins/objects_and_mobs/necropolis_gate.dm b/code/modules/ruins/objects_and_mobs/necropolis_gate.dm	(rejected hunks)
-@@ -397,3 +452,8 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
- 
- /obj/structure/stone_tile/surrounding_tile/burnt/hot
- 	icon = 'icons/turf/boss_floors_hot.dmi'
-+
-+#undef STABLE
-+#undef COLLAPSE_ON_CROSS
-+#undef DESTROY_ON_CROSS
-+#undef UNIQUE_EFFECT
+
