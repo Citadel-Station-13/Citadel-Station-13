@@ -136,6 +136,11 @@
 	var/obj/item/organ/ears/ears = C.getorganslot("ears")
 	var/obj/item/organ/tongue/tongue = C.getorganslot("tongue")
 
+	var/obj/item/organ/liver/liver = C.getorganslot("liver")
+	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
+
+
+
 	if((NOBLOOD in species_traits) && heart)
 		heart.Remove(C)
 		qdel(heart)
@@ -146,6 +151,10 @@
 	if(lungs)
 		qdel(lungs)
 		lungs = null
+
+	QDEL_NULL(liver)
+
+	QDEL_NULL(stomach)
 
 	if(C.get_bodypart("head"))
 		if(eyes)
@@ -169,6 +178,20 @@
 		else
 			lungs = new()
 		lungs.Insert(C)
+
+	if((!(NOLIVER in species_traits)) && (!liver))
+		if(mutantliver)
+			liver = new mutantliver()
+		else
+			liver = new()
+		liver.Insert(C)
+
+	if((!(NOSTOMACH in species_traits)) && (!stomach))
+		if(mutantstomach)
+			stomach = new mutantstomach()
+		else
+			stomach = new()
+		stomach.Insert(C)
 
 	if((NOHUNGER in species_traits) && appendix)
 		qdel(appendix)
@@ -989,10 +1012,10 @@
 	//LIFE//
 	////////
 
-/datum/species/proc/handle_chemicals_in_body(mob/living/carbon/human/H)
+/datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.disabilities & FAT)
+	if(H.disabilities & FAT)//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			H.disabilities &= ~FAT
