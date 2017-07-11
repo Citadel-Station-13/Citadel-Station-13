@@ -140,7 +140,7 @@
 		targ = mob_override
 	if(!istype(targ))
 		return
-	to_chat(targ, "<span class='[span]'>\icon[src]|[message]</span>")
+	to_chat(targ, "[bicon(src)]<span class='[span]'>|[message]</span>")
 
 /obj/item/device/flightpack/proc/sync_processing(datum/controller/subsystem/processing/flightpacks/FPS)
 	processing_mode = FPS.flightsuit_processing
@@ -348,22 +348,22 @@
 			disable_flight(1)
 	if(!pressure && brake)
 		brake = FALSE
-		usermessage("Airbrakes deactivated due to lack of pressure!", 2)
-	if(!suit.deployedshoes)
-		if(brake || stabilizer)
-			brake = FALSE
-			stabilizer = FALSE
-			usermessage("Warning: Sensor data is not being received from flight shoes. Stabilizers and airbrake modules OFFLINE!", 2)
+		usermessage("Airbrakes deactivated due to lack of pressure!", "boldwarning")
+	if(suit)
+		if(!suit.deployedshoes)
+			if(brake || stabilizer)
+				brake = FALSE
+				stabilizer = FALSE
+				usermessage("Warning: Sensor data is not being recieved from flight shoes. Stabilizers and airbrake modules OFFLINE!", "boldwarning")
 
 /obj/item/device/flightpack/proc/update_slowdown()
 	if(!flight)
-		suit.slowdown = slowdown_ground
-		return
+		slowdown = slowdown_ground
 	else
-		suit.slowdown = slowdown_air
+		slowdown = slowdown_air
 
 /obj/item/device/flightpack/process()
-	if(!suit || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
+	if((!suit && requires_suit) || (processing_mode == FLIGHTSUIT_PROCESSING_NONE))
 		return FALSE
 	check_conditions()
 	calculate_momentum_speed()
@@ -638,7 +638,7 @@
 		if(move)
 			while(momentum_x != 0 || momentum_y != 0)
 				sleep(2)
-				step(wearer, pick(GLOB.cardinals))
+				step(wearer, pick(GLOB.cardinal))
 				momentum_decay()
 				adjust_momentum(0, 0, 10)
 		wearer.visible_message("<span class='warning'>[wearer]'s flight suit crashes into the ground!</span>")
@@ -808,57 +808,47 @@
 			suit.pack = null
 	suit = null
 
-/obj/item/device/flightpack/proc/usermessage(message, urgency = 0)
-	if(urgency == 0)
-		to_chat(wearer, "[bicon(src)]|<span class='boldnotice'>[message]</span>")
-	if(urgency == 1)
-		to_chat(wearer, "[bicon(src)]|<span class='warning'>[message]</span>")
-	if(urgency == 2)
-		to_chat(wearer, "[bicon(src)]|<span class='boldwarning'>[message]</span>")
-	if(urgency == 3)
-		to_chat(wearer, "[bicon(src)]|<span class='userdanger'>[message]</span>")
-
 /obj/item/device/flightpack/attackby(obj/item/I, mob/user, params)
-	if(ishuman(user) && !ishuman(src.loc))
-		wearer = user
+	var/changed = FALSE
 	if(istype(I, /obj/item/weapon/stock_parts))
 		var/obj/item/weapon/stock_parts/S = I
 		if(istype(S, /obj/item/weapon/stock_parts/manipulator))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_manip)
 					part_manip.forceMove(get_turf(src))
-					part_manip = null
 				part_manip = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/scanning_module))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_scan)
 					part_scan.forceMove(get_turf(src))
-					part_scan = null
 				part_scan = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/micro_laser))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_laser)
 					part_laser.forceMove(get_turf(src))
-					part_laser = null
 				part_laser = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/matter_bin))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_bin)
 					part_bin.forceMove(get_turf(src))
-					part_bin = null
 				part_bin = I
+				changed = TRUE
 		if(istype(S, /obj/item/weapon/stock_parts/capacitor))
-			usermessage("[I] has been sucessfully installed into systems.")
+			usermessage("[I] has been sucessfully installed into systems.", mob_override = user)
 			if(user.transferItemToLoc(I, src))
 				if(part_cap)
 					part_cap.forceMove(get_turf(src))
-					part_cap = null
 				part_cap = I
-	update_parts()
+				changed = TRUE
+	if(changed)
+		update_parts()
 	..()
 
 //MOB MOVEMENT STUFF----------------------------------------------------------------------------------------------------------------------------------------------
@@ -959,13 +949,13 @@
 	makeshoes()
 	resync()
 
-/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, urgency = 0)
-	if(!urgency)
-		to_chat(user, "[bicon(src)]<span class='notice'>|[message]</span>")
-	else if(urgency == 1)
-		to_chat(user, "[bicon(src)]<span class='warning'>|[message]</span>")
-	else if(urgency == 2)
-		to_chat(user, "[bicon(src)]<span class='userdanger'>|[message]</span>")
+/obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, span = "boldnotice")
+	var/mob/targ = user
+	if(ismob(loc))
+		targ = loc
+	if(!istype(targ))
+		return
+	to_chat(targ, "[bicon(src)]<span class='[span]'>|[message]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/examine(mob/user)
 	..()
