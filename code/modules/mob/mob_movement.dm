@@ -113,29 +113,30 @@
 #define MOVEMENT_DELAY_BUFFER_DELTA 1.25
 /client/Move(n, direct)
 	if(world.time < move_delay)
-		return 0
+		return FALSE
 	var/old_move_delay = move_delay
 	move_delay = world.time+world.tick_lag //this is here because Move() can now be called mutiple times per tick
 	if(!mob || !mob.loc)
-		return 0
+		return FALSE
+	var/oldloc = mob.loc
 	if(mob.notransform)
-		return 0	//This is sota the goto stop mobs from moving var
+		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)
 	if(!isliving(mob))
 		return mob.Move(n,direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
-		return 0
+		return FALSE
 	if(moving)
-		return 0
+		return FALSE
 	if(mob.force_moving)
-		return 0
+		return FALSE
 	if(isliving(mob))
 		var/mob/living/L = mob
 		if(L.incorporeal_move)	//Move though walls
 			Process_Incorpmove(direct)
-			return 0
+			return FALSE
 
 	if(mob.remote_control)					//we're controlling something, our movement is relayed to it
 		return mob.remote_control.relaymove(mob, direct)
@@ -169,7 +170,7 @@
 
 	if(mob.confused)
 		if(mob.confused > 40)
-			step(mob, pick(GLOB.cardinals))
+			step(mob, pick(GLOB.cardinal))
 		else if(prob(mob.confused * 1.5))
 			step(mob, angle2dir(dir2angle(direct) + pick(90, -90)))
 		else if(prob(mob.confused * 3))
