@@ -7217,10 +7217,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8;
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
@@ -73178,7 +73175,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 2;
 	external_pressure_bound = 140;
-	name = "server vent";
+	name = "killroom vent";
 	pressure_checks = 0
 	},
 /turf/open/floor/circuit{
@@ -97996,14 +97993,13 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
 /area/crew_quarters/theatre/abandoned)
 "dHc" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dHd" = (
@@ -113134,6 +113130,10 @@
 	dir = 4
 	},
 /area/construction/mining/aux_base)
+"epU" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 
 (1,1,1) = {"
 aaa
@@ -143540,7 +143540,7 @@ aib
 asx
 atw
 auQ
-aic
+epU
 awX
 aye
 azn
@@ -162923,7 +162923,7 @@ dCb
 dDu
 dEp
 dFs
-dHa
+dFs
 dHU
 aaf
 dJp

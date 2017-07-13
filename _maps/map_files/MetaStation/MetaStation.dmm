@@ -64988,10 +64988,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cto" = (
-/obj/machinery/vending/assist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ctp" = (
@@ -77257,7 +77257,7 @@
 "cQD" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
-	amount = 20;
+	amount = 40;
 	pixel_x = 3;
 	pixel_y = -4
 	},
@@ -90163,6 +90163,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
+"dBD" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 
 (1,1,1) = {"
 aaa
@@ -129574,7 +129578,7 @@ aqp
 dnh
 dnR
 aus
-dnS
+dBD
 dnh
 aAm
 dnS

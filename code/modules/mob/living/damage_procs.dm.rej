@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/damage_procs.dm b/code/modules/mob/living/damage_procs.dm	(rejected hunks)
+@@ -58,7 +58,7 @@
+ 			return getStaminaLoss()
+ 
+ 
+-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0)
++/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0)
+ 	if(blocked >= 100)
+ 		return 0
+ 	if(brute)
