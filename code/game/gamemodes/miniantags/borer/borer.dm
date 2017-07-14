@@ -59,6 +59,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	name = "cortical borer"
 	real_name = "cortical borer"
 	desc = "A small, quivering, slug-like creature."
+	icon = 'icons/mob/borer.dmi'
 	icon_state = "brainslug"
 	icon_living = "brainslug"
 	icon_dead = "brainslug_dead"
@@ -512,7 +513,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
-	M.Stun(3)
+	M.Stun(60)
 
 	used_dominate = world.time
 
@@ -613,9 +614,9 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		victim.setToxLoss(0)
 		victim.setOxyLoss(0)
 		victim.setCloneLoss(0)
-		victim.SetParalysis(0)
-		victim.SetStunned(0)
-		victim.SetWeakened(0)
+		victim.SetUnconscious(0)
+		victim.SetStun(0)
+		victim.SetKnockdown(0)
 		victim.radiation = 0
 		victim.heal_overall_damage(victim.getBruteLoss(), victim.getFireLoss())
 		victim.reagents.clear_reagents()
@@ -768,11 +769,11 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 	switch(punishment) //Hardcoding this stuff.
 		if("Blindness")
-			victim.blind_eyes(2)
+			victim.blind_eyes(4)
 		if("Deafness")
-			victim.minimumDeafTicks(20)
+			victim.minimumDeafTicks(40)
 		if("Stun")
-			victim.Weaken(10)
+			victim.Knockdown(100)
 
 	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")
 
