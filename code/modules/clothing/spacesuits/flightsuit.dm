@@ -1215,6 +1215,7 @@
 				usermessage("Disengage the shoes first!", "boldwarning")
 				return FALSE
 			detach_shoes()
+		return TRUE
 	else if(istype(I, /obj/item/device/flightpack))
 		var/obj/item/device/flightpack/F = I
 		if(pack)
@@ -1238,6 +1239,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(F))
 			attach_pack(F)
+		return TRUE
 	else if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
@@ -1245,6 +1247,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(S))
 			attach_shoes(S)
+		return TRUE
 	. = ..()
 
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
