@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - tweak: "Makes old chat show while goonchat loads. Should goonchat fail to load, the old chat will still be operational."
