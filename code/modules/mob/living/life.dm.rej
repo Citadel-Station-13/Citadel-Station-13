@@ -1,0 +1,11 @@
+diff a/code/modules/mob/living/life.dm b/code/modules/mob/living/life.dm	(rejected hunks)
+@@ -64,9 +64,6 @@
+ /mob/living/proc/handle_diseases()
+ 	return
+ 
+-/mob/living/proc/handle_chemicals_in_body()
+-	return
+-
+ /mob/living/proc/handle_diginvis()
+ 	if(!digitaldisguise)
+ 		src.digitaldisguise = image(loc = src)
