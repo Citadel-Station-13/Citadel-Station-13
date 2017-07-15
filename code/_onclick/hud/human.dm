@@ -282,7 +282,7 @@
 
 	//citadel code
 	arousal = new /obj/screen/arousal()
-	arousal.icon_state = (mymob.canbearoused == 1 ? "arousal0" : "")
+	arousal.icon_state = (owner.canbearoused == "1" ? "arousal0" : "")
 	infodisplay += arousal
 
 	healthdoll = new /obj/screen/healthdoll()
