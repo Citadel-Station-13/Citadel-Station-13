@@ -13,7 +13,7 @@
 /datum/disease/rhumba_beat/stage_act()
 	..()
 	if(affected_mob.ckey == "rosham")
-		cure()
+		src.cure()
 		return
 	switch(stage)
 		if(2)

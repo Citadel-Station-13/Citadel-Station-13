@@ -62,8 +62,7 @@
 //called when a carbon changes virus
 /mob/living/carbon/proc/check_virus()
 	var/threat = 0
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
+	for(var/datum/disease/D in viruses)
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			if (D.severity != NONTHREAT) //a buffing virus gets an icon
 				threat = 2

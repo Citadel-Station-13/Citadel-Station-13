@@ -716,9 +716,8 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+	for(var/datum/disease/D in viruses)
+		if (D.severity != NONTHREAT)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()

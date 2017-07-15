@@ -149,7 +149,7 @@
 				if(!new_name || ..())
 					return
 				A.AssignName(new_name)
-				for(var/datum/disease/advance/AD in SSdisease.active_diseases)
+				for(var/datum/disease/advance/AD in SSdisease.processing)
 					AD.Refresh()
 				. = TRUE
 		if("create_culture_bottle")

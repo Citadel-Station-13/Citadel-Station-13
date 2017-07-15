@@ -137,8 +137,7 @@
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
 				if(blood_data["viruses"])
-					for(var/thing in blood_data["viruses"])
-						var/datum/disease/D = thing
+					for(var/datum/disease/D in blood_data["viruses"])
 						if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
@@ -163,8 +162,7 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/thing in viruses)
-			var/datum/disease/D = thing
+		for(var/datum/disease/D in viruses)
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)

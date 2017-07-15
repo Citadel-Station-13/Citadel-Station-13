@@ -35,5 +35,5 @@ Bonus
 				M.emote("sniff")
 			else
 				M.emote("sneeze")
-				A.spread(5)
+				A.spread(A.holder, 5)
 	return
