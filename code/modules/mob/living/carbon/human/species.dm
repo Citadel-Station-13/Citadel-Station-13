@@ -68,6 +68,9 @@
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
+	
+	var/obj/item/organ/liver/mutantliver
+	var/obj/item/organ/stomach/mutantstomach
 
 	//Hands
 	var/obj/item/mutanthands = null
