@@ -132,7 +132,7 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/item/weapon/reagent_containers/glass/bottle/virus_type = pick(/obj/item/weapon/reagent_containers/glass/bottle/beesease, /obj/item/weapon/reagent_containers/glass/bottle/brainrot, /obj/item/weapon/reagent_containers/glass/bottle/fluspanish)
+				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
@@ -142,7 +142,11 @@
 					else if(prob(25))
 						shuttle_spawns.Add(/obj/item/weapon/shard)
 					T = pick_n_take(empty_shuttle_turfs)
-					new virus_type(T)
+					var/obj/effect/decal/cleanable/blood/b = new(T)
+					var/datum/disease/D = new virus_type()
+					D.longevity = 1000
+					b.viruses += D
+					D.holder = b
 				shuttle_spawns.Add(/obj/structure/closet/crate)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)

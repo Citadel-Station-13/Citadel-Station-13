@@ -119,8 +119,7 @@
 				//Virsuses
 				if(viruses.len)
 					stat("Viruses:", null)
-					for(var/thing in viruses)
-						var/datum/disease/D = thing
+					for(var/datum/disease/D in viruses)
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 

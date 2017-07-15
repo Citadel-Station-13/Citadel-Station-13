@@ -58,11 +58,13 @@
 	M.confused = 0
 	M.SetSleeping(0, 0)
 	M.jitteriness = 0
-	for(var/thing in M.viruses)
-		var/datum/disease/D = thing
+	for(var/datum/disease/D in M.viruses)
 		if(D.severity == NONTHREAT)
 			continue
-		D.cure()
+		D.spread_text = "Remissive"
+		D.stage--
+		if(D.stage < 1)
+			D.cure()
 	..()
 	. = 1
 
@@ -684,7 +686,7 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")	
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)
