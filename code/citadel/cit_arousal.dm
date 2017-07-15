@@ -99,7 +99,7 @@
 	if(dna.species.update_arousal_hud())
 		return 0
 	if(!canbearoused)
-		hud_used.arousal.icon_state = "arousal0"
+		hud_used.arousal.icon_state = ""
 		return 0
 	else
 		if(hud_used.arousal)
@@ -141,7 +141,7 @@
 
 /obj/screen/arousal
 	name = "arousal"
-	icon_state = "arousal0"
+	icon_state = ""
 	icon = 'code/citadel/icons/hud.dmi'
 	screen_loc = ui_arousal
 
