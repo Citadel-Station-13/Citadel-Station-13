@@ -129,6 +129,8 @@
 #define NO_UNDERWEAR	26
 #define MUTCOLORS2		27
 #define MUTCOLORS3		28
+#define NOLIVER 		29
+#define NOSTOMACH		30
 //citadel code
 #define NOAROUSAL		29//Stops all arousal effects
 #define NOGENITALS		30//Cannot create, use, or otherwise have genitals
