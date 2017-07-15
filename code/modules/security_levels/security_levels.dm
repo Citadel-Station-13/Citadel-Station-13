@@ -56,9 +56,9 @@ GLOBAL_VAR_INIT(security_level, 0)
 							SSshuttle.emergency.modTimer(0.5)
 				else
 					minor_announce(config.alert_desc_red_downto, "Attention! Code red!")
+				GLOB.security_level = SEC_LEVEL_RED
 				for(var/mob/M in GLOB.player_list)
 					M << sound('sound/misc/voyalert.ogg')
-				GLOB.security_level = SEC_LEVEL_RED
 
 				/*	- At the time of commit, setting status displays didn't work properly
 				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)

@@ -31,8 +31,8 @@
 	var/list/properties = list()
 	var/list/symptoms = list() // The symptoms of the disease.
 	var/id = ""
-	var/processing = 0
-	
+	var/processing = FALSE
+
 	// The order goes from easy to cure to hard to cure.
 	var/static/list/advance_cures = 	list(
 									"sodiumchloride", "sugar", "orangejuice",
@@ -76,7 +76,7 @@
 	if(symptoms && symptoms.len)
 
 		if(!processing)
-			processing = 1
+			processing = TRUE
 			for(var/datum/symptom/S in symptoms)
 				S.Start(src)
 
@@ -399,7 +399,7 @@
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
-			if(H.z != 1)
+			if(H.z != ZLEVEL_STATION)
 				continue
 			if(!H.HasDisease(D))
 				H.ForceContractDisease(D)

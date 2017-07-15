@@ -75,7 +75,6 @@
 /world/proc/file2list(filename, seperator="\n")
 	return splittext(file2text(filename),seperator)
 
-
 //Turns a direction into text
 /proc/dir2text(direction)
 	switch(direction)
@@ -200,8 +199,8 @@
 		. += "[seperator]+PERMISSIONS"
 	if(rights & R_STEALTH)
 		. += "[seperator]+STEALTH"
-	if(rights & R_REJUVINATE)
-		. += "[seperator]+REJUVINATE"
+	if(rights & R_POLL)
+		. += "[seperator]+POLL"
 	if(rights & R_VAREDIT)
 		. += "[seperator]+VAREDIT"
 	if(rights & R_SOUNDS)

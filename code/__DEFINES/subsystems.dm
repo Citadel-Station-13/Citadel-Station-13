@@ -14,7 +14,9 @@
 //prevents distinguishing identical timers with the wait variable
 #define TIMER_NO_HASH_WAIT  0x10
 
-#define TIMER_NO_INVOKE_WARNING 200 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
+#define TIMER_NO_INVOKE_WARNING 600 //number of byond ticks that are allowed to pass before the timer subsystem thinks it hung on something
+
+#define TIMER_ID_NULL -1
 
 //For servers that can't do with any additional lag, set this to none in flightpacks.dm in subsystem/processing.
 #define FLIGHTSUIT_PROCESSING_NONE 0
@@ -37,10 +39,13 @@
     }\
 }
 
-
 // Subsystem init_order, from highest priority to lowest priority
+// Subsystems shutdown in the reverse of the order they initialize in
 // The numbers just define the ordering, they are meaningless otherwise.
 
+#define INIT_ORDER_DBCORE 18
+#define INIT_ORDER_BLACKBOX 17
+#define INIT_ORDER_SERVER_MAINT 16
 #define INIT_ORDER_JOBS 15
 #define INIT_ORDER_EVENTS 14
 #define INIT_ORDER_TICKER 13

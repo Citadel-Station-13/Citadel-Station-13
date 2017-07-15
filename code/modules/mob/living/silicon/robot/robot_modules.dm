@@ -104,6 +104,10 @@
 			S.cost = 1
 			S.source = get_or_create_estorage(/datum/robot_energy_storage/wire)
 
+		else if(istype(S, /obj/item/stack/marker_beacon))
+			S.cost = 1
+			S.source = get_or_create_estorage(/datum/robot_energy_storage/beacon)
+
 		if(S && S.source)
 			S.materials = list()
 			S.is_cyborg = 1
@@ -145,8 +149,8 @@
 			F.update_icon()
 		else if(istype(I, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = I
-			if(B.bcell)
-				B.bcell.charge = B.bcell.maxcharge
+			if(B.cell)
+				B.cell.charge = B.cell.maxcharge
 		else if(istype(I, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/EG = I
 			if(!EG.chambered)
@@ -198,9 +202,9 @@
 /obj/item/weapon/robot_module/proc/do_transform_animation()
 	var/mob/living/silicon/robot/R = loc
 	R.notransform = TRUE
-	var/obj/effect/overlay/temp/decoy/fading/fivesecond/ANM = new /obj/effect/overlay/temp/decoy/fading/fivesecond(R.loc, R)
+	var/obj/effect/temp_visual/decoy/fading/fivesecond/ANM = new /obj/effect/temp_visual/decoy/fading/fivesecond(R.loc, R)
 	ANM.layer = R.layer - 0.01
-	new /obj/effect/overlay/temp/small_smoke(R.loc)
+	new /obj/effect/temp_visual/small_smoke(R.loc)
 	if(R.hat)
 		R.hat.forceMove(get_turf(R))
 		R.hat = null
@@ -246,7 +250,7 @@
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
 		/obj/item/clockwork/ratvarian_spear/cyborg,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
 	hat_offset = -3
@@ -310,7 +314,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/engineer,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	feedback_key = "cyborg_engineering"
@@ -348,6 +352,7 @@
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/weapon/soap/tongue,
 		/obj/item/device/analyzer/nose,
+		/obj/item/device/dogborg/sleeper/K9,
 		/obj/item/weapon/gun/energy/disabler/cyborg)
 	emag_modules = list(/obj/item/weapon/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
@@ -360,8 +365,19 @@
 
 /obj/item/weapon/robot_module/k9/do_transform_animation()
 	..()
-	loc << "<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
+	to_chat(loc,"<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
+	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+
+/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
+	if(T)
+		if(T.cell.charge < T.cell.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.cell.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
 
 /obj/item/weapon/robot_module/medihound
 	name = "MediHound module"
@@ -370,7 +386,7 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/weapon/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/weapon/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper,
 		/obj/item/weapon/twohanded/shockpaddles/hound,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/weapon/dogborg/pounce)
@@ -384,19 +400,39 @@
 
 /obj/item/weapon/robot_module/medihound/do_transform_animation()
 	..()
-	loc << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
+	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 
-/obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+/obj/item/weapon/robot_module/scrubpup
+	name = "Janitor"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/dogborg/jaws/small,
+		/obj/item/device/analyzer/nose,
+		/obj/item/weapon/soap/tongue,
+		/obj/item/device/lightreplacer/cyborg,
+		/obj/item/device/dogborg/sleeper/compactor)
+	emag_modules = list(/obj/item/weapon/dogborg/pounce)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg/janitor,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	cyborg_base_icon = "scrubpup"
+	moduleselect_icon = "scrubpup"
+	feedback_key = "cyborg_scrubpup"
+	hat_offset = INFINITY
+	clean_on_move = TRUE
+
+/obj/item/weapon/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
-	var/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/weapon/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.power_supply.charge < T.power_supply.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.power_supply.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
+	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
+	if(LR)
+		for(var/i in 1 to coeff)
+			LR.Charge(R)
+
+/obj/item/weapon/robot_module/scrubpup/do_transform_animation()
+	..()
+	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
+
 
 /obj/item/weapon/robot_module/peacekeeper
 	name = "Peacekeeper"
@@ -407,7 +443,8 @@
 		/obj/item/weapon/reagent_containers/borghypo/peace,
 		/obj/item/weapon/holosign_creator/cyborg,
 		/obj/item/borg/cyborghug/peacekeeper,
-		/obj/item/weapon/extinguisher)
+		/obj/item/weapon/extinguisher,
+		/obj/item/borg/projectile_dampen)
 	emag_modules = list(/obj/item/weapon/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,
@@ -427,6 +464,9 @@
 	name = "Janitor"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/weapon/screwdriver/cyborg,
+		/obj/item/weapon/crowbar/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/weapon/soap/nanotrasen,
 		/obj/item/weapon/storage/bag/trash/cyborg,
 		/obj/item/weapon/mop/cyborg,
@@ -436,7 +476,7 @@
 	emag_modules = list(/obj/item/weapon/reagent_containers/spray/cyborg_lube)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/clockwork_proselytizer/cyborg)
+		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	feedback_key = "cyborg_janitor"
@@ -525,7 +565,6 @@
 	name = "Miner"
 	basic_modules = list(
 		/obj/item/device/assembly/flash/cyborg,
-		/obj/item/borg/sight/meson,
 		/obj/item/weapon/storage/bag/ore/cyborg,
 		/obj/item/weapon/pickaxe/drill/cyborg,
 		/obj/item/weapon/shovel,
@@ -535,7 +574,8 @@
 		/obj/item/weapon/storage/bag/sheetsnatcher/borg,
 		/obj/item/device/t_scanner/adv_mining_scanner,
 		/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg,
-		/obj/item/device/gps/cyborg)
+		/obj/item/device/gps/cyborg,
+		/obj/item/stack/marker_beacon)
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
@@ -631,3 +671,8 @@
 	max_energy = 2500
 	recharge_rate = 250
 	name = "Medical Synthesizer"
+
+/datum/robot_energy_storage/beacon
+	max_energy = 30
+	recharge_rate = 1
+	name = "Marker Beacon Storage"

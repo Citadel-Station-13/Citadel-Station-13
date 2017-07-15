@@ -10,7 +10,7 @@
 	riding_datum = new/datum/riding/atv
 
 /obj/vehicle/atv/Initialize()
-	.=..()
+	. = ..()
 	atvcover = atvcover || mutable_appearance(icon, "atvcover", ABOVE_MOB_LAYER)
 
 
@@ -31,7 +31,7 @@
 	name = "mounted turret"
 	scan_range = 7
 	emp_vunerable = 1
-	density = 0
+	density = FALSE
 
 
 /obj/vehicle/atv/turret/Initialize()

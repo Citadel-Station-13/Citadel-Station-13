@@ -45,12 +45,12 @@
 	var/obj/machinery/camera/camera = null
 
 	var/opened = 0
-	var/emagged = 0
+	var/emagged = FALSE
 	var/emag_cooldown = 0
 	var/wiresexposed = 0
 
 	var/ident = 0
-	var/locked = 1
+	var/locked = TRUE
 	var/list/req_access = list(GLOB.access_robotics)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
@@ -96,6 +96,9 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
+
+/mob/living/silicon/robot/get_cell()
+	return cell
 
 /mob/living/silicon/robot/Initialize(mapload)
 	spark_system = new /datum/effect_system/spark_spread()
@@ -195,6 +198,10 @@
 	if(module.type != /obj/item/weapon/robot_module)
 		return
 
+	if(wires.is_cut(WIRE_RESET_MODULE))
+		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
+		return
+
 	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
 	"Engineering" = /obj/item/weapon/robot_module/engineering, \
 	"Medical" = /obj/item/weapon/robot_module/medical, \
@@ -202,7 +209,8 @@
 	"Janitor" = /obj/item/weapon/robot_module/janitor, \
 	"Service" = /obj/item/weapon/robot_module/butler, \
 	"MediHound" = /obj/item/weapon/robot_module/medihound, \
-	"Security K9" = /obj/item/weapon/robot_module/k9)
+	"Security K9" = /obj/item/weapon/robot_module/k9, \
+	"Scrub Puppy" = /obj/item/weapon/robot_module/scrubpup)
 	if(!config.forbid_peaceborg)
 		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
 	if(!config.forbid_secborg)
@@ -542,7 +550,7 @@
 	if(locked)
 		switch(alert("You cannot lock your cover again, are you sure?\n      (You can still ask for a human to lock it)", "Unlock Own Cover", "Yes", "No"))
 			if("Yes")
-				locked = 0
+				locked = FALSE
 				update_icons()
 				to_chat(usr, "<span class='notice'>You unlock your cover.</span>")
 
@@ -558,7 +566,7 @@
 	else if(ismonkey(M))
 		var/mob/living/carbon/monkey/george = M
 		//they can only hold things :(
-		if(istype(george.get_active_held_item(), /obj/item))
+		if(isitem(george.get_active_held_item()))
 			return check_access(george.get_active_held_item())
 	return 0
 
@@ -570,7 +578,7 @@
 	if(!L.len) //no requirements
 		return 1
 
-	if(!istype(I, /obj/item/weapon/card/id) && istype(I, /obj/item))
+	if(!istype(I, /obj/item/weapon/card/id) && isitem(I))
 		I = I.GetID()
 
 	if(!I || !I.access) //not ID or no access
@@ -586,14 +594,13 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-
 	if(module.cyborg_base_icon == "medihound")
 		icon = 'icons/mob/widerobot.dmi'
 		pixel_x = -16
 		if(sleeper_g == 1)
-			add_overlay("sleeper_g")
+			add_overlay("msleeper_g")
 		if(sleeper_r == 1)
-			add_overlay("sleeper_r")
+			add_overlay("msleeper_r")
 		if(stat == DEAD)
 			icon_state = "medihound-wreck"
 
@@ -604,14 +611,28 @@
 			add_overlay("laser")
 		if(disabler == 1)
 			add_overlay("disabler")
+		if(sleeper_g == 1)
+			add_overlay("ksleeper_g")
+		if(sleeper_r == 1)
+			add_overlay("ksleeper_r")
 		if(stat == DEAD)
 			icon_state = "k9-wreck"
+
+	if(module.cyborg_base_icon == "scrubpup")
+		icon = 'icons/mob/widerobot.dmi'
+		pixel_x = -16
+		if(sleeper_g == 1)
+			add_overlay("jsleeper_g")
+		if(sleeper_r == 1)
+			add_overlay("jsleeper_r")
+		if(stat == DEAD)
+			icon_state = "scrubpup-wreck"
 
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
 		pixel_x = initial(pixel_x)
 
-	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
+	if(stat != DEAD && !(IsUnconscious() || IsStun() || IsKnockdown() || low_power_mode)) //Not dead, not stunned.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_intensity > 2)
@@ -868,6 +889,8 @@
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 		if(AI_SHELL) //New Shell
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg shell detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
+		if(DISCONNECT) //Tampering with the wires
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -937,7 +960,7 @@
 		if(health <= -maxHealth) //die only once
 			death()
 			return
-		if(paralysis || stunned || weakened || getOxyLoss() > maxHealth*0.5)
+		if(IsUnconscious() || IsStun() || IsKnockdown() || getOxyLoss() > maxHealth*0.5)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -960,7 +983,7 @@
 			camera.toggle_cam(src,0)
 		update_headlamp()
 		if(admin_revive)
-			locked = 1
+			locked = TRUE
 		notify_ai(NEW_BORG)
 		. = 1
 
@@ -1105,7 +1128,8 @@
 		camera.c_tag = real_name	//update the camera name too
 	diag_hud_set_aishell()
 	mainframe.diag_hud_set_deployed()
-	mainframe.show_laws() //Always remind the AI when switching
+	if(mainframe.laws)
+		mainframe.laws.show_laws(mainframe) //Always remind the AI when switching
 	mainframe = null
 
 /mob/living/silicon/robot/attack_ai(mob/user)
@@ -1136,7 +1160,7 @@
 		return
 	if(incapacitated())
 		return
-	if(M.restrained())
+	if(M.incapacitated())
 		return
 	if(module)
 		if(!module.allow_riding)

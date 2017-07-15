@@ -11,11 +11,20 @@
 
 /datum/uplink_item/stealthy_tools/holoparasite
 	name="Holoparasite Injector"
-	desc="It contains an alien nanoswarm of unknown origin.\
-		  Though capable of near sorcerous feats via use of hardlight holograms and nanomachines.\
-		  It requires an organic host as a home base and source of fuel." //This is the description of the actual injector. Feel free to change this for uplink purposes//
+	desc="An injector containing a swarm of holographic parasites. \
+			They mimic the function of the guardians employed by the Space Wizard Federation, and their form can be selected upon application \
+			NOTE: The precise nature of the symbiosis required by the parasites renders them incompatible with changelings" //updated to actually describe what they do and warn traitorchans not to buy it
 	item = /obj/item/weapon/storage/box/syndie_kit/holoparasite
 	refundable = TRUE
-	cost = 10 //I'm working off the borer. Price subject to change
+	cost = 15
 	surplus = 20 //Nobody needs a ton of parasites
 	exclude_modes = list(/datum/game_mode/nuclear)
+	refund_path = /obj/item/weapon/guardiancreator/tech/choose/traitor
+
+
+/obj/item/weapon/storage/box/syndie_kit/holoparasite
+	name = "box"
+
+/obj/item/weapon/storage/box/syndie_kit/holoparasite/PopulateContents()
+	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/weapon/paper/guardian(src)
