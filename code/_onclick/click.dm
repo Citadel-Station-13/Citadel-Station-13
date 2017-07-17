@@ -453,7 +453,6 @@
 			T.Click(location, control, params)
 	. = 1
 
-
 /* MouseWheelOn */
 
 /mob/proc/MouseWheelOn(atom/A, delta_x, delta_y, params)
