@@ -9,13 +9,16 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
+#define PIPE_VISIBLE_LEVEL 2
+#define PIPE_HIDDEN_LEVEL 1
+
 /obj/machinery/atmospherics
 	anchored = 1
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
 	on_blueprints = TRUE
-	layer = GAS_PIPE_LAYER //under wires
+	layer = GAS_PIPE_HIDDEN_LAYER //under wires
 	resistance_flags = FIRE_PROOF
 	obj_integrity = 200
 	max_integrity = 200
@@ -152,7 +155,7 @@ Pipelines + Other Objects -> Pipe network
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>", \
 					"<span class='italics'>You hear ratchet.</span>")
-				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", "atmos")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
 				if(unsafe_wrenching)

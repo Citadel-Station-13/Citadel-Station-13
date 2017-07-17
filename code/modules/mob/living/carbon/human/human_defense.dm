@@ -40,12 +40,13 @@
 	if(spec_return)
 		return spec_return
 
-	if(martial_art && martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
-		if(prob(martial_art.deflection_chance))
-			if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-				visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
-				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
-				return 0
+	if(mind)
+		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
+			if(prob(mind.martial_art.deflection_chance))
+				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
+					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
+					return 0
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
 		if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
@@ -90,23 +91,24 @@
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
 			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
-			if(I.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+			if(I.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 				return 1
 	if(wear_suit)
 		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(wear_suit.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	if(w_uniform)
 		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
-		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type))
+		if(w_uniform.hit_reaction(src, attack_text, final_block_chance, damage, attack_type, AM))
 			return 1
 	return 0
 
 /mob/living/carbon/human/proc/check_block()
-	if(martial_art && martial_art.block_chance \
-	&& prob(martial_art.block_chance) && in_throw_mode \
-	&& !stat && !weakened && !stunned)
-		return TRUE
+	if(mind)
+		if(mind.martial_art && mind.martial_art.block_chance \
+		&& prob(mind.martial_art.block_chance) && in_throw_mode \
+		&& !stat && !weakened && !stunned)
+			return TRUE
 	return FALSE
 
 /mob/living/carbon/human/hitby(atom/movable/AM, skipcatch = 0, hitpush = 1, blocked = 0)
@@ -620,7 +622,7 @@
 			gain = 100
 		if(mind.assigned_role == "Clown")
 			gain = rand(-300, 300)
-	investigate_log("([key_name(src)]) has been consumed by the singularity.","singulo") //Oh that's where the clown ended up!
+	investigate_log("([key_name(src)]) has been consumed by the singularity.", INVESTIGATE_SINGULO) //Oh that's where the clown ended up!
 	gib()
 	return(gain)
 
@@ -663,10 +665,10 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
+				to_chat(src, "\t <span class='[status == "OK" ? "notice" : "warning"]'>Your [LB.name] is [status].</span>")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'class='warning'> There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

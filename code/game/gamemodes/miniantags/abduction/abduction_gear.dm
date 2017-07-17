@@ -64,7 +64,7 @@
 	stealth_active = 1
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
-		new /obj/effect/overlay/temp/dir_setting/ninja/cloak(get_turf(M), M.dir)
+		new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(M), M.dir)
 		M.name_override = disguise.name
 		M.icon = disguise.icon
 		M.icon_state = disguise.icon_state
@@ -78,7 +78,7 @@
 	stealth_active = 0
 	if(ishuman(loc))
 		var/mob/living/carbon/human/M = loc
-		new /obj/effect/overlay/temp/dir_setting/ninja(get_turf(M), M.dir)
+		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(M), M.dir)
 		M.name_override = null
 		M.cut_overlays()
 		M.regenerate_icons()
@@ -429,7 +429,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	add_logs(user, L, "stunned")
 
 /obj/item/weapon/abductor_baton/proc/SleepAttack(mob/living/L,mob/living/user)
-	if(L.stunned || L.sleeping)
+	if(L.incapacitated(TRUE, TRUE))
 		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)

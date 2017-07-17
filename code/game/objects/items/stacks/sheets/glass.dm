@@ -98,9 +98,9 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 /obj/item/stack/sheet/rglass/cyborg/get_amount()
 	return min(round(source.energy / metcost), round(glasource.energy / glacost))
 
-/obj/item/stack/sheet/rglass/cyborg/use(amount) // Requires special checks, because it uses two storages
-	source.use_charge(amount * metcost)
-	glasource.use_charge(amount * glacost)
+/obj/item/stack/sheet/rglass/cyborg/use(used, transfer = FALSE) // Requires special checks, because it uses two storages
+	source.use_charge(used * metcost)
+	glasource.use_charge(used * glacost)
 
 /obj/item/stack/sheet/rglass/cyborg/add(amount)
 	source.add_charge(amount * metcost)
@@ -196,6 +196,8 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 			var/picked_def_zone = pick("l_leg", "r_leg")
 			var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
 			if(!istype(O))
+				return
+			if(O.status == BODYPART_ROBOTIC)
 				return
 			var/feetCover = (H.wear_suit && H.wear_suit.body_parts_covered & FEET) || (H.w_uniform && H.w_uniform.body_parts_covered & FEET)
 			if(H.shoes || feetCover || H.movement_type & FLYING || H.buckled)

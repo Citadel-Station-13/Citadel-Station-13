@@ -37,7 +37,6 @@
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/state = 0
-	var/cell_power_remaining = 1 // 0 - no power, 1 - 100% power in cell. Starts as 1 so putting any cell into empty mech doesn't deplete charge from it
 	var/list/log = new
 	var/last_message = 0
 	var/add_req_access = 1
@@ -57,7 +56,7 @@
 	var/datum/gas_mixture/cabin_air
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
-	var/obj/item/device/radio/radio = null
+	var/obj/item/device/radio/mech/radio
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
@@ -118,6 +117,7 @@
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
+/obj/item/device/radio/mech //this has to go somewhere
 
 /obj/mecha/Initialize()
 	. = ..()
@@ -143,6 +143,9 @@
 	diag_hud_set_mechstat()
 	diag_hud_set_mechtracking()
 
+/obj/mecha/get_cell()
+	return cell
+
 
 /obj/mecha/Destroy()
 	go_out()
@@ -153,11 +156,9 @@
 			AI = M //AIs are loaded into the mech computer itself. When the mech dies, so does the AI. They can be recovered with an AI card from the wreck.
 		else
 			M.forceMove(loc)
-
-	if(prob(30))
-		explosion(get_turf(loc), 0, 0, 1, 3)
-
 	if(wreckage)
+		if(prob(30))
+			explosion(get_turf(src), 0, 0, 1, 3)
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			if(E.salvageable && prob(30))
@@ -263,7 +264,7 @@
 	if(equipment && equipment.len)
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "\icon[ME] [ME]")
+			to_chat(user, "[bicon(ME)] [ME]")
 
 //processing internal damage, temperature, air regulation, alert updates, lights power use.
 /obj/mecha/process()
@@ -638,7 +639,7 @@
 		var/can_control_mech = 0
 		for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
 			can_control_mech = 1
-			to_chat(user, "<span class='notice'>\icon[src] Status of [name]:</span>\n[A.get_mecha_info()]")
+			to_chat(user, "<span class='notice'>[bicon(src)] Status of [name]:</span>\n[A.get_mecha_info()]")
 			break
 		if(!can_control_mech)
 			to_chat(user, "<span class='warning'>You cannot control exosuits without AI control beacons installed.</span>")
@@ -1006,7 +1007,7 @@
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
 		if(occupant && occupant.client)
-			to_chat(occupant, "\icon[src] [message]")
+			to_chat(occupant, "[bicon(src)] [message]")
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)

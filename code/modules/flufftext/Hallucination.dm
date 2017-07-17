@@ -262,51 +262,57 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	px = -32
 
 /obj/effect/hallucination/oh_yeah
-	var/turf/closed/wall/wall
-	var/obj/effect/hallucination/simple/bubblegum/bubblegum = null
+	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
 	var/image/fakerune
 
 /obj/effect/hallucination/oh_yeah/Initialize(mapload, var/mob/living/carbon/T)
-	..()
+	. = ..()
 	target = T
+	var/turf/closed/wall/wall
 	for(var/turf/closed/wall/W in range(7,target))
 		wall = W
 		break
-	if(wall)
-		fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
-		var/turf/landing = get_turf(target)
-		var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
-		fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
-		fakebroken.override = TRUE
-		if(target.client)
-			target.client.images |= fakebroken
-			target.client.images |= fakerune
-		target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
-		bubblegum = new(wall, target)
-		sleep(10) //ominous wait
-		var/charged = FALSE //only get hit once
-		while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
-			bubblegum.forceMove(get_step_towards(bubblegum, landing))
-			bubblegum.setDir(get_dir(bubblegum, landing))
-			target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
-			shake_camera(target, 2, 1)
-			if(bubblegum.Adjacent(target) && !charged)
-				charged = TRUE
-				target.Weaken(4)
-				target.staminaloss += 40
-				step_away(target, bubblegum)
-				shake_camera(target, 4, 3)
-				target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
-			sleep(2)
-		sleep(30)
-		qdel(bubblegum)
+	if(!wall)
+		return INITIALIZE_HINT_QDEL
+
+	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
+	var/turf/landing = get_turf(target)
+	var/turf/landing_image_turf = get_step(landing, SOUTHWEST) //the icon is 3x3
+	fakerune = image('icons/effects/96x96.dmi', landing_image_turf, "landing", layer = ABOVE_OPEN_TURF_LAYER)
+	fakebroken.override = TRUE
+	if(target.client)
+		target.client.images |= fakebroken
+		target.client.images |= fakerune
+	target.playsound_local(wall,'sound/effects/meteorimpact.ogg', 150, 1)
+	bubblegum = new(wall, target)
+	addtimer(CALLBACK(src, .proc/bubble_attack, landing), 10)
+
+/obj/effect/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
+	var/charged = FALSE //only get hit once
+	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
+		bubblegum.forceMove(get_step_towards(bubblegum, landing))
+		bubblegum.setDir(get_dir(bubblegum, landing))
+		target.playsound_local(get_turf(bubblegum), 'sound/effects/meteorimpact.ogg', 150, 1)
+		shake_camera(target, 2, 1)
+		if(bubblegum.Adjacent(target) && !charged)
+			charged = TRUE
+			target.Weaken(4)
+			target.adjustStaminaLoss(40)
+			step_away(target, bubblegum)
+			shake_camera(target, 4, 3)
+			target.visible_message("<span class='warning'>[target] jumps backwards, falling on the ground!</span>","<span class='userdanger'>[bubblegum] slams into you!</span>")
+		sleep(2)
+	sleep(30)
 	qdel(src)
 
 /obj/effect/hallucination/oh_yeah/Destroy()
 	if(target.client)
 		target.client.images.Remove(fakebroken)
 		target.client.images.Remove(fakerune)
+	QDEL_NULL(fakebroken)
+	QDEL_NULL(fakerune)
+	QDEL_NULL(bubblegum)
 	return ..()
 
 /obj/effect/hallucination/singularity_scare
@@ -437,7 +443,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/list/image/delusions = list()
 
 /obj/effect/hallucination/delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
-	..()
+	. = ..()
 	target = T
 	var/image/A = null
 	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
@@ -530,7 +536,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/static/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/ballistic, /obj/item/ammo_box/a357,\
 	/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow, /obj/item/weapon/melee/energy/sword/saber,\
 	/obj/item/weapon/storage/box/syndicate, /obj/item/weapon/storage/box/emps,\
-	/obj/item/weapon/cartridge/syndicate, /obj/item/clothing/under/chameleon,\
+	/obj/item/weapon/cartridge/virus/syndicate, /obj/item/clothing/under/chameleon,\
 	/obj/item/clothing/shoes/chameleon, /obj/item/weapon/card/id/syndicate,\
 	/obj/item/clothing/mask/chameleon, /obj/item/clothing/glasses/thermal,\
 	/obj/item/device/chameleon, /obj/item/weapon/card/emag,	/obj/item/weapon/grenade/plastic/x4,\
@@ -544,7 +550,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	/obj/item/clothing/suit/space/nasavoid, /obj/item/weapon/tank)
 
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(get_turf(target),target)
-	
+
 	for(var/obj/item/I in clone.held_items)
 		if(!(locate(I) in non_fakeattack_weapons))
 			clone_weapon = I.name

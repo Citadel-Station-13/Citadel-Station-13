@@ -357,6 +357,7 @@
 		updatehealth() //then we check if the mob should wake up.
 		update_canmove()
 		update_sight()
+		clear_alert("oxy")
 		reload_fullscreen()
 		. = 1
 
@@ -664,13 +665,13 @@
 		else
 			final_where = where
 
-		if(!what.mob_can_equip(who, src, final_where, TRUE))
+		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
-		if(do_mob(src, who, what.put_on_delay))
-			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE))
+		if(do_mob(src, who, what.equip_delay_other))
+			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
 					if(where_list)
 						if(!who.put_in_hand(what, where_list[2]))
@@ -797,9 +798,6 @@
 	return 1
 
 /mob/living/carbon/proc/update_stamina()
-	return
-
-/mob/living/carbon/human/update_stamina()
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= HEALTH_THRESHOLD_CRIT && !stat)
@@ -807,6 +805,9 @@
 			Weaken(5)
 			setStaminaLoss(health - 2)
 	update_health_hud()
+
+/mob/living/carbon/alien/update_stamina()
+	return
 
 /mob/living/proc/owns_soul()
 	if(mind)

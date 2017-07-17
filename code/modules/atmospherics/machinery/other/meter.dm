@@ -8,7 +8,7 @@
 	power_channel = ENVIRON
 	var/frequency = 0
 	var/id_tag
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
 	obj_integrity = 150
@@ -19,7 +19,7 @@
 /obj/machinery/meter/Initialize(mapload)
 	. = ..()
 	SSair.atmos_machinery += src
-	if (mapload && !target)
+	if (!target)
 		target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()

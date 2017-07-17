@@ -43,12 +43,12 @@ GLOBAL_LIST_INIT(security_depts_prefs, list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"
-#define GDUFFLEBAG "Grey Dufflebag"
+#define Gduffelbag "Grey duffelbag"
 #define LSATCHEL "Leather Satchel"
 #define DBACKPACK "Department Backpack"
 #define DSATCHEL "Department Satchel"
-#define DDUFFLEBAG "Department Dufflebag"
-GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL))
+#define Dduffelbag "Department duffelbag"
+GLOBAL_LIST_INIT(backbaglist, list(DBACKPACK, DSATCHEL, Dduffelbag, GBACKPACK, GSATCHEL, Gduffelbag, LSATCHEL))
 
 //Uplink spawn loc
 #define UPLINK_PDA		"PDA"
@@ -161,3 +161,4 @@ GLOBAL_LIST_INIT(numbers_as_words, list("One", "Two", "Three", "Four",
 	return L
 
 GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_as_words + generate_number_strings())
+GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))

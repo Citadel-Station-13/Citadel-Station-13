@@ -12,7 +12,7 @@
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
 	density = 1
-	use_power = 1				//this turret uses and requires power
+	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	req_access = list(GLOB.access_security)
@@ -87,7 +87,9 @@
 	if(has_cover)
 		cover = new /obj/machinery/porta_turret_cover(loc)
 		cover.parent_turret = src
-		underlays += image('icons/obj/turrets.dmi',icon_state = "basedark")
+		var/mutable_appearance/base = mutable_appearance('icons/obj/turrets.dmi', "basedark")
+		base.layer = NOT_HIGH_OBJ_LAYER
+		underlays += base
 	if(!has_cover)
 		INVOKE_ASYNC(src, .proc/popUp)
 
@@ -225,7 +227,6 @@
 			spawn(rand(0, 15))
 				stat |= NOPOWER
 				update_icon()
-
 
 
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user, params)
@@ -550,9 +551,10 @@
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
+	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
@@ -562,6 +564,15 @@
 	faction = "syndicate"
 	emp_vunerable = 0
 
+/obj/machinery/porta_turret/syndicate/energy
+	icon_state = "standard_stun"
+	base_icon_state = "standard"
+	stun_projectile = /obj/item/projectile/energy/electrode
+	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
+	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
+
+
 /obj/machinery/porta_turret/syndicate/setup()
 	return
 
@@ -569,6 +580,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
+	max_integrity = 40
+	integrity_failure = 20
 	obj_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
@@ -607,7 +620,7 @@
 	obj_integrity = 260
 	max_integrity = 260
 	always_up = 1
-	use_power = 0
+	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
 	stun_projectile = /obj/item/projectile/beam/laser

@@ -102,6 +102,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigoff"
 	throw_speed = 0.5
 	item_state = "cigoff"
+	container_type = INJECTABLE
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
 	var/lit = FALSE
@@ -484,7 +485,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		icon_state = "[initial(icon_state)]"
 
 /obj/item/weapon/lighter/ignition_effect(atom/A, mob/user)
-	. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
+	if(is_hot())
+		. = "<span class='rose'>With a single flick of their wrist, [user] smoothly lights [A] with [src]. Damn [user.p_theyre()] cool.</span>"
 
 /obj/item/weapon/lighter/proc/set_lit(new_lit)
 	lit = new_lit
@@ -581,7 +583,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	add_overlay(base_overlay)
 
 /obj/item/weapon/lighter/greyscale/ignition_effect(atom/A, mob/user)
-	. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
+	if(is_hot())
+		. = "<span class='notice'>After some fiddling, [user] manages to light [A] with [src].</span>"
 
 
 ///////////
@@ -622,6 +625,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = null
 	item_state = null
+	w_class = WEIGHT_CLASS_TINY
 	var/chem_volume = 100
 	var/vapetime = 0 //this so it won't puff out clouds every tick
 	var/screw = 0 // kinky
@@ -633,8 +637,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 
-/obj/item/clothing/mask/vape/New(loc, var/param_color = null)
-	..()
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+	. = ..()
 	create_reagents(chem_volume)
 	reagents.set_reacting(FALSE) // so it doesn't react until you light it
 	reagents.add_reagent("nicotine", 50)

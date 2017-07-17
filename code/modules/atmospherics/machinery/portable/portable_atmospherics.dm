@@ -1,7 +1,7 @@
 /obj/machinery/portable_atmospherics
 	name = "portable_atmospherics"
 	icon = 'icons/obj/atmos.dmi'
-	use_power = 0
+	use_power = NO_POWER_USE
 	obj_integrity = 250
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 60, acid = 30)
@@ -120,6 +120,6 @@
 	if(I.force < 10 && !(stat & BROKEN))
 		take_damage(0)
 	else
-		investigate_log("was smacked with \a [I] by [key_name(user)].", "atmos")
+		investigate_log("was smacked with \a [I] by [key_name(user)].", INVESTIGATE_ATMOS)
 		add_fingerprint(user)
 		..()

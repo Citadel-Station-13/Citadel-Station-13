@@ -1,0 +1,15 @@
+diff a/code/modules/shuttle/emergency.dm b/code/modules/shuttle/emergency.dm	(rejected hunks)
+@@ -383,12 +381,7 @@
+ 				//move each escape pod to its corresponding escape dock
+ 				for(var/A in SSshuttle.mobile)
+ 					var/obj/docking_port/mobile/M = A
+-					if(M.launch_status == ENDGAME_LAUNCHED)
+-						if(istype(M, /obj/docking_port/mobile/pod))
+-							M.dock(SSshuttle.getDock("[M.id]_away")) //Escape pods dock at centcomm
+-						else
+-							M.launch_status = ENDGAME_TRANSIT
+-							//Mapping a new docking point for each ship mappers could potentially want docking with centcomm would take up lots of space, just let them keep flying off into the sunset for their greentext
++					M.on_emergency_dock()
+ 
+ 				// now move the actual emergency shuttle to centcomm
+ 				// unless the shuttle is "hijacked"

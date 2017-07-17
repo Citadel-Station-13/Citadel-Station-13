@@ -25,11 +25,11 @@
 	else if(istype(O,/obj/item/weapon/gun/energy/disabler/cyborg))
 		disabler = 0
 		update_icons()
-	else if(istype(O,/obj/item/weapon/dogborg/sleeper))
+	else if(istype(O,/obj/item/device/dogborg/sleeper))
 		sleeper_g = 0
 		sleeper_r = 0
 		update_icons()
-		var/obj/item/weapon/dogborg/sleeper/S = O
+		var/obj/item/device/dogborg/sleeper/S = O
 		S.go_out()
 	if(client)
 		client.screen -= O

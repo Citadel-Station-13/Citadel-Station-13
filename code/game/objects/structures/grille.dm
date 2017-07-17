@@ -23,7 +23,9 @@
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 20, "cost" = 5)
 		if(RCD_WINDOWGRILLE)
-			return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 10)
+			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
+			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/weapon/construction/rcd/the_rcd, passed_mode)
@@ -248,16 +250,17 @@
 
 /obj/structure/grille/ratvar
 	icon_state = "ratvargrille"
+	name = "cog grille"
 	desc = "A strangely-shaped grille."
 	broken_type = /obj/structure/grille/ratvar/broken
 
 /obj/structure/grille/ratvar/New()
 	..()
 	if(broken)
-		new /obj/effect/overlay/temp/ratvar/grille/broken(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/grille/broken(get_turf(src))
 	else
-		new /obj/effect/overlay/temp/ratvar/grille(get_turf(src))
-		new /obj/effect/overlay/temp/ratvar/beam/grille(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/grille(get_turf(src))
+		new /obj/effect/temp_visual/ratvar/beam/grille(get_turf(src))
 
 /obj/structure/grille/ratvar/narsie_act()
 	take_damage(rand(1, 3), BRUTE)

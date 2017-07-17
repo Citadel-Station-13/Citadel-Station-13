@@ -181,6 +181,7 @@
 				to_chat(H, "<span class='warning'>You feel intensely watched.</span>")
 		sleep(5)
 		to_chat(H, "<span class='warning'><b>Your mind snaps!</b></span>")
+		to_chat(H, "<big><span class='warning'><b>You can't remember how you got here...</b></span></big>")
 		var/objtype = pick(subtypesof(/datum/objective/abductee/))
 		var/datum/objective/abductee/O = new objtype()
 		SSticker.mode.abductees += H.mind
@@ -211,13 +212,12 @@
 
 /obj/machinery/abductor/experiment/proc/SendBack(mob/living/carbon/human/H)
 	H.Sleeping(8)
+	H.uncuff()
 	if(console && console.pad && console.pad.teleport_target)
 		H.forceMove(console.pad.teleport_target)
-		H.uncuff()
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	H.forceMove(pick(GLOB.latejoin))
-	H.uncuff()
+	SSjob.SendToLateJoin(H, FALSE)
 	return
 
 

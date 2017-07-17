@@ -2,7 +2,7 @@
 	name = "air injector"
 	desc = "Has a valve and pump attached to it"
 	icon_state = "inje_map"
-	use_power = 1
+	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
@@ -16,6 +16,7 @@
 	var/datum/radio_frequency/radio_connection
 
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	if(SSradio)
@@ -167,7 +168,7 @@
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", "atmos")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -183,7 +184,7 @@
 				. = TRUE
 			if(.)
 				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", "atmos")
+				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()
 

@@ -49,7 +49,7 @@
 		created += src
 
 //Called after New if the map is being loaded. mapload = TRUE
-//Called from base of New if the map is being loaded. mapload = FALSE
+//Called from base of New if the map is not being loaded. mapload = FALSE
 //This base must be called or derivatives must set initialized to TRUE
 //must not sleep
 //Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
@@ -79,13 +79,8 @@
 	return INITIALIZE_HINT_NORMAL
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
-//This version shouldn't be called
 /atom/proc/LateInitialize()
-	var/static/list/warned_types = list()
-	if(!warned_types[type])
-		WARNING("Old style LateInitialize behaviour detected in [type]!")
-		warned_types[type] = TRUE
-	Initialize(FALSE)
+	return
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -103,6 +98,9 @@
 	QDEL_NULL(light)
 
 	return ..()
+
+/atom/proc/handle_ricochet(obj/item/projectile/P)
+	return
 
 /atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
 	return (!density || !height)
@@ -187,6 +185,19 @@
 /atom/proc/is_transparent()
 	return container_type & TRANSPARENT
 
+/atom/proc/is_injectable(allowmobs = TRUE)
+	if(isliving(src) && allowmobs)
+		var/mob/living/L = src
+		return L.can_inject()
+	if(container_type & OPENCONTAINER)
+		return TRUE
+	return container_type & INJECTABLE
+
+/atom/proc/is_drawable(allowmobs = TRUE)
+	if(is_injectable(allowmobs)) //Everything that can be injected can also be drawn from, but not vice versa
+		return TRUE
+	return container_type & DRAWABLE
+
 /atom/proc/allow_drop()
 	return 1
 
@@ -246,7 +257,7 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	to_chat(user, "[bicon(src)] That's [f_name]")
 
 	if(desc)
 		to_chat(user, desc)

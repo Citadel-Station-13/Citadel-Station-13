@@ -92,7 +92,7 @@
 	if(next_move > world.time) // in the year 2000...
 		return
 
-	if(A.IsObscured())
+	if(!modifiers["catcher"] && A.IsObscured())
 		return
 
 	if(istype(loc,/obj/mecha))
@@ -114,18 +114,18 @@
 		W.attack_self(src)
 		update_inv_hands()
 		return
-	
+
 	//These are always reachable.
 	//User itself, current loc, and user inventory
 	if(DirectAccess(A))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
 			UnarmedAttack(A)
 		return
-	
+
 	//Can't reach anything else in lockers or other weirdness
 	if(!loc.AllowClick())
 		return
@@ -133,7 +133,7 @@
 	//Standard reach turf to turf or reaching inside storage
 	if(CanReach(A,W))
 		if(W)
-			melee_item_attack_chain(src,W,A,params)
+			W.melee_attack_chain(src, A, params)
 		else
 			if(ismob(A))
 				changeNext_move(CLICK_CD_MELEE)
@@ -326,8 +326,8 @@
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user))
 		var/mob/living/carbon/human/H = user
-		H.dna.species.grab(H, src, H.martial_art)
-		H.next_click = world.time + CLICK_CD_MELEE
+		H.dna.species.grab(H, src, H.mind.martial_art)
+		H.changeNext_move(CLICK_CD_MELEE)
 	else
 		..()
 /*
@@ -446,6 +446,7 @@
 		C.swap_hand()
 	else
 		var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr))
+		params += "&catcher=1"
 		if(T)
 			T.Click(location, control, params)
 	. = 1

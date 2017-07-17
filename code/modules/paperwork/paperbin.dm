@@ -110,7 +110,7 @@
 		papers.Add(P)
 		total_paper++
 		update_icon()
-	else if(istype(I, /obj/item/weapon/pen))
+	else if(istype(I, /obj/item/weapon/pen) && !bin_pen)
 		var/obj/item/weapon/pen/P = I
 		if(!user.transferItemToLoc(P, src))
 			return
@@ -130,7 +130,7 @@
 
 /obj/item/weapon/paper_bin/update_icon()
 	if(total_paper < 1)
-		icon_state = "paper_bin_0"
+		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
 	cut_overlays()

@@ -14,6 +14,12 @@
 	var/drop_y = 1
 	var/drop_z = 1
 
+/turf/open/chasm/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0)
+	return
+
+/turf/open/chasm/MakeDry(wet_setting = TURF_WET_WATER)
+	return
+
 /turf/open/chasm/Entered(atom/movable/AM)
 	START_PROCESSING(SSobj, src)
 	drop_stuff(AM)
@@ -22,6 +28,10 @@
 	if(!drop_stuff())
 		STOP_PROCESSING(SSobj, src)
 
+/turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "basalt"
+	return TRUE
 
 /turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
 	..()
@@ -50,8 +60,16 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
+/turf/open/chasm/proc/is_safe()
+	//if anything matching this typecache is found in the chasm, we don't drop things
+	var/static/list/chasm_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk, /obj/structure/stone_tile))
+	var/list/found_safeties = typecache_filter_list(contents, chasm_safeties_typecache)
+	return LAZYLEN(found_safeties)
+
 /turf/open/chasm/proc/drop_stuff(AM)
 	. = 0
+	if(is_safe())
+		return FALSE
 	var/thing_to_check = src
 	if(AM)
 		thing_to_check = list(AM)
@@ -108,9 +126,12 @@
 
 
 /turf/open/chasm/straight_down/lava_land_surface
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	planetary_atmos = TRUE
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
+	light_range = 1.9 //slightly less range than lava
+	light_power = 0.65 //less bright, too
+	light_color = LIGHT_COLOR_LAVA //let's just say you're falling into lava, that makes sense right
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
 	//Make sure the item is still there after our sleep
@@ -166,9 +187,14 @@
 /turf/open/chasm/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/chasm/jungle/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
+	underlay_appearance.icon = 'icons/turf/floors.dmi'
+	underlay_appearance.icon_state = "dirt"
+	return TRUE
 
 /turf/open/chasm/straight_down/jungle
 	icon = 'icons/turf/floors/junglechasm.dmi'
 	planetary_atmos = TRUE
-	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
