@@ -1,0 +1,9 @@
+diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
+@@ -28,6 +28,7 @@
+ #include "code\__DEFINES\callbacks.dm"
+ #include "code\__DEFINES\clockcult.dm"
+ #include "code\__DEFINES\combat.dm"
++#include "code\__DEFINES\components.dm"
+ #include "code\__DEFINES\construction.dm"
+ #include "code\__DEFINES\contracts.dm"
+ #include "code\__DEFINES\cult.dm"
