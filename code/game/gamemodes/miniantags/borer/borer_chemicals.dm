@@ -8,7 +8,7 @@
 /datum/borer_chem/epinephrine
 	chemname = "epinephrine"
 	chem_desc = "Stabilizes critical condition and slowly restores oxygen damage. If overdosed, it will deal toxin and oxyloss damage."
-	chem_message = "<span class='notice'>You feel a surge of epinephrine flooding your bloodstream!</span>"
+	chem_message = "<span class='notice'>You feel your energy being replenished and it becomes easier to breathe!</span>"
 
 /datum/borer_chem/leporazine
 	chemname = "leporazine"
