@@ -133,6 +133,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	//borer_chems += /datum/borer_chem/creagent
 	borer_chems += /datum/borer_chem/ethanol
 	borer_chems += /datum/borer_chem/rezadone
+	borer_chems += /datum/borer_chem/crocin
 
 	if(is_team_borer)
 		GLOB.borers += src
