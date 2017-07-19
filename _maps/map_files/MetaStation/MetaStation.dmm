@@ -12890,10 +12890,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "2"
+	name = "Cell 1"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -12925,10 +12924,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "2"
+	name = "Cell 2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -12948,10 +12946,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "2"
+	name = "Cell 3"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -13009,10 +13006,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/security/holding{
 	id = "Holding Cell";
-	name = "Holding Cell";
-	req_access_txt = "2"
+	name = "Holding Cell"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side,
