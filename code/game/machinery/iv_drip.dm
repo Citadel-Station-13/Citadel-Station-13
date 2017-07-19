@@ -1,3 +1,6 @@
+#define IV_TAKING 0
+#define IV_INJECTING 1
+
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
 	icon = 'icons/obj/iv_drip.dmi'
@@ -5,7 +8,7 @@
 	anchored = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
-	var/mode = 1 // 1 is injecting, 0 is taking blood.
+	var/mode = IV_INJECTING
 	var/obj/item/weapon/reagent_containers/beaker = null
 	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
 											/obj/item/weapon/reagent_containers/food,
@@ -15,6 +18,11 @@
 	..()
 	update_icon()
 	drip_containers = typecacheof(drip_containers)
+	
+/obj/machinery/iv_drip/Destroy()
+	attached = null
+	QDEL_NULL(beaker)
+	return ..()
 
 /obj/machinery/iv_drip/update_icon()
 	if(attached)
