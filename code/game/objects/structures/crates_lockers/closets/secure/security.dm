@@ -199,6 +199,12 @@
 	anchored = TRUE
 	var/id = null
 
+/obj/structure/closet/secure_closet/evidence
+	anchored = TRUE
+	name = "Secure Evidence Closet"
+	req_access_txt = "0"
+	req_one_access_txt = list(ACCESS_ARMORY, ACCESS_FORENSICS_LOCKERS)
+
 /obj/structure/closet/secure_closet/brig/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/prisoner( src )
@@ -218,9 +224,19 @@
 	new /obj/item/clothing/head/powdered_wig (src)
 	new /obj/item/weapon/storage/briefcase(src)
 
+/obj/structure/closet/secure_closet/contraband/armory
+	anchored = TRUE
+	name = "Contraband Locker"
+	req_access = list(ACCESS_ARMORY)
+
+/obj/structure/closet/secure_closet/contraband/heads
+	anchored = TRUE
+	name = "Contraband Locker"
+	req_access = list(ACCESS_HEADS)
+
 /obj/structure/closet/secure_closet/armory1
 	name = "armory armor locker"
-	req_access = list(GLOB.access_armory)
+	req_access = list(ACCESS_ARMORY)
 	icon_state = "armory"
 
 /obj/structure/closet/secure_closet/armory1/PopulateContents()
