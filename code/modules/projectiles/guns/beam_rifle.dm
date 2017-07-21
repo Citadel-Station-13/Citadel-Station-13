@@ -728,7 +728,7 @@
 	starting_p_y = pixel_y
 	. = ..()
 
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Bump(atom/target, yes)
+/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Collide(atom/target, yes)
 	paused = TRUE
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
