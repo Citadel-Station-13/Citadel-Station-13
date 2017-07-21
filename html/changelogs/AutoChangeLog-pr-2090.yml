@@ -1,0 +1,5 @@
+author: "Jay"
+delete-after: True
+changes: 
+  - imageadd: "New PDA icons"
+  - bugfix: "fixes missing icons for PDAs"
