@@ -1,0 +1,192 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -90101,6 +90259,190 @@
+ 	},
+ /turf/closed/wall/r_wall,
+ /area/engine/atmos)
++"dBD" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	icon_state = "0-4";
++	d2 = 4
++	},
++/turf/open/floor/plating,
++/area/security/brig)
++"dBE" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	icon_state = "0-4";
++	d2 = 4
++	},
++/turf/open/floor/plating,
++/area/security/brig)
++"dBF" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 8;
++	icon_state = "0-8"
++	},
++/obj/structure/cable/yellow{
++	icon_state = "0-4";
++	d2 = 4
++	},
++/turf/open/floor/plating,
++/area/security/brig)
++"dBG" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 8;
++	icon_state = "0-8"
++	},
++/turf/open/floor/plating,
++/area/security/brig)
++"dBH" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/structure/cable/yellow{
++	icon_state = "0-4";
++	d2 = 4
++	},
++/turf/open/floor/plating,
++/area/security/brig)
++"dBI" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow,
++/turf/open/floor/plating,
++/area/engine/break_room)
++"dBJ" = (
++/obj/structure/cable/yellow{
++	icon_state = "4-8";
++	d1 = 4;
++	d2 = 8
++	},
++/turf/open/floor/plasteel,
++/area/engine/atmos)
++"dBK" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/machinery/door/poddoor{
++	density = 0;
++	icon_state = "open";
++	id = "atmos";
++	name = "Atmos Blast Door";
++	opacity = 0
++	},
++/obj/structure/cable/yellow,
++/turf/open/floor/plating,
++/area/engine/atmos)
++"dBL" = (
++/obj/structure/cable/yellow{
++	icon_state = "4-8";
++	d1 = 4;
++	d2 = 8
++	},
++/turf/open/floor/plasteel,
++/area/engine/atmos)
++"dBM" = (
++/obj/structure/cable/yellow{
++	icon_state = "4-8";
++	d1 = 4;
++	d2 = 8
++	},
++/turf/open/floor/plasteel/caution{
++	dir = 8
++	},
++/area/engine/atmos)
++"dBN" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 2;
++	icon_state = "0-2"
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBO" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/mob/living/carbon/monkey,
++/turf/open/floor/plasteel/freezer,
++/area/medical/virology)
++"dBP" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 2;
++	icon_state = "0-2"
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBQ" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 2;
++	icon_state = "0-2"
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBR" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	icon_state = "0-4";
++	d2 = 4
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBS" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 4;
++	icon_state = "1-4"
++	},
++/turf/open/floor/plasteel/white,
++/area/medical/virology)
++"dBT" = (
++/obj/structure/grille,
++/obj/structure/window/fulltile,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/cable/yellow{
++	d2 = 8;
++	icon_state = "0-8"
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBU" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow{
++	d2 = 8;
++	icon_state = "0-8"
++	},
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBV" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow,
++/turf/open/floor/plating,
++/area/medical/virology)
++"dBW" = (
++/obj/structure/grille,
++/obj/structure/window/reinforced/fulltile,
++/obj/structure/cable/yellow,
++/turf/open/floor/plating,
++/area/medical/virology)
+ 
+ (1,1,1) = {"
+ aaa

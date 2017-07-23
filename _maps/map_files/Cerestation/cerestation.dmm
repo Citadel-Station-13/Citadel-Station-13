@@ -1533,8 +1533,6 @@
 /area/shuttle/syndicate)
 "ady" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/firealarm{
@@ -2837,8 +2835,6 @@
 /area/security/prison)
 "age" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -6969,8 +6965,6 @@
 /area/crew_quarters/heads/captain)
 "aoi" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -7610,8 +7604,6 @@
 /area/security/prison)
 "apA" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable/orange{
@@ -8013,15 +8005,15 @@
 /obj/machinery/door/airlock/mining{
 	req_access_txt = "48"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/quartermaster/miningdock)
 "aqr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -8087,6 +8079,11 @@
 /area/security/warden)
 "aqy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -8637,8 +8634,6 @@
 /area/crew_quarters/locker)
 "arC" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -8802,8 +8797,6 @@
 "arU" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/floorgrime{
@@ -8943,12 +8936,6 @@
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
 /obj/item/weapon/gun/energy/e_gun/dragnet,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -9140,8 +9127,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/cmo,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -9246,8 +9231,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/ce,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/poster/contraband/power{
@@ -9477,11 +9460,6 @@
 	pixel_y = -3
 	},
 /obj/structure/window/reinforced,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -10324,8 +10302,6 @@
 	req_one_access_txt = "19;41"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet{
@@ -10663,8 +10639,6 @@
 /area/maintenance/asteroid/fore/com_west)
 "avD" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/closet/wardrobe/red,
@@ -10745,8 +10719,6 @@
 /area/security/warden)
 "avL" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -11486,6 +11458,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11905,8 +11880,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/hos,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -12061,8 +12034,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/rd,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/poster/contraband/lamarr{
@@ -13985,8 +13956,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -14137,8 +14106,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/camera{
@@ -14213,6 +14180,11 @@
 /area/security/main)
 "aCK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
 	dir = 1;
@@ -14272,8 +14244,6 @@
 /area/security/brig)
 "aCP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14344,8 +14314,6 @@
 /area/security/courtroom)
 "aCV" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -15320,8 +15288,6 @@
 	c_tag = "Bridge Midway 1"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/darkblue/side{
@@ -15517,8 +15483,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/qm,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/secure/safe{
@@ -15712,6 +15676,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -17437,8 +17406,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/wood{
@@ -18959,8 +18926,6 @@
 /area/bridge)
 "aLg" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -21042,6 +21007,11 @@
 	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4;
@@ -23514,6 +23484,9 @@
 	dir = 4
 	},
 /obj/vehicle/janicart,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -28102,6 +28075,9 @@
 	c_tag = "EVA Equipment";
 	dir = 6
 	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -29508,8 +29484,6 @@
 /area/hallway/primary/central)
 "bek" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -31240,6 +31214,10 @@
 	c_tag = "EVA Storage";
 	dir = 9
 	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/blue/side{
 	icon_state = "blue";
 	dir = 4;
@@ -32496,8 +32474,6 @@
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -33760,7 +33736,6 @@
 	name = "Isolation A";
 	req_access_txt = "39"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -35882,8 +35857,6 @@
 "bpt" = (
 /obj/structure/table,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/paper_bin{
@@ -36089,8 +36062,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -37272,9 +37243,7 @@
 	},
 /area/hallway/primary/port)
 "brN" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37286,6 +37255,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -37293,6 +37265,9 @@
 /area/hallway/primary/port)
 "brP" = (
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -38089,6 +38064,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -38891,9 +38867,6 @@
 	},
 /area/hydroponics)
 "buE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Hydroponics";
 	req_access_txt = "35"
@@ -38909,9 +38882,6 @@
 	},
 /area/hydroponics)
 "buF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -38919,6 +38889,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -40238,8 +40211,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -40510,8 +40481,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -40708,8 +40677,6 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -41007,8 +40974,6 @@
 	c_tag = "Hydroponics North 2"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/darkgreen{
@@ -42359,9 +42324,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
+/obj/machinery/airalarm/engine{
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/green/visible,
@@ -43755,8 +43718,6 @@
 /area/medical/chemistry)
 "bDn" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whiteyellow/side{
@@ -44457,8 +44418,6 @@
 /area/medical/genetics)
 "bEF" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -44677,8 +44636,6 @@
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
 /obj/item/weapon/grenade/chem_grenade/metalfoam,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -44863,8 +44820,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable/yellow{
@@ -45448,8 +45403,6 @@
 /area/library)
 "bGw" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/twohanded/required/kirbyplants{
@@ -45536,8 +45489,6 @@
 /obj/item/weapon/grown/log,
 /obj/item/weapon/grown/log,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/hatchet,
@@ -46113,8 +46064,6 @@
 	pixel_y = -3
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -46893,9 +46842,6 @@
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/mask/muzzle,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -47823,8 +47769,6 @@
 /area/engine/gravity_generator)
 "bKQ" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
@@ -48948,9 +48892,6 @@
 	pixel_y = 2
 	},
 /obj/item/clothing/neck/stethoscope,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -50842,6 +50783,11 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/cable/orange{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -53389,8 +53335,6 @@
 /area/crew_quarters/fitness)
 "bVm" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black{
@@ -55761,6 +55705,10 @@
 "cap" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/grimy{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -60638,9 +60586,6 @@
 	},
 /area/hallway/primary/aft)
 "cjO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -60651,6 +60596,9 @@
 	req_access_txt = "24"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60711,8 +60659,6 @@
 /area/construction/mining/aux_base)
 "cjU" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -60883,10 +60829,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_x = -22
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61702,8 +61645,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -62055,8 +61996,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -62848,8 +62787,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -64505,8 +64442,6 @@
 /area/science/robotics/lab)
 "cqz" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -64628,8 +64563,6 @@
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/whitepurple/side{
@@ -64657,7 +64590,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/hallway/primary/aft)
 "cqM" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -66384,7 +66317,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/maintenance/asteroid/aft/science)
+/area/science/lab)
 "ctR" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -66778,8 +66711,6 @@
 /area/science/research)
 "cuN" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -68210,8 +68141,6 @@
 /area/science/xenobiology)
 "cwO" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white{
@@ -68737,11 +68666,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable/orange{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
 /obj/effect/turf_decal/stripes/asteroid/line{
 	icon_state = "ast_warn";
 	dir = 1
@@ -68803,8 +68727,6 @@
 /area/science/server)
 "cxT" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -69958,9 +69880,6 @@
 /obj/machinery/door/airlock/research{
 	name = "Kill Chamber";
 	req_access_txt = "55"
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
 	},
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -72242,7 +72161,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -75206,8 +75124,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
@@ -75746,8 +75662,6 @@
 /area/crew_quarters/locker)
 "cLx" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/sign/map/left/ceres{
@@ -76637,8 +76551,6 @@
 /area/crew_quarters/theatre)
 "cNb" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -76830,8 +76742,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/wood{
@@ -77279,8 +77189,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/barber{
@@ -80338,14 +80246,9 @@
 	},
 /area/maintenance/disposal/incinerator)
 "cUO" = (
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = 24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = 24
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	name = "output gas connector port"
@@ -85166,8 +85069,6 @@
 /area/security/armory)
 "dfc" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -87508,8 +87409,6 @@
 "dlg" = (
 /obj/machinery/computer/gulag_teleporter_computer,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel{
@@ -90103,12 +90002,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -90281,12 +90174,6 @@
 /obj/item/weapon/shield/riot{
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90472,12 +90359,6 @@
 	layer = 3.00001;
 	pixel_x = 3;
 	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/orange{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -91651,8 +91532,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/machinery/camera{
@@ -91702,8 +91581,6 @@
 	dir = 8
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black{
@@ -92303,6 +92180,15 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -32
 	},
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Warden's Office APC";
+	pixel_y = -24
+	},
+/obj/structure/cable/orange{
+	d2 = 4;
+	icon_state = "0-4"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92544,6 +92430,11 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/showroomfloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -92767,6 +92658,15 @@
 "dvG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Brig APC";
+	pixel_y = 24
+	},
+/obj/structure/cable/orange{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -93941,8 +93841,6 @@
 /area/security/courtroom)
 "dxP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/vault{
@@ -94679,6 +94577,184 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
+"dzg" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/hallway/secondary/bridges/cargo_ai)
+"dzh" = (
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/ai_monitored/storage/eva)
+"dzi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/orange{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/open/floor/plasteel/red/side{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/brig)
+"dzk" = (
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/turf/open/floor/circuit,
+/area/ai_monitored/nuke_storage)
+"dzl" = (
+/obj/structure/cable/orange{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard)
+"dzo" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Starboard Asteroid Maintenace APC";
+	pixel_y = -24
+	},
+/obj/effect/turf_decal/stripes/end{
+	icon_state = "warn_end";
+	dir = 1
+	},
+/obj/structure/cable/orange,
+/turf/open/floor/plating{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/maintenance/asteroid/starboard)
+"dzp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/starboard/aft)
+"dzq" = (
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/security/vacantoffice)
+"dzr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 4;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
+"dzs" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1;
+	baseturf = /turf/open/floor/plating/asteroid/airless
+	},
+/area/hallway/primary/aft)
 
 (1,1,1) = {"
 aaa
@@ -106822,7 +106898,7 @@ dtJ
 dtJ
 dvh
 dvG
-aDP
+dzi
 aFl
 cLB
 dwO
@@ -108364,8 +108440,8 @@ duk
 aqy
 dvk
 aCK
-aGP
-aFq
+cHc
+dzj
 dwv
 dwT
 dxn
@@ -109780,7 +109856,7 @@ civ
 cjc
 cjN
 cky
-cky
+dzr
 cky
 cmI
 cnO
@@ -118263,7 +118339,7 @@ cfA
 cfA
 cfA
 cfA
-cmJ
+dzs
 cfv
 coN
 cJC
@@ -121237,7 +121313,7 @@ cEY
 aUZ
 aUZ
 aUZ
-aVn
+dzk
 aSN
 abC
 aaa
@@ -121363,7 +121439,7 @@ djY
 cxE
 djV
 cSA
-czT
+djz
 dka
 djV
 dkb
@@ -128154,7 +128230,7 @@ dsW
 dvv
 aDs
 aEQ
-dwo
+dtX
 dvv
 arP
 arP
@@ -132060,7 +132136,7 @@ cIE
 cIF
 bfg
 bgk
-bfg
+dzh
 cIF
 cIH
 cIv
@@ -135105,7 +135181,7 @@ cXC
 cXH
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -136390,7 +136466,7 @@ cXC
 aqV
 aqV
 cXQ
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -137675,7 +137751,7 @@ cXD
 cXI
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -138678,7 +138754,7 @@ ako
 ako
 ako
 ako
-cXv
+dzg
 cXv
 cXv
 cXv
@@ -138703,7 +138779,7 @@ aOe
 cXJ
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -139988,7 +140064,7 @@ cXF
 cXL
 aqV
 cXQ
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -141273,7 +141349,7 @@ cXF
 cXK
 aqV
 cXP
-cXR
+cXF
 aqU
 aaa
 aaa
@@ -141316,7 +141392,7 @@ bhm
 bhm
 bjG
 dyY
-bkG
+dzm
 blF
 bkG
 bnY
@@ -141850,7 +141926,7 @@ bEr
 bFF
 bEr
 bIK
-bEr
+dzn
 bEr
 bMy
 bNG
@@ -141892,7 +141968,7 @@ cXf
 cXg
 cdy
 djr
-djr
+dzp
 djr
 djr
 cfl
@@ -143956,7 +144032,7 @@ cdi
 cth
 cgW
 chI
-cim
+dzq
 cim
 cjE
 ckv
@@ -144223,7 +144299,7 @@ cmz
 cnH
 cnH
 chI
-cpZ
+cpX
 cnX
 crW
 csG
@@ -145423,7 +145499,7 @@ bcS
 bcS
 beD
 aZq
-bgw
+dzl
 bhp
 bic
 biP
@@ -148538,7 +148614,7 @@ bMO
 bNM
 bOR
 bPZ
-cQi
+dzo
 beH
 aZM
 aZM

@@ -1,0 +1,48 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -113238,6 +113279,46 @@
+ 	},
+ /turf/open/floor/plasteel,
+ /area/hallway/secondary/construction)
++"eqg" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqh" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqi" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqj" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqk" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eql" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqm" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqn" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqo" = (
++/obj/effect/decal/cleanable/dirt,
++/turf/open/floor/plating,
++/area/maintenance/department/medical)
++"eqp" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqq" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqr" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqs" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
+ 
+ (1,1,1) = {"
+ aaa
