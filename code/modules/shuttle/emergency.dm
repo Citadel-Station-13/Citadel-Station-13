@@ -16,7 +16,7 @@
 		say("Please equip your ID card into your ID slot to authenticate.")
 	. = ..()
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.human_adjacent_state)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -230,14 +230,14 @@
 	else
 		SSshuttle.emergencyLastCallLoc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
 		return
 	if(SSshuttle.emergencyNoRecall)
 		return
-	
+
 	invertTimer()
 	mode = SHUTTLE_RECALL
 
@@ -245,7 +245,7 @@
 		SSshuttle.emergencyLastCallLoc = signalOrigin
 	else
 		SSshuttle.emergencyLastCallLoc = null
-	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlerecalled.ogg', "Priority")
+	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/ai/shuttlerecalled.ogg', "Priority")
 
 /obj/docking_port/mobile/emergency/proc/is_hijacked()
 	var/has_people = FALSE
@@ -296,7 +296,7 @@
 				mode = SHUTTLE_DOCKED
 				setTimer(SSshuttle.emergencyDockTime)
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
-				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
+				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/ai/shuttledock.ogg', "Priority")
 				if(SSdbcore.Connect())
 					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
 					query_round_shuttle_name.Execute()
@@ -441,16 +441,17 @@
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "dorm_available"
 	light_color = LIGHT_COLOR_BLUE
-	density = 0
+	density = FALSE
 	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/pod/update_icon()
 	return
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
-	if(!emagged)
-		emagged = TRUE
-		to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
+	if(emagged)
+		return
+	emagged = TRUE
+	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/docking_port/stationary/random
 	name = "escape pod"
@@ -499,8 +500,8 @@
 /obj/item/weapon/storage/pod
 	name = "emergency space suits"
 	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "safe"
 	var/unlocked = FALSE

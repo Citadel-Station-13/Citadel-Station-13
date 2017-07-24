@@ -281,7 +281,7 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
@@ -325,6 +325,8 @@
 
 /mob/living/carbon/human/CtrlClick(mob/user)
 	if(ishuman(user) && Adjacent(user))
+		if(world.time < user.next_move)
+			return FALSE
 		var/mob/living/carbon/human/H = user
 		H.dna.species.grab(H, src, H.mind.martial_art)
 		H.changeNext_move(CLICK_CD_MELEE)
@@ -339,7 +341,7 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (iscarbon(A)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
 	else
@@ -441,7 +443,7 @@
 
 /obj/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["middle"] && istype(usr, /mob/living/carbon))
+	if(modifiers["middle"] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
 	else

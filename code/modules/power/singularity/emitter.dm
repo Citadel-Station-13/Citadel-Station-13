@@ -4,8 +4,8 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
 	var/icon_state_on = "emitter_+a"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(GLOB.access_engine_equip)
 
 	// The following 3 vars are mostly for the prototype
@@ -25,7 +25,7 @@
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
@@ -98,9 +98,10 @@
 
 /obj/machinery/power/emitter/Destroy()
 	if(SSticker && SSticker.IsRoundInProgress())
-		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
-		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z]) at [get_area(src)]", INVESTIGATE_SINGULO)
+		var/turf/T = get_turf(src)
+		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
+		log_game("Emitter deleted at [COORD(T)]")
+		investigate_log("<font color='red'>deleted</font> at [get_area(src)] [COORD(T)]", INVESTIGATE_SINGULO)
 	QDEL_NULL(sparks)
 	return ..()
 
@@ -341,11 +342,12 @@
 	return ..()
 
 /obj/machinery/power/emitter/emag_act(mob/user)
-	if(!emagged)
-		locked = 0
-		emagged = 1
-		if(user)
-			user.visible_message("[user.name] emags the [src.name].","<span class='notice'>You short out the lock.</span>")
+	if(emagged)
+		return
+	locked = FALSE
+	emagged = TRUE
+	if(user)
+		user.visible_message("[user.name] emags the [src].","<span class='notice'>You short out the lock.</span>")
 
 
 /obj/machinery/power/emitter/prototype
@@ -392,7 +394,7 @@
 	auto.Grant(M, src)
 
 /datum/action/innate/protoemitter
-	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUNNED | AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED | AB_CHECK_STUN | AB_CHECK_CONSCIOUS
 	var/obj/machinery/power/emitter/prototype/PE
 	var/mob/living/carbon/U
 

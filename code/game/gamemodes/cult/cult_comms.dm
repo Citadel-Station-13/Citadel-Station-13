@@ -4,7 +4,7 @@
 /datum/action/innate/cult
 	background_icon_state = "bg_demon"
 	buttontooltipstyle = "cult"
-	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUNNED|AB_CHECK_CONSCIOUS
+	check_flags = AB_CHECK_RESTRAINED|AB_CHECK_STUN|AB_CHECK_CONSCIOUS
 
 /datum/action/innate/cult/IsAvailable()
 	if(!iscultist(owner))
@@ -46,7 +46,7 @@
 			var/link = FOLLOW_LINK(M, user)
 			to_chat(M, "[link] [my_message]")
 
-	log_say("[user.real_name]/[user.key] : [message]")
+	log_talk(user,"CULT:[key_name(user)] : [message]",LOGSAY)
 
 /mob/living/proc/cult_help()
 	set category = "Cultist"

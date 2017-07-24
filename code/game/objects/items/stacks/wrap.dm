@@ -16,7 +16,7 @@
 
 /obj/item/stack/wrapping_paper/use(used, transfer)
 	var/turf/T = get_turf(src)
-	..()
+	. = ..()
 	if(QDELETED(src) && !transfer)
 		new /obj/item/weapon/c_tube(T)
 
@@ -55,7 +55,7 @@
 	if(target.anchored)
 		return
 
-	if(istype(target, /obj/item))
+	if(isitem(target))
 		var/obj/item/I = target
 		if(!I.can_be_package_wrapped())
 			return
@@ -102,7 +102,7 @@
 
 /obj/item/stack/packageWrap/use(used, transfer = FALSE)
 	var/turf/T = get_turf(src)
-	..()
+	. = ..()
 	if(QDELETED(src) && !transfer)
 		new /obj/item/weapon/c_tube(T)
 

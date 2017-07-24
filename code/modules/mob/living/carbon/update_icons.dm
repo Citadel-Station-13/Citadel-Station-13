@@ -209,7 +209,8 @@
 
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
-/obj/item/proc/worn_overlays(isinhands = FALSE)
+//"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
+/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
 	. = list()
 
 
@@ -219,10 +220,6 @@
 /mob/living/carbon/proc/update_body_parts()
 	//CHECK FOR UPDATE
 	var/oldkey = icon_render_key
-	var/istaur = 0
-	if(ishuman(src))
-		if("taur" in dna.species.mutant_bodyparts && dna.features["taur"] != "None")
-			istaur = 1
 	icon_render_key = generate_icon_render_key()
 	if(oldkey == icon_render_key)
 		return
@@ -231,8 +228,6 @@
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(istaur && (istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg)) )
-			continue
 		BP.update_limb()
 
 	//LOAD ICONS

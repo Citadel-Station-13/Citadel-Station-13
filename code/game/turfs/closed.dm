@@ -2,7 +2,7 @@
 	var/thermite = 0
 	layer = CLOSED_TURF_LAYER
 	opacity = 1
-	density = 1
+	density = TRUE
 	blocks_air = 1
 
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
@@ -117,16 +117,16 @@
 	return TRUE
 
 /turf/closed/indestructible/riveted/boss
-	name = "stone wall"
+	name = "necropolis wall"
 	desc = "A thick, seemingly indestructible stone wall."
 	icon = 'icons/turf/walls/boss_wall.dmi'
 	icon_state = "wall"
+	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
 	explosion_block = 50
 	baseturf = /turf/closed/indestructible/riveted/boss
 
-/turf/closed/indestructible/riveted/boss/hot
-	icon = 'icons/turf/walls/boss_wall_hot.dmi'
-	baseturf = /turf/closed/indestructible/riveted/boss/hot
+/turf/closed/indestructible/riveted/boss/see_through
+	opacity = FALSE
 
 /turf/closed/indestructible/riveted/boss/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'

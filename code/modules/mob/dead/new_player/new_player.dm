@@ -8,11 +8,11 @@
 
 	invisibility = INVISIBILITY_ABSTRACT
 
-	density = 0
+	density = FALSE
 	stat = DEAD
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchored = TRUE	//  don't get pushed around
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
 /mob/dead/new_player/Initialize()
@@ -30,7 +30,6 @@
 	return
 
 /mob/dead/new_player/proc/new_player_panel()
-
 	var/output = "<center><p><a href='byond://?src=\ref[src];show_preferences=1'>Setup Character</a></p>"
 
 	if(SSticker && SSticker.current_state <= GAME_STATE_PREGAME)
@@ -41,7 +40,6 @@
 				output += "<p>\[ <b>Ready</b> | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
-
 	else
 		output += "<p><a href='byond://?src=\ref[src];manifest=1'>View the Crew Manifest</a></p>"
 		output += "<p><a href='byond://?src=\ref[src];late_join=1'>Join Game!</a></p>"
@@ -112,7 +110,7 @@
 		if(SSticker)
 			var/tready = text2num(href_list["ready"])
 			//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-			//This is likely not an actual issue but I don't have time to prove that this
+			//This is likely not an actual issue but I don't have time to prove that this 
 			//no longer is required
 			if(SSticker.current_state <= GAME_STATE_PREGAME)
 				ready = tready
@@ -292,7 +290,6 @@
 	QDEL_NULL(mind)
 	qdel(src)
 	return TRUE
-
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)

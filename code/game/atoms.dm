@@ -102,22 +102,28 @@
 /atom/proc/handle_ricochet(obj/item/projectile/P)
 	return
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return (!density || !height)
+/atom/proc/CanPass(atom/movable/mover, turf/target)
+	return !density
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)
 	if(!T)
-		return 0
+		return FALSE
+
+	if(T.z == ZLEVEL_TRANSIT)
+		for(var/A in SSshuttle.mobile)
+			var/obj/docking_port/mobile/M = A
+			if(M.launch_status == ENDGAME_TRANSIT && T in M.areaInstance)
+				return TRUE
 
 	if(T.z != ZLEVEL_CENTCOM)//if not, don't bother
-		return 0
+		return FALSE
 
 	//check for centcomm shuttles
 	for(var/A in SSshuttle.mobile)
 		var/obj/docking_port/mobile/M = A
 		if(M.launch_status == ENDGAME_LAUNCHED && T in M.areaInstance)
-			return 1
+			return TRUE
 
 	//finally check for centcom itself
 	return istype(T.loc,/area/centcom)
@@ -148,7 +154,7 @@
 				reagents = new()
 			reagents.reagent_list.Add(A)
 			reagents.conditional_update()
-		else if(istype(A, /atom/movable))
+		else if(ismovableatom(A))
 			var/atom/movable/M = A
 			if(isliving(M.loc))
 				var/mob/living/L = M.loc
@@ -173,7 +179,7 @@
 	return
 
 
-/atom/proc/Bumped(AM as mob|obj)
+/atom/proc/CollidedWith(atom/movable/AM)
 	return
 
 // Convenience proc to see if a container is open for chemistry handling
@@ -413,7 +419,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/clean_blood()
-	if(istype(blood_DNA, /list))
+	if(islist(blood_DNA))
 		blood_DNA = null
 		return 1
 

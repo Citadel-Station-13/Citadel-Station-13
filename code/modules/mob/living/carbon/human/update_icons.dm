@@ -60,7 +60,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
-	dna.species.handle_genitals(src)
 	..()
 
 /mob/living/carbon/human/update_fire()
@@ -74,7 +73,6 @@ There are several things that need to be remembered:
 	if(!..())
 		icon_render_key = null //invalidate bodyparts cache
 		update_body()
-		update_genitals()
 		update_hair()
 		update_inv_w_uniform()
 		update_inv_wear_id()
@@ -474,7 +472,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(isinhands)
+	var/list/worn_overlays = worn_overlays(isinhands, file2use)
 	if(worn_overlays && worn_overlays.len)
 		standing.overlays.Add(worn_overlays)
 

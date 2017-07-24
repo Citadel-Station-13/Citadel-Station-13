@@ -6,8 +6,8 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/transform_dead = 0
 	var/transform_standing = 0
 	var/cooldown_duration = 600 // 1 minute
@@ -16,7 +16,7 @@
 	var/robot_cell_charge = 5000
 	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
-	
+
 /obj/machinery/transformer/Initialize()
 	// On us
 	. = ..()
@@ -49,7 +49,7 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/machinery/transformer/Bumped(atom/movable/AM)
+/obj/machinery/transformer/CollidedWith(atom/movable/AM)
 	if(cooldown == 1)
 		return
 
@@ -62,7 +62,7 @@
 			AM.loc = src.loc
 			do_transform(AM)
 
-/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
+/obj/machinery/transformer/CanPass(atom/movable/mover, turf/target)
 	// Allows items to go through,
 	// to stop them from blocking the conveyor belt.
 	if(!ishuman(mover))
@@ -91,7 +91,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_icon()
 
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 

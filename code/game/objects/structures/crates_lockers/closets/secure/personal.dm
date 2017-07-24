@@ -24,11 +24,11 @@
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 
 /obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/leather/withwallet( src )
+	new /obj/item/device/instrument/piano_synth(src)
 	new /obj/item/device/radio/headset( src )
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/W, mob/user, params)
@@ -51,27 +51,3 @@
 			to_chat(user, "<span class='danger'>Access Denied.</span>")
 	else
 		return ..()
-
-/obj/structure/closet/secure_closet/personal/proc/reset_lock(usr)
-	if (opened && !broken)
-		registered_name = null
-		desc = initial(desc)
-		to_chat(usr,"<span class='danger'>The lock has been reset.")
-	else if(!opened)
-		to_chat(usr,"<span class='danger'>The locker must be open!")
-	else if(broken)
-		to_chat(usr,"<span class='danger'>The lock is broken!")
-
-/obj/structure/closet/secure_closet/personal/verb/verb_resetlock()
-	set src in oview(1)
-	set category = "Object"
-	set name = "Reset Lock"
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return
-
-	if(iscarbon(usr) || issilicon(usr) || isdrone(usr))
-		reset_lock(usr)
-	else
-		to_chat(usr, "<span class='warning'>This mob type can't use this verb.</span>")
-

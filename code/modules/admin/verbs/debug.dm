@@ -109,6 +109,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 		UNTIL(!GLOB.AdminProcCaller)
 		to_chat(usr, "<span class='adminnotice'>Running your proc</span>")
 	GLOB.AdminProcCaller = ckey	//if this runtimes, too bad for you
+	++GLOB.AdminProcCallCount
 	. = world.WrapAdminProcCall(target, procname, arguments)
 	if(--GLOB.AdminProcCallCount == 0)
 		GLOB.AdminProcCaller = null
@@ -665,7 +666,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
 			F.active = 1
 			F.state = 2
 			F.power = 250
-			F.anchored = 1
+			F.anchored = TRUE
 			F.warming_up = 3
 			F.start_fields()
 			F.update_icon()

@@ -115,7 +115,6 @@
 /obj/item/stack/tile/carpet/black/fifty
 	amount = 50
 
-
 /obj/item/stack/tile/fakespace
 	name = "astral carpet"
 	singular_name = "astral carpet"

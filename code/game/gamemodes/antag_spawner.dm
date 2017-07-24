@@ -155,6 +155,7 @@
 /obj/item/weapon/antag_spawner/nuke_ops/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
+
 	to_chat(user, "<span class='notice'>You activate [src] and wait for confirmation.</span>")
 	var/list/nuke_candidates = pollGhostCandidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, null, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
 	if(nuke_candidates.len)
@@ -250,7 +251,7 @@
 		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)
+		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
 		qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")

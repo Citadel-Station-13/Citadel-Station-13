@@ -27,8 +27,9 @@
 		i++
 		if(i + 1 > pre_traitors.len)
 			i = 0
-		target_list[traitor] = pre_traitors[i+1]
+		target_list[traitor] = pre_traitors[i+1]	
 	..()
+
 
 /datum/game_mode/traitor/internal_affairs/add_latejoin_traitor(datum/mind/character)
 
@@ -72,3 +73,5 @@
 
 		// If any check fails, remove them from our list
 		late_joining_list -= M
+
+

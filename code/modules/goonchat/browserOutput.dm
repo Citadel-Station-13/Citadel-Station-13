@@ -98,10 +98,10 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 	messageQueue = null
 	sendClientData()
-	
+
 	//do not convert to to_chat()
 	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
-	
+
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
@@ -152,7 +152,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin_private("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -223,18 +223,18 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
 		target << message
 		CRASH("Invalid message! [message]")
-	
+
 	if(!istext(message))
 		return
 
 	if(target == world)
 		target = GLOB.clients
-	
+
 	var/list/targets
 	if(!islist(target))
 		targets = list(target)
 	else
-		targets = target 
+		targets = target
 		if(!targets.len)
 			return
 	var/original_message = message
@@ -243,17 +243,17 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[GLOB.TAB][GLOB.TAB]")
-	
+
 	for(var/I in targets)
 		//Grab us a client if possible
 		var/client/C = grab_client(I)
-		
+
 		if (!C)
 			continue
-		
+
 		//Send it to the old style output window.
 		C << original_message
-		
+
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
 
@@ -268,7 +268,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 /proc/grab_client(target)
 	if(istype(target, /client))
 		return target
-	else if(istype(target, /mob))
+	else if(ismob(target))
 		var/mob/M = target
 		if(M.client)
 			return M.client

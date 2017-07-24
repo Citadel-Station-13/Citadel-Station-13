@@ -126,7 +126,6 @@
 	desc = "It's a burial receptacle for the dearly departed."
 	icon_state = "coffin"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 	horizontal = TRUE
 	delivery_icon = "deliverycrate"
@@ -353,3 +352,16 @@
 		new /obj/item/clothing/under/rank/hydroponics(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/mask/bandana(src)
+
+
+/obj/structure/closet/wardrobe/curator
+	name = "treasure hunting wardrobe"
+	icon_door = "black"
+
+/obj/structure/closet/wardrobe/curator/PopulateContents()
+	new /obj/item/clothing/head/fedora/curator(src)
+	new /obj/item/clothing/suit/curator(src)
+	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
+	new /obj/item/clothing/shoes/workboots/mining(src)
+	new /obj/item/weapon/storage/backpack/satchel/explorer(src)
+

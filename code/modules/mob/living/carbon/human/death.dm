@@ -19,6 +19,10 @@
 /mob/living/carbon/human/death(gibbed)
 	if(stat == DEAD)
 		return
+	stop_sound_channel(CHANNEL_HEARTBEAT)
+	var/obj/item/organ/heart/H = getorganslot("heart")
+	if(H)
+		H.beat = BEAT_NONE
 
 	. = ..()
 
@@ -32,7 +36,7 @@
 
 	dna.species.spec_death(gibbed, src)
 
-	if(SSticker && SSticker.mode)
+	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)
 	if(is_devil(src))
 		INVOKE_ASYNC(is_devil(src), /datum/antagonist/devil.proc/beginResurrectionCheck, src)

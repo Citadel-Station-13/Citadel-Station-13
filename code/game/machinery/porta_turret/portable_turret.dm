@@ -8,10 +8,10 @@
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = 1
+	anchored = TRUE
 	layer = OBJ_LAYER
 	invisibility = INVISIBILITY_OBSERVER	//the turret is invisible if it's inside its cover
-	density = 1
+	density = TRUE
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
@@ -28,12 +28,11 @@
 	var/raised = 0			//if the turret cover is "open" and the turret is raised
 	var/raising= 0			//if the turret is currently opening or closing its cover
 
-	obj_integrity = 160			//the turret's health
-	max_integrity = 160
+	max_integrity = 160		//the turret's health
 	integrity_failure = 80
 	armor = list(melee = 50, bullet = 30, laser = 30, energy = 30, bomb = 30, bio = 0, rad = 0, fire = 90, acid = 90)
 
-	var/locked = 1			//if the turret's behaviour control access is locked
+	var/locked = TRUE			//if the turret's behaviour control access is locked
 	var/controllock = 0		//if the turret responds to control panels
 
 	var/installation = /obj/item/weapon/gun/energy/e_gun/turret		//the type of weapon installed by default
@@ -254,7 +253,7 @@
 
 		//This code handles moving the turret around. After all, it's a portable turret!
 		if(!anchored && !isinspace())
-			anchored = 1
+			anchored = TRUE
 			invisibility = INVISIBILITY_MAXIMUM
 			update_icon()
 			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
@@ -262,7 +261,7 @@
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
-			anchored = 0
+			anchored = FALSE
 			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 			update_icon()
 			invisibility = 0
@@ -283,15 +282,16 @@
 		return ..()
 
 /obj/machinery/porta_turret/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
-		visible_message("[src] hums oddly...")
-		emagged = 1
-		controllock = 1
-		on = 0 //turns off the turret temporarily
-		update_icon()
-		sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
-		on = 1 //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
+	if(emagged)
+		return
+	to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+	visible_message("[src] hums oddly...")
+	emagged = TRUE
+	controllock = 1
+	on = FALSE //turns off the turret temporarily
+	update_icon()
+	sleep(60) //6 seconds for the traitor to gtfo of the area before the turret decides to ruin his shit
+	on = TRUE //turns it back on. The cover popUp() popDown() are automatically called in process(), no need to define it here
 
 
 /obj/machinery/porta_turret/emp_act(severity)
@@ -547,7 +547,6 @@
 	emagged = TRUE
 	installation = /obj/item/weapon/gun/energy/laser
 
-
 /obj/machinery/porta_turret/syndicate
 	installation = null
 	always_up = 1
@@ -557,8 +556,8 @@
 	req_access = list(GLOB.access_syndicate)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
-	lethal_projectile_sound = 'sound/weapons/Gunshot.ogg'
-	stun_projectile_sound = 'sound/weapons/Gunshot.ogg'
+	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
+	stun_projectile_sound = 'sound/weapons/gunshot.ogg'
 	icon_state = "syndie_off"
 	base_icon_state = "syndie"
 	faction = "syndicate"
@@ -568,10 +567,9 @@
 	icon_state = "standard_stun"
 	base_icon_state = "standard"
 	stun_projectile = /obj/item/projectile/energy/electrode
-	stun_projectile_sound = 'sound/weapons/Taser.ogg'
+	stun_projectile_sound = 'sound/weapons/taser.ogg'
 	lethal_projectile = /obj/item/projectile/beam/laser/heavylaser
 	lethal_projectile_sound = 'sound/weapons/lasercannonfire.ogg'
-
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return
@@ -580,9 +578,8 @@
 	return 10 //Syndicate turrets shoot everything not in their faction
 
 /obj/machinery/porta_turret/syndicate/pod
-	max_integrity = 40
 	integrity_failure = 20
-	obj_integrity = 40
+	max_integrity = 40
 	stun_projectile = /obj/item/projectile/bullet/weakbullet3
 	lethal_projectile = /obj/item/projectile/bullet/weakbullet3
 
@@ -617,7 +614,6 @@
 
 /obj/machinery/porta_turret/centcomm_shuttle
 	installation = null
-	obj_integrity = 260
 	max_integrity = 260
 	always_up = 1
 	use_power = NO_POWER_USE
@@ -648,11 +644,11 @@
 	desc = "Used to control a room's automated defenses."
 	icon = 'icons/obj/machines/turret_control.dmi'
 	icon_state = "control_standby"
-	anchored = 1
-	density = 0
+	anchored = TRUE
+	density = FALSE
 	var/enabled = 1
 	var/lethal = 0
-	var/locked = 1
+	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
 	req_access = list(GLOB.access_ai_upload)
@@ -663,7 +659,7 @@
 	..()
 	if(built)
 		setDir(ndir)
-		locked = 0
+		locked = FALSE
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 	power_change() //Checks power and initial settings
@@ -722,12 +718,13 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
 /obj/machinery/turretid/emag_act(mob/user)
-	if(!emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
-		emagged = 1
-		locked = 0
-		if(user && user.machine == src)
-			attack_hand(user)
+	if(emagged)
+		return
+	to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+	emagged = TRUE
+	locked = FALSE
+	if(user && user.machine == src)
+		attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
@@ -926,11 +923,11 @@
 	if(on)
 		if(team_color == "blue")
 			if(istype(P, /obj/item/projectile/beam/lasertag/redtag))
-				on = 0
+				on = FALSE
 				spawn(100)
-					on = 1
+					on = TRUE
 		else if(team_color == "red")
 			if(istype(P, /obj/item/projectile/beam/lasertag/bluetag))
-				on = 0
+				on = FALSE
 				spawn(100)
-					on = 1
+					on = TRUE

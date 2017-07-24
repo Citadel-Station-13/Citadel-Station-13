@@ -12,6 +12,7 @@
 //do things for each entry in Generate_list
 //return value sets Generate_list[verbpath]
 /datum/verbs/proc/HandleVerb(list/entry, atom/verb/verbpath, ...)
+	return entry
 
 /datum/verbs/New()
 	var/mainlist = GetList()
@@ -91,7 +92,7 @@
 			entry["command"] = copytext(verbpath.name,2)
 		else
 			entry["command"] = replacetext(verbpath.name, " ", "-")
-
+		
 		.[verbpath] = HandleVerb(arglist(list(entry, verbpath) + args))
 
 /world/proc/LoadVerbs(verb_type)

@@ -103,7 +103,7 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 	if(href_list["random"] && !possible_destinations)
 		usr.changeNext_move(CLICK_CD_RAPID) //Anti-spam
 		var/turf/LZ = safepick(Z_TURFS(ZLEVEL_MINING)) //Pick a random mining Z-level turf
-		if(!istype(LZ, /turf/closed/mineral) && !istype(LZ, /turf/open/floor/plating/asteroid))
+		if(!ismineralturf(LZ) && !istype(LZ, /turf/open/floor/plating/asteroid))
 		//Find a suitable mining turf. Reduces chance of landing in a bad area
 			to_chat(usr, "<span class='warning'>Landing zone scan failed. Please try again.</span>")
 			updateUsrDialog()
@@ -253,8 +253,8 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 /obj/structure/mining_shuttle_beacon
 	name = "mining shuttle beacon"
 	desc = "A bluespace beacon calibrated to mark a landing spot for the mining shuttle when deployed near the auxillary mining base."
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	var/shuttle_ID = "landing_zone_dock"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "miningbeacon"
@@ -343,7 +343,7 @@ obj/docking_port/stationary/public_mining_dock/onShuttleMove()
 
 	aux_base_console.set_mining_mode() //Lets the colony park the shuttle there, now that it has a dock.
 	to_chat(user, "<span class='notice'>Mining shuttle calibration successful! Shuttle interface available at base console.</span>")
-	anchored = 1 //Locks in place to mark the landing zone.
+	anchored = TRUE //Locks in place to mark the landing zone.
 	playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 /obj/structure/mining_shuttle_beacon/proc/clear_cooldown()

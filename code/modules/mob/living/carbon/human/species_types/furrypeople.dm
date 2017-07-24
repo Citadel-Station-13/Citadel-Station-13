@@ -21,6 +21,7 @@ datum/species/mammal
 /datum/species/avian
 	name = "Avian"
 	id = "avian"
+	say_mod = "chirps"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
 	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings")

@@ -181,7 +181,9 @@
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
+	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
+	dynamic_hair_suffix = "+detective"
 	pockets = /obj/item/weapon/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
@@ -280,9 +282,3 @@
 	name = "magnificent crown"
 	desc = "A crown worn by only the highest emperors of the land."
 	icon_state = "fancycrown"
-
-/obj/item/clothing/head/hunter
-	name = "hunter hat"
-	desc = "It's a flimsy looking hat."
-	item_state = "hunter_hat"
-	icon_state = "hunter_hat"

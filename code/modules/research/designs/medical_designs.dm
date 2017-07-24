@@ -201,7 +201,6 @@
 	build_path = /obj/item/organ/eyes/robotic/glow
 	category = list("Misc", "Medical Designs")
 
-
 /datum/design/cyberimp_breather
 	name = "Breathing Tube Implant"
 	desc = "This simple implant adds an internals connector to your back, allowing you to use internals without a mask and protecting you from being choked."

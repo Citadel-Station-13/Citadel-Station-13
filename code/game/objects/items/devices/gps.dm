@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		tracking = TRUE
 
 
-/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/item/device/gps/ui_interact(mob/user, ui_key = "gps", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(emped)
 		to_chat(user, "[src] fizzles weakly.")
 		return
@@ -118,9 +118,8 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	switch(action)
 		if("rename")
 			var/a = input("Please enter desired tag.", name, gpstag) as text
-			a = uppertext(copytext(sanitize(a), 1, 5))
+			a = copytext(sanitize(a), 1, 20)
 			gpstag = a
-			name = "global positioning system ([gpstag])"
 			. = TRUE
 		if("power")
 			toggletracking(usr)
@@ -136,9 +135,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	..()
 	if(href_list["tag"] )
 		var/a = input("Please enter desired tag.", name, gpstag) as text
-		a = copytext(sanitize(a), 1, 20)
+		a = uppertext(copytext(sanitize(a), 1, 5))
 		if(in_range(src, usr))
 			gpstag = a
+			name = "global positioning system ([gpstag])"
 			attack_self(usr)
 
 /obj/item/device/gps/science

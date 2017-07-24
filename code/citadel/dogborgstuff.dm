@@ -256,7 +256,7 @@
 			if(R.cell.charge <= 666)
 				return
 			L.Stun(4) // normal stunbaton is force 7 gimme a break good sir!
-			L.Weaken(4)
+			L.Knockdown(80)
 			L.apply_effect(STUTTER, 4)
 			L.visible_message("<span class='danger'>[user] has shocked [L] with its tongue!</span>", \
 								"<span class='userdanger'>[user] has shocked you with its tongue! You can feel the betrayal.</span>")
@@ -330,6 +330,16 @@
 		/obj/item/weapon/pinpointer,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/clothing/head/helmet/space,
+		/obj/item/clothing/suit/space,
+		/obj/item/weapon/reagent_containers/hypospray/CMO,
+		/obj/item/weapon/tank/jetpack/oxygen/captain,
+		/obj/item/clothing/accessory/medal/gold/captain,
+		/obj/item/clothing/suit/armor,
+		/obj/item/documents,
+		/obj/item/nuke_core,
+		/obj/item/nuke_core_container,
+		/obj/item/areaeditor/blueprints,
+		/obj/item/documents/syndicate,
 		/obj/item/weapon/disk/nuclear)
 
 /obj/item/device/dogborg/sleeper/New()
@@ -365,7 +375,7 @@
 			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has eaten [key_name(patient)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
-			playsound(hound, 'sound/vore/gulpold.ogg', 100, 1)
+			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
 /obj/item/device/dogborg/sleeper/proc/go_out(var/target)
 	hound = src.loc
@@ -475,8 +485,6 @@
 		dat += "<span style='[toxcolor]'>\t-Toxin Content %: [patient.getToxLoss()]</span><BR>"
 		dat += "<span style='[burncolor]'>\t-Burn Severity %: [patient.getFireLoss()]</span><BR>"
 
-		if(round(patient.paralysis / 4) >= 1)
-			dat += text("<HR>Patient paralyzed for: []<BR>", round(patient.paralysis / 4) >= 1 ? "[round(patient.paralysis / 4)] seconds" : "None")
 		if(patient.getBrainLoss())
 			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div><br>"
 		if(patient.getCloneLoss())
@@ -569,8 +577,9 @@
 		if(patient.health < 0)
 			patient.adjustOxyLoss(-1) //Heal some oxygen damage if they're in critical condition
 			patient.updatehealth()
-		patient.AdjustStunned(-4)
-		patient.AdjustWeakened(-4)
+		patient.AdjustStun(-80)
+		patient.AdjustKnockdown(-80)
+		patient.AdjustUnconscious(-80)
 		src.drain()
 		if((patient.reagents.get_reagent_amount("epinephrine") < 5) && (patient.health < patient.maxHealth)) //Stop pumping full HP people full of drugs. Don't heal people you're digesting, meanie.
 			patient.reagents.add_reagent("epinephrine", 5)
@@ -646,31 +655,15 @@
 		cleaning = 0
 		update_patient()
 		return
-
-	if(prob(20))
-		var/churnsound = pick(
-			'sound/vore/pred/digest_01.ogg',
-			'sound/vore/pred/digest_02.ogg',
-			'sound/vore/pred/digest_03.ogg',
-			'sound/vore/pred/digest_04.ogg',
-			'sound/vore/pred/digest_05.ogg',
-			'sound/vore/pred/digest_06.ogg',
-			'sound/vore/pred/digest_07.ogg',
-			'sound/vore/pred/digest_08.ogg',
-			'sound/vore/pred/digest_09.ogg',
-			'sound/vore/pred/digest_10.ogg',
-			'sound/vore/pred/digest_11.ogg',
-			'sound/vore/pred/digest_12.ogg',
-			'sound/vore/pred/digest_13.ogg',
-			'sound/vore/pred/digest_14.ogg',
-			'sound/vore/pred/digest_15.ogg',
-			'sound/vore/pred/digest_16.ogg',
-			'sound/vore/pred/digest_17.ogg',
-			'sound/vore/pred/digest_18.ogg')
-		for(var/mob/outhearer in range(1,hound))
-			outhearer << sound(churnsound)
-		for(var/mob/inhearer in contents)
-			inhearer << sound(churnsound)
+	
+	//sound effects
+	for(var/mob/living/M in contents)
+		if(prob(20))
+			M.stop_sound_channel(CHANNEL_PRED)
+			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+			M.stop_sound_channel(CHANNEL_PRED)
+			M.playsound_local("digest_prey",60)
+			
 	//If the timing is right, and there are items to be touched
 	if(SSmobs.times_fired%6==1 && length(touchable_items))
 
@@ -691,28 +684,15 @@
 			var/mob/living/carbon/human/T = target
 
 			//Mob is now dead
-			if(T.stat & DEAD)
+			if(T.stat & DEAD && T.digestable)
 				message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
-				hound << "<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>"
-				T << "<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>"
+				to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
+				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
 				src.drain(-30000) //Fueeeeellll
-				var/deathsound = pick(
-					'sound/vore/pred/death_01.ogg',
-					'sound/vore/pred/death_02.ogg',
-					'sound/vore/pred/death_03.ogg',
-					'sound/vore/pred/death_04.ogg',
-					'sound/vore/pred/death_05.ogg',
-					'sound/vore/pred/death_06.ogg',
-					'sound/vore/pred/death_07.ogg',
-					'sound/vore/pred/death_08.ogg',
-					'sound/vore/pred/death_09.ogg',
-					'sound/vore/pred/death_10.ogg',
-					'sound/vore/pred/death_11.ogg',
-					'sound/vore/pred/death_12.ogg',
-					'sound/vore/pred/death_13.ogg')
-				for(var/mob/hearer in range(1,src.hound))
-					hearer << deathsound
-				T << deathsound
+				T.stop_sound_channel(CHANNEL_PRED)
+				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				T.stop_sound_channel(CHANNEL_PRED)
+				T.playsound_local("death_prey",60)
 				qdel(T)
 				src.update_patient()
 
@@ -754,7 +734,7 @@
 		go_out()
 
 /obj/item/device/dogborg/sleeper/K9 //The K9 portabrig
-	name = "Brig-Belly"
+	name = "Mobile Brig"
 	desc = "Equipment for a K9 unit. A mounted portable-brig that holds criminals."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "sleeperb"
@@ -762,6 +742,40 @@
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
 
+/obj/item/weapon/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
+	K9.afterattack(src, user ,1)
+	
+/obj/item/device/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
+	hound = loc
+
+	if(!istype(target))
+		return
+	if(!proximity)
+		return
+	if(target.anchored)
+		return
+	if(ishuman(target))
+		var/mob/living/carbon/human/brigman = target
+		if (!brigman.devourable)
+			to_chat(user, "The target registers an error code. Unable to insert into [src.name].")
+			return
+		if(patient)
+			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
+			return
+		if(brigman.buckled)
+			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src.name].</span>")
+			return
+		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src.name].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
+		if(do_after(user, 30, brigman) && !patient && !brigman.buckled)
+			brigman.forceMove(src)
+			brigman.reset_perspective(src)
+			update_patient()
+			START_PROCESSING(SSobj, src)
+			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [brigman] slips inside.</span>")
+			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
+		return
+	return
+		
 /obj/item/device/dogborg/sleeper/compactor //Janihound gut.
 	name = "garbage processor"
 	desc = "A mounted garbage compactor unit with fuel processor."
@@ -785,19 +799,21 @@
 	if(target.anchored)
 		return
 	if(length(contents) > (max_item_count - 1))
-		user << "<span class='warning'>Your [src.name] is full. Eject or process contents to continue.</span>"
+		to_chat(user,"<span class='warning'>Your [src.name] is full. Eject or process contents to continue.</span>")
 		return
-
 	if(istype(target,/obj/item))
 		var/obj/item/target_obj = target
+		if(target_obj.type in important_items)
+			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
+			return
 		if(target_obj.w_class > WEIGHT_CLASS_BULKY)
-			user << "<span class='warning'>\The [target] is too large to fit into your [src.name]</span>"
+			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
 		if(do_after(user, 30, target) && length(contents) < max_item_count)
 			target.forceMove(src)
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [target.name] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [target] slips inside.</span>")
-			playsound(hound, 'sound/vore/gulpold.ogg', 50, 1)
+			playsound(hound, 'sound/machines/disposalflush.ogg', 50, 1)
 			if(length(contents) > 11) //grow that tum after a certain junk amount
 				hound.sleeper_r = 1
 				hound.update_icons()
@@ -805,11 +821,14 @@
 
 	else if(ishuman(target))
 		var/mob/living/carbon/human/trashman = target
+		if (!trashman.devourable)
+			to_chat(user, "The target registers an error code.")
+			return
 		if(patient)
-			user << "<span class='warning'>Your [src.name] is already occupied.</span>"
+			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
 			return
 		if(trashman.buckled)
-			user << "<span class='warning'>[trashman] is buckled and can not be put into your [src.name].</span>"
+			to_chat(user,"<span class='warning'>[trashman] is buckled and can not be put into your [src.name].</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashman] into their [src.name].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
 		if(do_after(user, 30, trashman) && !patient && !trashman.buckled && length(contents) < max_item_count)
@@ -818,7 +837,7 @@
 			update_patient()
 			START_PROCESSING(SSobj, src)
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [trashman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [trashman] slips inside.</span>")
-			playsound(hound, 'sound/vore/gulpold.ogg', 80, 1)
+			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1)
 		return
 	return
 
@@ -855,14 +874,14 @@
 
 /mob/living/silicon/robot/proc/leap_at(atom/A)
 	if(pounce_cooldown)
-		src << "<span class='danger'>Your leg actuators are still recharging!</span>"
+		to_chat(src,"<span class='danger'>Your leg actuators are still recharging!</span>")
 		return
 
 	if(leaping || stat || buckled || lying)
 		return
 
 	if(!has_gravity(src) || !has_gravity(A))
-		src << "<span class='danger'>It is unsafe to leap without gravity!</span>"
+		to_chat(src,"<span class='danger'>It is unsafe to leap without gravity!</span>")
 		//It's also extremely buggy visually, so it's balance+bugfix
 		return
 
@@ -896,18 +915,18 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Weaken(3)
+				L.Knockdown(100)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Weaken(2, 1, 1)
+				Knockdown(40, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
-			Weaken(2, 1, 1)
+			Knockdown(40, 1, 1)
 
 		if(leaping)
 			leaping = 0

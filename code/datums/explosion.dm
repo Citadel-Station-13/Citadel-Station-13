@@ -165,20 +165,20 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/throw_dist = dist
 
 		if(dist < devastation_range)
-			dist = 1
+			dist = EXPLODE_DEVASTATE
 		else if(dist < heavy_impact_range)
-			dist = 2
+			dist = EXPLODE_HEAVY
 		else if(dist < light_impact_range)
-			dist = 3
+			dist = EXPLODE_LIGHT
 		else
-			dist = 0
+			dist = EXPLODE_NONE
 
 		//------- EX_ACT AND TURF FIRES -------
 
 		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
 			new /obj/effect/hotspot(T) //Mostly for ambience!
 
-		if(dist > 0)
+		if(dist > EXPLODE_NONE)
 			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
 			T.explosion_id = id
 			T.ex_act(dist)
@@ -350,6 +350,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				for(var/obj/O in T)
 					var/the_block = O.explosion_block
 					dist += the_block == EXPLOSION_BLOCK_PROC ? O.GetExplosionBlock() : the_block
+
 		if(dist < dev)
 			T.color = "red"
 			T.maptext = "Dev"

@@ -45,8 +45,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_DEVIL = /datum/game_mode/devil,
-	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
 	ROLE_BORER,
+	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

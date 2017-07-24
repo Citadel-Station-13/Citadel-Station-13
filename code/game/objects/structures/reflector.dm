@@ -3,8 +3,8 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
 	desc = "An angled mirror for reflecting lasers. This one does so at a 90 degree angle."
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	layer = BELOW_OBJ_LAYER
 	var/finished = 0
 	var/admin = 0 //Can't be rotated or deconstructed
@@ -55,18 +55,18 @@
 		switch(anchored)
 			if(0)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
 						"<span class='notice'>You start to weld \the [src] to the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
 					if (do_after(user,20*W.toolspeed, target = src))
 						if(!src || !WT.isOn())
 							return
-						anchored = 1
+						anchored = TRUE
 						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 			if(1)
 				if (WT.remove_fuel(0,user))
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
 						"<span class='notice'>You start to cut \the [src] free from the floor...</span>", \
 						"<span class='italics'>You hear welding.</span>")
@@ -154,7 +154,7 @@
 
 /obj/structure/reflector/single/mapping
 	admin = 1
-	anchored = 1
+	anchored = TRUE
 
 //DOUBLE
 
@@ -177,7 +177,7 @@
 
 /obj/structure/reflector/double/mapping
 	admin = 1
-	anchored = 1
+	anchored = TRUE
 
 //BOX
 
@@ -201,7 +201,7 @@
 
 /obj/structure/reflector/box/mapping
 	admin = 1
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/reflector/ex_act()
 	if(admin)

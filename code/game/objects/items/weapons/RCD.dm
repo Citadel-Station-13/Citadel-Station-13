@@ -10,8 +10,8 @@ ARCD
 
 obj/item/weapon/construction
 	opacity = 0
-	density = 0
-	anchored = 0
+	density = FALSE
+	anchored = FALSE
 	flags = CONDUCT | NOBLUDGEON
 	force = 0
 	throwforce = 10
@@ -78,7 +78,7 @@ obj/item/weapon/construction
 	return 0
 
 /obj/item/weapon/construction/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 
 /obj/item/weapon/construction/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -534,7 +534,7 @@ obj/item/weapon/construction
 						var/list/candidates = list()
 						var/turf/open/winner = null
 						var/winning_dist = null
-						for(var/direction in GLOB.cardinal)
+						for(var/direction in GLOB.cardinals)
 							var/turf/C = get_step(W, direction)
 							var/list/dupes = checkdupes(C)
 							if(start.CanAtmosPass(C) && !dupes.len)

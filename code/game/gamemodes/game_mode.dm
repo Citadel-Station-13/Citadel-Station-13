@@ -44,6 +44,7 @@
 
 	var/list/datum/station_goal/station_goals = list()
 
+	var/allow_persistence_save = TRUE
 
 /datum/game_mode/proc/announce() //Shows the gamemode's name and a fast description.
 	to_chat(world, "<b>The gamemode is: <span class='[announce_span]'>[name]</span>!</b>")
@@ -54,7 +55,7 @@
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
 	for(var/mob/dead/new_player/player in GLOB.player_list)
-		if((player.client)&&(player.ready))
+		if((player.client)&&(player.ready == PLAYER_READY_TO_PLAY))
 			playerC++
 	if(!GLOB.Debug2)
 		if(playerC < required_players || (maximum_players >= 0 && playerC > maximum_players))
@@ -268,6 +269,7 @@
 	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
 		datum_cult_completion()
 
+
 	if(GLOB.borers.len)
 		var/borerwin = FALSE
 		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
@@ -303,7 +305,6 @@
 				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
 
 		CHECK_TICK
-
 	return 0
 
 
@@ -336,7 +337,7 @@
 			intercepttext += G.get_report()
 
 	print_command_report(intercepttext, "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/AI/intercept.ogg')
+	priority_announce("A summary has been copied and printed to all communications consoles.", "Enemy communication intercepted. Security level elevated.", 'sound/ai/intercept.ogg')
 	if(GLOB.security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)
 
@@ -415,6 +416,7 @@
 	return candidates		// Returns: The number of people who had the antagonist role set to yes, regardless of recomended_enemies, if that number is greater than recommended_enemies
 							//			recommended_enemies if the number of people with that role set to yes is less than recomended_enemies,
 							//			Less if there are not enough valid players in the game entirely to make recommended_enemies.
+
 
 
 /datum/game_mode/proc/num_players()

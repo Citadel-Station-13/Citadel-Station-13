@@ -68,3 +68,4 @@
 	var/list/topiclimiter
 
 	var/datum/chatOutput/chatOutput
+

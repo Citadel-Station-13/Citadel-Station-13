@@ -91,7 +91,7 @@
 /obj/item/projectile/magic/door/proc/OpenDoor(var/obj/machinery/door/D)
 	if(istype(D,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
-		A.locked = 0
+		A.locked = FALSE
 	D.open()
 
 /obj/item/projectile/magic/change
@@ -277,6 +277,8 @@
 
 	to_chat(new_mob, "<span class='warning'>Your form morphs into that of a [randomize].</span>")
 
+	to_chat(new_mob, config.policies["polymorph"])
+
 	qdel(M)
 	return new_mob
 
@@ -287,12 +289,12 @@
 	damage_type = BURN
 	nodamage = 1
 
-/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
 	target.animate_atom_living(firer)
 	..()
 
 /atom/proc/animate_atom_living(var/mob/living/owner = null)
-	if((istype(src, /obj/item) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
+	if((isitem(src) || istype(src, /obj/structure)) && !is_type_in_list(src, GLOB.protected_objects))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -353,7 +355,7 @@
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
 			if(L.stat != DEAD && L != firer)
-				return Bump(L, TRUE)
+				return Collide(L)
 	..()
 
 /obj/item/projectile/magic/aoe/lightning
@@ -412,3 +414,9 @@
 	exp_light = -1
 	exp_flash = 4
 	exp_fire= 5
+
+/obj/item/projectile/magic/aoe/fireball/infernal/on_hit(target)
+	. = ..()
+	var/turf/T = get_turf(target)
+	for(var/i=0, i<50, i+=10)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/explosion, T, -1, exp_heavy, exp_light, exp_flash, FALSE, FALSE, exp_fire), i)

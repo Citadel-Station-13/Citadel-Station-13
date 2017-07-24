@@ -11,7 +11,6 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
-	new /obj/item/weapon/storage/daki(src)
 	new /obj/item/weapon/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
@@ -163,14 +162,13 @@
 	req_access = list(GLOB.access_forensics_lockers)
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
-	obj_integrity = 70
 	max_integrity = 70
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/clothing/under/rank/det(src)
 	new /obj/item/clothing/suit/det_suit(src)
-	new /obj/item/clothing/head/det_hat(src)
+	new /obj/item/clothing/head/fedora/det_hat(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/under/rank/det/grey(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
@@ -198,7 +196,7 @@
 /obj/structure/closet/secure_closet/brig
 	name = "brig locker"
 	req_access = list(GLOB.access_brig)
-	anchored = 1
+	anchored = TRUE
 	var/id = null
 
 /obj/structure/closet/secure_closet/brig/PopulateContents()

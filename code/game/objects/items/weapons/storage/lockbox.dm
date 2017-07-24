@@ -56,6 +56,7 @@
 		if(user)
 			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
 			return
+
 /obj/item/weapon/storage/lockbox/show_to(mob/user)
 	if(locked)
 		to_chat(user, "<span class='warning'>It's locked!</span>")
@@ -75,6 +76,7 @@
 	if(locked)
 		return 0
 	return ..()
+
 /obj/item/weapon/storage/lockbox/handle_item_insertion(obj/item/W, prevent_warning = 0, mob/user)
 	open = TRUE
 	update_icon()
@@ -83,7 +85,6 @@
 	open = TRUE
 	update_icon()
 	return ..()
-
 
 /obj/item/weapon/storage/lockbox/loyalty
 	name = "lockbox of mindshield implants"
@@ -124,7 +125,6 @@
 		update_icon()
 	..()
 
-
 /obj/item/weapon/storage/lockbox/medal/PopulateContents()
 	new /obj/item/clothing/accessory/medal/gold/captain(src)
 	new /obj/item/clothing/accessory/medal/silver/valor(src)
@@ -163,9 +163,8 @@
 	name = "security medal box"
 	desc = "A locked box used to store medals to be given to members of the security department."
 	req_access = list(GLOB.access_hos)
-	can_hold = list(/obj/item/clothing/accessory/medal)
 
-obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
+/obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/silver/security(src)
 
@@ -173,7 +172,6 @@ obj/item/weapon/storage/lockbox/medal/sec/PopulateContents()
 	name = "science medal box"
 	desc = "A locked box used to store medals to be given to members of the science department."
 	req_access = list(GLOB.access_rd)
-	can_hold = list(/obj/item/clothing/accessory/medal)
 
 /obj/item/weapon/storage/lockbox/medal/sci/PopulateContents()
 	for(var/i in 1 to 3)

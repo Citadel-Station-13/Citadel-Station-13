@@ -131,11 +131,11 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/alternating_dir_shots()
 	dir_shots(GLOB.diagonals)
 	sleep(10)
-	dir_shots(GLOB.cardinal)
+	dir_shots(GLOB.cardinals)
 	sleep(10)
 	dir_shots(GLOB.diagonals)
 	sleep(10)
-	dir_shots(GLOB.cardinal)
+	dir_shots(GLOB.cardinals)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/double_spiral()
 	visible_message("<span class='colossus'>\"<b>Die.</b>\"</span>")
@@ -251,10 +251,10 @@ Difficulty: Very Hard
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/item/projectile/colossus/on_hit(atom/target, blocked = 0)
+/obj/item/projectile/colossus/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(2)
+		target.ex_act(EXPLODE_HEAVY)
 
 
 /obj/item/device/gps/internal/colossus
@@ -381,7 +381,7 @@ Difficulty: Very Hard
 	light_range = 8
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	use_power = NO_POWER_USE
-	density = 1
+	density = TRUE
 	flags = HEAR
 	var/activation_method
 	var/list/possible_methods = list(ACTIVATE_TOUCH, ACTIVATE_SPEECH, ACTIVATE_HEAT, ACTIVATE_BULLET, ACTIVATE_ENERGY, ACTIVATE_BOMB, ACTIVATE_MOB_BUMP, ACTIVATE_WEAPON, ACTIVATE_MAGIC)
@@ -403,7 +403,7 @@ Difficulty: Very Hard
 		to_chat(user, observer_desc)
 		to_chat(user, "It is activated by [activation_method].")
 
-/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans)
+/obj/machinery/anomalous_crystal/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, message_mode)
 	..()
 	if(isliving(speaker))
 		ActivationReaction(speaker, ACTIVATE_SPEECH)
@@ -437,7 +437,7 @@ Difficulty: Very Hard
 	playsound(user, activation_sound, 100, 1)
 	return TRUE
 
-/obj/machinery/anomalous_crystal/Bumped(atom/AM as mob|obj)
+/obj/machinery/anomalous_crystal/CollidedWith(atom/movable/AM)
 	..()
 	if(ismob(AM))
 		ActivationReaction(AM, ACTIVATE_MOB_BUMP)
@@ -633,7 +633,7 @@ Difficulty: Very Hard
 	health = 2
 	harm_intent_damage = 1
 	friendly = "mends"
-	density = 0
+	density = FALSE
 	movement_type = FLYING
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -683,7 +683,7 @@ Difficulty: Very Hard
 	observer_desc = "This crystal \"refreshes\" items that it affects, rendering them as new."
 	activation_method = ACTIVATE_TOUCH
 	cooldown_add = 50
-	activation_sound = 'sound/magic/TIMEPARADOX2.ogg'
+	activation_sound = 'sound/magic/timeparadox2.ogg'
 	var/list/banned_items_typecache = list(/obj/item/weapon/storage, /obj/item/weapon/implant, /obj/item/weapon/implanter, /obj/item/weapon/disk/nuclear, /obj/item/projectile, /obj/item/weapon/spellbook)
 
 /obj/machinery/anomalous_crystal/refresher/Initialize()
@@ -697,7 +697,7 @@ Difficulty: Very Hard
 		var/turf/T = get_step(src, dir)
 		new /obj/effect/temp_visual/emp/pulse(T)
 		for(var/i in T)
-			if(istype(i, /obj/item) && !is_type_in_typecache(i, banned_items_typecache))
+			if(isitem(i) && !is_type_in_typecache(i, banned_items_typecache))
 				var/obj/item/W = i
 				if(!W.admin_spawned)
 					L += W
@@ -728,9 +728,9 @@ Difficulty: Very Hard
 	name = "quantum entanglement stasis warp field"
 	desc = "You can hardly comprehend this thing... which is why you can't see it."
 	icon_state = null //This shouldn't even be visible, so if it DOES show up, at least nobody will notice
-	density = 1
-	anchored = 1
-	obj_integrity = 999
+	density = TRUE
+	anchored = TRUE
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	var/mob/living/simple_animal/holder_animal
 
 /obj/structure/closet/stasis/process()
@@ -740,8 +740,8 @@ Difficulty: Very Hard
 			holder_animal.gib()
 			return
 
-/obj/structure/closet/stasis/New()
-	..()
+/obj/structure/closet/stasis/Initialize(mapload)
+	. = ..()
 	if(isanimal(loc))
 		holder_animal = loc
 	START_PROCESSING(SSobj, src)

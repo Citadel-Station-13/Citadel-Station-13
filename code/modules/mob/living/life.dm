@@ -25,9 +25,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
-	if(stat != DEAD)
 		//Random events (vomiting etc)
 		handle_random_events()
 
@@ -36,12 +33,12 @@
 		handle_environment(environment)
 
 	handle_fire()
+	
+	// Vore code for belly processes
+	handle_internal_contents()
 
 	//stuff in the stomach
 	handle_stomach()
-
-	// Vore code for belly processes
-	handle_internal_contents()
 
 	update_gravity(mob_has_gravity())
 
@@ -51,7 +48,7 @@
 	if(stat != DEAD)
 		handle_disabilities() // eye, ear, brain damages
 	if(stat != DEAD)
-		handle_status_effects() //all special effects, stunned, weakened, jitteryness, hallucination, sleeping, etc
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	if(stat != DEAD)
 		return 1
@@ -61,9 +58,6 @@
 
 /mob/living/proc/handle_mutations_and_radiation()
 	radiation = 0 //so radiation don't accumulate in simple animals
-	return
-
-/mob/living/proc/handle_chemicals_in_body()
 	return
 
 /mob/living/proc/handle_diginvis()
@@ -100,14 +94,8 @@
 /mob/living/proc/handle_stomach()
 	return
 
-//this updates all special effects: stunned, sleeping, weakened, druggy, stuttering, etc..
+//this updates all special effects: knockdown, druggy, stuttering, etc..
 /mob/living/proc/handle_status_effects()
-	if(paralysis)
-		AdjustParalysis(-1, 1, 1)
-	if(stunned)
-		AdjustStunned(-1, 1, 1)
-	if(weakened)
-		AdjustWeakened(-1, 1, 1)
 	if(confused)
 		confused = max(0, confused - 1)
 

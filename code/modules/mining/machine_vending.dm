@@ -5,8 +5,8 @@
 	desc = "An equipment vendor for miners, points collected at an ore redemption machine can be spent here."
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "mining"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list( //if you add something to this, please, for the love of god, use tabs and not spaces.
 		new /datum/data/mining_equipment("1 Marker Beacon",		/obj/item/stack/marker_beacon,											10),
@@ -55,9 +55,6 @@
 		new /datum/data/mining_equipment("Drone Ranged Upgrade",/obj/item/device/mine_bot_ugprade/cooldown,								600),
 		new /datum/data/mining_equipment("Drone AI Upgrade",	/obj/item/slimepotion/sentience/mining,									1000),
 		new /datum/data/mining_equipment("Jump Boots",			/obj/item/clothing/shoes/bhop,											2500),
-		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,			150),
-		new /datum/data/mining_equipment("Stimpack Value Pack", /obj/item/weapon/storage/box/medipens/utility,							500),
-		new /datum/data/mining_equipment("Survival Pen Kit",	/obj/item/weapon/storage/box/medipens/surival_box,						3000),
 		)
 
 /datum/data/mining_equipment

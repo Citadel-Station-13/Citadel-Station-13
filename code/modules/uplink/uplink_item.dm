@@ -455,8 +455,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun/bag
-	name = "12g Ammo duffelbag"
-	desc = "A duffelbag filled with enough 12g ammo to supply an entire team, at a discounted price."
+	name = "12g Ammo Duffel Bag"
+	desc = "A duffel bag filled with enough 12g ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/shotgun
 	cost = 12
 
@@ -469,8 +469,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
 
 /datum/uplink_item/ammo/smg/bag
-	name = ".45 Ammo duffelbag"
-	desc = "A duffelbag filled with enough .45 ammo to supply an entire team, at a discounted price."
+	name = ".45 Ammo Duffel Bag"
+	desc = "A duffel bag filled with enough .45 ammo to supply an entire team, at a discounted price."
 	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/ammo/smg
 	cost = 20
 	include_modes = list(/datum/game_mode/nuclear)
@@ -748,7 +748,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "F.R.A.M.E. PDA Cartridge"
 	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
 			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked.  \
-			You will recieve the unlock code upon activating the virus, and the new uplink may be charged with \
+			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
 			telecrystals normally."
 	item = /obj/item/weapon/cartridge/virus/frame
 	cost = 4
@@ -846,7 +846,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black syndicate space suit is less encumbering than Nanotrasen variants, \
-			fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit \
+			fits inside bags, and has a weapon slot. Nanotrasen crew members are trained to report red space suit \
 			sightings, however."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
 	cost = 4
@@ -865,15 +865,17 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
-	desc = "An advanced hardsuit with superior armor and mobility to the standard Syndicate hardsuit."
+	desc = "An upgraded, elite version of the syndicate hardsuit. It features fireproofing, and also \
+			provides the user with superior armor and mobility compared to the standard syndicate hardsuit."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi/elite
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list()
 
 /datum/uplink_item/suits/hardsuit/shielded
-	name = "Shielded Hardsuit"
-	desc = "An advanced hardsuit with built in energy shielding. The shields will rapidly recharge when not under fire."
+	name = "Shielded Syndicate Hardsuit"
+	desc = "An upgraded version of the standard syndicate hardsuit. It features a built-in energy shielding system. \
+			The shields can handle up to three impacts within a short duration and will rapidly recharge while not under fire."
 	item = /obj/item/clothing/suit/space/hardsuit/shielded/syndi
 	cost = 30
 	include_modes = list(/datum/game_mode/nuclear)
@@ -899,8 +901,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 1
 
 /datum/uplink_item/device_tools/surgerybag
-	name = "Syndicate Surgery duffelbag"
-	desc = "The Syndicate surgery duffelbag is a toolkit containing all surgery tools, surgical drapes, \
+	name = "Syndicate Surgery Duffel Bag"
+	desc = "The Syndicate surgery duffel bag is a toolkit containing all surgery tools, surgical drapes, \
 			a Syndicate brand MMI, a straitjacket, and a muzzle."
 	item = /obj/item/weapon/storage/backpack/duffelbag/syndie/surgery
 	cost = 3
@@ -1130,17 +1132,16 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
 	item = /obj/item/weapon/codespeak_manual
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/codespeak_manual_deluxe
 	name = "Deluxe Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to comvey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)
-
 
 // Implants
 /datum/uplink_item/implants

@@ -7,7 +7,6 @@
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	obj_integrity = 500
 	max_integrity = 500
 	armor = list(melee = 100, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70) //default + ignores melee
 
@@ -92,29 +91,36 @@
 	engine_power = 0
 
 /obj/structure/shuttle/engine/propulsion
-	name = "propulsion"
+	name = "propulsion engine"
 	icon_state = "propulsion"
 	opacity = 1
 
+/obj/structure/shuttle/engine/propulsion/left
+	name = "left propulsion engine"
+	icon_state = "propulsion_l"
+
+/obj/structure/shuttle/engine/propulsion/right
+	name = "right propulsion engine"
+	icon_state = "propulsion_r"
+
 /obj/structure/shuttle/engine/propulsion/burst
-	name = "burst"
+	name = "burst engine"
 
 /obj/structure/shuttle/engine/propulsion/burst/cargo
 	state = ENGINE_UNWRENCHED
 	anchored = FALSE
 
 /obj/structure/shuttle/engine/propulsion/burst/left
-	name = "left"
+	name = "left burst engine"
 	icon_state = "burst_l"
 
 /obj/structure/shuttle/engine/propulsion/burst/right
-	name = "right"
+	name = "right burst engine"
 	icon_state = "burst_r"
 
 /obj/structure/shuttle/engine/router
 	name = "router"
 	icon_state = "router"
-
 
 /obj/structure/shuttle/engine/large
 	name = "engine"

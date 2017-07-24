@@ -95,10 +95,12 @@ SUBSYSTEM_DEF(blackbox)
 
 	for (var/datum/feedback_variable/FV in feedback)
 		sqlrowlist += list(list("time" = "Now()", "round_id" = GLOB.round_id, "var_name" =  "'[sanitizeSQL(FV.get_variable())]'", "var_value" = FV.get_value(), "details" = "'[sanitizeSQL(FV.get_details())]'"))
+
 	if (!length(sqlrowlist))
 		return
 
 	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
+
 
 /datum/controller/subsystem/blackbox/proc/LogBroadcast(blackbox_msg, freq)
 	if(sealed)
@@ -208,7 +210,6 @@ SUBSYSTEM_DEF(blackbox)
 		message_admins(msg)
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
-
 
 //feedback variable datum, for storing all kinds of data
 /datum/feedback_variable

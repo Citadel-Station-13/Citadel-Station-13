@@ -23,16 +23,16 @@
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
-	status_flags = CANPARALYSE|CANPUSH
+	status_flags = CANUNCONSCIOUS|CANPUSH
 
 	var/heat_protection = 0.5
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
-	devourable = TRUE
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
-
+	devourable = TRUE
+	
 /mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -51,7 +51,7 @@
 	internal_organs += new /obj/item/organ/ears
 	..()
 
-/mob/living/carbon/alien/assess_threat() // beepsky won't hunt aliums
+/mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
