@@ -196,6 +196,17 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
+		else if(prob(50))
+			var/datum/objective/assassinate/late/late_objective = new
+			late_objective.owner = owner
+			late_objective.find_target()
+			add_objective(late_objective)
+			while(late_objective.target == null)
+				sleep(3000) //Wait for 5min before trying again
+				if(late_objective) //Hope nothing bad happened to this while we slept
+					late_objective.find_target()
+				else
+					break //Something bad, abort, abort!
 		else
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner
