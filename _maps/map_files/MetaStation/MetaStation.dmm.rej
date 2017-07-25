@@ -1,0 +1,15 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -50167,11 +50167,11 @@
+ /area/bridge/showroom/corporate)
+ "bRz" = (
+ /obj/structure/showcase{
+-	desc = "The famous NanoTrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
++	desc = "The famous Nanotrasen-brand microwave, the multi-purpose cooking appliance every station needs! This one appears to be drawn onto a cardboard box.";
+ 	dir = 1;
+ 	icon = 'icons/obj/kitchen.dmi';
+ 	icon_state = "mw";
+-	name = "NanoTrasen-brand microwave";
++	name = "Nanotrasen-brand microwave";
+ 	pixel_y = 2
+ 	},
+ /obj/structure/table/wood,
