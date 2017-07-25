@@ -165,6 +165,7 @@
 	id = "anaphro"
 	description = "Naturally found in some species of evergreen trees, camphor is a waxy substance. When injested by most animals, it acts as an anaphrodisiac\
 					, reducing libido and calming them. Non-habit forming and not addictive."
+	taste_description = "dull bitterness"
 	taste_mult = 2
 	color = "#D9D9D9"//rgb(217, 217, 217)
 	reagent_state = SOLID
