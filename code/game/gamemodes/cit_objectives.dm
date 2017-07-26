@@ -1,29 +1,35 @@
+#define MIN_LATE_TARGET_TIME 60 //lower bound of re-rolled timer, 1 min
+#define MAX_LATE_TARGET_TIME 600 //upper bound of re-rolled timer, 10 min
+#define LATE_TARGET_HIT_CHANCE 70 //How often would the find_target succeed, otherwise it re-rolls later and tries again.
+//Hit chance is here to avoid people checking github and then hovering around new arrivals within the max minute range every round.
+
 /datum/objective/assassinate/late
 	martyr_compatible = 0
 
 
 /datum/objective/assassinate/late/find_target()
-	if(!GLOB.latejoiners)
-		update_explanation_text()
-		return
 	var/list/possible_targets = list()
 	for(var/mob/M in GLOB.latejoiners)
 		var/datum/mind/possible_target = M.mind
 		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != 2) && is_unique_objective(possible_target))
 			possible_targets += possible_target
-	if(possible_targets.len > 0)
+	if(possible_targets.len > 0 && prob(LATE_TARGET_HIT_CHANCE))
 		target = pick(possible_targets)
 		martyr_compatible = 1 //Might never matter, but I guess if an admin gives another random objective, this should now be compatible
 		update_explanation_text()
+
+		message_admins("[target] has been selected as the assassination target of [owner].")
+		log_game("[target] has been selected as the assassination target of [owner].")
+
+		to_chat(owner, "<span class='italics'>You hear a crackling noise in your ears, as a one-way syndicate message plays:</span>")
+		to_chat(owner, "<span class='userdanger'><font size=5>You target has been located. To succeed, find and eliminate [target], the [!target_role_type ? target.assigned_role : target.special_role].</font></span>")
 		return target
 	else
 		update_explanation_text()
+		addtimer(CALLBACK(src, .proc/find_target),rand(MIN_LATE_TARGET_TIME, MAX_LATE_TARGET_TIME))
 		return null
 
 /datum/objective/assassinate/late/find_target_by_role(role, role_type=0, invert=0)
-	if(!GLOB.latejoiners) //No latejoiners, no targets needed
-		update_explanation_text()
-		return
 	var/list/possible_targets = list()
 	for(var/mob/M in GLOB.latejoiners)
 		var/datum/mind/possible_target = M.mind
@@ -44,9 +50,18 @@
 			else if(is_role)
 				possible_targets += possible_target
 				//break
-	if(possible_targets)
+	if(possible_targets && prob(LATE_TARGET_HIT_CHANCE))
 		target = pick(possible_targets)
-	update_explanation_text()
+		update_explanation_text()
+
+		message_admins("[target] has been selected as the assassination target of [owner].")
+		log_game("[target] has been selected as the assassination target of [owner].")
+
+		to_chat(owner, "<span class='italics'>You hear a crackling noise in your ears, as a one-way syndicate message plays:</span>")
+		to_chat(owner, "<span class='userdanger'><font size=5>You target has been located. To succeed, find and eliminate [target], the [!target_role_type ? target.assigned_role : target.special_role].</font></span>")
+	else
+		update_explanation_text()
+		addtimer(CALLBACK(src, .proc/find_target_by_role, role, role_type, invert),rand(MIN_LATE_TARGET_TIME, MAX_LATE_TARGET_TIME))
 
 
 
@@ -67,4 +82,4 @@
 	if(target && target.current)
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
-		explanation_text = "Stay alive until your target arrives on the station."
+		explanation_text = "Stay alive until your target arrives on the station, you will be notified when the target has been identified."

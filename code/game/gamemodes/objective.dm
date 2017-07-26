@@ -43,6 +43,7 @@
 	return target
 
 /datum/objective/proc/find_target_by_role(role, role_type=0, invert=0)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
+	var/list/candidates = list() //Let's compile a list and THEN pick one randomly, not just first come first serve...
 	for(var/datum/mind/possible_target in get_crewmember_minds())
 		if((possible_target != owner) && ishuman(possible_target.current))
 			var/is_role = 0
@@ -56,12 +57,11 @@
 			if(invert)
 				if(is_role)
 					continue
-				target = possible_target
-				break
+				candidates += possible_target
 			else if(is_role)
-				target = possible_target
-				break
-
+				candidates += possible_target
+	if(candidates)
+		target = pick(candidates)
 	update_explanation_text()
 
 /datum/objective/proc/update_explanation_text()
