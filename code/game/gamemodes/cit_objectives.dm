@@ -1,5 +1,5 @@
-#define MIN_LATE_TARGET_TIME 60 //lower bound of re-rolled timer, 1 min
-#define MAX_LATE_TARGET_TIME 600 //upper bound of re-rolled timer, 10 min
+#define MIN_LATE_TARGET_TIME 600 //lower bound of re-rolled timer, 1 min
+#define MAX_LATE_TARGET_TIME 6000 //upper bound of re-rolled timer, 10 min
 #define LATE_TARGET_HIT_CHANCE 70 //How often would the find_target succeed, otherwise it re-rolls later and tries again.
 //Hit chance is here to avoid people checking github and then hovering around new arrivals within the max minute range every round.
 
