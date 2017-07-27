@@ -786,7 +786,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "late-assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
 			return
 
@@ -820,6 +820,12 @@
 					new_objective:target = new_target:mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.update_explanation_text()
+
+			if ("late-assassinate")
+				new_objective = new /datum/objective/assassinate/late
+				new_objective.owner = src
+				new_objective.target = null
+				new_objective.find_target() //This will begin the "find-target" loop and update their explanation text
 
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
