@@ -9,7 +9,7 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-	var/blocks_air = 0
+	var/blocks_air = FALSE
 
 	flags = CAN_BE_DIRTY
 
@@ -134,7 +134,7 @@
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	var/atom/movable/tompost_bump
-	var/top_layer = 0
+	var/top_layer = FALSE
 	for(var/atom/movable/obstacle in large_dense)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
 			if(obstacle.layer > top_layer)
@@ -431,7 +431,7 @@
 	var/acid_type = /obj/effect/acid
 	if(acidpwr >= 200) //alien acid power
 		acid_type = /obj/effect/acid/alien
-	var/has_acid_effect = 0
+	var/has_acid_effect = FALSE
 	for(var/obj/O in src)
 		if(intact && O.level == 1) //hidden under the floor
 			continue
