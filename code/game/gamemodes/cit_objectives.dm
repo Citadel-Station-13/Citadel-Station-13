@@ -4,7 +4,7 @@
 //Hit chance is here to avoid people checking github and then hovering around new arrivals within the max minute range every round.
 
 /datum/objective/assassinate/late
-	martyr_compatible = 0
+	martyr_compatible = FALSE
 
 
 /datum/objective/assassinate/late/find_target()
@@ -15,7 +15,7 @@
 			possible_targets += possible_target
 	if(possible_targets.len > 0 && prob(LATE_TARGET_HIT_CHANCE))
 		target = pick(possible_targets)
-		martyr_compatible = 1 //Might never matter, but I guess if an admin gives another random objective, this should now be compatible
+		martyr_compatible = TRUE	//Might never matter, but I guess if an admin gives another random objective, this should now be compatible
 		update_explanation_text()
 
 		message_admins("[target] has been selected as the assassination target of [owner].")
@@ -68,14 +68,14 @@
 /datum/objective/assassinate/late/check_completion()
 	if(target && target.current) //If target WAS assigned
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	else //If no target was ever given
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-			return 0
+			return FALSE
 		if(!is_special_character(owner.current))
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 /datum/objective/assassinate/late/update_explanation_text()
 	//..()
