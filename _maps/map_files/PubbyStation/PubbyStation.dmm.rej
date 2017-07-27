@@ -1,0 +1,10 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -52393,7 +52380,7 @@
+ 	pixel_x = -32
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+-/obj/item/weapon/paper/pamphlet,
++/obj/item/weapon/paper/pamphlet/gateway,
+ /turf/open/floor/plasteel,
+ /area/teleporter)
+ "cmv" = (
