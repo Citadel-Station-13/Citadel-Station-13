@@ -117,7 +117,7 @@
 				return FALSE
 
 	var/list/large_dense = list()
-	
+
 	//Next, check objects to block entry that are on the border
 	for(var/atom/movable/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
@@ -424,7 +424,6 @@
 
 /turf/proc/is_transition_turf()
 	return
-
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
