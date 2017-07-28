@@ -26977,7 +26977,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "ble" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet{
@@ -27671,7 +27671,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/heads/captain)
+/area/maintenance/central/secondary)
 "bmE" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
@@ -29580,7 +29580,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plating,
-/area/teleporter)
+/area/maintenance/central/secondary)
 "bqL" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment,
@@ -98097,7 +98097,7 @@ bbw
 bjJ
 bld
 bmD
-bmD
+cTD
 bmD
 bqK
 bso
