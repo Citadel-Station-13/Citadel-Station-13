@@ -44143,31 +44143,19 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bWB" = (
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bWC" = (
 /obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWD" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWE" = (
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWF" = (
 /obj/machinery/light{
@@ -44183,17 +44171,11 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bWG" = (
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bWH" = (
 /obj/structure/table,
@@ -44666,24 +44648,15 @@
 /area/maintenance/port/aft)
 "bXz" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXA" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXB" = (
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXC" = (
 /obj/structure/cable{
@@ -44691,17 +44664,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bXD" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "bXE" = (
 /obj/machinery/computer/message_monitor,
@@ -45372,10 +45339,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZo" = (
 /obj/structure/cable{
@@ -45383,10 +45347,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZp" = (
 /obj/structure/cable{
@@ -45399,10 +45360,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZq" = (
 /obj/structure/window/reinforced/fulltile,
@@ -45788,10 +45746,7 @@
 /area/maintenance/port/aft)
 "cag" = (
 /obj/machinery/ntnet_relay,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cah" = (
 /obj/structure/cable{
@@ -45799,10 +45754,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cai" = (
 /obj/machinery/power/smes{
@@ -45812,10 +45764,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "caj" = (
 /obj/structure/cable{
@@ -45823,17 +45772,12 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "cak" = (
 /obj/machinery/telecomms/hub/preset,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
+/turf/open/floor/plasteel/vault/telecomms/mainframe{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cal" = (
@@ -45857,10 +45801,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "can" = (
 /obj/machinery/door/airlock/glass_engineering{
@@ -46379,10 +46320,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cbm" = (
 /obj/structure/window/reinforced/fulltile,
@@ -46826,24 +46764,15 @@
 /area/construction)
 "ccf" = (
 /obj/machinery/telecomms/broadcaster/preset_left,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "ccg" = (
 /obj/machinery/message_server,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cch" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cci" = (
 /obj/structure/table,
@@ -47259,31 +47188,19 @@
 /area/maintenance/port/aft)
 "cdc" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdd" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cde" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdf" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cdg" = (
 /obj/machinery/computer/telecomms/monitor{
@@ -47697,41 +47614,26 @@
 /area/maintenance/port/aft)
 "cdZ" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cea" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "ceb" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cec" = (
 /obj/structure/sign/nosmoking_2{
 	pixel_y = -32
 	},
 /obj/machinery/light,
-/turf/open/floor/circuit{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "ced" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cee" = (
 /obj/structure/table,
@@ -64123,19 +64025,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cSF" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black{
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/mainframe,
 /area/tcommsat/server)
 "cSG" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
