@@ -2,9 +2,6 @@
 For the main html chat area
 *********************************/
 
-#define BICON_X_MAX 96
-#define BICON_Y_MAX 96
-
 //Precaching a bunch of shit
 GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
 
@@ -189,12 +186,9 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 // exporting it as text, and then parsing the base64 from that.
 // (This relies on byond automatically storing icons in savefiles as base64)
 /proc/icon2base64(icon/icon, iconKey = "misc")
+	return FALSE
 	if (!isicon(icon))
 		return FALSE
-	//DOS exploit
-	if(icon.Width() > BICON_X_MAX || icon.Length() > BICON_Y_MAX)
-		return FALSE
-	//
 	GLOB.iconCache[iconKey] << icon
 	var/iconData = GLOB.iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
