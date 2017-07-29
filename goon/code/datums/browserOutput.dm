@@ -2,6 +2,9 @@
 For the main html chat area
 *********************************/
 
+#define BICON_X_MAX 96
+#define BICON_Y_MAX 96
+
 //Precaching a bunch of shit
 GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
 
@@ -188,6 +191,10 @@ GLOBAL_LIST_EMPTY(bicon_cache)
 /proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon))
 		return FALSE
+	//DOS exploit
+	if(icon.Width() > BICON_X_MAX || icon.Length() > BICON_Y_MAX)
+		return FALSE
+	//
 	GLOB.iconCache[iconKey] << icon
 	var/iconData = GLOB.iconCache.ExportText(iconKey)
 	var/list/partial = splittext(iconData, "{")
