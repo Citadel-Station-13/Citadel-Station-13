@@ -140,7 +140,7 @@
 	desc = "A very large construction."
 	layer = MASSIVE_OBJ_LAYER
 	density = FALSE
-	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 
 /obj/structure/destructible/clockwork/massive/Initialize()
 	. = ..()
