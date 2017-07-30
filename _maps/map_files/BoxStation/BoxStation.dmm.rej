@@ -1,0 +1,37 @@
+diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/BoxStation.dmm	(rejected hunks)
+@@ -45050,31 +45017,19 @@
+ /turf/open/floor/plating,
+ /area/maintenance/port/aft)
+ "bYz" = (
+-/turf/open/floor/plasteel/black{
+-	name = "Mainframe Floor";
+-	initial_gas_mix = "n2=100;TEMP=80"
+-	},
++/turf/open/floor/plasteel/black/telecomms/mainframe,
+ /area/tcommsat/server)
+ "bYA" = (
+ /obj/machinery/telecomms/broadcaster/preset_right,
+-/turf/open/floor/plasteel/black{
+-	name = "Mainframe Floor";
+-	initial_gas_mix = "n2=100;TEMP=80"
+-	},
++/turf/open/floor/plasteel/black/telecomms/mainframe,
+ /area/tcommsat/server)
+ "bYB" = (
+ /obj/machinery/blackbox_recorder,
+-/turf/open/floor/plasteel/black{
+-	name = "Mainframe Floor";
+-	initial_gas_mix = "n2=100;TEMP=80"
+-	},
++/turf/open/floor/plasteel/black/telecomms/mainframe,
+ /area/tcommsat/server)
+ "bYC" = (
+ /obj/machinery/telecomms/receiver/preset_right,
+-/turf/open/floor/plasteel/black{
+-	name = "Mainframe Floor";
+-	initial_gas_mix = "n2=100;TEMP=80"
+-	},
++/turf/open/floor/plasteel/black/telecomms/mainframe,
+ /area/tcommsat/server)
+ "bYD" = (
+ /obj/machinery/computer/telecomms/server{

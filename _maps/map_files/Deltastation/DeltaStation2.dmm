@@ -49225,10 +49225,8 @@
 /turf/closed/wall/r_wall,
 /area/crew_quarters/heads/hop)
 "bQr" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bQs" = (
@@ -50512,26 +50510,16 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bSE" = (
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bSF" = (
 /obj/machinery/telecomms/receiver/preset_right,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bSG" = (
 /obj/structure/cable/white{
@@ -50546,20 +50534,14 @@
 /area/tcommsat/server)
 "bSH" = (
 /obj/machinery/telecomms/receiver/preset_left,
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bSI" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bSJ" = (
@@ -51791,25 +51773,18 @@
 /area/crew_quarters/heads/hop)
 "bUJ" = (
 /obj/machinery/telecomms/server/presets/medical,
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/whiteblue/side/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "bUK" = (
 /obj/machinery/telecomms/server/presets/science,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/whitepurple/side/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bUL" = (
-/turf/open/floor/plasteel/vault{
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
-	},
+/turf/open/floor/plasteel/vault/telecomms,
 /area/tcommsat/server)
 "bUM" = (
 /obj/structure/cable/white{
@@ -51823,26 +51798,20 @@
 	req_access = null;
 	req_access_txt = "61"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bUN" = (
 /obj/machinery/telecomms/server/presets/command,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/darkblue/side/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "bUO" = (
 /obj/machinery/telecomms/server/presets/security,
-/turf/open/floor/plasteel/darkred/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/darkred/side/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bUP" = (
@@ -52693,25 +52662,19 @@
 /area/crew_quarters/heads/hop)
 "bWv" = (
 /obj/machinery/telecomms/bus/preset_one,
-/turf/open/floor/plasteel/whiteblue/side{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/whiteblue/side/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "bWw" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/plasteel/whitepurple/side{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/whitepurple/side/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "bWx" = (
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bWy" = (
@@ -52719,10 +52682,8 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bWz" = (
@@ -52731,36 +52692,28 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bWA" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bWB" = (
 /obj/machinery/telecomms/processor/preset_three,
-/turf/open/floor/plasteel/darkblue/side{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/darkblue/side/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "bWC" = (
 /obj/machinery/telecomms/bus/preset_three,
-/turf/open/floor/plasteel/darkred/side{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/darkred/side/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "bWD" = (
@@ -53606,10 +53559,8 @@
 	name = "telecomms camera";
 	network = list("SS13","tcomm")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bYf" = (
@@ -53618,10 +53569,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "bYg" = (
@@ -53636,10 +53585,8 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bYh" = (
@@ -53648,10 +53595,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bYi" = (
@@ -53661,10 +53606,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bYj" = (
@@ -53680,11 +53623,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "bYl" = (
 /obj/structure/cable/white{
@@ -53697,10 +53636,8 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bYm" = (
@@ -53709,10 +53646,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "bYn" = (
@@ -53721,10 +53656,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bYo" = (
@@ -54544,10 +54477,8 @@
 	pixel_x = -26
 	},
 /obj/structure/cable/white,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "bZW" = (
@@ -54556,10 +54487,8 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "bZX" = (
@@ -54572,11 +54501,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "bZY" = (
 /obj/structure/cable/white{
@@ -54587,10 +54512,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "bZZ" = (
@@ -54603,11 +54526,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 1
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "caa" = (
 /obj/structure/cable/white{
@@ -54619,10 +54538,8 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cab" = (
@@ -54645,11 +54562,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "cad" = (
 /obj/machinery/blackbox_recorder,
@@ -54661,11 +54574,7 @@
 /obj/machinery/atmospherics/pipe/manifold/general/hidden{
 	dir = 1
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "cae" = (
 /obj/machinery/telecomms/broadcaster/preset_right,
@@ -54677,11 +54586,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/circuit{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
 "caf" = (
 /obj/structure/cable/white{
@@ -54696,10 +54601,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "cag" = (
@@ -54707,10 +54610,8 @@
 	charge = 5e+006
 	},
 /obj/structure/cable/white,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cah" = (
@@ -55612,25 +55513,19 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "cbK" = (
-/turf/open/floor/plasteel/vault{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "cbL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cbM" = (
@@ -55640,18 +55535,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "cbN" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "cbO" = (
@@ -55660,10 +55549,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "cbP" = (
@@ -55673,10 +55560,8 @@
 	name = "telecomms camera";
 	network = list("SS13","tcomm")
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cbQ" = (
@@ -56634,59 +56519,43 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/circuit/green{
-	initial_gas_mix = "n2=100;TEMP=80";
-	name = "Mainframe Base";
-	temperature = 80
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/tcommsat/server)
 "cdB" = (
 /obj/machinery/telecomms/bus/preset_four,
-/turf/open/floor/plasteel/brown{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/brown/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "cdC" = (
 /obj/machinery/telecomms/processor/preset_four,
-/turf/open/floor/plasteel/green/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/green/side/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cdD" = (
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cdF" = (
 /obj/machinery/light/small,
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cdG" = (
 /obj/machinery/telecomms/processor/preset_two,
-/turf/open/floor/plasteel/brown{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/brown/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "cdH" = (
 /obj/machinery/telecomms/bus/preset_two,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/neutral/side/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cdI" = (
@@ -57382,18 +57251,14 @@
 /area/crew_quarters/heads/hop)
 "cfd" = (
 /obj/machinery/telecomms/server/presets/supply,
-/turf/open/floor/plasteel/brown{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/brown/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "cfe" = (
 /obj/machinery/telecomms/server/presets/service,
-/turf/open/floor/plasteel/green/side{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/green/side/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "cff" = (
@@ -57408,26 +57273,20 @@
 	req_access = null;
 	req_access_txt = "61"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cfg" = (
 /obj/machinery/telecomms/server/presets/engineering,
-/turf/open/floor/plasteel/brown{
-	dir = 9;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/brown/telecomms{
+	dir = 9
 	},
 /area/tcommsat/server)
 "cfh" = (
 /obj/machinery/telecomms/server/presets/common,
-/turf/open/floor/plasteel/neutral/side{
-	dir = 5;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/neutral/side/telecomms{
+	dir = 5
 	},
 /area/tcommsat/server)
 "cfi" = (
@@ -58054,20 +57913,16 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cgx" = (
 /obj/structure/sign/electricshock{
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "cgz" = (
@@ -95699,17 +95554,12 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
 "dCI" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/server)
 "dCJ" = (
@@ -95724,10 +95574,7 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
 "dCK" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -96390,17 +96237,12 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
 "dEf" = (
 /obj/machinery/atmospherics/pipe/manifold/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/science/server)
 "dEg" = (
@@ -96408,10 +96250,7 @@
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
-/turf/open/floor/circuit/green{
-	name = "Mainframe Base";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
+/turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
 "dEh" = (
 /obj/item/weapon/twohanded/required/kirbyplants/random,
@@ -108278,25 +108117,19 @@
 /area/crew_quarters/heads/hop)
 "ecz" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 10;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 10
 	},
 /area/tcommsat/server)
 "ecA" = (
-/turf/open/floor/plasteel/vault{
-	dir = 6;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 6
 	},
 /area/tcommsat/server)
 "ecE" = (
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
-/turf/open/floor/plasteel/vault{
-	dir = 8;
-	initial_gas_mix = "n2=100;TEMP=80";
-	temperature = 80
+/turf/open/floor/plasteel/vault/telecomms{
+	dir = 8
 	},
 /area/tcommsat/server)
 "ecG" = (
