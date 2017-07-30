@@ -628,6 +628,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -3321,6 +3322,7 @@
 /area/quartermaster/storage)
 "afD" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/quartermaster/storage)
 "afE" = (
@@ -3490,6 +3492,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -3541,6 +3544,7 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "afZ" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/captain/private)
 "aga" = (
@@ -5504,6 +5508,7 @@
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -5655,6 +5660,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 4
 	},
@@ -6738,6 +6744,7 @@
 	},
 /area/quartermaster/storage)
 "akM" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 4
 	},
@@ -7587,6 +7594,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -8427,6 +8435,7 @@
 /area/security/brig)
 "anD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -9411,6 +9420,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/brown,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -12163,6 +12173,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -12924,6 +12935,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/corner,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -13140,6 +13152,7 @@
 /area/storage/primary)
 "auW" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 6
 	},
@@ -14020,6 +14033,7 @@
 	name = "Station Intercom";
 	pixel_x = -26
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -14272,6 +14286,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -17625,6 +17640,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -19116,6 +19132,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -19294,6 +19311,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
 "aFU" = (
@@ -19348,6 +19366,7 @@
 	name = "\improper Departure Lounge"
 	})
 "aGa" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/hallway/secondary/exit{
 	name = "\improper Departure Lounge"
@@ -22401,6 +22420,7 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aKW" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/greenblue/side{
 	icon_state = "greenblue";
 	dir = 8
@@ -22565,6 +22585,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -22866,6 +22887,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aLW" = (
@@ -25586,6 +25608,7 @@
 /area/hallway/primary/central)
 "aQo" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	icon_state = "L6"
 	},
@@ -25659,6 +25682,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central{
 	name = "Primary Hallway"
@@ -27678,6 +27702,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aUD" = (
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -30411,6 +30436,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/blue,
 /area/medical/medbay/zone3)
 "aZO" = (
@@ -31375,6 +31401,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bby" = (
@@ -33708,6 +33735,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/neutral,
 /area/maintenance/port)
 "bfG" = (
@@ -34944,6 +34972,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 4
 	},
@@ -35158,6 +35187,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel{
 	dir = 4;
 	icon_state = "chapel"
@@ -36832,6 +36862,7 @@
 	c_tag = "Research Division North";
 	dir = 2
 	},
+/obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/whitepurple/corner{
 	dir = 1
 	},
@@ -72439,7 +72470,7 @@ avF
 awJ
 axo
 ayi
-azo
+bxI
 aAp
 aBx
 aCB
@@ -73998,7 +74029,7 @@ aNa
 aEt
 aOI
 aPP
-aQV
+bxR
 aRS
 aTb
 aUb
@@ -75265,7 +75296,7 @@ auL
 avQ
 aqz
 axz
-asB
+bxH
 azy
 aAA
 aBI
@@ -75801,7 +75832,7 @@ aQW
 aRY
 aTg
 aUf
-aUX
+bxS
 aVS
 aWE
 aXh
@@ -76281,7 +76312,7 @@ ajb
 akb
 ala
 alQ
-akb
+bxA
 ala
 aoz
 apE
@@ -76305,7 +76336,7 @@ aGx
 aHD
 aIA
 aCM
-aCM
+bxP
 aCM
 aNi
 anH
@@ -76801,7 +76832,7 @@ aoB
 apG
 akc
 akc
-akc
+bxD
 atM
 auR
 avW
@@ -77092,7 +77123,7 @@ aWG
 aXl
 aQW
 aYF
-aXd
+bxU
 aRS
 bbo
 bcb
@@ -77579,7 +77610,7 @@ avY
 awQ
 axG
 ayy
-azC
+bxJ
 aAH
 aBQ
 azC
@@ -77838,7 +77869,7 @@ awQ
 awQ
 awQ
 aAH
-aBQ
+bxK
 awQ
 awQ
 awQ
@@ -78614,7 +78645,7 @@ awQ
 awQ
 awQ
 awQ
-arY
+bxN
 aHM
 aHM
 aHM
@@ -78623,7 +78654,7 @@ aHM
 aHM
 aHM
 aOZ
-aQd
+bxQ
 ayV
 aSh
 aTm
@@ -78889,7 +78920,7 @@ aVh
 aWd
 aWL
 aXn
-aXn
+bxT
 aYL
 aZH
 bay
@@ -79366,7 +79397,7 @@ akm
 ali
 alZ
 amU
-anM
+bxB
 anM
 apL
 alg
@@ -79632,7 +79663,7 @@ atd
 atW
 atd
 atd
-atd
+bxE
 axL
 ayD
 atd
@@ -80403,7 +80434,7 @@ atf
 atY
 avb
 awg
-awg
+bxF
 awg
 ayF
 azF
@@ -80641,7 +80672,7 @@ acd
 acU
 adM
 adM
-adM
+bxx
 age
 agV
 aby
@@ -81688,7 +81719,7 @@ asg
 asg
 asg
 asg
-awT
+bxG
 asg
 avi
 awn
@@ -81700,7 +81731,7 @@ asg
 awT
 aAR
 avi
-asg
+bxO
 asg
 aLf
 aMt
@@ -81730,7 +81761,7 @@ bfK
 bgg
 bgT
 bhG
-biw
+bxY
 bgU
 aaa
 aaa
@@ -82721,7 +82752,7 @@ axP
 ayL
 asg
 aAR
-asg
+bxL
 avi
 asg
 asg
@@ -84034,7 +84065,7 @@ aZc
 aZV
 baO
 bbD
-bcu
+bxV
 bdm
 beh
 beL
@@ -84253,7 +84284,7 @@ anU
 aoW
 aqc
 alu
-asn
+bxC
 atm
 auj
 avo
@@ -84753,7 +84784,7 @@ acq
 adi
 adW
 aeL
-afw
+bxy
 agq
 ahh
 aia
@@ -85788,7 +85819,7 @@ abt
 abt
 ajF
 akJ
-aly
+bxz
 amt
 ank
 anZ
@@ -86036,7 +86067,7 @@ abt
 abL
 acu
 adm
-adY
+bxw
 adm
 afB
 agu
@@ -86604,7 +86635,7 @@ aZj
 bae
 baY
 bbM
-bcA
+bxW
 bdw
 bep
 aZl
@@ -87122,7 +87153,7 @@ bcC
 bdy
 ber
 aZl
-bfq
+bxX
 bfP
 bfP
 bfP
@@ -88122,7 +88153,7 @@ aaa
 aaa
 azb
 blM
-blZ
+bxM
 bsC
 azb
 aaa

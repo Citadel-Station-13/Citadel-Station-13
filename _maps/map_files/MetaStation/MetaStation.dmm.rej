@@ -1,0 +1,787 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -43213,6 +43238,7 @@
+ 	d2 = 8;
+ 	icon_state = "1-8"
+ 	},
++/obj/effect/landmark/event_spawn,
+ /turf/open/floor/plasteel,
+ /area/engine/atmos)
+ "bDU" = (
+@@ -90423,6 +90482,705 @@
+ /obj/structure/cable/yellow,
+ /turf/open/floor/plating,
+ /area/medical/virology)
++"dBX" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/ai_monitored/security/armory)
++"dBY" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 8
++	},
++/area/crew_quarters/fitness/recreation)
++"dBZ" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault{
++	dir = 8
++	},
++/area/security/warden)
++"dCa" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	icon_state = "4-8";
++	d1 = 4;
++	d2 = 8
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/security/warden)
++"dCb" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red,
++/area/security/main)
++"dCc" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 4
++	},
++/area/crew_quarters/fitness/recreation)
++"dCd" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red,
++/area/security/main)
++"dCe" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/fore)
++"dCf" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/showroomfloor,
++/area/security/warden)
++"dCg" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red/corner{
++	dir = 1
++	},
++/area/security/brig)
++"dCh" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/showroomfloor,
++/area/security/warden)
++"dCi" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating{
++	icon_state = "platingdmg3"
++	},
++/area/maintenance/starboard/fore)
++"dCj" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/floorgrime,
++/area/security/brig)
++"dCk" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"dCl" = (
++/obj/structure/disposalpipe/segment,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/fore)
++"dCm" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"dCn" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/quartermaster/miningoffice)
++"dCo" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/fore)
++"dCp" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating{
++	icon_state = "platingdmg2"
++	},
++/area/maintenance/fore)
++"dCq" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/security/courtroom)
++"dCr" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/fore)
++"dCs" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/fore)
++"dCt" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/storage/primary)
++"dCu" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/storage/primary)
++"dCv" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/floorgrime,
++/area/crew_quarters/locker)
++"dCw" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"dCx" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating{
++	icon_state = "panelscorched"
++	},
++/area/maintenance/port/fore)
++"dCy" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/floorgrime,
++/area/crew_quarters/locker)
++"dCz" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/security/courtroom)
++"dCA" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 1
++	},
++/area/crew_quarters/locker)
++"dCB" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/quartermaster/storage)
++"dCC" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/fore)
++"dCD" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/fore)
++"dCE" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCF" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCG" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCH" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCI" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/port)
++"dCJ" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/yellow/corner{
++	dir = 1
++	},
++/area/hallway/primary/starboard)
++"dCK" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/bridge)
++"dCL" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/bridge)
++"dCM" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/structure/extinguisher_cabinet{
++	pixel_y = -30
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/caution/corner{
++	dir = 8
++	},
++/area/hallway/primary/starboard)
++"dCN" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/port)
++"dCO" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/crew_quarters/heads/hop)
++"dCP" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/crew_quarters/heads/captain/private)
++"dCQ" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCR" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/bridge)
++"dCS" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/bar,
++/area/crew_quarters/bar)
++"dCT" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dCU" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/crew_quarters/bar)
++"dCV" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard)
++"dCW" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port)
++"dCX" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/library)
++"dCY" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/atmos)
++"dCZ" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/library)
++"dDa" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 8
++	},
++/area/hallway/secondary/command)
++"dDb" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/bar,
++/area/crew_quarters/bar)
++"dDc" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/crew_quarters/bar)
++"dDd" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dDe" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/cafeteria{
++	dir = 5
++	},
++/area/crew_quarters/kitchen)
++"dDf" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/bridge/showroom/corporate)
++"dDg" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/bridge/showroom/corporate)
++"dDh" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dDi" = (
++/obj/machinery/newscaster{
++	pixel_x = -32
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/library)
++"dDj" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dDk" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/primary/central)
++"dDl" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/green/side{
++	dir = 8
++	},
++/area/hydroponics)
++"dDm" = (
++/obj/machinery/atmospherics/pipe/simple/dark/visible{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/atmos)
++"dDn" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/green/side{
++	dir = 8
++	},
++/area/hydroponics)
++"dDo" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/medical/medbay/central)
++"dDp" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/research)
++"dDq" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"dDr" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"dDs" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard)
++"dDt" = (
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/barber{
++	dir = 8
++	},
++/area/crew_quarters/heads/cmo)
++"dDu" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"dDv" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/blue/side{
++	dir = 8
++	},
++/area/hallway/primary/aft)
++"dDw" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/aft)
++"dDx" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/aft)
++"dDy" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/research)
++"dDz" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/circuit,
++/area/science/robotics/mechbay)
++"dDA" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/mixing)
++"dDB" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/aft)
++"dDC" = (
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/black,
++/area/medical/morgue)
++"dDD" = (
++/obj/structure/cable/yellow{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/research)
++"dDE" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/science/robotics/lab)
++"dDF" = (
++/obj/structure/cable/yellow{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"dDG" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/secondary/exit/departure_lounge)
++"dDH" = (
++/obj/structure/chair{
++	pixel_y = -2
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault,
++/area/chapel/main)
++"dDI" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/xenobiology)
+ 
+ (1,1,1) = {"
+ aaa
+@@ -107566,7 +108324,7 @@ cIr
+ cJh
+ cKg
+ cKT
+-dBW
++dBV
+ cMu
+ aaf
+ aaa
+@@ -108584,7 +109342,7 @@ dux
+ aaf
+ aaf
+ aaf
+-dBP
++dBN
+ cDG
+ cEJ
+ cFF
+@@ -109098,7 +109856,7 @@ dux
+ aaa
+ aaa
+ aaa
+-dBQ
++dBN
+ cDI
+ cEL
+ cFH
+@@ -117288,7 +118046,7 @@ bGH
+ bJO
+ bLw
+ bTZ
+-bOC
++dDf
+ bQi
+ bRz
+ bLw
+@@ -118316,7 +119074,7 @@ bGH
+ bJP
+ bLw
+ bTZ
+-bOB
++dDg
+ bQg
+ bRD
+ bLw
+@@ -119300,7 +120058,7 @@ ahB
+ ave
+ awl
+ axm
+-dBE
++dBD
+ azL
+ aBf
+ ajm
+@@ -130645,7 +131403,7 @@ bxd
+ byS
+ bAC
+ dBJ
+-bCi
++dCY
+ bFH
+ bHq
+ bIJ
+@@ -131159,7 +131917,7 @@ bxd
+ byU
+ bAE
+ bCk
+-dBL
++dBJ
+ bFJ
+ bHs
+ bIL

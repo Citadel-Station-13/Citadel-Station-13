@@ -1,0 +1,263 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -40495,6 +40526,261 @@
+ 	},
+ /turf/open/floor/plasteel,
+ /area/engine/engineering)
++"bxw" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/hallway/primary/central{
++	name = "Primary Hallway"
++	})
++"bxx" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault{
++	dir = 5
++	},
++/area/bridge)
++"bxy" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault{
++	dir = 5
++	},
++/area/crew_quarters/heads/hop)
++"bxz" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 1
++	},
++/area/hallway/primary/central{
++	name = "Primary Hallway"
++	})
++"bxA" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 4;
++	icon_state = "1-4"
++	},
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 8;
++	icon_state = "1-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red/side{
++	dir = 6
++	},
++/area/security/brig)
++"bxB" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/teleporter)
++"bxC" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner,
++/area/maintenance/starboard/central)
++"bxD" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red/corner{
++	dir = 1
++	},
++/area/hallway/primary/central{
++	name = "Primary Hallway"
++	})
++"bxE" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/central)
++"bxF" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/crew_quarters/theatre)
++"bxG" = (
++/obj/machinery/atmospherics/components/unary/vent_pump/on{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/redyellow,
++/area/crew_quarters/bar{
++	name = "Atrium"
++	})
++"bxH" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"bxI" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"bxJ" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 4
++	},
++/area/crew_quarters/dorms)
++"bxK" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner,
++/area/crew_quarters/dorms)
++"bxL" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/redyellow,
++/area/crew_quarters/bar{
++	name = "Atrium"
++	})
++"bxM" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/hallway/secondary/exit{
++	name = "\improper Departure Lounge"
++	})
++"bxN" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/central)
++"bxO" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/redyellow,
++/area/crew_quarters/bar{
++	name = "Atrium"
++	})
++"bxP" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner,
++/area/hallway/primary/central{
++	name = "Primary Hallway"
++	})
++"bxQ" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 8;
++	heat_capacity = 1e+006
++	},
++/area/hallway/primary/central{
++	name = "Primary Hallway"
++	})
++"bxR" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 1
++	},
++/area/maintenance/port)
++"bxS" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/grimy,
++/area/library)
++"bxT" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/whiteblue/corner{
++	dir = 1
++	},
++/area/medical/medbay/zone3)
++"bxU" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner,
++/area/maintenance/port)
++"bxV" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/circuit,
++/area/science/robotics/mechbay)
++"bxW" = (
++/obj/effect/turf_decal/stripes/line,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/science/robotics/lab)
++"bxX" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard)
++"bxY" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 1;
++	heat_capacity = 1e+006
++	},
++/area/hallway/secondary/entry)
+ 
+ (1,1,1) = {"
+ aaa
