@@ -176,6 +176,6 @@
 								'sound/vore/prey/death_10.ogg')
 	return soundin
 
-/proc/playsound_global(file, repeat=0, wait, channel, volume)
+/proc/playsound_global(file, repeat = 0, wait, channel, volume)
 	for(var/V in GLOB.clients)
 		V << sound(file, repeat, wait, channel, volume)
