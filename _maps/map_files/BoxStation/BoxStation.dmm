@@ -7717,8 +7717,6 @@
 /area/security/detectives_office)
 "aqX" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/chair,
@@ -9526,10 +9524,6 @@
 /area/crew_quarters/fitness)
 "avB" = (
 /obj/structure/grille,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable{
 	d2 = 8;
@@ -13166,6 +13160,9 @@
 /area/crew_quarters/toilet)
 "aDO" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/airalarm{
+	pixel_y = 23
+	},
 /turf/open/floor/plasteel/freezer,
 /area/crew_quarters/toilet)
 "aDP" = (
@@ -20042,7 +20039,6 @@
 /area/security/vacantoffice)
 "aUP" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/wood,
@@ -22954,7 +22950,7 @@
 "bbI" = (
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Vacant Office A APC";
+	name = "Vacant Office APC";
 	pixel_x = -24
 	},
 /obj/structure/cable{
@@ -22962,7 +22958,7 @@
 	d2 = 4
 	},
 /turf/open/floor/plating,
-/area/security/vacantoffice/a)
+/area/security/vacantoffice)
 "bbJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -24942,7 +24938,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
@@ -27182,6 +27177,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/airalarm{
+	dir = 1;
+	pixel_y = -22
+	},
 /turf/open/floor/plasteel,
 /area/science/robotics/mechbay)
 "bly" = (
@@ -28469,7 +28468,6 @@
 /area/security/checkpoint/medical)
 "bol" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/disposalpipe/segment{
@@ -29139,7 +29137,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -30021,7 +30018,6 @@
 /obj/item/weapon/folder/white,
 /obj/item/weapon/folder/white,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/device/radio/off,
@@ -30369,7 +30365,6 @@
 	c_tag = "Teleporter"
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33501,7 +33496,6 @@
 "bza" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -34704,8 +34698,6 @@
 "bBF" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/item/weapon/storage/firstaid/toxin,
@@ -34773,7 +34765,6 @@
 "bBO" = (
 /obj/machinery/computer/med_data,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/barber,
@@ -35533,7 +35524,6 @@
 /area/storage/tech)
 "bDz" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -35610,7 +35600,6 @@
 "bDH" = (
 /obj/structure/closet/l3closet/janitor,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel,
@@ -39717,7 +39706,6 @@
 /obj/structure/table,
 /obj/machinery/reagentgrinder,
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -40329,7 +40317,6 @@
 /area/quartermaster/office)
 "bNL" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plating,
@@ -40542,7 +40529,6 @@
 	dir = 1
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/white,
@@ -40602,7 +40588,6 @@
 	},
 /obj/machinery/airalarm{
 	dir = 4;
-	locked = 0;
 	pixel_x = -23
 	},
 /turf/open/floor/plasteel,
@@ -45646,7 +45631,6 @@
 /area/maintenance/aft)
 "bZR" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/item/weapon/wrench,
@@ -48076,7 +48060,6 @@
 	req_access_txt = "11";
 	req_one_access_txt = "0"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cfa" = (
@@ -49105,14 +49088,9 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/obj/machinery/airalarm{
-	desc = "This particular atmos control unit appears to have no access restrictions.";
+/obj/machinery/airalarm/all_access{
 	dir = 8;
-	locked = 0;
-	name = "all-access air alarm";
-	pixel_x = 24;
-	req_access = "0";
-	req_one_access = "0"
+	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
 	d2 = 8;
@@ -49568,8 +49546,6 @@
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable{
@@ -53725,12 +53701,9 @@
 	dir = 1;
 	name = "Gas to Filter"
 	},
-/obj/machinery/airalarm{
+/obj/machinery/airalarm/engine{
 	dir = 4;
-	locked = 0;
-	pixel_x = -23;
-	req_access = null;
-	req_one_access_txt = "24;10"
+	pixel_x = -23
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
@@ -56050,7 +56023,6 @@
 /area/ai_monitored/turret_protected/ai)
 "cwg" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
 	pixel_y = 23
 	},
 /obj/structure/chair{
@@ -81120,13 +81092,13 @@ ayl
 ayl
 ayl
 aSf
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
-aTq
+czK
+czK
+czK
+czK
+czK
+czK
+czK
 aPz
 aPz
 bdB

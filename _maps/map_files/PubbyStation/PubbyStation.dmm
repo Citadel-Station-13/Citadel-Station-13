@@ -10228,11 +10228,6 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port)
 "awq" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/door/airlock/engineering{
 	name = "Port Solar Access";
 	req_access_txt = "10"
@@ -25432,8 +25427,6 @@
 	dir = 6
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/black,
@@ -27844,7 +27837,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
@@ -27855,13 +27848,13 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
@@ -34969,6 +34962,9 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
 /turf/open/floor/plasteel,
 /area/science/mineral_storeroom)
 "bwT" = (
@@ -35243,6 +35239,10 @@
 /obj/structure/table,
 /obj/item/weapon/folder/white,
 /obj/item/weapon/pen,
+/obj/machinery/airalarm{
+	dir = 4;
+	pixel_x = -22
+	},
 /turf/open/floor/plasteel/black,
 /area/science/server)
 "bxv" = (
@@ -45753,8 +45753,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/red/side{
@@ -46011,8 +46009,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/neutral/corner{
@@ -46050,8 +46046,6 @@
 	dir = 4
 	},
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -48357,8 +48351,6 @@
 /area/chapel/office)
 "cby" = (
 /obj/machinery/airalarm{
-	frequency = 1439;
-	locked = 0;
 	pixel_y = 23
 	},
 /turf/open/floor/carpet,
@@ -69051,8 +69043,8 @@ agv
 agv
 agv
 agv
-alM
-ahy
+cnH
+cnI
 agv
 anz
 aol
@@ -75271,7 +75263,7 @@ bWQ
 bev
 bfI
 bgL
-bgL
+cnJ
 biK
 bgL
 bgL
@@ -79384,7 +79376,7 @@ beG
 bfU
 bgP
 bfT
-biY
+biU
 bcE
 blM
 bni
@@ -79641,7 +79633,7 @@ bcE
 bcE
 bcE
 bcE
-biZ
+biT
 bcE
 blH
 bnd
@@ -85823,8 +85815,8 @@ bvk
 bwp
 bxw
 bte
-bzw
-bAt
+cnL
+cnM
 bBv
 bCw
 bDt
@@ -98156,7 +98148,7 @@ bfy
 bfy
 bfy
 bed
-bwX
+cnK
 brM
 aaa
 aaa
