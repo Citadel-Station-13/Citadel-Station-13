@@ -1,0 +1,26 @@
+diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/BoxStation.dmm	(rejected hunks)
+@@ -64372,6 +64372,24 @@
+ "cTC" = (
+ /turf/closed/wall/mineral/titanium,
+ /area/shuttle/mining)
++"cTD" = (
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/power/apc{
++	dir = 8;
++	name = "Central Maintenance APC";
++	pixel_x = -24
++	},
++/obj/structure/cable{
++	icon_state = "0-2";
++	pixel_y = 1;
++	d2 = 2
++	},
++/turf/open/floor/plating,
++/area/maintenance/central/secondary)
+ 
+ (1,1,1) = {"
+ aaa
