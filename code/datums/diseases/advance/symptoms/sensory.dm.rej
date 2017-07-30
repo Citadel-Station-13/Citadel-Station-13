@@ -128,7 +128,7 @@ diff a/code/datums/diseases/advance/symptoms/sensory.dm b/code/datums/diseases/a
 -		if(12 to 24)
 -			M.drowsyness += 1
 -		if(24 to INFINITY)
--			M.Sleeping(2, 0)
+-			M.Sleeping(40)
 +	if(brain_heal && A.stage >= 5)
 +		M.adjustBrainLoss(-3)
 \ No newline at end of file

@@ -1,37 +1,1241 @@
 diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
-@@ -156131,16 +156132,16 @@ cim
- brN
- brN
- bqq
--coe
-+bkT
- cpL
--cqZ
-+brH
- csr
--cub
-+bmI
- cvE
- cwY
--cqZ
--cqZ
--cqZ
-+brH
-+brH
-+brH
- brH
- bkT
- cFG
-@@ -156166,10 +156167,10 @@ djZ
- dlM
- dnc
- doh
--dpQ
-+dnc
- drt
- dsT
--dpQ
-+dnc
- ego
- dwO
- dyc
+@@ -3385,8 +3383,7 @@
+ "aht" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/machinery/door/airlock{
+-	name = "Auxiliary Storage Closet";
+-	req_access_txt = "32"
++	name = "Auxiliary Storage Closet"
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 2
+@@ -6246,7 +6229,7 @@
+ /obj/machinery/conveyor_switch/oneway{
+ 	convdir = -1;
+ 	id = "garbage";
+-	name = "disposal coveyor"
++	name = "disposal conveyor"
+ 	},
+ /obj/structure/disposalpipe/segment{
+ 	dir = 4
+@@ -9049,14 +9031,9 @@
+ /area/quartermaster/storage)
+ "atd" = (
+ /obj/effect/decal/cleanable/dirt,
+-/obj/structure/cable/white{
+-	d1 = 1;
+-	d2 = 2;
+-	icon_state = "1-2"
+-	},
+ /obj/machinery/door/airlock/maintenance_hatch{
+ 	name = "Cargo Maintenance";
+-	req_access_txt = "48;50"
++	req_access_txt = "31"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/structure/disposalpipe/segment,
+@@ -15502,7 +15472,7 @@
+ /obj/machinery/conveyor_switch/oneway{
+ 	convdir = -1;
+ 	id = "cargodeliver";
+-	name = "delivery coveyor";
++	name = "delivery conveyor";
+ 	pixel_x = -12
+ 	},
+ /turf/open/floor/plasteel/loadingarea,
+@@ -24363,7 +24340,7 @@
+ 	icon_state = "1-2"
+ 	},
+ /obj/machinery/door/airlock/maintenance_hatch{
+-	name = "Hydroponic's Maintenance";
++	name = "Hydroponics Maintenance";
+ 	req_access_txt = "35"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+@@ -28756,7 +28733,7 @@
+ /obj/machinery/atmospherics/components/trinary/filter{
+ 	dir = 1;
+ 	filter_type = "n2";
+-	name = "nitogren filter";
++	name = "nitrogen filter";
+ 	on = 1
+ 	},
+ /turf/open/floor/plasteel/red/side{
+@@ -29368,7 +29345,6 @@
+ /obj/item/device/healthanalyzer,
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+ 	pixel_x = -3;
+-	pixel_x = -3;
+ 	pixel_y = 2
+ 	},
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+@@ -29665,6 +29636,7 @@
+ /obj/machinery/atmospherics/pipe/simple/orange/visible{
+ 	dir = 4
+ 	},
++/obj/effect/landmark/event_spawn,
+ /turf/open/floor/plasteel,
+ /area/engine/atmos)
+ "bhc" = (
+@@ -30603,7 +30575,6 @@
+ "bjc" = (
+ /obj/effect/decal/cleanable/dirt,
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+-	name = "scrubbers pipe";
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel/caution{
+@@ -30612,7 +30583,6 @@
+ /area/engine/atmos)
+ "bjd" = (
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+-	name = "scrubbers pipe";
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel/caution{
+@@ -30625,7 +30595,6 @@
+ 	dir = 8
+ 	},
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+-	name = "scrubbers pipe";
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel,
+@@ -33979,7 +33945,7 @@
+ 	icon_state = "2-8"
+ 	},
+ /obj/machinery/door/airlock/glass_security{
+-	name = "Security Transfering Control";
++	name = "Security Transferring Control";
+ 	req_access_txt = "63"
+ 	},
+ /obj/structure/disposalpipe/segment{
+@@ -35487,7 +35452,7 @@
+ /obj/structure/cable/white,
+ /obj/machinery/power/apc{
+ 	dir = 2;
+-	name = "Security Transfering APC";
++	name = "Security Transferring APC";
+ 	pixel_y = -26
+ 	},
+ /turf/open/floor/plasteel/red/side,
+@@ -36220,7 +36184,7 @@
+ 	icon_state = "2-4"
+ 	},
+ /obj/machinery/door/airlock/glass_security{
+-	name = "Security Transfering Control";
++	name = "Security Transferring Control";
+ 	req_access_txt = "63"
+ 	},
+ /obj/structure/disposalpipe/segment,
+@@ -37269,7 +37231,7 @@
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /obj/structure/bonfire,
+ /obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice{
+-	desc = "For the weary spacemen on their quest to rekindle the first plasmafire.";
++	desc = "For the weary spacemen on their quest to rekindle the first plasma fire.";
+ 	name = "Carton of Estus"
+ 	},
+ /obj/item/weapon/nullrod/claymore/glowing{
+@@ -37935,7 +37897,7 @@
+ "bwk" = (
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/airlock/security{
+-	name = "Security Transfering Center";
++	name = "Security Transferring Center";
+ 	req_access_txt = "63"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+@@ -41256,7 +41234,7 @@
+ 	},
+ /obj/machinery/door/airlock/glass_security{
+ 	id_tag = "gulagdoor";
+-	name = "Security Transfering Center";
++	name = "Security Transferring Center";
+ 	req_access_txt = "63"
+ 	},
+ /turf/open/floor/plasteel/red/side{
+@@ -43271,10 +43245,9 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/machinery/door/window/brigdoor/westright{
++/obj/machinery/door/window/brigdoor/security/cell/westright{
+ 	id = "brig1";
+-	name = "Cell 1";
+-	req_access_txt = "2"
++	name = "Cell 1"
+ 	},
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 8
+@@ -43914,7 +43878,7 @@
+ 	},
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/airlock/command{
+-	name = "Telecoms Control Room";
++	name = "Telecomms Control Room";
+ 	req_access = null;
+ 	req_access_txt = "19; 61"
+ 	},
+@@ -44951,7 +44913,7 @@
+ /obj/machinery/power/apc{
+ 	cell_type = 10000;
+ 	dir = 1;
+-	name = "Telecoms Monitoring APC";
++	name = "Telecomms Monitoring APC";
+ 	pixel_y = 28
+ 	},
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+@@ -47278,10 +47239,9 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/machinery/door/window/brigdoor/westright{
++/obj/machinery/door/window/brigdoor/security/cell/westright{
+ 	id = "brig2";
+-	name = "Cell 2";
+-	req_access_txt = "2"
++	name = "Cell 2"
+ 	},
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 8
+@@ -49274,7 +49252,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/airlock/command{
+ 	cyclelinkeddir = 2;
+-	name = "Telecoms Server Room";
++	name = "Telecomms Server Room";
+ 	req_access = null;
+ 	req_access_txt = "61"
+ 	},
+@@ -51835,7 +51814,7 @@
+ 	},
+ /obj/machinery/door/airlock/command{
+ 	cyclelinkeddir = 1;
+-	name = "Telecoms Server Room";
++	name = "Telecomms Server Room";
+ 	req_access = null;
+ 	req_access_txt = "61"
+ 	},
+@@ -54556,7 +54536,7 @@
+ "bZV" = (
+ /obj/machinery/power/apc{
+ 	dir = 8;
+-	name = "Telecoms Server Room APC";
++	name = "Telecomms Server Room APC";
+ 	pixel_x = -26
+ 	},
+ /obj/structure/cable/white,
+@@ -56020,9 +56001,8 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/machinery/door/window/brigdoor/westright{
+-	name = "Holding Cell";
+-	req_access_txt = "63"
++/obj/machinery/door/window/brigdoor/security/holding/westright{
++	name = "Holding Cell"
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 4
+@@ -57421,7 +57401,7 @@
+ 	},
+ /obj/machinery/door/airlock/command{
+ 	cyclelinkeddir = 2;
+-	name = "Telecoms Server Room";
++	name = "Telecomms Server Room";
+ 	req_access = null;
+ 	req_access_txt = "61"
+ 	},
+@@ -58835,7 +58811,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/airlock/command{
+ 	cyclelinkeddir = 1;
+-	name = "Telecoms Server Room";
++	name = "Telecomms Server Room";
+ 	req_access = null;
+ 	req_access_txt = "61"
+ 	},
+@@ -61072,7 +61054,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/airlock/command{
+ 	cyclelinkeddir = 0;
+-	name = "Telecoms Foyer";
++	name = "Telecomms Foyer";
+ 	req_access = null;
+ 	req_access_txt = "61"
+ 	},
+@@ -76914,7 +76903,6 @@
+ /obj/item/clothing/glasses/hud/health,
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+ 	pixel_x = -3;
+-	pixel_x = -3;
+ 	pixel_y = 2
+ 	},
+ /obj/machinery/status_display{
+@@ -78316,7 +78305,7 @@
+ /obj/structure/window/reinforced/fulltile,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemisttop";
+-	name = "Chemisty Lobby Shutters"
++	name = "Chemistry Lobby Shutters"
+ 	},
+ /turf/open/floor/plating,
+ /area/medical/medbay/central)
+@@ -78324,7 +78313,7 @@
+ /obj/structure/grille,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemisttop";
+-	name = "Chemisty Lobby Shutters"
++	name = "Chemistry Lobby Shutters"
+ 	},
+ /obj/structure/window/reinforced/fulltile,
+ /turf/open/floor/plating,
+@@ -78334,7 +78323,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemisttop";
+-	name = "Chemisty Lobby Shutters"
++	name = "Chemistry Lobby Shutters"
+ 	},
+ /obj/machinery/door/window/southleft{
+ 	name = "Chemistry Desk";
+@@ -79223,7 +79212,7 @@
+ /obj/structure/window/reinforced/fulltile,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemistbot";
+-	name = "Chemisty Side Shutters"
++	name = "Chemistry Side Shutters"
+ 	},
+ /turf/open/floor/plating,
+ /area/medical/chemistry)
+@@ -80336,7 +80325,6 @@
+ /obj/item/weapon/folder/white,
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+ 	pixel_x = -3;
+-	pixel_x = -3;
+ 	pixel_y = 2
+ 	},
+ /turf/open/floor/plasteel/neutral/corner{
+@@ -81444,7 +81429,6 @@
+ /obj/item/weapon/folder/white,
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+ 	pixel_x = -3;
+-	pixel_x = -3;
+ 	pixel_y = 2
+ 	},
+ /obj/effect/turf_decal/delivery,
+@@ -82139,7 +82123,7 @@
+ /obj/structure/window/reinforced/fulltile,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemistbot";
+-	name = "Chemisty Side Shutters"
++	name = "Chemistry Side Shutters"
+ 	},
+ /obj/structure/disposalpipe/segment{
+ 	dir = 4
+@@ -82723,7 +82707,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/door/poddoor/shutters/preopen{
+ 	id = "chemistbot";
+-	name = "Chemisty Side Shutters"
++	name = "Chemistry Side Shutters"
+ 	},
+ /obj/machinery/door/window/southleft{
+ 	dir = 4;
+@@ -93243,6 +93268,7 @@
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 4
+ 	},
++/obj/machinery/aug_manipulator,
+ /turf/open/floor/plasteel,
+ /area/science/robotics/lab)
+ "dxQ" = (
+@@ -96188,7 +96214,7 @@
+ /area/science/test_area)
+ "dDJ" = (
+ /obj/machinery/doppler_array{
+-	dir = 4
++	dir = 8
+ 	},
+ /obj/structure/extinguisher_cabinet{
+ 	pixel_x = -26;
+@@ -103335,7 +103359,6 @@
+ /obj/item/weapon/reagent_containers/dropper,
+ /obj/item/weapon/reagent_containers/spray/cleaner{
+ 	pixel_x = -3;
+-	pixel_x = -3;
+ 	pixel_y = 2
+ 	},
+ /obj/effect/turf_decal/stripes/line{
+@@ -109078,7 +109152,7 @@
+ /obj/structure/table/reinforced,
+ /obj/machinery/microwave{
+ 	desc = "It looks really dirty.";
+-	name = "maint microwave";
++	name = "maintenance microwave";
+ 	pixel_y = 5
+ 	},
+ /obj/structure/sign/poster/official/help_others{
+@@ -110542,7 +110612,7 @@
+ 	},
+ /obj/machinery/power/apc{
+ 	dir = 4;
+-	name = "Starboard Quarter Maintenace APC";
++	name = "Starboard Quarter Maintenance APC";
+ 	pixel_x = 26
+ 	},
+ /turf/open/floor/plating,
+@@ -113196,6 +113267,852 @@
+ 	},
+ /turf/open/floor/plasteel,
+ /area/engine/atmos)
++"eqb" = (
++/obj/structure/sign/electricshock,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 6
++	},
++/turf/closed/wall/r_wall,
++/area/engine/atmospherics_engine)
++"eqc" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/light/small{
++	dir = 1
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
++	dir = 1
++	},
++/turf/open/floor/plasteel,
++/area/engine/atmospherics_engine)
++"eqd" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/door/airlock/maintenance_hatch{
++	name = "Maintenance Hatch";
++	req_access_txt = "12"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/structure/barricade/wooden,
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/turf/open/floor/plasteel,
++/area/maintenance/starboard/fore)
++"eqe" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 8
++	},
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/turf/open/floor/plasteel,
++/area/engine/gravity_generator)
++"eqf" = (
++/obj/machinery/door/airlock/maintenance_hatch{
++	name = "Maintenance Hatch";
++	req_access_txt = "12"
++	},
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/turf_decal/stripes/line{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/turf/open/floor/plasteel,
++/area/hallway/secondary/construction)
++"eqg" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqh" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqi" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqj" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqk" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eql" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqm" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqn" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqo" = (
++/obj/effect/decal/cleanable/dirt,
++/turf/open/floor/plating,
++/area/maintenance/department/medical)
++"eqp" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqq" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqr" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqs" = (
++/turf/closed/wall,
++/area/maintenance/department/medical)
++"eqt" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/construction/mining/aux_base)
++"equ" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/arrival,
++/area/hallway/secondary/entry)
++"eqv" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/arrival,
++/area/hallway/secondary/entry)
++"eqw" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/fore)
++"eqx" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/carpet,
++/area/hallway/secondary/entry)
++"eqy" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/fore)
++"eqz" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/atmospherics_engine)
++"eqA" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 1
++	},
++/area/maintenance/port/fore)
++"eqB" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/fore)
++"eqC" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/maintenance/port/fore)
++"eqD" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/storage)
++"eqE" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 4
++	},
++/area/hallway/secondary/service)
++"eqF" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/redyellow,
++/area/crew_quarters/bar/atrium)
++"eqG" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/storage)
++"eqH" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/grimy,
++/area/crew_quarters/bar/atrium)
++"eqI" = (
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/office)
++"eqJ" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/qm)
++"eqK" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/redyellow,
++/area/crew_quarters/bar/atrium)
++"eqL" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/fore)
++"eqM" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/greenblue/side,
++/area/hydroponics)
++"eqN" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/fore)
++"eqO" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/miningoffice)
++"eqP" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"eqQ" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/fore)
++"eqR" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red,
++/area/crew_quarters/kitchen)
++"eqS" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/quartermaster/miningoffice)
++"eqT" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hydroponics)
++"eqU" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"eqV" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"eqW" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/security/brig)
++"eqX" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/atmos)
++"eqY" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"eqZ" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault{
++	dir = 5
++	},
++/area/bridge)
++"era" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/security/transfer)
++"erb" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/storage/tech)
++"erc" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/break_room)
++"erd" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/storage/primary)
++"ere" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/darkblue/side,
++/area/bridge)
++"erf" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 4
++	},
++/area/maintenance/port/fore)
++"erg" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/red/side{
++	dir = 8
++	},
++/area/security/brig)
++"erh" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/storage/primary)
++"eri" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"erj" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/vault{
++	dir = 5
++	},
++/area/security/detectives_office)
++"erk" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/port)
++"erl" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/grimy,
++/area/tcommsat/computer)
++"erm" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/port)
++"ern" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/starboard)
++"ero" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/starboard)
++"erp" = (
++/obj/effect/turf_decal/stripes/line,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"erq" = (
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/grimy,
++/area/crew_quarters/heads/hop)
++"err" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 4
++	},
++/area/maintenance/port)
++"ers" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/grimy,
++/area/library)
++"ert" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"eru" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard)
++"erv" = (
++/obj/structure/cable{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/structure/disposalpipe/segment,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/engine/engineering)
++"erw" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/wood,
++/area/library)
++"erx" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner{
++	dir = 8
++	},
++/area/hallway/secondary/command)
++"ery" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/corner,
++/area/hallway/secondary/command)
++"erz" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"erA" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/crew_quarters/locker)
++"erB" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/maintenance/starboard)
++"erC" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"erD" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/ai_monitored/storage/eva)
++"erE" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/yellow,
++/area/engine/storage)
++"erF" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/crew_quarters/toilet/restrooms)
++"erG" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/crew_quarters/locker)
++"erH" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/crew_quarters/fitness/recreation)
++"erI" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel,
++/area/engine/engineering)
++"erJ" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port)
++"erK" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port)
++"erL" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port)
++"erM" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"erN" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/central)
++"erO" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port)
++"erP" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"erQ" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/medical/medbay/central)
++"erR" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/cmo,
++/area/medical/medbay/central)
++"erS" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/science/research)
++"erT" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/crew_quarters/fitness/recreation)
++"erU" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 2
++	},
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/white,
++/area/science/xenobiology)
++"erV" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/aft)
++"erW" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 1;
++	heat_capacity = 1e+006
++	},
++/area/maintenance/starboard/aft)
++"erX" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/purple,
++/area/science/research)
++"erY" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 4
++	},
++/area/maintenance/port)
++"erZ" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/blue,
++/area/medical/medbay/central)
++"esa" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/maintenance/port)
++"esb" = (
++/obj/structure/disposalpipe/segment{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/science/research)
++"esc" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/medical/medbay/central)
++"esd" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/medical/medbay/central)
++"ese" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/medical/medbay/central)
++"esf" = (
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/starboard/aft)
++"esg" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/aft)
++"esh" = (
++/obj/structure/cable/white{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 1
++	},
++/area/maintenance/port)
++"esi" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/blue,
++/area/medical/medbay/central)
++"esj" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/science/robotics/lab)
++"esk" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/maintenance/starboard/aft)
++"esl" = (
++/obj/structure/disposalpipe/segment,
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/purple,
++/area/science/research)
++"esm" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/machinery/atmospherics/pipe/simple/supply/hidden,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/science/mixing)
++"esn" = (
++/obj/structure/cable/white{
++	d1 = 1;
++	d2 = 2;
++	icon_state = "1-2"
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/primary/aft)
++"eso" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side,
++/area/maintenance/aft)
++"esp" = (
++/obj/machinery/atmospherics/pipe/simple/supply/hidden{
++	dir = 4
++	},
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plating,
++/area/maintenance/port/aft)
++"esq" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/secondary/exit/departure_lounge)
++"esr" = (
++/obj/effect/decal/cleanable/dirt,
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral/side{
++	dir = 4
++	},
++/area/maintenance/port/aft)
++"ess" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel{
++	dir = 1;
++	icon_state = "chapel"
++	},
++/area/chapel/main)
++"est" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel{
++	icon_state = "chapel"
++	},
++/area/chapel/main)
++"esu" = (
++/obj/effect/landmark/event_spawn,
++/turf/open/floor/plasteel/neutral,
++/area/hallway/secondary/exit/departure_lounge)
++"esv" = (
++/obj/structure/closet/secure_closet/miner/unlocked,
++/turf/open/floor/plasteel/yellow/side{
++	dir = 4
++	},
++/area/construction/mining/aux_base)
+ 
+ (1,1,1) = {"
+ aaa

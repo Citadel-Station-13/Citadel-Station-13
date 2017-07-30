@@ -1,0 +1,19 @@
+diff a/_maps/RandomZLevels/snowdin.dmm b/_maps/RandomZLevels/snowdin.dmm	(rejected hunks)
+@@ -1338,7 +1338,7 @@
+ 	},
+ /area/awaymission/snowdin/post)
+ "dx" = (
+-/turf/open/floor/plating/lava{
++/turf/open/lava{
+ 	temperature = 140
+ 	},
+ /area/awaymission/snowdin/dungeon1)
+@@ -1511,7 +1511,7 @@
+ 	},
+ /area/awaymission/snowdin/post)
+ "dT" = (
+-/turf/open/floor/plating/lava{
++/turf/open/lava{
+ 	temperature = 140
+ 	},
+ /area/awaymission/snowdin/post)

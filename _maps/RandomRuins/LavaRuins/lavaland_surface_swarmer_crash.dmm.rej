@@ -1,0 +1,33 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm	(rejected hunks)
+@@ -6,14 +6,10 @@
+ /turf/closed/mineral/volcanic/lava_land_surface,
+ /area/template_noop)
+ "c" = (
+-/turf/closed/wall/mineral/plastitanium{
+-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+-	},
++/turf/closed/wall/mineral/plastitanium,
+ /area/ruin/unpowered)
+ "d" = (
+-/turf/open/floor/mineral/plastitanium{
+-	baseturf = /turf/open/floor/plating/lava/smooth
+-	},
++/turf/open/floor/mineral/plastitanium,
+ /area/ruin/unpowered)
+ "e" = (
+ /obj/structure/shuttle/engine/propulsion{
+@@ -23,9 +19,11 @@
+ /area/ruin/unpowered)
+ "f" = (
+ /mob/living/simple_animal/hostile/megafauna/swarmer_swarm_beacon,
+-/turf/open/floor/mineral/plastitanium{
+-	baseturf = /turf/open/floor/plating/lava/smooth
+-	},
++/turf/open/floor/mineral/plastitanium,
++/area/ruin/unpowered)
++"g" = (
++/obj/effect/baseturf_helper,
++/turf/closed/wall/mineral/plastitanium,
+ /area/ruin/unpowered)
+ 
+ (1,1,1) = {"

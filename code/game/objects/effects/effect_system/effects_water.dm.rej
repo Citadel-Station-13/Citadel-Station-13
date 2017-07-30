@@ -1,0 +1,10 @@
+diff a/code/game/objects/effects/effect_system/effects_water.dm b/code/game/objects/effects/effect_system/effects_water.dm	(rejected hunks)
+@@ -19,7 +19,7 @@
+ 		return 0
+ 	.=..()
+ 
+-/obj/effect/particle_effect/water/Bump(atom/A)
++/obj/effect/particle_effect/water/Collide(atom/A)
+ 	if(reagents)
+ 		reagents.reaction(A)
+ 	return ..()

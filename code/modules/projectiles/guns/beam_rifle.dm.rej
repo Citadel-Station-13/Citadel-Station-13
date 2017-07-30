@@ -1,0 +1,143 @@
+diff a/code/modules/projectiles/guns/beam_rifle.dm b/code/modules/projectiles/guns/beam_rifle.dm	(rejected hunks)
+@@ -351,20 +499,29 @@
+ /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
+ 	if(!do_pierce)
+ 		return FALSE
++	if(pierced[target])		//we already pierced them go away
++		loc = get_turf(target)
++		return TRUE
+ 	if(isclosedturf(target))
+ 		if(wall_pierce++ < wall_pierce_amount)
+ 			loc = target
+ 			if(prob(wall_devastate))
+-				target.ex_act(2)
++				if(istype(target, /turf/closed/wall))
++					var/turf/closed/wall/W = target
++					W.dismantle_wall(TRUE, TRUE)
++				else
++					target.ex_act(EXPLODE_HEAVY)
+ 			return TRUE
+ 	if(ismovableatom(target))
+ 		var/atom/movable/AM = target
+ 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
+-			if(structure_pierce++ < structure_pierce_amount)
++			if(structure_pierce < structure_pierce_amount)
+ 				if(isobj(AM))
+ 					var/obj/O = AM
+ 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
++				pierced[AM] = TRUE
+ 				loc = get_turf(AM)
++				structure_pierce++
+ 				return TRUE
+ 	return FALSE
+ 
+@@ -395,23 +552,70 @@
+ 	if(!QDELETED(target))
+ 		handle_impact(target)
+ 
+-/obj/item/projectile/beam/beam_rifle/Bump(atom/target, yes)
++/obj/item/projectile/beam/beam_rifle/Collide(atom/target)
++	paused = TRUE
+ 	if(check_pierce(target))
+ 		permutated += target
+ 		return FALSE
+ 	if(!QDELETED(target))
+ 		cached = get_turf(target)
++	paused = FALSE
+ 	. = ..()
+ 
+ /obj/item/projectile/beam/beam_rifle/on_hit(atom/target, blocked = FALSE)
++	paused = TRUE
+ 	if(!QDELETED(target))
+ 		cached = get_turf(target)
+ 	handle_hit(target)
++	paused = FALSE
+ 	. = ..()
+ 
+ /obj/item/projectile/beam/beam_rifle/hitscan
+ 	icon_state = ""
+-	var/tracer_type = /obj/effect/temp_visual/projectile_beam/tracer
++	var/tracer_type = /obj/effect/projectile_beam/tracer
++	var/starting_z
++	var/starting_p_x
++	var/starting_p_y
++	var/constant_tracer = FALSE
++	var/travelled_p_x = 0
++	var/travelled_p_y = 0
++	var/tracer_spawned = FALSE
++
++/obj/item/projectile/beam/beam_rifle/hitscan/Destroy()
++	paused = TRUE	//STOP HITTING WHEN YOU'RE ALREADY BEING DELETED!
++	spawn_tracer(constant_tracer)
++	return ..()
++
++/obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer(put_in_rifle = FALSE)
++	if(tracer_spawned)
++		return
++	tracer_spawned = TRUE
++	//Remind me to port baystation trajectories so this shit isn't needed...
++	var/pixels_travelled = round(sqrt(travelled_p_x**2 + travelled_p_y**2),1)
++	var/scaling = pixels_travelled/world.icon_size
++	var/midpoint_p_x = round(starting_p_x + (travelled_p_x / 2))
++	var/midpoint_p_y = round(starting_p_y + (travelled_p_y / 2))
++	var/tracer_px = midpoint_p_x % world.icon_size
++	var/tracer_py = midpoint_p_y % world.icon_size
++	var/tracer_lx = (midpoint_p_x - tracer_px) / world.icon_size
++	var/tracer_ly = (midpoint_p_y - tracer_py) / world.icon_size
++	var/obj/effect/projectile_beam/PB = new tracer_type(src)
++	PB.apply_vars(Angle, tracer_px, tracer_py, color, scaling, locate(tracer_lx,tracer_ly,starting_z))
++	if(put_in_rifle && istype(gun))
++		if(gun.current_tracer)
++			QDEL_NULL(gun.current_tracer)
++		gun.current_tracer = PB
++	else
++		QDEL_IN(PB, 5)
++
++/obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge(turf/T)
++	if(!istype(T))
++		return TRUE
++	var/tx = T.x
++	var/ty = T.y
++	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
++		return TRUE
++	return FALSE
+ 
+ /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
+ 	set waitfor = 0
+@@ -469,27 +681,23 @@
+ 			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
+ 		old_pixel_x = pixel_x_offset
+ 		old_pixel_y = pixel_y_offset
+-		if(original && (original.layer>=2.75) || ismob(original))
+-			if(loc == get_turf(original))
+-				if(!(original in permutated))
+-					Bump(original, 1)
++		if(can_hit_target(original, permutated))
++			Collide(original)
++		c2 = loc
+ 		Range()
+-
+-/obj/item/projectile/beam/beam_rifle/hitscan/Range()
+-	spawn_tracer_effect()
+-	if(!QDELETED(src) && loc)
+-		cached = get_turf(src)
+-
+-/obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
+-	QDEL_IN((new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)), 5)
++		if(check_for_turf_edge(loc))
++			spawn_tracer(constant_tracer)
++	if(istype(c2))
++		cached = c2
+ 
+ /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
+-	tracer_type = /obj/effect/temp_visual/projectile_beam/tracer/aiming
++	tracer_type = /obj/effect/projectile_beam/tracer/aiming
+ 	name = "aiming beam"
+ 	hitsound = null
+ 	hitsound_wall = null
+ 	nodamage = TRUE
+ 	damage = 0
++	constant_tracer = TRUE
+ 
+ /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
+ 	qdel(src)

@@ -1,0 +1,16 @@
+diff a/code/__DEFINES/shuttles.dm b/code/__DEFINES/shuttles.dm	(rejected hunks)
+@@ -51,4 +51,11 @@
+ //Engine related
+ #define ENGINE_COEFF_MIN 0.5
+ #define ENGINE_COEFF_MAX 2
+-#define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+\ No newline at end of file
++#define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
++
++//Docking error flags
++#define DOCKING_SUCCESS 0
++#define DOCKING_COMPLETE 1
++#define DOCKING_BLOCKED 2
++#define DOCKING_IMMOBILIZED 4
++#define DOCKING_AREA_EMPTY 8
+\ No newline at end of file

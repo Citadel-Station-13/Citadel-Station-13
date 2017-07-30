@@ -1,0 +1,10 @@
+diff a/code/modules/awaymissions/exile.dm b/code/modules/awaymissions/exile.dm	(rejected hunks)
+@@ -1,7 +1,7 @@
+ 
+ /obj/structure/closet/secure_closet/exile
+ 	name = "exile implants"
+-	req_access = list(GLOB.access_hos)
++	req_access = list(ACCESS_HOS)
+ 
+ /obj/structure/closet/secure_closet/exile/New()
+ 	..()

@@ -1,0 +1,7 @@
+diff a/code/game/gamemodes/devil/objectives.dm b/code/game/gamemodes/devil/objectives.dm	(rejected hunks)
+@@ -1,5 +1,4 @@
+ /datum/objective/devil
+-	dangerrating = 5
+ 
+ /datum/objective/devil/soulquantity
+ 	explanation_text = "You shouldn't see this text.  Error:DEVIL1"

@@ -1,0 +1,11 @@
+diff a/code/game/objects/effects/effect_system/effects_smoke.dm b/code/game/objects/effects/effect_system/effects_smoke.dm	(rejected hunks)
+@@ -133,8 +133,7 @@
+ 		M.emote("cough")
+ 		return 1
+ 
+-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target, height=0)
+-	if(height==0) return 1
++/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
+ 	if(istype(mover, /obj/item/projectile/beam))
+ 		var/obj/item/projectile/beam/B = mover
+ 		B.damage = (B.damage/2)
