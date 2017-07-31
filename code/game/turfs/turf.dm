@@ -414,7 +414,7 @@
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
-		qdel(thing, force=TRUE
+		qdel(thing, force=TRUE)
 
 	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)
 
