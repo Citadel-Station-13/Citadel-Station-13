@@ -16,7 +16,6 @@ obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owne
 
 		B.mind.assigned_role = B.name
 		B.mind.special_role = B.name
-		SSticker.mode.traitors += B.mind
 		var/datum/objective/syndi_borer/new_objective
 		new_objective = new /datum/objective/syndi_borer
 		new_objective.owner = B.mind

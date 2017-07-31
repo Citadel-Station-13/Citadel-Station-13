@@ -83,3 +83,24 @@
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Stay alive until your target arrives on the station, you will be notified when the target has been identified."
+
+
+
+//BORER STUFF
+//Because borers didn't use to have objectives
+/datum/objective/normal_borer //Default objective, should technically never be used unmodified but CAN work unmodified.
+	explanation_text = "You must escape with at least one borer with host on the shuttle."
+	target_amount = 1
+	martyr_compatible = 0
+
+/datum/objective/normal_borer/check_completion()
+	var/total_borer_hosts = 0
+	for(var/mob/living/carbon/C in GLOB.mob_list)
+		var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+		var/turf/location = get_turf(C)
+		if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+			total_borer_hosts++
+	if(target_amount <= total_borer_hosts)
+		return TRUE
+	else
+		return FALSE
