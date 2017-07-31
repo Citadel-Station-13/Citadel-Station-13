@@ -6,7 +6,7 @@
 	desc = "Used to remotely lockdown or detonate linked Cyborgs."
 	icon_screen = "robot"
 	icon_keyboard = "rd_key"
-	req_access = list(GLOB.access_robotics)
+	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/weapon/circuitboard/computer/robotics
 	var/temp = null
 
@@ -158,7 +158,7 @@
 
 	else if (href_list["killdrone"])
 		if(src.allowed(usr))
-			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"])
+			var/mob/living/simple_animal/drone/D = locate(href_list["killdrone"]) in GLOB.mob_list
 			if(D.hacked)
 				to_chat(usr, "<span class='danger'>ERROR: [D] is not responding to external commands.</span>")
 			else

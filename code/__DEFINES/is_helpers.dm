@@ -1,6 +1,6 @@
 // simple is_type and similar inline helpers
 
-#define islist(L) (istype(L,/list))
+#define islist(L) (istype(L, /list))
 
 #define in_range(source, user) (get_dist(source, user) <= 1)
 
@@ -23,7 +23,7 @@
 
 #define ismineralturf(A) (istype(A, /turf/closed/mineral))
 
-#define islava(A) (istype(A, /turf/open/floor/plating/lava))
+#define islava(A) (istype(A, /turf/open/lava))
 
 //Mobs
 #define isliving(A) (istype(A, /mob/living))

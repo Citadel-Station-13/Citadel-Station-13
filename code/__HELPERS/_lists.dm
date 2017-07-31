@@ -88,7 +88,7 @@
 			L -= V //No return here so that it removes all strings of that type
 	return
 
-
+//returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
 	for (var/thing in atoms)

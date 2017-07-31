@@ -92,6 +92,7 @@
 	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	instrumentId = "eguitar"
+	instrumentExt = "ogg"
 
 /obj/item/device/instrument/glockenspiel
 	name = "glockenspiel"
@@ -138,6 +139,12 @@
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/instrument)
+
+/obj/item/device/instrument/harmonica/speechModification(message)
+	if(song.playing && ismob(loc))
+		to_chat(loc, "<span class='warning'>You stop playing the harmonica to talk...</span>")
+		song.playing = FALSE
+	return message
 
 /obj/item/device/instrument/bikehorn
 	name = "gilded bike horn"
