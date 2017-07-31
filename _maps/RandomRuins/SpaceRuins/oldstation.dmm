@@ -99,6 +99,7 @@
 "ap" = (
 /obj/effect/decal/cleanable/oil,
 /obj/effect/decal/cleanable/robot_debris,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "aq" = (
@@ -169,11 +170,11 @@
 /area/template_noop)
 "aB" = (
 /obj/effect/decal/cleanable/robot_debris,
-/mob/living/simple_animal/hostile/hivebot/rapid,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "aC" = (
-/mob/living/simple_animal/hostile/hivebot/rapid,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/black,
 /area/ruin/ancientstation/hivebot)
 "aD" = (
@@ -691,7 +692,7 @@
 /area/ruin/ancientstation/deltacorridor)
 "cc" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plating,
 /area/ruin/ancientstation/deltacorridor)
 "cd" = (
@@ -878,6 +879,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "cA" = (
@@ -908,7 +910,7 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/rapid,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "cD" = (
@@ -1079,6 +1081,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "cZ" = (
@@ -1087,6 +1090,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "da" = (
@@ -1119,7 +1123,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot/rapid,
+/mob/living/simple_animal/hostile/hivebot/range,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "de" = (
@@ -1135,6 +1139,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
+/mob/living/simple_animal/hostile/hivebot/strong,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "dg" = (
@@ -1532,6 +1537,7 @@
 	req_access = "0";
 	req_one_access = "0"
 	},
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "ef" = (
@@ -1868,6 +1874,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "eX" = (
@@ -2234,7 +2241,7 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/strong,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "fS" = (
@@ -4115,7 +4122,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/hivebot/rapid,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "ju" = (
@@ -4139,6 +4146,7 @@
 "jw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
+/mob/living/simple_animal/hostile/hivebot,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/ancientstation/deltacorridor)
 "jx" = (
@@ -5152,31 +5160,6 @@
 	icon_state = "floor"
 	},
 /area/template_noop)
-"me" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/hostile/hivebot/rapid,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/ancientstation/deltacorridor)
-"mf" = (
-/obj/effect/decal/cleanable/dirt,
-/mob/living/simple_animal/hostile/hivebot/rapid,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/ancientstation/deltacorridor)
-"mg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/mob/living/simple_animal/hostile/hivebot/rapid,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/ancientstation/deltacorridor)
-"mh" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/mob/living/simple_animal/hostile/hivebot/strong,
-/turf/open/floor/plasteel/floorgrime,
-/area/ruin/ancientstation/deltacorridor)
 
 (1,1,1) = {"
 aa
@@ -8275,7 +8258,7 @@ ey
 hC
 ey
 ey
-dW
+iC
 dw
 ey
 ey
@@ -8317,17 +8300,17 @@ bD
 cA
 cZ
 dx
-me
-dX
-hD
 dX
 dX
+eX
+dX
+fS
 gL
 dX
 hD
-mg
 dX
 dX
+fS
 dx
 dX
 dB
@@ -8408,18 +8391,18 @@ aa
 ac
 ad
 ae
-ah
-aD
+af
+af
 ag
-aB
-aE
-ah
+ai
+ao
+af
 bo
 ad
 ac
 bD
-cD
-dc
+cC
+db
 dy
 dY
 ez
@@ -8434,8 +8417,8 @@ in
 iD
 iP
 dy
-dc
-cD
+jt
+jK
 jV
 kd
 kt
@@ -8459,14 +8442,14 @@ aa
 aa
 ac
 ad
-ah
-aq
-ah
-ah
-ah
+af
+ao
+af
 ah
 ah
-ah
+af
+af
+af
 ad
 bE
 bD
@@ -8522,7 +8505,7 @@ ad
 ad
 bG
 bF
-cD
+cC
 dd
 dy
 dZ
@@ -8563,14 +8546,14 @@ aa
 ac
 ac
 ad
-ah
+af
 ap
+af
+aq
 ah
-aq
-aD
 ag
-aq
-ai
+be
+aB
 aN
 bG
 lx
@@ -8590,7 +8573,7 @@ ip
 iF
 eb
 dy
-dc
+db
 cC
 jV
 kg
@@ -8615,24 +8598,24 @@ aa
 ac
 ac
 ad
-ah
-ah
+af
+af
 aB
 ah
 ai
 ah
-ah
-ah
+aC
+af
 aN
 bG
 lx
-ca
-dc
+cF
+db
 dz
 eb
 eb
 eb
-eb
+fw
 eb
 gO
 eb
@@ -8678,7 +8661,7 @@ ad
 ad
 bG
 bF
-dg
+ca
 dc
 dA
 eb
@@ -8695,7 +8678,7 @@ lT
 hi
 jd
 jw
-dX
+fS
 jX
 ki
 ki
@@ -8720,20 +8703,20 @@ ac
 ac
 ad
 ag
-ah
-ah
-ah
-ah
-ah
-ah
+af
+af
+af
+af
+af
+af
 ah
 ad
 bE
 bD
-ca
-dc
+cF
+db
 dy
-dY
+ec
 dZ
 dZ
 eC
@@ -8746,7 +8729,7 @@ is
 dy
 dy
 dy
-mh
+dc
 ca
 jV
 kj
@@ -8772,12 +8755,12 @@ ac
 ac
 ad
 ah
-ah
-ah
-ai
-ah
+af
+af
+aB
+af
 ag
-ah
+af
 ah
 ad
 ac
@@ -8798,8 +8781,8 @@ eb
 lM
 iQ
 dy
-jv
-ca
+jx
+ed
 jV
 kk
 kx
@@ -8824,12 +8807,12 @@ ac
 ac
 ad
 ai
+af
 ah
-aD
 ag
+aC
 ah
-aD
-ah
+af
 aq
 ad
 ac
@@ -8877,17 +8860,17 @@ ac
 ad
 ah
 ag
-ah
-ah
 aC
-ah
+aC
+aC
+aC
 ag
 ah
 ad
 ac
 bD
-ca
-dc
+cF
+db
 dy
 ea
 eF
@@ -8903,7 +8886,7 @@ iG
 iS
 dy
 jt
-ca
+ed
 jV
 kl
 kz
@@ -8930,8 +8913,8 @@ ad
 ah
 ai
 ah
-ah
-ah
+aD
+aD
 ah
 ai
 ah
@@ -8981,10 +8964,10 @@ ac
 ad
 ag
 aq
+aD
 ah
 ah
-ah
-ah
+aD
 aq
 ah
 ad
@@ -8993,17 +8976,17 @@ bD
 ca
 df
 dB
+ed
 ca
+eY
 ca
+ed
+ca
+ed
 hI
-mf
+ed
 ca
-ca
-dg
-hI
-ca
-ca
-ca
+ed
 ca
 je
 jy
@@ -9043,17 +9026,17 @@ ad
 ac
 bD
 cH
-ca
+dg
 dC
 ee
 ca
-hI
+eY
 cX
+ed
 ca
-ca
-ca
+ed
 hJ
-ca
+ed
 ca
 ee
 cX
@@ -9085,10 +9068,10 @@ ac
 ad
 aj
 ai
-aq
-ah
-ah
-ah
+aE
+aD
+aD
+aD
 ah
 bp
 ad
@@ -9137,17 +9120,17 @@ ac
 ac
 ad
 ag
-ah
-ah
-ah
-ah
+aD
+aD
+aD
+aD
 aq
 ad
 ac
 bD
-dh
 cc
-dh
+cc
+cc
 bD
 aa
 bD
@@ -9161,9 +9144,9 @@ hK
 bD
 aa
 bD
-dh
 cc
-dh
+cc
+cc
 bD
 aa
 aa
