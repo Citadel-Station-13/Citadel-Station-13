@@ -118,7 +118,7 @@
 		if(do_damage)
 			playsound(src, break_sound, 10 * get_efficiency_mod(TRUE), 1)
 			take_damage(round(max_integrity * 0.25, 1), BRUTE)
-		to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
+			to_chat(user, "<span class='warning'>As you unsecure [src] from the floor, you see cracks appear in its surface!</span>")
 
 /obj/structure/destructible/clockwork/emp_act(severity)
 	if(anchored && unanchored_icon)
