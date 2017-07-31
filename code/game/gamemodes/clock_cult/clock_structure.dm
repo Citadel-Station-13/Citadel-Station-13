@@ -87,13 +87,6 @@
 		. *= min(max_integrity/max(obj_integrity, 1), 4)
 	. = round(., 0.01)
 
-/obj/structure/destructible/clockwork/can_be_unfasten_wrench(mob/user, silent)
-	if(anchored && obj_integrity <= round(max_integrity * 0.25, 1))
-		if(!silent)
-			to_chat(user, "<span class='warning'>[src] is too damaged to unsecure!</span>")
-		return FAILED_UNFASTEN
-	return ..()
-
 /obj/structure/destructible/clockwork/attack_ai(mob/user)
 	if(is_servant_of_ratvar(user))
 		attack_hand(user)
