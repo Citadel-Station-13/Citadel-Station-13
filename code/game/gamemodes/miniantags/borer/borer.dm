@@ -413,6 +413,8 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	victim = C
 	forceMove(victim)
 
+	SSticker.mode.update_borer_icons_added_host(victim.mind)
+
 	RemoveBorerActions()
 	GrantInfestActions()
 
@@ -587,6 +589,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	var/mob/living/V = victim
 	V.verbs -= /mob/living/proc/borer_comm
 	talk_to_borer_action.Remove(victim)
+	SSticker.mode.update_borer_icons_removed_host(victim.mind)
 	victim = null
 	return
 
@@ -842,6 +845,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 		if(mind)
 			mind.store_memory("You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle.")
+			SSticker.mode.update_borer_icons_added(mind)
 
 		to_chat(src, "<span class='notice'>You are a cortical borer!</span>")
 		to_chat(src, "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm.")
@@ -1076,3 +1080,27 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 /datum/action/innate/borer/jumpstart_host/Activate()
 	var/mob/living/simple_animal/borer/B = owner
 	B.jumpstart()
+
+
+//HUD STUFF
+/datum/game_mode/proc/update_borer_icons_added(datum/mind/borer_mind)
+	var/datum/atom_hud/antag/borerhud = GLOB.huds[ANTAG_HUD_BORER]
+	borerhud.join_hud(borer_mind.current)
+	set_antag_hud(borer_mind.current, "hudbrainworm")
+
+/datum/game_mode/proc/update_borer_icons_removed(datum/mind/borer_mind)
+	var/datum/atom_hud/antag/borerhud = GLOB.huds[ANTAG_HUD_BORER]
+	borerhud.leave_hud(borer_mind.current)
+	set_antag_hud(borer_mind.current, null)
+
+/datum/game_mode/proc/update_borer_icons_added_host(datum/mind/host_mind)
+	var/datum/atom_hud/antag/hosthud = GLOB.huds[ANTAG_HUD_BORER] //Invisible to self
+	hosthud.self_visible = FALSE
+	hosthud.join_hud(host_mind.current)
+	set_antag_hud(host_mind.current, "hudbrainworm")
+
+/datum/game_mode/proc/update_borer_icons_removed_host(datum/mind/host_mind)
+	var/datum/atom_hud/antag/hosthud = GLOB.huds[ANTAG_HUD_BORER] //Invisible to self
+	hosthud.self_visible = FALSE //Probably not needed as we're deleting?
+	hosthud.leave_hud(host_mind.current)
+	set_antag_hud(host_mind.current, null)
