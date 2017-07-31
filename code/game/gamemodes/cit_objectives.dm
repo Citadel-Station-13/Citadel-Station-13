@@ -68,8 +68,8 @@
 /datum/objective/assassinate/late/check_completion()
 	if(target && target.current) //If target WAS assigned
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	else //If no target was ever given
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
 			return 0
