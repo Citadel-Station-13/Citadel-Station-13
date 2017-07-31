@@ -1,0 +1,5 @@
+author: "Raeschen"
+delete-after: True
+changes: 
+  - rscdel: "Removed a whole bunch of hivebots."
+  - rscadd: "Added stronger hivebots."
