@@ -33,7 +33,6 @@
 
 /obj/structure/destructible/clockwork/ocular_warden/can_be_unfasten_wrench(mob/user, silent)
 	if(!anchored)
-		else
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(W.anchored)
  -				if(!silent)
