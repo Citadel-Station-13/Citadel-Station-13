@@ -348,6 +348,14 @@
 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
 	},
 /area/ruin/unpowered)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/baseturf_helper,
+/turf/open/floor/wood{
+	baseturf = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
+	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+	},
+/area/ruin/unpowered)
 
 (1,1,1) = {"
 a

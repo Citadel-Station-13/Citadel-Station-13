@@ -1,0 +1,25 @@
+diff a/code/game/machinery/vending.dm b/code/game/machinery/vending.dm	(rejected hunks)
+@@ -383,9 +383,10 @@
+ 	..()
+ 
+ /obj/machinery/vending/emag_act(mob/user)
+-	if(!emagged)
+-		emagged  = 1
+-		to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
++	if(emagged)
++		return
++	emagged = TRUE
++	to_chat(user, "<span class='notice'>You short out the product lock on [src].</span>")
+ 
+ /obj/machinery/vending/attack_ai(mob/user)
+ 	return attack_hand(user)
+@@ -768,8 +768,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
+ 	icon_state = "sustenance"
+ 	products = list(/obj/item/weapon/reagent_containers/food/snacks/tofu = 24,
+ 					/obj/item/weapon/reagent_containers/food/drinks/ice = 12,
+-					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
+-					/obj/item/weapon/reagent_containers/glass/beaker/waterbottle = 10)
++					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6)
+ 	contraband = list(/obj/item/weapon/kitchen/knife = 6,
+ 					/obj/item/weapon/reagent_containers/food/drinks/coffee = 12,
+ 					/obj/item/weapon/tank/internals/emergency_oxygen = 6,

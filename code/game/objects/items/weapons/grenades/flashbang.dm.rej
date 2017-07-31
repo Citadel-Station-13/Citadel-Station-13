@@ -1,0 +1,7 @@
+diff a/code/game/objects/items/weapons/grenades/flashbang.dm b/code/game/objects/items/weapons/grenades/flashbang.dm	(rejected hunks)
+@@ -34,4 +34,4 @@
+ 		M.soundbang_act(1, 200, 10, 15)
+ 
+ 	else
+-		M.soundbang_act(1, max(20/max(1,distance), 3), rand(0, 5))
++		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))

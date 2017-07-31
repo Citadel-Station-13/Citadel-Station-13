@@ -1,0 +1,9 @@
+diff a/code/game/machinery/doors/unpowered.dm b/code/game/machinery/doors/unpowered.dm	(rejected hunks)
+@@ -1,6 +1,6 @@
+ /obj/machinery/door/unpowered
+ 
+-/obj/machinery/door/unpowered/Bumped(atom/AM)
++/obj/machinery/door/unpowered/CollidedWith(atom/movable/AM)
+ 	if(src.locked)
+ 		return
+ 	..()

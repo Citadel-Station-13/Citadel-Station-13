@@ -1,0 +1,14 @@
+diff a/code/game/turfs/simulated/chasm.dm b/code/game/turfs/simulated/chasm.dm	(rejected hunks)
+@@ -189,11 +189,9 @@
+ 
+ 
+ 
+-/turf/open/chasm/CanPass(atom/movable/mover, turf/target, height=0)
++/turf/open/chasm/CanPass(atom/movable/mover, turf/target)
+ 	return 1
+ 
+-
+-
+ //Jungle
+ 
+ /turf/open/chasm/jungle

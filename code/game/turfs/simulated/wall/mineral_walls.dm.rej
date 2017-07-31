@@ -1,0 +1,10 @@
+diff a/code/game/turfs/simulated/wall/mineral_walls.dm b/code/game/turfs/simulated/wall/mineral_walls.dm	(rejected hunks)
+@@ -86,7 +86,7 @@
+ 	radiate()
+ 	..()
+ 
+-/turf/closed/wall/mineral/uranium/Bumped(AM as mob|obj)
++/turf/closed/wall/mineral/uranium/CollidedWith(atom/movable/AM)
+ 	radiate()
+ 	..()
+ 

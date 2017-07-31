@@ -1,0 +1,10 @@
+diff a/code/modules/events/spacevine.dm b/code/modules/events/spacevine.dm	(rejected hunks)
+@@ -579,7 +579,7 @@
+ 	if(!override)
+ 		qdel(src)
+ 
+-/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target, height=0)
++/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target)
+ 	if(isvineimmune(mover))
+ 		. = TRUE
+ 	else

@@ -1,0 +1,51 @@
+diff a/code/game/machinery/doors/windowdoor.dm b/code/game/machinery/doors/windowdoor.dm	(rejected hunks)
+@@ -58,7 +58,7 @@
+ 		sleep(20)
+ 	close()
+ 
+-/obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
++/obj/machinery/door/window/CollidedWith(atom/movable/AM)
+ 	if( operating || !src.density )
+ 		return
+ 	if (!( ismob(AM) ))
+@@ -89,7 +89,7 @@
+ 		do_animate("deny")
+ 	return
+ 
+-/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target, height=0)
++/obj/machinery/door/window/CanPass(atom/movable/mover, turf/target)
+ 	if(istype(mover) && mover.checkpass(PASSGLASS))
+ 		return 1
+ 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
+@@ -206,13 +206,14 @@
+ 
+ /obj/machinery/door/window/emag_act(mob/user)
+ 	if(!operating && density && !emagged)
++		emagged = TRUE
+ 		operating = TRUE
+ 		flick("[src.base_state]spark", src)
++		playsound(src, "sparks", 75, 1)
+ 		sleep(6)
+ 		operating = FALSE
+ 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
+ 		open()
+-		emagged = TRUE
+ 
+ /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/living/user, params)
+ 
+@@ -308,6 +309,15 @@
+ 	reinf = 1
+ 	explosion_block = 1
+ 
++/obj/machinery/door/window/brigdoor/security/cell
++	name = "cell door"
++	desc = "For keeping in criminal scum."
++	req_access = list(ACCESS_BRIG)
++
++/obj/machinery/door/window/brigdoor/security/holding
++	name = "holding cell door"
++	req_access = list(ACCESS_SEC_DOORS, ACCESS_LAWYER) //love for the lawyer
++
+ /obj/machinery/door/window/clockwork
+ 	name = "brass windoor"
+ 	desc = "A thin door with translucent brass paneling."

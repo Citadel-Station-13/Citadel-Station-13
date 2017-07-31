@@ -1,0 +1,38 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_blooddrunk2.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_blooddrunk2.dmm	(rejected hunks)
+@@ -96,13 +96,6 @@
+ 	},
+ /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+ /area/lavaland/surface/outdoors)
+-"r" = (
+-/obj/structure/stone_tile/block{
+-	dir = 8
+-	},
+-/obj/structure/stone_tile/cracked,
+-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+-/area/lavaland/surface/outdoors)
+ "s" = (
+ /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
+ 	dir = 8
+@@ -157,6 +150,13 @@
+ 	},
+ /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+ /area/lavaland/surface/outdoors)
++"M" = (
++/obj/structure/stone_tile/block{
++	dir = 8
++	},
++/obj/structure/stone_tile/cracked,
++/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
++/area/lavaland/surface/outdoors)
+ 
+ (1,1,1) = {"
+ a
+@@ -250,7 +250,7 @@ f
+ f
+ f
+ o
+-r
++M
+ q
+ w
+ f

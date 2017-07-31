@@ -1,0 +1,10 @@
+diff a/code/modules/projectiles/projectile/magic.dm b/code/modules/projectiles/projectile/magic.dm	(rejected hunks)
+@@ -355,7 +352,7 @@
+ 	if(proxdet)
+ 		for(var/mob/living/L in range(1, get_turf(src)))
+ 			if(L.stat != DEAD && L != firer)
+-				return Bump(L, TRUE)
++				return Collide(L)
+ 	..()
+ 
+ /obj/item/projectile/magic/aoe/lightning

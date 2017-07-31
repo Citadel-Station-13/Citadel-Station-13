@@ -1,0 +1,22 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm	(rejected hunks)
+@@ -217,11 +217,6 @@
+ 	initial_gas_mix = "o2=14;n2=23;TEMP=300"
+ 	},
+ /area/ruin/unpowered)
+-"B" = (
+-/obj/structure/lattice,
+-/obj/effect/decal/cleanable/dirt,
+-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+-/area/space)
+ "C" = (
+ /obj/structure/chair/wood/wings{
+ 	icon_state = "wooden_chair_wings";
+@@ -510,7 +513,7 @@ d
+ g
+ o
+ h
+-h
++S
+ C
+ J
+ h

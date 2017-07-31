@@ -1,12 +1,12 @@
 diff a/code/modules/mob/living/carbon/human/species.dm b/code/modules/mob/living/carbon/human/species.dm	(rejected hunks)
-@@ -71,8 +71,8 @@
- 	var/obj/item/mutanthands = null
- 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
+@@ -241,6 +241,10 @@
+ 	var/dynamic_hair_suffix = "" //if this is non-null, and hair+suffix matches an iconstate, then we render that hair instead
+ 	var/dynamic_fhair_suffix = ""
  
--	var/obj/item/organ/liver/mutantliver = null
--	var/obj/item/organ/stomach/mutantstomach = null
-+	var/obj/item/organ/liver/mutantliver
-+	var/obj/item/organ/stomach/mutantstomach
- 
- ///////////
- // PROCS //
++	//for augmented heads
++	if(HD.status == BODYPART_ROBOTIC)
++		return
++
+ 	//we check if our hat or helmet hides our facial hair.
+ 	if(H.head)
+ 		var/obj/item/I = H.head

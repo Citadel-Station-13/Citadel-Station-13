@@ -1,0 +1,11 @@
+diff a/code/modules/mob/living/carbon/human/life.dm b/code/modules/mob/living/carbon/human/life.dm	(rejected hunks)
+@@ -30,8 +30,7 @@
+ 		return
+ 
+ 	if(..()) //not dead
+-		for(var/datum/mutation/human/HM in dna.mutations)
+-			HM.on_life(src)
++		handle_active_genes()
+ 
+ 	if(stat != DEAD)
+ 		//heart attack stuff

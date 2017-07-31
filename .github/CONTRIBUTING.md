@@ -337,9 +337,9 @@ DM has a var keyword, called global. This var keyword is for vars inside of type
 
 ```DM
 mob
-    var
-        global
-            thing = TRUE
+	var
+		global
+			thing = TRUE
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 

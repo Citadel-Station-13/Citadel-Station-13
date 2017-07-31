@@ -1,0 +1,9 @@
+diff a/code/game/gamemodes/miniantags/abduction/abduction.dm b/code/game/gamemodes/miniantags/abduction/abduction.dm	(rejected hunks)
+@@ -210,7 +210,6 @@
+ 
+ // OBJECTIVES
+ /datum/objective/experiment
+-	dangerrating = 10
+ 	target_amount = 6
+ 	var/team
+ 
