@@ -101,7 +101,7 @@
 	for (var/thing in atoms)
 		var/atom/A = thing
 		if (!typecache[A.type])
- 			. += A
+			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path, only_root_path = FALSE)
