@@ -35,9 +35,9 @@
 	if(!anchored)
 		for(var/obj/structure/destructible/clockwork/ocular_warden/W in orange(OCULAR_WARDEN_EXCLUSION_RANGE, src))
 			if(W.anchored)
- -				if(!silent)
- -					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
- -				return FAILED_UNFASTEN
+ 				if(!silent)
+ 					to_chat(user, "<span class='neovgre'>You sense another ocular warden too near this location. Activating this one this close would cause them to fight.</span>")
+ 				return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
 /obj/structure/destructible/clockwork/ocular_warden/ratvar_act()
