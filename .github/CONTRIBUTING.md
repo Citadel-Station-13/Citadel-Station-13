@@ -314,7 +314,7 @@ var/obj/item/sword/best_sword
 for(var/s in bag_of_swords)
 	var/obj/item/sword/S = s
 	if(!best_sword || S.damage > best_sword.damage)
-    		best_sword = S
+		best_sword = S
 ```
 Of course, if the list contains data of a mixed type then the above optimisation is DANGEROUS, as it will blindly typecast all data in the list as the specified type, even if it isn't really that type, causing runtime errors.
 
@@ -337,9 +337,9 @@ DM has a var keyword, called global. This var keyword is for vars inside of type
 
 ```DM
 mob
-    var
-        global
-            thing = TRUE
+	var
+		global
+			thing = TRUE
 ```
 This does NOT mean that you can access it everywhere like a global var. Instead, it means that that var will only exist once for all instances of its type, in this case that var will only exist once for all mobs - it's shared across everything in its type. (Much more like the keyword `static` in other languages like PHP/C++/C#/Java)
 
