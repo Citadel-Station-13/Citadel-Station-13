@@ -72,10 +72,10 @@
 		return FALSE
 	else //If no target was ever given
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-			return 0
+			return FALSE
 		if(!is_special_character(owner.current))
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 /datum/objective/assassinate/late/update_explanation_text()
 	//..()
