@@ -73,7 +73,7 @@
 			return getArousalLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, brain = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, arousal = 0, brain = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
