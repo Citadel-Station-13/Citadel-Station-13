@@ -11,6 +11,9 @@
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
+//Citadel code
+#define AROUSAL		"arousal"
+
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 1
 #define FIRELOSS 2
