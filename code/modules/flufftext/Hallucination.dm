@@ -11,6 +11,8 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 */
 
+#define HAL_LINES_FILE "hallucination.json"
+
 /mob/living/carbon
 	var/image/halimage
 	var/image/halbody
@@ -64,13 +66,14 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	var/col_mod = null
 	var/image/current_image = null
 	var/image_layer = MOB_LAYER
-	var/active = 1 //qdelery
+	var/active = TRUE //qdelery
 
 /obj/effect/hallucination/simple/Initialize(mapload, var/mob/living/carbon/T)
 	..()
 	target = T
 	current_image = GetImage()
-	if(target.client) target.client.images |= current_image
+	if(target.client)
+		target.client.images |= current_image
 
 /obj/effect/hallucination/simple/proc/GetImage()
 	var/image/I = image(image_icon,src,image_state,image_layer,dir=src.dir)
@@ -82,10 +85,12 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/hallucination/simple/proc/Show(update=1)
 	if(active)
-		if(target.client) target.client.images.Remove(current_image)
+		if(target.client)
+			target.client.images.Remove(current_image)
 		if(update)
 			current_image = GetImage()
-		if(target.client) target.client.images |= current_image
+		if(target.client)
+			target.client.images |= current_image
 
 /obj/effect/hallucination/simple/update_icon(new_state,new_icon,new_px=0,new_py=0)
 	image_state = new_state
@@ -101,36 +106,39 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	Show()
 
 /obj/effect/hallucination/simple/Destroy()
-	if(target.client) target.client.images.Remove(current_image)
-	active = 0
+	if(target.client)
+		target.client.images.Remove(current_image)
+	active = FALSE
 	return ..()
 
 #define FAKE_FLOOD_EXPAND_TIME 20
 #define FAKE_FLOOD_MAX_RADIUS 10
 
-/obj/effect/hallucination/fake_flood
+/datum/hallucination/fake_flood
 	//Plasma starts flooding from the nearby vent
+	var/turf/center
 	var/list/flood_images = list()
 	var/list/turf/flood_turfs = list()
 	var/image_icon = 'icons/effects/tile_effects.dmi'
 	var/image_state = "plasma"
 	var/radius = 0
 	var/next_expand = 0
+	cost = 25
 
-/obj/effect/hallucination/fake_flood/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/fake_flood/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
-			src.loc = U.loc
+			center = get_turf(U)
 			break
-	flood_images += image(image_icon,src,image_state,MOB_LAYER)
-	flood_turfs += get_turf(src.loc)
+	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
+	flood_images += image(image_icon,center,image_state,MOB_LAYER)
+	flood_turfs += center
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 	START_PROCESSING(SSobj, src)
 
-/obj/effect/hallucination/fake_flood/process()
+/datum/hallucination/fake_flood/process()
 	if(next_expand <= world.time)
 		radius++
 		if(radius > FAKE_FLOOD_MAX_RADIUS)
@@ -138,10 +146,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			target.hallucinate("fake_alert", "tox_in_air")
+			new /datum/hallucination/fake_alert(target, TRUE, "tox_in_air")
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
-/obj/effect/hallucination/fake_flood/proc/Expand()
+/datum/hallucination/fake_flood/proc/Expand()
 	for(var/turf/FT in flood_turfs)
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(FT, dir)
@@ -152,7 +160,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	if(target.client)
 		target.client.images |= flood_images
 
-/obj/effect/hallucination/fake_flood/Destroy()
+/datum/hallucination/fake_flood/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	qdel(flood_turfs)
 	flood_turfs = list()
@@ -167,7 +175,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_icon = 'icons/mob/alien.dmi'
 	image_state = "alienh_pounce"
 
-/obj/effect/hallucination/simple/xeno/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/hallucination/simple/xeno/Initialize(mapload, mob/living/carbon/T)
 	..()
 	name = "alien hunter ([rand(1, 1000)])"
 
@@ -177,18 +185,19 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		target.Knockdown(100)
 		target.visible_message("<span class='danger'>[target] flails around wildly.</span>","<span class ='userdanger'>[name] pounces on you!</span>")
 
-/obj/effect/hallucination/xeno_attack
+/datum/hallucination/xeno_attack
 	//Xeno crawls from nearby vent,jumps at you, and goes back in
 	var/obj/machinery/atmospherics/components/unary/vent_pump/pump = null
 	var/obj/effect/hallucination/simple/xeno/xeno = null
+	cost = 25
 
-/obj/effect/hallucination/xeno_attack/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/xeno_attack/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
 			pump = U
 			break
+	feedback_details += "Vent Coords: [pump.x],[pump.y],[pump.z]"
 	if(pump)
 		xeno = new(pump.loc,target)
 		sleep(10)
@@ -200,7 +209,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		sleep(10)
 		var/xeno_name = xeno.name
 		to_chat(target, "<span class='notice'>[xeno_name] begins climbing into the ventilation system...</span>")
-		sleep(10)
+		sleep(30)
 		qdel(xeno)
 		to_chat(target, "<span class='notice'>[xeno_name] scrambles into the ventilation ducts!</span>")
 	qdel(src)
@@ -209,7 +218,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_icon = 'icons/mob/animal.dmi'
 	image_state = "clown"
 
-/obj/effect/hallucination/simple/clown/Initialize(mapload, var/mob/living/carbon/T,duration)
+/obj/effect/hallucination/simple/clown/Initialize(mapload, mob/living/carbon/T, duration)
 	..(loc, T)
 	name = pick(GLOB.clown_names)
 	QDEL_IN(src,duration)
@@ -256,20 +265,21 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_state = "bubblegum"
 	px = -32
 
-/obj/effect/hallucination/oh_yeah
+/datum/hallucination/oh_yeah
 	var/obj/effect/hallucination/simple/bubblegum/bubblegum
 	var/image/fakebroken
 	var/image/fakerune
+	cost = 75
 
-/obj/effect/hallucination/oh_yeah/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/oh_yeah/New(mob/living/carbon/T, forced = TRUE)
 	. = ..()
-	target = T
 	var/turf/closed/wall/wall
 	for(var/turf/closed/wall/W in range(7,target))
 		wall = W
 		break
 	if(!wall)
 		return INITIALIZE_HINT_QDEL
+	feedback_details += "Source: [wall.x],[wall.y],[wall.z]"
 
 	fakebroken = image('icons/turf/floors.dmi', wall, "plating", layer = TURF_LAYER)
 	var/turf/landing = get_turf(target)
@@ -283,7 +293,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	bubblegum = new(wall, target)
 	addtimer(CALLBACK(src, .proc/bubble_attack, landing), 10)
 
-/obj/effect/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
+/datum/hallucination/oh_yeah/proc/bubble_attack(turf/landing)
 	var/charged = FALSE //only get hit once
 	while(get_turf(bubblegum) != landing && target && target.stat != DEAD)
 		bubblegum.forceMove(get_step_towards(bubblegum, landing))
@@ -301,7 +311,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	sleep(30)
 	qdel(src)
 
-/obj/effect/hallucination/oh_yeah/Destroy()
+/datum/hallucination/oh_yeah/Destroy()
 	if(target.client)
 		target.client.images.Remove(fakebroken)
 		target.client.images.Remove(fakerune)
@@ -310,23 +320,24 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	QDEL_NULL(bubblegum)
 	return ..()
 
-/obj/effect/hallucination/singularity_scare
+/datum/hallucination/singularity_scare
 	//Singularity moving towards you.
 	//todo Hide where it moved with fake space images
 	var/obj/effect/hallucination/simple/singularity/s = null
+	cost = 75
 
-/obj/effect/hallucination/singularity_scare/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/singularity_scare/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	target = T
 	var/turf/start = get_turf(T)
 	var/screen_border = pick(SOUTH,EAST,WEST,NORTH)
-	for(var/i = 0,i<11,i++)
+	for(var/i in 1 to 13)
 		start = get_step(start,screen_border)
+	feedback_details += "Source: [start.x],[start.y],[start.z]"
 	s = new(start,target)
 	s.parent = src
-	for(var/i = 0,i<11,i++)
-		sleep(5)
-		s.loc = get_step(get_turf(s),get_dir(s,target))
+	for(var/i in 1 to 13)
+		sleep(10)
+		s.forceMove(get_step(get_turf(s),get_dir(s,target)))
 		s.Show()
 		s.Eat()
 	qdel(s)
@@ -337,64 +348,72 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image_layer = MASSIVE_OBJ_LAYER
 	px = -96
 	py = -96
-	var/obj/effect/hallucination/singularity_scare/parent
+	var/datum/hallucination/singularity_scare/parent
 
 /obj/effect/hallucination/simple/singularity/proc/Eat(atom/OldLoc, Dir)
 	var/target_dist = get_dist(src,target)
 	if(target_dist<=3) //"Eaten"
-		target.hal_screwyhud = SCREWYHUD_CRIT
+		target.set_screwyhud(SCREWYHUD_DEAD)
 		target.SetUnconscious(160)
-		addtimer(CALLBACK(parent, .proc/wake_and_restore), rand(30, 50))
+		addtimer(CALLBACK(parent, /datum/hallucination/.proc/wake_and_restore), rand(30, 50))
 
-/obj/effect/hallucination/battle
+/datum/hallucination/battle
+	cost = 15
 
-/obj/effect/hallucination/battle/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/battle/New(mob/living/carbon/T, forced = TRUE, battle_type)
 	..()
-	target = T
 	var/hits = rand(3,6)
-	switch(rand(1,5))
-		if(1) //Laser fight
-			for(var/i=0,i<hits,i++)
+	if(!battle_type)
+		battle_type = pick("laser","esword","gun","stunprod","bomb")
+	feedback_details += "Type: [battle_type]"
+	switch(battle_type)
+		if("laser") //Laser fight
+			for(var/i in 1 to hits)
 				target.playsound_local(null, 'sound/weapons/laser.ogg', 25, 1)
-				if(prob(75))
+				if(prob(50))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/sear.ogg', 25, 1), rand(10,20))
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/effects/searwall.ogg', 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-		if(2) //Esword fight
+		if("esword") //Esword fight
 			target.playsound_local(null, 'sound/weapons/saberon.ogg',15, 1)
 			for(var/i=0,i<hits,i++)
 				target.playsound_local(null, 'sound/weapons/blade1.ogg', 25, 1)
 				sleep(rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			target.playsound_local(null, 'sound/weapons/saberoff.ogg', 15, 1)
-		if(3) //Gun fight
-			for(var/i=0,i<hits,i++)
+		if("gun") //Gun fight
+			for(var/i in 1 to hits)
 				target.playsound_local(null, get_sfx("gunshot"), 25)
-				if(prob(75))
+				if(prob(60))
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, 'sound/weapons/pierce.ogg', 25, 1), rand(10,20))
 				else
 					addtimer(CALLBACK(target, /mob/.proc/playsound_local, null, "ricochet", 25, 1), rand(10,20))
 				sleep(rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 8))
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
-		if(4) //Stunprod + cablecuff
+		if("stunprod") //Stunprod + cablecuff
 			target.playsound_local(null, 'sound/weapons/egloves.ogg', 40, 1)
 			target.playsound_local(null, get_sfx("bodyfall"), 25, 1)
 			sleep(20)
 			target.playsound_local(null, 'sound/weapons/cablecuff.ogg', 15, 1)
-		if(5) // Tick Tock
-			for(var/i=0,i<hits,i++)
-				target.playsound_local(null, 'sound/items/timer.ogg', 25, 1)
+		if("bomb") // Tick Tock
+			for(var/i in 1 to hits)
+				target.playsound_local(null, 'sound/items/timer.ogg', 25, 0)
 				sleep(15)
 	qdel(src)
 
-/obj/effect/hallucination/items_other
+/datum/hallucination/items_other
+	cost = 10
 
-/obj/effect/hallucination/items_other/Initialize(mapload, mob/living/carbon/T)
+/datum/hallucination/items_other/New(mob/living/carbon/T, forced = TRUE, item_type)
 	..()
-	target = T
-	var/item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
+	var/item
+	if(!item_type)
+		item = pick(list("esword","dual_esword","stunpaper","clockspear","ttv","flash","armblade"))
+	else
+		item = item_type
+	feedback_details += "Item: [item]"
 	var/image_file
 	var/image/A = null
 	for(var/mob/living/carbon/human/H in view(7,target))
@@ -434,22 +453,23 @@ Gunshots/explosions/opening doors/less rare audio (done)
 				break
 	qdel(src)
 
-/obj/effect/hallucination/delusion
+/datum/hallucination/delusion
 	var/list/image/delusions = list()
+	cost = 50
 
-/obj/effect/hallucination/delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
+/datum/hallucination/delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300,skip_nearby = 1, custom_icon = null, custom_icon_file = null)
 	. = ..()
-	target = T
 	var/image/A = null
-	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie")
+	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie")
+	feedback_details += "Type: [kind]"
 	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
 		if(H == target)
 			continue
 		if(skip_nearby && (H in view(target)))
 			continue
 		switch(kind)
-			if("clown")//Clown
-				A = image('icons/mob/animal.dmi',H,"clown")
+			if("monkey")//Monkey
+				A = image('icons/mob/monkey.dmi',H,"monkey1")
 			if("carp")//Carp
 				A = image('icons/mob/animal.dmi',H,"carp")
 			if("corgi")//Corgi
@@ -468,23 +488,24 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			target.client.images |= A
 	QDEL_IN(src, duration)
 
-/obj/effect/hallucination/delusion/Destroy()
+/datum/hallucination/delusion/Destroy()
 	for(var/image/I in delusions)
 		if(target.client)
 			target.client.images.Remove(I)
 	return ..()
 
-/obj/effect/hallucination/self_delusion
+/datum/hallucination/self_delusion
 	var/image/delusion
+	cost = 40
 
-/obj/effect/hallucination/self_delusion/Initialize(mapload, mob/living/carbon/T,force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null)
+/datum/hallucination/self_delusion/New(mob/living/carbon/T, forced, force_kind = null , duration = 300, custom_icon = null, custom_icon_file = null, wabbajack = TRUE) //set wabbajack to false if you want to use another fake source
 	..()
-	target = T
 	var/image/A = null
-	var/kind = force_kind ? force_kind : pick("clown","corgi","carp","skeleton","demon","zombie","robot")
+	var/kind = force_kind ? force_kind : pick("monkey","corgi","carp","skeleton","demon","zombie","robot")
+	feedback_details += "Type: [kind]"
 	switch(kind)
-		if("clown")//Clown
-			A = image('icons/mob/animal.dmi',target,"clown")
+		if("monkey")//Monkey
+			A = image('icons/mob/monkey.dmi',target,"monkey1")
 		if("carp")//Carp
 			A = image('icons/mob/animal.dmi',target,"carp")
 		if("corgi")//Corgi
@@ -502,20 +523,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			A = image(custom_icon_file, target, custom_icon)
 	A.override = 1
 	if(target.client)
-		to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
-		target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1, -1)
+		if(wabbajack)
+			to_chat(target, "<span class='italics'>...wabbajack...wabbajack...</span>")
+			target.playsound_local(target,'sound/magic/staff_change.ogg', 50, 1)
 		delusion = A
 		target.client.images |= A
 	QDEL_IN(src, duration)
 
-/obj/effect/hallucination/self_delusion/Destroy()
+/datum/hallucination/self_delusion/Destroy()
 	if(target.client)
 		target.client.images.Remove(delusion)
 	return ..()
 
-/obj/effect/hallucination/fakeattacker/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/fakeattacker/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	target = T
 	var/mob/living/carbon/human/clone = null
 	var/clone_weapon = null
 
@@ -523,6 +544,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(H.stat || H.lying)
 			continue
 		clone = H
+		feedback_details += "Clone of: [H.real_name]"
 		break
 
 	if(!clone)
@@ -604,7 +626,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/mob/O in oviewers(world.view , my_target))
 				to_chat(O, "<span class='danger'>[my_target] stumbles around.</span>")
 
-/obj/effect/fake_attacker/Initialize(mapload, var/mob/living/carbon/T)
+/obj/effect/fake_attacker/Initialize(mapload, mob/living/carbon/T)
 	..()
 	my_target = T
 	QDEL_IN(src, 300)
@@ -651,7 +673,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						if(!locate(/obj/effect/overlay) in my_target.loc)
 							fake_blood(my_target)
 				else
-					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1, -1)
+					my_target.playsound_local(my_target, pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'), 25, 1)
 					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
@@ -674,14 +696,15 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	QDEL_IN(O, 300)
 
 
-/obj/effect/hallucination/bolts
+/datum/hallucination/bolts
 	var/list/doors = list()
+	cost = 25
 
-/obj/effect/hallucination/bolts/Initialize(mapload, var/mob/living/carbon/T,var/door_number=-1) //-1 for severe, 1-2 for subtle
+/datum/hallucination/bolts/New(mob/living/carbon/T, forced, door_number=-1) //-1 for severe, 1-2 for subtle
 	..()
-	target = T
 	var/image/I = null
 	var/count = 0
+	feedback_details += "Door amount: [door_number]"
 	for(var/obj/machinery/door/airlock/A in range(7, target))
 		if(count>door_number && door_number>0)
 			break
@@ -700,13 +723,30 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		sleep(rand(6,12))
 	qdel(src)
 
-/obj/effect/hallucination/whispers
+/datum/hallucination/whispers
+	cost = 15
 
-/obj/effect/hallucination/whispers/Initialize(mapload, var/mob/living/carbon/T)
+/datum/hallucination/whispers/New(mob/living/carbon/T, forced = TRUE)
 	..()
-	target = T
-	var/speak_messages = list("I'm watching you...","[target.first_name()]!","Get out!","Kchck-Chkck? Kchchck!","Did you hear that?","What did you do ?","Why?","Give me that!","HELP!!","EI NATH!!", "RUN!!", "Kill me!","O bidai nabora se'sma!", "[text2ratvar("Divinity, grant...")]")
-	var/radio_messages = list("Xenos!","Singularity loose!","Comms down!","They are arming the nuke!","They butchered Ian!","H-help!","[pick("Cult", "Wizard", "Ling", "Ops", "Revenant", "Murderer", "Harm", "I hear flashing", "Help")] in [pick(GLOB.teleportlocs)][prob(50)?"!":"!!"]","Where's [target.first_name()]?","Call the shuttle!","AI rogue!!")
+	var/speak_messages = list("[pick("I'm watching you...","I know what you're doing","What are you hiding?","I saw that")]",\
+	"[pick("","Hey, ","Hi ","Hello ","Wait, ","It's ")][target.first_name()]!",\
+	"[pick("Get out","Go away","Fuck off","OUT!")]",\
+	"[pick("Kchck-Chkck? Kchchck!","EEEeeeeEEEE","#@§*&£","H-hhhhh...")]",\
+	"[pick("Did you hear that?","Did you see that?","What was that?")]",\
+	"[pick("Hail Ratvar","Hail Nar'Sie","Viva!","[generate_code_phrase()]","Are you mr. [pick(GLOB.possible_changeling_IDs)]?")]",\
+	"[pick("Why?","What?","Wait, what?","Wait","Hold on","Uh...")]",\
+	"Give me that!",\
+	"HELP[pick(""," ME"," HIM"," HER"," THEM")]!!",\
+	"RUN!!",\
+	"I'm infected, [pick("stay away","don't get close","be careful","help me","kill me")]")
+
+	var/radio_messages = list("Set [target.first_name()] to arrest!",\
+	"[pick("Captain","Hos","Cmo","Rd","Ce","Hop","Janitor","AI","Viro","Qm","[target.first_name()]")] is [pick("rogue","cult","clockcult","a revhead","a gang leader","a traitor","a ling","dead")]!",\
+	"Help!",\
+	"[pick("Cult", "Wizard", "Blob", "Ling", "Ops", "Swarmers", "Revenant", "Traitor", "Harm", "I hear flashing", "Help")] in [pick(GLOB.teleportlocs)][prob(50)?"!":"!!"]",\
+	"Where's [target.first_name()]?"\
+	,"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!"\
+	,"AI [pick("rogue", "is dead")]!!")
 
 	var/list/mob/living/carbon/people = list()
 	var/list/mob/living/carbon/person = null
@@ -722,7 +762,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		people += H
 	if(person) //Basic talk
 		var/image/speech_overlay = image('icons/mob/talk.dmi', person, "default0", layer = ABOVE_MOB_LAYER)
-		to_chat(target, target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans()))
+		var/message = target.compose_message(person,understood_language,pick(speak_messages),null,person.get_spans())
+		feedback_details += "Type: Talk, Source: [person.real_name], Message: [message]"
+		to_chat(target, message)
 		if(target.client)
 			target.client.images |= speech_overlay
 			sleep(30)
