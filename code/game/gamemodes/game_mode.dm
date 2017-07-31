@@ -298,7 +298,7 @@
 				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
 					total_borer_hosts++
 			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive.</b>")
 
 		CHECK_TICK
 	return 0
