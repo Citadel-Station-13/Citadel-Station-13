@@ -21,6 +21,9 @@
 #define OXYLOSS 8
 #define SHAME 16
 
+//Citadel code
+#define AROUSAL	32
+
 #define STUN		"stun"
 #define KNOCKDOWN		"knockdown"
 #define UNCONSCIOUS	"unconscious"
