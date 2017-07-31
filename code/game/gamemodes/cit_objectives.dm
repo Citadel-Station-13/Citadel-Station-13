@@ -15,7 +15,7 @@
 			possible_targets += possible_target
 	if(possible_targets.len > 0 && prob(LATE_TARGET_HIT_CHANCE))
 		target = pick(possible_targets)
-		martyr_compatible = 1 //Might never matter, but I guess if an admin gives another random objective, this should now be compatible
+		martyr_compatible = TRUE //Might never matter, but I guess if an admin gives another random objective, this should now be compatible
 		update_explanation_text()
 
 		message_admins("[target] has been selected as the assassination target of [owner].")
