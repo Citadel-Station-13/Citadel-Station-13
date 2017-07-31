@@ -4,7 +4,7 @@
 //Hit chance is here to avoid people checking github and then hovering around new arrivals within the max minute range every round.
 
 /datum/objective/assassinate/late
-	martyr_compatible = False
+	martyr_compatible = FALSE
 
 
 /datum/objective/assassinate/late/find_target()
