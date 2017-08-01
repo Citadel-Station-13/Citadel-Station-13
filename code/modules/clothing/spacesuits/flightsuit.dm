@@ -1266,6 +1266,9 @@
 
 //ITEM actionS------------------------------------------------------------------------------------------------------------------------------------------------------
 //TODO: TOGGLED BUTTON SPRITES
+/datum/action/item_action/flightsuit
+	icon_icon = 'icons/mob/actions/actions_flightsuit.dmi'
+
 /datum/action/item_action/flightsuit/toggle_boots
 	name = "Toggle Boots"
 	button_icon_state = "flightsuit_shoes"
@@ -1285,6 +1288,9 @@
 	name = "Lock Suit"
 	button_icon_state = "flightsuit_lock"
 	background_icon_state = "bg_tech"
+
+/datum/action/item_action/flightpack
+	icon_icon = 'icons/mob/actions/actions_flightsuit.dmi'
 
 /datum/action/item_action/flightpack/toggle_flight
 	name = "Toggle Flight"
@@ -1313,5 +1319,7 @@
 
 /datum/action/item_action/flightpack/zoom
 	name = "Helmet Smart Zoom"
+	icon_icon = 'icons/mob/actions.dmi'
 	background_icon_state = "bg_tech_blue"
+	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
