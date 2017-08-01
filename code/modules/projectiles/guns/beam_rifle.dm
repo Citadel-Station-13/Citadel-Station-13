@@ -1,16 +1,4 @@
 
-#define ZOOM_LOCK_AUTOZOOM_FREEMOVE 0
-#define ZOOM_LOCK_AUTOZOOM_ANGLELOCK 1
-#define ZOOM_LOCK_CENTER_VIEW 2
-#define ZOOM_LOCK_OFF 3
-
-#define ZOOM_SPEED_STEP 0
-#define ZOOM_SPEED_INSTANT 1
-
-#define AUTOZOOM_PIXEL_STEP_FACTOR 48
-
-#define AIMING_BEAM_ANGLE_CHANGE_THRESHOLD 0.1
-
 /obj/item/weapon/gun/energy/beam_rifle
 	name = "particle acceleration rifle"
 	desc = "An energy-based anti material marksman rifle that uses highly charged particle beams moving at extreme velocities to decimate whatever is unfortunate enough to be targetted by one. \
@@ -24,13 +12,22 @@
 	force = 15
 	materials = list()
 	origin_tech = ""
-	recoil = 4
+	recoil = 5
 	ammo_x_offset = 3
 	ammo_y_offset = 3
 	modifystate = FALSE
+	zoomable = TRUE
+	zoom_amt = 17
+	zoom_out_amt = 20
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
+	var/hipfire_inaccuracy = 2
+	var/hipfire_recoil = 10
+	var/scoped_inaccuracy = 0
+	var/scoped_recoil = 3
+	var/scoped = FALSE
+	var/noscope = FALSE	//Can you fire this without a scope?
 	cell_type = /obj/item/weapon/stock_parts/cell/beam_rifle
 	canMouseDown = TRUE
 	pin = null
@@ -40,14 +37,13 @@
 	var/aiming_time_left = 7
 	var/aiming_time_increase_user_movement = 3
 	var/scoped_slow = 1
-	var/aiming_time_increase_angle_multiplier = 0.3
+	var/aiming_time_increase_angle_multiplier = 0.6
 
 	var/lastangle = 0
-	var/aiming_lastangle = 0
 	var/mob/current_user = null
-	var/obj/effect/projectile_beam/current_tracer
+	var/list/obj/effect/temp_visual/current_tracers = list()
 
-	var/structure_piercing = 2				//Amount * 2. For some reason structures aren't respecting this unless you have it doubled. Probably with the objects in question's Bump() code instead of this but I'll deal with this later.
+	var/structure_piercing = 2				//This doesn't always work!
 	var/structure_bleed_coeff = 0.7
 	var/wall_pierce_amount = 0
 	var/wall_devastate = 0
@@ -64,122 +60,19 @@
 	var/delay = 65
 	var/lastfire = 0
 
-	//ZOOMING
-	var/zoom_current_view_increase = 0
-	var/zoom_target_view_increase = 10
-	var/zoom_speed = ZOOM_SPEED_STEP
-	var/zooming = FALSE
-	var/zoom_lock = ZOOM_LOCK_AUTOZOOM_FREEMOVE
-	var/zooming_angle
-	var/current_zoom_x = 0
-	var/current_zoom_y = 0
-	var/zoom_animating = 0
-
 	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
 	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
-
-	var/datum/action/item_action/zoom_speed_action/zoom_speed_action
-	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 
 /obj/item/weapon/gun/energy/beam_rifle/debug
 	delay = 0
 	cell_type = /obj/item/weapon/stock_parts/cell/infinite
 	aiming_time = 0
 	recoil = 0
-	pin = /obj/item/device/firing_pin
-
-/obj/item/weapon/gun/energy/beam_rifle/equipped(mob/user)
-	set_user(user)
-	. = ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/pickup(mob/user)
-	set_user(user)
-	. = ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/dropped()
-	set_user()
-	. = ..()
-
-/obj/item/weapon/gun/energy/beam_rifle/ui_action_click(owner, action)
-	if(istype(action, /datum/action/item_action/zoom_speed_action))
-		zoom_speed++
-		if(zoom_speed > 1)
-			zoom_speed = ZOOM_SPEED_STEP
-		switch(zoom_speed)
-			if(ZOOM_SPEED_STEP)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s digital zoom to stepper mode.</span>")
-			if(ZOOM_SPEED_INSTANT)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s digital zoom to instant mode.</span>")
-	if(istype(action, /datum/action/item_action/zoom_lock_action))
-		zoom_lock++
-		if(zoom_lock > 3)
-			zoom_lock = 0
-		switch(zoom_lock)
-			if(ZOOM_LOCK_AUTOZOOM_FREEMOVE)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to free directional.</span>")
-			if(ZOOM_LOCK_AUTOZOOM_ANGLELOCK)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to locked directional.</span>")
-			if(ZOOM_LOCK_CENTER_VIEW)
-				to_chat(owner, "<span class='boldnotice'>You switch [src]'s zooming processor to center mode.</span>")
-			if(ZOOM_LOCK_OFF)
-				to_chat(owner, "<span class='boldnotice'>You disable [src]'s zooming system.</span>")
-	reset_zooming()
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/smooth_zooming(delay_override = null)
-	if(!check_user() || !zooming || zoom_lock == ZOOM_LOCK_OFF || zoom_lock == ZOOM_LOCK_CENTER_VIEW)
-		return
-	if(zoom_animating && delay_override != 0)
-		return smooth_zooming(zoom_animating + delay_override)	//Automatically compensate for ongoing zooming actions.
-	var/total_time = SSfastprocess.wait
-	if(delay_override)
-		total_time = delay_override
-	if(zoom_speed == ZOOM_SPEED_INSTANT)
-		total_time = 0
-	zoom_animating = total_time
-	animate(current_user.client, pixel_x = current_zoom_x, pixel_y = current_zoom_y , total_time, SINE_EASING, ANIMATION_PARALLEL)
-	zoom_animating = 0
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/set_autozoom_pixel_offsets_immediate(current_angle)
-	if(zoom_lock == ZOOM_LOCK_CENTER_VIEW || zoom_lock == ZOOM_LOCK_OFF)
-		return
-	current_zoom_x = sin(current_angle) + sin(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
-	current_zoom_y = cos(current_angle) + cos(current_angle) * AUTOZOOM_PIXEL_STEP_FACTOR * zoom_current_view_increase
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/handle_zooming()
-	if(!zooming || !check_user())
-		return
-	if(zoom_speed == ZOOM_SPEED_INSTANT)
-		current_user.client.change_view(world.view + zoom_target_view_increase)
-		zoom_current_view_increase = zoom_target_view_increase
-		set_autozoom_pixel_offsets_immediate(zooming_angle)
-		smooth_zooming()
-		return
-	if(zoom_current_view_increase > zoom_target_view_increase)
-		return
-	zoom_current_view_increase++
-	current_user.client.change_view(zoom_current_view_increase + world.view)
-	set_autozoom_pixel_offsets_immediate(zooming_angle)
-	smooth_zooming(SSfastprocess.wait * zoom_target_view_increase * zoom_speed)
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/start_zooming()
-	if(zoom_lock == ZOOM_LOCK_OFF)
-		return
-	zooming = TRUE
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/stop_zooming()
-	zooming = FALSE
-	reset_zooming()
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/reset_zooming()
-	if(!check_user(FALSE))
-		return
-	zoom_animating = 0
-	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
-	zoom_current_view_increase = 0
-	current_user.client.change_view(world.view)
-	zooming_angle = 0
-	current_zoom_x = 0
-	current_zoom_y = 0
+	scoped_recoil = 0
+	hipfire_recoil = 0
+	hipfire_inaccuracy = 0
+	scoped_inaccuracy = 0
+	noscope = 1
 
 /obj/item/weapon/gun/energy/beam_rifle/update_icon()
 	cut_overlays()
@@ -192,10 +85,9 @@
 /obj/item/weapon/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
-	aiming_beam()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/update_slowdown()
-	if(aiming)
+	if(scoped)
 		slowdown = scoped_slow
 	else
 		slowdown = initial(slowdown)
@@ -203,160 +95,140 @@
 /obj/item/weapon/gun/energy/beam_rifle/Initialize()
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
-	zoom_speed_action = new(src)
-	zoom_lock_action = new(src)
 
 /obj/item/weapon/gun/energy/beam_rifle/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
-	set_user(null)
-	QDEL_NULL(current_tracer)
-	return ..()
+	..()
+
+/obj/item/weapon/gun/energy/beam_rifle/zoom(user, forced_zoom)
+	. = ..()
+	scope(user, .)
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/scope(mob/user, forced)
+	var/scoping
+	switch(forced)
+		if(TRUE)
+			scoping = TRUE
+		if(FALSE)
+			scoping = FALSE
+		else
+			scoping = !scoped
+	if(scoping)
+		spread = scoped_inaccuracy
+		recoil = scoped_recoil
+		scoped = TRUE
+		user << "<span class='boldnotice'>You bring your [src] up and use its scope...</span>"
+	else
+		spread = hipfire_inaccuracy
+		recoil = hipfire_recoil
+		scoped = FALSE
+		user << "<span class='boldnotice'>You lower your [src].</span>"
+	update_slowdown()
+
+/obj/item/weapon/gun/energy/beam_rifle/can_trigger_gun(var/mob/living/user)
+	if(!scoped && !noscope)
+		user << "<span class='userdanger'>This beam rifle can only be used while scoped!</span>"
+		return FALSE
+	. = ..(user)
 
 /obj/item/weapon/gun/energy/beam_rifle/emp_act(severity)
 	chambered = null
 	recharge_newshot()
 
-/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
-	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
-	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
+/obj/item/weapon/gun/energy/beam_rifle/proc/aiming_beam()
+	var/atom/A = current_user.client.mouseObject
+	if(!istype(A) || !A.loc)
 		return
-	aiming_lastangle = lastangle
+	var/turf/T = get_turf(current_user.client.mouseObject)
+	if(!istype(T))
+		return
 	var/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/P = new
 	P.gun = src
 	P.wall_pierce_amount = wall_pierce_amount
 	P.structure_pierce_amount = structure_piercing
 	P.do_pierce = projectile_setting_pierce
+	P.preparePixelProjectile(current_user.client.mouseObject, T, current_user, current_user.client.mouseParams, 0)
 	if(aiming_time)
 		var/percent = ((100/aiming_time)*aiming_time_left)
 		P.color = rgb(255 * percent,255 * ((100 - percent) / 100),0)
 	else
 		P.color = rgb(0, 255, 0)
-	var/turf/curloc = get_turf(src)
-	var/turf/targloc = get_turf(current_user.client.mouseObject)
-	if(!istype(targloc))
-		if(!istype(curloc))
-			return
-		targloc = get_turf_in_angle(lastangle, curloc, 10)
-	P.preparePixelProjectile(targloc, targloc, current_user, current_user.client.mouseParams, 0)
-	P.fire(lastangle)
+	clear_tracers()
+	P.fire()
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/clear_tracers()
+	for(var/I in current_tracers)
+		current_tracers -= I
+		var/obj/effect/temp_visual/projectile_beam/PB = I
+		qdel(PB)
+
+/obj/item/weapon/gun/energy/beam_rifle/proc/terminate_aiming()
+	stop_aiming()
+	clear_tracers()
 
 /obj/item/weapon/gun/energy/beam_rifle/process()
 	if(!aiming)
 		return
-	check_user()
-	handle_zooming()
+	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
+		terminate_aiming()
+		return
 	if(aiming_time_left > 0)
 		aiming_time_left--
-		aiming_beam(TRUE)
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
-	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
-		if(automatic_cleanup)
-			stop_aiming()
-			set_user(null)
-		return FALSE
-	return TRUE
+	aiming_beam()
+	process_aim()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/process_aim()
-	if(istype(current_user) && current_user.client && current_user.client.mouseParams)
-		var/angle = mouse_angle_from_client(current_user.client)
-		switch(angle)
-			if(316 to 360)
-				current_user.setDir(NORTH)
-			if(0 to 45)
-				current_user.setDir(NORTH)
-			if(46 to 135)
-				current_user.setDir(EAST)
-			if(136 to 225)
-				current_user.setDir(SOUTH)
-			if(226 to 315)
-				current_user.setDir(WEST)
-		var/difference = abs(lastangle - angle)
-		if(difference > 350)			//Too lazy to properly math, detects 360 --> 0 changes.
-			difference = (lastangle > 350? ((360 - lastangle) + angle) : ((360 - angle) + lastangle))
-		delay_penalty(difference * aiming_time_increase_angle_multiplier)
-		lastangle = angle
+	if(current_user.client.mouseParams)
+		var/list/mouse_control = params2list(current_user.client.mouseParams)
+		if(isturf(current_user.client.mouseLocation))
+			current_user.face_atom(current_user.client.mouseLocation)
+		if(mouse_control["screen-loc"])
+			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
+			var/list/screen_loc_X = splittext(screen_loc_params[1],":")
+			var/list/screen_loc_Y = splittext(screen_loc_params[2],":")
+			var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
+			var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
+			var/screenview = (current_user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
+			var/ox = round(screenview/2) - current_user.client.pixel_x //"origin" x
+			var/oy = round(screenview/2) - current_user.client.pixel_y //"origin" y
+			var/angle = NORM_ROT(Atan2(y - oy, x - ox))
+			var/difference = abs(lastangle - angle)
+			delay_penalty(difference * aiming_time_increase_angle_multiplier)
+			lastangle = angle
 
 /obj/item/weapon/gun/energy/beam_rifle/on_mob_move()
-	check_user()
-	if(aiming)
-		delay_penalty(aiming_time_increase_user_movement)
-		process_aim()
-		aiming_beam(TRUE)
+	delay_penalty(aiming_time_increase_user_movement)
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/start_aiming()
 	aiming_time_left = aiming_time
 	aiming = TRUE
-	process_aim()
-	aiming_beam(TRUE)
-	zooming_angle = lastangle
-	start_zooming()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/stop_aiming()
-	set waitfor = FALSE
 	aiming_time_left = aiming_time
 	aiming = FALSE
-	QDEL_NULL(current_tracer)
-	stop_zooming()
-
-/obj/item/weapon/gun/energy/beam_rifle/proc/set_user(mob/user)
-	if(user == current_user)
-		return
-	stop_aiming()
-	if(istype(current_user))
-		LAZYREMOVE(current_user.mousemove_intercept_objects, src)
-		current_user = null
-	if(istype(user))
-		current_user = user
-		LAZYADD(current_user.mousemove_intercept_objects, src)
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-	if(aiming)
-		process_aim()
-		aiming_beam()
-		if(zoom_lock == ZOOM_LOCK_AUTOZOOM_FREEMOVE)
-			zooming_angle = lastangle
-			set_autozoom_pixel_offsets_immediate(zooming_angle)
-			smooth_zooming(2)
-	return ..()
+	current_user = mob
 
-/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob/mob)
-	if(istype(mob))
-		set_user(mob)
-	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
-		return
-	if((object in mob.contents) || (object == mob))
-		return
+/obj/item/weapon/gun/energy/beam_rifle/onMouseDown(object, location, params, mob)
 	start_aiming()
-	return ..()
+	current_user = mob
 
 /obj/item/weapon/gun/energy/beam_rifle/onMouseUp(object, location, params, mob/M)
-	if(istype(object, /obj/screen) && !istype(object, /obj/screen/click_catcher))
-		return
 	process_aim()
-	if(aiming_time_left <= aiming_time_fire_threshold && check_user())
+	if(aiming_time_left <= aiming_time_fire_threshold)
 		sync_ammo()
 		afterattack(M.client.mouseObject, M, FALSE, M.client.mouseParams, passthrough = TRUE)
 	stop_aiming()
-	QDEL_NULL(current_tracer)
-	return ..()
+	clear_tracers()
 
 /obj/item/weapon/gun/energy/beam_rifle/afterattack(atom/target, mob/living/user, flag, params, passthrough = FALSE)
-	if(flag) //It's adjacent, is the user, or is on the user's person
-		if(target in user.contents) //can't shoot stuff inside us.
-			return
-		if(!ismob(target) || user.a_intent == INTENT_HARM) //melee attack
-			return
-		if(target == user && user.zone_selected != "mouth") //so we can't shoot ourselves (unless mouth selected)
-			return
 	if(!passthrough && (aiming_time > aiming_time_fire_threshold))
 		return
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
-	stop_aiming()
-	return ..()
+	. = ..()
 
 /obj/item/weapon/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
@@ -426,25 +298,6 @@
 	HS_BB.do_pierce = do_pierce
 	HS_BB.gun = host
 
-/obj/item/ammo_casing/energy/beam_rifle/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread)
-	var/turf/curloc = get_turf(user)
-	if(!istype(curloc) || !BB)
-		return FALSE
-	var/obj/item/weapon/gun/energy/beam_rifle/gun = loc
-	if(!targloc && gun)
-		targloc = get_turf_in_angle(gun.lastangle, curloc, 10)
-	else if(!targloc)
-		return FALSE
-	var/firing_dir
-	if(BB.firer)
-		firing_dir = BB.firer.dir
-	if(!BB.suppressed && firing_effect_type)
-		new firing_effect_type(get_turf(src), firing_dir)
-	BB.preparePixelProjectile(target, targloc, user, params, spread)
-	BB.fire(gun? gun.lastangle : null, null)
-	BB = null
-	return TRUE
-
 /obj/item/ammo_casing/energy/beam_rifle/hitscan
 	projectile_type = /obj/item/projectile/beam/beam_rifle/hitscan
 	select_name = "beam"
@@ -477,7 +330,6 @@
 	var/impact_structure_damage = 0
 	var/impact_direct_damage = 0
 	var/turf/cached
-	var/list/pierced = list()
 
 /obj/item/projectile/beam/beam_rifle/proc/AOE(turf/epicenter)
 	set waitfor = FALSE
@@ -499,9 +351,6 @@
 /obj/item/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
 	if(!do_pierce)
 		return FALSE
-	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
-		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
 			loc = target
@@ -562,50 +411,7 @@
 
 /obj/item/projectile/beam/beam_rifle/hitscan
 	icon_state = ""
-	var/tracer_type = /obj/effect/projectile_beam/tracer
-	var/starting_z
-	var/starting_p_x
-	var/starting_p_y
-	var/constant_tracer = FALSE
-	var/travelled_p_x = 0
-	var/travelled_p_y = 0
-	var/tracer_spawned = FALSE
-
-/obj/item/projectile/beam/beam_rifle/hitscan/Destroy()
-	paused = TRUE	//STOP HITTING WHEN YOU'RE ALREADY BEING DELETED!
-	spawn_tracer(constant_tracer)
-	return ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer(put_in_rifle = FALSE)
-	if(tracer_spawned)
-		return
-	tracer_spawned = TRUE
-	//Remind me to port baystation trajectories so this shit isn't needed...
-	var/pixels_travelled = round(sqrt(travelled_p_x**2 + travelled_p_y**2),1)
-	var/scaling = pixels_travelled/world.icon_size
-	var/midpoint_p_x = round(starting_p_x + (travelled_p_x / 2))
-	var/midpoint_p_y = round(starting_p_y + (travelled_p_y / 2))
-	var/tracer_px = midpoint_p_x % world.icon_size
-	var/tracer_py = midpoint_p_y % world.icon_size
-	var/tracer_lx = (midpoint_p_x - tracer_px) / world.icon_size
-	var/tracer_ly = (midpoint_p_y - tracer_py) / world.icon_size
-	var/obj/effect/projectile_beam/PB = new tracer_type(src)
-	PB.apply_vars(Angle, tracer_px, tracer_py, color, scaling, locate(tracer_lx,tracer_ly,starting_z))
-	if(put_in_rifle && istype(gun))
-		if(gun.current_tracer)
-			QDEL_NULL(gun.current_tracer)
-		gun.current_tracer = PB
-	else
-		QDEL_IN(PB, 5)
-
-/obj/item/projectile/beam/beam_rifle/hitscan/proc/check_for_turf_edge(turf/T)
-	if(!istype(T))
-		return TRUE
-	var/tx = T.x
-	var/ty = T.y
-	if(tx < 10 || tx > (world.maxx - 10) || ty < 10 || ty > (world.maxy-10))
-		return TRUE
-	return FALSE
+	var/tracer_type = /obj/effect/temp_visual/projectile_beam/tracer
 
 /obj/item/projectile/beam/beam_rifle/hitscan/fire(setAngle, atom/direct_target)	//oranges didn't let me make this a var the first time around so copypasta time
 	set waitfor = 0
@@ -617,12 +423,6 @@
 	var/old_pixel_x = pixel_x
 	var/old_pixel_y = pixel_y
 	var/safety = 0	//The code works fine, but... just in case...
-	var/turf/c2
-	var/starting_x = loc.x
-	var/starting_y = loc.y
-	starting_z = loc.z
-	starting_p_x = starting_x * world.icon_size + pixel_x
-	starting_p_y = starting_y * world.icon_size + pixel_y
 	while(loc)
 		if(++safety > (range * 3))	//If it's looping for way, way too long...
 			return	//Kill!
@@ -637,8 +437,6 @@
 		transform = M
 		var/Pixel_x=sin(Angle)+16*sin(Angle)*2
 		var/Pixel_y=cos(Angle)+16*cos(Angle)*2
-		travelled_p_x += Pixel_x
-		travelled_p_y += Pixel_y
 		var/pixel_x_offset = old_pixel_x + Pixel_x
 		var/pixel_y_offset = old_pixel_y + Pixel_y
 		var/new_x = x
@@ -681,73 +479,23 @@
 	spawn_tracer_effect()
 	if(!QDELETED(src) && loc)
 		cached = get_turf(src)
-	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/proc/spawn_tracer_effect()
-	var/obj/effect/projectile_beam/tracer/T = new tracer_type(loc, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)
-	QDEL_IN(T, 5)
+	QDEL_IN((new tracer_type(loc, time = 5, angle_override = Angle, p_x = pixel_x, p_y = pixel_y, color_override = color)), 5)
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam
-	tracer_type = /obj/effect/projectile_beam/tracer/aiming
+	tracer_type = /obj/effect/temp_visual/projectile_beam/tracer/aiming
 	name = "aiming beam"
 	hitsound = null
 	hitsound_wall = null
 	nodamage = TRUE
 	damage = 0
-	var/starting_x		//i can't be assed to port trajectory datums from baystation today so have this
-	var/starting_y
-	var/proj_z
-	var/starting_p_x
-	var/starting_p_y
-	var/dest_x
-	var/dest_y
-	var/dest_p_x
-	var/dest_p_y
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/proc/spawn_tracer()
-	if(!dest_x || !dest_y)
-		dest_x = cached.x
-		dest_y = cached.y
-	var/x_offset = dest_x - starting_x
-	var/y_offset = dest_y - starting_y
-	var/turf/midpoint = locate(round((starting_x + x_offset) / 2, 1), round((starting_y + y_offset) / 2, 1), proj_z)
-	var/obj/effect/projectile_beam/tracer/aiming = new
-	if(istype(gun))
-		gun.current_tracer = aiming
-	var/pixels_between_points = round(sqrt((abs(x_offset) ** 2) + (abs(y_offset) ** 2)), 1)
-	var/scaling = round(pixels_between_points/32, 1)
-	aiming.apply_vars(Angle, pixel_x, pixel_y, color, scaling, midpoint)
-	to_chat(world, "DEBUG: x_offset [x_offset] y_offset [y_offset] pixels [pixels_between_points] scaling [scaling]")
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/fire()
-	var/turf/T = get_turf(src)
-	starting_x = T.x
-	starting_y = T.y
-	proj_z = T.z
-	starting_p_x = pixel_x
-	starting_p_y = pixel_y
-	. = ..()
-
-/obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/Collide(atom/target, yes)
-	paused = TRUE
-	if(!QDELETED(src))
-		var/turf/T = get_turf(src)
-		dest_x = T.x
-		dest_y = T.y
-		dest_p_x = pixel_x
-		dest_p_y = pixel_y
-	else
-		to_chat(world, "DEBUG: Beam already deleted.")
-	paused = FALSE
-	. = ..()
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/prehit(atom/target)
 	qdel(src)
 	return FALSE
 
 /obj/item/projectile/beam/beam_rifle/hitscan/aiming_beam/on_hit()
-	to_chat(world, "ON_HIT CALLED")
-	spawn_tracer()
 	qdel(src)
 	return FALSE
 
@@ -777,21 +525,11 @@
 	M.Turn(angle_override)
 	look.transform = M
 	appearance = look
-	if(!isnull(new_loc))	//If you want to null it just delete it...
-		forceMove(new_loc)
+	..()
 
-/obj/effect/projectile_beam/tracer
+/obj/effect/temp_visual/projectile_beam/tracer
 	icon_state = "tracer_beam"
 
-/obj/effect/projectile_beam/tracer/aiming
+/obj/effect/temp_visual/projectile_beam/tracer/aiming
 	icon_state = "gbeam"
-
-/datum/action/item_action/zoom_speed_action
-	name = "Toggle Zooming Speed"
-	button_icon_state = "projectile"
-	background_icon_state = "bg_tech"
-
-/datum/action/item_action/zoom_lock_action
-	name = "Switch Zoom Mode"
-	button_icon_state = "zoom_mode"
-	background_icon_state = "bg_tech"
+	duration = 1
