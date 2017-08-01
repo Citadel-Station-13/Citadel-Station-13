@@ -432,7 +432,7 @@
 
 /obj/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "click_catcher"
+	icon_state = "flash"
 	plane = CLICKCATCHER_PLANE
 	mouse_opacity = 2
 	screen_loc = "CENTER"
