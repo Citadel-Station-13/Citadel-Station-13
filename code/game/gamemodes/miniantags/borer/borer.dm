@@ -97,6 +97,9 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	var/hiding = FALSE
 	var/waketimerid = null
 
+	var/docile_chem = "sugar"
+	var/list/wakeup_objectives = list()  //Used to store objectives until the borer wakes up
+
 	var/datum/action/innate/borer/talk_to_host/talk_to_host_action = new
 	var/datum/action/innate/borer/infest_host/infest_host_action = new
 	var/datum/action/innate/borer/toggle_hide/toggle_hide_action = new
@@ -136,8 +139,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	borer_chems += /datum/borer_chem/crocin
 	borer_chems += /datum/borer_chem/camphor
 
-	if(is_team_borer)
-		GLOB.borers += src
+	GLOB.borers += src
 
 	GrantBorerActions()
 
@@ -285,12 +287,12 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 		if(stat != DEAD && victim.stat != DEAD)
 
-			if(victim.reagents.has_reagent("sugar"))
+			if(victim.reagents.has_reagent(docile_chem))
 				if(!docile || waketimerid)
 					if(controlling)
-						to_chat(victim, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
+						to_chat(victim, "<span class='warning'>You feel the soporific flow of [docile_chem] in your host's blood, lulling you into docility.</span>")
 					else
-						to_chat(src, "<span class='warning'>You feel the soporific flow of sugar in your host's blood, lulling you into docility.</span>")
+						to_chat(src, "<span class='warning'>You feel the soporific flow of [docile_chem] in your host's blood, lulling you into docility.</span>")
 					if(waketimerid)
 						deltimer(waketimerid)
 						waketimerid = null
@@ -298,9 +300,9 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 			else
 				if(docile && !waketimerid)
 					if(controlling)
-						to_chat(victim, "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>")
+						to_chat(victim, "<span class='warning'>You start shaking off your lethargy as the [docile_chem] leaves your host's blood. This will take about 10 seconds...</span>")
 					else
-						to_chat(src, "<span class='warning'>You start shaking off your lethargy as the sugar leaves your host's blood. This will take about 10 seconds...</span>")
+						to_chat(src, "<span class='warning'>You start shaking off your lethargy as the [docile_chem] leaves your host's blood. This will take about 10 seconds...</span>")
 
 					waketimerid = addtimer(CALLBACK(src, "wakeup"), 10, TIMER_STOPPABLE)
 			if(controlling)
@@ -775,10 +777,13 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 	switch(punishment) //Hardcoding this stuff.
 		if("Blindness")
 			victim.blind_eyes(4)
+			to_chat(victim, "<span class='userdanger'>Your vision fades away suddenly, as your borer robs you of your sight.</span>")
 		if("Deafness")
 			victim.minimumDeafTicks(40)
+			to_chat(victim, "<span class='userdanger'>Your hearing fades away suddenly, as your borer robs you of your hearing.</span>")
 		if("Stun")
 			victim.Knockdown(100)
+			to_chat(victim, "<span class='userdanger'>You are wracked with unbearable pain, as your borer takes control of your pain-center!</span>")
 
 	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")
 
@@ -825,7 +830,10 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 
 		new /obj/effect/decal/cleanable/vomit(get_turf(src))
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
-		new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
+		var/mob/living/simple_animal/borer/Baby = new /mob/living/simple_animal/borer(get_turf(src), B.generation + 1)
+
+		Baby.wakeup_objectives = src.mind.objectives //Save them for later, since we lack a mind for them right now
+
 		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
 	else
 		to_chat(src, "<span class='warning'>You need 200 chemicals stored to reproduce.</span>")
@@ -843,15 +851,26 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 		candidate.mob = src
 		ckey = candidate.ckey
 
-		if(mind)
-			mind.store_memory("You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle.")
-			SSticker.mode.update_borer_icons_added(mind)
-
 		to_chat(src, "<span class='notice'>You are a cortical borer!</span>")
 		to_chat(src, "You are a brain slug that worms its way into the head of its victim. Use stealth, persuasion and your powers of mind control to keep you, your host and your eventual spawn safe and warm.")
-		to_chat(src, "Sugar nullifies your abilities, avoid it at all costs!")
+		to_chat(src, "[docile_chem] nullifies your abilities, avoid it at all costs!")
 		to_chat(src, "You can speak to your fellow borers by prefixing your messages with ';'. Check out your Borer tab to see your abilities.")
-		to_chat(src, "You must escape with at least [GLOB.total_borer_hosts_needed] borers with hosts on the shuttle. To reproduce you must have 100 chemicals and be controlling a host.")
+
+		if(mind)
+			if(!(wakeup_objectives.len)) //No objectives, use default?
+				var/datum/objective/normal_borer/new_objective
+				new_objective = new /datum/objective/normal_borer
+				new_objective.owner = mind
+				new_objective.target_amount = GLOB.total_borer_hosts_needed
+				new_objective.explanation_text = "You must escape with at least [GLOB.total_borer_hosts_needed] borer[new_objective.target_amount > 1 ? "s" : ""] with host[new_objective.target_amount > 1 ? "s" : ""] on the shuttle."
+				mind.objectives += new_objective
+				to_chat(src, "<B>Objective #1</B>: [new_objective.explanation_text]")
+			else
+				mind.objectives += wakeup_objectives
+				var/count = 1
+				for(var/datum/objective/O in mind.objectives)
+					to_chat(src, "<B>Objective #[count]</B>: [O.explanation_text]")
+					count++
 
 /mob/living/simple_animal/borer/proc/detatch()
 	if(!victim || !controlling)
