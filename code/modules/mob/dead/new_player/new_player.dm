@@ -110,7 +110,7 @@
 		if(SSticker)
 			var/tready = text2num(href_list["ready"])
 			//Avoid updating ready if we're after PREGAME (they should use latejoin instead)
-			//This is likely not an actual issue but I don't have time to prove that this 
+			//This is likely not an actual issue but I don't have time to prove that this
 			//no longer is required
 			if(SSticker.current_state <= GAME_STATE_PREGAME)
 				ready = tready
@@ -368,6 +368,7 @@
 			humanc.make_scottish()
 
 	GLOB.joined_player_list += character.ckey
+	GLOB.latejoiners += character
 
 	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
