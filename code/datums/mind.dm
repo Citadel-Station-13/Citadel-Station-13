@@ -13,7 +13,7 @@
 			mind.transfer_to(new_mob)
 
 	-	You must not assign key= or ckey= after transfer_to() since the transfer_to transfers the client for you.
-		By setting key or ckey explicitly after transfering the mind with transfer_to you will cause bugs like DCing
+		By setting key or ckey explicitly after transferring the mind with transfer_to you will cause bugs like DCing
 		the player.
 
 	-	IMPORTANT NOTE 2, if you want a player to become a ghost, use mob.ghostize() It does all the hard work for you.
@@ -97,7 +97,7 @@
 		language_holder = mob_holder.copy(src)
 
 	if(key)
-		if(new_character.key != key)					//if we're transfering into a body with a key associated which is not ours
+		if(new_character.key != key)					//if we're transferring into a body with a key associated which is not ours
 			new_character.ghostize(1)						//we'll need to ghostize so that key isn't mobless.
 	else
 		key = new_character.key
@@ -787,7 +787,7 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "late-assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
 			return
 
@@ -821,6 +821,12 @@
 					new_objective:target = new_target:mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.update_explanation_text()
+
+			if ("late-assassinate")
+				new_objective = new /datum/objective/assassinate/late
+				new_objective.owner = src
+				new_objective.target = null
+				new_objective.find_target() //This will begin the "find-target" loop and update their explanation text
 
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
@@ -1593,9 +1599,9 @@
 	agent_landmarks.len = 4
 	scientist_landmarks.len = 4
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/obj/effect/landmark/L
