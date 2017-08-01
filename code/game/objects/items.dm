@@ -314,7 +314,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 // The lack of ..() is intentional, do not add one
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
@@ -504,7 +504,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
+	var/obj/item/organ/eyes/eyes = M.getorganslot("eye_sight")
 	if (!eyes)
 		return
 	if(eyes.eye_damage >= 10)
@@ -569,7 +569,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
 		return 0
-	if(istype(loc,/obj/item/weapon/storage))
+	if(istype(loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = loc
 		S.remove_from_storage(src,newLoc)
 		return 1

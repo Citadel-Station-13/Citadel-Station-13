@@ -87,6 +87,8 @@ proc/get_top_level_mob(var/mob/S)
 					alert("Unable to use this emote, must be either hearable or visible.")
 					return
 			message = subtle_emote
+		else
+			return FALSE
 	else
 		message = params
 		if(type_override)

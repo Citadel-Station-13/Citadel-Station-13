@@ -219,6 +219,9 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
+	if(call_reason)
+		SSblackbox.add_details("shuttle_reason", call_reason)
+		log_game("Shuttle call reason: [call_reason]")
 	message_admins("[key_name_admin(user)] has called the shuttle. (<A HREF='?_src_=holder;trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
@@ -540,7 +543,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
 	var/area/current = get_area(A)
-	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))

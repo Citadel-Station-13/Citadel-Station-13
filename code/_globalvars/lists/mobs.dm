@@ -23,3 +23,5 @@ GLOBAL_LIST_EMPTY(simple_animals)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
+
+GLOBAL_LIST_EMPTY(latejoiners) //All latejoining people, for traitor-target purposes.

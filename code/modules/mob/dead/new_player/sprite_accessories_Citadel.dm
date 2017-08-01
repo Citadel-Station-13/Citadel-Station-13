@@ -153,6 +153,18 @@
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
+
 /******************************************
 *************** Body Parts ****************
 *******************************************/
@@ -428,6 +440,18 @@
 	name = "Guilmon"
 	icon_state = "guilmon"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 ************ Body Markings ****************
