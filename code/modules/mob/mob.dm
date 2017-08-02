@@ -11,8 +11,7 @@
 	qdel(hud_used)
 	if(mind && mind.current == src)
 		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
+	QDEL_LIST(viruses)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
@@ -387,7 +386,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc,/obj/mecha))
+	if(istype(loc, /obj/mecha))
 		return
 
 	if(incapacitated())
@@ -869,7 +868,7 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A,/obj/item/weapon/card/id) )
+		if( search_id && istype(A, /obj/item/weapon/card/id) )
 			var/obj/item/weapon/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
@@ -878,7 +877,7 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A,/obj/item/device/pda) )
+		else if( search_pda && istype(A, /obj/item/device/pda) )
 			var/obj/item/device/pda/PDA = A
 			if(PDA.owner == oldname)
 				PDA.owner = newname

@@ -4,7 +4,7 @@
 //Hit chance is here to avoid people checking github and then hovering around new arrivals within the max minute range every round.
 
 /datum/objective/assassinate/late
-	martyr_compatible = 0
+	martyr_compatible = FALSE
 
 
 /datum/objective/assassinate/late/find_target()
@@ -15,7 +15,7 @@
 			possible_targets += possible_target
 	if(possible_targets.len > 0 && prob(LATE_TARGET_HIT_CHANCE))
 		target = pick(possible_targets)
-		martyr_compatible = 1 //Might never matter, but I guess if an admin gives another random objective, this should now be compatible
+		martyr_compatible = TRUE	//Might never matter, but I guess if an admin gives another random objective, this should now be compatible
 		update_explanation_text()
 
 		message_admins("[target] has been selected as the assassination target of [owner].")
@@ -68,14 +68,14 @@
 /datum/objective/assassinate/late/check_completion()
 	if(target && target.current) //If target WAS assigned
 		if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > 6 || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 	else //If no target was ever given
 		if(!owner.current || owner.current.stat == DEAD || isbrain(owner.current))
-			return 0
+			return FALSE
 		if(!is_special_character(owner.current))
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 /datum/objective/assassinate/late/update_explanation_text()
 	//..()
@@ -83,3 +83,24 @@
 		explanation_text = "Assassinate [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
 	else
 		explanation_text = "Stay alive until your target arrives on the station, you will be notified when the target has been identified."
+
+
+
+//BORER STUFF
+//Because borers didn't use to have objectives
+/datum/objective/normal_borer //Default objective, should technically never be used unmodified but CAN work unmodified.
+	explanation_text = "You must escape with at least one borer with host on the shuttle."
+	target_amount = 1
+	martyr_compatible = 0
+
+/datum/objective/normal_borer/check_completion()
+	var/total_borer_hosts = 0
+	for(var/mob/living/carbon/C in GLOB.mob_list)
+		var/mob/living/simple_animal/borer/D = C.has_brain_worms()
+		var/turf/location = get_turf(C)
+		if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
+			total_borer_hosts++
+	if(target_amount <= total_borer_hosts)
+		return TRUE
+	else
+		return FALSE

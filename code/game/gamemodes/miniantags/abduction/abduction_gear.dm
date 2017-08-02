@@ -271,10 +271,10 @@
 	var/list/all_items = M.GetAllContents()
 
 	for(var/obj/I in all_items)
-		if(istype(I,/obj/item/device/radio/))
+		if(istype(I, /obj/item/device/radio/))
 			var/obj/item/device/radio/r = I
 			r.listening = 0
-			if(!istype(I,/obj/item/device/radio/headset))
+			if(!istype(I, /obj/item/device/radio/headset))
 				r.broadcasting = 0 //goddamned headset hacks
 
 /obj/item/device/firing_pin/abductor
@@ -469,7 +469,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		species = "<span clas=='notice'>[H.dna.species.name]</span>"
+		species = "<span class='notice'>[H.dna.species.name]</span>"
 		if(L.mind && L.mind.changeling)
 			species = "<span class='warning'>Changeling lifeform</span>"
 		var/obj/item/organ/heart/gland/temp = locate() in H.internal_organs

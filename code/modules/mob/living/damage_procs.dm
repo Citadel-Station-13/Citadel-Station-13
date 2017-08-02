@@ -25,6 +25,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			adjustBrainLoss(damage * hit_percent)
 		//citadel code
 		if(AROUSAL)
 			adjustArousalLoss(damage * hit_percent)
@@ -44,6 +46,8 @@
 			return adjustCloneLoss(damage)
 		if(STAMINA)
 			return adjustStaminaLoss(damage)
+		if(BRAIN)
+			return adjustBrainLoss(damage)
 		//citadel code
 		if(AROUSAL)
 			return adjustArousalLoss(damage)
@@ -62,12 +66,14 @@
 			return getCloneLoss()
 		if(STAMINA)
 			return getStaminaLoss()
+		if(BRAIN)
+			return getBrainLoss()
 		//citadel code
 		if(AROUSAL)
 			return getArousalLoss()
 
 
-/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = 0, stamina = 0, arousal = 0)
+/mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, def_zone = null, blocked = FALSE, stamina = 0, arousal = 0, brain = 0)
 	if(blocked >= 100)
 		return 0
 	if(brute)
@@ -82,6 +88,8 @@
 		apply_damage(clone, CLONE, def_zone, blocked)
 	if(stamina)
 		apply_damage(stamina, STAMINA, def_zone, blocked)
+	if(brain)
+		apply_damage(brain, BRAIN, def_zone, blocked)
 	//citadel code
 	if(arousal)
 		apply_damage(arousal, AROUSAL, def_zone, blocked)
