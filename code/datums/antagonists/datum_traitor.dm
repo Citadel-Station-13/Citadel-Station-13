@@ -172,10 +172,16 @@
 		objective_count += forge_single_objective()
 
 	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-		var/datum/objective/assassinate/kill_objective = new
-		kill_objective.owner = owner
-		kill_objective.find_target()
-		add_objective(kill_objective)
+		if(prob(20)) //AI's are less likely to look for a late-joiner than normal traitors
+			var/datum/objective/assassinate/late/late_objective = new
+			late_objective.owner = owner
+			late_objective.find_target()
+			add_objective(late_objective)
+		else
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = owner
+			kill_objective.find_target()
+			add_objective(kill_objective)
 
 	var/datum/objective/survive/survive_objective = new
 	survive_objective.owner = owner
@@ -196,6 +202,11 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
+		else if(prob(50))
+			var/datum/objective/assassinate/late/late_objective = new
+			late_objective.owner = owner
+			late_objective.find_target()
+			add_objective(late_objective)
 		else
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner

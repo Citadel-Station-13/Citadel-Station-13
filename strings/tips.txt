@@ -161,7 +161,7 @@ As a Servant, the Judicial Visor is an effective defensive combat tool in small 
 As a Servant, making, and protecting, Tinkerer's Caches is extremely important, as caches are required to unlock scripture and share components.
 As a Servant, Ocular Wardens, while fragile, do very high, rapid damage to a target non-Servant that can see them and will even attack mechs that contain heretics. Place them behind objects that don't block vision to get the most use out of them.
 As a Servant, Clockwork Structures that require power will draw power from the APC if they cannot find a different source of power, and most power-using Structures will rapidly drain the APC.
-As a Servant, you can repair Servant cyborgs and Clockwork Structures with a Replica Fabricator at a rate of 25W power to 1 health.
+As a Servant, you can repair Servant cyborgs and Clockwork Structures with a Replica Fabricator at a rate of 25W power to 1 health. Damaged Clockwork Structures are less efficient, so don't forget to repair them!
 As a Servant, securing a reliable source of component generation is high-priority, as simply handing out slabs will slowly become inefficient. Try placing Tinkerer's Caches near clockwork walls or creating and powering Tinkerer's Daemons.
 As a Servant, only a single held Clockwork Slab will generate components, no matter how many you're holding. In addition, slabs will generate components slower with large amounts of Servants; you can see the exact time with Recollection.
 As a Servant, you can use Geis to easily convert single targets, as it binds them in place, preventing escape unless they react quickly enough. Having another Servant apply Geis to someone already bound will prevent their escape and mute them, even if they reacted quickly.

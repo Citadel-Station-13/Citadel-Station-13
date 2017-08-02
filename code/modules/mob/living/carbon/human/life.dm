@@ -103,15 +103,17 @@
 			var/datum/species/S = dna.species
 
 			if(S.breathid == "o2")
-				throw_alert("oxy", /obj/screen/alert/oxy)
+				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 			else if(S.breathid == "tox")
 				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
 			else if(S.breathid == "co2")
 				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+			else if(S.breathid == "n2")
+				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
 		return 0
 	else
-		if(istype(L,/obj/item/organ/lungs))
+		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
@@ -270,13 +272,6 @@
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 	return min(1,thermal_protection)
-
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
 
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high

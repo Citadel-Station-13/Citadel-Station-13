@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(garbage)
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/tobequeued = list()	//We store the references of things to be added to the queue separately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -144,7 +144,7 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-//this is purely to seperate things profile wise.
+//this is purely to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
 	var/time = world.timeofday
 	var/tick = world.tick_usage
@@ -189,6 +189,7 @@ SUBSYSTEM_DEF(garbage)
 	SSgarbage.qdel_list += "[D.type]"
 #endif
 	if(isnull(D.gc_destroyed))
+		D.SendSignal(COMSIG_PARENT_QDELETED)
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
 		var/start_time = world.time
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
@@ -236,6 +237,7 @@ SUBSYSTEM_DEF(garbage)
 // Default implementation of clean-up code.
 // This should be overridden to remove all references pointing to the object being destroyed.
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
+// TODO: Move this and all datum var definitions into code/datums/datum.dm
 /datum/proc/Destroy(force=FALSE)
 	tag = null
 	var/list/timers = active_timers
@@ -245,6 +247,13 @@ SUBSYSTEM_DEF(garbage)
 		if (timer.spent)
 			continue
 		qdel(timer)
+	var/list/dc = datum_components
+	for(var/I in dc)
+		var/datum/component/C = I
+		C._RemoveNoSignal()
+		qdel(C)
+	if(dc)
+		dc.Cut()
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.

@@ -2824,7 +2824,7 @@
 "eE" = (
 /obj/structure/table,
 /obj/item/weapon/book/manual/hydroponics_pod_people,
-/obj/item/weapon/paper/hydroponics,
+/obj/item/weapon/paper/guides/jobs/hydroponics,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 1;
@@ -5557,7 +5557,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet,
+/obj/item/weapon/paper/pamphlet/gateway,
 /turf/open/floor/plasteel/floorgrime{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -9874,7 +9874,7 @@
 	dir = 8
 	},
 /obj/machinery/button/door{
-	desc = "A remote control-switch whichs locks the research division down in the event of a biohazard leak or contamination.";
+	desc = "A remote control-switch which locks the research division down in the event of a biohazard leak or contamination.";
 	id = "UO45_biohazard";
 	name = "Biohazard Door Control";
 	pixel_y = 8;
