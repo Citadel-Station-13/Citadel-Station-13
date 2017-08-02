@@ -1,9 +1,0 @@
-diff a/code/_onclick/autoclick.dm b/code/_onclick/autoclick.dm	(rejected hunks)
-@@ -85,7 +84,6 @@
- 	return
- 
- /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
--	to_chat(world, "<span class='boldnotice'>DEBUG: Client MouseMove with params [params]</span>")
- 	mouseParams = params
- 	mouseLocation = over_location
- 	mouseObject = over_object
