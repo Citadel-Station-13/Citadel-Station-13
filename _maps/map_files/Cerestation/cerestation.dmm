@@ -700,7 +700,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Northern External Waste Belt APC";
+	name = "Northen External Waste Belt APC";
 	pixel_y = -24
 	},
 /obj/effect/turf_decal/stripes/end{
@@ -1636,7 +1636,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
-	name = "Telecomms Server APC";
+	name = "Telecoms Server APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -2388,7 +2388,7 @@
 	},
 /obj/machinery/ntnet_relay,
 /obj/machinery/camera{
-	c_tag = "Telecomms Server Room";
+	c_tag = "Telecoms Server Room";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -2543,7 +2543,7 @@
 	},
 /area/ai_monitored/security/armory)
 "afz" = (
-/obj/machinery/door/window/brigdoor/security/cell/northleft{
+/obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 6";
 	name = "Cell Door 6"
 	},
@@ -3366,9 +3366,10 @@
 	},
 /area/security/prison)
 "agY" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 4";
-	name = "Cell Door 4"
+	name = "Cell Door 4";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -3892,7 +3893,7 @@
 "aif" = (
 /obj/machinery/power/apc{
 	dir = 2;
-	name = "Telecomms Control Room APC";
+	name = "Telecoms Control Room APC";
 	pixel_y = -24
 	},
 /obj/structure/cable,
@@ -4890,7 +4891,7 @@
 	},
 /area/security/prison)
 "akf" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 8";
 	name = "Cell Door 8"
 	},
@@ -6351,9 +6352,10 @@
 	},
 /area/security/prison)
 "amZ" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 8";
-	name = "Cell Door 8"
+	name = "Cell Door 8";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -7600,9 +7602,10 @@
 	},
 /area/security/prison)
 "apz" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2"
+	name = "Cell Door 2";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -7651,7 +7654,7 @@
 	},
 /area/security/prison)
 "apD" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 9";
 	name = "Cell Door 9"
 	},
@@ -8041,9 +8044,10 @@
 	},
 /area/quartermaster/miningdock)
 "aqu" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3"
+	name = "Cell Door 3";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -8106,9 +8110,10 @@
 	},
 /area/security/warden)
 "aqB" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 7";
-	name = "Cell Door 7"
+	name = "Cell Door 7";
+	req_one_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10019,9 +10024,10 @@
 	},
 /area/security/armory)
 "auu" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 2";
-	name = "Cell Door 2"
+	name = "Cell Door 2";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -10065,9 +10071,10 @@
 	},
 /area/security/warden)
 "auy" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 6";
-	name = "Cell Door 6"
+	name = "Cell Door 6";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -12390,9 +12397,10 @@
 	},
 /area/security/brig)
 "azj" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1"
+	name = "Cell Door 1";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red/side{
 	icon_state = "red";
@@ -20322,7 +20330,7 @@
 "aNC" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Fore Asteroid Maintenance APC";
+	name = "Fore Asteroid Maintenace APC";
 	pixel_y = 24
 	},
 /obj/effect/turf_decal/stripes/end,
@@ -27392,7 +27400,7 @@
 "bae" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintenance APC";
+	name = "Port Asteroid Maintence APC";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -28502,7 +28510,7 @@
 /area/maintenance/asteroid/port/west)
 "bcl" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Service SMES Access";
+	name = "Serivce SMES Access";
 	req_access_txt = "10;11;12"
 	},
 /obj/structure/cable/orange{
@@ -38753,7 +38761,7 @@
 /area/awaymission/research/interior/gateway)
 "bur" = (
 /obj/item/weapon/paper{
-	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delivered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
+	info = "<center><b>Nanotrasen Exploration and Colonization Program</b></center><br><br><center><i>Due to recent shutdowns of the Exploration and Colonization department shortly after this gateway was delievered on-site during station construction, this room has been condemmed and an engineering team will be on-site within the next few months to recollect the gate. Thank you for your cooperation.</i>";
 	name = "NOTICE - GATEWAY STATUS"
 	},
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -41022,7 +41030,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Hydroponics Delivery Chute";
+	name = "Hydroponics Delievery Chute";
 	opacity = 1;
 	req_access_txt = "33"
 	},
@@ -44061,7 +44069,7 @@
 /area/engine/atmos)
 "bDT" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Atmospherics Maintenance";
+	name = "Atmospehrics Maintenance";
 	req_access_txt = "12;24"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -46667,6 +46675,7 @@
 "bIB" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -47259,6 +47268,7 @@
 "bJN" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -51220,7 +51230,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Engineering Delivery Chute";
+	name = "Engineering Delievery Chute";
 	opacity = 1;
 	req_access_txt = "10"
 	},
@@ -51662,6 +51672,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -66208,6 +66219,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -70283,6 +70295,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/mechanical,
 /obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = -4;
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -70542,7 +70555,7 @@
 /obj/machinery/door/window{
 	dir = 8;
 	icon_state = "right";
-	name = "Research Delivery Chute";
+	name = "Research Delievery Chute";
 	opacity = 1;
 	req_access_txt = "55"
 	},
@@ -72155,9 +72168,10 @@
 	},
 /area/quartermaster/sorting)
 "cEr" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 3";
-	name = "Cell Door 3"
+	name = "Cell Door 3";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73580,8 +73594,9 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/machinery/door/window/brigdoor/security/holding{
-	name = "Holding Cell"
+/obj/machinery/door/window/brigdoor{
+	name = "Holding Cell";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -73665,7 +73680,7 @@
 "cHq" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small criminals alike!";
+	desc = "A chute for big and small crimnals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -75079,7 +75094,7 @@
 	dir = 8
 	},
 /obj/machinery/disposal/deliveryChute{
-	desc = "A chute for big and small criminals alike!";
+	desc = "A chute for big and small crimnals alike!";
 	dir = 1;
 	name = "Criminal Delivery Chute"
 	},
@@ -76286,7 +76301,7 @@
 "cMw" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Port Asteroid Maintenance APC";
+	name = "Port Asteroid Maintence APC";
 	pixel_y = 24
 	},
 /obj/structure/cable/orange{
@@ -84553,7 +84568,7 @@
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
 	filter_type = "n2";
-	name = "nitrogen filter";
+	name = "nitogren filter";
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -88007,7 +88022,7 @@
 	},
 /area/security/prison)
 "dmi" = (
-/obj/machinery/door/window/brigdoor/security/cell/northleft{
+/obj/machinery/door/window/brigdoor/northleft{
 	id = "Cell 5";
 	name = "Cell Door 5"
 	},
@@ -88426,7 +88441,7 @@
 	},
 /area/security/prison)
 "dnc" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 7";
 	name = "Cell Door 7"
 	},
@@ -90283,6 +90298,7 @@
 	},
 /obj/item/weapon/shield/riot,
 /obj/item/weapon/shield/riot{
+	pixel_y = 1;
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -90905,9 +90921,10 @@
 	},
 /area/security/armory)
 "drT" = (
-/obj/machinery/door/window/brigdoor/security/cell/westleft{
+/obj/machinery/door/window/brigdoor/westleft{
 	id = "Cell 1";
-	name = "Cell Door 1"
+	name = "Cell Door 1";
+	req_access_txt = "1"
 	},
 /turf/open/floor/plasteel/red{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -90924,7 +90941,7 @@
 	},
 /area/security/prison)
 "drV" = (
-/obj/machinery/door/window/brigdoor/security/cell/eastleft{
+/obj/machinery/door/window/brigdoor/eastleft{
 	id = "Cell 10";
 	name = "Cell Door 10"
 	},

@@ -4282,7 +4282,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal conveyor"
+	name = "disposal coveyor"
 	},
 /turf/open/floor/plating,
 /area/maintenance/disposal)
@@ -12890,9 +12890,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 1";
-	name = "Cell 1"
+	name = "Cell 1";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -12924,9 +12925,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 2";
-	name = "Cell 2"
+	name = "Cell 2";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -12946,9 +12948,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 3";
-	name = "Cell 3"
+	name = "Cell 3";
+	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -13006,9 +13009,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/window/brigdoor/security/holding{
+/obj/machinery/door/window/brigdoor{
 	id = "Holding Cell";
-	name = "Holding Cell"
+	name = "Holding Cell";
+	req_access_txt = "2"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side,
@@ -17534,6 +17538,8 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -27002,6 +27008,7 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 8
 	},
@@ -33814,7 +33821,7 @@
 /area/quartermaster/office)
 "bmj" = (
 /obj/structure/sign/directions/engineering{
-	desc = "A direction sign, pointing out which way the Supply department is.";
+	desc = "A direction sign, pointing out which way the Suuply department is.";
 	dir = 1;
 	icon_state = "direction_supply";
 	name = "cargo department";
@@ -38103,7 +38110,7 @@
 /area/tcommsat/computer)
 "btN" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecomms Control Room";
+	name = "Telecoms Control Room";
 	req_one_access_txt = "19; 61"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -38985,7 +38992,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecomms)";
+	name = "Station Intercom (Telecoms)";
 	pixel_y = 30
 	},
 /obj/structure/table/wood,
@@ -39934,7 +39941,7 @@
 "bxs" = (
 /obj/machinery/computer/security/telescreen{
 	dir = 8;
-	name = "Telecomms Camera Monitor";
+	name = "Telecoms Camera Monitor";
 	network = list("tcomm");
 	pixel_x = 26
 	},
@@ -41028,7 +41035,7 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecomms Control Room APC";
+	name = "Telecoms Control Room APC";
 	pixel_x = 26
 	},
 /obj/machinery/computer/telecomms/server{
@@ -41766,9 +41773,9 @@
 "bBa" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecomms Admin";
+	department = "Telecoms Admin";
 	departmentType = 5;
-	name = "Telecomms RC";
+	name = "Telecoms RC";
 	pixel_y = -30
 	},
 /obj/machinery/firealarm{
@@ -42544,7 +42551,7 @@
 /area/tcommsat/server)
 "bCF" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Telecomms Server Room"
+	name = "Telecoms Server Room"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -43260,7 +43267,7 @@
 "bEf" = (
 /obj/machinery/telecomms/processor/preset_one,
 /obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Fore-Port";
+	c_tag = "Telecoms - Server Room - Fore-Port";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -43310,7 +43317,7 @@
 "bEk" = (
 /obj/machinery/telecomms/processor/preset_three,
 /obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Fore-Starboard";
+	c_tag = "Telecoms - Server Room - Fore-Starboard";
 	dir = 2;
 	network = list("SS13","tcomm")
 	},
@@ -45972,7 +45979,7 @@
 /obj/item/weapon/folder,
 /obj/item/weapon/folder,
 /obj/machinery/camera{
-	c_tag = "Telecomms - Control Room";
+	c_tag = "Telecoms - Control Room";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -46607,7 +46614,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/door/airlock/engineering{
-	name = "Telecomms Storage";
+	name = "Telecoms Storage";
 	req_access_txt = "61"
 	},
 /obj/structure/cable/yellow{
@@ -47374,7 +47381,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Telecomms - Storage";
+	c_tag = "Telecoms - Storage";
 	dir = 4;
 	network = list("SS13")
 	},
@@ -47548,7 +47555,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Aft-Port";
+	c_tag = "Telecoms - Server Room - Aft-Port";
 	dir = 4;
 	network = list("SS13","tcomm")
 	},
@@ -47595,14 +47602,14 @@
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 4;
-	name = "Telecomms Server Room APC";
+	name = "Telecoms Server Room APC";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Aft-Starboard";
+	c_tag = "Telecoms - Server Room - Aft-Starboard";
 	dir = 8;
 	network = list("SS13","tcomm")
 	},
@@ -47970,7 +47977,7 @@
 /area/bridge/showroom/corporate)
 "bNb" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
+	desc = "A guide to the exhibit, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -48358,7 +48365,7 @@
 	},
 /obj/machinery/power/apc{
 	dir = 8;
-	name = "Telecomms Storage APC";
+	name = "Telecoms Storage APC";
 	pixel_x = -28
 	},
 /obj/structure/cable/yellow{
@@ -48496,7 +48503,7 @@
 "bNZ" = (
 /obj/machinery/light/small,
 /obj/machinery/camera{
-	c_tag = "Telecomms - Server Room - Aft";
+	c_tag = "Telecoms - Server Room - Aft";
 	dir = 1;
 	network = list("SS13","tcomm")
 	},
@@ -49557,7 +49564,7 @@
 "bQj" = (
 /obj/machinery/cell_charger,
 /obj/item/weapon/stock_parts/cell/crap{
-	name = "\improper NanoTrasen-brand rechargeable AA battery"
+	name = "\improper NanoTrasen-brand rechargable AA battery"
 	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
@@ -50230,7 +50237,9 @@
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/clothing/mask/cigarette/cigar/cohiba,
+/obj/item/clothing/mask/cigarette/cigar/cohiba{
+	name = "cohiba robusto cigar"
+	},
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
@@ -50241,7 +50250,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/showcase{
-	desc = "A slightly battered looking TV. Various Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
+	desc = "A slightly battered looking TV. Vaious Nanotrasen infomercials play on a loop, accompanied by a jaunty tune.";
 	dir = 1;
 	icon = 'icons/obj/computer.dmi';
 	icon_state = "television";
@@ -64982,10 +64991,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cto" = (
+/obj/machinery/vending/assist,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ctp" = (
@@ -66840,6 +66849,7 @@
 	pixel_y = -30
 	},
 /obj/item/weapon/stamp/rd{
+	pixel_x = -11;
 	pixel_x = 3;
 	pixel_y = -2
 	},
@@ -71201,7 +71211,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/aug_manipulator,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cFe" = (
@@ -77251,7 +77260,7 @@
 "cQD" = (
 /obj/structure/table,
 /obj/item/stack/sheet/glass{
-	amount = 40;
+	amount = 20;
 	pixel_x = 3;
 	pixel_y = -4
 	},
@@ -90157,10 +90166,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/atmos)
-"dBD" = (
-/obj/machinery/vending/kink,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 
 (1,1,1) = {"
 aaa
@@ -129572,7 +129577,7 @@ aqp
 dnh
 dnR
 aus
-dBD
+dnS
 dnh
 aAm
 dnS

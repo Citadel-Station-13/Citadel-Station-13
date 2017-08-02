@@ -7432,9 +7432,10 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aql" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 1";
-	name = "Cell 1"
+	name = "Cell 1";
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7485,9 +7486,10 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aqp" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 2";
-	name = "Cell 2"
+	name = "Cell 2";
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -7505,9 +7507,10 @@
 /turf/closed/wall,
 /area/security/brig)
 "aqr" = (
-/obj/machinery/door/window/brigdoor/security/cell{
+/obj/machinery/door/window/brigdoor{
 	id = "Cell 3";
-	name = "Cell 3"
+	name = "Cell 3";
+	req_access_txt = "1"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -15796,7 +15799,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = 1;
 	id = "garbagestacked";
-	name = "disposal conveyor"
+	name = "disposal coveyor"
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating{
@@ -17805,7 +17808,7 @@
 /obj/machinery/conveyor_switch/oneway{
 	convdir = -1;
 	id = "garbage";
-	name = "disposal conveyor"
+	name = "disposal coveyor"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -26266,7 +26269,7 @@
 /area/science/explab)
 "bft" = (
 /obj/structure/sign/atmosplaque{
-	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today.";
+	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the uncorruptable cyborg servants of tomorrow, available today.";
 	icon_state = "kiddieplaque";
 	name = "\improper 'Perfect Drone' sign";
 	pixel_y = 32
@@ -29039,7 +29042,7 @@
 /area/science/xenobiology)
 "ble" = (
 /obj/machinery/computer/security/telescreen{
-	name = "Test Chamber Monitor";
+	name = "Test Chamber Moniter";
 	network = list("Xeno");
 	pixel_y = 2
 	},
@@ -34756,7 +34759,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecomms)";
+	name = "Station Intercom (Telecoms)";
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/red/side,
@@ -35990,7 +35993,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecomms)";
+	name = "Station Intercom (Telecoms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel/whitegreen/side{
@@ -37937,7 +37940,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8;
 	freerange = 1;
-	name = "Station Intercom (Telecomms)";
+	name = "Station Intercom (Telecoms)";
 	pixel_y = 26
 	},
 /turf/open/floor/plasteel,
@@ -41272,6 +41275,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -41797,9 +41801,9 @@
 /area/engine/atmos)
 "bLN" = (
 /obj/machinery/camera{
-	c_tag = "Telecomms External Fore";
+	c_tag = "Telecoms External Fore";
 	dir = 1;
-	network = list("SS13, Telecomms");
+	network = list("SS13, Telecoms");
 	start_active = 1
 	},
 /turf/open/space,
@@ -41994,9 +41998,9 @@
 /area/engine/atmos)
 "bMm" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms External Access";
+	c_tag = "Telecoms External Access";
 	dir = 1;
-	network = list("SS13","Telecomms")
+	network = list("SS13","Telecoms")
 	},
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
@@ -42037,9 +42041,9 @@
 "bMs" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms External Port";
+	c_tag = "Telecoms External Port";
 	dir = 8;
-	network = list("Telecomms")
+	network = list("Telecoms")
 	},
 /turf/open/space,
 /area/space)
@@ -42061,9 +42065,9 @@
 "bMv" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms External Starboard";
+	c_tag = "Telecoms External Starboard";
 	dir = 4;
-	network = list("Telecomms")
+	network = list("Telecoms")
 	},
 /turf/open/space,
 /area/space)
@@ -42953,6 +42957,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/stack/cable_coil,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
+/obj/item/weapon/twohanded/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bOg" = (
@@ -43989,7 +43995,7 @@
 /area/engine/engineering)
 "bQD" = (
 /obj/machinery/camera{
-	c_tag = "Engineering Telecomms Access";
+	c_tag = "Engineering Telecoms Access";
 	dir = 8;
 	network = list("Labor")
 	},
@@ -43997,11 +44003,11 @@
 	dir = 4
 	},
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for watching telecomms.";
+	desc = "Used for watching telecoms.";
 	dir = 8;
 	layer = 4;
-	name = "Telecomms Telescreen";
-	network = list("Telecomms");
+	name = "Telecoms Telescreen";
+	network = list("Telecoms");
 	pixel_x = 30
 	},
 /turf/open/floor/plasteel,
@@ -44078,18 +44084,18 @@
 "bQL" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms External Port Aft";
+	c_tag = "Telecoms External Port Aft";
 	dir = 2;
-	network = list("Telecomms")
+	network = list("Telecoms")
 	},
 /turf/open/space,
 /area/space)
 "bQM" = (
 /obj/structure/lattice,
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms External Starboard Aft";
+	c_tag = "Telecoms External Starboard Aft";
 	dir = 2;
-	network = list("Telecomms")
+	network = list("Telecoms")
 	},
 /turf/open/space,
 /area/space)
@@ -44935,9 +44941,9 @@
 "bSS" = (
 /obj/machinery/requests_console{
 	announcementConsole = 1;
-	department = "Telecomms Admin";
+	department = "Telecoms Admin";
 	departmentType = 5;
-	name = "Telecomms RC";
+	name = "Telecoms RC";
 	pixel_y = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -44968,9 +44974,9 @@
 	pixel_y = 26
 	},
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms Monitoring";
+	c_tag = "Telecoms Monitoring";
 	dir = 2;
-	network = list("SS13","Telecomms")
+	network = list("SS13","Telecoms")
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 1
@@ -44996,7 +45002,7 @@
 "bSW" = (
 /obj/machinery/power/apc{
 	dir = 1;
-	name = "Telecomms Monitoring APC";
+	name = "Telecoms Monitoring APC";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -45211,7 +45217,7 @@
 	cell_type = 5000;
 	dir = 1;
 	layer = 4;
-	name = "Telecomms Server APC";
+	name = "Telecoms Server APC";
 	pixel_y = 24
 	},
 /obj/structure/cable,
@@ -45500,9 +45506,9 @@
 /area/tcommsat/server)
 "bUe" = (
 /obj/machinery/camera/motion{
-	c_tag = "Telecomms Server Room";
+	c_tag = "Telecoms Server Room";
 	dir = 1;
-	network = list("SS13","Telecomms")
+	network = list("SS13","Telecoms")
 	},
 /turf/open/floor/plasteel/black{
 	initial_gas_mix = "n2=100;TEMP=80"
@@ -51735,24 +51741,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"cjR" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cjS" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cjT" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cjU" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cjV" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
-"cjW" = (
-/turf/closed/wall/mineral/titanium/nodiagonal,
-/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -66762,13 +66750,13 @@ aCh
 aCh
 aCh
 aCh
-cjT
+aCh
 cjC
 aJL
 aJL
 aJL
 cjE
-cjV
+aCh
 aCh
 aCh
 aCh
@@ -67015,7 +67003,7 @@ aaa
 aaa
 aCh
 aCh
-cjR
+aCh
 aEr
 aFm
 aGh
@@ -68043,7 +68031,7 @@ aaa
 aaa
 aCh
 aCh
-cjS
+aCh
 aEu
 aFn
 aGh
@@ -68304,13 +68292,13 @@ aCh
 aCh
 aCh
 aCh
-cjU
+aCh
 cjC
 aJK
 aJK
 aJK
 cjE
-cjW
+aCh
 aCh
 aCh
 aCh
