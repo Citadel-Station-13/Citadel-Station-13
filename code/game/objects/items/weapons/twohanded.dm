@@ -578,6 +578,7 @@
 	force_wielded = 25
 
 /obj/item/weapon/twohanded/pitchfork/demonic/Initialize()
+	. = ..()
 	set_light(3,6,LIGHT_COLOR_RED)
 
 /obj/item/weapon/twohanded/pitchfork/demonic/greater
