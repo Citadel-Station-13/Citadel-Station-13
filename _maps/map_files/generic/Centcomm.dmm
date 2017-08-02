@@ -2454,7 +2454,6 @@
 /area/ctf)
 "hf" = (
 /obj/machinery/power/emitter/energycannon{
-	icon_state = "emitter";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3513,11 +3512,7 @@
 	},
 /area/centcom/supply)
 "jZ" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "19"
-	},
+/obj/structure/closet/secure_closet/contraband/heads,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -3586,7 +3581,7 @@
 "ki" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -5142,7 +5137,7 @@
 "nX" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -8399,7 +8394,7 @@
 "vR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -10687,7 +10682,6 @@
 /obj/machinery/door/airlock/silver{
 	name = "Shower"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "BK" = (
@@ -12188,7 +12182,7 @@
 "Fu" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -14384,27 +14378,6 @@ aa
 aa
 aa
 aa
-Gf
-Gv
-GF
-GR
-GX
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -14438,9 +14411,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Gf
 Gv
 GF
@@ -14452,6 +14422,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Gf
+Gv
+GF
+GR
+GX
 aa
 aa
 aa
@@ -14640,6 +14634,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Ga
 Gg
 GA
@@ -14704,12 +14704,6 @@ GG
 GS
 GY
 He
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -14897,6 +14891,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gb
 Gm
 Gx
@@ -14961,12 +14961,6 @@ GH
 Gx
 GZ
 Hf
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15154,6 +15148,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gc
 Gn
 Gx
@@ -15218,12 +15218,6 @@ GI
 Gx
 Ha
 Hg
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15411,6 +15405,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gd
 Go
 Gx
@@ -15475,12 +15475,6 @@ GJ
 Gx
 Hb
 Hh
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15668,27 +15662,6 @@ aa
 aa
 aa
 aa
-Ge
-Gk
-Gy
-GK
-Gy
-Hc
-Hi
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15722,9 +15695,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Ge
 Gk
 Gy
@@ -15738,6 +15708,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Ge
+Gk
+Gy
+GK
+Gy
+Hc
+Hi
 aa
 aa
 aa
@@ -15926,27 +15920,6 @@ aa
 aa
 aa
 aa
-Gl
-Gz
-GL
-GT
-Hd
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15980,9 +15953,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Gl
 Gz
 GL
@@ -15994,6 +15964,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Gl
+Gz
+GL
+GT
+Hd
 aa
 aa
 aa
@@ -26983,6 +26977,11 @@ hq
 hq
 hq
 hq
+hq
+hq
+hq
+hq
+hq
 lF
 hq
 hq
@@ -26995,11 +26994,6 @@ Kl
 Kl
 Kl
 Kl
-hq
-hq
-hq
-hq
-hq
 hq
 hq
 hq
