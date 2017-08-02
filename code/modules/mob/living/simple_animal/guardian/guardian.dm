@@ -602,7 +602,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/weapon/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guardian
+/obj/item/weapon/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "alienpaper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
