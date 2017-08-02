@@ -93,7 +93,6 @@
 		C.loaded.place_turf(src, user)
 		C.is_empty(user)
 
-
 /turf/attackby(obj/item/C, mob/user, params)
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = C
@@ -106,7 +105,6 @@
 
 	else if(istype(C, /obj/item/weapon/twohanded/rcl))
 		handleRCL(C, user)
-
 
 	return FALSE
 
@@ -211,14 +209,14 @@
 		qdel(L)
 
 //wrapper for ChangeTurf()s that you want to prevent/affect without overriding ChangeTurf() itself
-/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
-	return ChangeTurf(path, new_baseturf, defer_change, ignore_air)
+/turf/proc/TerraformTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+	return ChangeTurf(path, new_baseturf, defer_change, ignore_air, forceop)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE)
+/turf/proc/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
 	if(!path)
 		return
-	if(!GLOB.use_preloader && path == type) // Don't no-op if the map loader requires it to be reconstructed
+	if(!GLOB.use_preloader && path == type && !forceop) // Don't no-op if the map loader requires it to be reconstructed
 		return src
 
 	var/old_baseturf = baseturf
@@ -430,15 +428,14 @@
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE)
-
+	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
+    
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()
 	SSair.add_to_active(newT,1)
 
 /turf/proc/is_transition_turf()
 	return
-
 
 /turf/acid_act(acidpwr, acid_volume)
 	. = 1
