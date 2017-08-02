@@ -1,0 +1,14 @@
+diff a/code/modules/clothing/spacesuits/flightsuit.dm b/code/modules/clothing/spacesuits/flightsuit.dm	(rejected hunks)
+@@ -1157,10 +1157,10 @@
+ 			maint_panel = TRUE
+ 		else
+ 			maint_panel = FALSE
+-		usermessage("You [maint_panel? "open" : "close"] the maintainence panel.")
++		usermessage("You [maint_panel? "open" : "close"] the maintenance panel.")
+ 		return FALSE
+ 	else if(!maint_panel)
+-		usermessage("The maintainence panel is closed!", "boldwarning")
++		usermessage("The maintenance panel is closed!", "boldwarning")
+ 		return FALSE
+ 	else if(istype(I, /obj/item/weapon/crowbar))
+ 		var/list/inputlist = list()

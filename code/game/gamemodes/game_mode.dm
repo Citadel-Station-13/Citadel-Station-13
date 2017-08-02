@@ -266,22 +266,24 @@
 	if(escaped_total > 0)
 		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
-	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
 		datum_cult_completion()
 
 
 	if(GLOB.borers.len)
-		var/borerwin = FALSE
 		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
 		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
 			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
-				var/turf/location = get_turf(B)
-				if(location.z == ZLEVEL_CENTCOM && B.victim)
-					borertext += "escaped with host"
-				else
-					borertext += "failed"
-				borertext += ")"
+				borertext += "<br><font size=2><b>[B.controlling ? B.victim.key : B.key] was [B.truename]</b></font>"
+				var/count = 1
+				for(var/datum/objective/objective in B.mind.objectives)
+					if(objective.check_completion())
+						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+					else
+						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					count++
+
+
 		to_chat(world, borertext)
 
 		var/total_borers = 0
@@ -295,14 +297,8 @@
 				var/turf/location = get_turf(C)
 				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
 					total_borer_hosts++
-			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
-				borerwin = TRUE
 			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
-			if(borerwin)
-				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
-			else
-				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive.</b>")
 
 		CHECK_TICK
 	return 0
@@ -373,7 +369,7 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 
