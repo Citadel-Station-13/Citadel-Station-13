@@ -28566,7 +28566,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},

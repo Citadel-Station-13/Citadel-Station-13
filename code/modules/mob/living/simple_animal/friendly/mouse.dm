@@ -43,7 +43,7 @@
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/trash/deadmouse/M = new(src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(loc)
 		M.icon_state = icon_dead
 		M.name = name
 		if(toast)
@@ -101,8 +101,12 @@
 	response_harm   = "splats"
 	gold_core_spawnable = 0
 
-/obj/item/trash/deadmouse
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
-	desc = "It looks like somebody dropped the bass on it."
+	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
+	bitesize = 3
+	eatverb = "devours"
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	foodtype = GROSS | MEAT | RAW

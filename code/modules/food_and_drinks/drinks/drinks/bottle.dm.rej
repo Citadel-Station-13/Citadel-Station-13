@@ -1,0 +1,41 @@
+diff a/code/modules/food_and_drinks/drinks/drinks/bottle.dm b/code/modules/food_and_drinks/drinks/drinks/bottle.dm	(rejected hunks)
+@@ -11,6 +11,7 @@
+ 	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
+ 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
+ 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
++	foodtype = ALCOHOL
+ 
+ /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
+ 	..()
+@@ -306,6 +312,7 @@
+ 	item_state = "carton"
+ 	isGlass = 0
+ 	list_reagents = list("orangejuice" = 100)
++	foodtype = FRUIT
+ 
+ /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
+ 	name = "Milk Cream"
+@@ -314,6 +321,7 @@
+ 	item_state = "carton"
+ 	isGlass = 0
+ 	list_reagents = list("cream" = 100)
++	foodtype = DAIRY
+ 
+ /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
+ 	name = "Tomato Juice"
+@@ -322,6 +330,7 @@
+ 	item_state = "carton"
+ 	isGlass = 0
+ 	list_reagents = list("tomatojuice" = 100)
++	foodtype = VEGETABLES
+ 
+ /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
+ 	name = "Lime Juice"
+@@ -330,6 +339,7 @@
+ 	item_state = "carton"
+ 	isGlass = 0
+ 	list_reagents = list("limejuice" = 100)
++	foodtype = FRUIT
+ 
+ 
+ ////////////////////////// MOLOTOV ///////////////////////

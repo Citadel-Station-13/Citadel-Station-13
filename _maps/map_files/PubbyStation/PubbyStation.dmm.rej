@@ -1,0 +1,19 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -18833,7 +18833,7 @@
+ "aOW" = (
+ /obj/structure/kitchenspike,
+ /obj/item/device/assembly/mousetrap,
+-/obj/item/trash/deadmouse,
++/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
+ /turf/open/floor/plasteel/showroomfloor,
+ /area/crew_quarters/kitchen)
+ "aOX" = (
+@@ -35519,7 +35519,7 @@
+ /area/maintenance/department/engine)
+ "byd" = (
+ /obj/structure/closet/masks,
+-/obj/item/trash/deadmouse,
++/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
+ /obj/effect/landmark/revenantspawn,
+ /turf/open/floor/plating,
+ /area/maintenance/department/engine)
