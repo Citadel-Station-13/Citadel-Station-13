@@ -1,9 +1,0 @@
-diff a/code/datums/action.dm b/code/datums/action.dm	(rejected hunks)
-@@ -172,6 +172,7 @@
- 
- /datum/action/item_action/rcl
- 	name = "Change Cable Color"
-+	icon_icon = 'icons/mob/actions/actions_items.dmi'
- 	button_icon_state = "rcl_rainbow"
- 
- /datum/action/item_action/startchainsaw
