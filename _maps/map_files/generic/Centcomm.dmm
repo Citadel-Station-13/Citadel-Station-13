@@ -1397,7 +1397,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1423,7 +1423,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1438,7 +1438,7 @@
 	icon = 'icons/obj/machines/particle_accelerator.dmi';
 	icon_state = "control_boxp";
 	name = "Kobayashi Maru control computer";
-	prizes = list(/obj/item/weapon/paper/trek_diploma = 1);
+	prizes = list(/obj/item/weapon/paper/fluff/holodeck/trek_diploma = 1);
 	settlers = list("Kirk","Worf","Gene")
 	},
 /turf/open/floor/holofloor/plating,
@@ -1918,7 +1918,7 @@
 	},
 /area/holodeck/rec_center/firingrange)
 "ft" = (
-/obj/item/weapon/paper/range,
+/obj/item/weapon/paper/guides/jobs/security/range,
 /turf/open/floor/holofloor,
 /area/holodeck/rec_center/firingrange)
 "fu" = (
@@ -2454,7 +2454,6 @@
 /area/ctf)
 "hf" = (
 /obj/machinery/power/emitter/energycannon{
-	icon_state = "emitter";
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -3513,11 +3512,7 @@
 	},
 /area/centcom/supply)
 "jZ" = (
-/obj/structure/closet/secure_closet{
-	anchored = 1;
-	name = "Contraband Locker";
-	req_access_txt = "19"
-	},
+/obj/structure/closet/secure_closet/contraband/heads,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -3586,7 +3581,7 @@
 "ki" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -4669,9 +4664,9 @@
 	},
 /area/centcom/control)
 "mQ" = (
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/structure/table/wood,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -4946,9 +4941,9 @@
 /area/centcom/control)
 "ny" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/centcom/control)
@@ -5142,7 +5137,7 @@
 "nX" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -5809,10 +5804,7 @@
 /turf/open/floor/engine/cult,
 /area/wizard_station)
 "pz" = (
-/obj/item/weapon/paper{
-	info = "GET DAT FUKKEN DISK";
-	name = "memo"
-	},
+/obj/item/weapon/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard{
 	pixel_x = -32
 	},
@@ -7600,9 +7592,9 @@
 /area/centcom/control)
 "tD" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -8402,7 +8394,7 @@
 "vR" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -9495,9 +9487,9 @@
 /area/centcom/control)
 "yy" = (
 /obj/structure/table,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -10150,7 +10142,7 @@
 "Af" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/paper/pamphlet/ccaInfo,
+/obj/item/weapon/paper/pamphlet/centcom/visitor_info,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/tdome/tdomeobserve)
@@ -10338,7 +10330,7 @@
 	base_state = "rightsecure";
 	dir = 2;
 	icon_state = "rightsecure";
-	name = "Thunderdoom Booth";
+	name = "Thunderdome Booth";
 	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/bot,
@@ -10690,7 +10682,6 @@
 /obj/machinery/door/airlock/silver{
 	name = "Shower"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "BK" = (
@@ -12152,9 +12143,7 @@
 /area/shuttle/escape)
 "Fp" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper{
-	info = "Due to circumstances beyond our control, your Emergency Evacuation Shuttle is out of service.<br><br>We apologise for the inconvinience this may cause you.<br><br>Please enjoy the use of this complementary book.<br><br>Sincerely,<br>Centcom Operations Demolitions Examination Retribution Bugfixing Underlining Services"
-	},
+/obj/item/weapon/paper/fluff/stations/centcom/broken_evac,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Fq" = (
@@ -12193,7 +12182,7 @@
 "Fu" = (
 /obj/structure/table/wood,
 /obj/item/weapon/phone{
-	desc = "Supposedly a direct line to NanoTrasen Central Command. It's not even plugged in.";
+	desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in.";
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -12656,7 +12645,7 @@
 /area/abductor_ship)
 "GS" = (
 /obj/item/weapon/surgical_drapes,
-/obj/item/weapon/paper/abductor,
+/obj/item/weapon/paper/guides/antag/abductor,
 /obj/item/weapon/scalpel/alien,
 /obj/structure/table/abductor,
 /obj/item/weapon/cautery/alien,
@@ -14389,27 +14378,6 @@ aa
 aa
 aa
 aa
-Gf
-Gv
-GF
-GR
-GX
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -14443,9 +14411,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Gf
 Gv
 GF
@@ -14457,6 +14422,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Gf
+Gv
+GF
+GR
+GX
 aa
 aa
 aa
@@ -14645,6 +14634,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Ga
 Gg
 GA
@@ -14709,12 +14704,6 @@ GG
 GS
 GY
 He
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -14902,6 +14891,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gb
 Gm
 Gx
@@ -14966,12 +14961,6 @@ GH
 Gx
 GZ
 Hf
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15159,6 +15148,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gc
 Gn
 Gx
@@ -15223,12 +15218,6 @@ GI
 Gx
 Ha
 Hg
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15416,6 +15405,12 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
 Gd
 Go
 Gx
@@ -15480,12 +15475,6 @@ GJ
 Gx
 Hb
 Hh
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15673,27 +15662,6 @@ aa
 aa
 aa
 aa
-Ge
-Gk
-Gy
-GK
-Gy
-Hc
-Hi
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15727,9 +15695,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Ge
 Gk
 Gy
@@ -15743,6 +15708,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Ge
+Gk
+Gy
+GK
+Gy
+Hc
+Hi
 aa
 aa
 aa
@@ -15931,27 +15920,6 @@ aa
 aa
 aa
 aa
-Gl
-Gz
-GL
-GT
-Hd
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -15985,9 +15953,6 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 Gl
 Gz
 GL
@@ -15999,6 +15964,30 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+Gl
+Gz
+GL
+GT
+Hd
 aa
 aa
 aa
@@ -26988,6 +26977,11 @@ hq
 hq
 hq
 hq
+hq
+hq
+hq
+hq
+hq
 lF
 hq
 hq
@@ -27000,11 +26994,6 @@ Kl
 Kl
 Kl
 Kl
-hq
-hq
-hq
-hq
-hq
 hq
 hq
 hq

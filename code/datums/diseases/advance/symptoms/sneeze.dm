@@ -42,6 +42,7 @@ Bonus
 		if(1, 2, 3)
 			if(!suppress_warning)
 				M.emote("sniff")
-		else
-			M.emote("sneeze")
-			A.spread(A.holder, 4 + power)
+			else
+				M.emote("sneeze")
+				A.spread(5)
+	return
