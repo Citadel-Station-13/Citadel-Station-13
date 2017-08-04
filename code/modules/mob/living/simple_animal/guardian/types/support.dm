@@ -29,6 +29,8 @@
 /mob/living/simple_animal/hostile/guardian/healer/AttackingTarget()
 	. = ..()
 	if(toggle && iscarbon(target))
+		if(src.loc == summoner)
+			return
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(-5)
 		C.adjustFireLoss(-5)
