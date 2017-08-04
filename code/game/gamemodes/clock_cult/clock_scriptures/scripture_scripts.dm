@@ -52,8 +52,8 @@
 /datum/clockwork_scripture/create_object/vitality_matrix
 	descname = "Trap, Damage to Healing"
 	name = "Vitality Matrix"
-	desc = "Places a sigil that drains life from any living non-Servants that cross it. Servants that cross it, however, will be healed based on how much Vitality all \
-	Matrices have drained from non-Servants. Dead Servants can be revived by this sigil if there is vitality equal to the target Servant's non-oxygen damage."
+	desc = "Places a sigil that drains life from any living non-Servants that cross it, producing Vitality. Servants that cross it, however, will be healed using existing Vitality. \
+	Dead Servants can be revived by this sigil at a cost of 150 Vitality."
 	invocations = list("Divinity...", "...steal their life...", "...for these shells!")
 	channel_time = 60
 	consumed_components = list(BELLIGERENT_EYE = 1, VANGUARD_COGWHEEL = 2)
@@ -245,13 +245,12 @@
 /datum/clockwork_scripture/function_call
 	descname = "Permanent Summonable Spear"
 	name = "Function Call"
-	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every three minutes. The spear will deal significant damage to Nar-Sie's dogs and silicon lifeforms, but will \
-	vanish three minutes after being summoned."
+	desc = "Grants the invoker the ability to call forth a powerful Ratvarian spear every 3 minutes, with it lasting 3 minutes. The spear's attacks will generate Vitality, used for healing."
 	invocations = list("Grant me...", "...the might of brass!")
 	channel_time = 20
 	consumed_components = list(REPLICANT_ALLOY = 2, HIEROPHANT_ANSIBLE = 1)
 	whispered = TRUE
-	usage_tip = "You can impale human targets with the spear by pulling them, then attacking. Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
+	usage_tip = "Throwing the spear at a mob will do massive damage and knock them down, but break the spear."
 	tier = SCRIPTURE_SCRIPT
 	primary_component = REPLICANT_ALLOY
 	sort_priority = 8
