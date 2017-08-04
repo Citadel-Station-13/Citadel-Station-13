@@ -93,6 +93,8 @@
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
 
+	var/remote_range = 7 //How far can you interact with machines.
+
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	can_ride_typecache = list(/mob/living/carbon/human)
@@ -1079,6 +1081,7 @@
 /datum/action/innate/undeployment
  	name = "Disconnect from shell"
  	desc = "Stop controlling your shell and resume normal core operations."
+ 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
  	button_icon_state = "ai_core"
 
 /datum/action/innate/undeployment/Trigger()
