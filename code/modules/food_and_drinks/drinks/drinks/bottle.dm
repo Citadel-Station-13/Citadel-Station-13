@@ -13,6 +13,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	foodtype = ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
 	..()
@@ -315,6 +316,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("orangejuice" = 100)
+	foodtype = FRUIT
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
@@ -325,6 +327,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("cream" = 100)
+	foodtype = DAIRY
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
@@ -335,6 +338,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("tomatojuice" = 100)
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
@@ -345,6 +349,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	isGlass = 0
 	list_reagents = list("limejuice" = 100)
+	foodtype = FRUIT
 
 
 ////////////////////////// MOLOTOV ///////////////////////

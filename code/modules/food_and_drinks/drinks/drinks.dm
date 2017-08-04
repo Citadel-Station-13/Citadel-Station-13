@@ -202,19 +202,24 @@
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	list_reagents = list("hot_coco" = 30, "sugar" = 5)
+	foodtype = SUGAR
+
 	resistance_flags = FREEZE_PROOF
+
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
 	desc = "Just add 10ml of water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
 	list_reagents = list("dry_ramen" = 30)
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/drinks/beer
 	name = "Space Beer"
 	desc = "Beer. In space."
 	icon_state = "beer"
 	list_reagents = list("beer" = 30)
+	foodtype = GRAIN | ALCOHOL
 
 /obj/item/weapon/reagent_containers/food/drinks/ale
 	name = "Magm-Ale"
@@ -343,7 +348,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	container_type = 0
 	spillable = FALSE
-	
+
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on [user.p_their()] forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
@@ -399,30 +404,35 @@
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
 	list_reagents = list("space_up" = 30)
+	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/starkist
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
 	list_reagents = list("cola" = 15, "orangejuice" = 15)
+	foodtype = SUGAR | FRUIT | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/space_mountain_wind
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
 	list_reagents = list("spacemountainwind" = 30)
+	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
 	list_reagents = list("thirteenloko" = 30)
+	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/dr_gibb
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
 	list_reagents = list("dr_gibb" = 30)
+	foodtype = SUGAR | JUNKFOOD
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"

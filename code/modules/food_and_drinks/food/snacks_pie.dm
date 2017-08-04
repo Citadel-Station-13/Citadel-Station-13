@@ -26,6 +26,7 @@
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
 	list_reagents = list("nutriment" = 6, "banana" = 5, "vitamin" = 2)
 	tastes = list("pie" = 1)
+	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
 	. = ..()
