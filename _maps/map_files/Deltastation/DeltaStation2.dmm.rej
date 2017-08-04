@@ -1,0 +1,10 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -78449,7 +78449,7 @@
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel,
+-/area/maintenance/department/electrical)
++/area/maintenance/port)
+ "cVb" = (
+ /obj/structure/cable/white,
+ /obj/effect/spawner/structure/window/reinforced,

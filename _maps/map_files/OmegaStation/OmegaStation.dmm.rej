@@ -1,0 +1,12 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -26087,9 +26087,7 @@
+ 	dir = 2
+ 	},
+ /turf/open/floor/plasteel,
+-/area/hallway/primary/central{
+-	name = "Primary Hallway"
+-	})
++/area/maintenance/starboard)
+ "aRy" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,

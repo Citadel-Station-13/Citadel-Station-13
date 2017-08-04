@@ -1,0 +1,19 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -86040,7 +86040,7 @@ adw
+ adL
+ adV
+ adV
+-cnF
++cnD
+ adV
+ adV
+ aeN
+@@ -87582,7 +87582,7 @@ adC
+ adO
+ adZ
+ adZ
+-cnI
++cnG
+ adZ
+ adZ
+ aeR
