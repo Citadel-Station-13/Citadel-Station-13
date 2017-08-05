@@ -29,6 +29,9 @@
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
+	if(ishuman(destination))
+		var/mob/living/carbon/human/H = destination
+		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -246,6 +249,8 @@
 	if(se)
 		dna.struc_enzymes = se
 		domutcheck()
+
+	give_genitals(TRUE)//Give all genitalia that DNA says you should have, remove any pre-existing ones as this is a hardset!
 
 	if(mrace || newfeatures || ui)
 		update_body()
