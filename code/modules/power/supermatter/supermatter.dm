@@ -25,6 +25,7 @@
 #define HEAT_PENALTY_THRESHOLD 40             //Higher == Crystal safe operational temperature is higher.
 #define DAMAGE_HARDCAP 0.0025
 #define DAMAGE_INCREASE_MULTIPLIER 0.25
+#define PROCESSING_HANDICAP 0.25
 
 
 #define THERMAL_RELEASE_MODIFIER 5         //Higher == less heat released during reaction, not to be confused with the above values
@@ -84,7 +85,6 @@
 	var/emergency_issued = FALSE
 
 	var/explosion_power = 12
-	var/temp_factor = 30
 
 	var/lastwarning = 0				// Time in 1/10th of seconds since the last sent warning
 	var/power = 0
@@ -107,7 +107,16 @@
 	var/mole_heat_penalty = 0
 	var/freon_transmit_modifier = 1
 
+	var/device_energy = 0
+
+	var/has_gas = TRUE		//Whether we have gas to process.
+
 	var/matter_power = 0
+
+	var/temp_factor = 30
+	var/temp_factor_normal = 30
+	var/temp_factor_optimal = 50
+
 
 	//Temporary values so that we can optimize this
 	//How much the bullets damage should be multiplied by when it is added to the internal variables
@@ -247,9 +256,7 @@
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = T.return_air()
-
 	var/datum/gas_mixture/removed
-
 	if(produces_gas)
 		//Remove gas from surrounding area
 		removed = env.remove(gasefficency * env.total_moles())
@@ -257,26 +264,15 @@
 		// Pass all the gas related code an empty gas container
 		removed = new()
 
-	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
-		if(takes_damage)
-			damage += max((power-1600)/10, 0)
-		return 1
-
-	damage_archived = damage
+	//Process damage.
 	if(takes_damage)
-		//causing damage
-		damage = max(damage + (max(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD)*dynamic_heat_resistance), 0) * mole_heat_penalty / 150 ) * DAMAGE_INCREASE_MULTIPLIER, 0)
-		damage = max(damage + (max(power - POWER_PENALTY_THRESHOLD, 0)/500) * DAMAGE_INCREASE_MULTIPLIER, 0)
-		damage = max(damage + (max(combined_gas - MOLE_PENALTY_THRESHOLD, 0)/80) * DAMAGE_INCREASE_MULTIPLIER, 0)
+		SM_autoprocess_damage(removed, T)
 
-		//healing damage
-		if(combined_gas < MOLE_PENALTY_THRESHOLD)
-			damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
+	//Process alerts
+	SM_autoprocess_alert()
 
-		//capping damage
-		damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
-		if(damage > damage_archived && prob(10))
-			playsound(get_turf(src), 'sound/effects/empulse.ogg', 50, 1)
+	//Process explosion check
+	SM_autoprocess_explosioncheck()
 
 	removed.assert_gases("o2", "plasma", "co2", "n2o", "n2", "freon")
 	//calculating gas related values
@@ -309,8 +305,8 @@
 	powerloss_inhibitor = Clamp(1-(powerloss_dynamic_scaling * Clamp(combined_gas/POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD,1 ,1.5)),0 ,1)
 
 	if(matter_power)
-		var/removed_matter = max(matter_power/MATTER_POWER_CONVERSION, 40)
-		power = max(power + removed_matter, 0)
+		var/removed_matter = max((matter_power/MATTER_POWER_CONVERSION) * PROCESSING_HANDICAP, 40)
+		power = max((power + removed_matter) * PROCESSING_HANDICAP, 0)
 		matter_power = max(matter_power - removed_matter, 0)
 
 	var/temp_factor = 50
@@ -323,12 +319,9 @@
 		temp_factor = 30
 		icon_state = base_icon_state
 
-	power = max( (removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power, 0) //Total laser power plus an overload
+	power = max(((removed.temperature * temp_factor / T0C) * gasmix_power_ratio + power) * PROCESSING_HANDICAP, 0) //Total laser power plus an overload
 
-	//We've generated power, now let's transfer it to the collectors for storing/usage
-	transfer_energy()
-
-	var/device_energy = power * REACTION_POWER_MODIFIER
+	var/device_energy = power * REACTION_POWER_MODIFIER * PROCESSING_HANDICAP
 
 	//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
 	//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
