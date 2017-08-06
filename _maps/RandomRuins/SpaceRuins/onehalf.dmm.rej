@@ -1,0 +1,196 @@
+diff a/_maps/RandomRuins/SpaceRuins/onehalf.dmm b/_maps/RandomRuins/SpaceRuins/onehalf.dmm	(rejected hunks)
+@@ -49,11 +49,11 @@
+ /area/template_noop)
+ "ag" = (
+ /turf/closed/wall,
+-/area/ruin/onehalf/dorms_med)
++/area/ruin/space/has_grav/onehalf/dorms_med)
+ "ah" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/onehalf/dorms_med)
++/area/ruin/space/has_grav/onehalf/dorms_med)
+ "ai" = (
+ /obj/structure/cable{
+ 	d1 = 1;
+@@ -432,25 +432,25 @@
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/drone_bay)
++/area/ruin/space/has_grav/onehalf/drone_bay)
+ "bd" = (
+ /obj/structure/disposalpipe/segment,
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 5
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/drone_bay)
++/area/ruin/space/has_grav/onehalf/drone_bay)
+ "be" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/onehalf/drone_bay)
++/area/ruin/space/has_grav/onehalf/drone_bay)
+ "bf" = (
+ /obj/item/stack/sheet/metal,
+ /turf/open/floor/plating/airless{
+ 	broken = 1;
+ 	icon_state = "platingdmg1"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "bg" = (
+ /obj/structure/disposalpipe/broken{
+ 	icon_state = "pipe-b";
+@@ -796,18 +796,18 @@
+ 	broken = 1;
+ 	icon_state = "platingdmg1"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "bX" = (
+ /obj/structure/disposalpipe/segment,
+ /obj/item/stack/rods,
+ /turf/open/floor/plasteel/airless{
+ 	icon_state = "damaged5"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "bY" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/airless,
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "bZ" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/machinery/door/poddoor/preopen{
+@@ -953,7 +953,7 @@
+ /obj/structure/table/reinforced,
+ /obj/item/weapon/lighter,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cq" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{
+@@ -992,33 +992,33 @@
+ 	icon_state = "medium"
+ 	},
+ /turf/template_noop,
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "cu" = (
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plasteel/airless{
+ 	icon_state = "damaged5"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "cv" = (
+ /obj/structure/girder/reinforced,
+ /turf/open/floor/plating/airless,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cw" = (
+ /obj/structure/disposalpipe/trunk{
+ 	dir = 1
+ 	},
+ /obj/machinery/disposal/bin,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cx" = (
+ /obj/item/stack/tile/plasteel,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cy" = (
+ /obj/machinery/power/solar_control,
+ /obj/structure/cable,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cz" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable,
+@@ -1136,25 +1136,25 @@
+ 	icon_state = "1-2"
+ 	},
+ /turf/open/space,
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "cP" = (
+ /turf/open/floor/plasteel/airless{
+ 	icon_state = "damaged3"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "cQ" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "cR" = (
+ /obj/structure/table/reinforced,
+ /obj/machinery/recharger,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cS" = (
+ /obj/structure/chair/office,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cT" = (
+ /obj/machinery/button/door{
+ 	id = "bridge_onehalf";
+@@ -1163,11 +1163,11 @@
+ 	pixel_y = 5
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cU" = (
+ /obj/structure/table/reinforced,
+ /turf/open/floor/plasteel,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "cV" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{
+@@ -1240,14 +1240,14 @@
+ 	broken = 1;
+ 	icon_state = "platingdmg1"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "dd" = (
+ /obj/structure/grille,
+ /obj/item/weapon/shard,
+ /turf/open/floor/plating/airless{
+ 	icon_state = "platingdmg3"
+ 	},
+-/area/ruin/onehalf/hallway)
++/area/ruin/space/has_grav/onehalf/hallway)
+ "de" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{
+@@ -1264,7 +1264,7 @@
+ 	name = "bridge blast door"
+ 	},
+ /turf/open/floor/plating,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "df" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{
+@@ -1280,7 +1280,7 @@
+ 	name = "bridge blast door"
+ 	},
+ /turf/open/floor/plating,
+-/area/ruin/onehalf/bridge)
++/area/ruin/space/has_grav/onehalf/bridge)
+ "dg" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{

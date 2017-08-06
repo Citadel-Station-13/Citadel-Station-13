@@ -1,0 +1,61 @@
+diff a/_maps/RandomRuins/SpaceRuins/intactemptyship.dmm b/_maps/RandomRuins/SpaceRuins/intactemptyship.dmm	(rejected hunks)
+@@ -49,49 +49,49 @@
+ 	dir = 1
+ 	},
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "j" = (
+ /obj/structure/closet,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "k" = (
+ /obj/machinery/vending/assist,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "l" = (
+ /obj/structure/table/wood,
+ /obj/item/clothing/shoes/sandal,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "m" = (
+ /obj/machinery/light{
+ 	dir = 8
+ 	},
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "n" = (
+ /obj/structure/table/wood,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "o" = (
+ /obj/structure/table/wood,
+ /obj/machinery/computer/libraryconsole/bookmanagement,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "p" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "q" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "r" = (
+ /obj/structure/table/wood,
+ /obj/item/weapon/paper_bin,
+ /obj/item/weapon/pen,
+ /turf/open/floor/mineral/titanium/purple,
+-/area/ruin/powered/authorship)
++area/ruin/space/has_grav/powered/authorship)
+ "s" = (
+ /obj/machinery/door/poddoor{
+ 	id = "goonwizship1"

@@ -1,0 +1,37 @@
+diff a/_maps/RandomRuins/SpaceRuins/mechtransport.dmm b/_maps/RandomRuins/SpaceRuins/mechtransport.dmm	(rejected hunks)
+@@ -4,29 +4,29 @@
+ /area/template_noop)
+ "b" = (
+ /turf/closed/wall/mineral/titanium/overspace,
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "c" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "d" = (
+ /turf/closed/wall/shuttle{
+ 	icon_state = "swall_s10";
+ 	dir = 2
+ 	},
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "e" = (
+ /turf/closed/wall/mineral/titanium,
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "f" = (
+ /obj/structure/closet/crate/secure/loot,
+ /obj/effect/decal/cleanable/cobweb,
+ /turf/open/floor/mineral/titanium/blue,
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "g" = (
+ /obj/structure/closet/crate/secure/loot,
+ /turf/open/floor/mineral/titanium/blue,
+-/area/ruin/powered/mechtransport)
++/area/ruin/space/has_grav/powered/mechtransport)
+ "h" = (
+ /obj/structure/table,
+ /obj/machinery/button/door{

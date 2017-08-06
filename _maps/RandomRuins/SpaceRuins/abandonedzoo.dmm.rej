@@ -1,0 +1,37 @@
+diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm	(rejected hunks)
+@@ -13,7 +13,7 @@
+ 	d2 = 4
+ 	},
+ /turf/open/floor/plating/airless,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "ac" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{
+@@ -68,21 +68,21 @@
+ 	icon_state = "0-8"
+ 	},
+ /turf/open/floor/plating/airless,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "ag" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "ah" = (
+ /turf/closed/mineral,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "ai" = (
+ /turf/open/floor/plating/asteroid,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "aj" = (
+ /obj/structure/flora/rock,
+ /turf/open/floor/plating/asteroid,
+-/area/ruin/abandonedzoo)
++/area/ruin/space/has_grav/abandonedzoo)
+ "ak" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable{

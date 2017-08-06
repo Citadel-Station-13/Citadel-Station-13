@@ -1,0 +1,81 @@
+diff a/_maps/RandomRuins/SpaceRuins/bigderelict1.dmm b/_maps/RandomRuins/SpaceRuins/bigderelict1.dmm	(rejected hunks)
+@@ -168,50 +168,50 @@
+ 	id = "bigderelictship"
+ 	},
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aE" = (
+ /obj/structure/closet/crate/medical,
+ /obj/item/weapon/storage/firstaid/o2,
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aF" = (
+ /obj/structure/closet/crate/medical,
+ /obj/item/weapon/storage/firstaid/regular,
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aG" = (
+ /obj/structure/closet/crate/medical,
+ /obj/item/weapon/storage/firstaid/brute,
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aH" = (
+ /obj/structure/closet/crate/engineering,
+ /obj/item/weapon/storage/toolbox/mechanical,
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aI" = (
+ /obj/structure/closet/crate/engineering/electrical,
+ /obj/item/weapon/storage/toolbox/electrical,
+ /obj/item/weapon/stock_parts/cell/hyper,
+ /obj/item/weapon/stock_parts/cell/high,
+ /turf/open/floor/mineral/titanium/yellow,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "aJ" = (
+ /obj/structure/table,
+ /obj/item/clothing/gloves/fingerless,
+ /turf/open/floor/plasteel,
+-/area/ruin/derelictoutpost/cargobay)
++/area/ruin/space/has_grav/derelictoutpost/cargobay)
+ "aK" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/derelictoutpost)
++/area/ruin/space/has_grav/derelictoutpost)
+ "aL" = (
+ /obj/machinery/door/airlock/external,
+ /turf/open/floor/plating,
+-/area/ruin/derelictoutpost)
++/area/ruin/space/has_grav/derelictoutpost)
+ "aM" = (
+ /turf/open/floor/plating,
+-/area/ruin/derelictoutpost/powerstorage)
++/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+ "aN" = (
+ /obj/structure/closet/crate{
+ 	icon_state = "crateopen";
+@@ -765,15 +765,15 @@
+ 	icon_state = "0-8"
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/derelictoutpost/powerstorage)
++/area/ruin/space/has_grav/derelictoutpost/powerstorage)
+ "cb" = (
+ /obj/structure/closet/wardrobe/cargotech,
+ /turf/open/floor/plasteel,
+-/area/ruin/derelictoutpost/cargobay)
++/area/ruin/space/has_grav/derelictoutpost/cargobay)
+ "cc" = (
+ /obj/effect/spawner/structure/window/shuttle,
+ /turf/open/floor/plating,
+-/area/ruin/derelictoutpost/dockedship)
++/area/ruin/space/has_grav/derelictoutpost/dockedship)
+ "cd" = (
+ /obj/structure/grille/broken,
+ /obj/item/weapon/shard,
