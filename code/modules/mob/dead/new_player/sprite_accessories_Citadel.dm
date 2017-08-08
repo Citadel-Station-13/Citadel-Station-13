@@ -240,6 +240,17 @@
 	hasinner = 1
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 
+/datum/sprite_accessory/mam_tails/bear
+	name = "Bear"
+	icon_state = "bear"
+	extra_color_src = MUTCOLORS2
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
