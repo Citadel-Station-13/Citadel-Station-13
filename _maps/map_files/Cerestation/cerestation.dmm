@@ -1227,7 +1227,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "acO" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/black{
@@ -1605,7 +1605,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "adD" = (
 /obj/machinery/telecomms/server/presets/engineering,
 /turf/open/floor/circuit{
@@ -1740,7 +1740,7 @@
 "adS" = (
 /obj/item/weapon/ore/glass,
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "adT" = (
 /obj/structure/rack,
 /obj/item/weapon/gun/energy/ionrifle,
@@ -1781,7 +1781,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "adW" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -2935,15 +2935,15 @@
 /area/ai_monitored/security/armory)
 "agk" = (
 /turf/closed/mineral,
-/area/security/transfer)
+/area/security/execution/transfer)
 "agl" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "agm" = (
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "agn" = (
 /obj/machinery/door/airlock/glass_external{
 	cyclelinkeddir = 1
@@ -3762,7 +3762,7 @@
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "ahQ" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -4131,7 +4131,7 @@
 /obj/structure/rack,
 /obj/item/weapon/pickaxe/mini,
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aiA" = (
 /obj/structure/girder,
 /turf/open/floor/plating{
@@ -4516,7 +4516,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "ajq" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -4529,7 +4529,7 @@
 /obj/structure/rack,
 /obj/item/weapon/shovel,
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "ajs" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -4929,7 +4929,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "akj" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating{
@@ -4938,7 +4938,7 @@
 	icon_state = "asteroid_dug";
 	name = "ditch"
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "akk" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -5481,7 +5481,7 @@
 	icon_state = "asteroid_dug";
 	name = "ditch"
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "alr" = (
 /turf/open/floor/plating/asteroid,
 /area/security/prison)
@@ -80573,7 +80573,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "cVx" = (
 /obj/structure/cable/orange{
 	d1 = 4;
@@ -80821,7 +80821,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "cVR" = (
 /obj/structure/table,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -80860,7 +80860,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "cVU" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -80906,7 +80906,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "cVX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -80961,7 +80961,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "cWa" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -87152,7 +87152,7 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkI" = (
 /obj/structure/rack,
 /obj/item/weapon/pickaxe,
@@ -87160,7 +87160,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkJ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
@@ -87173,7 +87173,7 @@
 "dkK" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating/asteroid,
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkL" = (
 /obj/structure/sign/poster/contraband/fun_police{
 	pixel_y = 32
@@ -87181,22 +87181,22 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkM" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkN" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkO" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkP" = (
 /obj/item/weapon/ore/glass,
 /obj/structure/cable/orange{
@@ -87221,7 +87221,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkR" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
@@ -87236,24 +87236,24 @@
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkT" = (
 /obj/structure/mineral_door/iron,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkU" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkV" = (
 /obj/item/weapon/ore/glass,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkW" = (
 /obj/structure/cable/orange{
 	d1 = 1;
@@ -87263,7 +87263,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkX" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -87271,7 +87271,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "dkY" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/orange{
