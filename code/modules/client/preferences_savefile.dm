@@ -273,7 +273,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		S["default_slot"] << slot
+		WRITE_FILE(S["default_slot"] , slot)
 
 	S.cd = "/character[slot]"
 	var/needs_update = savefile_needs_update(S)
@@ -292,7 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		S["features["mcolor"]"]	<< "#FFF"
+		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
 	S["OOC_Notes"]			>> metadata

@@ -448,7 +448,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		var/sound = pick(ambientsounds)
 
 		if(!L.client.played)
-			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE)
+			SEND_SOUND(L, sound(sound, repeat = 0, wait = 0, volume = 25, channel = CHANNEL_AMBIENCE))
 			L.client.played = 1
 			sleep(600)			//ewww - this is very very bad
 			if(L.&& L.client)
