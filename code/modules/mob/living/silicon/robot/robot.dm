@@ -51,7 +51,7 @@
 
 	var/ident = 0
 	var/locked = TRUE
-	var/list/req_access = list(GLOB.access_robotics)
+	var/list/req_access = list(ACCESS_ROBOTICS)
 
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list(), "Camera"=list(), "Burglar"=list())
 
@@ -92,6 +92,8 @@
 	/obj/item/clothing/head/nursehat,
 	/obj/item/clothing/head/sombrero,
 	/obj/item/clothing/head/witchunter_hat)
+
+	var/remote_range = 7 //How far can you interact with machines.
 
 	can_buckle = TRUE
 	buckle_lying = FALSE
@@ -393,13 +395,14 @@
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/stack/cable_coil/coil = W
-		if (getFireLoss() > 0)
+		if (getFireLoss() > 0 || getToxLoss() > 0)
 			if(src == user)
 				to_chat(user, "<span class='notice'>You start fixing yourself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
 				adjustFireLoss(-30)
+				adjustToxLoss(-30)
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
@@ -655,29 +658,6 @@
 		add_overlay(head_overlay)
 	update_fire()
 
-#define BORG_CAMERA_BUFFER 30
-
-/mob/living/silicon/robot/proc/do_camera_update(oldLoc)
-	if(oldLoc != src.loc)
-		GLOB.cameranet.updatePortableCamera(src.camera)
-	updating = 0
-
-/mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
-	. = ..()
-	if(.)
-		if(src.camera)
-			if(!updating)
-				updating = 1
-				addtimer(CALLBACK(src, .proc/do_camera_update, oldLoc), BORG_CAMERA_BUFFER)
-	if(module)
-		if(istype(module, /obj/item/weapon/robot_module/miner))
-			if(istype(loc, /turf/open/floor/plating/asteroid))
-				for(var/obj/item/I in held_items)
-					if(istype(I,/obj/item/weapon/storage/bag/ore))
-						loc.attackby(I, src)
-#undef BORG_CAMERA_BUFFER
-
 /mob/living/silicon/robot/proc/self_destruct()
 	if(emagged)
 		if(mmi)
@@ -841,7 +821,7 @@
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
@@ -1077,7 +1057,7 @@
 	diag_hud_set_aishell()
 
 /mob/living/silicon/robot/proc/deploy_init(var/mob/living/silicon/ai/AI)
-	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up seperately in the shells list
+	real_name = "[AI.real_name] shell [rand(100, 999)] - [designation]"	//Randomizing the name so it shows up separately in the shells list
 	name = real_name
 	if(camera)
 		camera.c_tag = real_name	//update the camera name too
@@ -1101,6 +1081,7 @@
 /datum/action/innate/undeployment
  	name = "Disconnect from shell"
  	desc = "Stop controlling your shell and resume normal core operations."
+ 	icon_icon = 'icons/mob/actions/actions_AI.dmi'
  	button_icon_state = "ai_core"
 
 /datum/action/innate/undeployment/Trigger()

@@ -28,7 +28,7 @@
 
 
 // the Area Power Controller (APC), formerly Power Distribution Unit (PDU)
-// one per area, needs wire conection to power network through a terminal
+// one per area, needs wire connection to power network through a terminal
 
 // controls power to devices in that area
 // may be opened to change power cell
@@ -103,7 +103,7 @@
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
-		req_access = list(GLOB.access_engine_equip)
+		req_access = list(ACCESS_ENGINE_EQUIP)
 	if (!armor)
 		armor = list(melee = 20, bullet = 20, laser = 10, energy = 100, bomb = 30, bio = 100, rad = 100, fire = 90, acid = 50)
 	..()
@@ -256,7 +256,7 @@
 				O += "apco2-[environ]"
 			add_overlay(O)
 
-	// And now, seperately for cleanness, the lighting changing
+	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
 		switch(charging)
 			if(0)

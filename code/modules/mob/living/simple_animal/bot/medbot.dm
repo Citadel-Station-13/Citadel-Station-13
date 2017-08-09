@@ -76,6 +76,9 @@
 	treatment_tox = "sodium_thiopental"
 
 /mob/living/simple_animal/bot/medbot/update_icon()
+	cut_overlays()
+	if(skin)
+		add_overlay("medskin_[skin]")
 	if(!on)
 		icon_state = "medibot0"
 		return
@@ -90,17 +93,14 @@
 	else
 		icon_state = "medibot1"
 
-/mob/living/simple_animal/bot/medbot/Initialize()
-	..()
-	update_icon()
-
-	if(skin)
-		add_overlay("medskin_[skin]")
-
+/mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
+	. = ..()
 	var/datum/job/doctor/J = new /datum/job/doctor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
+	skin = new_skin
+	update_icon()
 
 /mob/living/simple_animal/bot/medbot/update_canmove()
 	. = ..()
@@ -373,7 +373,8 @@
 		return 1
 
 	if(treat_virus && !C.reagents.has_reagent(treatment_virus_avoid) && !C.reagents.has_reagent(treatment_virus))
-		for(var/datum/disease/D in C.viruses)
+		for(var/thing in C.viruses)
+			var/datum/disease/D = thing
 			//the medibot can't detect viruses that are undetectable to Health Analyzers or Pandemic machines.
 			if(!(D.visibility_flags & HIDDEN_SCANNER || D.visibility_flags & HIDDEN_PANDEMIC) \
 			&& D.severity != NONTHREAT \
@@ -424,7 +425,8 @@
 	else
 		if(treat_virus)
 			var/virus = 0
-			for(var/datum/disease/D in C.viruses)
+			for(var/thing in C.viruses)
+				var/datum/disease/D = thing
 				//detectable virus
 				if((!(D.visibility_flags & HIDDEN_SCANNER)) || (!(D.visibility_flags & HIDDEN_PANDEMIC)))
 					if(D.severity != NONTHREAT)      //virus is harmful
@@ -459,6 +461,8 @@
 					break
 
 	if(!reagent_id) //If they don't need any of that they're probably cured!
+		if(C.maxHealth - C.health < heal_threshold)
+			to_chat(src, "<span class='notice'>[C] is healthy! Your programming prevents you from injecting anyone without at least [heal_threshold] damage of any one type ([heal_threshold + 15] for oxygen damage.)</span>")
 		var/list/messagevoice = list("All patched up!" = 'sound/voice/mpatchedup.ogg',"An apple a day keeps me away." = 'sound/voice/mapple.ogg',"Feel better soon!" = 'sound/voice/mfeelbetter.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
@@ -539,4 +543,4 @@
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(GLOB.access_medical, GLOB.access_robotics)
+	req_one_access =list(ACCESS_MEDICAL, ACCESS_ROBOTICS)

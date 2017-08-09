@@ -2,6 +2,8 @@
 	name = "flashbang"
 	icon_state = "flashbang"
 	item_state = "flashbang"
+	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	origin_tech = "materials=2;combat=3"
 
 /obj/item/weapon/grenade/flashbang/prime()
@@ -34,4 +36,4 @@
 		M.soundbang_act(1, 200, 10, 15)
 
 	else
-		M.soundbang_act(1, max(20/max(1,distance), 3), rand(0, 5))
+		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))

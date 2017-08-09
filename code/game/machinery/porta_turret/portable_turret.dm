@@ -15,7 +15,7 @@
 	use_power = IDLE_POWER_USE				//this turret uses and requires power
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
-	req_access = list(GLOB.access_security)
+	req_access = list(ACCESS_SECURITY)
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
 
 	var/base_icon_state = "standard"
@@ -274,7 +274,7 @@
 			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
-	else if(istype(I,/obj/item/device/multitool) && !locked)
+	else if(istype(I, /obj/item/device/multitool) && !locked)
 		var/obj/item/device/multitool/M = I
 		M.buffer = src
 		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
@@ -359,28 +359,23 @@
 			popDown()
 		return
 
-	var/list/targets = calculate_targets()
-
-	if(!tryToShootAt(targets))
-		if(!always_up)
-			popDown() // no valid targets, close the cover
-
-/obj/machinery/porta_turret/proc/calculate_targets()
 	var/list/targets = list()
-	var/turretview = view(scan_range, base)
-	for(var/A in turretview)
+	var/static/things_to_scan = typecacheof(list(/mob/living, /obj/mecha))
+
+	for(var/A in typecache_filter_list(view(scan_range, base), things_to_scan))
 		var/atom/AA = A
-		if(AA.invisibility>SEE_INVISIBLE_LIVING)
+
+		if(AA.invisibility > SEE_INVISIBLE_LIVING)
 			continue
 
 		if(check_anomalies)//if it's set to check for simple animals
-			if(istype(A, /mob/living/simple_animal))
+			if(isanimal(A))
 				var/mob/living/simple_animal/SA = A
 				if(SA.stat || in_faction(SA)) //don't target if dead or in faction
 					continue
 				targets += SA
 
-		if(istype(A, /mob/living/carbon))
+		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 			//If not emagged, only target non downed carbons
 			if(mode != TURRET_LETHAL && (C.stat || C.handcuffed || C.lying))
@@ -399,14 +394,16 @@
 				if(!in_faction(C))
 					targets += C
 
-		if(istype(A, /obj/mecha/))
+		if(istype(A, /obj/mecha))
 			var/obj/mecha/M = A
 			//If there is a user and they're not in our faction
 			if(M.occupant && !in_faction(M.occupant))
 				if(assess_perp(M.occupant) >= 4)
 					targets += M
 
-	return targets
+	if(!tryToShootAt(targets))
+		if(!always_up)
+			popDown() // no valid targets, close the cover
 
 /obj/machinery/porta_turret/proc/tryToShootAt(list/atom/movable/targets)
 	while(targets.len > 0)
@@ -490,11 +487,9 @@
 
 /obj/machinery/porta_turret/proc/target(atom/movable/target)
 	if(target)
-		spawn()
-			popUp()				//pop the turret up if it's not already up.
+		popUp()				//pop the turret up if it's not already up.
 		setDir(get_dir(base, target))//even if you can't shoot, follow the target
-		spawn()
-			shootAt(target)
+		shootAt(target)
 		return 1
 	return
 
@@ -553,7 +548,7 @@
 	use_power = NO_POWER_USE
 	has_cover = 0
 	scan_range = 9
-	req_access = list(GLOB.access_syndicate)
+	req_access = list(ACCESS_SYNDICATE)
 	stun_projectile = /obj/item/projectile/bullet
 	lethal_projectile = /obj/item/projectile/bullet
 	lethal_projectile_sound = 'sound/weapons/gunshot.ogg'
@@ -651,7 +646,7 @@
 	var/locked = TRUE
 	var/control_area = null //can be area name, path or nothing.
 	var/ailock = 0 // AI cannot use this
-	req_access = list(GLOB.access_ai_upload)
+	req_access = list(ACCESS_AI_UPLOAD)
 	var/list/obj/machinery/porta_turret/turrets = list()
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -689,9 +684,9 @@
 /obj/machinery/turretid/attackby(obj/item/I, mob/user, params)
 	if(stat & BROKEN) return
 
-	if (istype(I,/obj/item/device/multitool))
+	if (istype(I, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = I
-		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
+		if(M.buffer && istype(M.buffer, /obj/machinery/porta_turret))
 			turrets |= M.buffer
 			to_chat(user, "You link \the [M.buffer] with \the [src]")
 			return
@@ -862,7 +857,7 @@
 	. = ..()
 
 /obj/machinery/porta_turret/lasertag
-	req_access = list(GLOB.access_maint_tunnels, GLOB.access_theatre)
+	req_access = list(ACCESS_MAINT_TUNNELS, ACCESS_THEATRE)
 	check_records = 0
 	criminals = 0
 	auth_weapons = 1

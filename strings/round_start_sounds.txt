@@ -18,3 +18,4 @@ sound/music/torvus.ogg
 sound/music/shootingstars.ogg
 sound/music/oceanman.ogg
 sound/music/indeep.ogg
+sound/music/goodbyemoonmen.ogg

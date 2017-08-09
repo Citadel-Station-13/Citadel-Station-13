@@ -54,7 +54,7 @@
 	idle_power_usage = 4
 	active_power_usage = 8
 	power_channel = ENVIRON
-	req_access = list(GLOB.access_atmospherics)
+	req_access = list(ACCESS_ATMOSPHERICS)
 	max_integrity = 250
 	integrity_failure = 80
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 90, acid = 30)
@@ -113,6 +113,19 @@
 		"water_vapor"	= new/datum/tlv(-1, -1, 0.2, 0.5)
 	)
 
+/obj/machinery/airalarm/engine
+	name = "engine air alarm"
+	locked = FALSE
+	req_access = null
+	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_ENGINE)
+
+/obj/machinery/airalarm/all_access
+	name = "all-access air alarm"
+	desc = "This particular atmos control unit appears to have no access restrictions."
+	locked = FALSE
+	req_access = null
+	req_one_access = null
+
 //all air alarms in area are connected via magic
 /area
 	var/list/air_vent_names = list()
@@ -139,8 +152,7 @@
 	update_icon()
 
 /obj/machinery/airalarm/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src, frequency)
+	SSradio.remove_object(src, frequency)
 	qdel(wires)
 	wires = null
 	return ..()

@@ -79,10 +79,13 @@
 		SSshuttle.shuttle_loan = null
 
 		var/list/empty_shuttle_turfs = list()
-		for(var/turf/open/floor/T in SSshuttle.supply.areaInstance)
-			if(is_blocked_turf(T))
-				continue
-			empty_shuttle_turfs += T
+		var/list/area/shuttle/shuttle_areas = SSshuttle.supply.shuttle_areas
+		for(var/place in shuttle_areas)
+			var/area/shuttle/shuttle_area = place
+			for(var/turf/open/floor/T in shuttle_area)
+				if(is_blocked_turf(T))
+					continue
+				empty_shuttle_turfs += T
 		if(!empty_shuttle_turfs.len)
 			return
 
@@ -132,7 +135,7 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/virus_type = pick(/datum/disease/beesease, /datum/disease/brainrot, /datum/disease/fluspanish)
+				var/obj/item/weapon/reagent_containers/glass/bottle/virus_type = pick(/obj/item/weapon/reagent_containers/glass/bottle/beesease, /obj/item/weapon/reagent_containers/glass/bottle/brainrot, /obj/item/weapon/reagent_containers/glass/bottle/fluspanish)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
@@ -142,11 +145,7 @@
 					else if(prob(25))
 						shuttle_spawns.Add(/obj/item/weapon/shard)
 					T = pick_n_take(empty_shuttle_turfs)
-					var/obj/effect/decal/cleanable/blood/b = new(T)
-					var/datum/disease/D = new virus_type()
-					D.longevity = 1000
-					b.viruses += D
-					D.holder = b
+					new virus_type(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
 				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)

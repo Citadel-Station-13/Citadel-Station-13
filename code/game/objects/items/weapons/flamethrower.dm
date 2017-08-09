@@ -4,6 +4,8 @@
 	icon = 'icons/obj/flamethrower.dmi'
 	icon_state = "flamethrowerbase"
 	item_state = "flamethrower_0"
+	lefthand_file = 'icons/mob/inhands/weapons/flamethrower_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/flamethrower_righthand.dmi'
 	flags = CONDUCT
 	force = 3
 	throwforce = 10
@@ -115,7 +117,7 @@
 		update_icon()
 		return
 
-	else if(istype(W,/obj/item/weapon/tank/internals/plasma))
+	else if(istype(W, /obj/item/weapon/tank/internals/plasma))
 		if(ptank)
 			if(user.transferItemToLoc(W,src))
 				ptank.forceMove(get_turf(src))

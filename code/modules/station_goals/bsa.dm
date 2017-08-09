@@ -64,7 +64,7 @@
 
 /obj/machinery/bsa/middle
 	name = "Bluespace Artillery Fusor"
-	desc = "Contents classifed by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using multitool."
+	desc = "Contents classified by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using multitool."
 	icon_state = "fuel_chamber"
 	var/obj/machinery/bsa/back/back
 	var/obj/machinery/bsa/front/front
@@ -73,11 +73,11 @@
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer)
-			if(istype(M.buffer,/obj/machinery/bsa/back))
+			if(istype(M.buffer, /obj/machinery/bsa/back))
 				back = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [back].</span>")
-			else if(istype(M.buffer,/obj/machinery/bsa/front))
+			else if(istype(M.buffer, /obj/machinery/bsa/front))
 				front = M.buffer
 				M.buffer = null
 				to_chat(user, "<span class='notice'>You link [src] with [front].</span>")
@@ -291,17 +291,17 @@
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()
-	if(istype(target,/area))
+	if(istype(target, /area))
 		var/area/A = target
 		return A.name
-	else if(istype(target,/obj/item/device/gps))
+	else if(istype(target, /obj/item/device/gps))
 		var/obj/item/device/gps/G = target
 		return G.gpstag
 
 /obj/machinery/computer/bsa_control/proc/get_impact_turf()
-	if(istype(target,/area))
+	if(istype(target, /area))
 		return pick(get_area_turfs(target))
-	else if(istype(target,/obj/item/device/gps))
+	else if(istype(target, /obj/item/device/gps))
 		return get_turf(target)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
