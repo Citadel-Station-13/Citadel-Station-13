@@ -75,6 +75,7 @@
 			continue
 		if(C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
+			C.AfterComponentActivated()
 			. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
