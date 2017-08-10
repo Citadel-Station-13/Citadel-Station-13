@@ -31,6 +31,16 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/mam_tails/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -234,22 +244,21 @@
 	extra = 1
 	extra_color_src = MUTCOLORS2
 
-/datum/sprite_accessory/mam_ears/catbig
-	name = "Cat, Big"
-	icon_state = "cat"
-	hasinner = 1
-	icon = 'icons/mob/mutant_bodyparts.dmi'
-
 /datum/sprite_accessory/mam_tails/bear
 	name = "Bear"
 	icon_state = "bear"
-	extra_color_src = MUTCOLORS2
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/catbig
+	name = "Cat, Big"
+	icon_state = "cat"
+	hasinner = 1
+	icon = 'icons/mob/mutant_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
