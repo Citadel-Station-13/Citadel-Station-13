@@ -382,9 +382,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_has_womb"]				>> features["has_womb"]
 	//flavor text
 	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
-	if((S["feature_flavor_text"] == "") && (S["flavor_text"] != "")) //If we got no new flavor_text data, but we have old
-		S["flavor_text"]				>> features["flavor_text"]
-	else //Otherwise use new flavor_text data always
+	if(S["flavor_text"] != "" || S["flavor_text"] != null)
+		S["flavor_text"]				>> features["flavor_text"] //Load old flavortext as current dna-based flavortext
+		S["flavor_text"]				>> S["feature_flavor_text"] //Save it in our new type of flavor-text
+		null 							>> S["flavor_text"] //Remove old flavortext, completing the cut-and-paste into the new format.
+	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
 
