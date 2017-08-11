@@ -383,14 +383,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//flavor text
 	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
 	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
-		to_chat(world, "DEBUG: OLD TEXT FOUND, MOVING:[S["flavor_text"]]")
 		S["flavor_text"]				>> features["flavor_text"] //Load old flavortext as current dna-based flavortext
 
 		S["feature_flavor_text"]		<< features["flavor_text"] //Save it in our new type of flavor-text
 		S["flavor_text"]				<< "" //Remove old flavortext, completing the cut-and-paste into the new format.
 
 	else //We have no old flavortext, default to new
-		to_chat(world, "DEBUG: No old text found.")
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
 
