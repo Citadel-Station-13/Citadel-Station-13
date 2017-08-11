@@ -31,6 +31,33 @@
 	icon_state = "tapered"
 	name = "Tapered"
 
+////////////////////////
+// Taur cocks go here //
+////////////////////////
+/datum/sprite_accessory/penis/taur_flared
+	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon_state = "flared"
+	name = "Taur, Flared"
+	center = TRUE //Center the image 'cause 2-tile wide.
+	dimension_x = 64
+
+/datum/sprite_accessory/penis/taur_knotted
+	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon_state = "knotted"
+	name = "Taur, Knotted"
+	center = TRUE //Center the image 'cause 2-tile wide.
+	dimension_x = 64
+
+/datum/sprite_accessory/penis/taur_tapered
+	icon = 'code/citadel/icons/taur_penis_onmob.dmi' //Needed larger width
+	icon_state = "tapered"
+	name = "Taur, Tapered"
+	center = TRUE //Center the image 'cause 2-tile wide.
+	dimension_x = 64
+
+
+
+
 //Vaginas
 /datum/sprite_accessory/vagina
 	icon = 'code/citadel/icons/vagina_onmob.dmi'
