@@ -116,6 +116,7 @@
 		"xenohead" 			= "None",
 		"xenotail" 			= "None",
 		"exhibitionist" 	= FALSE,
+		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= pick(GLOB.cock_shapes_list),
 		"cock_length"		= 6,
@@ -158,8 +159,9 @@
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum"))
-		
+		"womb_fluid" 		= "femcum",
+		"flavor_text"		= ""))
+
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)
