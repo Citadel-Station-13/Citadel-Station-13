@@ -31,12 +31,12 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-/datum/sprite_accessory/mam_tails/human/bear
+/datum/sprite_accessory/tails/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-/datum/sprite_accessory/mam_ears/human/bear
+/datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
