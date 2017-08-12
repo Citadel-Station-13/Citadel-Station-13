@@ -32,6 +32,7 @@
 	if(ishuman(destination))
 		var/mob/living/carbon/human/H = destination
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
+	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -231,6 +232,7 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
+		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
 		set_species(mrace, icon_update=0)
