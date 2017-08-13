@@ -1,21 +1,23 @@
 /obj/item/organ/genital/penis
-	name 		= "Penis"
-	desc 		= "A male reproductive organ."
-	icon_state 	= "penis"
-	icon 		= 'code/citadel/icons/penis.dmi'
-	zone 		= "groin"
-	slot 		= "penis"
-	w_class 	= 3
-	can_masturbate_with = 1
-	size 	= 2 //arbitrary value derived from length and girth for sprites.
-	var/length 	= 6	//inches
+	name 					= "Penis"
+	desc 					= "A male reproductive organ."
+	icon_state 				= "penis"
+	icon 					= 'code/citadel/icons/penis.dmi'
+	zone 					= "groin"
+	slot 					= "penis"
+	w_class 				= 3
+	can_masturbate_with 	= TRUE
+	masturbation_verb 		= "stroke"
+	can_climax 				= TRUE
+	fluid_transfer_factor = 1.0
+	size 					= 2 //arbitrary value derived from length and girth for sprites.
+	var/length 				= 6	//inches
 	var/cached_length //used to detect a change in length
-	var/girth  	= 0
-	var/girth_ratio = COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
-	var/knot_girth_ratio = KNOT_GIRTH_RATIO_DEF
-	var/list/dickflags = list()
-	var/list/knotted_types = list("knotted", "barbknot")
-	var/obj/item/organ/genital/testicles/linked_balls
+	var/girth  				= 0
+	var/girth_ratio 		= COCK_GIRTH_RATIO_DEF //0.73; check citadel_defines.dm
+	var/knot_girth_ratio 	= KNOT_GIRTH_RATIO_DEF
+	var/list/dickflags 		= list()
+	var/list/knotted_types 	= list("knotted", "barbknot")
 
 /obj/item/organ/genital/penis/update_size()
 	if(length == cached_length)
@@ -55,15 +57,15 @@
 
 /obj/item/organ/genital/penis/update_link()
 	if(owner)
-		linked_balls = (owner.getorganslot("testicles"))
-		if(linked_balls)
-			linked_balls.linked_penis = src
+		linked_organ = (owner.getorganslot("testicles"))
+		if(linked_organ)
+			linked_organ.linked_organ = src
 	else
-		if(linked_balls)
-			linked_balls.linked_penis = null
-		linked_balls = null
+		if(linked_organ)
+			linked_organ.linked_organ = null
+		linked_organ = null
 
-/obj/item/organ/genital/penis/remove_ref()
-	if(linked_balls)
-		linked_balls.linked_penis = null
-		linked_balls = null
+/obj/item/organ/genital/penis/is_exposed()
+	..()
+	to_chat(world, "DEBUG: penis code is_exposed result:[owner.is_groin_exposed()]")
+	return owner.is_groin_exposed()
