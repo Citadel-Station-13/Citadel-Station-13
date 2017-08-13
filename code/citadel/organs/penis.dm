@@ -9,7 +9,7 @@
 	can_masturbate_with 	= TRUE
 	masturbation_verb 		= "stroke"
 	can_climax 				= TRUE
-	fluid_transfer_factor = 1.0
+	fluid_transfer_factor = 0.5
 	size 					= 2 //arbitrary value derived from length and girth for sprites.
 	var/length 				= 6	//inches
 	var/cached_length //used to detect a change in length
@@ -66,6 +66,7 @@
 		linked_organ = null
 
 /obj/item/organ/genital/penis/is_exposed()
-	..()
-	to_chat(world, "DEBUG: penis code is_exposed result:[owner.is_groin_exposed()]")
+	. = ..()
+	if(.)
+		return TRUE
 	return owner.is_groin_exposed()

@@ -199,8 +199,8 @@
 	total_fluids = fluid_source.total_volume
 
 	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] [p_their()] [G].</span>", \
-						"<span class='green'>You start [G.masturbation_verb] your [G].</span>", \
-						"<span class='green'>You start [G.masturbation_verb] your [G].</span>")
+						"<span class='green'>You start to [G.masturbation_verb] your [G].</span>", \
+						"<span class='green'>You start to [G.masturbation_verb] your [G].</span>")
 
 	if(do_after(src, mb_time, target = src))
 		if(total_fluids > 5)
@@ -498,7 +498,7 @@
 				if(picked_organ)
 					var/mob/living/partner = pick_partner() //Get someone
 					if(partner)
-						var/spillage = input(src, "Choose overflowing option", "Would your fluids spill outside?", "Yes") as anything in list("Yes", "No")
+						var/spillage = input(src, "Would your fluids spill outside?", "Choose overflowing option", "Yes") as anything in list("Yes", "No")
 						if(spillage == "Yes")
 							mob_climax_partner(picked_organ, partner, TRUE)
 						else

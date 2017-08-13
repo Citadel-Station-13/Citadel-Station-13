@@ -46,15 +46,11 @@
 
 /obj/item/organ/genital/proc/is_exposed()
 	if(!owner)
-		to_chat(world, "DEBUG: Genital level is_exposed failed owner check.")
 		return FALSE
 	if(internal)
-		to_chat(world, "DEBUG: Genital level is_exposed failed internal check.")
 		return FALSE
 	if(through_clothes)
-		to_chat(world, "DEBUG: Genital level is_exposed succeded through_clothes check.")
 		return TRUE
-	to_chat(world, "DEBUG: Genital level is_exposed is done..")
 
 /obj/item/organ/genital/proc/toggle_through_clothes()
 	if(through_clothes)
@@ -63,6 +59,9 @@
 	else
 		through_clothes = TRUE
 		owner.exposed_genitals += src
+	if(ishuman(owner)) //recast to use update genitals proc
+		var/mob/living/carbon/human/H = owner
+		H.update_genitals()
 
 /mob/living/carbon/verb/toggle_genitals()
 	set category = "IC"
@@ -114,21 +113,21 @@
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
-
-	if(dna.features["has_cock"])
-		give_penis()
-		if(dna.features["has_balls"])
-			give_balls()
-	else if(dna.features["has_ovi"])
-		give_ovipositor()
-		if(dna.features["has_eggsack"])
-			give_eggsack()
+	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 	if(dna.features["has_breasts"])
 		give_breasts()
 	if(dna.features["has_vag"])
 		give_vagina()
-		if(dna.features["has_womb"])
-			give_womb()
+	if(dna.features["has_womb"])
+		give_womb()
+	if(dna.features["has_balls"])
+		give_balls()
+	if(dna.features["has_cock"])
+		give_penis()
+	if(dna.features["has_ovi"])
+		give_ovipositor()
+	if(dna.features["has_eggsack"])
+		give_eggsack()
 
 /mob/living/carbon/human/proc/give_penis()
 	if(!dna)

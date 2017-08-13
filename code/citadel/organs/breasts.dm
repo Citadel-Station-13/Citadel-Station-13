@@ -14,7 +14,7 @@
 	can_masturbate_with		= TRUE
 	masturbation_verb 		= "massage"
 	can_climax				= TRUE
-	fluid_transfer_factor 	= 1.0
+	fluid_transfer_factor 	=0.5
 
 /obj/item/organ/genital/breasts/Initialize()
 	. = ..()
@@ -61,5 +61,7 @@
 			color = "#[owner.dna.features["breasts_color"]]"
 
 /obj/item/organ/genital/breasts/is_exposed()
-	..()
+	. = ..()
+	if(.)
+		return TRUE
 	return owner.is_chest_exposed()
