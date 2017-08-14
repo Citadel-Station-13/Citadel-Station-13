@@ -224,6 +224,15 @@
 /mob/living/carbon/proc/handle_blood()
 	return
 
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
+
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
 		if(mind.changeling)
@@ -369,8 +378,7 @@
 		adjust_drugginess(-1)
 
 	if(hallucination)
-		spawn handle_hallucinations()
-		hallucination = max(hallucination-2,0)
+		handle_hallucinations()
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

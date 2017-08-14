@@ -27,4 +27,4 @@
 
 /obj/item/weapon/storage/box/syndie_kit/holoparasite/PopulateContents()
 	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
-	new /obj/item/weapon/paper/guardian(src)
+	new /obj/item/weapon/paper/guides/antag/guardian(src)

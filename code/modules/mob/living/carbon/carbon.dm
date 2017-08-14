@@ -240,6 +240,12 @@
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 
+/mob/living/carbon/hallucinating()
+	if(hallucination)
+		return TRUE
+	else
+		return FALSE
+
 /mob/living/carbon/resist_buckle()
 	if(restrained())
 		changeNext_move(CLICK_CD_BREAKOUT)
@@ -716,8 +722,9 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
-	for(var/datum/disease/D in viruses)
-		if (D.severity != NONTHREAT)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.severity != NONTHREAT)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
@@ -811,3 +818,4 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"
