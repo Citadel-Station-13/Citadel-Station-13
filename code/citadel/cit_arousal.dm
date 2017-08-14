@@ -245,8 +245,8 @@
 			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G]!</span>", \
 								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G].</span>", \
 								"<span class='green'>You climax using your [G].</span>")
-		if(G.can_climax)
-			setArousalLoss(min_arousal)
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
 
 
 /mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE) //Used for climaxing with any living thing
