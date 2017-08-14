@@ -464,7 +464,6 @@
 /datum/sprite_accessory/mam_tails/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
-	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_ears/rabbit
@@ -673,49 +672,67 @@
 
 //Xeno Dorsal Tubes
 /datum/sprite_accessory/xeno_dorsal
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	color_src = 0
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_dorsal/none
 	name = "None"
 
-/datum/sprite_accessory/xeno_dorsal/normal
-	name = "Dorsal Tubes"
-	icon_state = "dortubes"
+/datum/sprite_accessory/xeno_dorsal/standard
+	name = "Standard"
+	icon_state = "standard"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+
+/datum/sprite_accessory/xeno_dorsal/royal
+	name = "Royal"
+	icon_state = "royal"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+
+/datum/sprite_accessory/xeno_dorsal/down
+	name = "Dorsal Down"
+	icon_state = "down"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Tail
 /datum/sprite_accessory/xeno_tail
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	color_src = 0
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_tail/none
 	name = "None"
 
-/datum/sprite_accessory/xeno_tail/normal
+/datum/sprite_accessory/xeno_tail/standard
 	name = "Xenomorph Tail"
 	icon_state = "xeno"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Caste Heads
 //unused as of October 3, 2016
 /datum/sprite_accessory/xeno_head
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	color_src = 0
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 /datum/sprite_accessory/xeno_head/none
 	name = "None"
 
+/datum/sprite_accessory/xeno_head/standard
+	name = "Standard"
+	icon_state = "standard"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
-/datum/sprite_accessory/xeno_head/hunter
-	name = "Hunter"
-	icon_state = "hunter"
 
-/datum/sprite_accessory/xeno_head/drone
-	name = "Drone"
-	icon_state = "drone"
+/datum/sprite_accessory/xeno_head/royal
+	name = "royal"
+	icon_state = "royal"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
-/datum/sprite_accessory/xeno_head/sentinel
-	name = "Sentinel"
-	icon_state = "sentinel"
+/datum/sprite_accessory/xeno_head/hollywood
+	name = "hollywood"
+	icon_state = "hollywood"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+
+/datum/sprite_accessory/xeno_head/warrior
+	name = "warrior"
+	icon_state = "warrior"
+	icon = 'icons/mob/xeno_parts_greyscale.dmi'
+
 /*
 //Slimecoon Parts
 /datum/sprite_accessory/slimecoon_ears
