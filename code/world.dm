@@ -59,7 +59,7 @@
 	if(config.sql_enabled)
 		if(SSdbcore.Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_version")]")
+			var/datum/DBQuery/db_version = SSdbcore.NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")]")
 			db_version.Execute()
 			if(db_version.NextRow())
 				var/db_major = db_version.item[1]
