@@ -177,15 +177,18 @@
 	var/area/A = src.loc.loc
 
 	//if area isn't specified use current
-	if(isarea(A) && src.areastring == null)
+	if(areastring)
+		src.area = get_area_instance_from_text(areastring)
+		if(!src.area)
+			src.area = A
+			stack_trace("Bad areastring path for [src], [src.areastring]")
+	else if(isarea(A) && src.areastring == null)
 		src.area = A
-	else
-		src.area = get_area_by_name(areastring)
 	update_icon()
 
 	make_terminal()
 
-	addtimer(CALLBACK(src, .proc/update), 5)
+addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
