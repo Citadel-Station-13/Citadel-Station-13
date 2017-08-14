@@ -150,6 +150,8 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	origin_tech = "programming=2"
 	materials = list(MAT_GLASS=1000)
 	w_class = WEIGHT_CLASS_SMALL
@@ -210,7 +212,7 @@
 	build_path = /obj/machinery/computer/card
 	origin_tech = "programming=3"
 /obj/item/weapon/circuitboard/computer/card/centcom
-	name = "Centcom ID Console (Computer Board)"
+	name = "CentCom ID Console (Computer Board)"
 	build_path = /obj/machinery/computer/card/centcom
 
 /obj/item/weapon/circuitboard/computer/card/minor
@@ -308,7 +310,7 @@
 	build_path = /obj/machinery/computer/rdconsole/core
 
 /obj/item/weapon/circuitboard/computer/rdconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/rdconsole/core)
 			name = "R&D Console - Robotics (Computer Board)"
 			build_path = /obj/machinery/computer/rdconsole/robotics
@@ -343,13 +345,13 @@
 	var/emagged = FALSE
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/device/multitool))
+	if(istype(I, /obj/item/device/multitool))
 		if(!emagged)
 			contraband = !contraband
 			to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
 		else
 			to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
-	else if(istype(I,/obj/item/weapon/card/emag))
+	else if(istype(I, /obj/item/weapon/card/emag))
 		if(!emagged)
 			contraband = TRUE
 			emagged = TRUE
@@ -441,7 +443,7 @@
 	origin_tech = "programming=1"
 
 /obj/item/weapon/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(istype(I,/obj/item/weapon/screwdriver))
+	if(istype(I, /obj/item/weapon/screwdriver))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole

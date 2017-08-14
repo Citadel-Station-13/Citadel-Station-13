@@ -36,6 +36,8 @@
 			adjustCloneLoss(damage * hit_percent)
 		if(STAMINA)
 			adjustStaminaLoss(damage * hit_percent)
+		if(BRAIN)
+			adjustBrainLoss(damage * hit_percent)
 		//citadel code
 		if(AROUSAL)
 			adjustArousalLoss(damage * hit_percent)

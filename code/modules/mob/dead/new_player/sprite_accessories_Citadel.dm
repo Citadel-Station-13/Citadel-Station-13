@@ -31,6 +31,16 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/tails/human/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -153,6 +163,18 @@
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/tails/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
+
 /******************************************
 *************** Body Parts ****************
 *******************************************/
@@ -221,6 +243,16 @@
 	icon_state = "ailurus"
 	extra = 1
 	extra_color_src = MUTCOLORS2
+
+/datum/sprite_accessory/mam_tails/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
@@ -428,6 +460,18 @@
 	name = "Guilmon"
 	icon_state = "guilmon"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_ears/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 ************ Body Markings ****************

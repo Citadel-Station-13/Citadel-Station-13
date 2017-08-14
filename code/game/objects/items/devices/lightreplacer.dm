@@ -46,6 +46,8 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "lightreplacer0"
 	item_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -122,7 +124,7 @@
 		var/replaced_something = TRUE
 
 		for(var/obj/item/I in S.contents)
-			if(istype(I,/obj/item/weapon/light))
+			if(istype(I, /obj/item/weapon/light))
 				var/obj/item/weapon/light/L = I
 				found_lightbulbs = TRUE
 				if(src.uses >= max_uses)

@@ -46,8 +46,8 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 //Human Overlays Indexes/////////
 //citadel code
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		29		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define GENITALS_BEHIND_LAYER	28
+#define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
+#define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			27		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
 #define BODY_ADJ_LAYER			26		//certain mutantrace features (snout, body markings) that must appear above the body parts
 #define GENITALS_ADJ_LAYER		25
@@ -167,10 +167,6 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).

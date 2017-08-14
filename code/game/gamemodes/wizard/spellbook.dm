@@ -376,7 +376,7 @@
 /datum/spellbook_entry/item/guardian/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	. = ..()
 	if(.)
-		new /obj/item/weapon/paper/guardian/wizard(get_turf(user))
+		new /obj/item/weapon/paper/guides/antag/guardian/wizard(get_turf(user))
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -899,7 +899,7 @@
 
 /obj/item/weapon/spellbook/oneuse/random/Initialize()
 	..()
-	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade,/obj/item/weapon/spellbook/oneuse/mimery_guns)
+	var/static/banned_spells = list(/obj/item/weapon/spellbook/oneuse/mimery_blockade, /obj/item/weapon/spellbook/oneuse/mimery_guns)
 	var/real_type = pick(subtypesof(/obj/item/weapon/spellbook/oneuse) - banned_spells)
 	new real_type(loc)
 	qdel(src)

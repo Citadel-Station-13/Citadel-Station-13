@@ -442,7 +442,7 @@
 			off_station = NUKE_MISS_STATION
 		if((bomb_location.x < (128-NUKERANGE)) || (bomb_location.x > (128+NUKERANGE)) || (bomb_location.y < (128-NUKERANGE)) || (bomb_location.y > (128+NUKERANGE)))
 			off_station = NUKE_MISS_STATION
-	else if(istype(A, /area/syndicate_mothership) || (istype(A,/area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
+	else if(istype(A, /area/syndicate_mothership) || (istype(A, /area/shuttle/syndicate) && bomb_location.z == ZLEVEL_CENTCOM))
 		off_station = NUKE_SYNDICATE_BASE
 	else
 		off_station = NUKE_NEAR_MISS
@@ -488,6 +488,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	icon = 'icons/obj/module.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	item_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	icon_state = "datadisk0"
 
 /obj/item/weapon/disk/nuclear

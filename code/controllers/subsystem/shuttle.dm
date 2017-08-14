@@ -34,8 +34,8 @@ SUBSYSTEM_DEF(shuttle)
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
 	var/points = 5000					//number of trade-points we have
-	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
-	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
+	var/centcom_message = ""			//Remarks from CentCom on how well you checked the last order.
+	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentCom, associated with their potencies
 
 	var/list/supply_packs = list()
 	var/list/shoppinglist = list()
@@ -185,7 +185,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	switch(emergency.mode)
 		if(SHUTTLE_RECALL)
-			to_chat(user, "The emergency shuttle may not be called while returning to Centcom.")
+			to_chat(user, "The emergency shuttle may not be called while returning to CentCom.")
 			return
 		if(SHUTTLE_CALL)
 			to_chat(user, "The emergency shuttle is already on its way.")
@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(shuttle)
 			to_chat(user, "The emergency shuttle is moving away to a safe distance.")
 			return
 		if(SHUTTLE_STRANDED)
-			to_chat(user, "The emergency shuttle has been disabled by Centcom.")
+			to_chat(user, "The emergency shuttle has been disabled by CentCom.")
 			return
 
 	call_reason = trim(html_encode(call_reason))
@@ -543,7 +543,7 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/is_in_shuttle_bounds(atom/A)
 	var/area/current = get_area(A)
-	if(istype(current, /area/shuttle) && !istype(current,/area/shuttle/transit))
+	if(istype(current, /area/shuttle) && !istype(current, /area/shuttle/transit))
 		return TRUE
 	for(var/obj/docking_port/mobile/M in mobile)
 		if(M.is_in_shuttle_bounds(A))

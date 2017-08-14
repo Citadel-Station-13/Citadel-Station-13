@@ -12,8 +12,8 @@
 	max_integrity = 150
 	integrity_failure = 50
 
-/obj/structure/fireaxecabinet/New()
-	..()
+/obj/structure/fireaxecabinet/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/structure/fireaxecabinet/Destroy()
@@ -22,7 +22,7 @@
 	return ..()
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
-	if(iscyborg(user) || istype(I,/obj/item/device/multitool))
+	if(iscyborg(user) || istype(I, /obj/item/device/multitool))
 		toggle_lock(user)
 	else if(istype(I, /obj/item/weapon/weldingtool) && user.a_intent == INTENT_HELP && !broken)
 		var/obj/item/weapon/weldingtool/WT = I

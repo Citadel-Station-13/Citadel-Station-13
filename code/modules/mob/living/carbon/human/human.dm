@@ -9,11 +9,11 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/dummy/New(loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/dummy/Destroy()
 	..()
-	if(!initialized)
-		args[1] = FALSE
-		Initialize(arglist(args))
+	return QDEL_HINT_QUEUE
 
 /mob/living/carbon/human/dummy/Life()
 	return
@@ -131,7 +131,8 @@
 				//Virsuses
 				if(viruses.len)
 					stat("Viruses:", null)
-					for(var/datum/disease/D in viruses)
+					for(var/thing in viruses)
+						var/datum/disease/D = thing
 						stat("*", "[D.name], Type: [D.spread_text], Stage: [D.stage]/[D.max_stages], Possible Cure: [D.cure_text]")
 
 
