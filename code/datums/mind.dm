@@ -120,6 +120,10 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
+		var/mob/living/L = new_character
+		L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
+		L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -1690,10 +1694,7 @@
 
 	else
 		mind = new /datum/mind(key)
-		if(SSticker)
-			SSticker.minds += mind
-		else
-			stack_trace("mind_initialize(): No SSticker ready")
+		SSticker.minds += mind
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

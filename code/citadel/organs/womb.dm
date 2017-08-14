@@ -1,5 +1,5 @@
 /obj/item/organ/genital/womb
-	name 			= "womb"
+	name 			= "Womb"
 	desc 			= "A female reproductive organ."
 	icon			= 'code/citadel/icons/vagina.dmi'
 	icon_state 		= "womb"
@@ -10,7 +10,7 @@
 	fluid_id 		= "femcum"
 	producing		= TRUE
 	var/obj/item/organ/genital/vagina/linked_vag
-	
+
 /obj/item/organ/genital/womb/Initialize()
 	. = ..()
 	reagents.add_reagent(fluid_id, fluid_max_volume)

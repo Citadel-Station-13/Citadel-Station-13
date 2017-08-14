@@ -48,7 +48,7 @@ Location where the teleport begins, target that will teleport, distance to go, d
 Random error in tile placement x, error in tile placement y, and block offset.
 Block offset tells the proc how to place the box. Behind teleport location, relative to starting location, forward, etc.
 Negative values for offset are accepted, think of it in relation to North, -x is west, -y is south. Error defaults to positive.
-Turf and target are seperate in case you want to teleport some distance from a turf the target is not standing on or something.
+Turf and target are separate in case you want to teleport some distance from a turf the target is not standing on or something.
 */
 
 	var/dirx = 0//Generic location finding variable.
@@ -491,17 +491,26 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(list/ignore_typecache)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
+	if(ignore_typecache)		//If there's a typecache, use it.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
+			if(ignore_typecache[A.type])
+				continue
+			processing_list |= (A.contents - assembled)
+			assembled |= A
 
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list -= A
+	else		//If there's none, only make this check once for performance.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
 
-		processing_list |= (A.contents - assembled)
+			processing_list |= (A.contents - assembled)
 
-		assembled |= A
+			assembled |= A
 
 	return assembled
 

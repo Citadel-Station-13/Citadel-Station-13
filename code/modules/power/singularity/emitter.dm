@@ -33,6 +33,19 @@
 
 	var/datum/effect_system/spark_spread/sparks
 
+/obj/machinery/power/emitter/anchored
+	anchored = TRUE
+
+/obj/machinery/power/emitter/ctf
+	name = "Energy Cannon"
+	active = TRUE
+	active_power_usage = FALSE
+	idle_power_usage = FALSE
+	locked = TRUE
+	req_access_txt = "100"
+	state = 2
+	use_power = FALSE
+
 /obj/machinery/power/emitter/New()
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
@@ -97,7 +110,7 @@
 	sparks.set_up(5, TRUE, src)
 
 /obj/machinery/power/emitter/Destroy()
-	if(SSticker && SSticker.IsRoundInProgress())
+	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("Emitter deleted at [ADMIN_COORDJMP(T)]",0,1)
 		log_game("Emitter deleted at [COORD(T)]")
