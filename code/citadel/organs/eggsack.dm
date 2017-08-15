@@ -1,5 +1,5 @@
 /obj/item/organ/genital/eggsack
-	name 			= "egg sack"
+	name 			= "Egg sack"
 	desc 			= "An egg producing reproductive organ."
 	icon_state 		= "egg_sack"
 	icon 			= 'code/citadel/icons/ovipositor.dmi'
