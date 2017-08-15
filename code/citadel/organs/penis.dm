@@ -1,5 +1,5 @@
 /obj/item/organ/genital/penis
-	name 					= "Penis"
+	name 					= "penis"
 	desc 					= "A male reproductive organ."
 	icon_state 				= "penis"
 	icon 					= 'code/citadel/icons/penis.dmi'

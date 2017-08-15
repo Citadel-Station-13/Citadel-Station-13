@@ -184,8 +184,7 @@
 
 //These are various procs that we'll use later, split up for readability instead of having one, huge proc.
 //For all of these, we assume the arguments given are proper and have been checked beforehand.
-/mob/living/carbon/human/proc/mob_masturbate(obj/item/organ/genital/G) //Masturbation, keep it gender-neutral
-	var/mb_time = 30
+/mob/living/carbon/human/proc/mob_masturbate(obj/item/organ/genital/G, mb_time = 30) //Masturbation, keep it gender-neutral
 	var/total_fluids = 0
 	var/datum/reagents/fluid_source = null
 
@@ -193,14 +192,14 @@
 		fluid_source = G.reagents
 	else
 		if(!G.linked_organ)
-			to_chat(src, "<span class='warning'>Your [G] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
 			return
 		fluid_source = G.linked_organ.reagents
 	total_fluids = fluid_source.total_volume
-
-	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] [p_their()] [G].</span>", \
-						"<span class='green'>You start to [G.masturbation_verb] your [G].</span>", \
-						"<span class='green'>You start to [G.masturbation_verb] your [G].</span>")
+	if(mb_time)
+		src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] [p_their()] [G.name].</span>", \
+							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>", \
+							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>")
 
 	if(do_after(src, mb_time, target = src))
 		if(total_fluids > 5)
@@ -213,8 +212,7 @@
 			setArousalLoss(min_arousal)
 
 
-/mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G) //This is used for forced orgasms and other hands-free climaxes
-	var/mb_time = 30
+/mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes
 	var/total_fluids = 0
 	var/datum/reagents/fluid_source = null
 	var/unable_to_come = FALSE
@@ -230,27 +228,27 @@
 			total_fluids = fluid_source.total_volume
 
 	if(unable_to_come)
-		src.visible_message("<span class='danger'>[src] shudders, their [G] unable to cum.</span>", \
-							"<span class='userdanger'>Your [G] cannot cum, giving no relief.</span>", \
-							"<span class='userdanger'>Your [G] cannot cum, giving no relief.</span>")
+		src.visible_message("<span class='danger'>[src] shudders, their [G.name] unable to cum.</span>", \
+							"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>", \
+							"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>")
 	else
 		total_fluids = fluid_source.total_volume
-		src.visible_message("<span class='danger'>[src] looks like they're about to cum.</span>", \
-							"<span class='green'>You feel yourself about to orgasm.</span>", \
-							"<span class='green'>You feel yourself about to orgasm.</span>")
+		if(mb_time) //as long as it's not instant, give a warning
+			src.visible_message("<span class='danger'>[src] looks like they're about to cum.</span>", \
+								"<span class='green'>You feel yourself about to orgasm.</span>", \
+								"<span class='green'>You feel yourself about to orgasm.</span>")
 		if(do_after(src, mb_time, target = src))
 			if(total_fluids > 5)
 				fluid_source.reaction(src.loc, TOUCH, 1, 0)
 			fluid_source.clear_reagents()
-			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G]!</span>", \
-								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G].</span>", \
-								"<span class='green'>You climax using your [G].</span>")
+			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
+								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
+								"<span class='green'>You climax using your [G.name].</span>")
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
 
 
-/mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE) //Used for climaxing with any living thing
-	var/mb_time = 30
+/mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE, mb_time = 30) //Used for climaxing with any living thing
 	var/total_fluids = 0
 	var/datum/reagents/fluid_source = null
 
@@ -258,14 +256,14 @@
 		fluid_source = G.reagents
 	else
 		if(!G.linked_organ)
-			to_chat(src, "<span class='warning'>Your [G] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
 			return
 		fluid_source = G.linked_organ.reagents
 	total_fluids = fluid_source.total_volume
-
-	src.visible_message("[src] is about to climax with [L]!", \
-						"You're about to climax with [L]!", \
-						"<span class='danger'>You're preparing to climax with someone!</span>")
+	if(mb_time) //Skip warning if this is an instant climax.
+		src.visible_message("[src] is about to climax with [L]!", \
+							"You're about to climax with [L]!", \
+							"<span class='danger'>You're preparing to climax with someone!</span>")
 	if(spillage)
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids*G.fluid_transfer_factor)
@@ -273,22 +271,21 @@
 			if(total_fluids > 5)
 				fluid_source.reaction(L.loc, TOUCH, 1, 0)
 			fluid_source.clear_reagents()
-			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G]!</span>", \
-								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G].</span>", \
-								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G].</span>")
+			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
+								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
+								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
 	else //knots and other non-spilling orgasms
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids)
 			total_fluids = 0
-			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G] spilling nothing!</span>", \
-								"<span class='green'>You ejaculate with [L], your [G] spilling nothing.</span>", \
-								"<span class='green'>You have climaxed inside someone, your [G] spilling nothing.</span>")
+			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
+								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
+								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
 	if(G.can_climax)
 		setArousalLoss(min_arousal)
 
 
-/mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/weapon/reagent_containers/container) //For beaker-filling, beware the bartender
-	var/mb_time = 30
+/mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/weapon/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
 	var/total_fluids = 0
 	var/datum/reagents/fluid_source = null
 
@@ -296,7 +293,7 @@
 		fluid_source = G.reagents
 	else
 		if(!G.linked_organ)
-			to_chat(src, "<span class='warning'>Your [G] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
 			return
 		fluid_source = G.linked_organ.reagents
 	total_fluids = fluid_source.total_volume
@@ -305,13 +302,13 @@
 	//	to_chat(src, "<span class='warning'>You need a container to do this!</span>")
 	//	return
 
-	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] their [G] over [container].</span>", \
-						"<span class='userdanger'>You start to [G.masturbation_verb] your [G] over [container].</span>", \
-						"<span class='userdanger'>You start to [G.masturbation_verb] your [G] over something.</span>")
+	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] their [G.name] over [container].</span>", \
+						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over [container].</span>", \
+						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over something.</span>")
 	if(do_after(src, mb_time, target = src) && in_range(src, container))
 		fluid_source.trans_to(container, total_fluids)
-		src.visible_message("<span class='danger'>[src] uses [p_their()] [G] to fill [container]!</span>", \
-							"<span class='green'>You used your [G] to fill [container].</span>", \
+		src.visible_message("<span class='danger'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
+							"<span class='green'>You used your [G.name] to fill [container].</span>", \
 							"<span class='green'>You have relieved some pressure.</span>")
 		if(G.can_climax)
 			setArousalLoss(min_arousal)
@@ -423,10 +420,10 @@
 							else //A cat is fine too
 								partner = check_target
 						if(partner) //Did they pass the clothing checks?
-							mob_climax_partner(G, partner)
+							mob_climax_partner(G, partner, mb_time = 0) //Instant climax due to forced
 							continue //You've climaxed once with this organ, continue on
 					//not exposed OR if no partner was found while exposed, climax alone
-					mob_climax_outside(G)
+					mob_climax_outside(G, mb_time = 0) //removed climax timer for sudden, forced orgasms
 			//Now all genitals that could climax, have.
 			//Since this was a forced climax, we do not need to continue with the other stuff
 			return
