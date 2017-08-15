@@ -100,7 +100,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	sendClientData()
 
 	//do not convert to to_chat()
-	owner << {"<span class="userdanger">If you can see this, update byond.</span>"}
+	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
 
 	pingLoop()
 
@@ -152,7 +152,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin_private("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -166,135 +166,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 
 //Global chat procs
 
-//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-// exporting it as text, and then parsing the base64 from that.
-// (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon/icon, iconKey = "misc")
-	if (!isicon(icon))
-		return FALSE
-	GLOB.iconCache[iconKey] << icon
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
-	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
-
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving)
-	if (!thing)
-		return
-	var/static/datum/callback/CB = CALLBACK(GLOBAL_PROC, .proc/send_asset)
-
-	var/key
-	var/icon/I = thing
-	if (!target)
-		return
-	if (target == world)
-		target = GLOB.clients
-
-	var/list/targets
-	if (!islist(target))
-		targets = list(target)
-	else
-		targets = target
-		if (!targets.len)
-			return
-	debug_usr("start")
-	if (!isicon(I))
-		debug_usr("not icon")
-		if (isfile(thing)) //special snowflake
-			debug_usr("file")
-			var/name = sanitize_filename("bicon.[thing]")
-			debug_usr("file:[name]")
-			register_asset(name, thing)
-			var/list/callbacks
-			var/list/callback_args = list()
-			for (var/thing2 in targets)
-				callbacks += CB
-				callback_args[++callback_args.len] = list(thing2, name, TRUE)
-			callback_select(callbacks, callback_args, savereturns = FALSE)
-			return "<img class='icon misc' src=\"[url_encode(name)]\">"
-		debug_usr("not file")
-		var/atom/A
-		if (isnull(dir))
-			dir = A.dir
-		if (isnull(icon_state))
-			icon_state = A.icon_state
-		I = A.icon
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			debug_usr("human")
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
-			dir = SOUTH
-	else
-		debug_usr("icon")
-		if (isnull(dir))
-			dir = SOUTH
-		if (isnull(icon_state))
-			icon_state = ""
-
-	I = icon(I, icon_state, dir, frame)
-
-	key = sanitize_filename("bicon.[md5(icon2base64(I))].[icon_state].[dir].png")
-	debug_usr("key:[key]")
-	register_asset(key, I)
-	var/list/callbacks = list()
-	var/list/callback_args = list()
-	for (var/thing2 in targets)
-		callbacks += CB
-		callback_args[++callback_args.len] = list(thing2, key, TRUE)
-
-	callback_select(callbacks, callback_args, savereturns = FALSE)
-	return "<img class='icon [icon_state]' src=\"[url_encode(key)]\">"
-
-/proc/icon2base64html(thing)
-	if (!thing)
-		return
-	var/static/list/bicon_cache = list()
-	if (isicon(thing))
-		var/icon/I = thing
-		var/icon_base64 = icon2base64(I)
-
-		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
-			var/icon_md5 = md5(icon_base64)
-			debug_admins(icon_md5)
-			icon_base64 = bicon_cache[icon_md5]
-			if (!icon_base64) // Doesn't exist yet, make it.
-				I = icon(I)
-				I.Scale(world.icon_size, world.icon_size)
-				bicon_cache[icon_md5] = icon_base64 = icon2base64(I)
-
-
-		return "<img class='icon misc' src='data:image/png;base64,[icon_base64]'>"
-
-	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
-	var/atom/A = thing
-	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
-
-
-	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
-
-		if (I.Height() > world.icon_size || I.Width() > world.icon_size)
-			I.Scale(world.icon_size, world.icon_size)
-
-		bicon_cache[key] = icon2base64(I, key)
-
-	return "<img class='icon [A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
-
-//Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
-/proc/costly_icon2html(thing, target)
-	if (!thing)
-		return
-
-	if (isicon(thing))
-		return icon2html(thing, target)
-
-	var/icon/I = getFlatIcon(thing)
-	return icon2html(I, target)
-
 /proc/to_chat(target, message)
 	if(!target)
 		return
@@ -302,7 +173,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 	//Ok so I did my best but I accept that some calls to this will be for shit like sound and images
 	//It stands that we PROBABLY don't want to output those to the browser output so just handle them here
 	if (istype(message, /image) || istype(message, /sound) || istype(target, /savefile))
-		target << message
 		CRASH("Invalid message! [message]")
 
 	if(!istext(message))
@@ -333,7 +203,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of ic
 			continue
 
 		//Send it to the old style output window.
-		C << original_message
+		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
