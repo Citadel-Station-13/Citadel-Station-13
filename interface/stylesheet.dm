@@ -161,4 +161,6 @@ BIG IMG.icon 			{width: 32px; height: 32px;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
+.love					{color: #FF69Bf;}
+.lovebold				{color: #FF69Bf;	font-weight: bold;}
 </style>"}
