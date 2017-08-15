@@ -1,5 +1,5 @@
 /obj/item/organ/genital/penis
-	name 		= "penis"
+	name 		= "Penis"
 	desc 		= "A male reproductive organ."
 	icon_state 	= "penis"
 	icon 		= 'code/citadel/icons/penis.dmi'
@@ -35,7 +35,7 @@
 	cached_length = length
 
 /obj/item/organ/genital/penis/update_appearance()
-	var/string = "penis_[lowertext(shape)]_[size]"
+	var/string = "penis_[GLOB.cock_shapes_icons[shape]]_[size]"
 	icon_state = sanitize_text(string)
 	var/lowershape = lowertext(shape)
 	if(lowershape in knotted_types)
