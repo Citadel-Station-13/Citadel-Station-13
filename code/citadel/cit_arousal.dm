@@ -244,8 +244,8 @@
 			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
 								"<span class='green'>You climax using your [G.name].</span>")
-		if(G.can_climax)
-			setArousalLoss(min_arousal)
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
 
 
 /mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE, mb_time = 30) //Used for climaxing with any living thing
@@ -274,6 +274,8 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
 								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
 								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
 	else //knots and other non-spilling orgasms
 		if(do_after(src, mb_time, target = src) && in_range(src, L))
 			fluid_source.trans_to(L, total_fluids)
@@ -281,8 +283,8 @@
 			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
 								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
 								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
-	if(G.can_climax)
-		setArousalLoss(min_arousal)
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
 
 
 /mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/weapon/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
