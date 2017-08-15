@@ -594,6 +594,13 @@
 	extra2 = 1
 	icon = 'icons/mob/mam_body_markings.dmi'
 
+	/datum/sprite_accessory/mam_body_markings/xeno
+	name = "Xeno"
+	icon_state = "xeno"
+	color_src = MUTCOLORS2
+	extra_color_src = MUTCOLORS3
+	gender_specific = 1
+
 /******************************************
 ************ Taur Bodies ******************
 *******************************************/
