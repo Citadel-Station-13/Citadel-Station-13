@@ -88,7 +88,7 @@ datum/species/mammal
 	default_color = "00FF00"
 	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
-	default_features = list("xenotail"="xeno","xenohead"="none","xenodorsal"="none","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
+	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
 	armor = 15
 	heatmod = 1.5
 	no_equip = list(slot_head)
