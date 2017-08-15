@@ -243,8 +243,10 @@
 				G.aroused_state = FALSE
 			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
+
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				I.color = "#[skintone2hex(H.skin_tone)]"
 			else

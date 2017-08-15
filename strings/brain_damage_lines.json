@@ -1,17 +1,17 @@
 {
     "brain_damage": [
-        "IM A PONY NEEEEEEIIIIIIIIIGH",
+        "@pick(semicolon)IM A PONY NEEEEEEIIIIIIIIIGH",
         "without oxigen blob don't evoluate?",
-        "CAPTAINS A COMDOM",
-        "@pick(faggot_traitor) @pick(george) @pick(mellens) is grifing me HALP!!!",
+        "@pick(semicolon)CAPTAINS A COMDOM",
+        "@pick(semicolon)@pick(faggot_traitor) @pick(george) @pick(mellens) is grifing me HALP!!!",
         "can u give me @pick(mutations)?",
         "THe saiyans screwed",
         "Bi is THE BEST OF BOTH WORLDS>",
-        "I WANNA PET TEH monkeyS",
+        "@pick(semicolon)I WANNA PET TEH monkeyS",
         "stop grifing me!!!!",
         "SOTP IT#",
         "shiggey diggey!!",
-        "A PIRATE APPEAR",
+        "@pick(semicolon)A PIRATE APPEAR",
         "FUS RO DAH",
         "fucking 4rries!",
         "stat me",
@@ -136,7 +136,8 @@
     "random_gibberish": [
         "g",
         "squid",
-        "r"
+        "r",
+        "carbon dioxide"
     ],
 
     "y_replacements": [
@@ -171,6 +172,19 @@
         "abdoocters"
     ],
 	
+    "bug": [
+        "",
+        "IS TIS A BUG??",
+        "SI IST A BUGG/",
+        "BUG!!!"
+    ],
+	
+    "semicolon": [
+        "",
+        ";",
+        ".h"
+	],
+		
 	"roles": [
 		"heds",
 		"ceptin",

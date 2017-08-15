@@ -342,9 +342,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
-
 	//Citadel code
-	S["flavor_text"]					>> flavor_text
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -382,6 +380,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_vag_color"]				>> features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
+	//flavor text
+	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
+	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
+		S["flavor_text"]				>> features["flavor_text"] //Load old flavortext as current dna-based flavortext
+
+		S["feature_flavor_text"]		<< features["flavor_text"] //Save it in our new type of flavor-text
+		S["flavor_text"]				<< "" //Remove old flavortext, completing the cut-and-paste into the new format.
+
+	else //We have no old flavortext, default to new
+		S["feature_flavor_text"]		>> features["flavor_text"]
+
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -441,7 +450,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
 	//Citadel
-	flavor_text		= sanitize_text(flavor_text, initial(flavor_text))
+	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
 	if(!features["mcolor2"] || features["mcolor"] == "#000")
 		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!features["mcolor3"] || features["mcolor"] == "#000")
@@ -510,7 +519,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_low"]		<< job_engsec_low
 
 	//Citadel
-	S["flavor_text"]			<< flavor_text
 	S["feature_exhibitionist"]			<< features["exhibitionist"]
 	S["feature_mcolor2"]				<< features["mcolor2"]
 	S["feature_mcolor3"]				<< features["mcolor3"]
@@ -548,7 +556,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_vag_color"]				<< features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				<< features["has_womb"]
-
+	//flavor text
+	S["feature_flavor_text"]			<< features["flavor_text"]
 	return 1
 
 #undef SAVEFILE_VERSION_MAX
