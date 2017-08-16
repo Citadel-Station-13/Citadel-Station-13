@@ -33,7 +33,7 @@
 
 /obj/machinery/launchpad/RefreshParts()
 	var/E = -1 //to make default parts have the base value
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	range = initial(range)
 	range += E

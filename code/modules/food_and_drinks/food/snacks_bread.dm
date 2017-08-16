@@ -1,5 +1,5 @@
 
-/obj/item/weapon/reagent_containers/food/snacks/store/bread
+/obj/item/reagent_containers/food/snacks/store/bread
 	icon = 'icons/obj/food/burgerbread.dmi'
 	volume = 80
 	slices_num = 5
@@ -176,7 +176,7 @@
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 1)
 	tastes = list("butter" = 1, "toast" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/butterbiscuit
+/obj/item/reagent_containers/food/snacks/butterbiscuit
 	name = "butter biscuit"
 	desc = "Well butter my biscuit!"
 	icon = 'icons/obj/food/food.dmi'

@@ -1,0 +1,22 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -29263,16 +29263,16 @@
+ /area/maintenance/port)
+ "aXO" = (
+ /obj/structure/table/glass,
+-/obj/item/weapon/storage/firstaid/toxin{
++/obj/item/storage/firstaid/toxin{
+ 	pixel_x = 6;
+ 	pixel_y = 6
+ 	},
+-/obj/item/weapon/storage/firstaid/toxin{
++/obj/item/storage/firstaid/toxin{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/weapon/storage/firstaid/regular,
+-/obj/item/weapon/storage/firstaid/toxin{
++/obj/item/storage/firstaid/regular,
++/obj/item/storage/firstaid/toxin{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},

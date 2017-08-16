@@ -23,7 +23,7 @@
 	var/list/ore_buffer = list()
 	var/datum/material_container/materials
 	var/datum/research/files
-	var/obj/item/weapon/disk/design_disk/inserted_disk
+	var/obj/item/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
@@ -52,17 +52,17 @@
 	var/ore_pickup_rate_temp = 15
 	var/point_upgrade_temp = 1
 	var/sheet_per_ore_temp = 1
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		sheet_per_ore_temp = 0.65 + (0.35 * B.rating)
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		ore_pickup_rate_temp = 15 * M.rating
-	for(var/obj/item/weapon/stock_parts/micro_laser/L in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
 		point_upgrade_temp = 0.65 + (0.35 * L.rating)
 	ore_pickup_rate = ore_pickup_rate_temp
 	point_upgrade = point_upgrade_temp
 	sheet_per_ore = sheet_per_ore_temp
 
-/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/weapon/ore/O)
+/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/ore/O)
 
 	ore_buffer -= O
 
@@ -144,7 +144,7 @@
 	if(OB)
 		input = OB
 
-	for(var/obj/item/weapon/ore/O in input)
+	for(var/obj/item/ore/O in input)
 		if(QDELETED(O))
 			continue
 		ore_buffer |= O
@@ -157,7 +157,7 @@
 	else if(!message_sent)
 		send_console_message()
 
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(exchange_parts(user, W))
 		return
 	if(default_pry_open(W))
@@ -173,8 +173,8 @@
 
 	if(!powered())
 		return
-	if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = user.get_active_held_item()
+	if(istype(W, /obj/item/card/id))
+		var/obj/item/card/id/I = user.get_active_held_item()
 		if(istype(I) && !istype(inserted_id))
 			if(!user.drop_item())
 				return
@@ -189,7 +189,7 @@
 		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/disk/design_disk))
+	if(istype(W, /obj/item/disk/design_disk))
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
@@ -256,7 +256,7 @@
 			inserted_id = null
 			return TRUE
 		if("Insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
+			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.transferItemToLoc(I,src))
 					return
@@ -298,7 +298,7 @@
 				to_chat(usr, "<span class='warning'>Required access not found.</span>")
 			return TRUE
 		if("diskInsert")
-			var/obj/item/weapon/disk/design_disk/disk = usr.get_active_held_item()
+			var/obj/item/disk/design_disk/disk = usr.get_active_held_item()
 			if(istype(disk))
 				if(!usr.transferItemToLoc(disk,src))
 					return

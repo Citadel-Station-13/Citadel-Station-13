@@ -5,7 +5,7 @@
 	icon_state = "seed-corn"
 	species = "corn"
 	plantname = "Corn Stalks"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/corn
+	product = /obj/item/reagent_containers/food/snacks/grown/corn
 	maturation = 8
 	potency = 20
 	growthstages = 3
@@ -35,7 +35,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
+/obj/item/grown/corncob/attackby(obj/item/grown/W, mob/user, params)
 	if(W.is_sharp())
 		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
@@ -50,11 +50,11 @@
 	icon_state = "seed-snapcorn"
 	species = "snapcorn"
 	plantname = "Snapcorn Stalks"
-	product = /obj/item/weapon/grown/snapcorn
+	product = /obj/item/grown/snapcorn
 	mutatelist = list()
 	rarity = 10
 
-/obj/item/weapon/grown/snapcorn
+/obj/item/grown/snapcorn
 	seed = /obj/item/seeds/corn/snapcorn
 	name = "snap corn"
 	desc = "A cob with snap pops"
@@ -66,11 +66,11 @@
 	throw_range = 7
 	var/snap_pops = 1
 
-/obj/item/weapon/grown/snapcorn/add_juice()
+/obj/item/grown/snapcorn/add_juice()
 	..()
 	snap_pops = max(round(seed.potency/8), 1)
 
-/obj/item/weapon/grown/snapcorn/attack_self(mob/user)
+/obj/item/grown/snapcorn/attack_self(mob/user)
 	..()
 	to_chat(user, "<span class='notice'>You pick a snap pop from the cob.</span>")
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
@@ -78,5 +78,5 @@
 		user.put_in_hands(S)
 	snap_pops -= 1
 	if(!snap_pops)
-		new /obj/item/weapon/grown/corncob(user.loc)
+		new /obj/item/grown/corncob(user.loc)
 		qdel(src)

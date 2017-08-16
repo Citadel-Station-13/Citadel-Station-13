@@ -2327,7 +2327,7 @@
 	},
 /area/ruin/unpowered/no_grav)
 "gI" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plasteel/airless{
@@ -2371,10 +2371,10 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "gR" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
@@ -2627,7 +2627,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,
@@ -2967,7 +2967,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "iR" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
@@ -3131,11 +3131,11 @@
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "jn" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "jo" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating/airless,
@@ -3841,8 +3841,8 @@
 	lootcount = 2;
 	name = "2maintenance loot spawner"
 	},
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/cultivator,
+/obj/item/shovel/spade,
+/obj/item/cultivator,
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "ll" = (
@@ -4107,7 +4107,7 @@
 /obj/machinery/door/window{
 	dir = 8
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plasteel/airless,

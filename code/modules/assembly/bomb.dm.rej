@@ -1,0 +1,10 @@
+diff a/code/modules/assembly/bomb.dm b/code/modules/assembly/bomb.dm	(rejected hunks)
+@@ -44,7 +44,7 @@
+ 
+ 		qdel(src)
+ 		return
+-	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
++	if((istype(W, /obj/item/weldingtool) && W:welding))
+ 		if(!status)
+ 			status = TRUE
+ 			GLOB.bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"

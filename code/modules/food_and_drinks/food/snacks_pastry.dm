@@ -2,7 +2,7 @@
 //This file contains pastries that don't fit any existing categories.
 ////////////////////////////////////////////DONUTS////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/donut
+/obj/item/reagent_containers/food/snacks/donut
 	name = "donut"
 	desc = "Goes great with Robust Coffee."
 	icon_state = "donut1"
@@ -22,13 +22,13 @@
 		bonus_reagents = list("sprinkles" = 2, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos
+/obj/item/reagent_containers/food/snacks/donut/chaos
 	name = "chaos donut"
 	desc = "Like life, it never quite tastes the same."
 	bitesize = 10
 	tastes = list("donut" = 3, "chaos" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/chaos/Initialize()
+/obj/item/reagent_containers/food/snacks/donut/chaos/Initialize()
 	. = ..()
 	extra_reagent = pick("nutriment", "capsaicin", "frostoil", "krokodil", "plasma", "cocoa", "slimejelly", "banana", "berryjuice", "omnizine")
 	reagents.add_reagent("[extra_reagent]", 3)
@@ -40,7 +40,7 @@
 		bonus_reagents = list("sprinkles" = 2, "[extra_reagent]" = 3, "sugar" = 1)
 		filling_color = "#FF69B4"
 
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly
+/obj/item/reagent_containers/food/snacks/donut/jelly
 	name = "jelly donut"
 	desc = "You jelly?"
 	icon_state = "jdonut1"
@@ -73,7 +73,7 @@
 
 ////////////////////////////////////////////MUFFINS////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/muffin
+/obj/item/reagent_containers/food/snacks/muffin
 	name = "muffin"
 	desc = "A delicious and spongy little cake."
 	icon_state = "muffin"
@@ -106,7 +106,7 @@
 
 ////////////////////////////////////////////WAFFLES////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/waffles
+/obj/item/reagent_containers/food/snacks/waffles
 	name = "waffles"
 	desc = "Mmm, waffles."
 	icon_state = "waffles"
@@ -149,7 +149,7 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/cookie
+/obj/item/reagent_containers/food/snacks/cookie
 	name = "cookie"
 	desc = "COOKIE!!!"
 	icon_state = "COOKIE!!!"
@@ -220,7 +220,7 @@
 	if(fey)
 		reagents.add_reagent("omnizine", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/cracker
+/obj/item/reagent_containers/food/snacks/cracker
 	name = "cracker"
 	desc = "It's a salted cracker."
 	icon_state = "cracker"

@@ -1,0 +1,10 @@
+diff a/code/game/machinery/dna_scanner.dm b/code/game/machinery/dna_scanner.dm	(rejected hunks)
+@@ -9,7 +9,7 @@
+ 	idle_power_usage = 50
+ 	active_power_usage = 300
+ 	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
+-	circuit = /obj/item/weapon/circuitboard/machine/clonescanner
++	circuit = /obj/item/circuitboard/machine/clonescanner
+ 	var/locked = FALSE
+ 	var/damage_coeff
+ 	var/scan_level

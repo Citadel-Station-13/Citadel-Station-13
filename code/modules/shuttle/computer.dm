@@ -4,7 +4,7 @@
 	icon_keyboard = "tech_key"
 	light_color = LIGHT_COLOR_CYAN
 	req_access = list( )
-	circuit = /obj/item/weapon/circuitboard/computer/shuttle
+	circuit = /obj/item/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
 	var/admin_controlled

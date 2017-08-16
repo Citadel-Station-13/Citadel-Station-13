@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////FISH////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/cubancarp
+/obj/item/reagent_containers/food/snacks/cubancarp
 	name = "\improper Cuban carp"
 	desc = "A grifftastic sandwich that burns your tongue and then leaves it numb!"
 	icon_state = "cubancarp"
@@ -52,7 +52,7 @@
 
 ////////////////////////////////////////////MEATS AND ALIKE////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/tofu
+/obj/item/reagent_containers/food/snacks/tofu
 	name = "tofu"
 	desc = "We all love tofu."
 	icon_state = "tofu"

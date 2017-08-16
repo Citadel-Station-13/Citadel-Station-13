@@ -10,9 +10,9 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	icon_screen = "id"
 	icon_keyboard = "id_key"
 	req_one_access = list(ACCESS_HEADS, ACCESS_CHANGE_IDS)
-	circuit = /obj/item/weapon/circuitboard/computer/card
-	var/obj/item/weapon/card/id/scan = null
-	var/obj/item/weapon/card/id/modify = null
+	circuit = /obj/item/circuitboard/computer/card
+	var/obj/item/card/id/scan = null
+	var/obj/item/card/id/modify = null
 	var/authenticated = 0
 	var/mode = 0
 	var/printing = null
@@ -51,8 +51,8 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	change_position_cooldown = config.id_console_jobslot_delay
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
-	if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
+	if(istype(O, /obj/item/card/id))
+		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
 				if(!usr.drop_item())
@@ -364,7 +364,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				head_subordinates = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -380,7 +380,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
-				if (istype(I, /obj/item/weapon/card/id))
+				if (istype(I, /obj/item/card/id))
 					if(!usr.drop_item())
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
@@ -542,7 +542,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (!( printing ))
 				printing = 1
 				sleep(50)
-				var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( loc )
+				var/obj/item/paper/P = new /obj/item/paper( loc )
 				var/t1 = "<B>Crew Manifest:</B><BR>"
 				for(var/datum/data/record/t in sortRecord(GLOB.data_core.general))
 					t1 += t.fields["name"] + " - " + t.fields["rank"] + "<br>"

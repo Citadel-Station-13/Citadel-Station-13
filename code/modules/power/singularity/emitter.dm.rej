@@ -1,0 +1,10 @@
+diff a/code/modules/power/singularity/emitter.dm b/code/modules/power/singularity/emitter.dm	(rejected hunks)
+@@ -7,7 +7,7 @@
+ 	anchored = FALSE
+ 	density = TRUE
+ 	req_access = list(ACCESS_ENGINE_EQUIP)
+-	circuit = /obj/item/weapon/circuitboard/machine/emitter
++	circuit = /obj/item/circuitboard/machine/emitter
+ 
+ 	use_power = NO_POWER_USE
+ 	idle_power_usage = 10

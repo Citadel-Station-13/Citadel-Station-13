@@ -1,6 +1,6 @@
-/obj/item/weapon/reagent_containers/food/snacks/store/cake
+/obj/item/reagent_containers/food/snacks/store/cake
 	icon = 'icons/obj/food/piecake.dmi'
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/plain
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/plain
 	slices_num = 5
 	bitesize = 3
 	volume = 80

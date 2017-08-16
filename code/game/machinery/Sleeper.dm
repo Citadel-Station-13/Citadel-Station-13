@@ -46,10 +46,10 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		E += B.rating
 	var/I
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
 	efficiency = initial(efficiency)* E

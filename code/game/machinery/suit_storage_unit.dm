@@ -35,7 +35,7 @@
 /obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/space/hardsuit/captain
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/captain
+	storage_type = /obj/item/tank/jetpack/oxygen/captain
 
 /obj/machinery/suit_storage_unit/engine
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine
@@ -53,12 +53,12 @@
 /obj/machinery/suit_storage_unit/hos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	storage_type = /obj/item/weapon/tank/internals/oxygen
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/atmos
 	suit_type = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	mask_type = /obj/item/clothing/mask/gas
-	storage_type = /obj/item/weapon/watertank/atmos
+	storage_type = /obj/item/watertank/atmos
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer

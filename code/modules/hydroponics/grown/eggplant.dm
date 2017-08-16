@@ -5,7 +5,7 @@
 	icon_state = "seed-eggplant"
 	species = "eggplant"
 	plantname = "Eggplants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
+	product = /obj/item/reagent_containers/food/snacks/grown/eggplant
 	yield = 2
 	potency = 20
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
@@ -15,7 +15,7 @@
 	mutatelist = list(/obj/item/seeds/eggplant/eggy)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
+/obj/item/reagent_containers/food/snacks/grown/eggplant
 	seed = /obj/item/seeds/eggplant
 	name = "eggplant"
 	desc = "Maybe there's a chicken inside?"

@@ -46,7 +46,7 @@
 	else if(subjectjob)
 		slice.name = "raw [subjectjob] cutlet"
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/weapon/reagent_containers/food/snacks/meat/S, cooking_efficiency)
+/obj/item/reagent_containers/food/snacks/meat/slab/human/initialize_cooked_food(obj/item/reagent_containers/food/snacks/meat/S, cooking_efficiency)
 	..()
 	S.subjectname = subjectname
 	S.subjectjob = subjectjob
@@ -56,7 +56,7 @@
 		S.name = "[subjectjob] meatsteak"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/slime
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/slime
 	icon_state = "slimemeat"
 	desc = "Because jello wasn't offensive enough to vegans."
 	list_reagents = list("nutriment" = 3, "slimejelly" = 3)
@@ -225,7 +225,7 @@
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/steak
+/obj/item/reagent_containers/food/snacks/meat/steak
 	name = "steak"
 	desc = "A piece of hot spicy meat."
 	icon_state = "meatsteak"
@@ -268,11 +268,11 @@
 
 //Raw cutlets
 
-/obj/item/weapon/reagent_containers/food/snacks/meat/rawcutlet
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet
 	name = "raw cutlet"
 	desc = "A raw meat cutlet."
 	icon_state = "rawcutlet"
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/meat/cutlet/plain
+	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/plain
 	bitesize = 2
 	list_reagents = list("nutriment" = 1)
 	filling_color = "#B22222"

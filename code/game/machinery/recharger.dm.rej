@@ -1,0 +1,29 @@
+diff a/code/game/machinery/recharger.dm b/code/game/machinery/recharger.dm	(rejected hunks)
+@@ -7,21 +7,21 @@
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 4
+ 	active_power_usage = 250
+-	circuit = /obj/item/weapon/circuitboard/machine/recharger
++	circuit = /obj/item/circuitboard/machine/recharger
+ 	var/obj/item/charging = null
+ 	var/recharge_coeff = 1
+ 	var/static/list/allowed_devices = typecacheof(list(
+-		/obj/item/weapon/gun/energy,
+-		/obj/item/weapon/melee/baton,
++		/obj/item/gun/energy,
++		/obj/item/melee/baton,
+ 		/obj/item/ammo_box/magazine/recharge,
+ 		/obj/item/device/modular_computer))
+ 
+ /obj/machinery/recharger/RefreshParts()
+-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
++	for(var/obj/item/stock_parts/capacitor/C in component_parts)
+ 		recharge_coeff = C.rating
+ 
+-/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
+-	if(istype(G, /obj/item/weapon/wrench))
++/obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
++	if(istype(G, /obj/item/wrench))
+ 		if(charging)
+ 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
+ 			return

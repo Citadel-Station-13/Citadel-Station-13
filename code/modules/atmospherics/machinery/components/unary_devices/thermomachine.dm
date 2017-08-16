@@ -67,7 +67,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		B += M.rating
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
@@ -123,7 +123,7 @@
 		return
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/weapon/wrench/W)
+/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/wrench/W)
 	if(!..())
 		return 0
 	SetInitDirections()

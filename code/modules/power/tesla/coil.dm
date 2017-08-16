@@ -31,12 +31,12 @@
 /obj/machinery/power/tesla_coil/RefreshParts()
 	var/power_multiplier = 0
 	zap_cooldown = 100
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		power_multiplier += C.rating
 		zap_cooldown -= (C.rating * 20)
 	input_power_multiplier = power_multiplier
 
-/obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
+/obj/machinery/power/tesla_coil/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
 	if(. == SUCCESSFUL_UNFASTEN)
 		if(panel_open)

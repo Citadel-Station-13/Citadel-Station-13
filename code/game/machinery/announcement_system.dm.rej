@@ -1,0 +1,10 @@
+diff a/code/game/machinery/announcement_system.dm b/code/game/machinery/announcement_system.dm	(rejected hunks)
+@@ -15,7 +15,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
+ 	idle_power_usage = 20
+ 	active_power_usage = 50
+ 
+-	circuit = /obj/item/weapon/circuitboard/machine/announcement_system
++	circuit = /obj/item/circuitboard/machine/announcement_system
+ 
+ 	var/obj/item/device/radio/headset/radio
+ 	var/arrival = "%PERSON has signed up as %RANK"

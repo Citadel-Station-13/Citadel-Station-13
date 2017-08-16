@@ -244,8 +244,8 @@
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/straight_jacket,
-/obj/item/weapon/reagent_containers/syringe/lethal,
-/obj/item/weapon/reagent_containers/syringe/lethal/choral,
+/obj/item/reagent_containers/syringe/lethal,
+/obj/item/reagent_containers/syringe/lethal/choral,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},

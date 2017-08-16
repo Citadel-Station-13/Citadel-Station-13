@@ -5,7 +5,7 @@
 	icon_state = "seed-carrot"
 	species = "carrot"
 	plantname = "Carrots"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+	product = /obj/item/reagent_containers/food/snacks/grown/carrot
 	maturation = 10
 	production = 1
 	yield = 5
@@ -14,7 +14,7 @@
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
 	reagents_add = list("oculine" = 0.25, "vitamin" = 0.04, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/carrot
+/obj/item/reagent_containers/food/snacks/grown/carrot
 	seed = /obj/item/seeds/carrot
 	name = "carrot"
 	desc = "It's good for the eyes!"
@@ -39,12 +39,12 @@
 	icon_state = "seed-parsnip"
 	species = "parsnip"
 	plantname = "Parsnip"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+	product = /obj/item/reagent_containers/food/snacks/grown/parsnip
 	icon_dead = "carrot-dead"
 	mutatelist = list()
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/parsnip
+/obj/item/reagent_containers/food/snacks/grown/parsnip
 	seed = /obj/item/seeds/carrot/parsnip
 	name = "parsnip"
 	desc = "Closely related to carrots."
@@ -59,7 +59,7 @@
 	icon_state = "seed-whitebeet"
 	species = "whitebeet"
 	plantname = "White-Beet Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
+	product = /obj/item/reagent_containers/food/snacks/grown/whitebeet
 	lifespan = 60
 	endurance = 50
 	yield = 6
@@ -68,7 +68,7 @@
 	mutatelist = list(/obj/item/seeds/redbeet)
 	reagents_add = list("vitamin" = 0.04, "sugar" = 0.2, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/whitebeet
+/obj/item/reagent_containers/food/snacks/grown/whitebeet
 	seed = /obj/item/seeds/whitebeet
 	name = "white-beet"
 	desc = "You can't beat white-beet."
@@ -83,7 +83,7 @@
 	icon_state = "seed-redbeet"
 	species = "redbeet"
 	plantname = "Red-Beet Plants"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+	product = /obj/item/reagent_containers/food/snacks/grown/redbeet
 	lifespan = 60
 	endurance = 50
 	yield = 6
@@ -92,7 +92,7 @@
 	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list("vitamin" = 0.05, "nutriment" = 0.05)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
+/obj/item/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet
 	name = "red beet"
 	desc = "You can't beat red beet."

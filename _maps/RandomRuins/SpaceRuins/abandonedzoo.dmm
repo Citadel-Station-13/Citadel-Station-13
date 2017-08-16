@@ -249,7 +249,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -365,7 +365,7 @@
 	d2 = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/melee/baton/cattleprod,
+/obj/item/melee/baton/cattleprod,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
@@ -813,7 +813,7 @@
 /turf/template_noop,
 /area/template_noop)
 "bW" = (
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/template_noop,
 /area/template_noop)
 "bX" = (

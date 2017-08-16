@@ -248,8 +248,8 @@
 /obj/structure/closet/crate/medical,
 /obj/item/clothing/neck/stethoscope,
 /obj/item/device/healthanalyzer,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Crew Quarters APC";
@@ -876,7 +876,7 @@
 	icon_state = "pipe-j1";
 	dir = 1
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating/airless{
 	broken = 1;
 	icon_state = "platingdmg2"
@@ -900,7 +900,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/template_noop,
@@ -923,7 +923,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	total_paper = 12
 	},
 /turf/open/floor/plasteel,
@@ -993,7 +993,7 @@
 /area/template_noop)
 "ct" = (
 /obj/structure/lattice,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/template_noop,
@@ -1320,7 +1320,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /obj/structure/lattice/catwalk,

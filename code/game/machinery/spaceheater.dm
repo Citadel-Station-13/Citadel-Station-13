@@ -121,9 +121,9 @@
 /obj/machinery/space_heater/RefreshParts()
 	var/laser = 0
 	var/cap = 0
-	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		laser += M.rating
-	for(var/obj/item/weapon/stock_parts/capacitor/M in component_parts)
+	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
 	heatingPower = laser * 40000
@@ -145,14 +145,14 @@
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/weapon/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/cell))
 		if(panel_open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 				return
 			else
 				// insert cell
-				var/obj/item/weapon/stock_parts/cell/C = usr.get_active_held_item()
+				var/obj/item/stock_parts/cell/C = usr.get_active_held_item()
 				if(istype(C))
 					if(!user.drop_item())
 						return
@@ -165,7 +165,7 @@
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
-	else if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/screwdriver))
 		panel_open = !panel_open
 		user.visible_message("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()

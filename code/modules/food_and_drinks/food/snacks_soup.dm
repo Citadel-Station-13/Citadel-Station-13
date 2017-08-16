@@ -90,13 +90,13 @@
 	list_reagents = list("nutriment" = 6)
 	tastes = list("chaos" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/mystery/New()
+/obj/item/reagent_containers/food/snacks/soup/mystery/New()
 	extra_reagent = pick("capsaicin", "frostoil", "omnizine", "banana", "blood", "slimejelly", "toxin", "banana", "carbon", "oculine")
 	bonus_reagents = list("[extra_reagent]" = 5, "nutriment" = 6)
 	..()
 	reagents.add_reagent("[extra_reagent]", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/soup/hotchili
+/obj/item/reagent_containers/food/snacks/soup/hotchili
 	name = "hot chili"
 	desc = "A five alarm Texan Chili!"
 	icon_state = "hotchili"

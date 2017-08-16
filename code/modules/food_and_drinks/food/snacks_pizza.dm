@@ -1,7 +1,7 @@
 
 /////////////////////////////////////////////////PIZZA////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/pizza
+/obj/item/reagent_containers/food/snacks/pizza
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	slices_num = 6

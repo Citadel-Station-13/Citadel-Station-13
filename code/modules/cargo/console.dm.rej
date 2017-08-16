@@ -1,10 +1,16 @@
 diff a/code/modules/cargo/console.dm b/code/modules/cargo/console.dm	(rejected hunks)
-@@ -145,7 +145,7 @@
+@@ -15,12 +15,12 @@
+ 	name = "supply request console"
+ 	desc = "Used to request supplies from cargo."
+ 	icon_screen = "request"
+-	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
++	circuit = /obj/item/circuitboard/computer/cargo/request
+ 	requestonly = TRUE
  
- 			var/reason = ""
- 			if(requestonly)
--				reason = stripped_input("Reason:", name, "") as text|null
-+				reason = stripped_input("Reason:", name, "")
- 				if(isnull(reason) || ..())
- 					return
+ /obj/machinery/computer/cargo/Initialize()
+ 	. = ..()
+-	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
++	var/obj/item/circuitboard/computer/cargo/board = circuit
+ 	contraband = board.contraband
+ 	emagged = board.emagged
  

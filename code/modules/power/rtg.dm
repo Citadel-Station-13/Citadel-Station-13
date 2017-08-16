@@ -45,7 +45,7 @@
 
 /obj/machinery/power/rtg/RefreshParts()
 	var/part_level = 0
-	for(var/obj/item/weapon/stock_parts/SP in component_parts)
+	for(var/obj/item/stock_parts/SP in component_parts)
 		part_level += SP.rating
 
 	power_gen = initial(power_gen) * part_level

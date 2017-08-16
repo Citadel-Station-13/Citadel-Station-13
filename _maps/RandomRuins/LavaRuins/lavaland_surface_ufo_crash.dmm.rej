@@ -1,0 +1,10 @@
+diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm b/_maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm	(rejected hunks)
+@@ -104,7 +104,7 @@
+ /area/ruin/unpowered)
+ "s" = (
+ /obj/structure/table/optable/abductor,
+-/obj/item/weapon/cautery/alien,
++/obj/item/cautery/alien,
+ /obj/effect/baseturf_helper/lava_land/surface,
+ /turf/open/floor/plating/abductor{
+ 	initial_gas_mix = "o2=16;n2=23;TEMP=300"

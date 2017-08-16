@@ -437,9 +437,9 @@
 /obj/item/device/tape/random,
 /obj/item/device/tape/random,
 /obj/item/device/tape/random,
-/obj/item/weapon/storage/box/rxglasses,
-/obj/item/weapon/extinguisher,
-/obj/item/weapon/extinguisher,
+/obj/item/storage/box/rxglasses,
+/obj/item/extinguisher,
+/obj/item/extinguisher,
 /obj/item/clothing/glasses/night,
 /obj/item/clothing/glasses/night,
 /obj/effect/turf_decal/delivery,
@@ -706,7 +706,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/cafeteria{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -950,12 +950,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -968,12 +968,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
-/obj/item/weapon/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
+/obj/item/reagent_containers/food/snacks/beans,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1129,9 +1129,9 @@
 /obj/structure/noticeboard{
 	pixel_y = 32
 	},
-/obj/item/weapon/paper/fluff/ruins/deepstorage/water_concern,
-/obj/item/weapon/paper/fluff/ruins/deepstorage/hydro_notice,
-/obj/item/weapon/paper/fluff/ruins/deepstorage/recycling_notice,
+/obj/item/paper/fluff/ruins/deepstorage/water_concern,
+/obj/item/paper/fluff/ruins/deepstorage/hydro_notice,
+/obj/item/paper/fluff/ruins/deepstorage/recycling_notice,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1209,7 +1209,7 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/weapon/soap,
+/obj/item/soap,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1272,11 +1272,11 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/item/weapon/reagent_containers/glass/bucket{
+/obj/item/reagent_containers/glass/bucket{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1295,7 +1295,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/hydrofloor{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1323,12 +1323,12 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
-/obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
+/obj/item/reagent_containers/glass/beaker/waterbottle/large,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1822,18 +1822,18 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/vending_refill/coffee,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -1843,15 +1843,15 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/vending_refill/coffee,
-/obj/item/weapon/vending_refill/cigarette,
-/obj/item/weapon/vending_refill/cigarette,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
+/obj/item/vending_refill/coffee,
+/obj/item/vending_refill/cigarette,
+/obj/item/vending_refill/cigarette,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -2297,7 +2297,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -3011,7 +3011,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

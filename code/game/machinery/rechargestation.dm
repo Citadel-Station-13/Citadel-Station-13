@@ -32,11 +32,11 @@
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0
 	repairs = 0
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_speed += C.rating * 100
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		repairs += M.rating - 1
-	for(var/obj/item/weapon/stock_parts/cell/C in component_parts)
+	for(var/obj/item/stock_parts/cell/C in component_parts)
 		recharge_speed *= C.maxcharge / 10000
 
 /obj/machinery/recharge_station/process()

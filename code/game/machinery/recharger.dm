@@ -50,8 +50,8 @@
 				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
 				return 1
 
-			if (istype(G, /obj/item/weapon/gun/energy))
-				var/obj/item/weapon/gun/energy/E = G
+			if (istype(G, /obj/item/gun/energy))
+				var/obj/item/gun/energy/E = G
 				if(!E.can_charge)
 					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
 					return 1
@@ -70,7 +70,7 @@
 		if(default_deconstruction_screwdriver(user, "rechargeropen", "recharger0", G))
 			return
 
-		if(panel_open && istype(G, /obj/item/weapon/crowbar))
+		if(panel_open && istype(G, /obj/item/crowbar))
 			default_deconstruction_crowbar(G)
 			return
 
@@ -108,15 +108,15 @@
 
 	var/using_power = 0
 	if(charging)
-		var/obj/item/weapon/stock_parts/cell/C = charging.get_cell()
+		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
 				using_power = 1
 			update_icon(using_power)
-		if(istype(charging, /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/E = charging
+		if(istype(charging, /obj/item/gun/energy))
+			var/obj/item/gun/energy/E = charging
 			E.recharge_newshot()
 			return
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
@@ -134,13 +134,13 @@
 
 /obj/machinery/recharger/emp_act(severity)
 	if(!(stat & (NOPOWER|BROKEN)) && anchored)
-		if(istype(charging,  /obj/item/weapon/gun/energy))
-			var/obj/item/weapon/gun/energy/E = charging
+		if(istype(charging,  /obj/item/gun/energy))
+			var/obj/item/gun/energy/E = charging
 			if(E.cell)
 				E.cell.emp_act(severity)
 
-		else if(istype(charging, /obj/item/weapon/melee/baton))
-			var/obj/item/weapon/melee/baton/B = charging
+		else if(istype(charging, /obj/item/melee/baton))
+			var/obj/item/melee/baton/B = charging
 			if(B.cell)
 				B.cell.charge = 0
 	..()

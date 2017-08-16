@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/sandwich
+/obj/item/reagent_containers/food/snacks/sandwich
 	name = "sandwich"
 	desc = "A grand creation of meat, cheese, bread, and several leaves of lettuce! Arthur Dent would be proud."
 	icon = 'icons/obj/food/burgerbread.dmi'

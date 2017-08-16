@@ -4,7 +4,7 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle
+/obj/item/reagent_containers/food/drinks/bottle
 	amount_per_transfer_from_this = 10
 	volume = 100
 	throwforce = 15
@@ -37,7 +37,7 @@
 
 	if(isGlass)
 		if(prob(33))
-			new/obj/item/weapon/shard(new_location)
+			new/obj/item/shard(new_location)
 		playsound(src, "shatter", 70, 1)
 	else
 		B.name = "broken carton"
@@ -48,7 +48,7 @@
 
 	qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
+/obj/item/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user)
 
 	if(!target)
 		return
@@ -123,7 +123,7 @@
 	return
 
 //Keeping this here for now, I'll ask if I should keep it here.
-/obj/item/weapon/broken_bottle
+/obj/item/broken_bottle
 	name = "Broken Bottle"
 	desc = "A bottle with a sharp broken bottom."
 	icon = 'icons/obj/drinks.dmi'
@@ -301,7 +301,7 @@
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice
+/obj/item/reagent_containers/food/drinks/bottle/orangejuice
 	name = "Orange Juice"
 	desc = "Full of vitamins and deliciousness!"
 	icon_state = "orangejuice"
@@ -343,7 +343,7 @@
 
 
 ////////////////////////// MOLOTOV ///////////////////////
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov
+/obj/item/reagent_containers/food/drinks/bottle/molotov
 	name = "molotov cocktail"
 	desc = "A throwing weapon used to ignite things, typically filled with an accelerant. Recommended highly by rioters and revolutionaries. Light and toss."
 	icon_state = "vodkabottle"
@@ -352,9 +352,9 @@
 							/datum/reagent/napalm, /datum/reagent/hellwater, /datum/reagent/toxin/plasma, /datum/reagent/toxin/spore_burning)
 	var/active = 0
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/CheckParts(list/parts_list)
 	..()
-	var/obj/item/weapon/reagent_containers/food/drinks/bottle/B = locate() in contents
+	var/obj/item/reagent_containers/food/drinks/bottle/B = locate() in contents
 	if(B)
 		icon_state = B.icon_state
 		B.reagents.copy_to(src,100)
@@ -363,7 +363,7 @@
 			isGlass = 0
 	return
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)
 	var/firestarter = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)
@@ -375,7 +375,7 @@
 		new /obj/effect/hotspot(get_turf(target))
 	..()
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.is_hot() && !active)
 		active = 1
 		var/turf/bombturf = get_turf(src)
@@ -393,8 +393,8 @@
 					var/counter
 					var/target = src.loc
 					for(counter = 0, counter<2, counter++)
-						if(istype(target, /obj/item/weapon/storage))
-							var/obj/item/weapon/storage/S = target
+						if(istype(target, /obj/item/storage))
+							var/obj/item/storage/S = target
 							target = S.loc
 					if(istype(target, /atom))
 						var/atom/A = target
@@ -402,7 +402,7 @@
 						A.fire_act()
 					qdel(src)
 
-/obj/item/weapon/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/attack_self(mob/user)
 	if(active)
 		if(!isGlass)
 			to_chat(user, "<span class='danger'>The flame's spread too far on it!</span>")

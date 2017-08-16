@@ -959,13 +959,13 @@
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
+			if(!istype(I, /obj/item/restraints/handcuffs))
 				return 0
 			if(num_arms < 2)
 				return 0
@@ -973,14 +973,14 @@
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
+			if(!istype(I, /obj/item/restraints/legcuffs))
 				return 0
 			if(num_legs < 2)
 				return 0
 			return 1
 		if(slot_in_backpack)
-			if(H.back && istype(H.back, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/B = H.back
+			if(H.back && istype(H.back, /obj/item/storage))
+				var/obj/item/storage/B = H.back
 				if(B.can_be_inserted(I, 1, H))
 					return 1
 			return 0
@@ -1012,7 +1012,7 @@
 /datum/species/proc/get_spans()
 	return list()
 
-/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return 0
 
 ////////
@@ -1155,7 +1155,7 @@
 		gravity = 1
 
 	if(!gravity)
-		var/obj/item/weapon/tank/jetpack/J = H.back
+		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
 		if(!istype(J) && istype(C))

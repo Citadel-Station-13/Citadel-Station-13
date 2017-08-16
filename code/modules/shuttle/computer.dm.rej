@@ -1,0 +1,12 @@
+diff a/code/modules/shuttle/computer.dm b/code/modules/shuttle/computer.dm	(rejected hunks)
+@@ -15,8 +15,8 @@
+ 	return INITIALIZE_HINT_LATELOAD
+ 
+ /obj/machinery/computer/shuttle/LateInitialize()
+-	if(istype(circuit, /obj/item/weapon/circuitboard/computer/shuttle))
+-		var/obj/item/weapon/circuitboard/computer/shuttle/C = circuit
++	if(istype(circuit, /obj/item/circuitboard/computer/shuttle))
++		var/obj/item/circuitboard/computer/shuttle/C = circuit
+ 		possible_destinations = C.possible_destinations
+ 		shuttleId = C.shuttleId
+ 

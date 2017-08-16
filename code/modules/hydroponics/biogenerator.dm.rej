@@ -1,0 +1,13 @@
+diff a/code/modules/hydroponics/biogenerator.dm b/code/modules/hydroponics/biogenerator.dm	(rejected hunks)
+@@ -7,9 +7,9 @@
+ 	anchored = TRUE
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 40
+-	circuit = /obj/item/weapon/circuitboard/machine/biogenerator
++	circuit = /obj/item/circuitboard/machine/biogenerator
+ 	var/processing = FALSE
+-	var/obj/item/weapon/reagent_containers/glass/beaker = null
++	var/obj/item/reagent_containers/glass/beaker = null
+ 	var/points = 0
+ 	var/menustat = "menu"
+ 	var/efficiency = 0

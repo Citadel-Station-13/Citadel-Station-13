@@ -1,0 +1,22 @@
+diff a/code/modules/mob/living/simple_animal/guardian/guardian.dm b/code/modules/mob/living/simple_animal/guardian/guardian.dm	(rejected hunks)
+@@ -589,16 +589,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
+ 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
+ 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+ 
+-/obj/item/weapon/guardiancreator/tech/choose/traitor
++/obj/item/guardiancreator/tech/choose/traitor
+ 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+ 
+-/obj/item/weapon/guardiancreator/tech/choose
++/obj/item/guardiancreator/tech/choose
+ 	random = FALSE
+ 
+-/obj/item/weapon/guardiancreator/tech/choose/dextrous
++/obj/item/guardiancreator/tech/choose/dextrous
+ 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+ 
+-/obj/item/weapon/paper/guides/antag/guardian
++/obj/item/paper/guides/antag/guardian
+ 	name = "Holoparasite Guide"
+ 	icon_state = "paper_words"
+ 	info = {"<b>A list of Holoparasite Types</b><br>

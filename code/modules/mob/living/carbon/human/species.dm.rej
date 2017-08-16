@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/carbon/human/species.dm b/code/modules/mob/living/carbon/human/species.dm	(rejected hunks)
+@@ -27,7 +27,7 @@
+ 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
+ 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
+ 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
+-	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
++	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
+ 	var/skinned_type
+ 	var/liked_food = NONE
+ 	var/disliked_food = GROSS

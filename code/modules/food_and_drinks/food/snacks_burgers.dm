@@ -1,4 +1,4 @@
-/obj/item/weapon/reagent_containers/food/snacks/burger
+/obj/item/reagent_containers/food/snacks/burger
 	filling_color = "#CD853F"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"

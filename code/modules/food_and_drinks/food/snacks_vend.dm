@@ -2,7 +2,7 @@
 //in other words: junk food
 //don't even bother looking for recipes for these
 
-/obj/item/weapon/reagent_containers/food/snacks/candy
+/obj/item/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat love it or hate it."
 	icon_state = "candy"

@@ -108,7 +108,7 @@
 		return
 
 	if(panel_open)
-		if(istype(O, /obj/item/weapon/crowbar))
+		if(istype(O, /obj/item/crowbar))
 			default_deconstruction_crowbar(O)
 			return 1
 		else if(is_wire_tool(O))
@@ -121,12 +121,12 @@
 	if(stat)
 		return 1
 
-	if(istype(O, /obj/item/weapon/disk/design_disk))
+	if(istype(O, /obj/item/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
 			"You begin to load a design from \the [O]...",
 			"You hear the chatter of a floppy drive.")
 		busy = TRUE
-		var/obj/item/weapon/disk/design_disk/D = O
+		var/obj/item/disk/design_disk/D = O
 		if(do_after(user, 14.4, target = src))
 			for(var/B in D.blueprints)
 				if(B)
@@ -256,11 +256,11 @@
 
 /obj/machinery/autolathe/RefreshParts()
 	var/T = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/MB in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/MB in component_parts)
 		T += MB.rating*75000
 	materials.max_amount = T
 	T=1.2
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		T -= M.rating*0.2
 	prod_coeff = min(1,max(0,T)) // Coeff going 1 -> 0,8 -> 0,6 -> 0,4
 

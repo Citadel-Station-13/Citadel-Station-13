@@ -52,7 +52,7 @@ insert ascii eagle on american flag background here
 	if(!reagents.total_volume)
 		to_chat(user, "There's nothing to fry with in [src]!")
 		return
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
 		return
 	if(default_unfasten_wrench(user, I))
@@ -87,9 +87,9 @@ insert ascii eagle on american flag background here
 	if(frying)
 		if(frying.loc == src)
 			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
-			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
-			if(istype(frying, /obj/item/weapon/reagent_containers/))
-				var/obj/item/weapon/reagent_containers/food = frying
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
+			if(istype(frying, /obj/item/reagent_containers/))
+				var/obj/item/reagent_containers/food = frying
 				food.reagents.trans_to(S, food.reagents.total_volume)
 			S.icon = frying.icon
 			S.overlays = frying.overlays

@@ -40,7 +40,7 @@
 
 /obj/machinery/mech_bay_recharge_port/RefreshParts()
 	var/MC
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		MC += C.rating
 	max_charge = MC * 25
 
@@ -83,7 +83,7 @@
 	desc = "Used to control mechbay power ports."
 	icon_screen = "recharge_comp"
 	icon_keyboard = "rd_key"
-	circuit = /obj/item/weapon/circuitboard/computer/mech_bay_power_console
+	circuit = /obj/item/circuitboard/computer/mech_bay_power_console
 	var/obj/machinery/mech_bay_recharge_port/recharge_port
 	light_color = LIGHT_COLOR_PINK
 

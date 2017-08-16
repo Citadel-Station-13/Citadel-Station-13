@@ -48,7 +48,7 @@
 		new /datum/data/mining_equipment("KA Damage Increase",	/obj/item/borg/upgrade/modkit/damage,									1000),
 		new /datum/data/mining_equipment("KA Cooldown Decrease", /obj/item/borg/upgrade/modkit/cooldown,									1000),
 		new /datum/data/mining_equipment("KA AoE Damage",		/obj/item/borg/upgrade/modkit/aoe/mobs,									2000),
-		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/weapon/card/mining_point_card,								500),
+		new /datum/data/mining_equipment("Point Transfer Card",	/obj/item/card/mining_point_card,								500),
 		new /datum/data/mining_equipment("Mining Drone",		/mob/living/simple_animal/hostile/mining_drone,							800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade",	/obj/item/device/mine_bot_ugprade,										400),
 		new /datum/data/mining_equipment("Drone Health Upgrade", /obj/item/device/mine_bot_ugprade/health,								400),
@@ -124,7 +124,7 @@
 				inserted_id.verb_pickup()
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
-			var/obj/item/weapon/card/id/I = usr.get_active_held_item()
+			var/obj/item/card/id/I = usr.get_active_held_item()
 			if(istype(I))
 				if(!usr.drop_item())
 					return
@@ -148,11 +148,11 @@
 	return
 
 /obj/machinery/mineral/equipment_vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/mining_voucher))
+	if(istype(I, /obj/item/mining_voucher))
 		RedeemVoucher(I, user)
 		return
-	if(istype(I, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = usr.get_active_held_item()
+	if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/C = usr.get_active_held_item()
 		if(istype(C) && !istype(inserted_id))
 			if(!usr.drop_item())
 				return
@@ -167,7 +167,7 @@
 		return
 	return ..()
 
-/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/weapon/mining_voucher/voucher, mob/redeemer)
+/obj/machinery/mineral/equipment_vendor/proc/RedeemVoucher(obj/item/mining_voucher/voucher, mob/redeemer)
 	var/items = list("Survival Capsule and Explorer's Webbing", "Resonator and Advanced Scanner", "Mining Drone", "Extraction and Rescue Kit", "Crusher Kit", "Mining Conscription Kit")
 
 	var/selection = input(redeemer, "Pick your equipment", "Mining Voucher Redemption") as null|anything in items
@@ -175,24 +175,24 @@
 		return
 	switch(selection)
 		if("Survival Capsule and Explorer's Webbing")
-			new /obj/item/weapon/storage/belt/mining/vendor(src.loc)
+			new /obj/item/storage/belt/mining/vendor(src.loc)
 		if("Resonator and Advanced Scanner")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/resonator(src.loc)
 			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
 		if("Mining Drone")
 			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+			new /obj/item/weldingtool/hugetank(src.loc)
 			new /obj/item/clothing/glasses/welding(src.loc)
 		if("Extraction and Rescue Kit")
-			new /obj/item/weapon/extraction_pack(loc)
+			new /obj/item/extraction_pack(loc)
 			new /obj/item/fulton_core(loc)
 			new /obj/item/stack/marker_beacon/thirty(loc)
 		if("Crusher Kit")
-			new /obj/item/weapon/twohanded/required/kinetic_crusher(loc)
-			new /obj/item/weapon/storage/belt/mining/alt(loc)
-			new /obj/item/weapon/extinguisher/mini(loc)
+			new /obj/item/twohanded/required/kinetic_crusher(loc)
+			new /obj/item/storage/belt/mining/alt(loc)
+			new /obj/item/extinguisher/mini(loc)
 		if("Mining Conscription Kit")
-			new /obj/item/weapon/storage/backpack/duffelbag/mining_conscript(loc)
+			new /obj/item/storage/backpack/duffelbag/mining_conscript(loc)
 
 	SSblackbox.add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -244,16 +244,16 @@
 
 /**********************Mining Point Card**********************/
 
-/obj/item/weapon/card/mining_point_card
+/obj/item/card/mining_point_card
 	name = "mining points card"
 	desc = "A small card preloaded with mining points. Swipe your ID card over it to transfer the points, then discard."
 	icon_state = "data"
 	var/points = 500
 
-/obj/item/weapon/card/mining_point_card/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id))
+/obj/item/card/mining_point_card/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/card/id))
 		if(points)
-			var/obj/item/weapon/card/id/C = I
+			var/obj/item/card/id/C = I
 			C.mining_points += points
 			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
@@ -261,19 +261,19 @@
 			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
 	..()
 
-/obj/item/weapon/card/mining_point_card/examine(mob/user)
+/obj/item/card/mining_point_card/examine(mob/user)
 	..()
 	to_chat(user, "There's [points] point\s on the card.")
 
 ///Conscript kit
-/obj/item/weapon/card/mining_access_card
+/obj/item/card/mining_access_card
 	name = "mining access card"
 	desc = "A small card, that when used on any ID, will add mining access."
 	icon_state = "data"
 
-/obj/item/weapon/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
-	if(istype(AM, /obj/item/weapon/card/id) && proximity)
-		var/obj/item/weapon/card/id/I = AM
+/obj/item/card/mining_access_card/afterattack(atom/movable/AM, mob/user, proximity)
+	if(istype(AM, /obj/item/card/id) && proximity)
+		var/obj/item/card/id/I = AM
 		I.access |=	ACCESS_MINING
 		I.access |= ACCESS_MINING_STATION
 		I.access |= ACCESS_MINERAL_STOREROOM
@@ -282,17 +282,17 @@
 		qdel(src)
 	..()
 
-/obj/item/weapon/storage/backpack/duffelbag/mining_conscript
+/obj/item/storage/backpack/duffelbag/mining_conscript
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/weapon/storage/backpack/duffelbag/mining_conscript/New()
+/obj/item/storage/backpack/duffelbag/mining_conscript/New()
 	..()
-	new /obj/item/weapon/pickaxe/mini(src)
+	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
-	new /obj/item/weapon/storage/bag/ore(src)
+	new /obj/item/storage/bag/ore(src)
 	new /obj/item/clothing/suit/hooded/explorer(src)
 	new /obj/item/device/encryptionkey/headset_cargo(src)
 	new /obj/item/clothing/mask/gas/explorer(src)
-	new /obj/item/weapon/card/mining_access_card(src)
+	new /obj/item/card/mining_access_card(src)

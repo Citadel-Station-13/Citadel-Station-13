@@ -1,0 +1,34 @@
+diff a/code/game/machinery/suit_storage_unit.dm b/code/game/machinery/suit_storage_unit.dm	(rejected hunks)
+@@ -79,27 +79,27 @@
+ /obj/machinery/suit_storage_unit/syndicate
+ 	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
+ 	mask_type = /obj/item/clothing/mask/gas/syndicate
+-	storage_type = /obj/item/weapon/tank/jetpack/oxygen/harness
++	storage_type = /obj/item/tank/jetpack/oxygen/harness
+ 
+ /obj/machinery/suit_storage_unit/ert/command
+ 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert
+ 	mask_type = /obj/item/clothing/mask/breath
+-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
++	storage_type = /obj/item/tank/internals/emergency_oxygen/double
+ 
+ /obj/machinery/suit_storage_unit/ert/security
+ 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/sec
+ 	mask_type = /obj/item/clothing/mask/breath
+-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
++	storage_type = /obj/item/tank/internals/emergency_oxygen/double
+ 
+ /obj/machinery/suit_storage_unit/ert/engineer
+ 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/engi
+ 	mask_type = /obj/item/clothing/mask/breath
+-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
++	storage_type = /obj/item/tank/internals/emergency_oxygen/double
+ 
+ /obj/machinery/suit_storage_unit/ert/medical
+ 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
+ 	mask_type = /obj/item/clothing/mask/breath
+-	storage_type = /obj/item/weapon/tank/internals/emergency_oxygen/double
++	storage_type = /obj/item/tank/internals/emergency_oxygen/double
+ 
+ /obj/machinery/suit_storage_unit/Initialize()
+ 	. = ..()

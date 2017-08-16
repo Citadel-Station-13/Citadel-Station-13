@@ -5,7 +5,7 @@
 	icon_state = "seed-banana"
 	species = "banana"
 	plantname = "Banana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	product = /obj/item/reagent_containers/food/snacks/grown/banana
 	lifespan = 50
 	endurance = 30
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
@@ -37,7 +37,7 @@
 	user.visible_message("<B>[user]</B> laughs so hard they begin to suffocate!")
 	return (OXYLOSS)
 
-/obj/item/weapon/grown/bananapeel
+/obj/item/grown/bananapeel
 	seed = /obj/item/seeds/banana
 	name = "banana peel"
 	desc = "A peel from a banana."
@@ -48,7 +48,7 @@
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/weapon/grown/bananapeel/suicide_act(mob/user)
+/obj/item/grown/bananapeel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is deliberately slipping on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -1)
 	return (BRUTELOSS)
@@ -61,21 +61,21 @@
 	icon_state = "seed-mimana"
 	species = "mimana"
 	plantname = "Mimana Tree"
-	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/mime
 	growthstages = 4
 	mutatelist = list()
 	reagents_add = list("nothing" = 0.1, "mutetoxin" = 0.1, "nutriment" = 0.02)
 	rarity = 15
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/banana/mime
+/obj/item/reagent_containers/food/snacks/grown/banana/mime
 	seed = /obj/item/seeds/banana/mime
 	name = "mimana"
 	desc = "It's an excellent prop for a mime."
 	icon_state = "mimana"
-	trash = /obj/item/weapon/grown/bananapeel/mimanapeel
+	trash = /obj/item/grown/bananapeel/mimanapeel
 	filling_color = "#FFFFEE"
 
-/obj/item/weapon/grown/bananapeel/mimanapeel
+/obj/item/grown/bananapeel/mimanapeel
 	seed = /obj/item/seeds/banana/mime
 	name = "mimana peel"
 	desc = "A mimana peel."

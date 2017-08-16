@@ -1,0 +1,17 @@
+diff a/code/modules/hydroponics/grown/misc.dm b/code/modules/hydroponics/grown/misc.dm	(rejected hunks)
+@@ -103,13 +103,13 @@
+ 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+ 	reagents_add = list("sulfur" = 0.1, "carbon" = 0.1, "nitrogen" = 0.07, "potassium" = 0.05)
+ 
+-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/gatfruit
++/obj/item/reagent_containers/food/snacks/grown/shell/gatfruit
+ 	seed = /obj/item/seeds/gatfruit
+ 	name = "gatfruit"
+ 	desc = "It smells like burning."
+ 	icon_state = "gatfruit"
+ 	origin_tech = "combat=6"
+-	trash = /obj/item/weapon/gun/ballistic/revolver
++	trash = /obj/item/gun/ballistic/revolver
+ 	bitesize_mod = 2
+ 	foodtype = FRUIT
+ 

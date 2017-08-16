@@ -59,25 +59,25 @@
 	lootcount = 3
 	lootdoubles = FALSE
 	var/soups = list(
-			/obj/item/weapon/reagent_containers/food/snacks/soup/beet,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/stew,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/hotchili,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/nettle,
-			/obj/item/weapon/reagent_containers/food/snacks/soup/meatball)
+			/obj/item/reagent_containers/food/snacks/soup/beet,
+			/obj/item/reagent_containers/food/snacks/soup/sweetpotato,
+			/obj/item/reagent_containers/food/snacks/soup/stew,
+			/obj/item/reagent_containers/food/snacks/soup/hotchili,
+			/obj/item/reagent_containers/food/snacks/soup/nettle,
+			/obj/item/reagent_containers/food/snacks/soup/meatball)
 	var/salads = list(
-			/obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/fruit,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/jungle,
-			/obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad)
+			/obj/item/reagent_containers/food/snacks/salad/herbsalad,
+			/obj/item/reagent_containers/food/snacks/salad/validsalad,
+			/obj/item/reagent_containers/food/snacks/salad/fruit,
+			/obj/item/reagent_containers/food/snacks/salad/jungle,
+			/obj/item/reagent_containers/food/snacks/salad/aesirsalad)
 	var/mains = list(
-			/obj/item/weapon/reagent_containers/food/snacks/bearsteak,
-			/obj/item/weapon/reagent_containers/food/snacks/enchiladas,
-			/obj/item/weapon/reagent_containers/food/snacks/stewedsoymeat,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/bigbite,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/superbite,
-			/obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm)
+			/obj/item/reagent_containers/food/snacks/bearsteak,
+			/obj/item/reagent_containers/food/snacks/enchiladas,
+			/obj/item/reagent_containers/food/snacks/stewedsoymeat,
+			/obj/item/reagent_containers/food/snacks/burger/bigbite,
+			/obj/item/reagent_containers/food/snacks/burger/superbite,
+			/obj/item/reagent_containers/food/snacks/burger/fivealarm)
 
 /obj/effect/spawner/lootdrop/three_course_meal/Initialize(mapload)
 	loot = list(pick(soups) = 1,pick(salads) = 1,pick(mains) = 1)

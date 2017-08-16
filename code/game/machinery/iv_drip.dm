@@ -90,7 +90,7 @@
 			to_chat(usr, "<span class='warning'>There's nothing attached to the IV drip!</span>")
 
 
-/obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/iv_drip/attackby(obj/item/W, mob/user, params)
 	if(is_type_in_typecache(W, drip_containers))
 		if(beaker)
 			to_chat(user, "<span class='warning'>There is already a reagent container loaded!</span>")
@@ -127,7 +127,7 @@
 		if(mode)
 			if(beaker.reagents.total_volume)
 				var/transfer_amount = 5
-				if(istype(beaker, /obj/item/weapon/reagent_containers/blood))
+				if(istype(beaker, /obj/item/reagent_containers/blood))
 					// speed up transfer on blood packs
 					transfer_amount = 10
 				var/fraction = min(transfer_amount/beaker.reagents.total_volume, 1) //the fraction that is transfered of the total volume

@@ -201,7 +201,7 @@
 	name = "Hotel Guest Room 3"
 	})
 "aD" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-02"
 	},
 /turf/open/floor/wood,
@@ -258,7 +258,7 @@
 	name = "Hotel Guest Room 4"
 	})
 "aL" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -315,7 +315,7 @@
 	name = "Hotel Guest Room 5"
 	})
 "aT" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -372,7 +372,7 @@
 	name = "Hotel Guest Room 6"
 	})
 "bb" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/wood,
@@ -1421,7 +1421,7 @@
 	name = "Hotel Guest Room 2"
 	})
 "dq" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
@@ -1503,7 +1503,7 @@
 	name = "Hotel Guest Room 1"
 	})
 "dy" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-14"
 	},
 /turf/open/floor/wood,
@@ -2639,9 +2639,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
-/obj/item/weapon/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
+/obj/item/reagent_containers/food/condiment/milk,
 /obj/structure/closet/secure_closet/freezer/fridge{
 	req_access_txt = "200"
 	},
@@ -3605,8 +3605,8 @@
 "ji" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/yellow/side{
 	icon_state = "yellow";
 	dir = 8
@@ -3736,8 +3736,8 @@
 "jA" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;

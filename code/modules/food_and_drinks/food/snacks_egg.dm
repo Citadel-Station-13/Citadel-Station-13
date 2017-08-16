@@ -1,7 +1,7 @@
 
 ////////////////////////////////////////////EGGS////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/chocolateegg
+/obj/item/reagent_containers/food/snacks/chocolateegg
 	name = "chocolate egg"
 	desc = "Such, sweet, fattening food."
 	icon_state = "chocolateegg"
@@ -41,47 +41,47 @@
 	else
 		..()
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/blue
+/obj/item/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
 	item_color = "blue"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/green
+/obj/item/reagent_containers/food/snacks/egg/green
 	icon_state = "egg-green"
 	item_color = "green"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/mime
+/obj/item/reagent_containers/food/snacks/egg/mime
 	icon_state = "egg-mime"
 	item_color = "mime"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/orange
+/obj/item/reagent_containers/food/snacks/egg/orange
 	icon_state = "egg-orange"
 	item_color = "orange"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/purple
+/obj/item/reagent_containers/food/snacks/egg/purple
 	icon_state = "egg-purple"
 	item_color = "purple"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/rainbow
+/obj/item/reagent_containers/food/snacks/egg/rainbow
 	icon_state = "egg-rainbow"
 	item_color = "rainbow"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/red
+/obj/item/reagent_containers/food/snacks/egg/red
 	icon_state = "egg-red"
 	item_color = "red"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/yellow
+/obj/item/reagent_containers/food/snacks/egg/yellow
 	icon_state = "egg-yellow"
 	item_color = "yellow"
 	tastes = list("egg" = 4, "the back of class" = 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/friedegg
+/obj/item/reagent_containers/food/snacks/friedegg
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
 	icon_state = "friedegg"
@@ -129,7 +129,7 @@
 		return
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/benedict
+/obj/item/reagent_containers/food/snacks/benedict
 	name = "eggs benedict"
 	desc = "There is only one egg on this, how rude."
 	icon_state = "benedict"

@@ -259,7 +259,7 @@
 
 /obj/machinery/teleport/hub/RefreshParts()
 	var/A = 0
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		A += M.rating
 	accurate = A
 
@@ -367,7 +367,7 @@
 
 /obj/machinery/teleport/station/RefreshParts()
 	var/E
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		E += C.rating
 	efficiency = E - 1
 
@@ -395,7 +395,7 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
@@ -420,7 +420,7 @@
 	else if(default_deconstruction_crowbar(W))
 		return
 
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
 			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")

@@ -83,7 +83,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/RefreshParts()
 	var/holograph_range = 4
-	for(var/obj/item/weapon/stock_parts/capacitor/B in component_parts)
+	for(var/obj/item/stock_parts/capacitor/B in component_parts)
 		holograph_range += 1 * B.rating
 	holo_range = holograph_range
 

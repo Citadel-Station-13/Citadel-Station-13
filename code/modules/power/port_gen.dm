@@ -103,10 +103,10 @@
 /obj/machinery/power/port_gen/pacman/RefreshParts()
 	var/temp_rating = 0
 	var/consumption_coeff = 0
-	for(var/obj/item/weapon/stock_parts/SP in component_parts)
-		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin))
+	for(var/obj/item/stock_parts/SP in component_parts)
+		if(istype(SP, /obj/item/stock_parts/matter_bin))
 			max_sheets = SP.rating * SP.rating * 50
-		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
+		else if(istype(SP, /obj/item/stock_parts/capacitor))
 			temp_rating += SP.rating
 		else
 			consumption_coeff += SP.rating
@@ -190,7 +190,7 @@
 		if(exchange_parts(user, O))
 			return
 
-		if(istype(O, /obj/item/weapon/wrench))
+		if(istype(O, /obj/item/wrench))
 
 			if(!anchored && !isinspace())
 				connect_to_network()
@@ -203,7 +203,7 @@
 
 			playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
 			return
-		else if(istype(O, /obj/item/weapon/screwdriver))
+		else if(istype(O, /obj/item/screwdriver))
 			panel_open = !panel_open
 			playsound(src.loc, O.usesound, 50, 1)
 			if(panel_open)
