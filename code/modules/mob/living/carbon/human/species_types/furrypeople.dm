@@ -89,8 +89,8 @@ datum/species/mammal
 	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
 	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
-	armor = 15
-	heatmod = 1.9
+	armor = 5
+	heatmod = 1.4
 	no_equip = list(slot_head)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
