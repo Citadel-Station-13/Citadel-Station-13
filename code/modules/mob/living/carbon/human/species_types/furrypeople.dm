@@ -79,7 +79,6 @@ datum/species/mammal
 	return TRUE
 //HERBIVOROUS//
 
-
 //Alien//
 /datum/species/xeno
 	// A cloning mistake, crossing human and xenomorph DNA
