@@ -99,7 +99,7 @@ datum/species/mammal
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
-	roundstart = 1
+	roundstart = 0
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 
