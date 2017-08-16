@@ -79,6 +79,30 @@ datum/species/mammal
 	return TRUE
 //HERBIVOROUS//
 
+//Alien//
+/datum/species/xeno
+	// A cloning mistake, crossing human and xenomorph DNA
+	name = "xeno"
+	id = "xeno"
+	say_mod = "hisses"
+	default_color = "00FF00"
+	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
+	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
+	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
+	armor = 15
+	heatmod = 1.7
+	no_equip = list(slot_head)
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+	exotic_bloodtype = "L"
+	damage_overlay_type = "xeno"
+	roundstart = 0
+
+//Praise the Omnissiah, A challange worthy of my skills - HS
+
 //EXOTIC//
 //These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
 /*
