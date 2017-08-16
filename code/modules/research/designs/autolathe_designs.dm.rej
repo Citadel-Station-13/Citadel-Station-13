@@ -1,0 +1,10 @@
+diff a/code/modules/research/designs/autolathe_designs.dm b/code/modules/research/designs/autolathe_designs.dm	(rejected hunks)
+@@ -629,7 +629,7 @@
+ 	id = "reciever"
+ 	build_type = AUTOLATHE
+ 	materials = list(MAT_METAL = 15000)
+-	build_path = /obj/itemcrafting/receiver
++	build_path = /obj/item/weaponcrafting/receiver
+ 	category = list("hacked", "Security")
+ 
+ /datum/design/shotgun_slug
