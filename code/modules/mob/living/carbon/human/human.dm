@@ -275,11 +275,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			var/obj/item/place_item = usr.get_active_held_item() // Item to place in the pocket, if it's empty
 
 			var/delay_denominator = 1
-			if(pocket_item && !(pocket_item.flags&ABSTRACT))
-				if(pocket_item.flags & NODROP)
+			if(pocket_item && !(pocket_item.flags_1&ABSTRACT_1))
+				if(pocket_item.flags_1 & NODROP_1)
 					to_chat(usr, "<span class='warning'>You try to empty [src]'s [pocket_side] pocket, it seems to be stuck!</span>")
 				to_chat(usr, "<span class='notice'>You try to empty [src]'s [pocket_side] pocket.</span>")
-			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags&ABSTRACT))
+			else if(place_item && place_item.mob_can_equip(src, usr, pocket_id, 1) && !(place_item.flags_1&ABSTRACT_1))
 				to_chat(usr, "<span class='notice'>You try to place [place_item] into [src]'s [pocket_side] pocket.</span>")
 				delay_denominator = 4
 			else
@@ -525,10 +525,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	// If targeting the head, see if the head item is thin enough.
 	// If targeting anything else, see if the wear suit is thin enough.
 	if(above_neck(target_zone))
-		if(head && head.flags & THICKMATERIAL && !penetrate_thick)
+		if(head && head.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
 			. = 0
 	else
-		if(wear_suit && wear_suit.flags & THICKMATERIAL && !penetrate_thick)
+		if(wear_suit && wear_suit.flags_1 & THICKMATERIAL_1 && !penetrate_thick)
 			. = 0
 	if(!. && error_msg && user)
 		// Might need re-wording.

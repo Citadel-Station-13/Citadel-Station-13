@@ -23,6 +23,7 @@
 	armour_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
+	flags_2 = SLOWS_WHILE_IN_HAND_2
 	var/team = WHITE_TEAM
 	var/reset_cooldown = 0
 	var/obj/effect/ctf/flag_reset/reset

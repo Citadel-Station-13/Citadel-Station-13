@@ -141,7 +141,7 @@
 	broken_states = list("damaged")
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/turf/open/floor/carpet)
-	flags = NONE
+	flags_1 = NONE
 
 /turf/open/floor/carpet/Initialize()
 	..()

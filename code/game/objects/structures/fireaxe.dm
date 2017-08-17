@@ -83,7 +83,7 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
-	if(!broken && !(flags & NODECONSTRUCT))
+	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		update_icon()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)

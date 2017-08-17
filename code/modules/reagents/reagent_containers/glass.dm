@@ -3,7 +3,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	spillable = 1
 	resistance_flags = ACID_PROOF
 
@@ -240,7 +240,7 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(10,15,20,25,30,50,70)
 	volume = 70
-	flags = OPENCONTAINER
+	flags_1 = OPENCONTAINER_1
 	flags_inv = HIDEHAIR
 	slot_flags = SLOT_HEAD
 	resistance_flags = 0

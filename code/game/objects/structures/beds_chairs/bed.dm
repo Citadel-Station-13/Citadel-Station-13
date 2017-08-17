@@ -22,7 +22,7 @@
 	var/buildstackamount = 2
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	..()
