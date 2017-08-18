@@ -7457,9 +7457,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqr" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -112682,9 +112679,6 @@
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "ept" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
