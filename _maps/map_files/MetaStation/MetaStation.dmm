@@ -42557,10 +42557,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bCC" = (
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bCD" = (
 /turf/closed/wall/r_wall,
@@ -60229,19 +60226,13 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "ckL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "ckM" = (
 /obj/structure/girder,
@@ -60892,10 +60883,7 @@
 /obj/item/stack/rods{
 	amount = 25
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	initial_gas_mix = "o2=0.01;n2=0.01"
-	},
+/turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "cmf" = (
 /turf/open/floor/plating/airless,
@@ -72904,10 +72892,7 @@
 /area/science/server)
 "cIe" = (
 /obj/machinery/r_n_d/server/robotics,
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cIf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -72915,10 +72900,7 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cIg" = (
 /turf/closed/wall/r_wall,
@@ -73377,10 +73359,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plasteel/black{
-	name = "Server Walkway";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/server/walkway,
 /area/science/server)
 "cIZ" = (
 /obj/effect/landmark/blobstart,
@@ -73394,10 +73373,7 @@
 	dir = 8;
 	pixel_x = 22
 	},
-/turf/open/floor/plasteel/black{
-	name = "Server Walkway";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/plasteel/black/telecomms/server/walkway,
 /area/science/server)
 "cJa" = (
 /obj/structure/cable/yellow{
@@ -73883,10 +73859,7 @@
 /area/science/server)
 "cJV" = (
 /obj/machinery/r_n_d/server/core,
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cJW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -73894,10 +73867,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit{
-	name = "Server Base";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cJX" = (
 /obj/structure/cable/yellow{
@@ -81833,10 +81803,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cZv" = (
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cZw" = (
 /obj/structure/table,
@@ -82432,17 +82399,11 @@
 	name = "server vent";
 	pressure_checks = 0
 	},
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "daS" = (
 /obj/structure/disposalpipe/segment,
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "daT" = (
 /turf/open/space,
@@ -82618,10 +82579,7 @@
 "dbv" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/light/small,
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "dbw" = (
 /obj/machinery/camera{
@@ -82630,10 +82588,7 @@
 	network = list("SS13","RD","Xeno");
 	start_active = 1
 	},
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "dbx" = (
 /obj/structure/table/optable,
@@ -83883,10 +83838,7 @@
 	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/turf/open/floor/circuit{
-	name = "Killroom Floor";
-	initial_gas_mix = "n2=500;TEMP=80"
-	},
+/turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "ddC" = (
 /obj/structure/disposalpipe/trunk{

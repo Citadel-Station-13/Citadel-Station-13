@@ -2999,7 +2999,6 @@
 /area/centcom/supply)
 "iT" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)
@@ -3009,7 +3008,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -3811,7 +3809,6 @@
 /area/centcom/supply)
 "kL" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/centcom/supply)
@@ -4108,7 +4105,6 @@
 /area/centcom/supply)
 "lv" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/centcom/supply)
@@ -4118,7 +4114,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -4234,7 +4229,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/centcom/supply)
@@ -4243,7 +4237,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)
@@ -4253,7 +4246,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -4443,7 +4435,6 @@
 /area/centcom/supply)
 "mm" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/centcom/supply)
@@ -4626,7 +4617,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/centcom/supply)
@@ -5082,7 +5072,6 @@
 /area/centcom/supply)
 "nQ" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -6443,7 +6432,6 @@
 /area/centcom/ferry)
 "qO" = (
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/centcom/control)
@@ -7339,7 +7327,6 @@
 /area/centcom/evac)
 "sY" = (
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/centcom/evac)
@@ -7640,7 +7627,6 @@
 /area/centcom/evac)
 "tJ" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 5
 	},
 /area/centcom/evac)
@@ -7649,13 +7635,11 @@
 /area/centcom/evac)
 "tL" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 4
 	},
 /area/centcom/evac)
 "tM" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 8
 	},
 /area/centcom/evac)
@@ -7846,7 +7830,6 @@
 /area/centcom/evac)
 "uo" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 6
 	},
 /area/centcom/evac)
@@ -8045,7 +8028,6 @@
 /area/centcom/evac)
 "uQ" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 5
 	},
 /area/centcom/evac)
@@ -8177,13 +8159,11 @@
 /area/centcom/control)
 "vm" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 9
 	},
 /area/centcom/evac)
 "vn" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 10
 	},
 /area/centcom/evac)
@@ -8530,13 +8510,11 @@
 /area/centcom/control)
 "wd" = (
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/centcom/evac)
 "we" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 1
 	},
 /area/centcom/evac)
@@ -10371,7 +10349,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 9
 	},
 /area/tdome/tdomeobserve)
@@ -10388,7 +10365,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 5
 	},
 /area/tdome/tdomeobserve)
@@ -10414,7 +10390,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 1
 	},
 /area/tdome/tdomeobserve)
@@ -10427,7 +10402,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -10958,7 +10932,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -10988,7 +10961,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 1
 	},
 /area/tdome/tdomeobserve)
@@ -11188,7 +11160,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 8
 	},
 /area/tdome/tdomeobserve)
@@ -11333,7 +11304,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -11663,7 +11633,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -11694,7 +11663,6 @@
 	name = "General Supply"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -11843,7 +11811,6 @@
 /area/tdome/arena)
 "Ey" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12076,7 +12043,6 @@
 /area/tdome/tdomeadmin)
 "Ff" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/tdome/tdomeadmin)
@@ -13001,7 +12967,6 @@
 /area/tdome/arena_source)
 "IS" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
@@ -13149,7 +13114,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)

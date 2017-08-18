@@ -156,7 +156,6 @@
 /area/shuttle/escape)
 "aE" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -181,7 +180,6 @@
 /area/shuttle/escape)
 "aJ" = (
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -226,7 +224,6 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -303,13 +300,11 @@
 /area/shuttle/escape)
 "aZ" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 8
 	},
 /area/shuttle/escape)
 "ba" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -444,7 +439,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -466,7 +460,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -525,7 +518,6 @@
 /area/shuttle/escape)
 "bB" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -537,7 +529,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -603,7 +594,6 @@
 /area/shuttle/escape)
 "bM" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -618,7 +608,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -630,7 +619,6 @@
 /area/shuttle/escape)
 "bR" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -708,7 +696,6 @@
 "cc" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -747,13 +734,11 @@
 	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 9
 	},
 /area/shuttle/escape)
 "ci" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -761,21 +746,18 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "ck" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cl" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -794,7 +776,6 @@
 /area/shuttle/escape)
 "co" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -821,7 +802,6 @@
 /area/shuttle/escape)
 "ct" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -833,13 +813,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 5
 	},
 /area/shuttle/escape)
 "cv" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -848,7 +826,6 @@
 /area/shuttle/escape)
 "cx" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -859,7 +836,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -892,7 +868,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -993,7 +968,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -1002,7 +976,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1034,13 +1007,11 @@
 "cT" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 9
 	},
 /area/shuttle/escape)
 "cU" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1050,13 +1021,11 @@
 	},
 /obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
 "cW" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -1080,19 +1049,16 @@
 "cZ" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
 "da" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
 "db" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -1108,7 +1074,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -1116,7 +1081,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -1136,7 +1100,6 @@
 "dh" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -1145,7 +1108,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -1190,7 +1152,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 6
 	},
 /area/shuttle/escape)
