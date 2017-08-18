@@ -16,12 +16,11 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/syndicate)
 "aad" = (
-/obj/structure/grille,
 /obj/machinery/door/poddoor/shutters{
 	id = "syndieshutters";
 	name = "blast shutters"
 	},
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "aae" = (
@@ -336,8 +335,7 @@
 	},
 /area/shuttle/syndicate)
 "aaO" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/shuttle/syndicate)
 "aaP" = (
@@ -3957,8 +3955,7 @@
 	d2 = 2
 	},
 /obj/structure/cable,
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/security/prison)
 "ajf" = (
@@ -7215,8 +7212,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apS" = (
@@ -32659,8 +32655,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/science/xenobiology)
 "btC" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/biohazard,
 /turf/open/floor/plating,
 /area/science/xenobiology)
