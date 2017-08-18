@@ -122,7 +122,7 @@
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
 	icon_state = "shark"
-	color_src = 0
+	color_src = MUTCOLORS
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/shark/datashark
@@ -326,7 +326,6 @@
 /datum/sprite_accessory/mam_ears/husky
 	name = "Husky"
 	icon_state = "wolf"
-	hasinner = 1
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
@@ -390,7 +389,7 @@
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
 	icon_state = "shark"
-	color_src = 0
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/mam_tails_animated/shark
 	name = "Shark"
