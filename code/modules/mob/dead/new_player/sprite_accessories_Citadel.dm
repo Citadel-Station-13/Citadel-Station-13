@@ -150,8 +150,7 @@
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	hasinner = 1
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = 1
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
@@ -191,6 +190,7 @@
 
 /datum/sprite_accessory/mam_tails_animated
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/mam_tails_animated/none
 	name = "None"
 
@@ -436,7 +436,7 @@
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	hasinner = 1
+	extra = 1
 
 /datum/sprite_accessory/mam_tails/wolf
 	name = "Wolf"
