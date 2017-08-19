@@ -1,6 +1,3 @@
-//wrapper macro for sending images that makes grepping easy
-#define SEND_IMAGE(target, image) target << image
-
 /proc/random_blood_type()
 	return pick(4;"O-", 36;"O+", 3;"A-", 28;"A+", 1;"B-", 20;"B+", 1;"AB-", 5;"AB+")
 
@@ -116,6 +113,7 @@
 		"xenohead" 			= "None",
 		"xenotail" 			= "None",
 		"exhibitionist" 	= FALSE,
+		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= pick(GLOB.cock_shapes_list),
 		"cock_length"		= 6,
@@ -158,8 +156,9 @@
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum"))
-		
+		"womb_fluid" 		= "femcum",
+		"flavor_text"		= ""))
+
 /proc/random_hair_style(gender)
 	switch(gender)
 		if(MALE)

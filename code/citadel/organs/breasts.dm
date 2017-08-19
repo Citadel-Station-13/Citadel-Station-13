@@ -1,5 +1,5 @@
 /obj/item/organ/genital/breasts
-	name 					= "breasts"
+	name 					= "Breasts"
 	desc 					= "Female milk producing organs."
 	icon_state 				= "breasts"
 	icon 					= 'code/citadel/icons/breasts.dmi'
