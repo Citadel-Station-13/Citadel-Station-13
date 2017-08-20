@@ -103,6 +103,13 @@
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
 
+	var/use_exp_tracking = FALSE
+	var/use_exp_restrictions_heads = FALSE
+	var/use_exp_restrictions_heads_hours = 0
+	var/use_exp_restrictions_heads_department = FALSE
+	var/use_exp_restrictions_other = FALSE
+	var/use_exp_restrictions_admin_bypass = FALSE
+
 	//Population cap vars
 	var/soft_popcap				= 0
 	var/hard_popcap				= 0
