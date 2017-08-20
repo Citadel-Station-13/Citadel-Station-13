@@ -17,7 +17,7 @@
 
 /turf/open/floor/plating/asteroid/Initialize()
 	var/proper_name = name
-	..()
+	. = ..()
 	name = proper_name
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
@@ -104,7 +104,18 @@
 	return
 
 /turf/open/floor/plating/asteroid/singularity_pull(S, current_size)
-	return
+	if(dug)
+		return
+	switch(current_size)
+		if(STAGE_THREE)
+			if(!prob(30))
+				gets_dug()
+		if(STAGE_FOUR)
+			if(prob(50))
+				gets_dug()
+		else 
+			if(current_size >= STAGE_FIVE && prob(70))
+				gets_dug()
 
 
 /turf/open/floor/plating/asteroid/basalt
@@ -124,7 +135,7 @@
 	initial_gas_mix = "TEMP=2.7"
 
 /turf/open/floor/plating/asteroid/basalt/Initialize()
-	..()
+	. = ..()
 	set_basalt_light(src)
 
 /proc/set_basalt_light(turf/open/floor/B)

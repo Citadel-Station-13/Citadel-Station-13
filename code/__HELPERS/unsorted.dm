@@ -289,7 +289,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/list/pois = list()
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera/))
+			if(!isbot(M) && !istype(M, /mob/camera) && !ismegafauna(M))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -491,17 +491,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-/atom/proc/GetAllContents()
+/atom/proc/GetAllContents(list/ignore_typecache)
 	var/list/processing_list = list(src)
 	var/list/assembled = list()
+	if(ignore_typecache)		//If there's a typecache, use it.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
+			if(ignore_typecache[A.type])
+				continue
+			processing_list |= (A.contents - assembled)
+			assembled |= A
 
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
-		processing_list -= A
+	else		//If there's none, only make this check once for performance.
+		while(processing_list.len)
+			var/atom/A = processing_list[1]
+			processing_list -= A
 
-		processing_list |= (A.contents - assembled)
+			processing_list |= (A.contents - assembled)
 
-		assembled |= A
+			assembled |= A
 
 	return assembled
 
@@ -836,11 +845,11 @@ GLOBAL_LIST_INIT(WALLITEMS_INVERSE, typecacheof(list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on [bicon(icon)] [target].", "<span class='notice'>You use the analyzer on [bicon(icon)] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(src))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of [bicon(icon)] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 

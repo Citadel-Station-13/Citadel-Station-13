@@ -7457,9 +7457,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aqr" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25015,6 +25012,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/structure/fireaxecabinet{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/caution{
 	icon_state = "caution";
 	dir = 8
@@ -29570,10 +29571,10 @@
 "bgT" = (
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
-	input_tag = "co2_in";
-	name = "Carbon Dioxide Supply Control";
-	output_tag = "co2_out";
-	sensors = list("co2_sensor" = "Tank")
+	input_tag = "n2o_in";
+	name = "Nitrous Oxide Supply Control";
+	output_tag = "n2o_out";
+	sensors = list("n2o_sensor" = "Tank")
 	},
 /obj/structure/window/reinforced{
 	dir = 8
@@ -68726,12 +68727,12 @@
 /obj/item/weapon/folder/blue,
 /obj/item/clothing/under/rank/centcom_commander{
 	desc = "A replica of a jumpsuit worn by the highest ranking commanders under Nanotrasen's central command.";
-	name = "Replica Centcom officer's jumpsuit"
+	name = "Replica CentCom officer's jumpsuit"
 	},
 /obj/item/clothing/head/centhat{
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0);
 	desc = "A replica hat of a Central Commander's attire. It has a small tag on it saying, 'It's good to be emperor.'";
-	name = "Replica Centcom hat"
+	name = "Replica CentCom hat"
 	},
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = -32
@@ -112682,9 +112683,6 @@
 /turf/open/floor/plating,
 /area/engine/atmospherics_engine)
 "ept" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -138464,7 +138462,7 @@ aRf
 aSV
 aUs
 aIU
-aIU
+aSV
 aIU
 aSV
 aSV
