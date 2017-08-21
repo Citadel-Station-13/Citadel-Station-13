@@ -321,6 +321,6 @@
 	icon_state = "direction_bridge"
 
 /obj/structure/sign/logo
-	name = "station logo"
-	desc = "A sign: SPACE STATION 13."
+	name = "nanotrasen logo"
+	desc = "The Nanotrasen corporate logo."
 	icon_state = "ss13sign-1"

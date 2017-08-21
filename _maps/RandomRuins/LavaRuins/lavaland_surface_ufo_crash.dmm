@@ -106,6 +106,7 @@
 /obj/structure/table/optable/abductor,
 /obj/item/cautery/alien,
 /obj/effect/baseturf_helper,
+
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "o2=16;n2=23;TEMP=300"
 	},
