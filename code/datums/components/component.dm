@@ -124,7 +124,7 @@
 	if(!islist(target))
 		var/datum/component/C = target
 		if(C.enabled && C.ReceiveSignal(arglist(args)))
- 			ComponentActivated(C)
+			ComponentActivated(C)
 			return TRUE
 	else
 		for(var/I in target)
