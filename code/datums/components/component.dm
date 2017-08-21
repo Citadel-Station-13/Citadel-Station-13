@@ -106,14 +106,17 @@
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
-
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
+
+/datum/component/proc/AfterComponentActivated()
+	return
+
 /datum/component/proc/_GetInverseTypeList(current_type)
 	. = list(current_type)
- 	while (current_type != /datum/component)
- 		current_type = type2parent(current_type)
-		. += current_type
+	while (current_type != /datum/component)
+		current_type = type2parent(current_type)
+. += current_type
 
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
