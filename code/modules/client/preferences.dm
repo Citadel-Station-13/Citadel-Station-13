@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("snout" in pref_species.mutant_bodyparts)
 					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
 				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+					dat += "<b>Horns: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
 				if("frills" in pref_species.mutant_bodyparts)
 					dat += "<b>Frills: </b><a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
 				if("spines" in pref_species.mutant_bodyparts)
