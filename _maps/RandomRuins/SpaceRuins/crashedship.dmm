@@ -2321,7 +2321,7 @@
 	dir = 4
 	},
 /obj/structure/grille,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating/airless,

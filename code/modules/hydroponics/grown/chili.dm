@@ -76,13 +76,13 @@
 	bitesize_mod = 4
 	origin_tech = "biotech=4;magnets=5"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
 	if( ismob(loc) )
 		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
+/obj/item/reagent_containers/food/snacks/grown/ghost_chili/process()
 	if(held_mob && loc == held_mob)
 		if(held_mob.is_holding(src))
 			if(istype(held_mob) && held_mob.gloves)

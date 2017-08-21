@@ -39,17 +39,17 @@
 
 /obj/machinery/hydroponics/constructable/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/hydroponics(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/hydroponics(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/hydroponics
+/obj/item/circuitboard/machine/hydroponics
 	name = "Hydroponics Tray (Machine Board)"
 	build_path = /obj/machinery/hydroponics/constructable
 	origin_tech = "programming=1;biotech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stock_parts/matter_bin = 2,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0

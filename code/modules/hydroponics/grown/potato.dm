@@ -27,7 +27,7 @@
 	bitesize = 100
 
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+/obj/item/reagent_containers/food/snacks/grown/potato/wedges
 	name = "potato wedges"
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"

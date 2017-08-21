@@ -3,7 +3,7 @@ diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins
  /turf/open/floor/plating,
  /area/ruin/space/djstation)
  "al" = (
--/obj/item/weapon/storage/toolbox/mechanical{
+-/obj/item/storage/toolbox/mechanical{
 +/obj/item/storage/toolbox/mechanical{
  	pixel_x = -2;
  	pixel_y = -1
@@ -11,7 +11,7 @@ diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins
  /turf/open/floor/plating,
  /area/ruin/space/djstation)
  "am" = (
--/obj/item/weapon/extinguisher,
+-/obj/item/extinguisher,
 +/obj/item/extinguisher,
  /turf/open/floor/plating,
  /area/ruin/space/djstation)
@@ -20,7 +20,7 @@ diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins
  /area/ruin/space/djstation)
  "aD" = (
  /obj/structure/bed,
--/obj/item/weapon/bedsheet,
+-/obj/item/bedsheet,
 +/obj/item/bedsheet,
  /turf/open/floor/plasteel/grimy,
  /area/ruin/space/djstation)
@@ -29,7 +29,7 @@ diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins
  /area/ruin/space/djstation)
  "aR" = (
  /obj/structure/table,
--/obj/item/weapon/paper/fluff/ruins/djstation,
+-/obj/item/paper/fluff/ruins/djstation,
 +/obj/item/paper/fluff/ruins/djstation,
  /turf/open/floor/plasteel/cafeteria,
  /area/ruin/space/djstation)
@@ -38,12 +38,12 @@ diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins
  /area/ruin/space/djstation)
  "bg" = (
  /obj/structure/table,
--/obj/item/weapon/paper_bin{
+-/obj/item/paper_bin{
 +/obj/item/paper_bin{
  	pixel_x = 1;
  	pixel_y = 9
  	},
--/obj/item/weapon/pen,
+-/obj/item/pen,
 +/obj/item/pen,
  /turf/open/floor/plasteel/cafeteria,
  /area/ruin/space/djstation)

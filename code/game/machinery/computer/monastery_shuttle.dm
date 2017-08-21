@@ -6,6 +6,6 @@
 	possible_destinations = "monastery_shuttle_asteroid;monastery_shuttle_station"
 	no_destination_swap = TRUE
 
-/obj/item/weapon/circuitboard/computer/shuttle/monastery_shuttle
+/obj/item/circuitboard/computer/shuttle/monastery_shuttle
 	name = "Monastery Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/monastery_shuttle

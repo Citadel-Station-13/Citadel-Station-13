@@ -45,7 +45,7 @@
 
 /obj/machinery/power/smes/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smes(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/smes(null)
 	B.apply_default_parts(src)
 
 	spawn(5)
@@ -64,15 +64,15 @@
 		update_icon()
 	return
 
-/obj/item/weapon/circuitboard/machine/smes
+/obj/item/circuitboard/machine/smes
 	name = "SMES (Machine Board)"
 	build_path = /obj/machinery/power/smes
 	origin_tech = "programming=3;powerstorage=3;engineering=3"
 	req_components = list(
 							/obj/item/stack/cable_coil = 5,
-							/obj/item/weapon/stock_parts/cell = 5,
-							/obj/item/weapon/stock_parts/capacitor = 1)
-	def_components = list(/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high/empty)
+							/obj/item/stock_parts/cell = 5,
+							/obj/item/stock_parts/capacitor = 1)
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high/empty)
 
 /obj/machinery/power/smes/RefreshParts()
 	var/IO = 0

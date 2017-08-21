@@ -19,28 +19,28 @@ insert ascii eagle on american flag background here
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/cook_time = 0
 	var/static/list/blacklisted_items = typecacheof(list(
-		/obj/item/weapon/screwdriver,
-		/obj/item/weapon/crowbar,
-		/obj/item/weapon/wrench,
-		/obj/item/weapon/wirecutters,
+		/obj/item/screwdriver,
+		/obj/item/crowbar,
+		/obj/item/wrench,
+		/obj/item/wirecutters,
 		/obj/item/device/multitool,
-		/obj/item/weapon/weldingtool,
-		/obj/item/weapon/reagent_containers/glass,
-		/obj/item/weapon/storage/part_replacer))
+		/obj/item/weldingtool,
+		/obj/item/reagent_containers/glass,
+		/obj/item/storage/part_replacer))
 
-/obj/item/weapon/circuitboard/machine/deep_fryer
+/obj/item/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"
 	build_path = /obj/machinery/deepfryer
 	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/micro_laser = 1)
+	req_components = list(/obj/item/stock_parts/micro_laser = 1)
 
 /obj/machinery/deepfryer/New()
 	..()
 	create_reagents(50)
 	reagents.add_reagent("nutriment", 25)
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/machine/deep_fryer(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/circuitboard/machine/deep_fryer(null)
+	component_parts += new /obj/item/stock_parts/micro_laser(null)
 	RefreshParts()
 
 /obj/machinery/deepfryer/examine()
@@ -112,7 +112,7 @@ insert ascii eagle on american flag background here
 					S.name = "the physical manifestation of the very concept of fried foods"
 					S.desc = "A heavily fried...something.  Who can tell anymore?"
 			S.filling_color = S.color
-			if(istype(frying, /obj/item/weapon/reagent_containers/food/snacks/))
+			if(istype(frying, /obj/item/reagent_containers/food/snacks/))
 				qdel(frying)
 			else
 				frying.forceMove(S)

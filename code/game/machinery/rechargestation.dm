@@ -14,20 +14,20 @@
 
 /obj/machinery/recharge_station/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/cyborgrecharger(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/cyborgrecharger(null)
 	B.apply_default_parts(src)
 	update_icon()
 
-/obj/item/weapon/circuitboard/machine/cyborgrecharger
+/obj/item/circuitboard/machine/cyborgrecharger
 	name = "Cyborg Recharger (Machine Board)"
 	build_path = /obj/machinery/recharge_station
 	origin_tech = "powerstorage=3;engineering=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/capacitor = 2,
-							/obj/item/weapon/stock_parts/cell = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/capacitor = 2,
+							/obj/item/stock_parts/cell = 1,
+							/obj/item/stock_parts/manipulator = 1)
 	def_components = list(
-		/obj/item/weapon/stock_parts/cell = /obj/item/weapon/stock_parts/cell/high)
+		/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0

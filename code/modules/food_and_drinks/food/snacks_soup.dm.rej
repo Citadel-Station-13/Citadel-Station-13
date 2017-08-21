@@ -1,10 +1,10 @@
 diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_drinks/food/snacks_soup.dm	(rejected hunks)
 @@ -1,25 +1,25 @@
--/obj/item/weapon/reagent_containers/food/snacks/soup
+-/obj/item/reagent_containers/food/snacks/soup
 +/obj/item/reagent_containers/food/snacks/soup
  	w_class = WEIGHT_CLASS_NORMAL
  	icon = 'icons/obj/food/soupsalad.dmi'
--	trash = /obj/item/weapon/reagent_containers/glass/bowl
+-	trash = /obj/item/reagent_containers/glass/bowl
 +	trash = /obj/item/reagent_containers/glass/bowl
  	bitesize = 5
  	volume = 80
@@ -12,12 +12,12 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("tasteless soup" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/New()
+-/obj/item/reagent_containers/food/snacks/soup/New()
 +/obj/item/reagent_containers/food/snacks/soup/New()
  	..()
  	eatverb = pick("slurp","sip","suck","inhale","drink")
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/wish
+-/obj/item/reagent_containers/food/snacks/soup/wish
 +/obj/item/reagent_containers/food/snacks/soup/wish
  	name = "wish soup"
  	desc = "I wish this was soup."
@@ -25,7 +25,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	list_reagents = list("water" = 10)
  	tastes = list("wishes" = 1)
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/wish/New()
+-/obj/item/reagent_containers/food/snacks/soup/wish/New()
 +/obj/item/reagent_containers/food/snacks/soup/wish/New()
  	var/wish_true = prob(25)
  	if(wish_true)
@@ -34,7 +34,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  		reagents.add_reagent("vitamin", 1)
  		foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/meatball
+-/obj/item/reagent_containers/food/snacks/soup/meatball
 +/obj/item/reagent_containers/food/snacks/soup/meatball
  	name = "meatball soup"
  	desc = "You've got balls kid, BALLS!"
@@ -43,7 +43,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("meat" = 1)
  	foodtype = MEAT
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/slime
+-/obj/item/reagent_containers/food/snacks/soup/slime
 +/obj/item/reagent_containers/food/snacks/soup/slime
  	name = "slime soup"
  	desc = "If no water is available, you may substitute tears."
@@ -52,7 +52,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("slime" = 1)
  	foodtype = TOXIC | SUGAR
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/blood
+-/obj/item/reagent_containers/food/snacks/soup/blood
 +/obj/item/reagent_containers/food/snacks/soup/blood
  	name = "tomato soup"
  	desc = "Smells like copper."
@@ -61,19 +61,19 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("iron" = 1)
  	foodtype = GROSS
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
+-/obj/item/reagent_containers/food/snacks/soup/wingfangchu
 +/obj/item/reagent_containers/food/snacks/soup/wingfangchu
  	name = "wing fang chu"
  	desc = "A savory dish of alien wing wang in soy."
  	icon_state = "wingfangchu"
--	trash = /obj/item/weapon/reagent_containers/glass/bowl
+-	trash = /obj/item/reagent_containers/glass/bowl
 +	trash = /obj/item/reagent_containers/glass/bowl
  	bonus_reagents = list("nutriment" = 1, "vitamin" = 2)
  	list_reagents = list("nutriment" = 6, "soysauce" = 5, "vitamin" = 2)
  	tastes = list("soy" = 1)
  	foodtype = MEAT
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/clownstears
+-/obj/item/reagent_containers/food/snacks/soup/clownstears
 +/obj/item/reagent_containers/food/snacks/soup/clownstears
  	name = "clown's tears"
  	desc = "Not very funny."
@@ -82,7 +82,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("a bad joke" = 1)
  	foodtype = FRUIT | SUGAR
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/vegetable
+-/obj/item/reagent_containers/food/snacks/soup/vegetable
 +/obj/item/reagent_containers/food/snacks/soup/vegetable
  	name = "vegetable soup"
  	desc = "A true vegan meal."
@@ -91,7 +91,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("vegetables" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/nettle
+-/obj/item/reagent_containers/food/snacks/soup/nettle
 +/obj/item/reagent_containers/food/snacks/soup/nettle
  	name = "nettle soup"
  	desc = "To think, the botanist would've beat you to death with one of these."
@@ -100,7 +100,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("nettles" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/mystery
+-/obj/item/reagent_containers/food/snacks/soup/mystery
 +/obj/item/reagent_containers/food/snacks/soup/mystery
  	name = "mystery soup"
  	desc = "The mystery is, why aren't you eating it?"
@@ -109,7 +109,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("hot peppers" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/coldchili
+-/obj/item/reagent_containers/food/snacks/soup/coldchili
 +/obj/item/reagent_containers/food/snacks/soup/coldchili
  	name = "cold chili"
  	desc = "This slush is barely a liquid!"
@@ -118,7 +118,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("tomato" = 1, "mint" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/monkeysdelight
+-/obj/item/reagent_containers/food/snacks/soup/monkeysdelight
 +/obj/item/reagent_containers/food/snacks/soup/monkeysdelight
  	name = "monkey's delight"
  	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
@@ -127,7 +127,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("the jungle" = 1, "banana" = 1)
  	foodtype = FRUIT
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/tomato
+-/obj/item/reagent_containers/food/snacks/soup/tomato
 +/obj/item/reagent_containers/food/snacks/soup/tomato
  	name = "tomato soup"
  	desc = "Drinking this feels like being a vampire! A tomato vampire..."
@@ -136,7 +136,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("tomato" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/tomato/eyeball
+-/obj/item/reagent_containers/food/snacks/soup/tomato/eyeball
 +/obj/item/reagent_containers/food/snacks/soup/tomato/eyeball
  	name = "eyeball soup"
  	desc = "It looks back at you..."
@@ -145,7 +145,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("tomato" = 1, "squirming" = 1)
  	foodtype = MEAT | GROSS
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/milo
+-/obj/item/reagent_containers/food/snacks/soup/milo
 +/obj/item/reagent_containers/food/snacks/soup/milo
  	name = "milosoup"
  	desc = "The universes best soup! Yum!!!"
@@ -154,7 +154,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("milo" = 1) // wtf is milo
  	foodtype = GROSS
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/mushroom
+-/obj/item/reagent_containers/food/snacks/soup/mushroom
 +/obj/item/reagent_containers/food/snacks/soup/mushroom
  	name = "chantrelle soup"
  	desc = "A delicious and hearty mushroom soup."
@@ -163,7 +163,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("mushroom" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/beet
+-/obj/item/reagent_containers/food/snacks/soup/beet
 +/obj/item/reagent_containers/food/snacks/soup/beet
  	name = "beet soup"
  	desc = "Wait, how do you spell it again..?"
@@ -171,14 +171,14 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/beet/New()
+-/obj/item/reagent_containers/food/snacks/soup/beet/New()
 +/obj/item/reagent_containers/food/snacks/soup/beet/New()
  	..()
  	name = pick("borsch","bortsch","borstch","borsh","borshch","borscht")
  	tastes = list(name = 1)
  
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/spacylibertyduff
+-/obj/item/reagent_containers/food/snacks/soup/spacylibertyduff
 +/obj/item/reagent_containers/food/snacks/soup/spacylibertyduff
  	name = "spacy liberty duff"
  	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
@@ -187,7 +187,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("jelly" = 1, "mushroom" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/amanitajelly
+-/obj/item/reagent_containers/food/snacks/soup/amanitajelly
 +/obj/item/reagent_containers/food/snacks/soup/amanitajelly
  	name = "amanita jelly"
  	desc = "Looks curiously toxic."
@@ -196,7 +196,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("jelly" = 1, "mushroom" = 1)
  	foodtype = VEGETABLES | TOXIC
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/stew
+-/obj/item/reagent_containers/food/snacks/soup/stew
 +/obj/item/reagent_containers/food/snacks/soup/stew
  	name = "stew"
  	desc = "A nice and warm stew. Healthy and strong."
@@ -205,7 +205,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("tomato" = 1, "carrot" = 1)
  	foodtype = VEGETABLES
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/sweetpotato
+-/obj/item/reagent_containers/food/snacks/soup/sweetpotato
 +/obj/item/reagent_containers/food/snacks/soup/sweetpotato
  	name = "sweet potato soup"
  	desc = "Delicious sweet potato in soup form."
@@ -214,7 +214,7 @@ diff a/code/modules/food_and_drinks/food/snacks_soup.dm b/code/modules/food_and_
  	tastes = list("sweet potato" = 1)
  	foodtype = VEGETABLES | SUGAR
  
--/obj/item/weapon/reagent_containers/food/snacks/soup/beet/red
+-/obj/item/reagent_containers/food/snacks/soup/beet/red
 +/obj/item/reagent_containers/food/snacks/soup/beet/red
  	name = "red beet soup"
  	desc = "Quite a delicacy."

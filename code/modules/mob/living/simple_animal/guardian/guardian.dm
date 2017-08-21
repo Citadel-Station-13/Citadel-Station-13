@@ -593,16 +593,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it.</span>"
 
-/obj/item/weapon/guardiancreator/tech/choose/traitor
+/obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/tech/choose
+/obj/item/guardiancreator/tech/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/tech/choose/dextrous
+/obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guides/antag/guardian
+/obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "alienpaper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>

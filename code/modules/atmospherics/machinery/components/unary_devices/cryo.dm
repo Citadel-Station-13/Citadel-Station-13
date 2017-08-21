@@ -35,7 +35,7 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Initialize()
 	. = ..()
 	initialize_directions = dir
-	var/obj/item/weapon/circuitboard/machine/cryo_tube/B = new
+	var/obj/item/circuitboard/machine/cryo_tube/B = new
 	B.apply_default_parts(src)
 
 	radio = new(src)
@@ -44,14 +44,14 @@
 	radio.canhear_range = 0
 	radio.recalculateChannels()
 
-/obj/item/weapon/circuitboard/machine/cryo_tube
+/obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
 	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	origin_tech = "programming=4;biotech=3;engineering=4;plasmatech=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/matter_bin = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/stock_parts/console_screen = 1,
 							/obj/item/stack/sheet/glass = 2)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_construction()

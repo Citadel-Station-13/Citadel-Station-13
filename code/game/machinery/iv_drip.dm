@@ -9,10 +9,10 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
-	var/obj/item/weapon/reagent_containers/beaker = null
-	var/list/drip_containers = list(/obj/item/weapon/reagent_containers/blood,
-											/obj/item/weapon/reagent_containers/food,
-											/obj/item/weapon/reagent_containers/glass)
+	var/obj/item/reagent_containers/beaker = null
+	var/list/drip_containers = list(/obj/item/reagent_containers/blood,
+											/obj/item/reagent_containers/food,
+											/obj/item/reagent_containers/glass)
 
 /obj/machinery/iv_drip/Initialize()
 	..()

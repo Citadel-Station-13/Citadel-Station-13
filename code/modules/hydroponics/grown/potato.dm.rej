@@ -3,7 +3,7 @@ diff a/code/modules/hydroponics/grown/potato.dm b/code/modules/hydroponics/grown
  	foodtype = VEGETABLES
  
  
--/obj/item/weapon/reagent_containers/food/snacks/grown/potato/wedges
+-/obj/item/reagent_containers/food/snacks/grown/potato/wedges
 +/obj/item/reagent_containers/food/snacks/grown/potato/wedges
  	name = "potato wedges"
  	desc = "Slices of neatly cut potato."

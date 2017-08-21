@@ -3,7 +3,7 @@ diff a/code/game/machinery/Sleeper.dm b/code/game/machinery/Sleeper.dm	(rejected
  	density = FALSE
  	anchored = TRUE
  	state_open = TRUE
--	circuit = /obj/item/weapon/circuitboard/machine/sleeper
+-	circuit = /obj/item/circuitboard/machine/sleeper
 +	circuit = /obj/item/circuitboard/machine/sleeper
  	var/efficiency = 1
  	var/min_health = -25

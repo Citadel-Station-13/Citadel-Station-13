@@ -268,15 +268,15 @@
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 */
 
-/obj/item/weapon/circuitboard/machine
+/obj/item/circuitboard/machine
 	var/list/req_components = null
 	// Components required by the machine.
-	// Example: list(/obj/item/weapon/stock_parts/matter_bin = 5)
+	// Example: list(/obj/item/stock_parts/matter_bin = 5)
 	var/list/def_components = null
 	// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
-	// Example: list(/obj/item/weapon/stock_parts/matter_bin = /obj/item/weapon/stock_parts/matter_bin/super)
+	// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
 
-/obj/item/weapon/circuitboard/machine/proc/apply_default_parts(obj/machinery/M)
+/obj/item/circuitboard/machine/proc/apply_default_parts(obj/machinery/M)
 	if(!req_components)
 		return
 
@@ -300,11 +300,11 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	M.RefreshParts()
 
 
-/obj/item/weapon/circuitboard/machine/abductor
+/obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
 	icon_state = "abductor_mod"
 	origin_tech = "programming=5;abductor=3"
 
-/obj/item/weapon/circuitboard/machine/clockwork
+/obj/item/circuitboard/machine/clockwork
 	name = "clockwork board (Report This)"
 	icon_state = "clock_mod"

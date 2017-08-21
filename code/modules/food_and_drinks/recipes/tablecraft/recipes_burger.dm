@@ -208,68 +208,68 @@
 	reqs = list(
 		/datum/reagent/consumable/sodiumchloride = 5,
 		/datum/reagent/consumable/blackpepper = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/meat/steak/plain = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = 4,
-		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 3,
-		/obj/item/weapon/reagent_containers/food/snacks/boiledegg = 2,
-		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 5,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 4,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 3,
+		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/bun = 1
 
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/superbite
+	result = /obj/item/reagent_containers/food/snacks/burger/superbite
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/slimeburger
 	name = "Jelly burger"
 	reqs = list(
 		/datum/reagent/toxin/slimejelly = 5,
-		/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/slime
+	result = /obj/item/reagent_containers/food/snacks/burger/jelly/slime
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/jellyburger
 	name = "Jelly burger"
 	reqs = list(
 			/datum/reagent/consumable/cherryjelly = 5,
-			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/jelly/cherry
+	result = /obj/item/reagent_containers/food/snacks/burger/jelly/cherry
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
 	reqs = list(
-			/obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili = 2,
-			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+			/obj/item/reagent_containers/food/snacks/grown/ghost_chili = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/fivealarm
+	result = /obj/item/reagent_containers/food/snacks/burger/fivealarm
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/ratburger
 	name = "Rat burger"
 	reqs = list(
 			/obj/item/trash/deadmouse = 1,
-			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/rat
+	result = /obj/item/reagent_containers/food/snacks/burger/rat
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/baseballburger
 	name = "Home run baseball burger"
 	reqs = list(
-			/obj/item/weapon/melee/baseball_bat = 1,
-			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+			/obj/item/melee/baseball_bat = 1,
+			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baseball
+	result = /obj/item/reagent_containers/food/snacks/burger/baseball
 	subcategory = CAT_BURGER
 
 /datum/crafting_recipe/food/baconburger
 	name = "Bacon Burger"
 	reqs = list(
-			/obj/item/weapon/reagent_containers/food/snacks/meat/bacon = 3,
-			/obj/item/weapon/reagent_containers/food/snacks/cheesewedge = 1,
-			/obj/item/weapon/reagent_containers/food/snacks/bun = 1
+			/obj/item/reagent_containers/food/snacks/meat/bacon = 3,
+			/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 
-	result = /obj/item/weapon/reagent_containers/food/snacks/burger/baconburger
+	result = /obj/item/reagent_containers/food/snacks/burger/baconburger
 	subcategory = CAT_BURGER

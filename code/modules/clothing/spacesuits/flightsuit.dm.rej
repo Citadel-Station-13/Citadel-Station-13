@@ -3,7 +3,7 @@ diff a/code/modules/clothing/spacesuits/flightsuit.dm b/code/modules/clothing/sp
  	else if(!maint_panel)
  		usermessage("The maintenance panel is closed!", "boldwarning")
  		return FALSE
--	else if(istype(I, /obj/item/weapon/crowbar))
+-	else if(istype(I, /obj/item/crowbar))
 +	else if(istype(I, /obj/item/crowbar))
  		var/list/inputlist = list()
  		if(pack)

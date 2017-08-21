@@ -17,19 +17,19 @@
 
 /obj/machinery/quantumpad/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/quantumpad(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/quantumpad(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/quantumpad
+/obj/item/circuitboard/machine/quantumpad
 	name = "Quantum Pad (Machine Board)"
 	build_path = /obj/machinery/quantumpad
 	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
 	req_components = list(
-							/obj/item/weapon/ore/bluespace_crystal = 1,
-							/obj/item/weapon/stock_parts/capacitor = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/ore/bluespace_crystal = 1,
+							/obj/item/stock_parts/capacitor = 1,
+							/obj/item/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0

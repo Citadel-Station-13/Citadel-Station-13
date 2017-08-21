@@ -51,7 +51,7 @@
 
 /obj/machinery/computer/camera_advanced/base_construction/New()
 	..()
-	RCD = new /obj/item/weapon/construction/rcd/internal(src)
+	RCD = new /obj/item/construction/rcd/internal(src)
 
 /obj/machinery/computer/camera_advanced/base_construction/Initialize(mapload)
 	..()

@@ -12,8 +12,8 @@
 		var/mob/living/carbon/M = AM
 		if(M.slip(120, src, NO_SLIP_WHEN_WALKING))
 			if (ishuman(M) && (M.real_name != src.owner))
-				if (istype(src.cartridge, /obj/item/weapon/cartridge/virus/clown))
-					var/obj/item/weapon/cartridge/virus/cart = src.cartridge
+				if (istype(src.cartridge, /obj/item/cartridge/virus/clown))
+					var/obj/item/cartridge/virus/cart = src.cartridge
 					if(cart.charges < 5)
 						cart.charges++
 

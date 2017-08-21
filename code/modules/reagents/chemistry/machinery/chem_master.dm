@@ -8,8 +8,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	var/obj/item/weapon/reagent_containers/beaker = null
-	var/obj/item/weapon/storage/pill_bottle/bottle = null
+	var/obj/item/reagent_containers/beaker = null
+	var/obj/item/storage/pill_bottle/bottle = null
 	var/mode = 1
 	var/condi = 0
 	var/screen = "home"
@@ -20,21 +20,21 @@
 /obj/machinery/chem_master/Initialize()
 	create_reagents(100)
 	add_overlay("waitlight")
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
 	. = ..()
 
-/obj/item/weapon/circuitboard/machine/chem_master
+/obj/item/circuitboard/machine/chem_master
 	name = "ChemMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master
 	origin_tech = "materials=3;programming=2;biotech=3"
 	req_components = list(
-							/obj/item/weapon/reagent_containers/glass/beaker = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/reagent_containers/glass/beaker = 2,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/console_screen = 1)
 
-/obj/item/weapon/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		var/new_name = "ChemMaster"
 		var/new_path = /obj/machinery/chem_master
 
@@ -361,6 +361,6 @@
 	desc = "Used to create condiments and other cooking supplies."
 	condi = 1
 
-/obj/item/weapon/circuitboard/machine/chem_master/condi
+/obj/item/circuitboard/machine/chem_master/condi
 	name = "CondiMaster 3000 (Machine Board)"
 	build_path = /obj/machinery/chem_master/condimaster

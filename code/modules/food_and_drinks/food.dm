@@ -7,7 +7,7 @@
 	container_type = INJECTABLE
 	resistance_flags = FLAMMABLE
 
-/obj/item/weapon/reagent_containers/food/New()
+/obj/item/reagent_containers/food/New()
 		..()
 		pixel_x = rand(-5, 5)	//Randomizes postion slightly.
 		pixel_y = rand(-5, 5)

@@ -26,14 +26,14 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter/New()
 	..()
 	required_items = typecacheof(list(
-				/obj/item/weapon/implant,
+				/obj/item/implant,
 				/obj/item/clothing/suit/space/eva/plasmaman,
 				/obj/item/clothing/under/plasmaman,
 				/obj/item/clothing/head/helmet/space/plasmaman,
-				/obj/item/weapon/tank/internals,
+				/obj/item/tank/internals,
 				/obj/item/clothing/mask/breath,
 				/obj/item/clothing/mask/gas))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/gulag_teleporter(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/gulag_teleporter(null)
 	B.apply_default_parts(src)
 	addtimer(CALLBACK(src, .proc/locate_reclaimer), 5)
 
@@ -139,7 +139,7 @@ The console is located at computer/gulag_teleporter.dm
 	var/mob/living/mob_occupant = occupant
 	for(var/obj/item/W in mob_occupant)
 		if(!is_type_in_typecache(W, required_items) && mob_occupant.temporarilyRemoveItemFromInventory(W))
-			if(istype(W, /obj/item/weapon/restraints/handcuffs))
+			if(istype(W, /obj/item/restraints/handcuffs))
 				W.forceMove(get_turf(src))
 				continue
 			if(linked_reclaimer)

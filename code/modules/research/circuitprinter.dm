@@ -31,21 +31,21 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	. = ..()
 	materials = new(src, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE))
 	create_reagents(0)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/circuit_imprinter(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/circuit_imprinter(null)
 	B.apply_default_parts(src)
 
 /obj/machinery/r_n_d/circuit_imprinter/Destroy()
 	qdel(materials)
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/circuit_imprinter
+/obj/item/circuitboard/machine/circuit_imprinter
 	name = "Circuit Imprinter (Machine Board)"
 	build_path = /obj/machinery/r_n_d/circuit_imprinter
 	origin_tech = "engineering=2;programming=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/reagent_containers/glass/beaker = 2)
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/reagent_containers/glass/beaker = 2)
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0

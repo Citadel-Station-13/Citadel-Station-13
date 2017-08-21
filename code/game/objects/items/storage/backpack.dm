@@ -418,12 +418,12 @@
 	silent = 1
 	slowdown = 0
 
-/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman
+/obj/item/storage/backpack/duffelbag/syndie/hitman
 	desc = "A large duffel bag for holding extra things. There is a NanoTrasen logo on the back."
 	icon_state = "duffel-syndieammo"
 	item_state = "duffel-syndieammo"
 
-/obj/item/weapon/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
+/obj/item/storage/backpack/duffelbag/syndie/hitman/PopulateContents()
 	new /obj/item/clothing/under/lawyer/blacksuit(src)
 	new /obj/item/clothing/accessory/waistcoat(src)
 	new /obj/item/clothing/suit/toggle/lawyer/black(src)

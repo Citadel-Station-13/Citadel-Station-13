@@ -44,7 +44,7 @@
 
 		qdel(src)
 		return
-	var/obj/item/weapon/weldingtool/WT = W
+	var/obj/item/weldingtool/WT = W
 	if((istype(WT) && WT.welding))
 		if(!status)
 			status = TRUE

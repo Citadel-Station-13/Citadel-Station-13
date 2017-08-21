@@ -3,22 +3,22 @@ diff a/code/modules/paperwork/paper.dm b/code/modules/paperwork/paper.dm	(reject
   * Natural paper
   */
  
--/obj/item/weapon/paper/natural/Initialize()
+-/obj/item/paper/natural/Initialize()
 +/obj/item/paper/natural/Initialize()
  	. = ..()
  	color = "#FFF5ED"
  
--/obj/item/weapon/paper/crumpled
+-/obj/item/paper/crumpled
 +/obj/item/paper/crumpled
  	name = "paper scrap"
  	icon_state = "scrap"
  	slot_flags = null
  
--/obj/item/weapon/paper/crumpled/update_icon()
+-/obj/item/paper/crumpled/update_icon()
 +/obj/item/paper/crumpled/update_icon()
  	return
  
--/obj/item/weapon/paper/crumpled/bloody
+-/obj/item/paper/crumpled/bloody
 +/obj/item/paper/crumpled/bloody
  	icon_state = "scrap_bloodied"
  

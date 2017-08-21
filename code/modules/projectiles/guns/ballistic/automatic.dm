@@ -8,17 +8,17 @@
 	fire_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
-/obj/item/weapon/gun/ballistic/automatic/proto
+/obj/item/gun/ballistic/automatic/proto
 	name = "\improper NanoTrasen Saber SMG"
 	desc = "A prototype three-round burst 9mm submachine gun, designated 'SABR'. Has a threaded barrel for suppressors."
 	icon_state = "saber"
 	mag_type = /obj/item/ammo_box/magazine/smgm9mm
 	pin = null
 
-/obj/item/weapon/gun/ballistic/automatic/proto/unrestricted
+/obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/device/firing_pin
 
-/obj/item/weapon/gun/ballistic/automatic/update_icon()
+/obj/item/gun/ballistic/automatic/update_icon()
 	..()
 	cut_overlays()
 	if(!select)

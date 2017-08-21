@@ -95,7 +95,7 @@ datum/species/mammal
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
@@ -128,7 +128,7 @@ datum/species/mammal
 	exotic_blood = "xblood"
 	damage_overlay_type = "xeno"
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
 	roundstart = 0

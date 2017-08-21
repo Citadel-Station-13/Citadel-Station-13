@@ -178,12 +178,12 @@
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/Initialize()
+/obj/item/reagent_containers/food/snacks/icecream/Initialize()
 	. = ..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 4)
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
+/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
 	cone_type = cone_name
 	icon_state = "icecream_cone_[cone_name]"
 	switch (cone_type)

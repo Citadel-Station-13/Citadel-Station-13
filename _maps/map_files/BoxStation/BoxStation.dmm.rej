@@ -3,8 +3,8 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  /area/security/execution/transfer)
  "acY" = (
  /obj/structure/table,
--/obj/item/weapon/paper,
--/obj/item/weapon/pen,
+-/obj/item/paper,
+-/obj/item/pen,
 +/obj/item/paper,
 +/obj/item/pen,
  /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14,15 +14,15 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  "adC" = (
  /obj/structure/table,
  /obj/machinery/atmospherics/pipe/simple/supply/hidden,
--/obj/item/weapon/scalpel{
+-/obj/item/scalpel{
 +/obj/item/scalpel{
  	pixel_y = 12
  	},
--/obj/item/weapon/circular_saw,
--/obj/item/weapon/hemostat,
--/obj/item/weapon/retractor,
--/obj/item/weapon/surgical_drapes,
--/obj/item/weapon/razor,
+-/obj/item/circular_saw,
+-/obj/item/hemostat,
+-/obj/item/retractor,
+-/obj/item/surgical_drapes,
+-/obj/item/razor,
 +/obj/item/circular_saw,
 +/obj/item/hemostat,
 +/obj/item/retractor,
@@ -35,7 +35,7 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  /area/security/execution/transfer)
  "adE" = (
  /obj/structure/table,
--/obj/item/weapon/folder/red{
+-/obj/item/folder/red{
 +/obj/item/folder/red{
  	pixel_x = 3
  	},
@@ -43,7 +43,7 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  	pixel_x = -3
  	},
  /obj/item/device/assembly/flash/handheld,
--/obj/item/weapon/reagent_containers/spray/pepper,
+-/obj/item/reagent_containers/spray/pepper,
 +/obj/item/reagent_containers/spray/pepper,
  /turf/open/floor/plasteel/black,
  /area/security/execution/transfer)
@@ -52,7 +52,7 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  /area/security/execution/transfer)
  "afz" = (
  /obj/structure/table,
--/obj/item/weapon/restraints/handcuffs,
+-/obj/item/restraints/handcuffs,
 +/obj/item/restraints/handcuffs,
  /turf/open/floor/plasteel/red/side{
  	dir = 10
@@ -61,14 +61,14 @@ diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/Bo
  /area/maintenance/starboard)
  "brz" = (
  /obj/structure/table,
--/obj/item/weapon/pen,
+-/obj/item/pen,
 +/obj/item/pen,
  /obj/machinery/camera{
  	c_tag = "Experimentor Lab";
  	dir = 2;
  	network = list("SS13","RD")
  	},
--/obj/item/weapon/hand_labeler,
+-/obj/item/hand_labeler,
 +/obj/item/hand_labeler,
  /obj/item/stack/packageWrap,
  /turf/open/floor/plasteel/white/side{

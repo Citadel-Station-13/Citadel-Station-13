@@ -28,19 +28,19 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/weapon/twohanded/ctf/Destroy()
+/obj/item/twohanded/ctf/Destroy()
 	if(reset)
 		qdel(reset)
 		reset = null
 	. = ..()
 
-/obj/item/weapon/twohanded/ctf/Initialize()
+/obj/item/twohanded/ctf/Initialize()
 	..()
 	SET_SECONDARY_FLAG(src, SLOWS_WHILE_IN_HAND)
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/weapon/twohanded/ctf/process()
+/obj/item/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
 		forceMove(get_turf(src.reset))
 		for(var/mob/M in GLOB.player_list)

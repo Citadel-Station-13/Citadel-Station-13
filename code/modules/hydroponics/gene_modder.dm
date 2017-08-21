@@ -7,7 +7,7 @@
 	anchored = TRUE
 
 	var/obj/item/seeds/seed
-	var/obj/item/weapon/disk/plantgene/disk
+	var/obj/item/disk/plantgene/disk
 
 	var/list/core_genes = list()
 	var/list/reagent_genes = list()
@@ -24,21 +24,21 @@
 
 /obj/machinery/plantgenes/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/plantgenes(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/plantgenes
+/obj/item/circuitboard/machine/plantgenes
 	name = "Plant DNA Manipulator (Machine Board)"
 	build_path = /obj/machinery/plantgenes
 	origin_tech = "programming=3;biotech=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/scanning_module = 1)
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/console_screen = 1,
+							/obj/item/stock_parts/scanning_module = 1)
 
 /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if(M.rating > 3)
 			max_potency = 95
 		else
@@ -426,24 +426,24 @@
 // Gene modder for seed vault ship, built with high tech alien parts.
 /obj/machinery/plantgenes/seedvault/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/plantgenes/vault(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/plantgenes/vault(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/plantgenes/vault
+/obj/item/circuitboard/machine/plantgenes/vault
 	name = "alien board (Plant DNA Manipulator)"
 	icon_state = "abductor_mod"
 	origin_tech = "programming=5;biotech=5"
 	// It wasn't made by actual abductors race, so no abductor tech here.
 	def_components = list(
-		/obj/item/weapon/stock_parts/manipulator = /obj/item/weapon/stock_parts/manipulator/femto,
-		/obj/item/weapon/stock_parts/micro_laser = /obj/item/weapon/stock_parts/micro_laser/quadultra,
-		/obj/item/weapon/stock_parts/scanning_module = /obj/item/weapon/stock_parts/scanning_module/triphasic)
+		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
+		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
+		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
 
 /*
  *  Plant DNA disk
  */
 
-/obj/item/weapon/disk/plantgene
+/obj/item/disk/plantgene
 	name = "plant data disk"
 	desc = "A disk for storing plant genetic data."
 	icon_state = "datadisk_hydro"

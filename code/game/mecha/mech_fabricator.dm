@@ -38,18 +38,18 @@
 	..()
 	files = new /datum/research(src) //Setup the research data holder.
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/mechfab(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/mechfab(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/mechfab
+/obj/item/circuitboard/machine/mechfab
 	name = "Exosuit Fabricator (Machine Board)"
 	build_path = /obj/machinery/mecha_part_fabricator
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 2,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stock_parts/matter_bin = 2,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0

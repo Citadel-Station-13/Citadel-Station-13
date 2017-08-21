@@ -3,7 +3,7 @@ diff a/code/modules/mob/living/carbon/human/human.dm b/code/modules/mob/living/c
  		threatcount -= 1
  
  	//Agent cards lower threatlevel.
--	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
+-	if(istype(idcard, /obj/item/card/id/syndicate))
 +	if(istype(idcard, /obj/item/card/id/syndicate))
  		threatcount -= 5
  

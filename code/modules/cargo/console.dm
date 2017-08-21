@@ -15,12 +15,12 @@
 	name = "supply request console"
 	desc = "Used to request supplies from cargo."
 	icon_screen = "request"
-	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
+	circuit = /obj/item/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
 /obj/machinery/computer/cargo/New()
 	..()
-	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
+	var/obj/item/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband
 	emagged = board.emagged
 

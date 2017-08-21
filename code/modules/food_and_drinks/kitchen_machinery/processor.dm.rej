@@ -3,7 +3,7 @@ diff a/code/modules/food_and_drinks/kitchen_machinery/processor.dm b/code/module
  	use_power = IDLE_POWER_USE
  	idle_power_usage = 5
  	active_power_usage = 50
--	circuit = /obj/item/weapon/circuitboard/machine/processor
+-	circuit = /obj/item/circuitboard/machine/processor
 +	circuit = /obj/item/circuitboard/machine/processor
  	var/broken = FALSE
  	var/processing = FALSE
@@ -11,10 +11,10 @@ diff a/code/modules/food_and_drinks/kitchen_machinery/processor.dm b/code/module
  	var/rating_amount = 1
  
  /obj/machinery/processor/RefreshParts()
--	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 +	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
  		rating_amount = B.rating
--	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 +	for(var/obj/item/stock_parts/manipulator/M in component_parts)
  		rating_speed = M.rating
  
@@ -23,7 +23,7 @@ diff a/code/modules/food_and_drinks/kitchen_machinery/processor.dm b/code/module
  
  /obj/machinery/processor/slime/Initialize()
  	. = ..()
--	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
+-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
 +	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
  	B.apply_default_parts(src)
 \ No newline at end of file

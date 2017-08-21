@@ -3,7 +3,7 @@ diff a/code/modules/power/smes.dm b/code/modules/power/smes.dm	(rejected hunks)
  	density = TRUE
  	anchored = TRUE
  	use_power = NO_POWER_USE
--	circuit = /obj/item/weapon/circuitboard/machine/smes
+-	circuit = /obj/item/circuitboard/machine/smes
 +	circuit = /obj/item/circuitboard/machine/smes
  	var/capacity = 5e6 // maximum charge
  	var/charge = 0 // actual charge

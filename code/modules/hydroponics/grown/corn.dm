@@ -15,17 +15,17 @@
 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
 	reagents_add = list("cornoil" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/corn
+/obj/item/reagent_containers/food/snacks/grown/corn
 	seed = /obj/item/seeds/corn
 	name = "ear of corn"
 	desc = "Needs some butter!"
 	icon_state = "corn"
-	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/popcorn
+	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
 	filling_color = "#FFFF00"
-	trash = /obj/item/weapon/grown/corncob
+	trash = /obj/item/grown/corncob
 	bitesize_mod = 2
 
-/obj/item/weapon/grown/corncob
+/obj/item/grown/corncob
 	name = "corn cob"
 	desc = "A reminder of meals gone by."
 	icon_state = "corncob"

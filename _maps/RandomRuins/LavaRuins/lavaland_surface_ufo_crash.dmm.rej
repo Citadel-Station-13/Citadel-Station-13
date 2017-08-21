@@ -3,7 +3,7 @@ diff a/_maps/RandomRuins/LavaRuins/lavaland_surface_ufo_crash.dmm b/_maps/Random
  /area/ruin/unpowered)
  "s" = (
  /obj/structure/table/optable/abductor,
--/obj/item/weapon/cautery/alien,
+-/obj/item/cautery/alien,
 +/obj/item/cautery/alien,
  /obj/effect/baseturf_helper/lava_land/surface,
  /turf/open/floor/plating/abductor{

@@ -30,14 +30,14 @@
 			for(var/i in 1 to amount)
 				load(new typekey(src))
 
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/smartfridge(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/smartfridge(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/smartfridge
+/obj/item/circuitboard/machine/smartfridge
 	name = "Smartfridge (Machine Board)"
 	build_path = /obj/machinery/smartfridge
 	origin_tech = "programming=1"
-	req_components = list(/obj/item/weapon/stock_parts/matter_bin = 1)
+	req_components = list(/obj/item/stock_parts/matter_bin = 1)
 	var/static/list/fridges = list(/obj/machinery/smartfridge = "plant produce",
 							/obj/machinery/smartfridge/food = "food",
 							/obj/machinery/smartfridge/drinks = "drinks",
@@ -46,13 +46,13 @@
 							/obj/machinery/smartfridge/chemistry/virology = "viruses",
 							/obj/machinery/smartfridge/disks = "disks")
 
-/obj/item/weapon/circuitboard/machine/smartfridge/New(loc, new_type)
+/obj/item/circuitboard/machine/smartfridge/New(loc, new_type)
 	if(new_type)
 		build_path = new_type
 	..()
 
-/obj/item/weapon/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		var/position = fridges.Find(build_path, fridges)
 		position = (position == fridges.len) ? 1 : (position + 1)
 		build_path = fridges[position]
@@ -60,12 +60,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/circuitboard/machine/smartfridge/examine(mob/user)
+/obj/item/circuitboard/machine/smartfridge/examine(mob/user)
 	..()
 	to_chat(user, "<span class='info'>[src] is set to [fridges[build_path]]. You can use a screwdriver to reconfigure it.</span>")
 
 /obj/machinery/smartfridge/RefreshParts()
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_n_of_items = 1500 * B.rating
 
 /obj/machinery/smartfridge/power_change()

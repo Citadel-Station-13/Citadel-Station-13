@@ -3,7 +3,7 @@ diff a/code/modules/station_goals/shield.dm b/code/modules/station_goals/shield.
  /obj/machinery/computer/sat_control
  	name = "satellite control"
  	desc = "Used to control the satellite network."
--	circuit = /obj/item/weapon/circuitboard/computer/sat_control
+-	circuit = /obj/item/circuitboard/computer/sat_control
 +	circuit = /obj/item/circuitboard/computer/sat_control
  	var/notice
  

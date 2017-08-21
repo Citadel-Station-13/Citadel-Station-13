@@ -3,7 +3,7 @@ diff a/code/game/machinery/announcement_system.dm b/code/game/machinery/announce
  	idle_power_usage = 20
  	active_power_usage = 50
  
--	circuit = /obj/item/weapon/circuitboard/machine/announcement_system
+-	circuit = /obj/item/circuitboard/machine/announcement_system
 +	circuit = /obj/item/circuitboard/machine/announcement_system
  
  	var/obj/item/device/radio/headset/radio

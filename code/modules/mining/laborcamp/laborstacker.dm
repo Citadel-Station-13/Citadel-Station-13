@@ -22,7 +22,7 @@
 	addtimer(CALLBACK(src, .proc/locate_stacking_machine), 7)
 
 /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/card/id/prisoner))
+	if(istype(I, /obj/item/card/id/prisoner))
 		if(!inserted_id)
 			if(!user.drop_item())
 				return

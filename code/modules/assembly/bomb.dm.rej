@@ -3,7 +3,7 @@ diff a/code/modules/assembly/bomb.dm b/code/modules/assembly/bomb.dm	(rejected h
  
  		qdel(src)
  		return
--	if((istype(W, /obj/item/weapon/weldingtool) && W:welding))
+-	if((istype(W, /obj/item/weldingtool) && W:welding))
 +	if((istype(W, /obj/item/weldingtool) && W:welding))
  		if(!status)
  			status = TRUE

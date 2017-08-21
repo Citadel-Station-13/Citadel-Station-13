@@ -159,12 +159,12 @@
 	mutatelist = list(/obj/item/seeds/grape/green)
 	reagents_add = list("vitamin" = 0.04, "nutriment" = 0.1, "sugar" = 0.1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/grapes
+/obj/item/reagent_containers/food/snacks/grown/grapes
 	seed = /obj/item/seeds/grape
 	name = "bunch of grapes"
 	desc = "Nutritious!"
 	icon_state = "grapes"
-	dried_type = /obj/item/weapon/reagent_containers/food/snacks/no_raisin/healthy
+	dried_type = /obj/item/reagent_containers/food/snacks/no_raisin/healthy
 	filling_color = "#FF1493"
 	bitesize_mod = 2
 

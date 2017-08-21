@@ -3,7 +3,7 @@ diff a/code/modules/admin/verbs/debug.dm b/code/modules/admin/verbs/debug.dm	(re
  				if(istype(worn, /obj/item/device/pda))
  					worn:id = id
  					id.loc = worn
--				else if(istype(worn, /obj/item/weapon/storage/wallet))
+-				else if(istype(worn, /obj/item/storage/wallet))
 +				else if(istype(worn, /obj/item/storage/wallet))
  					worn:front_id = id
  					id.loc = worn

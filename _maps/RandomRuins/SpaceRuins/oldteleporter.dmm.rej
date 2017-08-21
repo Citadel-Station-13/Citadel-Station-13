@@ -3,7 +3,7 @@ diff a/_maps/RandomRuins/SpaceRuins/oldteleporter.dmm b/_maps/RandomRuins/SpaceR
  /area/ruin/space/oldteleporter)
  "l" = (
  /obj/structure/table,
--/obj/item/weapon/stock_parts/cell{
+-/obj/item/stock_parts/cell{
 +/obj/item/stock_parts/cell{
  	charge = 100;
  	maxcharge = 15000

@@ -16,16 +16,16 @@
 
 /obj/machinery/monkey_recycler/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/monkey_recycler(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/monkey_recycler(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/monkey_recycler
+/obj/item/circuitboard/machine/monkey_recycler
 	name = "Monkey Recycler (Machine Board)"
 	build_path = /obj/machinery/monkey_recycler
 	origin_tech = "programming=1;biotech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1)
 
 /obj/machinery/monkey_recycler/RefreshParts()
 	var/req_grind = 5

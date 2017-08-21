@@ -3,7 +3,7 @@ diff a/code/modules/mob/living/simple_animal/friendly/mouse.dm b/code/modules/mo
  /mob/living/simple_animal/mouse/death(gibbed, toast)
  	if(!ckey)
  		..(1)
--		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(loc)
+-		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
 +		var/obj/item/reagent_containers/food/snacks/deadmouse/M = new(loc)
  		M.icon_state = icon_dead
  		M.name = name
@@ -12,7 +12,7 @@ diff a/code/modules/mob/living/simple_animal/friendly/mouse.dm b/code/modules/mo
  	response_harm   = "splats"
  	gold_core_spawnable = 0
  
--/obj/item/weapon/reagent_containers/food/snacks/deadmouse
+-/obj/item/reagent_containers/food/snacks/deadmouse
 +/obj/item/reagent_containers/food/snacks/deadmouse
  	name = "dead mouse"
  	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."

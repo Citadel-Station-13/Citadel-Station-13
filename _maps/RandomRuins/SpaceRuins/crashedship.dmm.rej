@@ -3,7 +3,7 @@ diff a/_maps/RandomRuins/SpaceRuins/crashedship.dmm b/_maps/RandomRuins/SpaceRui
  /area/awaymission/BMPship)
  "gF" = (
  /obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
--/obj/item/weapon/shard{
+-/obj/item/shard{
 +/obj/item/shard{
  	icon_state = "small"
  	},

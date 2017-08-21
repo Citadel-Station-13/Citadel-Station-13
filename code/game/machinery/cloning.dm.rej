@@ -3,7 +3,7 @@ diff a/code/game/machinery/cloning.dm b/code/game/machinery/cloning.dm	(rejected
  	icon_state = "pod_0"
  	req_access = list(ACCESS_CLONING) //FOR PREMATURE UNLOCKING.
  	verb_say = "states"
--	circuit = /obj/item/weapon/circuitboard/machine/clonepod
+-	circuit = /obj/item/circuitboard/machine/clonepod
 +	circuit = /obj/item/circuitboard/machine/clonepod
  
  	var/heal_level //The clone is released once its health reaches this level.

@@ -1738,13 +1738,13 @@
 	},
 /area/ai_monitored/security/armory)
 "adS" = (
-/obj/item/weapon/ore/glass,
+/obj/item/ore/glass,
 /turf/open/floor/plating/asteroid,
 /area/security/transfer)
 "adT" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/ionrifle,
-/obj/item/weapon/gun/energy/temperature/security,
+/obj/item/gun/energy/ionrifle,
+/obj/item/gun/energy/temperature/security,
 /obj/item/clothing/suit/armor/laserproof,
 /obj/structure/window/reinforced{
 	dir = 1
@@ -4129,7 +4129,7 @@
 /area/security/prison)
 "aiz" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe/mini,
+/obj/item/pickaxe/mini,
 /turf/open/floor/plating/asteroid,
 /area/security/transfer)
 "aiA" = (
@@ -4527,7 +4527,7 @@
 /area/security/prison)
 "ajr" = (
 /obj/structure/rack,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating/asteroid,
 /area/security/transfer)
 "ajs" = (
@@ -6188,11 +6188,11 @@
 /area/quartermaster/sorting)
 "amK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
-/obj/item/weapon/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -6477,8 +6477,8 @@
 /area/crew_quarters/heads/captain)
 "anj" = (
 /obj/structure/table/wood,
-/obj/item/weapon/pinpointer,
-/obj/item/weapon/disk/nuclear,
+/obj/item/pinpointer,
+/obj/item/disk/nuclear,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -31968,24 +31968,24 @@
 /area/medical/patients_rooms)
 "biQ" = (
 /obj/structure/table,
-/obj/item/weapon/surgicaldrill,
+/obj/item/surgicaldrill,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/surgery)
 "biR" = (
 /obj/structure/table,
-/obj/item/weapon/hemostat,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/surgery)
 "biS" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel{
+/obj/item/scalpel{
 	pixel_y = 12
 	},
-/obj/item/weapon/circular_saw,
+/obj/item/circular_saw,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -31995,14 +31995,14 @@
 /area/medical/surgery)
 "biT" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
+/obj/item/retractor,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/surgery)
 "biU" = (
 /obj/structure/table,
-/obj/item/weapon/cautery{
+/obj/item/cautery{
 	pixel_x = 4
 	},
 /turf/open/floor/plasteel/white{
@@ -32442,16 +32442,16 @@
 /area/crew_quarters/heads/cmo)
 "bjM" = (
 /obj/structure/table,
-/obj/item/weapon/cartridge/medical{
+/obj/item/cartridge/medical{
 	pixel_x = -2;
 	pixel_y = 6
 	},
-/obj/item/weapon/cartridge/medical{
+/obj/item/cartridge/medical{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/weapon/cartridge/medical,
-/obj/item/weapon/cartridge/chemistry{
+/obj/item/cartridge/medical,
+/obj/item/cartridge/chemistry{
 	pixel_y = 2
 	},
 /obj/machinery/light{
@@ -32518,8 +32518,8 @@
 /area/medical/surgery)
 "bjU" = (
 /obj/structure/table,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/razor,
+/obj/item/surgical_drapes,
+/obj/item/razor,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -32976,7 +32976,7 @@
 /area/crew_quarters/heads/cmo)
 "bkJ" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red{
+/obj/item/folder/red{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -33003,7 +33003,7 @@
 /area/medical/patients_rooms)
 "bkM" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -33745,7 +33745,7 @@
 /area/medical/virology)
 "blW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -34525,26 +34525,26 @@
 /area/medical/surgery)
 "bnk" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/BPlus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -37838,12 +37838,12 @@
 /area/medical/virology)
 "bsN" = (
 /obj/structure/table/glass,
-/obj/item/weapon/book/manual/wiki/infections{
+/obj/item/book/manual/wiki/infections{
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -37870,7 +37870,7 @@
 /area/medical/virology)
 "bsQ" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/device/radio/headset/headset_med,
 /obj/structure/reagent_dispensers/virusfood{
 	density = 0;
@@ -38645,11 +38645,11 @@
 /area/medical/virology)
 "buj" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 5
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
@@ -39439,7 +39439,7 @@
 /area/medical/medbay/central)
 "bvA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -40085,8 +40085,8 @@
 /area/medical/medbay/central)
 "bwM" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -40727,7 +40727,7 @@
 /area/hallway/primary/starboard)
 "bxS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -40752,7 +40752,7 @@
 "bxU" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/wrench/medical,
+/obj/item/wrench/medical,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41228,12 +41228,12 @@
 /area/medical/medbay/central)
 "byT" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
-/obj/item/weapon/folder,
+/obj/item/pen,
+/obj/item/folder,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -41259,8 +41259,8 @@
 /area/medical/medbay/central)
 "byW" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	name = "Station Intercom (General)";
@@ -42745,7 +42745,7 @@
 /area/medical/genetics/cloning)
 "bBx" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/medical_cloning{
+/obj/item/book/manual/medical_cloning{
 	pixel_y = 6
 	},
 /obj/machinery/firealarm{
@@ -43275,12 +43275,12 @@
 /area/medical/genetics/cloning)
 "bCu" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/rxglasses{
+/obj/item/storage/box/rxglasses{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /obj/structure/cable/orange{
 	d2 = 8;
 	icon_state = "0-8"
@@ -46011,10 +46011,10 @@
 /area/medical/medbay/central)
 "bHu" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/folder/white,
+/obj/item/gun/syringe,
+/obj/item/reagent_containers/dropper,
+/obj/item/soap/nanotrasen,
 /obj/machinery/newscaster{
 	pixel_y = 32
 	},
@@ -46024,12 +46024,12 @@
 /area/medical/medbay/zone2)
 "bHv" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -46043,12 +46043,12 @@
 "bHw" = (
 /obj/structure/table,
 /obj/item/device/radio/intercom,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -46058,12 +46058,12 @@
 /area/medical/medbay/zone2)
 "bHx" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -46078,12 +46078,12 @@
 /area/medical/medbay/zone2)
 "bHy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -46693,7 +46693,7 @@
 /obj/structure/table/glass,
 /obj/item/hand_labeler_refill,
 /obj/item/hand_labeler_refill,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
 /obj/machinery/light,
 /turf/open/floor/plasteel/white{
@@ -46704,7 +46704,7 @@
 /obj/structure/table/glass,
 /obj/item/stack/cable_coil/random,
 /obj/item/stack/cable_coil/random,
-/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -48828,20 +48828,20 @@
 /area/maintenance/asteroid/starboard)
 "bMG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine{
+/obj/item/storage/box/syringes,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 7;
 	pixel_y = -3
 	},
-/obj/item/weapon/reagent_containers/glass/bottle/morphine{
+/obj/item/reagent_containers/glass/bottle/morphine{
 	pixel_x = 8;
 	pixel_y = -3
 	},
-/obj/item/weapon/reagent_containers/syringe{
+/obj/item/reagent_containers/syringe{
 	pixel_x = 6;
 	pixel_y = -3
 	},
@@ -48851,13 +48851,13 @@
 /area/medical/medbay/zone2)
 "bMH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/medical{
+/obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/belt/medical{
+/obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/belt/medical{
+/obj/item/storage/belt/medical{
 	pixel_y = 2
 	},
 /obj/item/clothing/neck/stethoscope,
@@ -48868,15 +48868,15 @@
 /area/medical/medbay/zone2)
 "bMI" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/gun/syringe,
+/obj/item/hand_labeler,
+/obj/item/gun/syringe,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/medical/medbay/zone2)
 "bMJ" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health,
@@ -48886,11 +48886,11 @@
 /area/medical/medbay/zone2)
 "bMK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/bodybags{
+/obj/item/storage/box/bodybags{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/rxglasses,
+/obj/item/storage/box/rxglasses,
 /obj/item/stack/packageWrap,
 /obj/item/device/destTagger,
 /turf/open/floor/plasteel/white{
@@ -54737,7 +54737,7 @@
 	})
 "bYp" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/holodeck/disclaimer,
+/obj/item/paper/fluff/holodeck/disclaimer,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -54889,7 +54889,7 @@
 	name = "Fitness Toilets"
 	})
 "bYG" = (
-/obj/item/weapon/soap/nanotrasen,
+/obj/item/soap/nanotrasen,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/freezer{
 	baseturf = /turf/open/floor/plating/asteroid/airless
@@ -61078,12 +61078,12 @@
 /area/construction/mining/aux_base)
 "ckH" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/machine/telecomms/processor,
-/obj/item/weapon/circuitboard/machine/telecomms/receiver,
-/obj/item/weapon/circuitboard/machine/telecomms/server,
-/obj/item/weapon/circuitboard/machine/telecomms/bus,
-/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
-/obj/item/weapon/circuitboard/computer/message_monitor{
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/circuitboard/machine/telecomms/receiver,
+/obj/item/circuitboard/machine/telecomms/server,
+/obj/item/circuitboard/machine/telecomms/bus,
+/obj/item/circuitboard/machine/telecomms/broadcaster,
+/obj/item/circuitboard/computer/message_monitor{
 	pixel_y = -5
 	},
 /turf/open/floor/plating{
@@ -64340,8 +64340,8 @@
 	req_access_txt = "29"
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/belt/utility/full,
-/obj/item/weapon/storage/belt/utility/full,
+/obj/item/storage/belt/utility/full,
+/obj/item/storage/belt/utility/full,
 /obj/item/clothing/glasses/welding,
 /obj/item/clothing/head/welding,
 /turf/open/floor/plasteel/white{
@@ -65722,10 +65722,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel,
+/obj/item/retractor,
+/obj/item/hemostat,
+/obj/item/circular_saw,
+/obj/item/scalpel,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -65746,9 +65746,9 @@
 "csS" = (
 /obj/structure/table,
 /obj/structure/window/reinforced,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/weapon/storage/box/bodybags,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -66046,20 +66046,20 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid{
+/obj/item/storage/firstaid{
 	name = "first-aid kit (empty)"
 	},
-/obj/item/weapon/storage/firstaid{
+/obj/item/storage/firstaid{
 	name = "first-aid kit (empty)"
 	},
-/obj/item/weapon/storage/firstaid{
+/obj/item/storage/firstaid{
 	name = "first-aid kit (empty)"
 	},
 /obj/item/device/healthanalyzer,
 /obj/item/device/healthanalyzer,
 /obj/item/device/healthanalyzer,
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /obj/item/device/assembly/prox_sensor,
 /obj/item/device/assembly/prox_sensor,
 /obj/item/device/assembly/prox_sensor,
@@ -66079,17 +66079,17 @@
 "ctw" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/science/robotics/lab)
 "ctx" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 5
 	},
@@ -77241,7 +77241,7 @@
 "cOG" = (
 /obj/structure/table/glass,
 /obj/item/clothing/neck/stethoscope,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /turf/open/floor/plasteel/barber{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -77404,12 +77404,12 @@
 /area/crew_quarters/heads/cmo)
 "cOZ" = (
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/pen,
-/obj/item/weapon/stamp/cmo,
+/obj/item/pen,
+/obj/item/stamp/cmo,
 /turf/open/floor/plasteel/barber{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87147,16 +87147,16 @@
 /area/space)
 "dkH" = (
 /obj/structure/rack,
-/obj/item/weapon/shovel,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
 /area/security/transfer)
 "dkI" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -87198,7 +87198,7 @@
 	},
 /area/security/transfer)
 "dkP" = (
-/obj/item/weapon/ore/glass,
+/obj/item/ore/glass,
 /obj/structure/cable/orange{
 	d1 = 2;
 	d2 = 4;
@@ -87249,7 +87249,7 @@
 	},
 /area/security/transfer)
 "dkV" = (
-/obj/item/weapon/ore/glass,
+/obj/item/ore/glass,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},

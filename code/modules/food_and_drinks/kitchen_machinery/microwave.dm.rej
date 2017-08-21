@@ -3,7 +3,7 @@ diff a/code/modules/food_and_drinks/kitchen_machinery/microwave.dm b/code/module
  	use_power = IDLE_POWER_USE
  	idle_power_usage = 5
  	active_power_usage = 100
--	circuit = /obj/item/weapon/circuitboard/machine/microwave
+-	circuit = /obj/item/circuitboard/machine/microwave
 +	circuit = /obj/item/circuitboard/machine/microwave
  	var/operating = FALSE // Is it on?
  	var/dirty = 0 // = {0..100} Does it need cleaning?

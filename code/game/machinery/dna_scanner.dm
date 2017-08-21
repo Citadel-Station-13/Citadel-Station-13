@@ -16,17 +16,17 @@
 
 /obj/machinery/dna_scannernew/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/clonescanner(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/clonescanner(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/clonescanner
+/obj/item/circuitboard/machine/clonescanner
 	name = "Cloning Scanner (Machine Board)"
 	build_path = /obj/machinery/dna_scannernew
 	origin_tech = "programming=2;biotech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/scanning_module = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/scanning_module = 1,
+							/obj/item/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/micro_laser = 1,
 							/obj/item/stack/sheet/glass = 1,
 							/obj/item/stack/cable_coil = 2)
 

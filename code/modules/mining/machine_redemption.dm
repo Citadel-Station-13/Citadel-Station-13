@@ -12,7 +12,7 @@
 	output_dir = SOUTH
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	var/req_access_reclaim = ACCESS_MINING_STATION
-	var/obj/item/weapon/card/id/inserted_id
+	var/obj/item/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
 	var/sheet_per_ore = 1
@@ -27,7 +27,7 @@
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/ore_redemption/B = new
+	var/obj/item/circuitboard/machine/ore_redemption/B = new
 	B.apply_default_parts(src)
 	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	files = new /datum/research/smelter(src)
@@ -37,15 +37,15 @@
 	QDEL_NULL(files)
 	return ..()
 
-/obj/item/weapon/circuitboard/machine/ore_redemption
+/obj/item/circuitboard/machine/ore_redemption
 	name = "Ore Redemption (Machine Board)"
 	build_path = /obj/machinery/mineral/ore_redemption
 	origin_tech = "programming=1;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/console_screen = 1,
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/console_screen = 1,
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/manipulator = 1,
 							/obj/item/device/assembly/igniter = 1)
 
 /obj/machinery/mineral/ore_redemption/RefreshParts()

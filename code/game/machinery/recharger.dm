@@ -8,26 +8,26 @@
 	idle_power_usage = 4
 	active_power_usage = 250
 	var/obj/item/charging = null
-	var/static/list/allowed_devices = typecacheof(list(/obj/item/weapon/gun/energy, /obj/item/weapon/melee/baton, /obj/item/ammo_box/magazine/recharge, /obj/item/device/modular_computer))
+	var/static/list/allowed_devices = typecacheof(list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/ammo_box/magazine/recharge, /obj/item/device/modular_computer))
 	var/recharge_coeff = 1
 
 /obj/machinery/recharger/Initialize()
 	. = ..()
-	var/obj/item/weapon/circuitboard/machine/recharger/B = new()
+	var/obj/item/circuitboard/machine/recharger/B = new()
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/recharger
+/obj/item/circuitboard/machine/recharger
 	name = "Weapon Recharger (Machine Board)"
 	build_path = /obj/machinery/recharger
 	origin_tech = "powerstorage=4;engineering=3;materials=4"
-	req_components = list(/obj/item/weapon/stock_parts/capacitor = 1)
+	req_components = list(/obj/item/stock_parts/capacitor = 1)
 
 /obj/machinery/recharger/RefreshParts()
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
+	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
-	if(istype(G, /obj/item/weapon/wrench))
+/obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
+	if(istype(G, /obj/item/wrench))
 		if(charging)
 			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
 			return

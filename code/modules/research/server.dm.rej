@@ -3,7 +3,7 @@ diff a/code/modules/research/server.dm b/code/modules/research/server.dm	(reject
  
  /obj/machinery/r_n_d/server/Initialize()
  	. = ..()
--	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/rdserver(null)
+-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 +	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
  	B.apply_default_parts(src)
  

@@ -30,18 +30,18 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems += src
 	radio = new /obj/item/device/radio/headset/ai(src)
 
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/announcement_system(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/announcement_system(null)
 	B.apply_default_parts(src)
 
 	update_icon()
 
-/obj/item/weapon/circuitboard/machine/announcement_system
+/obj/item/circuitboard/machine/announcement_system
 	name = "Announcement System (Machine Board)"
 	build_path = /obj/machinery/announcement_system
 	origin_tech = "programming=3;bluespace=3;magnets=2"
 	req_components = list(
 							/obj/item/stack/cable_coil = 2,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/announcement_system/update_icon()
 	if(is_operational())

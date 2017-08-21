@@ -3,7 +3,7 @@ diff a/code/modules/research/experimentor.dm b/code/modules/research/experimento
  	density = TRUE
  	anchored = TRUE
  	use_power = IDLE_POWER_USE
--	circuit = /obj/item/weapon/circuitboard/machine/experimentor
+-	circuit = /obj/item/circuitboard/machine/experimentor
 +	circuit = /obj/item/circuitboard/machine/experimentor
  	var/recentlyExperimented = 0
  	var/mob/trackedIan
@@ -12,14 +12,14 @@ diff a/code/modules/research/experimentor.dm b/code/modules/research/experimento
  	SetTypeReactions()
  
  /obj/machinery/r_n_d/experimentor/RefreshParts()
--	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 +	for(var/obj/item/stock_parts/manipulator/M in component_parts)
  		if(resetTime > 0 && (resetTime - M.rating) >= 1)
  			resetTime -= M.rating
--	for(var/obj/item/weapon/stock_parts/scanning_module/M in component_parts)
+-	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
 +	for(var/obj/item/stock_parts/scanning_module/M in component_parts)
  		badThingCoeff += M.rating*2
--	for(var/obj/item/weapon/stock_parts/micro_laser/M in component_parts)
+-	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 +	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
  		badThingCoeff += M.rating
  

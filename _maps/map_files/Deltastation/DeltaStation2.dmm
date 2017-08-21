@@ -1256,7 +1256,7 @@
 	name = "Station Intercom";
 	pixel_y = 26
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -16360,7 +16360,7 @@
 /area/prison/execution_room)
 "aHA" = (
 /obj/structure/lattice/catwalk,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/space,
 /area/space)
 "aHB" = (
@@ -31696,7 +31696,7 @@
 /turf/open/floor/plating,
 /area/security/transfer)
 "bll" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -33886,12 +33886,12 @@
 /area/security/transfer)
 "bpi" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/restraints/handcuffs,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/prisoner,
+/obj/item/storage/box/prisoner,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -35466,7 +35466,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/transfer)
 "bse" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -35479,7 +35479,7 @@
 	},
 /area/security/transfer)
 "bsf" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -36200,7 +36200,7 @@
 /turf/open/floor/plating,
 /area/security/transfer)
 "btp" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -36886,11 +36886,11 @@
 /area/security/transfer)
 "buE" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/briefcase{
+/obj/item/storage/briefcase{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/secure/briefcase,
+/obj/item/storage/secure/briefcase,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -36900,22 +36900,22 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/folder/red,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
 /area/security/transfer)
 "buG" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
 /area/security/transfer)
 "buH" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -40206,7 +40206,7 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/transfer)
 "bzY" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
@@ -44917,7 +44917,7 @@
 	name = "Telecomms Monitoring APC";
 	pixel_y = 28
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/structure/cable/white{
 	d2 = 2;
 	icon_state = "0-2"
@@ -48483,7 +48483,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
 "bPo" = (
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/turretid{
 	control_area = "AI Satellite Antechamber";
 	enabled = 1;
@@ -84989,8 +84989,8 @@
 	name = "Cloning Lab APC";
 	pixel_y = 24
 	},
-/obj/item/weapon/folder/white,
-/obj/item/weapon/book/manual/medical_cloning,
+/obj/item/folder/white,
+/obj/item/book/manual/medical_cloning,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -93116,7 +93116,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/random,
+/obj/item/twohanded/required/kirbyplants/random,
 /obj/machinery/camera{
 	c_tag = "Science - Robotics Lab";
 	dir = 8;

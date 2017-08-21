@@ -3,10 +3,10 @@ diff a/code/game/objects/effects/spawners/lootdrop.dm b/code/game/objects/effect
  	lootdoubles = FALSE
  
  	loot = list(
--				/obj/item/weapon/gun/ballistic/automatic/pistol = 8,
--				/obj/item/weapon/gun/ballistic/shotgun/automatic/combat = 5,
--				/obj/item/weapon/gun/ballistic/revolver/mateba,
--				/obj/item/weapon/gun/ballistic/automatic/pistol/deagle
+-				/obj/item/gun/ballistic/automatic/pistol = 8,
+-				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
+-				/obj/item/gun/ballistic/revolver/mateba,
+-				/obj/item/gun/ballistic/automatic/pistol/deagle
 +				/obj/item/gun/ballistic/automatic/pistol = 8,
 +				/obj/item/gun/ballistic/shotgun/automatic/combat = 5,
 +				/obj/item/gun/ballistic/revolver/mateba,
@@ -16,8 +16,8 @@ diff a/code/game/objects/effects/spawners/lootdrop.dm b/code/game/objects/effect
  /obj/effect/spawner/lootdrop/gambling
  	name = "gambling valuables spawner"
  	loot = list(
--				/obj/item/weapon/gun/ballistic/revolver/russian = 5,
--				/obj/item/weapon/storage/box/syndie_kit/throwing_weapons = 1,
+-				/obj/item/gun/ballistic/revolver/russian = 5,
+-				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
 +				/obj/item/gun/ballistic/revolver/russian = 5,
 +				/obj/item/storage/box/syndie_kit/throwing_weapons = 1,
  				/obj/item/toy/cards/deck/syndicate = 2
@@ -26,12 +26,12 @@ diff a/code/game/objects/effects/spawners/lootdrop.dm b/code/game/objects/effect
  /obj/effect/spawner/lootdrop/grille_or_trash
  	name = "maint grille or trash spawner"
  	loot = list(/obj/structure/grille = 5,
--			/obj/item/weapon/cigbutt = 1,
+-			/obj/item/cigbutt = 1,
 +			/obj/item/cigbutt = 1,
  			/obj/item/trash/cheesie = 1,
  			/obj/item/trash/candy = 1,
  			/obj/item/trash/chips = 1,
--			/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 1,
+-			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
 +			/obj/item/reagent_containers/food/snacks/deadmouse = 1,
  			/obj/item/trash/pistachios = 1,
  			/obj/item/trash/plate = 1,

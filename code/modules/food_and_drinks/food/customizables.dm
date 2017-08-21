@@ -160,25 +160,25 @@
 	icon_state = "bun"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/bread
+/obj/item/reagent_containers/food/snacks/customizable/bread
 	name = "bread"
 	ingMax = 6
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/custom
+	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/custom
 	slices_num = 5
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/cake
+/obj/item/reagent_containers/food/snacks/customizable/cake
 	name = "cake"
 	ingMax = 6
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/custom
+	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/custom
 	slices_num = 5
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab
+/obj/item/reagent_containers/food/snacks/customizable/kebab
 	name = "kebab"
 	desc = "Delicious food on a stick."
 	ingredients_placement = INGREDIENTS_LINE
@@ -188,7 +188,7 @@
 	icon_state = "rod"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
+/obj/item/reagent_containers/food/snacks/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
 	ingredients_placement = INGREDIENTS_SCATTER
@@ -197,34 +197,34 @@
 	icon_state = "spaghettiboiled"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/pie
+/obj/item/reagent_containers/food/snacks/customizable/pie
 	name = "pie"
 	ingMax = 6
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pie"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
+/obj/item/reagent_containers/food/snacks/customizable/pizza
 	name = "pizza"
 	desc = "A personalized pan pizza meant for only one person."
 	ingredients_placement = INGREDIENTS_SCATTER
 	ingMax = 8
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/custom
+	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/custom
 	slices_num = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/salad
+/obj/item/reagent_containers/food/snacks/customizable/salad
 	name = "salad"
 	desc = "Very tasty."
-	trash = /obj/item/weapon/reagent_containers/glass/bowl
+	trash = /obj/item/reagent_containers/glass/bowl
 	ingMax = 6
 	icon = 'icons/obj/food/soupsalad.dmi'
 	icon_state = "bowl"
 
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich
+/obj/item/reagent_containers/food/snacks/customizable/sandwich
 	name = "toast"
 	desc = "A timeless classic."
 	ingredients_placement = INGREDIENTS_STACK
@@ -232,13 +232,13 @@
 	icon_state = "breadslice"
 	var/finished = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/weapon/reagent_containers/BASE, obj/item/I, mob/user)
+/obj/item/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)
 	icon_state = BASE.icon_state
 	..()
 
-/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/breadslice)) //we're finishing the custom food.
-		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/BS = I
+/obj/item/reagent_containers/food/snacks/customizable/sandwich/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/breadslice)) //we're finishing the custom food.
+		var/obj/item/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
 			return
 		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")

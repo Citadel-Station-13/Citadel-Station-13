@@ -628,7 +628,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
+	if(istype(idcard, /obj/item/card/id/syndicate))
 		threatcount -= 2
 
 	return threatcount

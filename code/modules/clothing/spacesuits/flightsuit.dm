@@ -1161,7 +1161,7 @@
 	else if(!maint_panel)
 		usermessage("The maintainence panel is closed!", "boldwarning")
 		return FALSE
-	else if(istype(I, /obj/item/weapon/crowbar))
+	else if(istype(I, /obj/item/crowbar))
 		var/list/inputlist = list()
 		if(pack)
 			inputlist += "Pack"

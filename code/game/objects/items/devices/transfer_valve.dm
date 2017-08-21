@@ -6,8 +6,8 @@
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
 	desc = "Regulates the transfer of air between two tanks"
-	var/obj/item/weapon/tank/tank_one
-	var/obj/item/weapon/tank/tank_two
+	var/obj/item/tank/tank_one
+	var/obj/item/tank/tank_two
 	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE

@@ -1,6 +1,6 @@
 diff a/code/modules/hydroponics/grown/mushrooms.dm b/code/modules/hydroponics/grown/mushrooms.dm	(rejected hunks)
 @@ -1,4 +1,4 @@
--/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
+-/obj/item/reagent_containers/food/snacks/grown/mushroom
 +/obj/item/reagent_containers/food/snacks/grown/mushroom
  	name = "mushroom"
  	bitesize_mod = 2
@@ -9,7 +9,7 @@ diff a/code/modules/hydroponics/grown/mushrooms.dm b/code/modules/hydroponics/gr
  
  
  
--/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
+-/obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
 +/obj/item/reagent_containers/food/snacks/grown/mushroom/reishi
  	seed = /obj/item/seeds/reishi
  	name = "reishi"

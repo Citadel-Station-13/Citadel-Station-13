@@ -17,23 +17,23 @@
 
 /obj/machinery/processor/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/processor
+/obj/item/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 	origin_tech = "programming=1"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1)
 
-/obj/item/weapon/circuitboard/machine/processor
+/obj/item/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
 	build_path = /obj/machinery/processor
 
-/obj/item/weapon/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		if(build_path == /obj/machinery/processor)
 			name = "Slime Processor (Machine Board)"
 			build_path = /obj/machinery/processor/slime
@@ -46,9 +46,9 @@
 		return ..()
 
 /obj/machinery/processor/RefreshParts()
-	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
+	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		rating_amount = B.rating
-	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
+	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating_speed = M.rating
 
 /obj/machinery/processor/process()
@@ -302,9 +302,9 @@
 
 /obj/machinery/processor/slime/New()
 	..()
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/processor/slime(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/processor/slime(null)
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/processor/slime
+/obj/item/circuitboard/machine/processor/slime
 	name = "Slime Processor (Machine Board)"
 	build_path = /obj/machinery/processor/slime

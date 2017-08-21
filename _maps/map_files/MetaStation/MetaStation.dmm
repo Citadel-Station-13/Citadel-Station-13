@@ -480,8 +480,8 @@
 /turf/open/floor/plating,
 /area/prison/execution_room)
 "abh" = (
-/obj/item/weapon/soap/nanotrasen,
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/soap/nanotrasen,
+/obj/item/bikehorn/rubberducky,
 /obj/machinery/shower{
 	dir = 4
 	},
@@ -1429,15 +1429,15 @@
 /area/prison/execution_room)
 "acW" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red{
+/obj/item/folder/red{
 	pixel_x = 3
 	},
 /obj/item/device/taperecorder{
 	pixel_x = -3
 	},
-/obj/item/weapon/storage/fancy/cigarettes,
+/obj/item/storage/fancy/cigarettes,
 /obj/item/device/assembly/flash/handheld,
-/obj/item/weapon/reagent_containers/spray/pepper,
+/obj/item/reagent_containers/spray/pepper,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2302,18 +2302,18 @@
 /turf/open/floor/plasteel/vault,
 /area/prison/execution_room)
 "aeI" = (
-/obj/item/weapon/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = -4;
 	pixel_y = -1
 	},
-/obj/item/weapon/tank/internals/oxygen/red{
+/obj/item/tank/internals/oxygen/red{
 	pixel_x = 4;
 	pixel_y = -1
 	},
-/obj/item/weapon/tank/internals/anesthetic{
+/obj/item/tank/internals/anesthetic{
 	pixel_x = 2
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /obj/structure/closet/crate{
@@ -2321,7 +2321,7 @@
 	opened = 1
 	},
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel/vault,
 /area/prison/execution_room)
 "aeJ" = (
@@ -18724,7 +18724,7 @@
 	name = "Law Office APC";
 	pixel_y = 24
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -23369,7 +23369,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
-/obj/item/weapon/pipe_dispenser,
+/obj/item/pipe_dispenser,
 /obj/machinery/airalarm{
 	dir = 1;
 	pixel_y = -22

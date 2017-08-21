@@ -12,7 +12,7 @@
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
 	max_integrity = 250
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
@@ -29,17 +29,17 @@
 /obj/machinery/space_heater/New()
 	..()
 	cell = new(src)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/space_heater(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/space_heater(null)
 	B.apply_default_parts(src)
 	update_icon()
 
-/obj/item/weapon/circuitboard/machine/space_heater
+/obj/item/circuitboard/machine/space_heater
 	name = "Space Heater (Machine Board)"
 	build_path = /obj/machinery/space_heater
 	origin_tech = "programming=2;engineering=2;plasmatech=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/micro_laser = 1,
-							/obj/item/weapon/stock_parts/capacitor = 1,
+							/obj/item/stock_parts/micro_laser = 1,
+							/obj/item/stock_parts/capacitor = 1,
 							/obj/item/stack/cable_coil = 3)
 
 /obj/machinery/space_heater/on_construction()

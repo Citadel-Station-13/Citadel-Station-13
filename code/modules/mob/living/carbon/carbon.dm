@@ -51,7 +51,7 @@
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		var/obj/item/weapon/twohanded/TH = item_in_hand
+		var/obj/item/twohanded/TH = item_in_hand
 		if(istype(TH))
 			if(TH.wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [TH]</span>")

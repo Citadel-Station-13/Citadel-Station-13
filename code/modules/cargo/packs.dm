@@ -1783,7 +1783,7 @@
 	cost = 5000
 	special = TRUE
 	contains = list(
-					/obj/item/weapon/circuitboard/machine/computer/sat_control
+					/obj/item/circuitboard/machine/computer/sat_control
 					)
 	crate_name= "shield control board crate"
 

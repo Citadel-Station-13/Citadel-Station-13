@@ -136,7 +136,7 @@
 					src.visible_message("<span class='warning'><font size=4>[src]'s Staff is flung free as their body explodes.</font></span>")
 					var/obj/structure/ladder/unbreakable/hades/churchLadder = new/obj/structure/ladder/unbreakable/hades(T)
 					var/obj/structure/ladder/unbreakable/hades/bodyLadder = new/obj/structure/ladder/unbreakable/hades(get_turf(src))
-					var/obj/item/weapon/hades_staff/HS = new/obj/item/weapon/hades_staff(get_turf(src))
+					var/obj/item/hades_staff/HS = new/obj/item/hades_staff(get_turf(src))
 					HS.throw_at_fast(pick(orange(src,7)),10,1)
 					churchLadder.up = bodyLadder
 					bodyLadder.down = churchLadder
@@ -447,8 +447,8 @@
 	if(isIndulged)
 		sinPerson << "<span class='warning'>Your stomach growls, you feel hungry.</span>"
 		var/list/allTypes = list()
-		for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
-			var/obj/item/weapon/reagent_containers/food/snacks/O = A
+		for(var/A in typesof(/obj/item/reagent_containers/food/snacks))
+			var/obj/item/reagent_containers/food/snacks/O = A
 			if(initial(O.cooked_type))
 				allTypes += A
 		for(var/i in 1 to 10)
@@ -461,12 +461,12 @@
 /proc/sin_Pride(var/mob/living/carbon/human/sinPerson, var/isIndulged)
 	if(isIndulged)
 		sinPerson << "<span class='warning'>You feel strong enough to take on the world.</span>"
-		var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+		var/obj/item/twohanded/sin_pride/good = new/obj/item/twohanded/sin_pride(get_turf(sinPerson))
 		good.name = "Indulged [good.name]"
 		good.pride_direction = FALSE
 	else
 		sinPerson << "<span class='warning'>You feel small and weak, like the entire world is against you.</span>"
-		var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
+		var/obj/item/twohanded/sin_pride/bad = new/obj/item/twohanded/sin_pride(get_turf(sinPerson))
 		bad.name = "Punished [bad.name]"
 		bad.pride_direction = TRUE
 
@@ -550,7 +550,7 @@
 	icon = 'icons/effects/224x224.dmi'
 
 
-/obj/item/weapon/twohanded/sin_pride
+/obj/item/twohanded/sin_pride
 	icon_state = "mjollnir0"
 	name = "Pride-struck Hammer"
 	desc = "It resonates an aura of Pride."
@@ -564,11 +564,11 @@
 	hitsound = 'sound/weapons/blade1.ogg'
 	var/pride_direction = FALSE
 
-/obj/item/weapon/twohanded/sin_pride/update_icon()
+/obj/item/twohanded/sin_pride/update_icon()
 	icon_state = "mjollnir[wielded]"
 	return
 
-/obj/item/weapon/twohanded/sin_pride/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
+/obj/item/twohanded/sin_pride/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
 	if(!proximity) return
 	if(wielded)
 		if(istype(A,/mob/living/carbon/human))
@@ -655,7 +655,7 @@
 	attacktext = "strikes at"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 
-	butcher_results = list(/obj/item/clothing/mask/gas/cyborg/hades = 1,/obj/item/clothing/suit/hooded/chaplain_hoodie/hades = 1,/obj/item/weapon/hades_staff/fake = 1)
+	butcher_results = list(/obj/item/clothing/mask/gas/cyborg/hades = 1,/obj/item/clothing/suit/hooded/chaplain_hoodie/hades = 1,/obj/item/hades_staff/fake = 1)
 
 	unsuitable_atmos_damage = 0
 	del_on_death = 0

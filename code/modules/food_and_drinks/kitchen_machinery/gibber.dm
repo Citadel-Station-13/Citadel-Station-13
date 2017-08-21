@@ -48,16 +48,16 @@
 /obj/machinery/gibber/Initialize()
 	. = ..()
 	add_overlay("grjam")
-	var/obj/item/weapon/circuitboard/machine/gibber/B = new
+	var/obj/item/circuitboard/machine/gibber/B = new
 	B.apply_default_parts(src)
 
-/obj/item/weapon/circuitboard/machine/gibber
+/obj/item/circuitboard/machine/gibber
 	name = "Gibber (Machine Board)"
 	build_path = /obj/machinery/gibber
 	origin_tech = "programming=2;engineering=2"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1)
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1)
 
 /obj/machinery/gibber/RefreshParts()
 	var/gib_time = 40

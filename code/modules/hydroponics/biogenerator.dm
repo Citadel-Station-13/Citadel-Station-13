@@ -8,7 +8,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
 	var/processing = FALSE
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
+	var/obj/item/reagent_containers/glass/beaker = null
 	var/points = 0
 	var/menustat = "menu"
 	var/efficiency = 0
@@ -22,7 +22,7 @@
 	..()
 	files = new /datum/research/biogenerator(src)
 	create_reagents(1000)
-	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/biogenerator(null)
+	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/biogenerator(null)
 	B.apply_default_parts(src)
 
 /obj/machinery/biogenerator/Destroy()
@@ -43,15 +43,15 @@
 		update_icon()
 		updateUsrDialog()
 
-/obj/item/weapon/circuitboard/machine/biogenerator
+/obj/item/circuitboard/machine/biogenerator
 	name = "Biogenerator (Machine Board)"
 	build_path = /obj/machinery/biogenerator
 	origin_tech = "programming=2;biotech=3;materials=3"
 	req_components = list(
-							/obj/item/weapon/stock_parts/matter_bin = 1,
-							/obj/item/weapon/stock_parts/manipulator = 1,
+							/obj/item/stock_parts/matter_bin = 1,
+							/obj/item/stock_parts/manipulator = 1,
 							/obj/item/stack/cable_coil = 1,
-							/obj/item/weapon/stock_parts/console_screen = 1)
+							/obj/item/stock_parts/console_screen = 1)
 
 /obj/machinery/biogenerator/RefreshParts()
 	var/E = 0

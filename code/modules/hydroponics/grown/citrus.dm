@@ -105,7 +105,7 @@
 	icon_state = "firelemon"
 	bitesize_mod = 2
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
+/obj/item/reagent_containers/food/snacks/grown/firelemon/attack_self(mob/living/user)
 	var/area/A = get_area(user)
 	user.visible_message("<span class='warning'>[user] primes the [src]!</span>", "<span class='userdanger'>You prime the [src]!</span>")
 	var/message = "[ADMIN_LOOKUPFLW(user)] primed a combustible lemon for detonation at [A] [ADMIN_COORDJMP(user)]"

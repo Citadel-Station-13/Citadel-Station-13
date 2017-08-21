@@ -3,8 +3,8 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  /turf/open/floor/plating,
  /area/security/execution/education)
  "abh" = (
--/obj/item/weapon/soap/nanotrasen,
--/obj/item/weapon/bikehorn/rubberducky,
+-/obj/item/soap/nanotrasen,
+-/obj/item/bikehorn/rubberducky,
 +/obj/item/soap/nanotrasen,
 +/obj/item/bikehorn/rubberducky,
  /obj/machinery/shower{
@@ -14,17 +14,17 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  /area/security/execution/education)
  "acW" = (
  /obj/structure/table,
--/obj/item/weapon/folder/red{
+-/obj/item/folder/red{
 +/obj/item/folder/red{
  	pixel_x = 3
  	},
  /obj/item/device/taperecorder{
  	pixel_x = -3
  	},
--/obj/item/weapon/storage/fancy/cigarettes,
+-/obj/item/storage/fancy/cigarettes,
 +/obj/item/storage/fancy/cigarettes,
  /obj/item/device/assembly/flash/handheld,
--/obj/item/weapon/reagent_containers/spray/pepper,
+-/obj/item/reagent_containers/spray/pepper,
 +/obj/item/reagent_containers/spray/pepper,
  /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
  /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33,21 +33,21 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  /turf/open/floor/plasteel/vault,
  /area/security/execution/education)
  "aeI" = (
--/obj/item/weapon/tank/internals/oxygen/red{
+-/obj/item/tank/internals/oxygen/red{
 +/obj/item/tank/internals/oxygen/red{
  	pixel_x = -4;
  	pixel_y = -1
  	},
--/obj/item/weapon/tank/internals/oxygen/red{
+-/obj/item/tank/internals/oxygen/red{
 +/obj/item/tank/internals/oxygen/red{
  	pixel_x = 4;
  	pixel_y = -1
  	},
--/obj/item/weapon/tank/internals/anesthetic{
+-/obj/item/tank/internals/anesthetic{
 +/obj/item/tank/internals/anesthetic{
  	pixel_x = 2
  	},
--/obj/item/weapon/storage/toolbox/mechanical,
+-/obj/item/storage/toolbox/mechanical,
 +/obj/item/storage/toolbox/mechanical,
  /obj/item/clothing/mask/gas,
  /obj/item/clothing/mask/gas,
@@ -56,7 +56,7 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  	opened = 1
  	},
  /obj/machinery/atmospherics/pipe/manifold/general/visible,
--/obj/item/weapon/wrench,
+-/obj/item/wrench,
 +/obj/item/wrench,
  /turf/open/floor/plasteel/vault,
  /area/security/execution/education)
@@ -65,7 +65,7 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  	areastring = "/area/lawoffice";
  	pixel_y = 24
  	},
--/obj/item/weapon/twohanded/required/kirbyplants{
+-/obj/item/twohanded/required/kirbyplants{
 +/obj/item/twohanded/required/kirbyplants{
  	icon_state = "plant-21";
  	layer = 4.1
@@ -74,7 +74,7 @@ diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation
  /obj/item/stack/sheet/glass{
  	amount = 50
  	},
--/obj/item/weapon/pipe_dispenser,
+-/obj/item/pipe_dispenser,
 +/obj/item/pipe_dispenser,
  /obj/machinery/light{
  	dir = 4

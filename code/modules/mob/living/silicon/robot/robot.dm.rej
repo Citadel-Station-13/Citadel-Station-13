@@ -3,7 +3,7 @@ diff a/code/modules/mob/living/silicon/robot/robot.dm b/code/modules/mob/living/
  
  
  /mob/living/silicon/robot/proc/pick_module()
--	if(module.type != /obj/item/weapon/robot_module)
+-	if(module.type != /obj/item/robot_module)
 +	if(module.type != /obj/item/robot_module)
  		return
  
@@ -11,12 +11,12 @@ diff a/code/modules/mob/living/silicon/robot/robot.dm b/code/modules/mob/living/
  		to_chat(src,"<span class='userdanger'>ERROR: Module installer reply timeout. Please check internal connections.</span>")
  		return
  
--	var/list/modulelist = list("Standard" = /obj/item/weapon/robot_module/standard, \
--	"Engineering" = /obj/item/weapon/robot_module/engineering, \
--	"Medical" = /obj/item/weapon/robot_module/medical, \
--	"Miner" = /obj/item/weapon/robot_module/miner, \
--	"Janitor" = /obj/item/weapon/robot_module/janitor, \
--	"Service" = /obj/item/weapon/robot_module/butler)
+-	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
+-	"Engineering" = /obj/item/robot_module/engineering, \
+-	"Medical" = /obj/item/robot_module/medical, \
+-	"Miner" = /obj/item/robot_module/miner, \
+-	"Janitor" = /obj/item/robot_module/janitor, \
+-	"Service" = /obj/item/robot_module/butler)
 +	var/list/modulelist = list("Standard" = /obj/item/robot_module/standard, \
 +	"Engineering" = /obj/item/robot_module/engineering, \
 +	"Medical" = /obj/item/robot_module/medical, \
@@ -24,14 +24,14 @@ diff a/code/modules/mob/living/silicon/robot/robot.dm b/code/modules/mob/living/
 +	"Janitor" = /obj/item/robot_module/janitor, \
 +	"Service" = /obj/item/robot_module/butler)
  	if(!config.forbid_peaceborg)
--		modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
+-		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 +		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
  	if(!config.forbid_secborg)
--		modulelist["Security"] = /obj/item/weapon/robot_module/security
+-		modulelist["Security"] = /obj/item/robot_module/security
 +		modulelist["Security"] = /obj/item/robot_module/security
  
  	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
--	if(!input_module || module.type != /obj/item/weapon/robot_module)
+-	if(!input_module || module.type != /obj/item/robot_module)
 +	if(!input_module || module.type != /obj/item/robot_module)
  		return
  

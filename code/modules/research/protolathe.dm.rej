@@ -3,7 +3,7 @@ diff a/code/modules/research/protolathe.dm b/code/modules/research/protolathe.dm
  	desc = "Converts raw materials into useful objects."
  	icon_state = "protolathe"
  	container_type = OPENCONTAINER
--	circuit = /obj/item/weapon/circuitboard/machine/protolathe
+-	circuit = /obj/item/circuitboard/machine/protolathe
 +	circuit = /obj/item/circuitboard/machine/protolathe
  
  	var/datum/material_container/materials

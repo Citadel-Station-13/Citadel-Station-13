@@ -25,17 +25,17 @@
 		board.moved = TRUE
 	..()
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+/obj/item/circuitboard/computer/syndicate_shuttle
 	name = "Syndicate Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/shuttle/syndicate
 	var/challenge = FALSE
 	var/moved = FALSE
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Initialize()
+/obj/item/circuitboard/computer/syndicate_shuttle/Initialize()
 	. = ..()
 	GLOB.syndicate_shuttle_boards += src
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle/Destroy()
+/obj/item/circuitboard/computer/syndicate_shuttle/Destroy()
 	GLOB.syndicate_shuttle_boards -= src
 	return ..()
 

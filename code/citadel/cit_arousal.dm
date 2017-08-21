@@ -190,7 +190,7 @@
 	var/list/genitals_list = list()
 	var/obj/item/organ/genital/SG = null//originally selected_genital
 	var/list/containers_list = list()
-	var/obj/item/weapon/reagent_containers/SC = null
+	var/obj/item/reagent_containers/SC = null
 	var/datum/reagents/fluid_source = null
 	var/into_container = 0
 	var/free_hands = get_num_arms() //arms was only used to know if we had ANY at all
@@ -273,8 +273,8 @@
 		if(genitals_list.len)
 			SG = input(src, "with what?", "Masturbate")  as null|obj in genitals_list
 			if(SG)
-				for(var/obj/item/weapon/reagent_containers/container in held_items)
-					if(container.is_open_container() || istype(container, /obj/item/weapon/reagent_containers/food/snacks/pie))
+				for(var/obj/item/reagent_containers/container in held_items)
+					if(container.is_open_container() || istype(container, /obj/item/reagent_containers/food/snacks/pie))
 						containers_list += container
 				if(containers_list.len)
 					SC = input(src, "Into or onto what?(Cancel for nowhere)", "Masturbate")  as null|obj in containers_list

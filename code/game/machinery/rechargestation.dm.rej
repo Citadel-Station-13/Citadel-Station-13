@@ -3,7 +3,7 @@ diff a/code/game/machinery/rechargestation.dm b/code/game/machinery/rechargestat
  	active_power_usage = 1000
  	req_access = list(ACCESS_ROBOTICS)
  	state_open = TRUE
--	circuit = /obj/item/weapon/circuitboard/machine/cyborgrecharger
+-	circuit = /obj/item/circuitboard/machine/cyborgrecharger
 +	circuit = /obj/item/circuitboard/machine/cyborgrecharger
  	var/recharge_speed
  	var/repairs

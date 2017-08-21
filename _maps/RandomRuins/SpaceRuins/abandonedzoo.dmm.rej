@@ -3,10 +3,10 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "ax" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/clipboard,
+-/obj/item/clipboard,
 +/obj/item/clipboard,
  /obj/item/clothing/mask/surgical,
--/obj/item/weapon/razor,
+-/obj/item/razor,
 +/obj/item/razor,
  /obj/machinery/light{
  	dir = 8
@@ -15,12 +15,12 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "az" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/storage/box/syringes{
+-/obj/item/storage/box/syringes{
 +/obj/item/storage/box/syringes{
  	pixel_x = 5;
  	pixel_y = 5
  	},
--/obj/item/weapon/storage/box/beakers,
+-/obj/item/storage/box/beakers,
 +/obj/item/storage/box/beakers,
  /obj/machinery/light{
  	dir = 4
@@ -29,7 +29,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aN" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/folder,
+-/obj/item/folder,
 +/obj/item/folder,
  /turf/open/floor/plasteel{
  	icon_state = "dark"
@@ -38,8 +38,8 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aP" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/reagent_containers/glass/bottle/liver_enhance_virion,
--/obj/item/weapon/reagent_containers/dropper,
+-/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
+-/obj/item/reagent_containers/dropper,
 +/obj/item/reagent_containers/glass/bottle/liver_enhance_virion,
 +/obj/item/reagent_containers/dropper,
  /turf/open/floor/plasteel{
@@ -49,7 +49,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  	},
  /obj/structure/rack,
  /obj/item/clothing/suit/space/hardsuit/medical,
--/obj/item/weapon/tank/internals/emergency_oxygen/double,
+-/obj/item/tank/internals/emergency_oxygen/double,
 +/obj/item/tank/internals/emergency_oxygen/double,
  /turf/open/floor/plasteel{
  	icon_state = "dark"
@@ -57,8 +57,8 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aU" = (
  /obj/structure/rack,
--/obj/item/weapon/crowbar,
--/obj/item/weapon/shield/riot,
+-/obj/item/crowbar,
+-/obj/item/shield/riot,
 +/obj/item/crowbar,
 +/obj/item/shield/riot,
  /obj/machinery/light{
@@ -68,7 +68,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aW" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/gun/syringe,
+-/obj/item/gun/syringe,
 +/obj/item/gun/syringe,
  /turf/open/floor/plasteel{
  	icon_state = "dark"
@@ -76,16 +76,16 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aX" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/grenade/chem_grenade/antiweed{
+-/obj/item/grenade/chem_grenade/antiweed{
 +/obj/item/grenade/chem_grenade/antiweed{
  	pixel_x = 3;
  	pixel_y = 5
  	},
--/obj/item/weapon/grenade/chem_grenade/antiweed{
+-/obj/item/grenade/chem_grenade/antiweed{
 +/obj/item/grenade/chem_grenade/antiweed{
  	pixel_x = 4
  	},
--/obj/item/weapon/grenade/chem_grenade/antiweed{
+-/obj/item/grenade/chem_grenade/antiweed{
 +/obj/item/grenade/chem_grenade/antiweed{
  	pixel_x = -3;
  	pixel_y = -1
@@ -94,7 +94,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aY" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/gun/energy/temperature{
+-/obj/item/gun/energy/temperature{
 +/obj/item/gun/energy/temperature{
  	pin = /obj/item/device/firing_pin
  	},
@@ -103,8 +103,8 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "aZ" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/cultivator,
--/obj/item/weapon/shovel,
+-/obj/item/cultivator,
+-/obj/item/shovel,
 +/obj/item/cultivator,
 +/obj/item/shovel,
  /turf/open/floor/plasteel{
@@ -114,8 +114,8 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "bi" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/reagent_containers/hypospray/medipen/stimpack,
--/obj/item/weapon/reagent_containers/glass/bottle/mutagen,
+-/obj/item/reagent_containers/hypospray/medipen/stimpack,
+-/obj/item/reagent_containers/glass/bottle/mutagen,
 +/obj/item/reagent_containers/hypospray/medipen/stimpack,
 +/obj/item/reagent_containers/glass/bottle/mutagen,
  /turf/open/floor/plasteel{
@@ -124,13 +124,13 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "bj" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/surgicaldrill,
--/obj/item/weapon/hemostat,
--/obj/item/weapon/scalpel,
--/obj/item/weapon/surgical_drapes,
--/obj/item/weapon/retractor,
--/obj/item/weapon/cautery,
--/obj/item/weapon/circular_saw,
+-/obj/item/surgicaldrill,
+-/obj/item/hemostat,
+-/obj/item/scalpel,
+-/obj/item/surgical_drapes,
+-/obj/item/retractor,
+-/obj/item/cautery,
+-/obj/item/circular_saw,
 +/obj/item/surgicaldrill,
 +/obj/item/hemostat,
 +/obj/item/scalpel,
@@ -145,7 +145,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "bn" = (
  /obj/structure/table/reinforced,
--/obj/item/weapon/reagent_containers/food/snacks/carrotfries,
+-/obj/item/reagent_containers/food/snacks/carrotfries,
 +/obj/item/reagent_containers/food/snacks/carrotfries,
  /turf/open/floor/plasteel{
  	icon_state = "dark"
@@ -154,7 +154,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "bp" = (
  /obj/structure/bed,
--/obj/item/weapon/bedsheet/green,
+-/obj/item/bedsheet/green,
 +/obj/item/bedsheet/green,
  /obj/structure/disposalpipe/segment,
  /turf/open/floor/plasteel{
@@ -163,7 +163,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  	pixel_x = 3;
  	pixel_y = -4
  	},
--/obj/item/weapon/wirecutters,
+-/obj/item/wirecutters,
 +/obj/item/wirecutters,
  /turf/open/floor/plating,
  /area/ruin/space/has_grav/abandonedzoo)
@@ -172,14 +172,14 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  	density = 0;
  	icon_state = "brokengrille"
  	},
--/obj/item/weapon/shard{
+-/obj/item/shard{
 +/obj/item/shard{
  	icon_state = "small"
  	},
  /turf/open/floor/plating/airless,
  /area/ruin/space/has_grav/abandonedzoo)
  "bO" = (
--/obj/item/weapon/shard,
+-/obj/item/shard,
 +/obj/item/shard,
  /turf/open/floor/plating/airless,
  /area/ruin/space/has_grav/abandonedzoo)
@@ -188,7 +188,7 @@ diff a/_maps/RandomRuins/SpaceRuins/abandonedzoo.dmm b/_maps/RandomRuins/SpaceRu
  /area/ruin/space/has_grav/abandonedzoo)
  "bT" = (
  /obj/structure/grille,
--/obj/item/weapon/shard{
+-/obj/item/shard{
 +/obj/item/shard{
  	icon_state = "medium"
  	},

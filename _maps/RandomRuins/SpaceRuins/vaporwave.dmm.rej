@@ -3,7 +3,7 @@ diff a/_maps/RandomRuins/SpaceRuins/vaporwave.dmm b/_maps/RandomRuins/SpaceRuins
  /turf/open/floor/holofloor/beach/coast_t,
  /area/ruin/space/has_grav/powered/aesthetic)
  "v" = (
--/obj/item/weapon/statuebust,
+-/obj/item/statuebust,
 +/obj/item/statuebust,
  /turf/open/floor/plasteel/vaporwave,
  /area/ruin/space/has_grav/powered/aesthetic)

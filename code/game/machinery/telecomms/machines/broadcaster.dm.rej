@@ -3,7 +3,7 @@ diff a/code/game/machinery/telecomms/machines/broadcaster.dm b/code/game/machine
  	use_power = IDLE_POWER_USE
  	idle_power_usage = 25
  	machinetype = 5
--	circuit = /obj/item/weapon/circuitboard/machine/telecomms/broadcaster
+-	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
 +	circuit = /obj/item/circuitboard/machine/telecomms/broadcaster
  
  /obj/machinery/telecomms/broadcaster/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)

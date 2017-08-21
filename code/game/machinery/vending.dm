@@ -63,7 +63,7 @@
 	. = ..()
 	wires = new /datum/wires/vending(src)
 	if(refill_canister) //constructable vending machine
-		var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/vendor(null)
+		var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/vendor(null)
 		B.apply_default_parts(src)
 	else
 		build_inventory(products)
@@ -77,12 +77,12 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
-/obj/item/weapon/circuitboard/machine/vendor
+/obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
 	build_path = /obj/machinery/vending/boozeomat
 	origin_tech = "programming=1"
 	req_components = list(
-							/obj/item/weapon/vending_refill/boozeomat = 3)
+							/obj/item/vending_refill/boozeomat = 3)
 
 	var/list/names_paths = list(/obj/machinery/vending/boozeomat = "Booze-O-Mat",
 							/obj/machinery/vending/coffee = "Solar's Best Hot Drinks",
@@ -94,8 +94,8 @@
 							/obj/machinery/vending/medical = "NanoMed Plus",
 							/obj/machinery/vending/wallmed = "NanoMed")
 
-/obj/item/weapon/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/screwdriver))
+/obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/screwdriver))
 		var/position = names_paths.Find(build_path)
 		position = (position == names_paths.len) ? 1 : (position + 1)
 		var/typepath = names_paths[position]
@@ -105,12 +105,12 @@
 	else
 		return ..()
 
-/obj/item/weapon/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
+/obj/item/circuitboard/machine/vendor/proc/set_type(var/obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = initial(typepath.refill_count))
 
-/obj/item/weapon/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
 	for(var/typepath in names_paths)
 		if(istype(M, typepath))
 			set_type(typepath)
@@ -124,7 +124,7 @@
 	return ..()
 
 /obj/machinery/vending/snack/Destroy()
-	for(var/obj/item/weapon/reagent_containers/food/snacks/S in contents)
+	for(var/obj/item/reagent_containers/food/snacks/S in contents)
 		S.loc = get_turf(src)
 	qdel(wires)
 	wires = null

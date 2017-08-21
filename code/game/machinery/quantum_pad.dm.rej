@@ -3,7 +3,7 @@ diff a/code/game/machinery/quantum_pad.dm b/code/game/machinery/quantum_pad.dm	(
  	idle_power_usage = 200
  	active_power_usage = 5000
  	unique_rename = 1
--	circuit = /obj/item/weapon/circuitboard/machine/quantumpad
+-	circuit = /obj/item/circuitboard/machine/quantumpad
 +	circuit = /obj/item/circuitboard/machine/quantumpad
  	var/teleport_cooldown = 400 //30 seconds base due to base parts
  	var/teleport_speed = 50
