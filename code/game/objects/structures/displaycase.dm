@@ -50,7 +50,7 @@
 			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
 
 /obj/structure/displaycase/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		dump()
 		if(!disassembled)
 			new /obj/item/weapon/shard( src.loc )
@@ -58,7 +58,7 @@
 	qdel(src)
 
 /obj/structure/displaycase/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(flags & NODECONSTRUCT))
 		density = FALSE
 		broken = 1
 		new /obj/item/weapon/shard( src.loc )

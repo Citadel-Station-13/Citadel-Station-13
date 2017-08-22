@@ -5,7 +5,7 @@
 	icon_state = "firing_pin"
 	item_state = "pen"
 	origin_tech = "materials=2;combat=4"
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("poked")
 	var/emagged = FALSE

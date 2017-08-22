@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(processing)
 	name = "Processing"
 	priority = 25
-	flags_1 = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
+	flags = SS_BACKGROUND|SS_POST_FIRE_TIMING|SS_NO_INIT
 	wait = 10
 
 	var/stat_tag = "P" //Used for logging

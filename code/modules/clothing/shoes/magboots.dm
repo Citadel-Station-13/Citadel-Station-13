@@ -22,10 +22,10 @@
 
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(src.magpulse)
-		src.flags_1 &= ~NOSLIP_1
+		src.flags &= ~NOSLIP
 		src.slowdown = SHOES_SLOWDOWN
 	else
-		src.flags_1 |= NOSLIP_1
+		src.flags |= NOSLIP
 		src.slowdown = slowdown_active
 	magpulse = !magpulse
 	icon_state = "[magboot_state][magpulse]"
@@ -37,7 +37,7 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
-	return flags_1 & NOSLIP_1
+	return flags & NOSLIP
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()

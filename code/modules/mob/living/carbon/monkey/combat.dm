@@ -153,7 +153,7 @@
 	if(!locate(/obj/item/weapon) in held_items)
 		best_force = 0
 
-	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags_1 & NODROP_1)))
+	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags & NODROP)))
 		pickupTarget = null
 
 	if(!resisting && pickupTarget)
@@ -274,7 +274,7 @@
 					// check if target has a weapon
 					var/obj/item/weapon/W
 					for(var/obj/item/weapon/I in target.held_items)
-						if(!(I.flags_1 & ABSTRACT_1))
+						if(!(I.flags & ABSTRACT))
 							W = I
 							break
 

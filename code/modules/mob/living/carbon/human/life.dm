@@ -32,7 +32,7 @@
 	//citadel code
 	if(stat != DEAD)
 		handle_arousal()
-
+		
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
@@ -55,7 +55,7 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
+	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -153,7 +153,7 @@
 //END FIRE CODE
 
 
-//This proc returns a number made up of the flags_1 for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
@@ -285,13 +285,13 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
 	if(glasses)
-		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
 	if(head)
-		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
+		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
 			. = 1
 	if(NOBREATH in dna.species.species_traits)
 		. = 1

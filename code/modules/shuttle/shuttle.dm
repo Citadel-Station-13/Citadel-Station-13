@@ -178,7 +178,7 @@
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
 			T.ChangeTurf(/turf/open/space,/turf/open/space)
-			T.flags_1 |= UNUSED_TRANSIT_TURF_1
+			T.flags |= UNUSED_TRANSIT_TURF
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)

@@ -15,7 +15,7 @@
 	icon_state = "golhood"
 	desc = "A hood for a cloak"
 	body_parts_covered = HEAD
-	flags_1 = NODROP_1
+	flags = NODROP
 	flags_inv = HIDEHAIR|HIDEEARS
 
 /obj/item/clothing/neck/cloak/suicide_act(mob/user)

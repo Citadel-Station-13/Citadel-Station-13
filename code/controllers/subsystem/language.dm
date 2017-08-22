@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(language)
 	name = "Language"
 	init_order = INIT_ORDER_LANGUAGE
-	flags_1 = SS_NO_FIRE
+	flags = SS_NO_FIRE
 
 /datum/controller/subsystem/language/Initialize(timeofday)
 	for(var/L in subtypesof(/datum/language))

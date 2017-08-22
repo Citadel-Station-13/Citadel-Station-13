@@ -130,7 +130,7 @@
 			if (T < shortesttimer)
 				shortesttimer = T
 			L.transform = newtransform
-			animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags_1 = ANIMATION_END_NOW)
+			animate(L, transform = matrix(), time = T, easing = QUAD_EASING | (new_parallax_movedir ? EASE_IN : EASE_OUT), flags = ANIMATION_END_NOW)
 			if (new_parallax_movedir)
 				L.transform = newtransform
 				animate(transform = matrix(), time = T) //queue up another animate so lag doesn't create a shutter
@@ -168,7 +168,7 @@
 
 		L.transform = newtransform
 
-		animate(L, transform = matrix(), time = T, loop = -1, flags_1 = ANIMATION_END_NOW)
+		animate(L, transform = matrix(), time = T, loop = -1, flags = ANIMATION_END_NOW)
 
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client

@@ -36,7 +36,7 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars,list("tag","area","type","loc","locs",
 			M.power_change()
 
 	if(holoitem)
-		O.flags_2 |= HOLOGRAM_2
+		SET_SECONDARY_FLAG(O, HOLOGRAM)
 	return O
 
 

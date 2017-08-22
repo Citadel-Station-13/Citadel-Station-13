@@ -27,12 +27,12 @@
 
 	var/obj/item/radio/integrated/radio = null
 
-	var/access = 0 //Bit flags_1 for cartridge access
+	var/access = 0 //Bit flags for cartridge access
 
 //	var/access_flora = 0
 	var/remote_door_id = ""
 
-	var/bot_access_flags = 0 //Bit flags_1. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT
 	var/spam_enabled = 0 //Enables "Send to All" Option
 
 	var/obj/item/device/pda/host_pda = null

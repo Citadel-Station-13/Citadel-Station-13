@@ -27,7 +27,7 @@ dmm_suite{
 		write_map(), which accepts three arguments:
 			- A turf representing one corner of a three dimensional grid (Required).
 			- Another turf representing the other corner of the same grid (Required).
-			- Any, or a combination, of several bit flags_1 (Optional, see documentation).
+			- Any, or a combination, of several bit flags (Optional, see documentation).
 
 		The order in which the turfs are supplied does not matter, the /dmm_writer will
 		determine the grid containing both, in much the same way as DM's block() function.

@@ -24,7 +24,7 @@
 		bananium.use_amount_type(100, MAT_BANANIUM)
 		if(bananium.amount(MAT_BANANIUM) < 100)
 			on = !on
-			flags_1 &= ~NOSLIP_1
+			flags &= ~NOSLIP
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
 	else
@@ -63,9 +63,9 @@
 		update_icon()
 		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
 		if(on)
-			flags_1 |= NOSLIP_1
+			flags |= NOSLIP
 		else
-			flags_1 &= ~NOSLIP_1
+			flags &= ~NOSLIP
 	else
 		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
 

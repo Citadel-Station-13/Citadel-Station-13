@@ -126,7 +126,7 @@
 	desc = "A flickering ring preventing you from holding items."
 	icon = 'icons/effects/clockwork_effects.dmi'
 	icon_state = "geisbinding_full"
-	flags_1 = NODROP_1|ABSTRACT_1|DROPDEL_1
+	flags = NODROP|ABSTRACT|DROPDEL
 
 /obj/item/geis_binding/pre_attackby(atom/target, mob/living/user, params)
 	return FALSE

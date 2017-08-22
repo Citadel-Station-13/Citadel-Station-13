@@ -9,7 +9,7 @@
 	desc = "Wrap packages with this festive paper to make gifts."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "wrap_paper"
-	flags_1 = NOBLUDGEON_1
+	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE
@@ -30,7 +30,7 @@
 	desc = "You can use this to wrap items in."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "deliveryPaper"
-	flags_1 = NOBLUDGEON_1
+	flags = NOBLUDGEON
 	amount = 25
 	max_amount = 25
 	resistance_flags = FLAMMABLE

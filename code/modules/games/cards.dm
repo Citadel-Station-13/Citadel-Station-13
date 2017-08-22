@@ -12,7 +12,7 @@
 	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck"
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = NOBLUDGEON_1
+	flags = NOBLUDGEON
 
 	var/list/cards = list()
 

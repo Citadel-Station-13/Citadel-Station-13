@@ -445,8 +445,8 @@
 	name = "turret controls"
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags_1 = ABSTRACT_1 | NODROP_1
-	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON_1
+	flags = ABSTRACT | NODROP
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | NOBLUDGEON
 	var/delay = 0
 
 /obj/item/weapon/turret_control/afterattack(atom/targeted_atom, mob/user)

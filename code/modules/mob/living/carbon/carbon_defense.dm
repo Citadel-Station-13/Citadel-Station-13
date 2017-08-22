@@ -24,9 +24,9 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && (ears.flags_2 & BANG_PROTECT_2))
+	if(ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT))
 		number += 1
-	if(head && (head.flags_2 & BANG_PROTECT_2))
+	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
 		number += 1
 	var/obj/item/organ/ears/E = getorganslot("ears")
 	if(!E)
@@ -210,7 +210,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
+	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)

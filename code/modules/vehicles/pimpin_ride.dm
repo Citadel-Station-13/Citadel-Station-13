@@ -60,7 +60,7 @@
 		floorbuffer = TRUE
 		qdel(I)
 		to_chat(user, "<span class='notice'>You upgrade [src] with the floor buffer.</span>")
-		flags_1 |= CLEAN_ON_MOVE_1
+		flags |= CLEAN_ON_MOVE
 		update_icon()
 	else
 		return ..()
