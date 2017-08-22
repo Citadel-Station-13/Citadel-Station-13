@@ -617,10 +617,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-		threatcount += 5
+		threatcount += 3
 
 	//Check for nonhuman scum
-	if(dna && dna.species.id && dna.species.id != "human" || "lizard" || "mammal" || "avian" || "aquatic" || "insect")
+	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
 		threatcount += 1
 
 	//mindshield implants imply trustworthyness
