@@ -73,4 +73,5 @@ GLOBAL_LIST(custom_item_list)
 								ret[item_path] += GLOB.custom_item_list[ckey][char][job][item_path]
 							else
 								ret[item_path] = GLOB.custom_item_list[ckey][char][job][item_path]
+	to_chat(world, "debug: parsing returned [english_list(ret)]")
 	return ret
