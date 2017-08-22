@@ -1,22 +1,35 @@
 /datum/component
 	var/enabled = TRUE
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
+	var/dupe_type
 	var/list/signal_procs
 	var/datum/parent
 
 /datum/component/New(datum/P, ...)
+	parent = P
+	var/list/arguments = args.Copy()
+	arguments.Cut(1, 2)
+	Initialize(arglist(arguments))
+
 	var/dm = dupe_mode
 	if(dm != COMPONENT_DUPE_ALLOWED)
-		var/datum/component/old = P.GetExactComponent(type)
-		if(old)
-			switch(dm)
-				if(COMPONENT_DUPE_HIGHLANDER)
-					InheritComponent(old, FALSE)
-					qdel(old)
-				if(COMPONENT_DUPE_UNIQUE)
-					old.InheritComponent(src, TRUE)
-					qdel(src)
-					return
+		var/dt = dupe_type
+		var/datum/component/old 
+		if(!dt)
+			old = P.GetExactComponent(type)
+		else
+			old = P.GetComponent(dt)
+		switch(dm)
+			if(COMPONENT_DUPE_UNIQUE)
+				old.InheritComponent(src, TRUE)
+				parent = null	//prevent COMPONENT_REMOVING signal
+				qdel(src)
+				return
+			if(COMPONENT_DUPE_HIGHLANDER)
+				InheritComponent(old, FALSE)
+				qdel(old)
+	
+	//let the others know
 	P.SendSignal(COMSIG_COMPONENT_ADDED, src)
 	
 	//lazy init the parent's dc list
@@ -26,7 +39,7 @@
 	
 	//set up the typecache
 	var/our_type = type
-	for(var/I in _GetInverseTypeListExceptRoot(our_type))
+	for(var/I in _GetInverseTypeList(our_type))
 		var/test = dc[I]
 		if(test)	//already another component of this type here
 			var/list/components_of_type
@@ -50,7 +63,8 @@
 		else	//only component of this type, no list
 			dc[I] = src
 
-	parent = P
+/datum/component/proc/Initialize(...)
+	return
 
 /datum/component/Destroy()
 	enabled = FALSE
@@ -66,7 +80,7 @@
 	if(P)
 		var/list/dc = P.datum_components
 		var/our_type = type
-		for(var/I in _GetInverseTypeListExceptRoot(our_type))
+		for(var/I in _GetInverseTypeList(our_type))
 			var/list/components_of_type = dc[I]
 			if(islist(components_of_type))	//
 				var/list/subtracted = components_of_type - src
@@ -110,23 +124,35 @@
 /datum/component/proc/OnTransfer(datum/new_parent)
 	return
 
-/datum/component/proc/_GetInverseTypeListExceptRoot(our_type_cached)
-	var/datum/component/current_type = our_type_cached
-	. = list()
+/datum/component/proc/AfterComponentActivated()
+	return
+
+/datum/component/proc/_GetInverseTypeList(current_type)
+	. = list(current_type)
 	while (current_type != /datum/component)
-		. += current_type
 		current_type = type2parent(current_type)
+		. += current_type
 
 /datum/proc/SendSignal(sigtype, ...)
 	var/list/comps = datum_components
 	. = FALSE
-	for(var/I in comps)
-		var/datum/component/C = I
-		if(!C.enabled)
-			continue
-		if(C.ReceiveSignal(arglist(args)))
+	if(!comps)
+		return
+	var/target = comps[/datum/component]
+	if(!islist(target))
+		var/datum/component/C = target
+		if(C.enabled && C.ReceiveSignal(arglist(args)))
 			ComponentActivated(C)
-			. = TRUE
+			C.AfterComponentActivated()
+			return TRUE
+	else
+		for(var/I in target)
+			var/datum/component/C = I
+			if(!C.enabled)
+				continue
+			if(C.ReceiveSignal(arglist(args)))
+				ComponentActivated(C)
+				. = TRUE
 
 /datum/proc/ComponentActivated(datum/component/C)
 	return
@@ -164,6 +190,11 @@
 	args[1] = src
 	var/datum/component/C = new nt(arglist(args))
 	return QDELING(C) ? GetComponent(new_type) : C
+
+/datum/proc/LoadComponent(component_type, ...)
+	. = GetComponent(component_type)
+	if(!.)
+		return AddComponent(arglist(args))
 
 /datum/proc/TakeComponent(datum/component/C)
 	if(!C)
