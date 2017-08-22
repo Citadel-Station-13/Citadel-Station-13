@@ -1,18 +1,1 @@
-diff a/code/datums/components/component.dm b/code/datums/components/component.dm	(rejected hunks)
-@@ -22,8 +22,7 @@
- 	//lazy init the parent's dc list
- 	var/list/dc = P.datum_components
- 	if(!dc)
--		dc = list()
--		P.datum_components = dc
-+		P.datum_components = dc = list()
- 	
- 	//set up the typecache
- 	var/our_type = type
-@@ -179,4 +178,4 @@
- 	helicopter.SendSignal(COMSIG_COMPONENT_REMOVING, C)
- 	C.OnTransfer(src)
- 	C.parent = src
--	SendSignal(COMSIG_COMPONENT_ADDED, C)
-\ No newline at end of file
-+	SendSignal(COMSIG_COMPONENT_ADDED, C)
+garbage
