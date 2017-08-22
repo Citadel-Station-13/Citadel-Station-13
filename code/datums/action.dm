@@ -234,8 +234,8 @@
 		UpdateButtonIcon()
 
 /datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
-	if(istype(target, /obj/item/weapon/hierophant_club))
-		var/obj/item/weapon/hierophant_club/H = target
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
 		if(H.friendly_fire_check)
 			button_icon_state = "vortex_ff_off"
 			name = "Toggle Friendly Fire \[OFF\]"
@@ -264,8 +264,8 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
-	if(istype(target, /obj/item/weapon/hierophant_club))
-		var/obj/item/weapon/hierophant_club/H = target
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
 			return 0
 	return ..()
@@ -351,7 +351,7 @@
 	name = "Toggle Jetpack Stabilization"
 
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
-	var/obj/item/weapon/tank/jetpack/J = target
+	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
 	return ..()

@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "The Subtle emote now properly cancels empty or cancelled emotes."

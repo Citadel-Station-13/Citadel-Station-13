@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - tweak: "Changed how borers win-conditions are displayed. Syndicate borers are now listed with other cortical borers, as they can count for their team-objective even if they don't share it."
