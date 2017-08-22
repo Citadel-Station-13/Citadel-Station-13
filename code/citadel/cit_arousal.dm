@@ -287,7 +287,7 @@
 				setArousalLoss(min_arousal)
 
 
-/mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/weapon/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
+/mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
 	var/total_fluids = 0
 	var/datum/reagents/fluid_source = null
 
@@ -368,11 +368,11 @@
 	return input(src, "With whom?", "Sexual partner", null) in partners //pick one, default to null
 
 /mob/living/carbon/human/proc/pick_climax_container()
-	var/obj/item/weapon/reagent_containers/SC = null
+	var/obj/item/reagent_containers/SC = null
 	var/list/containers_list = list()
 
-	for(var/obj/item/weapon/reagent_containers/container in held_items)
-		if(container.is_open_container() || istype(container, /obj/item/weapon/reagent_containers/food/snacks))
+	for(var/obj/item/reagent_containers/container in held_items)
+		if(container.is_open_container() || istype(container, /obj/item/reagent_containers/food/snacks))
 			containers_list += container
 
 	if(containers_list.len)
@@ -530,7 +530,7 @@
 				picked_organ = pick_climax_genitals() //Gotta be climaxable, not just masturbation, to fill with fluids.
 				if(picked_organ)
 					//Good, got an organ, time to pick a container
-					var/obj/item/weapon/reagent_containers/fluid_container = pick_climax_container()
+					var/obj/item/reagent_containers/fluid_container = pick_climax_container()
 					if(fluid_container)
 						mob_fill_container(picked_organ, fluid_container)
 						return

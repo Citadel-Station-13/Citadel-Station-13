@@ -65,14 +65,14 @@
 		return ..()
 
 //snowflake screwdriver, works as a key to start nuke theft, traitor only
-/obj/item/weapon/screwdriver/nuke
+/obj/item/screwdriver/nuke
 	name = "screwdriver"
 	desc = "A screwdriver with an ultra thin tip."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	toolspeed = 0.5
 
-/obj/item/weapon/paper/nuke_instructions
+/obj/item/paper/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
 	<li>Use a screwdriver with a very thin tip (provided) to unscrew the terminal's front panel</li>\

@@ -16,13 +16,13 @@
 		var/obj/item/borg/sight/S = O
 		sight_mode &= ~S.sight_mode
 		update_sight()
-	else if(istype(O, /obj/item/weapon/storage/bag/tray/))
-		var/obj/item/weapon/storage/bag/tray/T = O
+	else if(istype(O, /obj/item/storage/bag/tray/))
+		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
-	else if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+	else if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = 0
 		update_icons()
-	else if(istype(O,/obj/item/weapon/gun/energy/disabler/cyborg))
+	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
 		disabler = 0
 		update_icons()
 	else if(istype(O,/obj/item/device/dogborg/sleeper))
@@ -62,10 +62,10 @@
 	if(activated(O))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
-	if(istype(O,/obj/item/weapon/gun/energy/laser/cyborg))
+	if(istype(O,/obj/item/gun/energy/laser/cyborg))
 		laser = 1
 		update_icons()
-	if(istype(O,/obj/item/weapon/gun/energy/disabler/cyborg))
+	if(istype(O,/obj/item/gun/energy/disabler/cyborg))
 		disabler = 1
 		update_icons()
 	if(!held_items[1])
