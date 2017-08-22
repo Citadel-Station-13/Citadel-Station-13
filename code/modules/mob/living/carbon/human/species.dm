@@ -28,7 +28,6 @@
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
-	var/skinned_type = null
 	var/skinned_type
 	var/liked_food = NONE
 	var/disliked_food = GROSS

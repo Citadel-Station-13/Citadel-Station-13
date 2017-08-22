@@ -101,7 +101,7 @@
 	response_harm   = "splats"
 	gold_core_spawnable = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/deadmouse
+/obj/item/reagent_containers/food/snacks/deadmouse
 	name = "dead mouse"
 	desc = "It looks like somebody dropped the bass on it. A lizard's favorite meal."
 	icon = 'icons/mob/animal.dmi'
