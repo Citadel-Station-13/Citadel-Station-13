@@ -167,7 +167,7 @@
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
 		for(var/obj/item/weapon/bloodcrawl/BC in C)
-			BC.flags = null
+			BC.flags_1 = null
 			qdel(BC)
 	qdel(src.holder)
 	src.holder = null

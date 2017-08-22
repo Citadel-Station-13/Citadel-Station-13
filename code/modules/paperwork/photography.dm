@@ -497,7 +497,7 @@
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
 	materials = list()
-	flags = 0
+	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/weapon/photo/displayed

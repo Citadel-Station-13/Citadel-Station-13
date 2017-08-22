@@ -14,7 +14,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	layer = BELOW_OBJ_LAYER
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 	max_integrity = 300
 	var/list/product_types = list()
 	var/dispense_flavour = ICECREAM_VANILLA

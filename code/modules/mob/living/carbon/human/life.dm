@@ -32,7 +32,7 @@
 	//citadel code
 	if(stat != DEAD)
 		handle_arousal()
-		
+
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
@@ -153,7 +153,7 @@
 //END FIRE CODE
 
 
-//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+//This proc returns a number made up of the flags_1 for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing

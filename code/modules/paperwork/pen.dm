@@ -168,7 +168,7 @@
  */
 /obj/item/weapon/pen/sleepy
 	origin_tech = "engineering=4;syndicate=2"
-	container_type = OPENCONTAINER
+	container_type = OPENCONTAINER_1
 
 
 /obj/item/weapon/pen/sleepy/attack(mob/living/M, mob/user)

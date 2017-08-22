@@ -7,7 +7,7 @@
 	var/flash_protect = 0		//What level of bright light protection item has. 1 = Flashers, Flashes, & Flashbangs | 2 = Welding | -1 = OH GOD WELDING BURNT OUT MY RETINAS
 	var/tint = 0				//Sets the item's level of visual impairment tint, normally set to the same as flash_protect
 	var/up = 0					//but separated to allow items to protect but not impair vision, like space helmets
-	var/visor_flags = 0			//flags that are added/removed when an item is adjusted up/down
+	var/visor_flags = 0			//flags_1 that are added/removed when an item is adjusted up/down
 	var/visor_flags_inv = 0		//same as visor_flags, but for flags_inv
 	var/visor_flags_cover = 0	//same as above, but for flags_cover
 //what to toggle when toggled with weldingvisortoggle()
@@ -494,7 +494,7 @@ BLIND     // can't see anything
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals)
 	slowdown = 1
@@ -783,7 +783,7 @@ BLIND     // can't see anything
 		A.UpdateButtonIcon()
 	return TRUE
 
-/obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
+/obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags_1
 	up = !up
 	flags_1 ^= visor_flags
 	flags_inv ^= visor_flags_inv

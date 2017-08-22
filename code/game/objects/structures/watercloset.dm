@@ -462,7 +462,7 @@
 
 	if(istype(O, /obj/item/weapon/reagent_containers))
 		var/obj/item/weapon/reagent_containers/RG = O
-		if(RG.container_type & OPENCONTAINER)
+		if(RG.container_type & OPENCONTAINER_1)
 			if(!RG.reagents.holder_full())
 				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")

@@ -121,7 +121,7 @@
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
-	I.flags |= NODROP
+	I.flags_1 |= NODROP_1
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	if(nonstandard)
 		added_modules += I

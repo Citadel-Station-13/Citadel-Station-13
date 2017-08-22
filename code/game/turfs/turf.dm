@@ -163,7 +163,7 @@
 	..()
 	if(explosion_level && AM.ex_check(explosion_id))
 		AM.ex_act(explosion_level)
-		
+
 	// If an opaque movable atom moves around we need to potentially update visibility.
 	if (AM.opacity)
 		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
@@ -342,7 +342,7 @@
 		M.take_damage(damage*2, BRUTE, "melee", 1)
 
 /turf/proc/Bless()
-	flags |= NOJAUNT
+	flags_1 |= NOJAUNT_1
 
 /turf/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	if(src_object.contents.len)

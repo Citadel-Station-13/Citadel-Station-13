@@ -220,7 +220,7 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
@@ -228,7 +228,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/weapon/tank))
-						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
 							internal = ITEM
 							update_internals_hud_icon(1)
 

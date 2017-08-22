@@ -62,7 +62,7 @@
 /obj/item/weapon/pickaxe/drill/cyborg
 	name = "cyborg mining drill"
 	desc = "An integrated electric mining drill."
-	flags = NODROP
+	flags_1 = NODROP_1
 
 /obj/item/weapon/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
@@ -72,7 +72,7 @@
 	desc = "Yours is the drill that will pierce the heavens!"
 
 /obj/item/weapon/pickaxe/drill/cyborg/diamond //This is the BORG version!
-	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP flag, and easier to change borg specific drill mechanics.
+	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
 	icon_state = "diamonddrill"
 	digspeed = 7
 

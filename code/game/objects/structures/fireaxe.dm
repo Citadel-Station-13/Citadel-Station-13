@@ -91,7 +91,7 @@
 		new /obj/item/weapon/shard(loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null

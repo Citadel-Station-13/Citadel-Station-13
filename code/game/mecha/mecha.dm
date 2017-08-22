@@ -112,7 +112,7 @@
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
-	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/occupant_sight_flags = 0 //sight flags_1 to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 

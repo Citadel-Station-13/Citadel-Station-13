@@ -21,7 +21,7 @@
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/weapon/extinguisher, /obj/item/weapon/crowbar)
 	slowdown = 1
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = STOPSPRESSUREDMAGE | THICKMATERIAL
+	flags_1 = STOPSPRESSUREDMAGE_1 | THICKMATERIAL_1
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -124,7 +124,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.50
-	flags = THICKMATERIAL
+	flags_1 = THICKMATERIAL_1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/device/flashlight, /obj/item/weapon/tank/internals/emergency_oxygen, /obj/item/device/geiger_counter)
 	slowdown = 1.5

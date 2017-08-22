@@ -362,7 +362,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack_self(mob/user)
 	if(!is_open_container())
 		to_chat(user, "You pull back the tab of \the [src] with a satisfying pop.") //Ahhhhhhhh
-		container_type = OPENCONTAINER
+		container_type = OPENCONTAINER_1
 		playsound(src, "can_open", 50, 1)
 		spillable = TRUE
 		return

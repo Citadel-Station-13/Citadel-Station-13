@@ -331,7 +331,7 @@
 	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
 	darkness_view = 8
 	scan_reagents = 1
-	flags = NODROP
+	flags_1 = NODROP_1
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 
 /obj/item/clothing/glasses/godeye/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
