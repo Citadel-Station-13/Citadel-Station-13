@@ -105,7 +105,7 @@
 		M.emote(pick("moan","blush"))
 	if(prob(5))
 		var/aroused_message = pick("You feel frisky.", "You're having trouble suppressing your urges.", "You feel in the mood.")
-		M << "<span class='love'>[aroused_message]</span>"
+		to_chat(M, "<span class='love'>[aroused_message]</span>")
 	..()
 
 /datum/reagent/aphrodisiacplus
@@ -128,15 +128,13 @@
 		else
 			M.emote(pick("moan","blush"))
 	if(prob(5))
+		var/aroused_message
 		if(M.getArousalLoss() > 90)
-			var/aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
-			M << "<span class='love'>[aroused_message]</span>"
+			aroused_message = pick("You need to fuck someone!", "You're bursting with sexual tension!", "You can't get sex off your mind!")
 		else
-			var/aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
-			M << "<span class='love'>[aroused_message]</span>"
-//	if(iscarbon(M) && has_dna(M))
-//		M.force_ejaculation()
-	..()
+			aroused_message = pick("You feel a bit hot.", "You feel strong sexual urges.", "You feel in the mood.", "You're ready to go down on someone.")
+		to_chat(M, "<span class='love'>[aroused_message]</span>")
+
 /datum/reagent/aphrodisiacplus/addiction_act_stage2(mob/living/M)
 	if(prob(30))
 		M.adjustBrainLoss(2)
@@ -152,11 +150,16 @@
 	..()
 
 /datum/reagent/aphrodisiacplus/overdose_process(mob/living/M)
-	if(prob(66))
+	if(prob(33))
+		if(M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
+			var/mob/living/carbon/human/H = M
+			if(prob(50)) //Less spam
+				to_chat(H, "<span class='love'>Your libido is going haywire!</span>")
+				H.mob_climax(forced_climax=TRUE)
 		if(M.min_arousal < 50)
 			M.min_arousal += 1
-		if(M.max_arousal < 200)
-			M.max_arousal += 1
+		if(M.min_arousal < M.max_arousal)
+			M.min_arousal += 1
 		M.adjustArousalLoss(2)
 	..()
 
@@ -193,7 +196,7 @@
 	if(prob(33))
 		if(M.min_arousal > 0)
 			M.min_arousal -= 1
-		if(M.max_arousal > 75)
+		if(M.min_arousal > 50)
 			M.min_arousal -= 1
 		M.adjustArousalLoss(-2)
 	..()
