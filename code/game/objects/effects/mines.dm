@@ -129,7 +129,7 @@
 	spawn(0)
 		new /datum/hallucination/delusion(victim, TRUE, "demon",duration,0)
 
-	var/obj/item/weapon/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
+	var/obj/item/twohanded/required/chainsaw/doomslayer/chainsaw = new(victim.loc)
 	chainsaw.flags_1 |= NODROP_1
 	victim.drop_all_held_items()
 	victim.put_in_hands(chainsaw)

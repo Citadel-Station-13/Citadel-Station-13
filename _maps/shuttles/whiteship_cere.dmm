@@ -239,9 +239,9 @@
 	name = "spare equipment crate";
 	opened = 1
 	},
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/toolbox/emergency/old,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/toolbox/emergency/old,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -289,8 +289,8 @@
 	name = "spare equipment crate";
 	opened = 1
 	},
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/pickaxe,
+/obj/item/storage/bag/ore,
+/obj/item/pickaxe,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -382,7 +382,7 @@
 /obj/structure/closet/crate{
 	name = "spare equipment crate"
 	},
-/obj/item/weapon/storage/toolbox/mechanical/old,
+/obj/item/storage/toolbox/mechanical/old,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -530,7 +530,7 @@
 "aT" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -585,7 +585,7 @@
 /area/space)
 "aZ" = (
 /obj/structure/table,
-/obj/item/weapon/phone{
+/obj/item/phone{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -605,7 +605,7 @@
 /area/shuttle/abandoned)
 "bb" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -1;
 	pixel_y = 6
 	},
