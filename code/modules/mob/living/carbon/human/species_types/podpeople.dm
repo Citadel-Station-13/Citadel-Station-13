@@ -9,7 +9,7 @@
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
 	heatmod = 1.5
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/plant
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

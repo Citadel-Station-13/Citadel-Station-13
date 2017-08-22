@@ -135,20 +135,20 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/item/weapon/reagent_containers/glass/bottle/virus_type = pick(/obj/item/weapon/reagent_containers/glass/bottle/beesease, /obj/item/weapon/reagent_containers/glass/bottle/brainrot, /obj/item/weapon/reagent_containers/glass/bottle/fluspanish)
+				var/obj/item/reagent_containers/glass/bottle/virus_type = pick(/obj/item/reagent_containers/glass/bottle/beesease, /obj/item/reagent_containers/glass/bottle/brainrot, /obj/item/reagent_containers/glass/bottle/fluspanish)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle)
+						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
-						shuttle_spawns.Add(/obj/item/weapon/reagent_containers/syringe)
+						shuttle_spawns.Add(/obj/item/reagent_containers/syringe)
 					else if(prob(25))
-						shuttle_spawns.Add(/obj/item/weapon/shard)
+						shuttle_spawns.Add(/obj/item/shard)
 					T = pick_n_take(empty_shuttle_turfs)
 					new virus_type(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/pierrot_throat)
-				shuttle_spawns.Add(/obj/item/weapon/reagent_containers/glass/bottle/magnitis)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
+				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)
 
 			if(DEPARTMENT_RESUPPLY)
 				var/list/crate_types = list(
