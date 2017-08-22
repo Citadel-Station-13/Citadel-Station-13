@@ -257,7 +257,7 @@
 	return 1
 
 
-//There is no easy way for an object to be notified of changes to atmos can pass flags
+//There is no easy way for an object to be notified of changes to atmos can pass flags_1
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
 	if (widenet)
