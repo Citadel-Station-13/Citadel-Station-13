@@ -2,7 +2,7 @@
 	name = "Holodeck"
 	icon_state = "Holodeck"
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
-	flags_1 = 0
+	flags = 0
 	hidden = TRUE
 
 	var/obj/machinery/computer/holodeck/linked

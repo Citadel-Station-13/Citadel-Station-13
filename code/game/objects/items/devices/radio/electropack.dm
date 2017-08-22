@@ -6,7 +6,7 @@
 	item_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	slot_flags = SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
@@ -52,8 +52,8 @@
 
 		user.put_in_hands(A)
 		A.add_fingerprint(user)
-		if(src.flags_1 & NODROP_1)
-			A.flags_1 |= NODROP_1
+		if(src.flags & NODROP)
+			A.flags |= NODROP
 	else
 		return ..()
 

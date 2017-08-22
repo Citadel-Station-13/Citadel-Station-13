@@ -164,7 +164,7 @@
 			return
 		if(!allow_dense && AM.density)
 			return
-		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags_1 & NODROP_1))
+		if(AM.anchored || AM.has_buckled_mobs() || (AM.flags & NODROP))
 			return
 	else
 		return
@@ -193,12 +193,12 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if(ispath(material_drop) && material_drop_amount && !(flags_1 & NODECONSTRUCT_1))
+	if(ispath(material_drop) && material_drop_amount && !(flags & NODECONSTRUCT))
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
 /obj/structure/closet/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(flags & NODECONSTRUCT))
 		bust_open()
 
 /obj/structure/closet/attackby(obj/item/weapon/W, mob/user, params)
@@ -251,7 +251,7 @@
 		user.visible_message("<span class='notice'>[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='notice'>You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground.</span>", \
 						"<span class='italics'>You hear a ratchet.</span>")
-	else if(user.a_intent != INTENT_HARM && !(W.flags_1 & NOBLUDGEON_1))
+	else if(user.a_intent != INTENT_HARM && !(W.flags & NOBLUDGEON))
 		if(W.GetID() || !toggle(user))
 			togglelock(user)
 		return 1

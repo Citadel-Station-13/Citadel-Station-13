@@ -4,7 +4,7 @@
 	icon_state = "briefcase"
 	lefthand_file = 'icons/mob/inhands/equipment/briefcase_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 8
 	hitsound = "swing_hit"
 	throw_speed = 2
@@ -34,7 +34,7 @@
 	name = "briefcase"
 	desc = "It's label reads genuine hardened Captain leather, but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	icon_state = "briefcase"
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 10
 	hitsound = "swing_hit"
 	throw_speed = 2

@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(air)
 	init_order = INIT_ORDER_AIR
 	priority = 20
 	wait = 5
-	flags_1 = SS_BACKGROUND
+	flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cost_turfs = 0

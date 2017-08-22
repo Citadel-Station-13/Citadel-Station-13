@@ -187,7 +187,7 @@
 	name = "dangerous old crusher"
 	emagged = TRUE
 	crush_damage = 120
-	flags_1 = NODECONSTRUCT_1
+	flags = NODECONSTRUCT
 
 /obj/item/weapon/paper/guides/recycler
 	name = "paper - 'garbage duty instructions'"

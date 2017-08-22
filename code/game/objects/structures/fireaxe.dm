@@ -83,7 +83,7 @@
 		update_icon()
 
 /obj/structure/fireaxecabinet/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(flags & NODECONSTRUCT))
 		update_icon()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, 1)
@@ -91,7 +91,7 @@
 		new /obj/item/weapon/shard(loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		if(fireaxe && loc)
 			fireaxe.forceMove(loc)
 			fireaxe = null

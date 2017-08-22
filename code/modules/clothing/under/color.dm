@@ -17,7 +17,7 @@
 	resistance_flags = 0
 
 /obj/item/clothing/under/color/black/ghost
-	flags_1 = NODROP_1|DROPDEL_1
+	flags = NODROP|DROPDEL
 
 /obj/item/clothing/under/color/grey
 	name = "grey jumpsuit"

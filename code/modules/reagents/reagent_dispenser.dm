@@ -5,7 +5,7 @@
 	icon_state = "water"
 	density = TRUE
 	anchored = FALSE
-	container_type = DRAWABLE_1
+	container_type = DRAWABLE
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	max_integrity = 300
 	var/tank_volume = 1000 //In units, how much the dispenser can hold
@@ -42,7 +42,7 @@
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		if(!disassembled)
 			boom()
 	else

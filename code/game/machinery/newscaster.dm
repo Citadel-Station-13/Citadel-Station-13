@@ -758,14 +758,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 
 
 /obj/machinery/newscaster/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		new /obj/item/stack/sheet/metal(loc, 2)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/weapon/shard(loc)
 	qdel(src)
 
 /obj/machinery/newscaster/obj_break()
-	if(!(stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
 		stat |= BROKEN
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, 1)
 		update_icon()

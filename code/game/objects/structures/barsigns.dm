@@ -38,7 +38,7 @@
 		desc = "It displays \"[name]\"."
 
 /obj/structure/sign/barsign/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(flags & NODECONSTRUCT))
 		broken = 1
 
 /obj/structure/sign/barsign/deconstruct(disassembled = TRUE)

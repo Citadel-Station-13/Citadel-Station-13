@@ -1,6 +1,6 @@
 //A set of constants used to determine which type of mute an admin wishes to apply:
 //Please read and understand the muting/automuting stuff before changing these. MUTE_IC_AUTO etc = (MUTE_IC << 1)
-//Therefore there needs to be a gap between the flags_1 for the automute flags_1
+//Therefore there needs to be a gap between the flags for the automute flags
 #define MUTE_IC			1
 #define MUTE_OOC		2
 #define MUTE_PRAY		4
@@ -39,7 +39,7 @@
 #error Remove the flag below , its been long enough
 #endif
 //legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2
+#define R_REJUVINATE	2 
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 

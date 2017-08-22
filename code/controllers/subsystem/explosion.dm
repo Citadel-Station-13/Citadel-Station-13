@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(explosion)
 	priority = 99
 	wait = 1
-	flags_1 = SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/explosions
 
@@ -49,12 +49,12 @@ SUBSYSTEM_DEF(explosion)
 	flame_cap = SSexplosion.flame_cap
 	dyn_ex_scale = SSexplosion.dyn_ex_scale
 
-/datum/controller/subsystem/explosion/fire()
+/datum/controller/subsystem/explosion/fire()    
 	var/list/cached_explosions = explosions
 	var/num_explosions = cached_explosions.len
 	if(!num_explosions)
 		return
-
+	
 	//figure exactly how many tick splits are required
 	var/num_splits
 	if(rebuild_tick_split_count)
@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(explosion)
 
 	started_at = REALTIMEOFDAY
 	tick_started = world.time
-
+	
 	gathered_turfs = list()
 	calculated_turfs = list()
 	unsafe_turfs = list()
@@ -332,13 +332,13 @@ SUBSYSTEM_DEF(explosion)
 
 		for(var/obj/structure/blob/B in T)
 			current_exp_block += B.explosion_block
-
+		
 		L[T] = current_exp_block
 
 		if(MC_TICK_CHECK)
 			E.gathered_turfs.Cut(1, cut_to)
 			return FALSE
-
+	
 	E.gathered_turfs.Cut()
 	return done_gathering_turfs
 
@@ -358,7 +358,7 @@ SUBSYSTEM_DEF(explosion)
 	var/throw_range_max = E.extent
 
 	var/turf/epi = E.epicenter
-
+	
 	var/x0 = epi.x
 	var/y0 = epi.y
 
@@ -407,7 +407,7 @@ SUBSYSTEM_DEF(explosion)
 				var/throw_range = rand(throw_dist, throw_range_max)
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Resets when it finishes throwing, regardless of hitting anything)
-				I.throw_at(throw_at, throw_range, 4)
+				I.throw_at(throw_at, throw_range, 4)		
 
 		if(MC_TICK_CHECK)
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
@@ -432,7 +432,7 @@ SUBSYSTEM_DEF(explosion)
 
 	E.finished_at = REALTIMEOFDAY
 	E.tick_finished = world.time
-
+	
 	return TRUE
 
 /client/proc/check_bomb_impacts()

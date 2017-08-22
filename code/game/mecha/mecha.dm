@@ -23,7 +23,7 @@
 	layer = BELOW_MOB_LAYER//icon draw layer
 	infra_luminosity = 15 //byond implementation is bugged.
 	force = 5
-	flags_1 = HEAR_1
+	flags = HEAR
 	var/can_move = 1
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
@@ -112,7 +112,7 @@
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
-	var/occupant_sight_flags = 0 //sight flags_1 to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 

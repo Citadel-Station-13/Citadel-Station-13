@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
 	wait = 2
 	init_order = INIT_ORDER_LIGHTING
-	flags_1 = SS_TICKER
+	flags = SS_TICKER
 
 	var/initialized = FALSE
 
@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(lighting)
 
 		create_all_lighting_objects()
 		initialized = TRUE
-
+	
 	fire(FALSE, TRUE)
 
 	..()

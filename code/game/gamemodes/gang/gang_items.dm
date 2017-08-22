@@ -355,7 +355,7 @@
 	name = "Wetwork boots"
 	desc = "A gang's best hitmen are prepared for anything."
 	permeability_coefficient = 0.01
-	flags_1 = NOSLIP_1
+	flags = NOSLIP
 
 /datum/gang_item/equipment/pen
 	name = "Recruitment Pen"

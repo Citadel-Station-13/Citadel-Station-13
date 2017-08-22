@@ -60,7 +60,7 @@
 		to_chat(owner, "<span class='warning'>You shouldn't be able to toggle a camogear helmetmask if you're not wearing it</span>")
 	if(new_headgear)
 		// Force drop the item in the headslot, even though
-		// it's NODROP_1
+		// it's NODROP
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
 		// where is `slot_head` defined? WHO KNOWS
@@ -85,7 +85,7 @@
 	for(var/V in typesof(chameleon_type))
 		if(ispath(V) && ispath(V, /obj/item))
 			var/obj/item/I = V
-			if(chameleon_blacklist[V] || (initial(I.flags_1) & ABSTRACT_1))
+			if(chameleon_blacklist[V] || (initial(I.flags) & ABSTRACT))
 				continue
 			if(!initial(I.icon_state) || !initial(I.item_state))
 				continue
@@ -170,30 +170,30 @@
 	var/obj/item/I = target
 	var/mob/living/M = owner
 
-	var/flags_1 = I.slot_flags
-	if(flags_1 & SLOT_OCLOTHING)
+	var/flags = I.slot_flags
+	if(flags & SLOT_OCLOTHING)
 		M.update_inv_wear_suit()
-	if(flags_1 & SLOT_ICLOTHING)
+	if(flags & SLOT_ICLOTHING)
 		M.update_inv_w_uniform()
-	if(flags_1 & SLOT_GLOVES)
+	if(flags & SLOT_GLOVES)
 		M.update_inv_gloves()
-	if(flags_1 & SLOT_EYES)
+	if(flags & SLOT_EYES)
 		M.update_inv_glasses()
-	if(flags_1 & SLOT_EARS)
+	if(flags & SLOT_EARS)
 		M.update_inv_ears()
-	if(flags_1 & SLOT_MASK)
+	if(flags & SLOT_MASK)
 		M.update_inv_wear_mask()
-	if(flags_1 & SLOT_HEAD)
+	if(flags & SLOT_HEAD)
 		M.update_inv_head()
-	if(flags_1 & SLOT_FEET)
+	if(flags & SLOT_FEET)
 		M.update_inv_shoes()
-	if(flags_1 & SLOT_ID)
+	if(flags & SLOT_ID)
 		M.update_inv_wear_id()
-	if(flags_1 & SLOT_BELT)
+	if(flags & SLOT_BELT)
 		M.update_inv_belt()
-	if(flags_1 & SLOT_BACK)
+	if(flags & SLOT_BACK)
 		M.update_inv_back()
-	if(flags_1 & SLOT_NECK)
+	if(flags & SLOT_NECK)
 		M.update_inv_neck()
 
 /obj/item/clothing/under/chameleon
@@ -314,7 +314,7 @@
 /obj/item/clothing/head/chameleon/drone
 	// The camohat, I mean, holographic hat projection, is part of the
 	// drone itself.
-	flags_1 = NODROP_1
+	flags = NODROP
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// which means it offers no protection, it's just air and light
 
@@ -334,7 +334,7 @@
 	resistance_flags = 0
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -362,7 +362,7 @@
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
-	flags_1 = NODROP_1
+	flags = NODROP
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	// Can drones use the voice changer part? Let's not find out.
 	vchange = 0
@@ -384,7 +384,7 @@
 	item_color = "black"
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
-	flags_1 = NOSLIP_1
+	flags = NOSLIP
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
 	pockets = /obj/item/weapon/storage/internal/pocket/shoes

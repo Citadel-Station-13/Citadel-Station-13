@@ -235,12 +235,12 @@
 	. = ..()
 
 /obj/machinery/camera/obj_break(damage_flag)
-	if(status && !(flags_1 & NODECONSTRUCT_1))
+	if(status && !(flags & NODECONSTRUCT))
 		triggerCameraAlarm()
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		if(disassembled)
 			if(!assembly)
 				assembly = new()

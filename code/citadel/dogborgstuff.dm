@@ -3,7 +3,7 @@
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "jaws"
 	desc = "The jaws of the law."
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 12
 	throwforce = 0
 	hitsound = 'sound/weapons/bite.ogg'
@@ -16,7 +16,7 @@
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "smalljaws"
 	desc = "The jaws of a small dog."
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 6
 	throwforce = 0
 	hitsound = 'sound/weapons/bite.ogg'
@@ -38,7 +38,7 @@
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "jaws"
 			desc = "The jaws of the law."
-			flags_1 = CONDUCT_1
+			flags = CONDUCT
 			force = 12
 			throwforce = 0
 			hitsound = 'sound/weapons/bite.ogg'
@@ -50,7 +50,7 @@
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "smalljaws"
 			desc = "The jaws of a small dog."
-			flags_1 = CONDUCT_1
+			flags = CONDUCT
 			force = 5
 			throwforce = 0
 			hitsound = 'sound/weapons/bite.ogg'
@@ -85,7 +85,7 @@
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "nose"
 	desc = "The BOOP module"
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 0
 	throwforce = 0
 	attack_verb = list("nuzzled", "nosed", "booped")
@@ -177,7 +177,7 @@
 
 /obj/item/weapon/soap/tongue/New()
 	..()
-	flags_1 |= NOBLUDGEON_1 //No more attack messages
+	flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/trash/rkibble
 	name = "robo kibble"
@@ -344,7 +344,7 @@
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
-	flags_1 |= NOBLUDGEON_1 //No more attack messages
+	flags |= NOBLUDGEON //No more attack messages
 
 /obj/item/device/dogborg/sleeper/Exit(atom/movable/O)
 	return 0
@@ -655,7 +655,7 @@
 		cleaning = 0
 		update_patient()
 		return
-
+	
 	//sound effects
 	for(var/mob/living/M in contents)
 		if(prob(20))
@@ -663,7 +663,7 @@
 			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
 			M.stop_sound_channel(CHANNEL_PRED)
 			M.playsound_local("digest_prey",60)
-
+			
 	//If the timing is right, and there are items to be touched
 	if(SSmobs.times_fired%6==1 && length(touchable_items))
 
@@ -744,7 +744,7 @@
 
 /obj/item/weapon/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
 	K9.afterattack(src, user ,1)
-
+	
 /obj/item/device/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
 	hound = loc
 
@@ -775,7 +775,7 @@
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
 		return
 	return
-
+		
 /obj/item/device/dogborg/sleeper/compactor //Janihound gut.
 	name = "garbage processor"
 	desc = "A mounted garbage compactor unit with fuel processor."
@@ -854,7 +854,7 @@
 
 /obj/item/weapon/dogborg/pounce/New()
 	..()
-	flags_1 |= NOBLUDGEON_1
+	flags |= NOBLUDGEON
 
 /mob/living/silicon/robot
 	var/leaping = 0

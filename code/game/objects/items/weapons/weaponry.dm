@@ -52,7 +52,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -70,7 +70,7 @@
 
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags_1 = CONDUCT_1 | NODROP_1 | DROPDEL_1
+	flags = CONDUCT | NODROP | DROPDEL
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	luminosity = 3
@@ -197,7 +197,7 @@
 	item_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -222,7 +222,7 @@
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -240,7 +240,7 @@
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags_1 & NODROP_1))
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -280,7 +280,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
-	flags_1 = CONDUCT_1
+	flags = CONDUCT
 	force = 3
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
@@ -406,7 +406,7 @@
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
+	flags = NODROP | ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
@@ -583,7 +583,7 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags_1 = DROPDEL_1 | ABSTRACT_1
+	flags = DROPDEL | ABSTRACT
 	attack_verb = list("bopped")
 
 /obj/item/weapon/proc/can_trigger_gun(mob/living/user)

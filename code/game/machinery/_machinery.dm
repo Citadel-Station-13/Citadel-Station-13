@@ -35,8 +35,8 @@ Class Variables:
       Next uid value in sequence
 
    stat (bitflag)
-      Machine status bit flags_1.
-      Possible bit flags_1:
+      Machine status bit flags.
+      Possible bit flags:
          BROKEN:1 -- Machine is broken
          NOPOWER:2 -- No power is being supplied to machine.
          POWEROFF:4 -- tbd
@@ -307,7 +307,7 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
-	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && istype(C)
+	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -315,13 +315,13 @@ Class Procs:
 		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel) &&  !(flags_1 & NODECONSTRUCT_1)
+	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
 		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		on_deconstruction()
 		if(component_parts && component_parts.len)
 			spawn_frame(disassembled)
@@ -340,7 +340,7 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		stat |= BROKEN
 
 /obj/machinery/contents_explosion(severity, target)
@@ -354,7 +354,7 @@ Class Procs:
 		updateUsrDialog()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
-	if(istype(S) &&  !(flags_1 & NODECONSTRUCT_1))
+	if(istype(S) &&  !(flags & NODECONSTRUCT))
 		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
 			panel_open = TRUE
@@ -382,7 +382,7 @@ Class Procs:
 	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(istype(W) && !(flags_1 & NODECONSTRUCT_1))
+	if(istype(W) && !(flags & NODECONSTRUCT))
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
@@ -409,7 +409,7 @@ Class Procs:
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	if(!istype(W))
 		return
-	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
+	if((flags & NODECONSTRUCT) && !W.works_from_distance)
 		return
 	var/shouldplaysound = 0
 	if(component_parts)

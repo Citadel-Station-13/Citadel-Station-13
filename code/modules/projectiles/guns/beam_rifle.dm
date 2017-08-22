@@ -678,7 +678,7 @@
 			pixel_x = pixel_x_offset
 			pixel_y = pixel_y_offset
 		else
-			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags_1 = ANIMATION_END_NOW)
+			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 		old_pixel_x = pixel_x_offset
 		old_pixel_y = pixel_y_offset
 		if(can_hit_target(original, permutated))
@@ -715,7 +715,7 @@
 	light_range = 2
 	light_color = "#00ffff"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flags_1 = ABSTRACT_1
+	flags = ABSTRACT
 	appearance_flags = 0
 
 /obj/effect/projectile_beam/proc/scale_to(nx,ny,override=TRUE)

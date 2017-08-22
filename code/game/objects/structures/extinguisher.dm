@@ -120,7 +120,7 @@
 		icon_state = "extinguisher_empty"
 
 /obj/structure/extinguisher_cabinet/obj_break(damage_flag)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(flags & NODECONSTRUCT))
 		broken = 1
 		opened = 1
 		if(stored_extinguisher)
@@ -130,7 +130,7 @@
 
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(flags & NODECONSTRUCT))
 		if(disassembled)
 			new /obj/item/wallframe/extinguisher_cabinet(loc)
 		else
