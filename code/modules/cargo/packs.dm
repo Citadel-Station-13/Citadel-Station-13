@@ -543,10 +543,14 @@
 	crate_name = "electrical maintenance crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
+/obj/item/stock_parts/cell/inducer_supply
+	maxcharge = 5000
+	charge = 5000
+
 /datum/supply_pack/engineering/inducers
 	name = "NT-75 Electromagnetic Power Inducers Crate"
 	cost = 2000
-	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell {maxcharge = 5000; charge = 5000};opened = 0}, /obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell {maxcharge = 5000; charge = 5000};opened = 0}) //FALSE doesn't work in modified type paths apparently.
+	contains = list(/obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}, /obj/item/inducer/sci {cell_type = /obj/item/stock_parts/cell/inducer_supply; opened = 0}) //FALSE doesn't work in modified type paths apparently.
 	crate_name = "inducer crate"
 	crate_type = /obj/structure/closet/crate/engineering/electrical
 
@@ -1774,14 +1778,16 @@
 	crate_name= "shield sat crate"
 
 
+
+//This needs to be added back in another PR. - Jay
+/*
 /datum/supply_pack/misc/shield_sat_control
 	name = "Shield System Control Board"
 	cost = 5000
 	special = TRUE
-	contains = list(
-					/obj/item/circuitboard/machine/computer/sat_control
-					)
+	contains = list(/obj/item/circuitboard/computer/sat_control)
 	crate_name= "shield control board crate"
+	*/
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
