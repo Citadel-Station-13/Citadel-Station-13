@@ -53,6 +53,7 @@
 			ingredients += S
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
+			foodtype |= S.foodtype
 			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
@@ -158,6 +159,7 @@
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
+	foodtype = GRAIN
 
 
 /obj/item/reagent_containers/food/snacks/customizable/bread
@@ -167,6 +169,7 @@
 	slices_num = 5
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
+	foodtype = GRAIN
 
 
 /obj/item/reagent_containers/food/snacks/customizable/cake
@@ -176,6 +179,7 @@
 	slices_num = 5
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/reagent_containers/food/snacks/customizable/kebab
@@ -195,6 +199,7 @@
 	ingMax = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
+	foodtype = GRAIN
 
 
 /obj/item/reagent_containers/food/snacks/customizable/pie
@@ -202,6 +207,7 @@
 	ingMax = 6
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pie"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/reagent_containers/food/snacks/customizable/pizza
@@ -213,6 +219,7 @@
 	slices_num = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/reagent_containers/food/snacks/customizable/salad
@@ -231,6 +238,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0
+	foodtype = GRAIN
 
 /obj/item/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/reagent_containers/BASE, obj/item/I, mob/user)
 	icon_state = BASE.icon_state
