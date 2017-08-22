@@ -1,0 +1,10 @@
+diff a/code/modules/research/circuitprinter.dm b/code/modules/research/circuitprinter.dm	(rejected hunks)
+@@ -9,7 +9,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
+ 	desc = "Manufactures circuit boards for the construction of machines."
+ 	icon_state = "circuit_imprinter"
+ 	container_type = OPENCONTAINER
+-	circuit = /obj/item/circuitboard/machine/circuit_imprinter
++	circuit = /obj/item/circuitboard/machine/circuit_imprinter
+ 
+ 	var/datum/material_container/materials
+ 	var/efficiency_coeff

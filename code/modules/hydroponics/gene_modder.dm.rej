@@ -1,0 +1,39 @@
+diff a/code/modules/hydroponics/gene_modder.dm b/code/modules/hydroponics/gene_modder.dm	(rejected hunks)
+@@ -5,10 +5,10 @@
+ 	icon_state = "dnamod"
+ 	density = TRUE
+ 	anchored = TRUE
+-	circuit = /obj/item/circuitboard/machine/plantgenes
++	circuit = /obj/item/circuitboard/machine/plantgenes
+ 
+ 	var/obj/item/seeds/seed
+-	var/obj/item/disk/plantgene/disk
++	var/obj/item/disk/plantgene/disk
+ 
+ 	var/list/core_genes = list()
+ 	var/list/reagent_genes = list()
+@@ -24,7 +24,7 @@
+ 	var/min_wrate = 10
+ 
+ /obj/machinery/plantgenes/RefreshParts() // Comments represent the max you can set per tier, respectively. seeds.dm [219] clamps these for us but we don't want to mislead the viewer.
+-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
++	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+ 		if(M.rating > 3)
+ 			max_potency = 95
+ 		else
+@@ -409,13 +409,13 @@
+ 
+ // Gene modder for seed vault ship, built with high tech alien parts.
+ /obj/machinery/plantgenes/seedvault
+-	circuit = /obj/item/circuitboard/machine/plantgenes/vault
++	circuit = /obj/item/circuitboard/machine/plantgenes/vault
+ 
+ /*
+  *  Plant DNA disk
+  */
+ 
+-/obj/item/disk/plantgene
++/obj/item/disk/plantgene
+ 	name = "plant data disk"
+ 	desc = "A disk for storing plant genetic data."
+ 	icon_state = "datadisk_hydro"

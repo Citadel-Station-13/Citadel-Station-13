@@ -1,0 +1,81 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -474,8 +474,8 @@
+ /turf/open/floor/plating,
+ /area/security/execution/education)
+ "abh" = (
+-/obj/item/soap/nanotrasen,
+-/obj/item/bikehorn/rubberducky,
++/obj/item/soap/nanotrasen,
++/obj/item/bikehorn/rubberducky,
+ /obj/machinery/shower{
+ 	dir = 4
+ 	},
+@@ -1420,15 +1420,15 @@
+ /area/security/execution/education)
+ "acW" = (
+ /obj/structure/table,
+-/obj/item/folder/red{
++/obj/item/folder/red{
+ 	pixel_x = 3
+ 	},
+ /obj/item/device/taperecorder{
+ 	pixel_x = -3
+ 	},
+-/obj/item/storage/fancy/cigarettes,
++/obj/item/storage/fancy/cigarettes,
+ /obj/item/device/assembly/flash/handheld,
+-/obj/item/reagent_containers/spray/pepper,
++/obj/item/reagent_containers/spray/pepper,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 4
+@@ -2285,18 +2285,18 @@
+ /turf/open/floor/plasteel/vault,
+ /area/security/execution/education)
+ "aeI" = (
+-/obj/item/tank/internals/oxygen/red{
++/obj/item/tank/internals/oxygen/red{
+ 	pixel_x = -4;
+ 	pixel_y = -1
+ 	},
+-/obj/item/tank/internals/oxygen/red{
++/obj/item/tank/internals/oxygen/red{
+ 	pixel_x = 4;
+ 	pixel_y = -1
+ 	},
+-/obj/item/tank/internals/anesthetic{
++/obj/item/tank/internals/anesthetic{
+ 	pixel_x = 2
+ 	},
+-/obj/item/storage/toolbox/mechanical,
++/obj/item/storage/toolbox/mechanical,
+ /obj/item/clothing/mask/gas,
+ /obj/item/clothing/mask/gas,
+ /obj/structure/closet/crate{
+@@ -2304,7 +2304,7 @@
+ 	opened = 1
+ 	},
+ /obj/machinery/atmospherics/pipe/manifold/general/visible,
+-/obj/item/wrench,
++/obj/item/wrench,
+ /turf/open/floor/plasteel/vault,
+ /area/security/execution/education)
+ "aeJ" = (
+@@ -18649,7 +18649,7 @@
+ 	areastring = "/area/lawoffice";
+ 	pixel_y = 24
+ 	},
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-21";
+ 	layer = 4.1
+ 	},
+@@ -22720,7 +22720,7 @@
+ /obj/item/stack/sheet/glass{
+ 	amount = 50
+ 	},
+-/obj/item/pipe_dispenser,
++/obj/item/pipe_dispenser,
+ /obj/machinery/light{
+ 	dir = 4
+ 	},

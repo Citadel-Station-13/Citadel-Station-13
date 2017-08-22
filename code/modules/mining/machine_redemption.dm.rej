@@ -1,0 +1,13 @@
+diff a/code/modules/mining/machine_redemption.dm b/code/modules/mining/machine_redemption.dm	(rejected hunks)
+@@ -12,9 +12,9 @@
+ 	output_dir = SOUTH
+ 	req_access = list(ACCESS_MINERAL_STOREROOM)
+ 	speed_process = 1
+-	circuit = /obj/item/circuitboard/machine/ore_redemption
++	circuit = /obj/item/circuitboard/machine/ore_redemption
+ 	var/req_access_reclaim = ACCESS_MINING_STATION
+-	var/obj/item/card/id/inserted_id
++	var/obj/item/card/id/inserted_id
+ 	var/points = 0
+ 	var/ore_pickup_rate = 15
+ 	var/sheet_per_ore = 1

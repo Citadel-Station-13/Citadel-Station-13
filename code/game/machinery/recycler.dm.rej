@@ -1,0 +1,10 @@
+diff a/code/game/machinery/recycler.dm b/code/game/machinery/recycler.dm	(rejected hunks)
+@@ -8,7 +8,7 @@
+ 	layer = ABOVE_ALL_MOB_LAYER // Overhead
+ 	anchored = TRUE
+ 	density = TRUE
+-	circuit = /obj/item/circuitboard/machine/recycler
++	circuit = /obj/item/circuitboard/machine/recycler
+ 	var/safety_mode = FALSE // Temporarily stops machine if it detects a mob
+ 	var/icon_name = "grinder-o"
+ 	var/blood = 0

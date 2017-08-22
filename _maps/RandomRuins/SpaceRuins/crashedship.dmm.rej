@@ -1,0 +1,10 @@
+diff a/_maps/RandomRuins/SpaceRuins/crashedship.dmm b/_maps/RandomRuins/SpaceRuins/crashedship.dmm	(rejected hunks)
+@@ -2248,7 +2248,7 @@
+ /area/awaymission/BMPship)
+ "gF" = (
+ /obj/effect/spawner/structure/window/hollow/reinforced/one_side/east,
+-/obj/item/shard{
++/obj/item/shard{
+ 	icon_state = "small"
+ 	},
+ /turf/open/floor/plating/airless,

@@ -1,0 +1,21 @@
+diff a/code/game/objects/items/tools.dm b/code/game/objects/items/tools.dm	(rejected hunks)
+@@ -352,16 +352,16 @@
+ 			playsound(loc,pick('sound/misc/desceration-01.ogg','sound/misc/desceration-02.ogg','sound/misc/desceration-01.ogg') ,50, 1, -1)
+ 	return (BRUTELOSS)
+ 
+-/obj/item/wirecutters/power/attack_self(mob/user)
++/obj/item/wirecutters/power/attack_self(mob/user)
+ 	playsound(get_turf(user), 'sound/items/change_jaws.ogg', 50, 1)
+-	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power
++	var/obj/item/crowbar/power/pryjaws = new /obj/item/crowbar/power
+ 	to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
+ 	qdel(src)
+ 	user.put_in_active_hand(pryjaws)
+ /*
+  * Welding Tool
+  */
+-/obj/item/weldingtool
++/obj/item/weldingtool
+ 	name = "welding tool"
+ 	desc = "A standard edition welder provided by Nanotrasen."
+ 	icon = 'icons/obj/tools.dmi'

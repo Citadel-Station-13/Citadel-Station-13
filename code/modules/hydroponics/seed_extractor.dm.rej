@@ -1,0 +1,20 @@
+diff a/code/modules/hydroponics/seed_extractor.dm b/code/modules/hydroponics/seed_extractor.dm	(rejected hunks)
+@@ -44,15 +44,15 @@
+ 	icon_state = "sextractor"
+ 	density = TRUE
+ 	anchored = TRUE
+-	circuit = /obj/item/circuitboard/machine/seed_extractor
++	circuit = /obj/item/circuitboard/machine/seed_extractor
+ 	var/piles = list()
+ 	var/max_seeds = 1000
+ 	var/seed_multiplier = 1
+ 
+ /obj/machinery/seed_extractor/RefreshParts()
+-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
++	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
+ 		max_seeds = 1000 * B.rating
+-	for(var/obj/item/stock_parts/manipulator/M in component_parts)
++	for(var/obj/item/stock_parts/manipulator/M in component_parts)
+ 		seed_multiplier = M.rating
+ 
+ /obj/machinery/seed_extractor/attackby(obj/item/O, mob/user, params)

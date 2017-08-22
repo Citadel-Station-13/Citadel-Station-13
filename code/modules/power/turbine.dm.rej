@@ -1,0 +1,19 @@
+diff a/code/modules/power/turbine.dm b/code/modules/power/turbine.dm	(rejected hunks)
+@@ -31,7 +31,7 @@
+ 	density = TRUE
+ 	resistance_flags = FIRE_PROOF
+ 	CanAtmosPass = ATMOS_PASS_DENSITY
+-	circuit = /obj/item/circuitboard/machine/power_compressor
++	circuit = /obj/item/circuitboard/machine/power_compressor
+ 	var/obj/machinery/power/turbine/turbine
+ 	var/datum/gas_mixture/gas_contained
+ 	var/turf/inturf
+@@ -52,7 +52,7 @@
+ 	density = TRUE
+ 	resistance_flags = FIRE_PROOF
+ 	CanAtmosPass = ATMOS_PASS_DENSITY
+-	circuit = /obj/item/circuitboard/machine/power_turbine
++	circuit = /obj/item/circuitboard/machine/power_turbine
+ 	var/opened = 0
+ 	var/obj/machinery/power/compressor/compressor
+ 	var/turf/outturf

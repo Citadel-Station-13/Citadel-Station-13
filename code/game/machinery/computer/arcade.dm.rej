@@ -1,0 +1,12 @@
+diff a/code/game/machinery/computer/arcade.dm b/code/game/machinery/computer/arcade.dm	(rejected hunks)
+@@ -56,8 +56,8 @@
+ 	// If it's a generic arcade machine, pick a random arcade
+ 	// circuit board for it and make the new machine
+ 	if(!circuit)
+-		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
+-		var/obj/item/circuitboard/CB = new choice()
++		var/choice = pick(subtypesof(/obj/item/circuitboard/computer/arcade))
++		var/obj/item/circuitboard/CB = new choice()
+ 		new CB.build_path(loc, CB)
+ 		return INITIALIZE_HINT_QDEL
+ 	Reset()

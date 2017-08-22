@@ -1,0 +1,22 @@
+diff a/code/modules/power/tesla/coil.dm b/code/modules/power/tesla/coil.dm	(rejected hunks)
+@@ -11,7 +11,7 @@
+ 	buckle_lying = FALSE
+ 	buckle_requires_restraints = TRUE
+ 
+-	circuit = /obj/item/circuitboard/machine/tesla_coil
++	circuit = /obj/item/circuitboard/machine/tesla_coil
+ 
+ 	var/power_loss = 2
+ 	var/input_power_multiplier = 1
+@@ -103,9 +103,9 @@
+ 	buckle_lying = FALSE
+ 	buckle_requires_restraints = TRUE
+ 
+-	circuit = /obj/item/circuitboard/machine/grounding_rod
++	circuit = /obj/item/circuitboard/machine/grounding_rod
+ 
+-/obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
++/obj/machinery/power/grounding_rod/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
+ 	. = ..()
+ 	if(. == SUCCESSFUL_UNFASTEN)
+ 		if(panel_open)

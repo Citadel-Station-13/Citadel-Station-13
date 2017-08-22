@@ -1,0 +1,28 @@
+diff a/code/modules/power/port_gen.dm b/code/modules/power/port_gen.dm	(rejected hunks)
+@@ -54,7 +54,7 @@
+ 
+ /obj/machinery/power/port_gen/pacman
+ 	name = "\improper P.A.C.M.A.N.-type portable generator"
+-	circuit = /obj/item/circuitboard/machine/pacman
++	circuit = /obj/item/circuitboard/machine/pacman
+ 	var/sheets = 0
+ 	var/max_sheets = 100
+ 	var/sheet_name = ""
+@@ -272,7 +272,7 @@
+ 	name = "\improper S.U.P.E.R.P.A.C.M.A.N.-type portable generator"
+ 	icon_state = "portgen1_0"
+ 	base_icon = "portgen1"
+-	circuit = /obj/item/circuitboard/machine/pacman/super
++	circuit = /obj/item/circuitboard/machine/pacman/super
+ 	sheet_path = /obj/item/stack/sheet/mineral/uranium
+ 	power_gen = 15000
+ 	time_per_sheet = 85
+@@ -284,7 +284,7 @@
+ 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
+ 	base_icon = "portgen2"
+ 	icon_state = "portgen2_0"
+-	circuit = /obj/item/circuitboard/machine/pacman/mrs
++	circuit = /obj/item/circuitboard/machine/pacman/mrs
+ 	sheet_path = /obj/item/stack/sheet/mineral/diamond
+ 	power_gen = 40000
+ 	time_per_sheet = 80

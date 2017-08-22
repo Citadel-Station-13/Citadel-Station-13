@@ -1,0 +1,1542 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -799,8 +799,8 @@
+ /turf/closed/wall/r_wall,
+ /area/ai_monitored/turret_protected/ai)
+ "abP" = (
+-/obj/item/cautery,
+-/obj/item/scalpel,
++/obj/item/cautery,
++/obj/item/scalpel,
+ /obj/structure/table/reinforced,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 8
+@@ -3068,7 +3068,7 @@
+ /area/security/execution/transfer)
+ "ahk" = (
+ /obj/structure/table,
+-/obj/item/folder/red{
++/obj/item/folder/red{
+ 	pixel_x = 3
+ 	},
+ /obj/item/device/taperecorder{
+@@ -3344,7 +3344,7 @@
+ /area/security/prison)
+ "ahK" = (
+ /obj/structure/table,
+-/obj/item/melee/chainofcommand,
++/obj/item/melee/chainofcommand,
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 1
+ 	},
+@@ -3437,11 +3437,11 @@
+ /area/security/execution/transfer)
+ "ahV" = (
+ /obj/structure/rack,
+-/obj/item/tank/internals/anesthetic{
++/obj/item/tank/internals/anesthetic{
+ 	pixel_x = -3;
+ 	pixel_y = 1
+ 	},
+-/obj/item/tank/internals/oxygen/red{
++/obj/item/tank/internals/oxygen/red{
+ 	pixel_x = 3
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+@@ -8467,7 +8467,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/security/brig)
+ "asJ" = (
+-/obj/item/folder/red,
++/obj/item/folder/red,
+ /obj/item/device/taperecorder,
+ /obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+ 	dir = 4
+@@ -9154,12 +9154,12 @@
+ /area/ai_monitored/nuke_storage)
+ "aue" = (
+ /obj/structure/safe,
+-/obj/item/bikehorn/golden,
++/obj/item/bikehorn/golden,
+ /obj/item/ammo_box/a357,
+-/obj/item/tank/internals/plasma/full,
+-/obj/item/disk/fakenucleardisk,
+-/obj/item/ore/diamond,
+-/obj/item/gun/energy/disabler,
++/obj/item/tank/internals/plasma/full,
++/obj/item/disk/fakenucleardisk,
++/obj/item/ore/diamond,
++/obj/item/gun/energy/disabler,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 4
+ 	},
+@@ -9770,7 +9770,7 @@
+ 	id = "Cell 1";
+ 	pixel_x = -28
+ 	},
+-/obj/item/bedsheet/blue,
++/obj/item/bedsheet/blue,
+ /turf/open/floor/plasteel/blue/side,
+ /area/security/brig)
+ "avt" = (
+@@ -9789,7 +9789,7 @@
+ 	id = "Cell 2";
+ 	pixel_x = -28
+ 	},
+-/obj/item/bedsheet/green,
++/obj/item/bedsheet/green,
+ /turf/open/floor/plasteel/green/side,
+ /area/security/brig)
+ "avw" = (
+@@ -9808,7 +9808,7 @@
+ 	id = "Cell 3";
+ 	pixel_x = -28
+ 	},
+-/obj/item/bedsheet/orange,
++/obj/item/bedsheet/orange,
+ /turf/open/floor/plasteel/yellow/side,
+ /area/security/brig)
+ "avz" = (
+@@ -10456,14 +10456,14 @@
+ 	name = "brig shutters"
+ 	},
+ /obj/structure/table/reinforced,
+-/obj/item/folder/red{
++/obj/item/folder/red{
+ 	layer = 2.9
+ 	},
+ /turf/open/floor/plasteel/black,
+ /area/security/brig)
+ "awQ" = (
+ /obj/structure/table/reinforced,
+-/obj/item/pen{
++/obj/item/pen{
+ 	layer = 3
+ 	},
+ /obj/machinery/door/poddoor/preopen{
+@@ -11053,22 +11053,22 @@
+ /area/crew_quarters/dorms)
+ "ayo" = (
+ /obj/structure/table/wood,
+-/obj/item/storage/pill_bottle/dice,
++/obj/item/storage/pill_bottle/dice,
+ /turf/open/floor/carpet,
+ /area/crew_quarters/dorms)
+ "ayp" = (
+ /obj/structure/table/wood,
+-/obj/item/pen{
++/obj/item/pen{
+ 	layer = 4
+ 	},
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	layer = 2.9
+ 	},
+ /turf/open/floor/carpet,
+ /area/crew_quarters/dorms)
+ "ayq" = (
+ /obj/structure/table/wood,
+-/obj/item/storage/backpack,
++/obj/item/storage/backpack,
+ /turf/open/floor/carpet,
+ /area/crew_quarters/dorms)
+ "ayr" = (
+@@ -13869,14 +13869,14 @@
+ /obj/structure/table/wood,
+ /obj/structure/disposalpipe/segment,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
++/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+ 	pixel_x = -1;
+ 	pixel_y = 9
+ 	},
+-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
++/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+ 	pixel_y = 0
+ 	},
+-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
++/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass{
+ 	pixel_x = 7;
+ 	pixel_y = 2
+ 	},
+@@ -14343,7 +14343,7 @@
+ 	pixel_x = 3;
+ 	pixel_y = -7
+ 	},
+-/obj/item/electronics/apc,
++/obj/item/electronics/apc,
+ /obj/item/device/t_scanner,
+ /turf/open/floor/plasteel/neutral/side{
+ 	dir = 8;
+@@ -14450,12 +14450,12 @@
+ 	d2 = 4;
+ 	icon_state = "2-4"
+ 	},
+-/obj/item/wrench,
+-/obj/item/crowbar,
++/obj/item/wrench,
++/obj/item/crowbar,
+ /turf/open/floor/plating,
+ /area/storage/emergency/starboard)
+ "aFF" = (
+-/obj/item/storage/box/lights/mixed,
++/obj/item/storage/box/lights/mixed,
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+@@ -14570,9 +14570,9 @@
+ /area/maintenance/department/cargo)
+ "aFQ" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/glass/bowl,
+-/obj/item/reagent_containers/glass/bowl,
+-/obj/item/reagent_containers/food/condiment/rice,
++/obj/item/reagent_containers/glass/bowl,
++/obj/item/reagent_containers/glass/bowl,
++/obj/item/reagent_containers/food/condiment/rice,
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+@@ -14692,10 +14692,10 @@
+ /area/storage/primary)
+ "aGh" = (
+ /obj/structure/table,
+-/obj/item/storage/belt/utility,
+-/obj/item/storage/belt/utility,
+-/obj/item/storage/belt/utility,
+-/obj/item/reagent_containers/glass/beaker,
++/obj/item/storage/belt/utility,
++/obj/item/storage/belt/utility,
++/obj/item/storage/belt/utility,
++/obj/item/reagent_containers/glass/beaker,
+ /turf/open/floor/plasteel/neutral/side,
+ /area/storage/primary)
+ "aGi" = (
+@@ -14734,7 +14734,7 @@
+ 	},
+ /area/crew_quarters/heads/captain)
+ "aGn" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-09";
+ 	layer = 3.1;
+ 	light_color = "#2cb2e8";
+@@ -16629,7 +16629,7 @@
+ /turf/open/floor/plasteel,
+ /area/hallway/primary/central)
+ "aKg" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-04";
+ 	layer = 4.1
+ 	},
+@@ -17067,7 +17067,7 @@
+ 	dir = 4
+ 	},
+ /obj/structure/easel,
+-/obj/item/canvas/twentythreeXnineteen,
++/obj/item/canvas/twentythreeXnineteen,
+ /turf/open/floor/plasteel/redblue,
+ /area/storage/art)
+ "aLy" = (
+@@ -17091,8 +17091,8 @@
+ /area/storage/art)
+ "aLA" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/snacks/friedegg,
+-/obj/item/kitchen/fork,
++/obj/item/reagent_containers/food/snacks/friedegg,
++/obj/item/kitchen/fork,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/cafeteria/lunchroom)
+ "aLB" = (
+@@ -17787,11 +17787,11 @@
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+-/obj/item/storage/toolbox/artistic{
++/obj/item/storage/toolbox/artistic{
+ 	pixel_x = 2;
+ 	pixel_y = 4
+ 	},
+-/obj/item/storage/toolbox/artistic{
++/obj/item/storage/toolbox/artistic{
+ 	pixel_x = -3
+ 	},
+ /turf/open/floor/plasteel/redblue,
+@@ -17895,18 +17895,18 @@
+ 	},
+ /area/maintenance/department/crew_quarters/bar)
+ "aNg" = (
+-/obj/item/storage/box/lights/mixed,
++/obj/item/storage/box/lights/mixed,
+ /turf/open/floor/plating,
+ /area/maintenance/department/crew_quarters/bar)
+ "aNh" = (
+-/obj/item/extinguisher,
++/obj/item/extinguisher,
+ /turf/open/floor/plating{
+ 	icon_state = "panelscorched"
+ 	},
+ /area/maintenance/department/crew_quarters/bar)
+ "aNi" = (
+ /obj/structure/grille/broken,
+-/obj/item/crowbar,
++/obj/item/crowbar,
+ /obj/structure/disposalpipe/segment,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /obj/structure/cable{
+@@ -18097,7 +18097,7 @@
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 4
+ 	},
+-/obj/item/book/manual/wiki/security_space_law,
++/obj/item/book/manual/wiki/security_space_law,
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 8
+ 	},
+@@ -18435,14 +18435,14 @@
+ /area/storage/art)
+ "aOu" = (
+ /obj/structure/table,
+-/obj/item/storage/crayons,
+-/obj/item/storage/crayons,
++/obj/item/storage/crayons,
++/obj/item/storage/crayons,
+ /obj/machinery/light,
+ /obj/machinery/camera{
+ 	c_tag = "Art Storage";
+ 	dir = 1
+ 	},
+-/obj/item/hand_labeler,
++/obj/item/hand_labeler,
+ /turf/open/floor/plasteel/redblue,
+ /area/storage/art)
+ "aOv" = (
+@@ -18459,8 +18459,8 @@
+ 	amount = 20;
+ 	layer = 3.3
+ 	},
+-/obj/item/canvas/twentythreeXtwentythree,
+-/obj/item/canvas/nineteenXnineteen,
++/obj/item/canvas/twentythreeXtwentythree,
++/obj/item/canvas/nineteenXnineteen,
+ /turf/open/floor/plasteel/redblue,
+ /area/storage/art)
+ "aOw" = (
+@@ -19120,7 +19120,7 @@
+ /area/teleporter)
+ "aPQ" = (
+ /obj/structure/closet/crate,
+-/obj/item/crowbar,
++/obj/item/crowbar,
+ /obj/effect/turf_decal/delivery,
+ /turf/open/floor/plasteel/darkblue/side,
+ /area/teleporter)
+@@ -20043,11 +20043,11 @@
+ 	},
+ /area/maintenance/department/crew_quarters/bar)
+ "aRQ" = (
+-/obj/item/gun/ballistic/revolver/doublebarrel{
++/obj/item/gun/ballistic/revolver/doublebarrel{
+ 	pixel_y = 11
+ 	},
+ /obj/structure/table/wood,
+-/obj/item/coin/silver,
++/obj/item/coin/silver,
+ /obj/item/stack/spacecash/c10,
+ /obj/item/stack/spacecash/c100,
+ /turf/open/floor/wood,
+@@ -20491,14 +20491,14 @@
+ /area/crew_quarters/bar)
+ "aSQ" = (
+ /obj/effect/landmark/xeno_spawn,
+-/obj/item/storage/box/beanbag,
++/obj/item/storage/box/beanbag,
+ /turf/open/floor/wood,
+ /area/crew_quarters/bar)
+ "aSR" = (
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 5
+ 	},
+-/obj/item/weldingtool,
++/obj/item/weldingtool,
+ /turf/open/floor/plating,
+ /area/maintenance/department/crew_quarters/bar)
+ "aSS" = (
+@@ -21060,24 +21060,24 @@
+ /area/hydroponics)
+ "aTW" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/spray/plantbgone{
++/obj/item/reagent_containers/spray/plantbgone{
+ 	pixel_y = 3
+ 	},
+-/obj/item/reagent_containers/spray/plantbgone{
++/obj/item/reagent_containers/spray/plantbgone{
+ 	pixel_x = 8;
+ 	pixel_y = 8
+ 	},
+-/obj/item/reagent_containers/spray/plantbgone{
++/obj/item/reagent_containers/spray/plantbgone{
+ 	pixel_x = 13;
+ 	pixel_y = 5
+ 	},
+-/obj/item/watertank,
++/obj/item/watertank,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/hydroponics)
+ "aTX" = (
+ /obj/structure/kitchenspike,
+ /obj/item/device/assembly/mousetrap,
+-/obj/item/reagent_containers/food/snacks/deadmouse,
++/obj/item/reagent_containers/food/snacks/deadmouse,
+ /turf/open/floor/plasteel/showroomfloor,
+ /area/crew_quarters/kitchen)
+ "aTY" = (
+@@ -21640,19 +21640,19 @@
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/patron{
++/obj/item/reagent_containers/food/drinks/bottle/patron{
+ 	pixel_x = -5;
+ 	pixel_y = 16
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/cognac{
++/obj/item/reagent_containers/food/drinks/bottle/cognac{
+ 	pixel_x = -10;
+ 	pixel_y = 7
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/grappa{
++/obj/item/reagent_containers/food/drinks/bottle/grappa{
+ 	pixel_x = 10;
+ 	pixel_y = 15
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/vodka{
++/obj/item/reagent_containers/food/drinks/bottle/vodka{
+ 	pixel_x = 2;
+ 	pixel_y = 4
+ 	},
+@@ -21660,36 +21660,36 @@
+ /area/crew_quarters/bar)
+ "aVi" = (
+ /obj/structure/table/glass,
+-/obj/item/reagent_containers/food/drinks/bottle/hcider{
++/obj/item/reagent_containers/food/drinks/bottle/hcider{
+ 	layer = 3.1;
+ 	pixel_x = -6;
+ 	pixel_y = 8
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/wine{
++/obj/item/reagent_containers/food/drinks/bottle/wine{
+ 	layer = 3.1;
+ 	pixel_x = 3;
+ 	pixel_y = 5
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/rum{
++/obj/item/reagent_containers/food/drinks/bottle/rum{
+ 	layer = 3.2;
+ 	pixel_x = -15;
+ 	pixel_y = 4
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/lizardwine{
++/obj/item/reagent_containers/food/drinks/bottle/lizardwine{
+ 	layer = 3.1;
+ 	pixel_x = 13;
+ 	pixel_y = 15
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/tequila{
++/obj/item/reagent_containers/food/drinks/bottle/tequila{
+ 	layer = 3.2;
+ 	pixel_x = 13;
+ 	pixel_y = 7
+ 	},
+-/obj/item/reagent_containers/food/drinks/shaker{
++/obj/item/reagent_containers/food/drinks/shaker{
+ 	pixel_x = 1;
+ 	pixel_y = 13
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/gin{
++/obj/item/reagent_containers/food/drinks/bottle/gin{
+ 	pixel_x = -10;
+ 	pixel_y = 15
+ 	},
+@@ -21714,7 +21714,7 @@
+ /area/crew_quarters/bar)
+ "aVk" = (
+ /obj/structure/table/wood,
+-/obj/item/lipstick/random{
++/obj/item/lipstick/random{
+ 	pixel_x = 2;
+ 	pixel_y = 2
+ 	},
+@@ -22054,8 +22054,8 @@
+ /area/hydroponics)
+ "aVW" = (
+ /obj/structure/closet/chefcloset,
+-/obj/item/wrench,
+-/obj/item/crowbar,
++/obj/item/wrench,
++/obj/item/crowbar,
+ /turf/open/floor/plasteel/showroomfloor,
+ /area/crew_quarters/kitchen)
+ "aVX" = (
+@@ -22207,7 +22207,7 @@
+ /area/crew_quarters/bar)
+ "aWm" = (
+ /obj/structure/disposalpipe/segment,
+-/obj/item/storage/box/drinkingglasses,
++/obj/item/storage/box/drinkingglasses,
+ /turf/open/floor/plasteel/black,
+ /area/crew_quarters/bar)
+ "aWn" = (
+@@ -22446,7 +22446,7 @@
+ "aWO" = (
+ /obj/structure/bed,
+ /obj/effect/landmark/start/janitor,
+-/obj/item/bedsheet/purple,
++/obj/item/bedsheet/purple,
+ /turf/open/floor/plasteel/black,
+ /area/janitor)
+ "aWP" = (
+@@ -23024,7 +23024,7 @@
+ /area/crew_quarters/bar)
+ "aYe" = (
+ /obj/structure/table/reinforced,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-18";
+ 	layer = 4.1;
+ 	pixel_y = 10
+@@ -23037,8 +23037,8 @@
+ /area/crew_quarters/bar)
+ "aYf" = (
+ /obj/structure/table/reinforced,
+-/obj/item/book/manual/barman_recipes,
+-/obj/item/reagent_containers/glass/rag,
++/obj/item/book/manual/barman_recipes,
++/obj/item/reagent_containers/glass/rag,
+ /turf/open/floor/plasteel/darkred/side{
+ 	icon_state = "darkred";
+ 	dir = 1;
+@@ -23066,7 +23066,7 @@
+ "aYi" = (
+ /obj/structure/table/reinforced,
+ /obj/structure/disposalpipe/segment,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-18";
+ 	layer = 4.1;
+ 	pixel_y = 10
+@@ -23098,9 +23098,9 @@
+ /area/crew_quarters/theatre)
+ "aYl" = (
+ /obj/structure/table/wood,
+-/obj/item/soap,
++/obj/item/soap,
+ /obj/structure/table/wood,
+-/obj/item/bikehorn,
++/obj/item/bikehorn,
+ /obj/item/toy/cattoy,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 8
+@@ -23414,12 +23414,12 @@
+ /obj/machinery/computer/security/telescreen/entertainment{
+ 	pixel_y = 32
+ 	},
+-/obj/item/reagent_containers/food/condiment/saltshaker{
++/obj/item/reagent_containers/food/condiment/saltshaker{
+ 	layer = 3;
+ 	pixel_x = -2;
+ 	pixel_y = 2
+ 	},
+-/obj/item/reagent_containers/food/condiment/peppermill{
++/obj/item/reagent_containers/food/condiment/peppermill{
+ 	pixel_x = 5;
+ 	pixel_y = -2
+ 	},
+@@ -23428,7 +23428,7 @@
+ 	},
+ /area/crew_quarters/kitchen)
+ "aYY" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-05";
+ 	layer = 4.1
+ 	},
+@@ -23945,7 +23945,7 @@
+ 	id = "kitchenshutters";
+ 	name = "kitchen shutters"
+ 	},
+-/obj/item/storage/fancy/donut_box,
++/obj/item/storage/fancy/donut_box,
+ /turf/open/floor/plasteel/darkred/side{
+ 	dir = 8
+ 	},
+@@ -24530,7 +24530,7 @@
+ 	},
+ /area/crew_quarters/bar)
+ "bbs" = (
+-/obj/item/cane,
++/obj/item/cane,
+ /obj/item/clothing/head/that{
+ 	throwforce = 1
+ 	},
+@@ -24856,7 +24856,7 @@
+ /area/crew_quarters/kitchen)
+ "bcg" = (
+ /obj/structure/table,
+-/obj/item/kitchen/rollingpin,
++/obj/item/kitchen/rollingpin,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 4
+ 	},
+@@ -24864,7 +24864,7 @@
+ /area/crew_quarters/kitchen)
+ "bch" = (
+ /obj/structure/table,
+-/obj/item/storage/box/ingredients/wildcard,
++/obj/item/storage/box/ingredients/wildcard,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 4
+ 	},
+@@ -24903,10 +24903,10 @@
+ /area/crew_quarters/bar)
+ "bco" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/gun/ballistic/revolver/russian{
++/obj/item/gun/ballistic/revolver/russian{
+ 	pixel_y = 16
+ 	},
+-/obj/item/storage/box/matches{
++/obj/item/storage/box/matches{
+ 	pixel_x = -3;
+ 	pixel_y = 5
+ 	},
+@@ -25346,17 +25346,17 @@
+ /area/hallway/primary/central)
+ "bdp" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/glass/beaker/large,
++/obj/item/reagent_containers/glass/beaker/large,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "bdq" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/snacks/grown/tomato,
++/obj/item/reagent_containers/food/snacks/grown/tomato,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "bdr" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/condiment/enzyme{
++/obj/item/reagent_containers/food/condiment/enzyme{
+ 	pixel_y = 6
+ 	},
+ /turf/open/floor/plasteel/cafeteria,
+@@ -25911,8 +25911,8 @@
+ /area/crew_quarters/bar)
+ "beD" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/snacks/chocolatebar,
+-/obj/item/kitchen/fork,
++/obj/item/reagent_containers/food/snacks/chocolatebar,
++/obj/item/kitchen/fork,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 5
+ 	},
+@@ -26234,7 +26234,7 @@
+ 	},
+ /area/hallway/primary/central)
+ "bfp" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-21";
+ 	layer = 4.1
+ 	},
+@@ -26715,7 +26715,7 @@
+ /area/hallway/primary/central)
+ "bgs" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/snacks/donut,
++/obj/item/reagent_containers/food/snacks/donut,
+ /turf/open/floor/plasteel/neutral/corner{
+ 	dir = 1
+ 	},
+@@ -27933,7 +27933,7 @@
+ 	c_tag = "Central Primary Hallway Genetics";
+ 	dir = 1
+ 	},
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-05";
+ 	layer = 4.1
+ 	},
+@@ -28027,7 +28027,7 @@
+ /turf/open/floor/plasteel/blue/side,
+ /area/medical/medbay/central)
+ "bji" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-10";
+ 	layer = 4.1
+ 	},
+@@ -28447,7 +28447,7 @@
+ 	pixel_y = -4
+ 	},
+ /obj/item/clothing/head/welding,
+-/obj/item/screwdriver{
++/obj/item/screwdriver{
+ 	pixel_y = 16
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -28458,10 +28458,10 @@
+ /area/science/research/lobby)
+ "bks" = (
+ /obj/structure/table,
+-/obj/item/wrench,
++/obj/item/wrench,
+ /obj/item/stack/cable_coil,
+-/obj/item/electronics/apc,
+-/obj/item/electronics/airlock,
++/obj/item/electronics/apc,
++/obj/item/electronics/airlock,
+ /turf/open/floor/plasteel/black,
+ /area/science/research/lobby)
+ "bkt" = (
+@@ -28604,7 +28604,7 @@
+ 	d2 = 8;
+ 	icon_state = "2-8"
+ 	},
+-/obj/item/reagent_containers/food/snacks/deadmouse,
++/obj/item/reagent_containers/food/snacks/deadmouse,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 10
+ 	},
+@@ -28878,7 +28878,7 @@
+ "blw" = (
+ /obj/structure/table,
+ /obj/machinery/cell_charger,
+-/obj/item/stock_parts/cell/high/plus,
++/obj/item/stock_parts/cell/high/plus,
+ /turf/open/floor/plasteel/green/side{
+ 	dir = 1
+ 	},
+@@ -29193,7 +29193,7 @@
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+-/obj/item/reagent_containers/food/drinks/britcup{
++/obj/item/reagent_containers/food/drinks/britcup{
+ 	desc = "Kingston's personal cup."
+ 	},
+ /turf/open/floor/plasteel,
+@@ -29809,18 +29809,18 @@
+ 	pixel_y = 0
+ 	},
+ /obj/structure/table,
+-/obj/item/storage/box/gloves{
++/obj/item/storage/box/gloves{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/box/masks,
++/obj/item/storage/box/masks,
+ /turf/open/floor/plasteel/whiteblue/corner,
+ /area/medical/medbay/zone3)
+ "bnz" = (
+ /obj/structure/table,
+-/obj/item/folder/white,
++/obj/item/folder/white,
+ /obj/item/clothing/gloves/color/latex,
+-/obj/item/storage/fancy/candle_box,
++/obj/item/storage/fancy/candle_box,
+ /turf/open/floor/plasteel/black,
+ /area/medical/morgue)
+ "bnA" = (
+@@ -30343,12 +30343,12 @@
+ /area/science/research/lobby)
+ "boR" = (
+ /obj/structure/table,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	layer = 2.9;
+ 	pixel_x = -2;
+ 	pixel_y = 4
+ 	},
+-/obj/item/pen,
++/obj/item/pen,
+ /turf/open/floor/plasteel/black,
+ /area/science/research/lobby)
+ "boS" = (
+@@ -30359,7 +30359,7 @@
+ 	},
+ /area/science/research/lobby)
+ "boT" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /obj/effect/turf_decal/bot,
+@@ -30378,7 +30378,7 @@
+ 	dir = 1
+ 	},
+ /obj/machinery/light,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-10";
+ 	layer = 4.1
+ 	},
+@@ -30420,7 +30420,7 @@
+ "boZ" = (
+ /obj/structure/table,
+ /obj/machinery/cell_charger,
+-/obj/item/stock_parts/cell/high/plus,
++/obj/item/stock_parts/cell/high/plus,
+ /obj/machinery/light{
+ 	dir = 4
+ 	},
+@@ -32347,11 +32347,11 @@
+ /turf/open/floor/plasteel/white,
+ /area/medical/chemistry)
+ "bsL" = (
+-/obj/item/book/manual/wiki/chemistry,
+-/obj/item/storage/box/beakers,
++/obj/item/book/manual/wiki/chemistry,
++/obj/item/storage/box/beakers,
+ /obj/structure/table/glass,
+-/obj/item/reagent_containers/dropper,
+-/obj/item/reagent_containers/dropper,
++/obj/item/reagent_containers/dropper,
++/obj/item/reagent_containers/dropper,
+ /turf/open/floor/plasteel/white,
+ /area/medical/chemistry)
+ "bsM" = (
+@@ -32438,7 +32438,7 @@
+ 	},
+ /area/science/research/lobby)
+ "bsW" = (
+-/obj/item/twohanded/required/kirbyplants,
++/obj/item/twohanded/required/kirbyplants,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 8
+ 	},
+@@ -35605,8 +35605,8 @@
+ /area/science/research)
+ "byV" = (
+ /obj/structure/table,
+-/obj/item/folder,
+-/obj/item/pen,
++/obj/item/folder,
++/obj/item/pen,
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+ /turf/open/floor/plasteel/darkpurple/side,
+ /area/science/research)
+@@ -37159,9 +37159,9 @@
+ 	areastring = "/area/medical/sleeper";
+ 	pixel_x = -24
+ 	},
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
+ /obj/structure/cable,
+ /turf/open/floor/plasteel/blue,
+ /area/medical/sleeper)
+@@ -37442,7 +37442,7 @@
+ 	dir = 4;
+ 	network = list("SS13","RD")
+ 	},
+-/obj/item/book/manual/wiki/security_space_law,
++/obj/item/book/manual/wiki/security_space_law,
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 10
+ 	},
+@@ -38441,7 +38441,7 @@
+ /area/crew_quarters/heads/hor)
+ "bES" = (
+ /obj/item/device/aicard,
+-/obj/item/circuitboard/aicore,
++/obj/item/circuitboard/aicore,
+ /obj/machinery/requests_console{
+ 	announcementConsole = 1;
+ 	department = "Research Director's Desk";
+@@ -39339,7 +39339,7 @@
+ /area/maintenance/department/engine)
+ "bGL" = (
+ /obj/structure/closet/masks,
+-/obj/item/reagent_containers/food/snacks/deadmouse,
++/obj/item/reagent_containers/food/snacks/deadmouse,
+ /obj/effect/landmark/revenantspawn,
+ /turf/open/floor/plating,
+ /area/maintenance/department/engine)
+@@ -48198,13 +48198,13 @@
+ 	dir = 8;
+ 	layer = 2.9
+ 	},
+-/obj/item/storage/belt/utility,
++/obj/item/storage/belt/utility,
+ /obj/item/clothing/head/welding{
+ 	pixel_x = -3;
+ 	pixel_y = 5
+ 	},
+ /obj/effect/turf_decal/stripes/line,
+-/obj/item/airlock_painter,
++/obj/item/airlock_painter,
+ /obj/item/clothing/glasses/meson{
+ 	pixel_x = 3;
+ 	pixel_y = -4
+@@ -48290,16 +48290,16 @@
+ /area/engine/engineering)
+ "caw" = (
+ /obj/structure/table,
+-/obj/item/twohanded/rcl/pre_loaded,
++/obj/item/twohanded/rcl/pre_loaded,
+ /turf/open/floor/plasteel,
+ /area/engine/engineering)
+ "cax" = (
+ /obj/structure/table,
+-/obj/item/electronics/airlock,
+-/obj/item/electronics/airlock,
+-/obj/item/electronics/apc,
+-/obj/item/stock_parts/cell/high/plus,
+-/obj/item/stock_parts/cell/high/plus,
++/obj/item/electronics/airlock,
++/obj/item/electronics/airlock,
++/obj/item/electronics/apc,
++/obj/item/stock_parts/cell/high/plus,
++/obj/item/stock_parts/cell/high/plus,
+ /obj/structure/cable{
+ 	d1 = 1;
+ 	d2 = 2;
+@@ -50195,7 +50195,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+ "ceK" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-08";
+ 	layer = 4.1
+ 	},
+@@ -50203,7 +50203,7 @@
+ /area/chapel/main/monastery)
+ "ceL" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/box/matches{
++/obj/item/storage/box/matches{
+ 	pixel_x = -3;
+ 	pixel_y = 8
+ 	},
+@@ -51690,11 +51690,11 @@
+ /turf/open/floor/plasteel,
+ /area/shuttle/abandoned)
+ "ciy" = (
+-/obj/item/reagent_containers/glass/bucket,
++/obj/item/reagent_containers/glass/bucket,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden{
+ 	dir = 9
+ 	},
+-/obj/item/reagent_containers/glass/bucket,
++/obj/item/reagent_containers/glass/bucket,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "ciz" = (
+@@ -51815,12 +51815,12 @@
+ /area/chapel/main/monastery)
+ "ciO" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/condiment/saltshaker{
++/obj/item/reagent_containers/food/condiment/saltshaker{
+ 	layer = 3.1;
+ 	pixel_x = -2;
+ 	pixel_y = 2
+ 	},
+-/obj/item/reagent_containers/food/condiment/peppermill{
++/obj/item/reagent_containers/food/condiment/peppermill{
+ 	pixel_x = 5;
+ 	pixel_y = 6
+ 	},
+@@ -52761,7 +52761,7 @@
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+-/obj/item/storage/box/lights/bulbs,
++/obj/item/storage/box/lights/bulbs,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 9
+ 	},
+@@ -53903,7 +53903,7 @@
+ /turf/open/floor/plating,
+ /area/storage/emergency/starboard)
+ "cor" = (
+-/obj/item/extinguisher,
++/obj/item/extinguisher,
+ /turf/open/floor/plating,
+ /area/storage/emergency/starboard)
+ "cos" = (
+@@ -53933,7 +53933,7 @@
+ /area/storage/primary)
+ "cow" = (
+ /obj/structure/rack,
+-/obj/item/storage/toolbox/emergency,
++/obj/item/storage/toolbox/emergency,
+ /turf/open/floor/plating,
+ /area/storage/emergency/starboard)
+ "cox" = (
+@@ -54181,23 +54181,23 @@
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/goldschlager{
++/obj/item/reagent_containers/food/drinks/bottle/goldschlager{
+ 	pixel_x = -8;
+ 	pixel_y = 15
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/vermouth{
++/obj/item/reagent_containers/food/drinks/bottle/vermouth{
+ 	pixel_x = 3;
+ 	pixel_y = 7
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/whiskey{
++/obj/item/reagent_containers/food/drinks/bottle/whiskey{
+ 	pixel_x = 7;
+ 	pixel_y = 16
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/kahlua{
++/obj/item/reagent_containers/food/drinks/bottle/kahlua{
+ 	pixel_x = 9;
+ 	pixel_y = 7
+ 	},
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe{
++/obj/item/reagent_containers/food/drinks/bottle/absinthe{
+ 	pixel_x = -5;
+ 	pixel_y = 4
+ 	},
+@@ -54295,12 +54295,12 @@
+ /area/crew_quarters/kitchen)
+ "cpm" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/snacks/pie/cream,
++/obj/item/reagent_containers/food/snacks/pie/cream,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "cpn" = (
+ /obj/structure/table,
+-/obj/item/reagent_containers/food/snacks/spaghetti,
++/obj/item/reagent_containers/food/snacks/spaghetti,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "cpo" = (
+@@ -54393,12 +54393,12 @@
+ "cpz" = (
+ /obj/structure/rack,
+ /obj/item/stack/packageWrap,
+-/obj/item/hand_labeler,
++/obj/item/hand_labeler,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "cpA" = (
+ /obj/structure/rack,
+-/obj/item/storage/box/drinkingglasses,
++/obj/item/storage/box/drinkingglasses,
+ /turf/open/floor/plasteel/cafeteria,
+ /area/crew_quarters/kitchen)
+ "cpB" = (
+@@ -54529,11 +54529,11 @@
+ 	},
+ /area/hallway/primary/central)
+ "cpT" = (
+-/obj/item/twohanded/required/kirbyplants,
++/obj/item/twohanded/required/kirbyplants,
+ /turf/open/floor/plasteel/blue/side,
+ /area/hallway/primary/central)
+ "cpU" = (
+-/obj/item/twohanded/required/kirbyplants,
++/obj/item/twohanded/required/kirbyplants,
+ /turf/open/floor/plasteel/purple/side,
+ /area/hallway/primary/central)
+ "cpV" = (
+@@ -54762,7 +54762,7 @@
+ /turf/open/floor/plasteel/green/side,
+ /area/science/research/lobby)
+ "cqE" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-18";
+ 	layer = 3
+ 	},
+@@ -54992,8 +54992,8 @@
+ /area/maintenance/department/engine)
+ "crt" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/folder,
+-/obj/item/pen,
++/obj/item/folder,
++/obj/item/pen,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/office)
+ "cru" = (
+@@ -55009,7 +55009,7 @@
+ /area/chapel/office)
+ "crx" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/snacks/grown/harebell,
++/obj/item/reagent_containers/food/snacks/grown/harebell,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+ "cry" = (
+@@ -55068,7 +55068,7 @@
+ /area/maintenance/department/engine)
+ "crD" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/box/bodybags,
++/obj/item/storage/box/bodybags,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/office)
+ "crE" = (
+@@ -55089,7 +55089,7 @@
+ /area/chapel/office)
+ "crH" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/snacks/grown/poppy,
++/obj/item/reagent_containers/food/snacks/grown/poppy,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+ "crI" = (
+@@ -55201,11 +55201,11 @@
+ /area/chapel/main/monastery)
+ "crY" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/snacks/breadslice/plain,
+-/obj/item/reagent_containers/food/snacks/breadslice/plain{
++/obj/item/reagent_containers/food/snacks/breadslice/plain,
++/obj/item/reagent_containers/food/snacks/breadslice/plain{
+ 	pixel_y = 4
+ 	},
+-/obj/item/reagent_containers/food/snacks/breadslice/plain{
++/obj/item/reagent_containers/food/snacks/breadslice/plain{
+ 	pixel_y = 8
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -55234,7 +55234,7 @@
+ /area/chapel/office)
+ "cse" = (
+ /obj/structure/table/wood,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-18";
+ 	layer = 4.1;
+ 	pixel_y = 8
+@@ -55262,14 +55262,14 @@
+ /turf/open/floor/plasteel/darkyellow/corner,
+ /area/chapel/office)
+ "csj" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /turf/open/floor/plasteel/black,
+ /area/chapel/office)
+ "csk" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/drinks/bottle/wine{
++/obj/item/reagent_containers/food/drinks/bottle/wine{
+ 	pixel_y = 8
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -55290,9 +55290,9 @@
+ 	},
+ /obj/item/clothing/under/rank/chaplain,
+ /obj/item/clothing/shoes/sneakers/black,
+-/obj/item/storage/backpack/cultpack,
+-/obj/item/storage/fancy/candle_box,
+-/obj/item/storage/fancy/candle_box,
++/obj/item/storage/backpack/cultpack,
++/obj/item/storage/fancy/candle_box,
++/obj/item/storage/fancy/candle_box,
+ /obj/item/clothing/suit/nun,
+ /obj/item/clothing/head/nun_hood,
+ /obj/item/clothing/suit/holidaypriest,
+@@ -55310,7 +55310,7 @@
+ /area/chapel/office)
+ "cso" = (
+ /obj/structure/table/wood,
+-/obj/item/nullrod,
++/obj/item/nullrod,
+ /turf/open/floor/carpet,
+ /area/chapel/office)
+ "csp" = (
+@@ -55409,7 +55409,7 @@
+ /area/chapel/office)
+ "csC" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/drinks/bottle/holywater{
++/obj/item/reagent_containers/food/drinks/bottle/holywater{
+ 	name = "flask of holy water";
+ 	pixel_x = -2;
+ 	pixel_y = 2
+@@ -55667,7 +55667,7 @@
+ /area/chapel/main/monastery)
+ "cth" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/fancy/candle_box,
++/obj/item/storage/fancy/candle_box,
+ /obj/machinery/light/small,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+@@ -55745,7 +55745,7 @@
+ 	},
+ /area/chapel/office)
+ "ctv" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -55816,7 +55816,7 @@
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+ 	dir = 8
+ 	},
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-10";
+ 	layer = 4.1
+ 	},
+@@ -55882,7 +55882,7 @@
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+ 	dir = 4
+ 	},
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-21";
+ 	layer = 4.1
+ 	},
+@@ -55922,7 +55922,7 @@
+ /obj/item/clothing/suit/holidaypriest,
+ /obj/item/clothing/suit/nun,
+ /obj/item/clothing/head/nun_hood,
+-/obj/item/storage/backpack/cultpack,
++/obj/item/storage/backpack/cultpack,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 8
+ 	},
+@@ -55932,9 +55932,9 @@
+ /obj/machinery/light/small{
+ 	dir = 2
+ 	},
+-/obj/item/storage/book/bible,
+-/obj/item/storage/book/bible,
+-/obj/item/storage/book/bible,
++/obj/item/storage/book/bible,
++/obj/item/storage/book/bible,
++/obj/item/storage/book/bible,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 8
+ 	},
+@@ -56022,9 +56022,9 @@
+ /obj/item/clothing/head/beekeeper_head,
+ /obj/item/clothing/head/beekeeper_head,
+ /obj/item/clothing/head/beekeeper_head,
+-/obj/item/melee/flyswatter,
+-/obj/item/melee/flyswatter,
+-/obj/item/melee/flyswatter,
++/obj/item/melee/flyswatter,
++/obj/item/melee/flyswatter,
++/obj/item/melee/flyswatter,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cul" = (
+@@ -56084,18 +56084,18 @@
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cut" = (
+-/obj/item/reagent_containers/glass/bucket,
++/obj/item/reagent_containers/glass/bucket,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuu" = (
+-/obj/item/storage/bag/plants,
++/obj/item/storage/bag/plants,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+ /obj/structure/extinguisher_cabinet{
+ 	pixel_x = 24
+ 	},
+-/obj/item/storage/bag/plants,
++/obj/item/storage/bag/plants,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuv" = (
+@@ -56111,7 +56111,7 @@
+ "cuw" = (
+ /obj/structure/table/wood,
+ /obj/item/trash/plate,
+-/obj/item/kitchen/fork,
++/obj/item/kitchen/fork,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+@@ -56119,7 +56119,7 @@
+ /area/chapel/main/monastery)
+ "cux" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/drinks/mug/tea,
++/obj/item/reagent_containers/food/drinks/mug/tea,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+@@ -56192,7 +56192,7 @@
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuH" = (
+-/obj/item/hatchet,
++/obj/item/hatchet,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuI" = (
+@@ -56200,7 +56200,7 @@
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuJ" = (
+-/obj/item/shovel/spade,
++/obj/item/shovel/spade,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cuK" = (
+@@ -56345,7 +56345,7 @@
+ 	},
+ /area/chapel/main/monastery)
+ "cuZ" = (
+-/obj/item/wrench,
++/obj/item/wrench,
+ /turf/open/floor/plasteel/hydrofloor,
+ /area/chapel/main/monastery)
+ "cva" = (
+@@ -56574,7 +56574,7 @@
+ 	icon_state = "1-4"
+ 	},
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-21";
+ 	layer = 4.1
+ 	},
+@@ -56681,7 +56681,7 @@
+ 	},
+ /area/chapel/main/monastery)
+ "cvM" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-10";
+ 	layer = 4.1
+ 	},
+@@ -56820,7 +56820,7 @@
+ /turf/closed/wall/mineral/iron,
+ /area/library)
+ "cwj" = (
+-/obj/item/storage/box/matches{
++/obj/item/storage/box/matches{
+ 	pixel_x = -3;
+ 	pixel_y = 8
+ 	},
+@@ -56837,7 +56837,7 @@
+ /obj/effect/decal/cleanable/cobweb{
+ 	icon_state = "cobweb2"
+ 	},
+-/obj/item/storage/fancy/candle_box,
++/obj/item/storage/fancy/candle_box,
+ /obj/structure/table/wood,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+@@ -56859,7 +56859,7 @@
+ 	d2 = 8;
+ 	icon_state = "4-8"
+ 	},
+-/obj/item/storage/toolbox/mechanical,
++/obj/item/storage/toolbox/mechanical,
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+@@ -56903,7 +56903,7 @@
+ /turf/closed/wall/mineral/iron,
+ /area/library)
+ "cwr" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /obj/structure/cable{
+@@ -56934,13 +56934,13 @@
+ /area/library)
+ "cww" = (
+ /obj/structure/table/wood,
+-/obj/item/reagent_containers/food/snacks/grown/poppy,
+-/obj/item/reagent_containers/food/snacks/grown/harebell,
++/obj/item/reagent_containers/food/snacks/grown/poppy,
++/obj/item/reagent_containers/food/snacks/grown/harebell,
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+ "cwx" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/book/bible,
++/obj/item/storage/book/bible,
+ /turf/open/floor/carpet,
+ /area/chapel/main/monastery)
+ "cwy" = (
+@@ -57562,7 +57562,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "cyQ" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /obj/machinery/camera{
+@@ -57573,7 +57573,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "cyR" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -57587,12 +57587,12 @@
+ /area/library)
+ "cyT" = (
+ /obj/structure/table/wood,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	layer = 2.9;
+ 	pixel_x = -2;
+ 	pixel_y = 4
+ 	},
+-/obj/item/pen,
++/obj/item/pen,
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "cyU" = (
+@@ -57693,8 +57693,8 @@
+ /area/library)
+ "czp" = (
+ /obj/structure/table/wood,
+-/obj/item/disk/fakenucleardisk,
+-/obj/item/barcodescanner,
++/obj/item/disk/fakenucleardisk,
++/obj/item/barcodescanner,
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "czq" = (
+@@ -57715,17 +57715,17 @@
+ /area/library)
+ "czs" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/pill_bottle/dice,
++/obj/item/storage/pill_bottle/dice,
+ /turf/open/floor/carpet,
+ /area/library)
+ "czt" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/photo_album,
++/obj/item/storage/photo_album,
+ /turf/open/floor/carpet,
+ /area/library)
+ "czu" = (
+ /obj/structure/table/wood,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	layer = 2.9;
+ 	pixel_x = -2;
+ 	pixel_y = 4
+@@ -57760,12 +57760,12 @@
+ /area/library)
+ "czA" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/dice/d20,
++/obj/item/dice/d20,
+ /turf/open/floor/carpet,
+ /area/library)
+ "czB" = (
+ /obj/structure/table/wood/fancy,
+-/obj/item/storage/fancy/candle_box,
++/obj/item/storage/fancy/candle_box,
+ /turf/open/floor/carpet,
+ /area/library)
+ "czC" = (
+@@ -57778,8 +57778,8 @@
+ /area/library)
+ "czD" = (
+ /obj/structure/table/wood,
+-/obj/item/folder/yellow,
+-/obj/item/pen,
++/obj/item/folder/yellow,
++/obj/item/pen,
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "czE" = (
+@@ -57835,7 +57835,7 @@
+ /area/library)
+ "czN" = (
+ /obj/structure/table/wood,
+-/obj/item/storage/bag/books,
++/obj/item/storage/bag/books,
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "czO" = (
+@@ -57846,7 +57846,7 @@
+ "czP" = (
+ /obj/structure/table/wood,
+ /obj/item/stack/packageWrap,
+-/obj/item/coin/gold,
++/obj/item/coin/gold,
+ /turf/open/floor/plasteel/black,
+ /area/library)
+ "czQ" = (
+@@ -57935,7 +57935,7 @@
+ /turf/open/space/basic,
+ /area/space/nearstation)
+ "cAf" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -57969,7 +57969,7 @@
+ /turf/open/floor/plasteel/vault,
+ /area/library)
+ "cAm" = (
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-22"
+ 	},
+ /turf/open/floor/plasteel/black,
+@@ -58007,7 +58007,7 @@
+ /area/library)
+ "cAs" = (
+ /obj/structure/table/wood,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-05";
+ 	layer = 4.1;
+ 	pixel_y = 10
+@@ -58052,7 +58052,7 @@
+ /area/library)
+ "cAx" = (
+ /obj/structure/table/wood,
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-05";
+ 	layer = 4.1;
+ 	pixel_y = 10
+@@ -58193,7 +58193,7 @@
+ 	icon_state = "minibar";
+ 	name = "skeletal minibar"
+ 	},
+-/obj/item/book/codex_gigas,
++/obj/item/book/codex_gigas,
+ /obj/machinery/camera{
+ 	c_tag = "Monastery Archives Aft";
+ 	dir = 1;

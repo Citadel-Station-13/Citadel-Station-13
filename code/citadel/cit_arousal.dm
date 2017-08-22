@@ -389,8 +389,8 @@
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
 			to_chat(src, "<span class='warning'>You need to wait [round((mb_cd_timer - world.time)/(20))] seconds before you can do that again!</span>")
 		return
-	mb_cd_timer = (world.time + mb_cd_length)
-
+	mb_cd_timer = (world.time + mb_cd_length)  
+  
 
 	if(canbearoused && has_dna())
 		if(stat==2)

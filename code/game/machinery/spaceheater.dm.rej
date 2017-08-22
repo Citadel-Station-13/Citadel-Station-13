@@ -1,0 +1,12 @@
+diff a/code/game/machinery/spaceheater.dm b/code/game/machinery/spaceheater.dm	(rejected hunks)
+@@ -12,8 +12,8 @@
+ 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+ 	max_integrity = 250
+ 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 100, rad = 100, fire = 80, acid = 10)
+-	circuit = /obj/item/circuitboard/machine/space_heater
+-	var/obj/item/stock_parts/cell/cell
++	circuit = /obj/item/circuitboard/machine/space_heater
++	var/obj/item/stock_parts/cell/cell
+ 	var/on = FALSE
+ 	var/mode = HEATER_MODE_STANDBY
+ 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.

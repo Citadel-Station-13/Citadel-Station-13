@@ -1,0 +1,10 @@
+diff a/code/modules/reagents/chemistry/machinery/chem_dispenser.dm b/code/modules/reagents/chemistry/machinery/chem_dispenser.dm	(rejected hunks)
+@@ -229,7 +229,7 @@
+ 	amount = 5
+ 	recharge_delay = 30
+ 	dispensable_reagents = list()
+-	circuit = /obj/item/circuitboard/machine/chem_dispenser
++	circuit = /obj/item/circuitboard/machine/chem_dispenser
+ 	var/list/dispensable_reagent_tiers = list(
+ 		list(
+ 			"hydrogen",

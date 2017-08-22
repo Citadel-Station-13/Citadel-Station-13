@@ -1,0 +1,10 @@
+diff a/code/game/machinery/limbgrower.dm b/code/game/machinery/limbgrower.dm	(rejected hunks)
+@@ -15,7 +15,7 @@
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 10
+ 	active_power_usage = 100
+-	circuit = /obj/item/circuitboard/machine/limbgrower
++	circuit = /obj/item/circuitboard/machine/limbgrower
+ 
+ 	var/operating = FALSE
+ 	var/disabled = FALSE

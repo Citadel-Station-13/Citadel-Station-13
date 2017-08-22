@@ -1,0 +1,16 @@
+diff a/code/modules/food_and_drinks/kitchen_machinery/icecream_vat.dm b/code/modules/food_and_drinks/kitchen_machinery/icecream_vat.dm	(rejected hunks)
+@@ -182,12 +182,12 @@
+ 	bitesize = 3
+ 	foodtype = DAIRY
+ 
+-/obj/item/reagent_containers/food/snacks/icecream/Initialize()
++/obj/item/reagent_containers/food/snacks/icecream/Initialize()
+ 	. = ..()
+ 	create_reagents(20)
+ 	reagents.add_reagent("nutriment", 4)
+ 
+-/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
++/obj/item/reagent_containers/food/snacks/icecream/proc/set_cone_type(var/cone_name)
+ 	cone_type = cone_name
+ 	icon_state = "icecream_cone_[cone_name]"
+ 	switch (cone_type)

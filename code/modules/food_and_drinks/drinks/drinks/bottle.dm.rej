@@ -1,0 +1,210 @@
+diff a/code/modules/food_and_drinks/drinks/drinks/bottle.dm b/code/modules/food_and_drinks/drinks/drinks/bottle.dm	(rejected hunks)
+@@ -15,15 +15,15 @@
+ 	var/isGlass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+ 	foodtype = ALCOHOL
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
++/obj/item/reagent_containers/food/drinks/bottle/throw_impact(atom/target,mob/thrower)
+ 	..()
+ 	smash(target,thrower,1)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
++/obj/item/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user, ranged = 0)
+ 
+ 	//Creates a shattering noise and replaces the bottle with a broken_bottle
+ 	var/new_location = get_turf(loc)
+-	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
++	var/obj/item/broken_bottle/B = new /obj/item/broken_bottle(new_location)
+ 	if(ranged)
+ 		B.loc = new_location
+ 	else
+@@ -140,109 +140,109 @@
+ 	var/icon/broken_outline = icon('icons/obj/drinks.dmi', "broken")
+ 	sharpness = IS_SHARP
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/gin
++/obj/item/reagent_containers/food/drinks/bottle/gin
+ 	name = "Griffeater Gin"
+ 	desc = "A bottle of high quality gin, produced in the New London Space Station."
+ 	icon_state = "ginbottle"
+ 	list_reagents = list("gin" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/whiskey
++/obj/item/reagent_containers/food/drinks/bottle/whiskey
+ 	name = "Uncle Git's Special Reserve"
+ 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
+ 	icon_state = "whiskeybottle"
+ 	list_reagents = list("whiskey" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/vodka
++/obj/item/reagent_containers/food/drinks/bottle/vodka
+ 	name = "Tunguska Triple Distilled"
+ 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
+ 	icon_state = "vodkabottle"
+ 	list_reagents = list("vodka" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka
++/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka
+ 	name = "Badminka Vodka"
+ 	desc = "The label's written in Cyrillic. All you can make out is the name and a word that looks vaguely like 'Vodka'."
+ 	icon_state = "badminka"
+ 	list_reagents = list("vodka" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/tequila
++/obj/item/reagent_containers/food/drinks/bottle/tequila
+ 	name = "Caccavo Guaranteed Quality Tequila"
+ 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
+ 	icon_state = "tequilabottle"
+ 	list_reagents = list("tequila" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing
++/obj/item/reagent_containers/food/drinks/bottle/bottleofnothing
+ 	name = "Bottle of Nothing"
+ 	desc = "A bottle filled with nothing."
+ 	icon_state = "bottleofnothing"
+ 	list_reagents = list("nothing" = 100)
+ 	foodtype = NONE
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/patron
++/obj/item/reagent_containers/food/drinks/bottle/patron
+ 	name = "Wrapp Artiste Patron"
+ 	desc = "Silver laced tequila, served in space night clubs across the galaxy."
+ 	icon_state = "patronbottle"
+ 	list_reagents = list("patron" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/rum
++/obj/item/reagent_containers/food/drinks/bottle/rum
+ 	name = "Captain Pete's Cuban Spiced Rum"
+ 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
+ 	icon_state = "rumbottle"
+ 	list_reagents = list("rum" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/holywater
++/obj/item/reagent_containers/food/drinks/bottle/holywater
+ 	name = "Flask of Holy Water"
+ 	desc = "A flask of the chaplain's holy water."
+ 	icon_state = "holyflask"
+ 	list_reagents = list("holywater" = 100)
+ 	foodtype = NONE
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/holywater/hell
++/obj/item/reagent_containers/food/drinks/bottle/holywater/hell
+ 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
+ 	list_reagents = list("hell_water" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/vermouth
++/obj/item/reagent_containers/food/drinks/bottle/vermouth
+ 	name = "Goldeneye Vermouth"
+ 	desc = "Sweet, sweet dryness~"
+ 	icon_state = "vermouthbottle"
+ 	list_reagents = list("vermouth" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/kahlua
++/obj/item/reagent_containers/food/drinks/bottle/kahlua
+ 	name = "Robert Robust's Coffee Liqueur"
+ 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK."
+ 	icon_state = "kahluabottle"
+ 	list_reagents = list("kahlua" = 100)
+ 	foodtype = VEGETABLES
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/goldschlager
++/obj/item/reagent_containers/food/drinks/bottle/goldschlager
+ 	name = "College Girl Goldschlager"
+ 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
+ 	icon_state = "goldschlagerbottle"
+ 	list_reagents = list("goldschlager" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/cognac
++/obj/item/reagent_containers/food/drinks/bottle/cognac
+ 	name = "Chateau De Baton Premium Cognac"
+ 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
+ 	icon_state = "cognacbottle"
+ 	list_reagents = list("cognac" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/wine
++/obj/item/reagent_containers/food/drinks/bottle/wine
+ 	name = "Doublebeard Bearded Special Wine"
+ 	desc = "A faint aura of unease and asspainery surrounds the bottle."
+ 	icon_state = "winebottle"
+ 	list_reagents = list("wine" = 100)
+ 	foodtype = FRUIT | ALCOHOL
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe
++/obj/item/reagent_containers/food/drinks/bottle/absinthe
+ 	name = "Extra-Strong Absinthe"
+ 	desc = "An strong alcoholic drink brewed and distributed by"
+ 	icon_state = "absinthebottle"
+ 	list_reagents = list("absinthe" = 100)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe/New()
++/obj/item/reagent_containers/food/drinks/bottle/absinthe/New()
+ 	..()
+ 	redact()
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
++/obj/item/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
+ 	// There was a large fight in the coderbus about a player reference
+ 	// in absinthe. Ergo, this is why the name generation is now so
+ 	// complicated. Judge us kindly.
+@@ -277,29 +277,29 @@
+ 	desc = "[desc] [fullname] Inc."
+ 
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium
++/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium
+ 	name = "Gwyn's Premium Absinthe"
+ 	desc = "A potent alcoholic beverage, almost makes you forget the ash in your lungs."
+ 	icon_state = "absinthepremium"
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
++/obj/item/reagent_containers/food/drinks/bottle/absinthe/premium/redact()
+ 	return
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/lizardwine
++/obj/item/reagent_containers/food/drinks/bottle/lizardwine
+ 	name = "Bottle of lizard wine"
+ 	desc = "An alcoholic beverage from Space China, made by infusing lizard tails in ethanol. Inexplicably popular among command staff."
+ 	icon_state = "lizardwine"
+ 	list_reagents = list("lizardwine" = 100)
+ 	foodtype = FRUIT | ALCOHOL
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/hcider
++/obj/item/reagent_containers/food/drinks/bottle/hcider
+ 	name = "Jian Hard Cider"
+ 	desc = "Apple juice for adults."
+ 	icon_state = "hcider"
+ 	volume = 50
+ 	list_reagents = list("hcider" = 50)
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/grappa
++/obj/item/reagent_containers/food/drinks/bottle/grappa
+ 	name = "Phillipes well-aged Grappa"
+ 	desc = "Bottle of Grappa."
+ 	icon_state = "grappabottle"
+@@ -318,7 +318,7 @@
+ 	list_reagents = list("orangejuice" = 100)
+ 	foodtype = FRUIT
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/cream
++/obj/item/reagent_containers/food/drinks/bottle/cream
+ 	name = "Milk Cream"
+ 	desc = "It's cream. Made from milk. What else did you think you'd find in there?"
+ 	icon_state = "cream"
+@@ -329,7 +329,7 @@
+ 	list_reagents = list("cream" = 100)
+ 	foodtype = DAIRY
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/tomatojuice
++/obj/item/reagent_containers/food/drinks/bottle/tomatojuice
+ 	name = "Tomato Juice"
+ 	desc = "Well, at least it LOOKS like tomato juice. You can't tell with all that redness."
+ 	icon_state = "tomatojuice"
+@@ -340,7 +340,7 @@
+ 	list_reagents = list("tomatojuice" = 100)
+ 	foodtype = VEGETABLES
+ 
+-/obj/item/reagent_containers/food/drinks/bottle/limejuice
++/obj/item/reagent_containers/food/drinks/bottle/limejuice
+ 	name = "Lime Juice"
+ 	desc = "Sweet-sour goodness."
+ 	icon_state = "limejuice"

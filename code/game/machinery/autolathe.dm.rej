@@ -1,0 +1,10 @@
+diff a/code/game/machinery/autolathe.dm b/code/game/machinery/autolathe.dm	(rejected hunks)
+@@ -11,7 +11,7 @@
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 10
+ 	active_power_usage = 100
+-	circuit = /obj/item/circuitboard/machine/autolathe
++	circuit = /obj/item/circuitboard/machine/autolathe
+ 
+ 	var/operating = FALSE
+ 	var/list/L = list()

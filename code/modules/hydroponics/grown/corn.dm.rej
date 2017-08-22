@@ -1,0 +1,24 @@
+diff a/code/modules/hydroponics/grown/corn.dm b/code/modules/hydroponics/grown/corn.dm	(rejected hunks)
+@@ -15,18 +15,18 @@
+ 	mutatelist = list(/obj/item/seeds/corn/snapcorn)
+ 	reagents_add = list("cornoil" = 0.2, "vitamin" = 0.04, "nutriment" = 0.1)
+ 
+-/obj/item/reagent_containers/food/snacks/grown/corn
++/obj/item/reagent_containers/food/snacks/grown/corn
+ 	seed = /obj/item/seeds/corn
+ 	name = "ear of corn"
+ 	desc = "Needs some butter!"
+ 	icon_state = "corn"
+-	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
++	cooked_type = /obj/item/reagent_containers/food/snacks/popcorn
+ 	filling_color = "#FFFF00"
+-	trash = /obj/item/grown/corncob
++	trash = /obj/item/grown/corncob
+ 	bitesize_mod = 2
+ 	foodtype = VEGETABLES
+ 
+-/obj/item/grown/corncob
++/obj/item/grown/corncob
+ 	name = "corn cob"
+ 	desc = "A reminder of meals gone by."
+ 	icon_state = "corncob"

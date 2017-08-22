@@ -1,0 +1,10 @@
+diff a/code/modules/mining/laborcamp/laborstacker.dm b/code/modules/mining/laborcamp/laborstacker.dm	(rejected hunks)
+@@ -22,7 +22,7 @@
+ 	locate_stacking_machine()
+ 
+ /obj/machinery/mineral/labor_claim_console/attackby(obj/item/I, mob/user, params)
+-	if(istype(I, /obj/item/card/id/prisoner))
++	if(istype(I, /obj/item/card/id/prisoner))
+ 		if(!inserted_id)
+ 			if(!user.drop_item())
+ 				return

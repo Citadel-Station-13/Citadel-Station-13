@@ -1,0 +1,10 @@
+diff a/code/game/mecha/mech_fabricator.dm b/code/game/mecha/mech_fabricator.dm	(rejected hunks)
+@@ -9,7 +9,7 @@
+ 	idle_power_usage = 20
+ 	active_power_usage = 5000
+ 	req_access = list(ACCESS_ROBOTICS)
+-	circuit = /obj/item/circuitboard/machine/mechfab
++	circuit = /obj/item/circuitboard/machine/mechfab
+ 	var/time_coeff = 1
+ 	var/component_coeff = 1
+ 	var/datum/material_container/materials

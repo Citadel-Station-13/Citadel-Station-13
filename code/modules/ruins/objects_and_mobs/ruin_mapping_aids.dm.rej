@@ -1,0 +1,10 @@
+diff a/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm b/code/modules/ruins/objects_and_mobs/ruin_mapping_aids.dm	(rejected hunks)
+@@ -2,7 +2,7 @@
+ 
+ /obj/effect/baseturf_helper
+ 	name = "baseturf editor"
+-	icon = 'icons/obj/weapons.dmi'
++	icon = 'icons/obj/items_and_weapons.dmi'
+ 	icon_state = "syndballoon"
+ 	var/baseturf = null
+ 	layer = POINT_LAYER

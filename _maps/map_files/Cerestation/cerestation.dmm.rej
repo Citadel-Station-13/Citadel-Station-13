@@ -1,0 +1,1039 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -1732,13 +1732,13 @@
+ 	},
+ /area/ai_monitored/security/armory)
+ "adS" = (
+-/obj/item/ore/glass,
++/obj/item/ore/glass,
+ /turf/open/floor/plating/asteroid,
+ /area/security/execution/transfer)
+ "adT" = (
+ /obj/structure/rack,
+-/obj/item/gun/energy/ionrifle,
+-/obj/item/gun/energy/temperature/security,
++/obj/item/gun/energy/ionrifle,
++/obj/item/gun/energy/temperature/security,
+ /obj/item/clothing/suit/armor/laserproof,
+ /obj/structure/window/reinforced{
+ 	dir = 1
+@@ -4114,7 +4114,7 @@
+ /area/security/prison)
+ "aiz" = (
+ /obj/structure/rack,
+-/obj/item/pickaxe/mini,
++/obj/item/pickaxe/mini,
+ /turf/open/floor/plating/asteroid,
+ /area/security/execution/transfer)
+ "aiA" = (
+@@ -4512,7 +4512,7 @@
+ /area/security/prison)
+ "ajr" = (
+ /obj/structure/rack,
+-/obj/item/shovel,
++/obj/item/shovel,
+ /turf/open/floor/plating/asteroid,
+ /area/security/execution/transfer)
+ "ajs" = (
+@@ -6173,11 +6173,11 @@
+ /area/maintenance/asteroid/fore/cargo_west)
+ "amK" = (
+ /obj/structure/table,
+-/obj/item/storage/box,
+-/obj/item/storage/box,
+-/obj/item/storage/box,
+-/obj/item/storage/box,
+-/obj/item/storage/box,
++/obj/item/storage/box,
++/obj/item/storage/box,
++/obj/item/storage/box,
++/obj/item/storage/box,
++/obj/item/storage/box,
+ /turf/open/floor/plasteel{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -6463,8 +6463,8 @@
+ /area/maintenance/asteroid/fore/com_north)
+ "anj" = (
+ /obj/structure/table/wood,
+-/obj/item/pinpointer,
+-/obj/item/disk/nuclear,
++/obj/item/pinpointer,
++/obj/item/disk/nuclear,
+ /turf/open/floor/wood{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -31837,26 +31837,26 @@
+ /area/medical/patients_rooms)
+ "biQ" = (
+ /obj/structure/closet/crate/freezer,
+-/obj/item/reagent_containers/blood/empty,
+-/obj/item/reagent_containers/blood/empty,
+-/obj/item/reagent_containers/blood/AMinus,
+-/obj/item/reagent_containers/blood/BMinus{
++/obj/item/reagent_containers/blood/empty,
++/obj/item/reagent_containers/blood/empty,
++/obj/item/reagent_containers/blood/AMinus,
++/obj/item/reagent_containers/blood/BMinus{
+ 	pixel_x = -4;
+ 	pixel_y = 4
+ 	},
+-/obj/item/reagent_containers/blood/BPlus{
++/obj/item/reagent_containers/blood/BPlus{
+ 	pixel_x = 1;
+ 	pixel_y = 2
+ 	},
+-/obj/item/reagent_containers/blood/OMinus,
+-/obj/item/reagent_containers/blood/OPlus{
++/obj/item/reagent_containers/blood/OMinus,
++/obj/item/reagent_containers/blood/OPlus{
+ 	pixel_x = -2;
+ 	pixel_y = -1
+ 	},
+-/obj/item/reagent_containers/blood/random,
+-/obj/item/reagent_containers/blood/random,
+-/obj/item/reagent_containers/blood/APlus,
+-/obj/item/reagent_containers/blood/random,
++/obj/item/reagent_containers/blood/random,
++/obj/item/reagent_containers/blood/random,
++/obj/item/reagent_containers/blood/APlus,
++/obj/item/reagent_containers/blood/random,
+ /turf/open/floor/plasteel/whiteblue/corner{
+ 	dir = 1
+ 	},
+@@ -31887,7 +31887,7 @@
+ /area/medical/surgery)
+ "biU" = (
+ /obj/structure/table,
+-/obj/item/surgicaldrill,
++/obj/item/surgicaldrill,
+ /turf/open/floor/plasteel/whiteblue/corner{
+ 	dir = 4
+ 	},
+@@ -32324,16 +32324,16 @@
+ /area/crew_quarters/heads/cmo)
+ "bjM" = (
+ /obj/structure/table,
+-/obj/item/cartridge/medical{
++/obj/item/cartridge/medical{
+ 	pixel_x = -2;
+ 	pixel_y = 6
+ 	},
+-/obj/item/cartridge/medical{
++/obj/item/cartridge/medical{
+ 	pixel_x = 6;
+ 	pixel_y = 3
+ 	},
+-/obj/item/cartridge/medical,
+-/obj/item/cartridge/chemistry{
++/obj/item/cartridge/medical,
++/obj/item/cartridge/chemistry{
+ 	pixel_y = 2
+ 	},
+ /turf/open/floor/plasteel/neutral/side{
+@@ -32382,7 +32382,7 @@
+ /area/medical/surgery)
+ "bjU" = (
+ /obj/structure/table,
+-/obj/item/hemostat,
++/obj/item/hemostat,
+ /turf/open/floor/plasteel/whiteblue/corner{
+ 	dir = 4
+ 	},
+@@ -32414,8 +32414,8 @@
+ /obj/structure/sign/poster/official/bless_this_spess{
+ 	pixel_x = -32
+ 	},
+-/obj/item/folder/red,
+-/obj/item/pen/red,
++/obj/item/folder/red,
++/obj/item/pen/red,
+ /turf/open/floor/plasteel/whitegreen/side{
+ 	dir = 8
+ 	},
+@@ -32846,7 +32846,7 @@
+ /turf/open/floor/plasteel/cmo,
+ /area/crew_quarters/heads/cmo)
+ "bkJ" = (
+-/obj/item/folder/red{
++/obj/item/folder/red{
+ 	pixel_x = 8;
+ 	pixel_y = 6
+ 	},
+@@ -32867,7 +32867,7 @@
+ /turf/open/floor/plasteel/cmo,
+ /area/medical/patients_rooms)
+ "bkM" = (
+-/obj/item/folder/white,
++/obj/item/folder/white,
+ /obj/structure/table/glass,
+ /turf/open/floor/plasteel/blue,
+ /area/medical/patients_rooms)
+@@ -33501,7 +33501,7 @@
+ 	name = "Privacy Shutters";
+ 	pixel_x = -24
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/cmo,
+ /area/medical/patients_rooms)
+ "blK" = (
+@@ -33518,7 +33518,7 @@
+ 	name = "Privacy Shutters";
+ 	pixel_x = -24
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/cmo,
+ /area/medical/patients_rooms)
+ "blN" = (
+@@ -33527,7 +33527,7 @@
+ /area/medical/surgery)
+ "blO" = (
+ /obj/structure/table,
+-/obj/item/retractor,
++/obj/item/retractor,
+ /turf/open/floor/plasteel/whiteblue/corner,
+ /area/medical/surgery)
+ "blP" = (
+@@ -33601,12 +33601,12 @@
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+-/obj/item/bedsheet/medical,
++/obj/item/bedsheet/medical,
+ /turf/open/floor/plasteel/vault,
+ /area/medical/virology)
+ "blW" = (
+ /obj/structure/table,
+-/obj/item/storage/box/donkpockets,
++/obj/item/storage/box/donkpockets,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+@@ -34365,8 +34365,8 @@
+ /area/medical/surgery)
+ "bnj" = (
+ /obj/structure/table,
+-/obj/item/surgical_drapes,
+-/obj/item/razor,
++/obj/item/surgical_drapes,
++/obj/item/razor,
+ /obj/machinery/firealarm{
+ 	dir = 1;
+ 	pixel_y = -24
+@@ -34375,7 +34375,7 @@
+ /area/medical/surgery)
+ "bnk" = (
+ /obj/structure/table,
+-/obj/item/cautery{
++/obj/item/cautery{
+ 	pixel_x = 4
+ 	},
+ /turf/open/floor/plasteel/whiteblue/corner,
+@@ -34452,9 +34452,9 @@
+ 	dir = 4
+ 	},
+ /obj/structure/table/glass,
+-/obj/item/wrench,
+-/obj/item/crowbar,
+-/obj/item/restraints/handcuffs,
++/obj/item/wrench,
++/obj/item/crowbar,
++/obj/item/restraints/handcuffs,
+ /turf/open/floor/plasteel/whitegreen/corner{
+ 	dir = 1
+ 	},
+@@ -35727,7 +35727,7 @@
+ /area/security/checkpoint/medical)
+ "bpy" = (
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	dir = 9
+ 	},
+@@ -36679,11 +36679,11 @@
+ 	},
+ /area/medical/virology)
+ "brh" = (
+-/obj/item/storage/box/masks{
++/obj/item/storage/box/masks{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/box/gloves,
++/obj/item/storage/box/gloves,
+ /obj/structure/table/glass,
+ /turf/open/floor/plasteel/whitegreen/side{
+ 	icon_state = "whitegreen";
+@@ -37486,7 +37486,7 @@
+ 	d2 = 2;
+ 	icon_state = "1-2"
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/red/side{
+ 	icon_state = "red";
+ 	dir = 6;
+@@ -37503,15 +37503,15 @@
+ /area/security/checkpoint/medical)
+ "bsz" = (
+ /obj/structure/table/glass,
+-/obj/item/reagent_containers/glass/bottle/morphine{
++/obj/item/reagent_containers/glass/bottle/morphine{
+ 	pixel_x = 8;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/glass/bottle/epinephrine{
++/obj/item/reagent_containers/glass/bottle/epinephrine{
+ 	pixel_x = 7;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/syringe{
++/obj/item/reagent_containers/syringe{
+ 	pixel_x = 6;
+ 	pixel_y = -3
+ 	},
+@@ -37719,7 +37719,7 @@
+ /turf/open/floor/plasteel/neutral,
+ /area/medical/virology)
+ "bsQ" = (
+-/obj/item/hand_labeler,
++/obj/item/hand_labeler,
+ /obj/item/device/radio/headset/headset_med,
+ /obj/structure/reagent_dispensers/virusfood{
+ 	density = 0;
+@@ -38348,7 +38348,7 @@
+ 	pixel_y = -28;
+ 	req_access_txt = "39"
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whitegreen/side{
+ 	icon_state = "whitegreen";
+ 	dir = 4;
+@@ -38424,7 +38424,7 @@
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+ 	dir = 4
+ 	},
+-/obj/item/twohanded/required/kirbyplants{
++/obj/item/twohanded/required/kirbyplants{
+ 	icon_state = "plant-25"
+ 	},
+ /turf/open/floor/plasteel/whitegreen/side{
+@@ -38442,11 +38442,11 @@
+ 	},
+ /area/medical/virology)
+ "buj" = (
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	pixel_x = -2;
+ 	pixel_y = 5
+ 	},
+-/obj/item/pen/red,
++/obj/item/pen/red,
+ /obj/structure/extinguisher_cabinet{
+ 	pixel_x = 24
+ 	},
+@@ -39217,24 +39217,24 @@
+ 	},
+ /area/medical/medbay/central)
+ "bvy" = (
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/blue,
+ /area/medical/medbay/central)
+ "bvz" = (
+-/obj/item/reagent_containers/glass/bottle/epinephrine{
++/obj/item/reagent_containers/glass/bottle/epinephrine{
+ 	pixel_x = 7;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/glass/bottle/charcoal{
++/obj/item/reagent_containers/glass/bottle/charcoal{
+ 	pixel_x = -4;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/syringe/epinephrine{
++/obj/item/reagent_containers/syringe/epinephrine{
+ 	pixel_x = 3;
+ 	pixel_y = -2
+ 	},
+-/obj/item/reagent_containers/dropper,
+-/obj/item/reagent_containers/glass/beaker{
++/obj/item/reagent_containers/dropper,
++/obj/item/reagent_containers/glass/beaker{
+ 	pixel_x = 8;
+ 	pixel_y = 2
+ 	},
+@@ -39883,8 +39883,8 @@
+ /turf/open/floor/plasteel/whiteblue/corner,
+ /area/medical/medbay/central)
+ "bwM" = (
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
+ /obj/machinery/light{
+ 	dir = 8
+ 	},
+@@ -40523,7 +40523,7 @@
+ /area/hallway/primary/starboard)
+ "bxS" = (
+ /obj/structure/table/reinforced,
+-/obj/item/reagent_containers/food/drinks/britcup,
++/obj/item/reagent_containers/food/drinks/britcup,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	dir = 8
+ 	},
+@@ -40542,7 +40542,7 @@
+ /area/medical/medbay/central)
+ "bxU" = (
+ /obj/machinery/cell_charger,
+-/obj/item/wrench/medical,
++/obj/item/wrench/medical,
+ /obj/structure/table/glass,
+ /turf/open/floor/plasteel{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -41008,12 +41008,12 @@
+ /area/medical/medbay/central)
+ "byT" = (
+ /obj/structure/table/reinforced,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	pixel_x = -3;
+ 	pixel_y = 7
+ 	},
+-/obj/item/pen,
+-/obj/item/folder,
++/obj/item/pen,
++/obj/item/folder,
+ /turf/open/floor/plasteel/whiteblue/corner{
+ 	dir = 8
+ 	},
+@@ -41036,8 +41036,8 @@
+ 	},
+ /area/medical/medbay/central)
+ "byW" = (
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
+-/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
++/obj/item/reagent_containers/glass/beaker/cryoxadone,
+ /obj/item/device/radio/intercom{
+ 	broadcasting = 0;
+ 	name = "Station Intercom (General)";
+@@ -42281,7 +42281,7 @@
+ 	},
+ /area/hallway/primary/starboard)
+ "bBf" = (
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/neutral,
+ /area/medical/medbay/central)
+ "bBg" = (
+@@ -42470,7 +42470,7 @@
+ /turf/open/floor/plasteel/neutral,
+ /area/medical/genetics/cloning)
+ "bBx" = (
+-/obj/item/book/manual/medical_cloning{
++/obj/item/book/manual/medical_cloning{
+ 	pixel_y = 6
+ 	},
+ /obj/machinery/firealarm{
+@@ -42999,12 +42999,12 @@
+ 	},
+ /area/medical/genetics/cloning)
+ "bCu" = (
+-/obj/item/storage/box/rxglasses{
++/obj/item/storage/box/rxglasses{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/box/bodybags,
+-/obj/item/pen,
++/obj/item/storage/box/bodybags,
++/obj/item/pen,
+ /obj/structure/cable/orange{
+ 	d2 = 8;
+ 	icon_state = "0-8"
+@@ -44005,12 +44005,12 @@
+ /area/medical/chemistry)
+ "bEu" = (
+ /obj/structure/table/glass,
+-/obj/item/storage/box/beakers{
++/obj/item/storage/box/beakers{
+ 	pixel_x = 2;
+ 	pixel_y = 2
+ 	},
+-/obj/item/reagent_containers/glass/beaker/large,
+-/obj/item/reagent_containers/dropper,
++/obj/item/reagent_containers/glass/beaker/large,
++/obj/item/reagent_containers/dropper,
+ /turf/open/floor/plasteel/whiteyellow/corner{
+ 	icon_state = "whiteyellowcorner";
+ 	dir = 1;
+@@ -44056,8 +44056,8 @@
+ 	dir = 4
+ 	},
+ /obj/structure/table/glass,
+-/obj/item/storage/box/syringes,
+-/obj/item/storage/box/beakers{
++/obj/item/storage/box/syringes,
++/obj/item/storage/box/beakers{
+ 	pixel_x = 2;
+ 	pixel_y = 2
+ 	},
+@@ -45712,7 +45712,7 @@
+ /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+ 	dir = 4
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	icon_state = "whiteblue";
+ 	dir = 10;
+@@ -45727,17 +45727,17 @@
+ 	},
+ /area/medical/medbay/central)
+ "bHt" = (
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	icon_state = "whiteblue";
+ 	dir = 6
+ 	},
+ /area/medical/medbay/central)
+ "bHu" = (
+-/obj/item/folder/white,
+-/obj/item/gun/syringe,
+-/obj/item/reagent_containers/dropper,
+-/obj/item/soap/nanotrasen,
++/obj/item/folder/white,
++/obj/item/gun/syringe,
++/obj/item/reagent_containers/dropper,
++/obj/item/soap/nanotrasen,
+ /obj/machinery/newscaster{
+ 	pixel_y = 32
+ 	},
+@@ -45745,12 +45745,12 @@
+ /turf/open/floor/plasteel/neutral/corner,
+ /area/medical/medbay/zone2)
+ "bHv" = (
+-/obj/item/storage/firstaid/o2{
++/obj/item/storage/firstaid/o2{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/firstaid/o2,
+-/obj/item/storage/firstaid/regular{
++/obj/item/storage/firstaid/o2,
++/obj/item/storage/firstaid/regular{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},
+@@ -45762,12 +45762,12 @@
+ /area/medical/medbay/zone2)
+ "bHw" = (
+ /obj/item/device/radio/intercom,
+-/obj/item/storage/firstaid/toxin{
++/obj/item/storage/firstaid/toxin{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/firstaid/toxin,
+-/obj/item/storage/firstaid/regular{
++/obj/item/storage/firstaid/toxin,
++/obj/item/storage/firstaid/regular{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},
+@@ -45775,12 +45775,12 @@
+ /turf/open/floor/plasteel/neutral/side,
+ /area/medical/medbay/zone2)
+ "bHx" = (
+-/obj/item/storage/firstaid/fire{
++/obj/item/storage/firstaid/fire{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/firstaid/fire,
+-/obj/item/storage/firstaid/regular{
++/obj/item/storage/firstaid/fire,
++/obj/item/storage/firstaid/regular{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},
+@@ -45793,12 +45793,12 @@
+ /turf/open/floor/plasteel/neutral/side,
+ /area/medical/medbay/zone2)
+ "bHy" = (
+-/obj/item/storage/firstaid/brute{
++/obj/item/storage/firstaid/brute{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/firstaid/brute,
+-/obj/item/storage/firstaid/regular{
++/obj/item/storage/firstaid/brute,
++/obj/item/storage/firstaid/regular{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},
+@@ -46412,7 +46412,7 @@
+ /obj/structure/table/glass,
+ /obj/item/hand_labeler_refill,
+ /obj/item/hand_labeler_refill,
+-/obj/item/hand_labeler,
++/obj/item/hand_labeler,
+ /obj/item/stack/packageWrap,
+ /obj/machinery/light,
+ /turf/open/floor/plasteel/whiteyellow/corner{
+@@ -46424,7 +46424,7 @@
+ /obj/structure/table/glass,
+ /obj/item/stack/cable_coil/random,
+ /obj/item/stack/cable_coil/random,
+-/obj/item/book/manual/wiki/chemistry,
++/obj/item/book/manual/wiki/chemistry,
+ /turf/open/floor/plasteel/whiteyellow/corner{
+ 	icon_state = "whiteyellowcorner";
+ 	dir = 8
+@@ -48511,20 +48511,20 @@
+ 	},
+ /area/maintenance/asteroid/starboard)
+ "bMG" = (
+-/obj/item/storage/box/beakers{
++/obj/item/storage/box/beakers{
+ 	pixel_x = 2;
+ 	pixel_y = 2
+ 	},
+-/obj/item/storage/box/syringes,
+-/obj/item/reagent_containers/glass/bottle/epinephrine{
++/obj/item/storage/box/syringes,
++/obj/item/reagent_containers/glass/bottle/epinephrine{
+ 	pixel_x = 7;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/glass/bottle/morphine{
++/obj/item/reagent_containers/glass/bottle/morphine{
+ 	pixel_x = 8;
+ 	pixel_y = -3
+ 	},
+-/obj/item/reagent_containers/syringe{
++/obj/item/reagent_containers/syringe{
+ 	pixel_x = 6;
+ 	pixel_y = -3
+ 	},
+@@ -48536,13 +48536,13 @@
+ 	},
+ /area/medical/medbay/zone2)
+ "bMH" = (
+-/obj/item/storage/belt/medical{
++/obj/item/storage/belt/medical{
+ 	pixel_y = 2
+ 	},
+-/obj/item/storage/belt/medical{
++/obj/item/storage/belt/medical{
+ 	pixel_y = 2
+ 	},
+-/obj/item/storage/belt/medical{
++/obj/item/storage/belt/medical{
+ 	pixel_y = 2
+ 	},
+ /obj/item/clothing/neck/stethoscope,
+@@ -48551,13 +48551,13 @@
+ /turf/open/floor/plasteel/whiteblue/side,
+ /area/medical/medbay/zone2)
+ "bMI" = (
+-/obj/item/hand_labeler,
+-/obj/item/gun/syringe,
++/obj/item/hand_labeler,
++/obj/item/gun/syringe,
+ /obj/structure/table/glass,
+ /turf/open/floor/plasteel/whiteblue/side,
+ /area/medical/medbay/zone2)
+ "bMJ" = (
+-/obj/item/reagent_containers/spray/cleaner,
++/obj/item/reagent_containers/spray/cleaner,
+ /obj/item/clothing/glasses/hud/health,
+ /obj/item/clothing/glasses/hud/health,
+ /obj/item/clothing/glasses/hud/health,
+@@ -48565,11 +48565,11 @@
+ /turf/open/floor/plasteel/whiteblue/side,
+ /area/medical/medbay/zone2)
+ "bMK" = (
+-/obj/item/storage/box/bodybags{
++/obj/item/storage/box/bodybags{
+ 	pixel_x = 3;
+ 	pixel_y = 3
+ 	},
+-/obj/item/storage/box/rxglasses,
++/obj/item/storage/box/rxglasses,
+ /obj/item/stack/packageWrap,
+ /obj/item/device/destTagger,
+ /obj/structure/table/glass,
+@@ -54324,7 +54324,7 @@
+ /area/crew_quarters/toilet/fitness)
+ "bYp" = (
+ /obj/structure/table,
+-/obj/item/paper/fluff/holodeck/disclaimer,
++/obj/item/paper/fluff/holodeck/disclaimer,
+ /turf/open/floor/plasteel{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -54474,7 +54474,7 @@
+ 	},
+ /area/crew_quarters/toilet/fitness)
+ "bYG" = (
+-/obj/item/soap/nanotrasen,
++/obj/item/soap/nanotrasen,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/freezer{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+@@ -60604,12 +60604,12 @@
+ /area/construction/mining/aux_base)
+ "ckH" = (
+ /obj/structure/rack,
+-/obj/item/circuitboard/machine/telecomms/processor,
+-/obj/item/circuitboard/machine/telecomms/receiver,
+-/obj/item/circuitboard/machine/telecomms/server,
+-/obj/item/circuitboard/machine/telecomms/bus,
+-/obj/item/circuitboard/machine/telecomms/broadcaster,
+-/obj/item/circuitboard/computer/message_monitor{
++/obj/item/circuitboard/machine/telecomms/processor,
++/obj/item/circuitboard/machine/telecomms/receiver,
++/obj/item/circuitboard/machine/telecomms/server,
++/obj/item/circuitboard/machine/telecomms/bus,
++/obj/item/circuitboard/machine/telecomms/broadcaster,
++/obj/item/circuitboard/computer/message_monitor{
+ 	pixel_y = -5
+ 	},
+ /obj/machinery/power/apc{
+@@ -63872,9 +63872,9 @@
+ "cqt" = (
+ /obj/structure/table,
+ /obj/machinery/cell_charger,
+-/obj/item/stock_parts/cell/high,
+-/obj/item/stock_parts/cell/high,
+-/obj/item/stock_parts/cell/high,
++/obj/item/stock_parts/cell/high,
++/obj/item/stock_parts/cell/high,
++/obj/item/stock_parts/cell/high,
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 1
+ 	},
+@@ -64971,8 +64971,8 @@
+ /area/science/robotics/lab)
+ "cso" = (
+ /obj/structure/rack,
+-/obj/item/storage/belt/utility/full,
+-/obj/item/storage/belt/utility/full,
++/obj/item/storage/belt/utility/full,
++/obj/item/storage/belt/utility/full,
+ /obj/item/clothing/glasses/welding,
+ /obj/item/clothing/head/welding,
+ /obj/structure/window/reinforced{
+@@ -65579,9 +65579,9 @@
+ /area/science/mixing)
+ "cts" = (
+ /obj/structure/table,
+-/obj/item/surgical_drapes,
++/obj/item/surgical_drapes,
+ /obj/item/clothing/gloves/color/latex,
+-/obj/item/storage/box/bodybags,
++/obj/item/storage/box/bodybags,
+ /obj/structure/window/reinforced{
+ 	dir = 4
+ 	},
+@@ -65591,8 +65591,8 @@
+ /area/science/robotics/lab)
+ "ctt" = (
+ /obj/structure/table,
+-/obj/item/storage/toolbox/mechanical,
+-/obj/item/storage/toolbox/electrical{
++/obj/item/storage/toolbox/mechanical,
++/obj/item/storage/toolbox/electrical{
+ 	pixel_x = 1;
+ 	pixel_y = 5
+ 	},
+@@ -65645,7 +65645,7 @@
+ 	},
+ /area/science/robotics/lab)
+ "ctz" = (
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whitepurple/corner{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -72306,10 +72306,10 @@
+ /area/hallway/secondary/entry)
+ "cFX" = (
+ /obj/structure/table,
+-/obj/item/retractor,
+-/obj/item/hemostat,
+-/obj/item/circular_saw,
+-/obj/item/scalpel,
++/obj/item/retractor,
++/obj/item/hemostat,
++/obj/item/circular_saw,
++/obj/item/scalpel,
+ /obj/machinery/light{
+ 	dir = 8
+ 	},
+@@ -72529,8 +72529,8 @@
+ /turf/open/floor/plasteel/blue,
+ /area/medical/medbay/central)
+ "cGu" = (
+-/obj/item/pen,
+-/obj/item/storage/firstaid/regular,
++/obj/item/pen,
++/obj/item/storage/firstaid/regular,
+ /obj/structure/table/glass,
+ /turf/open/floor/plasteel/whiteblue/corner{
+ 	dir = 1
+@@ -76779,7 +76779,7 @@
+ "cOG" = (
+ /obj/structure/table/glass,
+ /obj/item/clothing/neck/stethoscope,
+-/obj/item/folder,
++/obj/item/folder,
+ /turf/open/floor/plasteel/cmo,
+ /area/crew_quarters/heads/cmo)
+ "cOH" = (
+@@ -76903,7 +76903,7 @@
+ /area/medical/virology)
+ "cOU" = (
+ /obj/structure/table,
+-/obj/item/hand_labeler,
++/obj/item/hand_labeler,
+ /obj/item/device/radio/headset/headset_med,
+ /obj/machinery/light{
+ 	dir = 1
+@@ -76949,12 +76949,12 @@
+ /area/crew_quarters/heads/cmo)
+ "cOZ" = (
+ /obj/structure/table/glass,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	pixel_x = -3;
+ 	pixel_y = 7
+ 	},
+-/obj/item/pen,
+-/obj/item/stamp/cmo,
++/obj/item/pen,
++/obj/item/stamp/cmo,
+ /turf/open/floor/plasteel/cmo,
+ /area/crew_quarters/heads/cmo)
+ "cPa" = (
+@@ -81594,7 +81594,7 @@
+ 	dir = 8
+ 	},
+ /obj/structure/table/glass,
+-/obj/item/storage/firstaid/regular{
++/obj/item/storage/firstaid/regular{
+ 	pixel_x = -3;
+ 	pixel_y = -3
+ 	},
+@@ -86574,7 +86574,7 @@
+ /obj/machinery/light{
+ 	dir = 1
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/blue,
+ /area/medical/medbay/central)
+ "dkv" = (
+@@ -86675,16 +86675,16 @@
+ /area/space)
+ "dkH" = (
+ /obj/structure/rack,
+-/obj/item/shovel,
+-/obj/item/shovel,
++/obj/item/shovel,
++/obj/item/shovel,
+ /turf/open/floor/plating/astplate{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/security/execution/transfer)
+ "dkI" = (
+ /obj/structure/rack,
+-/obj/item/pickaxe,
+-/obj/item/pickaxe,
++/obj/item/pickaxe,
++/obj/item/pickaxe,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -86726,7 +86726,7 @@
+ 	},
+ /area/security/execution/transfer)
+ "dkP" = (
+-/obj/item/ore/glass,
++/obj/item/ore/glass,
+ /obj/structure/cable/orange{
+ 	d1 = 2;
+ 	d2 = 4;
+@@ -86778,7 +86778,7 @@
+ 	},
+ /area/security/execution/transfer)
+ "dkV" = (
+-/obj/item/ore/glass,
++/obj/item/ore/glass,
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+@@ -94305,10 +94305,10 @@
+ /area/medical/surgery)
+ "dzC" = (
+ /obj/structure/table,
+-/obj/item/scalpel{
++/obj/item/scalpel{
+ 	pixel_y = 12
+ 	},
+-/obj/item/circular_saw,
++/obj/item/circular_saw,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	icon_state = "whiteblue";
+ 	dir = 4;
+@@ -94336,11 +94336,11 @@
+ /area/medical/virology)
+ "dzF" = (
+ /obj/structure/table,
+-/obj/item/paper_bin{
++/obj/item/paper_bin{
+ 	pixel_x = -2;
+ 	pixel_y = 5
+ 	},
+-/obj/item/pen/red,
++/obj/item/pen/red,
+ /turf/open/floor/plasteel/whitegreen/corner{
+ 	dir = 4
+ 	},
+@@ -94357,7 +94357,7 @@
+ /area/medical/virology)
+ "dzH" = (
+ /obj/structure/table/glass,
+-/obj/item/clipboard,
++/obj/item/clipboard,
+ /obj/item/toy/figure/virologist,
+ /obj/machinery/computer/security/telescreen/entertainment{
+ 	pixel_y = 32
+@@ -94366,7 +94366,7 @@
+ /turf/open/floor/plasteel/vault,
+ /area/medical/virology)
+ "dzI" = (
+-/obj/item/bedsheet/medical,
++/obj/item/bedsheet/medical,
+ /obj/structure/bed,
+ /obj/item/device/radio/intercom{
+ 	broadcasting = 0;
+@@ -94379,7 +94379,7 @@
+ /turf/open/floor/plasteel/vault,
+ /area/medical/virology)
+ "dzJ" = (
+-/obj/item/storage/secure/safe{
++/obj/item/storage/secure/safe{
+ 	pixel_y = 24
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+@@ -94388,7 +94388,7 @@
+ /turf/open/floor/plasteel/vault,
+ /area/medical/virology)
+ "dzK" = (
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/neutral/side{
+ 	dir = 8;
+ 	heat_capacity = 1e+006
+@@ -94456,7 +94456,7 @@
+ /area/medical/medbay/central)
+ "dzU" = (
+ /obj/structure/bed,
+-/obj/item/bedsheet/medical,
++/obj/item/bedsheet/medical,
+ /turf/open/floor/plasteel/vault{
+ 	dir = 5
+ 	},
+@@ -94561,7 +94561,7 @@
+ /area/medical/virology)
+ "dAj" = (
+ /obj/structure/table/glass,
+-/obj/item/book/manual/wiki/infections{
++/obj/item/book/manual/wiki/infections{
+ 	pixel_y = 7
+ 	},
+ /turf/open/floor/plasteel/whitegreen/side{
+@@ -94715,9 +94715,9 @@
+ /area/medical/virology)
+ "dAE" = (
+ /obj/structure/table/glass,
+-/obj/item/reagent_containers/syringe/antiviral,
+-/obj/item/reagent_containers/dropper,
+-/obj/item/reagent_containers/spray/cleaner,
++/obj/item/reagent_containers/syringe/antiviral,
++/obj/item/reagent_containers/dropper,
++/obj/item/reagent_containers/spray/cleaner,
+ /turf/open/floor/plasteel/whitegreen/corner,
+ /area/medical/virology)
+ "dAF" = (
+@@ -94751,7 +94751,7 @@
+ 	pixel_x = 30
+ 	},
+ /obj/structure/table/glass,
+-/obj/item/storage/box/bodybags{
++/obj/item/storage/box/bodybags{
+ 	pixel_x = 3;
+ 	pixel_y = 2
+ 	},
+@@ -94907,7 +94907,7 @@
+ 	dir = 1;
+ 	pixel_y = -24
+ 	},
+-/obj/item/twohanded/required/kirbyplants/random,
++/obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/whiteblue/side{
+ 	icon_state = "whiteblue";
+ 	dir = 6
+@@ -94950,7 +94950,7 @@
+ 	name = "Chemistry Desk";
+ 	req_access_txt = "5; 33"
+ 	},
+-/obj/item/folder/yellow,
++/obj/item/folder/yellow,
+ /obj/machinery/door/window/northleft{
+ 	name = "Chemistry Desk"
+ 	},
+@@ -95024,7 +95024,7 @@
+ /area/medical/medbay/central)
+ "dBx" = (
+ /obj/structure/table/glass,
+-/obj/item/storage/box/syringes,
++/obj/item/storage/box/syringes,
+ /turf/open/floor/plasteel/whiteblue/corner,
+ /area/medical/medbay/central)
+ "dBy" = (
+@@ -95350,20 +95350,20 @@
+ /area/science/robotics/lab)
+ "dCh" = (
+ /obj/structure/table,
+-/obj/item/storage/firstaid{
++/obj/item/storage/firstaid{
+ 	name = "first-aid kit (empty)"
+ 	},
+-/obj/item/storage/firstaid{
++/obj/item/storage/firstaid{
+ 	name = "first-aid kit (empty)"
+ 	},
+-/obj/item/storage/firstaid{
++/obj/item/storage/firstaid{
+ 	name = "first-aid kit (empty)"
+ 	},
+ /obj/item/device/healthanalyzer,
+ /obj/item/device/healthanalyzer,
+ /obj/item/device/healthanalyzer,
+-/obj/item/reagent_containers/glass/bucket,
+-/obj/item/reagent_containers/glass/bucket,
++/obj/item/reagent_containers/glass/bucket,
++/obj/item/reagent_containers/glass/bucket,
+ /obj/item/device/assembly/prox_sensor,
+ /obj/item/device/assembly/prox_sensor,
+ /obj/item/device/assembly/prox_sensor,

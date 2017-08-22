@@ -1,0 +1,10 @@
+diff a/code/modules/admin/verbs/debug.dm b/code/modules/admin/verbs/debug.dm	(rejected hunks)
+@@ -463,7 +463,7 @@ GLOBAL_PROTECT(AdminProcCallCount)
+ 				if(istype(worn, /obj/item/device/pda))
+ 					worn:id = id
+ 					id.loc = worn
+-				else if(istype(worn, /obj/item/storage/wallet))
++				else if(istype(worn, /obj/item/storage/wallet))
+ 					worn:front_id = id
+ 					id.loc = worn
+ 					worn.update_icon()

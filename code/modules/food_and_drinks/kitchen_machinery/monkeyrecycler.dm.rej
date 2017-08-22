@@ -1,0 +1,10 @@
+diff a/code/modules/food_and_drinks/kitchen_machinery/monkeyrecycler.dm b/code/modules/food_and_drinks/kitchen_machinery/monkeyrecycler.dm	(rejected hunks)
+@@ -9,7 +9,7 @@
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 5
+ 	active_power_usage = 50
+-	circuit = /obj/item/circuitboard/machine/monkey_recycler
++	circuit = /obj/item/circuitboard/machine/monkey_recycler
+ 	var/grinded = 0
+ 	var/required_grind = 5
+ 	var/cube_production = 1

@@ -1,6 +1,6 @@
 //Will include consumable gene mods in the future.
 
-/obj/item/weapon/genemod
+/obj/item/genemod
 	name = "genetic modifier"
 	desc = "Microbodies which can grow, morph, or otherwise change an organism into something else."
 	icon = 'icons/obj/items.dmi'
@@ -18,5 +18,5 @@
 
 	var/used = 0
 
-/obj/item/weapon/genemod/proc/use(mob/living/carbon/human/target)
+/obj/item/genemod/proc/use(mob/living/carbon/human/target)
 	return

@@ -1,0 +1,10 @@
+diff a/code/game/mecha/mech_bay.dm b/code/game/mecha/mech_bay.dm	(rejected hunks)
+@@ -17,7 +17,7 @@
+ 	dir = EAST
+ 	icon = 'icons/mecha/mech_bay.dmi'
+ 	icon_state = "recharge_port"
+-	circuit = /obj/item/circuitboard/machine/mech_recharger
++	circuit = /obj/item/circuitboard/machine/mech_recharger
+ 	var/obj/mecha/recharging_mech
+ 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
+ 	var/max_charge = 50

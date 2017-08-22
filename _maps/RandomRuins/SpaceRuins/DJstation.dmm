@@ -44,14 +44,14 @@
 /turf/open/floor/plating,
 /area/djstation)
 "al" = (
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
 /turf/open/floor/plating,
 /area/djstation)
 "am" = (
-/obj/item/weapon/extinguisher,
+/obj/item/extinguisher,
 /turf/open/floor/plating,
 /area/djstation)
 "an" = (
@@ -91,7 +91,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'HIGH VOLTAGE'";
 	icon_state = "shock";
@@ -165,7 +165,7 @@
 /area/djstation)
 "aD" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /turf/open/floor/plasteel/grimy,
 /area/djstation)
 "aE" = (
@@ -249,7 +249,7 @@
 /area/djstation)
 "aR" = (
 /obj/structure/table,
-/obj/item/weapon/paper/fluff/ruins/djstation,
+/obj/item/paper/fluff/ruins/djstation,
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "aS" = (
@@ -336,11 +336,11 @@
 /area/djstation)
 "bg" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plasteel/cafeteria,
 /area/djstation)
 "bh" = (

@@ -1,0 +1,10 @@
+diff a/code/modules/food_and_drinks/kitchen_machinery/microwave.dm b/code/modules/food_and_drinks/kitchen_machinery/microwave.dm	(rejected hunks)
+@@ -9,7 +9,7 @@
+ 	use_power = IDLE_POWER_USE
+ 	idle_power_usage = 5
+ 	active_power_usage = 100
+-	circuit = /obj/item/circuitboard/machine/microwave
++	circuit = /obj/item/circuitboard/machine/microwave
+ 	var/operating = FALSE // Is it on?
+ 	var/dirty = 0 // = {0..100} Does it need cleaning?
+ 	var/broken = 0 // ={0,1,2} How broken is it???

@@ -1,0 +1,10 @@
+diff a/code/modules/research/server.dm b/code/modules/research/server.dm	(rejected hunks)
+@@ -16,7 +16,7 @@
+ 
+ /obj/machinery/r_n_d/server/Initialize()
+ 	. = ..()
+-	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
++	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
+ 	B.apply_default_parts(src)
+ 
+ /obj/machinery/r_n_d/server/Destroy()

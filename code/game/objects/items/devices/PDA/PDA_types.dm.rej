@@ -1,0 +1,10 @@
+diff a/code/game/objects/items/devices/PDA/PDA_types.dm b/code/game/objects/items/devices/PDA/PDA_types.dm	(rejected hunks)
+@@ -18,7 +18,7 @@
+ 		return
+ 	var/mob/living/carbon/human/M = S.slip_victim
+ 	if (istype(M) && (M.real_name != src.owner))
+-		var/obj/item/cartridge/virus/clown/cart = cartridge
++		var/obj/item/cartridge/virus/clown/cart = cartridge
+ 		if(istype(cart) && cart.charges < 5)
+ 			cart.charges++
+ 
