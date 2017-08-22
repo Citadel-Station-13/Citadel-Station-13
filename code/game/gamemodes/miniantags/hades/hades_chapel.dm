@@ -39,14 +39,14 @@
 	playsound(get_turf(src), 'sound/effects/pope_entry.ogg', 100, 1)
 	sleep(100)
 	playsound(get_turf(src), 'sound/effects/hyperspace_end.ogg', 100, 1)
-	new/obj/item/weapon/hades_staff/imbued(get_turf(src))
+	new/obj/item/hades_staff/imbued(get_turf(src))
 	src.visible_message("<span class='warning'>[src] shatters into a thousand shards, a staff falling from it.</span>")
 	qdel(src)
 
-/obj/structure/chair/hades/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/chair/hades/attackby(obj/item/W, mob/user, params)
 	..()
-	if(istype(W, /obj/item/weapon/hades_staff))
-		var/obj/item/weapon/hades_staff/HS = W
+	if(istype(W, /obj/item/hades_staff))
+		var/obj/item/hades_staff/HS = W
 		if(!HS.isKey)
 			return
 		src.visible_message("<span class='warning'>[user] inserts the [W] into the [src], giving it a quick turn.</span>")
@@ -74,11 +74,11 @@
 /obj/structure/ladder/unbreakable/hades/update_icon()
 	return
 
-/obj/item/weapon/paper/hades_instructions
+/obj/item/paper/hades_instructions
 	name = "paper- 'Hastily Scrawled Letter'"
 	info = "The Master has instructed us to collect corpses for the ritual, and told us to deposity them in the Ritual Room, behind a bookcase in the library. The Master has locked the device to only work with his key, so no more accidents happen."
 
-/obj/item/weapon/hades_staff
+/obj/item/hades_staff
 	name = "Staff of Hades"
 	desc = "A large, dark staff, with a set of key-like prongs on the end."
 	icon_state = "staffofchange"
@@ -93,12 +93,12 @@
 	block_chance = 25
 	var/isKey = 1
 
-/obj/item/weapon/hades_staff/fake
+/obj/item/hades_staff/fake
 	name = "Inert Staff of Hades"
 	desc = "A large, dark staff."
 	isKey = 0
 
-/obj/item/weapon/hades_staff/imbued
+/obj/item/hades_staff/imbued
 	name = "Imbued Staff of Hades"
 	desc = " Bestowed with the power of wayward souls, this Staff allows the wielder to judge a target."
 	force = 75
@@ -107,7 +107,7 @@
 	var/lastJudge = 0
 	var/judgeCooldown = 150
 
-/obj/item/weapon/hades_staff/imbued/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
+/obj/item/hades_staff/imbued/attack(mob/living/carbon/human/M, mob/living/carbon/human/user)
 	if(!istype(M))
 		return ..()
 

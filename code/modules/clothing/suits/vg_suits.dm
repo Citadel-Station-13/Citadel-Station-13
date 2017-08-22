@@ -71,7 +71,7 @@
 	name = "russian fur coat"
 	desc = "Let the land do the fighting for you."
 	icon_state = "russofurcoat"
-	allowed = list(/obj/item/weapon/gun)
+	allowed = list(/obj/item/gun)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
