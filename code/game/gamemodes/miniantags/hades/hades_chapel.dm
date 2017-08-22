@@ -16,7 +16,7 @@
 
 /obj/structure/chair/hades/New()
 	..()
-	flags |= NODECONSTRUCT
+	flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/kitchenspike/KS in range(12))
 		watchedSpikes += KS
 
