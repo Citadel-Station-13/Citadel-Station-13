@@ -486,7 +486,7 @@
 /obj/effect/golemrune/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src)
+	notify_ghosts("Golem rune created in [get_area(src)].", 'sound/misc/server-ready.ogg', source = src)
 
 /obj/effect/golemrune/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -554,7 +554,7 @@
 	layer = FLY_LAYER
 	pixel_x = -64
 	pixel_y = -64
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/mob/living/immune = list() // the one who creates the timestop is immune
 	var/list/stopped_atoms = list()
 	var/freezerange = 2

@@ -92,7 +92,7 @@
 	icon_state = "default"
 	name = "Alert"
 	desc = "Something seems to have gone wrong with this alert, so report this bug please"
-	mouse_opacity = 1
+	mouse_opacity = MOUSE_OPACITY_ICON
 	var/timeout = 0 //If set to a number, this alert will clear itself after that many deciseconds
 	var/severity = 0
 	var/alerttooltipstyle = ""
@@ -165,6 +165,21 @@
 	name = "Starving"
 	desc = "You're severely malnourished. The hunger pains make moving around a chore."
 	icon_state = "starving"
+
+/obj/screen/alert/gross
+	name = "Grossed out."
+	desc = "That was kind of gross..."
+	icon_state = "gross"
+
+/obj/screen/alert/verygross
+	name = "Very grossed out."
+	desc = "I'm not feeling very well.."
+	icon_state = "gross2"
+
+/obj/screen/alert/disgusted
+	name = "DISGUSTED"
+	desc = "ABSOLUTELY DISGUSTIN'"
+	icon_state = "gross3"
 
 /obj/screen/alert/hot
 	name = "Too Hot"
