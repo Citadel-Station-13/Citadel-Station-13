@@ -1029,7 +1029,7 @@
 	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acq" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -1070,7 +1070,7 @@
 	req_access_txt = "65"
 	},
 /turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acu" = (
 /obj/machinery/porta_turret/ai{
 	dir = 4
@@ -1084,7 +1084,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acv" = (
 /obj/machinery/camera/motion{
 	c_tag = "MiniSat External Starboard";
@@ -1144,7 +1144,7 @@
 	pixel_y = -28
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acz" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -1152,7 +1152,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acA" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
@@ -1198,7 +1198,7 @@
 	pixel_y = 24
 	},
 /turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/plating/airless,
@@ -1213,7 +1213,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acH" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -1224,7 +1224,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acI" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -1242,7 +1242,7 @@
 /turf/open/floor/plasteel/white{
 	heat_capacity = 1e+006
 	},
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "acJ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -1361,21 +1361,23 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "adc" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "add" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai)
+/area/wreck/ai)
 "ade" = (
 /obj/structure/table/glass,
 /obj/item/stack/sheet/metal,
@@ -1428,7 +1430,6 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "MiniSat Antechamber APC";
-	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
 	pixel_x = -24
 	},
 /obj/machinery/recharger,
@@ -3014,7 +3015,6 @@
 /area/security/main)
 "ahd" = (
 /obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "ahe" = (
@@ -3871,7 +3871,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
 "aiU" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/barsign,
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/dorms)
@@ -5981,7 +5982,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/pod_1)
 "ano" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/pod_1)
 "anp" = (
@@ -7678,7 +7680,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Dormitory APC";
-	areastring = "/area/crew_quarters/dorms";
 	pixel_y = 25
 	},
 /obj/structure/cable{
@@ -8261,7 +8262,8 @@
 /turf/open/floor/plasteel/barber,
 /area/crew_quarters/dorms)
 "ash" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "asi" = (
@@ -8271,7 +8273,8 @@
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "asj" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
@@ -8740,7 +8743,6 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Dormitory Maintenance APC";
-	areastring = "/area/maintenance/department/crew_quarters/dorms";
 	pixel_x = -24
 	},
 /obj/structure/cable,
@@ -9266,7 +9268,8 @@
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/dorms)
 "aum" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -9626,7 +9629,8 @@
 /turf/closed/wall/r_wall,
 /area/teleporter)
 "avd" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Dorm3Shutters";
 	name = "Dorm Shutters"
@@ -11029,7 +11033,8 @@
 /turf/open/floor/plasteel/stairs,
 /area/hallway/primary/central)
 "ayi" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Dorm2Shutters";
 	name = "Dorm Shutters"
@@ -12612,7 +12617,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aBL" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "Dorm1Shutters";
 	name = "Dorm Shutters"
@@ -13855,7 +13861,8 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aEl" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aEm" = (
@@ -21068,7 +21075,7 @@
 "aTX" = (
 /obj/structure/kitchenspike,
 /obj/item/device/assembly/mousetrap,
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "aTY" = (
@@ -21158,7 +21165,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/bar)
+/area/crew_quarters/theatre)
 "aUi" = (
 /obj/machinery/camera{
 	c_tag = "Central Primary Hallway Cargo";
@@ -22950,7 +22957,7 @@
 /area/hydroponics)
 "aYa" = (
 /obj/machinery/door/airlock{
-	name = "Kitchen";
+	name = "Kitchen Cold Room";
 	req_access_txt = "28"
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -22976,7 +22983,7 @@
 "aYd" = (
 /obj/machinery/door/airlock{
 	cyclelinkeddir = 8;
-	name = "Kitchen";
+	name = "Bar Access";
 	req_access_txt = "0";
 	req_one_access_txt = "25; 28"
 	},
@@ -26608,6 +26615,7 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/kitchen)
 "bgn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair{
 	dir = 4
 	},
@@ -26887,7 +26895,8 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
 "bgT" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
 "bgU" = (
@@ -28563,7 +28572,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -31288,7 +31297,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/transport)
 "bqQ" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/structure/grille,
+/obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "bqR" = (
@@ -39240,7 +39250,7 @@
 /area/maintenance/department/engine)
 "bGL" = (
 /obj/structure/closet/masks,
-/obj/item/trash/deadmouse,
+/obj/item/weapon/reagent_containers/food/snacks/deadmouse,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -40309,7 +40319,8 @@
 /turf/open/space/basic,
 /area/space)
 "bIZ" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bJa" = (
@@ -46548,7 +46559,8 @@
 /turf/open/floor/plasteel/black,
 /area/chapel/main/monastery)
 "bWY" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -47098,7 +47110,8 @@
 /area/engine/atmos)
 "bYr" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -48022,7 +48035,8 @@
 /turf/closed/wall,
 /area/chapel/office)
 "bZZ" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
 "caa" = (
@@ -49661,7 +49675,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "cdF" = (
-/obj/structure/closet/secure_closet/miner,
+/obj/structure/closet/secure_closet/miner/unlocked,
 /turf/open/floor/plating,
 /area/shuttle/auxillary_base)
 "cdG" = (
@@ -50659,7 +50673,6 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Monastery External APC";
-	areastring = "/area/chapel/main/monastery";
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/asteroid{
@@ -52253,7 +52266,6 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Monastery Maintenance APC";
-	areastring = "/area/maintenance/department/chapel/monastery";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -52332,7 +52344,6 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Library APC";
-	areastring = "/area/library";
 	pixel_x = 24
 	},
 /obj/machinery/airalarm{
@@ -64760,268 +64771,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-"}
-(43,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aoH
-aoI
-aqb
-ara
-ara
-ara
-ara
-ara
-ara
-ara
-ayy
-azK
-aAV
-aCa
-aCa
-aCa
-aCa
-aCa
-aCa
-aCa
-aIr
-aoI
-aoH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-cil
-cil
-ciw
-cix
-ciw
-cil
-cil
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
 "}
 (44,1,1) = {"
 aaa
@@ -65204,14 +64953,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 cil
-cje
-cjB
-cje
 cil
-aaa
+ciw
+cix
+ciw
+cil
+cil
 aaa
 aaa
 aaa
@@ -65450,6 +65198,263 @@ aaa
 aaa
 aaa
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+cil
+cje
+cjB
+cje
+cil
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(46,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aoH
+aoI
+aoH
+aoH
+aoH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+azL
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aoH
+aoI
+aoH
+aoH
+aoH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aby
 aby
 aby
@@ -65537,9 +65542,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
 "}
-(46,1,1) = {"
+(47,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -65786,7 +65800,7 @@ aaa
 aaa
 aaa
 "}
-(47,1,1) = {"
+(48,1,1) = {"
 aaa
 aaa
 aaa
@@ -66043,7 +66057,7 @@ aaa
 aaa
 aaa
 "}
-(48,1,1) = {"
+(49,1,1) = {"
 aaa
 aaa
 aaa
@@ -66300,7 +66314,7 @@ aaa
 aaa
 aaa
 "}
-(49,1,1) = {"
+(50,1,1) = {"
 aaa
 aaa
 aaa
@@ -67417,29 +67431,19 @@ aaa
 aaa
 aaa
 aaa
-aoH
-aoI
-aoH
-aoH
-aoH
+aaa
+azH
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-azL
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aoH
-aoI
-aoH
-aoH
-aoH
 aaa
 aaa
 aaa
@@ -68939,9 +68943,6 @@ aaa
 aaa
 aaa
 aaa
-abN
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -68997,16 +68998,6 @@ aUE
 aTF
 aVJ
 aWD
-aaa
-aaa
-aaa
-cil
-cje
-cjB
-cje
-cil
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -83921,7 +83912,7 @@ bcj
 beu
 bfq
 bgn
-aJI
+bhe
 aDZ
 aHN
 bjd
@@ -91335,7 +91326,7 @@ apu
 ale
 ale
 asb
-coe
+ate
 apX
 ave
 awn
@@ -93130,7 +93121,7 @@ aaa
 aaa
 ann
 ann
-cnZ
+ano
 ann
 aqX
 apX
@@ -93641,7 +93632,7 @@ ako
 alg
 aaa
 aaa
-cnW
+ano
 aoc
 aoF
 aoF
@@ -94158,7 +94149,7 @@ aaa
 aaa
 ann
 ann
-cnY
+ano
 ann
 aqX
 apX
