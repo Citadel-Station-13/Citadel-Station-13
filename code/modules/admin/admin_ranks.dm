@@ -147,15 +147,15 @@ GLOBAL_PROTECT(admin_ranks)
 			load_admin_ranks()
 			return
 
-		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags_1 FROM [format_table_name("admin_ranks")]")
+		var/datum/DBQuery/query_load_admin_ranks = SSdbcore.NewQuery("SELECT rank, flags FROM [format_table_name("admin_ranks")]")
 		if(!query_load_admin_ranks.Execute())
 			return
 		while(query_load_admin_ranks.NextRow())
 			var/rank_name = ckeyEx(query_load_admin_ranks.item[1])
-			var/flags_1 = query_load_admin_ranks.item[2]
-			if(istext(flags_1))
-				flags_1 = text2num(flags_1)
-			var/datum/admin_rank/R = new(rank_name, flags_1)
+			var/flags = query_load_admin_ranks.item[2]
+			if(istext(flags))
+				flags = text2num(flags)
+			var/datum/admin_rank/R = new(rank_name, flags)
 			if(!R)
 				continue
 			GLOB.admin_ranks += R
