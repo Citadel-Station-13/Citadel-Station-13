@@ -157,6 +157,17 @@
 	targetitem = /obj/item/documents/syndicate/blue
 	difficulty = 10
 
+/datum/objective_item/special/New()
+	..()
+	if(TargetExists())
+		GLOB.possible_items_special += src
+	else
+		qdel(src)
+
+/datum/objective_item/special/Destroy()
+	GLOB.possible_items_special -= src
+	return ..()
+
 //Old ninja objectives.
 /datum/objective_item/special/pinpointer
 	name = "the captain's pinpointer."
