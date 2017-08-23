@@ -8,9 +8,10 @@
 	resistance_flags = FLAMMABLE
 	var/foodtype = NONE
 	var/last_check_time
-
-/obj/item/weapon/reagent_containers/food/New()
-		..()
+  
+/obj/item/weapon/reagent_containers/food/Initialize(mapload)
+	..()
+	if(!mapload)
 		pixel_x = rand(-5, 5)	//Randomizes postion slightly.
 		pixel_y = rand(-5, 5)
 

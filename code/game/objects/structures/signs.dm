@@ -274,6 +274,11 @@
 	desc = "A sign labelling a religious area."
 	icon_state = "holy"
 
+/obj/structure/sign/restroom
+	name = "\improper RESTROOM"
+	desc = "A sign labelling a restroom."
+	icon_state = "restroom"
+
 /obj/structure/sign/xeno_warning_mining
 	name = "DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
