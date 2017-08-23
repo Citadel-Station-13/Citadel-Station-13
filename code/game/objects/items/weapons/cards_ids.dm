@@ -56,7 +56,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	origin_tech = "magnets=2;syndicate=2"
-	flags = NOBLUDGEON
+	flags_1 = NOBLUDGEON_1
 	var/prox_check = TRUE //If the emag requires you to be in range
 
 /obj/item/weapon/card/emag/bluespace
@@ -106,7 +106,7 @@
 				update_label()
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: [bicon(src)] [src.name].</span>", \
+	user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", \
 					"<span class='notice'>You show \the [src.name].</span>")
 	src.add_fingerprint(user)
 	return

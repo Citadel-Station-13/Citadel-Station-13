@@ -219,7 +219,7 @@
 	var/turf/T = get_turf(src)
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
-			M << 'sound/magic/charge.ogg'
+			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
@@ -457,7 +457,7 @@
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in GLOB.mob_list)
 		if(M.z == z)
-			M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
+			SEND_SOUND(M, 'sound/effects/supermatter.ogg') //everyone goan know bout this
 			to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return gain
@@ -524,7 +524,7 @@
 			R.receive_pulse(power * (1 + power_transmission_bonus)/10 * freon_transmit_modifier)
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.flags & ABSTRACT) || !istype(user))
+	if(!istype(W) || (W.flags_1 & ABSTRACT_1) || !istype(user))
 		return
 	if(istype(W, /obj/item/weapon/scalpel/supermatter))
 		playsound(src, W.usesound, 100, 1)

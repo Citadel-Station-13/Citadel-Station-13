@@ -193,11 +193,11 @@ Difficulty: Medium
 			qdel(F)
 			if(stat == DEAD)
 				swooping &= ~SWOOP_DAMAGEABLE
-				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags_1 = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	sleep(7)
 	var/list/flame_hit = list()
 	while(swoop_duration > 0)

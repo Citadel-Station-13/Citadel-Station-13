@@ -233,9 +233,13 @@
 					return
 			else /*if(src.justzap)*/
 				return
-		else if(user.hallucination > 50 && ishuman(user) && prob(10) && src.operating == FALSE)
-			hallucinate_shock(user)
-			return
+		else if(user.hallucinating() && ishuman(user) && prob(4) && !operating)
+			var/mob/living/carbon/human/H = user
+			if(H.gloves)
+				var/obj/item/clothing/gloves/G = H.gloves
+				if(G.siemens_coefficient)//not insulated
+					hallucinate_shock(H)
+					return
 	if (cyclelinkedairlock)
 		if (!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency && allowed(user))
 			if(cyclelinkedairlock.operating)
@@ -1525,7 +1529,7 @@
 
 
 /obj/machinery/door/airlock/obj_break(damage_flag)
-	if(!(stat & BROKEN) && !(flags & NODECONSTRUCT))
+	if(!(flags_1 & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
 		if(!panel_open)
 			panel_open = TRUE
@@ -1543,7 +1547,7 @@
 
 
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/structure/door_assembly/A
 		if(assemblytype)
 			A = new assemblytype(src.loc)

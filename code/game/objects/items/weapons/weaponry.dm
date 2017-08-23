@@ -1,4 +1,5 @@
 /obj/item/weapon
+	var/trigger_guard = TRIGGER_GUARD_NONE
 
 /obj/item/weapon/banhammer
 	desc = "A banhammer"
@@ -51,7 +52,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -69,7 +70,7 @@
 
 /obj/item/weapon/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
-	flags = CONDUCT | NODROP | DROPDEL
+	flags_1 = CONDUCT_1 | NODROP_1 | DROPDEL_1
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	luminosity = 3
@@ -77,8 +78,8 @@
 	var/notches = 0 //HOW MANY PEOPLE HAVE BEEN SLAIN WITH THIS BLADE
 	var/obj/item/weapon/disk/nuclear/nuke_disk //OUR STORED NUKE DISK
 
-/obj/item/weapon/claymore/highlander/New()
-	..()
+/obj/item/weapon/claymore/highlander/Initialize()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/claymore/highlander/Destroy()
@@ -196,7 +197,7 @@
 	item_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
@@ -221,7 +222,7 @@
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
 	item_state = "rods"
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
@@ -239,7 +240,7 @@
 		user.put_in_hands(S)
 		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 
-	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags & NODROP))
+	else if(istype(I, /obj/item/device/assembly/igniter) && !(I.flags_1 & NODROP_1))
 		var/obj/item/weapon/melee/baton/cattleprod/P = new /obj/item/weapon/melee/baton/cattleprod
 
 		remove_item_from_storage(user)
@@ -279,7 +280,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharp, concealable, spring-loaded knife."
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	force = 3
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 5
@@ -405,7 +406,7 @@
 	item_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags = NODROP | ABSTRACT | DROPDEL
+	flags_1 = NODROP_1 | ABSTRACT_1 | DROPDEL_1
 	w_class = WEIGHT_CLASS_HUGE
 	force = 21
 	throwforce = 0
@@ -540,7 +541,7 @@
 	return 1
 
 /obj/item/weapon/melee/flyswatter
-	name = "Flyswatter"
+	name = "flyswatter"
 	desc = "Useful for killing insects of all sizes."
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "flyswatter"
@@ -555,8 +556,8 @@
 	//Things in this list will be instantly splatted.  Flyman weakness is handled in the flyman species weakness proc.
 	var/list/strong_against
 
-/obj/item/weapon/melee/flyswatter/New()
-	..()
+/obj/item/weapon/melee/flyswatter/Initialize()
+	. = ..()
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
@@ -582,5 +583,10 @@
 	icon_state = "madeyoulook"
 	force = 0
 	throwforce = 0
-	flags = DROPDEL | ABSTRACT
+	flags_1 = DROPDEL_1 | ABSTRACT_1
 	attack_verb = list("bopped")
+
+/obj/item/weapon/proc/can_trigger_gun(mob/living/user)
+	if(!user.can_use_guns(src))
+		return FALSE
+	return TRUE

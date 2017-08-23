@@ -196,7 +196,7 @@
 
 	if(display_contents_with_number)
 		for(var/datum/numbered_display/ND in display_contents)
-			ND.sample_object.mouse_opacity = 2
+			ND.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			ND.sample_object.screen_loc = "[cx]:16,[cy]:16"
 			ND.sample_object.maptext = "<font color='white'>[(ND.number > 1)? "[ND.number]" : ""]</font>"
 			ND.sample_object.layer = ABOVE_HUD_LAYER
@@ -207,7 +207,7 @@
 				cy--
 	else
 		for(var/obj/O in contents)
-			O.mouse_opacity = 2 //This is here so storage items that spawn with contents correctly have the "click around item to equip"
+			O.mouse_opacity = MOUSE_OPACITY_OPAQUE //This is here so storage items that spawn with contents correctly have the "click around item to equip"
 			O.screen_loc = "[cx]:16,[cy]:16"
 			O.maptext = ""
 			O.layer = ABOVE_HUD_LAYER
@@ -261,7 +261,7 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0, mob/user)
-	if(!istype(W) || (W.flags & ABSTRACT))
+	if(!istype(W) || (W.flags_1 & ABSTRACT_1))
 		return //Not an item
 
 	if(loc == W)
@@ -302,7 +302,7 @@
 				to_chat(usr, "<span class='warning'>[src] cannot hold [W] as it's a storage item of the same size!</span>")
 			return 0 //To prevent the stacking of same sized storage items.
 
-	if(W.flags & NODROP) //SHOULD be handled in unEquip, but better safe than sorry.
+	if(W.flags_1 & NODROP_1) //SHOULD be handled in unEquip, but better safe than sorry.
 		to_chat(usr, "<span class='warning'>\the [W] is stuck to your hand, you can't put it in \the [src]!</span>")
 		return 0
 
@@ -350,7 +350,7 @@
 		orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
-	W.mouse_opacity = 2 //So you can click on the area around the item to equip it, instead of having to pixel hunt
+	W.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	update_icon()
 	return 1
 

@@ -35,8 +35,8 @@ Class Variables:
       Next uid value in sequence
 
    stat (bitflag)
-      Machine status bit flags.
-      Possible bit flags:
+      Machine status bit flags_1.
+      Possible bit flags_1:
          BROKEN:1 -- Machine is broken
          NOPOWER:2 -- No power is being supplied to machine.
          POWEROFF:4 -- tbd
@@ -123,12 +123,18 @@ Class Procs:
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
 	var/speed_process = 0 // Process as fast as possible?
+	var/obj/item/weapon/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 /obj/machinery/Initialize()
 	if(!armor)
 		armor = list(melee = 25, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 70)
 	. = ..()
 	GLOB.machines += src
+
+	if(ispath(circuit, /obj/item/weapon/circuitboard))
+		circuit = new circuit
+		circuit.apply_default_parts(src)
+
 	if(!speed_process)
 		START_PROCESSING(SSmachines, src)
 	else
@@ -301,7 +307,7 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/weapon/crowbar/C)
-	. = !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT)) && istype(C)
+	. = !(state_open || panel_open || is_operational() || (flags_1 & NODECONSTRUCT_1)) && istype(C)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -309,13 +315,13 @@ Class Procs:
 		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/crowbar/C, ignore_panel = 0)
-	. = istype(C) && (panel_open || ignore_panel) &&  !(flags & NODECONSTRUCT)
+	. = istype(C) && (panel_open || ignore_panel) &&  !(flags_1 & NODECONSTRUCT_1)
 	if(.)
 		playsound(loc, C.usesound, 50, 1)
 		deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		on_deconstruction()
 		if(component_parts && component_parts.len)
 			spawn_frame(disassembled)
@@ -334,7 +340,7 @@ Class Procs:
 	M.icon_state = "box_1"
 
 /obj/machinery/obj_break(damage_flag)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		stat |= BROKEN
 
 /obj/machinery/contents_explosion(severity, target)
@@ -348,7 +354,7 @@ Class Procs:
 		updateUsrDialog()
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/S)
-	if(istype(S) &&  !(flags & NODECONSTRUCT))
+	if(istype(S) &&  !(flags_1 & NODECONSTRUCT_1))
 		playsound(loc, S.usesound, 50, 1)
 		if(!panel_open)
 			panel_open = TRUE
@@ -376,7 +382,7 @@ Class Procs:
 	return SUCCESSFUL_UNFASTEN
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20) //try to unwrench an object in a WONDERFUL DYNAMIC WAY
-	if(istype(W) && !(flags & NODECONSTRUCT))
+	if(istype(W) && !(flags_1 & NODECONSTRUCT_1))
 		var/can_be_unfasten = can_be_unfasten_wrench(user)
 		if(!can_be_unfasten || can_be_unfasten == FAILED_UNFASTEN)
 			return can_be_unfasten
@@ -403,7 +409,7 @@ Class Procs:
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	if(!istype(W))
 		return
-	if((flags & NODECONSTRUCT) && !W.works_from_distance)
+	if((flags_1 & NODECONSTRUCT_1) && !W.works_from_distance)
 		return
 	var/shouldplaysound = 0
 	if(component_parts)
@@ -439,7 +445,7 @@ Class Procs:
 /obj/machinery/proc/display_parts(mob/user)
 	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
 	for(var/obj/item/C in component_parts)
-		to_chat(user, "<span class='notice'>[bicon(C)] [C.name]</span>")
+		to_chat(user, "<span class='notice'>[icon2html(C, user)] [C.name]</span>")
 
 /obj/machinery/examine(mob/user)
 	..()
