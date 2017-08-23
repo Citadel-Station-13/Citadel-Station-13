@@ -1,4 +1,4 @@
-//CONTAINS: Suit fibers and Detective's Scanning Computer
+//CONTAINS: Suit fibers,  and Detective's Scanning Computer
 
 /atom/var/list/suit_fibers
 
@@ -43,12 +43,12 @@
 			suit_fibers += "Material from a pair of [M.gloves.name]."
 
 
-/atom/proc/add_hiddenprint(mob/living/M)
+/datum/forensics/proc/add_hiddenprint(mob/living/M)
 	if(!M || !M.key)
 		return
 
-	if(!fingerprintshidden) //Add the list if it does not exist
-		fingerprintshidden = list()
+	if(forensics.hiddenprints) //Add the list if it does not exist
+		forensics.hiddenprints = list()
 
 	var/hasgloves = ""
 	if(ishuman(M))
@@ -57,13 +57,13 @@
 			hasgloves = "(gloves)"
 
 	var/current_time = time_stamp()
-	if(!fingerprintshidden[M.key])
-		fingerprintshidden[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
+	if(!forensics.hiddenprints[M.key])
+		forensics.hiddenprints[M.key] = "First: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
 	else
-		var/laststamppos = findtext(fingerprintshidden[M.key], " Last: ")
+		var/laststamppos = findtext(forensics.hiddenprints[M.key], " Last: ")
 		if(laststamppos)
-			fingerprintshidden[M.key] = copytext(fingerprintshidden[M.key], 1, laststamppos)
-		fingerprintshidden[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
+			forensics.hiddenprints[M.key] = copytext(forensics.hiddenprints[M.key], 1, laststamppos)
+		forensics.hiddenprints[M.key] += " Last: [M.real_name]\[[current_time]\][hasgloves]. Ckey: [M.ckey]"
 
 	fingerprintslast = M.ckey
 
@@ -89,10 +89,10 @@
 				H.gloves.add_fingerprint(H, 1) //ignoregloves = 1 to avoid infinite loop.
 				return
 
-		if(!fingerprints) //Add the list if it does not exist
-			fingerprints = list()
+		if(!forensics.prints) //Add the list if it does not exist
+			forensics.prints = list()
 		var/full_print = md5(H.dna.uni_identity)
-		fingerprints[full_print] = full_print
+		forensics.prints[full_print] = full_print
 
 
 
@@ -100,19 +100,19 @@
 /atom/proc/transfer_fingerprints_to(atom/A)
 
 	// Make sure everything are lists.
-	if(!islist(A.fingerprints))
-		A.fingerprints = list()
-	if(!islist(A.fingerprintshidden))
-		A.fingerprintshidden = list()
+	if(!islist(A.forensics.prints))
+		A.forensics.prints = list()
+	if(!islist(A.forensics.hiddenprints))
+		A.forensics.hiddenprints = list()
 
-	if(!islist(fingerprints))
-		fingerprints = list()
-	if(!islist(fingerprintshidden))
-		fingerprintshidden = list()
+	if(!islist(forensics.prints))
+		forensics.prints = list()
+	if(!islist(forensics.hiddenprints))
+		forensics.hiddenprints = list()
 
 	// Transfer
-	if(fingerprints)
-		A.fingerprints |= fingerprints.Copy()            //detective
-	if(fingerprintshidden)
-		A.fingerprintshidden |= fingerprintshidden.Copy()    //admin
+	if(LAZYLEN(forensics.prints))
+		A.forensics.prints |= forensics.prints.Copy()            //detective
+	if(LAZYLEN(forensics.hiddenprints))
+		A.forensics.hiddenprints |= forensics.hiddenprints.Copy()    //admin
 	A.fingerprintslast = fingerprintslast

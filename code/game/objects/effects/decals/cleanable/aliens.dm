@@ -62,4 +62,8 @@
 /obj/effect/decal/cleanable/blood/xtracks
 	icon_state = "xtracks"
 	random_icon_states = null
-	blood_DNA = list("UNKNOWN DNA" = "X*")
+
+/obj/effect/decal/cleanable/blood/xtracks/Initialize(stuff)
+	. = ..(stuff)
+	forensics.blood = list("UNKNOWN DNA" = "X*")
+

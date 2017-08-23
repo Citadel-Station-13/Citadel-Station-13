@@ -1,10 +1,10 @@
 diff a/code/game/objects/structures/watercloset.dm b/code/game/objects/structures/watercloset.dm	(rejected hunks)
-@@ -462,7 +462,7 @@
+@@ -287,7 +287,7 @@
  
- 	if(istype(O, /obj/item/reagent_containers))
- 		var/obj/item/reagent_containers/RG = O
--		if(RG.container_type & OPENCONTAINER)
-+		if(RG.container_type & OPENCONTAINER_1)
- 			if(!RG.reagents.holder_full())
- 				RG.reagents.add_reagent("[dispensedreagent]", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
- 				to_chat(user, "<span class='notice'>You fill [RG] from [src].</span>")
+ 
+ /obj/machinery/shower/proc/wash_obj(atom/movable/O)
+-	. = O.clean_blood()
++	. = O.forensics.clean_blood()
+ 	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+ 	if(isitem(O))
+ 		var/obj/item/I = O
