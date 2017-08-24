@@ -1,0 +1,9 @@
+diff a/code/modules/mob/living/simple_animal/hostile/alien.dm b/code/modules/mob/living/simple_animal/hostile/alien.dm	(rejected hunks)
+@@ -171,6 +171,6 @@
+ 			qdel(target)
+ 			return TRUE
+ 		var/atom/movable/M = target
+-		M.forensics.clean_blood()
++		M.clean_blood()
+ 		visible_message("[src] polishes \the [target].")
+ 		return TRUE
