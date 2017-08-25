@@ -1,0 +1,44 @@
+diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/BoxStation.dmm	(rejected hunks)
+@@ -2457,17 +2457,17 @@
+ 	dir = 10
+ 	},
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "afu" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "afv" = (
+ /obj/machinery/atmospherics/pipe/simple/general/hidden{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plasteel/black,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "afw" = (
+ /obj/machinery/atmospherics/components/binary/pump{
+ 	dir = 4;
+@@ -2735,18 +2735,18 @@
+ 	pixel_y = -24
+ 	},
+ /turf/open/floor/plasteel/black,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "agg" = (
+ /obj/structure/closet/secure_closet/injection,
+ /obj/structure/cable,
+ /obj/machinery/power/apc{
+ 	dir = 2;
+ 	name = "Prisoner Transfer Centre";
+-	areastring = "/area/security/transfer";
++	areastring = "/area/security/execution/transfer";
+ 	pixel_y = -27
+ 	},
+ /turf/open/floor/plasteel/black,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "agh" = (
+ /obj/structure/table,
+ /obj/item/device/electropack,

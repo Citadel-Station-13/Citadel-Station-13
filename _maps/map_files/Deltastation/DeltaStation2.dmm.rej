@@ -1,0 +1,144 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -22176,13 +22176,13 @@
+ 	dir = 5
+ 	},
+ /turf/open/floor/plasteel/darkred/side,
+-/area/prison/execution_room)
++/area/security/execution/education)
+ "aSD" = (
+ /obj/structure/cable/white,
+ /obj/machinery/power/apc{
+ 	dir = 2;
+ 	name = "Education Chamber APC";
+-	areastring = "/area/prison/execution_room";
++	areastring = "/area/security/execution/education";
+ 	pixel_y = -26
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/general/hidden{
+@@ -30855,7 +30855,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bjO" = (
+ /obj/structure/cable/white{
+ 	d2 = 4;
+@@ -30867,7 +30867,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bjP" = (
+ /obj/structure/cable/white{
+ 	d2 = 8;
+@@ -30879,10 +30879,10 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bjQ" = (
+ /turf/closed/wall/r_wall,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bjR" = (
+ /obj/machinery/light{
+ 	dir = 8
+@@ -31590,14 +31590,14 @@
+ /obj/structure/cable/white,
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bll" = (
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/effect/turf_decal/stripes/line{
+ 	dir = 9
+ 	},
+ /turf/open/floor/plasteel,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "blm" = (
+ /obj/structure/filingcabinet/chestdrawer,
+ /obj/structure/cable/white{
+@@ -31660,7 +31660,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bls" = (
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -33709,7 +33709,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bpe" = (
+ /obj/structure/cable/white{
+ 	d2 = 4;
+@@ -33723,7 +33723,7 @@
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/sign/vacuum,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bpf" = (
+ /obj/structure/cable/white{
+ 	d2 = 4;
+@@ -33736,7 +33736,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bpg" = (
+ /obj/structure/cable/white{
+ 	d1 = 4;
+@@ -35316,20 +35316,20 @@
+ /turf/open/floor/plasteel/red/side{
+ 	dir = 10
+ 	},
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bsb" = (
+ /turf/open/floor/plasteel/red/side,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bsc" = (
+ /obj/structure/cable/white,
+ /obj/machinery/power/apc{
+ 	dir = 2;
+ 	name = "Security Transferring APC";
+-	areastring = "/area/security/transfer";
++	areastring = "/area/security/execution/transfer";
+ 	pixel_y = -26
+ 	},
+ /turf/open/floor/plasteel/red/side,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bsd" = (
+ /obj/structure/cable/white{
+ 	d1 = 1;
+@@ -36061,7 +36061,7 @@
+ 	},
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "btp" = (
+ /obj/item/weapon/twohanded/required/kirbyplants/random,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+@@ -41094,7 +41094,7 @@
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/disposalpipe/segment,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "bBD" = (
+ /obj/structure/cable/white{
+ 	d1 = 1;

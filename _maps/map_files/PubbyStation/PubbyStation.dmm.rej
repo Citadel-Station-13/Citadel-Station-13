@@ -1,0 +1,26 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -2933,7 +2933,7 @@
+ /obj/machinery/door/firedoor,
+ /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
+ /turf/open/floor/plating,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "agU" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/machinery/door/poddoor/preopen{
+@@ -3914,13 +3914,13 @@
+ 	icon_state = "2-4"
+ 	},
+ /turf/open/floor/plasteel/black,
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "ajb" = (
+ /obj/structure/closet/secure_closet/injection,
+ /obj/machinery/power/apc{
+ 	dir = 4;
+ 	name = "Prisoner Transfer Centre";
+-	areastring = "/area/security/transfer";
++	areastring = "/area/security/execution/transfer";
+ 	pixel_x = 24
+ 	},
+ /obj/structure/cable{

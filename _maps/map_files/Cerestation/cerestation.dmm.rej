@@ -1,0 +1,25 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -80631,7 +80631,7 @@
+ /obj/machinery/power/apc{
+ 	dir = 1;
+ 	name = "Security Transfer Range APC";
+-	areastring = "/area/security/transfer";
++	areastring = "/area/security/execution/transfer";
+ 	pixel_y = 24
+ 	},
+ /obj/structure/cable/orange{
+@@ -87029,12 +87029,12 @@
+ /turf/open/floor/plating{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+-/area/security/transfer)
++/area/security/execution/transfer)
+ "dkQ" = (
+ /obj/machinery/power/apc{
+ 	dir = 4;
+ 	name = "Prisoner Transfer APC";
+-	areastring = "/area/security/transfer";
++	areastring = "/area/security/execution/transfer";
+ 	pixel_x = 24
+ 	},
+ /obj/structure/cable/orange{

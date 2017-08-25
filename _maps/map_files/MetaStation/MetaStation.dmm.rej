@@ -1,0 +1,44 @@
+diff a/_maps/map_files/MetaStation/MetaStation.dmm b/_maps/map_files/MetaStation/MetaStation.dmm	(rejected hunks)
+@@ -418,7 +418,7 @@
+ /area/solar/starboard/fore)
+ "aaZ" = (
+ /turf/closed/wall/r_wall,
+-/area/prison/execution_room)
++/area/security/execution/education)
+ "aba" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+@@ -1135,7 +1135,7 @@
+ /turf/open/floor/plasteel/darkred{
+ 	dir = 4
+ 	},
+-/area/prison/execution_room)
++/area/security/execution/education)
+ "acB" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/machinery/door/poddoor/preopen{
+@@ -1458,13 +1458,13 @@
+ /turf/open/floor/plasteel/darkred/side{
+ 	dir = 1
+ 	},
+-/area/prison/execution_room)
++/area/security/execution/education)
+ "acZ" = (
+ /obj/machinery/power/apc{
+ 	cell_type = 2500;
+ 	dir = 1;
+ 	name = "Prisoner Education Chamber APC";
+-	areastring = "/area/prison/execution_room";
++	areastring = "/area/security/execution/education";
+ 	pixel_y = 24
+ 	},
+ /obj/structure/cable/yellow{
+@@ -12800,7 +12800,7 @@
+ /area/shuttle/labor)
+ "ayv" = (
+ /turf/closed/wall,
+-/area/prison/execution_room)
++/area/security/execution/education)
+ "ayw" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/structure/cable/yellow{

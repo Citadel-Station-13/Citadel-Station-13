@@ -337,22 +337,22 @@
 	dir = 6
 	},
 /turf/closed/wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abc" = (
 /turf/closed/wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abd" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
 /turf/closed/wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abf" = (
 /obj/machinery/vending/sustenance,
 /turf/open/floor/plasteel/floorgrime,
@@ -362,7 +362,7 @@
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abh" = (
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/floorgrime,
@@ -449,14 +449,14 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abu" = (
 /obj/machinery/door/poddoor{
 	id = "executionspaceblast";
 	name = "blast door"
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -465,7 +465,7 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abw" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -478,7 +478,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abx" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/floorgrime,
@@ -486,7 +486,7 @@
 "aby" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "abz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -767,7 +767,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acb" = (
 /obj/machinery/sparker{
 	dir = 2;
@@ -778,12 +778,12 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acc" = (
 /obj/structure/bed,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acd" = (
 /turf/closed/wall,
 /area/security/prison)
@@ -950,7 +950,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acA" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 2
@@ -959,13 +959,13 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acC" = (
 /obj/structure/bed,
 /obj/machinery/camera{
@@ -1050,7 +1050,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "acJ" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1186,7 +1186,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "acY" = (
 /obj/structure/table,
 /obj/item/paper,
@@ -1204,7 +1204,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "ada" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/flasher{
@@ -1497,7 +1497,7 @@
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "adD" = (
 /obj/machinery/button/flasher{
 	id = "executionflash";
@@ -1513,7 +1513,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "adE" = (
 /obj/structure/table,
 /obj/item/folder/red{
@@ -1525,7 +1525,7 @@
 /obj/item/device/assembly/flash/handheld,
 /obj/item/reagent_containers/spray/pepper,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "adF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
@@ -1722,13 +1722,13 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeb" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aec" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1739,7 +1739,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aed" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -1758,13 +1758,13 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden,
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aee" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aef" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -1777,7 +1777,7 @@
 "aeg" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeh" = (
 /obj/machinery/button/door{
 	id = "permacell3";
@@ -2046,7 +2046,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeI" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -2066,7 +2066,7 @@
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeJ" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -2075,7 +2075,7 @@
 	dir = 9
 	},
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2087,13 +2087,13 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeL" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeM" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/cable{
@@ -2124,7 +2124,7 @@
 	req_access_txt = "2"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "aeO" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -2492,7 +2492,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
-/area/security/transfer)
+/area/security/execution/transfer)
 "afx" = (
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -2506,7 +2506,7 @@
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "afy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -2515,7 +2515,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "afz" = (
 /obj/structure/table,
 /obj/item/restraints/handcuffs,
@@ -2525,7 +2525,7 @@
 /area/security/prison)
 "afA" = (
 /turf/closed/wall/r_wall,
-/area/security/transfer)
+/area/security/execution/transfer)
 "afB" = (
 /obj/item/device/radio/intercom{
 	dir = 4;
@@ -2771,7 +2771,7 @@
 	pixel_y = -22
 	},
 /turf/open/floor/plasteel/black,
-/area/security/transfer)
+/area/security/execution/transfer)
 "agi" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
