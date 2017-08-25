@@ -1,4 +1,4 @@
-/obj/item/weapon/dogborg/jaws/big
+/obj/item/dogborg/jaws/big
 	name = "combat jaws"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "jaws"
@@ -11,7 +11,7 @@
 	w_class = 3
 	sharpness = IS_SHARP
 
-/obj/item/weapon/dogborg/jaws/small
+/obj/item/dogborg/jaws/small
 	name = "puppy jaws"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "smalljaws"
@@ -25,11 +25,11 @@
 	sharpness = IS_SHARP
 	var/emagged = 0
 
-/obj/item/weapon/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
+/obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
 	user.do_attack_animation(A, ATTACK_EFFECT_BITE)
 
-/obj/item/weapon/dogborg/jaws/small/attack_self(mob/user)
+/obj/item/dogborg/jaws/small/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.emagged)
 		emagged = !emagged
@@ -62,14 +62,14 @@
 
 //Cuffs
 
-/obj/item/weapon/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user)
+/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog/attack(mob/living/carbon/C, mob/user)
 	if(!C.handcuffed)
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
 		C.visible_message("<span class='danger'>[user] is trying to put zipties on [C]!</span>", \
 							"<span class='userdanger'>[user] is trying to put zipties on [C]!</span>")
 		if(do_mob(user, C, 30))
 			if(!C.handcuffed)
-				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
+				C.handcuffed = new /obj/item/restraints/handcuffs/cable/zipties/used(C)
 				C.update_inv_handcuffed(0)
 				to_chat(user,"<span class='notice'>You handcuff [C].</span>")
 				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
@@ -149,7 +149,7 @@
 
 //Delivery
 
-/obj/item/weapon/storage/bag/borgdelivery
+/obj/item/storage/bag/borgdelivery
 	name = "fetching storage"
 	desc = "Fetch the thing!"
 	icon = 'icons/mob/dogborg.dmi'
@@ -161,12 +161,12 @@
 	storage_slots = 1
 	collection_mode = 0
 	can_hold = list() // any
-	cant_hold = list(/obj/item/weapon/disk/nuclear)
+	cant_hold = list(/obj/item/disk/nuclear)
 
 
 //Tongue stuff
 
-/obj/item/weapon/soap/tongue
+/obj/item/soap/tongue
 	name = "synthetic tongue"
 	desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
 	icon = 'icons/mob/dogborg.dmi'
@@ -175,7 +175,7 @@
 	cleanspeed = 80
 	var/emagged = 0
 
-/obj/item/weapon/soap/tongue/New()
+/obj/item/soap/tongue/New()
 	..()
 	flags_1 |= NOBLUDGEON_1 //No more attack messages
 
@@ -185,7 +185,7 @@
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state= "kibble"
 
-/obj/item/weapon/soap/tongue/attack_self(mob/user)
+/obj/item/soap/tongue/attack_self(mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.emagged)
 		emagged = !emagged
@@ -203,7 +203,7 @@
 			cleanspeed = 80
 		update_icon()
 
-/obj/item/weapon/soap/tongue/afterattack(atom/target, mob/user, proximity)
+/obj/item/soap/tongue/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !check_allowed_items(target))
 		return
 	if(user.client && (target in user.client.screen))
@@ -228,14 +228,14 @@
 				var/mob/living/silicon/robot.R = user
 				R.cell.give(250)
 			return
-		if(istype(target,/obj/item/weapon/stock_parts/cell))
+		if(istype(target,/obj/item/stock_parts/cell))
 			user.visible_message("[user] begins cramming \the [target.name] down its throat.", "<span class='warning'>You begin cramming \the [target.name] down your throat...</span>")
 			if(do_after(user, 50, target = target))
 				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 					return //If they moved away, you can't eat them.
 				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
 				var/mob/living/silicon/robot.R = user
-				var/obj/item/weapon/stock_parts/cell.C = target
+				var/obj/item/stock_parts/cell.C = target
 				R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
 				qdel(target)
 			return
@@ -298,7 +298,7 @@
 
 //Defibs
 
-/obj/item/weapon/twohanded/shockpaddles/hound
+/obj/item/twohanded/shockpaddles/hound
 	name = "defibrillator paws"
 	desc = "MediHound specific shock paws."
 	icon = 'icons/mob/dogborg.dmi'
@@ -307,7 +307,7 @@
 	req_defib = 0
 	wielded = 1
 
-/obj/item/weapon/twohanded/shockpaddles/hound/attack(mob/M, mob/user)
+/obj/item/twohanded/shockpaddles/hound/attack(mob/M, mob/user)
 	var/mob/living/silicon/robot.R = user
 	if(R.cell.charge < 1000)
 		user.visible_message("<span class='warning'>You don't have enough charge for this operation!</span class>")
@@ -336,17 +336,17 @@
 	var/eject_port = "ingestion"
 	var/list/items_preserved = list()
 	var/list/important_items = list(
-		/obj/item/weapon/hand_tele,
-		/obj/item/weapon/card/id/captains_spare,
+		/obj/item/hand_tele,
+		/obj/item/card/id/captains_spare,
 		/obj/item/device/aicard,
 		/obj/item/device/paicard,
-		/obj/item/weapon/gun,
-		/obj/item/weapon/pinpointer,
+		/obj/item/gun,
+		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/clothing/head/helmet/space,
 		/obj/item/clothing/suit/space,
-		/obj/item/weapon/reagent_containers/hypospray/CMO,
-		/obj/item/weapon/tank/jetpack/oxygen/captain,
+		/obj/item/reagent_containers/hypospray/CMO,
+		/obj/item/tank/jetpack/oxygen/captain,
 		/obj/item/clothing/accessory/medal/gold/captain,
 		/obj/item/clothing/suit/armor,
 		/obj/item/documents,
@@ -354,7 +354,7 @@
 		/obj/item/nuke_core_container,
 		/obj/item/areaeditor/blueprints,
 		/obj/item/documents/syndicate,
-		/obj/item/weapon/disk/nuclear)
+		/obj/item/disk/nuclear)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
@@ -734,8 +734,8 @@
 					qdel(T)
 
 				//Special case for IDs to make them digested
-			//else if (istype(T, /obj/item/weapon/card/id))
-				//var/obj/item/weapon/card/id/ID = T
+			//else if (istype(T, /obj/item/card/id))
+				//var/obj/item/card/id/ID = T
 				//ID.digest() //Need the digest proc, first.
 
 				//Anything not perserved, PDA, or ID
@@ -760,7 +760,7 @@
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
 
-/obj/item/weapon/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
+/obj/item/storage/attackby(obj/item/device/dogborg/sleeper/K9, mob/user, proximity)
 	K9.afterattack(src, user ,1)
 
 /obj/item/device/dogborg/sleeper/K9/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)
@@ -806,7 +806,7 @@
 	injection_chems = null //So they don't have all the same chems as the medihound!
 	var/max_item_count = 32
 
-/obj/item/weapon/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
+/obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
 	compactor.afterattack(src, user ,1)
 
 /obj/item/device/dogborg/sleeper/compactor/afterattack(var/atom/movable/target, mob/living/silicon/user, proximity)//GARBO NOMS
@@ -868,7 +868,7 @@
 
 // Pounce stuff for K-9
 
-/obj/item/weapon/dogborg/pounce
+/obj/item/dogborg/pounce
 	name = "pounce"
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "pounce"
@@ -876,7 +876,7 @@
 	force = 0
 	throwforce = 0
 
-/obj/item/weapon/dogborg/pounce/New()
+/obj/item/dogborg/pounce/New()
 	..()
 	flags_1 |= NOBLUDGEON_1
 
@@ -892,7 +892,7 @@
 
 #define MAX_K9_LEAP_DIST 4 //because something's definitely borked the pounce functioning from a distance.
 
-/obj/item/weapon/dogborg/pounce/afterattack(atom/A, mob/user)
+/obj/item/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot.R = user
 	R.leap_at(A)
 
