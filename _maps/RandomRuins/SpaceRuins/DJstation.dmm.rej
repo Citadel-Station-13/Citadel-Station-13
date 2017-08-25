@@ -1,0 +1,67 @@
+diff a/_maps/RandomRuins/SpaceRuins/DJstation.dmm b/_maps/RandomRuins/SpaceRuins/DJstation.dmm	(rejected hunks)
+@@ -5,54 +5,54 @@
+ "ab" = (
+ /obj/structure/grille,
+ /turf/open/floor/plating/airless,
+-/area/djstation/solars)
++/area/ruin/space/djstation/solars)
+ "ac" = (
+ /obj/machinery/power/solar/fake,
+ /turf/open/floor/plasteel/airless/solarpanel,
+-/area/djstation/solars)
++/area/ruin/space/djstation/solars)
+ "ad" = (
+ /turf/open/floor/plating/airless,
+-/area/djstation/solars)
++/area/ruin/space/djstation/solars)
+ "ae" = (
+ /obj/structure/lattice,
+ /turf/template_noop,
+ /area/template_noop)
+ "af" = (
+ /turf/closed/wall,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "ag" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "ah" = (
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "ai" = (
+ /obj/machinery/telecomms/relay/preset/ruskie,
+ /obj/machinery/light{
+ 	dir = 1
+ 	},
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "aj" = (
+ /obj/machinery/power/terminal,
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "ak" = (
+ /obj/item/device/multitool,
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "al" = (
+ /obj/item/weapon/storage/toolbox/mechanical{
+ 	pixel_x = -2;
+ 	pixel_y = -1
+ 	},
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "am" = (
+ /obj/item/weapon/extinguisher,
+ /turf/open/floor/plating,
+-/area/djstation)
++/area/ruin/space/djstation)
+ "an" = (
+ /obj/structure/cable{
+ 	icon_state = "0-2";

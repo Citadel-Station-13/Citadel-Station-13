@@ -79484,14 +79484,14 @@
 /area/crew_quarters/heads/hor)
 "cTv" = (
 /turf/closed/mineral,
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTw" = (
 /turf/closed/wall/rust{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTx" = (
@@ -79499,21 +79499,21 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTy" = (
 /turf/closed/wall{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTz" = (
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTA" = (
@@ -79524,7 +79524,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTB" = (
@@ -79535,14 +79535,14 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTC" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTD" = (
@@ -79555,7 +79555,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTE" = (
@@ -79563,7 +79563,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTF" = (
@@ -79577,12 +79577,12 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTG" = (
 /turf/closed/mineral/random/low_chance,
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTH" = (
@@ -79593,7 +79593,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTI" = (
@@ -79601,7 +79601,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTJ" = (
@@ -79611,7 +79611,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTK" = (
@@ -79620,7 +79620,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTL" = (
@@ -79630,7 +79630,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTM" = (
@@ -79641,7 +79641,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTN" = (
@@ -79653,7 +79653,7 @@
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTO" = (
@@ -79662,7 +79662,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "cTP" = (
@@ -94437,7 +94437,7 @@
 /turf/open/floor/plasteel/floorgrime{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
-/area/derelict/secret{
+/area/ruin/space/derelict/secret{
 	valid_territory = 0
 	})
 "dyY" = (

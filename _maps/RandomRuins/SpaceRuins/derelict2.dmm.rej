@@ -1,0 +1,37 @@
+diff a/_maps/RandomRuins/SpaceRuins/derelict2.dmm b/_maps/RandomRuins/SpaceRuins/derelict2.dmm	(rejected hunks)
+@@ -26,29 +26,29 @@
+ 	dir = 8
+ 	},
+ /turf/open/floor/plating,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "f" = (
+ /turf/closed/wall,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "g" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "h" = (
+ /obj/machinery/light/small{
+ 	dir = 1
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "i" = (
+ /turf/open/floor/plasteel,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "j" = (
+ /obj/machinery/light/small{
+ 	dir = 4
+ 	},
+ /turf/open/floor/plasteel,
+-/area/ruin/powered/dinner_for_two)
++area/ruin/space/has_grav/powered/dinner_for_two)
+ "k" = (
+ /obj/structure/window/reinforced,
+ /turf/open/space,

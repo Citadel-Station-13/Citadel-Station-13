@@ -1,0 +1,24 @@
+diff a/_maps/RandomRuins/SpaceRuins/TheDerelict.dmm b/_maps/RandomRuins/SpaceRuins/TheDerelict.dmm	(rejected hunks)
+@@ -4084,19 +4084,19 @@
+ "lY" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+-/area/derelict/arrival)
++/area/ruin/space/derelict/arrival)
+ "lZ" = (
+ /obj/machinery/door/airlock/external{
+ 	name = "Escape Airlock"
+ 	},
+ /turf/open/floor/plating,
+-/area/derelict/arrival)
++/area/ruin/space/derelict/arrival)
+ "ma" = (
+ /obj/item/weapon/shard{
+ 	icon_state = "medium"
+ 	},
+ /turf/open/floor/plating/airless,
+-/area/derelict/atmospherics)
++/area/ruin/space/derelict/atmospherics)
+ "mb" = (
+ /obj/structure/lattice,
+ /obj/item/stack/cable_coil/cut,
