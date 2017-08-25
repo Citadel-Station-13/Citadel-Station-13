@@ -71,11 +71,11 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 				C.update_inv_handcuffed(0)
-				user << "<span class='notice'>You handcuff [C].</span>"
+				to_chat(user,"<span class='notice'>You handcuff [C].</span>")
 				playsound(loc, pick('sound/voice/bgod.ogg', 'sound/voice/biamthelaw.ogg', 'sound/voice/bsecureday.ogg', 'sound/voice/bradio.ogg', 'sound/voice/binsult.ogg', 'sound/voice/bcreep.ogg'), 50, 0)
 				add_logs(user, C, "handcuffed")
 		else
-			user << "<span class='warning'>You fail to handcuff [C]!</span>"
+			to_chat(user,"<span class='warning'>You fail to handcuff [C]!</span>")
 
 
 //Boop
@@ -207,11 +207,13 @@
 	if(!proximity || !check_allowed_items(target))
 		return
 	if(user.client && (target in user.client.screen))
-		user << "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>"
+		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to lick off \the [target.name].", "<span class='warning'>You begin to lick off \the [target.name]...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You finish licking off \the [target.name].</span>"
+			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't eat them.
+			to_chat(user, "<span class='notice'>You finish licking off \the [target.name].</span>")
 			qdel(target)
 			var/mob/living/silicon/robot.R = user
 			R.cell.give(50)
@@ -219,7 +221,9 @@
 		if(istype(target,/obj/item/trash))
 			user.visible_message("[user] nibbles away at \the [target.name].", "<span class='warning'>You begin to nibble away at \the [target.name]...</span>")
 			if(do_after(user, src.cleanspeed, target = target))
-				user << "<span class='notice'>You finish off \the [target.name].</span>"
+				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+					return //If they moved away, you can't eat them.
+				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
 				qdel(target)
 				var/mob/living/silicon/robot.R = user
 				R.cell.give(250)
@@ -227,7 +231,9 @@
 		if(istype(target,/obj/item/weapon/stock_parts/cell))
 			user.visible_message("[user] begins cramming \the [target.name] down its throat.", "<span class='warning'>You begin cramming \the [target.name] down your throat...</span>")
 			if(do_after(user, 50, target = target))
-				user << "<span class='notice'>You finish off \the [target.name].</span>"
+				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+					return //If they moved away, you can't eat them.
+				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
 				var/mob/living/silicon/robot.R = user
 				var/obj/item/weapon/stock_parts/cell.C = target
 				R.cell.charge = R.cell.charge + (C.charge / 3) //Instant full cell upgrades op idgaf
@@ -237,15 +243,19 @@
 		if(!I.anchored && src.emagged)
 			user.visible_message("[user] begins chewing up \the [target.name]. Looks like it's trying to loophole around its diet restriction!", "<span class='warning'>You begin chewing up \the [target.name]...</span>")
 			if(do_after(user, 100, target = I)) //Nerf dat time yo
+				if(!in_range(src, target)) //Proximity is probably old news by now, do a new check. Even emags don't make you magically eat things at range.
+					return //If they moved away, you can't eat them.
 				visible_message("<span class='warning'>[user] chews up \the [target.name] and cleans off the debris!</span>")
-				user << "<span class='notice'>You finish off \the [target.name].</span>"
+				to_chat(user, "<span class='notice'>You finish off \the [target.name].</span>")
 				qdel(I)
 				var/mob/living/silicon/robot.R = user
 				R.cell.give(500)
 			return
 		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You clean \the [target.name].</span>"
+			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't clean them.
+			to_chat(user,"<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.clean_blood()
@@ -269,12 +279,16 @@
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You clean \the [target.name].</span>"
+			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't clean them.
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.color = initial(target.color)
 	else
 		user.visible_message("[user] begins to lick \the [target.name] clean...", "<span class='notice'>You begin to lick \the [target.name] clean...</span>")
 		if(do_after(user, src.cleanspeed, target = target))
-			user << "<span class='notice'>You clean \the [target.name].</span>"
+			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't clean them.
+			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.clean_blood()
@@ -355,16 +369,20 @@
 		return
 	if(!ishuman(target))
 		return
+	if(!target.devourable)
+		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
+		return
 	if(target.buckled)
-		user << "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>"
+		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
 	if(patient)
-		user << "<span class='warning'>Your [src.name] is already occupied.</span>"
+		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
 		return
 	user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src]...</span>")
-	if(!patient && ishuman(target) && !target.buckled && do_after (user, 50, target))
+	if(!patient && ishuman(target) && !target.buckled && do_after (user, 50, target = target))
 
-		if(!proximity) return //If they moved away, you can't eat them.
+		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+			return //If they moved away, you can't eat them.
 
 		if(patient) return //If you try to eat two people at once, you can only eat one.
 
@@ -526,7 +544,7 @@
 					START_PROCESSING(SSobj, src)
 					sleeperUI(usr)
 					if(patient)
-						patient << "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>"
+						to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
 					return
 		if(cleaning)
 			sleeperUI(usr)
@@ -544,9 +562,9 @@
 		if(href_list["inject"] == "epinephrine" || patient.health > min_health)
 			inject_chem(usr, href_list["inject"])
 		else
-			usr << "<span class='notice'>ERROR: Subject is not in stable condition for injections.</span>"
+			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for injections.</span>")
 	else
-		usr << "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>"
+		to_chat(usr,"<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
 
 	src.updateUsrDialog()
 	sleeperUI(usr) //Needs a callback to boop the page to refresh.
@@ -556,15 +574,15 @@
 	if(patient && patient.reagents)
 		if(chem in injection_chems + "epinephrine")
 			if(hound.cell.charge < 800) //This is so borgs don't kill themselves with it.
-				hound << "<span class='notice'>You don't have enough power to synthesize fluids.</span>"
+				to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
 				return
 			else if(patient.reagents.get_reagent_amount(chem) + 10 >= 20) //Preventing people from accidentally killing themselves by trying to inject too many chemicals!
-				hound << "<span class='notice'>Your stomach is currently too full of fluids to secrete more fluids of this kind.</span>"
+				to_chat(hound, "<span class='notice'>Your stomach is currently too full of fluids to secrete more fluids of this kind.</span>")
 			else if(patient.reagents.get_reagent_amount(chem) + 10 <= 20) //No overdoses for you
 				patient.reagents.add_reagent(chem, inject_amount)
 				drain(750) //-750 charge per injection
 			var/units = round(patient.reagents.get_reagent_amount(chem))
-			hound << "<span class='notice'>Injecting [units] unit\s of [injection_chems[chem]] into occupant.</span>" //If they were immersed, the reagents wouldn't leave with them.
+			to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [injection_chems[chem]] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
 
 /obj/item/device/dogborg/sleeper/process()
 
@@ -651,7 +669,7 @@
 
 	//Belly is entirely empty
 	if(!length(contents))
-		hound << "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>"
+		to_chat(hound, "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>")
 		cleaning = 0
 		update_patient()
 		return
@@ -766,12 +784,14 @@
 			to_chat(user,"<span class='warning'>[brigman] is buckled and can not be put into your [src.name].</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [brigman] into their [src.name].</span>", "<span class='notice'>You start ingesting [brigman] into your [src.name]...</span>")
-		if(do_after(user, 30, brigman) && !patient && !brigman.buckled)
+		if(do_after(user, 30, target = brigman) && !patient && !brigman.buckled)
+			if(!in_range(src, brigman)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't eat them.
 			brigman.forceMove(src)
 			brigman.reset_perspective(src)
 			update_patient()
 			START_PROCESSING(SSobj, src)
-			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [brigman] slips inside.</span>")
+			user.visible_message("<span class='warning'>[hound.name]'s mobile brig clunks in series as [brigman] slips inside.</span>", "<span class='notice'>Your mobile brig groans lightly as [brigman] slips inside.</span>")
 			playsound(hound, 'sound/effects/bin_close.ogg', 80, 1) // Really don't need ERP sound effects for robots
 		return
 	return
@@ -810,7 +830,9 @@
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
-		if(do_after(user, 30, target) && length(contents) < max_item_count)
+		if(do_after(user, 30, target = target) && length(contents) < max_item_count)
+			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't eat them. This still applies to items, don't magically eat things I picked up already.
 			target.forceMove(src)
 			user.visible_message("<span class='warning'>[hound.name]'s garbage processor groans lightly as [target.name] slips inside.</span>", "<span class='notice'>Your garbage compactor groans lightly as [target] slips inside.</span>")
 			playsound(hound, 'sound/machines/disposalflush.ogg', 50, 1)
@@ -822,7 +844,7 @@
 	else if(ishuman(target))
 		var/mob/living/carbon/human/trashman = target
 		if (!trashman.devourable)
-			to_chat(user, "The target registers an error code.")
+			to_chat(user, "<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
 		if(patient)
 			to_chat(user,"<span class='warning'>Your [src.name] is already occupied.</span>")
@@ -831,7 +853,9 @@
 			to_chat(user,"<span class='warning'>[trashman] is buckled and can not be put into your [src.name].</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [trashman] into their [src.name].</span>", "<span class='notice'>You start ingesting [trashman] into your [src.name]...</span>")
-		if(do_after(user, 30, trashman) && !patient && !trashman.buckled && length(contents) < max_item_count)
+		if(do_after(user, 30, target = trashman) && !patient && !trashman.buckled && length(contents) < max_item_count)
+			if(!in_range(src, trashman)) //Proximity is probably old news by now, do a new check.
+				return //If they moved away, you can't eat them.
 			trashman.forceMove(src)
 			trashman.reset_perspective(src)
 			update_patient()
