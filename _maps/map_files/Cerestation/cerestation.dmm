@@ -59417,7 +59417,6 @@
 /area/hallway/secondary/exit)
 "chL" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -82713,7 +82712,6 @@
 /area/shuttle/escape)
 "cZI" = (
 /turf/open/floor/plasteel/darkyellow/side{
-	icon_state = "darkyellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -82768,7 +82766,6 @@
 /area/shuttle/escape)
 "cZQ" = (
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -82863,7 +82860,6 @@
 	pixel_y = -29
 	},
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -82929,13 +82925,11 @@
 /area/shuttle/escape)
 "dai" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 8
 	},
 /area/shuttle/escape)
 "daj" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83060,7 +83054,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -83082,7 +83075,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83104,7 +83096,6 @@
 /area/shuttle/escape)
 "daD" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -83116,7 +83107,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83158,7 +83148,6 @@
 /area/shuttle/escape)
 "daM" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -83173,7 +83162,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet,
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -83244,7 +83232,6 @@
 "daZ" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83283,13 +83270,11 @@
 	name = "Speedy* Recovery"
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 9
 	},
 /area/shuttle/escape)
 "dbf" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83297,21 +83282,18 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "dbh" = (
 /obj/machinery/atmospherics/components/unary/cryo_cell,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
 "dbi" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83330,7 +83312,6 @@
 /area/shuttle/escape)
 "dbl" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -83355,7 +83336,6 @@
 /area/shuttle/escape)
 "dbq" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83367,13 +83347,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 5
 	},
 /area/shuttle/escape)
 "dbs" = (
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -83382,7 +83360,6 @@
 /area/shuttle/escape)
 "dbu" = (
 /turf/open/floor/plasteel/whiteblue/corner{
-	icon_state = "whitebluecorner";
 	dir = 8
 	},
 /area/shuttle/escape)
@@ -83393,7 +83370,6 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83426,7 +83402,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83528,7 +83503,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whiteblue/side{
-	icon_state = "whiteblue";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -83537,7 +83511,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83569,13 +83542,11 @@
 "dbQ" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 9
 	},
 /area/shuttle/escape)
 "dbR" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83585,13 +83556,11 @@
 	},
 /obj/machinery/computer/monitor,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
 "dbT" = (
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -83615,19 +83584,16 @@
 "dbW" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
 "dbX" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/shuttle/escape)
 "dbY" = (
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83643,7 +83609,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 1
 	},
 /area/shuttle/escape)
@@ -83651,7 +83616,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 5
 	},
 /area/shuttle/escape)
@@ -83671,7 +83635,6 @@
 "dce" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 10
 	},
 /area/shuttle/escape)
@@ -83680,7 +83643,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/shuttle/escape)
@@ -83725,7 +83687,6 @@
 	pixel_y = -30
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 6
 	},
 /area/shuttle/escape)
@@ -84517,7 +84478,6 @@
 "ddW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -84525,7 +84485,6 @@
 /obj/machinery/pipedispenser,
 /obj/machinery/light,
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 8
 	},
 /area/engine/atmos)
@@ -84565,7 +84524,6 @@
 	network = list("SS13","CE")
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/engine/atmos)
@@ -84638,7 +84596,6 @@
 	target_pressure = 101
 	},
 /turf/open/floor/plasteel/yellow/side{
-	icon_state = "yellow";
 	dir = 4
 	},
 /area/engine/atmos)

@@ -1,0 +1,33 @@
+diff a/_maps/map_files/OmegaStation/OmegaStation.dmm b/_maps/map_files/OmegaStation/OmegaStation.dmm	(rejected hunks)
+@@ -5214,7 +5196,6 @@
+ /obj/item/pen/red,
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 1
+ 	},
+ /area/quartermaster/storage)
+@@ -5225,7 +5206,6 @@
+ 	},
+ /obj/item/paper_bin,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 5
+ 	},
+ /area/quartermaster/storage)
+@@ -7787,7 +7756,6 @@
+ /obj/item/stack/cable_coil/white,
+ /obj/item/hand_labeler,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 6
+ 	},
+ /area/quartermaster/storage)
+@@ -10698,7 +10657,6 @@
+ /obj/item/folder/yellow,
+ /obj/item/toy/figure/miner,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 10
+ 	},
+ /area/quartermaster/miningdock)

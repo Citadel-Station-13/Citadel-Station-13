@@ -1,0 +1,327 @@
+diff a/_maps/map_files/Deltastation/DeltaStation2.dmm b/_maps/map_files/Deltastation/DeltaStation2.dmm	(rejected hunks)
+@@ -512,15 +512,12 @@
+ "abi" = (
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/yellow/side{
+-	dir = 9;
+-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
++	dir = 9
+ 	},
+ /area/construction/mining/aux_base)
+ "abj" = (
+ /turf/open/floor/plasteel/yellow/side{
+-	dir = 1;
+-	icon_state = "yellow";
+-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
++	dir = 1
+ 	},
+ /area/construction/mining/aux_base)
+ "abk" = (
+@@ -1226,8 +1223,7 @@
+ 	},
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/yellow/side{
+-	dir = 9;
+-	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
++	dir = 9
+ 	},
+ /area/construction/mining/aux_base)
+ "acx" = (
+@@ -3757,7 +3739,6 @@
+ 	},
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/blue/side{
+-	icon_state = "blue";
+ 	dir = 5
+ 	},
+ /area/security/checkpoint/customs)
+@@ -4613,7 +4592,6 @@
+ /obj/item/stack/packageWrap,
+ /obj/item/hand_labeler,
+ /turf/open/floor/plasteel/blue/side{
+-	icon_state = "blue";
+ 	dir = 4
+ 	},
+ /area/security/checkpoint/customs)
+@@ -5020,7 +4997,6 @@
+ /obj/item/folder/blue,
+ /obj/item/pen,
+ /turf/open/floor/plasteel/blue/side{
+-	icon_state = "blue";
+ 	dir = 4
+ 	},
+ /area/security/checkpoint/customs)
+@@ -5419,7 +5395,6 @@
+ /obj/item/paper_bin,
+ /obj/item/pen,
+ /turf/open/floor/plasteel/blue/side{
+-	icon_state = "blue";
+ 	dir = 4
+ 	},
+ /area/security/checkpoint/customs)
+@@ -9533,7 +9490,6 @@
+ /obj/structure/table/reinforced,
+ /obj/item/paper_bin,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 1
+ 	},
+ /area/quartermaster/storage)
+@@ -16666,7 +16593,6 @@
+ "aIi" = (
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 8
+ 	},
+ /area/quartermaster/sorting)
+@@ -19931,7 +19833,6 @@
+ /obj/item/clipboard,
+ /obj/item/toy/figure/qm,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 1
+ 	},
+ /area/quartermaster/qm)
+@@ -20004,7 +19900,6 @@
+ 	},
+ /obj/item/bedsheet/qm,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 1
+ 	},
+ /area/quartermaster/qm)
+@@ -20136,7 +20030,6 @@
+ 	pixel_y = 5
+ 	},
+ /turf/open/floor/plasteel/darkred/side{
+-	icon_state = "darkred";
+ 	dir = 9
+ 	},
+ /area/security/execution/education)
+@@ -20311,7 +20204,6 @@
+ /obj/item/stack/packageWrap,
+ /obj/item/hand_labeler,
+ /turf/open/floor/plasteel/caution{
+-	icon_state = "caution";
+ 	dir = 10
+ 	},
+ /area/engine/atmos)
+@@ -22146,7 +22015,6 @@
+ 	pixel_x = -26
+ 	},
+ /turf/open/floor/plasteel/darkred/side{
+-	icon_state = "darkred";
+ 	dir = 10
+ 	},
+ /area/security/execution/education)
+@@ -22193,7 +22061,6 @@
+ 	dir = 4
+ 	},
+ /turf/open/floor/plasteel/darkred/side{
+-	icon_state = "darkred";
+ 	dir = 6
+ 	},
+ /area/security/execution/education)
+@@ -24431,7 +24285,6 @@
+ 	pixel_x = -23
+ 	},
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 10
+ 	},
+ /area/quartermaster/office)
+@@ -25347,7 +25194,6 @@
+ /obj/structure/table/reinforced,
+ /obj/item/storage/belt/utility,
+ /turf/open/floor/plasteel/purple/side{
+-	icon_state = "purple";
+ 	dir = 1
+ 	},
+ /area/quartermaster/miningoffice)
+@@ -26144,14 +25976,12 @@
+ "bam" = (
+ /obj/structure/filingcabinet/filingcabinet,
+ /turf/open/floor/plasteel/purple/side{
+-	icon_state = "purple";
+ 	dir = 4
+ 	},
+ /area/quartermaster/miningoffice)
+ "ban" = (
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 8
+ 	},
+ /area/quartermaster/miningoffice)
+@@ -28986,7 +28783,6 @@
+ /obj/structure/table/reinforced,
+ /obj/item/storage/toolbox/mechanical,
+ /turf/open/floor/plasteel/purple/side{
+-	icon_state = "purple";
+ 	dir = 8
+ 	},
+ /area/quartermaster/miningoffice)
+@@ -29020,7 +28815,6 @@
+ /obj/effect/decal/cleanable/dirt,
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 8
+ 	},
+ /area/quartermaster/miningoffice)
+@@ -29100,7 +28894,6 @@
+ /obj/item/folder/yellow,
+ /obj/item/device/gps/mining,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 6
+ 	},
+ /area/quartermaster/miningoffice)
+@@ -29922,7 +29712,6 @@
+ /obj/item/stack/packageWrap,
+ /obj/item/hand_labeler,
+ /turf/open/floor/plasteel/brown{
+-	icon_state = "brown";
+ 	dir = 10
+ 	},
+ /area/hallway/primary/fore)
+@@ -38481,21 +38249,18 @@
+ "bxz" = (
+ /obj/item/twohanded/required/kirbyplants/random,
+ /turf/open/floor/plasteel/darkblue/side{
+-	icon_state = "darkblue";
+ 	dir = 1
+ 	},
+ /area/bridge)
+ "bxA" = (
+ /obj/machinery/vending/cola/random,
+ /turf/open/floor/plasteel/darkblue/side{
+-	icon_state = "darkblue";
+ 	dir = 1
+ 	},
+ /area/bridge)
+ "bxB" = (
+ /obj/machinery/vending/snack/random,
+ /turf/open/floor/plasteel/darkblue/side{
+-	icon_state = "darkblue";
+ 	dir = 1
+ 	},
+ /area/bridge)
+@@ -40925,7 +40681,6 @@
+ /obj/item/twohanded/required/kirbyplants/random,
+ /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+ /turf/open/floor/plasteel/darkblue/side{
+-	icon_state = "darkblue";
+ 	dir = 1
+ 	},
+ /area/bridge)
+@@ -41772,7 +41523,6 @@
+ /obj/item/device/aicard,
+ /obj/item/storage/secure/briefcase,
+ /turf/open/floor/plasteel/vault{
+-	icon_state = "vault";
+ 	dir = 8
+ 	},
+ /area/bridge)
+@@ -41830,7 +41580,6 @@
+ /obj/item/storage/toolbox/emergency,
+ /obj/item/wrench,
+ /turf/open/floor/plasteel/vault{
+-	icon_state = "vault";
+ 	dir = 8
+ 	},
+ /area/bridge)
+@@ -42799,7 +42546,6 @@
+ /obj/structure/table/reinforced,
+ /obj/item/paper_bin,
+ /turf/open/floor/plasteel/vault{
+-	icon_state = "vault";
+ 	dir = 8
+ 	},
+ /area/bridge)
+@@ -50126,7 +49869,6 @@
+ /obj/item/book/manual/wiki/security_space_law,
+ /obj/item/device/radio,
+ /turf/open/floor/plasteel/red/side{
+-	icon_state = "red";
+ 	dir = 4
+ 	},
+ /area/security/checkpoint/engineering)
+@@ -69838,7 +69565,6 @@
+ /obj/item/reagent_containers/blood/random,
+ /obj/item/roller,
+ /turf/open/floor/plasteel/blue/corner{
+-	icon_state = "bluecorner";
+ 	dir = 1
+ 	},
+ /area/maintenance/starboard/aft)
+@@ -78402,7 +78083,6 @@
+ /obj/item/storage/crayons,
+ /obj/item/storage/crayons,
+ /turf/open/floor/plasteel/escape{
+-	icon_state = "escape";
+ 	dir = 4
+ 	},
+ /area/crew_quarters/fitness/recreation)
+@@ -78840,7 +78517,6 @@
+ /obj/item/clipboard,
+ /obj/item/toy/figure/chemist,
+ /turf/open/floor/plasteel/whiteyellow/corner{
+-	icon_state = "whiteyellowcorner";
+ 	dir = 1
+ 	},
+ /area/medical/chemistry)
+@@ -80428,13 +80098,11 @@
+ /obj/item/grenade/chem_grenade,
+ /obj/item/screwdriver,
+ /turf/open/floor/plasteel/whiteyellow/corner{
+-	icon_state = "whiteyellowcorner";
+ 	dir = 8
+ 	},
+ /area/medical/chemistry)
+ "cZa" = (
+ /turf/open/floor/plasteel/whiteyellow/corner{
+-	icon_state = "whiteyellowcorner";
+ 	dir = 8
+ 	},
+ /area/medical/chemistry)
+@@ -84566,14 +84224,12 @@
+ /obj/item/wrench,
+ /obj/item/roller,
+ /turf/open/floor/plasteel/blue/corner{
+-	icon_state = "bluecorner";
+ 	dir = 1
+ 	},
+ /area/maintenance/department/medical)
+ "dhN" = (
+ /obj/effect/decal/cleanable/dirt,
+ /turf/open/floor/plasteel/blue/corner{
+-	icon_state = "bluecorner";
+ 	dir = 1
+ 	},
+ /area/maintenance/department/medical)
+@@ -103444,7 +103077,6 @@
+ /obj/item/pen/red,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/whitegreen/side{
+-	icon_state = "whitegreen";
+ 	dir = 4
+ 	},
+ /area/medical/virology)
+@@ -104216,7 +103848,6 @@
+ /obj/item/bedsheet/medical,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/whitegreen/side{
+-	icon_state = "whitegreen";
+ 	dir = 9
+ 	},
+ /area/medical/virology)
+@@ -104257,7 +103886,6 @@
+ /obj/item/bedsheet/medical,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plasteel/whitegreen/side{
+-	icon_state = "whitegreen";
+ 	dir = 5
+ 	},
+ /area/medical/virology)

@@ -9503,7 +9503,6 @@
 	pixel_x = -22
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/bridge)
@@ -9514,7 +9513,6 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/bridge)
@@ -22914,7 +22912,6 @@
 /area/hydroponics)
 "aXV" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 5
 	},
 /area/hydroponics)
@@ -30833,7 +30830,6 @@
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/hallway/primary/aft)
@@ -31561,7 +31557,6 @@
 "bro" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/yellow/corner{
-	icon_state = "yellowcorner";
 	dir = 4
 	},
 /area/hallway/primary/aft)
@@ -32539,7 +32534,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32548,7 +32542,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32562,7 +32555,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32574,7 +32566,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32583,7 +32574,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32597,7 +32587,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32615,7 +32604,6 @@
 	pixel_y = 28
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -32629,7 +32617,6 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/xenobiology)
@@ -33761,7 +33748,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/research)
@@ -33805,7 +33791,6 @@
 	pixel_y = 30
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/research)
@@ -33823,7 +33808,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/research)
@@ -33843,7 +33827,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/research)
@@ -33853,7 +33836,6 @@
 	layer = 4.1
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/science/research)
@@ -36692,7 +36674,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/crew_quarters/heads/hor)
@@ -36702,7 +36683,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/crew_quarters/heads/hor)
@@ -36713,7 +36693,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
-	icon_state = "darkpurple";
 	dir = 1
 	},
 /area/crew_quarters/heads/hor)
@@ -39306,7 +39285,6 @@
 	pixel_y = 24
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 9
 	},
 /area/medical/virology)
@@ -39332,7 +39310,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/hidden,
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 5
 	},
 /area/medical/virology)
@@ -39781,7 +39758,6 @@
 "bHU" = (
 /obj/machinery/vending/medical,
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 9
 	},
 /area/medical/virology)
@@ -40926,7 +40902,6 @@
 "bKu" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/medical/virology)
@@ -41452,7 +41427,6 @@
 	layer = 3
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/medical/virology)
@@ -42489,7 +42463,6 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plasteel/arrival{
-	icon_state = "arrival";
 	dir = 9
 	},
 /area/hallway/primary/aft)
