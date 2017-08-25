@@ -1473,6 +1473,7 @@
 	cell_type = 2500;
 	dir = 1;
 	name = "Prisoner Education Chamber APC";
+	areastring = "/area/prison/execution_room";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -2575,6 +2576,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Prison Wing APC";
+	areastring = "/area/security/prison";
 	pixel_x = 1;
 	pixel_y = 24
 	},
@@ -3432,6 +3434,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Recreation Area APC";
+	areastring = "/area/crew_quarters/fitness/recreation";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -3961,6 +3964,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Armory APC";
+	areastring = "/area/ai_monitored/security/armory";
 	pixel_x = 1;
 	pixel_y = -24
 	},
@@ -4286,6 +4290,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Port Bow Solar APC";
+	areastring = "/area/maintenance/solars/port/fore";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -6375,6 +6380,7 @@
 	cell_type = 5000;
 	dir = 8;
 	name = "Brig Control APC";
+	areastring = "/area/security/warden";
 	pixel_x = -26
 	},
 /obj/structure/cable/yellow,
@@ -6539,6 +6545,7 @@
 	cell_type = 2500;
 	dir = 4;
 	name = "Shooting Range APC";
+	areastring = "/area/security/range";
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
@@ -7043,6 +7050,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Security Office APC";
+	areastring = "/area/security/main";
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow,
@@ -7686,6 +7694,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Disposal APC";
+	areastring = "/area/maintenance/disposal";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -8484,6 +8493,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Gravity Generator APC";
+	areastring = "/area/engine/gravity_generator";
 	pixel_x = -25;
 	pixel_y = 1
 	},
@@ -9199,6 +9209,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Starboard Bow Solar APC";
+	areastring = "/area/maintenance/solars/starboard/fore";
 	pixel_x = -25;
 	pixel_y = 3
 	},
@@ -10961,6 +10972,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Head of Security's Office APC";
+	areastring = "/area/crew_quarters/heads/hos";
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
@@ -12275,6 +12287,7 @@
 	cell_type = 10000;
 	dir = 2;
 	name = "Brig APC";
+	areastring = "/area/security/brig";
 	pixel_x = 1;
 	pixel_y = -24
 	},
@@ -12824,6 +12837,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Vault APC";
+	areastring = "/area/security/nuke_storage";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -13286,6 +13300,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Mining APC";
+	areastring = "/area/quartermaster/miningoffice";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -13699,6 +13714,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Fore Maintenance APC";
+	areastring = "/area/maintenance/fore";
 	pixel_y = 24
 	},
 /turf/open/floor/plating,
@@ -14519,6 +14535,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Dormitories APC";
+	areastring = "/area/crew_quarters/dorms";
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -15031,6 +15048,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Detective APC";
+	areastring = "/area/security/detectives_office";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -16184,6 +16202,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Warehouse APC";
+	areastring = "/area/quartermaster/warehouse";
 	pixel_x = 27
 	},
 /obj/structure/cable/yellow{
@@ -16491,6 +16510,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Restrooms APC";
+	areastring = "/area/crew_quarters/toilet/restrooms";
 	pixel_y = -26
 	},
 /obj/structure/cable/yellow{
@@ -17112,6 +17132,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Fore Primary Hallway APC";
+	areastring = "/area/hallway/primary/fore";
 	pixel_y = -27
 	},
 /obj/structure/cable/yellow,
@@ -18347,6 +18368,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Storage Wing APC";
+	areastring = "/area/construction/storage/wing";
 	pixel_y = -27
 	},
 /obj/structure/cable/yellow{
@@ -18722,6 +18744,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Law Office APC";
+	areastring = "/area/lawoffice";
 	pixel_y = 24
 	},
 /obj/item/twohanded/required/kirbyplants{
@@ -20785,6 +20808,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Quartermaster's Office APC";
+	areastring = "/area/quartermaster/qm";
 	pixel_y = 30
 	},
 /obj/structure/cable/yellow{
@@ -21282,6 +21306,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Garden APC";
+	areastring = "/area/hydroponics/garden";
 	pixel_x = 27;
 	pixel_y = 2
 	},
@@ -21307,6 +21332,7 @@
 	cell_type = 10000;
 	dir = 8;
 	name = "Engine Room APC";
+	areastring = "/area/engine/engineering";
 	pixel_x = -26
 	},
 /obj/structure/cable/yellow{
@@ -22225,6 +22251,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Upload APC";
+	areastring = "/area/ai_monitored/turret_protected/ai_upload";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow{
@@ -23354,6 +23381,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Auxillary Base Construction APC";
+	areastring = "/area/construction/mining/aux_base";
 	pixel_y = -24
 	},
 /turf/open/floor/plasteel/yellow/side,
@@ -23735,6 +23763,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Locker Room APC";
+	areastring = "/area/crew_quarters/locker";
 	pixel_x = -1;
 	pixel_y = -26
 	},
@@ -24146,6 +24175,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Security Post - Cargo Bay APC";
+	areastring = "/area/security/checkpoint/supply";
 	pixel_x = 1;
 	pixel_y = 24
 	},
@@ -24268,7 +24298,7 @@
 "aUy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/turretid{
-	control_area = "AI Upload Chamber";
+	control_area = "/area/ai_monitored/turret_protected/ai_upload";
 	icon_state = "control_stun";
 	name = "AI Upload turret control";
 	pixel_y = 28
@@ -24288,6 +24318,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "AI Upload Access APC";
+	areastring = "/area/ai_monitored/turret_protected/ai_upload_foyer";
 	pixel_y = -27
 	},
 /obj/machinery/light/small{
@@ -24419,6 +24450,7 @@
 	cell_type = 2500;
 	dir = 2;
 	name = "Courtroom APC";
+	areastring = "/area/security/courtroom";
 	pixel_x = 1;
 	pixel_y = -24
 	},
@@ -26310,6 +26342,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "CE Office APC";
+	areastring = "/area/crew_quarters/heads/chief";
 	pixel_x = 28
 	},
 /obj/structure/cable/yellow,
@@ -26901,6 +26934,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Tech Storage APC";
+	areastring = "/area/storage/tech";
 	pixel_x = -27
 	},
 /obj/structure/cable/yellow{
@@ -27459,6 +27493,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Cargo Bay APC";
+	areastring = "/area/quartermaster/storage";
 	pixel_x = 1;
 	pixel_y = -24
 	},
@@ -27902,6 +27937,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Auxiliary Tool Storage APC";
+	areastring = "/area/storage/tools";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -28343,6 +28379,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Cargo Office APC";
+	areastring = "/area/quartermaster/office";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -28762,6 +28799,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Engineering Security APC";
+	areastring = "/area/security/checkpoint/engineering";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -28873,6 +28911,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Customs APC";
+	areastring = "/area/security/checkpoint/customs";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -29658,6 +29697,7 @@
 	aidisabled = 0;
 	dir = 1;
 	name = "AI Chamber APC";
+	areastring = "/area/ai_monitored/turret_protected/ai";
 	pixel_y = 24
 	},
 /obj/structure/cable{
@@ -31026,6 +31066,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Custodial Closet APC";
+	areastring = "/area/janitor";
 	pixel_x = -24
 	},
 /obj/structure/table,
@@ -31085,6 +31126,7 @@
 	cell_type = 2500;
 	dir = 4;
 	name = "Central Maintenance APC";
+	areastring = "/area/maintenance/central";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow,
@@ -31465,6 +31507,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Starboard Hallway APC";
+	areastring = "/area/hallway/primary/starboard";
 	pixel_y = 26
 	},
 /obj/structure/cable/yellow{
@@ -32802,6 +32845,7 @@
 	cell_type = 2500;
 	dir = 4;
 	name = "Delivery Office APC";
+	areastring = "/area/quartermaster/sorting";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -34566,7 +34610,7 @@
 /area/ai_monitored/turret_protected/aisat/foyer)
 "bny" = (
 /obj/machinery/turretid{
-	control_area = "AI Satellite Antechamber";
+	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	enabled = 1;
 	icon_state = "control_standby";
 	name = "Antechamber Turret Control";
@@ -34634,6 +34678,7 @@
 	cell_type = 2500;
 	dir = 4;
 	name = "MiniSat Antechamber APC";
+	areastring = "/area/ai_monitored/turret_protected/aisat_interior";
 	pixel_x = 29
 	},
 /obj/structure/cable/yellow{
@@ -34888,6 +34933,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Hallway APC";
+	areastring = "/area/hallway/primary/port";
 	pixel_x = -1;
 	pixel_y = 26
 	},
@@ -35045,6 +35091,7 @@
 	cell_type = 10000;
 	dir = 8;
 	name = "Bridge APC";
+	areastring = "/area/bridge";
 	pixel_x = -27
 	},
 /obj/structure/cable/yellow,
@@ -35962,6 +36009,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Arrivals APC";
+	areastring = "/area/hallway/secondary/entry";
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow{
@@ -36469,6 +36517,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Captain's Quarters APC";
+	areastring = "/area/crew_quarters/heads/captain/private";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -36551,6 +36600,7 @@
 	cell_type = 2500;
 	dir = 8;
 	name = "Art Storage APC";
+	areastring = "/area/storage/art";
 	pixel_x = -25
 	},
 /obj/structure/cable/yellow{
@@ -36878,6 +36928,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Engineering Foyer APC";
+	areastring = "/area/engine/break_room";
 	pixel_x = -1;
 	pixel_y = -26
 	},
@@ -37035,6 +37086,7 @@
 	aidisabled = 0;
 	dir = 2;
 	name = "MiniSat Exterior APC";
+	areastring = "/area/aisat";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow{
@@ -37146,6 +37198,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "MiniSat Foyer APC";
+	areastring = "/area/ai_monitored/turret_protected/aisat/foyer";
 	pixel_y = -29
 	},
 /obj/structure/cable/yellow,
@@ -38070,6 +38123,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Head of Personnel APC";
+	areastring = "/area/crew_quarters/heads/hop";
 	pixel_y = 24
 	},
 /turf/open/floor/carpet,
@@ -39694,6 +39748,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Bar APC";
+	areastring = "/area/crew_quarters/bar";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -40230,6 +40285,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Port Maintenance APC";
+	areastring = "/area/maintenance/port";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow{
@@ -40621,6 +40677,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Theatre APC";
+	areastring = "/area/crew_quarters/theatre";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -40659,6 +40716,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "MiniSat Maint APC";
+	areastring = "/area/ai_monitored/storage/satellite";
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -40792,6 +40850,7 @@
 	cell_type = 10000;
 	dir = 1;
 	name = "Atmospherics APC";
+	areastring = "/area/engine/atmos";
 	pixel_y = 28
 	},
 /obj/structure/cable/yellow{
@@ -41031,6 +41090,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Telecomms Control Room APC";
+	areastring = "/area/tcommsat/computer";
 	pixel_x = 26
 	},
 /obj/machinery/computer/telecomms/server{
@@ -42675,6 +42735,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Auxiliary Restrooms APC";
+	areastring = "/area/crew_quarters/toilet/auxiliary";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -42930,6 +42991,7 @@
 	cell_type = 10000;
 	dir = 1;
 	name = "Command Hallway APC";
+	areastring = "/area/hallway/secondary/command";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -45476,6 +45538,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Teleporter APC";
+	areastring = "/area/teleporter";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -45604,6 +45667,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Gateway APC";
+	areastring = "/area/gateway";
 	pixel_x = 28
 	},
 /obj/structure/cable/yellow{
@@ -46866,6 +46930,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Vacant Office APC";
+	areastring = "/area/security/vacantoffice";
 	pixel_x = -25
 	},
 /obj/structure/cable/yellow{
@@ -46989,6 +47054,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "E.V.A. Storage APC";
+	areastring = "/area/ai_monitored/storage/eva";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -47562,6 +47628,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Telecomms Server Room APC";
+	areastring = "/area/tcommsat/server";
 	pixel_x = 25
 	},
 /obj/machinery/light/small{
@@ -47736,6 +47803,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Library APC";
+	areastring = "/area/library";
 	pixel_x = -25
 	},
 /obj/structure/cable/yellow{
@@ -48322,6 +48390,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Telecomms Storage APC";
+	areastring = "/area/storage/tcom";
 	pixel_x = -28
 	},
 /obj/structure/cable/yellow{
@@ -48776,6 +48845,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Nanotrasen Corporate Showroom APC";
+	areastring = "/area/bridge/showroom/corporate";
 	pixel_x = 28
 	},
 /obj/structure/cable/yellow{
@@ -50359,6 +50429,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Kitchen APC";
+	areastring = "/area/crew_quarters/kitchen";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -51069,6 +51140,7 @@
 	cell_type = 2500;
 	dir = 1;
 	name = "Starboard Maintenance APC";
+	areastring = "/area/maintenance/starboard";
 	pixel_x = -1;
 	pixel_y = 26
 	},
@@ -51519,6 +51591,7 @@
 	cell_type = 10000;
 	dir = 1;
 	name = "Central Primary Hallway APC";
+	areastring = "/area/hallway/primary/central";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -51978,6 +52051,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Port Quarter Solar APC";
+	areastring = "/area/maintenance/solars/port/aft";
 	pixel_x = -26;
 	pixel_y = 3
 	},
@@ -54105,6 +54179,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Medical Security Checkpoint APC";
+	areastring = "/area/security/checkpoint/medical";
 	pixel_x = -24
 	},
 /obj/machinery/airalarm{
@@ -55639,7 +55714,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/medical/storage)
+/area/maintenance/port/aft)
 "cbJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -55989,6 +56064,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Hydroponics APC";
+	areastring = "/area/hydroponics";
 	pixel_y = -28
 	},
 /obj/structure/cable/yellow,
@@ -57689,6 +57765,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Sleeper Room APC";
+	areastring = "/area/medical/sleeper";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -57727,6 +57804,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Medbay Storage APC";
+	areastring = "/area/medical/storage";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow{
@@ -57983,6 +58061,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Security Post - Research Division APC";
+	areastring = "/area/security/checkpoint/science/research";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow,
@@ -58058,6 +58137,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Incinerator APC";
+	areastring = "/area/maintenance/disposal/incinerator";
 	pixel_x = -24
 	},
 /obj/structure/cable/yellow{
@@ -59022,6 +59102,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Medbay Central APC";
+	areastring = "/area/medical/medbay/central";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -59273,6 +59354,7 @@
 	cell_type = 10000;
 	dir = 1;
 	name = "Research Division APC";
+	areastring = "/area/science/research";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -61513,6 +61595,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Cryogenics APC";
+	areastring = "/area/medical/cryo";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -62144,6 +62227,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Surgery APC";
+	areastring = "/area/medical/surgery";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -62298,6 +62382,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "CMO's Office APC";
+	areastring = "/area/crew_quarters/heads/cmo";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -63226,6 +63311,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Chemistry APC";
+	areastring = "/area/medical/chemistry";
 	pixel_x = -24
 	},
 /obj/structure/closet/secure_closet/chemical{
@@ -63308,6 +63394,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Research Lab APC";
+	areastring = "/area/science/lab";
 	pixel_y = -26
 	},
 /obj/structure/cable/yellow,
@@ -63542,6 +63629,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Experimentation Lab APC";
+	areastring = "/area/science/explab";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -63938,6 +64026,7 @@
 	cell_type = 5000;
 	dir = 4;
 	name = "Aft Hallway APC";
+	areastring = "/area/hallway/primary/aft";
 	pixel_x = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -64833,6 +64922,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Toxins Storage APC";
+	areastring = "/area/science/storage";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -65330,6 +65420,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Port Quarter Maintenance APC";
+	areastring = "/area/maintenance/port/aft";
 	pixel_y = 24
 	},
 /turf/open/floor/plating,
@@ -65347,6 +65438,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Patient Room A APC";
+	areastring = "/area/medical/patients_rooms/room_a";
 	pixel_x = -26
 	},
 /obj/structure/cable/yellow{
@@ -65483,6 +65575,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Genetics Lab APC";
+	areastring = "/area/medical/genetics";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -66424,6 +66517,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Patient Room B APC";
+	areastring = "/area/medical/patients_rooms/room_b";
 	pixel_x = -26
 	},
 /obj/structure/cable/yellow{
@@ -66718,6 +66812,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "RD Office APC";
+	areastring = "/area/crew_quarters/heads/hor";
 	pixel_y = -27
 	},
 /obj/structure/cable/yellow,
@@ -67831,6 +67926,7 @@
 	dir = 4;
 	locked = 0;
 	name = "Cloning Lab APC";
+	areastring = "/area/medical/genetics/cloning";
 	pixel_x = 24
 	},
 /obj/structure/cable/yellow,
@@ -68340,6 +68436,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Medbay Aft APC";
+	areastring = "/area/medical/medbay/aft";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -68555,6 +68652,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Mech Bay APC";
+	areastring = "/area/science/robotics/mechbay";
 	pixel_x = 28
 	},
 /obj/structure/cable/yellow{
@@ -69065,6 +69163,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Research Firing Range APC";
+	areastring = "/area/science/misc_lab/range";
 	pixel_y = -28
 	},
 /obj/structure/table,
@@ -69721,6 +69820,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Toxins Lab APC";
+	areastring = "/area/science/mixing";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -70014,6 +70114,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Robotics Lab APC";
+	areastring = "/area/science/robotics/lab";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -70231,6 +70332,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Virology APC";
+	areastring = "/area/medical/virology";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -70544,6 +70646,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Morgue APC";
+	areastring = "/area/medical/morgue";
 	pixel_x = 26
 	},
 /obj/structure/cable/yellow{
@@ -72176,7 +72279,7 @@
 	req_access_txt = "6"
 	},
 /turf/open/floor/plating,
-/area/medical/morgue)
+/area/maintenance/aft)
 "cGU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/extinguisher_cabinet{
@@ -72874,6 +72977,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Research Division Server Room APC";
+	areastring = "/area/science/server";
 	pixel_y = 25
 	},
 /obj/structure/cable/yellow{
@@ -74165,6 +74269,7 @@
 	cell_type = 5000;
 	dir = 1;
 	name = "Departure Lounge APC";
+	areastring = "/area/hallway/secondary/exit/departure_lounge";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -74929,6 +75034,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Starboard Quarter Solar APC";
+	areastring = "/area/maintenance/solars/starboard/aft";
 	pixel_y = 24
 	},
 /obj/structure/cable/yellow{
@@ -75153,6 +75259,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Aft Maintenance APC";
+	areastring = "/area/maintenance/aft";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -76169,6 +76276,7 @@
 /obj/machinery/power/apc{
 	dir = 8;
 	name = "Chapel APC";
+	areastring = "/area/chapel/main";
 	pixel_x = -25
 	},
 /turf/open/floor/carpet,
@@ -76420,6 +76528,7 @@
 	dir = 2;
 	lighting = 3;
 	name = "Chapel Office APC";
+	areastring = "/area/chapel/office";
 	pixel_y = -25
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -83004,6 +83113,7 @@
 	cell_type = 10000;
 	dir = 1;
 	name = "Xenobiology APC";
+	areastring = "/area/science/xenobiology";
 	pixel_y = 27
 	},
 /obj/structure/cable/yellow{
@@ -83841,6 +83951,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Test Chamber Maintenance APC";
+	areastring = "/area/maintenance/department/science/xenobiology";
 	pixel_x = 26
 	},
 /turf/open/floor/plating,
@@ -85386,6 +85497,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Tool Storage APC";
+	areastring = "/area/storage/primary";
 	pixel_y = -27
 	},
 /obj/structure/cable/yellow,
@@ -87276,6 +87388,7 @@
 	cell_type = 2500;
 	dir = 4;
 	name = "Port Bow Maintenance APC";
+	areastring = "/area/maintenance/port/fore";
 	pixel_x = 26
 	},
 /turf/open/floor/plating{
@@ -88516,6 +88629,7 @@
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Starboard Bow Maintenance APC";
+	areastring = "/area/maintenance/starboard/fore";
 	pixel_y = -28
 	},
 /obj/structure/cable/yellow{
@@ -89808,6 +89922,7 @@
 	cell_type = 5000;
 	dir = 2;
 	name = "Starboard Quarter Maintenance APC";
+	areastring = "/area/maintenance/starboard/aft";
 	pixel_y = -24
 	},
 /obj/structure/cable/yellow,
@@ -111774,7 +111889,7 @@ cia
 cia
 cuj
 cbx
-dDx
+dDw
 bXE
 cxU
 cxU
@@ -113535,7 +113650,7 @@ bok
 bqz
 bsL
 buk
-dCQ
+dCH
 bdP
 baG
 baG
@@ -113544,7 +113659,7 @@ bEB
 baG
 bHW
 baG
-dDd
+dCH
 baG
 bdP
 baG
@@ -114029,7 +114144,7 @@ aJN
 dhI
 aME
 aNW
-dCu
+dCt
 aQx
 aMB
 aTe
@@ -114065,7 +114180,7 @@ bGy
 bGy
 bGy
 bTG
-dDj
+dCE
 bWk
 bXK
 bYV
@@ -116863,7 +116978,7 @@ aJS
 aUx
 aUx
 aXI
-dCF
+dCE
 baQ
 bci
 aaf
@@ -118418,7 +118533,7 @@ bov
 bqN
 bsX
 buA
-dCR
+dCK
 byg
 bzW
 bBJ
@@ -119183,7 +119298,7 @@ aaf
 bfw
 bhp
 bjb
-dCL
+dCK
 bmE
 boy
 bqP
@@ -120747,7 +120862,7 @@ bQr
 bRJ
 bGM
 bTW
-dDk
+dCE
 bWA
 bXV
 bZk
@@ -120975,7 +121090,7 @@ aTp
 aIT
 aTk
 aXS
-dCG
+dCE
 baV
 bcj
 bdH
@@ -121204,7 +121319,7 @@ ajF
 akP
 ami
 anx
-dCd
+dCb
 apU
 arp
 asF
@@ -121805,7 +121920,7 @@ cAu
 cBo
 crL
 cwN
-dDD
+dDy
 cFl
 cGh
 cHb
@@ -123314,7 +123429,7 @@ aWf
 aWf
 aWf
 aWf
-dDh
+dCT
 aWf
 aWf
 bVo
@@ -123797,7 +123912,7 @@ aMY
 aOu
 aOv
 aQR
-dCy
+dCv
 aTw
 aUM
 aWs
@@ -124862,7 +124977,7 @@ bUh
 bVs
 bWN
 bWR
-dDn
+dDl
 caM
 ccu
 bST
@@ -126906,7 +127021,7 @@ dCU
 byC
 bwX
 bHe
-dDc
+dCU
 bKm
 bKe
 bNE
@@ -130724,7 +130839,7 @@ axQ
 ayR
 axY
 aBG
-dCm
+dCk
 aEk
 aFs
 aGT

@@ -1,0 +1,19 @@
+diff a/_maps/map_files/BoxStation/BoxStation.dmm b/_maps/map_files/BoxStation/BoxStation.dmm	(rejected hunks)
+@@ -26631,7 +26631,7 @@
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+ /turf/open/floor/plating,
+-/area/quartermaster/storage)
++/area/maintenance/port)
+ "bkH" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+@@ -36244,7 +36244,7 @@
+ 	},
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/open/floor/plating,
+-/area/janitor)
++/area/maintenance/aft)
+ "bFt" = (
+ /obj/structure/disposalpipe/segment,
+ /obj/effect/spawner/structure/window,

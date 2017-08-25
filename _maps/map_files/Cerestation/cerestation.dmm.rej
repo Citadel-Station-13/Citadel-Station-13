@@ -1,0 +1,32 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -52237,17 +52308,13 @@
+ /turf/open/floor/plasteel{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+-/area/crew_quarters/toilet{
+-	name = "Fitness Toilets"
+-	})
++/area/crew_quarters/toilet/fitness)
+ "bTu" = (
+ /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+ /turf/closed/wall{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+-/area/crew_quarters/toilet{
+-	name = "Fitness Toilets"
+-	})
++/area/crew_quarters/toilet/fitness)
+ "bTv" = (
+ /obj/effect/spawner/structure/window,
+ /obj/structure/disposalpipe/segment,
+@@ -53125,9 +53179,7 @@
+ /turf/open/floor/plasteel/freezer{
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+-/area/crew_quarters/toilet{
+-	name = "Fitness Toilets"
+-	})
++/area/crew_quarters/toilet/fitness)
+ "bVj" = (
+ /obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating{
