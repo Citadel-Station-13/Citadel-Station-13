@@ -1,20 +1,19 @@
 /obj/structure/flora
 	resistance_flags = FLAMMABLE
-	obj_integrity = 150
 	max_integrity = 150
-	anchored = 1
+	anchored = TRUE
 
 //trees
 /obj/structure/flora/tree
 	name = "tree"
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
-	if(!cut && log_amount && (!(NODECONSTRUCT_1 in flags_1)))
+	if(!cut && log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
@@ -26,7 +25,7 @@
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
 				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
-				density = 0
+				density = FALSE
 				pixel_x = -16
 				name += " stump"
 				cut = TRUE
@@ -91,6 +90,11 @@
 	icon_state = "[icon_state][rand(1, 6)]"
 	. = ..()
 
+/obj/structure/flora/tree/jungle/small
+	pixel_y = 0
+	pixel_x = -32
+	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
 //grass
 /obj/structure/flora/grass
 	name = "grass"
@@ -125,7 +129,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/flora/bush/Initialize()
 	icon_state = "snowbush[rand(1, 6)]"
@@ -304,7 +308,7 @@
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
-	density = 1
+	density = TRUE
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()

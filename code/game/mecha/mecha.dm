@@ -112,7 +112,7 @@
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
-	var/occupant_sight_flags = 0 //sight flags_1 to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -1045,9 +1045,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
-	return 0
-
-/obj/mecha/allow_drop()
 	return 0
 
 /obj/mecha/update_remote_sight(mob/living/user)

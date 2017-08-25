@@ -2855,8 +2855,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/control)
 "iA" = (
@@ -2999,7 +2998,6 @@
 /area/centcom/supply)
 "iT" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)
@@ -3009,7 +3007,6 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -3048,8 +3045,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "iZ" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/supply)
 "ja" = (
@@ -3073,8 +3069,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/control)
 "jd" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
 	icon_state = "space";
@@ -3811,7 +3806,6 @@
 /area/centcom/supply)
 "kL" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/centcom/supply)
@@ -4108,7 +4102,6 @@
 /area/centcom/supply)
 "lv" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/centcom/supply)
@@ -4118,13 +4111,11 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
 "lx" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -4234,7 +4225,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 9
 	},
 /area/centcom/supply)
@@ -4243,7 +4233,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)
@@ -4253,7 +4242,6 @@
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -4443,7 +4431,6 @@
 /area/centcom/supply)
 "mm" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 10
 	},
 /area/centcom/supply)
@@ -4626,7 +4613,6 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 6
 	},
 /area/centcom/supply)
@@ -4780,8 +4766,7 @@
 	},
 /area/centcom/control)
 "nf" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/ferry)
 "ng" = (
@@ -5082,7 +5067,6 @@
 /area/centcom/supply)
 "nQ" = (
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 5
 	},
 /area/centcom/supply)
@@ -6170,8 +6154,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/evac)
 "ql" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/evac)
 "qm" = (
@@ -6443,7 +6426,6 @@
 /area/centcom/ferry)
 "qO" = (
 /turf/open/floor/plasteel/darkred/side{
-	icon_state = "darkred";
 	dir = 1
 	},
 /area/centcom/control)
@@ -7116,8 +7098,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/centcom/evac)
 "sw" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -7339,7 +7320,6 @@
 /area/centcom/evac)
 "sY" = (
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 8
 	},
 /area/centcom/evac)
@@ -7422,8 +7402,7 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/assault_pod)
 "tn" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -7640,7 +7619,6 @@
 /area/centcom/evac)
 "tJ" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 5
 	},
 /area/centcom/evac)
@@ -7649,13 +7627,11 @@
 /area/centcom/evac)
 "tL" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 4
 	},
 /area/centcom/evac)
 "tM" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 8
 	},
 /area/centcom/evac)
@@ -7846,7 +7822,6 @@
 /area/centcom/evac)
 "uo" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 6
 	},
 /area/centcom/evac)
@@ -7968,8 +7943,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/ferry)
 "uF" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
 	desc = "A sign that shows there are doors here. There are doors everywhere!";
 	icon_state = "doors";
@@ -8045,7 +8019,6 @@
 /area/centcom/evac)
 "uQ" = (
 /turf/open/floor/plasteel/neutral/side{
-	icon_state = "neutral";
 	dir = 5
 	},
 /area/centcom/evac)
@@ -8177,13 +8150,11 @@
 /area/centcom/control)
 "vm" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 9
 	},
 /area/centcom/evac)
 "vn" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 10
 	},
 /area/centcom/evac)
@@ -8208,8 +8179,7 @@
 /turf/open/floor/plating/airless,
 /area/syndicate_mothership/control)
 "vr" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/vacuum,
 /turf/open/floor/plating,
 /area/centcom/ferry)
@@ -8530,13 +8500,11 @@
 /area/centcom/control)
 "wd" = (
 /turf/open/floor/plasteel/blue/corner{
-	icon_state = "bluecorner";
 	dir = 1
 	},
 /area/centcom/evac)
 "we" = (
 /turf/open/floor/plasteel/blue/side{
-	icon_state = "blue";
 	dir = 1
 	},
 /area/centcom/evac)
@@ -10025,8 +9993,7 @@
 	},
 /area/tdome/tdomeobserve)
 "zN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tdome/tdomeobserve)
 "zO" = (
@@ -10371,7 +10338,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 9
 	},
 /area/tdome/tdomeobserve)
@@ -10388,7 +10354,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 5
 	},
 /area/tdome/tdomeobserve)
@@ -10414,7 +10379,6 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 1
 	},
 /area/tdome/tdomeobserve)
@@ -10427,7 +10391,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -10958,7 +10921,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -10988,7 +10950,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 1
 	},
 /area/tdome/tdomeobserve)
@@ -11148,17 +11109,7 @@
 /turf/open/floor/plasteel/white,
 /area/tdome/tdomeobserve)
 "CL" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CM" = (
@@ -11166,17 +11117,7 @@
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CN" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced,
 /turf/open/floor/plasteel,
 /area/centcom/holding)
 "CO" = (
@@ -11188,7 +11129,6 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/whitered/corner{
-	icon_state = "whiteredcorner";
 	dir = 8
 	},
 /area/tdome/tdomeobserve)
@@ -11333,7 +11273,6 @@
 	pixel_x = 28
 	},
 /turf/open/floor/plasteel/whitegreen/side{
-	icon_state = "whitegreen";
 	dir = 4
 	},
 /area/tdome/tdomeobserve)
@@ -11663,7 +11602,6 @@
 	name = "Thunderdome Blast Door"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -11694,7 +11632,6 @@
 	name = "General Supply"
 	},
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -11722,8 +11659,7 @@
 	},
 /area/tdome/tdomeadmin)
 "Ef" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/tdome/tdomeadmin)
 "Eg" = (
@@ -11843,7 +11779,6 @@
 /area/tdome/arena)
 "Ey" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena)
@@ -12076,7 +12011,6 @@
 /area/tdome/tdomeadmin)
 "Ff" = (
 /turf/open/floor/plasteel/darkgreen/side{
-	icon_state = "darkgreen";
 	dir = 1
 	},
 /area/tdome/tdomeadmin)
@@ -12744,8 +12678,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "Hk" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
+/obj/effect/spawner/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/centcom/evac)
 "Hl" = (
@@ -13001,7 +12934,6 @@
 /area/tdome/arena_source)
 "IS" = (
 /turf/open/floor/plasteel/loadingarea{
-	baseturf = /turf/open/space;
 	dir = 8
 	},
 /area/tdome/arena_source)
@@ -13149,7 +13081,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/brown{
-	icon_state = "brown";
 	dir = 1
 	},
 /area/centcom/supply)
