@@ -1,0 +1,79 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -54213,8 +54208,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/crew_quarters/bar)
+ "cpd" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+ /area/maintenance/department/cargo)
+ "cpe" = (
+@@ -54858,8 +54852,7 @@
+ /turf/open/floor/plasteel,
+ /area/crew_quarters/heads/chief)
+ "cqW" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/closed/mineral,
+ /area/chapel/asteroid{
+ 	name = "Monastery Asteroid"
+@@ -54870,8 +54863,7 @@
+ /turf/open/space/basic,
+ /area/space)
+ "cqY" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/closed/mineral,
+ /area/chapel/asteroid{
+ 	name = "Monastery Asteroid"
+@@ -54890,15 +54882,13 @@
+ /turf/open/floor/plating/airless,
+ /area/chapel/office)
+ "crc" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/closed/mineral,
+ /area/chapel/asteroid{
+ 	name = "Monastery Asteroid"
+ 	})
+ "crd" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/closed/mineral,
+ /area/chapel/asteroid{
+ 	name = "Monastery Asteroid"
+@@ -54930,8 +54920,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/chapel/office)
+ "cri" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/closed/mineral,
+ /area/chapel/asteroid{
+ 	name = "Monastery Asteroid"
+@@ -54966,8 +54955,7 @@
+ /turf/open/space,
+ /area/space)
+ "crn" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+ /area/maintenance/department/engine)
+ "cro" = (
+@@ -55093,8 +55081,7 @@
+ /turf/open/floor/plasteel/black,
+ /area/chapel/main/monastery)
+ "crI" = (
+-/obj/structure/grille,
+-/obj/structure/window/reinforced/fulltile,
++/obj/effect/spawner/structure/window/reinforced,
+ /turf/open/floor/plating,
+ /area/maintenance/department/engine)
+ "crJ" = (
