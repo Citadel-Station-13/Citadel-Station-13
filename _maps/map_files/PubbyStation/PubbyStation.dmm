@@ -46940,7 +46940,7 @@
 	pixel_x = 0;
 	pixel_y = -28
 	},
-/obj/structure/chair/stool,
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bXV" = (
@@ -78041,7 +78041,7 @@ bUa
 bva
 bVv
 bSw
-bDi
+bPC
 bXU
 bva
 bZt
@@ -79584,7 +79584,7 @@ bva
 bva
 bva
 bDi
-bDi
+cBj
 bva
 bZv
 cad

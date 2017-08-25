@@ -1,0 +1,22 @@
+diff a/_maps/map_files/Cerestation/cerestation.dmm b/_maps/map_files/Cerestation/cerestation.dmm	(rejected hunks)
+@@ -95762,6 +95763,20 @@
+ 	baseturf = /turf/open/floor/plating/asteroid/airless
+ 	},
+ /area/medical/virology)
++"dCX" = (
++/obj/effect/turf_decal/stripes/line{
++	dir = 1
++	},
++/obj/structure/cable{
++	d1 = 4;
++	d2 = 8;
++	icon_state = "4-8"
++	},
++/obj/machinery/computer/shuttle/mining,
++/turf/open/floor/plasteel{
++	baseturf = /turf/open/floor/plating/asteroid/airless
++	},
++/area/construction/mining/aux_base)
+ 
+ (1,1,1) = {"
+ aaa

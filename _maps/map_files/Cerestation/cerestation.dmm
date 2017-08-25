@@ -59799,6 +59799,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/ore_box,
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -60647,7 +60648,6 @@
 	c_tag = "Aux Base Construction";
 	dir = 6
 	},
-/obj/machinery/computer/camera_advanced/base_construction,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -60666,6 +60666,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/computer/camera_advanced/base_construction,
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -113902,7 +113903,7 @@ ceA
 ceA
 ciA
 cjg
-cjX
+dCX
 ckF
 clj
 cdI

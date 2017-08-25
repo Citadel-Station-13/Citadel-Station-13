@@ -1,0 +1,12 @@
+diff a/_maps/map_files/PubbyStation/PubbyStation.dmm b/_maps/map_files/PubbyStation/PubbyStation.dmm	(rejected hunks)
+@@ -58278,6 +58278,10 @@
+ 	},
+ /turf/open/floor/plating,
+ /area/maintenance/department/security/brig)
++"cBj" = (
++/obj/structure/ore_box,
++/turf/open/floor/plating,
++/area/maintenance/department/engine)
+ 
+ (1,1,1) = {"
+ aaa
