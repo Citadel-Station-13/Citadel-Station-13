@@ -2825,11 +2825,7 @@
 /turf/template_noop,
 /area/template_noop)
 "iu" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
-/obj/structure/grille,
+/obj/effect/spawner/structure/window/hollow/reinforced/corner,
 /turf/template_noop,
 /area/template_noop)
 "iv" = (
@@ -3943,14 +3939,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "lD" = (
-/obj/structure/grille,
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lE" = (
@@ -4028,13 +4017,7 @@
 /turf/open/floor/plasteel/airless,
 /area/ruin/unpowered/no_grav)
 "lR" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
+/obj/effect/spawner/structure/window/hollow/reinforced/middle/vertical,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/no_grav)
 "lS" = (
