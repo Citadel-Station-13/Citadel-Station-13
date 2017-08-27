@@ -7,7 +7,7 @@
 	mutantstomach = /obj/item/organ/stomach/fly
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	disliked_food = null
-	liked_food = GROSS
+	liked_food = NONE
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
