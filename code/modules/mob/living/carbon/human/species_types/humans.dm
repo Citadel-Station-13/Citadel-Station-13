@@ -2,10 +2,10 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,LIPS)
 	mutant_bodyparts = list("tail_human", "ears", "taur")
 	default_features = list("tail_human" = "None", "ears" = "None", "taur" = "none")
-	use_skintones = 1
+	use_skintones = FALSE
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
