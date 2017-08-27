@@ -3,7 +3,7 @@
 /obj/item/genemod
 	name = "genetic modifier"
 	desc = "Microbodies which can grow, morph, or otherwise change an organism into something else."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
