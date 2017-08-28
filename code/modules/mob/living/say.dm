@@ -108,7 +108,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(check_emote(original_message) || !can_speak_basic(original_message))
 		return
 
+	var/in_full_critical = InFullCritical()
+		
 	if(in_critical)
+		if(!in_full_critical && !message_mode)
+			message_mode = MODE_WHISPER
 		if(!(crit_allowed_modes[message_mode]))
 			return
 	else if(stat == UNCONSCIOUS)

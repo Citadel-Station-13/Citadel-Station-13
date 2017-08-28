@@ -1,0 +1,10 @@
+diff a/code/modules/mob/living/say.dm b/code/modules/mob/living/say.dm	(rejected hunks)
+@@ -149,7 +153,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
+ 		message_range = 1
+ 		spans |= SPAN_ITALICS
+ 		log_whisper("[src.name]/[src.key] : [message]")
+-		if(InFullCritical())
++		if(in_full_critical)
+ 			var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+ 			// If we cut our message short, abruptly end it with a-..
+ 			var/message_len = length(message)
