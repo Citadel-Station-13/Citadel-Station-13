@@ -1,10 +1,10 @@
 diff a/code/modules/client/client_procs.dm b/code/modules/client/client_procs.dm	(rejected hunks)
-@@ -73,7 +73,7 @@
- 			return
+@@ -353,7 +353,7 @@ GLOBAL_LIST(external_rsc_urls)
  
- 	//Logs all hrefs, except chat pings
--	if(href_list["proc"] != "ping")
-+	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
- 		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
- 
- 	// Admin PM
+ /client/Del()
+ 	if(credits)
+-		QDEL_LIST(credits)	
++		QDEL_LIST(credits)
+ 	log_access("Logout: [key_name(src)]")
+ 	if(holder)
+ 		adminGreet(1)
