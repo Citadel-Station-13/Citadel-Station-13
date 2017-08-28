@@ -203,6 +203,11 @@
 	bitesize = 4
 	tastes = list("meat" = 1, "wheat" = 1)
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/gorilla
+	name = "gorilla meat"
+	desc = "Much meatier than monkey meat."
+	list_reagents = list("nutriment" = 5, "vitamin" = 1)	
+
 /obj/item/weapon/reagent_containers/food/snacks/meat/rawbacon
 	name = "raw piece of bacon"
 	desc = "A raw piece of bacon."
