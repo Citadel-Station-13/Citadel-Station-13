@@ -1,10 +1,13 @@
 diff a/code/modules/mob/living/living.dm b/code/modules/mob/living/living.dm	(rejected hunks)
-@@ -793,7 +793,7 @@
- 	else
- 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
- 	return
--/mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
-+/mob/living/proc/can_use_guns(var/obj/item/weapon/G)
- 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
- 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
- 		return 0
+@@ -241,10 +241,7 @@
+ 		return 1
+ 
+ /mob/living/proc/InCritical()
+-	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+-
+-/mob/living/proc/InFullCritical()
+-	return (health < HEALTH_THRESHOLD_FULLCRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
++	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
+ 
+ //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
+ //affects them once clothing is factored in. ~Errorage
