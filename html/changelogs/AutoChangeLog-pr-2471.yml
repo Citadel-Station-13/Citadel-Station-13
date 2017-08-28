@@ -1,0 +1,7 @@
+author: "ktccd"
+delete-after: True
+changes: 
+  - bugfix: "Dogborgs now properly sends chat messages when using their unique modules."
+  - bugfix: "Medidogs now respect vore prefs."
+  - bugfix: "Dogborg modules now respect the laws of physics, in regards to only eating/cleaning people/things near them."
+  - bugfix: "Dogborg stuff now has that nice progress-bar show up when trying to do things."

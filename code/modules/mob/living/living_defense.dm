@@ -68,7 +68,7 @@
 		var/dtype = BRUTE
 		var/volume = I.get_volume_by_throwforce_and_or_w_class()
 		if(istype(I, /obj/item/weapon)) //If the item is a weapon...
-			var/obj/item/weapon/W = I
+			var/obj/item/W = I
 			dtype = W.damtype
 
 			if (W.throwforce > 0) //If the weapon's throwforce is greater than zero...
@@ -280,7 +280,7 @@
 	return 1
 
 /mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	if(shock_damage > 0)
 		if(!illusion)
@@ -342,7 +342,7 @@
 		return
 
 	if(stat != DEAD && !is_servant_of_ratvar(src))
-		for(var/obj/item/weapon/implant/mindshield/M in implants)
+		for(var/obj/item/implant/mindshield/M in implants)
 			qdel(M)
 		if(!add_servant_of_ratvar(src))
 			to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")

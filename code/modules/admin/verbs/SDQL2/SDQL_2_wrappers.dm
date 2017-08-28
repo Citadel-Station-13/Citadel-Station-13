@@ -3,8 +3,8 @@
 /proc/_abs(A)
 	return abs(A)
 
-/*/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags = null)
-	animate(A, set_vars, time, loop, easing, flags)
+/*/proc/_animate(atom/A, set_vars, time = 10, loop = 1, easing = LINEAR_EASING, flags_1 = null)
+	animate(A, set_vars, time, loop, easing, flags_1)
 	Borked. If anyone wants to fix this be my guest.*/
 
 /proc/_acrccos(A)
@@ -112,8 +112,8 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
-/proc/_regex(pattern, flags)
-	return regex(pattern, flags)
+/proc/_regex(pattern, flags_1)
+	return regex(pattern, flags_1)
 
 /proc/_REGEX_QUOTE(text)
 	return REGEX_QUOTE(text)

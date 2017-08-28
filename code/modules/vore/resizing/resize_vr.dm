@@ -18,7 +18,7 @@ GLOBAL_VAR_CONST(SIZESCALE_A_SMALLTINY,(GLOB.SIZESCALE_SMALL + GLOB.SIZESCALE_TI
 
 // Define holder_type on types we want to be scoop-able
 //mob/living/carbon/human
-//	holder_type = /obj/item/weapon/holder/micro
+//	holder_type = /obj/item/holder/micro
 
 /**
  * Scale up the size of a mob's icon by the size_multiplier.
@@ -91,7 +91,7 @@ GLOBAL_VAR_CONST(SIZESCALE_A_SMALLTINY,(GLOB.SIZESCALE_SMALL + GLOB.SIZESCALE_TI
 		usr << "<span class='notice'>You have to unbuckle \the [M] before you pick them up.</span>"
 		return 0
 	if(M.get_effective_size() - src.get_effective_size() >= 0.75)
-		var/obj/item/weapon/holder/m_holder = get_scooped(M)
+		var/obj/item/holder/m_holder = get_scooped(M)
 		if (m_holder)
 			return 1
 		else
