@@ -1,20 +1,19 @@
 /obj/structure/flora
 	resistance_flags = FLAMMABLE
-	obj_integrity = 150
 	max_integrity = 150
-	anchored = 1
+	anchored = TRUE
 
 //trees
 /obj/structure/flora/tree
 	name = "tree"
-	density = 1
+	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
 	var/cut = FALSE
 	var/log_amount = 10
 
-/obj/structure/flora/tree/attackby(obj/item/weapon/W, mob/user, params)
-	if(!cut && log_amount && (!(NODECONSTRUCT_1 in flags_1)))
+/obj/structure/flora/tree/attackby(obj/item/W, mob/user, params)
+	if(!cut && log_amount && (!(flags_1 & NODECONSTRUCT_1)))
 		if(W.sharpness && W.force > 0)
 			if(W.hitsound)
 				playsound(get_turf(src), W.hitsound, 100, 0, 0)
@@ -26,12 +25,12 @@
 				playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 100 , 0, 0)
 				icon = 'icons/obj/flora/pinetrees.dmi'
 				icon_state = "tree_stump"
-				density = 0
+				density = FALSE
 				pixel_x = -16
 				name += " stump"
 				cut = TRUE
 				for(var/i=1 to log_amount)
-					new /obj/item/weapon/grown/log/tree(get_turf(src))
+					new /obj/item/grown/log/tree(get_turf(src))
 
 	else
 		return ..()
@@ -91,6 +90,11 @@
 	icon_state = "[icon_state][rand(1, 6)]"
 	. = ..()
 
+/obj/structure/flora/tree/jungle/small
+	pixel_y = 0
+	pixel_x = -32
+	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
 //grass
 /obj/structure/flora/grass
 	name = "grass"
@@ -125,7 +129,7 @@
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
-	anchored = 1
+	anchored = TRUE
 
 /obj/structure/flora/bush/Initialize()
 	icon_state = "snowbush[rand(1, 6)]"
@@ -248,7 +252,7 @@
 	icon_state = "fullgrass_[rand(1, 3)]"
 	. = ..()
 
-/obj/item/weapon/twohanded/required/kirbyplants
+/obj/item/twohanded/required/kirbyplants
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
@@ -259,26 +263,26 @@
 	throw_speed = 2
 	throw_range = 4
 
-/obj/item/weapon/twohanded/required/kirbyplants/equipped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	..()
 
-/obj/item/weapon/twohanded/required/kirbyplants/dropped(mob/living/user)
+/obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("sneaking_mission")
 
-/obj/item/weapon/twohanded/required/kirbyplants/random
+/obj/item/twohanded/required/kirbyplants/random
 	var/list/static/states
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/Initialize()
+/obj/item/twohanded/required/kirbyplants/random/Initialize()
 	. = ..()
 	if(!states)
 		generate_states()
 	icon_state = pick(states)
 
-/obj/item/weapon/twohanded/required/kirbyplants/random/proc/generate_states()
+/obj/item/twohanded/required/kirbyplants/random/proc/generate_states()
 	states = list()
 	for(var/i in 1 to 25)
 		var/number
@@ -290,7 +294,7 @@
 	states += "applebush"
 
 
-/obj/item/weapon/twohanded/required/kirbyplants/dead
+/obj/item/twohanded/required/kirbyplants/dead
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
@@ -304,7 +308,7 @@
 	desc = "A volcanic rock"
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
-	density = 1
+	density = TRUE
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
