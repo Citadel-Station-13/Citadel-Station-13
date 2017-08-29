@@ -11,12 +11,12 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags
+	var/flags_1
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-	if(!(flags & REAGENT_NOREACT))
+	if(!(flags_1 & REAGENT_NOREACT))
 		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
@@ -290,7 +290,7 @@
 
 /datum/reagents/process()
 	var/list/cached_reagents = reagent_list
-	if(flags & REAGENT_NOREACT)
+	if(flags_1 & REAGENT_NOREACT)
 		STOP_PROCESSING(SSobj, src)
 		return
 
@@ -302,11 +302,11 @@
 	if(react)
 		// Order is important, process() can remove from processing if
 		// the flag is present
-		flags &= ~(REAGENT_NOREACT)
+		flags_1 &= ~(REAGENT_NOREACT)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
-		flags |= REAGENT_NOREACT
+		flags_1 |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -326,7 +326,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(flags & REAGENT_NOREACT)
+	if(flags_1 & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0
