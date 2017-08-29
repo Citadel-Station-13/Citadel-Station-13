@@ -275,7 +275,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				GLOB.config_error_log << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				WRITE_FILE(GLOB.config_error_log, "Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -549,7 +549,7 @@
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
 				else
-					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
+					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 		else if(type == "game_options")
 			switch(name)
@@ -612,13 +612,13 @@
 					if(mode_name in modes)
 						continuous[mode_name] = 1
 					else
-						GLOB.config_error_log << "Unknown continuous configuration definition: [mode_name]."
+						WRITE_FILE(GLOB.config_error_log, "Unknown continuous configuration definition: [mode_name].")
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in modes)
 						midround_antag[mode_name] = 1
 					else
-						GLOB.config_error_log << "Unknown midround antagonist configuration definition: [mode_name]."
+						WRITE_FILE(GLOB.config_error_log, "Unknown midround antagonist configuration definition: [mode_name].")
 				if("midround_antag_time_check")
 					midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -634,9 +634,9 @@
 						if(mode_name in modes)
 							min_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.config_error_log << "Unknown minimum population configuration definition: [mode_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown minimum population configuration definition: [mode_name].")
 					else
-						GLOB.config_error_log << "Incorrect minimum population configuration definition: [mode_name]  [mode_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect minimum population configuration definition: [mode_name]  [mode_value].")
 				if("max_pop")
 					var/pop_pos = findtext(value, " ")
 					var/mode_name = null
@@ -648,9 +648,9 @@
 						if(mode_name in modes)
 							max_pop[mode_name] = text2num(mode_value)
 						else
-							GLOB.config_error_log << "Unknown maximum population configuration definition: [mode_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown maximum population configuration definition: [mode_name].")
 					else
-						GLOB.config_error_log << "Incorrect maximum population configuration definition: [mode_name]  [mode_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect maximum population configuration definition: [mode_name]  [mode_value].")
 				if("shuttle_refuel_delay")
 					shuttle_refuel_delay     = text2num(value)
 				if("show_game_type_odds")
@@ -678,9 +678,9 @@
 						if(prob_name in modes)
 							probabilities[prob_name] = text2num(prob_value)
 						else
-							GLOB.config_error_log << "Unknown game mode probability configuration definition: [prob_name]."
+							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
-						GLOB.config_error_log << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
@@ -727,7 +727,7 @@
 					// Value is in the form "LAWID,NUMBER"
 					var/list/L = splittext(value, ",")
 					if(L.len != 2)
-						GLOB.config_error_log << "Invalid LAW_WEIGHT: " + t
+						WRITE_FILE(GLOB.config_error_log, "Invalid LAW_WEIGHT: " + t)
 						continue
 					var/lawid = L[1]
 					var/weight = text2num(L[2])
@@ -782,7 +782,7 @@
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
 				else
-					GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
+					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 		else if(type == "policies")
 			policies[name] = value
 
@@ -840,7 +840,7 @@
 			if ("disabled")
 				currentmap = null
 			else
-				GLOB.config_error_log << "Unknown command in map vote config: '[command]'"
+				WRITE_FILE(GLOB.config_error_log, "Unknown command in map vote config: '[command]'")
 
 
 /datum/configuration/proc/loadsql(filename)
@@ -884,7 +884,7 @@
 			if("feedback_tableprefix")
 				global.sqlfdbktableprefix = value
 			else
-				GLOB.config_error_log << "Unknown setting in configuration: '[name]'"
+				WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

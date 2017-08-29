@@ -397,7 +397,7 @@
 	})
 "aaP" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -409,7 +409,7 @@
 	})
 "aaQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -444,7 +444,7 @@
 	name = "Permabrig"
 	})
 "aaV" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/security/processing{
 	name = "Permabrig"
@@ -532,8 +532,8 @@
 	})
 "abd" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
+/obj/item/folder/red,
+/obj/item/pen,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -742,12 +742,12 @@
 "abz" = (
 /obj/structure/table,
 /obj/item/stack/cable_coil,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "abA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/zipties{
+/obj/item/storage/box/zipties{
 	pixel_x = 1;
 	pixel_y = 2
 	},
@@ -980,7 +980,7 @@
 /area/shuttle/syndicate)
 "abX" = (
 /obj/machinery/hydroponics/soil,
-/obj/item/weapon/cultivator,
+/obj/item/cultivator,
 /turf/open/floor/grass,
 /area/security/processing{
 	name = "Permabrig"
@@ -1274,23 +1274,23 @@
 /area/shuttle/syndicate)
 "acx" = (
 /obj/structure/table,
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = 2;
 	pixel_y = -3
 	},
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/grenade/plastic/c4{
+/obj/item/grenade/plastic/c4{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1743,7 +1743,7 @@
 	})
 "adh" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
+/obj/item/storage/box/prisoner,
 /turf/open/floor/plasteel{
 	icon_state = "redfull"
 	},
@@ -1856,7 +1856,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /turf/open/floor/plasteel{
 	icon_state = "redfull"
 	},
@@ -1912,16 +1912,16 @@
 /area/shuttle/syndicate)
 "ady" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "adz" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver{
+/obj/item/screwdriver{
 	pixel_y = 9
 	},
 /obj/item/device/assembly/voice{
@@ -1931,7 +1931,7 @@
 /area/shuttle/syndicate)
 "adA" = (
 /obj/structure/table,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/item/device/assembly/infra,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
@@ -1951,7 +1951,7 @@
 /area/shuttle/syndicate)
 "adC" = (
 /obj/structure/table,
-/obj/item/weapon/weldingtool/largetank{
+/obj/item/weldingtool/largetank{
 	pixel_y = 3
 	},
 /obj/item/device/multitool,
@@ -2016,8 +2016,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/restraints/handcuffs,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel{
 	icon_state = "redfull"
 	},
@@ -2046,8 +2046,8 @@
 /area/shuttle/syndicate)
 "adL" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/syndicate,
-/obj/item/weapon/crowbar/red,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate)
 "adM" = (
@@ -2172,7 +2172,7 @@
 	})
 "adZ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -2340,8 +2340,8 @@
 	})
 "aeq" = (
 /obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/reagent_containers/food/snacks/donut/jelly,
+/obj/item/paper,
+/obj/item/reagent_containers/food/snacks/donut/jelly,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -2351,7 +2351,7 @@
 "aer" = (
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/table/glass,
 /obj/structure/window/reinforced{
 	dir = 8
@@ -2368,7 +2368,7 @@
 	})
 "aes" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
+/obj/item/bedsheet/red,
 /obj/structure/window/reinforced{
 	dir = 1;
 	pixel_y = 1
@@ -2382,11 +2382,11 @@
 	name = "Prisoner Processing"
 	})
 "aet" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/table/glass,
 /obj/structure/window/reinforced{
 	dir = 1;
@@ -2437,12 +2437,12 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -2450,12 +2450,12 @@
 /area/shuttle/syndicate)
 "aeA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -2471,11 +2471,11 @@
 /area/shuttle/syndicate)
 "aeC" = (
 /obj/structure/table,
-/obj/item/weapon/grenade/syndieminibomb{
+/obj/item/grenade/syndieminibomb{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/weapon/grenade/syndieminibomb{
+/obj/item/grenade/syndieminibomb{
 	pixel_x = -1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2514,11 +2514,11 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "aeJ" = (
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 1;
@@ -2540,12 +2540,12 @@
 	},
 /area/medical/virology)
 "aeK" = (
-/obj/item/weapon/book/manual/wiki/infections{
+/obj/item/book/manual/wiki/infections{
 	pixel_y = 7
 	},
-/obj/item/weapon/reagent_containers/syringe/antiviral,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 8;
@@ -2842,7 +2842,7 @@
 	})
 "afe" = (
 /obj/machinery/iv_drip,
-/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 4
 	},
@@ -2851,8 +2851,8 @@
 	})
 "aff" = (
 /obj/structure/table,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 8
@@ -2918,7 +2918,7 @@
 /turf/open/floor/plating,
 /area/medical/virology)
 "afn" = (
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -2968,15 +2968,15 @@
 	},
 /area/medical/virology)
 "afr" = (
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /obj/machinery/requests_console{
 	department = "Virology";
 	name = "Virology Requests Console";
@@ -3133,19 +3133,19 @@
 	})
 "afD" = (
 /obj/structure/table,
-/obj/item/weapon/cautery,
-/obj/item/weapon/scalpel,
+/obj/item/cautery,
+/obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "afE" = (
 /obj/structure/table/optable,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "afF" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/retractor,
+/obj/item/hemostat,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/syndicate)
 "afG" = (
@@ -3238,13 +3238,13 @@
 /area/medical/virology)
 "afO" = (
 /obj/structure/rack,
-/obj/item/weapon/crowbar/red,
+/obj/item/crowbar/red,
 /obj/machinery/light_switch{
 	pixel_x = 0;
 	pixel_y = 26
 	},
-/obj/item/weapon/wrench,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/wrench,
+/obj/item/restraints/handcuffs,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
@@ -3426,7 +3426,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/beakers,
+/obj/item/storage/box/beakers,
 /turf/open/floor/plasteel/whitegreen/side{
 	dir = 8
 	},
@@ -3629,7 +3629,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -3639,8 +3639,8 @@
 	})
 "agy" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
+/obj/item/folder/red,
+/obj/item/pen,
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching Prison Wing holding areas.";
 	name = "Prison Monitor";
@@ -3660,8 +3660,8 @@
 	})
 "agA" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
-/obj/item/weapon/card/id/prisoner,
+/obj/item/storage/box/prisoner,
+/obj/item/card/id/prisoner,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/processing{
 	name = "Prisoner Processing"
@@ -3762,7 +3762,7 @@
 /area/shuttle/syndicate)
 "agL" = (
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -4087,7 +4087,7 @@
 /area/medical/virology)
 "ahq" = (
 /obj/structure/closet/wardrobe/virology_white,
-/obj/item/weapon/storage/backpack/satchel/vir,
+/obj/item/storage/backpack/satchel/vir,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -4101,28 +4101,28 @@
 /area/medical/virology)
 "ahr" = (
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/BMinus{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
+/obj/item/reagent_containers/blood/BPlus{
 	pixel_x = 1;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus{
 	pixel_x = -2;
 	pixel_y = -1
 	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
+/obj/item/reagent_containers/blood/random,
 /turf/open/floor/plasteel/vault,
 /area/medical/virology)
 "ahs" = (
@@ -4190,8 +4190,8 @@
 	})
 "ahB" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/zipties,
-/obj/item/weapon/melee/baton,
+/obj/item/storage/box/zipties,
+/obj/item/melee/baton,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/processing{
 	name = "Prisoner Processing"
@@ -4307,7 +4307,7 @@
 	pixel_y = 1
 	},
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/backpack/satchel/leather/withwallet,
+/obj/item/storage/backpack/satchel/leather/withwallet,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ahM" = (
@@ -4319,7 +4319,7 @@
 	icon_state = "crateopen";
 	opened = 1
 	},
-/obj/item/weapon/hatchet,
+/obj/item/hatchet,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ahN" = (
@@ -4355,7 +4355,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/belt,
+/obj/item/storage/belt,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ahR" = (
@@ -4386,7 +4386,7 @@
 /area/maintenance/fore)
 "ahU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/structure/bed,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
@@ -4402,7 +4402,7 @@
 "ahW" = (
 /obj/structure/bed,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "ahX" = (
@@ -4517,7 +4517,7 @@
 	})
 "aii" = (
 /obj/item/stack/sheet/cardboard,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aij" = (
@@ -4532,7 +4532,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aim" = (
-/obj/item/weapon/caution,
+/obj/item/caution,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ain" = (
@@ -4570,16 +4570,16 @@
 /obj/machinery/newscaster{
 	pixel_x = -30
 	},
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/paper,
-/obj/item/weapon/pen/red,
+/obj/item/paper,
+/obj/item/pen/red,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 0;
 	pixel_y = 30
@@ -4611,7 +4611,7 @@
 /area/medical/virology)
 "aiu" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -4821,17 +4821,17 @@
 /area/shuttle/pod_4)
 "aiR" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/beaker,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "aiS" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_y = 4
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/freezer,
 /area/medical/virology)
 "aiT" = (
@@ -4843,7 +4843,7 @@
 /area/medical/virology)
 "aiU" = (
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 9
 	},
@@ -5033,7 +5033,7 @@
 /area/maintenance/fore)
 "ajt" = (
 /obj/structure/mopbucket,
-/obj/item/weapon/mop,
+/obj/item/mop,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aju" = (
@@ -5065,7 +5065,7 @@
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
-/obj/item/weapon/storage/pod{
+/obj/item/storage/pod{
 	pixel_x = 6;
 	pixel_y = -32
 	},
@@ -5303,7 +5303,7 @@
 	name = "Secure Workstations Common Area"
 	})
 "ajS" = (
-/obj/item/weapon/storage/box/lights,
+/obj/item/storage/box/lights,
 /turf/open/floor/plating,
 /area/construction/hallway{
 	name = "Secure Workstations Common Area"
@@ -5378,7 +5378,7 @@
 /turf/open/floor/plasteel/vault,
 /area/medical/virology)
 "akc" = (
-/obj/item/weapon/reagent_containers/food/snacks/sosjerky,
+/obj/item/reagent_containers/food/snacks/sosjerky,
 /obj/structure/table/glass,
 /turf/open/floor/plasteel/vault,
 /area/medical/virology)
@@ -5464,7 +5464,7 @@
 	name = "Brig Desk";
 	req_access_txt = "1"
 	},
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -5530,7 +5530,7 @@
 	name = "Secure Workstations Common Area"
 	})
 "ako" = (
-/obj/item/weapon/extinguisher,
+/obj/item/extinguisher,
 /turf/open/floor/plating,
 /area/construction/hallway{
 	name = "Secure Workstations Common Area"
@@ -5622,7 +5622,7 @@
 	name = "Brig Desk";
 	req_access_txt = "2"
 	},
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /obj/item/device/radio/off,
 /turf/open/floor/plasteel/black,
 /area/security/processing{
@@ -6153,7 +6153,7 @@
 /turf/open/floor/plasteel,
 /area/toxins/xenobiology)
 "alw" = (
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6283,7 +6283,7 @@
 /area/maintenance/fore)
 "alI" = (
 /obj/structure/table,
-/obj/item/weapon/coin/iron,
+/obj/item/coin/iron,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "alJ" = (
@@ -6298,7 +6298,7 @@
 /area/maintenance/fore)
 "alL" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk1";
 	name = "Bunk Bolt Control 1";
@@ -6329,7 +6329,7 @@
 /area/crew_quarters/sleep)
 "alP" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk2";
 	name = "Bunk Bolt Control 2";
@@ -6618,7 +6618,7 @@
 	})
 "amu" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep{
 	name = "\improper Dormitory Suite 3"
@@ -6670,7 +6670,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_3)
 "amB" = (
-/obj/item/weapon/storage/pod{
+/obj/item/storage/pod{
 	pixel_x = 6;
 	pixel_y = -28
 	},
@@ -6860,7 +6860,7 @@
 /area/maintenance/fore)
 "amY" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk3";
 	name = "Bunk Bolt Control 3";
@@ -6888,7 +6888,7 @@
 /area/crew_quarters/sleep)
 "anb" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk4";
 	name = "Bunk Bolt Control 4";
@@ -7157,7 +7157,7 @@
 	density = 0;
 	icon_state = "brokengrille"
 	},
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "anD" = (
@@ -7401,7 +7401,7 @@
 /area/maintenance/fore)
 "aoc" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk5";
 	name = "Bunk Bolt Control 5";
@@ -7429,7 +7429,7 @@
 /area/crew_quarters/sleep)
 "aof" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk6";
 	name = "Bunk Bolt Control 6";
@@ -7574,7 +7574,7 @@
 /area/toxins/xenobiology)
 "aoy" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/patriot,
+/obj/item/bedsheet/patriot,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep{
 	name = "\improper Dormitory Suite 4"
@@ -7647,7 +7647,7 @@
 	name = "Biodome Hallway"
 	})
 "aoG" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet,
@@ -7727,23 +7727,23 @@
 "aoR" = (
 /obj/machinery/light,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/monkeycubes,
-/obj/item/weapon/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aoS" = (
 /obj/structure/table/glass,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aoT" = (
 /obj/structure/table,
-/obj/item/weapon/extinguisher{
+/obj/item/extinguisher{
 	pixel_x = 4;
 	pixel_y = 3
 	},
-/obj/item/weapon/extinguisher,
+/obj/item/extinguisher,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aoU" = (
@@ -7755,7 +7755,7 @@
 	pixel_x = 0;
 	pixel_y = -30
 	},
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = 1;
 	pixel_y = 9
 	},
@@ -7781,11 +7781,11 @@
 /area/toxins/xenobiology)
 "aoW" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 2;
 	pixel_y = 2
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "aoX" = (
@@ -7865,7 +7865,7 @@
 /area/maintenance/fore)
 "api" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk7";
 	name = "Bunk Bolt Control 7";
@@ -7893,7 +7893,7 @@
 /area/crew_quarters/sleep)
 "apl" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk8";
 	name = "Bunk Bolt Control 8";
@@ -8134,7 +8134,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "apJ" = (
-/obj/item/weapon/storage/box/emptysandbags,
+/obj/item/storage/box/emptysandbags,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "apK" = (
@@ -8154,7 +8154,7 @@
 /area/shuttle/abandoned)
 "apN" = (
 /obj/structure/table,
-/obj/item/weapon/screwdriver,
+/obj/item/screwdriver,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "apO" = (
@@ -8277,7 +8277,7 @@
 	name = "\improper Dormitory Suite 4"
 	})
 "apY" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet,
@@ -8553,8 +8553,8 @@
 /area/maintenance/fore)
 "aqA" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/fancy/candle_box,
-/obj/item/weapon/lighter,
+/obj/item/storage/fancy/candle_box,
+/obj/item/lighter,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aqB" = (
@@ -8758,7 +8758,7 @@
 /area/crew_quarters/sleep)
 "aqY" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/green,
+/obj/item/bedsheet/green,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	name = "regular air vent";
@@ -8801,7 +8801,7 @@
 /area/crew_quarters/sleep)
 "are" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk9";
 	name = "Bunk Bolt Control 9";
@@ -8829,7 +8829,7 @@
 /area/crew_quarters/sleep)
 "arh" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk10";
 	name = "Bunk Bolt Control 10";
@@ -8842,14 +8842,14 @@
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep)
 "ari" = (
-/obj/item/weapon/paint/green,
+/obj/item/paint/green,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "arj" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paint/yellow,
+/obj/item/paint/yellow,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ark" = (
@@ -8888,7 +8888,7 @@
 /area/toxins/xenobiology)
 "aro" = (
 /obj/structure/table_frame,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "small"
 	},
 /turf/open/floor/plating,
@@ -8986,7 +8986,7 @@
 /area/crew_quarters/sleep)
 "arA" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/brown,
+/obj/item/bedsheet/brown,
 /obj/machinery/button/door{
 	id = "Dorm4";
 	name = "Dorm Bolt Control";
@@ -9002,7 +9002,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paint/violet,
+/obj/item/paint/violet,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "arC" = (
@@ -9017,7 +9017,7 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned)
 "arE" = (
-/obj/item/weapon/stock_parts/cell{
+/obj/item/stock_parts/cell{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -9025,11 +9025,11 @@
 /area/shuttle/abandoned)
 "arF" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/tank/internals/emergency_oxygen,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/tank/internals/emergency_oxygen,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "arG" = (
@@ -9132,7 +9132,7 @@
 /area/crew_quarters/sleep)
 "arP" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk11";
 	name = "Bunk Bolt Control 11";
@@ -9160,7 +9160,7 @@
 /area/crew_quarters/sleep)
 "arS" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk12";
 	name = "Bunk Bolt Control 12";
@@ -9185,7 +9185,7 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "arV" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/mineral/titanium,
@@ -9280,13 +9280,13 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "ase" = (
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asf" = (
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asg" = (
@@ -9397,21 +9397,21 @@
 /area/crew_quarters/sleep)
 "asp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/blue,
+/obj/item/bedsheet/blue,
 /turf/open/floor/wood,
 /area/crew_quarters/sleep)
 "asq" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin/construction,
-/obj/item/weapon/storage/crayons,
-/obj/item/weapon/paint/red,
+/obj/item/paper_bin/construction,
+/obj/item/storage/crayons,
+/obj/item/paint/red,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asr" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paint/green,
+/obj/item/paint/green,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "ass" = (
@@ -9508,7 +9508,7 @@
 /area/crew_quarters/sleep)
 "asC" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/yellow,
+/obj/item/bedsheet/yellow,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	name = "regular air vent";
@@ -9544,7 +9544,7 @@
 /area/crew_quarters/sleep)
 "asG" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk13";
 	name = "Bunk Bolt Control 13";
@@ -9572,7 +9572,7 @@
 /area/crew_quarters/sleep)
 "asJ" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk14";
 	name = "Bunk Bolt Control 14";
@@ -9595,7 +9595,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/paint/white,
+/obj/item/paint/white,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asM" = (
@@ -9695,7 +9695,7 @@
 	})
 "asX" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
+/obj/item/bedsheet/red,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep{
 	name = "\improper Dormitory Suite 2"
@@ -9754,7 +9754,7 @@
 /area/crew_quarters/sleep)
 "atf" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "atg" = (
@@ -9791,7 +9791,7 @@
 /area/shuttle/abandoned)
 "atl" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
@@ -9804,7 +9804,7 @@
 /area/shuttle/abandoned)
 "atn" = (
 /obj/structure/table,
-/obj/item/weapon/gun/energy/laser/retro,
+/obj/item/gun/energy/laser/retro,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "ato" = (
@@ -9896,7 +9896,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "atv" = (
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "atw" = (
@@ -10013,7 +10013,7 @@
 /area/crew_quarters/sleep)
 "atI" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk15";
 	name = "Bunk Bolt Control 15";
@@ -10041,7 +10041,7 @@
 /area/crew_quarters/sleep)
 "atL" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk16";
 	name = "Bunk Bolt Control 16";
@@ -10249,7 +10249,7 @@
 /area/crew_quarters/sleep)
 "auf" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/wallet,
+/obj/item/storage/wallet,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -10268,7 +10268,7 @@
 /area/crew_quarters/sleep)
 "auh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/hug/medical,
+/obj/item/storage/box/hug/medical,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -10313,7 +10313,7 @@
 /area/crew_quarters/sleep)
 "aun" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "Dorm2";
 	name = "Dorm Bolt Control";
@@ -10335,7 +10335,7 @@
 /area/shuttle/abandoned)
 "auq" = (
 /obj/structure/table,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "aur" = (
@@ -10415,18 +10415,18 @@
 /area/maintenance/fore)
 "aux" = (
 /obj/structure/table,
-/obj/item/weapon/lighter/greyscale,
+/obj/item/lighter/greyscale,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "auy" = (
 /obj/structure/table,
-/obj/item/weapon/hatchet/cutterblade,
-/obj/item/weapon/retractor,
+/obj/item/hatchet/cutterblade,
+/obj/item/retractor,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "auz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid,
+/obj/item/storage/firstaid,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "auA" = (
@@ -10438,7 +10438,7 @@
 	name = "\improper Dormitory Suite 2"
 	})
 "auB" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
 /turf/open/floor/carpet,
@@ -10466,12 +10466,12 @@
 /area/crew_quarters/sleep)
 "auG" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/briefcase,
+/obj/item/storage/briefcase,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "auH" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/crayons,
+/obj/item/storage/crayons,
 /turf/open/floor/plasteel,
 /area/crew_quarters/sleep)
 "auI" = (
@@ -10514,7 +10514,7 @@
 /area/crew_quarters/sleep)
 "auN" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk17";
 	name = "Bunk Bolt Control 17";
@@ -10542,7 +10542,7 @@
 /area/crew_quarters/sleep)
 "auQ" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/machinery/button/door{
 	id = "bunk18";
 	name = "Bunk Bolt Control 18";
@@ -10560,7 +10560,7 @@
 /area/maintenance/fore)
 "auS" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet,
+/obj/item/bedsheet,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -10799,7 +10799,7 @@
 /area/crew_quarters/sleep)
 "avp" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/ian,
+/obj/item/bedsheet/ian,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -10828,7 +10828,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avs" = (
-/obj/item/weapon/paint/black,
+/obj/item/paint/black,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avt" = (
@@ -10889,7 +10889,7 @@
 /area/toxins/xenobiology)
 "avz" = (
 /obj/structure/rack,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11030,7 +11030,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avT" = (
-/obj/item/weapon/paint/paint_remover,
+/obj/item/paint/paint_remover,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avU" = (
@@ -11103,13 +11103,13 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/toxins/xenobiology)
 "awc" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/oxygen,
+/obj/item/tank/internals/oxygen,
 /turf/open/floor/plating/airless/astplate{
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	},
@@ -11140,7 +11140,7 @@
 	})
 "awg" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awh" = (
@@ -11214,7 +11214,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awp" = (
-/obj/item/weapon/paint/blue,
+/obj/item/paint/blue,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awq" = (
@@ -11303,7 +11303,7 @@
 	})
 "awC" = (
 /obj/structure/grille,
-/obj/item/weapon/shard,
+/obj/item/shard,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awD" = (
@@ -11311,7 +11311,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awE" = (
-/obj/item/weapon/storage/firstaid,
+/obj/item/storage/firstaid,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awF" = (
@@ -11580,7 +11580,7 @@
 	})
 "axk" = (
 /obj/structure/grille,
-/obj/item/weapon/shard{
+/obj/item/shard{
 	icon_state = "medium"
 	},
 /turf/open/floor/plating,
@@ -11653,7 +11653,7 @@
 	name = "regular air scrubber";
 	on = 1
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	icon_state = "freezerfloor"
 	},
@@ -11714,7 +11714,7 @@
 /turf/closed/wall,
 /area/crew_quarters/fitness)
 "axA" = (
-/obj/item/weapon/scalpel,
+/obj/item/scalpel,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "axB" = (
@@ -11975,7 +11975,7 @@
 /area/crew_quarters/fitness)
 "ayd" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 6;
 	pixel_y = -5
 	},
@@ -12091,7 +12091,7 @@
 "ayn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
-/obj/item/weapon/shovel,
+/obj/item/shovel,
 /turf/open/floor/plating,
 /area/maintenance/fpmaint{
 	name = "Secure Workstations Maintenance"
@@ -12667,7 +12667,7 @@
 /area/maintenance/fore)
 "azw" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/purple,
+/obj/item/bedsheet/purple,
 /turf/open/floor/carpet,
 /area/crew_quarters/sleep{
 	name = "\improper Dormitory Suites"
@@ -12691,7 +12691,7 @@
 	name = "\improper Dormitory Suites"
 	})
 "azz" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_y = 32
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -12963,7 +12963,7 @@
 /area/crew_quarters/fitness)
 "azY" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azZ" = (
@@ -13475,7 +13475,7 @@
 /area/maintenance/fore)
 "aBj" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aBk" = (
@@ -13520,7 +13520,7 @@
 /area/library)
 "aBp" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/carpet,
 /area/library)
 "aBq" = (
@@ -13535,7 +13535,7 @@
 /area/library)
 "aBs" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid
 	},
@@ -13735,7 +13735,7 @@
 /area/maintenance/fore)
 "aBS" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/pill_bottle/dice,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aBT" = (
@@ -13782,7 +13782,7 @@
 /area/library)
 "aBZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -13797,7 +13797,7 @@
 	icon_state = "camera";
 	dir = 4
 	},
-/obj/item/weapon/storage/bag/books,
+/obj/item/storage/bag/books,
 /turf/open/floor/wood,
 /area/library)
 "aCb" = (
@@ -13811,7 +13811,7 @@
 /area/library)
 "aCc" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	name = "regular air vent";
 	on = 1
@@ -13869,7 +13869,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	tag = "icon-plant-17";
 	icon_state = "plant-17"
 	},
@@ -13910,7 +13910,7 @@
 /area/maintenance/fore)
 "aCn" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid
 	},
@@ -13923,14 +13923,14 @@
 /area/maintenance/fore)
 "aCp" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/cups,
+/obj/item/storage/box/cups,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid
 	},
 /area/maintenance/fore)
 "aCq" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/drinkingglasses,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/wood{
 	baseturf = /turf/open/floor/plating/asteroid
 	},
@@ -13950,7 +13950,7 @@
 	layer = 2.9
 	},
 /obj/structure/rack,
-/obj/item/weapon/restraints/handcuffs/fake/kinky,
+/obj/item/restraints/handcuffs/fake/kinky,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aCt" = (
@@ -13991,7 +13991,7 @@
 /area/maintenance/fore)
 "aCx" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/backpack/clown,
+/obj/item/storage/backpack/clown,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aCy" = (
@@ -14103,7 +14103,7 @@
 	dir = 9
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /obj/item/clothing/glasses/monocle,
 /turf/open/floor/wood,
 /area/library)
@@ -14124,7 +14124,7 @@
 	scrub_Toxins = 0
 	},
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = 0;
 	pixel_y = 12;
@@ -14308,7 +14308,7 @@
 /area/maintenance/fore)
 "aDe" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aDf" = (
@@ -14348,7 +14348,7 @@
 /area/library)
 "aDj" = (
 /obj/structure/table/wood/fancy,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-15";
 	pixel_x = 0;
 	pixel_y = 12;
@@ -14442,7 +14442,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1
 	},
@@ -14528,14 +14528,14 @@
 	name = "Asteroid"
 	})
 "aDC" = (
-/obj/item/weapon/storage/bag/trash,
+/obj/item/storage/bag/trash,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aDD" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/caution,
+/obj/item/caution,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aDE" = (
@@ -14924,8 +14924,8 @@
 "aEz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
-/obj/item/weapon/storage/box/cups,
+/obj/item/storage/box/cups,
+/obj/item/storage/box/cups,
 /obj/item/device/radio/intercom{
 	freerange = 0;
 	frequency = 1459;
@@ -14956,14 +14956,14 @@
 	})
 "aEC" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria{
 	name = "Cafe"
 	})
 "aED" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/cafeteria{
 	name = "Cafe"
@@ -15229,7 +15229,7 @@
 /turf/open/floor/wood,
 /area/library)
 "aFi" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21";
 	layer = 4.1;
 	pixel_x = -3;
@@ -15487,12 +15487,12 @@
 /area/library)
 "aFK" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/library)
 "aFL" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
+/obj/item/folder,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -15627,16 +15627,16 @@
 	})
 "aGa" = (
 /obj/structure/janitorialcart,
-/obj/item/weapon/mop,
+/obj/item/mop,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGb" = (
-/obj/item/weapon/caution,
-/obj/item/weapon/caution,
-/obj/item/weapon/caution,
-/obj/item/weapon/caution,
-/obj/item/weapon/caution,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGc" = (
@@ -15646,7 +15646,7 @@
 /area/janitor)
 "aGd" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -15655,15 +15655,15 @@
 /area/janitor)
 "aGe" = (
 /obj/structure/table,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
-/obj/item/weapon/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
+/obj/item/grenade/chem_grenade/cleaner,
 /obj/machinery/requests_console{
 	department = "Janitorial";
 	departmentType = 1;
 	pixel_y = -29
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel,
 /area/janitor)
 "aGf" = (
@@ -15721,7 +15721,7 @@
 /area/chapel/main)
 "aGo" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/grown/harebell,
+/obj/item/reagent_containers/food/snacks/grown/harebell,
 /turf/open/floor/wood,
 /area/chapel/main)
 "aGp" = (
@@ -15794,10 +15794,10 @@
 /area/chapel/main)
 "aGz" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/poppypretzel,
-/obj/item/weapon/reagent_containers/food/snacks/poppypretzel,
-/obj/item/weapon/reagent_containers/food/snacks/poppypretzel,
-/obj/item/weapon/reagent_containers/food/snacks/poppypretzel,
+/obj/item/reagent_containers/food/snacks/poppypretzel,
+/obj/item/reagent_containers/food/snacks/poppypretzel,
+/obj/item/reagent_containers/food/snacks/poppypretzel,
+/obj/item/reagent_containers/food/snacks/poppypretzel,
 /turf/open/floor/plasteel/chapel{
 	tag = "icon-chapel (EAST)";
 	icon_state = "chapel";
@@ -15882,7 +15882,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aGN" = (
@@ -16019,7 +16019,7 @@
 	pixel_x = 24
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/grown/poppy,
+/obj/item/reagent_containers/food/snacks/grown/poppy,
 /turf/open/floor/plasteel/chapel,
 /area/chapel/main)
 "aHd" = (
@@ -16112,7 +16112,7 @@
 	icon_state = "bulb1";
 	dir = 4
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	tag = "icon-plant-18";
 	icon_state = "plant-18"
 	},
@@ -16162,7 +16162,7 @@
 	})
 "aHs" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Cafateria APC";
@@ -16195,7 +16195,7 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/item/weapon/storage/backpack/botany,
+/obj/item/storage/backpack/botany,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aHv" = (
@@ -16237,8 +16237,8 @@
 /area/chapel/main)
 "aHA" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen,
+/obj/item/folder,
+/obj/item/pen,
 /turf/open/floor/wood,
 /area/chapel/main)
 "aHB" = (
@@ -16403,7 +16403,7 @@
 /area/maintenance/starboard)
 "aHW" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/book/bible,
+/obj/item/storage/book/bible,
 /obj/structure/cable{
 	icon_state = "2-4";
 	tag = "icon-2-8"
@@ -16412,7 +16412,7 @@
 /area/chapel/main)
 "aHX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -16487,7 +16487,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/book/bible,
+/obj/item/storage/book/bible,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -16745,8 +16745,8 @@
 "aIC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/candle_box,
-/obj/item/weapon/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
 /turf/open/floor/wood,
 /area/chapel/main)
 "aID" = (
@@ -17074,7 +17074,7 @@
 /area/chapel/main)
 "aJm" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -17250,7 +17250,7 @@
 /area/hydroponics)
 "aJG" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aJH" = (
@@ -17435,7 +17435,7 @@
 /area/chapel/main)
 "aKe" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/snacks/bun,
+/obj/item/reagent_containers/food/snacks/bun,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
@@ -17825,7 +17825,7 @@
 "aLb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/gun/ballistic/revolver/russian,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aLc" = (
@@ -18074,7 +18074,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/juicer,
-/obj/item/weapon/book/manual/hydroponics_pod_people,
+/obj/item/book/manual/hydroponics_pod_people,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (EAST)";
 	icon_state = "camera";
@@ -18175,8 +18175,8 @@
 /area/chapel/main)
 "aLL" = (
 /obj/structure/closet/wardrobe/chaplain_black,
-/obj/item/weapon/storage/book/bible/booze,
-/obj/item/weapon/nullrod,
+/obj/item/storage/book/bible/booze,
+/obj/item/nullrod,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aLM" = (
@@ -18402,8 +18402,8 @@
 /area/crew_quarters/bar)
 "aMl" = (
 /obj/structure/closet/secure_closet/bar,
-/obj/item/weapon/vending_refill/boozeomat,
-/obj/item/weapon/vending_refill/cigarette,
+/obj/item/vending_refill/boozeomat,
+/obj/item/vending_refill/cigarette,
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	name = "regular air vent";
 	on = 1
@@ -18419,7 +18419,7 @@
 	},
 /obj/item/clothing/head/that,
 /obj/structure/table/wood,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/item/clothing/glasses/sunglasses/reagent,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -18427,7 +18427,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "aMn" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_y = 32
 	},
 /obj/structure/reagent_dispensers/beerkeg,
@@ -18603,7 +18603,7 @@
 /area/hydroponics)
 "aMH" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/item/weapon/watertank,
+/obj/item/watertank,
 /turf/open/floor/plasteel/hydrofloor,
 /area/hydroponics)
 "aMI" = (
@@ -18655,9 +18655,9 @@
 /area/hydroponics)
 "aMP" = (
 /obj/structure/closet/crate/hydroponics,
-/obj/item/weapon/shovel/spade,
-/obj/item/weapon/wrench,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/shovel/spade,
+/obj/item/wrench,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/plasteel{
 	icon_state = "hydrofloor"
 	},
@@ -18711,8 +18711,8 @@
 /area/medical/morgue)
 "aMW" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /obj/machinery/airalarm{
 	dir = 8;
 	icon_state = "alarm0";
@@ -19231,7 +19231,7 @@
 /area/medical/morgue)
 "aOc" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/white,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/black,
 /area/medical/morgue)
 "aOd" = (
@@ -19255,7 +19255,7 @@
 /area/chapel/office)
 "aOg" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater,
+/obj/item/reagent_containers/food/drinks/bottle/holywater,
 /obj/structure/cable{
 	tag = "icon-1-2";
 	icon_state = "1-2"
@@ -19264,8 +19264,8 @@
 /area/chapel/office)
 "aOh" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/candle_box,
-/obj/item/weapon/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
+/obj/item/storage/fancy/candle_box,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aOi" = (
@@ -19319,7 +19319,7 @@
 /area/crew_quarters/theatre)
 "aOq" = (
 /obj/structure/table/wood,
-/obj/item/weapon/lipstick,
+/obj/item/lipstick,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aOr" = (
@@ -19375,7 +19375,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/kitchen/rollingpin,
+/obj/item/kitchen/rollingpin,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aOy" = (
@@ -19383,11 +19383,11 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 9
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aOz" = (
@@ -19403,7 +19403,7 @@
 	icon_state = "pipe-j2"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aOB" = (
@@ -19594,7 +19594,7 @@
 /area/chapel/office)
 "aOZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -19684,7 +19684,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
 /obj/structure/table/wood/bar,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
@@ -19771,7 +19771,7 @@
 	name = "HoochMaster Deluxe";
 	pixel_x = -4
 	},
-/obj/item/weapon/book/manual/barman_recipes,
+/obj/item/book/manual/barman_recipes,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aPt" = (
@@ -19808,8 +19808,8 @@
 /area/crew_quarters/kitchen)
 "aPx" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/obj/item/weapon/storage/box/donkpockets{
+/obj/item/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -20205,8 +20205,8 @@
 /area/crew_quarters/theatre)
 "aQu" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/glass/rag,
-/obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/food/drinks/shaker,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aQv" = (
@@ -20310,8 +20310,8 @@
 /area/quartermaster/miningdock)
 "aQK" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/shovel,
+/obj/item/storage/bag/ore,
+/obj/item/shovel,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTHWEST)";
 	dir = 9;
@@ -20332,12 +20332,12 @@
 /area/quartermaster/miningdock)
 "aQN" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/masks,
+/obj/item/storage/box/masks,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aQO" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aQP" = (
@@ -20350,7 +20350,7 @@
 /area/maintenance/port)
 "aQQ" = (
 /obj/structure/closet,
-/obj/item/weapon/storage/backpack/chemistry,
+/obj/item/storage/backpack/chemistry,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aQR" = (
@@ -20539,7 +20539,7 @@
 /area/crew_quarters/bar)
 "aRq" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/snacks/mint,
+/obj/item/reagent_containers/food/snacks/mint,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
@@ -20609,7 +20609,7 @@
 /area/shuttle/labor)
 "aRA" = (
 /obj/structure/table,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -20808,7 +20808,7 @@
 /area/crew_quarters/kitchen)
 "aSb" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/tray,
+/obj/item/storage/bag/tray,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
 "aSc" = (
@@ -20906,13 +20906,13 @@
 /area/medical/genetics)
 "aSq" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aSr" = (
 /obj/machinery/light/small,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/masks,
+/obj/item/storage/box/masks,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aSs" = (
@@ -20924,8 +20924,8 @@
 	},
 /obj/structure/cable,
 /obj/structure/table/glass,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/folder/white,
+/obj/item/paper_bin,
+/obj/item/folder/white,
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
 "aSt" = (
@@ -20937,8 +20937,8 @@
 	pixel_y = 28
 	},
 /obj/structure/table,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "aSv" = (
@@ -20946,14 +20946,14 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/retractor,
+/obj/item/scalpel,
+/obj/item/retractor,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "aSw" = (
 /obj/structure/table,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/cautery,
+/obj/item/hemostat,
+/obj/item/cautery,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "aSx" = (
@@ -20961,12 +20961,12 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/weapon/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute,
 /turf/open/floor/plasteel/white/side,
 /area/medical/surgery)
 "aSy" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/white/corner{
 	tag = "icon-whitecorner (WEST)";
 	icon_state = "whitecorner";
@@ -20989,7 +20989,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /obj/machinery/light/small{
@@ -21223,7 +21223,7 @@
 /area/medical/surgery)
 "aTh" = (
 /obj/structure/table,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgical_drapes,
 /turf/open/floor/plasteel/white/side{
 	tag = "icon-whitehall (WEST)";
 	icon_state = "whitehall";
@@ -21292,7 +21292,7 @@
 /area/crew_quarters/bar)
 "aTs" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/glass/bucket,
 /turf/open/floor/grass,
 /area/construction/hallway{
 	name = "Biodome Hallway"
@@ -21393,7 +21393,7 @@
 	layer = 2.9
 	},
 /obj/structure/table,
-/obj/item/weapon/pen,
+/obj/item/pen,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aTG" = (
@@ -21457,8 +21457,8 @@
 	icon_state = "0-8"
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/disks,
-/obj/item/weapon/storage/pill_bottle/mutadone,
+/obj/item/storage/box/disks,
+/obj/item/storage/pill_bottle/mutadone,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -21474,8 +21474,8 @@
 	pixel_y = 24
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/injectors,
-/obj/item/weapon/storage/pill_bottle/mannitol,
+/obj/item/storage/box/injectors,
+/obj/item/storage/pill_bottle/mannitol,
 /obj/structure/cable{
 	tag = "icon-2-8";
 	icon_state = "2-8"
@@ -21558,7 +21558,7 @@
 /turf/open/floor/plasteel/black,
 /area/medical/surgery)
 "aTW" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	tag = "icon-plant-17";
 	icon_state = "plant-17"
 	},
@@ -21741,10 +21741,10 @@
 	name = "Spares";
 	req_access_txt = "57"
 	},
-/obj/item/weapon/storage/box/ids,
-/obj/item/weapon/storage/box/ids,
-/obj/item/weapon/storage/box/PDAs,
-/obj/item/weapon/storage/box/PDAs,
+/obj/item/storage/box/ids,
+/obj/item/storage/box/ids,
+/obj/item/storage/box/PDAs,
+/obj/item/storage/box/PDAs,
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "aUu" = (
@@ -21825,7 +21825,7 @@
 /area/maintenance/port)
 "aUE" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/air,
+/obj/item/tank/internals/air,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aUF" = (
@@ -22080,13 +22080,13 @@
 /area/maintenance/port)
 "aVk" = (
 /obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/poster/random_contraband,
+/obj/item/paper,
+/obj/item/poster/random_contraband,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aVl" = (
 /obj/structure/rack,
-/obj/item/weapon/razor,
+/obj/item/razor,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aVm" = (
@@ -22181,11 +22181,11 @@
 /area/medical/surgery)
 "aVx" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/masks{
+/obj/item/storage/box/masks{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plasteel/white/side{
 	tag = "icon-whitehall (NORTH)";
 	icon_state = "whitehall";
@@ -22211,7 +22211,7 @@
 /area/medical/surgery)
 "aVA" = (
 /obj/machinery/light/small,
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/plasteel/black,
@@ -22372,7 +22372,7 @@
 /area/crew_quarters/heads)
 "aVU" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -22523,10 +22523,10 @@
 	})
 "aWp" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
+/obj/item/reagent_containers/food/condiment/saltshaker{
 	pixel_x = 9
 	},
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/reagent_containers/food/condiment/peppermill,
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "aWq" = (
@@ -22611,8 +22611,8 @@
 /area/crew_quarters/heads)
 "aWA" = (
 /obj/structure/table,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/hop,
+/obj/item/folder/blue,
+/obj/item/stamp/hop,
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "aWB" = (
@@ -22906,7 +22906,7 @@
 /area/crew_quarters/heads)
 "aXl" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/wood,
 /area/crew_quarters/heads)
 "aXm" = (
@@ -22932,7 +22932,7 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/weapon/pickaxe,
+/obj/item/pickaxe,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aXr" = (
@@ -23062,7 +23062,7 @@
 "aXD" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/rxglasses,
+/obj/item/storage/box/rxglasses,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -23303,7 +23303,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/rack,
-/obj/item/weapon/poster/random_official,
+/obj/item/poster/random_official,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aYi" = (
@@ -23414,7 +23414,7 @@
 /area/medical/genetics_cloning)
 "aYu" = (
 /obj/machinery/computer/cloning,
-/obj/item/weapon/book/manual/medical_cloning,
+/obj/item/book/manual/medical_cloning,
 /turf/open/floor/plasteel/whitepurple,
 /area/medical/genetics_cloning)
 "aYv" = (
@@ -23734,14 +23734,14 @@
 /area/medical/patients_rooms)
 "aZb" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/salglu_solution,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "aZc" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/effect/landmark{
 	name = "revenantspawn"
 	},
@@ -23768,7 +23768,7 @@
 /area/medical/patients_rooms)
 "aZg" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/cmo,
+/obj/item/bedsheet/cmo,
 /turf/open/floor/carpet,
 /area/medical/medbay3)
 "aZh" = (
@@ -23799,8 +23799,8 @@
 /area/medical/cryo)
 "aZm" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (EAST)";
 	icon_state = "whitepurplecorner";
@@ -23817,8 +23817,8 @@
 /area/medical/cryo)
 "aZo" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (NORTH)";
 	icon_state = "whitepurplecorner";
@@ -23850,8 +23850,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /obj/structure/cable{
 	icon_state = "0-4";
 	d2 = 4
@@ -24142,7 +24142,7 @@
 	tag = "icon-1-2";
 	icon_state = "1-2"
 	},
-/obj/item/weapon/rack_parts,
+/obj/item/rack_parts,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aZY" = (
@@ -24261,8 +24261,8 @@
 /area/medical/cmo)
 "bam" = (
 /obj/structure/bookcase/manuals/medical,
-/obj/item/weapon/book/manual/wiki/chemistry,
-/obj/item/weapon/book/manual/medical_cloning,
+/obj/item/book/manual/wiki/chemistry,
+/obj/item/book/manual/medical_cloning,
 /turf/open/floor/plasteel/cmo,
 /area/medical/cmo)
 "ban" = (
@@ -24517,7 +24517,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/weapon/phone,
+/obj/item/phone,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "baP" = (
@@ -25365,7 +25365,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
@@ -25436,10 +25436,10 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/med_data/laptop,
 /obj/structure/window/reinforced,
-/obj/item/weapon/folder/white{
+/obj/item/folder/white{
 	pixel_x = 9
 	},
-/obj/item/weapon/pen/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/cmo,
 /area/medical/cmo)
 "bcz" = (
@@ -25454,7 +25454,7 @@
 /obj/structure/table/wood,
 /obj/structure/window/reinforced,
 /obj/machinery/keycard_auth,
-/obj/item/weapon/stamp/cmo{
+/obj/item/stamp/cmo{
 	pixel_x = 9
 	},
 /turf/open/floor/plasteel/cmo,
@@ -25901,8 +25901,8 @@
 /area/medical/patients_rooms)
 "bdw" = (
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "bdx" = (
@@ -26531,10 +26531,10 @@
 /area/medical/patients_rooms)
 "beF" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/britcup,
 /turf/open/floor/plasteel/barber,
 /area/medical/medbay3)
 "beG" = (
@@ -26634,8 +26634,8 @@
 	})
 "beQ" = (
 /obj/structure/table/glass,
-/obj/item/weapon/soap/nanotrasen,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/soap/nanotrasen,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -26714,7 +26714,7 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/item/weapon/twohanded/required/kirbyplants,
+/obj/item/twohanded/required/kirbyplants,
 /turf/open/floor/plasteel/cmo,
 /area/medical/cmo)
 "beY" = (
@@ -26745,22 +26745,22 @@
 "bfb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/darkred,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
 	})
 "bfc" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /obj/machinery/button/door{
 	id = "civ armory outer";
 	name = "Civilian Armory Outer Shutters";
@@ -26779,11 +26779,11 @@
 	})
 "bfe" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/medipens{
+/obj/item/storage/box/medipens{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/medipens/utility,
+/obj/item/storage/box/medipens/utility,
 /obj/machinery/button/door{
 	id = "civ armory inner";
 	name = "Civilian Armory Inner Shutters";
@@ -26800,8 +26800,8 @@
 	req_access_txt = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/backpack/dufflebag/sec{
-	contents = newlist(/obj/item/weapon/scalpel,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/cautery,/obj/item/weapon/circular_saw,/obj/item/weapon/surgical_drapes,/obj/item/clothing/mask/surgical);
+/obj/item/storage/backpack/dufflebag/sec{
+	contents = newlist(/obj/item/scalpel,/obj/item/hemostat,/obj/item/retractor,/obj/item/cautery,/obj/item/circular_saw,/obj/item/surgical_drapes,/obj/item/clothing/mask/surgical);
 	desc = "A large dufflebag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools.";
 	name = "dufflebag";
 	pixel_y = 5
@@ -26991,8 +26991,8 @@
 	pixel_y = -22
 	},
 /obj/structure/table,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/storage/bag/ore,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -27052,8 +27052,8 @@
 "bfG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/salglu_solution,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "bfH" = (
@@ -27076,11 +27076,11 @@
 	},
 /obj/structure/table,
 /obj/machinery/juicer,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
-/obj/item/weapon/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
+/obj/item/reagent_containers/food/snacks/grown/apple,
 /turf/open/floor/plasteel/barber,
 /area/medical/medbay3)
 "bfJ" = (
@@ -27472,17 +27472,17 @@
 	})
 "bgy" = (
 /obj/structure/table,
-/obj/item/weapon/pickaxe,
-/obj/item/weapon/shovel,
+/obj/item/pickaxe,
+/obj/item/shovel,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
 	})
 "bgz" = (
 /obj/structure/table,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore,
-/obj/item/weapon/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
 /turf/open/floor/plasteel/brown,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -27572,7 +27572,7 @@
 "bgK" = (
 /obj/structure/table,
 /obj/machinery/microwave,
-/obj/item/weapon/storage/box/donkpockets,
+/obj/item/storage/box/donkpockets,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	pixel_x = -28
@@ -27658,7 +27658,7 @@
 	})
 "bgT" = (
 /obj/machinery/chem_dispenser,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (NORTHWEST)";
 	icon_state = "whiteyellow";
@@ -27667,7 +27667,7 @@
 /area/medical/chemistry)
 "bgU" = (
 /obj/machinery/chem_master,
-/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (NORTH)";
 	icon_state = "whiteyellow";
@@ -27690,7 +27690,7 @@
 /obj/machinery/vending/wallmed{
 	pixel_y = 28
 	},
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/clothing/glasses/science,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (NORTH)";
@@ -27727,7 +27727,7 @@
 	dir = 1
 	},
 /obj/machinery/chem_master,
-/obj/item/weapon/book/manual/wiki/chemistry,
+/obj/item/book/manual/wiki/chemistry,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (NORTH)";
 	icon_state = "whiteyellow";
@@ -27736,7 +27736,7 @@
 /area/medical/chemistry)
 "bha" = (
 /obj/machinery/chem_dispenser,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (NORTHEAST)";
 	icon_state = "whiteyellow";
@@ -27757,7 +27757,7 @@
 /area/hallway/primary/port)
 "bhd" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
@@ -27765,25 +27765,25 @@
 "bhe" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/rack,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
 	})
 "bhf" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
 	})
 "bhg" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/silver_ids{
+/obj/item/storage/box/silver_ids{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/ids,
+/obj/item/storage/box/ids,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
@@ -27822,14 +27822,14 @@
 	})
 "bhi" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs,
+/obj/item/storage/box/flashbangs,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
 	})
 "bhj" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/flashes,
+/obj/item/storage/box/flashes,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
@@ -27839,7 +27839,7 @@
 	req_access_txt = 1
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/box/mechabeacons,
+/obj/item/storage/box/mechabeacons,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
@@ -27851,7 +27851,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/box/teargas,
+/obj/item/storage/box/teargas,
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/security/armory{
 	name = "Emergency Storage"
@@ -28126,12 +28126,12 @@
 	})
 "bhT" = (
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/reagent_containers/dropper,
-/obj/item/weapon/storage/pill_bottle/epinephrine,
-/obj/item/weapon/storage/pill_bottle/charcoal,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
+/obj/item/storage/pill_bottle/epinephrine,
+/obj/item/storage/pill_bottle/charcoal,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -28249,8 +28249,8 @@
 /area/security/checkpoint)
 "bif" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/red,
+/obj/item/paper_bin,
+/obj/item/pen/red,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 0;
@@ -28411,8 +28411,8 @@
 /area/security/checkpoint)
 "biq" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/pen/red,
+/obj/item/paper_bin,
+/obj/item/pen/red,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (SOUTHEAST)";
 	icon_state = "camera";
@@ -28955,7 +28955,7 @@
 /area/security/checkpoint)
 "bjx" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
@@ -29190,7 +29190,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bjQ" = (
@@ -29435,7 +29435,7 @@
 	dir = 8
 	},
 /obj/structure/closet/wardrobe/chemistry_white,
-/obj/item/weapon/storage/backpack/chemistry,
+/obj/item/storage/backpack/chemistry,
 /turf/open/floor/plasteel/whiteyellow/side{
 	tag = "icon-whiteyellow (SOUTHWEST)";
 	icon_state = "whiteyellow";
@@ -29445,15 +29445,15 @@
 "bkj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/beakers{
+/obj/item/storage/box/beakers{
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/box/pillbottles{
+/obj/item/storage/box/pillbottles{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/medical/chemistry)
 "bkk" = (
@@ -29466,11 +29466,11 @@
 /area/medical/chemistry)
 "bkl" = (
 /obj/structure/table/glass,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/grenade/chem_grenade,
-/obj/item/weapon/screwdriver,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/grenade/chem_grenade,
+/obj/item/screwdriver,
 /turf/open/floor/plasteel/whiteyellow/side,
 /area/medical/chemistry)
 "bkm" = (
@@ -29541,7 +29541,7 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/machinery/status_display{
 	dir = 8;
 	pixel_x = -32
@@ -29575,7 +29575,7 @@
 "bkw" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/darkbrown/side{
 	tag = "icon-darkbrown (NORTH)";
 	icon_state = "darkbrown";
@@ -29606,11 +29606,11 @@
 	tag = ""
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency{
+/obj/item/storage/toolbox/emergency{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /obj/item/device/multitool,
 /turf/open/floor/plasteel/darkbrown/side{
 	tag = "icon-darkbrown (NORTH)";
@@ -29674,7 +29674,7 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /obj/item/device/assembly/flash,
 /obj/machinery/status_display{
 	dir = 4;
@@ -30080,7 +30080,7 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/black,
 /area/bridge)
 "blz" = (
@@ -30339,8 +30339,8 @@
 "bmi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/glass/bottle/salglu_solution,
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/salglu_solution,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -30348,7 +30348,7 @@
 /area/medical/patients_rooms)
 "bmj" = (
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/medical,
+/obj/item/bedsheet/medical,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -30399,7 +30399,7 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/item/weapon/defibrillator/loaded,
+/obj/item/defibrillator/loaded,
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -30431,9 +30431,9 @@
 /area/medical/medbay3)
 "bmr" = (
 /obj/structure/rack,
-/obj/item/weapon/caution,
-/obj/item/weapon/caution,
-/obj/item/weapon/reagent_containers/spray/cleaner,
+/obj/item/caution,
+/obj/item/caution,
+/obj/item/reagent_containers/spray/cleaner,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -30648,7 +30648,7 @@
 	tag = "icon-pipe-j1 (WEST)"
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -31276,10 +31276,10 @@
 	pixel_x = -24
 	},
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-/obj/item/weapon/reagent_containers/glass/bottle/charcoal,
-/obj/item/weapon/reagent_containers/glass/bottle/potass_iodide,
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
+/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/charcoal,
+/obj/item/reagent_containers/glass/bottle/potass_iodide,
+/obj/item/reagent_containers/glass/bottle/morphine,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -31303,7 +31303,7 @@
 /area/medical/medbay3)
 "bnP" = (
 /obj/structure/mopbucket,
-/obj/item/weapon/mop,
+/obj/item/mop,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -31798,8 +31798,8 @@
 	pixel_y = 23
 	},
 /obj/structure/table,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/yellow,
+/obj/item/clipboard,
+/obj/item/folder/yellow,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
@@ -31825,7 +31825,7 @@
 /area/quartermaster/office)
 "boP" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
@@ -31835,7 +31835,7 @@
 "boQ" = (
 /obj/structure/table,
 /obj/item/device/multitool,
-/obj/item/weapon/screwdriver,
+/obj/item/screwdriver,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTH)";
 	icon_state = "brown";
@@ -31845,7 +31845,7 @@
 "boR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (NORTHEAST)";
 	icon_state = "brown";
@@ -31995,10 +31995,10 @@
 	pixel_y = 0
 	},
 /obj/structure/rack,
-/obj/item/weapon/reagent_containers/glass/bottle/histamine,
-/obj/item/weapon/reagent_containers/glass/bottle/histamine,
-/obj/item/weapon/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/weapon/reagent_containers/glass/bottle/toxin,
+/obj/item/reagent_containers/glass/bottle/histamine,
+/obj/item/reagent_containers/glass/bottle/histamine,
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/glass/bottle/toxin,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -32010,10 +32010,10 @@
 /area/medical/medbay3)
 "bpg" = (
 /obj/structure/rack,
-/obj/item/weapon/cartridge/medical,
-/obj/item/weapon/cartridge/medical,
-/obj/item/weapon/cartridge/chemistry,
-/obj/item/weapon/cartridge/chemistry,
+/obj/item/cartridge/medical,
+/obj/item/cartridge/medical,
+/obj/item/cartridge/chemistry,
+/obj/item/cartridge/chemistry,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 24
 	},
@@ -32022,16 +32022,16 @@
 	},
 /area/medical/medbay3)
 "bph" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/fire{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -32086,20 +32086,20 @@
 	pixel_x = 24
 	},
 /obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/reagent_containers/blood/APlus,
-/obj/item/weapon/reagent_containers/blood/BMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus,
-/obj/item/weapon/reagent_containers/blood/BPlus,
-/obj/item/weapon/reagent_containers/blood/BPlus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus,
-/obj/item/weapon/reagent_containers/blood/OPlus,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/AMinus,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/APlus,
+/obj/item/reagent_containers/blood/BMinus,
+/obj/item/reagent_containers/blood/BMinus,
+/obj/item/reagent_containers/blood/BPlus,
+/obj/item/reagent_containers/blood/BPlus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OMinus,
+/obj/item/reagent_containers/blood/OPlus,
+/obj/item/reagent_containers/blood/OPlus,
+/obj/item/reagent_containers/blood/empty,
+/obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
@@ -32319,12 +32319,12 @@
 	pixel_y = 24
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/cigarettes/cigars,
-/obj/item/weapon/coin/plasma{
+/obj/item/storage/fancy/cigarettes/cigars,
+/obj/item/coin/plasma{
 	pixel_x = 3;
 	pixel_y = 2
 	},
-/obj/item/weapon/lighter{
+/obj/item/lighter{
 	pixel_x = -6
 	},
 /turf/open/floor/wood,
@@ -32374,12 +32374,12 @@
 /area/crew_quarters/captain)
 "bpS" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/stamp/captain,
+/obj/item/folder/blue,
+/obj/item/stamp/captain,
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
-/obj/item/weapon/melee/chainofcommand,
+/obj/item/melee/chainofcommand,
 /obj/item/device/radio/intercom{
 	desc = "Talk smack through this.";
 	dir = 4;
@@ -32625,25 +32625,25 @@
 /area/medical/medbay3)
 "bqq" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/gun/syringe,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/storage/box/syringes,
+/obj/item/gun/syringe,
+/obj/item/gun/syringe,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
 /area/medical/medbay3)
 "bqr" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/brute{
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/brute{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -32685,11 +32685,11 @@
 	})
 "bqu" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/medipens{
+/obj/item/storage/box/medipens{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/syringes,
+/obj/item/storage/box/syringes,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (EAST)";
 	icon_state = "whiteblue";
@@ -32725,7 +32725,7 @@
 /area/security/checkpoint/medical)
 "bqy" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/light_switch{
 	pixel_y = 24
 	},
@@ -32747,8 +32747,8 @@
 /area/security/checkpoint/medical)
 "bqA" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel{
 	icon_state = "redfull"
 	},
@@ -32842,8 +32842,8 @@
 /area/bridge/meeting_room)
 "bqJ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen,
+/obj/item/folder/white,
+/obj/item/pen,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bqK" = (
@@ -32852,8 +32852,8 @@
 	initialize_directions = 11
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bqL" = (
@@ -32941,7 +32941,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bqV" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 32
 	},
 /turf/open/floor/wood,
@@ -33056,11 +33056,11 @@
 /area/quartermaster/office)
 "brf" = (
 /obj/structure/table,
-/obj/item/weapon/stamp{
+/obj/item/stamp{
 	pixel_x = -6
 	},
-/obj/item/weapon/stamp/denied,
-/obj/item/weapon/pen{
+/obj/item/stamp/denied,
+/obj/item/pen{
 	pixel_x = 4;
 	pixel_y = 7
 	},
@@ -33245,13 +33245,13 @@
 /area/medical/medbay3)
 "brx" = (
 /obj/structure/closet/crate,
-/obj/item/weapon/surgicaldrill,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/retractor,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/hemostat,
-/obj/item/weapon/cautery,
-/obj/item/weapon/surgical_drapes,
+/obj/item/surgicaldrill,
+/obj/item/circular_saw,
+/obj/item/retractor,
+/obj/item/scalpel,
+/obj/item/hemostat,
+/obj/item/cautery,
+/obj/item/surgical_drapes,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -33264,16 +33264,16 @@
 	},
 /area/medical/medbay3)
 "brz" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/item/weapon/storage/firstaid/toxin{
+/obj/item/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -33287,16 +33287,16 @@
 	name = "Medbay Storage"
 	})
 "brA" = (
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/firstaid/o2,
-/obj/item/weapon/storage/firstaid/o2{
+/obj/item/storage/firstaid/o2,
+/obj/item/storage/firstaid/o2{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -33325,11 +33325,11 @@
 	})
 "brD" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/masks{
+/obj/item/storage/box/masks{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/gloves,
+/obj/item/storage/box/gloves,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (SOUTHEAST)";
 	icon_state = "whiteblue";
@@ -33474,8 +33474,8 @@
 "brS" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen/blue,
+/obj/item/folder/blue,
+/obj/item/pen/blue,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "brT" = (
@@ -33504,7 +33504,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "brW" = (
@@ -33641,7 +33641,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/recharger,
-/obj/item/weapon/hand_tele,
+/obj/item/hand_tele,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -34001,9 +34001,9 @@
 	dir = 4;
 	pixel_x = 0
 	},
-/obj/item/weapon/clipboard,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen/blue,
+/obj/item/clipboard,
+/obj/item/folder/white,
+/obj/item/pen/blue,
 /obj/machinery/door/firedoor/border_only{
 	tag = "icon-door_open (EAST)";
 	icon_state = "door_open";
@@ -34033,8 +34033,8 @@
 /area/hallway/primary/port)
 "btc" = (
 /obj/structure/table/wood,
-/obj/item/weapon/folder,
-/obj/item/weapon/pen,
+/obj/item/folder,
+/obj/item/pen,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (EAST)";
 	icon_state = "camera";
@@ -34045,8 +34045,8 @@
 "btd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen,
+/obj/item/folder/yellow,
+/obj/item/pen,
 /turf/open/floor/carpet,
 /area/bridge/meeting_room)
 "bte" = (
@@ -34072,8 +34072,8 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bth" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/core/full/asimov,
-/obj/item/weapon/aiModule/core/freeformcore,
+/obj/item/aiModule/core/full/asimov,
+/obj/item/aiModule/core/freeformcore,
 /obj/machinery/door/window{
 	base_state = "right";
 	dir = 4;
@@ -34082,14 +34082,14 @@
 	req_access_txt = "20"
 	},
 /obj/structure/window/reinforced,
-/obj/item/weapon/aiModule/core/full/corp,
+/obj/item/aiModule/core/full/corp,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/aiModule/core/full/custom,
+/obj/item/aiModule/core/full/custom,
 /turf/open/floor/plasteel/blue,
 /area/ai_monitored/turret_protected/ai_upload)
 "bti" = (
@@ -34104,8 +34104,8 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "btk" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/supplied/oxygen,
-/obj/item/weapon/aiModule/zeroth/oneHuman,
+/obj/item/aiModule/supplied/oxygen,
+/obj/item/aiModule/zeroth/oneHuman,
 /obj/machinery/door/window{
 	base_state = "left";
 	dir = 8;
@@ -34113,16 +34113,16 @@
 	name = "High-Risk Modules";
 	req_access_txt = "20"
 	},
-/obj/item/weapon/aiModule/reset/purge,
+/obj/item/aiModule/reset/purge,
 /obj/structure/window/reinforced,
-/obj/item/weapon/aiModule/core/full/antimov,
+/obj/item/aiModule/core/full/antimov,
 /obj/structure/window/reinforced{
 	dir = 1
 	},
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/aiModule/supplied/protectStation,
+/obj/item/aiModule/supplied/protectStation,
 /turf/open/floor/plasteel/blue,
 /area/ai_monitored/turret_protected/ai_upload)
 "btl" = (
@@ -34135,13 +34135,13 @@
 	pixel_y = -22
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/lockbox/medal,
+/obj/item/storage/lockbox/medal,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "btn" = (
 /obj/structure/table/wood,
-/obj/item/weapon/pinpointer,
-/obj/item/weapon/disk/nuclear,
+/obj/item/pinpointer,
+/obj/item/disk/nuclear,
 /turf/open/floor/wood,
 /area/crew_quarters/captain)
 "bto" = (
@@ -34323,7 +34323,7 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/box/mousetraps,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "btL" = (
@@ -34348,19 +34348,19 @@
 /obj/item/ammo_casing/a762,
 /obj/item/ammo_casing/a762,
 /obj/item/ammo_casing/a762,
-/obj/item/weapon/gun/ballistic/shotgun/boltaction,
+/obj/item/gun/ballistic/shotgun/boltaction,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "btO" = (
 /obj/structure/table/reinforced,
 /obj/item/device/electropack,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /obj/item/device/assembly/signaler,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "btP" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/internals/anesthetic,
+/obj/item/tank/internals/anesthetic,
 /obj/item/clothing/mask/breath,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
@@ -34374,13 +34374,13 @@
 "btR" = (
 /obj/structure/table/reinforced,
 /obj/item/device/taperecorder,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "btS" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "btT" = (
@@ -34388,7 +34388,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "btU" = (
-/obj/item/weapon/restraints/handcuffs/cable/zipties/used,
+/obj/item/restraints/handcuffs/cable/zipties/used,
 /turf/open/floor/plasteel{
 	icon_plating = "asteroid";
 	icon_state = "asteroid";
@@ -34485,7 +34485,7 @@
 	pixel_x = -24
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/whiteblue/side{
 	tag = "icon-whiteblue (WEST)";
 	icon_state = "whiteblue";
@@ -34503,7 +34503,7 @@
 	icon_state = "door_open";
 	dir = 4
 	},
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bue" = (
@@ -35078,8 +35078,8 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/card/id/captains_spare,
-/obj/item/weapon/reagent_containers/food/drinks/flask/gold,
+/obj/item/card/id/captains_spare,
+/obj/item/reagent_containers/food/drinks/flask/gold,
 /turf/open/floor/wood,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
@@ -35191,7 +35191,7 @@
 /area/security/checkpoint/supply)
 "bvE" = (
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/folder/yellow,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (WEST)";
 	icon_state = "brown";
@@ -35269,7 +35269,7 @@
 /area/quartermaster/storage)
 "bvP" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /obj/item/hand_labeler_refill,
 /turf/open/floor/plasteel/brown{
 	tag = "icon-brown (SOUTHEAST)";
@@ -35561,7 +35561,7 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bwy" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/core/full/asimov,
+/obj/item/aiModule/core/full/asimov,
 /turf/open/floor/plasteel/blue,
 /area/ai_monitored/turret_protected/ai_upload)
 "bwz" = (
@@ -35590,8 +35590,8 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "bwB" = (
 /obj/structure/table,
-/obj/item/weapon/aiModule/core/freeformcore,
-/obj/item/weapon/aiModule/reset,
+/obj/item/aiModule/core/freeformcore,
+/obj/item/aiModule/reset,
 /turf/open/floor/plasteel/blue,
 /area/ai_monitored/turret_protected/ai_upload)
 "bwC" = (
@@ -35608,7 +35608,7 @@
 	on = 1
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/captain,
+/obj/item/bedsheet/captain,
 /turf/open/floor/wood,
 /area/crew_quarters/captain{
 	name = "\improper Captain's Quarters"
@@ -35680,7 +35680,7 @@
 	req_access_txt = "47"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -35689,7 +35689,7 @@
 "bwL" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/toxins/lab)
 "bwM" = (
@@ -35770,7 +35770,7 @@
 /area/security/checkpoint/supply)
 "bwU" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (NORTH)";
 	icon_state = "camera";
@@ -36000,7 +36000,7 @@
 /turf/open/floor/wood,
 /area/security/hos)
 "bxz" = (
-/obj/item/weapon/storage/secure/safe/HoS{
+/obj/item/storage/secure/safe/HoS{
 	pixel_x = 35
 	},
 /obj/structure/closet/secure_closet/hos,
@@ -36141,11 +36141,11 @@
 	pixel_y = 1
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/white,
 /area/toxins/lab)
 "bxS" = (
@@ -36596,8 +36596,8 @@
 	pixel_x = 24
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/hand_labeler,
-/obj/item/weapon/reagent_containers/food/drinks/flask/det,
+/obj/item/hand_labeler,
+/obj/item/reagent_containers/food/drinks/flask/det,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
 	pixel_x = 0;
@@ -36637,8 +36637,8 @@
 /area/security/hos)
 "byN" = (
 /obj/structure/table/wood,
-/obj/item/weapon/storage/box/deputy,
-/obj/item/weapon/storage/box/seccarts{
+/obj/item/storage/box/deputy,
+/obj/item/storage/box/seccarts{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -36722,7 +36722,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/soap/deluxe,
+/obj/item/soap/deluxe,
 /obj/machinery/shower{
 	tag = "icon-shower (NORTH)";
 	icon_state = "shower";
@@ -36818,12 +36818,12 @@
 /area/toxins/lab)
 "bzi" = (
 /obj/structure/table/glass,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/micro_laser,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/micro_laser,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = 3
@@ -36958,7 +36958,7 @@
 	name = "Waste to Filter";
 	on = 1
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bzy" = (
@@ -37257,7 +37257,7 @@
 /area/toxins/lab)
 "bAi" = (
 /obj/machinery/r_n_d/circuit_imprinter,
-/obj/item/weapon/reagent_containers/glass/beaker/sulphuric,
+/obj/item/reagent_containers/glass/beaker/sulphuric,
 /turf/open/floor/plasteel/purple,
 /area/toxins/lab)
 "bAj" = (
@@ -37265,17 +37265,17 @@
 /turf/open/floor/plasteel/white,
 /area/toxins/lab)
 "bAk" = (
-/obj/item/weapon/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
 /obj/structure/table/glass,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/console_screen,
-/obj/item/weapon/stock_parts/matter_bin,
-/obj/item/weapon/stock_parts/matter_bin,
-/obj/item/weapon/stock_parts/scanning_module{
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/console_screen,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/matter_bin,
+/obj/item/stock_parts/scanning_module{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/stock_parts/scanning_module,
+/obj/item/stock_parts/scanning_module,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -37321,8 +37321,8 @@
 	on = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
+/obj/item/paper,
+/obj/item/pen,
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "bAp" = (
@@ -37332,7 +37332,7 @@
 	on = 1
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "bAq" = (
@@ -37341,7 +37341,7 @@
 /area/security/transfer)
 "bAr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/bodybags,
+/obj/item/storage/box/bodybags,
 /turf/open/floor/plasteel/black,
 /area/security/transfer)
 "bAs" = (
@@ -37366,12 +37366,12 @@
 	dir = 8;
 	pixel_x = 0
 	},
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bAv" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
+/obj/item/storage/box/prisoner,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bAw" = (
@@ -37514,8 +37514,8 @@
 	on = 1
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -37526,8 +37526,8 @@
 	on = 1
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/paper_bin,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
 	},
@@ -37662,7 +37662,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/item/weapon/twohanded/required/kirbyplants/dead,
+/obj/item/twohanded/required/kirbyplants/dead,
 /turf/open/floor/plasteel/whitepurple/corner,
 /area/crew_quarters/hor)
 "bBf" = (
@@ -37758,18 +37758,18 @@
 /turf/open/floor/plating,
 /area/toxins/lab)
 "bBo" = (
-/obj/item/weapon/folder/white,
+/obj/item/folder/white,
 /obj/structure/table,
-/obj/item/weapon/disk/tech_disk{
+/obj/item/disk/tech_disk{
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/item/weapon/disk/tech_disk{
+/obj/item/disk/tech_disk{
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/obj/item/weapon/disk/design_disk,
-/obj/item/weapon/disk/design_disk,
+/obj/item/disk/design_disk,
+/obj/item/disk/design_disk,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -37827,15 +37827,15 @@
 /area/toxins/lab)
 "bBu" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/beaker/large{
+/obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/reagent_containers/glass/beaker{
+/obj/item/reagent_containers/glass/beaker{
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/weapon/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -38029,7 +38029,7 @@
 /area/lawoffice)
 "bBO" = (
 /obj/structure/table/wood,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -38045,7 +38045,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/weapon/storage/briefcase,
+/obj/item/storage/briefcase,
 /turf/open/floor/wood,
 /area/lawoffice)
 "bBQ" = (
@@ -38121,7 +38121,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/weapon/storage/briefcase,
+/obj/item/storage/briefcase,
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/plasteel{
 	icon_state = "grimy"
@@ -38175,8 +38175,8 @@
 "bCd" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
+/obj/item/folder/red,
+/obj/item/stamp/hos,
 /turf/open/floor/carpet,
 /area/security/hos)
 "bCe" = (
@@ -38272,7 +38272,7 @@
 	})
 "bCp" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel{
 	icon_state = "whitepurplefull"
 	},
@@ -38389,7 +38389,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bCD" = (
@@ -38548,7 +38548,7 @@
 	dir = 1;
 	pixel_y = 0
 	},
-/obj/item/weapon/gavelblock,
+/obj/item/gavelblock,
 /obj/machinery/door/firedoor/border_only{
 	tag = "icon-door_open (NORTH)";
 	icon_state = "door_open";
@@ -38641,7 +38641,7 @@
 	initialize_directions = 11
 	},
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/courtroom)
 "bCV" = (
@@ -38661,7 +38661,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel/black,
 /area/crew_quarters/courtroom)
 "bCX" = (
@@ -38692,8 +38692,8 @@
 /area/lawoffice)
 "bCZ" = (
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/stamp/law,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/stamp/law,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -38749,7 +38749,7 @@
 	},
 /area/security/detectives_office)
 "bDg" = (
-/obj/item/weapon/storage/secure/safe{
+/obj/item/storage/secure/safe{
 	pixel_x = 0;
 	pixel_y = -23
 	},
@@ -38769,7 +38769,7 @@
 "bDi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/wood,
 /area/security/hos)
 "bDj" = (
@@ -39259,7 +39259,7 @@
 /area/ai_monitored/turret_protected/ai)
 "bEn" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/aicore{
+/obj/item/circuitboard/aicore{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -39348,7 +39348,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes,
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/plasteel{
 	icon_state = "whitepurplefull"
 	},
@@ -39559,8 +39559,8 @@
 /area/shuttle/labor)
 "bER" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/restraints/handcuffs,
+/obj/item/folder/red,
+/obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/labor)
 "bES" = (
@@ -39638,7 +39638,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bFa" = (
@@ -39650,7 +39650,7 @@
 /area/crew_quarters/courtroom)
 "bFb" = (
 /obj/structure/closet/secure_closet/courtroom,
-/obj/item/weapon/gavelhammer,
+/obj/item/gavelhammer,
 /turf/open/floor/plasteel/blue/side{
 	tag = "icon-blue (SOUTHWEST)";
 	icon_state = "blue";
@@ -39715,7 +39715,7 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "bFk" = (
-/obj/item/weapon/twohanded/required/kirbyplants{
+/obj/item/twohanded/required/kirbyplants{
 	tag = "icon-plant-18";
 	icon_state = "plant-18"
 	},
@@ -39795,7 +39795,7 @@
 	pixel_y = 24
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -39812,7 +39812,7 @@
 "bFu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /obj/machinery/camera/autoname,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
@@ -39848,7 +39848,7 @@
 /area/security/main)
 "bFx" = (
 /obj/structure/closet/cabinet,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth,
+/obj/item/reagent_containers/food/drinks/bottle/vermouth,
 /obj/item/key/security,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (NORTHWEST)";
@@ -40390,7 +40390,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bGy" = (
@@ -40398,7 +40398,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/red,
+/obj/item/folder/red,
 /turf/open/floor/plasteel,
 /area/security/main)
 "bGz" = (
@@ -40771,15 +40771,15 @@
 /area/ai_monitored/security/armory)
 "bHm" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/rubbershot{
+/obj/item/storage/box/rubbershot{
 	pixel_x = 4;
 	pixel_y = -6
 	},
-/obj/item/weapon/storage/box/rubbershot{
+/obj/item/storage/box/rubbershot{
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/weapon/storage/box/rubbershot{
+/obj/item/storage/box/rubbershot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -40825,15 +40825,15 @@
 /area/ai_monitored/security/armory)
 "bHo" = (
 /obj/structure/rack,
-/obj/item/weapon/shield/riot{
+/obj/item/shield/riot{
 	pixel_x = 4;
 	pixel_y = -7
 	},
-/obj/item/weapon/shield/riot{
+/obj/item/shield/riot{
 	pixel_x = 0;
 	pixel_y = -3
 	},
-/obj/item/weapon/shield/riot{
+/obj/item/shield/riot{
 	pixel_x = -4;
 	pixel_y = 0
 	},
@@ -40883,7 +40883,7 @@
 /obj/item/clothing/ears/earmuffs,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/sunglasses,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /obj/machinery/power/apc{
 	cell_type = 5000;
 	dir = 8;
@@ -41633,7 +41633,7 @@
 /area/security/transfer)
 "bIw" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bIx" = (
@@ -41692,7 +41692,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden{
 	name = "Security Control"
@@ -41849,7 +41849,7 @@
 /area/security/main)
 "bIW" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/red/corner{
 	dir = 4
 	},
@@ -42070,7 +42070,7 @@
 	layer = 2.9
 	},
 /obj/structure/closet/crate,
-/obj/item/weapon/storage/belt,
+/obj/item/storage/belt,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bJu" = (
@@ -42091,17 +42091,17 @@
 /area/shuttle/labor)
 "bJw" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/zipties,
+/obj/item/storage/box/zipties,
 /turf/open/floor/plasteel/darkred,
 /area/security/transfer)
 "bJx" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/shotgun/riot{
+/obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/ballistic/shotgun/riot,
-/obj/item/weapon/gun/ballistic/shotgun/riot{
+/obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -42661,11 +42661,11 @@
 	})
 "bKC" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/lockbox/loyalty{
+/obj/item/storage/lockbox/loyalty{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/lockbox/loyalty,
+/obj/item/storage/lockbox/loyalty,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 4
@@ -42679,11 +42679,11 @@
 /area/ai_monitored/security/armory)
 "bKE" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/chemimp{
+/obj/item/storage/box/chemimp{
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/obj/item/weapon/storage/box/trackimp,
+/obj/item/storage/box/trackimp,
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	on = 1
 	},
@@ -42694,15 +42694,15 @@
 /area/ai_monitored/security/armory)
 "bKF" = (
 /obj/structure/rack,
-/obj/item/weapon/storage/box/handcuffs{
+/obj/item/storage/box/handcuffs{
 	pixel_x = 3;
 	pixel_y = -6
 	},
-/obj/item/weapon/storage/box/flashbangs{
+/obj/item/storage/box/flashbangs{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/weapon/storage/box/teargas{
+/obj/item/storage/box/teargas{
 	pixel_x = -6;
 	pixel_y = 3
 	},
@@ -42771,8 +42771,8 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden{
 	name = "Security Control"
@@ -43222,8 +43222,8 @@
 	pixel_y = -24
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/white,
-/obj/item/weapon/pen{
+/obj/item/folder/white,
+/obj/item/pen{
 	desc = "Writes upside down!";
 	name = "astronaut pen"
 	},
@@ -43370,7 +43370,7 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/storage/firstaid/toxin,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/toxins/mixing)
@@ -43442,15 +43442,15 @@
 /area/security/transfer)
 "bLT" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/plasma/light{
+/obj/item/gun/energy/plasma/light{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/weapon/gun/energy/plasma/light{
+/obj/item/gun/energy/plasma/light{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/gun/energy/plasma/light,
+/obj/item/gun/energy/plasma/light,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 4
@@ -43470,12 +43470,12 @@
 /area/ai_monitored/security/armory)
 "bLW" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun{
+/obj/item/gun/energy/e_gun{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/e_gun,
-/obj/item/weapon/gun/energy/e_gun{
+/obj/item/gun/energy/e_gun,
+/obj/item/gun/energy/e_gun{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -43587,7 +43587,7 @@
 	dir = 4
 	},
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -43614,7 +43614,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/darkred,
 /area/security/brig{
 	name = "Security"
@@ -43740,8 +43740,8 @@
 /area/security/main)
 "bMt" = (
 /obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen/red,
+/obj/item/folder/red,
+/obj/item/pen/red,
 /turf/open/floor/plasteel/whitered/side{
 	tag = "icon-whitered (NORTHWEST)";
 	icon_state = "whitered";
@@ -43861,7 +43861,7 @@
 "bMJ" = (
 /obj/machinery/light,
 /obj/structure/closet,
-/obj/item/weapon/screwdriver,
+/obj/item/screwdriver,
 /obj/item/device/radio/intercom{
 	dir = 8;
 	pixel_x = -28
@@ -44106,15 +44106,15 @@
 /area/shuttle/labor)
 "bNj" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser/rifle{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/weapon/gun/energy/laser/rifle{
+/obj/item/gun/energy/laser/rifle{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/gun/energy/laser/rifle,
+/obj/item/gun/energy/laser/rifle,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 4
@@ -44122,16 +44122,16 @@
 /area/ai_monitored/security/armory)
 "bNk" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/dragnet{
+/obj/item/gun/energy/e_gun/dragnet{
 	layer = 3.1;
 	pixel_x = -4;
 	pixel_y = 3
 	},
-/obj/item/weapon/storage/box/firingpins{
+/obj/item/storage/box/firingpins{
 	pixel_x = 3;
 	pixel_y = -6
 	},
-/obj/item/weapon/storage/box/firingpins,
+/obj/item/storage/box/firingpins,
 /turf/open/floor/plasteel/darkred,
 /area/ai_monitored/security/armory)
 "bNl" = (
@@ -44142,19 +44142,19 @@
 	},
 /obj/structure/rack,
 /obj/item/clothing/suit/armor/laserproof,
-/obj/item/weapon/gun/energy/ionrifle{
+/obj/item/gun/energy/ionrifle{
 	pixel_y = -4
 	},
 /turf/open/floor/plasteel/darkred,
 /area/ai_monitored/security/armory)
 "bNm" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
+/obj/item/gun/energy/laser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -44196,7 +44196,7 @@
 	pixel_x = 24
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/hand_labeler,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden{
 	name = "Security Control"
@@ -44233,7 +44233,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -44594,12 +44594,12 @@
 	req_access_txt = "29"
 	},
 /obj/structure/table,
-/obj/item/weapon/stock_parts/cell/high,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high{
 	pixel_x = 10;
 	pixel_y = 5
 	},
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/stock_parts/cell/high{
 	pixel_x = 10;
 	pixel_y = 5
 	},
@@ -44834,11 +44834,11 @@
 /area/toxins/mixing)
 "bOx" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = -3;
 	pixel_y = 3
 	},
@@ -44849,12 +44849,12 @@
 /area/ai_monitored/security/armory)
 "bOy" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
+/obj/item/gun/energy/e_gun/advtaser{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/gun/energy/e_gun/advtaser,
-/obj/item/weapon/gun/energy/e_gun/advtaser{
+/obj/item/gun/energy/e_gun/advtaser,
+/obj/item/gun/energy/e_gun/advtaser{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -44930,7 +44930,7 @@
 "bOF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -45024,8 +45024,8 @@
 /area/security/main)
 "bOO" = (
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/morphine,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/whitered/side{
 	tag = "icon-whitered (WEST)";
 	icon_state = "whitered";
@@ -45062,8 +45062,8 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/weapon/reagent_containers/glass/bottle/morphine,
-/obj/item/weapon/reagent_containers/syringe,
+/obj/item/reagent_containers/glass/bottle/morphine,
+/obj/item/reagent_containers/syringe,
 /turf/open/floor/plasteel/whitered/side{
 	tag = "icon-whitered (EAST)";
 	icon_state = "whitered";
@@ -45180,7 +45180,7 @@
 "bPj" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/whitepurple/corner{
 	tag = "icon-whitepurplecorner (NORTH)";
 	icon_state = "whitepurplecorner";
@@ -45361,8 +45361,8 @@
 /area/toxins/mixing)
 "bPz" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/wrench,
-/obj/item/weapon/screwdriver{
+/obj/item/wrench,
+/obj/item/screwdriver{
 	pixel_y = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -45445,15 +45445,15 @@
 /area/toxins/mixing)
 "bPI" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = 6;
 	pixel_y = -6
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550{
+/obj/item/gun/ballistic/automatic/wt550{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/gun/ballistic/automatic/wt550,
+/obj/item/gun/ballistic/automatic/wt550,
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 4
@@ -45468,16 +45468,16 @@
 /area/security/armory)
 "bPK" = (
 /obj/structure/rack,
-/obj/item/weapon/grenade/barrier{
+/obj/item/grenade/barrier{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/weapon/grenade/barrier{
+/obj/item/grenade/barrier{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/grenade/barrier,
-/obj/item/weapon/grenade/barrier{
+/obj/item/grenade/barrier,
+/obj/item/grenade/barrier{
 	pixel_x = -2;
 	pixel_y = 2
 	},
@@ -45520,14 +45520,14 @@
 	pixel_x = 28;
 	syndie = 1
 	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden{
 	name = "Security Control"
 	})
 "bPQ" = (
 /obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
+/obj/item/storage/fancy/donut_box,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden{
 	name = "Security Control"
@@ -45762,7 +45762,7 @@
 	name = "Robotics Desk";
 	req_access_txt = "29"
 	},
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
@@ -45806,11 +45806,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/storage/toolbox/electrical{
+/obj/item/storage/toolbox/electrical{
 	pixel_x = 1;
 	pixel_y = 6
 	},
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -46006,7 +46006,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -46128,8 +46128,8 @@
 	})
 "bQV" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/folder/red,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/folder/red,
 /turf/open/floor/plating,
 /area/maintenance/maintcentral{
 	name = "Central Maintenance"
@@ -46190,15 +46190,15 @@
 /area/assembly/robotics)
 "bRf" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -46345,7 +46345,7 @@
 	dir = 5
 	},
 /obj/structure/closet/secure_closet/security,
-/obj/item/weapon/storage/belt/security/full,
+/obj/item/storage/belt/security/full,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -46366,7 +46366,7 @@
 	pixel_x = -28
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -46400,7 +46400,7 @@
 	pixel_x = -28
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -46434,7 +46434,7 @@
 	pixel_x = -28
 	},
 /obj/structure/bed,
-/obj/item/weapon/bedsheet/orange,
+/obj/item/bedsheet/orange,
 /turf/open/floor/plasteel/black,
 /area/security/brig{
 	name = "Security"
@@ -46529,8 +46529,8 @@
 	})
 "bRP" = (
 /obj/structure/table,
-/obj/item/weapon/storage/briefcase,
-/obj/item/weapon/pen/red,
+/obj/item/storage/briefcase,
+/obj/item/pen/red,
 /turf/open/floor/plating,
 /area/maintenance/maintcentral{
 	name = "Central Maintenance"
@@ -47086,7 +47086,7 @@
 /area/tcommsat/computer)
 "bSW" = (
 /obj/structure/table,
-/obj/item/weapon/paper_bin,
+/obj/item/paper_bin,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
@@ -47381,8 +47381,8 @@
 /area/tcommsat/computer)
 "bTH" = (
 /obj/structure/table,
-/obj/item/weapon/folder/blue,
-/obj/item/weapon/pen/blue,
+/obj/item/folder/blue,
+/obj/item/pen/blue,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/tcommsat/computer)
@@ -47421,8 +47421,8 @@
 /area/assembly/robotics)
 "bTN" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/hemostat,
+/obj/item/retractor,
+/obj/item/hemostat,
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bTO" = (
@@ -47434,8 +47434,8 @@
 "bTP" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
-/obj/item/weapon/surgical_drapes,
-/obj/item/weapon/razor,
+/obj/item/surgical_drapes,
+/obj/item/razor,
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bTQ" = (
@@ -47497,7 +47497,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/disks,
+/obj/item/storage/box/disks,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bTW" = (
@@ -47798,8 +47798,8 @@
 /area/assembly/chargebay)
 "bUz" = (
 /obj/structure/table,
-/obj/item/weapon/circular_saw,
-/obj/item/weapon/scalpel{
+/obj/item/circular_saw,
+/obj/item/scalpel{
 	pixel_y = 12
 	},
 /turf/open/floor/plasteel/white,
@@ -47826,14 +47826,14 @@
 	})
 "bUB" = (
 /obj/structure/table,
-/obj/item/weapon/rack_parts,
+/obj/item/rack_parts,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bUC" = (
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/weapon/storage/box/lights,
+/obj/item/storage/box/lights,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bUD" = (
@@ -48156,8 +48156,8 @@
 /area/assembly/chargebay)
 "bVl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/pen,
+/obj/item/storage/box/bodybags,
+/obj/item/pen,
 /turf/open/floor/plasteel/white,
 /area/assembly/robotics)
 "bVm" = (
@@ -48369,7 +48369,7 @@
 /area/ai_monitored/nuke_storage)
 "bVL" = (
 /obj/structure/filingcabinet,
-/obj/item/weapon/folder/documents,
+/obj/item/folder/documents,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -48386,10 +48386,10 @@
 	pixel_y = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/paper/gravity_gen{
+/obj/item/paper/gravity_gen{
 	layer = 3
 	},
-/obj/item/weapon/pen/blue,
+/obj/item/pen/blue,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -35
@@ -48565,7 +48565,7 @@
 /obj/structure/table,
 /obj/item/device/plant_analyzer,
 /obj/item/device/gps/science,
-/obj/item/weapon/storage/belt,
+/obj/item/storage/belt,
 /turf/open/floor/plating,
 /area/maintenance/asmaint2)
 "bWi" = (
@@ -48989,7 +48989,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
 /turf/open/floor/plasteel,
 /area/storage/eva)
 "bXe" = (
@@ -49020,7 +49020,7 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/weapon/storage/belt/champion,
+/obj/item/storage/belt/champion,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -49037,23 +49037,23 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/nuke_storage)
 "bXi" = (
-/obj/item/weapon/coin/silver{
+/obj/item/coin/silver{
 	pixel_x = 7;
 	pixel_y = 12
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/coin/silver{
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/coin/silver{
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/coin/silver{
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/weapon/coin/silver{
+/obj/item/coin/silver{
 	pixel_x = 5;
 	pixel_y = -8
 	},
@@ -49359,7 +49359,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/tank/jetpack/carbondioxide,
 /turf/open/floor/plasteel,
 /area/storage/eva)
 "bXT" = (
@@ -49408,11 +49408,11 @@
 "bXY" = (
 /obj/structure/safe,
 /obj/item/clothing/head/bearpelt,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/gun/ballistic/revolver/russian,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/gun/ballistic/revolver/russian,
 /obj/item/ammo_box/a357,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka/badminka,
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
@@ -49506,7 +49506,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/storage/toolbox/mechanical{
+/obj/item/storage/toolbox/mechanical{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -49688,12 +49688,12 @@
 /area/shuttle/escape)
 "bYH" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/crowbar,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bYI" = (
@@ -50796,12 +50796,12 @@
 /area/shuttle/escape)
 "cbl" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cbm" = (
@@ -52294,8 +52294,8 @@
 /area/ai_monitored/storage/secure)
 "ceg" = (
 /obj/structure/table,
-/obj/item/weapon/electronics/apc,
-/obj/item/weapon/electronics/airlock,
+/obj/item/electronics/apc,
+/obj/item/electronics/airlock,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -52306,7 +52306,7 @@
 "ceh" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell,
+/obj/item/stock_parts/cell,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -52611,32 +52611,32 @@
 /area/engine/chiefs_office)
 "ceU" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/clipboard,
-/obj/item/weapon/lighter,
+/obj/item/clipboard,
+/obj/item/lighter,
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/item/weapon/stamp/ce,
-/obj/item/weapon/stock_parts/cell/high/plus,
+/obj/item/stamp/ce,
+/obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/wood,
 /area/engine/chiefs_office)
 "ceV" = (
-/obj/item/weapon/cartridge/engineering{
+/obj/item/cartridge/engineering{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/weapon/cartridge/engineering{
+/obj/item/cartridge/engineering{
 	pixel_x = -3;
 	pixel_y = 2
 	},
-/obj/item/weapon/cartridge/engineering{
+/obj/item/cartridge/engineering{
 	pixel_x = 3
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/item/weapon/cartridge/atmos,
+/obj/item/cartridge/atmos,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -52674,7 +52674,7 @@
 "ceZ" = (
 /obj/structure/table,
 /obj/item/device/aicard,
-/obj/item/weapon/aiModule/reset,
+/obj/item/aiModule/reset,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -52690,21 +52690,21 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/pandemic{
+/obj/item/circuitboard/computer/pandemic{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/weapon/circuitboard/computer/rdconsole,
-/obj/item/weapon/circuitboard/machine/rdserver{
+/obj/item/circuitboard/computer/rdconsole,
+/obj/item/circuitboard/machine/rdserver{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/machine/destructive_analyzer,
-/obj/item/weapon/circuitboard/machine/protolathe,
-/obj/item/weapon/circuitboard/computer/aifixer,
-/obj/item/weapon/circuitboard/computer/teleporter,
-/obj/item/weapon/circuitboard/machine/circuit_imprinter,
-/obj/item/weapon/circuitboard/machine/mechfab,
+/obj/item/circuitboard/machine/destructive_analyzer,
+/obj/item/circuitboard/machine/protolathe,
+/obj/item/circuitboard/computer/aifixer,
+/obj/item/circuitboard/computer/teleporter,
+/obj/item/circuitboard/machine/circuit_imprinter,
+/obj/item/circuitboard/machine/mechfab,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
@@ -52715,24 +52715,24 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/mining,
-/obj/item/weapon/circuitboard/machine/autolathe{
+/obj/item/circuitboard/computer/mining,
+/obj/item/circuitboard/machine/autolathe{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/computer/arcade/battle,
+/obj/item/circuitboard/computer/arcade/battle,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
 /area/ai_monitored/storage/secure)
 "cfd" = (
 /obj/structure/rack,
-/obj/item/weapon/circuitboard/machine/telecomms/processor,
-/obj/item/weapon/circuitboard/machine/telecomms/receiver,
-/obj/item/weapon/circuitboard/machine/telecomms/server,
-/obj/item/weapon/circuitboard/machine/telecomms/bus,
-/obj/item/weapon/circuitboard/machine/telecomms/broadcaster,
-/obj/item/weapon/circuitboard/computer/message_monitor{
+/obj/item/circuitboard/machine/telecomms/processor,
+/obj/item/circuitboard/machine/telecomms/receiver,
+/obj/item/circuitboard/machine/telecomms/server,
+/obj/item/circuitboard/machine/telecomms/bus,
+/obj/item/circuitboard/machine/telecomms/broadcaster,
+/obj/item/circuitboard/computer/message_monitor{
 	pixel_y = -5
 	},
 /obj/structure/cable{
@@ -52917,8 +52917,8 @@
 /area/engine/chiefs_office)
 "cfy" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/paper/monitorkey,
+/obj/item/folder/yellow,
+/obj/item/paper/monitorkey,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/wood,
 /area/engine/chiefs_office)
@@ -52985,11 +52985,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/borgupload{
+/obj/item/circuitboard/computer/borgupload{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/computer/aiupload{
+/obj/item/circuitboard/computer/aiupload{
 	pixel_x = 2;
 	pixel_y = -2
 	},
@@ -53323,11 +53323,11 @@
 /area/engine/chiefs_office)
 "cgt" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin{
+/obj/item/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/storage/fancy/cigarettes,
+/obj/item/storage/fancy/cigarettes,
 /turf/open/floor/wood,
 /area/engine/chiefs_office)
 "cgu" = (
@@ -53373,15 +53373,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/crew{
+/obj/item/circuitboard/computer/crew{
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/obj/item/weapon/circuitboard/computer/card{
+/obj/item/circuitboard/computer/card{
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/weapon/circuitboard/computer/communications{
+/obj/item/circuitboard/computer/communications{
 	pixel_x = 5;
 	pixel_y = -5
 	},
@@ -53416,9 +53416,9 @@
 /area/ai_monitored/storage/secure)
 "cgz" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/analyzer,
-/obj/item/weapon/stock_parts/subspace/analyzer,
-/obj/item/weapon/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/analyzer,
+/obj/item/stock_parts/subspace/analyzer,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -53667,7 +53667,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
 "chd" = (
-/obj/item/weapon/storage/pod{
+/obj/item/storage/pod{
 	pixel_x = 6;
 	pixel_y = -28
 	},
@@ -53790,11 +53790,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/robotics{
+/obj/item/circuitboard/computer/robotics{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/computer/mecha_control{
+/obj/item/circuitboard/computer/mecha_control{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -53802,16 +53802,16 @@
 /area/ai_monitored/storage/secure)
 "chr" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/micro_laser,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/manipulator,
-/obj/item/weapon/stock_parts/capacitor,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
-/obj/item/weapon/stock_parts/micro_laser/high,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/manipulator,
+/obj/item/stock_parts/capacitor,
+/obj/item/stock_parts/micro_laser/high,
+/obj/item/stock_parts/micro_laser/high,
+/obj/item/stock_parts/micro_laser/high,
+/obj/item/stock_parts/micro_laser/high,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (EAST)";
 	icon_state = "camera";
@@ -53823,9 +53823,9 @@
 /area/ai_monitored/storage/secure)
 "chs" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/amplifier,
-/obj/item/weapon/stock_parts/subspace/amplifier,
-/obj/item/weapon/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier,
+/obj/item/stock_parts/subspace/amplifier,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -53835,16 +53835,16 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/cloning{
+/obj/item/circuitboard/computer/cloning{
 	pixel_x = 0
 	},
-/obj/item/weapon/circuitboard/computer/med_data{
+/obj/item/circuitboard/computer/med_data{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/weapon/circuitboard/machine/clonescanner,
-/obj/item/weapon/circuitboard/machine/clonepod,
-/obj/item/weapon/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/clonescanner,
+/obj/item/circuitboard/machine/clonepod,
+/obj/item/circuitboard/computer/scan_consolenew,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -53854,11 +53854,11 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/secure_data{
+/obj/item/circuitboard/computer/secure_data{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/computer/security{
+/obj/item/circuitboard/computer/security{
 	pixel_x = 1;
 	pixel_y = -1
 	},
@@ -53871,15 +53871,15 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/circuitboard/computer/powermonitor{
+/obj/item/circuitboard/computer/powermonitor{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/weapon/circuitboard/computer/stationalert{
+/obj/item/circuitboard/computer/stationalert{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/weapon/circuitboard/computer/atmos_alert{
+/obj/item/circuitboard/computer/atmos_alert{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -53911,9 +53911,9 @@
 	name = "Atmospherics Desk";
 	req_access_txt = "24"
 	},
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/folder/yellow,
-/obj/item/weapon/pen,
+/obj/item/folder/yellow,
+/obj/item/folder/yellow,
+/obj/item/pen,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -54238,22 +54238,22 @@
 	})
 "cih" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/transmitter,
-/obj/item/weapon/stock_parts/subspace/transmitter,
-/obj/item/weapon/stock_parts/subspace/treatment,
-/obj/item/weapon/stock_parts/subspace/treatment,
-/obj/item/weapon/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/transmitter,
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/treatment,
+/obj/item/stock_parts/subspace/treatment,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
 /area/ai_monitored/storage/secure)
 "cii" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/subspace/filter,
-/obj/item/weapon/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
+/obj/item/stock_parts/subspace/filter,
 /obj/machinery/light/small,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
@@ -54261,12 +54261,12 @@
 /area/ai_monitored/storage/secure)
 "cij" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/ansible,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/item/weapon/stock_parts/subspace/crystal,
-/obj/item/weapon/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/ansible,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/crystal,
+/obj/item/stock_parts/subspace/crystal,
 /turf/open/floor/plating{
 	icon_state = "floorgrime"
 	},
@@ -54491,7 +54491,7 @@
 /area/hallway/secondary/entry)
 "ciM" = (
 /obj/structure/table,
-/obj/item/weapon/hand_tele,
+/obj/item/hand_tele,
 /turf/open/floor/plasteel,
 /area/teleporter)
 "ciN" = (
@@ -54860,8 +54860,8 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cjM" = (
-/obj/item/weapon/crowbar,
-/obj/item/weapon/wrench,
+/obj/item/crowbar,
+/obj/item/wrench,
 /obj/structure/table,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel{
@@ -54897,7 +54897,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/table,
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cjQ" = (
@@ -55097,7 +55097,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/reagent_containers/food/drinks/soda_cans/thirteenloko,
+/obj/item/reagent_containers/food/drinks/soda_cans/thirteenloko,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "ckq" = (
@@ -55375,7 +55375,7 @@
 	pixel_x = -30
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/plasteel{
 	icon_state = "redfull"
 	},
@@ -55678,12 +55678,12 @@
 /area/shuttle/escape)
 "clN" = (
 /obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/weapon/crowbar,
+/obj/item/crowbar,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27;
 	pixel_y = 0
@@ -57207,7 +57207,7 @@
 	dir = 4;
 	initialize_directions = 11
 	},
-/obj/item/weapon/wrench,
+/obj/item/wrench,
 /turf/open/floor/plasteel,
 /area/atmos)
 "coL" = (
@@ -57413,7 +57413,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
 "cpk" = (
-/obj/item/weapon/storage/pod{
+/obj/item/storage/pod{
 	pixel_x = 6;
 	pixel_y = -28
 	},
@@ -57548,7 +57548,7 @@
 /area/atmos)
 "cpD" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/item/weapon/cigbutt,
+/obj/item/cigbutt,
 /turf/open/floor/plasteel,
 /area/atmos)
 "cpE" = (
@@ -57714,7 +57714,7 @@
 /turf/open/floor/plating,
 /area/maintenance/atmos_control)
 "cpW" = (
-/obj/item/weapon/storage/backpack/industrial,
+/obj/item/storage/backpack/industrial,
 /turf/open/floor/plating,
 /area/maintenance/atmos_control)
 "cpX" = (
@@ -57882,7 +57882,7 @@
 	dir = 8;
 	layer = 2.9
 	},
-/obj/item/weapon/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cqv" = (
@@ -58585,7 +58585,7 @@
 	pixel_y = 23
 	},
 /obj/structure/rack,
-/obj/item/weapon/storage/belt/utility,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 5
 	},
@@ -59581,8 +59581,8 @@
 	tag = ""
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox,
-/obj/item/weapon/storage/toolbox,
+/obj/item/storage/toolbox,
+/obj/item/storage/toolbox,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "ctP" = (
@@ -59664,7 +59664,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/reagent_containers/pill/charcoal,
+/obj/item/reagent_containers/pill/charcoal,
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
 "ctW" = (
@@ -59674,7 +59674,7 @@
 	icon_state = "4-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
 /obj/machinery/camera/autoname{
 	tag = "icon-camera (EAST)";
 	icon_state = "camera";
@@ -59737,9 +59737,9 @@
 /obj/item/stack/sheet/glass{
 	amount = 50
 	},
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/stock_parts/cell/high{
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
 	},
@@ -59849,10 +59849,10 @@
 /obj/structure/rack{
 	dir = 4
 	},
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
 /obj/item/stack/cable_coil,
 /obj/item/stack/cable_coil,
 /obj/item/wallframe/camera,
@@ -59941,7 +59941,7 @@
 	tag = ""
 	},
 /obj/structure/table,
-/obj/item/weapon/folder/yellow,
+/obj/item/folder/yellow,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
@@ -59960,7 +59960,7 @@
 	icon_state = "1-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cuv" = (
@@ -59976,8 +59976,8 @@
 	icon_state = "2-4"
 	},
 /obj/structure/table,
-/obj/item/weapon/electronics/apc,
-/obj/item/weapon/electronics/apc,
+/obj/item/electronics/apc,
+/obj/item/electronics/apc,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
@@ -60056,7 +60056,7 @@
 /obj/machinery/light,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/weapon/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plasteel/yellow,
 /area/engine/engineering)
 "cuD" = (
@@ -60066,11 +60066,11 @@
 	icon_state = "2-8"
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/engineering_construction{
+/obj/item/book/manual/wiki/engineering_construction{
 	pixel_x = 6
 	},
-/obj/item/weapon/book/manual/wiki/engineering_guide,
-/obj/item/weapon/book/manual/wiki/engineering_hacking{
+/obj/item/book/manual/wiki/engineering_guide,
+/obj/item/book/manual/wiki/engineering_hacking{
 	pixel_x = -6
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -60299,7 +60299,7 @@
 	on = 1
 	},
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cuY" = (
@@ -60309,8 +60309,8 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/weapon/electronics/airlock,
-/obj/item/weapon/electronics/airlock,
+/obj/item/electronics/airlock,
+/obj/item/electronics/airlock,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
@@ -60350,10 +60350,10 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/engineering_particle_accelerator{
+/obj/item/book/manual/engineering_particle_accelerator{
 	pixel_x = 3
 	},
-/obj/item/weapon/book/manual/engineering_singularity_safety{
+/obj/item/book/manual/engineering_singularity_safety{
 	pixel_x = -3
 	},
 /turf/open/floor/plasteel/yellow/side{
@@ -60729,7 +60729,7 @@
 /area/engine/engineering)
 "cvG" = (
 /obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cvH" = (
@@ -60739,7 +60739,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/weapon/electronics/firealarm,
+/obj/item/electronics/firealarm,
 /obj/item/stack/cable_coil{
 	pixel_x = 5
 	},
@@ -60782,7 +60782,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table,
-/obj/item/weapon/airlock_painter,
+/obj/item/airlock_painter,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (WEST)";
 	icon_state = "yellow";
@@ -60805,9 +60805,9 @@
 	tag = ""
 	},
 /obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/weapon/crowbar/red,
-/obj/item/weapon/storage/belt/utility,
+/obj/item/wrench,
+/obj/item/crowbar/red,
+/obj/item/storage/belt/utility,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
@@ -61000,8 +61000,8 @@
 /area/mining_construction)
 "cwj" = (
 /obj/structure/table,
-/obj/item/weapon/storage/box/lights/mixed,
-/obj/item/weapon/pipe_dispenser,
+/obj/item/storage/box/lights/mixed,
+/obj/item/pipe_dispenser,
 /obj/machinery/button/door{
 	id = "aux_base_shutters";
 	name = "Public Shutters Control";
@@ -61154,7 +61154,7 @@
 	},
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/weapon/storage/firstaid/fire,
+/obj/item/storage/firstaid/fire,
 /turf/open/floor/plasteel/yellow/side{
 	tag = "icon-yellow (EAST)";
 	icon_state = "yellow";
@@ -61247,7 +61247,7 @@
 /area/engine/engineering)
 "cwH" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/engineering_guide,
+/obj/item/book/manual/wiki/engineering_guide,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cwI" = (

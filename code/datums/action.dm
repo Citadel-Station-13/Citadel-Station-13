@@ -169,7 +169,7 @@
 
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
-	
+
 /datum/action/item_action/rcl
 	name = "Change Cable Color"
 	button_icon_state = "rcl_rainbow"
@@ -234,8 +234,8 @@
 		UpdateButtonIcon()
 
 /datum/action/item_action/toggle_unfriendly_fire/UpdateButtonIcon(status_only = FALSE)
-	if(istype(target, /obj/item/weapon/hierophant_club))
-		var/obj/item/weapon/hierophant_club/H = target
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
 		if(H.friendly_fire_check)
 			button_icon_state = "vortex_ff_off"
 			name = "Toggle Friendly Fire \[OFF\]"
@@ -264,8 +264,8 @@
 	button_icon_state = "vortex_recall"
 
 /datum/action/item_action/vortex_recall/IsAvailable()
-	if(istype(target, /obj/item/weapon/hierophant_club))
-		var/obj/item/weapon/hierophant_club/H = target
+	if(istype(target, /obj/item/hierophant_club))
+		var/obj/item/hierophant_club/H = target
 		if(H.teleporting)
 			return 0
 	return ..()
@@ -351,7 +351,7 @@
 	name = "Toggle Jetpack Stabilization"
 
 /datum/action/item_action/jetpack_stabilization/IsAvailable()
-	var/obj/item/weapon/tank/jetpack/J = target
+	var/obj/item/tank/jetpack/J = target
 	if(!istype(J) || !J.on)
 		return 0
 	return ..()
@@ -431,7 +431,7 @@
 	name = "Create Throwing Stars (1E)"
 	desc = "Creates some throwing stars"
 	button_icon_state = "throwingstar"
-	icon_icon = 'icons/obj/weapons.dmi'
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
 
 /datum/action/item_action/ninjanet
 	name = "Energy Net (20E)"
@@ -443,7 +443,7 @@
 	name = "Recall Energy Katana (Variable Cost)"
 	desc = "Teleports the Energy Katana linked to this suit to its wearer, cost based on distance."
 	button_icon_state = "energy_katana"
-	icon_icon = 'icons/obj/weapons.dmi'
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
 
 /datum/action/item_action/ninja_stealth
 	name = "Toggle Stealth"
@@ -490,7 +490,8 @@
 	var/obj/effect/proc_holder/spell/S = target
 	S.action = src
 	name = S.name
-	icon_icon = S.action_icon
+	desc = S.desc
+	button_icon = S.action_icon
 	button_icon_state = S.action_icon_state
 	background_icon_state = S.action_background_icon_state
 	button.name = name
