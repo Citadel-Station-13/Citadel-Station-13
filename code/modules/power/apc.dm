@@ -195,7 +195,7 @@
 
 	make_terminal()
 
-addtimer(CALLBACK(src, .proc/update), 5)
+	addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
