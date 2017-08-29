@@ -1,6 +1,6 @@
 /*****************Marker Beacons**************************/
 GLOBAL_LIST_INIT(marker_beacon_colors, list(
-"Random" = FALSE,//not a true color, will pick a random color
+"Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
 "Yellow" = LIGHT_COLOR_YELLOW,
@@ -89,7 +89,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	update_icon()
 
 /obj/structure/marker_beacon/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/item/stack/marker_beacon/M = new(loc)
 		M.picked_color = picked_color
 		M.update_icon()

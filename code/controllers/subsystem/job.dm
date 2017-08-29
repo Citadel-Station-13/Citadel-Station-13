@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
 	init_order = INIT_ORDER_JOBS
-	flags = SS_NO_FIRE
+	flags_1 = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
 	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
@@ -217,10 +217,9 @@ SUBSYSTEM_DEF(job)
 	Debug("Running DO")
 
 	//Holder for Triumvirate is stored in the SSticker, this just processes it
-	if(SSticker)
+	if(SSticker.triai)
 		for(var/datum/job/ai/A in occupations)
-			if(SSticker.triai)
-				A.spawn_positions = 3
+			A.spawn_positions = 3
 
 	//Get the players who are ready
 	for(var/mob/dead/new_player/player in GLOB.player_list)

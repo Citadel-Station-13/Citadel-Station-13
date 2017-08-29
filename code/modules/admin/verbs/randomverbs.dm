@@ -615,7 +615,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		new /obj/effect/gibspawner/generic(M.loc, M.viruses)
+		new /obj/effect/gibspawner/generic(get_turf(M))
 		return
 	if(confirm == "Yes")
 		M.gib()
@@ -649,9 +649,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set desc = "switches between 1x and custom views"
 
 	if(view == world.view)
-		view = input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128)
+		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
-		view = world.view
+		change_view(world.view)
 
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
@@ -800,7 +800,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/headwear = typesof(/obj/item/clothing/head)
 	var/list/glasses = typesof(/obj/item/clothing/glasses)
 	var/list/masks = typesof(/obj/item/clothing/mask)
-	var/list/ids = typesof(/obj/item/weapon/card/id)
+	var/list/ids = typesof(/obj/item/card/id)
 
 	var/uniform_select = "<select name=\"outfit_uniform\"><option value=\"\">None</option>"
 	for(var/path in uniforms)
@@ -1208,6 +1208,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!message)
 		return
 
-	message_admins("[key_name_admin(usr)] triggered a Centcom recall, with the admiral message of: [message]")
-	log_game("[key_name(usr)] triggered a Centcom recall, with the message of: [message]")
+	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
+	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)

@@ -49,8 +49,7 @@
 	A.air_scrub_names -= id_tag
 	A.air_scrub_info -= id_tag
 
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
+	SSradio.remove_object(src,frequency)
 	radio_connection = null
 
 	for(var/I in adjacent_turfs)
@@ -258,7 +257,7 @@
 	return 1
 
 
-//There is no easy way for an object to be notified of changes to atmos can pass flags
+//There is no easy way for an object to be notified of changes to atmos can pass flags_1
 //	So we check every machinery process (2 seconds)
 /obj/machinery/atmospherics/components/unary/vent_scrubber/process()
 	if (widenet)
@@ -340,9 +339,9 @@
 	..()
 	update_icon_nopipes()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
 			playsound(loc, WT.usesound, 40, 1)
 			to_chat(user, "<span class='notice'>Now welding the scrubber.</span>")

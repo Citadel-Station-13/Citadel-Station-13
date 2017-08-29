@@ -57,9 +57,7 @@
 			symptoms = GenerateSymptoms(0, 2)
 		else
 			for(var/datum/symptom/S in D.symptoms)
-				var/datum/symptom/new_symp = new S.type
-				new_symp.name = S.name
-				new_symp.neutered = S.neutered
+				var/datum/symptom/new_symp = S.Copy()
 				symptoms += new_symp
 
 	Refresh()
@@ -93,7 +91,7 @@
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(src.GetDiseaseID() != D.GetDiseaseID())
+	if(GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -118,7 +116,7 @@
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(src.IsSame(D)))
+	if(!(IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(S.Copy())
@@ -158,7 +156,6 @@
 	return generated
 
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
-	//to_chat(world, "[src.name] \ref[src] - REFRESH!")
 	GenerateProperties()
 	AssignProperties()
 	id = null
@@ -412,7 +409,7 @@
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in SSdisease.processing)
+		for(var/datum/disease/advance/AD in SSdisease.active_diseases)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
@@ -426,13 +423,6 @@
 		for(var/datum/symptom/S in D.symptoms)
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
-
-/*
-/mob/verb/test()
-
-	for(var/datum/disease/D in SSdisease.processing)
-		to_chat(src, "<a href='?_src_=vars;Vars=\ref[D]'>[D.name] - [D.holder]</a>")
-*/
 
 
 /datum/disease/advance/proc/totalStageSpeed()

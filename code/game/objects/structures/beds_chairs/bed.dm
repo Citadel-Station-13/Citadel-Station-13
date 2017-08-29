@@ -22,7 +22,7 @@
 	var/buildstackamount = 2
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags & NODECONSTRUCT))
+	if(!(flags_1 & NODECONSTRUCT_1))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 	..()
@@ -30,8 +30,8 @@
 /obj/structure/bed/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+/obj/structure/bed/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench) && !(flags_1&NODECONSTRUCT_1))
 		playsound(src.loc, W.usesound, 50, 1)
 		deconstruct(TRUE)
 	else
@@ -48,8 +48,8 @@
 	resistance_flags = 0
 	var/foldabletype = /obj/item/roller
 
-/obj/structure/bed/roller/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/roller/robo))
+/obj/structure/bed/roller/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/roller/robo))
 		var/obj/item/roller/robo/R = W
 		if(R.loaded)
 			to_chat(user, "<span class='warning'>You already have a roller bed docked!</span>")
@@ -161,6 +161,26 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 10
 	var/mob/living/owner = null
+
+/obj/structure/bed/dogbed/ian
+	desc = "Ian's bed! Looks comfy."
+	name = "Ian's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/cayenne
+	desc = "Seems kind of... fishy."
+	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/renault
+	desc = "Renault's bed! Looks comfy. A foxy person needs a foxy pet."
+	name = "Renault's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/runtime
+	desc = "A comfy-looking cat bed. You can even strap your pet in, in case the gravity turns off."
+	name = "Runtime's bed"
+	anchored = TRUE
 
 /obj/structure/bed/dogbed/proc/update_owner(mob/living/M)
 	owner = M

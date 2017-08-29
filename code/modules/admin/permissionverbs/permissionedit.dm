@@ -86,7 +86,7 @@
 		admin_id = text2num(query_get_admin.item[1])
 
 	if(new_admin)
-		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
+		var/datum/DBQuery/query_add_admin = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin")]` (`id`, `ckey`, `rank`, `level`, `flags_1`) VALUES (null, '[adm_ckey]', '[new_rank]', -1, 0)")
 		if(!query_add_admin.warn_execute())
 			return
 		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Added new admin [adm_ckey] to rank [new_rank]');")
@@ -119,7 +119,7 @@
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))
 		return
 
-	var/datum/DBQuery/query_get_perms = SSdbcore.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	var/datum/DBQuery/query_get_perms = SSdbcore.NewQuery("SELECT id, flags_1 FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
 	if(!query_get_perms.warn_execute())
 		return
 
@@ -130,7 +130,7 @@
 	if(!admin_id)
 		return
 
-	var/datum/DBQuery/query_change_perms = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
+	var/datum/DBQuery/query_change_perms = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET flags_1 = [new_permission] WHERE id = [admin_id]")
 	if(!query_change_perms.warn_execute())
 		return
 	var/datum/DBQuery/query_change_perms_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")

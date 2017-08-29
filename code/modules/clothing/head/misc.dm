@@ -1,5 +1,3 @@
-
-
 /obj/item/clothing/head/centhat
 	name = "\improper Centcom hat"
 	icon_state = "centcom"
@@ -56,6 +54,7 @@
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/nurse
 
@@ -110,6 +109,7 @@
 	name = "rabbit ears"
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/rabbit
 
@@ -136,12 +136,14 @@
 	desc = "Yarr."
 	icon_state = "bandana"
 	item_state = "bandana"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/witchwig
 	name = "witch costume wig"
@@ -183,8 +185,7 @@
 	item_state = "fedora"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	dynamic_hair_suffix = "+detective"
-	pockets = /obj/item/weapon/storage/internal/pocket/small
+	pockets = /obj/item/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -218,7 +219,7 @@
 	icon_state = "shamebrero"
 	item_state = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	flags = NODROP
+	flags_1 = NODROP_1
 	dog_fashion = null
 
 /obj/item/clothing/head/cone
@@ -246,8 +247,9 @@
 
 /obj/item/clothing/head/jester
 	name = "jester hat"
-	desc = "A hat with bells, to add some merryness to the suit."
+	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/rice_hat
 	name = "rice hat"
@@ -277,6 +279,7 @@
 	icon_state = "crown"
 	armor = list(melee = 15, bullet = 0, laser = 0,energy = 15, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
+	dynamic_hair_suffix = ""
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
@@ -296,5 +299,6 @@
 
 /obj/item/clothing/head/jester/alt
 	name = "jester hat"
-	desc = "A hat with bells, to add some merryness to the suit."
+	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat2"
+	dynamic_hair_suffix = ""

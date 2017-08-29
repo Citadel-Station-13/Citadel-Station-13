@@ -113,7 +113,7 @@
 			return
 		adjustOxyLoss(1)
 		failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
 
 	var/safe_oxy_min = 16
@@ -144,14 +144,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = 1
-		throw_alert("oxy", /obj/screen/alert/oxy)
+		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = 0
 		if(oxyloss)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
-		clear_alert("oxy")
+		clear_alert("not_enough_oxy")
 
 	breath_gases["o2"][MOLES] -= oxygen_used
 	breath_gases["co2"][MOLES] += oxygen_used
@@ -174,11 +174,10 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases["plasma"][MOLES]/safe_tox_max) * 10
-		if(reagents)
-			reagents.add_reagent("plasma", Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))
-		throw_alert("tox_in_air", /obj/screen/alert/tox_in_air)
+		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
-		clear_alert("tox_in_air")
+		clear_alert("too_much_tox")
 
 	//NITROUS OXIDE
 	if(breath_gases["n2o"])
@@ -215,7 +214,7 @@
 		if(internal.loc != src)
 			internal = null
 			update_internals_hud_icon(0)
-		else if ((!wear_mask || !(wear_mask.flags & MASKINTERNALS)) && !getorganslot("breathing_tube"))
+		else if ((!wear_mask || !(wear_mask.flags_1 & MASKINTERNALS_1)) && !getorganslot("breathing_tube"))
 			internal = null
 			update_internals_hud_icon(0)
 		else
@@ -224,6 +223,15 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/handle_diseases()
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(prob(D.infectivity))
+			D.spread()
+
+		if(stat != DEAD)
+			D.stage_act()
 
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
@@ -370,8 +378,7 @@
 		adjust_drugginess(-1)
 
 	if(hallucination)
-		spawn handle_hallucinations()
-		hallucination = max(hallucination-2,0)
+		handle_hallucinations()
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()
@@ -424,4 +431,3 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
-

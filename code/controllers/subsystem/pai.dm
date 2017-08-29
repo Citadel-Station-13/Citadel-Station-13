@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(pai)
 	name = "pAI"
 
-	flags = SS_NO_INIT|SS_NO_FIRE
+	flags_1 = SS_NO_INIT|SS_NO_FIRE
 
 	var/list/candidates = list()
 	var/ghost_spam = FALSE
@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(pai)
 		var/obj/item/device/paicard/card = locate(href_list["device"]) in pai_card_list
 		if(card.pai)
 			return
-		if(istype(card,/obj/item/device/paicard) && istype(candidate,/datum/paiCandidate))
+		if(istype(card, /obj/item/device/paicard) && istype(candidate, /datum/paiCandidate))
 			if(check_ready(candidate) != candidate)
 				return FALSE
 			var/mob/living/silicon/pai/pai = new(card)
@@ -149,7 +149,6 @@ SUBSYSTEM_DEF(pai)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue
-			//G << 'sound/misc/server-ready.ogg' //Alerting them to their consideration
 			to_chat(G, "<span class='ghostalert'>[user] is requesting a pAI personality! Use the pAI button to submit yourself as one.</span>")
 		addtimer(CALLBACK(src, .proc/spam_again), spam_delay)
 	var/list/available = list()

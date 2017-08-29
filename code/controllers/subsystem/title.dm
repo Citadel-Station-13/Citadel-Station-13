@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(title)
 	name = "Title Screen"
-	flags = SS_NO_FIRE|SS_NO_INIT
+	flags_1 = SS_NO_FIRE|SS_NO_INIT
 
 	var/file_path
 	var/icon/icon
@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(title)
 				break
 
 		file_path = "config/title_screens/images/[pick(title_screens)]"
-		
+
 		icon = new(fcopy_rsc(file_path))
 
 		if(splash_turf)
@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(title)
 /datum/controller/subsystem/title/Shutdown()
 	if(file_path)
 		var/F = file("data/previous_title.dat")
-		F << file_path
+		WRITE_FILE(F, file_path)
 
 	for(var/thing in GLOB.clients)
 		if(!thing)

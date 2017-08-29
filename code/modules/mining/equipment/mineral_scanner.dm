@@ -4,8 +4,10 @@
 	name = "manual mining scanner"
 	icon_state = "mining1"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
@@ -32,8 +34,10 @@
 	name = "advanced automatic mining scanner"
 	icon_state = "mining0"
 	item_state = "analyzer"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags = CONDUCT
+	flags_1 = CONDUCT_1
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
@@ -69,7 +73,7 @@
 	plane = FULLSCREEN_PLANE
 	layer = FLASH_LAYER
 	icon = 'icons/effects/ore_visuals.dmi'
-	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
+	appearance_flags = 0 //to avoid having TILE_BOUND in the flags_1, so that the 480x480 icon states let you see it no matter where you are
 	duration = 35
 	pixel_x = -224
 	pixel_y = -224

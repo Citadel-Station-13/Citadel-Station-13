@@ -1,5 +1,5 @@
 /obj/item/organ/genital/ovipositor
-	name = "ovipositor"
+	name = "Ovipositor"
 	desc = "An egg laying reproductive organ."
 	icon_state = "ovi_knotted_2"
 	icon = 'code/citadel/icons/ovipositor.dmi'

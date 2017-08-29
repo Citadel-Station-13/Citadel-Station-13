@@ -25,7 +25,7 @@
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
-		if(bp && istype(bp ,/obj/item/clothing))
+		if(bp && istype(bp , /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
 				protection += C.armor[d_type]
@@ -442,7 +442,7 @@
 			else if(S.siemens_coefficient == (-1))
 				total_coeff -= 1
 		siemens_coeff = total_coeff
-		if(HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+		if(flags_2 & TESLA_IGNORE_2)
 			siemens_coeff = 0
 	else if(!safety)
 		var/gloves_siemens_coeff = 1

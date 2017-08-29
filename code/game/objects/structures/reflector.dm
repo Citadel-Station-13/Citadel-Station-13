@@ -38,10 +38,10 @@
 	return - 1
 
 
-/obj/structure/reflector/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
-	if(istype(W, /obj/item/weapon/wrench))
+	if(istype(W, /obj/item/wrench))
 		if(anchored)
 			to_chat(user, "Unweld the [src] first!")
 		if(do_after(user, 80*W.toolspeed, target = src))
@@ -50,8 +50,8 @@
 			new framebuildstacktype(loc, framebuildstackamount)
 			new buildstacktype(loc, buildstackamount)
 			qdel(src)
-	else if(istype(W, /obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(istype(W, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = W
 		switch(anchored)
 			if(0)
 				if (WT.remove_fuel(0,user))
@@ -76,7 +76,7 @@
 						anchored  = 0
 						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 	//Finishing the frame
-	else if(istype(W,/obj/item/stack/sheet))
+	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
 			return
 		var/obj/item/stack/sheet/S = W
@@ -88,7 +88,7 @@
 				S.use(5)
 				new /obj/structure/reflector/single (src.loc)
 				qdel (src)
-		if(istype(W,/obj/item/stack/sheet/rglass))
+		if(istype(W, /obj/item/stack/sheet/rglass))
 			if(S.get_amount() < 10)
 				to_chat(user, "<span class='warning'>You need ten sheets of reinforced glass to create a double reflector!</span>")
 				return
@@ -148,6 +148,9 @@
 	buildstacktype = /obj/item/stack/sheet/glass
 	buildstackamount = 5
 
+/obj/structure/reflector/single/anchored
+	anchored = TRUE
+
 /obj/structure/reflector/single/get_reflection(srcdir,pdir)
 	var/new_dir = rotations["[srcdir]"]["[pdir]"]
 	return new_dir
@@ -171,6 +174,9 @@
 	buildstacktype = /obj/item/stack/sheet/rglass
 	buildstackamount = 10
 
+/obj/structure/reflector/double/anchored
+	anchored = TRUE
+
 /obj/structure/reflector/double/get_reflection(srcdir,pdir)
 	var/new_dir = double_rotations["[srcdir]"]["[pdir]"]
 	return new_dir
@@ -193,6 +199,9 @@
 "[WEST]" = list("[SOUTH]" = WEST, "[EAST]" = WEST, "[WEST]" = WEST, "[NORTH]" = WEST) )
 	buildstacktype = /obj/item/stack/sheet/mineral/diamond
 	buildstackamount = 1
+
+/obj/structure/reflector/box/anchored
+	anchored = TRUE
 
 /obj/structure/reflector/box/get_reflection(srcdir,pdir)
 	var/new_dir = box_rotations["[srcdir]"]["[pdir]"]

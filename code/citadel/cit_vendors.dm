@@ -13,15 +13,15 @@
 				/obj/item/clothing/under/maid = 5,
 				/obj/item/clothing/under/stripper_pink = 5,
 				/obj/item/clothing/under/stripper_green = 5,
-				/obj/item/weapon/dildo/custom = 5
+				/obj/item/dildo/custom = 5
 				)
-	contraband = list(/obj/item/weapon/restraints/handcuffs/fake/kinky = 5,
+	contraband = list(/obj/item/restraints/handcuffs/fake/kinky = 5,
 				/obj/item/clothing/neck/petcollar = 5,
 				/obj/item/clothing/under/mankini = 1,
-				/obj/item/weapon/dildo/flared/huge = 1
+				/obj/item/dildo/flared/huge = 1
 					)
 	premium = list()
-	refill_canister = /obj/item/weapon/vending_refill/kink
+	refill_canister = /obj/item/vending_refill/kink
 
 /obj/machinery/vending/nazivend
 	name = "Nazivend"
@@ -42,11 +42,11 @@
 		/obj/item/clothing/suit/officercoat = 10,
 		/obj/item/clothing/under/officeruniform = 10,
 		/obj/item/clothing/suit/space/hardsuit/nazi = 3,
-		/obj/item/weapon/gun/energy/plasma/MP40k = 4
+		/obj/item/gun/energy/plasma/MP40k = 4
 		)
 	premium = list()
 
-	refill_canister = /obj/item/weapon/vending_refill/nazi
+	refill_canister = /obj/item/vending_refill/nazi
 
 /obj/machinery/vending/sovietvend
 	name = "KomradeVendtink"
@@ -70,11 +70,11 @@
 		/obj/item/clothing/suit/russofurcoat = 4,
 		/obj/item/clothing/head/russofurhat = 4,
 		/obj/item/clothing/suit/space/hardsuit/soviet = 3,
-		/obj/item/weapon/gun/energy/laser/LaserAK = 4
+		/obj/item/gun/energy/laser/LaserAK = 4
 		)
 	premium = list()
 
-	refill_canister = /obj/item/weapon/vending_refill/soviet
+	refill_canister = /obj/item/vending_refill/soviet
 
 
 #undef STANDARD_CHARGE
@@ -82,19 +82,19 @@
 #undef COIN_CHARGE
 
 
-/obj/item/weapon/vending_refill/kink
+/obj/item/vending_refill/kink
 	machine_name 	= "KinkMate"
 	icon_state 		= "refill_kink"
 	charges 		= list(8, 5, 0)// of 20 standard, 12 contraband, 0 premium
 	init_charges 	= list(8, 5, 0)
 
-/obj/item/weapon/vending_refill/nazi
+/obj/item/vending_refill/nazi
 	machine_name 	= "nazivend"
 	icon_state 		= "refill_nazi"
 	charges 		= list(33, 13, 0)
 	init_charges 	= list(33, 13, 0)
 
-/obj/item/weapon/vending_refill/soviet
+/obj/item/vending_refill/soviet
 	machine_name 	= "sovietvend"
 	icon_state 		= "refill_soviet"
 	charges 		= list(47, 7, 0)

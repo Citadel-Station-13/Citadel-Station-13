@@ -53,7 +53,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/static/restart_clear = 0
 	var/static/restart_timeout = 0
 	var/static/restart_count = 0
-	
+
 	//current tick limit, assigned before running a subsystem.
 	//used by CHECK_TICK as well so that the procs subsystems call can obey that SS's tick limits
 	var/static/current_ticklimit = TICK_LIMIT_RUNNING
@@ -124,13 +124,14 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/FireHim = FALSE
 	if(istype(BadBoy))
 		msg = null
-		switch(++BadBoy.failure_strikes)
+		LAZYINITLIST(BadBoy.failure_strikes)
+		switch(++BadBoy.failure_strikes[BadBoy.type])
 			if(2)
 				msg = "The [BadBoy.name] subsystem was the last to fire for 2 controller restarts. It will be recovered now and disabled if it happens again."
 				FireHim = TRUE
 			if(3)
 				msg = "The [BadBoy.name] subsystem seems to be destabilizing the MC and will be offlined."
-				BadBoy.flags |= SS_NO_FIRE
+				BadBoy.flags_1 |= SS_NO_FIRE
 		if(msg)
 			to_chat(GLOB.admins, "<span class='boldannounce'>[msg]</span>")
 			log_world(msg)
@@ -166,7 +167,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	// Initialize subsystems.
 	current_ticklimit = config.tick_limit_mc_init
 	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
+		if (SS.flags_1 & SS_NO_INIT)
 			continue
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
@@ -231,13 +232,13 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	var/timer = world.time
 	for (var/thing in subsystems)
 		var/datum/controller/subsystem/SS = thing
-		if (SS.flags & SS_NO_FIRE)
+		if (SS.flags_1 & SS_NO_FIRE)
 			continue
 		SS.queued_time = 0
 		SS.queue_next = null
 		SS.queue_prev = null
 		SS.state = SS_IDLE
-		if (SS.flags & SS_TICKER)
+		if (SS.flags_1 & SS_TICKER)
 			tickersubsystems += SS
 			timer += world.tick_lag * rand(1, 5)
 			SS.next_fire = timer
@@ -370,7 +371,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			continue
 		if (SS.next_fire > world.time)
 			continue
-		SS_flags = SS.flags
+		SS_flags = SS.flags_1
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
 			continue
@@ -407,7 +408,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			if (ran && world.tick_usage > TICK_LIMIT_RUNNING)
 				break
 
-			queue_node_flags = queue_node.flags
+			queue_node_flags = queue_node.flags_1
 			queue_node_priority = queue_node.queued_priority
 
 			//super special case, subsystems where we can't make them pause mid way through

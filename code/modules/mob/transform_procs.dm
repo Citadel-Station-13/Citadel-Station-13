@@ -9,7 +9,7 @@
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/X in implants)
-			var/obj/item/weapon/implant/IMP = X
+			var/obj/item/implant/IMP = X
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
@@ -65,9 +65,9 @@
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
-		for(var/datum/disease/D in O.viruses)
+		for(var/thing in O.viruses)
+			var/datum/disease/D = thing
 			D.affected_mob = O
-			D.holder = O
 
 	//keep damage?
 	if (tr_flags & TR_KEEPDAMAGE)
@@ -83,7 +83,7 @@
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in implants)
-			var/obj/item/weapon/implant/IMP = Y
+			var/obj/item/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
 	//re-add organs to new mob. this order prevents moving the mind to a brain at any point
@@ -155,7 +155,7 @@
 
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/X in implants)
-			var/obj/item/weapon/implant/IMP = X
+			var/obj/item/implant/IMP = X
 			stored_implants += IMP
 			IMP.removed(src, 1, 1)
 
@@ -219,9 +219,9 @@
 	if (tr_flags & TR_KEEPVIRUS)
 		O.viruses = viruses
 		viruses = list()
-		for(var/datum/disease/D in O.viruses)
+		for(var/thing in O.viruses)
+			var/datum/disease/D = thing
 			D.affected_mob = O
-			D.holder = O
 		O.med_hud_set_status()
 
 	//keep damage?
@@ -238,7 +238,7 @@
 	//re-add implants to new mob
 	if (tr_flags & TR_KEEPIMPLANTS)
 		for(var/Y in implants)
-			var/obj/item/weapon/implant/IMP = Y
+			var/obj/item/implant/IMP = Y
 			IMP.implant(O, null, 1)
 
 	if(tr_flags & TR_KEEPORGANS)
@@ -493,6 +493,30 @@
 
 	to_chat(new_corgi, "<B>You are now a Corgi. Yap Yap!</B>")
 	. = new_corgi
+	qdel(src)
+
+/mob/living/carbon/proc/gorillize()
+	if(notransform)
+		return
+
+	var/Itemlist = get_equipped_items()
+	Itemlist += held_items
+	for(var/obj/item/W in Itemlist)
+		dropItemToGround(W, TRUE)
+
+	regenerate_icons()
+	notransform = TRUE
+	canmove = FALSE
+	icon = null
+	invisibility = INVISIBILITY_MAXIMUM
+	var/mob/living/simple_animal/hostile/gorilla/new_gorilla = new (get_turf(src))
+	new_gorilla.a_intent = INTENT_HARM
+	if(mind)
+		mind.transfer_to(new_gorilla)
+	else
+		new_gorilla.key = key
+	to_chat(new_gorilla, "<B>You are now a gorilla. Ooga ooga!</B>")
+	. = new_gorilla
 	qdel(src)
 
 /mob/living/carbon/human/Animalize()

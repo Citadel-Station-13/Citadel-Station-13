@@ -120,6 +120,10 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
+		var/mob/living/L = new_character
+		L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
+		L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -267,7 +271,7 @@
 	var/list/all_contents = traitor_mob.GetAllContents()
 	var/obj/item/device/pda/PDA = locate() in all_contents
 	var/obj/item/device/radio/R = locate() in all_contents
-	var/obj/item/weapon/pen/P = locate() in all_contents //including your PDA-pen!
+	var/obj/item/pen/P = locate() in all_contents //including your PDA-pen!
 
 	var/obj/item/uplink_loc
 
@@ -396,7 +400,15 @@
 		if (assigned_role in GLOB.command_positions)
 			text += "<b>HEAD</b>|loyal|employee|headrev|rev"
 		else if (src in SSticker.mode.head_revolutionaries)
-			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
+			var/last_healthy_headrev = TRUE
+			for(var/I in SSticker.mode.head_revolutionaries)
+				if(I == src)
+					continue
+				var/mob/M = I
+				if(M.z == ZLEVEL_STATION && !M.stat)
+					last_healthy_headrev = FALSE
+					break
+			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
 			text += "<br>Flash: <a href='?src=\ref[src];revolution=flash'>give</a>"
 
 			var/list/L = current.get_contents()
@@ -629,10 +641,11 @@
 		text = "<i><b>[text]</b></i>: "
 		if (ishuman(current))
 			text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<a href='?src=\ref[src];monkey=infected'>infected</a>|<b>HUMAN</b>|other"
-		else if (ismonkey(current))
-			var/found = 0
-			for(var/datum/disease/D in current.viruses)
-				if(istype(D, /datum/disease/transformation/jungle_fever)) found = 1
+		else if(ismonkey(current))
+			var/found = FALSE
+			for(var/datum/disease/transformation/jungle_fever/JF in current.viruses)
+				found = TRUE
+				break
 
 			if(found)
 				text += "<a href='?src=\ref[src];monkey=healthy'>healthy</a>|<b>INFECTED</b>|<a href='?src=\ref[src];monkey=human'>human</a>|other"
@@ -800,11 +813,11 @@
 						possible_targets += possible_target.current
 
 				var/mob/def_target = null
-				var/objective_list[] = list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon)
-				if (objective&&(objective.type in objective_list) && objective:target)
-					def_target = objective:target.current
+				var/list/objective_list = typecacheof(list(/datum/objective/assassinate, /datum/objective/protect, /datum/objective/debrain, /datum/objective/maroon))
+				if (is_type_in_typecache(objective, objective_list) && objective.target)
+					def_target = objective.target.current
 
-				var/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
+				var/mob/new_target = input("Select target:", "Objective target", def_target) as null|anything in possible_targets
 				if (!new_target)
 					return
 
@@ -812,12 +825,12 @@
 				if (new_target == "Free objective")
 					new_objective = new objective_path
 					new_objective.owner = src
-					new_objective:target = null
+					new_objective.target = null
 					new_objective.explanation_text = "Free objective"
 				else
 					new_objective = new objective_path
 					new_objective.owner = src
-					new_objective:target = new_target:mind
+					new_objective.target = new_target.mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.update_explanation_text()
 
@@ -1025,7 +1038,7 @@
 
 			if("takeequip")
 				var/list/L = current.get_contents()
-				for(var/obj/item/weapon/pen/gang/pen in L)
+				for(var/obj/item/pen/gang/pen in L)
 					qdel(pen)
 				for(var/obj/item/device/gangtool/gangtool in L)
 					qdel(gangtool)
@@ -1348,7 +1361,8 @@
 						src = M.mind
 						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
-						for(var/datum/disease/D in M.viruses)
+						for(var/thing in M.viruses)
+							var/datum/disease/D = thing
 							D.cure(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
@@ -1368,10 +1382,9 @@
 					var/mob/living/carbon/human/H = current
 					var/mob/living/carbon/monkey/M = current
 					if (istype(M))
-						for(var/datum/disease/D in M.viruses)
-							if (istype(D,/datum/disease/transformation/jungle_fever))
-								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
+						for(var/datum/disease/transformation/jungle_fever/JF in M.viruses)
+							JF.cure(0)
+							sleep(0) //because deleting of virus is doing throught spawn(0) //What
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("<span class='notice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(current)]</span>")
 						H = M.humanize(TR_KEEPITEMS | TR_KEEPIMPLANTS | TR_KEEPORGANS | TR_KEEPDAMAGE | TR_KEEPVIRUS | TR_DEFAULTMSG)
@@ -1598,9 +1611,9 @@
 	agent_landmarks.len = 4
 	scientist_landmarks.len = 4
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/obj/effect/landmark/L
@@ -1689,10 +1702,7 @@
 
 	else
 		mind = new /datum/mind(key)
-		if(SSticker)
-			SSticker.minds += mind
-		else
-			stack_trace("mind_initialize(): No SSticker ready")
+		SSticker.minds += mind
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src

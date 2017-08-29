@@ -19,7 +19,7 @@
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
+	var/round_ends_with_antag_death = 0 //flags_1 the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -83,7 +83,7 @@
 
 	if(SSdbcore.Connect())
 		var/sql
-		if(SSticker && SSticker.mode)
+		if(SSticker.mode)
 			sql += "game_mode = '[SSticker.mode]'"
 		if(GLOB.revdata.originmastercommit)
 			if(sql)
@@ -111,7 +111,7 @@
 	var/list/living_crew = list()
 
 	for(var/mob/Player in GLOB.mob_list)
-		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+		if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) && !isbrain(Player) && Player.client)
 			living_crew += Player
 	if(living_crew.len / GLOB.joined_player_list.len <= config.midround_antag_life_check) //If a lot of the player base died, we start fresh
 		message_admins("Convert_roundtype failed due to too many dead people. Limit is [config.midround_antag_life_check * 100]% living crew")
@@ -120,7 +120,7 @@
 	var/list/datum/game_mode/runnable_modes = config.get_runnable_midround_modes(living_crew.len)
 	var/list/datum/game_mode/usable_modes = list()
 	for(var/datum/game_mode/G in runnable_modes)
-		if(G.reroll_friendly)
+		if(G.reroll_friendly && living_crew >= G.required_players)
 			usable_modes += G
 		else
 			qdel(G)
@@ -208,7 +208,7 @@
 			return 0 //A resource saver: once we find someone who has to die for all antags to be dead, we can just keep checking them, cycling over everyone only when we lose our mark.
 
 		for(var/mob/Player in GLOB.living_mob_list)
-			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player))
+			if(Player.mind && Player.stat != DEAD && !isnewplayer(Player) &&!isbrain(Player) && Player.client)
 				if(Player.mind.special_role) //Someone's still antaging!
 					living_antag_player = Player
 					return 0
@@ -266,22 +266,24 @@
 	if(escaped_total > 0)
 		SSblackbox.set_val("escaped_total",escaped_total)
 	send2irc("Server", "Round just ended.")
-	if(cult.len && !istype(SSticker.mode,/datum/game_mode/cult))
+	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
 		datum_cult_completion()
 
 
 	if(GLOB.borers.len)
-		var/borerwin = FALSE
 		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
 		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
 			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br>[B.controlling ? B.victim.key : B.key] was [B.truename] ("
-				var/turf/location = get_turf(B)
-				if(location.z == ZLEVEL_CENTCOM && B.victim)
-					borertext += "escaped with host"
-				else
-					borertext += "failed"
-				borertext += ")"
+				borertext += "<br><font size=2><b>[B.controlling ? B.victim.key : B.key] was [B.truename]</b></font>"
+				var/count = 1
+				for(var/datum/objective/objective in B.mind.objectives)
+					if(objective.check_completion())
+						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+					else
+						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					count++
+
+
 		to_chat(world, borertext)
 
 		var/total_borers = 0
@@ -295,14 +297,8 @@
 				var/turf/location = get_turf(C)
 				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
 					total_borer_hosts++
-			if(GLOB.total_borer_hosts_needed <= total_borer_hosts)
-				borerwin = TRUE
 			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive. The borers needed [GLOB.total_borer_hosts_needed] hosts to escape.</b>")
-			if(borerwin)
-				to_chat(world, "<b><font color='green'>The borers were successful!</font></b>")
-			else
-				to_chat(world, "<b><font color='red'>The borers have failed!</font></b>")
+			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive.</b>")
 
 		CHECK_TICK
 	return 0
@@ -373,7 +369,7 @@
 	if(candidates.len < recommended_enemies)
 		for(var/mob/dead/new_player/player in players)
 			if(player.client && player.ready == PLAYER_READY_TO_PLAY)
-				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a seperate list of people who don't want to be one
+				if(!(role in player.client.prefs.be_special)) // We don't have enough people who want to be antagonist, make a separate list of people who don't want to be one
 					if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role)) //Nodrak/Carn: Antag Job-bans
 						drafted += player.mind
 

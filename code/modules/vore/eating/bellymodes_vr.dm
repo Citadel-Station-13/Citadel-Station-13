@@ -45,7 +45,8 @@
 
 				//Send messages
 				to_chat(owner, "<span class='warning'>[digest_alert_owner]</span>")
-				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>", "<span class='warning'>[digest_alert_prey]</span>")
+				to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
+				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)

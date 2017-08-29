@@ -21,7 +21,7 @@
 	return debug_variable(var_name, vars[var_name], 0, src)
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
-//add seperaters by doing . += "---"
+//add separaters by doing . += "---"
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -62,7 +62,7 @@
 
 
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
 			sprite = new /icon(AT.icon, AT.icon_state)
@@ -77,7 +77,7 @@
 		sprite_text = "<img src='vv[hash].png'></td><td>"
 	var/list/atomsnowflake = list()
 
-	if(istype(D,/atom))
+	if(istype(D, /atom))
 		var/atom/A = D
 		if(isliving(A))
 			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
@@ -575,7 +575,7 @@
 				return
 
 			var/D = locate(href_list["datumedit"])
-			if(!istype(D,/datum))
+			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
@@ -586,7 +586,7 @@
 				return
 
 			var/D = locate(href_list["datumchange"])
-			if(!istype(D,/datum))
+			if(!istype(D, /datum))
 				to_chat(usr, "This can only be used on datums")
 				return
 
@@ -928,6 +928,26 @@
 
 			manipulate_organs(C)
 			href_list["datumrefresh"] = href_list["editorgans"]
+
+		else if(href_list["hallucinate"])
+			if(!check_rights(0))
+				return
+
+			var/mob/living/carbon/C = locate(href_list["hallucinate"]) in GLOB.mob_list
+			if(!istype(C))
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon")
+				return
+
+			var/list/hallucinations = subtypesof(/datum/hallucination)
+			var/result = input(usr, "Choose the hallucination to apply","Send Hallucination") as null|anything in hallucinations
+			if(!usr)
+				return
+			if(QDELETED(C))
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+
+			if(result)
+				new result(C, TRUE)
 
 		else if(href_list["makehuman"])
 			if(!check_rights(R_SPAWN))

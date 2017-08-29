@@ -1,8 +1,8 @@
 SUBSYSTEM_DEF(garbage)
 	name = "Garbage"
 	priority = 15
-	wait = 5
-	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
+	wait = 20
+	flags_1 = SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(garbage)
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/tobequeued = list()	//We store the references of things to be added to the queue separately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -67,9 +67,9 @@ SUBSYSTEM_DEF(garbage)
 	HandleToBeQueued()
 	if(state == SS_RUNNING)
 		HandleQueue()
-	
+
 	if (state == SS_PAUSED) //make us wait again before the next run.
-		state = SS_RUNNING 
+		state = SS_RUNNING
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
@@ -114,7 +114,7 @@ SUBSYSTEM_DEF(garbage)
 			var/type = A.type
 			testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
 			didntgc["[type]"]++
-			
+
 			HardDelete(A)
 
 			++delslasttick
@@ -144,17 +144,17 @@ SUBSYSTEM_DEF(garbage)
 
 	queue[refid] = gctime
 
-//this is purely to seperate things profile wise.
+//this is purely to separate things profile wise.
 /datum/controller/subsystem/garbage/proc/HardDelete(datum/A)
 	var/time = world.timeofday
 	var/tick = world.tick_usage
 	var/ticktime = world.time
-	
+
 	var/type = A.type
 	var/refID = "\ref[A]"
-	
+
 	del(A)
-	
+
 	tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
 	if (tick > highest_del_tickusage)
 		highest_del_tickusage = tick
@@ -167,7 +167,7 @@ SUBSYSTEM_DEF(garbage)
 		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
 		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
 		postpone(time/5)
-	
+
 /datum/controller/subsystem/garbage/proc/HardQueue(datum/A)
 	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		tobequeued += A
@@ -234,27 +234,7 @@ SUBSYSTEM_DEF(garbage)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 
-// Default implementation of clean-up code.
-// This should be overridden to remove all references pointing to the object being destroyed.
-// Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
-// TODO: Move this and all datum var definitions into code/datums/datum.dm
-/datum/proc/Destroy(force=FALSE)
-	tag = null
-	var/list/timers = active_timers
-	active_timers = null
-	for(var/thing in timers)
-		var/datum/timedevent/timer = thing
-		if (timer.spent)
-			continue
-		qdel(timer)
-	QDEL_LIST(datum_components)
-	return QDEL_HINT_QUEUE
-
-/datum/var/gc_destroyed //Time when this object was destroyed.
-
 #ifdef TESTING
-/datum/var/running_find_references
-/datum/var/last_find_references = 0
 
 /datum/verb/find_refs()
 	set category = "Debug"
@@ -303,13 +283,12 @@ SUBSYSTEM_DEF(garbage)
 
 /client/verb/purge_all_destroyed_objects()
 	set category = "Debug"
-	if(SSgarbage)
-		while(SSgarbage.queue.len)
-			var/datum/o = locate(SSgarbage.queue[1])
-			if(istype(o) && o.gc_destroyed)
-				del(o)
-				SSgarbage.totaldels++
-			SSgarbage.queue.Cut(1, 2)
+	while(SSgarbage.queue.len)
+		var/datum/o = locate(SSgarbage.queue[1])
+		if(istype(o) && o.gc_destroyed)
+			del(o)
+			SSgarbage.totaldels++
+		SSgarbage.queue.Cut(1, 2)
 
 /datum/verb/qdel_then_find_references()
 	set category = "Debug"
