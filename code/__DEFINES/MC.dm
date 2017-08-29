@@ -22,7 +22,7 @@
 #define START_PROCESSING(Processor, Datum) if (!Datum.isprocessing) {Datum.isprocessing = TRUE;Processor.processing += Datum}
 #define STOP_PROCESSING(Processor, Datum) Datum.isprocessing = FALSE;Processor.processing -= Datum
 
-//SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
+//SubSystem flags_1 (Please design any new flags_1 so that the default is off, to make adding flags_1 to subsystems easier)
 
 //subsystem does not initialize.
 #define SS_NO_INIT 1
