@@ -1093,7 +1093,7 @@ GLOBAL_VAR_INIT(total_borer_hosts_needed, 10)
 /datum/action/innate/borer/jumpstart_host
 	name = "Jumpstart Host"
 	desc = "Bring your host back to life."
-	icon_icon = 'icons/obj/weapons.dmi'
+	icon_icon = 'icons/obj/items_and_weapons.dmi'
 	button_icon_state = "defibpaddles0"
 
 /datum/action/innate/borer/jumpstart_host/Activate()

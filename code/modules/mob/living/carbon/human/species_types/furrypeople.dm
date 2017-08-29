@@ -1,4 +1,4 @@
-datum/species/mammal
+/datum/species/mammal
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
@@ -93,7 +93,7 @@ datum/species/mammal
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
@@ -126,7 +126,7 @@ datum/species/mammal
 	exotic_blood = "xblood"
 	damage_overlay_type = "xeno"
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
 	roundstart = 0
@@ -229,7 +229,7 @@ datum/species/mammal
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
 
-datum/species/guilmon
+/datum/species/guilmon
 	name = "Guilmon"
 	id = "guilmon"
 	default_color = "4B4B4B"

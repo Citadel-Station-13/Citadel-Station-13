@@ -426,7 +426,10 @@
 	signal.frequency = freqnum // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
-
+		
+	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
+	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
+		R.receive_signal(signal)
 
 	spawn(20) // wait a little...
 
@@ -510,9 +513,9 @@
 	else
 		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
-/obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
 			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
@@ -560,9 +563,9 @@
 	. = ..()
 	set_frequency(GLOB.SYND_FREQ)
 
-/obj/item/device/radio/borg/attackby(obj/item/weapon/W, mob/user, params)
+/obj/item/device/radio/borg/attackby(obj/item/W, mob/user, params)
 
-	if(istype(W, /obj/item/weapon/screwdriver))
+	if(istype(W, /obj/item/screwdriver))
 		if(keyslot)
 			for(var/ch_name in channels)
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
