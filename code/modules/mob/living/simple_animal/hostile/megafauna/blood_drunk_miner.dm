@@ -38,13 +38,13 @@ Difficulty: Medium
 	ranged = 1
 	ranged_cooldown_time = 16
 	pixel_x = -16
-	crusher_loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
-	loot = list(/obj/item/weapon/melee/transforming/cleaving_saw, /obj/item/weapon/gun/energy/kinetic_accelerator)
+	crusher_loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	loot = list(/obj/item/melee/transforming/cleaving_saw, /obj/item/gun/energy/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	medal_type = MEDAL_PREFIX
-	var/obj/item/weapon/melee/transforming/cleaving_saw/miner/miner_saw
+	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
 	var/dash_cooldown = 15
@@ -60,11 +60,11 @@ Difficulty: Medium
 	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
 
-/obj/item/weapon/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
+/obj/item/melee/transforming/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
 	force_on = 10
 
-/obj/item/weapon/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/transforming/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
 	target.add_stun_absorption("miner", 10, INFINITY)
 	..()
 	target.stun_absorption -= "miner"
@@ -251,9 +251,9 @@ Difficulty: Medium
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
 	sleep(5)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags_1 = ANIMATION_PARALLEL)
 	sleep(4)
-	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags_1 = ANIMATION_PARALLEL)
 
 /obj/item/device/gps/internal/miner
 	icon_state = null

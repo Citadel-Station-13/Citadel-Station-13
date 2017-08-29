@@ -53,7 +53,7 @@
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
 
-//Docking error flags
+//Docking error flags_1
 #define DOCKING_SUCCESS 0
 #define DOCKING_COMPLETE 1
 #define DOCKING_BLOCKED 2

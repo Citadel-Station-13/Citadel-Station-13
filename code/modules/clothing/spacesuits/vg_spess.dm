@@ -16,7 +16,7 @@
 	icon_state = "hardsuit-nazi"
 	slowdown = 1
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)
+	allowed = list(/obj/item/gun,/obj/item/device/flashlight,/obj/item/tank,/obj/item/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/nazi
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
@@ -36,7 +36,7 @@
 	icon_state = "hardsuit-soviet"
 	slowdown = 1
 	armor = list(melee = 40, bullet = 30, laser = 30, energy = 15, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/weapon/gun,/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/melee/)
+	allowed = list(/obj/item/gun,/obj/item/device/flashlight,/obj/item/tank,/obj/item/melee/)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/soviet
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 
@@ -56,7 +56,7 @@
 	icon_state = "hardsuit-knight"
 	item_state = "hardsuit-knight"
 	slowdown = 1
-	allowed = list(/obj/item/weapon/gun,/obj/item/weapon/melee/baton,/obj/item/weapon/tank,/obj/item/weapon/shield/energy,/obj/item/weapon/claymore)
+	allowed = list(/obj/item/gun,/obj/item/melee/baton,/obj/item/tank,/obj/item/shield/energy,/obj/item/claymore)
 	armor = list(melee = 60, bullet = 40, laser = 40,energy = 30, bomb = 50, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0.5
