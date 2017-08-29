@@ -1,12 +1,12 @@
 ////////////Syndicate Cortical Borer
-obj/item/weapon/antag_spawner/syndi_borer
+obj/item/antag_spawner/syndi_borer
 	name = "syndicate brain-slug container"
 	desc = "Releases a modified cortical borer to assist the user."
 	icon = 'icons/obj/device.dmi' //Temporary? Doesn't really look like a container for xenofauna... but IDK what else could work.
 	icon_state = "locator"
 	var/polling = FALSE
 
-obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owner)
+obj/item/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owner)
 	var/mob/living/simple_animal/borer/syndi_borer/B = new /mob/living/simple_animal/borer/syndi_borer(T)
 
 	B.key = C.key
@@ -27,7 +27,7 @@ obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owne
 		if(new_objective)
 			to_chat(B, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
 		SSticker.mode.update_borer_icons_added(B)
-/obj/item/weapon/antag_spawner/syndi_borer/proc/check_usability(mob/user)
+/obj/item/antag_spawner/syndi_borer/proc/check_usability(mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] appears to be empty!</span>")
 		return 0
@@ -36,7 +36,7 @@ obj/item/weapon/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owne
 		return 0
 	return 1
 
-/obj/item/weapon/antag_spawner/syndi_borer/attack_self(mob/user)
+/obj/item/antag_spawner/syndi_borer/attack_self(mob/user)
 	if(!(check_usability(user)))
 		return
 	polling = TRUE

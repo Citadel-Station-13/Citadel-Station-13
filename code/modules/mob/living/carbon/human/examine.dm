@@ -56,7 +56,7 @@
 
 	//Hands
 	for(var/obj/item/I in held_items)
-		if(!(I.flags & ABSTRACT))
+		if(!(I.flags_1 & ABSTRACT_1))
 			if(I.blood_DNA)
 				msg += "<span class='warning'>[t_He] [t_is] holding [icon2html(I, user)] [I.gender==PLURAL?"some":"a"] blood-stained [I.name] in [t_his] [get_held_index_name(get_held_index_of_item(I))]!</span>\n"
 			else
@@ -77,7 +77,7 @@
 
 	//handcuffed?
 	if(handcuffed)
-		if(istype(handcuffed, /obj/item/weapon/restraints/handcuffs/cable))
+		if(istype(handcuffed, /obj/item/restraints/handcuffs/cable))
 			msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] restrained with cable!</span>\n"
 		else
 			msg += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>\n"
@@ -224,6 +224,14 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
+
+	switch(disgust)
+		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
+			msg += "[t_He] looks a bit grossed out.\n"
+		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
+			msg += "[t_He] looks really grossed out.\n"
+		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
+			msg += "[t_He] looks disgusted.\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
