@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #If you hit github's rate limit, add a 3rd parameter here that is a github personal access token
-./CreditsTool Citadel-Station-13 Citadel-Station-13
+./program Citadel-Station-13 Citadel-Station-13
 
 rm ../../icons/credits.dmi
 

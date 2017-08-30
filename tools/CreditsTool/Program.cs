@@ -76,7 +76,7 @@ namespace CreditsTool
 							using (var resizedBMP = new Bitmap(originalBMP, new Size(world_icon_size, world_icon_size)))
 								SaveBMP(resizedBMP, writtenFilename);
 					}
-					Console.WriteLine(String.Format("Done {0}.png! {1}%", writtenFilename, (int)((((float)(count + 1)) / LoginAvatars.Count) * 100)));
+					Console.WriteLine(String.Format("Done {0}.png! {1}%", writtenFilename, (int)((((float)(count + 1)) / LoginAvatars.Count) * 2)));
 					++count;
 				}
 			}
@@ -138,7 +138,7 @@ namespace CreditsTool
 
 		static WebResponse GetPageResponse(string repoOwner, string repoName, string authToken, int pageNumber)
 		{
-			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/repos/{0}/{1}/contributors?per_page=100&page={2}", repoOwner, repoName, pageNumber));
+			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(String.Format("https://api.github.com/repos/{0}/{1}/contributors?per_page=2&page={2}", repoOwner, repoName, pageNumber));
 			httpWebRequest.Method = WebRequestMethods.Http.Get;
 			httpWebRequest.Accept = "application/json";
 			httpWebRequest.UserAgent = "tgstation-13-credits-tool";
