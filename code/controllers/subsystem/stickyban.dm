@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(stickyban)
 	name = "Sticky Ban"
 	init_order = INIT_ORDER_STICKY_BAN
-	flags = SS_NO_FIRE
+	flags_1 = SS_NO_FIRE
 
 	var/list/cache = list()
 
@@ -27,6 +27,6 @@ SUBSYSTEM_DEF(stickyban)
 		ban["existing_user_matches_this_round"] = list()
 		ban["admin_matches_this_round"] = list()
 		cache[ckey] = ban
-	
+
 	for (var/bannedckey in cache)
 		world.SetConfig("ban", bannedckey, list2stickyban(cache[bannedckey]))
