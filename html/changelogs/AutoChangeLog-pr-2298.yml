@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "Preys being digested now get their digestion message"

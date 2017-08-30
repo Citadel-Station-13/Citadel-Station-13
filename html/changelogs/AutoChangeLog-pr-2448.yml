@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "Taurs now rely on their taur-sprites to render legs, instead of rendering human legs on top of them. Mostly impacts driders and such uniquely legged individuals."
