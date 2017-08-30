@@ -2,7 +2,7 @@
 // Size Gun
 //
 /*
-/obj/item/weapon/gun/energy/sizegun
+/obj/item/gun/energy/sizegun
 	name = "shrink ray"
 	desc = "A highly advanced ray gun with two settings: Shrink and Grow. Warning: Do not insert into mouth."
 	icon = 'icons/obj/gun_vr.dmi'
@@ -91,7 +91,7 @@ datum/design/sizeray
 	req_tech = list("combat" = 5, "materials" = 4, "engineering" = 5, "bluespace" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_DIAMOND = 2500, MAT_URANIUM = 2500, MAT_TITANIUM = 1000)
-	build_path = /obj/item/weapon/gun/energy/laser/sizeray
+	build_path = /obj/item/gun/energy/laser/sizeray
 	category = list("Weapons")
 
 /obj/item/projectile/sizeray
@@ -149,7 +149,7 @@ datum/design/sizeray
 
 
 //Gun here
-/obj/item/weapon/gun/energy/laser/sizeray
+/obj/item/gun/energy/laser/sizeray
 	name = "size ray"
 	icon_state = "bluetag"
 	desc = "Size manipulator using bluespace breakthroughs."

@@ -1,5 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - rscadd: "Borers can now inject aphrodisiac and anaphrodisiac."
-  - tweak: "Borer chemicals now sends flavour text to host when injected into them."
