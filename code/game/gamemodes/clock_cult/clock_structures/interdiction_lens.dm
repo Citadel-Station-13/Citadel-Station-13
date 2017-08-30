@@ -126,7 +126,7 @@
 					if(O.emped || !O.on)
 						continue
 					O.emp_act(EMP_HEAVY)
-				else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/weapon/storage)) //other things may have radios in them but we don't care
+				else if((isliving(A) && !is_servant_of_ratvar(A)) || istype(A, /obj/structure/closet) || istype(A, /obj/item/storage)) //other things may have radios in them but we don't care
 					for(var/obj/item/device/radio/O in A.GetAllContents())
 						successfulprocess = TRUE
 						if(O.emped || !O.on)

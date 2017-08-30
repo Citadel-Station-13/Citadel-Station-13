@@ -181,224 +181,364 @@
 			else
 				to_chat(src, "<span class='notice'>You aren't aroused enough for that.</span>")
 
+
+//These are various procs that we'll use later, split up for readability instead of having one, huge proc.
+//For all of these, we assume the arguments given are proper and have been checked beforehand.
+/mob/living/carbon/human/proc/mob_masturbate(obj/item/organ/genital/G, mb_time = 30) //Masturbation, keep it gender-neutral
+	var/total_fluids = 0
+	var/datum/reagents/fluid_source = null
+
+	if(G.producing) //Can it produce its own fluids, such as breasts?
+		fluid_source = G.reagents
+	else
+		if(!G.linked_organ)
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			return
+		fluid_source = G.linked_organ.reagents
+	total_fluids = fluid_source.total_volume
+	if(mb_time)
+		src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] [p_their()] [G.name].</span>", \
+							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>", \
+							"<span class='green'>You start to [G.masturbation_verb] your [G.name].</span>")
+
+	if(do_after(src, mb_time, target = src))
+		if(total_fluids > 5)
+			fluid_source.reaction(src.loc, TOUCH, 1, 0)
+			fluid_source.clear_reagents()
+		src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
+							"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
+							"<span class='green'>You have relieved yourself.</span>")
+		if(G.can_climax)
+			setArousalLoss(min_arousal)
+
+
+/mob/living/carbon/human/proc/mob_climax_outside(obj/item/organ/genital/G, mb_time = 30) //This is used for forced orgasms and other hands-free climaxes
+	var/total_fluids = 0
+	var/datum/reagents/fluid_source = null
+	var/unable_to_come = FALSE
+
+	if(G.producing) //Can it produce its own fluids, such as breasts?
+		fluid_source = G.reagents
+		total_fluids = fluid_source.total_volume
+	else
+		if(!G.linked_organ)
+			unable_to_come = TRUE
+		else
+			fluid_source = G.linked_organ.reagents
+			total_fluids = fluid_source.total_volume
+
+	if(unable_to_come)
+		src.visible_message("<span class='danger'>[src] shudders, their [G.name] unable to cum.</span>", \
+							"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>", \
+							"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>")
+	else
+		total_fluids = fluid_source.total_volume
+		if(mb_time) //as long as it's not instant, give a warning
+			src.visible_message("<span class='danger'>[src] looks like they're about to cum.</span>", \
+								"<span class='green'>You feel yourself about to orgasm.</span>", \
+								"<span class='green'>You feel yourself about to orgasm.</span>")
+		if(do_after(src, mb_time, target = src))
+			if(total_fluids > 5)
+				fluid_source.reaction(src.loc, TOUCH, 1, 0)
+			fluid_source.clear_reagents()
+			src.visible_message("<span class='danger'>[src] orgasms[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""], using [p_their()] [G.name]!</span>", \
+								"<span class='green'>You climax[istype(src.loc, /turf/open/floor) ? ", spilling onto [src.loc]" : ""] with your [G.name].</span>", \
+								"<span class='green'>You climax using your [G.name].</span>")
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
+
+
+/mob/living/carbon/human/proc/mob_climax_partner(obj/item/organ/genital/G, mob/living/L, spillage = TRUE, mb_time = 30) //Used for climaxing with any living thing
+	var/total_fluids = 0
+	var/datum/reagents/fluid_source = null
+
+	if(G.producing) //Can it produce its own fluids, such as breasts?
+		fluid_source = G.reagents
+	else
+		if(!G.linked_organ)
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			return
+		fluid_source = G.linked_organ.reagents
+	total_fluids = fluid_source.total_volume
+	if(mb_time) //Skip warning if this is an instant climax.
+		src.visible_message("[src] is about to climax with [L]!", \
+							"You're about to climax with [L]!", \
+							"<span class='danger'>You're preparing to climax with someone!</span>")
+	if(spillage)
+		if(do_after(src, mb_time, target = src) && in_range(src, L))
+			fluid_source.trans_to(L, total_fluids*G.fluid_transfer_factor)
+			total_fluids -= total_fluids*G.fluid_transfer_factor
+			if(total_fluids > 5)
+				fluid_source.reaction(L.loc, TOUCH, 1, 0)
+			fluid_source.clear_reagents()
+			src.visible_message("<span class='danger'>[src] climaxes with [L][spillage ? ", overflowing and spilling":""], using [p_their()] [G.name]!</span>", \
+								"<span class='green'>You orgasm with [L][spillage ? ", spilling out of them":""], using your [G.name].</span>", \
+								"<span class='green'>You have climaxed with someone[spillage ? ", spilling out of them":""], using your [G.name].</span>")
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
+	else //knots and other non-spilling orgasms
+		if(do_after(src, mb_time, target = src) && in_range(src, L))
+			fluid_source.trans_to(L, total_fluids)
+			total_fluids = 0
+			src.visible_message("<span class='danger'>[src] climaxes with [L], [p_their()] [G.name] spilling nothing!</span>", \
+								"<span class='green'>You ejaculate with [L], your [G.name] spilling nothing.</span>", \
+								"<span class='green'>You have climaxed inside someone, your [G.name] spilling nothing.</span>")
+			if(G.can_climax)
+				setArousalLoss(min_arousal)
+
+
+/mob/living/carbon/human/proc/mob_fill_container(obj/item/organ/genital/G, obj/item/reagent_containers/container, mb_time = 30) //For beaker-filling, beware the bartender
+	var/total_fluids = 0
+	var/datum/reagents/fluid_source = null
+
+	if(G.producing) //Can it produce its own fluids, such as breasts?
+		fluid_source = G.reagents
+	else
+		if(!G.linked_organ)
+			to_chat(src, "<span class='warning'>Your [G.name] is unable to produce it's own fluids, it's missing the organs for it.</span>")
+			return
+		fluid_source = G.linked_organ.reagents
+	total_fluids = fluid_source.total_volume
+
+	//if(!container) //Something weird happened
+	//	to_chat(src, "<span class='warning'>You need a container to do this!</span>")
+	//	return
+
+	src.visible_message("<span class='danger'>[src] starts to [G.masturbation_verb] their [G.name] over [container].</span>", \
+						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over [container].</span>", \
+						"<span class='userdanger'>You start to [G.masturbation_verb] your [G.name] over something.</span>")
+	if(do_after(src, mb_time, target = src) && in_range(src, container))
+		fluid_source.trans_to(container, total_fluids)
+		src.visible_message("<span class='danger'>[src] uses [p_their()] [G.name] to fill [container]!</span>", \
+							"<span class='green'>You used your [G.name] to fill [container].</span>", \
+							"<span class='green'>You have relieved some pressure.</span>")
+		if(G.can_climax)
+			setArousalLoss(min_arousal)
+
+/mob/living/carbon/human/proc/pick_masturbate_genitals()
+	var/obj/item/organ/genital/ret_organ
+	var/list/genitals_list = list()
+	var/list/worn_stuff = get_equipped_items()
+
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(G.can_masturbate_with) //filter out what you can't masturbate with
+			if(G.is_exposed(worn_stuff)) //Nude or through_clothing
+				genitals_list += G
+	if(genitals_list.len)
+		ret_organ = input(src, "with what?", "Masturbate", null)  as null|obj in genitals_list
+		return ret_organ
+	return null //error stuff
+
+
+/mob/living/carbon/human/proc/pick_climax_genitals()
+	var/obj/item/organ/genital/ret_organ
+	var/list/genitals_list = list()
+	var/list/worn_stuff = get_equipped_items()
+
+	for(var/obj/item/organ/genital/G in internal_organs)
+		if(G.can_climax) //filter out what you can't masturbate with
+			if(G.is_exposed(worn_stuff)) //Nude or through_clothing
+				genitals_list += G
+	if(genitals_list.len)
+		ret_organ = input(src, "with what?", "Climax", null)  as null|obj in genitals_list
+		return ret_organ
+	return null //error stuff
+
+
+/mob/living/carbon/human/proc/pick_partner()
+	var/list/partners = list()
+	if(src.pulling)
+		partners += src.pulling //Yes, even objects for now
+	if(src.pulledby)
+		partners += src.pulledby
+	//Now we got both of them, let's check if they're proper
+	for(var/I in partners)
+		if(isliving(I))
+			if(iscarbon(I))
+				var/mob/living/carbon/C = I
+				if(!C.exposed_genitals.len) //Nothing through_clothing
+					if(!C.is_groin_exposed()) //No pants undone
+						if(!C.is_chest_exposed()) //No chest exposed
+							partners -= I //Then not proper, remove them
+		else
+			partners -= I //No fucking objects
+	//NOW the list should only contain correct partners
+	if(!partners.len)
+		return null //No one left.
+	return input(src, "With whom?", "Sexual partner", null) in partners //pick one, default to null
+
+/mob/living/carbon/human/proc/pick_climax_container()
+	var/obj/item/reagent_containers/SC = null
+	var/list/containers_list = list()
+
+	for(var/obj/item/reagent_containers/container in held_items)
+		if(container.is_open_container() || istype(container, /obj/item/reagent_containers/food/snacks))
+			containers_list += container
+
+	if(containers_list.len)
+		SC = input(src, "Into or onto what?(Cancel for nowhere)", null)  as null|obj in containers_list
+		if(SC)
+			if(in_range(src, SC))
+				return SC
+	return null //If nothing correct, give null.
+
+
+//Here's the main proc itself
 /mob/living/carbon/human/mob_climax(forced_climax=FALSE) //Forced is instead of the other proc, makes you cum if you have the tools for it, ignoring restraints
 	if(mb_cd_timer > world.time)
 		if(!forced_climax) //Don't spam the message to the victim if forced to come too fast
 			to_chat(src, "<span class='warning'>You need to wait [round((mb_cd_timer - world.time)/(20))] seconds before you can do that again!</span>")
 		return
 	mb_cd_timer = (world.time + mb_cd_length)
-	var/list/genitals_list = list()
-	var/obj/item/organ/genital/SG = null//originally selected_genital
-	var/list/containers_list = list()
-	var/obj/item/weapon/reagent_containers/SC = null
-	var/datum/reagents/fluid_source = null
-	var/into_container = 0
-	var/free_hands = get_num_arms() //arms was only used to know if we had ANY at all
-	var/total_cum = 0
-	var/finished = 0
-	var/mb_time = 30
+
+
 	if(canbearoused && has_dna())
 		if(stat==2)
 			to_chat(src, "<span class='warning'>You can't do that while dead!</span>")
 			return
 		if(forced_climax) //Something forced us to cum, this is not a masturbation thing and does not progress to the other checks
-			for(var/obj/item/organ/genital/G in internal_organs)
-				if(G.can_masturbate_with) //All capable genitals will orgasm with this
-					var/unable_to_come = FALSE
-					switch(G.type)
-						if(/obj/item/organ/genital/penis)
-							var/obj/item/organ/genital/penis/P = G
-							if(!P.linked_balls)
-								unable_to_come = TRUE
-							else
-								fluid_source = P.linked_balls.reagents
+			for(var/obj/item/organ/O in internal_organs)
+				if(istype(O, /obj/item/organ/genital))
+					var/obj/item/organ/genital/G = O
+					if(!G.can_climax) //Skip things like wombs and testicles
+						continue
+					var/mob/living/partner
+					var/check_target
+					var/list/worn_stuff = get_equipped_items()
 
+					if(G.is_exposed(worn_stuff))
+						if(src.pulling) //Are we pulling someone? Priority target, we can't be making option menus for this, has to be quick
+							if(isliving(src.pulling)) //Don't fuck objects
+								check_target = src.pulling
+						if(src.pulledby && !check_target) //prioritise pulled over pulledby
+							if(isliving(src.pulledby))
+								check_target = src.pulledby
+						//Now we should have a partner, or else we have to come alone
+						if(check_target)
+							if(iscarbon(check_target)) //carbons can have clothes
+								var/mob/living/carbon/C = check_target
+								if(C.exposed_genitals.len || C.is_groin_exposed() || C.is_chest_exposed()) //Are they naked enough?
+									partner = C
+							else //A cat is fine too
+								partner = check_target
+						if(partner) //Did they pass the clothing checks?
+							mob_climax_partner(G, partner, mb_time = 0) //Instant climax due to forced
+							continue //You've climaxed once with this organ, continue on
+					//not exposed OR if no partner was found while exposed, climax alone
+					mob_climax_outside(G, mb_time = 0) //removed climax timer for sudden, forced orgasms
+			//Now all genitals that could climax, have.
+			//Since this was a forced climax, we do not need to continue with the other stuff
+			return
+		//If we get here, then this is not a forced climax and we gotta check a few things.
 
-						if(/obj/item/organ/genital/vagina)
-							var/obj/item/organ/genital/vagina/V = G
-							if(!V.linked_womb)
-								unable_to_come = TRUE
-							else
-								fluid_source = V.linked_womb.reagents
-						else //Weird, undefined genitalia behaviour
-							unable_to_come = TRUE
-
-					if(unable_to_come)
-						src.visible_message("<span class='danger'>[src] shudders, their [G.name] unable to cum.</span>", \
-						"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>", \
-						"<span class='userdanger'>Your [G.name] cannot cum, giving no relief.</span>")
-					else
-						if(fluid_source)
-							total_cum = fluid_source.total_volume
-							src.visible_message("<span class='danger'>[src] looks like they're about to cum.</span>", \
-							"<span class='green'>You feel yourself about to orgasm.</span>", \
-							"<span class='green'>You feel yourself about to orgasm.</span>")
-							if(do_after(src, mb_time, target = src))
-								if(total_cum > 5)
-									fluid_source.reaction(src.loc, TOUCH, 1, 0)
-								fluid_source.clear_reagents()
-								fluid_source = null //cleanup so this can be used for the next genitalia
-
-								src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
-								"<span class='green'>You're forced to cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""] with your [G].</span>", \
-								"<span class='green'>Your [G] have been forced to climax.</span>")
-								finished = 1
-			if(finished)
-				setArousalLoss(min_arousal)
-			return //Do not proceed to masturbating if all genitals have been forced to orgasm.
-		if(stat==1) //Sleeping people can be forced chemically or with electrical stimulants, for example.
+		if(stat==1) //No sleep-masturbation, you're unconscious.
 			to_chat(src, "<span class='warning'>You must be conscious to do that!</span>")
 			return
-		if(restrained())
-			to_chat(src, "<span class='warning'>You can't do that while restrained!</span>")
-			return
-		if(getArousalLoss() < 33)//flat number instead of percentage
+		if(getArousalLoss() < 33) //flat number instead of percentage
 			to_chat(src, "<span class='warning'>You aren't aroused enough for that!</span>")
 			return
-		if(!is_groin_exposed())
-			to_chat(src, "<span class='warning'>You need to undress, first!</span>")
-			return
-		if(!free_hands)
-			to_chat(src, "<span class='warning'>You need at least one free arm.</span>")
-			return
-		for(var/helditem in held_items)//how many hands are free
-			if(isobj(helditem))
-				free_hands--
-		if(free_hands <= 0)
-			to_chat(src, "<span class='warning'>You need at least one free hand.</span>")
-			return
-		for(var/obj/item/organ/genital/G in internal_organs)
-			if(G.can_masturbate_with)//filter out what you can't masturbate with
-				genitals_list += G
-		if(genitals_list.len)
-			SG = input(src, "with what?", "Masturbate")  as null|obj in genitals_list
-			if(SG)
-				for(var/obj/item/weapon/reagent_containers/container in held_items)
-					if(container.is_open_container() || istype(container, /obj/item/weapon/reagent_containers/food/snacks/pie))
-						containers_list += container
-				if(containers_list.len)
-					SC = input(src, "Into or onto what?(Cancel for nowhere)", "Masturbate")  as null|obj in containers_list
-					if(SC)
-						if(in_range(src, SC))
-							into_container = 1
-				SG.update()
-				switch(SG.type)
 
-					//Penis
-					if(/obj/item/organ/genital/penis)
-						var/obj/item/organ/genital/penis/P = SG
-						if(!P.linked_balls)
-							to_chat(src, "<span class='warning'>You need a pair of testicles to do this.</span>")
-							return
-						fluid_source = P.linked_balls.reagents
-						total_cum = fluid_source.total_volume
-						if(into_container)//into a glass or beaker or whatever
-							src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG.name] over [SC].</span>", \
-								"<span class='userdanger'>You start jerking off over [SC.name].</span>", \
-								"<span class='userdanger'>You start masturbating.</span>")
-							if(do_after(src, mb_time, target = src) && in_range(src, SC))
-								fluid_source.trans_to(SC, total_cum)
-								src.visible_message("<span class='danger'>[src] orgasms, [pick("cumming into", "emptying themself into")] [SC]!</span>", \
-									"<span class='green'>You cum into [SC].</span>", \
-									"<span class='green'>You have relieved yourself.</span>")
-								finished = 1
-						else //Not in a container
-							if(src.pulling)
-								if(iscarbon(src.pulling))
-									var/mob/living/carbon/C = src.pulling
-									if(!C.is_groin_exposed())
-										to_chat(src, "<span class='warning'>You must undress someone to climax inside them.</span>")
-										return
-								if(isliving(src.pulling)) //Gotta be alive to fuck it, don't wanna have to code fucking objects that ain't containers...
-									var/mob/living/partner = src.pulling
-									src.visible_message("[src] is about to climax inside [partner]!", \
-									"You're about to climax inside [partner]!", \
-									"<span class='danger'>You're preparing to climax inside someone!</span>")
-									switch(grab_state)
-										if(GRAB_PASSIVE)
-											if(do_after(src, mb_time, target = src) && in_range(src, partner))
-												var/spillage = 0.5 //Leaks a bit on passive grab
-												var/did_spill = FALSE
-												fluid_source.trans_to(partner, total_cum*(1-spillage))
-												total_cum = total_cum*spillage
-												if(total_cum > 5)
-													fluid_source.reaction(partner.loc, TOUCH, 1, 0)
-													did_spill = TRUE
-												fluid_source.clear_reagents()
+		//Ok, now we check what they want to do.
+		var/choice = input(src, "Select sexual activity", "Sexual activity:") in list("Masturbate", "Climax alone", "Climax with partner", "Fill container")
 
-												src.visible_message("<span class='danger'>[src] ejaculates inside [partner][did_spill ? ", overflowing and spilling":""]!</span>", \
-												"<span class='green'>You ejaculate inside [partner][did_spill ? ", spilling out of them":""].</span>", \
-												"<span class='green'>You have climaxed inside someone[did_spill ? ", spilling out of them":""].</span>")
-												finished = 1
-										else //Aggressive or higher
-											if(do_after(src, mb_time, target = src) && in_range(src, partner))
-												var/spillage = 0.0 //Leakproofing seals
-												fluid_source.trans_to(partner, total_cum*(1-spillage))
-												total_cum = total_cum*spillage
-												if(total_cum > 5)
-													fluid_source.reaction(partner.loc, TOUCH, 1, 0)
-												fluid_source.clear_reagents()
+		switch(choice)
+			if("Masturbate")
+				if(restrained(TRUE)) //TRUE ignores grabs
+					to_chat(src, "<span class='warning'>You can't do that while restrained!</span>")
+					return
+				var/free_hands = get_num_arms()
+				if(!free_hands)
+					to_chat(src, "<span class='warning'>You need at least one free arm.</span>")
+					return
+				for(var/helditem in held_items)//how many hands are free
+					if(isobj(helditem))
+						free_hands--
+				if(free_hands <= 0)
+					to_chat(src, "<span class='warning'>You're holding too many things.</span>")
+					return
+				//We got hands, let's pick an organ
+				var/obj/item/organ/genital/picked_organ
+				picked_organ = pick_masturbate_genitals()
+				if(picked_organ)
+					mob_masturbate(picked_organ)
+					return
+				else //They either lack organs that can masturbate, or they didn't pick one.
+					to_chat(src, "<span class='warning'>You cannot masturbate without choosing genitals.</span>")
+					return
 
-												src.visible_message("<span class='danger'>[src] ejaculates inside [partner], spilling nothing!</span>", \
-												"<span class='green'>You ejaculate inside [partner], spilling nothing.</span>", \
-												"<span class='green'>You have climaxed inside someone, spilling nothing.</span>")
-												finished = 1
-								//Don't care, not coding you fucking a unanchored girder
-							else //No pulling, or pulling non-living things
-								src.visible_message("<span class='danger'>[src] starts [pick("jerking off","stroking")] their [SG].</span>", \
-								"<span class='green'>You start masturbating.</span>", \
-								"<span class='green'>You start masturbating.</span>")
-								if(do_after(src, mb_time, target = src))
-									if(total_cum > 5)
-										fluid_source.reaction(src.loc, TOUCH, 1, 0)
-									fluid_source.clear_reagents()
+			if("Climax alone")
+				if(restrained(TRUE)) //TRUE ignores grabs
+					to_chat(src, "<span class='warning'>You can't do that while restrained!</span>")
+					return
+				var/free_hands = get_num_arms()
+				if(!free_hands)
+					to_chat(src, "<span class='warning'>You need at least one free arm.</span>")
+					return
+				for(var/helditem in held_items)//how many hands are free
+					if(isobj(helditem))
+						free_hands--
+				if(free_hands <= 0)
+					to_chat(src, "<span class='warning'>You're holding too many things.</span>")
+					return
+				//We got hands, let's pick an organ
+				var/obj/item/organ/genital/picked_organ
+				picked_organ = pick_climax_genitals()
+				if(picked_organ)
+					mob_climax_outside(picked_organ)
+					return
+				else //They either lack organs that can masturbate, or they didn't pick one.
+					to_chat(src, "<span class='warning'>You cannot climax without choosing genitals.</span>")
+					return
 
-									src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
-									"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
-									"<span class='green'>You have relieved yourself.</span>")
-									finished = 1
+			if("Climax with partner")
+				//We need no hands, we can be restrained and so on, so let's pick an organ
+				var/obj/item/organ/genital/picked_organ
+				picked_organ = pick_climax_genitals()
+				if(picked_organ)
+					var/mob/living/partner = pick_partner() //Get someone
+					if(partner)
+						var/spillage = input(src, "Would your fluids spill outside?", "Choose overflowing option", "Yes") as anything in list("Yes", "No")
+						if(spillage == "Yes")
+							mob_climax_partner(picked_organ, partner, TRUE)
+						else
+							mob_climax_partner(picked_organ, partner, FALSE)
+						return
+					else
+						to_chat(src, "<span class='warning'>You cannot do this alone.</span>")
+						return
+				else //They either lack organs that can masturbate, or they didn't pick one.
+					to_chat(src, "<span class='warning'>You cannot climax without choosing genitals.</span>")
+					return
 
-					if(/obj/item/organ/genital/vagina)
-						var/obj/item/organ/genital/vagina/V = SG
-						if(!V.linked_womb)
-							to_chat(src, "<span class='warning'>You need a womb to do this.</span>")
-							return
-						fluid_source = V.linked_womb.reagents
-						total_cum = fluid_source.total_volume
-						if(into_container)//into a glass or beaker or whatever
-							src.visible_message("<span class='danger'>[src] starts fingering their [SG.name] over [SC].</span>", \
-								"<span class='userdanger'>You start fingering over [SC.name].</span>", \
-								"<span class='userdanger'>You start masturbating.</span>")
-							if(do_after(src, mb_time, target = src) && in_range(src, SC))
-								fluid_source.trans_to(SC, total_cum)
-								src.visible_message("<span class='danger'>[src] orgasms, [pick("cumming into", "emptying themself into")] [SC]!</span>", \
-									"<span class='green'>You cum into [SC].</span>", \
-									"<span class='green'>You have relieved yourself.</span>")
-								finished = 1
-
-						else//not into a container
-							src.visible_message("<span class='danger'>[src] starts fingering their vagina.</span>", \
-								"<span class='userdanger'>You start fingering your vagina.</span>", \
-										"<span class='userdanger'>You start masturbating.</span>")
-							if(do_after(src, mb_time, target = src))
-								if(total_cum > 5)
-									fluid_source.reaction(src.loc, TOUCH, 1, 0)
-								fluid_source.clear_reagents()
-								src.visible_message("<span class='danger'>[src] orgasms, cumming[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""]!</span>", \
-									"<span class='green'>You cum[istype(src.loc, /turf/open/floor) ? " onto [src.loc]" : ""].</span>", \
-									"<span class='green'>You have relieved yourself.</span>")
-								finished = 1
-
-					else//backup message, just in case
-						src.visible_message("<span class='danger'>[src] starts masturbating!</span>", \
-								"<span class='userdanger'>You start masturbating.</span>")
-						if(do_after(src, mb_time, target = src))
-							src.visible_message("<span class='danger'>[src] [pick("relieves themself!", "shudders and moans in orgasm!")]</span>", \
-								"<span class='userdanger'>You have relieved yourself.</span>")
-							finished = 1
-				if(finished)
-					setArousalLoss(min_arousal)
-
-		else
-			to_chat(src, "<span class='warning'>You have no genitals!</span>")
-			return
+			if("Fill container")
+				//We'll need hands and no restraints.
+				if(restrained(TRUE)) //TRUE ignores grabs
+					to_chat(src, "<span class='warning'>You can't do that while restrained!</span>")
+					return
+				var/free_hands = get_num_arms()
+				if(!free_hands)
+					to_chat(src, "<span class='warning'>You need at least one free arm.</span>")
+					return
+				for(var/helditem in held_items)//how many hands are free
+					if(isobj(helditem))
+						free_hands--
+				if(free_hands <= 0)
+					to_chat(src, "<span class='warning'>You're holding too many things.</span>")
+					return
+				//We got hands, let's pick an organ
+				var/obj/item/organ/genital/picked_organ
+				picked_organ = pick_climax_genitals() //Gotta be climaxable, not just masturbation, to fill with fluids.
+				if(picked_organ)
+					//Good, got an organ, time to pick a container
+					var/obj/item/reagent_containers/fluid_container = pick_climax_container()
+					if(fluid_container)
+						mob_fill_container(picked_organ, fluid_container)
+						return
+					else
+						to_chat(src, "<span class='warning'>You cannot do this without anything to fill.</span>")
+						return
+				else //They either lack organs that can climax, or they didn't pick one.
+					to_chat(src, "<span class='warning'>You cannot fill anything without choosing genitals.</span>")
+					return
+			else //Somehow another option was taken, maybe something interrupted the selection or it was cancelled
+				return //Just end it in that case.

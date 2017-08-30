@@ -153,14 +153,13 @@
 	if(prob(33))
 		if(M.getArousalLoss() >= 100 && ishuman(M) && M.has_dna())
 			var/mob/living/carbon/human/H = M
-			to_chat(H, "<span class='love'>Your libido is going haywire!</span>")
-			H.mob_climax(forced_climax=TRUE)
+			if(prob(50)) //Less spam
+				to_chat(H, "<span class='love'>Your libido is going haywire!</span>")
+				H.mob_climax(forced_climax=TRUE)
 		if(M.min_arousal < 50)
 			M.min_arousal += 1
-			to_chat(M, "<span class='love'>You're having a hard time thinkin about things other than sex!</span>")
 		if(M.min_arousal < M.max_arousal)
 			M.min_arousal += 1
-			to_chat(M, "<span class='love'>You feel your libido permanently increasing.</span>")
 		M.adjustArousalLoss(2)
 	..()
 
@@ -197,10 +196,8 @@
 	if(prob(33))
 		if(M.min_arousal > 0)
 			M.min_arousal -= 1
-			to_chat(M, "<span class='notice'>You feel your libido returning to more normal levels.</span>")
 		if(M.min_arousal > 50)
 			M.min_arousal -= 1
-			to_chat(M, "<span class='notice'>You feel like your overactive libido is calming down.</span>")
 		M.adjustArousalLoss(-2)
 	..()
 

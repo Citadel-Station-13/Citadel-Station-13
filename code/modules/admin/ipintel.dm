@@ -77,7 +77,7 @@
 	if (!SSipintel.enabled)
 		return
 
-	var/list/http[] = world.Export("http://[config.ipintel_domain]/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json&flags=f")
+	var/list/http[] = world.Export("http://[config.ipintel_domain]/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json&flags_1=f")
 
 	if (http)
 		var/status = text2num(http["STATUS"])

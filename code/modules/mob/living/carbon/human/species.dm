@@ -10,9 +10,9 @@
 
 
 /datum/species
-	var/id = null		// if the game needs to manually check your race to do something not included in a proc here, it will use this
-	var/limbs_id = null	//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
-	var/name = null		// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
+	var/id	// if the game needs to manually check your race to do something not included in a proc here, it will use this
+	var/limbs_id		//this is used if you want to use a different species limb sprites. Mainly used for angels as they look like humans.
+	var/name	// this is the fluff name. these will be left generic (such as 'Lizardperson' for the lizard race) so servers can change them to whatever
 	var/roundstart = 0	// can this mob be chosen at roundstart? (assuming the config option is checked?)
 	var/default_color = "#FFF"	// if alien colors are disabled, this is the color that will be used by that race
 
@@ -21,17 +21,21 @@
 	var/face_y_offset = 0
 	var/hair_y_offset = 0
 
-	var/hair_color = null	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
+	var/hair_color	// this allows races to have specific hair colors... if null, it uses the H's hair/facial hair colors. if "mutcolor", it uses the H's mutant_color
 	var/hair_alpha = 255	// the alpha used by the hair. 255 is completely solid, 0 is transparent.
+
 	var/use_skintones = 0	// does it use skintones or not? (spoiler alert this is only used by humans)
 	var/exotic_blood = ""	// If your race wants to bleed something other than bog standard blood, change this to reagent id.
 	var/exotic_bloodtype = "" //If your race uses a non standard bloodtype (A+, O-, AB-, etc)
-	var/meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
-	var/skinned_type = null
+	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
+	var/skinned_type
+	var/liked_food = NONE
+	var/disliked_food = NONE
+	var/toxic_food = NONE
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
-	var/dangerous_existence = null //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
+	var/dangerous_existence //A flag for transformation spells that tells them "hey if you turn a person into one of these without preperation, they'll probably die!"
 	var/say_mod = "says"	// affects the speech message
 	var/list/default_features = list() // Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/mutant_bodyparts = list() 	// Parts of the body that are diferent enough from the standard human model that they cause clipping with some equipment
@@ -50,7 +54,7 @@
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
-	// species flags. these can be found in flags.dm
+	// species flags_1. these can be found in flags_1.dm
 	var/list/species_traits = list()
 
 	var/attack_verb = "punch"	// punch-specific attack verb
@@ -67,13 +71,11 @@
 
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
+	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
-	
+
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
-
-	//Hands
-	var/obj/item/mutanthands = null
 
 	//Citadel snowflake
 	var/fixed_mut_color2 = ""
@@ -81,9 +83,9 @@
 	var/whitelisted = 0 		//Is this species restricted to certain players?
 	var/whitelist = list() 		//List the ckeys that can use this species, if it's whitelisted.: list("John Doe", "poopface666", "SeeALiggerPullTheTrigger") Spaces & capitalization can be included or ignored entirely for each key as it checks for both.
 
-	///////////
-	// PROCS //
-	///////////
+///////////
+// PROCS //
+///////////
 
 
 /datum/species/New()
@@ -216,7 +218,7 @@
 
 	if(mutanthands)
 		// Drop items in hands
-		// If you're lucky enough to have a NODROP item, then it stays.
+		// If you're lucky enough to have a NODROP_1 item, then it stays.
 		for(var/V in C.held_items)
 			var/obj/item/I = V
 			if(istype(I))
@@ -411,6 +413,7 @@
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
+
 		if(H.socks && H.get_num_legs() >= 2 && !(DIGITIGRADE in species_traits))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[H.socks]
 			if(socks)
@@ -910,7 +913,7 @@
 				return 0
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(slot_l_store)
-			if(I.flags & NODROP) //Pockets aren't visible, so you can't move NODROP items into them.
+			if(I.flags_1 & NODROP_1) //Pockets aren't visible, so you can't move NODROP_1 items into them.
 				return 0
 			if(H.l_store)
 				return 0
@@ -926,7 +929,7 @@
 			if( I.w_class <= WEIGHT_CLASS_SMALL || (I.slot_flags & SLOT_POCKET) )
 				return 1
 		if(slot_r_store)
-			if(I.flags & NODROP)
+			if(I.flags_1 & NODROP_1)
 				return 0
 			if(H.r_store)
 				return 0
@@ -943,7 +946,7 @@
 				return 1
 			return 0
 		if(slot_s_store)
-			if(I.flags & NODROP)
+			if(I.flags_1 & NODROP_1)
 				return 0
 			if(H.s_store)
 				return 0
@@ -959,13 +962,13 @@
 				if(!disable_warning)
 					to_chat(H, "The [I.name] is too big to attach.") //should be src?
 				return 0
-			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/weapon/pen) || is_type_in_list(I, H.wear_suit.allowed) )
+			if( istype(I, /obj/item/device/pda) || istype(I, /obj/item/pen) || is_type_in_list(I, H.wear_suit.allowed) )
 				return 1
 			return 0
 		if(slot_handcuffed)
 			if(H.handcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/handcuffs))
+			if(!istype(I, /obj/item/restraints/handcuffs))
 				return 0
 			if(num_arms < 2)
 				return 0
@@ -973,14 +976,14 @@
 		if(slot_legcuffed)
 			if(H.legcuffed)
 				return 0
-			if(!istype(I, /obj/item/weapon/restraints/legcuffs))
+			if(!istype(I, /obj/item/restraints/legcuffs))
 				return 0
 			if(num_legs < 2)
 				return 0
 			return 1
 		if(slot_in_backpack)
-			if(H.back && istype(H.back, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/B = H.back
+			if(H.back && istype(H.back, /obj/item/storage))
+				var/obj/item/storage/B = H.back
 				if(B.can_be_inserted(I, 1, H))
 					return 1
 			return 0
@@ -1155,7 +1158,7 @@
 		gravity = 1
 
 	if(!gravity)
-		var/obj/item/weapon/tank/jetpack/J = H.back
+		var/obj/item/tank/jetpack/J = H.back
 		var/obj/item/clothing/suit/space/hardsuit/C = H.wear_suit
 		var/obj/item/organ/cyberimp/chest/thrusters/T = H.getorganslot("thrusters")
 		if(!istype(J) && istype(C))
@@ -1180,7 +1183,7 @@
 		if(H.back)
 			. += H.back.slowdown
 		for(var/obj/item/I in H.held_items)
-			if(HAS_SECONDARY_FLAG(I, SLOWS_WHILE_IN_HAND))
+			if(I.flags_2 & SLOWS_WHILE_IN_HAND_2)
 				. += I.slowdown
 		var/health_deficiency = (100 - H.health + H.staminaloss)
 		var/hungry = (500 - H.nutrition) / 5 // So overeat would be 100 and default level would be 80
@@ -1321,7 +1324,6 @@
 			target.apply_effect(40, KNOCKDOWN, target.run_armor_check(affecting, "melee", "Your armor prevents your fall!", "Your armor softens your fall!"))
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
-
 			return
 
 		if(randn <= 60)
@@ -1329,7 +1331,6 @@
 			if(target.pulling)
 				to_chat(target, "<span class='warning'>[user] has broken [target]'s grip on [target.pulling]!</span>")
 				target.stop_pulling()
-
 			else
 				I = target.get_active_held_item()
 				if(target.drop_item())
@@ -1587,6 +1588,7 @@
 			else
 				H.throw_alert("temp", /obj/screen/alert/cold, 3)
 				H.apply_damage(COLD_DAMAGE_LEVEL_3*coldmod, BURN)
+
 	else
 		H.clear_alert("temp")
 
@@ -1695,9 +1697,9 @@
 	return
 
 
-////////
+////////////
 //Stun//
-////////
+////////////
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H,amount)
 	. = stunmod * amount

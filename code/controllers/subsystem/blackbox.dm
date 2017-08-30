@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(blackbox)
 	name = "Blackbox"
 	wait = 6000
-	flags = SS_NO_TICK_CHECK | SS_NO_INIT
+	flags_1 = SS_NO_TICK_CHECK | SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	init_order = INIT_ORDER_BLACKBOX
 
@@ -253,16 +253,14 @@ SUBSYSTEM_DEF(blackbox)
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
-		details = text
+/datum/feedback_variable/proc/set_details(deets)
+	details = "\"[deets]\""
 
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		if (!details)
-			details = "\"[text]\""
-		else
-			details += " | \"[text]\""
+/datum/feedback_variable/proc/add_details(deets)
+	if (!details)
+		set_details(deets)
+	else
+		details += " | \"[deets]\""
 
 /datum/feedback_variable/proc/get_details()
 	return details
