@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - tweak: "Garbage collection happens less often now to reduce the lag caused by hard deletions."
