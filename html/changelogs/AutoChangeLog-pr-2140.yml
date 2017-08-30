@@ -1,5 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - rscadd: "A new objective is now available for traitors, where their target to assassinate has not yet arrived at the station."
-  - bugfix: "Random objective target that used to not be random now is."
