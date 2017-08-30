@@ -54,6 +54,11 @@
 	desc = "A strange dagger said to be used by sinister groups for \"preparing\" a corpse before sacrificing it to their dark gods."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	item_state = "knife"
+	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
