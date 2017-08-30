@@ -1,0 +1,11 @@
+diff a/code/game/objects/structures/beds_chairs/chair.dm b/code/game/objects/structures/beds_chairs/chair.dm	(rejected hunks)
+@@ -112,9 +112,6 @@
+ 	else
+ 		rotate()
+ 
+-/obj/structure/chair/relaymove(mob/living/user)
+-	user.resist_buckle()
+-
+ // Chair types
+ /obj/structure/chair/wood
+ 	icon_state = "wooden_chair"
