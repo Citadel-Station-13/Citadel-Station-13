@@ -148,10 +148,6 @@
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
 		to_chat(user, "<span class='warning'>[recharging_text]</span>")
-	if(metal_cost)
-		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_METAL)] units of metal stored.</span>")
-	if(glass_cost)
-		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_GLASS)] units of glass stored.</span>")
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -166,6 +162,7 @@
 	if((stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 

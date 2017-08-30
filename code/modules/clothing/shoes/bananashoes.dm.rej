@@ -1,0 +1,9 @@
+diff a/code/modules/clothing/shoes/bananashoes.dm b/code/modules/clothing/shoes/bananashoes.dm	(rejected hunks)
+@@ -21,6 +20,7 @@
+ 			footstep++
+ 
+ 		new/obj/item/weapon/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
++		GET_COMPONENT(bananium, /datum/component/material_container)
+ 		bananium.use_amount_type(100, MAT_BANANIUM)
+ 		if(bananium.amount(MAT_BANANIUM) < 100)
+ 			on = !on

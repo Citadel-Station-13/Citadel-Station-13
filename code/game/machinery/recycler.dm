@@ -126,6 +126,7 @@
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 	I.loc = src.loc
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(I)
 	if(!material_amount)
 		qdel(I)

@@ -1,13 +1,10 @@
 diff a/tgstation.dme b/tgstation.dme	(rejected hunks)
-@@ -1746,6 +1745,11 @@
- #include "code\modules\mob\living\simple_animal\hostile\gorilla\emotes.dm"
- #include "code\modules\mob\living\simple_animal\hostile\gorilla\gorilla.dm"
- #include "code\modules\mob\living\simple_animal\hostile\gorilla\visuals_icons.dm"
-+#include "code\modules\mob\living\simple_animal\hostile\jungle\_jungle_mobs.dm"
-+#include "code\modules\mob\living\simple_animal\hostile\jungle\leaper.dm"
-+#include "code\modules\mob\living\simple_animal\hostile\jungle\mega_arachnid.dm"
-+#include "code\modules\mob\living\simple_animal\hostile\jungle\mook.dm"
-+#include "code\modules\mob\living\simple_animal\hostile\jungle\seedling.dm"
- #include "code\modules\mob\living\simple_animal\hostile\megafauna\blood_drunk_miner.dm"
- #include "code\modules\mob\living\simple_animal\hostile\megafauna\bubblegum.dm"
- #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
+@@ -247,7 +246,7 @@
+ #include "code\datums\antagonists\devil.dm"
+ #include "code\datums\antagonists\ninja.dm"
+ #include "code\datums\components\component.dm"
+-#include "code\datums\components\powered.dm"
++#include "code\datums\components\material_container.dm"
+ #include "code\datums\diseases\_disease.dm"
+ #include "code\datums\diseases\_MobProcs.dm"
+ #include "code\datums\diseases\anxiety.dm"

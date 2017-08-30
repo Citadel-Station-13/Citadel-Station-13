@@ -113,6 +113,7 @@
 
 /obj/machinery/mecha_part_fabricator/proc/output_available_resources()
 	var/output
+	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		output += "<span class=\"res_name\">[M.name]: </span>[M.amount] cm&sup3;"
@@ -133,6 +134,7 @@
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	if(D.reagents_list.len) // No reagents storage - no reagent designs.
 		return 0
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(materials.has_materials(get_resources_w_coeff(D)))
 		return 1
 	return 0
@@ -142,6 +144,7 @@
 	desc = "It's building \a [initial(D.name)]."
 	var/list/res_coef = get_resources_w_coeff(D)
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.use_amount(res_coef)
 	add_overlay("fab-active")
 	use_power = ACTIVE_POWER_USE
@@ -398,14 +401,33 @@
 					break
 
 	if(href_list["remove_mat"] && href_list["material"])
+		GET_COMPONENT(materials, /datum/component/material_container)
 		materials.retrieve_sheets(text2num(href_list["remove_mat"]), href_list["material"])
 
 	updateUsrDialog()
 	return
 
 /obj/machinery/mecha_part_fabricator/on_deconstruction()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
+
+/obj/machinery/mecha_part_fabricator/ComponentActivated(datum/component/C)
+	..()
+	if(istype(C, /datum/component/material_container))
+		var/datum/component/material_container/M = C
+		if(!M.last_insert_success)
+			return
+		var/lit = M.last_inserted_type
+		var/stack_name
+		if(ispath(lit, /obj/item/weapon/ore/bluespace_crystal))
+			stack_name = "bluespace"
+		else
+			var/obj/item/stack/S = lit
+			stack_name = material2name(initial(S.materials)[1])
+		add_overlay("fab-load-[stack_name]")
+		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "fab-load-[stack_name]"), 10)
+		updateUsrDialog()
 
 /obj/machinery/mecha_part_fabricator/attackby(obj/item/W, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "fab-o", "fab-idle", W))
@@ -476,20 +498,6 @@
 		return FALSE
 	if(being_built)
 		to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
-		return FALSE
-
-	return TRUE
-
-
-/obj/machinery/mecha_part_fabricator/proc/try_insert(mob/user, obj/item/I, material_amount)
-	if(!material_amount)
-		to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>")
-		return FALSE
-	if(!materials.has_space(material_amount))
-		to_chat(user, "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>")
-		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(I))
-		to_chat(user, "<span class='warning'>\The [I] is stuck to you and cannot be placed into [src].</span>")
 		return FALSE
 
 	return TRUE

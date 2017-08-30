@@ -32,8 +32,6 @@
 	var/selected_category
 	var/screen = 1
 
-	var/datum/material_container/materials
-
 	var/list/categories = list(
 							"Tools",
 							"Electronics",
@@ -81,6 +79,7 @@
 	popup.open()
 
 /obj/machinery/autolathe/on_deconstruction()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/O, mob/user, params)
@@ -193,6 +192,7 @@
 
 			var/power = max(2000, (metal_cost+glass_cost)*multiplier/5)
 
+			GET_COMPONENT(materials, /datum/component/material_container)
 			if((materials.amount(MAT_METAL) >= metal_cost*multiplier*coeff) && (materials.amount(MAT_GLASS) >= glass_cost*multiplier*coeff))
 				busy = TRUE
 				use_power(power)
@@ -294,6 +294,7 @@
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
+			GET_COMPONENT(materials, /datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
@@ -325,6 +326,7 @@
 			dat += "<a href='?src=\ref[src];make=[D.id];multiplier=1'>[D.name]</a>"
 
 		if(ispath(D.build_path, /obj/item/stack))
+			GET_COMPONENT(materials, /datum/component/material_container)
 			var/max_multiplier = min(D.maxstack, D.materials[MAT_METAL] ?round(materials.amount(MAT_METAL)/D.materials[MAT_METAL]):INFINITY,D.materials[MAT_GLASS]?round(materials.amount(MAT_GLASS)/D.materials[MAT_GLASS]):INFINITY)
 			if (max_multiplier>10 && !disabled)
 				dat += " <a href='?src=\ref[src];make=[D.id];multiplier=10'>x10</a>"
@@ -339,6 +341,7 @@
 	return dat
 
 /obj/machinery/autolathe/proc/materials_printout()
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/dat = "<b>Total amount:</b> [materials.total_amount] / [materials.max_amount] cm<sup>3</sup><br>"
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]

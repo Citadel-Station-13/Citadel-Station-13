@@ -59,6 +59,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/A = materials.amount(M)
 	if(!A)
 		A = reagents.get_reagent_amount(M)
