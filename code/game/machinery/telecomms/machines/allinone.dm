@@ -14,7 +14,6 @@
 	machinetype = 6
 	var/intercept = FALSE // if TRUE, broadcasts all syndie messages to syndicate channel
 
-
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
 	if(!on) // has to be on to receive messages
