@@ -592,6 +592,7 @@
 	extra = 1
 	extra2 = 1
 	icon = 'icons/mob/mam_body_markings.dmi'
+	gender_specific = 1
 
 	/datum/sprite_accessory/mam_body_markings/xeno
 	name = "Xeno"
