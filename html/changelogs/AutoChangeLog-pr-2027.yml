@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - tweak: "Enabled random borer event, increased minimum timer before borer event can happen, decreased possibility of borer event, down to default value, increased minimum living, non-AFK players required for event to happen."

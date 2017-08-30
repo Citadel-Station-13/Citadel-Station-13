@@ -1,5 +1,0 @@
-author: "Raeschen"
-delete-after: True
-changes: 
-  - rscadd: "Added goodbyemoonmen.ogg to /strings/round_start_sounds.txt"
-  - soundadd: "Added sound/music/goodbyemoonmen.ogg"
