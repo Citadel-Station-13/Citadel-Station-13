@@ -60,12 +60,6 @@
 			msg += "\"01000001 01001001\"."
 		if(TRACK_INFILTRATOR)
 			msg += "\"vasvygengbefuvc\"."
-		if(TRACK_OPERATIVES)
-			msg += "\"[target ? "Operative [target]" : "friends"]\"."
-		if(TRACK_ATOM)
-			msg += "\"[initial(constant_target.name)]\"."
-		if(TRACK_COORDINATES)
-			msg += "\"([target_x], [target_y])\"."
 		else
 			msg = "Its tracking indicator is blank."
 	to_chat(user, msg)
