@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - tweak: "The cooldown on communications console announcements is halved from 60 to 30 seconds."
