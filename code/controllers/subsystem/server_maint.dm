@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(server_maint)
 	name = "Server Tasks"
 	wait = 6
-	flags_1 = SS_POST_FIRE_TIMING
+	flags = SS_POST_FIRE_TIMING
 	priority = 10
 	init_order = INIT_ORDER_SERVER_MAINT
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(server_maint)
 					qdel(C)
 
 		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*world.tick_usage/100]")
+			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
 
 		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
