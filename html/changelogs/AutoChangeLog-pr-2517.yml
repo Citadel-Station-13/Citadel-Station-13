@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - tweak: "Set all food preferences to NONE for all species."
