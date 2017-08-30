@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "Flavortext is now in the DNA of mobs who has that, meaning changelings, cloners and such things use it properly."
