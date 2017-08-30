@@ -1,0 +1,11 @@
+diff a/code/game/objects/structures/beds_chairs/bed.dm b/code/game/objects/structures/beds_chairs/bed.dm	(rejected hunks)
+@@ -37,9 +37,6 @@
+ 	else
+ 		return ..()
+ 
+-/obj/structure/bed/relaymove(mob/living/user)
+-	user.resist_buckle()
+-
+ /*
+  * Roller beds
+  */
