@@ -1,4 +1,0 @@
-author: "Xhuis"
-delete-after: True
-changes: 
-  - tweak: "Spell action buttons now have their description in a tooltip."
