@@ -1,6 +1,6 @@
 /obj/item/weapon
 	name = "weapon"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 
 /obj/item/Initialize()
 	. = ..()
