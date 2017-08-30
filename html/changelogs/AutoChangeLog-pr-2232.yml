@@ -1,8 +1,0 @@
-author: "Floyd (and sprites by Maya from Yogstation13)"
-delete-after: True
-changes: 
-  - rscadd: "Makes rat edible. Only lizards really enjoy eating them, though."
-  - rscadd: "Adds food types to all food, which means you can no longer eat whatever the hell you want."
-  - rscadd: "Adds a disgust system, currently only used with food."
-  - rscadd: "Pukonium, makes whoever it is injected to disgusted."
-  - rscadd: "Makes pod people vegan, or well, carnivores. It depends on how you look at it, really."
