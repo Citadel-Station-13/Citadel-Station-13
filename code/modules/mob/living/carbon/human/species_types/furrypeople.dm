@@ -1,4 +1,4 @@
-datum/species/mammal
+/datum/species/mammal
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
@@ -229,7 +229,7 @@ datum/species/mammal
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
 
-datum/species/guilmon
+/datum/species/guilmon
 	name = "Guilmon"
 	id = "guilmon"
 	default_color = "4B4B4B"

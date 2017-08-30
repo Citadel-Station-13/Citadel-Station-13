@@ -723,7 +723,6 @@
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"
 	illustration = "donk_kit"
-	item_state = null
 
 /obj/item/storage/box/ingredients/Initialize()
 	..()
