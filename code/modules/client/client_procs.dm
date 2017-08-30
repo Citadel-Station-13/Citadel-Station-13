@@ -75,6 +75,7 @@
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
@@ -196,8 +197,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	else
-		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -348,13 +347,13 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	hook_vr("client_new",list(src))
-
 //////////////
 //DISCONNECT//
 //////////////
 
 /client/Del()
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
@@ -364,30 +363,18 @@ GLOBAL_LIST(external_rsc_urls)
 			if(!GLOB.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
 				var/cheesy_message = pick(
 					"I have no admins online!",\
-					"I'm all alone... :(",\
-					"I'm feeling lonely. :(",\
-					"I'm so lonely. :(",\
+					"I'm all alone :(",\
+					"I'm feeling lonely :(",\
+					"I'm so lonely :(",\
 					"Why does nobody love me? :(",\
-					"I want a man. :(",\
+					"I want a man :(",\
 					"Where has everyone gone?",\
-					"I need a hug. :(",\
-					"Someone come hold me. :(",\
+					"I need a hug :(",\
+					"Someone come hold me :(",\
 					"I need someone on me :(",\
 					"What happened? Where has everyone gone?",\
-					"My nipples are so stiff, but Zelda ain't here. :(",\
-					"Leon senpai, play more Spessmans. :(",\
-					"If only Serdy were here...",\
-					"Panic bunker can't keep my love for you out.",\
-					"Cebu needs to Awoo herself back into my heart.",\
-					"I don't even have a Turry to snuggle viciously here.",\
-					"MOM, WHERE ARE YOU??? D:",\
-					"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
-					"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-					"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
-					"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
-					"i shure hop dere are no PRED arund!!!!",\
-					"NO PRED CAN eVER CATCH MI"\
-					)
+					"Forever alone :("\
+				)
 
 				send2irc("Server", "[cheesy_message] (No admins online)")
 
@@ -447,7 +434,7 @@ GLOBAL_LIST(external_rsc_urls)
 
 		new_player = 1
 		account_join_date = sanitizeSQL(findJoinDate())
-		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `lastseen`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), Now(), INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
+		var/datum/DBQuery/query_add_player = SSdbcore.NewQuery("INSERT INTO [format_table_name("player")] (`ckey`, `firstseen`, `firstseen_round_id`, `lastseen`, `lastseen_round_id`, `ip`, `computerid`, `lastadminrank`, `accountjoindate`) VALUES ('[sql_ckey]', Now(), '[GLOB.round_id]', Now(), '[GLOB.round_id]', INET_ATON('[sql_ip]'), '[sql_computerid]', '[sql_admin_rank]', [account_join_date ? "'[account_join_date]'" : "NULL"])")
 		if(!query_add_player.Execute())
 			return
 		if(!account_join_date)
@@ -473,12 +460,12 @@ GLOBAL_LIST(external_rsc_urls)
 					if(query_datediff.NextRow())
 						account_age = text2num(query_datediff.item[1])
 	if(!new_player)
-		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
+		var/datum/DBQuery/query_log_player = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET lastseen = Now(), lastseen_round_id = '[GLOB.round_id]', ip = INET_ATON('[sql_ip]'), computerid = '[sql_computerid]', lastadminrank = '[sql_admin_rank]', accountjoindate = [account_join_date ? "'[account_join_date]'" : "NULL"] WHERE ckey = '[sql_ckey]'")
 		if(!query_log_player.Execute())
 			return
 	if(!account_join_date)
 		account_join_date = "Error"
-	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
+	var/datum/DBQuery/query_log_connection = SSdbcore.NewQuery("INSERT INTO `[format_table_name("connection_log")]` (`id`,`datetime`,`server_ip`,`server_port`,`round_id`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')),'[world.port]','[GLOB.round_id]','[sql_ckey]',INET_ATON('[sql_ip]'),'[sql_computerid]')")
 	query_log_connection.Execute()
 	if(new_player)
 		player_age = -1
