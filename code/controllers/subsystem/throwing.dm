@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(throwing)
 	name = "Throwing"
 	priority = 25
 	wait = 1
-	flags_1 = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
+	flags = SS_NO_INIT|SS_KEEP_TIMING|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun
@@ -135,6 +135,6 @@ SUBSYSTEM_DEF(throwing)
 		var/atom/movable/AM = thing
 		if (AM == thrownthing)
 			continue
-		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags_1 & ON_BORDER_1))
+		if (AM.density && !(AM.pass_flags & LETPASSTHROW) && !(AM.flags & ON_BORDER_1))
 			finalize(hit=TRUE, target=AM)
 			return TRUE
