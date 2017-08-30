@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(overlays)
 	name = "Overlay"
-	flags_1 = SS_TICKER
+	flags = SS_TICKER
 	wait = 1
 	priority = 500
 	init_order = INIT_ORDER_OVERLAY

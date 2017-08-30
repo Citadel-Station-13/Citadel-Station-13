@@ -3,7 +3,7 @@
 SUBSYSTEM_DEF(ping)
 	name = "Ping"
 	wait = 6
-	flags_1 = SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
+	flags = SS_POST_FIRE_TIMING|SS_FIRE_IN_LOBBY
 	priority = 10
 	var/list/currentrun
 
