@@ -27,8 +27,6 @@ GLOBAL_LIST(custom_item_list)
 		var/item_str = copytext(line, job_str_sep+1, item_str_sep)
 		if(!ckey_str || !char_str || !job_str || !item_str || !length(ckey_str) || !length(char_str) || !length(job_str) || !length(item_str))
 			log_admin("Errored custom_items_whitelist line: [line] - Component/separator missing!")
-		to_chat(world, "DEBUG: Line process: [line]")
-		to_chat(world, "DEBUG: [ckey_str_sep], [char_str_sep], [job_str_sep], [item_str_sep], [ckey_str], [char_str],  [job_str], [item_str].")
 		if(!islist(GLOB.custom_item_list[ckey_str]))
 			GLOB.custom_item_list[ckey_str] = list()	//Initialize list for this ckey if it isn't initialized..
 		var/list/characters = splittext(char_str, "/")
@@ -36,8 +34,6 @@ GLOBAL_LIST(custom_item_list)
 			if(!islist(GLOB.custom_item_list[ckey_str][character]))
 				GLOB.custom_item_list[ckey_str][character] = list()
 		var/list/jobs = splittext(job_str, "/")
-		world << "DEBUG: Job string processed."
-		world << "DEBUG: JOBS: [english_list(jobs)]"
 		for(var/job in jobs)
 			for(var/character in characters)
 				if(!islist(GLOB.custom_item_list[ckey_str][character][job]))
@@ -52,7 +48,6 @@ GLOBAL_LIST(custom_item_list)
 			path = text2path(path)
 			if(!ispath(path) || !isnum(amount))
 				log_admin("Errored custom_items_whitelist line: [line] - Path/number for item missing or invalid.")
-			world << "DEBUG: [path_str_sep], [path], [amount]"
 			for(var/character in characters)
 				for(var/job in jobs)
 					if(!GLOB.custom_item_list[ckey_str][character][job][path])		//Doesn't exist, make it exist!
@@ -61,17 +56,16 @@ GLOBAL_LIST(custom_item_list)
 						GLOB.custom_item_list[ckey_str][character][job][path] += amount	//Exists, we want more~
 	return GLOB.custom_item_list
 
-/proc/parse_custom_roundstart_items(ckey, char_name = "ANY", job_name = "ANY", special_role)
+/proc/parse_custom_roundstart_items(ckey, char_name = "ALL", job_name = "ALL", special_role)
 	var/list/ret = list()
 	if(GLOB.custom_item_list[ckey])
 		for(var/char in GLOB.custom_item_list[ckey])
-			if((char_name == char) || (char_name == "ANY") || (char == "ANY"))
+			if((char_name == char) || (char_name == "ALL") || (char == "ALL"))
 				for(var/job in GLOB.custom_item_list[ckey][char])
-					if((job_name == job) || (job == "ANY") || (job_name == "ANY") || (special_role && (job == special_role)))
+					if((job_name == job) || (job == "ALL") || (job_name == "ALL") || (special_role && (job == special_role)))
 						for(var/item_path in GLOB.custom_item_list[ckey][char][job])
 							if(ret[item_path])
 								ret[item_path] += GLOB.custom_item_list[ckey][char][job][item_path]
 							else
 								ret[item_path] = GLOB.custom_item_list[ckey][char][job][item_path]
-	to_chat(world, "debug: parsing returned [english_list(ret)]")
 	return ret
