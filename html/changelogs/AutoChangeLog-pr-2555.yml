@@ -1,0 +1,4 @@
+author: "Jay"
+delete-after: True
+changes: 
+  - bugfix: "Fixes missing Guilmon var that prevented their bodymarkings form showing up in character creation"

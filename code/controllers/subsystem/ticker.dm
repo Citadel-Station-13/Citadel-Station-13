@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(ticker)
 	init_order = INIT_ORDER_TICKER
 
 	priority = 200
-	flags_1 = SS_KEEP_TIMING
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/current_state = GAME_STATE_STARTUP	//state of current round (used by process()) Use the defines GAME_STATE_* !
