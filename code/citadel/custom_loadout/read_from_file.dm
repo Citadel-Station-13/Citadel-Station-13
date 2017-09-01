@@ -43,7 +43,7 @@ GLOBAL_LIST(custom_item_list)
 			var/path_str_sep = findtext(item_string, "=")
 			var/path = copytext(item_string, 1, path_str_sep)	//Path to spawn
 			var/amount = copytext(item_string, path_str_sep+1)	//Amount to spawn
-			world << "DEBUG: Item string [item_string] processed"
+			//world << "DEBUG: Item string [item_string] processed"
 			amount = text2num(amount)
 			path = text2path(path)
 			if(!ispath(path) || !isnum(amount))
