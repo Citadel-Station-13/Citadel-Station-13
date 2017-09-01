@@ -7,10 +7,10 @@
 #define DROP_TO_FLOOR 0
 #define LOADING_TO_HUMAN 1
 
-/proc/handle_roundstart_items(mob/living/M)
-	if(!istype(M) || !M.ckey || !M.mind)
+/proc/handle_roundstart_items(mob/living/M, ckey_override, job_override, special_override)
+	if(!istype(M) || (!M.ckey && !ckey_override) || (!M.mind && (!job_override || !special_override)))
 		return FALSE
-	return load_itemlist_to_mob(M, parse_custom_roundstart_items(M.ckey, M.name, M.mind.assigned_role, M.mind.special_role), TRUE, TRUE, FALSE)
+	return load_itemlist_to_mob(M, parse_custom_roundstart_items(ckey_override? ckey_override : M.ckey, M.name, job_override? job_override : M.mind.assigned_role, special_override? special_override : M.mind.special_role), TRUE, TRUE, FALSE)
 
 //Just incase there's extra mob selections in the future.....
 /proc/load_itemlist_to_mob(mob/living/L, list/itemlist, drop_on_floor_if_full = TRUE, load_to_all_slots = TRUE, replace_slots = FALSE)
