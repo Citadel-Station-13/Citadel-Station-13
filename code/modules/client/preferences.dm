@@ -172,7 +172,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
-
+	
+	var/list/exp
 	var/list/menuoptions
 
 	//citadel code
