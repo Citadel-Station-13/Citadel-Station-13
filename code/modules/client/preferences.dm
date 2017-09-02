@@ -1,5 +1,3 @@
-
-
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 

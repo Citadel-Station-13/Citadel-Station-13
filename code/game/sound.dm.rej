@@ -1,9 +1,0 @@
-diff a/code/game/sound.dm b/code/game/sound.dm	(rejected hunks)
-@@ -145,7 +145,3 @@
- 			if ("can_open")
- 				soundin = pick('sound/effects/can_open1.ogg', 'sound/effects/can_open2.ogg', 'sound/effects/can_open3.ogg')
- 	return soundin
--
--/proc/playsound_global(file, repeat = 0, wait, channel, volume)
--	for(var/V in GLOB.clients)
--		V << sound(file, repeat, wait, channel, volume)

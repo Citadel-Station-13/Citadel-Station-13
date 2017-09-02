@@ -1,4 +1,4 @@
-/obj/item/weapon/gun/energy/megabuster
+/obj/item/gun/energy/megabuster
 	name = "Mega-buster"
 	desc = "An arm-mounted buster toy!"
 	icon_state = "megabuster"
@@ -9,12 +9,12 @@
 	needs_permit = 0
 	selfcharge = 1
 	icon = 'icons/obj/guns/VGguns.dmi'
-/obj/item/weapon/gun/energy/megabuster/proto
+/obj/item/gun/energy/megabuster/proto
 	name = "Proto-buster"
 	icon_state = "protobuster"
 	item_state = "protobuster"
 
-/obj/item/weapon/gun/energy/mmlbuster
+/obj/item/gun/energy/mmlbuster
 	name = "Buster Cannon"
 	desc = "An antique arm-mounted buster cannon."
 	icon = 'icons/obj/guns/VGguns.dmi'

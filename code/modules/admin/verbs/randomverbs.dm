@@ -652,7 +652,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
 		change_view(world.view)
-
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
 
@@ -1156,7 +1155,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /client/proc/toggle_hub()
 	set category = "Server"
 	set name = "Toggle Hub"
-
 	world.update_hub_visibility(!GLOB.hub_visibility)
 
 	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")

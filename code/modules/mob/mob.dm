@@ -514,7 +514,7 @@
 			else
 				what = get_item_by_slot(slot)
 			if(what)
-				if(!(what.flags & ABSTRACT))
+				if(!(what.flags_1 & ABSTRACT_1))
 					usr.stripPanelUnequip(what,src,slot)
 			else
 				usr.stripPanelEquip(what,src,slot)
@@ -622,6 +622,8 @@
 				if(A.invisibility > see_invisible)
 					continue
 				if(overrides.len && (A in overrides))
+					continue
+				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
 
@@ -870,8 +872,8 @@
 	var/search_pda = 1
 
 	for(var/A in searching)
-		if( search_id && istype(A, /obj/item/weapon/card/id) )
-			var/obj/item/weapon/card/id/ID = A
+		if( search_id && istype(A, /obj/item/card/id) )
+			var/obj/item/card/id/ID = A
 			if(ID.registered_name == oldname)
 				ID.registered_name = newname
 				ID.update_label()
