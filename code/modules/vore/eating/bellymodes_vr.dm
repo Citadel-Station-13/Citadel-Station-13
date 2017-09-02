@@ -19,7 +19,7 @@
 //////////////////////////// DM_DIGEST ////////////////////////////
 	if(digest_mode == DM_DIGEST)
 		for (var/mob/living/M in internal_contents)
-			if(prob(50))
+			if(prob(15))
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
@@ -67,7 +67,7 @@
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		for (var/mob/living/M in internal_contents)
-			if(prob(50))
+			if(prob(15))
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)

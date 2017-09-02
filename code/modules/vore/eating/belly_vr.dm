@@ -143,7 +143,7 @@
 
 	prey.forceMove(owner)
 	internal_contents.Add(prey)
-	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 80, channel = 50)
+	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 60, channel = 50)
 
 	if(inside_flavor)
 		prey << "<span class='notice'><B>[inside_flavor]</B></span>"
@@ -288,7 +288,7 @@
 //	for(var/mob/M in hearers(4, owner))
 //		M.visible_message(struggle_outer_message) // hearable
 	R.visible_message( "<span class='alert'>[struggle_outer_message]</span>", "<span class='alert'>[struggle_user_message]</span>")
-	playsound(get_turf(owner),"struggle_sound",75,0,-5,1,channel=51)
+	playsound(get_turf(owner),"struggle_sound",50,0,-6,1,channel=51)
 	R.stop_sound_channel(51)
 	R.playsound_local("prey_struggle_sound",60)
 
