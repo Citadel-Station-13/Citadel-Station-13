@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+source ~/.discordauth
+
+# ~/.discordauth contains:
+# CHANNELID=x
+# TOKEN=x
+# CHANNELID being the Discord Channel ID
+# TOKEN being the bot token
 
 set -u # don't expand unbound variable
 set -f # disable pathname expansion
@@ -25,10 +32,25 @@ type curl >/dev/null 2>&1 || { echo >&2 "Error: This script requires curl, pleas
 # Ensure jq exists and is available in the current context
 type jq >/dev/null 2>&1 || { echo >&2 "Error: This script requires jq, please ensure jq is installed and exists in the current PATH"; exit 1; }
 
+containsElement () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
 # Make sure we have our upstream remote
 if ! git remote | grep tgstation > /dev/null; then
    git remote add tgstation https://github.com/tgstation/tgstation.git
 fi
+
+curl -v \
+-H "Authorization: Bot $TOKEN" \
+-H "User-Agent: myBotThing (http://some.url, v0.1)" \
+-H "Content-Type: application/json" \
+-X POST \
+-d "{\"content\":\"Mirroring [$1] from /tg/ to Hippie\"}" \
+https://discordapp.com/api/channels/$CHANNELID/messages
 
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
@@ -57,13 +79,22 @@ echo "$CHERRY_PICK_OUTPUT"
 # You also can't use -m 1 if it's a rebase and merge...
 if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
-  for commit in $COMMITS; do
-  	echo "Cherry-picking: $commit"
-	git cherry-pick "$commit"
+  if containsElement "$MERGE_SHA" "${COMMITS[@]}"; then
+    for commit in $COMMITS; do
+  	  echo "Cherry-picking: $commit"
+	  git cherry-pick "$commit"
+	  # Add all files onto this branch
+	  git add -A .
+	  git cherry-pick --continue
+    done
+  else
+    echo "Cherry-picking: $MERGE_SHA"
+	git cherry-pick "$MERGE_SHA"
 	# Add all files onto this branch
 	git add -A .
 	git cherry-pick --continue
-  done
+  fi
+
 else
   # Add all files onto this branch
   git add -A .
