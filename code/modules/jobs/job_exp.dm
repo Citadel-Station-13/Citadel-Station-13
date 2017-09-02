@@ -132,24 +132,61 @@ GLOBAL_PROTECT(exp_to_update)
 		if(L.is_afk())
 			continue
 		addtimer(CALLBACK(L,/client/proc/update_exp_list,mins,ann),10)
-		CHECK_TICK
 
-/proc/update_exp_db()
+/datum/controller/subsystem/blackbox/proc/update_exp_db()
 	SSdbcore.MassInsert(format_table_name("role_time"),GLOB.exp_to_update,TRUE)
 	LAZYCLEARLIST(GLOB.exp_to_update)
 
-//Manual incrementing/updating
-/*
-/client/proc/update_exp_client(minutes, announce_changes = FALSE)
-	if(!src ||!ckey || !config.use_exp_tracking)
-		return
+//resets a client's exp to what was in the db.
+/client/proc/set_exp_from_db()
+	if(!config.use_exp_tracking)
+		return -1
 	if(!SSdbcore.Connect())
 		return -1
 	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
 	if(!exp_read.Execute())
-		var/err = exp_read.ErrorMsg()
-		log_sql("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
-		message_admins("SQL ERROR during exp_update_client read. Error : \[[err]\]\n")
+		return -1
+	var/list/play_records = list()
+	while(exp_read.NextRow())
+		play_records[exp_read.item[1]] = text2num(exp_read.item[2])
+
+	for(var/rtype in SSjob.name_occupations)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+	for(var/rtype in GLOB.exp_specialmap)
+		if(!play_records[rtype])
+			play_records[rtype] = 0
+
+	prefs.exp = play_records
+
+
+//updates player db flags
+/client/proc/update_flag_db(newflag, state = FALSE)
+
+	if(!SSdbcore.Connect())
+		return -1
+
+	if(!set_db_player_flags())
+		return -1
+
+	if((prefs.db_flags & newflag) && !state)
+		prefs.db_flags &= ~newflag
+	else
+		prefs.db_flags |= newflag
+
+	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
+
+	if(!flag_update.Execute())
+		return -1
+
+
+/client/proc/update_exp_list(minutes, announce_changes = FALSE)
+	if(!config.use_exp_tracking)
+		return -1
+	if(!SSdbcore.Connect())
+		return -1
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
+	if(!exp_read.Execute())
 		return -1
 	var/list/play_records = list()
 	while(exp_read.NextRow())
@@ -162,33 +199,81 @@ GLOBAL_PROTECT(exp_to_update)
 		if(!play_records[rtype])
 			play_records[rtype] = 0
 	var/list/old_records = play_records.Copy()
-	if(mob.stat != DEAD && mob.mind.assigned_role)
-		play_records[EXP_TYPE_LIVING] += minutes
-		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Living EXP!")
-		for(var/job in SSjob.name_occupations)
-			if(mob.mind.assigned_role == job)
-				play_records[job] += minutes
-				if(announce_changes)
-					to_chat(mob,"<span class='notice'>You got: [minutes] [job] EXP!")
-		if(mob.mind.special_role && !mob.mind.var_edited)
-			play_records[EXP_TYPE_SPECIAL] += minutes
+	if(isliving(mob))
+		if(mob.stat != DEAD)
+			var/rolefound = FALSE
+			play_records[EXP_TYPE_LIVING] += minutes
 			if(announce_changes)
-				to_chat(mob,"<span class='notice'>You got: [minutes] [mob.mind.special_role] EXP!")
+				to_chat(src,"<span class='notice'>You got: [minutes] Living EXP!</span>")
+			if(mob.mind.assigned_role)
+				for(var/job in SSjob.name_occupations)
+					if(mob.mind.assigned_role == job)
+						rolefound = TRUE
+						play_records[job] += minutes
+						if(announce_changes)
+							to_chat(src,"<span class='notice'>You got: [minutes] [job] EXP!</span>")
+				if(!rolefound)
+					for(var/role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])
+						if(mob.mind.assigned_role == role)
+							rolefound = TRUE
+							play_records[role] += minutes
+							if(announce_changes)
+								to_chat(mob,"<span class='notice'>You got: [minutes] [role] EXP!</span>")
+				if(mob.mind.special_role && !mob.mind.var_edited)
+					var/trackedrole = mob.mind.special_role
+					var/gangrole = lookforgangrole(mob.mind.special_role)
+					if(gangrole)
+						trackedrole = gangrole
+					play_records[trackedrole] += minutes
+					if(announce_changes)
+						to_chat(src,"<span class='notice'>You got: [minutes] [trackedrole] EXP!</span>")
+			if(!rolefound)
+				play_records["Unknown"] += minutes
+		else
+			play_records[EXP_TYPE_GHOST] += minutes
+			if(announce_changes)
+				to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(isobserver(mob))
 		play_records[EXP_TYPE_GHOST] += minutes
 		if(announce_changes)
-			to_chat(mob,"<span class='notice'>You got: [minutes] Ghost EXP!")
+			to_chat(src,"<span class='notice'>You got: [minutes] Ghost EXP!</span>")
 	else if(minutes)	//Let "refresh" checks go through
 		return
 	prefs.exp = play_records
 
 	for(var/jtype in play_records)
-		var jobname = jtype
-		var time = play_records[jtype]
-		var/datum/DBQuery/update_query = SSdbcore.NewQuery("INSERT INTO [format_table_name("role_time")] (`ckey`, `job`, `minutes`) VALUES ('[sanitizeSQL(ckey)]', '[jobname]', '[time]') ON DUPLICATE KEY UPDATE time = '[time]'")
-		if(!update_query.Execute())
-			var/err = update_queryd.ErrorMsg()
-			log_game("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-			message_admins("SQL ERROR during exp_update_client update. Error : \[[err]\]\n")
-			return
+		if(play_records[jtype] != old_records[jtype])
+			LAZYINITLIST(GLOB.exp_to_update)
+			GLOB.exp_to_update.Add(list(list(
+				"job" = "'[sanitizeSQL(jtype)]'",
+				"ckey" = "'[sanitizeSQL(ckey)]'",
+				"minutes" = play_records[jtype])))
+	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
+
+
+//ALWAYS call this at beginning to any proc touching player flags, or your database admin will probably be mad
+/client/proc/set_db_player_flags()
+	if(!SSdbcore.Connect())
+		return FALSE
+
+	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
+
+	if(!flags_read.Execute())
+		return FALSE
+
+	if(flags_read.NextRow())
+		prefs.db_flags = text2num(flags_read.item[1])
+	else if(isnull(prefs.db_flags))
+		prefs.db_flags = 0	//This PROBABLY won't happen, but better safe than sorry.
+	return TRUE
+
+//Since each gang is tracked as a different antag type, records need to be generalized or you get up to 57 different possible records
+/proc/lookforgangrole(rolecheck)
+	if(findtext(rolecheck,"Gangster"))
+		return "Gangster"
+	else if(findtext(rolecheck,"Gang Boss"))
+		return "Gang Boss"
+	else if(findtext(rolecheck,"Gang Lieutenant"))
+		return "Gang Lieutenant"
+	else
+		return FALSE
