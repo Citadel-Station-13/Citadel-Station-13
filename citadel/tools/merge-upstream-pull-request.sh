@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-source ~/.discordauth
-
-# ~/.discordauth contains:
-# CHANNELID=x
-# TOKEN=x
-# CHANNELID being the Discord Channel ID
-# TOKEN being the bot token
 
 set -u # don't expand unbound variable
 set -f # disable pathname expansion
@@ -43,14 +36,6 @@ containsElement () {
 if ! git remote | grep tgstation > /dev/null; then
    git remote add tgstation https://github.com/tgstation/tgstation.git
 fi
-
-curl -v \
--H "Authorization: Bot $TOKEN" \
--H "User-Agent: myBotThing (http://some.url, v0.1)" \
--H "Content-Type: application/json" \
--X POST \
--d "{\"content\":\"Mirroring [$1] from /tg/ to Hippie\"}" \
-https://discordapp.com/api/channels/$CHANNELID/messages
 
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
