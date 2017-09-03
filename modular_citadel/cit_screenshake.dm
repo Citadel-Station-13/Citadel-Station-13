@@ -59,7 +59,7 @@
 				if (1)
 					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 				if (2)
-					if (M.IsKnockdown)
+					if (M.IsKnockdown())
 						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 /obj/item/attack_obj(obj/O, mob/living/user)
