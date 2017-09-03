@@ -470,11 +470,11 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
-	var/nocredits = config.no_credits_round_end
-	 	for(var/client/C in GLOB.clients)
+/*	var/nocredits = config.no_credits_round_end
+		for(var/client/C in GLOB.clients)
 		if(!C.credits && !nocredits)
- 			C.RollCredits()
- 		C.playtitlemusic(40)
+			C.RollCredits()
+ 		C.playtitlemusic(40)*/
 
 	//Player status report
 	for(var/mob/Player in GLOB.mob_list)
