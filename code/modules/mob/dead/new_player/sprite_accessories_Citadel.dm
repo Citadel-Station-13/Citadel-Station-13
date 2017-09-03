@@ -539,6 +539,13 @@
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
+/datum/sprite_accessory/mam_body_markings/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	extra_color_src = MUTCOLORS2
+	extra2_color_src = MUTCOLORS3
+	gender_specific = 1
+
 /datum/sprite_accessory/mam_body_markings/hawk
 	name = "Hawk"
 	icon_state = "hawk"
@@ -584,14 +591,6 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	color_src = MUTCOLORS2
-	gender_specific = 1
-
-/datum/sprite_accessory/mam_body_markings/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	extra = 1
-	extra2 = 1
-	icon = 'icons/mob/mam_body_markings.dmi'
 	gender_specific = 1
 
 	/datum/sprite_accessory/mam_body_markings/xeno
