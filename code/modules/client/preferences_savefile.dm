@@ -191,6 +191,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
+	S["damagescreenshake"]		>> damagescreenshake
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -216,6 +217,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	screenshake			= sanitize_integer(screenshake, 0, 2, initial(screenshake))
+	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 
 
 	return 1
@@ -259,6 +261,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//citadel code
 	S["arousable"]			<< arousable
 	WRITE_FILE(S["screenshake"], screenshake)
+	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 
 	return 1
 

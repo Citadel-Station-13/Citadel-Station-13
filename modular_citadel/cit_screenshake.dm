@@ -1,18 +1,15 @@
 //we vlambeer now
 
-/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
+/obj/proc/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
 	if(!M || !M.client || duration <= 0)
 		return
 	var/client/C = M.client
-	switch(C.prefs.screenshake)
-		if(0)//possible todo: implement a reduced screenshake setting that cuts screenshake to a quarter of its normal amount? this works perfectly for now, though.
-			return
-		if(2)
-			duration = duration*0.25
+	if (C.prefs.screenshake==0)
+		return
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/max = ((C.prefs.screenshake==1) ? strength : strength*0.25) *world.icon_size
+	var/min = -(((C.prefs.screenshake==1) ? strength : strength*0.25)*world.icon_size)
 
 	for(var/i in 0 to duration-1)
 		if (i == 0)
@@ -57,7 +54,12 @@
 	. = ..()
 	if(force && force >=11)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
-		shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+		if(M.client.prefs)
+			switch (M.client.prefs.damagescreenshake)
+				if (1)
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)//setting is "only when down." check for knockdown status before applying this.
+					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()

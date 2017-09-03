@@ -48,6 +48,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/uses_glasses_colour = 0
 	
 	var/screenshake = 1
+	var/damagescreenshake = 2
 
 	//character preferences
 	var/real_name						//our character's name
@@ -366,7 +367,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</a><br>"
 
-			dat += "<b>Screen shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake) ? "Full" : ((!screenshake) ? "None" : "Reduced")]</a><br>"
+			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==1) ? "Full" : ((screenshake==0) ? "None" : "Reduced")]</a><br>"
+
+			dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1501,6 +1504,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							screenshake = 0
 						else
 							screenshake = 1
+				if("damagescreenshake")
+					switch(damagescreenshake)
+						if(0)
+							damagescreenshake = 1
+						if(1)
+							damagescreenshake = 2
+						if(2)
+							damagescreenshake = 0
+						else
+							damagescreenshake = 1
 
 				if("publicity")
 					if(unlock_content)
