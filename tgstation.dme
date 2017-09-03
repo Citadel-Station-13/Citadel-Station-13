@@ -169,6 +169,7 @@
 #include "code\citadel\cit_guns.dm"
 #include "code\citadel\cit_kegs.dm"
 #include "code\citadel\cit_reagents.dm"
+#include "code\citadel\cit_screenshake.dm"
 #include "code\citadel\cit_spawners.dm"
 #include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\cit_vendors.dm"
