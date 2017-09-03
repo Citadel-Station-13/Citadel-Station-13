@@ -7,4 +7,4 @@
 //test1|Memename Lastname|testjob1|/obj/item/device/aicard=3;/obj/item/device/flightpack=1;/obj/item/gun/energy=3
 //kevinz000|Skylar Lineman|ALL|/obj/item/bikehorn/airhorn=1
 //kevinz000|ALL|Clown|/obj/item/bikehorn=1
-JayEhh|ALL|ALL|/obj/item/bikehorn=1
+JayEhh|ALL|ALL|/obj/item/custom/ceb_soap=1
