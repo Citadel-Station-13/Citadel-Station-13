@@ -54,7 +54,7 @@
 	. = ..()
 	if(force && force >=15)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
-		if(M.client.prefs)
+		if(M.client)
 			switch (M.client.prefs.damagescreenshake)
 				if (1)
 					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
