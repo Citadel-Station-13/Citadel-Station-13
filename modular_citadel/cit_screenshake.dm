@@ -1,6 +1,6 @@
 //we vlambeer now
 
-/proc/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
+/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
 	if(!M || !M.client || duration <= 0)
 		return
 	var/client/C = M.client
