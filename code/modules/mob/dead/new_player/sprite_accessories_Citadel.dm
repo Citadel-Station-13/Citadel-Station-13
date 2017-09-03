@@ -198,6 +198,11 @@
 **************** Snouts *******************
 *******************************************/
 
+/datum/sprite_accessory/snouts/bird
+	name = "Beak"
+	icon_state = "bird"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
@@ -347,6 +352,19 @@
 	icon_state = "husky"
 	extra = 1
 
+/datum/sprite_accessory/mam_ears/kangaroo
+	name = "kangaroo"
+	icon_state = "kangaroo"
+	extra = 1
+
+/datum/sprite_accessory/mam_tails/kangaroo
+	name = "kangaroo"
+	icon_state = "kangaroo"
+
+/datum/sprite_accessory/mam_tails_animated/kangaroo
+	name = "kangaroo"
+	icon_state = "kangaroo"
+
 /datum/sprite_accessory/mam_ears/lab
 	name = "Dog, Long"
 	icon_state = "lab"
@@ -385,6 +403,20 @@
 /datum/sprite_accessory/mam_tails_animated/otie
 	name = "Otusian"
 	icon_state = "otie"
+
+/datum/sprite_accessory/mam_ears/skunk
+	name = "skunk"
+	icon_state = "skunk"
+
+/datum/sprite_accessory/mam_tails/skunk
+	name = "skunk"
+	icon_state = "skunk"
+	color_src = 0
+
+/datum/sprite_accessory/mam_tails_animated/skunk
+	name = "skunk"
+	icon_state = "skunk"
+	color_src = 0
 
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
@@ -445,31 +477,18 @@
 	name = "Wolf"
 	icon_state = "wolf"
 
-/datum/sprite_accessory/mam_tails/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	extra = 1
-
-/datum/sprite_accessory/mam_tails_animated/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	extra = 1
-
-/datum/sprite_accessory/mam_ears/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
 /datum/sprite_accessory/mam_tails/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails_animated/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
 
 /datum/sprite_accessory/mam_ears/rabbit
     name = "Rabbit"
     icon_state = "rabbit"
     hasinner= 1
-    icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 ************ Body Markings ****************
@@ -586,20 +605,13 @@
 	color_src = MUTCOLORS2
 	gender_specific = 1
 
-/datum/sprite_accessory/mam_body_markings/guilmon
-	name = "Guilmon"
-	icon_state = "guilmon"
-	extra = 1
-	extra2 = 1
-	icon = 'icons/mob/mam_body_markings.dmi'
-	gender_specific = 1
-
-	/datum/sprite_accessory/mam_body_markings/xeno
+/datum/sprite_accessory/mam_body_markings/xeno
 	name = "Xeno"
 	icon_state = "xeno"
 	color_src = MUTCOLORS2
 	extra_color_src = MUTCOLORS3
 	gender_specific = 1
+
 
 /******************************************
 ************ Taur Bodies ******************
@@ -712,7 +724,6 @@
 	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
 //Xeno Caste Heads
-//unused as of October 3, 2016
 /datum/sprite_accessory/xeno_head
 	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
@@ -740,17 +751,51 @@
 	icon_state = "warrior"
 	icon = 'icons/mob/xeno_parts_greyscale.dmi'
 
-/*
-//Slimecoon Parts
-/datum/sprite_accessory/slimecoon_ears
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	name = "Slimecoon Ears"
-	icon_state = "slimecoon"
-/datum/sprite_accessory/slimecoon_tail
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	name = "Slimecoon Tail"
-	icon_state = "slimecoon"
-/datum/sprite_accessory/slimecoon_snout
-	icon = 'icons/mob/exotic_bodyparts.dmi'
-	name = "Hunter"
-	icon_state = "slimecoon" */
+// *** Snooooow flaaaaake ***
+
+/datum/sprite_accessory/mam_body_markings/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	extra = 1
+	extra2 = 1
+	icon = 'icons/mob/mam_body_markings.dmi'
+	gender_specific = 1
+
+/datum/sprite_accessory/mam_tails/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	extra = 1
+
+/datum/sprite_accessory/mam_tails_animated/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	extra = 1
+
+/datum/sprite_accessory/mam_ears/guilmon
+	name = "Guilmon"
+	icon_state = "guilmon"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+
+/datum/sprite_accessory/mam_ears/sabresune
+	name = "sabresune"
+	icon_state = "sabresune"
+	extra = 1
+	extra_color_src = MUTCOLORS3
+
+/datum/sprite_accessory/mam_tails/sabresune
+	name = "sabresune"
+	icon_state = "sabresune"
+	extra = 1
+
+/datum/sprite_accessory/mam_tails_animated/sabresune
+	name = "sabresune"
+	icon_state = "sabresune"
+	extra = 1
+
+/datum/sprite_accessory/mam_body_markings/sabresune
+	name = "Sabresune"
+	icon_state = "sabresune"
+	color_src = MUTCOLORS2
+	extra = 0
+	extra2 = 0
