@@ -183,6 +183,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
+	S["menuoptions"]		>> menuoptions
+	S["enable_tips"]		>> enable_tips
+	S["tip_delay"]			>> tip_delay
 	S["parallax"]			>> parallax
 	S["menuoptions"]			>> menuoptions
 	//citadel code
@@ -223,32 +226,34 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 
-	S["version"] << SAVEFILE_VERSION_MAX		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)			//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	//general preferences
-	S["ooccolor"]			<< ooccolor
-	S["lastchangelog"]		<< lastchangelog
-	S["UI_style"]			<< UI_style
-	S["hotkeys"]			<< hotkeys
-	S["tgui_fancy"]			<< tgui_fancy
-	S["tgui_lock"]			<< tgui_lock
-	S["windowflash"]		<< windowflashing
-	S["be_special"]			<< be_special
-	S["default_slot"]		<< default_slot
-	S["toggles"]			<< toggles
-	S["chat_toggles"]		<< chat_toggles
-	S["ghost_form"]			<< ghost_form
-	S["ghost_orbit"]		<< ghost_orbit
-	S["ghost_accs"]			<< ghost_accs
-	S["ghost_others"]		<< ghost_others
-	S["preferred_map"]		<< preferred_map
-	S["ignoring"]			<< ignoring
-	S["ghost_hud"]			<< ghost_hud
-	S["inquisitive_ghost"]	<< inquisitive_ghost
-	S["uses_glasses_colour"]<< uses_glasses_colour
-	S["clientfps"]			<< clientfps
-	S["parallax"]			<< parallax
-	S["menuoptions"]		<< menuoptions
+	WRITE_FILE(S["ooccolor"], ooccolor)
+	WRITE_FILE(S["lastchangelog"], lastchangelog)
+	WRITE_FILE(S["UI_style"], UI_style)
+	WRITE_FILE(S["hotkeys"], hotkeys)
+	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
+	WRITE_FILE(S["tgui_lock"], tgui_lock)
+	WRITE_FILE(S["windowflash"], windowflashing)
+	WRITE_FILE(S["be_special"], be_special)
+	WRITE_FILE(S["default_slot"], default_slot)
+	WRITE_FILE(S["toggles"], toggles)
+	WRITE_FILE(S["chat_toggles"], chat_toggles)
+	WRITE_FILE(S["ghost_form"], ghost_form)
+	WRITE_FILE(S["ghost_orbit"], ghost_orbit)
+	WRITE_FILE(S["ghost_accs"], ghost_accs)
+	WRITE_FILE(S["ghost_others"], ghost_others)
+	WRITE_FILE(S["preferred_map"], preferred_map)
+	WRITE_FILE(S["ignoring"], ignoring)
+	WRITE_FILE(S["ghost_hud"], ghost_hud)
+	WRITE_FILE(S["inquisitive_ghost"], inquisitive_ghost)
+	WRITE_FILE(S["uses_glasses_colour"], uses_glasses_colour)
+	WRITE_FILE(S["clientfps"], clientfps)
+	WRITE_FILE(S["parallax"], parallax)
+	WRITE_FILE(S["menuoptions"], menuoptions)
+	WRITE_FILE(S["enable_tips"], enable_tips)
+	WRITE_FILE(S["tip_delay"], tip_delay)
 	//citadel code
 	S["arousable"]			<< arousable
 
@@ -268,7 +273,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
 	if(slot != default_slot)
 		default_slot = slot
-		S["default_slot"] << slot
+		WRITE_FILE(S["default_slot"] , slot)
 
 	S.cd = "/character[slot]"
 	var/needs_update = savefile_needs_update(S)
@@ -287,7 +292,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
-		S["features["mcolor"]"]	<< "#FFF"
+		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
 
 	//Character
 	S["OOC_Notes"]			>> metadata
@@ -337,9 +342,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
-
 	//Citadel code
-	S["flavor_text"]					>> flavor_text
+	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -377,6 +381,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_vag_color"]				>> features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				>> features["has_womb"]
+	//flavor text
+	//Let's make our players NOT cry desperately as we wipe their savefiles of their special snowflake texts:
+	if((S["flavor_text"] != "") && (S["flavor_text"] != null) && S["flavor_text"]) //If old text isn't null and isn't "" but still exists.
+		S["flavor_text"]				>> features["flavor_text"] //Load old flavortext as current dna-based flavortext
+
+		S["feature_flavor_text"]		<< features["flavor_text"] //Save it in our new type of flavor-text
+		S["flavor_text"]				<< "" //Remove old flavortext, completing the cut-and-paste into the new format.
+
+	else //We have no old flavortext, default to new
+		S["feature_flavor_text"]		>> features["flavor_text"]
+
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -436,7 +451,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
 	//Citadel
-	flavor_text		= sanitize_text(flavor_text, initial(flavor_text))
+	features["flavor_text"]		= sanitize_text(features["flavor_text"], initial(features["flavor_text"]))
 	if(!features["mcolor2"] || features["mcolor"] == "#000")
 		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 	if(!features["mcolor3"] || features["mcolor"] == "#000")
@@ -456,56 +471,56 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
 
 	//Character
-	S["OOC_Notes"]			<< metadata
-	S["real_name"]			<< real_name
-	S["name_is_always_random"] << be_random_name
-	S["body_is_always_random"] << be_random_body
-	S["gender"]				<< gender
-	S["age"]				<< age
-	S["hair_color"]			<< hair_color
-	S["facial_hair_color"]	<< facial_hair_color
-	S["eye_color"]			<< eye_color
-	S["skin_tone"]			<< skin_tone
-	S["hair_style_name"]	<< hair_style
-	S["facial_style_name"]	<< facial_hair_style
-	S["underwear"]			<< underwear
-	S["undershirt"]			<< undershirt
-	S["socks"]				<< socks
-	S["backbag"]			<< backbag
-	S["uplink_loc"]			<< uplink_spawn_loc
-	S["species"]			<< pref_species.id
-	S["feature_mcolor"]					<< features["mcolor"]
-	S["feature_lizard_tail"]			<< features["tail_lizard"]
-	S["feature_human_tail"]				<< features["tail_human"]
-	S["feature_lizard_snout"]			<< features["snout"]
-	S["feature_lizard_horns"]			<< features["horns"]
-	S["feature_human_ears"]				<< features["ears"]
-	S["feature_lizard_frills"]			<< features["frills"]
-	S["feature_lizard_spines"]			<< features["spines"]
-	S["feature_lizard_body_markings"]	<< features["body_markings"]
-	S["feature_lizard_legs"]			<< features["legs"]
-	S["clown_name"]			<< custom_names["clown"]
-	S["mime_name"]			<< custom_names["mime"]
-	S["ai_name"]			<< custom_names["ai"]
-	S["cyborg_name"]		<< custom_names["cyborg"]
-	S["religion_name"]		<< custom_names["religion"]
-	S["deity_name"]			<< custom_names["deity"]
-	S["prefered_security_department"] << prefered_security_department
+	WRITE_FILE(S["OOC_Notes"]			, metadata)
+	WRITE_FILE(S["real_name"]			, real_name)
+	WRITE_FILE(S["name_is_always_random"] , be_random_name)
+	WRITE_FILE(S["body_is_always_random"] , be_random_body)
+	WRITE_FILE(S["gender"]				, gender)
+	WRITE_FILE(S["age"]				, age)
+	WRITE_FILE(S["hair_color"]			, hair_color)
+	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
+	WRITE_FILE(S["eye_color"]			, eye_color)
+	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["hair_style_name"]	, hair_style)
+	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
+	WRITE_FILE(S["underwear"]			, underwear)
+	WRITE_FILE(S["undershirt"]			, undershirt)
+	WRITE_FILE(S["socks"]				, socks)
+	WRITE_FILE(S["backbag"]			, backbag)
+	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
+	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
+	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
+	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
+	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])
+	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
+	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
+	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
+	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
+	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
+	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
+	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
+	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
+	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
+	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
-	S["joblessrole"]		<< joblessrole
-	S["job_civilian_high"]	<< job_civilian_high
-	S["job_civilian_med"]	<< job_civilian_med
-	S["job_civilian_low"]	<< job_civilian_low
-	S["job_medsci_high"]	<< job_medsci_high
-	S["job_medsci_med"]		<< job_medsci_med
-	S["job_medsci_low"]		<< job_medsci_low
-	S["job_engsec_high"]	<< job_engsec_high
-	S["job_engsec_med"]		<< job_engsec_med
-	S["job_engsec_low"]		<< job_engsec_low
+	WRITE_FILE(S["joblessrole"]		, joblessrole)
+	WRITE_FILE(S["job_civilian_high"]	, job_civilian_high)
+	WRITE_FILE(S["job_civilian_med"]	, job_civilian_med)
+	WRITE_FILE(S["job_civilian_low"]	, job_civilian_low)
+	WRITE_FILE(S["job_medsci_high"]	, job_medsci_high)
+	WRITE_FILE(S["job_medsci_med"]		, job_medsci_med)
+	WRITE_FILE(S["job_medsci_low"]		, job_medsci_low)
+	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
+	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
+	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
 	//Citadel
-	S["flavor_text"]			<< flavor_text
+	S["feature_genitals_use_skintone"]	<< features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			<< features["exhibitionist"]
 	S["feature_mcolor2"]				<< features["mcolor2"]
 	S["feature_mcolor3"]				<< features["mcolor3"]
@@ -543,7 +558,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_vag_color"]				<< features["vag_color"]
 	//womb features
 	S["feature_has_womb"]				<< features["has_womb"]
-
+	//flavor text
+	S["feature_flavor_text"]			<< features["flavor_text"]
 	return 1
 
 #undef SAVEFILE_VERSION_MAX

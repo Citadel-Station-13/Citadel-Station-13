@@ -52,7 +52,7 @@
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
-//Additional code for the above flags.
+//Additional code for the above flags_1.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
 #endif
@@ -69,7 +69,7 @@
 #error You need version 511 or higher
 #endif
 
-
-#ifndef SERVERTOOLS
-#define SERVERTOOLS 0
-#endif
+//Update this whenever the db schema changes
+//make sure you add an update to the schema_version stable in the db changelog
+#define DB_MAJOR_VERSION 3
+#define DB_MINOR_VERSION 1

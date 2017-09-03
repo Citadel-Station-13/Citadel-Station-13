@@ -51,9 +51,10 @@
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand,/obj/item/weapon/twohanded))
-			if(item_in_hand:wielded == 1)
-				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
+		var/obj/item/twohanded/TH = item_in_hand
+		if(istype(TH))
+			if(TH.wielded == 1)
+				to_chat(usr, "<span class='warning'>Your other hand is too busy holding [TH]</span>")
 				return
 	var/oindex = active_hand_index
 	active_hand_index = held_index
@@ -102,7 +103,7 @@
 				hurt = FALSE
 	if(hit_atom.density && isturf(hit_atom))
 		if(hurt)
-			Weaken(1)
+			Knockdown(20)
 			take_bodypart_damage(10)
 	if(iscarbon(hit_atom) && hit_atom != src)
 		var/mob/living/carbon/victim = hit_atom
@@ -111,8 +112,8 @@
 		if(hurt)
 			victim.take_bodypart_damage(10)
 			take_bodypart_damage(10)
-			victim.Weaken(1)
-			Weaken(1)
+			victim.Knockdown(20)
+			Knockdown(20)
 			visible_message("<span class='danger'>[src] crashes into [victim], knocking them both over!</span>", "<span class='userdanger'>You violently crash into [victim]!</span>")
 		playsound(src,'sound/weapons/punch1.ogg',50,1)
 
@@ -164,12 +165,13 @@
 					var/end_T_descriptor = "<font color='#6b4400'>tile at [end_T.x], [end_T.y], [end_T.z] in area [get_area(end_T)]</font>"
 					add_logs(src, throwable_mob, "thrown", addition="from [start_T_descriptor] with the target [end_T_descriptor]")
 
-	else if(!(I.flags & (NODROP|ABSTRACT)))
+	else if(!(I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		thrown_thing = I
 		dropItemToGround(I)
 
 	if(thrown_thing)
 		visible_message("<span class='danger'>[src] has thrown [thrown_thing].</span>")
+		add_logs(src, thrown_thing, "has thrown")
 		newtonian_move(get_dir(target, src))
 		thrown_thing.throw_at(target, thrown_thing.throw_range, thrown_thing.throw_speed, src)
 
@@ -186,17 +188,17 @@
 	<HR>
 	<B><FONT size=3>[name]</FONT></B>
 	<HR>
-	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags&ABSTRACT)) 			? head 		: "Nothing"]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags&ABSTRACT))	? wear_mask	: "Nothing"]</A>
-	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags&ABSTRACT))	? wear_neck	: "Nothing"]</A>"}
+	<BR><B>Head:</B> <A href='?src=\ref[src];item=[slot_head]'>				[(head && !(head.flags_1&ABSTRACT_1)) 			? head 		: "Nothing"]</A>
+	<BR><B>Mask:</B> <A href='?src=\ref[src];item=[slot_wear_mask]'>		[(wear_mask && !(wear_mask.flags_1&ABSTRACT_1))	? wear_mask	: "Nothing"]</A>
+	<BR><B>Neck:</B> <A href='?src=\ref[src];item=[slot_neck]'>		[(wear_neck && !(wear_neck.flags_1&ABSTRACT_1))	? wear_neck	: "Nothing"]</A>"}
 
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags & ABSTRACT)) ? I : "Nothing"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B></td><td><A href='?src=\ref[src];item=[slot_hands];hand_index=[i]'>[(I && !(I.flags_1 & ABSTRACT_1)) ? I : "Nothing"]</a>"
 
 	dat += "<BR><B>Back:</B> <A href='?src=\ref[src];item=[slot_back]'>[back ? back : "Nothing"]</A>"
 
-	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/weapon/tank))
+	if(istype(wear_mask, /obj/item/clothing/mask) && istype(back, /obj/item/tank))
 		dat += "<BR><A href='?src=\ref[src];internal=1'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	if(handcuffed)
@@ -218,15 +220,15 @@
 		if(href_list["internal"])
 			var/slot = text2num(href_list["internal"])
 			var/obj/item/ITEM = get_item_by_slot(slot)
-			if(ITEM && istype(ITEM, /obj/item/weapon/tank) && wear_mask && (wear_mask.flags & MASKINTERNALS))
+			if(ITEM && istype(ITEM, /obj/item/tank) && wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1))
 				visible_message("<span class='danger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>", \
 								"<span class='userdanger'>[usr] tries to [internal ? "close" : "open"] the valve on [src]'s [ITEM.name].</span>")
 				if(do_mob(usr, src, POCKET_STRIP_DELAY))
 					if(internal)
 						internal = null
 						update_internals_hud_icon(0)
-					else if(ITEM && istype(ITEM, /obj/item/weapon/tank))
-						if((wear_mask && (wear_mask.flags & MASKINTERNALS)) || getorganslot("breathing_tube"))
+					else if(ITEM && istype(ITEM, /obj/item/tank))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -239,6 +241,12 @@
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+
+/mob/living/carbon/hallucinating()
+	if(hallucination)
+		return TRUE
+	else
+		return FALSE
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())
@@ -258,7 +266,7 @@
 
 /mob/living/carbon/resist_fire()
 	fire_stacks -= 5
-	Weaken(3, 1, 1)
+	Knockdown(60, TRUE, TRUE)
 	spin(32,2)
 	visible_message("<span class='danger'>[src] rolls on the floor, trying to put themselves out!</span>", \
 		"<span class='notice'>You stop, drop, and roll!</span>")
@@ -313,7 +321,7 @@
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
-		var/obj/item/weapon/W = handcuffed
+		var/obj/item/W = handcuffed
 		handcuffed = null
 		if (buckled && buckled.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
@@ -328,7 +336,7 @@
 				W.plane = initial(W.plane)
 		changeNext_move(0)
 	if (legcuffed)
-		var/obj/item/weapon/W = legcuffed
+		var/obj/item/W = legcuffed
 		legcuffed = null
 		update_inv_legcuffed()
 		if (client)
@@ -379,10 +387,6 @@
 			return
 		return TRUE
 
-/mob/living/carbon/proc/is_mouth_covered(head_only = 0, mask_only = 0)
-	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
-		return 1
-
 /mob/living/carbon/get_standard_pixel_y_offset(lying = 0)
 	if(lying)
 		return -6
@@ -390,7 +394,7 @@
 		return initial(pixel_y)
 
 /mob/living/carbon/proc/accident(obj/item/I)
-	if(!I || (I.flags & (NODROP|ABSTRACT)))
+	if(!I || (I.flags_1 & (NODROP_1|ABSTRACT_1)))
 		return
 
 	dropItemToGround(I)
@@ -450,7 +454,7 @@
 		return 0
 	return ..()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(lost_nutrition = 10, blood = FALSE, stun = TRUE, distance = 1, message = TRUE, toxic = FALSE)
 	if(dna && dna.species && NOHUNGER in dna.species.species_traits)
 		return 1
 
@@ -459,7 +463,7 @@
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing in your stomach!</span>")
 		if(stun)
-			Weaken(10)
+			Knockdown(200)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -472,10 +476,13 @@
 			visible_message("<span class='danger'>[src] throws up!</span>", "<span class='userdanger'>You throw up!</span>")
 
 	if(stun)
-		Stun(4)
+		Stun(80)
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, 1)
 	var/turf/T = get_turf(src)
+	if(!blood)
+		nutrition -= lost_nutrition
+		adjustToxLoss(-3)
 	for(var/i=0 to distance)
 		if(blood)
 			if(T)
@@ -485,8 +492,6 @@
 		else
 			if(T)
 				T.add_vomit_floor(src, toxic)//toxic barf looks different
-			nutrition -= lost_nutrition
-			adjustToxLoss(-3)
 		T = get_step(T, dir)
 		if (is_blocked_turf(T))
 			break
@@ -686,7 +691,7 @@
 		if(health<= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(paralysis || sleeping || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
 			if(stat == CONSCIOUS)
 				stat = UNCONSCIOUS
 				blind_eyes(1)
@@ -719,14 +724,15 @@
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
 		B.damaged_brain = 0
-	for(var/datum/disease/D in viruses)
-		if (D.severity != NONTHREAT)
+	for(var/thing in viruses)
+		var/datum/disease/D = thing
+		if(D.severity != NONTHREAT)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()
 		regenerate_organs()
 		handcuffed = initial(handcuffed)
-		for(var/obj/item/weapon/restraints/R in contents) //actually remove cuffs from inventory
+		for(var/obj/item/restraints/R in contents) //actually remove cuffs from inventory
 			qdel(R)
 		update_handcuffed()
 		if(reagents)
@@ -814,3 +820,4 @@
 	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
 	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
 	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"

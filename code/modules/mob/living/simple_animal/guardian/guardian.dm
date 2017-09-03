@@ -31,11 +31,11 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
 	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0, OXY = 0.5) //how much damage from each damage type we transfer to the owner
-	environment_smash = 1
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/ectoplasm = 1)
 	AIStatus = AI_OFF
 	dextrous_hud_type = /datum/hud/dextrous/guardian //if we're set to dextrous, account for it.
 	var/list/guardian_overlays[GUARDIAN_TOTAL_LAYERS]
@@ -175,9 +175,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			if(istype(summoner.loc, /obj/effect))
 				Recall(TRUE)
 			else
-				new /obj/effect/overlay/temp/guardian/phase/out(loc)
+				new /obj/effect/temp_visual/guardian/phase/out(loc)
 				forceMove(summoner.loc)
-				new /obj/effect/overlay/temp/guardian/phase(loc)
+				new /obj/effect/temp_visual/guardian/phase(loc)
 
 /mob/living/simple_animal/hostile/guardian/canSuicide()
 	return 0
@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return FALSE
 	if(loc == summoner)
 		forceMove(summoner.loc)
-		new /obj/effect/overlay/temp/guardian/phase(loc)
+		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
 		return TRUE
 	return FALSE
@@ -323,7 +323,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /mob/living/simple_animal/hostile/guardian/proc/Recall(forced)
 	if(!summoner || loc == summoner || (cooldown > world.time && !forced))
 		return FALSE
-	new /obj/effect/overlay/temp/guardian/phase/out(loc)
+	new /obj/effect/temp_visual/guardian/phase/out(loc)
 
 	forceMove(summoner)
 	cooldown = world.time + 10
@@ -365,7 +365,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_say("[src.real_name]/[src.key] : [input]")
+		log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_say("[src.real_name]/[src.key] : [text]")
+	log_talk(src,"GUARDIAN:[key_name(src)]: [input]",LOGSAY)
 
 //FORCE RECALL/RESET
 
@@ -455,7 +455,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 ////////Creation
 
-/obj/item/weapon/guardiancreator
+/obj/item/guardiancreator
 	name = "deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power. "
 	icon = 'icons/obj/toy.dmi'
@@ -467,13 +467,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
+	var/activation_message = "<span class='holoparasite'>The rest of the deck rapidly flashes to ash!</span>"
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
 	var/allowguardian = FALSE
 
-/obj/item/weapon/guardiancreator/attack_self(mob/living/user)
+/obj/item/guardiancreator/attack_self(mob/living/user)
 	if(isguardian(user) && !allowguardian)
 		to_chat(user, "<span class='holoparasite'>[mob_name] chains are not allowed.</span>")
 		return
@@ -489,18 +490,20 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		return
 	used = TRUE
 	to_chat(user, "[use_message]")
-	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100)
+	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the [mob_name] of [user.real_name]?", ROLE_PAI, null, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 	var/mob/dead/observer/theghost = null
 
 	if(candidates.len)
 		theghost = pick(candidates)
 		spawn_guardian(user, theghost.key)
+		to_chat(user, "[activation_message]")
+		qdel(src)
 	else
 		to_chat(user, "[failure_message]")
 		used = FALSE
 
 
-/obj/item/weapon/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
+/obj/item/guardiancreator/proc/spawn_guardian(var/mob/living/user, var/key)
 	var/guardiantype = "Standard"
 	if(random)
 		guardiantype = pick(possible_guardians)
@@ -552,6 +555,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	G.summoner = user
 	G.key = key
 	G.mind.enslave_mind_to_creator(user)
+	log_game("[key_name(user)] has summoned [key_name(G)], a [guardiantype] holoparasite.")
 	switch(theme)
 		if("tech")
 			to_chat(user, "[G.tech_fluff_string]")
@@ -566,17 +570,17 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	user.verbs += /mob/living/proc/guardian_recall
 	user.verbs += /mob/living/proc/guardian_reset
 
-/obj/item/weapon/guardiancreator/choose
+/obj/item/guardiancreator/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/choose/dextrous
+/obj/item/guardiancreator/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/choose/wizard
+/obj/item/guardiancreator/choose/wizard
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
-/obj/item/weapon/guardiancreator/tech
+/obj/item/guardiancreator/tech
 	name = "holoparasite injector"
 	desc = "It contains an alien nanoswarm of unknown origin. Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, it requires an organic host as a home base and source of fuel."
 	icon = 'icons/obj/syringe.dmi'
@@ -587,19 +591,20 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
 	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
+	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it.</span>"
 
-/obj/item/weapon/guardiancreator/tech/choose/traitor
+/obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/guardiancreator/tech/choose
+/obj/item/guardiancreator/tech/choose
 	random = FALSE
 
-/obj/item/weapon/guardiancreator/tech/choose/dextrous
+/obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-/obj/item/weapon/paper/guardian
+/obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
-	icon_state = "paper_words"
+	icon_state = "alienpaper_words"
 	info = {"<b>A list of Holoparasite Types</b><br>
 
  <br>
@@ -621,10 +626,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
-/obj/item/weapon/paper/guardian/update_icon()
+/obj/item/paper/guides/antag/guardian/update_icon()
 	return
 
-/obj/item/weapon/paper/guardian/wizard
+/obj/item/paper/guides/antag/guardian/wizard
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
 
@@ -650,16 +655,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 "}
 
 
-/obj/item/weapon/storage/box/syndie_kit/guardian
+/obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
 
-/obj/item/weapon/storage/box/syndie_kit/guardian/Initialize()
+/obj/item/storage/box/syndie_kit/guardian/Initialize()
 	..()
-	new /obj/item/weapon/guardiancreator/tech/choose/traitor(src)
-	new /obj/item/weapon/paper/guardian(src)
+	new /obj/item/guardiancreator/tech/choose/traitor(src)
+	new /obj/item/paper/guides/antag/guardian(src)
 	return
 
-/obj/item/weapon/guardiancreator/carp
+/obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"
 	desc = "Using the power of Carp'sie, you can catch a carp from byond the veil of Carpthulu, and bind it to your fleshy flesh form."
 	icon = 'icons/obj/food/food.dmi'
@@ -670,9 +675,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
 	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
+	activation_message = "<span class='holoparasite'>You finish eating the fishsticks! Delicious!>"
 	allowmultiple = TRUE
 	allowling = TRUE
 	random = TRUE
 
-/obj/item/weapon/guardiancreator/carp/choose
+/obj/item/guardiancreator/carp/choose
 	random = FALSE

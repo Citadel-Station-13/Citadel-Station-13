@@ -4,6 +4,19 @@
 // #define EAST 4
 // #define WEST 8
 
+//These get to go at the top, because they're special
+//You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
+/* eg:
+/mob/living/carbon/human/death()
+	to_chat(world, THIS_PROC_TYPE_STR) //You can only output the string versions
+Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a string with () (eg: the _WITH_ARGS defines) to make it look nicer)
+*/
+#define THIS_PROC_TYPE .....
+#define THIS_PROC_TYPE_STR "[THIS_PROC_TYPE]" //Because you can only obtain a string of THIS_PROC_TYPE using "[]", and it's nice to just +/+= strings
+#define THIS_PROC_TYPE_STR_WITH_ARGS "[THIS_PROC_TYPE]([args.Join(",")])"
+#define THIS_PROC_TYPE_WEIRD ...... //This one is WEIRD, in some cases (When used in certain defines? (eg: ASSERT)) THIS_PROC_TYPE will fail to work, but THIS_PROC_TYPE_WEIRD will work instead
+#define THIS_PROC_TYPE_WEIRD_STR "[THIS_PROC_TYPE_WEIRD]" //Included for completeness
+#define THIS_PROC_TYPE_WEIRD_STR_WITH_ARGS "[THIS_PROC_TYPE_WEIRD]([args.Join(",")])" //Ditto
 
 #define MIDNIGHT_ROLLOVER		864000	//number of deciseconds in a day
 
@@ -33,8 +46,8 @@
 //Human Overlays Indexes/////////
 //citadel code
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
-#define BODY_BEHIND_LAYER		29		//certain mutantrace features (tail when looking south) that must appear behind the body parts
-#define GENITALS_BEHIND_LAYER	28
+#define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
+#define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts
 #define BODYPARTS_LAYER			27		//Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag
 #define BODY_ADJ_LAYER			26		//certain mutantrace features (snout, body markings) that must appear above the body parts
 #define GENITALS_ADJ_LAYER		25
@@ -154,10 +167,6 @@
 #define GAME_STATE_SETTING_UP	2
 #define GAME_STATE_PLAYING		3
 #define GAME_STATE_FINISHED		4
-//SOUND:
-#define SOUND_MINIMUM_PRESSURE 10
-#define FALLOFF_SOUNDS	1
-#define SURROUND_CAP	7
 
 //FONTS:
 // Used by Paper and PhotoCopier (and PaperBin once a year).
@@ -165,6 +174,7 @@
 // Used by NewsCaster and NewsPaper.
 // Used by Modular Computers
 #define PEN_FONT "Verdana"
+#define FOUNTAIN_PEN_FONT "Segoe Script"
 #define CRAYON_FONT "Comic Sans MS"
 #define PRINTER_FONT "Times New Roman"
 #define SIGNFONT "Times New Roman"
@@ -305,9 +315,16 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define APPEARANCE_CONSIDER_ALPHA			~RESET_ALPHA
 #define APPEARANCE_LONG_GLIDE				LONG_GLIDE
 
-// Consider these images/atoms as part of the UI/HUD
-#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA
-#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#ifndef PIXEL_SCALE
+#define PIXEL_SCALE 0
+#if DM_VERSION >= 512
+#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
+#endif
+#endif
+
+ // Consider these images/atoms as part of the UI/HUD
+#define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
+#define APPEARANCE_UI								RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -340,6 +357,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //debug printing macros
 #define debug_world(msg) if (GLOB.Debug2) to_chat(world, "DEBUG: [msg]")
+#define debug_usr(msg) if (GLOB.Debug2&&usr) to_chat(usr, "DEBUG: [msg]")
 #define debug_admins(msg) if (GLOB.Debug2) to_chat(GLOB.admins, "DEBUG: [msg]")
 #define debug_world_log(msg) if (GLOB.Debug2) log_world("DEBUG: [msg]")
 
@@ -407,3 +425,31 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+#define NO_FIELD 0
+#define FIELD_TURF 1
+#define FIELD_EDGE 2
+
+//gibtonite state defines
+#define GIBTONITE_UNSTRUCK 0
+#define GIBTONITE_ACTIVE 1
+#define GIBTONITE_STABLE 2
+#define GIBTONITE_DETONATE 3
+//for obj explosion block calculation
+#define EXPLOSION_BLOCK_PROC -1
+//Gangster starting influences
+
+#define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
+#define GANGSTER_BOSS_STARTING_INFLUENCE 20
+
+//for determining which type of heartbeat sound is playing
+#define BEAT_FAST 1
+#define BEAT_SLOW 2
+#define BEAT_NONE 0
+
+#define BEAT_CHANNEL 150
+
+//http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
+#define MOUSE_OPACITY_TRANSPARENT 0
+#define MOUSE_OPACITY_ICON 1
+#define MOUSE_OPACITY_OPAQUE 2

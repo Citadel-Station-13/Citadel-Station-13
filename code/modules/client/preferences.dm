@@ -1,5 +1,3 @@
-
-
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 
@@ -19,6 +17,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = null
+	var/enable_tips = TRUE
+	var/tip_delay = 500 //tip delay in milliseconds
 
 	//Antag preferences
 	var/list/be_special = list()		//Special role selection
@@ -28,11 +28,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 	var/UI_style = "Midnight"
+	var/buttons_locked = FALSE
 	var/hotkeys = FALSE
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
+	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
@@ -127,7 +129,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum"
+		"womb_fluid" 		= "femcum",
+		"flavor_text"		= ""
 		)//MAKE SURE TO UPDATE THE LIST IN MOBS.DM IF YOU'RE GOING TO ADD TO THIS LIST, OTHERWISE THINGS MIGHT GET FUCKEY
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
@@ -167,12 +170,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
-
+	
+	var/list/exp
 	var/list/menuoptions
 
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
-	var/flavor_text = ""
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -276,6 +279,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;task=input;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Yes" : "No"]</a><br>"
@@ -390,13 +394,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<div class='statusDisplay'><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
 			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
-			if(lentext(flavor_text) <= 40)
-				if(!lentext(flavor_text))
+			if(lentext(features["flavor_text"]) <= 40)
+				if(!lentext(features["flavor_text"]))
 					dat += "\[...\]"
 				else
-					dat += "[flavor_text]"
+					dat += "[features["flavor_text"]]"
 			else
-				dat += "[TextPreview(flavor_text)]...<BR>"
+				dat += "[TextPreview(features["flavor_text"])]...<BR>"
 			if(config.mutant_races)//really don't need this check, but fuck un-tabbing all those lines
 				dat += "<h2>Body</h2>"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
@@ -575,6 +579,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+				continue
+			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
+			if(required_playtime_remaining)
+				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \] </font></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)
@@ -912,11 +920,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(flavor_text)) as message
+					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"])) as message
 					if(msg != null)
 						msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 						msg = html_encode(msg)
-						flavor_text = msg
+						features["flavor_text"] = msg
 
 				if("metadata")
 					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
@@ -1495,7 +1503,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("hotkeys")
 					hotkeys = !hotkeys
-
+				if("action_buttons")
+					buttons_locked = !buttons_locked
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
 				if("tgui_lock")
@@ -1623,7 +1632,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.backbag = backbag
 
-	character.dna.features = features.Copy()
+	character.dna.features = features.Copy() //Flavor text is now a DNA feature
 	character.dna.real_name = character.real_name
 	var/datum/species/chosen_species
 	if(pref_species != /datum/species/human && config.mutant_races)
@@ -1634,10 +1643,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	//citadel code
 	character.give_genitals()
-	character.flavor_text = flavor_text
+	character.flavor_text = features["flavor_text"] //Let's update their flavor_text at least initially
 	character.canbearoused = arousable
 
 	if(icon_updates)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+		character.update_genitals()

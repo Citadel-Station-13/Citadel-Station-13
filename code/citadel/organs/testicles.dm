@@ -6,13 +6,12 @@
 	zone = "groin"
 	slot = "testicles"
 	w_class = 3
-	var/internal 		= FALSE
+	internal	 		= TRUE
 	size 				= BALLS_SIZE_DEF
 	var/sack_size		= BALLS_SACK_SIZE_DEF
 	fluid_id 			= "semen"
 	producing			= TRUE
 	var/sent_full_message = 1 //defaults to 1 since they're full to start
-	var/obj/item/organ/genital/penis/linked_penis
 
 /obj/item/organ/genital/testicles/Initialize()
 	. = ..()
@@ -33,20 +32,20 @@
 		return FALSE
 	sent_full_message = 0
 	update_link()
-	if(!linked_penis)
+	if(!linked_organ)
 		return FALSE
 	reagents.isolate_reagent(fluid_id)//remove old reagents if it changed and just clean up generally
 	reagents.add_reagent(fluid_id, (fluid_mult * fluid_rate))//generate the cum
 
 /obj/item/organ/genital/testicles/update_link()
 	if(owner && !QDELETED(src))
-		linked_penis = (owner.getorganslot("penis"))
-		if(linked_penis)
-			linked_penis.linked_balls = src
+		linked_organ = (owner.getorganslot("penis"))
+		if(linked_organ)
+			linked_organ.linked_organ = src
 	else
-		if(linked_penis)
-			linked_penis.linked_balls = null
-		linked_penis = null
+		if(linked_organ)
+			linked_organ.linked_organ = null
+		linked_organ = null
 
 /obj/item/organ/genital/testicles/proc/send_full_message(msg = "Your balls finally feel full, again.")
 	if(owner && istext(msg))
