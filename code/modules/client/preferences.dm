@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</a><br>"
 
-			dat += "<b>Screen shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake) ? "Full" : [(!screenshake) ? "None" : "Reduced"]]</a><br>"
+			dat += "<b>Screen shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake) ? "Full" : ((!screenshake) ? "None" : "Reduced")]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
