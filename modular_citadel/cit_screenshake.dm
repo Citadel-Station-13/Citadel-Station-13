@@ -52,14 +52,15 @@
 
 /obj/item/attack(mob/living/M, mob/living/user)
 	. = ..()
-	if(force && force >=11)
+	if(force && force >=15)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
 		if(M.client.prefs)
 			switch (M.client.prefs.damagescreenshake)
 				if (1)
 					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
-				if (2)//setting is "only when down." check for knockdown status before applying this.
-					shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
+				if (2)
+					if (M.IsKnockdown)
+						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
 
 /obj/item/attack_obj(obj/O, mob/living/user)
 	. = ..()
