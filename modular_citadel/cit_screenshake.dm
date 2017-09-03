@@ -1,11 +1,14 @@
 //we vlambeer now
 
-/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
+/proc/shake_camera(mob/M, duration, strength=1)//byond's wonky with this shit
 	if(!M || !M.client || duration <= 0)
 		return
 	var/client/C = M.client
-	if(!C.prefs.screenshake)//possible todo: implement a reduced screenshake setting that cuts screenshake to a quarter of its normal amount? this works perfectly for now, though.
-		return
+	switch(C.prefs.screenshake)
+		if(0)//possible todo: implement a reduced screenshake setting that cuts screenshake to a quarter of its normal amount? this works perfectly for now, though.
+			return
+		if(2)
+			duration = duration*0.25
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
 	var/max = strength*world.icon_size
