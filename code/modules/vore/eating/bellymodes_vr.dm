@@ -21,9 +21,9 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(15))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local("digest_prey",60)
+				M.playsound_local("digest_prey",45)
 
 			//Pref protection!
 			if (!M.digestable)
@@ -50,7 +50,7 @@
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local("death_prey",60)
 				digestion_death(M)
@@ -69,9 +69,9 @@
 		for (var/mob/living/M in internal_contents)
 			if(prob(15))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local("digest_prey",60)
+				M.playsound_local("digest_prey",35)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
@@ -79,3 +79,13 @@
 					M.adjustFireLoss(-1)
 					owner.nutrition -= 10
 		return
+		
+////////////////////////// DM_NOISY /////////////////////////////////
+//for when you just want people to squelch around
+	if(digest_mode == DM_NOISY)
+		for (var/mob/living/M in internal_contents)
+			if(prob(35))
+				M.stop_sound_channel(CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local("digest_prey",35)
