@@ -96,6 +96,20 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	extra = 1
 
+/datum/sprite_accessory/tails/human/kitsune
+	name = "Kitsune"
+	icon_state = "kitsune"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/kitsune
+	name = "Kitsune"
+	icon_state = "kitsune"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/lab
 	name = "Dog, Floppy"
 	icon_state = "lab"
@@ -118,6 +132,33 @@
 	icon_state = "murid"
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/ears/human/otie
+	name = "Otusian"
+	icon_state = "otie"
+	hasinner= 1
+
+/datum/sprite_accessory/tails/human/otie
+	name = "Otusian"
+	icon_state = "otie"
+
+/datum/sprite_accessory/tails_animated/human/otie
+	name = "Otusian"
+	icon_state = "otie"
+
+/datum/sprite_accessory/ears/human/skunk
+	name = "skunk"
+	icon_state = "skunk"
+
+/datum/sprite_accessory/tails/human/skunk
+	name = "skunk"
+	icon_state = "skunk"
+	color_src = 0
+
+/datum/sprite_accessory/tails_animated/human/skunk
+	name = "skunk"
+	icon_state = "skunk"
+	color_src = 0
 
 /datum/sprite_accessory/tails/human/shark
 	name = "Shark"
@@ -197,6 +238,11 @@
 /******************************************
 **************** Snouts *******************
 *******************************************/
+
+/datum/sprite_accessory/snouts/none
+	name = "None"
+	icon_state = "none"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/snouts/bird
 	name = "Beak"
@@ -364,6 +410,18 @@
 /datum/sprite_accessory/mam_tails_animated/kangaroo
 	name = "kangaroo"
 	icon_state = "kangaroo"
+
+/datum/sprite_accessory/mam_tails/kitsune
+	name = "Kitsune"
+	icon_state = "kitsune"
+	extra = 1
+	extra_color_src = MUTCOLORS2
+
+/datum/sprite_accessory/mam_tails_animated/kitsune
+	name = "Kitsune"
+	icon_state = "kitsune"
+	extra = 1
+	extra_color_src = MUTCOLORS2
 
 /datum/sprite_accessory/mam_ears/lab
 	name = "Dog, Long"
@@ -776,6 +834,7 @@
 	icon_state = "guilmon"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/* Till I get my snowflake only ckey lock
 
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
@@ -799,3 +858,4 @@
 	color_src = MUTCOLORS2
 	extra = 0
 	extra2 = 0
+*/
