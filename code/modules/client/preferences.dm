@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uses_glasses_colour = 0
 	
-	var/screenshake = TRUE
+	var/screenshake = 1
 
 	//character preferences
 	var/real_name						//our character's name
@@ -366,7 +366,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "</a><br>"
 
-			dat += "<b>Screen shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake) ? "Full" : "None"]</a><br>"
+			dat += "<b>Screen shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake) ? "Full" : [(!screenshake) ? "None" : "Reduced"]]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1492,7 +1492,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							features["exhibitionist"] = FALSE
 				if("screenshake")
-					screenshake = !screenshake
+					switch(screenshake)
+						if(0)
+							screenshake = 1
+						if(1)
+							screenshake = 2
+						if(2)
+							screenshake = 0
+						else
+							screenshake = 1
 
 				if("publicity")
 					if(unlock_content)
