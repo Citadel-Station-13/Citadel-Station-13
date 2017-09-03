@@ -190,6 +190,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["menuoptions"]			>> menuoptions
 	//citadel code
 	S["arousable"]			>> arousable
+	S["screenshake"]		>> screenshake
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -214,6 +215,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
+	screenshake			= sanitize_integer(screenshake, 0, 1, initial(screenshake))
 
 
 	return 1
@@ -256,6 +258,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	//citadel code
 	S["arousable"]			<< arousable
+	WRITE_FILE(S["screenshake"], screenshake)
 
 	return 1
 
