@@ -22,17 +22,15 @@
 	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
-	var/datum/material_container/materials
 	var/datum/research/files
 	var/obj/item/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
+	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
-	QDEL_NULL(materials)
 	QDEL_NULL(files)
 	return ..()
 
@@ -151,6 +149,7 @@
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(exchange_parts(user, W))
 		return
+	GET_COMPONENT(materials, /datum/component/material_container)
 	if(default_pry_open(W))
 		materials.retrieve_all()
 		return

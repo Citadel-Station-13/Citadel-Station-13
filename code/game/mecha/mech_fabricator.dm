@@ -12,7 +12,6 @@
 	circuit = /obj/item/circuitboard/machine/mechfab
 	var/time_coeff = 1
 	var/component_coeff = 1
-	var/datum/material_container/materials
 	var/datum/research/files
 	var/sync = 0
 	var/part_set
@@ -36,9 +35,11 @@
 								)
 
 /obj/machinery/mecha_part_fabricator/Initialize()
+	AddComponent(/datum/component/material_container,
+	 list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
-	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE))
-	return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -46,6 +47,7 @@
 	//maximum stocking amount (default 300000, 600000 at T4)
 	for(var/obj/item/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
+	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.max_amount = (200000 + (T*50000))
 
 	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
@@ -420,7 +422,7 @@
 			return
 		var/lit = M.last_inserted_type
 		var/stack_name
-		if(ispath(lit, /obj/item/weapon/ore/bluespace_crystal))
+		if(ispath(lit, /obj/item/ore/bluespace_crystal))
 			stack_name = "bluespace"
 		else
 			var/obj/item/stack/S = lit
@@ -439,55 +441,7 @@
 	if(default_deconstruction_crowbar(W))
 		return 1
 
-	if(istype(W, /obj/item/stack/sheet))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
-			if(W && W.materials.len)
-				if(!QDELETED(W))
-					user.put_in_active_hand(W)
-				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay) //No matter what the overlay shall still be deleted
-
-		updateUsrDialog()
-
-	else if(istype(W, /obj/item/ore/bluespace_crystal))
-
-		if(!is_insertion_ready(user))
-			return 1
-
-		var/material_amount = materials.get_item_material_amount(W)
-
-		if(!try_insert(user, W, material_amount))
-			return 1
-
-		var/inserted = materials.insert_item(W)
-		if(inserted)
-			to_chat(user, "<span class='notice'>You add [W] to the [src].</span>")
-			if(W && W.materials.len)
-				qdel(W)
-				var/mat_overlay = "fab-load-bluespace"
-				add_overlay(mat_overlay)
-				sleep(10)
-				if(!QDELETED(src))
-					cut_overlay(mat_overlay)
-
-		updateUsrDialog()
-
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/mecha_part_fabricator/proc/material2name(ID)
 	return copytext(ID,2)

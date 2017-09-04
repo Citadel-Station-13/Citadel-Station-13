@@ -114,10 +114,12 @@
 		return 0
 
 	insert_materials(S,amt)
+	last_inserted_type = S.type
 	S.use(amt)
+	last_amount_inserted = amt
 	return amt
 
-/datum/material_container/proc/insert_item(obj/item/I, multiplier = 1)
+/datum/component/material_container/proc/insert_item(obj/item/I, multiplier = 1)
 	if(!I)
 		return 0
 	if(istype(I, /obj/item/stack))

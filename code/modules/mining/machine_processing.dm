@@ -87,6 +87,7 @@
 		process_ore(AM)
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/ore/O)
+	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)

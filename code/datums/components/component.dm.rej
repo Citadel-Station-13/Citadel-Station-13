@@ -1,9 +1,0 @@
-diff a/code/datums/components/component.dm b/code/datums/components/component.dm	(rejected hunks)
-@@ -3,7 +3,6 @@
- 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
- 	var/list/signal_procs
- 	var/datum/parent
-->>>>>>> components_doc
- 
- /datum/component/New(datum/P, ...)
- 	var/dm = dupe_mode
