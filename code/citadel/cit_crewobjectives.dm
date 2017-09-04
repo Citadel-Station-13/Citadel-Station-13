@@ -1,6 +1,6 @@
 /datum/controller/subsystem/ticker/proc/generate_crew_objectives()
 	var/crewMembers = list()
-	for(var/V in GLOB.datacore.locked)
+	for(var/V in GLOB.data_core.locked)
 		var/datum/data/record/R = V
 		var/mob/M = R.fields["reference"]
 		if(M && M.mind)
