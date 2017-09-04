@@ -814,9 +814,8 @@
 /datum/sprite_accessory/mam_body_markings/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra = 1
-	extra2 = 1
-	icon = 'icons/mob/mam_body_markings.dmi'
+	extra_color_src = MUTCOLORS2
+	extra2_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_tails/guilmon
