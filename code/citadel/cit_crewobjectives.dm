@@ -1,11 +1,5 @@
 /datum/controller/subsystem/ticker/proc/generate_crew_objectives()
-	var/crewMembers = list()
-	for(var/V in GLOB.data_core.locked)
-		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			crewMembers += M.mind
-	for(var/datum/mind/crewMind in crewMembers)
+	for(var/datum/mind/crewMind in SSticker.minds)
 		if(prob(10) && GLOB.master_mode != "extended")//extended is supposed to have less chaos
 			generate_miscreant_objectives(crewMind)
 		else
