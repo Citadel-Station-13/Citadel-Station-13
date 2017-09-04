@@ -470,11 +470,13 @@
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = 0
+	extra = 1
 
 /datum/sprite_accessory/mam_tails_animated/skunk
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = 0
+	extra = 1
 
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
