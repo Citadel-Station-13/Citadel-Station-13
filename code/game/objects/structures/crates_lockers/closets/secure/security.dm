@@ -183,6 +183,7 @@
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
+	new /obj/item/device/mass_spectrometer(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
