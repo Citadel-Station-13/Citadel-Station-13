@@ -29,7 +29,7 @@
 	crewMind.announce_objectives()
 
 /datum/objective/crew/
-	explanation_text = "Yell on the coderbus discussion channel on Citadel's discord if this ever shows up. Something just broke here, dude"
+	explanation_text = "Yell on the coderbus discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"
 
 /datum/objective/crew/proc/setup()
 
