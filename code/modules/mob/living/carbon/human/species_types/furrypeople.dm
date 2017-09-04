@@ -9,6 +9,8 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRIED
+	disliked_food = TOXIC
 
 /datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -30,6 +32,8 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -50,6 +54,8 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT
+	disliked_food = TOXIC
 
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -70,6 +76,8 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -98,6 +106,7 @@
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
 	roundstart = 1
+	liked_food = MEAT
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 
