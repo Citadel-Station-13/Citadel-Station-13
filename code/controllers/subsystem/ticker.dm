@@ -601,18 +601,18 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	if (successfulCrew.len)
-		tochat(world, "<B>The following crew members completed their Crew Objectives:</B>")
+		to_chat(world, "<B>The following crew members completed their Crew Objectives:</B>")
 		for(var/i in successfulCrew)
-			tochat(world, "[i]")
+			to_chat(world, "[i]")
 	else
-		tochat(world, "<B>Nobody completed their Crew Objectives!</B>")
+		to_chat(world, "<B>Nobody completed their Crew Objectives!</B>")
 
 	CHECK_TICK
 
 	if (miscreants.len)
-		tochat(world, "<B> The following crew members were miscreants:</B>")
+		to_chat(world, "<B> The following crew members were miscreants:</B>")
 		for(var/i in miscreants)
-			tochat(world, "[i]")
+			to_chat(world, "[i]")
 
 	CHECK_TICK
 
