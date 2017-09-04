@@ -474,9 +474,9 @@ SUBSYSTEM_DEF(ticker)
 	for(var/datum/mind/crewMind in minds)
 		if(!crewMind.current || !crewMind.objectives.len)
 			continue
-		if(var/datum/objective/miscreant/MO in crewMind.objectives)
+		for(var/datum/objective/miscreant/MO in crewMind.objectives)
 			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
-		if(var/datum/objective/crew/CO in crewMind.objectives)
+		for(var/datum/objective/crew/CO in crewMind.objectives)
 			if(CO.check_completion())
 				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
 				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
