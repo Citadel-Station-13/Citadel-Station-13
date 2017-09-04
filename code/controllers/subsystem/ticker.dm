@@ -471,18 +471,6 @@ SUBSYSTEM_DEF(ticker)
 	var/list/successfulCrew = list()
 	var/list/miscreants = list()
 
-	for(var/datum/mind/crewMind in minds)
-		if(!crewMind.current || !crewMind.objectives.len)
-			continue
-		for(var/datum/objective/miscreant/MO in crewMind.objectives)
-			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
-		for(var/datum/objective/crew/CO in crewMind.objectives)
-			if(CO.check_completion())
-				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
-				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
-			else
-				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
-
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
 	//Player status report
@@ -600,12 +588,26 @@ SUBSYSTEM_DEF(ticker)
 
 	CHECK_TICK
 
+	for(var/datum/mind/crewMind in minds)
+		if(!crewMind.current || !crewMind.objectives.len)
+			continue
+		for(var/datum/objective/miscreant/MO in crewMind.objectives)
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
+		for(var/datum/objective/crew/CO in crewMind.objectives)
+			if(CO.check_completion())
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
+			else
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
+
 	if (successfulCrew.len)
 		to_chat(world, "<B>The following crew members completed their Crew Objectives:</B>")
 		for(var/i in successfulCrew)
 			to_chat(world, "[i]")
+		to_chat(world, "<BR>")
 	else
 		to_chat(world, "<B>Nobody completed their Crew Objectives!</B>")
+		to_chat(world, "<BR>")
 
 	CHECK_TICK
 
