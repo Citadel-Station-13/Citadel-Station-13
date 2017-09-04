@@ -19,7 +19,7 @@
 		return
 	if(!crewMind.assigned_role)
 		return
-	var/rolePathString = "/datum/objective/crew/[rolePathString]"
+	var/rolePathString = "/datum/objective/crew/[crewMind.assigned_role]"
 	var/rolePath = text2path(rolePathString)
 	if (isnull(rolePath))
 		return
