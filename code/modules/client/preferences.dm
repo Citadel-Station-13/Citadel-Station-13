@@ -369,7 +369,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==1) ? "Full" : ((screenshake==0) ? "None" : "Reduced")]</a><br>"
 
-			dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
+			if (!user.client.prefs.screenshake==0)
+				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
