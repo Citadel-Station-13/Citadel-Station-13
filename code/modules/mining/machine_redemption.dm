@@ -22,15 +22,17 @@
 	var/list/ore_values = list(MAT_GLASS = 1, MAT_METAL = 1, MAT_PLASMA = 15, MAT_SILVER = 16, MAT_GOLD = 18, MAT_TITANIUM = 30, MAT_URANIUM = 30, MAT_DIAMOND = 50, MAT_BLUESPACE = 50, MAT_BANANIUM = 60)
 	var/message_sent = FALSE
 	var/list/ore_buffer = list()
+	var/datum/material_container/materials
 	var/datum/research/files
 	var/obj/item/disk/design_disk/inserted_disk
 
 /obj/machinery/mineral/ore_redemption/Initialize()
 	. = ..()
-	AddComponent(/datum/component/material_container, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
+	materials = new(src, list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE),INFINITY)
 	files = new /datum/research/smelter(src)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
+	QDEL_NULL(materials)
 	QDEL_NULL(files)
 	return ..()
 
@@ -55,7 +57,6 @@
 	if(O && O.refined_type)
 		points += O.points * point_upgrade
 
-	GET_COMPONENT(materials, /datum/component/material_container)
 	var/material_amount = materials.get_item_material_amount(O)
 
 	if(!material_amount)
@@ -74,7 +75,6 @@
 
 	var/build_amount = 0
 
-	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in D.materials)
 		var/M = D.materials[mat_id]
 		var/datum/material/redemption_mat = materials.materials[mat_id]
@@ -110,7 +110,6 @@
 
 	var/has_minerals = FALSE
 
-	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		var/mineral_amount = M.amount / MINERAL_MATERIAL_AMOUNT
@@ -149,7 +148,6 @@
 /obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
 	if(exchange_parts(user, W))
 		return
-	GET_COMPONENT(materials, /datum/component/material_container)
 	if(default_pry_open(W))
 		materials.retrieve_all()
 		return
@@ -183,10 +181,16 @@
 		if(user.transferItemToLoc(W, src))
 			inserted_disk = W
 			return TRUE
+
+	if(istype(W, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = W
+		var/inserted = materials.insert_stack(S, S.amount)
+		to_chat(user, "<span class='notice'>You add [inserted] [S] sheets to \the [src].</span>")
+		return
+
 	return ..()
 
 /obj/machinery/mineral/ore_redemption/on_deconstruction()
-	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
 
@@ -209,7 +213,6 @@
 		data["claimedPoints"] = inserted_id.mining_points
 
 	data["materials"] = list()
-	GET_COMPONENT(materials, /datum/component/material_container)
 	for(var/mat_id in materials.materials)
 		var/datum/material/M = materials.materials[mat_id]
 		var/sheet_amount = M.amount ? M.amount / MINERAL_MATERIAL_AMOUNT : "0"
@@ -233,7 +236,6 @@
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
 	if(..())
 		return
-	GET_COMPONENT(materials, /datum/component/material_container)
 	switch(action)
 		if("Eject")
 			if(!inserted_id)
