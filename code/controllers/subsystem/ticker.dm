@@ -615,6 +615,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<B> The following crew members were miscreants:</B>")
 		for(var/i in miscreants)
 			to_chat(world, "[i]")
+		to_chat(world, "<BR>")
 
 	CHECK_TICK
 

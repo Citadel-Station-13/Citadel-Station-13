@@ -50,3 +50,6 @@
 
 /datum/objective/miscreant/whiny
 	explanation_text = "Complain incessantly about every minor issue you find."
+
+/datum/objective/miscreant/immersions
+	explanation_text = "Act as out of character as you possibly can."
