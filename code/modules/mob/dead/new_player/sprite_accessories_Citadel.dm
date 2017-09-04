@@ -486,17 +486,6 @@
 	icon_state = "shark"
 	color_src = 0
 
-/datum/sprite_accessory/mam_tails/shark/datashark
-	name = "DataShark"
-	icon_state = "datashark"
-	color_src = 0
-//	ckeys_allowed = list("rubyflamewing")
-
-/datum/sprite_accessory/mam_tails_animated/shark/datashark
-	name = "DataShark"
-	icon_state = "datashark"
-	color_src = 0
-
 /datum/sprite_accessory/mam_tails/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
@@ -832,6 +821,17 @@
 	name = "Guilmon"
 	icon_state = "guilmon"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/mam_tails/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
+	color_src = 0
+//	ckeys_allowed = list("rubyflamewing")
+
+/datum/sprite_accessory/mam_tails_animated/shark/datashark
+	name = "DataShark"
+	icon_state = "datashark"
+	color_src = 0
 
 /* Till I get my snowflake only ckey lock
 
