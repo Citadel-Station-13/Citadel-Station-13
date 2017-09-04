@@ -41,3 +41,12 @@
 
 /datum/objective/miscreant/creepy
 	explanation_text = "Sneak around looking as suspicious as possible without actually doing anything illegal."
+
+/datum/objective/miscreant/construction
+	explanation_text = "Perform obnoxious construction and renovation projects. Insist that you're just doing your job."
+
+/datum/objective/miscreant/access
+	explanation_text = "Make as much of the station as possible accessible to the public."
+
+/datum/objective/miscreant/whiny
+	explanation_text = "Complain incessantly about every minor issue you find."
