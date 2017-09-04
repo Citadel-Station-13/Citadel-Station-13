@@ -355,6 +355,10 @@
 
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
+		if(prob(10) && GLOB.master_mode != "extended")
+			humanc.generate_miscreant_objectives()
+		else
+			humanc.generate_individual_objectives()
 		humanc = character	//Let's retypecast the var to be human,
 
 	if(humanc)	//These procs all expect humans
@@ -367,10 +371,6 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(10) && GLOB.master_mode != "extended")
-			humanc.generate_miscreant_objectives()
-		else
-			humanc.generate_individual_objectives()
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
