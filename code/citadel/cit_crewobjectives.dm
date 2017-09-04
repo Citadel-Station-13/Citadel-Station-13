@@ -66,7 +66,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(owner))
-				if(!M.special_role && !M.assigned_role = "Security Officer" && !M.assigned_role = "Detective" && !M.assigned_role = "Head of Security" && !M.assigned_role = "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -79,7 +79,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(owner))
-				if(!M.special_role && !M.assigned_role = "Security Officer" && !M.assigned_role = "Detective" && !M.assigned_role = "Head of Security" && !M.assigned_role = "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -92,7 +92,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(owner))
-				if(!M.special_role && !M.assigned_role = "Security Officer" && !M.assigned_role = "Detective" && !M.assigned_role = "Head of Security" && !M.assigned_role = "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -105,6 +105,6 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(owner))
-				if(!M.special_role && !M.assigned_role = "Security Officer" && !M.assigned_role = "Detective" && !M.assigned_role = "Head of Security" && !M.assigned_role = "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
