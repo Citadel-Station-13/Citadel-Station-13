@@ -478,10 +478,10 @@ SUBSYSTEM_DEF(ticker)
 			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
 		if(var/datum/objective/crew/CO in crewMind.objectives)
 			if(CO.check_completion())
-				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>"
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
 				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
 			else
-				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>"
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
