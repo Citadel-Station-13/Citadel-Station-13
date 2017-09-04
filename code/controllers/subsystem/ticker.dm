@@ -208,6 +208,7 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters
 	collect_minds()
+	generate_crew_objectives()
 	equip_characters()
 
 	SSoverlays.Flush()	//Flush the majority of the shit
