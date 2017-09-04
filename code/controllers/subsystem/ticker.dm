@@ -468,6 +468,20 @@ SUBSYSTEM_DEF(ticker)
 	var/num_survivors = 0
 	var/num_escapees = 0
 	var/num_shuttle_escapees = 0
+	var/list/successfulCrew = list()
+	var/list/miscreants = list()
+
+	for(var/datum/mind/crewMind in minds)
+		if(!crewMind.current || !crewMind.objectives.len)
+			continue
+		if(var/datum/objective/miscreant/MO in crewMind.objectives)
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
+		if(var/datum/objective/crew/CO in crewMind.objectives)
+			if(CO.check_completion())
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>"
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
+			else
+				to_chat(crewMind.current, "<br><B>Objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>"
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
@@ -583,6 +597,22 @@ SUBSYSTEM_DEF(ticker)
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	CHECK_TICK
+
+	if (successfulCrew.len)
+		tochat(world, "<B>The following crew members completed their Crew Objectives:</B>")
+		for(var/i in successfulCrew)
+			tochat(world, "[i]")
+	else
+		tochat(world, "<B>Nobody completed their Crew Objectives!</B>")
+
+	CHECK_TICK
+
+	if (miscreants.len)
+		tochat(world, "<B> The following crew members were miscreants:</B>")
+		for(var/i in miscreants)
+			tochat(world, "[i]")
 
 	CHECK_TICK
 
