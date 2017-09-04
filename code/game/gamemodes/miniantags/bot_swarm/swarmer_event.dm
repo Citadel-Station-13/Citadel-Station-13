@@ -1,3 +1,4 @@
+/* 
 /datum/round_event_control/spawn_swarmer
 	name = "Spawn Swarmer Shell"
 	typepath = /datum/round_event/spawn_swarmer
@@ -25,3 +26,4 @@
 		if(istype(M, /mob/living/simple_animal/hostile/swarmer) && M.client) //If there is a swarmer with an active client, we've found our swarmer
 			return 1
 	return 0
+*/

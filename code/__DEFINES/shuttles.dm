@@ -59,6 +59,7 @@
 #define DOCKING_IMMOBILIZED 2
 #define DOCKING_AREA_EMPTY 4
 
+
 //Docking turf movements
 #define MOVE_TURF 1
 #define MOVE_AREA 2
