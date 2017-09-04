@@ -6,7 +6,10 @@
 	zone 					= "groin"
 	slot 					= "vagina"
 	size					= 1 //There is only 1 size right now
-	can_masturbate_with		= 1
+	can_masturbate_with		= TRUE
+	masturbation_verb 	= "finger"
+	can_climax 				= TRUE
+	fluid_transfer_factor = 0.1 //Yes, some amount is exposed to you, go get your AIDS
 	w_class 				= 3
 	var/cap_length		= 8//D   E   P   T   H (cap = capacity)
 	var/cap_girth		= 12
@@ -15,7 +18,6 @@
 	var/clit_diam 			= 0.25
 	var/clit_len			= 0.25
 	var/list/vag_types = list("tentacle", "dentata", "hairy")
-	var/obj/item/organ/genital/womb/linked_womb
 
 
 /obj/item/organ/genital/vagina/update_appearance()
@@ -56,15 +58,16 @@
 
 /obj/item/organ/genital/vagina/update_link()
 	if(owner)
-		linked_womb = (owner.getorganslot("womb"))
-		if(linked_womb)
-			linked_womb.linked_vag = src
+		linked_organ = (owner.getorganslot("womb"))
+		if(linked_organ)
+			linked_organ.linked_organ = src
 	else
-		if(linked_womb)
-			linked_womb.linked_vag = null
-		linked_womb = null
+		if(linked_organ)
+			linked_organ.linked_organ = null
+		linked_organ = null
 
-/obj/item/organ/genital/vagina/remove_ref()
-	if(linked_womb)
-		linked_womb.linked_vag = null
-		linked_womb = null
+/obj/item/organ/genital/vagina/is_exposed()
+	. = ..()
+	if(.)
+		return TRUE
+	return owner.is_groin_exposed()

@@ -31,6 +31,11 @@ GLOBAL_PROTECT(admin_datums)
 	GLOB.admin_datums[ckey] = src
 
 /datum/admins/proc/associate(client/C)
+	if(IsAdminAdvancedProcCall())
+		var/msg = " has tried to elevate permissions!"
+		message_admins("[key_name_admin(usr)][msg]")
+		log_admin_private("[key_name(usr)][msg]")
+		return
 	if(istype(C))
 		owner = C
 		owner.holder = src
@@ -61,7 +66,7 @@ GLOBAL_PROTECT(admin_datums)
 	return FALSE //nice try trialmin
 
 /*
-checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
+checks if usr is an admin with at least ONE of the flags_1 in rights_required. (Note, they don't need all the flags_1)
 if rights_required == 0, then it simply checks if they are an admin.
 if it doesn't return 1 and show_msg=1 it will prints a message explaining why the check has failed
 generally it would be used like so:
@@ -79,7 +84,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return 1
 		else
 			if(show_msg)
-				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
+				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags_1:[rights2text(rights_required," ")].</font>")
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution

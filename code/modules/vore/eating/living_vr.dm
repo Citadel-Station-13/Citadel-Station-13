@@ -173,9 +173,9 @@
 //
 //End vore code.
 /*
-	//Handle case: /obj/item/weapon/holder
-		if(/obj/item/weapon/holder/micro)
-			var/obj/item/weapon/holder/H = I
+	//Handle case: /obj/item/holder
+		if(/obj/item/holder/micro)
+			var/obj/item/holder/H = I
 
 			if(!isliving(user)) return 0 // Return 0 to continue upper procs
 			var/mob/living/attacker = user  // Typecast to living

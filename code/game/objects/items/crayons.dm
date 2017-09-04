@@ -38,7 +38,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("yiffhell", "secborg", "paint")
+	var/list/graffiti_large_h = list("secborg", "paint")
 
 	var/list/all_drawables
 
@@ -67,6 +67,7 @@
 
 	var/pre_noise = FALSE
 	var/post_noise = FALSE
+
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -137,7 +138,7 @@
 			qdel(src)
 		. = TRUE
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	// tgui is a plague upon this codebase
 
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -422,7 +423,7 @@
 	var/gangID = user.mind.gang_datum
 	var/area/territory = get_area(target)
 
-	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0)
+	new /obj/effect/decal/cleanable/crayon/gang(target,gangID,"graffiti",0,user)
 	to_chat(user, "<span class='notice'>You tagged [territory] for your gang!</span>")
 
 /obj/item/toy/crayon/red
@@ -498,7 +499,7 @@
  * Crayon Box
  */
 
-/obj/item/weapon/storage/crayons
+/obj/item/storage/crayons
 	name = "box of crayons"
 	desc = "A box of crayons for all your rune drawing needs."
 	icon = 'icons/obj/crayons.dmi'
@@ -509,7 +510,7 @@
 		/obj/item/toy/crayon
 	)
 
-/obj/item/weapon/storage/crayons/New()
+/obj/item/storage/crayons/New()
 	..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
@@ -520,12 +521,12 @@
 	new /obj/item/toy/crayon/black(src)
 	update_icon()
 
-/obj/item/weapon/storage/crayons/update_icon()
+/obj/item/storage/crayons/update_icon()
 	cut_overlays()
 	for(var/obj/item/toy/crayon/crayon in contents)
 		add_overlay(mutable_appearance('icons/obj/crayons.dmi', crayon.item_color))
 
-/obj/item/weapon/storage/crayons/attackby(obj/item/W, mob/user, params)
+/obj/item/storage/crayons/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/C = W
 		switch(C.item_color)
@@ -552,6 +553,8 @@
 	paint_color = null
 
 	item_state = "spraycan"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	desc = "A metallic container containing tasty paint.\n Alt-click to toggle the cap."
 
 	instant = TRUE
@@ -561,7 +564,7 @@
 	self_contained = FALSE // Don't disappear when they're empty
 	can_change_colour = TRUE
 
-	validSurfaces = list(/turf/open/floor,/turf/closed/wall)
+	validSurfaces = list(/turf/open/floor, /turf/closed/wall)
 	reagent_contents = list("welding_fuel" = 1, "ethanol" = 1)
 
 	pre_noise = TRUE
@@ -633,7 +636,7 @@
 			C.blind_eyes(1)
 		if(C.get_eye_protection() <= 0) // no eye protection? ARGH IT BURNS.
 			C.confused = max(C.confused, 3)
-			C.Weaken(3)
+			C.Knockdown(60)
 		if(ishuman(C) && actually_paints)
 			var/mob/living/carbon/human/H = C
 			H.lip_style = "spray_face"
