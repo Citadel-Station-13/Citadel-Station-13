@@ -11,7 +11,7 @@
 	if(!objectiveTypes.len)
 		return
 	var/selectedType = pick(objectiveTypes)
-	var/datum/objective/crew/newObjective = new selectedType
+	var/datum/objective/miscreant/newObjective = new selectedType
 	if(!newObjective)
 		return
 	newObjective.owner = crewMind
