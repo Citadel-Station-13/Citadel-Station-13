@@ -33,12 +33,12 @@
 
 /datum/objective/crew/proc/setup()
 
-/datum/objective/crew/captain/
+/datum/objective/crew/Captain/
 
-/datum/objective/crew/captain/hat
+/datum/objective/crew/Captain/hat
 	explanation_text = "Don't lose your hat."
 
-/datum/objective/crew/captain/hat/check_completion()
+/datum/objective/crew/Captain/hat/check_completion()
 	if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat))
 		return 1
 	else
