@@ -835,18 +835,20 @@
 	icon_state = "datashark"
 	color_src = 0
 
-/* Till I get my snowflake only ckey lock
+//Till I get my snowflake only ckey lock, these are locked-locked :D
 
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
 	extra = 1
 	extra_color_src = MUTCOLORS3
+	locked = TRUE
 
 /datum/sprite_accessory/mam_tails/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
 	extra = 1
+	locked = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/sabresune
 	name = "sabresune"
@@ -859,4 +861,4 @@
 	color_src = MUTCOLORS2
 	extra = 0
 	extra2 = 0
-*/
+	locked = TRUE
