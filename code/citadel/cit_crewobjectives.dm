@@ -269,7 +269,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
+				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
@@ -299,7 +299,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
+				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
@@ -307,6 +307,19 @@
 		return 0
 
 /*				CIVILLIAN OBJECTIVES			*/
+
+/datum/objective/crew/bartender
+
+/datum/objective/crew/bartender/responsibility
+	explanation_text = "Make sure nobody dies of alchohol poisoning."
+
+/datum/objective/crew/bartender/responsibility/check_completion()
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(H.stat == DEAD && H.reagents)
+			if(H.reagents.has_reagent(ethanol))
+				if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
+					return 0
+	return 1
 
 /datum/objective/crew/assistant
 
@@ -331,7 +344,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
+				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
