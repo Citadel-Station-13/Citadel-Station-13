@@ -269,7 +269,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
@@ -299,7 +299,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
@@ -315,7 +315,7 @@
 
 /datum/objective/crew/assistant/petsplosion/New()
 	. = ..()
-	target_amount = rand(10,75)
+	target_amount = rand(10,25)
 	update_explanation_text()
 
 /datum/objective/crew/assistant/petsplosion/update_explanation_text()
@@ -331,7 +331,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
 		return 1
