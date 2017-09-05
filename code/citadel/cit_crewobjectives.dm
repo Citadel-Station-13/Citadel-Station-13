@@ -228,7 +228,10 @@
 	. = ..()
 	target_amount = rand(2,5)
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
-	chempath = pick(typesof(/datum/reagent/drug) - blacklist, typesof(/datum/reagent/medicine) - blacklist, /datum/reagent/aphrodisiac, /datum/reagent/anaphrodisiac)
+	var/drugs = typesof(/datum/reagent/drug) - blacklist
+	var/meds = typesof(/datum/reagent/medicine) - blacklist
+	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
+	chempath = pick(chemlist)
 	targetchem = chempath.id
 	update_explanation_text()
 
@@ -271,7 +274,10 @@
 	. = ..()
 	target_amount = rand(2,5)
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
-	chempath = pick(typesof(/datum/reagent/drug) - blacklist, typesof(/datum/reagent/medicine) - blacklist, /datum/reagent/aphrodisiac, /datum/reagent/anaphrodisiac)
+	var/drugs = typesof(/datum/reagent/drug) - blacklist
+	var/meds = typesof(/datum/reagent/medicine) - blacklist
+	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
+	chempath = pick(chemlist)
 	targetchem = chempath.id
 	update_explanation_text()
 
