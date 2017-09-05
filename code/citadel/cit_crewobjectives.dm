@@ -117,6 +117,7 @@
 	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/researchdirector/cyborgs/New()
+	. = ..()
 	target_amount = rand(3,20)
 	update_explanation_text()
 
@@ -140,6 +141,7 @@
 	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/roboticist/cyborgs/New()
+	. = ..()
 	target_amount = rand(3,20)
 	update_explanation_text()
 
