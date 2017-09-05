@@ -241,7 +241,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(H.reagents.has_reagent(targetchem)
+				if(H.reagents.has_reagent(targetchem))
 					gotchems--
 	if(gotchems <= 0)
 		return 1
@@ -284,7 +284,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(H.reagents.has_reagent(targetchem)
+				if(H.reagents.has_reagent(targetchem))
 					gotchems--
 	if(gotchems <= 0)
 		return 1
