@@ -237,13 +237,13 @@
 	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
 
 /datum/objective/crew/chiefmedicalofficer/chems/check_completion()
-	var/gotchems = 0
+	var/gotchems = target_amount
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.reagents.has_reagent(targetchem)
-					gotchems += 1
-	if(gotchems >= target_amount)
+					gotchems--
+	if(gotchems <= 0)
 		return 1
 	else
 		return 0
@@ -280,13 +280,13 @@
 	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
 
 /datum/objective/crew/chemist/chems/check_completion()
-	var/gotchems = 0
+	var/gotchems = target_amount
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.reagents.has_reagent(targetchem)
-					gotchems += 1
-	if(gotchems >= target_amount)
+					gotchems--
+	if(gotchems <= 0)
 		return 1
 	else
 		return 0
