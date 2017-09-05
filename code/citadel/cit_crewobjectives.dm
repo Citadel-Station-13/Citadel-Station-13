@@ -232,7 +232,7 @@
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
 	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
 	chempath = pick(chemlist)
-	targetchem = chempath.id
+	targetchem = initial(chempath.id)
 	update_explanation_text()
 
 /datum/objective/crew/chiefmedicalofficer/chems/update_explanation_text()
@@ -278,7 +278,7 @@
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
 	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
 	chempath = pick(chemlist)
-	targetchem = chempath.id
+	targetchem = initial(chempath.id)
 	update_explanation_text()
 
 /datum/objective/crew/chemist/chems/update_explanation_text()
