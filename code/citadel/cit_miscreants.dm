@@ -18,7 +18,7 @@
 	crewMind.objectives += newObjective
 	crewMind.special_role = "miscreant"
 	to_chat(crewMind, "<B><font size=3 color=red>You are a Miscreant.</font></B>")
-	to_chat(crewMind, "Pursuing your objective is purely optional, but it is not tracked. You may not commit any traitorous acts not directly related to them.")
+	to_chat(crewMind, "Pursuing your objective is entirely optional, but it isn't tracked. Performing traitorous acts not directly related to your objective may result in permanent termination of your employment.")
 	crewMind.announce_objectives()
 
 /datum/objective/miscreant

@@ -65,7 +65,7 @@
 /datum/objective/crew/headofsecurity/justicecrew/check_completion()
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
-			if(M.current && isliving(owner))
+			if(M.current && isliving(M.current))
 				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
@@ -78,7 +78,7 @@
 /datum/objective/crew/securityofficer/justicecrew/check_completion()
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
-			if(M.current && isliving(owner))
+			if(M.current && isliving(M.current))
 				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
@@ -91,7 +91,7 @@
 /datum/objective/crew/detective/justicecrew/check_completion()
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
-			if(M.current && isliving(owner))
+			if(M.current && isliving(M.current))
 				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
@@ -104,7 +104,55 @@
 /datum/objective/crew/lawyer/justicecrew/check_completion()
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
-			if(M.current && isliving(owner))
+			if(M.current && isliving(M.current))
 				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
+
+/*				SCIENCE OBJECTIVES				*/
+
+/datum/objective/crew/researchdirector/
+
+/datum/objective/crew/researchdirector/cyborgs
+	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
+
+/datum/objective/crew/researchdirector/cyborgs/New()
+	target_amount = rand(3,20)
+	update_explanation_text()
+
+/datum/objective/crew/researchdirector/cyborgs/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure there are at least [target_amount] functioning cyborgs when the shift ends."
+
+/datum/objective/crew/researchdirector/cyborgs/check_completion()
+	var/borgcount = target_amount
+	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
+		if(!R.stat == DEAD)
+			borgcount--
+	if(borgcount <= 0)
+		return 1
+	else
+		return 0
+
+/datum/objective/crew/roboticist/
+
+/datum/objective/crew/roboticist/cyborgs
+	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
+
+/datum/objective/crew/roboticist/cyborgs/New()
+	target_amount = rand(3,20)
+	update_explanation_text()
+
+/datum/objective/crew/roboticist/cyborgs/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure there are at least [target_amount] functioning cyborgs when the shift ends."
+
+/datum/objective/crew/roboticist/cyborgs/check_completion()
+	var/borgcount = target_amount
+	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
+		if(!R.stat == DEAD)
+			borgcount--
+	if(borgcount <= 0)
+		return 1
+	else
+		return 0
