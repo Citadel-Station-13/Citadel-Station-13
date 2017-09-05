@@ -18,15 +18,13 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/msg_other = list()
 
 	var/list/feedback = list()	//list of datum/feedback_variable
-	
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
-	
+
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
 	. = ..()
-
 
 //poll population
 /datum/controller/subsystem/blackbox/fire()
@@ -37,14 +35,12 @@ SUBSYSTEM_DEF(blackbox)
 		if(M.client)
 			playercount += 1
 	var/admincount = GLOB.admins.len
-	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	var/datum/DBQuery/query_record_playercount = SSdbcore.NewQuery("INSERT INTO [format_table_name("legacy_population")] (playercount, admincount, time, server_ip, server_port, round_id) VALUES ([playercount], [admincount], '[SQLtime()]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', '[GLOB.round_id]')")
 	query_record_playercount.Execute()
-	
- 
+
 	if(config.use_exp_tracking)
 		if((triggertime < 0) || (world.time > (triggertime +3000)))	//subsystem fires once at roundstart then once every 10 minutes. a 5 min check skips the first fire. The <0 is midnight rollover check
 			update_exp(10,FALSE)
-
 
 
 /datum/controller/subsystem/blackbox/Recover()
@@ -212,8 +208,10 @@ SUBSYSTEM_DEF(blackbox)
 	var/x_coord = sanitizeSQL(L.x)
 	var/y_coord = sanitizeSQL(L.y)
 	var/z_coord = sanitizeSQL(L.z)
+	var/last_words = sanitizeSQL(L.last_words)
+	var/suicide = sanitizeSQL(L.suiciding)
 	var/map = sanitizeSQL(SSmapping.config.map_name)
-	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina])")
+	var/datum/DBQuery/query_report_death = SSdbcore.NewQuery("INSERT INTO [format_table_name("death")] (pod, x_coord, y_coord, z_coord, mapname, server_ip, server_port, round_id, tod, job, special, name, byondkey, laname, lakey, bruteloss, fireloss, brainloss, oxyloss, toxloss, cloneloss, staminaloss, last_words, suicide) VALUES ('[sqlpod]', '[x_coord]', '[y_coord]', '[z_coord]', '[map]', INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]', [GLOB.round_id], '[SQLtime()]', '[sqljob]', '[sqlspecial]', '[sqlname]', '[sqlkey]', '[laname]', '[lakey]', [sqlbrute], [sqlfire], [sqlbrain], [sqloxy], [sqltox], [sqlclone], [sqlstamina], '[last_words]', [suicide])")
 	query_report_death.Execute()
 
 /datum/controller/subsystem/blackbox/proc/Seal()
@@ -267,18 +265,6 @@ SUBSYSTEM_DEF(blackbox)
 /datum/feedback_variable/proc/get_variable()
 	return variable
 
-<<<<<<< HEAD
-/datum/feedback_variable/proc/set_details(text)
-	if (istext(text))
-		details = text
-
-/datum/feedback_variable/proc/add_details(text)
-	if (istext(text))
-		if (!details)
-			details = "\"[text]\""
-		else
-			details += " | \"[text]\""
-=======
 /datum/feedback_variable/proc/set_details(deets)
 	details = list("\"[deets]\"")
 
@@ -287,14 +273,9 @@ SUBSYSTEM_DEF(blackbox)
 		set_details(deets)
 	else
 		details += "\"[deets]\""
->>>>>>> dfeb900... Merge pull request #30431 from MrStonedOne/patch-418
 
 /datum/feedback_variable/proc/get_details()
 	return details.Join(" | ")
 
 /datum/feedback_variable/proc/get_parsed()
-<<<<<<< HEAD
-	return list(variable,value,details)
-=======
 	return list(variable,value,details.Join(" | "))
->>>>>>> dfeb900... Merge pull request #30431 from MrStonedOne/patch-418
