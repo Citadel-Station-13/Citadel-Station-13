@@ -88,7 +88,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(M.current))
-				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -110,7 +110,20 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(M.current))
-				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
+					return 0
+		return 1
+
+/datum/objective/crew/warden/
+
+/datum/objective/crew/warden/justicecrew
+	explanation_text = "Ensure there are no innocent crew members in the brig when the shift ends."
+
+/datum/objective/crew/warden/justicecrew/check_completion()
+	if(owner.current)
+		for(var/datum/mind/M in SSticker.minds)
+			if(M.current && isliving(M.current))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -123,7 +136,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(M.current))
-				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -136,7 +149,7 @@
 	if(owner.current)
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(M.current))
-				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && get_area(M.current) != typesof(/area/security))
+				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
 					return 0
 		return 1
 
@@ -189,3 +202,48 @@
 		return 1
 	else
 		return 0
+
+/*				ENGINEERING OBJECTIVES			*/
+
+/*				MEDICAL OBJECTIVES				*/
+
+/datum/objective/crew/chiefmedicalofficer/
+
+/datum/objective/crew/chiefmedicalofficer/morgue
+	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
+
+/datum/objective/crew/chiefmedicalofficer/morgue/check_completion()
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
+			if(get_area.H != /area/medical/morgue)
+				return 0
+	return 1
+
+/datum/objective/crew/geneticist
+
+/datum/objective/crew/geneticist/morgue
+	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
+
+/datum/objective/crew/geneticist/morgue/check_completion()
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
+			if(get_area.H != /area/medical/morgue)
+				return 0
+	return 1
+
+/datum/objective/crew/medicaldoctor
+
+/datum/objective/crew/medicaldoctor/morgue
+	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
+
+/datum/objective/crew/medicaldoctor/morgue/check_completion()
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
+			if(get_area.H != /area/medical/morgue)
+				return 0
+	return 1
+			
+
+/*				CARGO OBJECTIVES				*/
+
+/*				CIVILLIAN OBJECTIVES			*/
