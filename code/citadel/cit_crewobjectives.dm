@@ -62,7 +62,7 @@
 
 /datum/objective/crew/headofpersonnel/ian/check_completion()
 	if(owner.current)
-		for(var/mob/living/simple_animal/pet/dog/corgi/Ian/goodboy in world)
+		for(var/mob/living/simple_animal/pet/dog/corgi/Ian/goodboy in GLOB.mob_list)
 			if(goodboy.stat != DEAD && SSshuttle.emergency.shuttle_areas[get_area(goodboy)])
 				return 1
 		return 0
@@ -246,27 +246,93 @@
 
 /*				CARGO OBJECTIVES				*/
 
+/datum/objective/crew/quartermaster
+
+/datum/objective/crew/quartermaster/petsplosion
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
+
+/datum/objective/crew/quartermaster/petsplosion/New()
+	. = ..()
+	target_amount = rand(10,75)
+	update_explanation_text()
+
+/datum/objective/crew/quartermaster/petsplosion/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure there are at least [target_amount] pets on the station by the end of the shift. Interpret this as you wish."
+
+/datum/objective/crew/quartermaster/petsplosion/check_completion()
+	var/petcount = target_amount
+	for(var/mob/living/simple_animal/pet/P in GLOB.mob_list)
+		if(!P.stat == DEAD)
+			if(P.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
+				petcount--
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD)
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+					petcount--
+	if(petcount <= 0)
+		return 1
+	else
+		return 0
+
+/datum/objective/crew/cargotechnician
+
+/datum/objective/crew/cargotechnician/petsplosion
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
+
+/datum/objective/crew/assistant/petsplosion/New()
+	. = ..()
+	target_amount = rand(10,75)
+	update_explanation_text()
+
+/datum/objective/crew/cargotechnician/petsplosion/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure there are at least [target_amount] pets on the station by the end of the shift. Interpret this as you wish."
+
+/datum/objective/crew/cargotechnician/petsplosion/check_completion()
+	var/petcount = target_amount
+	for(var/mob/living/simple_animal/pet/P in GLOB.mob_list)
+		if(!P.stat == DEAD)
+			if(P.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
+				petcount--
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD)
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+					petcount--
+	if(petcount <= 0)
+		return 1
+	else
+		return 0
+
 /*				CIVILLIAN OBJECTIVES			*/
 
 /datum/objective/crew/assistant
 
 /datum/objective/crew/assistant/petsplosion
-	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) animals on the station by the end of the shift. Anthropomorphic animals do not count."
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
 
 /datum/objective/crew/assistant/petsplosion/New()
 	. = ..()
-	target_amount = rand(5,75)
+	target_amount = rand(10,75)
 	update_explanation_text()
 
 /datum/objective/crew/assistant/petsplosion/update_explanation_text()
 	. = ..()
-	explanation_text = "Ensure there are at least [target_amount] animals on the station by the end of the shift. Anthropomorphic animals do not count."
+	explanation_text = "Ensure there are at least [target_amount] pets on the station by the end of the shift. Interpret this as you wish."
 
 /datum/objective/crew/assistant/petsplosion/check_completion()
 	var/petcount = target_amount
-	for(var/mob/living/simple_animal/pet/P in world)
+	for(var/mob/living/simple_animal/pet/P in GLOB.mob_list)
 		if(!P.stat == DEAD)
-			petcount--
+			if(P.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
+				petcount--
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD)
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(istype(H.neck, /obj/item/clothing/neck/petcollar)
+					petcount--
 	if(petcount <= 0)
 		return 1
 	else
