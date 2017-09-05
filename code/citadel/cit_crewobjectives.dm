@@ -377,7 +377,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				for(/datum/reagent/consumable/ethanol/A in typesof(/datum/reagent/consumable/ethanol))
+				for(var/datum/reagent/consumable/ethanol/A in typesof(/datum/reagent/consumable/ethanol))
 					if(A)
 						if(A.volume >= 5)
 							return 0
