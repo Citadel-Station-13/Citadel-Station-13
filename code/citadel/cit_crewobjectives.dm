@@ -237,7 +237,7 @@
 
 /datum/objective/crew/chiefmedicalofficer/chems/update_explanation_text()
 	. = ..()
-	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
+	explanation_text = "Ensure at least [target_amount] living crew members have [initial(chempath.name)] in their bloodstream when the shift ends."
 
 /datum/objective/crew/chiefmedicalofficer/chems/check_completion()
 	var/gotchems = target_amount
@@ -283,7 +283,7 @@
 
 /datum/objective/crew/chemist/chems/update_explanation_text()
 	. = ..()
-	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
+	explanation_text = "Ensure at least [target_amount] living crew members have [initial(chempath.name)] in their bloodstream when the shift ends."
 
 /datum/objective/crew/chemist/chems/check_completion()
 	var/gotchems = target_amount
