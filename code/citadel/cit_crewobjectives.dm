@@ -316,8 +316,8 @@
 /datum/objective/crew/bartender/responsibility/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.reagents)
-			if(H.reagents.has_reagent(ethanol))
-				if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
+			if(H.reagents.has_reagent(typesof(/datum/reagent/consumable/ethanol)))
+				if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
 					return 0
 	return 1
 
