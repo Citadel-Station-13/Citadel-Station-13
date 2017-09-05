@@ -247,3 +247,27 @@
 /*				CARGO OBJECTIVES				*/
 
 /*				CIVILLIAN OBJECTIVES			*/
+
+/datum/objective/crew/assistant
+
+/datum/objective/crew/assistant/petsplosion
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) animals on the station by the end of the shift. Anthropomorphic animals do not count."
+
+/datum/objective/crew/assistant/petsplosion/New()
+	. = ..()
+	target_amount = rand(5,75)
+	update_explanation_text()
+
+/datum/objective/crew/assistant/petsplosion/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure there are at least [target_amount] animals on the station by the end of the shift. Anthropomorphic animals do not count."
+
+/datum/objective/crew/assistant/petsplosion/check_completion()
+	var/petcount = target_amount
+	for(var/mob/living/simple_animal/pet/P in world)
+		if(!P.stat == DEAD)
+			petcount--
+	if(petcount <= 0)
+		return 1
+	else
+		return 0
