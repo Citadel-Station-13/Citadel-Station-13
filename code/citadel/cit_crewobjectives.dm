@@ -215,7 +215,7 @@
 /datum/objective/crew/chiefmedicalofficer/morgue/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
-			if(get_area.H != /area/medical/morgue)
+			if(get_area(H) != /area/medical/morgue)
 				return 0
 	return 1
 
@@ -227,7 +227,7 @@
 /datum/objective/crew/geneticist/morgue/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
-			if(get_area.H != /area/medical/morgue)
+			if(get_area(H) != /area/medical/morgue)
 				return 0
 	return 1
 
@@ -239,7 +239,7 @@
 /datum/objective/crew/medicaldoctor/morgue/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
-			if(get_area.H != /area/medical/morgue)
+			if(get_area(H) != /area/medical/morgue)
 				return 0
 	return 1
 			
