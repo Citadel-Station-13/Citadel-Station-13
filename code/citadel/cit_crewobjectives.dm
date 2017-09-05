@@ -380,10 +380,11 @@
 	explanation_text = "Make sure nobody dies of alchohol poisoning."
 
 /datum/objective/crew/bartender/responsibility/check_completion()
+	var/boozetypes = typesof(/datum/reagent/consumable/ethanol)
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.reagents)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				for(var/datum/reagent/consumable/ethanol/A in H.reagents)
+				for(boozetypes/A in H.reagents)
 					if(A)
 						if(A.volume >= 5)
 							return 0
