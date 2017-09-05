@@ -219,6 +219,35 @@
 				return 0
 	return 1
 
+/datum/objective/crew/chiefmedicalofficer/chems //Ported from old Hippie with adjustments
+	var/targetchem = "none"
+	var/datum/reagent/chempath
+	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the codebus discussion channel of citadel's discord) in their bloodstream when the shift ends."
+
+/datum/objective/crew/chiefmedicalofficer/chems/New()
+	. = ..()
+	target_amount = rand(2,5)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	chempath = pick(typesof(/datum/reagent/drug) - blacklist, typesof(/datum/reagent/medicine) - blacklist, /datum/reagent/aphrodisiac, /datum/reagent/anaphrodisiac)
+	targetchem = chempath.id
+	update_explanation_text()
+
+/datum/objective/crew/chiefmedicalofficer/chems/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
+
+/datum/objective/crew/chiefmedicalofficer/chems/check_completion()
+	var/gotchems = 0
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD && H.reagents)
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(H.reagents.has_reagent(targetchem)
+					gotchems += 1
+	if(gotchems >= target_amount)
+		return 1
+	else
+		return 0
+
 /datum/objective/crew/geneticist
 
 /datum/objective/crew/geneticist/morgue //Ported from old Hippie
@@ -230,6 +259,37 @@
 			if(get_area(H) != /area/medical/morgue)
 				return 0
 	return 1
+
+/datum/objective/crew/chemist/
+
+/datum/objective/crew/chemist/chems //Ported from old Hippie with adjustments
+	var/targetchem = "none"
+	var/datum/reagent/chempath
+	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the codebus discussion channel of citadel's discord) in their bloodstream when the shift ends."
+
+/datum/objective/crew/chemist/chems/New()
+	. = ..()
+	target_amount = rand(2,5)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	chempath = pick(typesof(/datum/reagent/drug) - blacklist, typesof(/datum/reagent/medicine) - blacklist, /datum/reagent/aphrodisiac, /datum/reagent/anaphrodisiac)
+	targetchem = chempath.id
+	update_explanation_text()
+
+/datum/objective/crew/chemist/chems/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure at least [target_amount] living crew members have [chempath.name] in their bloodstream when the shift ends."
+
+/datum/objective/crew/chemist/chems/check_completion()
+	var/gotchems = 0
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD && H.reagents)
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(H.reagents.has_reagent(targetchem)
+					gotchems += 1
+	if(gotchems >= target_amount)
+		return 1
+	else
+		return 0
 
 /datum/objective/crew/medicaldoctor
 
@@ -316,9 +376,11 @@
 /datum/objective/crew/bartender/responsibility/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.reagents)
-			if(H.reagents.has_reagent(typesof(/datum/reagent/consumable/ethanol).id))
-				if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-					return 0
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				for(/datum/reagent/consumable/ethanol/A in typesof(/datum/reagent/consumable/ethanol))
+					if(A)
+						if(A.volume >= 5)
+							return 0
 	return 1
 
 /datum/objective/crew/assistant
