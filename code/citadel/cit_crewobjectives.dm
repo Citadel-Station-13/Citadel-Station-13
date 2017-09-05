@@ -37,7 +37,7 @@
 
 /datum/objective/crew/captain/
 
-/datum/objective/crew/captain/hat
+/datum/objective/crew/captain/hat //Ported from Goon
 	explanation_text = "Don't lose your hat."
 
 /datum/objective/crew/captain/hat/check_completion()
@@ -46,7 +46,7 @@
 	else
 		return 0
 
-/datum/objective/crew/captain/datfukkendisk
+/datum/objective/crew/captain/datfukkendisk //Ported from old Hippie
 	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
 
 /datum/objective/crew/captain/datfukkendisk/check_completion()
@@ -57,7 +57,7 @@
 
 /datum/objective/crew/headofpersonnel/
 
-/datum/objective/crew/headofpersonnel/ian
+/datum/objective/crew/headofpersonnel/ian //Ported from old Hippie
 	explanation_text = "Defend Ian at all costs, and ensure he gets delivered to Centcom at the end of the shift."
 
 /datum/objective/crew/headofpersonnel/ian/check_completion()
@@ -68,7 +68,7 @@
 		return 0
 	return 0
 
-/datum/objective/crew/headofpersonnel/datfukkendisk
+/datum/objective/crew/headofpersonnel/datfukkendisk //Ported from old Hippie
 	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
 
 /datum/objective/crew/headofpersonnel/datfukkendisk/check_completion()
@@ -92,7 +92,7 @@
 					return 0
 		return 1
 
-/datum/objective/crew/headofsecurity/datfukkendisk
+/datum/objective/crew/headofsecurity/datfukkendisk //Ported from old Hippie
 	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
 
 /datum/objective/crew/headofsecurity/datfukkendisk/check_completion()
@@ -157,7 +157,7 @@
 
 /datum/objective/crew/researchdirector/
 
-/datum/objective/crew/researchdirector/cyborgs
+/datum/objective/crew/researchdirector/cyborgs //Ported from old Hippie
 	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/researchdirector/cyborgs/New()
@@ -181,7 +181,7 @@
 
 /datum/objective/crew/roboticist/
 
-/datum/objective/crew/roboticist/cyborgs
+/datum/objective/crew/roboticist/cyborgs //Ported from old Hippie
 	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/roboticist/cyborgs/New()
@@ -209,7 +209,7 @@
 
 /datum/objective/crew/chiefmedicalofficer/
 
-/datum/objective/crew/chiefmedicalofficer/morgue
+/datum/objective/crew/chiefmedicalofficer/morgue //Ported from old Hippie
 	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
 
 /datum/objective/crew/chiefmedicalofficer/morgue/check_completion()
@@ -221,7 +221,7 @@
 
 /datum/objective/crew/geneticist
 
-/datum/objective/crew/geneticist/morgue
+/datum/objective/crew/geneticist/morgue //Ported from old Hippie
 	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
 
 /datum/objective/crew/geneticist/morgue/check_completion()
@@ -233,7 +233,7 @@
 
 /datum/objective/crew/medicaldoctor
 
-/datum/objective/crew/medicaldoctor/morgue
+/datum/objective/crew/medicaldoctor/morgue //Ported from old Hippie
 	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
 
 /datum/objective/crew/medicaldoctor/morgue/check_completion()

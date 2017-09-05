@@ -24,6 +24,8 @@
 /datum/objective/miscreant
 	explanation_text = "Something broke. Horribly. Dear god, im so sorry. Yell about this in the coderbus discussion channel of citadels discord."
 
+/*				Goon's Miscreant Objectives				*/
+
 /datum/objective/miscreant/blockade
 	explanation_text = "Try to completely block off access to an area, under the pretense that it's too dangerous."
 
@@ -50,6 +52,8 @@
 
 /datum/objective/miscreant/whiny
 	explanation_text = "Complain incessantly about every minor issue you find."
+
+/*				Citadel's Miscreant Objectives				*/
 
 /datum/objective/miscreant/immersions
 	explanation_text = "Act as out of character as you possibly can."
