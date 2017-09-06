@@ -401,13 +401,15 @@
 
 /datum/objective/crew/janitor/clean/update_explanation_text()
 	. = ..()
-	explanation_text = "Ensure that "
+	explanation_text = "Ensure that the "
 	for(var/i in 1 to areas.len)
 		var/area/A = areas[i]
 		explanation_text += "[A.name]"
-		if(i != areas.len)
-			explanation_text += ", and "
-	explanation_text += " remain[(areas.len ==1) ? "s" : ""] spotless at the end of the shift."
+		if(i != areas.len && areas.len >= 3)
+			explanation_text += ", "
+		if(i == areas.len - 1)
+			explanation_text += "and "
+	explanation_text += " [(areas.len ==1) ? "is completely" : "are [(areas.len == 2) ? "completely" : "all"]"] spotless at the end of the shift."
 
 /datum/objective/crew/janitor/clean/check_completion()
 
