@@ -226,7 +226,7 @@
 
 /datum/objective/crew/chiefmedicalofficer/chems/New()
 	. = ..()
-	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
 	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
@@ -267,7 +267,7 @@
 
 /datum/objective/crew/chemist/chems/New()
 	. = ..()
-	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagetn/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
 	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
@@ -295,7 +295,7 @@
 /datum/objective/crew/chemist/druglord/New()
 	. = ..()
 	target_amount = rand(5,50)
-	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/nicotine, /datum/reagent/drug/menthol)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/chemlist = drugs + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
 	chempath = pick(chemlist)
@@ -405,6 +405,40 @@
 	return 1
 
 /*				CIVILLIAN OBJECTIVES			*/
+
+/datum/objective/crew/botanist
+
+/datum/objective/crew/botanist/druglord //ported from old Hippie with adjustments
+	var/targetchem = "none"
+	var/datum/reagent/chempath
+	explanation_text = "Have at least (somethin broke here) harvested plants containing (report this on the development discussion channel of citadel's discord) when the shift ends."
+
+/datum/objective/crew/botanist/druglord/New()
+	. = ..()
+	target_amount = rand(3,20)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
+	var/drugs = typesof(/datum/reagent/drug) - blacklist
+	var/meds = typesof(/datum/reagent/medicine) - blacklist
+	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
+	chempath = pick(chemlist)
+	targetchem = initial(chempath.id)
+	update_explanation_text()
+
+/datum/objective/crew/botanist/druglord/update_explanation_text()
+	. = ..()
+	explanation_text = "Have at least [target_amount] harvested plants containing [initial(chempath.name)] when the shift ends."
+
+/datum/objective/crew/botanist/druglord/check_completion()
+	var/pillcount = target_amount
+	if(owner.current)
+		if(owner.current.contents)
+			for(var/obj/item/reagent_containers/food/snacks/grown/P in owner.current.get_contents())
+				if(P.reagents.has_reagent(targetchem))
+					pillcount--
+	if(pillcount <= 0)
+		return 1
+	else
+		return 0
 
 /datum/objective/crew/bartender
 
