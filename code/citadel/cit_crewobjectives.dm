@@ -370,7 +370,7 @@
 	explanation_text = "Ensure Bubblegum is dead at the end of the shift."
 
 /datum/objective/crew/shaftminer/bubblegum/check_completion()
-	for(var/mob/living/simple_animal/hostile/megafuana/bubblegum/B in GLOB.mob_list)
+	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(!B.stat == DEAD)
 			return 0
 	return 1
