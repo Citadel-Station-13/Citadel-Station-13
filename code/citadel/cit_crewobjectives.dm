@@ -397,8 +397,8 @@
 
 /datum/objective/crew/janitor/clean/New()
 	. = ..()
-	var/list/possibleareas = GLOB.teleportlocs - /area/space
-	for(var/i in 1 to rand(1,4))
+	var/list/possibleareas = GLOB.teleportlocs - /area - typesof(/area/space) - typesof(/area/lavaland) - typesof(/area/mine) - typesof(/area/ai_monitored/turret_protected) - typesof(/area/tcommsat)
+	for(var/i in 1 to rand(1,6))
 		areas |= pick_n_take(possibleareas)
 	update_explanation_text()
 
@@ -412,7 +412,7 @@
 			explanation_text += ", "
 		if(i == areas.len - 1)
 			explanation_text += "and "
-	explanation_text += " [(areas.len ==1) ? "is completely" : "are [(areas.len == 2) ? "completely" : "all"]"] spotless at the end of the shift."
+	explanation_text += " [(areas.len ==1) ? "is completely" : "are [(areas.len == 2) ? "completely" : "all"]"] clean at the end of the shift."
 
 /datum/objective/crew/janitor/clean/check_completion()
 	for(var/area/A in areas)
