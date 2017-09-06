@@ -239,7 +239,6 @@
 	explanation_text = "Have [initial(chempath.name)] in your bloodstream when the shift ends."
 
 /datum/objective/crew/chiefmedicalofficer/chems/check_completion()
-	var/gotchems = target_amount
 	if(owner.current)
 		if(!owner.current.stat == DEAD && owner.current.reagents)
 			if(owner.current.reagents.has_reagent(targetchem))
@@ -281,13 +280,36 @@
 	explanation_text = "Have [initial(chempath.name)] in your bloodstream when the shift ends."
 
 /datum/objective/crew/chemist/chems/check_completion()
-	var/gotchems = target_amount
 	if(owner.current)
 		if(!owner.current.stat == DEAD && owner.current.reagents)
 			if(owner.current.reagents.has_reagent(targetchem))
 				return 1
 	else
 		return 0
+
+/datum/objective/crew/chemist/druglord //ported from hippie, 
+	var/targetchem = "none"
+	var/datum/reagent/chempath
+	explanation_text = "Have at least (somethin broke here) pills containing (report this on the development discussion channel of citadel's discord) when the shift ends."
+
+/datum/objective/crew/chemist/druglord/New()
+	. = ..()
+	target_amount = rand(5,50)
+	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol)
+	var/drugs = typesof(/datum/reagent/drug) - blacklist
+	var/chemlist = drugs + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
+	chempath = pick(chemlist)
+	targetchem = initial(chempath.id)
+	update_explanation_text()
+
+/datum/objective/crew/chemist/druglord/update_explanation_text()
+	. = ..()
+	explanation_text = "Have at least [target_amount] pills containing [initial(chempath.name)] when the shift ends."
+
+/datum/objective/crew/chemist/druglord/check_completion()
+	if(owner.current)
+		if(owner.current.contents)
+			
 
 /datum/objective/crew/medicaldoctor
 
