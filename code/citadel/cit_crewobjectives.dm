@@ -404,7 +404,7 @@
 	explanation_text = "Ensure that the "
 	for(var/i in 1 to areas.len)
 		var/area/A = areas[i]
-		explanation_text += "[A.name]"
+		explanation_text += "[A]"
 		if(i != areas.len && areas.len >= 3)
 			explanation_text += ", "
 		if(i == areas.len - 1)
