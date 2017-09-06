@@ -970,7 +970,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
 	item = /obj/item/aiModule/syndicate
-	cost = 14
+	cost = 9
 
 /datum/uplink_item/device_tools/briefcase_launchpad
 	name = "Briefcase Launchpad"
@@ -1312,6 +1312,13 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
+	restricted_roles = list("Geneticist", "Chief Medical Officer")
+
+/datum/uplink_item/role_restricted/magillitis_serum
+	name = "Magillitis Serum Autoinjector"
+	desc = "A single-use autoinjector which contains an experimental serum that causes rapid muscular growth in basic primates."
+	item = /obj/item/reagent_containers/hypospray/magillitis
+	cost = 15
 	restricted_roles = list("Geneticist", "Chief Medical Officer")
 
 /datum/uplink_item/role_restricted/pressure_mod

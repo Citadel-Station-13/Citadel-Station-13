@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(minimap)
 	name = "Minimap"
 	init_order = INIT_ORDER_MINIMAP
-	flags_1 = SS_NO_FIRE
+	flags = SS_NO_FIRE
 	var/const/MINIMAP_SIZE = 2048
 	var/const/TILE_SIZE = 8
 

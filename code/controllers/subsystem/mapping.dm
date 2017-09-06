@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
-	flags_1 = SS_NO_FIRE
+	flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(mapping)
 		C.update_icon()
 
 /datum/controller/subsystem/mapping/Recover()
-	flags_1 |= SS_NO_INIT
+	flags |= SS_NO_INIT
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates

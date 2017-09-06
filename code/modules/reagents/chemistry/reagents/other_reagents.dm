@@ -1086,6 +1086,14 @@
 	color = "#664B63" // rgb: 102, 75, 99
 	taste_description = "metal"
 
+/datum/reagent/smart_foaming_agent //Smart foaming agent. Functions similarly to metal foam, but conforms to walls.
+	name = "Smart foaming agent"
+	id = "smart_foaming_agent"
+	description = "A agent that yields metallic foam which conforms to area boundaries when mixed with light metal and a strong acid."
+	reagent_state = SOLID
+	color = "#664B63" // rgb: 102, 75, 99
+	taste_description = "metal"
+
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"
@@ -1564,6 +1572,18 @@
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(H)
 	..()
+
+/datum/reagent/magillitis
+	name = "Magillitis"
+	id = "magillitis"
+	description = "An experimental serum which causes rapid muscular growth in basic primates. Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
+	reagent_state = LIQUID
+	color = "#00f041"
+
+/datum/reagent/magillitis/on_mob_life(mob/living/carbon/M)
+	..()
+	if(ismonkey(M) && current_cycle >= 10)
+		return M.gorillize()
 
 /datum/reagent/growthserum
 	name = "Growth Serum"

@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
-	flags_1 = SS_NO_INIT|SS_NO_FIRE
+	flags = SS_NO_INIT|SS_NO_FIRE
 	init_order = INIT_ORDER_DBCORE
 	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 
@@ -251,7 +251,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/table
 	var/position //1-based index into item data
 	var/sql_type
-	var/flags_1
+	var/flags
 	var/length
 	var/max_length
 	//types
@@ -275,7 +275,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	table = table_handler
 	position = position_handler
 	sql_type = type_handler
-	flags_1 = flag_handler
+	flags = flag_handler
 	length = length_handler
 	max_length = max_length_handler
 

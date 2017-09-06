@@ -623,6 +623,8 @@
 					continue
 				if(overrides.len && (A in overrides))
 					continue
+				if(A.IsObscured())
+					continue
 				statpanel(listed_turf.name, null, A)
 
 

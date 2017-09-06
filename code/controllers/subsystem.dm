@@ -6,7 +6,7 @@
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
 	var/priority = 50		//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
-	var/flags_1 = 0			//see MC.dm in __DEFINES Most flags_1 must be set on world start to take full effect. (You can also restart the mc to force them to process again)
+	var/flags = 0			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
 
 	//set to 0 to prevent fire() calls, mostly for admin use or subsystems that may be resumed later
 	//	use the SS_NO_FIRE flag instead for systems that never fire to keep it from even being added to the list
@@ -61,13 +61,13 @@
 //fire() seems more suitable. This is the procedure that gets called every 'wait' deciseconds.
 //Sleeping in here prevents future fires until returned.
 /datum/controller/subsystem/proc/fire(resumed = 0)
-	flags_1 |= SS_NO_FIRE
+	flags |= SS_NO_FIRE
 	throw EXCEPTION("Subsystem [src]([type]) does not fire() but did not set the SS_NO_FIRE flag. Please add the SS_NO_FIRE flag to any subsystem that doesn't fire so it doesn't get added to the processing list and waste cpu.")
 
 /datum/controller/subsystem/Destroy()
 	dequeue()
 	can_fire = 0
-	flags_1 |= SS_NO_FIRE
+	flags |= SS_NO_FIRE
 	Master.subsystems -= src
 
 
@@ -76,14 +76,14 @@
 //	(this lets us sort our run order correctly without having to re-sort the entire already sorted list)
 /datum/controller/subsystem/proc/enqueue()
 	var/SS_priority = priority
-	var/SS_flags = flags_1
+	var/SS_flags = flags
 	var/datum/controller/subsystem/queue_node
 	var/queue_node_priority
 	var/queue_node_flags
 
 	for (queue_node = Master.queue_head; queue_node; queue_node = queue_node.queue_next)
 		queue_node_priority = queue_node.queued_priority
-		queue_node_flags = queue_node.flags_1
+		queue_node_flags = queue_node.flags
 
 		if (queue_node_flags & SS_TICKER)
 			if (!(SS_flags & SS_TICKER))
@@ -170,7 +170,7 @@
 
 
 
-	if(can_fire && !(SS_NO_FIRE in flags_1))
+	if(can_fire && !(SS_NO_FIRE in flags))
 		msg = "[round(cost,1)]ms|[round(tick_usage,1)]%([round(tick_overrun,1)]%)|[round(ticks,0.1)]\t[msg]"
 	else
 		msg = "OFFLINE\t[msg]"
