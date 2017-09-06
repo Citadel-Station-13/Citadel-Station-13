@@ -394,7 +394,7 @@
 
 /datum/objective/crew/janitor/clean/New()
 	. = ..()
-	var/list/possibleareas = GLOB.teleportlocs
+	var/list/possibleareas = GLOB.teleportlocs - /area/space
 	for(var/i in 1 to rand(1,4))
 		areas |= pick_n_take(possibleareas)
 	update_explanation_text()
