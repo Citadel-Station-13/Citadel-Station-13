@@ -14,10 +14,10 @@
 	desc = "An interface between crew and the cryogenic storage oversight systems."
 	icon = 'icons/obj/cryopod.dmi'
 	icon_state = "cellconsole"
-	circuit = /obj/item/weapon/circuitboard/cryopodcontrol
+	circuit = /obj/item/circuitboard/cryopodcontrol
 	density = 0
-	interact_offline = 1
-	req_one_access = list(access_heads, access_armory) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
+	interact_offline = TRUE
+	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
 	var/mode = null
 
 	//Used for logging people entering cryosleep and important items they are carrying.
@@ -33,12 +33,12 @@
 
 	var/storage_type = "crewmembers"
 	var/storage_name = "Cryogenic Oversight Control"
-	var/allow_items = 1
+	var/allow_items = TRUE
 
 
-/obj/machinery/computer/cryopod/New()
-	..()
-	for(var/T in potential_theft_objectives)
+/obj/machinery/computer/cryopod/Initialize()
+	. = ..()
+	for(var/T in GLOB.objective_item)
 		theft_cache += new T
 
 /obj/machinery/computer/cryopod/attack_ai()
@@ -53,16 +53,16 @@
 
 	var/dat
 
-	if(!( ticker ))
+	if(!( GLOB.ticker ))
 		return
 
 	dat += "<hr/><br/><b>[storage_name]</b><br/>"
 	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=[UID()];log=1'>View storage log</a>.<br>"
+	dat += "<a href='?src=\ref[src];log=1'>View storage log</a>.<br>"
 	if(allow_items)
-		dat += "<a href='?src=[UID()];view=1'>View objects</a>.<br>"
-		dat += "<a href='?src=[UID()];item=1'>Recover object</a>.<br>"
-		dat += "<a href='?src=[UID()];allitems=1'>Recover all objects</a>.<br>"
+		dat += "<a href='?src=\ref[src];view=1'>View objects</a>.<br>"
+		dat += "<a href='?src=\ref[src];item=1'>Recover object</a>.<br>"
+		dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
 
 	user << browse(dat, "window=cryopod_console")
 	onclose(user, "cryopod_console")
@@ -134,6 +134,7 @@
 	updateUsrDialog()
 	return
 
+
 /obj/machinery/computer/cryopod/proc/dispense_item(obj/item/I)
 	if(!(I in frozen_items))
 		return
@@ -148,18 +149,16 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
 		return
 	visible_message("<span class='warning'>The console sparks, and some items fall out!</span>")
-	var/datum/effect/system/spark_spread/sparks = new
-	sparks.set_up(5, 1, src)
-	sparks.start()
+	do_sparks(10, FALSE, src)
 	for(var/obj/item/I in objective_items)
 		dispense_item(I)
 
-/obj/item/weapon/circuitboard/cryopodcontrol
+/obj/item/circuitboard/cryopodcontrol
 	name = "Circuit board (Cryogenic Oversight Console)"
 	build_path = "/obj/machinery/computer/cryopod"
 	origin_tech = "programming=1"
 
-/obj/item/weapon/circuitboard/robotstoragecontrol
+/obj/item/circuitboard/robotstoragecontrol
 	name = "Circuit board (Robotic Storage Console)"
 	build_path = "/obj/machinery/computer/cryopod/robot"
 	origin_tech = "programming=1"
@@ -192,8 +191,8 @@
 	desc = "A man-sized pod for entering suspended animation."
 	icon = 'icons/obj/cryopod.dmi'
 	icon_state = "body_scanner_0"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 
 	var/base_icon_state = "body_scanner_0"
 	var/occupied_icon_state = "body_scanner_1"
@@ -203,7 +202,6 @@
 	var/allow_occupant_types = list(/mob/living/carbon/human)
 	var/disallow_occupant_types = list()
 
-	var/mob/living/occupant = null       // Person waiting to be despawned.
 	var/orient_right = null       // Flips the sprite.
 	// 15 minutes-ish safe period before being despawned.
 	var/time_till_despawn = 9000 // This is reduced by 90% if a player manually enters cryo
@@ -216,25 +214,24 @@
 
 	// These items are preserved when the process() despawn proc occurs.
 	var/list/preserve_items = list(
-		/obj/item/weapon/hand_tele,
-		/obj/item/weapon/card/id/captains_spare,
+		/obj/item/hand_tele,
+		/obj/item/card/id/captains_spare,
 		/obj/item/device/aicard,
 		/obj/item/device/mmi,
 		/obj/item/device/paicard,
-		/obj/item/weapon/gun,
-		/obj/item/weapon/pinpointer,
+		/obj/item/gun,
+		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
 		/obj/item/areaeditor/blueprints,
 		/obj/item/clothing/head/helmet/space,
 		/obj/item/clothing/suit/space,
 		/obj/item/clothing/suit/armor,
-		/obj/item/weapon/defibrillator/compact,
-		/obj/item/weapon/reagent_containers/hypospray/CMO,
+		/obj/item/defibrillator/compact,
+		/obj/item/reagent_containers/hypospray/CMO,
 		/obj/item/clothing/accessory/medal/gold/captain,
-		/obj/item/clothing/gloves/color/black/krav_maga/sec,
-		/obj/item/weapon/storage/internal,
-		/obj/item/device/spacepod_key,
-		/obj/item/weapon/nullrod
+		/obj/item/clothing/gloves/krav_maga/sec,
+		/obj/item/storage/internal,
+		/obj/item/nullrod
 	)
 	// These items will NOT be preserved
 	var/list/do_not_preserve_items = list (
@@ -256,12 +253,12 @@
 	..()
 
 /obj/machinery/cryopod/initialize()
-	..()
+	. = ..()
 
 	find_control_computer()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent=0)
-	for(var/obj/machinery/computer/cryopod/C in areaMaster.contents) //locate() is shit, this actually works, and there's a decent chance it's faster than locate()
+	for(var/obj/machinery/computer/cryopod/C in getArea(contents)) //locate() is shit, this actually works, and there's a decent chance it's faster than locate()
 		control_computer = C
 		break
 
@@ -311,7 +308,7 @@
 #define CRYO_OBJECTIVE 2
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
-	for(var/datum/theft_objective/T in control_computer.theft_cache)
+	for(var/datum/objective_item/T in control_computer.theft_cache)
 		if(istype(I, T.typepath) && T.check_special_completion(I))
 			return CRYO_OBJECTIVE
 	for(var/T in preserve_items)
@@ -331,12 +328,12 @@
 			if(should_preserve_item(W) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
 				continue
 			for(var/obj/item/O in W.contents)
-				if(istype(O,/obj/item/weapon/tank)) //Stop eating pockets, you fuck!
+				if(istype(O,/obj/item/tank)) //Stop eating pockets, you fuck!
 					continue
 				O.forceMove(src)
 
-	for(var/obj/machinery/computer/cloning/cloner in machines)
-		for(var/datum/dna2/record/R in cloner.records)
+	for(var/obj/machinery/computer/cloning/cloner in GLOB.machines)
+		for(var/datum/data/record/R in records)
 			if(occupant.mind == locate(R.mind))
 				cloner.records.Remove(R)
 
@@ -714,7 +711,7 @@
 	desc = "An interface between crew and the robotic storage systems"
 	icon = 'icons/obj/robot_storage.dmi'
 	icon_state = "console"
-	circuit = /obj/item/weapon/circuitboard/robotstoragecontrol
+	circuit = /obj/item/circuitboard/robotstoragecontrol
 
 	storage_type = "cyborgs"
 	storage_name = "Robotic Storage Control"
@@ -756,7 +753,7 @@
 	if(istype(person_to_cryo.loc, /obj/machinery/cryopod))
 		return 0
 	var/list/free_cryopods = list()
-	for(var/obj/machinery/cryopod/P in machines)
+	for(var/obj/machinery/cryopod/P in GLOB.machines)
 		if(!P.occupant && istype(get_area(P), /area/crew_quarters/sleep))
 			free_cryopods += P
 	var/obj/machinery/cryopod/target_cryopod = null
