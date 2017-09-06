@@ -22,7 +22,7 @@
 	crewMind.announce_objectives()
 
 /datum/objective/miscreant
-	explanation_text = "Something broke. Horribly. Dear god, im so sorry. Yell about this in the coderbus discussion channel of citadels discord."
+	explanation_text = "Something broke. Horribly. Dear god, im so sorry. Yell about this in the development discussion channel of citadels discord."
 
 /*				Goon's Miscreant Objectives				*/
 

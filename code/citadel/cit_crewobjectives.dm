@@ -29,7 +29,7 @@
 	crewMind.announce_objectives()
 
 /datum/objective/crew/
-	explanation_text = "Yell on the coderbus discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"
+	explanation_text = "Yell on the development discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"
 
 /datum/objective/crew/proc/setup()
 
@@ -158,7 +158,7 @@
 /datum/objective/crew/researchdirector/
 
 /datum/objective/crew/researchdirector/cyborgs //Ported from old Hippie
-	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
+	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's development discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/researchdirector/cyborgs/New()
 	. = ..()
@@ -182,7 +182,7 @@
 /datum/objective/crew/roboticist/
 
 /datum/objective/crew/roboticist/cyborgs //Ported from old Hippie
-	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's codebus discussion channel about this) functioning cyborgs when the shift ends."
+	explanation_text = "Ensure there are at least (Yo something broke here, yell on citadel's development discussion channel about this) functioning cyborgs when the shift ends."
 
 /datum/objective/crew/roboticist/cyborgs/New()
 	. = ..()
@@ -222,7 +222,7 @@
 /datum/objective/crew/chiefmedicalofficer/chems //Ported from old Hippie with adjustments
 	var/targetchem = "none"
 	var/datum/reagent/chempath
-	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the codebus discussion channel of citadel's discord) in their bloodstream when the shift ends."
+	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the development discussion channel of citadel's discord) in their bloodstream when the shift ends."
 
 /datum/objective/crew/chiefmedicalofficer/chems/New()
 	. = ..()
@@ -268,7 +268,7 @@
 /datum/objective/crew/chemist/chems //Ported from old Hippie with adjustments
 	var/targetchem = "none"
 	var/datum/reagent/chempath
-	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the codebus discussion channel of citadel's discord) in their bloodstream when the shift ends."
+	explanation_text = "Ensure at least (yo something broke here) living crew members have (yell about this in the development discussion channel of citadel's discord) in their bloodstream when the shift ends."
 
 /datum/objective/crew/chemist/chems/New()
 	. = ..()
@@ -315,7 +315,7 @@
 /datum/objective/crew/quartermaster
 
 /datum/objective/crew/quartermaster/petsplosion
-	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
 
 /datum/objective/crew/quartermaster/petsplosion/New()
 	. = ..()
@@ -345,7 +345,7 @@
 /datum/objective/crew/cargotechnician
 
 /datum/objective/crew/cargotechnician/petsplosion
-	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
 
 /datum/objective/crew/assistant/petsplosion/New()
 	. = ..()
@@ -389,7 +389,7 @@
 /datum/objective/crew/assistant
 
 /datum/objective/crew/assistant/petsplosion
-	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the codebus discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
+	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
 
 /datum/objective/crew/assistant/petsplosion/New()
 	. = ..()
