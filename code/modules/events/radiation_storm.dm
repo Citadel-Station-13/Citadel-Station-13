@@ -17,3 +17,4 @@
 
 /datum/round_event/radiation_storm/start()
 	SSweather.run_weather("radiation storm",ZLEVEL_STATION)
+	make_maint_all_access()

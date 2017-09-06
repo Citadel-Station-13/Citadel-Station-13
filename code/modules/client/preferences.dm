@@ -1,5 +1,3 @@
-
-
 GLOBAL_LIST_EMPTY(preferences_datums)
 
 
@@ -36,6 +34,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/tgui_lock = TRUE
 	var/windowflashing = TRUE
 	var/toggles = TOGGLES_DEFAULT
+	var/db_flags
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_form = "ghost"
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
@@ -171,7 +170,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
-
+	
+	var/list/exp
 	var/list/menuoptions
 
 	//citadel code
@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("snout" in pref_species.mutant_bodyparts)
 					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=snout;task=input'>[features["snout"]]</a><BR>"
 				if("horns" in pref_species.mutant_bodyparts)
-					dat += "<b>Horns: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
+					dat += "<b>Snout: </b><a href='?_src_=prefs;preference=horns;task=input'>[features["horns"]]</a><BR>"
 				if("frills" in pref_species.mutant_bodyparts)
 					dat += "<b>Frills: </b><a href='?_src_=prefs;preference=frills;task=input'>[features["frills"]]</a><BR>"
 				if("spines" in pref_species.mutant_bodyparts)
@@ -579,6 +579,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			lastJob = job
 			if(jobban_isbanned(user, rank))
 				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+				continue
+			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
+			if(required_playtime_remaining)
+				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \] </font></td></tr>"
 				continue
 			if(!job.player_old_enough(user.client))
 				var/available_in_days = job.available_in_days(user.client)
