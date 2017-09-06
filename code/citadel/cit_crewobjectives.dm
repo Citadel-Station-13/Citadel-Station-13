@@ -416,7 +416,7 @@
 
 /datum/objective/crew/janitor/clean/check_completion()
 	for(var/area/A in areas)
-		for(var/obj/effect/decal/A in area_contents(A)
+		for(var/obj/effect/decal/cleanable/A in area_contents(A))
 			return 0
 	return 1
 
