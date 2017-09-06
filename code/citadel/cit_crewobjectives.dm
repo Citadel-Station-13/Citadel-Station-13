@@ -513,7 +513,7 @@
 /datum/objective/crew/clown/slipster/check_completion()
 	var/uniqueslips = list()
 	if(owner.current)
-		for(/obj/item/device/pda/clown/PDA in get_contents(owner.current)) //100% open for badmin abuse
+		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents()) //100% open for badmin abuse
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
 				uniqueslips |= H
 	if(uniqueslips.len >= target_amount)
