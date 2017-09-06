@@ -386,6 +386,31 @@
 				return 0
 	return 1
 
+/datum/objective/crew/janitor
+
+/datum/objective/crew/janitor/clean //ported from old Hippie
+	var/list/areas = list()
+	explanation_text = "Ensure sure that (Yo, something broke. Yell about this in citadels devlopmeent discussion channel.) remain spotless at the end of the shift."
+
+/datum/objective/crew/janitor/clean/new()
+	. = ..()
+	var/list/possibleareas = GLOB.teleportlocs
+	for(var/i in 1 to rand(1,4))
+		areas |= pick_n_take(possibleareas)
+	update_explanation_text()
+
+/datum/objective/crew/janitor/clean/update_explanation_text()
+	. = ..()
+	explanation_text = "Ensure that "
+	for(var/i in 1 to areas.len)
+		var/area/A = areas[i]
+		explanation_text += "[A.name]"
+		if(i != areas.len)
+			explanation_text += ", and "
+	explanation_text += " remain[(areas.len ==1) ? "s" : ""] spotless at the end of the shift."
+
+/datum/objective/crew/janitor/clean/check_completion()
+
 /datum/objective/crew/assistant
 
 /datum/objective/crew/assistant/petsplosion
