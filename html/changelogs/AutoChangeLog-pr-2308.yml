@@ -1,7 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - rscadd: "Penises can now climax inside someone instead of only be used for masturbating. Use passive grab to be able to spill on the floor, aggressive or higher grab to not spill a drop."
-  - rscadd: "Hexacrocin and hexacamphor now adjusts your arousal up respectively down when overdosed. Hexacrocin overdoses can force orgasms at high arousal."
-  - bugfix: "Penises can now be used for masturbation without containers again."
-  - bugfix: "Citadel chems now sends you feedback messages properly when in effect."

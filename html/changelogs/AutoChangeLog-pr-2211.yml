@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - rscadd: "Borers of all kinds now have a HUD element to see other sentient borers and their hosts. (Hosts cannot see this HUD)"

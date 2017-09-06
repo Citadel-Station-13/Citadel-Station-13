@@ -283,7 +283,7 @@ SUBSYSTEM_DEF(ticker)
 		SSshuttle.lockdown = TRUE
 
 	//initialise our cinematic screen object
-	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity=0;screen_loc="1,0";}(src)
+	cinematic = new /obj/screen{icon='icons/effects/station_explosion.dmi';icon_state="station_intact";layer=21;mouse_opacity = MOUSE_OPACITY_TRANSPARENT;screen_loc="1,0";}(src)
 
 	for(var/mob/M in GLOB.mob_list)
 		M.notransform = TRUE //stop everything moving
@@ -469,6 +469,12 @@ SUBSYSTEM_DEF(ticker)
 	var/num_shuttle_escapees = 0
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+
+/*	var/nocredits = config.no_credits_round_end
+		for(var/client/C in GLOB.clients)
+		if(!C.credits && !nocredits)
+			C.RollCredits()
+ 		C.playtitlemusic(40)*/
 
 	//Player status report
 	for(var/mob/Player in GLOB.mob_list)

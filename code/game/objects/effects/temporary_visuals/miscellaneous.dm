@@ -188,11 +188,14 @@
 		name = mimiced_atom.name
 		appearance = mimiced_atom.appearance
 		setDir(mimiced_atom.dir)
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/temp_visual/decoy/fading/Initialize(mapload, atom/mimiced_atom)
 	. = ..()
 	animate(src, alpha = 0, time = duration)
+
+/obj/effect/temp_visual/decoy/fading/threesecond
+	duration = 40
 
 /obj/effect/temp_visual/decoy/fading/fivesecond
 	duration = 50
@@ -374,7 +377,7 @@
 		M = size_matrix*0.1
 	else
 		M = size_matrix*2
-	animate(src, alpha = 20, transform = M, time = duration, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = 20, transform = M, time = duration, flags_1 = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/bleed/explode
 	icon_state = "bleed10"
@@ -394,7 +397,7 @@
 		if(warp_color)
 			color = list(warp_color, warp_color, warp_color, list(0,0,0))
 			set_light(1.4, 1, warp_color)
-		mouse_opacity = 0
+		mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		var/matrix/skew = transform
 		skew = skew.Turn(180)
 		skew = skew.Interpolate(transform, 0.5)

@@ -652,7 +652,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
 		change_view(world.view)
-
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
 
@@ -800,7 +799,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/headwear = typesof(/obj/item/clothing/head)
 	var/list/glasses = typesof(/obj/item/clothing/glasses)
 	var/list/masks = typesof(/obj/item/clothing/mask)
-	var/list/ids = typesof(/obj/item/weapon/card/id)
+	var/list/ids = typesof(/obj/item/card/id)
 
 	var/uniform_select = "<select name=\"outfit_uniform\"><option value=\"\">None</option>"
 	for(var/path in uniforms)
@@ -1156,7 +1155,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /client/proc/toggle_hub()
 	set category = "Server"
 	set name = "Toggle Hub"
-
 	world.update_hub_visibility(!GLOB.hub_visibility)
 
 	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
@@ -1211,3 +1209,52 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+	
+/client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
+	set category = "Admin"
+	set name = "Player Playtime"
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/list/msg = list()
+	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
+	for(var/client/C in GLOB.clients)
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
+	msg += "</UL></BODY></HTML>"
+	src << browse(msg.Join(), "window=Player_playtime_check")
+
+/datum/admins/proc/cmd_show_exp_panel(client/C)
+	if(!check_rights(R_ADMIN))
+		return
+	if(!C)
+		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+
+	var/list/body = list()
+	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
+	body += C.get_exp_report()
+	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
+	body += "</BODY></HTML>"
+	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
+
+/datum/admins/proc/toggle_exempt_status(client/C)
+	if(!check_rights(R_ADMIN))
+		return
+	if(!C)
+		to_chat(usr, "<span class='danger'>ERROR: Client not found.</span>")
+		return
+
+	if(!C.set_db_player_flags())
+		to_chat(usr, "<span class='danger'>ERROR: Unable read player flags from database. Please check logs.</span>")
+	var/dbflags = C.prefs.db_flags
+	var/newstate = FALSE
+	if(dbflags & DB_FLAG_EXEMPT)
+		newstate = FALSE
+	else
+		newstate = TRUE
+
+	if(C.update_flag_db(DB_FLAG_EXEMPT, newstate))
+		to_chat(usr, "<span class='danger'>ERROR: Unable to update player flags. Please check logs.</span>")
+	else
+		message_admins("[key_name_admin(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name_admin(C)]")
+		log_admin("[key_name(usr)] has [newstate ? "activated" : "deactivated"] job exp exempt status on [key_name(C)]")

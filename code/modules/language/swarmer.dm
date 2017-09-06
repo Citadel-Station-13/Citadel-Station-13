@@ -6,7 +6,7 @@
 	exclaim_verb = "tones loudly"
 	spans = list(SPAN_ROBOT)
 	key = "s"
-	flags = NO_STUTTER
+	flags_1 = NO_STUTTER
 	space_chance = 100
 	sentence_chance = 0
 	default_priority = 60

@@ -1,6 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - rscadd: "Re-added cortical borers and syndi-borers, though NOT the cortical borer random event."
-  - bugfix: "Fixed traitors being able to spam the syndi-borer summon, which annoyed ghosts."
-  - imageadd: "Added borer icons to their own dmi instead of sharing the animal mob one."

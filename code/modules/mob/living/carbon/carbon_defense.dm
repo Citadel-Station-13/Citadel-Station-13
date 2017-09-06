@@ -24,9 +24,9 @@
 
 /mob/living/carbon/get_ear_protection()
 	var/number = ..()
-	if(ears && HAS_SECONDARY_FLAG(ears, BANG_PROTECT))
+	if(ears && (ears.flags_2 & BANG_PROTECT_2))
 		number += 1
-	if(head && HAS_SECONDARY_FLAG(head, BANG_PROTECT))
+	if(head && (head.flags_2 & BANG_PROTECT_2))
 		number += 1
 	var/obj/item/organ/ears/E = getorganslot("ears")
 	if(!E)
@@ -210,7 +210,7 @@
 	..()
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, safety = 0, override = 0, tesla_shock = 0, illusion = 0, stun = TRUE)
-	if(tesla_shock && HAS_SECONDARY_FLAG(src, TESLA_IGNORE))
+	if(tesla_shock && (flags_2 & TESLA_IGNORE_2))
 		return FALSE
 	shock_damage *= siemens_coeff
 	if(dna && dna.species)
@@ -255,6 +255,8 @@
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None") || ("mam_tail" in dna.species.mutant_bodyparts)))
+				emote("wag") //lewd
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
