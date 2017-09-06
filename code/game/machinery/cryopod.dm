@@ -19,6 +19,7 @@
 	interact_offline = TRUE
 	req_one_access = list(ACCESS_HEADS, ACCESS_ARMORY) //Heads of staff or the warden can go here to claim recover items from their department that people went were cryodormed with.
 	var/mode = null
+	light_color = LIGHT_COLOR_GREEN
 
 	//Used for logging people entering cryosleep and important items they are carrying.
 	var/list/frozen_crew = list()
@@ -53,7 +54,7 @@
 
 	var/dat
 
-	if(!( GLOB.ticker ))
+	if(!( SSticker ))
 		return
 
 	dat += "<hr/><br/><b>[storage_name]</b><br/>"
@@ -193,6 +194,11 @@
 	icon_state = "body_scanner_0"
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 350
+	armor = list(melee = 30, bullet = 0, laser = 0, energy = 100, bomb = 0, bio = 100, rad = 100, fire = 30, acid = 30)
+	layer = ABOVE_WINDOW_LAYER
+	state_open = TRUE
+
 
 	var/base_icon_state = "body_scanner_0"
 	var/occupied_icon_state = "body_scanner_1"
@@ -258,7 +264,7 @@
 	find_control_computer()
 
 /obj/machinery/cryopod/proc/find_control_computer(urgent=0)
-	for(var/obj/machinery/computer/cryopod/C in getArea(contents)) //locate() is shit, this actually works, and there's a decent chance it's faster than locate()
+	for(var/obj/machinery/computer/cryopod/C in oview(5,src)) //locate() is shit, this actually works, and there's a decent chance it's faster than locate() // using R&D's search because reasons.
 		control_computer = C
 		break
 
@@ -321,8 +327,7 @@
 /obj/machinery/cryopod/proc/despawn_occupant()
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
-		occupant.unEquip(W)
-		W.forceMove(src)
+		transferItemToLoc(W,src,force)
 
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			if(should_preserve_item(W) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
@@ -333,7 +338,7 @@
 				O.forceMove(src)
 
 	for(var/obj/machinery/computer/cloning/cloner in GLOB.machines)
-		for(var/datum/data/record/R in records)
+		for(var/datum/data/record/R in active_record)
 			if(occupant.mind == locate(R.mind))
 				cloner.records.Remove(R)
 
@@ -361,14 +366,14 @@
 			W.forceMove(loc)
 
 	// Skip past any cult sacrifice objective using this person
-	if(GAMEMODE_IS_CULT && is_sacrifice_target(occupant.mind))
-		var/datum/game_mode/cult/cult_mode = ticker.mode
-		var/list/p_s_t = cult_mode.get_possible_sac_targets()
+	if(SSticker.mode.cult && is_sacrifice_target(occupant.mind))
+		var/datum/game_mode/cult/cult_mode = SSticker.mode.cult
+		var/list/p_s_t = cult_objectives.Find("sacrifice")
 		if(p_s_t.len)
-			cult_mode.sacrifice_target = pick(p_s_t)
-			for(var/datum/mind/H in ticker.mode.cult)
+			cult_mode.is_sacrifice_target = pick(p_s_t)
+			for(var/datum/mind/H in SSticker.mode.cult)
 				if(H.current)
-					to_chat(H.current, "<span class='danger'>[ticker.mode.cultdat.entity_name]</span> murmurs, <span class='cultlarge'>[occupant] is beyond your reach. Sacrifice [cult_mode.sacrifice_target.current] instead...</span></span>")
+					to_chat(H.current, "<span class='danger'>[SSticker.mode.cultdat.entity_name]</span> murmurs, <span class='cultlarge'>[occupant] is beyond your reach. Sacrifice [cult_mode.sacrifice_target.current] instead...</span></span>")
 		else
 			cult_mode.bypass_phase()
 
@@ -376,13 +381,13 @@
 	for(var/datum/objective/O in all_objectives)
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
 		// them win or lose based on cryo is silly so we remove the objective.
-		if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind)
+		if(istype(O,/datum/objective/revolution) && O.target == occupant.mind)
 			qdel(O)
 		else if(O.target && istype(O.target,/datum/mind))
 			if(O.target == occupant.mind)
 				if(O.owner && O.owner.current)
 					to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
-					O.owner.current << 'sound/ambience/alarm4.ogg'
+				//	O.owner.current << 'sound/ambience/alarm4.ogg'
 				O.target = null
 				spawn(1) //This should ideally fire after the occupant is deleted.
 					if(!O) return
@@ -410,13 +415,13 @@
 	var/announce_rank = null
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
-	for(var/datum/data/record/R in data_core.medical)
+	for(var/datum/data/record/R in GLOB.data_core.medical)
 		if((R.fields["name"] == occupant.real_name))
 			qdel(R)
-	for(var/datum/data/record/T in data_core.security)
+	for(var/datum/data/record/T in GLOB.data_core.security)
 		if((T.fields["name"] == occupant.real_name))
 			qdel(T)
-	for(var/datum/data/record/G in data_core.general)
+	for(var/datum/data/record/G in GLOB.data_core.general)
 		if((G.fields["name"] == occupant.real_name))
 			announce_rank = G.fields["rank"]
 			qdel(G)
@@ -430,7 +435,7 @@
 	control_computer.frozen_crew += "[occupant.real_name]"
 
 	var/ailist[] = list()
-	for(var/mob/living/silicon/ai/A in living_mob_list)
+	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
 		ailist += A
 	if(ailist.len)
 		var/mob/living/silicon/ai/announcer = pick(ailist)
@@ -458,85 +463,17 @@
 #undef CRYO_PRESERVE
 #undef CRYO_OBJECTIVE
 
-/obj/machinery/cryopod/attackby(var/obj/item/weapon/G as obj, var/mob/user as mob, params)
-
-	if(istype(G, /obj/item/weapon/grab))
-
-		if(occupant)
-			to_chat(user, "<span class='notice'>\The [src] is in use.</span>")
-			return
-
-		if(!ismob(G:affecting))
-			return
-
-		if(!check_occupant_allowed(G:affecting))
-			return
-
-		var/willing = null //We don't want to allow people to be forced into despawning.
-		var/mob/living/M = G:affecting
-		time_till_despawn = initial(time_till_despawn)
-
-		if(!istype(M) || M.stat == DEAD)
-			to_chat(user, "<span class='notice'>Dead people can not be put into cryo.</span>")
-			return
-
-		if(M.client)
-			if(alert(M,"Would you like to enter long-term storage?",,"Yes","No") == "Yes")
-				if(!M || !G || !G:affecting) return
-				willing = willing_time_divisor
-		else
-			willing = 1
-
-		if(willing)
-
-			visible_message("[user] starts putting [G:affecting:name] into \the [src].")
-
-			if(do_after(user, 20, target = G:affecting))
-				if(!M || !G || !G:affecting) return
-
-				if(occupant)
-					to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
-					return
-
-				take_occupant(M, willing)
-
-			else //because why the fuck would you keep going if the mob isn't in the pod
-				to_chat(user, "<span class='notice'>You stop putting [M] into the cryopod.</span>")
-				return
-
-			if(orient_right)
-				icon_state = "[occupied_icon_state]-r"
-			else
-				icon_state = occupied_icon_state
-
-			to_chat(M, "<span class='notice'>[on_enter_occupant_message]</span>")
-			to_chat(M, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
-
-			take_occupant(M, willing)
+/obj/machinery/cryopod/attackby(obj/item/I, mob/user, params)
+	return ..()
 
 
-/obj/machinery/cryopod/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-
-	if(O.loc == user) //no you can't pull things out of your ass
+/obj/machinery/cryopod/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser() || !ishuman(user) && !isrobot(user))
 		return
-	if(user.incapacitated()) //are you cuffed, dying, lying, stunned or other
-		return
-	if(get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src)) // is the mob anchored, too far away from you, or are you too far away from the source
-		return
-	if(!ismob(O)) //humans only
-		return
-	if(!check_occupant_allowed(O))
-		return
-	if(!ishuman(user) && !isrobot(user)) //No ghosts or mice putting people into the sleeper
-		return
-	if(user.loc==null) // just in case someone manages to get a closet into the blue light dimension, as unlikely as that seems
-		return
-	if(!istype(user.loc, /turf) || !istype(O.loc, /turf)) // are you in a container/closet/pod/etc?
-		return
+
 	if(occupant)
 		to_chat(user, "<span class='boldnotice'>The cryo pod is already occupied!</span>")
 		return
-
 
 	var/mob/living/L = O
 	if(!istype(L) || L.buckled)
@@ -577,7 +514,7 @@
 			if(occupant)
 				to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 				return
-			take_occupant(L, willing)
+			close_machine(target)
 		else
 			to_chat(user, "<span class='notice'>You stop [L == user ? "climbing into the cryo pod." : "putting [L] into the cryo pod."]</span>")
 
@@ -728,7 +665,7 @@
 	on_store_name = "Robotic Storage Oversight"
 	on_enter_occupant_message = "The storage unit broadcasts a sleep signal to you. Your systems start to shut down, and you enter low-power mode."
 	allow_occupant_types = list(/mob/living/silicon/robot)
-	disallow_occupant_types = list(/mob/living/silicon/robot/drone)
+//	disallow_occupant_types = list(/mob/living/silicon/robot/drone) // our drones aren't a borg meme
 
 /obj/machinery/cryopod/robot/right
 	orient_right = 1
