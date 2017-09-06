@@ -53,7 +53,13 @@
 /datum/objective/miscreant/whiny
 	explanation_text = "Complain incessantly about every minor issue you find."
 
+/datum/objective/miscreant/damage
+	explanation_text = "Cause as much property damage as possible without actually harming anyone."
+
 /*				Citadel's Miscreant Objectives				*/
 
 /datum/objective/miscreant/immersions
 	explanation_text = "Act as out of character as you possibly can."
+
+/datum/objective/miscreant/racism
+	explanation_text = "Attempt to establish superiority of your race."

@@ -162,7 +162,7 @@
 
 /datum/objective/crew/researchdirector/cyborgs/New()
 	. = ..()
-	target_amount = rand(3,20)
+	target_amount = rand(3,10)
 	update_explanation_text()
 
 /datum/objective/crew/researchdirector/cyborgs/update_explanation_text()
@@ -186,7 +186,7 @@
 
 /datum/objective/crew/roboticist/cyborgs/New()
 	. = ..()
-	target_amount = rand(3,20)
+	target_amount = rand(3,10)
 	update_explanation_text()
 
 /datum/objective/crew/roboticist/cyborgs/update_explanation_text()
@@ -311,6 +311,7 @@
 
 /datum/objective/crew/quartermaster/petsplosion/New()
 	. = ..()
+	target_amount = rand(10,30)
 	update_explanation_text()
 
 /datum/objective/crew/quartermaster/petsplosion/update_explanation_text()
@@ -338,8 +339,9 @@
 /datum/objective/crew/cargotechnician/petsplosion
 	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
 
-/datum/objective/crew/assistant/petsplosion/New()
+/datum/objective/crew/cargotechnician/petsplosion/New()
 	. = ..()
+	target_amount = rand(10,30)
 	update_explanation_text()
 
 /datum/objective/crew/cargotechnician/petsplosion/update_explanation_text()
@@ -361,6 +363,17 @@
 		return 1
 	else
 		return 0
+
+/datum/objective/crew/shaftminer
+
+/datum/objective/crew/shaftminer/bubblegum
+	explanation_text = "Ensure Bubblegum is dead at the end of the shift."
+
+/datum/objective/crew/shaftminer/bubblegum/check_completion()
+	for(var/mob/living/simple_animal/hostile/megafuana/bubblegum/B in GLOB.mob_list)
+		if(!B.stat == DEAD)
+			return 0
+	return 1
 
 /*				CIVILLIAN OBJECTIVES			*/
 
