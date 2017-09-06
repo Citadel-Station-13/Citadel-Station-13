@@ -1,0 +1,10 @@
+diff a/tools/github_webhook_processor.php b/tools/github_webhook_processor.php	(rejected hunks)
+@@ -133,8 +133,6 @@ function apisend($url, $method = 'GET', $content = NULL) {
+ 	));
+ 	if ($content)
+ 		$scontext['http']['content'] = $content;
+-	print_r($scontext);
+-	print_r($url);
+ 	
+ 	return file_get_contents($url, false, stream_context_create($scontext));
+ }
