@@ -834,7 +834,8 @@
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
-
+	
+/*
 //Till I get my snowflake only ckey lock, these are locked-locked :D
 
 /datum/sprite_accessory/mam_ears/sabresune
@@ -862,3 +863,4 @@
 	extra = 0
 	extra2 = 0
 	locked = TRUE
+*/
