@@ -326,7 +326,7 @@
 /datum/objective/crew/virologist/noinfections/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
-			if(H.z = ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.check_virus() == 2)
 					return 0
 	return 1
@@ -495,6 +495,31 @@
 		for(var/obj/effect/decal/cleanable/C in area_contents(A))
 			return 0
 	return 1
+
+/datum/objective/crew/clown
+
+/datum/objective/crew/clown/slipster //ported from old Hippie with adjustments
+	explanation_text = "Slip at least (Yell on citadel's development discussion channel if you see this) different people with your PDA, and have it on you at the end of the shift."
+
+/datum/objective/crew/clown/slipster/New()
+	. = ..()
+	target_amount = rand(5, 20)
+	update_explanation_text()
+
+/datum/objective/crew/clown/slipster/update_explanation_text()
+	. = ..()
+	explanation_text = "Slip at least [target_amount] different people with your PDA, and have it on you at the end of the shift."
+
+/datum/objective/crew/clown/slipster/check_completion()
+	var/uniqueslips = list()
+	if(owner.current)
+		for(/obj/item/device/pda/clown/PDA in get_contents(owner.current)) //100% open for badmin abuse
+			for(var/mob/living/carbon/human/H in PDA.slipvictims)
+				uniqueslips |= H
+	if(uniqueslips.len >= target_amount)
+		return 1
+	else
+		return 0
 
 /datum/objective/crew/assistant
 

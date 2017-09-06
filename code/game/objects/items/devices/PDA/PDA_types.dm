@@ -6,6 +6,7 @@
 	icon_state = "pda-clown"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 	ttone = "honk"
+	var/slipvictims = list()
 
 /obj/item/device/pda/clown/Initialize()
 	. = ..()
@@ -18,6 +19,7 @@
 		return
 	var/mob/living/carbon/human/M = S.slip_victim
 	if (istype(M) && (M.real_name != src.owner))
+		slipvictims |= M
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
