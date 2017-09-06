@@ -392,7 +392,7 @@
 	var/list/areas = list()
 	explanation_text = "Ensure sure that (Yo, something broke. Yell about this in citadels devlopmeent discussion channel.) remain spotless at the end of the shift."
 
-/datum/objective/crew/janitor/clean/new()
+/datum/objective/crew/janitor/clean/New()
 	. = ..()
 	var/list/possibleareas = GLOB.teleportlocs
 	for(var/i in 1 to rand(1,4))
