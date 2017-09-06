@@ -318,6 +318,19 @@
 	else
 		return 0
 
+/datum/objective/crew/virologist
+
+/datum/objective/crew/virologist/noinfections
+	explanation_text = "Ensure no living crew members are infected with harmful viruses at the end of the shift"
+
+/datum/objective/crew/virologist/noinfections/check_completion()
+	for(var/mob/living/carbon/human/H in GLOB.mob_list)
+		if(!H.stat == DEAD)
+			if(H.z = ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+				if(H.check_virus() == 2)
+					return 0
+	return 1
+
 /datum/objective/crew/medicaldoctor
 
 /datum/objective/crew/medicaldoctor/morgue //Ported from old Hippie
