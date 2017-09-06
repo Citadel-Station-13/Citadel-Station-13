@@ -241,8 +241,8 @@
 /datum/objective/crew/chiefmedicalofficer/chems/check_completion()
 	var/gotchems = target_amount
 	if(owner.current)
-		if(!owner.stat == DEAD && owner.reagents)
-			if(owner.reagents.has_reagent(targetchem))
+		if(!owner.current.stat == DEAD && owner.current.reagents)
+			if(owner.current.reagents.has_reagent(targetchem))
 				return 1
 	else
 		return 0
@@ -283,8 +283,8 @@
 /datum/objective/crew/chemist/chems/check_completion()
 	var/gotchems = target_amount
 	if(owner.current)
-		if(!owner.stat == DEAD && owner.reagents)
-			if(owner.reagents.has_reagent(targetchem))
+		if(!owner.current.stat == DEAD && owner.current.reagents)
+			if(owner.current.reagents.has_reagent(targetchem))
 				return 1
 	else
 		return 0
