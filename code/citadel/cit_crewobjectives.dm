@@ -287,7 +287,7 @@
 	else
 		return 0
 
-/datum/objective/crew/chemist/druglord //ported from hippie, 
+/datum/objective/crew/chemist/druglord //ported from old Hippie with adjustments
 	var/targetchem = "none"
 	var/datum/reagent/chempath
 	explanation_text = "Have at least (somethin broke here) pills containing (report this on the development discussion channel of citadel's discord) when the shift ends."
@@ -307,9 +307,16 @@
 	explanation_text = "Have at least [target_amount] pills containing [initial(chempath.name)] when the shift ends."
 
 /datum/objective/crew/chemist/druglord/check_completion()
+	var/pillcount = target_amount
 	if(owner.current)
 		if(owner.current.contents)
-			
+			for(var/item/reagent_containers/pill/P in owner.current.get_contents())
+				if(P.reagents.has_reagent(targetchem))
+					pillcount--
+	if(pillcount <= 0)
+		return 1
+	else
+		return 0
 
 /datum/objective/crew/medicaldoctor
 
