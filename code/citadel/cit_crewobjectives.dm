@@ -310,7 +310,7 @@
 	var/pillcount = target_amount
 	if(owner.current)
 		if(owner.current.contents)
-			for(var/item/reagent_containers/pill/P in owner.current.get_contents())
+			for(var/obj/item/reagent_containers/pill/P in owner.current.get_contents())
 				if(P.reagents.has_reagent(targetchem))
 					pillcount--
 	if(pillcount <= 0)
