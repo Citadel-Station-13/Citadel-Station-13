@@ -45,7 +45,7 @@
 	fancy_open = !fancy_open
 	update_icon()
 
-/obj/item/storage/fancy/content_can_dump(atom/dest_object, mob/user)
+/obj/item/storage/fancy/dump_content_at(atom/dest_object, mob/user)
 	. = ..()
 	if(.)
 		fancy_open = TRUE
@@ -222,7 +222,7 @@
 
 /obj/item/storage/fancy/rollingpapers
 	name = "rolling paper pack"
-	desc = "A pack of NanoTrasen brand rolling papers."
+	desc = "A pack of Nanotrasen brand rolling papers."
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig_paper_pack"
