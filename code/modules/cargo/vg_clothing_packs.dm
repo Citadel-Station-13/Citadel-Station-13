@@ -1,3 +1,4 @@
+/* // Can't be bothered to maintain this, mostly just memes anyway. 
 /datum/supply_pack/misc/vidyacon
 	name = "Vidya-Con Surplus Crate"
 	cost = 3250
@@ -30,4 +31,4 @@ datum/supply_pack/misc/reenactor
 					/obj/item/clothing/under/officeruniform,/obj/item/clothing/head/naziofficer,/obj/item/clothing/suit/officercoat,
 					/obj/item/clothing/head/panzer,
 					/obj/item/clothing/suit/russofurcoat,/obj/item/clothing/head/russofurhat,/obj/item/clothing/under/soviet)
-	crate_name = "historical reanactor crate"
+	crate_name = "historical reanactor crate" */

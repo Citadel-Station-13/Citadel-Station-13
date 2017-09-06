@@ -176,10 +176,10 @@
 
 /obj/item/gun_control
 	name = "turret controls"
-	icon = 'icons/obj/weapons.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "offhand"
 	w_class = WEIGHT_CLASS_HUGE
-	flags = ABSTRACT | NODROP | NOBLUDGEON | DROPDEL
+	flags_1 = ABSTRACT_1 | NODROP_1 | NOBLUDGEON_1 | DROPDEL_1
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/obj/machinery/manned_turret/turret
 

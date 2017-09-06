@@ -1,6 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `feedback` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `feedback`;
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -74,6 +71,7 @@ CREATE TABLE `ban` (
   `bantime` datetime NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) NOT NULL,
   `bantype` enum('PERMABAN','TEMPBAN','JOB_PERMABAN','JOB_TEMPBAN','ADMIN_PERMABAN','ADMIN_TEMPBAN') NOT NULL,
   `reason` varchar(2048) NOT NULL,
   `job` varchar(32) DEFAULT NULL,
@@ -119,7 +117,6 @@ CREATE TABLE `connection_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `death`
 --
@@ -136,7 +133,7 @@ CREATE TABLE `death` (
   `mapname` varchar(32) NOT NULL,
   `server_ip` int(10) unsigned NOT NULL,
   `server_port` smallint(5) unsigned NOT NULL,
-  `round_id` int(11) NOT NULL
+  `round_id` int(11) NOT NULL,
   `tod` datetime NOT NULL COMMENT 'Time of death',
   `job` varchar(32) NOT NULL,
   `special` varchar(32) DEFAULT NULL,
@@ -154,7 +151,6 @@ CREATE TABLE `death` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `feedback`
@@ -258,6 +254,21 @@ CREATE TABLE `messages` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `role_time`
+--
+
+DROP TABLE IF EXISTS `role_time`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+
+CREATE TABLE `role_time` 
+( `ckey` VARCHAR(32) NOT NULL ,
+ `job` VARCHAR(32) NOT NULL ,
+ `minutes` INT UNSIGNED NOT NULL,
+ PRIMARY KEY (`ckey`, `job`) 
+ ) ENGINE = InnoDB;
+
+--
 -- Table structure for table `player`
 --
 
@@ -272,6 +283,7 @@ CREATE TABLE `player` (
   `computerid` varchar(32) NOT NULL,
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
+  `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
@@ -289,12 +301,12 @@ CREATE TABLE `poll_option` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pollid` int(11) NOT NULL,
   `text` varchar(255) NOT NULL,
-  `percentagecalc` tinyint(1) NOT NULL DEFAULT '1',
   `minval` int(3) DEFAULT NULL,
   `maxval` int(3) DEFAULT NULL,
   `descmin` varchar(32) DEFAULT NULL,
   `descmid` varchar(32) DEFAULT NULL,
   `descmax` varchar(32) DEFAULT NULL,
+  `default_percentage_calc` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `idx_pop_pollid` (`pollid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -390,6 +402,17 @@ CREATE TABLE `round` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `schema_revision`
+--
+DROP TABLE IF EXISTS `schema_revision`;
+CREATE TABLE `schema_revision` (
+  `major` TINYINT(3) unsigned NOT NULL,
+  `minor` TINYINT(3) unsigned NOT NULL,
+  `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`major`, `minor`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -71,9 +71,9 @@
 	// this is an exercise left to others I'm afraid.  -Sayu
 	spawned = A.copy_contents_to(linked, 1, nerf_weapons = !emagged)
 	for(var/obj/machinery/M in spawned)
-		M.flags |= NODECONSTRUCT
+		M.flags_1 |= NODECONSTRUCT_1
 	for(var/obj/structure/S in spawned)
-		S.flags |= NODECONSTRUCT
+		S.flags_1 |= NODECONSTRUCT_1
 	effects = list()
 
 	spawn(30)
@@ -86,9 +86,9 @@
 				spawned += x // holocarp are not forever
 				added += x
 		for(var/obj/machinery/M in added)
-			M.flags |= NODECONSTRUCT
+			M.flags_1 |= NODECONSTRUCT_1
 		for(var/obj/structure/S in added)
-			S.flags |= NODECONSTRUCT
+			S.flags_1 |= NODECONSTRUCT_1
 
 /obj/machinery/computer/holodeck/proc/derez(var/obj/obj, var/silent = 1, var/forced = 0)
 	// Emagging a machine creates an anomaly in the derez systems.

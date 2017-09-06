@@ -234,11 +234,22 @@
 	if(limb_icon_cache[icon_render_key])
 		load_limb_from_cache()
 		return
+	//Taur code goes here, since humans just inherit this proc
+	var/is_taur = FALSE
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(("taur" in H.dna.species.mutant_bodyparts) && (H.dna.features["taur"] != "None"))
+			is_taur = TRUE
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
+
+		if(istype(BP, /obj/item/bodypart/r_leg) || istype(BP, /obj/item/bodypart/l_leg))
+			if(is_taur)
+				continue
+
 		new_limbs += BP.get_limb_icon()
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs

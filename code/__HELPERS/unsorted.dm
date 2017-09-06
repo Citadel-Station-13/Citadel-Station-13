@@ -357,6 +357,17 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/M = E/(SPEED_OF_LIGHT_SQ)
 	return M
 
+//Takes the value of energy used/produced/ect.
+//Returns a text value of that number in W, kW, MW, or GW.
+/proc/DisplayPower(var/powerused)
+	if(powerused < 1000) //Less than a kW
+		return "[powerused] W"
+	else if(powerused < 1000000) //Less than a MW
+		return "[round((powerused * 0.001),0.01)] kW"
+	else if(powerused < 1000000000) //Less than a GW
+		return "[round((powerused * 0.000001),0.001)] MW"
+	return "[round((powerused * 0.000000001),0.0001)] GW"
+
 /proc/key_name(whom, include_link = null, include_name = 1)
 	var/mob/M
 	var/client/C
@@ -605,6 +616,18 @@ Turf and target are separate in case you want to teleport some distance from a t
 	GLOB.sortedAreas.Add(src)
 	sortTim(GLOB.sortedAreas, /proc/cmp_name_asc)
 
+//Takes: Area type as a text string from a variable.
+//Returns: Instance for the area in the world.
+/proc/get_area_instance_from_text(areatext)
+	var/areainstance = null
+	if(istext(areatext))
+		areatext = text2path(areatext)
+	for(var/V in GLOB.sortedAreas)
+		var/area/A = V
+		if(A.type == areatext)
+			areainstance = V
+	return areainstance
+
 //Takes: Area type as text string or as typepath OR an instance of the area.
 //Returns: A list of all areas of that type in the world.
 /proc/get_areas(areatype, subtypes=TRUE)
@@ -797,7 +820,7 @@ GLOBAL_LIST_INIT(WALLITEMS, typecacheof(list(
 	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch, /obj/structure/sign,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/button,
 	/obj/machinery/computer/security/telescreen, /obj/machinery/embedded_controller/radio/simple_vent_controller,
-	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/item/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
 	/obj/structure/sign/picture_frame
 	)))
@@ -1218,7 +1241,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
-#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+#define DELTA_CALC max(((max(TICK_USAGE, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
 
 /proc/stoplag()
 	if (!Master || !(Master.current_runlevel & RUNLEVELS_DEFAULT))
@@ -1230,7 +1253,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 		. += round(i*DELTA_CALC)
 		sleep(i*world.tick_lag*DELTA_CALC)
 		i *= 2
-	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
+	while (TICK_USAGE > min(TICK_LIMIT_TO_RUN, Master.current_ticklimit))
 
 #undef DELTA_CALC
 
@@ -1254,6 +1277,7 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 #define RANDOM_COLOUR (rgb(rand(0,255),rand(0,255),rand(0,255)))
 
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+#define QDEL_IN_CLIENT_TIME(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE | TIMER_CLIENT_TIME)
 #define QDEL_NULL(item) qdel(item); item = null
 #define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
 #define QDEL_LIST_IN(L, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/______qdel_list_wrapper, L), time, TIMER_STOPPABLE)
@@ -1441,3 +1465,7 @@ GLOBAL_PROTECT(valid_HTTPSGet)
 	var/temp = bitfield - ((bitfield>>1)&46811) - ((bitfield>>2)&37449) //0133333 and 0111111 respectively
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
+
+//checks if a turf is in the planet z list.
+/proc/turf_z_is_planet(turf/T)
+	return GLOB.z_is_planet["[T.z]"]

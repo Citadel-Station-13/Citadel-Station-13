@@ -32,7 +32,7 @@
 	//citadel code
 	if(stat != DEAD)
 		handle_arousal()
-		
+
 	if(..()) //not dead
 		for(var/datum/mutation/human/HM in dna.mutations)
 			HM.on_life(src)
@@ -55,7 +55,9 @@
 
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
-	if((wear_suit && (wear_suit.flags & STOPSPRESSUREDMAGE)) && (head && (head.flags & STOPSPRESSUREDMAGE)))
+	if((wear_suit && (wear_suit.flags_1 & STOPSPRESSUREDMAGE_1)) && (head && (head.flags_1 & STOPSPRESSUREDMAGE_1)))
+		return ONE_ATMOSPHERE
+	if(ismob(loc))
 		return ONE_ATMOSPHERE
 	else
 		return pressure
@@ -153,7 +155,7 @@
 //END FIRE CODE
 
 
-//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+//This proc returns a number made up of the flags_1 for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
@@ -242,6 +244,9 @@
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
+	
+	if(ismob(loc))
+		return 1 //because lazy and being inside somemone insulates you from space
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -285,13 +290,13 @@
 
 /mob/living/carbon/human/has_smoke_protection()
 	if(wear_mask)
-		if(wear_mask.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(glasses)
-		if(glasses.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(glasses.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(head)
-		if(head.flags & BLOCK_GAS_SMOKE_EFFECT)
+		if(head.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			. = 1
 	if(NOBREATH in dna.species.species_traits)
 		. = 1
