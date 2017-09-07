@@ -552,7 +552,7 @@
 
 /datum/objective/crew/assistant/departmentclothes/check_completion()
 	if(owner.current)
-		if(istype(H.w_uniform, targetuniform)
+		if(istype(H.w_uniform, targetuniform))
 			return 1
 	return 0
 
