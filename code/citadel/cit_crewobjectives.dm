@@ -511,7 +511,7 @@
 	explanation_text = "Slip at least [target_amount] different people with your PDA, and have it on you at the end of the shift."
 
 /datum/objective/crew/clown/slipster/check_completion()
-	var/uniqueslips = list()
+	var/list/uniqueslips = list()
 	if(owner.current)
 		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents()) //100% open for badmin abuse
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
@@ -521,7 +521,40 @@
 	else
 		return 0
 
+/datum/objective/crew/mime
+
+/datum/objective/crew/mime/vow //ported from old Hippie
+	explanation_text = "Never break your vow of silence."
+
+/datum/objective/crew/mime/vow/check_completion()
+	var/list/say_log = owner.logging[INDIVIDUAL_SAY_LOG]
+	if(owner.current)
+		if(say_log.len > 0)
+			return 0
+	return 1
+
 /datum/objective/crew/assistant
+
+/datum/objective/crew/assistant/departmentclothes
+	var/obj/item/clothing/under/rank/targetuniform
+	explanation_text = "Be wearing a (Yo, this objective broke. report this to citadels discord via the development channel) at the end of the shift."
+
+/datum/objective/crew/assistant/departmentclothes/New()
+	. = ..()
+	var/list/blacklist = list(/obj/item/clothing/under/rank, /obj/item/clothing/under/rank/miner, /obj/item/clothing/under/rank/medical/blue, /obj/item/clothing/under/rank/medical/green, /obj/item/clothing/under/rank/medical/purple, /obj/item/clothing/under/rank/security/grey, /obj/item/clothing/under/rank/warden/grey, /obj/item/clothing/under/rank/head_of_security/grey /obj/item/clothing/under/rank/mailman, /obj/item/clothing/under/rank/psyche, /obj/item/clothing/under/rank/clown/sexy, /obj/item/clothing/under/rank/centcom_officer, /obj/item/clothing/under/rank/centcom_commander, /obj/item/clothing/under/rank/security/navyblue/russian, /obj/item/clothing/under/rank/security/blueshirt)
+	var/list/validclothes = typesof(/obj/item/clothing/under/rank) - blacklist
+	targetuniform = pick(validclothes)
+	update_explanation_text()
+
+/datum/objective/crew/assistant/departmentclothes/update_explanation_text()
+	. = ..()
+	explanation_text = "Be wearing a [targetuniform] at the end of the shift.
+
+/datum/objective/crew/assistant/departmentclothes/check_completion()
+	if(owner.current)
+		if(istype(H.w_uniform, targetuniform)
+			return 1
+	return 0
 
 /datum/objective/crew/assistant/petsplosion
 	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
