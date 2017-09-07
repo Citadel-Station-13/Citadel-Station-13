@@ -178,6 +178,7 @@
 #include "code\citadel\crew_objectives\cit_crewobjectives_cargo.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_civilian.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_command.dm"
+#include "code\citadel\crew_objectives\cit_crewobjectives_engineering.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_medical.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_science.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_security.dm"

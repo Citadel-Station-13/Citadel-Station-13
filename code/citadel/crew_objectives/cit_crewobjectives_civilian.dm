@@ -87,14 +87,14 @@
 
 /datum/objective/crew/janitor/clean/update_explanation_text()
 	. = ..()
-	explanation_text = "Ensure that the "
+	explanation_text = "Ensure that the"
 	for(var/i in 1 to areas.len)
 		var/area/A = areas[i]
-		explanation_text += "[A]"
+		explanation_text += " [A]"
 		if(i != areas.len && areas.len >= 3)
-			explanation_text += ", "
+			explanation_text += ","
 		if(i == areas.len - 1)
-			explanation_text += "and "
+			explanation_text += "and"
 	explanation_text += " [(areas.len ==1) ? "is completely" : "are [(areas.len == 2) ? "completely" : "all"]"] clean at the end of the shift."
 
 /datum/objective/crew/janitor/clean/check_completion()
@@ -163,31 +163,3 @@
 		if(istype(H.w_uniform, targetuniform))
 			return 1
 	return 0
-
-/datum/objective/crew/assistant/petsplosion
-	explanation_text = "Ensure there are at least (If you see this, yell on citadels discord in the development discussion channel) pets on the station by the end of the shift. Interpret this as you wish."
-
-/datum/objective/crew/assistant/petsplosion/New()
-	. = ..()
-	target_amount = rand(10,20)
-	update_explanation_text()
-
-/datum/objective/crew/assistant/petsplosion/update_explanation_text()
-	. = ..()
-	explanation_text = "Ensure there are at least [target_amount] pets on the station by the end of the shift. Interpret this as you wish."
-
-/datum/objective/crew/assistant/petsplosion/check_completion()
-	var/petcount = target_amount
-	for(var/mob/living/simple_animal/pet/P in GLOB.mob_list)
-		if(!P.stat == DEAD)
-			if(P.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(P)])
-				petcount--
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(!H.stat == DEAD)
-			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
-					petcount--
-	if(petcount <= 0)
-		return 1
-	else
-		return 0
