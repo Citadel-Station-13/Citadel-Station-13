@@ -527,8 +527,8 @@
 	explanation_text = "Never break your vow of silence."
 
 /datum/objective/crew/mime/vow/check_completion()
-	var/list/say_log = owner.logging[INDIVIDUAL_SAY_LOG]
 	if(owner.current)
+		var/list/say_log = owner.current.logging[INDIVIDUAL_SAY_LOG]
 		if(say_log.len > 0)
 			return 0
 	return 1
