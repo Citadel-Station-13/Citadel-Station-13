@@ -34,27 +34,27 @@
 	else
 		return 0
 
-/datum/objective/crew/chef
+/datum/objective/crew/cook
 
-/datum/objective/crew/chef/foodhoard
+/datum/objective/crew/cook/foodhoard
 	var/datum/crafting_recipe/food/targetfood
 	var/obj/item/reagent_containers/food/foodpath
 	explanation_text = "Personally deliver at least (yo something broke) (report this to the developer discussion channel in citadels discord)s to Centcom."
 
-/datum/objective/crew/chef/foodhoard/New()
+/datum/objective/crew/cook/foodhoard/New()
 	. = ..()
 	target_amount = rand(2,10)
 	var/blacklist = list(/datum/crafting_recipe/food)
 	var/possiblefoods = typesof(/datum/crafting_recipe/food) - blacklist
 	targetfood = pick(possiblefoods)
-	foodpath = targetfood.result
+	foodpath = initial(targetfood.result)
 	update_explanation_text()
 
-/datum/objective/crew/chef/foodhoard/update_explanation_text()
+/datum/objective/crew/cook/foodhoard/update_explanation_text()
 	. = ..()
 	explanation_text = "Personally deliver at least [target_amount] [initial(foodpath.name)]s to Centcom."
 
-/datum/objective/crew/chef/foodhoard/check_completion()
+/datum/objective/crew/cook/foodhoard/check_completion()
 	if(owner.current && owner.current.check_contents_for(foodpath) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return 1
 	else

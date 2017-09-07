@@ -367,7 +367,7 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(10) && GLOB.master_mode != "extended")
+		if(prob(10) && !issilicon(humanc) && GLOB.master_mode != "extended")
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
 			SSticker.generate_individual_objectives(humanc.mind)

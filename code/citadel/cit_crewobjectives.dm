@@ -1,6 +1,6 @@
 /datum/controller/subsystem/ticker/proc/generate_crew_objectives()
 	for(var/datum/mind/crewMind in SSticker.minds)
-		if(prob(10) && GLOB.master_mode != "extended")//extended is supposed to have less chaos
+		if(prob(10) && !issilicon(crewMind.current) && GLOB.master_mode != "extended")//extended is supposed to have less chaos
 			generate_miscreant_objectives(crewMind)
 		else
 			generate_individual_objectives(crewMind)
