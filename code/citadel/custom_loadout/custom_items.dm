@@ -18,3 +18,18 @@
 	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/lighter/gold
+	name = "\improper Engraved Zippo"
+	desc = "A shiny and relatively expensive zippo lighter. There's a small etched in verse on the bottom that reads, 'No Gods, No Masters, Only Man.'"
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "gold_zippo"
+	item_state = "gold_zippo"
+	w_class = WEIGHT_CLASS_TINY
+	flags_1 = CONDUCT_1
+	slot_flags = SLOT_BELT
+	var/lit = 0
+	var/fancy = TRUE
+	heat = 1500
+	resistance_flags = FIRE_PROOF
+	light_color = LIGHT_COLOR_FIRE
