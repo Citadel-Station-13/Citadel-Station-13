@@ -133,7 +133,8 @@
 
 /datum/objective/crew/assistant/departmentclothes/check_completion()
 	if(owner.current)
-		if(istype(owner.current.w_uniform, targetuniform))
+		var/mob/living/carbon/human/H = owner.current
+		if(istype(H.w_uniform, targetuniform))
 			return 1
 	return 0
 
