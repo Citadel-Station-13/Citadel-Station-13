@@ -548,7 +548,7 @@
 
 /datum/objective/crew/assistant/departmentclothes/update_explanation_text()
 	. = ..()
-	explanation_text = "Be wearing a [targetuniform] at the end of the shift.
+	explanation_text = "Be wearing a [targetuniform] at the end of the shift."
 
 /datum/objective/crew/assistant/departmentclothes/check_completion()
 	if(owner.current)
