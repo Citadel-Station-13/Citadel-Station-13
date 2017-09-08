@@ -216,6 +216,6 @@
 	if(owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H.get_idcard())
-			if(!H.get_assignment == "Assistant" && !H.get_assignment == "No id" && !H.get_assignment == "No job")
+			if(!H.get_assignment() == "Assistant" && !H.get_assignment() == "No id" && !H.get_assignment() == "No job")
 				return 1
 	return 0
