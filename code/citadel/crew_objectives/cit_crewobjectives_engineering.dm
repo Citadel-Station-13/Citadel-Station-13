@@ -23,9 +23,19 @@
 	else
 		return 0
 
+/datum/objective/crew/chiefengineer/poly
+	explanation_text = "Make sure Poly keeps his headset, and stays alive until the end of the shift."
+
+/datum/objective/crew/chiefengineer/poly/check_completion()
+	for(var/mob/living/simple_animal/pet/parrot/Poly/dumbbird in GLOB.mob_list)
+		if(!dumbbird.stat == DEAD && dumbbird.ears)
+			if(istype(dumbbird.ears, /obj/item/device/radio/headset)
+				return 1
+	return 0
+
 /datum/objective/crew/stationengineer
 
-/datum/objective/crew/stationengineer/integrity
+/datum/objective/crew/stationengineer/integrity //ported from old Hippie
 	explanation_text = "Ensure the station's integrity rating is at least (Yo something broke, yell on the development discussion channel of citadels discord about this)% when the shift ends."
 
 /datum/objective/crew/stationengineer/integrity/New()

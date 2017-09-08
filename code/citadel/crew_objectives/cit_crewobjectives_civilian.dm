@@ -44,7 +44,7 @@
 /datum/objective/crew/cook/foodhoard/New()
 	. = ..()
 	target_amount = rand(2,10)
-	var/blacklist = list(/datum/crafting_recipe/food)
+	var/blacklist = list(/datum/crafting_recipe/food, /datum/crafting_recipe/food/cak)
 	var/possiblefoods = typesof(/datum/crafting_recipe/food) - blacklist
 	targetfood = pick(possiblefoods)
 	foodpath = initial(targetfood.result)
@@ -63,7 +63,7 @@
 /datum/objective/crew/bartender
 
 /datum/objective/crew/bartender/responsibility
-	explanation_text = "Make sure nobody dies of alchohol poisoning."
+	explanation_text = "Make sure nobody dies of alcohol poisoning."
 
 /datum/objective/crew/bartender/responsibility/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
@@ -76,11 +76,16 @@
 
 /datum/objective/crew/janitor/clean //ported from old Hippie
 	var/list/areas = list()
+	var/hardmode = 0
 	explanation_text = "Ensure sure that (Yo, something broke. Yell about this in citadels devlopmeent discussion channel.) remain spotless at the end of the shift."
 
 /datum/objective/crew/janitor/clean/New()
 	. = ..()
-	var/list/possibleareas = GLOB.teleportlocs - /area - typesof(/area/space) - typesof(/area/lavaland) - typesof(/area/mine) - typesof(/area/ai_monitored/turret_protected) - typesof(/area/tcommsat)
+	if(prob(1))
+		hardmode = 1
+	var/list/blacklistnormal = list(typesof(/area/space) - typesof(/area/lavaland) - typesof(/area/mine) - typesof(/area/ai_monitored/turret_protected) - typesof(/area/tcommsat))
+	var/list/blacklisthard = list(typesof(/area/lavaland) - typesof(/area/mine))
+	var/list/possibleareas = GLOB.teleportlocs - /area - [(hardmode == 1) ? blacklisthard : blacklistnormal]
 	for(var/i in 1 to rand(1,6))
 		areas |= pick_n_take(possibleareas)
 	update_explanation_text()
@@ -96,6 +101,8 @@
 		if(i == areas.len - 1)
 			explanation_text += "and"
 	explanation_text += " [(areas.len ==1) ? "is completely" : "are [(areas.len == 2) ? "completely" : "all"]"] clean at the end of the shift."
+	if(hardmode)
+		explanation_text += " Chop-chop."
 
 /datum/objective/crew/janitor/clean/check_completion()
 	for(var/area/A in areas)
@@ -120,7 +127,7 @@
 /datum/objective/crew/clown/slipster/check_completion()
 	var/list/uniqueslips = list()
 	if(owner.current)
-		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents()) //100% open for badmin abuse
+		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents())
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
 				uniqueslips |= H
 	if(uniqueslips.len >= target_amount)
@@ -162,4 +169,53 @@
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H.w_uniform, targetuniform))
 			return 1
+	return 0
+
+/datum/objective/crew/assistant/spacesuit //ported from Goon
+	explanation_text = "Get your grubby hands on a space suit."
+
+/datum/objective/crew/assistant/spacesuit/New()
+	. = ..()
+	update_explanation_text()
+
+/datum/objective/crew/assistant/spacesuit/update_explanation_text()
+	. = ..()
+	if(owner.current)
+		var/mob/living/carbon/human/H = owner.current
+		explanation_text = "Get your "
+		if(H.dna.species.id == "avian")
+			explanation_text += "scratchy claws "
+		else if(H.dna.species.id == "mammal")
+			explanation_text += "dirty paws "
+		else if(H.dna.species.id == "aquatic")
+			explanation_text += "fishy hands "
+		else if(H.dna.species.id == "xeno")
+			explanation_text += "weird claws "
+		else if(H.dna.species.id == "guilmon")
+			explanation_text += "digital claws "
+		else if(H.dna.species.id == "lizard")
+			explanation_text += "slimy claws "
+		else if(H.dna.species.id == "datashark")
+			explanation_text += "glitchy hands "
+		else if(H.dna.species.id == "insect")
+			explanation_text += "gross grabbers "
+		else
+			explanation_text += "grubby hands "
+		explanation_text += "on a space suit."
+
+/datum/objective/crew/assistant/spacesuit/check_completion()
+	if(owner.current && owner.current.check_contents_for(typesof(/obj/item/clothing/suit/space)))
+		return 1
+	else
+		return 0
+
+/datum/objective/crew/assistant/promotion //ported from Goon
+	explanation_text = "Have a non-assistant ID registered to you at the end of the shift."
+
+/datum/objective/crew/assistant/promotion/check_completion()
+	if(owner.current)
+		var/mob/living/carbon/human/H = owner.current
+		if(istype(H.get_idcard())
+			if(!H.get_assignment == "Assistant" && !H.get_assignment == "No id" && !H.get_assignment == "No job")
+				return 1
 	return 0
