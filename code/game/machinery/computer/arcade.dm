@@ -414,8 +414,13 @@
 	if(gameStatus == ORION_STATUS_GAMEOVER)
 		dat = "<center><h1>Game Over</h1></center>"
 		dat += "Like many before you, your crew never made it to Orion, lost to space... <br><b>Forever</b>."
+<<<<<<< HEAD
 		if(settlers.len == 0)
 			dat += "<br>Your entire crew died, your ship joins the fleet of ghost-ships littering the galaxy."
+=======
+		if(!settlers.len)
+			dat += "<br>Your entire crew died, and your ship joins the fleet of ghost-ships littering the galaxy."
+>>>>>>> 35061e7... Fixes the Orion Trail machine
 		else
 			if(food <= 0)
 				dat += "<br>You ran out of food and starved."
@@ -439,6 +444,7 @@
 			name = "The Orion Trail"
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
+		dat += "<P ALIGN=Right><a href='byond://?src=\ref[src];menu=1'>May They Rest In Peace</a></P>"
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
