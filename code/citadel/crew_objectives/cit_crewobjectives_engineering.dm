@@ -27,7 +27,7 @@
 	explanation_text = "Make sure Poly keeps his headset, and stays alive until the end of the shift."
 
 /datum/objective/crew/chiefengineer/poly/check_completion()
-	for(var/mob/living/simple_animal/pet/parrot/Poly/dumbbird in GLOB.mob_list)
+	for(var/mob/living/simple_animal/parrot/Poly/dumbbird in GLOB.mob_list)
 		if(!dumbbird.stat == DEAD && dumbbird.ears)
 			if(istype(dumbbird.ears, /obj/item/device/radio/headset))
 				return 1
