@@ -22,6 +22,7 @@
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
 //add separaters by doing . += "---"
+<<<<<<< HEAD
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -62,6 +63,49 @@
 
 
 
+=======
+/datum/proc/vv_get_dropdown()
+	. = list()
+	. += "---"
+	.["Call Proc"] = "?_src_=vars;[HrefToken()];proc_call=\ref[src]"
+	.["Mark Object"] = "?_src_=vars;[HrefToken()];mark_object=\ref[src]"
+	.["Delete"] = "?_src_=vars;[HrefToken()];delete=\ref[src]"
+	.["Show VV To Player"] = "?_src_=vars;[HrefToken(TRUE)];expose=\ref[src]"
+
+
+/datum/proc/on_reagent_change()
+	return
+
+
+/client/proc/debug_variables(datum/D in world)
+	set category = "Debug"
+	set name = "View Variables"
+	//set src in world
+	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
+
+	if(!usr.client || !usr.client.holder) //The usr vs src abuse in this proc is intentional and must not be changed
+		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
+		return
+
+	if(!D)
+		return
+
+	var/islist = islist(D)
+	if (!islist && !istype(D))
+		return
+
+	var/title = ""
+	var/refid = "\ref[D]"
+	var/icon/sprite
+	var/hash
+
+	var/type = /list
+	if (!islist)
+		type = D.type
+
+
+
+>>>>>>> 84b1e3d... [s] Adds a security token to all admin hrefs (#29839)
 	if(istype(D, /atom))
 		var/atom/AT = D
 		if(AT.icon && AT.icon_state)
@@ -78,6 +122,7 @@
 	var/list/atomsnowflake = list()
 
 	if(istype(D, /atom))
+<<<<<<< HEAD
 		var/atom/A = D
 		if(isliving(A))
 			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
@@ -485,6 +530,415 @@
 		if(!check_rights(0))
 			return
 
+=======
+		var/atom/A = D
+		if(isliving(A))
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b>[D]</b></a>"
+			if(A.dir)
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
+			var/mob/living/M = A
+			atomsnowflake += {"
+				<br><font size='1'><a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=ckey'>[M.ckey ? M.ckey : "No ckey"]</a> / <a href='?_src_=vars;datumedit=[refid];varnameedit=real_name'>[M.real_name ? M.real_name : "No real name"]</a></font>
+				<br><font size='1'>
+					BRUTE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brute'>[M.getBruteLoss()]</a>
+					FIRE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=fire'>[M.getFireLoss()]</a>
+					TOXIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=toxin'>[M.getToxLoss()]</a>
+					OXY:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=oxygen'>[M.getOxyLoss()]</a>
+					CLONE:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=clone'>[M.getCloneLoss()]</a>
+					BRAIN:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=brain'>[M.getBrainLoss()]</a>
+					STAMINA:<font size='1'><a href='?_src_=vars;[HrefToken()];mobToDamage=[refid];adjustDamage=stamina'>[M.getStaminaLoss()]</a>
+				</font>
+			"}
+		else
+			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=name'><b>[D]</b></a>"
+			if(A.dir)
+				atomsnowflake += "<br><font size='1'><a href='?_src_=vars;[HrefToken()];rotatedatum=[refid];rotatedir=left'><<</a> <a href='?_src_=vars;[HrefToken()];datumedit=[refid];varnameedit=dir'>[dir2text(A.dir)]</a> <a href='?_src_=vars;rotatedatum=[refid];rotatedir=right'>>></a></font>"
+	else
+		atomsnowflake += "<b>[D]</b>"
+
+	var/formatted_type = "[type]"
+	if(length(formatted_type) > 25)
+		var/middle_point = length(formatted_type) / 2
+		var/splitpoint = findtext(formatted_type,"/",middle_point)
+		if(splitpoint)
+			formatted_type = "[copytext(formatted_type,1,splitpoint)]<br>[copytext(formatted_type,splitpoint)]"
+		else
+			formatted_type = "Type too long" //No suitable splitpoint (/) found.
+
+	var/marked
+	if(holder && holder.marked_datum && holder.marked_datum == D)
+		marked = "<br><font size='1' color='red'><b>Marked Object</b></font>"
+	var/varedited_line = ""
+	if(!islist && D.var_edited)
+		varedited_line = "<br><font size='1' color='red'><b>Var Edited</b></font>"
+
+	var/list/dropdownoptions = list()
+	if (islist)
+		dropdownoptions = list(
+			"---",
+			"Add Item" = "?_src_=vars;[HrefToken()];listadd=[refid]",
+			"Remove Nulls" = "?_src_=vars;[HrefToken()];listnulls=[refid]",
+			"Remove Dupes" = "?_src_=vars;[HrefToken()];listdupes=[refid]",
+			"Set len" = "?_src_=vars;[HrefToken()];listlen=[refid]",
+			"Shuffle" = "?_src_=vars;[HrefToken()];listshuffle=[refid]",
+			"Show VV To Player" = "?_src_=vars;[HrefToken()];expose=[refid]"
+			)
+	else
+		dropdownoptions = D.vv_get_dropdown()
+	var/list/dropdownoptions_html = list()
+
+	for (var/name in dropdownoptions)
+		var/link = dropdownoptions[name]
+		if (link)
+			dropdownoptions_html += "<option value='[link]'>[name]</option>"
+		else
+			dropdownoptions_html += "<option value>[name]</option>"
+
+	var/list/names = list()
+	if (!islist)
+		for (var/V in D.vars)
+			names += V
+	sleep(1)//For some reason, without this sleep, VVing will cause client to disconnect on certain objects.
+
+	var/list/variable_html = list()
+	if (islist)
+		var/list/L = D
+		for (var/i in 1 to L.len)
+			var/key = L[i]
+			var/value
+			if (IS_NORMAL_LIST(L) && !isnum(key))
+				value = L[key]
+			variable_html += debug_variable(i, value, 0, D)
+	else
+
+		names = sortList(names)
+		for (var/V in names)
+			if(D.can_vv_get(V))
+				variable_html += D.vv_get_var(V)
+
+	var/html = {"
+<html>
+	<head>
+		<title>[title]</title>
+		<style>
+			body {
+				font-family: Verdana, sans-serif;
+				font-size: 9pt;
+			}
+			.value {
+				font-family: "Courier New", monospace;
+				font-size: 8pt;
+			}
+		</style>
+	</head>
+	<body onload='selectTextField(); updateSearch()' onkeydown='return checkreload()' onkeyup='updateSearch()'>
+		<script type="text/javascript">
+			function checkreload() {
+				if(event.keyCode == 116){	//F5 (to refresh properly)
+					document.getElementById("refresh_link").click();
+					event.preventDefault ? event.preventDefault() : (event.returnValue = false)
+					return false;
+				}
+				return true;
+			}
+			function updateSearch(){
+				var filter_text = document.getElementById('filter');
+				var filter = filter_text.value.toLowerCase();
+				if(event.keyCode == 13){	//Enter / return
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								alist = lis\[i\].getElementsByTagName("a")
+								if(alist.length > 0){
+									location.href=alist\[0\].href;
+								}
+							}
+						}catch(err) {   }
+					}
+					return
+				}
+				if(event.keyCode == 38){	//Up arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								if( (i-1) >= 0){
+									var li_new = lis\[i-1\];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						}catch(err) {  }
+					}
+					return
+				}
+				if(event.keyCode == 40){	//Down arrow
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.style.backgroundColor == "#ffee88" )
+							{
+								if( (i+1) < lis.length){
+									var li_new = lis\[i+1\];
+									li.style.backgroundColor = "white";
+									li_new.style.backgroundColor = "#ffee88";
+									return
+								}
+							}
+						}catch(err) {  }
+					}
+					return
+				}
+
+				//This part here resets everything to how it was at the start so the filter is applied to the complete list. Screw efficiency, it's client-side anyway and it only looks through 200 or so variables at maximum anyway (mobs).
+				if(complete_list != null && complete_list != ""){
+					var vars_ol1 = document.getElementById("vars");
+					vars_ol1.innerHTML = complete_list
+				}
+				document.cookie="[refid][cookieoffset]search="+encodeURIComponent(filter);
+				if(filter == ""){
+					return;
+				}else{
+					var vars_ol = document.getElementById('vars');
+					var lis = vars_ol.getElementsByTagName("li");
+					for ( var i = 0; i < lis.length; ++i )
+					{
+						try{
+							var li = lis\[i\];
+							if ( li.innerText.toLowerCase().indexOf(filter) == -1 )
+							{
+								vars_ol.removeChild(li);
+								i--;
+							}
+						}catch(err) {   }
+					}
+				}
+				var lis_new = vars_ol.getElementsByTagName("li");
+				for ( var j = 0; j < lis_new.length; ++j )
+				{
+					var li1 = lis\[j\];
+					if (j == 0){
+						li1.style.backgroundColor = "#ffee88";
+					}else{
+						li1.style.backgroundColor = "white";
+					}
+				}
+			}
+			function selectTextField() {
+				var filter_text = document.getElementById('filter');
+				filter_text.focus();
+				filter_text.select();
+				var lastsearch = getCookie("[refid][cookieoffset]search");
+				if (lastsearch) {
+					filter_text.value = lastsearch;
+					updateSearch();
+				}
+			}
+			function loadPage(list) {
+				if(list.options\[list.selectedIndex\].value == ""){
+					return;
+				}
+				location.href=list.options\[list.selectedIndex\].value;
+			}
+			function getCookie(cname) {
+				var name = cname + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0; i<ca.length; i++) {
+					var c = ca\[i\];
+					while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					if (c.indexOf(name)==0) return c.substring(name.length,c.length);
+				}
+				return "";
+			}
+
+		</script>
+		<div align='center'>
+			<table width='100%'>
+				<tr>
+					<td width='50%'>
+						<table align='center' width='100%'>
+							<tr>
+								<td>
+									[sprite_text]
+									<div align='center'>
+										[atomsnowflake.Join()]
+									</div>
+								</td>
+							</tr>
+						</table>
+						<div align='center'>
+							<b><font size='1'>[formatted_type]</font></b>
+							[marked]
+							[varedited_line]
+						</div>
+					</td>
+					<td width='50%'>
+						<div align='center'>
+							<a id='refresh_link' href='?_src_=vars;[HrefToken()];datumrefresh=[refid]'>Refresh</a>
+							<form>
+								<select name="file" size="1"
+									onchange="loadPage(this.form.elements\[0\])"
+									target="_parent._top"
+									onmouseclick="this.focus()"
+									style="background-color:#ffffff">
+									<option value selected>Select option</option>
+									[dropdownoptions_html.Join()]
+								</select>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<hr>
+		<font size='1'>
+			<b>E</b> - Edit, tries to determine the variable type by itself.<br>
+			<b>C</b> - Change, asks you for the var type first.<br>
+			<b>M</b> - Mass modify: changes this variable for all objects of this type.<br>
+		</font>
+		<hr>
+		<table width='100%'>
+			<tr>
+				<td width='20%'>
+					<div align='center'>
+						<b>Search:</b>
+					</div>
+				</td>
+				<td width='80%'>
+					<input type='text' id='filter' name='filter_text' value='' style='width:100%;'>
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<ol id='vars'>
+			[variable_html.Join()]
+		</ol>
+		<script type='text/javascript'>
+			var vars_ol = document.getElementById("vars");
+			var complete_list = vars_ol.innerHTML;
+		</script>
+	</body>
+</html>
+"}
+	src << browse(html, "window=variables[refid];size=475x650")
+
+
+#define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
+/proc/debug_variable(name, value, level, datum/DA = null, sanitize = TRUE)
+	var/header
+	if(DA)
+		if (islist(DA))
+			var/index = name
+			if (value)
+				name = DA[name] //name is really the index until this line
+			else
+				value = DA[name]
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;[HrefToken()];listedit=\ref[DA];index=[index]'>E</a>) (<a href='?_src_=vars;[HrefToken()];listchange=\ref[DA];index=[index]'>C</a>) (<a href='?_src_=vars;[HrefToken()];listremove=\ref[DA];index=[index]'>-</a>) "
+		else
+			header = "<li style='backgroundColor:white'>(<a href='?_src_=vars;[HrefToken()];datumedit=\ref[DA];varnameedit=[name]'>E</a>) (<a href='?_src_=vars;[HrefToken()];datumchange=\ref[DA];varnamechange=[name]'>C</a>) (<a href='?_src_=vars;[HrefToken()];datummass=\ref[DA];varnamemass=[name]'>M</a>) "
+	else
+		header = "<li>"
+
+	var/item
+	if (isnull(value))
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
+
+	else if (istext(value))
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
+
+	else if (isicon(value))
+		#ifdef VARSICON
+		var/icon/I = new/icon(value)
+		var/rnd = rand(1,10000)
+		var/rname = "tmp\ref[I][rnd].png"
+		usr << browse_rsc(I, rname)
+		item = "[VV_HTML_ENCODE(name)] = (<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
+		#else
+		item = "[VV_HTML_ENCODE(name)] = /icon (<span class='value'>[value]</span>)"
+		#endif
+
+/*		else if (istype(value, /image))
+		#ifdef VARSICON
+		var/rnd = rand(1, 10000)
+		var/image/I = value
+
+		src << browse_rsc(I.icon, "tmp\ref[value][rnd].png")
+		html += "[name] = <img src=\"tmp\ref[value][rnd].png\">"
+		#else
+		html += "[name] = /image (<span class='value'>[value]</span>)"
+		#endif
+*/
+	else if (isfile(value))
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
+
+	//else if (istype(value, /client))
+	//	var/client/C = value
+	//	item = "<a href='?_src_=vars;Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [C] [C.type]"
+
+	else if (istype(value, /datum))
+		var/datum/D = value
+		if ("[D]" != "[D.type]") //if the thing as a name var, lets use it.
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D] [D.type]"
+		else
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] \ref[value]</a> = [D.type]"
+
+	else if (islist(value))
+		var/list/L = value
+		var/list/items = list()
+
+		if (L.len > 0 && !(name == "underlays" || name == "overlays" || L.len > (IS_NORMAL_LIST(L) ? 50 : 150)))
+			for (var/i in 1 to L.len)
+				var/key = L[i]
+				var/val
+				if (IS_NORMAL_LIST(L) && !isnum(key))
+					val = L[key]
+				if (!val)
+					val = key
+					key = i
+
+				items += debug_variable(key, val, level + 1, sanitize = sanitize)
+
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
+		else
+			item = "<a href='?_src_=vars;[HrefToken()];Vars=\ref[value]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
+
+	else
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>[VV_HTML_ENCODE(value)]</span>"
+
+	return "[header][item]</li>"
+
+#undef VV_HTML_ENCODE
+
+/client/proc/view_var_Topic(href, href_list, hsrc)
+	if( (usr.client != src) || !src.holder || !holder.CheckAdminHref(href, href_list))
+		return
+	if(href_list["Vars"])
+		debug_variables(locate(href_list["Vars"]))
+
+	else if(href_list["datumrefresh"])
+		var/datum/DAT = locate(href_list["datumrefresh"])
+		if(!DAT) //can't be an istype() because /client etc aren't datums
+			return
+		src.debug_variables(DAT)
+
+	else if(href_list["mob_player_panel"])
+		if(!check_rights(0))
+			return
+
+>>>>>>> 84b1e3d... [s] Adds a security token to all admin hrefs (#29839)
 		var/mob/M = locate(href_list["mob_player_panel"]) in GLOB.mob_list
 		if(!istype(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
@@ -541,6 +995,7 @@
 			return
 
 		var/mob/M = locate(href_list["regenerateicons"]) in GLOB.mob_list
+<<<<<<< HEAD
 		if(!ismob(M))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
@@ -557,6 +1012,44 @@
 			if(!check_rights(0))
 				return
 
+=======
+		if(!ismob(M))
+			to_chat(usr, "This can only be done to instances of type /mob")
+			return
+		M.regenerate_icons()
+	else if(href_list["expose"])
+		if(!check_rights(R_ADMIN, FALSE))
+			return
+		var/thing = locate(href_list["expose"])
+		if (!thing)
+			return
+		var/value = vv_get_value(VV_CLIENT)
+		if (value["class"] != VV_CLIENT)
+			return
+		var/client/C = value["value"]
+		if (!C)
+			return
+		var/prompt = alert("Do you want to grant [C] access to view this VV window? (they will not be able to edit or change anything nor open nested vv windows unless they themselves are an admin)", "Confirm", "Yes", "No")
+		if (prompt != "Yes" || !usr.client)
+			return
+		message_admins("[key_name_admin(usr)] Showed [key_name_admin(C)] a <a href='?_src_=vars;[HrefToken(TRUE)];datumrefresh=\ref[thing]'>VV window</a>")
+		log_admin("Admin [key_name(usr)] Showed [key_name(C)] a VV window of a [thing]")
+		to_chat(C, "[usr.client.holder.fakekey ? "an Administrator" : "[usr.client.key]"] has granted you access to view a View Variables window")
+		C.debug_variables(thing)
+
+
+//Needs +VAREDIT past this point
+
+	else if(check_rights(R_VAREDIT))
+
+
+	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
+
+		if(href_list["rename"])
+			if(!check_rights(0))
+				return
+
+>>>>>>> 84b1e3d... [s] Adds a security token to all admin hrefs (#29839)
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
 				to_chat(usr, "This can only be used on instances of type /mob")
