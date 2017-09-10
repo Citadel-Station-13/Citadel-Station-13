@@ -13,7 +13,7 @@
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/meds = typesof(/datum/reagent/medicine) - blacklist
-	var/chemlist = drugs + meds + /datum/reagent/anaphrodisiac + /datum/reagent/aphrodisiac
+	var/chemlist = drugs + meds
 	chempath = pick(chemlist)
 	targetchem = initial(chempath.id)
 	update_explanation_text()
