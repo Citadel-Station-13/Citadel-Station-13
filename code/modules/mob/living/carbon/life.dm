@@ -58,11 +58,23 @@
 
 	var/datum/gas_mixture/breath
 
+<<<<<<< HEAD
 	if(health <= HEALTH_THRESHOLD_CRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
 		losebreath++
 
 	//Suffocate
 	if(losebreath > 0)
+=======
+	if(!getorganslot("breathing_tube"))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
+			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
+
+		else if(health <= HEALTH_THRESHOLD_CRIT)
+			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
+
+	//Suffocate
+	if(losebreath >= 1) //You've missed a breath, take oxy damage
+>>>>>>> d4e09c9... Losebreath (#30580)
 		losebreath--
 		if(prob(10))
 			emote("gasp")
@@ -114,6 +126,10 @@
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
+<<<<<<< HEAD
+=======
+
+>>>>>>> d4e09c9... Losebreath (#30580)
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
@@ -150,7 +166,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(oxyloss)
+		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("not_enough_oxy")
