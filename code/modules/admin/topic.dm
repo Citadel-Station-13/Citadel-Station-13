@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /datum/admins/proc/CheckAdminHref(href, href_list)
 	var/auth = href_list["admin_token"]
 	. = auth && (auth == href_token || auth == GLOB.href_token)
@@ -12,8 +10,7 @@
 		log_world("UAH: [href]")
 		return TRUE
 	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
-
->>>>>>> 1204251... Fixes admin topics (#30554)
+	
 /datum/admins/Topic(href, href_list)
 	..()
 
