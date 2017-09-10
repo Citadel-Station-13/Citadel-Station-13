@@ -150,6 +150,7 @@
 	if(stat)
 		return FALSE
 
+<<<<<<< HEAD
 	var/dat = "<TT><b>Select an item:</b><br>"
 
 	if (contents.len == 0)
@@ -189,6 +190,39 @@
 
 /obj/machinery/smartfridge/Topic(var/href, var/list/href_list)
 	if(..())
+=======
+/obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "smartvend", name, 440, 550, master_ui, state)
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/obj/machinery/smartfridge/ui_data(mob/user)
+	. = list()
+
+	var/listofitems = list()
+	for (var/I in src)
+		var/atom/movable/O = I
+		if (!QDELETED(O))
+			if (listofitems[O.name])
+				listofitems[O.name]["amount"]++
+			else
+				listofitems[O.name] = list("name" = O.name, "type" = O.type, "amount" = 1)
+	sortList(listofitems)
+
+	.["contents"] = listofitems
+	.["name"] = name
+	.["isdryer"] = FALSE
+
+
+/obj/machinery/smartfridge/handle_atom_del(atom/A) // Update the UIs in case something inside gets deleted
+	SStgui.update_uis(src)
+
+/obj/machinery/smartfridge/ui_act(action, params)
+	. = ..()
+	if(.)
+>>>>>>> 5f6b2a9... Merge pull request #30519 from vuonojenmustaturska/smartfridges2electricboogaloo
 		return
 	usr.set_machine(src)
 
@@ -240,6 +274,7 @@
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_crowbar(obj/item/crowbar/C, ignore_panel = 1)
 	..()
 
+<<<<<<< HEAD
 /obj/machinery/smartfridge/drying_rack/interact(mob/user)
 	var/dat = ..()
 	if(dat)
@@ -254,6 +289,25 @@
 		toggle_drying(FALSE)
 	updateUsrDialog()
 	update_icon()
+=======
+/obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
+	. = ..()
+	.["isdryer"] = TRUE
+	.["verb"] = "Take"
+	.["drying"] = drying
+
+
+/obj/machinery/smartfridge/drying_rack/ui_act(action, params)
+	. = ..()
+	if(.)
+		update_icon() // This is to handle a case where the last item is taken out manually instead of through drying pop-out
+		return
+	switch(action)
+		if("Dry")
+			toggle_drying(FALSE)
+			return TRUE
+	return FALSE
+>>>>>>> 5f6b2a9... Merge pull request #30519 from vuonojenmustaturska/smartfridges2electricboogaloo
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
@@ -279,6 +333,7 @@
 	..()
 	if(drying)
 		if(rack_dry())//no need to update unless something got dried
+			SStgui.update_uis(src)
 			update_icon()
 
 /obj/machinery/smartfridge/drying_rack/accept_check(obj/item/O)
