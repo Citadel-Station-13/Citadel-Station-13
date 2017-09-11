@@ -22,7 +22,6 @@
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
 //add separaters by doing . += "---"
-<<<<<<< HEAD
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -63,7 +62,6 @@
 
 
 
-=======
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -122,7 +120,6 @@
 	var/list/atomsnowflake = list()
 
 	if(istype(D, /atom))
-<<<<<<< HEAD
 		var/atom/A = D
 		if(isliving(A))
 			atomsnowflake += "<a href='?_src_=vars;rename=[refid]'><b>[D]</b></a>"
@@ -530,7 +527,6 @@
 		if(!check_rights(0))
 			return
 
-=======
 		var/atom/A = D
 		if(isliving(A))
 			atomsnowflake += "<a href='?_src_=vars;[HrefToken()];rename=[refid]'><b>[D]</b></a>"
@@ -995,7 +991,6 @@
 			return
 
 		var/mob/M = locate(href_list["regenerateicons"]) in GLOB.mob_list
-<<<<<<< HEAD
 		if(!ismob(M))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
@@ -1012,7 +1007,6 @@
 			if(!check_rights(0))
 				return
 
-=======
 		if(!ismob(M))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
