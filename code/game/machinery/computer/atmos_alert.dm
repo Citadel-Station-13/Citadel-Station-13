@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
@@ -16,6 +17,26 @@
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/Destroy()
+=======
+/obj/machinery/computer/atmos_alert
+	name = "atmospheric alert console"
+	desc = "Used to monitor the station's air alarms."
+	circuit = /obj/item/circuitboard/computer/atmos_alert
+	icon_screen = "alert:0"
+	icon_keyboard = "atmos_key"
+	var/list/priority_alarms = list()
+	var/list/minor_alarms = list()
+	var/receive_frequency = 1437
+	var/datum/radio_frequency/radio_connection
+
+	light_color = LIGHT_COLOR_CYAN
+
+/obj/machinery/computer/atmos_alert/Initialize()
+	. = ..()
+	set_frequency(receive_frequency)
+
+/obj/machinery/computer/atmos_alert/Destroy()
+>>>>>>> f2c5657... Fixes initialize hints for a fair number of mobs and items (#30583)
 	SSradio.remove_object(src, receive_frequency)
 	return ..()
 
