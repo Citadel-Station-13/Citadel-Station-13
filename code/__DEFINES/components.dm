@@ -14,14 +14,11 @@
 #define COMSIG_COMPONENT_ADDED "component_added"				//when a component is added to a datum: (datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"			//before a component is removed from a datum because of RemoveComponent: (datum/component)
 #define COMSIG_PARENT_QDELETED "parent_qdeleted"				//before a datum's Destroy() is called: ()
-<<<<<<< HEAD
 #define COMSIG_ATOM_ENTERED "atom_entered"						//from base of atom/Entered(): (atom/movable, atom)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"				//from base of atom/movable/Crossed(): (atom/movable)
-=======
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from the base of atom/attackby: (obj/item, mob/living, params)
 #define COMSIG_PARENT_EXAMINE "atom_examine"                    //from the base of atom/examine: (mob)
 #define COMSIG_ATOM_ENTERED "atom_entered"                      //from base of atom/Entered(): (atom/movable, atom)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (atom/movable)
->>>>>>> 1e17bb7... Adds Archaeology Component (#30220)
