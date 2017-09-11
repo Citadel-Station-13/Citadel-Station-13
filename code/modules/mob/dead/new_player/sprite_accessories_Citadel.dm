@@ -13,6 +13,10 @@
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
 
+/***************** Alphabetical Order please ***************
+************* Keep it to Ears, Tails, Tails Animated *********/
+
+
 /datum/sprite_accessory/tails/lizard/none
 	name = "None"
 	icon_state = "None"
@@ -31,17 +35,17 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	
 /datum/sprite_accessory/tails/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/bear
-	name = "Bear"
-	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/ears/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -56,6 +60,12 @@
 	icon_state = "catbig"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/cow
+	name = "Cow"
+	icon_state = "cow"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	gender_specific = 1
+	
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -174,6 +184,24 @@
 	name = "Otusian"
 	icon_state = "otie"
 
+/datum/sprite_accessory/ears/human/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
+	
+/datum/sprite_accessory/tails/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
@@ -219,7 +247,7 @@
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	extra = TRUE
+	hasinner = 1
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
@@ -230,24 +258,6 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/tails/human/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/tails_animated/human/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/ears/human/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
-    hasinner= 1
-    icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 *************** Body Parts ****************
@@ -328,22 +338,23 @@
 	icon_state = "ailurus"
 	extra = TRUE
 
-/datum/sprite_accessory/mam_tails/bear
-	name = "Bear"
-	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	
+/datum/sprite_accessory/mam_tails/bear
+	name = "Bear"
+	icon_state = "bear"
+
+/datum/sprite_accessory/mam_tails_animated/bear
+	name = "Bear"
+	icon_state = "bear"
 
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
 	icon_state = "cat"
 	hasinner = 1
-	icon = 'icons/mob/mutant_bodyparts.dmi'
-
+	
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -352,6 +363,11 @@
 	name = "Cat, Big"
 	icon_state = "catbig"
 
+/datum/sprite_accessory/mam_ears/cow
+	name = "Cow"
+	icon_state = "cow"
+	gender_specific = 1
+	
 /datum/sprite_accessory/mam_tail/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -394,7 +410,7 @@
 /datum/sprite_accessory/mam_ears/fox
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = 0
+	hasinner = 1
 
 /datum/sprite_accessory/mam_tails/fox
 	name = "Fox"
@@ -502,6 +518,19 @@
 	name = "Otusian"
 	icon_state = "otie"
 
+/datum/sprite_accessory/mam_ears/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+	
+/datum/sprite_accessory/mam_tails/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/mam_tails_animated/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+
 /datum/sprite_accessory/mam_ears/sergal
 	name = "Sergal"
 	icon_state = "sergal"
@@ -569,7 +598,7 @@
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	extra = TRUE
+	hasinner = 1
 
 /datum/sprite_accessory/mam_tails/wolf
 	name = "Wolf"
@@ -578,19 +607,6 @@
 /datum/sprite_accessory/mam_tails_animated/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-
-/datum/sprite_accessory/mam_tails/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-
-/datum/sprite_accessory/mam_tails_animated/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-
-/datum/sprite_accessory/mam_ears/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
-    hasinner= 1
 
 /******************************************
 ************ Body Markings ****************
