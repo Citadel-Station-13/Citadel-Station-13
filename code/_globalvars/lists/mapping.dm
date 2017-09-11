@@ -4,7 +4,6 @@
 #define Z_WEST 4
 
 GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
-<<<<<<< HEAD
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
@@ -54,7 +53,6 @@ GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can 
 GLOBAL_LIST_EMPTY(sortedAreas)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
-=======
 GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
 
@@ -106,4 +104,3 @@ GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can 
 GLOBAL_LIST_EMPTY(sortedAreas)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
