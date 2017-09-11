@@ -22,7 +22,6 @@
 
 //please call . = ..() first and append to the result, that way parent items are always at the top and child items are further down
 //add separaters by doing . += "---"
-<<<<<<< HEAD
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -486,7 +485,6 @@
 		if(!check_rights(0))
 			return
 
-=======
 /datum/proc/vv_get_dropdown()
 	. = list()
 	. += "---"
@@ -951,7 +949,6 @@
 		if(!check_rights(0))
 			return
 
->>>>>>> 6656ce6... Gives admins the ability to show a read only vv window to a player (#30463)
 		var/mob/M = locate(href_list["mob_player_panel"]) in GLOB.mob_list
 		if(!istype(M))
 			to_chat(usr, "This can only be used on instances of type /mob")
@@ -1008,7 +1005,6 @@
 			return
 
 		var/mob/M = locate(href_list["regenerateicons"]) in GLOB.mob_list
-<<<<<<< HEAD
 		if(!ismob(M))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
@@ -1025,7 +1021,6 @@
 			if(!check_rights(0))
 				return
 
-=======
 		if(!ismob(M))
 			to_chat(usr, "This can only be done to instances of type /mob")
 			return
@@ -1062,7 +1057,6 @@
 			if(!check_rights(0))
 				return
 
->>>>>>> 6656ce6... Gives admins the ability to show a read only vv window to a player (#30463)
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
 				to_chat(usr, "This can only be used on instances of type /mob")
