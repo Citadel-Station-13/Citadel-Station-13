@@ -6,7 +6,6 @@
 	icon_state = "close"
 	anchored = TRUE
 	density = TRUE
-<<<<<<< HEAD
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -101,8 +100,6 @@
 	suit_type = /obj/item/clothing/suit/space/hardsuit/ert/med
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
-
-=======
 	max_integrity = 250
 
 	var/obj/item/clothing/suit/space/suit = null
@@ -200,7 +197,6 @@
 	mask_type = /obj/item/clothing/mask/breath
 	storage_type = /obj/item/tank/internals/emergency_oxygen/double
 
->>>>>>> d4d898f... Regularizes resisting out of containers (#30412)
 /obj/machinery/suit_storage_unit/Initialize()
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
@@ -262,7 +258,6 @@
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
-<<<<<<< HEAD
 		open_machine()
 		dump_contents()
 		new /obj/item/stack/sheet/metal (loc, 2)
@@ -413,7 +408,6 @@
 
 	return ..()
 
-=======
 		open_machine()
 		dump_contents()
 		new /obj/item/stack/sheet/metal (loc, 2)
