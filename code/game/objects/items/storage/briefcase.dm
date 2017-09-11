@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
@@ -56,7 +55,6 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)
 	new /obj/item/suppressor/specialoffer(src)
 
-=======
 /obj/item/storage/briefcase
 	name = "briefcase"
 	desc = "It's made of AUTHENTIC faux-leather and has a price-tag still attached. Its owner must be a real professional."
@@ -113,5 +111,3 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/ammo_box/magazine/sniper_rounds/soporific(src)
 	new /obj/item/suppressor/specialoffer(src)
-
->>>>>>> 65bb0a3... Ammo cleanup (#30361)
