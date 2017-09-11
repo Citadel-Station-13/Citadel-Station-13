@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /proc/power_failure()
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
@@ -61,7 +60,7 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
-=======
+	
 /proc/power_failure()
 	priority_announce("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure", 'sound/ai/poweroff.ogg')
 	for(var/obj/machinery/power/smes/S in GLOB.machines)
@@ -124,12 +123,10 @@
 		S.update_icon()
 		S.power_change()
 	for(var/area/A in world)
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
 		if(!istype(A, /area/space) && !istype(A, /area/shuttle) && !istype(A, /area/arrival))
 			A.power_light = TRUE
 			A.power_equip = TRUE
 			A.power_environ = TRUE
-<<<<<<< HEAD
 			A.power_change()
 
 /proc/power_restore_quick()
@@ -143,8 +140,6 @@
 		S.output_attempt = 1
 		S.update_icon()
 		S.power_change()
-
-=======
 			A.power_change()
 
 /proc/power_restore_quick()
@@ -158,5 +153,3 @@
 		S.output_attempt = 1
 		S.update_icon()
 		S.power_change()
-
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
