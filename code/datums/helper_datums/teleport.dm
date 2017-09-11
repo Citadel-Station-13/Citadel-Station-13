@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //wrapper
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	var/datum/teleport/instant/science/D = new
@@ -207,7 +206,6 @@
 			continue
 
 		if(extended_safety_checks)
-=======
 //wrapper
 /proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
 	var/datum/teleport/instant/science/D = new
@@ -416,7 +414,6 @@
 			continue
 
 		if(extended_safety_checks)
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
 			if(istype(F, /turf/open/lava)) //chasms aren't /floor, and so are pre-filtered
 				var/turf/open/lava/L = F
 				if(!L.is_safe())
