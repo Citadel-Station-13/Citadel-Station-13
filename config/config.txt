@@ -337,9 +337,6 @@ MINUTE_TOPIC_LIMIT 100
 
 ## Send a message to IRC when starting a new game
 #IRC_ANNOUNCE_NEW_GAME
-<<<<<<< HEAD
-=======
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
->>>>>>> 84b1e3d... [s] Adds a security token to all admin hrefs (#29839)
