@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -186,7 +186,6 @@
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
 
-=======
 /obj/machinery/implantchair
 	name = "mindshield implanter"
 	desc = "Used to implant occupants with mindshield implants."
@@ -375,4 +374,3 @@
 	message_admins("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	log_game("[key_name_admin(user)] brainwashed [key_name_admin(C)] with objective '[objective]'.")
 	return 1
->>>>>>> d4d898f... Regularizes resisting out of containers (#30412)
