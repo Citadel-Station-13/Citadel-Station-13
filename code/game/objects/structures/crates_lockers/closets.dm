@@ -388,11 +388,7 @@
 
 /obj/structure/closet/AltClick(mob/user)
 	..()
-<<<<<<< HEAD
-	if(!user.canUseTopic(src, be_close=TRUE))
-=======
 	if(!user.canUseTopic(src, be_close=TRUE) || !isturf(loc))
->>>>>>> 847e426... Fixes lockers alt-click (#30544)
 		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(opened || !secure)
