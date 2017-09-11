@@ -388,7 +388,7 @@
 		bomb_set = FALSE
 		detonation_timer = null
 		set_security_level(previous_level)
-		for(var/obj/item/pinpointer/syndicate/S in GLOB.pinpointer_list)
+		for(var/obj/item/pinpointer/nuke/syndicate/S in GLOB.pinpointer_list)
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
