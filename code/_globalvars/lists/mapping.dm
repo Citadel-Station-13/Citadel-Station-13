@@ -1,106 +1,47 @@
-#define Z_NORTH 1
-#define Z_EAST 2
-#define Z_SOUTH 3
-#define Z_WEST 4
+/*
+The /tg/ codebase currently requires you to have 11 z-levels of the same size dimensions.
+z-level order is important, the order you put them in inside the map config.dm will determine what z level number they are assigned ingame.
+Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
 
-GLOBAL_LIST_INIT(cardinals, list(NORTH, SOUTH, EAST, WEST))
-GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+current as of 2016/6/2
+z1 = station
+z2 = centcom
+z5 = mining
+Everything else = randomized space
+Last space-z level = empty
+*/
 
-//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("3" = 30, "4" = 70).
-//Spacing should be a reliable method of getting rid of a body -- Urist.
-//Go away Urist, I'm restoring this to the longer list. ~Errorage
-GLOBAL_LIST_INIT(accessable_z_levels, list(1,3,4,5,6,7)) //Keep this to six maps, repeating z-levels is ok if needed
+#define CROSSLINKED 2
+#define SELFLOOPING 1
+#define UNAFFECTED 0
 
-GLOBAL_LIST(global_map)
-	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
-	//Resulting sector map looks like
-	//|_1_|_4_|
-	//|_5_|_3_|
-	//
-	//1 - SS13
-	//4 - Derelict
-	//3 - AI satellite
-	//5 - empty space
+#define MAIN_STATION "Main Station"
+#define CENTCOM "CentCom"
+#define EMPTY_AREA_1 "Empty Area 1"
+#define EMPTY_AREA_2 "Empty Area 2"
+#define MINING "Mining Asteroid"
+#define EMPTY_AREA_3 "Empty Area 3"
+#define EMPTY_AREA_4 "Empty Area 4"
+#define EMPTY_AREA_5 "Empty Area 5"
+#define EMPTY_AREA_6 "Empty Area 6"
+#define EMPTY_AREA_7 "Empty Area 7"
+#define EMPTY_AREA_8 "Empty Area 8"
+#define AWAY_MISSION "Away Mission"
 
-GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
-GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
-GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
-GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
+//for modifying jobs
+#define MAP_JOB_CHECK if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return; }
+#define MAP_JOB_CHECK_BASE if(SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) { return ..(); }
+#define MAP_REMOVE_JOB(jobpath) /datum/job/##jobpath/map_check() { return (SSmapping.config.map_name != JOB_MODIFICATION_MAP_NAME) && ..() }
 
-GLOBAL_LIST_EMPTY(wizardstart)
-GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
-GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
-GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
-GLOBAL_LIST_EMPTY(tdome1)
-GLOBAL_LIST_EMPTY(tdome2)
-GLOBAL_LIST_EMPTY(tdomeobserve)
-GLOBAL_LIST_EMPTY(tdomeadmin)
-GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
-GLOBAL_LIST_EMPTY(blobstart)
-GLOBAL_LIST_EMPTY(secequipment)
-GLOBAL_LIST_EMPTY(deathsquadspawn)
-GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
-GLOBAL_LIST_EMPTY(ruin_landmarks)
+//zlevel defines, can be overridden for different maps in the appropriate _maps file.
+#define ZLEVEL_CENTCOM 1
+#define ZLEVEL_STATION_PRIMARY 2
+#define ZLEVEL_MINING 5
+#define ZLEVEL_LAVALAND 5
+#define ZLEVEL_EMPTY_SPACE 12
+#define ZLEVEL_TRANSIT 11
 
-	//away missions
-GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
+#define ZLEVEL_SPACEMIN 3
+#define ZLEVEL_SPACEMAX 12
 
-	//used by jump-to-area etc. Updated by area/updateName()
-GLOBAL_LIST_EMPTY(sortedAreas)
-
-GLOBAL_LIST_EMPTY(all_abstract_markers)
-GLOBAL_LIST_INIT(alldirs, list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-GLOBAL_LIST_INIT(diagonals, list(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
-
-//This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
-//(Exceptions: extended, sandbox and nuke) -Errorage
-//Was list("3" = 30, "4" = 70).
-//Spacing should be a reliable method of getting rid of a body -- Urist.
-//Go away Urist, I'm restoring this to the longer list. ~Errorage
-GLOBAL_LIST_INIT(accessable_z_levels, list(1,3,4,5,6,7)) //Keep this to six maps, repeating z-levels is ok if needed
-
-GLOBAL_LIST_INIT(station_z_levels, list(ZLEVEL_STATION_PRIMARY))
-
-GLOBAL_LIST(global_map)
-	//list/global_map = list(list(1,5),list(4,3))//an array of map Z levels.
-	//Resulting sector map looks like
-	//|_1_|_4_|
-	//|_5_|_3_|
-	//
-	//1 - SS13
-	//4 - Derelict
-	//3 - AI satellite
-	//5 - empty space
-
-GLOBAL_LIST_EMPTY(landmarks_list)				//list of all landmarks created
-GLOBAL_LIST_EMPTY(start_landmarks_list)			//list of all spawn points created
-GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security spawns
-GLOBAL_LIST_EMPTY(generic_event_spawns)			//list of all spawns for events
-
-GLOBAL_LIST_EMPTY(wizardstart)
-GLOBAL_LIST_EMPTY(newplayer_start)
-GLOBAL_LIST_EMPTY(prisonwarp)	//prisoners go to these
-GLOBAL_LIST_EMPTY(holdingfacility)	//captured people go here
-GLOBAL_LIST_EMPTY(xeno_spawn)//Aliens spawn at these.
-GLOBAL_LIST_EMPTY(tdome1)
-GLOBAL_LIST_EMPTY(tdome2)
-GLOBAL_LIST_EMPTY(tdomeobserve)
-GLOBAL_LIST_EMPTY(tdomeadmin)
-GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
-GLOBAL_LIST_EMPTY(blobstart)
-GLOBAL_LIST_EMPTY(secequipment)
-GLOBAL_LIST_EMPTY(deathsquadspawn)
-GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
-GLOBAL_LIST_EMPTY(ruin_landmarks)
-
-	//away missions
-GLOBAL_LIST_EMPTY(awaydestinations)	//a list of landmarks that the warpgate can take you to
-
-	//used by jump-to-area etc. Updated by area/updateName()
-GLOBAL_LIST_EMPTY(sortedAreas)
-
-GLOBAL_LIST_EMPTY(all_abstract_markers)
+#define SPACERUIN_MAP_EDGE_PAD 15
