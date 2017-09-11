@@ -21,10 +21,8 @@ SUBSYSTEM_DEF(persistence)
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
-<<<<<<< HEAD
 	secret_satchels = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
 	if(!fexists(secret_satchels))
-=======
 	var/placed_satchel = 0
 	var/path
 	var/obj/item/storage/backpack/satchel/flat/F = new()
@@ -59,7 +57,6 @@ SUBSYSTEM_DEF(persistence)
 				F.z = ZLEVEL_STATION_PRIMARY
 				path = text2path(old_secret_satchels[pos]["saved_obj"])
 	if(!ispath(path))
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
 		return
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
 	var/list/json = list()
