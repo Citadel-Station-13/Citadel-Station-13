@@ -21,6 +21,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /datum/round_event/immovable_rod/start()
 	var/startside = pick(GLOB.cardinals)
+<<<<<<< HEAD
 	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION)
 	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION)
 	new /obj/effect/immovablerod(startT, endT)
@@ -31,6 +32,18 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
 	throwforce = 100
+=======
+	var/turf/startT = spaceDebrisStartLoc(startside, ZLEVEL_STATION_PRIMARY)
+	var/turf/endT = spaceDebrisFinishLoc(startside, ZLEVEL_STATION_PRIMARY)
+	new /obj/effect/immovablerod(startT, endT)
+
+/obj/effect/immovablerod
+	name = "immovable rod"
+	desc = "What the fuck is that?"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "immrod"
+	throwforce = 100
+>>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
 	density = TRUE
 	anchored = TRUE
 	var/z_original = 0

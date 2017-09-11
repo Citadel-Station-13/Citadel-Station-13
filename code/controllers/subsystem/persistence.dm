@@ -21,8 +21,45 @@ SUBSYSTEM_DEF(persistence)
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
+<<<<<<< HEAD
 	secret_satchels = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
 	if(!fexists(secret_satchels))
+=======
+	var/placed_satchel = 0
+	var/path
+	var/obj/item/storage/backpack/satchel/flat/F = new()
+	if(fexists("data/npc_saves/SecretSatchels.sav")) //legacy compatability to convert old format to new
+		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
+		var/sav_text
+		secret_satchels[SSmapping.config.map_name] >> sav_text
+		fdel("data/npc_saves/SecretSatchels.sav")
+		if(sav_text)
+			old_secret_satchels = splittext(sav_text,"#")
+			if(old_secret_satchels.len >= 20)
+				var/satchel_string = pick_n_take(old_secret_satchels)
+				var/list/chosen_satchel = splittext(satchel_string,"|")
+				if(chosen_satchel.len == 3)
+					F.x = text2num(chosen_satchel[1])
+					F.y = text2num(chosen_satchel[2])
+					F.z = ZLEVEL_STATION_PRIMARY
+					path = text2path(chosen_satchel[3])
+	else
+		var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
+		if(!fexists(json_file))
+			return
+		var/list/json = list()
+		json = json_decode(file2text(json_file))
+		old_secret_satchels = json["data"]
+		if(old_secret_satchels.len)
+			if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
+				var/pos = rand(1, old_secret_satchels.len)
+				old_secret_satchels.Cut(pos, pos+1)
+				F.x = old_secret_satchels[pos]["x"]
+				F.y = old_secret_satchels[pos]["y"]
+				F.z = ZLEVEL_STATION_PRIMARY
+				path = text2path(old_secret_satchels[pos]["saved_obj"])
+	if(!ispath(path))
+>>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
 		return
 	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
 	var/list/json = list()
@@ -46,7 +83,7 @@ SUBSYSTEM_DEF(persistence)
 			placed_satchel++
 
 	var/list/free_satchels = list()
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION)))) //Nontrivially expensive but it's roundstart only
+	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
 		if(isfloorturf(T) && !istype(T, /turf/open/floor/plating/))
 			free_satchels += new /obj/item/storage/backpack/satchel/flat/secret(T)
 			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchel) >= (50 - old_secret_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
@@ -142,7 +179,7 @@ SUBSYSTEM_DEF(persistence)
 	var/list/satchels = list()
 	for(var/A in new_secret_satchels)
 		var/obj/item/storage/backpack/satchel/flat/F = A
-		if(QDELETED(F) || F.z != ZLEVEL_STATION || F.invisibility != INVISIBILITY_MAXIMUM)
+		if(QDELETED(F) || F.z != ZLEVEL_STATION_PRIMARY || F.invisibility != INVISIBILITY_MAXIMUM)
 			continue
 		var/list/savable_obj = list()
 		for(var/obj/O in F)
