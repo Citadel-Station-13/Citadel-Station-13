@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
 	name = "Invisible Wall"
 	desc = "The mime's performance transmutates into physical reality."
@@ -139,7 +138,6 @@
 	name = "Guide to Advanced Mimery Vol 2"
 	desc = "There aren't any words written..."
 	icon_state ="bookmime"
-=======
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall
 	name = "Invisible Wall"
 	desc = "The mime's performance transmutates into physical reality."
@@ -280,4 +278,3 @@
 	name = "Guide to Advanced Mimery Vol 2"
 	desc = "There aren't any words written..."
 	icon_state ="bookmime"
->>>>>>> 65bb0a3... Ammo cleanup (#30361)
