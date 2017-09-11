@@ -14,6 +14,9 @@
 	ranged = 1
 	ranged_message = "stares"
 	ranged_cooldown_time = 30
+	ranged_telegraph = "gathers energy and stares at *TARGET*!"
+	ranged_telegraph_sound = 'sound/magic/magic_missile.ogg'
+	ranged_telegraph_time = 7
 	throw_message = "does nothing against the hard shell of"
 	vision_range = 2
 	speed = 3
@@ -70,15 +73,47 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attacktext = "impales"
+	ranged_telegraph = "fixates on *TARGET* as its eye shines blue!"
+	ranged_telegraph_sound = 'sound/magic/tail_swing.ogg'
+	ranged_telegraph_time = 5
 	a_intent = INTENT_HARM
 	speak_emote = list("telepathically cries")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
 	stat_attack = UNCONSCIOUS
 	movement_type = FLYING
 	robust_searching = 1
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
 	loot = list()
 	butcher_results = list(/obj/item/ore/diamond = 2, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 1)
+
+/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/make_shiny()
+	if(prob(75))
+		name = "magmawing watcher"
+		real_name = name
+		desc = "When raised very close to lava, some watchers adapt to the extreme heat and change coloration. Such watchers are known as magmawings and use intense heat as their tool for hunting and defense."
+		icon_state = "watcher_magmawing"
+		icon_living = "watcher_magmawing"
+		icon_aggro = "watcher_magmawing"
+		icon_dead = "watcher_magmawing_dead"
+		maxHealth = 215 //Compensate for the lack of slowdown on projectiles with a bit of extra health
+		health = 215
+		projectiletype = /obj/item/projectile/temp/basilisk/magmawing
+	else
+		name = "icewing watcher"
+		real_name = name
+		desc = "Very rarely, some watchers will eke out an existence far from heat sources. In the absence of warmth, their wings will become papery and turn to an icy blue; these watchers are fragile but much quicker to fire their trademark freezing blasts."
+		icon_state = "watcher_icewing"
+		icon_living = "watcher_icewing"
+		icon_aggro = "watcher_icewing"
+		icon_dead = "watcher_icewing_dead"
+		maxHealth = 150
+		health = 150
+		ranged_cooldown_time = 20
+		butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/bone = 1) //No sinew; the wings are too fragile to be usable
+
+/obj/item/projectile/temp/basilisk/magmawing
+	name = "scorching blast"
+	icon_state = "gaussstrong"
+	temperature = 500 //Heats you up!
 
 /mob/living/simple_animal/hostile/asteroid/basilisk/watcher/tendril
 	fromtendril = TRUE

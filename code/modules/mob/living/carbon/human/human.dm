@@ -613,7 +613,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-		threatcount += 3
+		threatcount += 6
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
@@ -643,6 +643,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
@@ -651,7 +652,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
-	..()
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)

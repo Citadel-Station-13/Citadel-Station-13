@@ -15,6 +15,10 @@
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
+	
+	if(stat == DEAD)
+		to_chat(src, "<span class='warning'>There's no light in your life... by that I mean you're dead.</span>")
+		return
 	if(light_on)
 		set_light(0)
 	else
