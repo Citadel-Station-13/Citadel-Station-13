@@ -222,11 +222,8 @@ function handle_pr($payload) {
 			else {
 				$action = 'merged';
 				checkchangelog($payload, true, true);
-<<<<<<< HEAD
-=======
 				update_pr_balance($payload);
 				$validated = TRUE; //pr merged events always get announced.
->>>>>>> af44a7a... Adds Features per Fix tracking (#29897)
 			}
 			break;
 		default:
