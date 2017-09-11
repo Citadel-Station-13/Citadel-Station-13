@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-
 /*
  * GAMEMODES (by Rastaf0)
  *
@@ -592,7 +589,6 @@
 	for(var/V in station_goals)
 		var/datum/station_goal/G = V
 		G.print_result()
-=======
 
 
 /*
@@ -1153,4 +1149,3 @@
 	for(var/V in station_goals)
 		var/datum/station_goal/G = V
 		G.print_result()
->>>>>>> 10a3238... Makes the station Z level into a list instead of a single define (#30297)
