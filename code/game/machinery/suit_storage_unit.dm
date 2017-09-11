@@ -583,7 +583,6 @@
 
 	return ..()
 
->>>>>>> d4d898f... Regularizes resisting out of containers (#30412)
 /obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
