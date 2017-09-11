@@ -212,7 +212,7 @@
 	E.calculated_projectile_vars = calculate_projectile_angle_and_pixel_offsets(user, params)
 	E.direction_track(user, targeted_atom)
 	E.checkfire(targeted_atom, user)
-=======
+	
 /////// MANNED TURRET ////////
 
 /obj/machinery/manned_turret
