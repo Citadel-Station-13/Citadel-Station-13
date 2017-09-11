@@ -47,29 +47,6 @@
 			<BR>
 <<<<<<< HEAD
 
-			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];secrets=anime'>Chinese Cartoons</A><BR>
-			<A href='?src=\ref[src];secrets=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];secrets=guns'>Summon Guns</A><BR>
-			<A href='?src=\ref[src];secrets=magic'>Summon Magic</A><BR>
-			<A href='?src=\ref[src];secrets=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];secrets=onlyme'>There can only be me!</A><BR>
-			<A href='?src=\ref[src];secrets=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];secrets=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-=======
-<<<<<<< HEAD
-
 =======
 >>>>>>> 6e5ebf9c41fc97d5ee0daf4fd22536844438ace0
 			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
@@ -91,7 +68,6 @@
 			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
->>>>>>> 84b1e3d... [s] Adds a security token to all admin hrefs (#29839)
 			<BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
@@ -551,12 +527,6 @@
 			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only One")
 			usr.client.only_one_delayed()
 			sound_to_playing_players('sound/misc/highlander_delayed.ogg')
-
-		if("onlyme")
-			if(!check_rights(R_FUN))
-				return
-			SSblackbox.add_details("admin_secrets_fun_used","There Can Be Only Me")
-			only_me()
 
 		if("maint_access_brig")
 			if(!check_rights(R_DEBUG))
