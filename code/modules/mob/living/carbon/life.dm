@@ -72,7 +72,7 @@
 			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
-			loc_as_obj.handle_internal_lifeform(src,0)
+loc_as_obj.handle_internal_lifeform(src,0)
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
@@ -117,7 +117,9 @@
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
-		adjustOxyLoss(1)
+		var/oxy_loss = min(losebreath, 1)
+		adjustOxyLoss(oxy_loss)
+		losebreath -= oxy_loss
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
