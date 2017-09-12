@@ -9,8 +9,12 @@ SUBSYSTEM_DEF(persistence)
 
 	var/list/obj/structure/chisel_message/chisel_messages = list()
 	var/list/saved_messages = list()
+<<<<<<< HEAD
 
 	var/trophy_sav
+=======
+	var/list/saved_modes = list(1,2,3)
+>>>>>>> 8503bf3... Round weighting now reduces the chances of repeating a recently played mode (#30522)
 	var/list/saved_trophies = list()
 
 /datum/controller/subsystem/persistence/Initialize()
@@ -18,6 +22,7 @@ SUBSYSTEM_DEF(persistence)
 	LoadPoly()
 	LoadChiselMessages()
 	LoadTrophies()
+	LoadRecentModes()
 	..()
 
 /datum/controller/subsystem/persistence/proc/LoadSatchels()
@@ -108,6 +113,17 @@ SUBSYSTEM_DEF(persistence)
 
 	SetUpTrophies(saved_trophies.Copy())
 
+/datum/controller/subsystem/persistence/proc/LoadRecentModes()
+	var/json_file = file("data/RecentModes.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	if(!json)
+		return
+	saved_modes = json["data"]
+
+
 /datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
 	for(var/A in GLOB.trophy_cases)
 		var/obj/structure/displaycase/trophy/T = A
@@ -137,6 +153,7 @@ SUBSYSTEM_DEF(persistence)
 	CollectChiselMessages()
 	CollectSecretSatchels()
 	CollectTrophies()
+	CollectRoundtype()
 
 /datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
 	var/list/satchels = list()
@@ -192,4 +209,18 @@ SUBSYSTEM_DEF(persistence)
 		data["path"] = T.showpiece.type
 		data["message"] = T.trophy_message
 		data["placer_key"] = T.placer_key
+<<<<<<< HEAD
 		saved_trophies += list(data)
+=======
+		saved_trophies += list(data)
+
+/datum/controller/subsystem/persistence/proc/CollectRoundtype()
+	saved_modes[3] = saved_modes[2]
+	saved_modes[2] = saved_modes[1]
+	saved_modes[1] = SSticker.mode.config_tag
+	var/json_file = file("data/RecentModes.json")
+	var/list/file_data = list()
+	file_data["data"] = saved_modes
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(file_data))
+>>>>>>> 8503bf3... Round weighting now reduces the chances of repeating a recently played mode (#30522)
