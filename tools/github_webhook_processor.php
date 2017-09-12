@@ -15,12 +15,17 @@
  */
 
 
+<<<<<<< HEAD:tools/github_webhook_processor.php
 //CONFIG START (all defaults are random examples, do change them)
 //Use single quotes for config options that are strings.
  
 //Github lets you have it sign the message with a secret that you can validate. This prevents people from faking events.
 //This var should match the secret you configured for this webhook on github.
 //This is required as otherwise somebody could trick the script into leaking the api key.
+=======
+//CONFIGS ARE IN SECRET.PHP, THESE ARE JUST DEFAULTS!
+
+>>>>>>> bdbc6cf... Merge pull request #30644 from MrStonedOne/patch-423:tools/WebhookProcessor/github_webhook_processor.php
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 
 $trackPRBalance = true;	//set this to false to disable PR balance tracking
@@ -52,6 +57,7 @@ set_error_handler(function($severity, $message, $file, $line) {
 set_exception_handler(function($e) {
 	header('HTTP/1.1 500 Internal Server Error');
 	echo "Error on line {$e->getLine()}: " . htmlSpecialChars($e->getMessage());
+	file_put_contents('htwebhookerror.log', "Error on line {$e->getLine()}: " . $e->getMessage(), FILE_APPEND);
 	die();
 });
 $rawPost = NULL;
