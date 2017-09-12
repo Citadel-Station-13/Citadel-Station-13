@@ -46,26 +46,6 @@
 	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
-	..()
-	SSair.atmos_machinery += src
-	set_frequency(frequency)
-
-/obj/machinery/air_sensor/Destroy()
-	SSair.atmos_machinery -= src
-	SSradio.remove_object(src, frequency)
-<<<<<<< HEAD
-	return ..()
-
-/////////////////////////////////////////////////////////////
-// GENERAL AIR CONTROL (a.k.a atmos computer)
-/////////////////////////////////////////////////////////////
-
-/obj/machinery/computer/atmos_control
-=======
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
-
-/obj/machinery/air_sensor/Initialize()
 	. = ..()
 	SSair.atmos_machinery += src
 	set_frequency(frequency)
@@ -80,7 +60,6 @@
 /////////////////////////////////////////////////////////////
 
 /obj/machinery/computer/atmos_control
->>>>>>> f2c5657... Fixes initialize hints for a fair number of mobs and items (#30583)
 	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
