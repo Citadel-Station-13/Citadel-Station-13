@@ -108,6 +108,8 @@ GLOBAL_PROTECT(config_dir)
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+	var/note_fresh_days
+	var/note_stale_days
 
 	var/use_exp_tracking = FALSE
 	var/use_exp_restrictions_heads = FALSE
@@ -484,6 +486,10 @@ GLOBAL_PROTECT(config_dir)
 					showircname = 1
 				if("see_own_notes")
 					see_own_notes = 1
+				if("note_fresh_days")
+					note_fresh_days = text2num(value)
+				if("note_stale_days")
+					note_stale_days = text2num(value)
 				if("soft_popcap")
 					soft_popcap = text2num(value)
 				if("hard_popcap")
