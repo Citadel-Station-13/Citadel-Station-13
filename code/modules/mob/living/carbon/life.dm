@@ -65,11 +65,11 @@
 		else if(health <= HEALTH_THRESHOLD_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
-	//Suffocate
+ 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
-		if(prob(10))
-			emote("gasp")
+ 		if(prob(10))
+ 			emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 loc_as_obj.handle_internal_lifeform(src,0)
@@ -117,9 +117,7 @@ loc_as_obj.handle_internal_lifeform(src,0)
 	if(!breath || (breath.total_moles() == 0) || !lungs)
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
-		var/oxy_loss = min(losebreath, 1)
-		adjustOxyLoss(oxy_loss)
-		losebreath -= oxy_loss
+		adjustOxyLoss(1)
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
