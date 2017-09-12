@@ -21,21 +21,6 @@
 //These are all default settings that are described in secret.php
 $hookSecret = '08ajh0qj93209qj90jfq932j32r';
 $apiKey = '209ab8d879c0f987d06a09b9d879c0f987d06a09b9d8787d0a089c';
-<<<<<<< HEAD:tools/github_webhook_processor.php
-
-//servers to announce PRs to.
-$servers = array();
-/*
-$servers[0] = array();
-$servers[0]['address'] = 'game.tgstation13.org';
-$servers[0]['port'] = '1337';
-$servers[0]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
-$servers[1] = array();
-$servers[1]['address'] = 'game.tgstation13.org';
-$servers[1]['port'] = '2337';
-$servers[1]['comskey'] = '89aj90cq2fm0amc90832mn9rm90';
-*/
-=======
 $repoOwnerAndName = "tgstation/tgstation";
 $servers = array();
 $enable_live_tracking = true;
@@ -50,7 +35,6 @@ $validation_count = 1;
 $tracked_branch = 'master';
 
 require_once 'secret.php';
->>>>>>> 07c1c4a... Gives the webhook processor the ability to self update (#30448):tools/WebhookProcessor/github_webhook_processor.php
 
 //CONFIG END
 set_error_handler(function($severity, $message, $file, $line) {
