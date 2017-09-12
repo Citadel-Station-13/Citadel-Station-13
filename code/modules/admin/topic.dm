@@ -9,10 +9,10 @@
 		message_admins("Debug mode enabled, call not blocked. Please ask your coders to review this round's logs.")
 		log_world("UAH: [href]")
 		return TRUE
-log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
+	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
 
 /datum/admins/Topic(href, href_list)
-	..()
+..()
 
 	if(usr.client != src.owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
