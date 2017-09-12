@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #define WELDER_FUEL_BURN_INTERVAL 13
 
 /* Tools!
@@ -789,7 +788,6 @@
 	user.put_in_active_hand(cutjaws)
 
 #undef WELDER_FUEL_BURN_INTERVAL
-=======
 #define WELDER_FUEL_BURN_INTERVAL 13
 
 /* Tools!
@@ -1580,4 +1578,3 @@
 	user.put_in_active_hand(cutjaws)
 
 #undef WELDER_FUEL_BURN_INTERVAL
->>>>>>> a479714... Adds missing span-endings (#30494)
