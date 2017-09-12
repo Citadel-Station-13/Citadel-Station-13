@@ -65,14 +65,14 @@
 		else if(health <= HEALTH_THRESHOLD_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
 
- 	//Suffocate
-	if(losebreath >= 1) //You've missed a breath, take oxy damage
-		losebreath--
- 		if(prob(10))
- 			emote("gasp")
+//Start of a breath chain, calls breathe()
+/mob/living/carbon/handle_breathing(times_fired)
+	if((times_fired % 4) == 2 || failed_last_breath)
+		breathe() //Breathe per 4 ticks, unless suffocating
+	else
 		if(istype(loc, /obj/))
-			var/obj/loc_as_obj = loc
-loc_as_obj.handle_internal_lifeform(src,0)
+			var/obj/location_as_object = loc
+			location_as_object.handle_internal_lifeform(src,0)
 	else
 		//Breathe from internal
 		breath = get_breath_from_internal(BREATH_VOLUME)
