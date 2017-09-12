@@ -7,7 +7,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = HEAR_1
-<<<<<<< HEAD
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=60, MAT_GLASS=30)
 	force = 2
