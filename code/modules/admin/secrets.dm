@@ -45,6 +45,7 @@
 		dat += {"
 			<B>Fun Secrets</B><BR>
 			<BR>
+<<<<<<< HEAD
 
 			<A href='?src=\ref[src];secrets=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secrets=monkey'>Turn all humans into monkeys</A><BR>
@@ -66,6 +67,27 @@
 			<A href='?src=\ref[src];secrets=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secrets=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+=======
+			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
+			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
+>>>>>>> d39246b... No
 			<BR>
 			<A href='?src=\ref[src];secrets=changebombcap'>Change bomb cap</A><BR>
 			<A href='?src=\ref[src];secrets=masspurrbation'>Mass Purrbation</A><BR>
