@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /obj/machinery/computer/atmos_alert
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
