@@ -1,0 +1,7 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - rscadd: "Added Horse and Cow tails"
+  - rscadd: "Added Sergal ears and tails."
+  - tweak: "Fennec Ears a bit cleaner"
+  - tweak: "TRUE/FALSE in Citadel Sprites"
