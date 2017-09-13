@@ -1,226 +1,230 @@
-SUBSYSTEM_DEF(persistence)
-	name = "Persistence"
-	init_order = INIT_ORDER_PERSISTENCE
-	flags = SS_NO_FIRE
-	var/list/satchel_blacklist 		= list() //this is a typecache
-	var/list/new_secret_satchels 	= list() //these are objects
-	var/list/old_secret_satchels 	= list()
+//wrapper
+/proc/do_teleport(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	var/datum/teleport/instant/science/D = new
+	if(D.start(arglist(args)))
+		return 1
+	return 0
 
-	var/list/obj/structure/chisel_message/chisel_messages = list()
-	var/list/saved_messages = list()
+/datum/teleport
+	var/atom/movable/teleatom //atom to teleport
+	var/atom/destination //destination to teleport to
+	var/precision = 0 //teleport precision
+	var/datum/effect_system/effectin //effect to show right before teleportation
+	var/datum/effect_system/effectout //effect to show right after teleportation
+	var/soundin //soundfile to play before teleportation
+	var/soundout //soundfile to play after teleportation
+	var/force_teleport = 1 //if false, teleport will use Move() proc (dense objects will prevent teleportation)
 
-	var/list/saved_trophies = list()
+/datum/teleport/proc/start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+	if(!initTeleport(arglist(args)))
+		return 0
+	return 1
 
-/datum/controller/subsystem/persistence/Initialize()
-	LoadSatchels()
-	LoadPoly()
-	LoadChiselMessages()
-	LoadTrophies()
+/datum/teleport/proc/initTeleport(ateleatom,adestination,aprecision,afteleport,aeffectin,aeffectout,asoundin,asoundout)
+	if(!setTeleatom(ateleatom))
+		return 0
+	if(!setDestination(adestination))
+		return 0
+	if(!setPrecision(aprecision))
+		return 0
+	setEffects(aeffectin,aeffectout)
+	setForceTeleport(afteleport)
+	setSounds(asoundin,asoundout)
+	return 1
+
+//must succeed
+/datum/teleport/proc/setPrecision(aprecision)
+	if(isnum(aprecision))
+		precision = aprecision
+		return 1
+	return 0
+
+//must succeed
+/datum/teleport/proc/setDestination(atom/adestination)
+	if(istype(adestination))
+		destination = adestination
+		return 1
+	return 0
+
+//must succeed in most cases
+/datum/teleport/proc/setTeleatom(atom/movable/ateleatom)
+	if(istype(ateleatom, /obj/effect) && !istype(ateleatom, /obj/effect/dummy/chameleon))
+		qdel(ateleatom)
+		return 0
+	if(istype(ateleatom))
+		teleatom = ateleatom
+		return 1
+	return 0
+
+//custom effects must be properly set up first for instant-type teleports
+//optional
+/datum/teleport/proc/setEffects(datum/effect_system/aeffectin=null,datum/effect_system/aeffectout=null)
+	effectin = istype(aeffectin) ? aeffectin : null
+	effectout = istype(aeffectout) ? aeffectout : null
+	return 1
+
+//optional
+/datum/teleport/proc/setForceTeleport(afteleport)
+	force_teleport = afteleport
+	return 1
+
+//optional
+/datum/teleport/proc/setSounds(asoundin=null,asoundout=null)
+	soundin = isfile(asoundin) ? asoundin : null
+	soundout = isfile(asoundout) ? asoundout : null
+	return 1
+
+//placeholder
+/datum/teleport/proc/teleportChecks()
+	return 1
+
+/datum/teleport/proc/playSpecials(atom/location,datum/effect_system/effect,sound)
+	if(location)
+		if(effect)
+			INVOKE_ASYNC(src, .proc/do_effect, location, effect)
+		if(sound)
+			INVOKE_ASYNC(src, .proc/do_sound, location, sound)
+
+/datum/teleport/proc/do_effect(atom/location, datum/effect_system/effect)
+	src = null
+	effect.attach(location)
+	effect.start()
+
+/datum/teleport/proc/do_sound(atom/location, sound)
+	src = null
+	playsound(location, sound, 60, 1)
+
+//do the monkey dance
+/datum/teleport/proc/doTeleport()
+
+	var/turf/destturf
+	var/turf/curturf = get_turf(teleatom)
+	destturf = get_teleport_turf(get_turf(destination), precision)
+
+	if(!destturf || !curturf || destturf.is_transition_turf())
+		return 0
+
+	var/area/A = get_area(curturf)
+	if(A.noteleport)
+		return 0
+
+	playSpecials(curturf,effectin,soundin)
+	if(force_teleport)
+		teleatom.forceMove(destturf)
+		if(ismegafauna(teleatom))
+			message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+		playSpecials(destturf,effectout,soundout)
+	else
+		if(teleatom.Move(destturf))
+			playSpecials(destturf,effectout,soundout)
+			if(ismegafauna(teleatom))
+				message_admins("[teleatom] [ADMIN_FLW(teleatom)] has teleported from [ADMIN_COORDJMP(curturf)] to [ADMIN_COORDJMP(destturf)].")
+	return 1
+
+/datum/teleport/proc/teleport()
+	if(teleportChecks())
+		return doTeleport()
+	return 0
+
+/datum/teleport/instant //teleports when datum is created
+
+	start(ateleatom, adestination, aprecision=0, afteleport=1, aeffectin=null, aeffectout=null, asoundin=null, asoundout=null)
+		if(..())
+			if(teleport())
+				return 1
+		return 0
+
+
+/datum/teleport/instant/science
+
+/datum/teleport/instant/science/setEffects(datum/effect_system/aeffectin,datum/effect_system/aeffectout)
+	if(aeffectin==null || aeffectout==null)
+		var/datum/effect_system/spark_spread/aeffect = new
+		aeffect.set_up(5, 1, teleatom)
+		effectin = effectin || aeffect
+		effectout = effectout || aeffect
+		return 1
+	else
+		return ..()
+
+/datum/teleport/instant/science/setPrecision(aprecision)
 	..()
+	if(istype(teleatom, /obj/item/storage/backpack/holding))
+		precision = rand(1,100)
 
-/datum/controller/subsystem/persistence/proc/LoadSatchels()
-	var/placed_satchel = 0
-	var/path
-	var/obj/item/storage/backpack/satchel/flat/F = new()
-	if(fexists("data/npc_saves/SecretSatchels.sav")) //legacy compatability to convert old format to new
-		var/savefile/secret_satchels = new /savefile("data/npc_saves/SecretSatchels.sav")
-		var/sav_text
-		secret_satchels[SSmapping.config.map_name] >> sav_text
-		fdel("data/npc_saves/SecretSatchels.sav")
-		if(sav_text)
-			old_secret_satchels = splittext(sav_text,"#")
-			if(old_secret_satchels.len >= 20)
-				var/satchel_string = pick_n_take(old_secret_satchels)
-				var/list/chosen_satchel = splittext(satchel_string,"|")
-				if(chosen_satchel.len == 3)
-					F.x = text2num(chosen_satchel[1])
-					F.y = text2num(chosen_satchel[2])
-					F.z = ZLEVEL_STATION_PRIMARY
-					path = text2path(chosen_satchel[3])
-	else
-		var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
-		if(!fexists(json_file))
-			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
-		old_secret_satchels = json["data"]
-		if(old_secret_satchels.len)
-			if(old_secret_satchels.len >= 20) //guards against low drop pools assuring that one player cannot reliably find his own gear.
-				var/pos = rand(1, old_secret_satchels.len)
-				old_secret_satchels.Cut(pos, pos+1)
-				F.x = old_secret_satchels[pos]["x"]
-				F.y = old_secret_satchels[pos]["y"]
-				F.z = ZLEVEL_STATION_PRIMARY
-				path = text2path(old_secret_satchels[pos]["saved_obj"])
-	if(!ispath(path))
-		return
-	if(isfloorturf(F.loc) && !istype(F.loc, /turf/open/floor/plating/))
-		F.hide(1)
-	new path(F)
-	placed_satchel++
-	var/list/free_satchels = list()
-	for(var/turf/T in shuffle(block(locate(TRANSITIONEDGE,TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY), locate(world.maxx-TRANSITIONEDGE,world.maxy-TRANSITIONEDGE,ZLEVEL_STATION_PRIMARY)))) //Nontrivially expensive but it's roundstart only
-		if(isfloorturf(T) && !istype(T, /turf/open/floor/plating/))
-			free_satchels += new /obj/item/storage/backpack/satchel/flat/secret(T)
-			if(!isemptylist(free_satchels) && ((free_satchels.len + placed_satchel) >= (50 - old_secret_satchels.len) * 0.1)) //up to six tiles, more than enough to kill anything that moves
-				break
+	var/list/bagholding = teleatom.search_contents_for(/obj/item/storage/backpack/holding)
+	if(bagholding.len)
+		precision = max(rand(1,100)*bagholding.len,100)
+		if(isliving(teleatom))
+			var/mob/living/MM = teleatom
+			to_chat(MM, "<span class='warning'>The bluespace interface on your bag of holding interferes with the teleport!</span>")
+	return 1
 
-/datum/controller/subsystem/persistence/proc/LoadPoly()
-	for(var/mob/living/simple_animal/parrot/Poly/P in GLOB.living_mob_list)
-		twitterize(P.speech_buffer, "polytalk")
-		break //Who's been duping the bird?!
+// Safe location finder
 
-/datum/controller/subsystem/persistence/proc/LoadChiselMessages()
-	var/list/saved_messages = list()
-	if(fexists("data/npc_saves/ChiselMessages.sav")) //legacy compatability to convert old format to new
-		var/savefile/chisel_messages_sav = new /savefile("data/npc_saves/ChiselMessages.sav")
-		var/saved_json
-		chisel_messages_sav[SSmapping.config.map_name] >> saved_json
-		if(!saved_json)
-			return
-		saved_messages = json_decode(saved_json)
-		fdel("data/npc_saves/ChiselMessages.sav")
-	else
-		var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
-		if(!fexists(json_file))
-			return
-		var/list/json
-		json = json_decode(file2text(json_file))
+/proc/find_safe_turf(zlevel = ZLEVEL_STATION_PRIMARY, list/zlevels, extended_safety_checks = FALSE)
+	if(!zlevels)
+		zlevels = list(zlevel)
+	var/cycles = 1000
+	for(var/cycle in 1 to cycles)
+		// DRUNK DIALLING WOOOOOOOOO
+		var/x = rand(1, world.maxx)
+		var/y = rand(1, world.maxy)
+		var/z = pick(zlevels)
+		var/random_location = locate(x,y,z)
 
-		if(!json)
-			return
-		saved_messages = json["data"]
-
-	for(var/item in saved_messages)
-		if(!islist(item))
+		if(!isfloorturf(random_location))
+			continue
+		var/turf/open/floor/F = random_location
+		if(!F.air)
 			continue
 
-		var/xvar = item["x"]
-		var/yvar = item["y"]
-		var/zvar = item["z"]
-
-		if(!xvar || !yvar || !zvar)
-			continue
-
-		var/turf/T = locate(xvar, yvar, zvar)
-		if(!isturf(T))
-			continue
-
-		if(locate(/obj/structure/chisel_message) in T)
-			continue
-
-		var/obj/structure/chisel_message/M = new(T)
-
-		if(!QDELETED(M))
-			M.unpack(item)
-
-	log_world("Loaded [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
-
-/datum/controller/subsystem/persistence/proc/LoadTrophies()
-	if(fexists("data/npc_saves/TrophyItems.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/TrophyItems.sav")
-		var/saved_json
-		S >> saved_json
-		if(!saved_json)
-			return
-		saved_trophies = json_decode(saved_json)
-		fdel("data/npc_saves/TrophyItems.sav")
-	else
-		var/json_file = file("data/npc_saves/TrophyItems.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
-		if(!json)
-			return
-		saved_trophies = json["data"]
-	SetUpTrophies(saved_trophies.Copy())
-
-/datum/controller/subsystem/persistence/proc/SetUpTrophies(list/trophy_items)
-	for(var/A in GLOB.trophy_cases)
-		var/obj/structure/displaycase/trophy/T = A
-		T.added_roundstart = TRUE
-
-		var/trophy_data = pick_n_take(trophy_items)
-
-		if(!islist(trophy_data))
-			continue
-
-		var/list/chosen_trophy = trophy_data
-
-		if(!chosen_trophy || isemptylist(chosen_trophy)) //Malformed
-			continue
-
-		var/path = text2path(chosen_trophy["path"]) //If the item no longer exist, this returns null
-		if(!path)
-			continue
-
-		T.showpiece = new /obj/item/showpiece_dummy(T, path)
-		T.trophy_message = chosen_trophy["message"]
-		T.placer_key = chosen_trophy["placer_key"]
-		T.update_icon()
-
-
-/datum/controller/subsystem/persistence/proc/CollectData()
-	CollectChiselMessages()
-	CollectSecretSatchels()
-	CollectTrophies()
-
-/datum/controller/subsystem/persistence/proc/CollectSecretSatchels()
-	var/list/satchels = list()
-	satchel_blacklist = typecacheof(list(/obj/item/stack/tile/plasteel, /obj/item/crowbar))
-	for(var/A in new_secret_satchels)
-		var/obj/item/storage/backpack/satchel/flat/F = A
-		if(QDELETED(F) || F.z != ZLEVEL_STATION_PRIMARY || F.invisibility != INVISIBILITY_MAXIMUM)
-			continue
-		var/list/savable_obj = list()
-		for(var/obj/O in F)
-			if(is_type_in_typecache(O, satchel_blacklist) || O.admin_spawned)
+		var/datum/gas_mixture/A = F.air
+		var/list/A_gases = A.gases
+		var/trace_gases
+		for(var/id in A_gases)
+			if(id in GLOB.hardcoded_gases)
 				continue
-			if(O.persistence_replacement)
-				savable_obj += O.persistence_replacement
-			else
-				savable_obj += O.type
-		if(isemptylist(savable_obj))
+			trace_gases = TRUE
+			break
+
+		// Can most things breathe?
+		if(trace_gases)
 			continue
-		var/list/data = list()
-		data["x"] = F.x
-		data["y"] = F.y
-		data["saved_obj"] = pick(savable_obj)
-		satchels += list(data)
-	var/json_file = file("data/npc_saves/SecretSatchels[SSmapping.config.map_name].json")
-	var/list/file_data = list()
-	file_data["data"] = satchels
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+		if(!(A_gases["o2"] && A_gases["o2"][MOLES] >= 16))
+			continue
+		if(A_gases["plasma"])
+			continue
+		if(A_gases["co2"] && A_gases["co2"][MOLES] >= 10)
+			continue
 
-/datum/controller/subsystem/persistence/proc/CollectChiselMessages()
-	var/json_file = file("data/npc_saves/ChiselMessages[SSmapping.config.map_name].json")
+		// Aim for goldilocks temperatures and pressure
+		if((A.temperature <= 270) || (A.temperature >= 360))
+			continue
+		var/pressure = A.return_pressure()
+		if((pressure <= 20) || (pressure >= 550))
+			continue
 
-	for(var/obj/structure/chisel_message/M in chisel_messages)
-		saved_messages += list(M.pack())
+		if(extended_safety_checks)
+			if(istype(F, /turf/open/lava)) //chasms aren't /floor, and so are pre-filtered
+				var/turf/open/lava/L = F
+				if(!L.is_safe())
+					continue
 
-	log_world("Saved [saved_messages.len] engraved messages on map [SSmapping.config.map_name]")
-	var/list/file_data = list()
-	file_data["data"] = saved_messages
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
+		// DING! You have passed the gauntlet, and are "probably" safe.
+		return F
 
-/datum/controller/subsystem/persistence/proc/SaveChiselMessage(obj/structure/chisel_message/M)
-	saved_messages += list(M.pack()) // dm eats one list
+/proc/get_teleport_turfs(turf/center, precision = 0)
+	if(!precision)
+		return list(center)
+	var/list/posturfs = list()
+	for(var/turf/T in range(precision,center))
+		if(T.is_transition_turf())
+			continue // Avoid picking these.
+		var/area/A = T.loc
+		if(!A.noteleport)
+			posturfs.Add(T)
+	return posturfs
 
-
-/datum/controller/subsystem/persistence/proc/CollectTrophies()
-	var/json_file = file("data/npc_saves/TrophyItems.json")
-	var/list/file_data = list()
-	file_data["data"] = saved_trophies
-	fdel(json_file)
-	WRITE_FILE(json_file, json_encode(file_data))
-
-/datum/controller/subsystem/persistence/proc/SaveTrophy(obj/structure/displaycase/trophy/T)
-	if(!T.added_roundstart && T.showpiece)
-		var/list/data = list()
-		data["path"] = T.showpiece.type
-		data["message"] = T.trophy_message
-		data["placer_key"] = T.placer_key
-		saved_trophies += list(data)
+/proc/get_teleport_turf(turf/center, precision = 0)
+	return safepick(get_teleport_turfs(center, precision))
