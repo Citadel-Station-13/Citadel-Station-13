@@ -309,8 +309,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	owner_AI.nuking = TRUE
 	owner_AI.doomsday_device = DOOM
 	owner_AI.doomsday_device.start()
-	for(var/pinpointer in GLOB.pinpointer_list)
-		var/obj/item/pinpointer/P = pinpointer
+	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 	qdel(src)
 
@@ -534,7 +533,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		if(!(AA.z in GLOB.station_z_levels))
 			continue
 		AA.emagged = TRUE
-	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
+	to_chat(owner, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.</span>")
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 
 

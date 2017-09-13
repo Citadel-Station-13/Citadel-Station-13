@@ -10,6 +10,9 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
 
+
+/*Inferno707*/
+
 /obj/item/clothing/neck/cloak/inferno
 	name = "Kiara's Cloak"
 	desc = "The design on this seems a little too familiar."
@@ -18,6 +21,16 @@
 	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/clothing/neck/petcollar/inferno
+	name = "Kiara's Collar"
+	desc = "A soft black collar that seems to stretch to fit whoever wears it."
+	icon_state = "infcollar"
+	item_state = "infcollar"
+	item_color = null
+	tagname = null
+
+/*DirtyOldHarry*/
 
 /obj/item/lighter/gold
 	name = "\improper Engraved Zippo"
@@ -31,3 +44,13 @@
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
+
+
+/*Zombierobin*/
+
+/obj/item/clothing/neck/scarf/zomb //Default white color, same functionality as beanies.
+	name = "A special scarf"
+	icon_state = "zombscarf"
+	desc = "A fashionable collar"
+	item_color = "zombscarf"
+	dog_fashion = /datum/dog_fashion/head
