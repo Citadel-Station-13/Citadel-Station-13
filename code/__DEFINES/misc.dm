@@ -399,8 +399,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define NUKE_SYNDICATE_BASE 3
 #define STATION_DESTROYED_NUKE 4
 #define STATION_EVACUATED 5
-#define GANG_LOSS 6
-#define GANG_TAKEOVER 7
 #define BLOB_WIN 8
 #define BLOB_NUKE 9
 #define BLOB_DESTROYED 10
@@ -437,10 +435,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_DETONATE 3
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
-//Gangster starting influences
-
-#define GANGSTER_SOLDIER_STARTING_INFLUENCE 5
-#define GANGSTER_BOSS_STARTING_INFLUENCE 20
 
 //for determining which type of heartbeat sound is playing
 #define BEAT_FAST 1
