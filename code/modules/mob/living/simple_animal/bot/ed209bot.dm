@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /mob/living/simple_animal/bot/ed209
 	name = "\improper ED-209 Security Robot"
 	desc = "A security robot.  He looks less than thrilled."
