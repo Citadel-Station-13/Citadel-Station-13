@@ -11,9 +11,21 @@
 	var/stat_affected = CONSCIOUS
 	var/sigil_name = "Sigil"
 	var/resist_string = "glows blinding white" //string for when a null rod blocks its effects, "glows [resist_string]"
+	var/list/component_refund = list()
 
 /obj/effect/clockwork/sigil/attackby(obj/item/I, mob/living/user, params)
-	if(I.force && !is_servant_of_ratvar(user))
+	if(is_servant_of_ratvar(user))
+		if(istype(I, /obj/item/clockwork/slab))
+			user.visible_message("<span class='warning'>[user] starts to dispel [src]...</span>", "<span class='danger'>You start to dispel [src]...</span>")
+			if(do_after(user, 20, target = src))
+				user.visible_message("<span class='warning'>[user] dispels [src]!</span>", "<span class='danger'>You dispel [src]!</span>")
+				for(var/i in component_refund)
+					if(component_refund[i])
+						for(var/r in 1 to component_refund[i])
+							generate_cache_component(i, src)
+					qdel(src)
+			return 1
+	else if(I.force)
 		user.visible_message("<span class='warning'>[user] scatters [src] with [I]!</span>", "<span class='danger'>You scatter [src] with [I]!</span>")
 		qdel(src)
 		return 1
@@ -63,6 +75,7 @@
 	light_power = 1
 	light_color = "#FAE48C"
 	sigil_name = "Sigil of Transgression"
+	component_refund = list(HIEROPHANT_ANSIBLE = 1)
 
 /obj/effect/clockwork/sigil/transgression/sigil_effects(mob/living/L)
 	var/target_flashed = L.flash_act()
@@ -94,27 +107,33 @@
 	light_color = "#FAE48C"
 	stat_affected = UNCONSCIOUS
 	resist_string = "glows faintly yellow"
+	sigil_name = "Sigil of Submission"
+	component_refund = list(GEIS_CAPACITOR = 1)
 	var/convert_time = 80
 	var/delete_on_finish = TRUE
-	sigil_name = "Sigil of Submission"
 	var/glow_type = /obj/effect/temp_visual/ratvar/sigil/submission
 
 /obj/effect/clockwork/sigil/submission/sigil_effects(mob/living/L)
+	if(istype(L.buckled, /obj/structure/destructible/clockwork/geis_binding))
+		if(is_servant_of_ratvar(L.pulledby))
+			L.pulledby.stop_pulling()
+		if(is_servant_of_ratvar(L.buckled.pulledby))
+			L.buckled.pulledby.stop_pulling()
 	L.visible_message("<span class='warning'>[src] begins to glow a piercing magenta!</span>", "<span class='sevtug'>You feel something start to invade your mind...</span>")
 	var/oldcolor = color
-	animate(src, color = "#AF0AAF", time = convert_time, flags_1 = ANIMATION_END_NOW)
+	animate(src, color = "#AF0AAF", time = convert_time, flags = ANIMATION_END_NOW)
 	var/obj/effect/temp_visual/ratvar/sigil/glow
 	if(glow_type)
 		glow = new glow_type(get_turf(src))
 		animate(glow, alpha = 255, time = convert_time)
 	var/I = 0
-	while(I < convert_time && get_turf(L) == get_turf(src))
+	while(I < convert_time && !QDELETED(L) && get_turf(L) == get_turf(src))
 		I++
 		sleep(1)
-	if(get_turf(L) != get_turf(src))
+	if(QDELETED(L) || get_turf(L) != get_turf(src))
 		if(glow)
 			qdel(glow)
-		animate(src, color = oldcolor, time = 20, flags_1 = ANIMATION_END_NOW)
+		animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 		return
@@ -136,7 +155,7 @@
 				to_chat(M, "<span class='heavy_brass'>[message] you!</span>")
 			else
 				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
-	animate(src, color = oldcolor, time = 20, flags_1 = ANIMATION_END_NOW)
+	animate(src, color = oldcolor, time = 20, flags = ANIMATION_END_NOW)
 	addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 20)
 	visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
 
@@ -152,6 +171,7 @@
 	light_color = "#EC8A2D"
 	resist_string = "glows faintly"
 	sigil_name = "Sigil of Transmission"
+	component_refund = list(HIEROPHANT_ANSIBLE = 1)
 	affects_servants = TRUE
 	var/power_charge = 0 //starts with no power
 	var/drain_range = 14
@@ -296,6 +316,7 @@
 	stat_affected = DEAD
 	resist_string = "glows shimmering yellow"
 	sigil_name = "Vitality Matrix"
+	component_refund = list(VANGUARD_COGWHEEL = 1)
 	var/revive_cost = 150
 	var/sigil_active = FALSE
 	var/animation_number = 3 //each cycle increments this by 1, at 4 it produces an animation and resets
@@ -314,7 +335,7 @@
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
 		return
 	visible_message("<span class='warning'>[src] begins to glow bright blue!</span>")
-	animate(src, alpha = 255, time = 10, flags_1 = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
+	animate(src, alpha = 255, time = 10, flags = ANIMATION_END_NOW) //we may have a previous animation going. finish it first, then do this one without delay.
 	sleep(10)
 //as long as they're still on the sigil and are either not a servant or they're a servant AND it has remaining vitality
 	while(L && (!is_servant_of_ratvar(L) || (is_servant_of_ratvar(L) && (GLOB.ratvar_awakens || GLOB.clockwork_vitality))) && get_turf(L) == get_turf(src))
@@ -380,4 +401,4 @@
 		animation_number = initial(animation_number)
 		sigil_active = FALSE
 		visible_message("<span class='warning'>[src] slowly stops glowing!</span>")
-	animate(src, alpha = initial(alpha), time = 10, flags_1 = ANIMATION_END_NOW)
+	animate(src, alpha = initial(alpha), time = 10, flags = ANIMATION_END_NOW)

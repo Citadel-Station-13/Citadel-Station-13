@@ -104,7 +104,7 @@
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
 			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
-			if((summon.z == ZLEVEL_STATION) && summon.valid_territory)
+			if((summon.z in GLOB.station_z_levels) && summon.valid_territory)
 				GLOB.summon_spots += summon
 	cult_objectives += "eldergod"
 
@@ -125,9 +125,9 @@
 			mob.dna.remove_mutation(CLOWNMUT)
 
 	if(tome)
-		. += cult_give_item(/obj/item/weapon/tome, mob)
+		. += cult_give_item(/obj/item/tome, mob)
 	else
-		. += cult_give_item(/obj/item/weapon/paper/talisman/supply, mob)
+		. += cult_give_item(/obj/item/paper/talisman/supply, mob)
 	to_chat(mob, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
 
 /datum/game_mode/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
@@ -144,9 +144,9 @@
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
 		return 0
 	else
-		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].")
+		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
-			var/obj/item/weapon/storage/B = mob.back
+			var/obj/item/storage/B = mob.back
 			B.orient2hud(mob)
 			B.show_to(mob)
 		return 1

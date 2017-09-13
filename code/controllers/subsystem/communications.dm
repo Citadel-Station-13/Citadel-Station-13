@@ -1,9 +1,9 @@
-#define COMMUNICATION_COOLDOWN 600
-#define COMMUNICATION_COOLDOWN_AI 600
+#define COMMUNICATION_COOLDOWN 300
+#define COMMUNICATION_COOLDOWN_AI 300
 
 SUBSYSTEM_DEF(communications)
 	name = "Communications"
-	flags_1 = SS_NO_INIT | SS_NO_FIRE
+	flags = SS_NO_INIT | SS_NO_FIRE
 
 	var/silicon_message_cooldown
 	var/nonsilicon_message_cooldown

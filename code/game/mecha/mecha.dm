@@ -34,7 +34,7 @@
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list(melee = 20, bullet = 10, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	var/list/facing_modifiers = list(FRONT_ARMOUR = 1.5, SIDE_ARMOUR = 1, BACK_ARMOUR = 0.5)
-	var/obj/item/weapon/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell
 	var/state = 0
 	var/list/log = new
 	var/last_message = 0
@@ -112,7 +112,7 @@
 	var/nextsmash = 0
 	var/smashcooldown = 3	//deciseconds
 
-	var/occupant_sight_flags = 0 //sight flags_1 to give to the occupant (e.g. mech mining scanner gives meson-like vision)
+	var/occupant_sight_flags = 0 //sight flags to give to the occupant (e.g. mech mining scanner gives meson-like vision)
 
 	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 
@@ -210,7 +210,7 @@
 	internal_tank = new /obj/machinery/portable_atmospherics/canister/air(src)
 	return internal_tank
 
-/obj/mecha/proc/add_cell(var/obj/item/weapon/stock_parts/cell/C=null)
+/obj/mecha/proc/add_cell(var/obj/item/stock_parts/cell/C=null)
 	if(C)
 		C.forceMove(src)
 		cell = C
@@ -421,7 +421,7 @@
 		target = safepick(view(3,target))
 		if(!target)
 			return
-	if(!target.Adjacent(src))
+	if(!Adjacent(target))
 		if(selected && selected.is_ranged())
 			if(selected.action(target,params))
 				selected.start_cooldown()
@@ -451,6 +451,9 @@
 	. = ..()
 	if(.)
 		events.fireEvent("onMove",get_turf(src))
+	if (internal_tank.disconnect()) // Something moved us and broke connection
+		occupant_message("<span class='warning'>Air port connection teared off!</span>")
+		log_message("Lost connection to gas port.")
 
 /obj/mecha/Process_Spacemove(var/movement_dir = 0)
 	. = ..()
@@ -474,7 +477,7 @@
 		user.forceMove(get_turf(src))
 		to_chat(user, "<span class='notice'>You climb out from [src].</span>")
 		return 0
-	if(connected_port)
+	if(internal_tank.connected_port)
 		if(world.time - last_message > 20)
 			occupant_message("<span class='warning'>Unable to move while connected to the air system port!</span>")
 			last_message = world.time
@@ -623,7 +626,7 @@
 	if(user.can_dominate_mechs)
 		examine(user) //Get diagnostic information!
 		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
-			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:")
+			to_chat(user, "<span class='danger'>Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:</span>")
 			to_chat(user, "[B.get_mecha_info()]")
 			break
 		//Nothing like a big, red link to make the player feel powerful!
@@ -675,7 +678,7 @@
 			AI.linked_core = new /obj/structure/AIcore/deactivated(AI.loc)
 			if(AI.can_dominate_mechs)
 				if(occupant) //Oh, I am sorry, were you using that?
-					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!")
+					to_chat(AI, "<span class='warning'>Pilot detected! Forced ejection initiated!</span>")
 					to_chat(occupant, "<span class='danger'>You have been forcibly ejected!</span>")
 					go_out(1) //IT IS MINE, NOW. SUCK IT, RD!
 			ai_enter_mech(AI, interaction)
@@ -691,7 +694,7 @@
 				to_chat(user, "<span class='warning'>[AI.name] is currently unresponsive, and cannot be uploaded.</span>")
 				return
 			if(occupant || dna_lock) //Normal AIs cannot steal mechs!
-				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].")
+				to_chat(user, "<span class='warning'>Access denied. [name] is [occupant ? "currently occupied" : "secured with a DNA lock"].</span>")
 				return
 			AI.control_disabled = 0
 			AI.radio_enabled = 1
@@ -763,39 +766,11 @@
 		. = t_air.return_pressure()
 	return
 
-
 /obj/mecha/proc/return_temperature()
 	var/datum/gas_mixture/t_air = return_air()
 	if(t_air)
 		. = t_air.return_temperature()
 	return
-
-/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
-	//Make sure not already connected to something else
-	if(connected_port || !new_port || new_port.connected_device)
-		return 0
-
-	//Make sure are close enough for a valid connection
-	if(new_port.loc != loc)
-		return 0
-
-	//Perform the connection
-	connected_port = new_port
-	connected_port.connected_device = src
-	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
-	connected_port_parent.reconcile_air()
-
-	log_message("Connected to gas port.")
-	return 1
-
-/obj/mecha/proc/disconnect()
-	if(!connected_port)
-		return 0
-
-	connected_port.connected_device = null
-	connected_port = null
-	log_message("Disconnected from gas port.")
-	return 1
 
 /obj/mecha/portableConnectorReturnAir()
 	return internal_tank.return_air()
@@ -1045,9 +1020,6 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 	if(!isnull(get_charge()))
 		cell.give(amount)
 		return 1
-	return 0
-
-/obj/mecha/allow_drop()
 	return 0
 
 /obj/mecha/update_remote_sight(mob/living/user)

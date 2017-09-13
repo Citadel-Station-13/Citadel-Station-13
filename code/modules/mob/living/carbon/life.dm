@@ -48,6 +48,8 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return
 	if(ismob(loc))
 		return
 	var/datum/gas_mixture/environment
@@ -56,11 +58,16 @@
 
 	var/datum/gas_mixture/breath
 
-	if(health <= HEALTH_THRESHOLD_CRIT || (pulledby && pulledby.grab_state >= GRAB_KILL && !getorganslot("breathing_tube")))
-		losebreath++
+	if(!getorganslot("breathing_tube"))
+		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby && pulledby.grab_state >= GRAB_KILL))
+			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
+
+		else if(health <= HEALTH_THRESHOLD_CRIT)
+			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
+
 
 	//Suffocate
-	if(losebreath > 0)
+	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
 		if(prob(10))
 			emote("gasp")
@@ -148,7 +155,7 @@
 
 	else //Enough oxygen
 		failed_last_breath = 0
-		if(oxyloss)
+		if(health >= HEALTH_THRESHOLD_CRIT)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases["o2"][MOLES]
 		clear_alert("not_enough_oxy")

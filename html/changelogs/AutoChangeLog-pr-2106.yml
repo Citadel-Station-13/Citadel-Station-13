@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - tweak: "Increased minimum timer for xenomorph event from 20 to 40min. Also increased minimum living, non-afk players required from 10 to 20."

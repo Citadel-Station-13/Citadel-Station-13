@@ -144,7 +144,7 @@
 		to_chat(user, "<span class='brass'>You use [stored_power ? "some":"all"] of [src]'s power to produce <b>5</b> brass sheets. It now stores <b>[get_power()]W/[get_max_power()]W</b> of power.</span>")
 
 /obj/item/clockwork/replica_fabricator/pre_attackby(atom/target, mob/living/user, params)
-	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/weapon/storage))
+	if(!target || !user || !is_servant_of_ratvar(user) || istype(target, /obj/item/storage))
 		return TRUE
 	return fabricate(target, user)
 
@@ -196,7 +196,7 @@
 		fabrication_values["power_cost"] = 0
 
 	var/turf/Y = get_turf(user)
-	if(!Y || (Y.z != ZLEVEL_STATION && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
+	if(!Y || (!(Y.z in GLOB.station_z_levels) && Y.z != ZLEVEL_CENTCOM && Y.z != ZLEVEL_MINING && Y.z != ZLEVEL_LAVALAND))
 		fabrication_values["operation_time"] *= 2
 		if(fabrication_values["power_cost"] > 0)
 			fabrication_values["power_cost"] *= 2

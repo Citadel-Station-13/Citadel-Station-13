@@ -38,8 +38,8 @@
 	aggressiveness = 1 //Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
 
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/screwdriver))
+/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/screwdriver))
 		switch(aggressiveness)
 			if(1)
 				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
@@ -52,7 +52,7 @@
 				aggressiveness = 1
 			if(4)
 				to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because it's broken.</span>")
-	else if(istype(W, /obj/item/weapon/wirecutters))
+	else if(istype(W, /obj/item/wirecutters))
 		if(aggressiveness != 4)
 			to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
 			aggressiveness = 4
@@ -70,7 +70,7 @@
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user as mob)
 	if(safety)
 		safety = FALSE
-		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.")
+		to_chat(user, "<span class='warning'>You silently fry [src]'s vocal circuit with the cryptographic sequencer.</span>")
 	else
 		return
 
@@ -181,7 +181,3 @@
 		playsound(src.loc, "sound/voice/complionator/[phrase_sound].ogg", 100, 0, 4)
 		cooldown = world.time
 		cooldown_special = world.time
-
-
-
-

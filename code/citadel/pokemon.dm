@@ -90,7 +90,7 @@
 	icon = 'icons/mob/pokemon.dmi'
 	var/pokeball
 	pixel_x = -16
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 5)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 5)
 	ventcrawler = 2
 	health = 100
 	maxHealth = 100
@@ -132,7 +132,7 @@
 /mob/living/simple_animal/pokemon/leg
 	icon = 'icons/mob/legendary.dmi'
 	pixel_x = -32
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 12)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 12)
 	health = 200
 	maxHealth = 200
 

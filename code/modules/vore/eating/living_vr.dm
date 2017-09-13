@@ -21,7 +21,7 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return FALSE
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -173,9 +173,9 @@
 //
 //End vore code.
 /*
-	//Handle case: /obj/item/weapon/holder
-		if(/obj/item/weapon/holder/micro)
-			var/obj/item/weapon/holder/H = I
+	//Handle case: /obj/item/holder
+		if(/obj/item/holder/micro)
+			var/obj/item/holder/H = I
 
 			if(!isliving(user)) return 0 // Return 0 to continue upper procs
 			var/mob/living/attacker = user  // Typecast to living

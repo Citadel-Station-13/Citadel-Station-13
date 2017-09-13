@@ -11,10 +11,6 @@
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
-/mob/living/carbon/human/dummy/Destroy()
-	..()
-	return QDEL_HINT_QUEUE
-
 /mob/living/carbon/human/dummy/Life()
 	return
 
@@ -149,7 +145,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dat += "<tr><td>&nbsp;</td></tr>"
 
 	dat += "<tr><td><B>Back:</B></td><td><A href='?src=\ref[src];item=[slot_back]'>[(back && !(back.flags_1&ABSTRACT_1)) ? back : "<font color=grey>Empty</font>"]</A>"
-	if(has_breathable_mask && istype(back, /obj/item/weapon/tank))
+	if(has_breathable_mask && istype(back, /obj/item/tank))
 		dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_back]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 
 	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
@@ -181,7 +177,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	dat += "<tr><td><B>Exosuit:</B></td><td><A href='?src=\ref[src];item=[slot_wear_suit]'>[(wear_suit && !(wear_suit.flags_1&ABSTRACT_1)) ? wear_suit : "<font color=grey>Empty</font>"]</A></td></tr>"
 	if(wear_suit)
 		dat += "<tr><td>&nbsp;&#8627;<B>Suit Storage:</B></td><td><A href='?src=\ref[src];item=[slot_s_store]'>[(s_store && !(s_store.flags_1&ABSTRACT_1)) ? s_store : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(s_store, /obj/item/weapon/tank))
+		if(has_breathable_mask && istype(s_store, /obj/item/tank))
 			dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_s_store]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 		dat += "</td></tr>"
 	else
@@ -208,7 +204,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		dat += "<tr><td><font color=grey>&nbsp;&#8627;<B>Belt:</B></font></td></tr>"
 	else
 		dat += "<tr><td>&nbsp;&#8627;<B>Belt:</B></td><td><A href='?src=\ref[src];item=[slot_belt]'>[(belt && !(belt.flags_1&ABSTRACT_1)) ? belt : "<font color=grey>Empty</font>"]</A>"
-		if(has_breathable_mask && istype(belt, /obj/item/weapon/tank))
+		if(has_breathable_mask && istype(belt, /obj/item/tank))
 			dat += "&nbsp;<A href='?src=\ref[src];internal=[slot_belt]'>[internal ? "Disable Internals" : "Set Internals"]</A>"
 		dat += "</td></tr>"
 		dat += "<tr><td>&nbsp;&#8627;<B>Pockets:</B></td><td><A href='?src=\ref[src];pockets=left'>[(l_store && !(l_store.flags_1&ABSTRACT_1)) ? "Left (Full)" : "<font color=grey>Left (Empty)</font>"]</A>"
@@ -319,7 +315,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 							return
 						else if(!istype(H.glasses, /obj/item/clothing/glasses/hud) && !istype(H.getorganslot("eye_hud"), /obj/item/organ/cyberimp/eyes/hud/medical))
 							return
-						var/obj/item/weapon/photo/P = null
+						var/obj/item/photo/P = null
 						if(href_list["photo_front"])
 							P = R.fields["photo_front"]
 						else if(href_list["photo_side"])
@@ -573,23 +569,23 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(lasercolor == "b")//Lasertag turrets target the opposing team, how great is that? -Sieve
 			if(istype(wear_suit, /obj/item/clothing/suit/redtag))
 				threatcount += 4
-			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/redtag))
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/redtag))
 				threatcount += 4
-			if(istype(belt, /obj/item/weapon/gun/energy/laser/redtag))
+			if(istype(belt, /obj/item/gun/energy/laser/redtag))
 				threatcount += 2
 
 		if(lasercolor == "r")
 			if(istype(wear_suit, /obj/item/clothing/suit/bluetag))
 				threatcount += 4
-			if(is_holding_item_of_type(/obj/item/weapon/gun/energy/laser/bluetag))
+			if(is_holding_item_of_type(/obj/item/gun/energy/laser/bluetag))
 				threatcount += 4
-			if(istype(belt, /obj/item/weapon/gun/energy/laser/bluetag))
+			if(istype(belt, /obj/item/gun/energy/laser/bluetag))
 				threatcount += 2
 
 		return threatcount
 
 	//Check for ID
-	var/obj/item/weapon/card/id/idcard = get_idcard()
+	var/obj/item/card/id/idcard = get_idcard()
 	if( (judgement_criteria & JUDGE_IDCHECK) && !idcard && name=="Unknown")
 		threatcount += 4
 
@@ -617,7 +613,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	//Check for dresscode violations
 	if(istype(head, /obj/item/clothing/head/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/wizard) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/syndi) || istype(head, /obj/item/clothing/head/helmet/space/hardsuit/shielded/syndi))
-		threatcount += 3
+		threatcount += 6
 
 	//Check for nonhuman scum
 	if(dna && dna.species.id && !(dna.species.id in list("human" , "lizard", "mammal", "avian", "aquatic", "insect")))
@@ -628,7 +624,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		threatcount -= 1
 
 	//Agent cards lower threatlevel.
-	if(istype(idcard, /obj/item/weapon/card/id/syndicate))
+	if(istype(idcard, /obj/item/card/id/syndicate))
 		threatcount -= 2
 
 	return threatcount
@@ -647,6 +643,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	update_hair()
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_THREE)
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
@@ -655,7 +652,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	rad_act(current_size * 3)
 	if(mob_negates_gravity())
 		return
-	..()
 
 /mob/living/carbon/human/proc/do_cpr(mob/living/carbon/C)
 	CHECK_DNA_AND_SPECIES(C)
@@ -910,12 +906,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make monkey"] = "?_src_=vars;makemonkey=\ref[src]"
-	.["Set Species"] = "?_src_=vars;setspecies=\ref[src]"
-	.["Make cyborg"] = "?_src_=vars;makerobot=\ref[src]"
-	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
-	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
-	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+	.["Make monkey"] = "?_src_=vars;[HrefToken()];makemonkey=\ref[src]"
+	.["Set Species"] = "?_src_=vars;[HrefToken()];setspecies=\ref[src]"
+	.["Make cyborg"] = "?_src_=vars;[HrefToken()];makerobot=\ref[src]"
+	.["Make alien"] = "?_src_=vars;[HrefToken()];makealien=\ref[src]"
+	.["Make slime"] = "?_src_=vars;[HrefToken()];makeslime=\ref[src]"
+	.["Toggle Purrbation"] = "?_src_=vars;[HrefToken()];purrbation=\ref[src]"
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
 	if((target != pulling) || (grab_state < GRAB_AGGRESSIVE) || (user != target) || !isliving(user) || stat || user.stat)//Get consent first :^)

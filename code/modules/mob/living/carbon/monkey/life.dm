@@ -30,7 +30,9 @@
 				emote("collapse")
 			Knockdown(200)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
-
+		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.00002))
+			gorillize()
+			return
 		switch(radiation)
 
 			if(50 to 75)
@@ -138,6 +140,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
+
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			return 1
 

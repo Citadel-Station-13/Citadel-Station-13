@@ -244,7 +244,7 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!")
+		to_chat(M, "<span class='warning'>You can't put them out with just your bare hands!</span>")
 		return
 
 	if(health >= 0 && !(status_flags & FAKEDEATH))
@@ -255,6 +255,8 @@
 		else if(check_zone(M.zone_selected) == "head")
 			M.visible_message("<span class='notice'>[M] gives [src] a pat on the head to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You give [src] a pat on the head to make [p_them()] feel better!</span>")
+			if(dna && dna.species && (("tail_lizard" in dna.species.mutant_bodyparts) || (dna.features["tail_human"] != "None") || ("mam_tail" in dna.species.mutant_bodyparts)))
+				emote("wag") //lewd
 		else
 			M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 						"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")

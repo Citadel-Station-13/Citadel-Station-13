@@ -1,4 +1,0 @@
-author: "ktccd"
-delete-after: True
-changes: 
-  - bugfix: "Cloner and other mind-transfer things now respect client arousal settings."

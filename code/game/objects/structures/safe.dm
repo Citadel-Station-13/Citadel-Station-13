@@ -192,7 +192,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/floor/Initialize(mapload)
-	..()
+	. = ..()
 	if(mapload)
 		var/turf/T = loc
 		hide(T.intact)

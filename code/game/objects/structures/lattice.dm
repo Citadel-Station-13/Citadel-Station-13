@@ -32,7 +32,7 @@
 		new /obj/structure/lattice/clockwork/large(loc)
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/weapon/wirecutters))
+	if(istype(C, /obj/item/wirecutters))
 		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
 		deconstruct()
 	else
@@ -45,6 +45,7 @@
 	qdel(src)
 
 /obj/structure/lattice/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 

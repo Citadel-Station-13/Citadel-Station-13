@@ -180,7 +180,7 @@
 /atom/proc/CanReachStorage(atom/target,user,depth)
 	return FALSE
 
-/obj/item/weapon/storage/CanReachStorage(atom/target,user,depth)
+/obj/item/storage/CanReachStorage(atom/target,user,depth)
 	while(target && depth > 0)
 		target = target.loc
 		depth--
@@ -355,7 +355,7 @@
 		else
 			user.listed_turf = T
 			user.client.statpanel = T.name
-	return
+	user.Stat() //responsive ui pls
 
 /mob/proc/TurfAdjacent(turf/T)
 	return T.Adjacent(src)

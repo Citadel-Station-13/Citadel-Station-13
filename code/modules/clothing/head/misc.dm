@@ -185,7 +185,7 @@
 	item_state = "fedora"
 	armor = list(melee = 25, bullet = 5, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0, fire = 30, acid = 50)
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
-	pockets = /obj/item/weapon/storage/internal/pocket/small
+	pockets = /obj/item/storage/internal/pocket/small
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -302,3 +302,9 @@
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat2"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/nemes
+	name = "headress of Nemes"
+	desc = "Lavish space tomb not included."
+	icon_state = "nemes_headdress"
+	icon_state = "nemes_headdress"

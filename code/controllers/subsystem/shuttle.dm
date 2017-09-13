@@ -5,7 +5,7 @@ SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 10
 	init_order = INIT_ORDER_SHUTTLE
-	flags_1 = SS_KEEP_TIMING|SS_NO_TICK_CHECK
+	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	var/list/mobile = list()
@@ -290,7 +290,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && (T.z in GLOB.station_z_levels))
 			callShuttle = 0
 			break
 
@@ -341,7 +341,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)))
+		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -356,7 +356,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D))
+		if(M.dock(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 

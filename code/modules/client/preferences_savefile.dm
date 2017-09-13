@@ -81,8 +81,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 						be_special += ROLE_NINJA
 					if(2048)
 						be_special += ROLE_MONKEY
-					if(4096)
-						be_special += ROLE_GANG
 					if(16384)
 						be_special += ROLE_ABDUCTOR
 
@@ -343,6 +341,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["job_engsec_low"]		>> job_engsec_low
 
 	//Citadel code
+	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			>> features["exhibitionist"]
 	S["feature_mcolor2"]				>> features["mcolor2"]
 	S["feature_mcolor3"]				>> features["mcolor3"]
@@ -519,6 +518,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
 	//Citadel
+	S["feature_genitals_use_skintone"]	<< features["genitals_use_skintone"]
 	S["feature_exhibitionist"]			<< features["exhibitionist"]
 	S["feature_mcolor2"]				<< features["mcolor2"]
 	S["feature_mcolor3"]				<< features["mcolor3"]

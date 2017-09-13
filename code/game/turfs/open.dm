@@ -4,6 +4,9 @@
 	var/wet = 0
 	var/wet_time = 0 // Time in seconds that this floor will be wet for.
 	var/mutable_appearance/wet_overlay
+	var/postdig_icon_change = FALSE
+	var/postdig_icon
+	var/list/archdrops
 
 /turf/open/indestructible
 	name = "floor"
@@ -190,11 +193,18 @@
 			new /datum/forced_movement(C, get_ranged_target_turf(C, olddir, 1), 1, FALSE)	//spinning would be bad for ice, fucks up the next dir
 		return 1
 
+/turf/open/copyTurf(turf/T)
+	. = ..()
+	if(. && isopenturf(T) && wet_time)
+		var/turf/open/O = T
+		O.MakeSlippery(wet_setting = wet, wet_time_to_add = wet_time) //we're copied, copy how wet we are also
+
 /turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
 	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting
+	UpdateSlip()
 	if(wet_setting != TURF_DRY)
 		if(wet_overlay)
 			cut_overlay(wet_overlay)
@@ -217,6 +227,41 @@
 		add_overlay(wet_overlay)
 	HandleWet()
 
+/turf/open/proc/UpdateSlip()
+	var/intensity
+	var/lube_flags
+	switch(wet)
+		if(TURF_WET_WATER)
+			intensity = 60
+			lube_flags = NO_SLIP_WHEN_WALKING
+		if(TURF_WET_LUBE)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		if(TURF_WET_ICE)
+			intensity = 120
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		if(TURF_WET_PERMAFROST)
+			intensity = 120
+			lube_flags = SLIDE_ICE | GALOSHES_DONT_HELP
+		if(TURF_WET_SLIDE)
+			intensity = 80
+			lube_flags = SLIDE | GALOSHES_DONT_HELP
+		else
+			qdel(GetComponent(/datum/component/slippery))
+			return
+	var/datum/component/slippery/S = LoadComponent(/datum/component/slippery)
+	S.intensity = intensity
+	S.lube_flags = lube_flags
+
+/turf/open/ComponentActivated(datum/component/C)
+	..()
+	var/datum/component/slippery/S = C
+	if(!istype(S))
+		return
+	if(wet == TURF_WET_LUBE)
+		var/mob/living/L = S.slip_victim
+		L.confused = max(L.confused, 8)
+
 /turf/open/proc/MakeDry(wet_setting = TURF_WET_WATER)
 	if(wet > wet_setting || !wet)
 		return
@@ -229,6 +274,7 @@
 			wet = TURF_DRY
 			if(wet_overlay)
 				cut_overlay(wet_overlay)
+		UpdateSlip()
 
 /turf/open/proc/HandleWet()
 	if(!wet)
@@ -273,3 +319,13 @@
 		wet_time = 0
 	if(wet)
 		addtimer(CALLBACK(src, .proc/HandleWet), 15, TIMER_UNIQUE)
+
+/turf/open/get_dumping_location()
+	return src
+
+/turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
+	wet = TURF_DRY
+	UpdateSlip()
+	if(wet_overlay)
+		cut_overlay(wet_overlay)
+

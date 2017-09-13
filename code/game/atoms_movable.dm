@@ -1,11 +1,4 @@
 
-#ifndef PIXEL_SCALE
-#define PIXEL_SCALE 0
-#if DM_VERSION >= 512
-#error HEY, PIXEL_SCALE probably exists now, remove this gross ass shim.
-#endif
-#endif
-
 /atom/movable
 	layer = OBJ_LAYER
 	var/last_move = null
@@ -215,14 +208,14 @@
 // This is automatically called when something enters your square
 //oldloc = old location on atom, inserted when forceMove is called and ONLY when forceMove is called!
 /atom/movable/Crossed(atom/movable/AM, oldloc)
-	return
+	SendSignal(COMSIG_MOVABLE_CROSSED, AM)
 
 
 //This is tg's equivalent to the byond bump, it used to be called bump with a second arg
 //to differentiate it, naturally everyone forgot about this immediately and so some things
 //would bump twice, so now it's called Collide
 /atom/movable/proc/Collide(atom/A)
-	if((A))
+	if(A)
 		if(throwing)
 			throwing.hit_atom(A)
 			. = 1
@@ -504,7 +497,7 @@
 /atom/movable/vv_get_dropdown()
 	. = ..()
 	. -= "Jump to"
-	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"
+	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[src]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)
@@ -567,7 +560,7 @@
 		flags_2 |= STATIONLOVING_2
 
 /atom/movable/proc/relocate()
-	var/targetturf = find_safe_turf(ZLEVEL_STATION)
+	var/targetturf = find_safe_turf(ZLEVEL_STATION_PRIMARY)
 	if(!targetturf)
 		if(GLOB.blobstart.len > 0)
 			targetturf = get_turf(pick(GLOB.blobstart))
@@ -577,8 +570,8 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.transferItemToLoc(src, targetturf, TRUE)	//nodrops disks when?
-	else if(istype(loc, /obj/item/weapon/storage))
-		var/obj/item/weapon/storage/S = loc
+	else if(istype(loc, /obj/item/storage))
+		var/obj/item/storage/S = loc
 		S.remove_from_storage(src, targetturf)
 	else
 		forceMove(targetturf)
@@ -599,7 +592,7 @@
 /atom/movable/proc/in_bounds()
 	. = FALSE
 	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || currentturf.z == ZLEVEL_STATION || currentturf.z == ZLEVEL_TRANSIT))
+	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
 		. = TRUE
 
 
