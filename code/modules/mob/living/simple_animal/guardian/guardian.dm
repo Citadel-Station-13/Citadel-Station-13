@@ -54,10 +54,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	GLOB.parasites += src
 	setthemename(theme)
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
-	if(summoner)
+	if(!QDELETED(summoner))
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = "hud[RoundHealth(summoner)]"
 
@@ -659,7 +659,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "holoparasite injector kit"
 
 /obj/item/storage/box/syndie_kit/guardian/Initialize()
-	..()
+	. = ..()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
 	return

@@ -1,0 +1,24 @@
+diff a/code/controllers/configuration.dm b/code/controllers/configuration.dm	(rejected hunks)
+@@ -337,17 +337,17 @@
+ 				if("use_account_age_for_jobs")
+ 					use_account_age_for_jobs = 1
+ 				if("use_exp_tracking")
+-					use_exp_tracking = 1
++					use_exp_tracking = TRUE
+ 				if("use_exp_restrictions_heads")
+-					use_exp_restrictions_heads = 1
++					use_exp_restrictions_heads = TRUE
+ 				if("use_exp_restrictions_heads_hours")
+ 					use_exp_restrictions_heads_hours = text2num(value)
+ 				if("use_exp_restrictions_heads_department")
+-					use_exp_restrictions_heads_department = 1
++					use_exp_restrictions_heads_department = TRUE
+ 				if("use_exp_restrictions_other")
+-					use_exp_restrictions_other = 1
++					use_exp_restrictions_other = TRUE
+ 				if("use_exp_restrictions_admin_bypass")
+-					use_exp_restrictions_admin_bypass = 1
++					use_exp_restrictions_admin_bypass = TRUE
+ 				if("lobby_countdown")
+ 					lobby_countdown = text2num(value)
+ 				if("round_end_countdown")

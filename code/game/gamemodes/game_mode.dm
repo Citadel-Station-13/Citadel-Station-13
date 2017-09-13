@@ -19,7 +19,7 @@
 	var/probability = 0
 	var/station_was_nuked = 0 //see nuclearbomb.dm and malfunction.dm
 	var/explosion_in_progress = 0 //sit back and relax
-	var/round_ends_with_antag_death = 0 //flags_1 the "one verse the station" antags as such
+	var/round_ends_with_antag_death = 0 //flags the "one verse the station" antags as such
 	var/list/datum/mind/modePlayer = new
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
 	var/list/restricted_jobs = list()	// Jobs it doesn't make sense to be.  I.E chaplain or AI cultist
@@ -269,38 +269,6 @@
 	if(cult.len && !istype(SSticker.mode, /datum/game_mode/cult))
 		datum_cult_completion()
 
-
-	if(GLOB.borers.len)
-		var/borertext = "<br><font size=3><b>The borers were:</b></font>"
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.controlling) && B.stat != DEAD)
-				borertext += "<br><font size=2><b>[B.controlling ? B.victim.key : B.key] was [B.truename]</b></font>"
-				var/count = 1
-				for(var/datum/objective/objective in B.mind.objectives)
-					if(objective.check_completion())
-						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					else
-						borertext += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					count++
-
-
-		to_chat(world, borertext)
-
-		var/total_borers = 0
-		for(var/mob/living/simple_animal/borer/B in GLOB.borers)
-			if((B.key || B.victim) && B.stat != DEAD)
-				total_borers++
-		if(total_borers)
-			var/total_borer_hosts = 0
-			for(var/mob/living/carbon/C in GLOB.mob_list)
-				var/mob/living/simple_animal/borer/D = C.has_brain_worms()
-				var/turf/location = get_turf(C)
-				if(location.z == ZLEVEL_CENTCOM && D && D.stat != DEAD)
-					total_borer_hosts++
-			to_chat(world, "<b>There were [total_borers] borers alive at round end!</b>")
-			to_chat(world, "<b>A total of [total_borer_hosts] borers with hosts escaped on the shuttle alive.</b>")
-
-		CHECK_TICK
 	return 0
 
 
@@ -313,7 +281,7 @@
 	intercepttext += "<b>Central Command has intercepted and partially decoded a Syndicate transmission with vital information regarding their movements. The following report outlines the most \
 	likely threats to appear in your sector.</b>"
 	var/list/possible_modes = list()
-	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "gang", "malf", "nuclear", "revolution", "traitor", "wizard")
+	possible_modes.Add("blob", "changeling", "clock_cult", "cult", "extended", "malf", "nuclear", "revolution", "traitor", "wizard")
 	possible_modes -= name //remove the current gamemode to prevent it from being randomly deleted, it will be readded later
 
 	for(var/i in 1 to 6) //Remove a few modes to leave four
@@ -520,7 +488,7 @@
 			text += " <span class='boldannounce'>died</span>"
 		else
 			text += " <span class='greenannounce'>survived</span>"
-		if(fleecheck && ply.current.z > ZLEVEL_STATION)
+		if(fleecheck && (!(ply.current.z in GLOB.station_z_levels)))
 			text += " while <span class='boldannounce'>fleeing the station</span>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
@@ -571,7 +539,6 @@
 /datum/game_mode/proc/remove_antag_for_borging(datum/mind/newborgie)
 	SSticker.mode.remove_cultist(newborgie, 0, 0)
 	SSticker.mode.remove_revolutionary(newborgie, 0)
-	SSticker.mode.remove_gangster(newborgie, 0, remove_bosses=1)
 
 /datum/game_mode/proc/generate_station_goals()
 	var/list/possible = list()
