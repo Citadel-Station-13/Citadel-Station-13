@@ -14,7 +14,6 @@ FLOOR SAFES
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/open = FALSE		//is the safe open?
-<<<<<<< HEAD
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
 	var/tumbler_2_pos
