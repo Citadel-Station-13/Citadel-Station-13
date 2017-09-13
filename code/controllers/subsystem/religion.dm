@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(religion)
 	name = "Religion"
-	flags_1 = SS_NO_FIRE|SS_NO_INIT
+	flags = SS_NO_FIRE|SS_NO_INIT
 
 	var/religion
 	var/deity

@@ -840,7 +840,7 @@
 	if(!malf.can_shunt)
 		to_chat(malf, "<span class='warning'>You cannot shunt!</span>")
 		return
-	if(src.z != ZLEVEL_STATION)
+	if(!(src.z in GLOB.station_z_levels))
 		return
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
@@ -874,9 +874,9 @@
 			occupier.loc = src.loc
 			occupier.death()
 			occupier.gib()
-			for(var/obj/item/pinpointer/P in GLOB.pinpointer_list)
+			for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
 				P.switch_mode_to(TRACK_NUKE_DISK) //Pinpointers go back to tracking the nuke disk
-				P.nuke_warning = FALSE
+				P.alert = FALSE
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/device/aicard/card)
 	if(card.AI)

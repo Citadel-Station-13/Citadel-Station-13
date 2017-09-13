@@ -1,6 +1,6 @@
 /*
 This file is for jamming single-line procs into Polaris procs.
-It will prevent runtimes and allow their code to run if VOREStation's fails.
+It will prevent runtimes and allow their code to run if these fail.
 It will also log when we mess up our code rather than making it vague.
 
 Call it at the top of a stock proc with...

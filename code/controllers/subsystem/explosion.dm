@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(explosion)
 	priority = 99
 	wait = 1
-	flags_1 = SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER|SS_NO_INIT
 
 	var/list/explosions
 
