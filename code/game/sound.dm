@@ -176,4 +176,6 @@
 								'sound/vore/prey/death_04.ogg','sound/vore/prey/death_05.ogg','sound/vore/prey/death_06.ogg',
 								'sound/vore/prey/death_07.ogg','sound/vore/prey/death_08.ogg','sound/vore/prey/death_09.ogg',
 								'sound/vore/prey/death_10.ogg')
+			if("bullet_miss")
+				soundin = pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg')
 	return soundin
