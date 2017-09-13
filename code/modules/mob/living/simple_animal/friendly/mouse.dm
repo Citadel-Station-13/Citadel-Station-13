@@ -27,7 +27,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/mouse/Initialize()
-	..()
+	. = ..()
 	if(!body_color)
 		body_color = pick( list("brown","gray","white") )
 	icon_state = "mouse_[body_color]"

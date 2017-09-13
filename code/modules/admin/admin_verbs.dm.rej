@@ -1,0 +1,10 @@
+diff a/code/modules/admin/admin_verbs.dm b/code/modules/admin/admin_verbs.dm	(rejected hunks)
+@@ -663,7 +664,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, AVerbsHideable())
+ 
+ 	if(!holder)
+ 		return
+-	
++
+ 	if(has_antag_hud())
+ 		toggle_antag_hud()
+ 

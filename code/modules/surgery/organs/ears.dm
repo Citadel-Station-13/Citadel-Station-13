@@ -80,9 +80,6 @@
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
 
-/obj/item/organ/ears/cat/adjustEarDamage(ddmg, ddeaf)
-	..(ddmg*2,ddeaf*2)
-
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
 	color = H.hair_color
