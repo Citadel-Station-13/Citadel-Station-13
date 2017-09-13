@@ -330,6 +330,7 @@
 	icon_state = "minimoog"
 	anchored = TRUE
 	density = TRUE
+<<<<<<< HEAD
 	var/datum/song/song
 
 
@@ -375,6 +376,53 @@
 /obj/structure/piano/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/wrench))
 		if (!anchored && !isinspace())
+=======
+	var/datum/song/song
+
+
+/obj/structure/piano/New()
+	..()
+	song = new("piano", src)
+
+	if(prob(50))
+		name = "space minimoog"
+		desc = "This is a minimoog, like a space piano, but more spacey!"
+		icon_state = "minimoog"
+	else
+		name = "space piano"
+		desc = "This is a space piano, like a regular piano, but always in tune! Even if the musician isn't."
+		icon_state = "piano"
+
+/obj/structure/piano/Destroy()
+	qdel(song)
+	song = null
+	return ..()
+
+/obj/structure/piano/Initialize(mapload)
+	. = ..()
+	if(mapload)
+		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+
+/obj/structure/piano/attack_hand(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return 1
+	interact(user)
+
+/obj/structure/piano/attack_paw(mob/user)
+	return src.attack_hand(user)
+
+/obj/structure/piano/interact(mob/user)
+	if(!user || !anchored)
+		return
+
+	user.set_machine(src)
+	song.interact(user)
+
+/obj/structure/piano/attackby(obj/item/O, mob/user, params)
+	if (istype(O, /obj/item/wrench))
+		if (!anchored && !isinspace())
+>>>>>>> 6e46872... Fixes to more Initialize procs (#30641)
 			playsound(src, O.usesound, 50, 1)
 			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, 20*O.toolspeed, target = src))
