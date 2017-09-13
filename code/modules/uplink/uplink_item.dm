@@ -218,10 +218,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/dangerous/smg/unrestricted
-	item = /obj/item/gun/ballistic/automatic/c20r/unrestricted
-	include_modes = list(/datum/game_mode/gang)
-
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
@@ -265,7 +261,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/gun/energy/kinetic_accelerator/crossbow
 	cost = 12
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
@@ -274,7 +270,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/flamethrower/full/tank
 	cost = 4
 	surplus = 40
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/sword
 	name = "Energy Sword"
@@ -361,7 +357,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/reagent_containers/spray/chemsprayer/bioterror
 	cost = 20
 	surplus = 0
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
@@ -402,6 +398,12 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. These rounds are more damaging but ineffective against armour."
 	item = /obj/item/ammo_box/magazine/m10mm/hp
 	cost = 3
+
+/datum/uplink_item/ammo/pistolaps
+	name = "9mm Handgun Magazine"
+	desc = "An additional 15-round 9mm magazine, compatible with the Stetchkin APS pistol, found in the Spetsnaz Pyro bundle."
+	item = /obj/item/ammo_box/magazine/pistolm9mm
+	cost = 2
 
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
@@ -466,7 +468,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			These bullets pack a lot of punch that can knock most targets down, but do limited overall damage."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/smg/bag
 	name = ".45 Ammo Duffel Bag"
@@ -607,7 +609,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/sleeping_carp_scroll
 	cost = 17
 	surplus = 0
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/cqc
 	name = "CQC Manual"
@@ -637,7 +639,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/gun/ballistic/automatic/toy/pistol/riot
 	cost = 3
 	surplus = 10
-	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_weapons/sleepy_pen
 	name = "Sleepy Pen"
@@ -647,7 +648,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/soap
 	name = "Syndicate Soap"
@@ -670,7 +671,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	cant_discount = TRUE
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_weapons/dart_pistol
 	name = "Dart Pistol"
@@ -778,7 +779,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			move the projector from their hand. Disguised users move slowly, and projectiles pass over them."
 	item = /obj/item/device/chameleon
 	cost = 7
-	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/stealthy_tools/camera_bug
 	name = "Camera Bug"
@@ -812,7 +812,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/reagent_containers/syringe/mulligan
 	cost = 4
 	surplus = 30
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/emplight
 	name = "EMP Flashlight"
@@ -840,7 +840,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
-	exclude_modes = list(/datum/game_mode/gang)
 	surplus = 40
 
 /datum/uplink_item/suits/space_suit
@@ -891,7 +890,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
 	item = /obj/item/card/emag
 	cost = 6
-	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/toolbox
 	name = "Full Syndicate Toolbox"
@@ -921,7 +919,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			and other supplies helpful for a field medic."
 	item = /obj/item/storage/firstaid/tactical
 	cost = 4
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/syndietome
 	name = "Syndicate Tome"
@@ -1038,7 +1036,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
 	item = /obj/item/device/sbeacondrop
 	cost = 14
-	exclude_modes = list(/datum/game_mode/gang)
 
 /datum/uplink_item/device_tools/syndicate_bomb
 	name = "Syndicate Bomb"
@@ -1084,7 +1081,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/item/shield/energy
 	cost = 16
 	surplus = 20
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
@@ -1372,7 +1369,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 			you will receive."
 	item = /obj/item/storage/box/syndicate
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus
@@ -1382,7 +1379,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	item = /obj/structure/closet/crate
 	cost = 20
 	player_minimum = 25
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/gang)
+	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)

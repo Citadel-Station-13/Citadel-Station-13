@@ -1,4 +1,0 @@
-author: "LetterJay"
-delete-after: True
-changes: 
-  - bugfix: "Actually fixes missing guilmon issue and puts it correctly in the list. (I tested it.)"
