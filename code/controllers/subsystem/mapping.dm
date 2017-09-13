@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(mapping)
 	name = "Mapping"
 	init_order = INIT_ORDER_MAPPING
-	flags_1 = SS_NO_FIRE
+	flags = SS_NO_FIRE
 
 	var/list/nuke_tiles = list()
 	var/list/nuke_threats = list()
@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(mapping)
 		C.update_icon()
 
 /datum/controller/subsystem/mapping/Recover()
-	flags_1 |= SS_NO_INIT
+	flags |= SS_NO_INIT
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
@@ -117,7 +117,7 @@ SUBSYSTEM_DEF(mapping)
 	var/start_time = REALTIMEOFDAY
 
 	INIT_ANNOUNCE("Loading [config.map_name]...")
-	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION)
+	TryLoadZ(config.GetFullMapPath(), FailedZs, ZLEVEL_STATION_PRIMARY)
 	INIT_ANNOUNCE("Loaded station in [(REALTIMEOFDAY - start_time)/10]s!")
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET map_name = '[config.map_name]' WHERE id = [GLOB.round_id]")
