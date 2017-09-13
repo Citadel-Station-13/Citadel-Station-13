@@ -58378,6 +58378,42 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/chapel/office)
+"cBN" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBO" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBP" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBQ" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBR" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBS" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBT" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBU" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"cBV" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aaa
@@ -72356,13 +72392,13 @@ aaa
 aaa
 aaa
 aFS
-aFT
-aFT
+cBO
+cBP
 aKs
 aFS
 aFS
-aFT
-aFT
+cBT
+cBU
 aFS
 aKs
 cBC
@@ -72616,7 +72652,7 @@ aFS
 aIs
 aJx
 aJx
-aFT
+cBR
 aMI
 aNZ
 aNZ
@@ -73130,7 +73166,7 @@ aFS
 aIu
 aJy
 aKt
-aFT
+cBS
 aIx
 aOa
 aOa
@@ -73895,19 +73931,19 @@ aaa
 aaa
 aaa
 aaa
-aFT
+cBN
 aGQ
 aHw
 aIw
 aIw
-aFT
+cBQ
 aIx
 aIx
 aOc
 aPj
 aOc
 aIx
-aFT
+cBV
 aMI
 aMI
 aMI
@@ -95714,8 +95750,8 @@ ajv
 aju
 ajt
 alQ
-alb
-alb
+cBt
+cBt
 aiS
 anY
 apt
@@ -95972,7 +96008,7 @@ akh
 alc
 alR
 amF
-alb
+cBt
 anm
 ajv
 ajv
@@ -96229,7 +96265,7 @@ cBm
 cBp
 alS
 amG
-alb
+cBt
 aiS
 aiS
 aiS
@@ -96997,6 +97033,8 @@ aaa
 aaa
 aiS
 aiS
+aiS
+aiT
 aiT
 aiT
 aiS
