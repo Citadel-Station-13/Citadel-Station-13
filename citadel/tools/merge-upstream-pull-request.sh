@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+source ~/.discordauth
+
+# ~/.discordauth contains:
+# CHANNELID=x
+# TOKEN=x
+# CHANNELID being the Discord Channel ID
+# TOKEN being the bot token
 
 set -u # don't expand unbound variable
 set -f # disable pathname expansion
@@ -37,6 +44,14 @@ if ! git remote | grep tgstation > /dev/null; then
    git remote add tgstation https://github.com/tgstation/tgstation.git
 fi
 
+curl -v \
+-H "Authorization: Bot $TOKEN" \
+-H "User-Agent: myBotThing (http://some.url, v0.1)" \
+-H "Content-Type: application/json" \
+-X POST \
+-d "{\"content\":\"Mirroring [$1] from /tg/ to Citadel\"}" \
+https://discordapp.com/api/channels/$CHANNELID/messages
+
 # We need to make sure we are always on a clean master when creating the new branch.
 # So we forcefully reset, clean and then checkout the master branch
 git fetch --all
@@ -54,15 +69,16 @@ git checkout -b "$BASE_BRANCH_NAME$1"
 readonly MERGE_SHA=$(curl --silent "$BASE_PULL_URL/$1" | jq '.merge_commit_sha' -r)
 
 # Get the commits
-readonly COMMITS=$(curl "$BASE_PULL_URL/$1/commits" | jq '.[].sha' -r)
+readonly COMMITS=$(curl --silent "$BASE_PULL_URL/$1/commits" | jq '.[].sha' -r)
 
 # Cherry pick onto the new branch
+echo "Cherry picking onto branch"
 CHERRY_PICK_OUTPUT=$(git cherry-pick -m 1 "$MERGE_SHA" 2>&1)
 echo "$CHERRY_PICK_OUTPUT"
 
 # If it's a squash commit, you can't use -m 1, you need to remove it
 # You also can't use -m 1 if it's a rebase and merge...
-if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit'; then
+if echo "$CHERRY_PICK_OUTPUT" | grep -i 'error: mainline was specified but commit'; then
   echo "Commit was a squash, retrying"
   if containsElement "$MERGE_SHA" "${COMMITS[@]}"; then
     for commit in $COMMITS; do
@@ -79,14 +95,16 @@ if echo "$CHERRY_PICK_OUTPUT" | grep 'error: mainline was specified but commit';
 	git add -A .
 	git cherry-pick --continue
   fi
-
 else
   # Add all files onto this branch
+  echo "Adding files to branch:"
   git add -A .
 fi
 
 # Commit these changes
+echo "Commiting changes"
 git commit --allow-empty -m "$2"
 
 # Push them onto the branch
+echo "Pushing changes"
 git push -u origin "$BASE_BRANCH_NAME$1"

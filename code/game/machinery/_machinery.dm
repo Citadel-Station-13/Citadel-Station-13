@@ -35,13 +35,12 @@ Class Variables:
       Next uid value in sequence
 
    stat (bitflag)
-      Machine status bit flags_1.
-      Possible bit flags_1:
-         BROKEN:1 -- Machine is broken
-         NOPOWER:2 -- No power is being supplied to machine.
-         POWEROFF:4 -- tbd
-         MAINT:8 -- machine is currently under going maintenance.
-         EMPED:16 -- temporary broken by EMP pulse
+      Machine status bit flags.
+      Possible bit flags:
+         BROKEN -- Machine is broken
+         NOPOWER -- No power is being supplied to machine.
+         MAINT -- machine is currently under going maintenance.
+         EMPED -- temporary broken by EMP pulse
 
 Class Procs:
    Initialize()                     'game/machinery/machine.dm'

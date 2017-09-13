@@ -1,9 +1,8 @@
-/* 
 /datum/round_event_control/spawn_swarmer
 	name = "Spawn Swarmer Shell"
 	typepath = /datum/round_event/spawn_swarmer
-	weight = 7
-	max_occurrences = 1 //Only once okay fam
+	weight = 0
+	max_occurrences = 0 //Only once okay fam
 	earliest_start = 18000 //30 minutes
 	min_players = 15
 
@@ -26,4 +25,3 @@
 		if(istype(M, /mob/living/simple_animal/hostile/swarmer) && M.client) //If there is a swarmer with an active client, we've found our swarmer
 			return 1
 	return 0
-*/

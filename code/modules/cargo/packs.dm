@@ -811,7 +811,7 @@
 					/obj/item/reagent_containers/glass/bottle/magnitis,
 					/obj/item/reagent_containers/glass/bottle/pierrot_throat,
 					/obj/item/reagent_containers/glass/bottle/brainrot,
-					/obj/item/reagent_containers/glass/bottle/hullucigen_virion,
+					/obj/item/reagent_containers/glass/bottle/hallucigen_virion,
 					/obj/item/reagent_containers/glass/bottle/anxiety,
 					/obj/item/reagent_containers/glass/bottle/beesease,
 					/obj/item/storage/box/syringes,
@@ -1648,7 +1648,8 @@
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton,
-					/obj/item/toy/eightball)
+					/obj/item/toy/eightball,
+					/obj/item/vending_refill/donksoft)
 	crate_name = "toy crate"
 
 /datum/supply_pack/misc/autodrobe
