@@ -184,7 +184,94 @@ function tag_pr($payload, $opened) {
 	$scontext['http']['method'] = 'PUT';
 	$scontext['http']['content'] = json_encode($final);
 
+<<<<<<< HEAD
 	echo file_get_contents($url, false, stream_context_create($scontext));
+=======
+	echo apisend($url, 'PUT', $final);
+
+	return $final;
+}
+
+function remove_ready_for_review($payload, $labels = null){
+	if($labels == null)
+		$labels = get_labels($payload);
+	$index = array_search('Ready for Review', $labels);
+	if($index !== FALSE)
+		unset($labels[$index]);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
+}
+
+function dismiss_review($payload, $id){
+	$content = array('message' => 'Out of date review');
+	apisend($payload['pull_request']['url'] . '/reviews/' . $id . '/dismissals', 'PUT', $content);
+}
+
+function check_ready_for_review($payload, $labels = null){
+	$r4rlabel = 'Ready for Review';
+	$has_label_already = false;
+	if($labels == null)
+		$labels = get_labels($payload);
+	//if the label is already there we may need to remove it
+	foreach($labels as $L)
+		if($L == $r4rlabel){
+			$has_label_already = true;
+			break;
+		}
+
+	//find all reviews to see if changes were requested at some point
+	$reviews = json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
+
+	$reviews_ids_with_changes_requested = array();
+	$dismissed_an_approved_review = false;
+
+	foreach($reviews as $R){
+		if(isset($R['author_association'])){
+			$lower_association = strtolower($R['author_association']);
+			if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
+				$lower_state = strtolower($R['state']);
+				if($lower_state == 'changes_requested')
+					$reviews_ids_with_changes_requested[] = $R['id'];
+				else if ($lower_state == 'approved'){
+					dismiss_review($payload, $R['id']);
+					$dismissed_an_approved_review = true;
+				}
+			}
+		}
+	}
+
+	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
+		if($has_label_already)
+			remove_ready_for_review($payload, $labels);
+		return;	//no need to be here
+	}
+
+	if(count($reviews_ids_with_changes_requested) > 0){
+		//now get the review comments for the offending reviews
+
+		$review_comments = json_decode(apisend($payload['pull_request']['review_comments_url']), true);
+
+		foreach($review_comments as $C){
+			//make sure they are part of an offending review
+			if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
+				continue;
+			
+			//review comments which are outdated have a null position
+			if($C['position'] !== null){
+				if($has_label_already)
+					remove_ready_for_review($payload, $labels);
+				return;	//no need to tag
+			}
+		}
+	}
+
+	//finally, add it if necessary
+	if(!$has_label_already){
+		$labels[] = $r4rlabel;
+		$url = $payload['pull_request']['issue_url'] . '/labels';
+		apisend($url, 'PUT', $labels);
+	}
+>>>>>>> f5b0d02... Merge pull request #30708 from tgstation/Cyberboss-patch-6
 }
 
 function handle_pr($payload) {
