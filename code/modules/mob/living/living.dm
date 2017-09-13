@@ -560,7 +560,7 @@
 
 	// climbing out of a gut
 	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
-	
+
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
 		var/obj/C = loc
@@ -740,9 +740,6 @@
 
 	if(statpanel("Status"))
 		if(SSticker && SSticker.mode)
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
