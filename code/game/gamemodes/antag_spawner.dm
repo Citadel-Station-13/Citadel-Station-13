@@ -108,6 +108,7 @@
 		new_objective.explanation_text = "Protect [usr.real_name], the wizard."
 		M.mind.objectives += new_objective
 	SSticker.mode.apprentices += M.mind
+	M.mind.assigned_role = "Apprentice"
 	M.mind.special_role = "apprentice"
 	SSticker.mode.update_wiz_icons_added(M.mind)
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
@@ -237,7 +238,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(user.z != ZLEVEL_STATION)
+	if(!(user.z in GLOB.station_z_levels))
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
