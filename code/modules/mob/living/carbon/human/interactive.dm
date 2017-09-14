@@ -1618,8 +1618,4 @@
 	TRAITS |= TRAIT_ROBUST
 	TRAITS |= TRAIT_SMART
 	faction += "bot_power"
-<<<<<<< HEAD
-	..()
-=======
 	. = ..()
->>>>>>> 6e46872... Fixes to more Initialize procs (#30641)
