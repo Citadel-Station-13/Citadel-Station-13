@@ -17,8 +17,8 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
-		if(stat == SOFT_CRIT)
-			. += SOFTCRIT_ADD_SLOWDOWN
+	if(stat == SOFT_CRIT)
+		. += SOFTCRIT_ADD_SLOWDOWN
  
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
