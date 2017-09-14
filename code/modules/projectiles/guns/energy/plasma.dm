@@ -61,8 +61,6 @@
 	desc = "A laser AK. Death solves all problems -- No man, no problem."
 	icon_state = "LaserAK"
 	item_state = null
-	burst_size = 3
-	fire_delay = 2
 	icon = 'icons/obj/guns/VGguns.dmi'
 	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)

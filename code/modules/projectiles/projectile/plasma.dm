@@ -2,7 +2,6 @@ obj/item/projectile/energy/plasmabolt
 	icon = 'icons/obj/VGProjectile.dmi'
 	name = "plasma bolt"
 	icon_state = "plasma"
-	knockdown = 0
 	flag = "energy"
 	damage_type = BURN
 	hitsound = 'sound/weapons/sear.ogg'
@@ -10,11 +9,17 @@ obj/item/projectile/energy/plasmabolt
 	light_range = 3
 	light_color = LIGHT_COLOR_GREEN
 
+/obj/item/projectile/energy/plasmabolt/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(isturf(target) || istype(target, /obj/structure/))
+		target.ex_act(EXPLODE_LIGHT)
+
+
 /obj/item/projectile/energy/plasmabolt/light
-	damage = 35
+	damage = 30
 	icon_state = "plasma2"
-	irradiate = 20
-	stamina = 60
+	irradiate = 10
+	stamina = 20
 
 /obj/item/projectile/energy/plasmabolt/rifle
 	damage = 50
