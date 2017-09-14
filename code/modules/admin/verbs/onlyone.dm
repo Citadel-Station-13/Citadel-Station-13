@@ -50,8 +50,8 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(src), slot_ears)
 	equip_to_slot_or_del(new /obj/item/clothing/head/beret/highlander(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(src), slot_shoes)
-	equip_to_slot_or_del(new /obj/item/pinpointer(src), slot_l_store)
-	for(var/obj/item/pinpointer/P in src)
+	equip_to_slot_or_del(new /obj/item/pinpointer/nuke(src), slot_l_store)
+	for(var/obj/item/pinpointer/nuke/P in src)
 		P.attack_self(src)
 	var/obj/item/card/id/W = new(src)
 	W.icon_state = "centcom"
@@ -77,4 +77,3 @@ GLOBAL_VAR_INIT(highlander, FALSE)
 
 	to_chat(src, "<span class='boldannounce'>Your [H1.name] cries out for blood. Claim the lives of others, and your own will be restored!\n\
 	Activate it in your hand, and it will lead to the nearest target. Attack the nuclear authentication disk with it, and you will store it.</span>")
-
