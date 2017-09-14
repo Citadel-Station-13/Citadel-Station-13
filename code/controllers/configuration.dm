@@ -134,11 +134,7 @@ GLOBAL_PROTECT(config_dir)
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
-<<<<<<< HEAD
-=======
 	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
->>>>>>> dab51af... Fixes adjust config (#30654)
-
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
@@ -716,9 +712,6 @@ GLOBAL_PROTECT(config_dir)
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-<<<<<<< HEAD
-
-=======
 				if("repeated_mode_adjust")
 					if(value)
 						repeated_mode_adjust.Cut()
@@ -727,7 +720,6 @@ GLOBAL_PROTECT(config_dir)
 							repeated_mode_adjust += text2num(v)
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
->>>>>>> dab51af... Fixes adjust config (#30654)
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -978,10 +970,6 @@ GLOBAL_PROTECT(config_dir)
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
-<<<<<<< HEAD
-			runnable_modes[M] = probabilities[M.config_tag]
-			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
-=======
 			var/final_weight = probabilities[M.config_tag]
 			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
 				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
@@ -991,7 +979,6 @@ GLOBAL_PROTECT(config_dir)
 					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
 				final_weight *= ((100-adjustment)/100)
 			runnable_modes[M] = final_weight
->>>>>>> dab51af... Fixes adjust config (#30654)
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)
