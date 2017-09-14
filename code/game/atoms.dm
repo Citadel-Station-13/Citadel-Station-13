@@ -488,10 +488,7 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return FALSE
 
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-<<<<<<< HEAD
-=======
 	SendSignal(COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
->>>>>>> 23f65ef... inserts the missing rcd params
 	return FALSE
 
 /atom/proc/storage_contents_dump_act(obj/item/storage/src_object, mob/user)
