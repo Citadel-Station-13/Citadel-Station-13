@@ -46,6 +46,7 @@
 		// Delaminating, not within coverage, not on a tile.
 		if(!((S.z in GLOB.station_z_levels) || S.z == ZLEVEL_MINING || S.z == T.z) || !istype(S.loc, /turf/))
 			continue
+			
 		supermatters.Add(S)
 
 	if(!(active in supermatters))
