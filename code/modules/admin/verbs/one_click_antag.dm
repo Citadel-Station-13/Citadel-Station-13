@@ -79,7 +79,7 @@
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CHANGELING in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
 				if(!jobban_isbanned(applicant, ROLE_CHANGELING) && !jobban_isbanned(applicant, "Syndicate"))
 					if(temp.age_check(applicant.client))
 						if(!(applicant.job in temp.restricted_jobs))
@@ -112,7 +112,7 @@
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_REV in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
 				if(!jobban_isbanned(applicant, ROLE_REV) && !jobban_isbanned(applicant, "Syndicate"))
 					if(temp.age_check(applicant.client))
 						if(!(applicant.job in temp.restricted_jobs))
@@ -154,7 +154,7 @@
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_CULTIST in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
 				if(!jobban_isbanned(applicant, ROLE_CULTIST) && !jobban_isbanned(applicant, "Syndicate"))
 					if(temp.age_check(applicant.client))
 						if(!(applicant.job in temp.restricted_jobs))
@@ -187,7 +187,7 @@
 	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
 		if(ROLE_SERVANT_OF_RATVAR in applicant.client.prefs.be_special)
 			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
+			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && (T.z in GLOB.station_z_levels))
 				if(!jobban_isbanned(applicant, ROLE_SERVANT_OF_RATVAR) && !jobban_isbanned(applicant, "Syndicate"))
 					if(temp.age_check(applicant.client))
 						if(!(applicant.job in temp.restricted_jobs))
@@ -356,43 +356,6 @@
 			return 0
 
 	return
-
-/datum/admins/proc/makeGangsters()
-
-	var/datum/game_mode/gang/temp = new
-	if(config.protect_roles_from_antagonist)
-		temp.restricted_jobs += temp.protected_jobs
-
-	if(config.protect_assistant_from_antagonist)
-		temp.restricted_jobs += "Assistant"
-
-	var/list/mob/living/carbon/human/candidates = list()
-	var/mob/living/carbon/human/H = null
-
-	for(var/mob/living/carbon/human/applicant in GLOB.player_list)
-		if(ROLE_GANG in applicant.client.prefs.be_special)
-			var/turf/T = get_turf(applicant)
-			if(applicant.stat == CONSCIOUS && applicant.mind && !applicant.mind.special_role && T.z == ZLEVEL_STATION)
-				if(!jobban_isbanned(applicant, ROLE_GANG) && !jobban_isbanned(applicant, "Syndicate"))
-					if(temp.age_check(applicant.client))
-						if(!(applicant.job in temp.restricted_jobs))
-							candidates += applicant
-
-	if(candidates.len >= 2)
-		for(var/needs_assigned=2,needs_assigned>0,needs_assigned--)
-			H = pick(candidates)
-			if(GLOB.gang_colors_pool.len)
-				var/datum/gang/newgang = new()
-				SSticker.mode.gangs += newgang
-				H.mind.make_Gang(newgang)
-				candidates.Remove(H)
-			else if(needs_assigned == 2)
-				return 0
-		return 1
-
-	return 0
-
-
 
 /datum/admins/proc/makeOfficial()
 	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")

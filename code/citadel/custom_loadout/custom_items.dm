@@ -54,3 +54,17 @@
 	desc = "A fashionable collar"
 	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
+
+
+/*PLACEHOLDER*/
+
+/obj/item/toy/plush/carrot
+	name = "carrot plushie"
+	desc = "While a normal carrot would be good for your eyes, this one seems a bit more for hugging then eating."
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "carrot"
+	item_state = "carrot"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("slapped")
+	resistance_flags = FLAMMABLE
+	var/bitesound = 'sound/items/bikehorn.ogg'

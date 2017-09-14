@@ -260,7 +260,7 @@
 	// The direction the shuttle prefers to travel in
 	var/preferred_direction = NORTH
 	// And the angle from the front of the shuttle to the port
-	var/port_angle = 0 // used to be travelDir
+	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
 	var/obj/docking_port/stationary/previous
@@ -410,7 +410,7 @@
 	mode = SHUTTLE_RECALL
 
 /obj/docking_port/mobile/proc/enterTransit()
-	if(SSshuttle.lockdown && z == ZLEVEL_STATION)	//emp went off, no escape
+	if(SSshuttle.lockdown && (z in GLOB.station_z_levels))	//emp went off, no escape
 		return
 	previous = null
 //		if(!destination)
@@ -574,7 +574,7 @@
 
 		if(move_mode & MOVE_AREA)
 			areas_to_move[old_area] = TRUE
-		
+
 		old_turfs[place] = move_mode
 
 	/*******************************************All onShuttleMove procs******************************************/
