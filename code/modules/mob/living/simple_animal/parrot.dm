@@ -296,7 +296,7 @@
 		else
 			parrot_state |= PARROT_FLEE		//Otherwise, fly like a bat out of hell!
 			drop_held_item(0)
-	if(stat != DEAD && M.a_intent == INTENT_HELP)
+	if(!stat && M.a_intent == INTENT_HELP)
 		handle_automated_speech(1) //assured speak/emote
 	return
 
@@ -734,7 +734,7 @@
 			visible_message("[src] grabs [held_item] out of [C]'s hand!", "<span class='notice'>You snag [held_item] out of [C]'s hand!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
-	to_chat(src, "<span class='warning'>There is nothing of interest to take!</spawn>")
+	to_chat(src, "<span class='warning'>There is nothing of interest to take!</span>")
 	return 0
 
 /mob/living/simple_animal/parrot/verb/drop_held_item_player()
@@ -896,7 +896,7 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -924,23 +924,15 @@
 	..(gibbed)
 
 /mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
-	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-		S["phrases"] 			>> speech_buffer
-		S["roundssurvived"]		>> rounds_survived
-		S["longestsurvival"]	>> longest_survival
-		S["longestdeathstreak"] >> longest_deathstreak
-		fdel("data/npc_saves/Poly.sav")
-	else
-		var/json_file = file("data/npc_saves/Poly.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
-		speech_buffer = json["phrases"]
-		rounds_survived = json["roundssurvived"]
-		longest_survival = json["longestsurvival"]
-		longest_deathstreak = json["longestdeathstreak"]
+	var/json_file = file("data/npc_saves/Poly.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	speech_buffer = json["phrases"]
+	rounds_survived = json["roundssurvived"]
+	longest_survival = json["longestsurvival"]
+	longest_deathstreak = json["longestdeathstreak"]
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 

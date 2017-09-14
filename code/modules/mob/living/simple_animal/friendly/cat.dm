@@ -32,7 +32,7 @@
 	devourable = TRUE
 
 /mob/living/simple_animal/pet/cat/Initialize()
-	..()
+	. = ..()
 	verbs += /mob/living/proc/lay_down
 
 /mob/living/simple_animal/pet/cat/update_canmove()
@@ -92,7 +92,7 @@
 		icon_living = "original"
 		icon_dead = "original_dead"
 	Read_Memory()
-	..()
+	. = ..()
 
 /mob/living/simple_animal/pet/cat/Runtime/Life()
 	if(!cats_deployed && SSticker.current_state >= GAME_STATE_SETTING_UP)
@@ -113,17 +113,12 @@
 	..()
 
 /mob/living/simple_animal/pet/cat/Runtime/proc/Read_Memory()
-	if(fexists("data/npc_saves/Runtime.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Runtime.sav")
-		S["family"] >> family
-		fdel("data/npc_saves/Runtime.sav")
-	else
-		var/json_file = file("data/npc_saves/Runtime.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = list()
-		json = json_decode(file2text(json_file))
-		family = json["family"]
+	var/json_file = file("data/npc_saves/Runtime.json")
+	if(!fexists(json_file))
+		return
+	var/list/json = list()
+	json = json_decode(file2text(json_file))
+	family = json["family"]
 	if(isnull(family))
 		family = list()
 
