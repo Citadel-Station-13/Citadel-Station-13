@@ -44,11 +44,7 @@
 	//var/valid_z_levels = (GetConnectedZlevels(T.z) & using_map.station_levels)
 	for(var/obj/machinery/power/supermatter_shard/S in GLOB.machines)
 		// Delaminating, not within coverage, not on a tile.
-<<<<<<< HEAD
-		if(!(S.z == ZLEVEL_STATION || S.z == ZLEVEL_MINING || S.z == T.z) || !istype(S.loc, /turf/))
-=======
 		if(!((S.z in GLOB.station_z_levels) || S.z == ZLEVEL_MINING || S.z == T.z) || !istype(S.loc, /turf/))
->>>>>>> df826f5... Fixes SM monitor (#30640)
 			continue
 		supermatters.Add(S)
 
