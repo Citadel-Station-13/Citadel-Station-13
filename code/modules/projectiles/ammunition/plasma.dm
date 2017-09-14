@@ -6,11 +6,11 @@
 
 /obj/item/ammo_casing/energy/plasmagun/rifle
 	projectile_type = /obj/item/projectile/energy/plasmabolt/rifle
-	e_cost = 150
+	e_cost = 125
 
 /obj/item/ammo_casing/energy/plasmagun/light
 	projectile_type = /obj/item/projectile/energy/plasmabolt/light
-	e_cost = 50
+	e_cost = 100
 
 /obj/item/ammo_casing/energy/plasmagun/MP40k
 	projectile_type = /obj/item/projectile/energy/plasmabolt/MP40k
