@@ -172,21 +172,14 @@ Thus, the two variables affect pump operation are set in New():
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
-<<<<<<< HEAD
-	if(..())
-		var/turf/T = get_turf(src)
-		var/area/A = get_area(src)
-		if(!(stat & NOPOWER) && on)
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		else
-			investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-			message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
-			log_admin("[key_name(usr)] unwrenched a pump at [x], [y], [z]")
-			return 1
-=======
 	. = ..()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(src)
 	if(. && on && is_operational())
-		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-		return FALSE
->>>>>>> ba5a491... Improve atmos components code + OmegaStation fixes (#30449)
-
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+			return FALSE
+	else
+		investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
+		log_admin("[key_name(usr)] unwrenched a pump at [x], [y], [z]")
+		return TRUE
