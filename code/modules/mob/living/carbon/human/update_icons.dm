@@ -318,7 +318,7 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((ear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'))
+		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'))
 
 	update_hair()
 	update_mutant_bodyparts()
