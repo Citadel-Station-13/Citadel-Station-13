@@ -75,6 +75,7 @@
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
@@ -196,8 +197,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	else
-		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
@@ -348,13 +347,13 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	hook_vr("client_new",list(src))
-
 //////////////
 //DISCONNECT//
 //////////////
 
 /client/Del()
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)

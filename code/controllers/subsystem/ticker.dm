@@ -64,8 +64,6 @@ SUBSYSTEM_DEF(ticker)
 	var/mode_result = "undefined"
 	var/end_state = "undefined"
 
-	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
-
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
@@ -95,8 +93,6 @@ SUBSYSTEM_DEF(ticker)
 			fire()
 		if(GAME_STATE_PREGAME)
 				//lobby stats for statpanels
-			if(!modevoted)
-				send_gamemode_vote()
 			if(isnull(timeLeft))
 				timeLeft = max(0,start_at - world.time)
 			totalPlayers = 0
@@ -135,7 +131,6 @@ SUBSYSTEM_DEF(ticker)
 			check_queue()
 			check_maprotate()
 			scripture_states = scripture_unlock_alert(scripture_states)
-			SSshuttle.autoEnd()
 
 			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
@@ -671,13 +666,6 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/IsRoundInProgress()
 	return current_state == GAME_STATE_PLAYING
 
-/proc/send_gamemode_vote()
-	if(SSticker.current_state == GAME_STATE_PREGAME)
-		if(SSticker.timeLeft < 900)
-			SSticker.timeLeft = 900
-		SSticker.modevoted = TRUE
-		SSvote.initiate_vote("roundtype","server")
-
 /datum/controller/subsystem/ticker/Recover()
 	current_state = SSticker.current_state
 	force_ending = SSticker.force_ending
@@ -716,8 +704,6 @@ SUBSYSTEM_DEF(ticker)
 	queued_players = SSticker.queued_players
 	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
-
-	modevoted = SSticker.modevoted
 
 	switch (current_state)
 		if(GAME_STATE_SETTING_UP)
