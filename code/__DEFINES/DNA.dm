@@ -127,6 +127,7 @@
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	26
+<<<<<<< HEAD
 #define MUTCOLORS2		27
 #define MUTCOLORS3		28
 #define NOLIVER 		29
@@ -134,3 +135,8 @@
 //citadel code
 #define NOAROUSAL		29//Stops all arousal effects
 #define NOGENITALS		30//Cannot create, use, or otherwise have genitals
+=======
+#define NOLIVER			27
+#define NOSTOMACH		28
+#define NO_DNA_COPY     29
+>>>>>>> ed43a09... Prevents the creation of Shadowzombiechangelings (#30681)
