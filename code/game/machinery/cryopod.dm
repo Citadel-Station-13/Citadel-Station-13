@@ -202,8 +202,6 @@
 
 	var/base_icon_state = "body_scanner_0"
 	var/occupied_icon_state = "body_scanner_1"
-	var/on_store_message = "has entered long-term storage."
-	var/on_store_name = "Cryogenic Oversight"
 	var/on_enter_occupant_message = "You feel cool air surround you. You go numb as your senses turn inward."
 	var/allow_occupant_types = list(/mob/living/carbon/human)
 	var/disallow_occupant_types = list()
@@ -314,9 +312,9 @@
 #define CRYO_PRESERVE 1
 #define CRYO_OBJECTIVE 2
 
-/obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
-	for(var/datum/objective_item/T in control_computer.theft_cache)
-		if(istype(I, T.typepath) && T.check_special_completion(I))
+/obj/machinery/cryopod/proc/should_preserve_item()
+	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
+		if(istype(var/T))
 			return CRYO_OBJECTIVE
 	for(var/T in preserve_items)
 		if(istype(I, T) && !(I.type in do_not_preserve_items))
@@ -328,7 +326,7 @@
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
 	//Drop all items into the pod.
-	for(var/obj/item/W in occupant)
+	for(var/obj/item/W in mob.occupant)
 		transferItemToLoc(W,src,force)
 
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
@@ -413,18 +411,14 @@
 				midround_antag.possible_traitors.Remove(mob_occupant)
 
 	// Delete them from datacore.
-
-	var/announce_rank = null
-	for(var/datum/data/record/R in GLOB.data_core.medical)
-		if((R.fields["name"] == mob_occupant.real_name))
-			qdel(R)
-	for(var/datum/data/record/T in GLOB.data_core.security)
-		if((T.fields["name"] == mob_occupant.real_name))
-			qdel(T)
-	for(var/datum/data/record/G in GLOB.data_core.general)
-		if((G.fields["name"] == mob_occupant.real_name))
-			announce_rank = G.fields["rank"]
-			qdel(G)
+	if(mob_occupant in GLOB.data_core.medical)
+		GLOB.data_core.medical -= mob_occupant
+	if(mob_occupant in GLOB.data_core.security)
+		GLOB.data_core.security -= mob_occupant
+	if(mob_occupant in GLOB.data_core.general)
+		GLOB.data_core.general -= mob_occupant
+	if(mob_occupant in GLOB.data_core.locked)
+		GLOB.data_core.locked -= mob_occupant
 
 	if(orient_right)
 		icon_state = "[base_icon_state]-r"
@@ -432,19 +426,12 @@
 		icon_state = base_icon_state
 
 	//Make an announcement and log the person entering storage.
-	control_computer.frozen_crew += "[mob_occupant.real_name]"
-
 	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
 		announcer.announce("CRYOPOD", H.real_name, H.job)
 
 	// Ghost and delete the mob.
-	if(!mob_occupant.get_ghost(1))
-		if(TOO_EARLY_TO_GHOST)
-			mob_occupant.ghostize(0) // Players despawned too early may not re-enter the game
-		else
-			mob_occupant.ghostize(1)
+	ghostize(0)
 	QDEL_NULL(mob_occupant)
-	name = initial(name)
 
 
 #undef CRYO_DESTROY
@@ -456,7 +443,7 @@
 
 
 /obj/machinery/cryopod/MouseDrop_T(mob/target, mob/user)
-	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser() || !ishuman(user) && !isrobot(user))
+	if(user.stat || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser() || !ishuman(user) && !isrobot(user))
 		return
 
 	var/mob/living/L = occupant
@@ -579,7 +566,7 @@
 		to_chat(usr, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
 
-	for(var/mob/living/carbon/slime/M in range(1,usr))
+	for(var/mob/living/simple_animal/slime/M in range(1,usr))
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
@@ -653,8 +640,6 @@
 	icon_state = "pod_0"
 	base_icon_state = "pod_0"
 	occupied_icon_state = "pod_1"
-	on_store_message = "has entered robotic storage."
-	on_store_name = "Robotic Storage Oversight"
 	on_enter_occupant_message = "The storage unit broadcasts a sleep signal to you. Your systems start to shut down, and you enter low-power mode."
 	allow_occupant_types = list(/mob/living/silicon/robot)
 //	disallow_occupant_types = list(/mob/living/silicon/robot/drone) // our drones aren't a borg meme
@@ -673,17 +658,17 @@
 		for(var/obj/item/O in I) // the things inside the tools, if anything; mainly for janiborg trash bags
 			O.loc = R
 		qdel(I)
-	R.module.remove_subsystems_and_actions(R)
+	R.module.remove_module
 	qdel(R.module)
 
 	return ..()
 
-/proc/cryo_ssd(var/mob/living/carbon/person_to_cryo)
+/obj/machinery/cryopod/proc/cryo_ssd(var/mob/living/carbon/person_to_cryo)
+	var/mob/living/mob_occupant = occupant
 	if(istype(person_to_cryo.loc, /obj/machinery/cryopod))
 		return 0
 	var/list/free_cryopods = list()
 	for(var/obj/machinery/cryopod/P in GLOB.machines)
-		var/mob/living/mob_occupant = occupant
 		if(!P.mob_occupant && istype(get_area(P), /area/crew_quarters/sleep))
 			free_cryopods += P
 	var/obj/machinery/cryopod/target_cryopod = null
