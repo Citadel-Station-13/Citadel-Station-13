@@ -293,16 +293,17 @@
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		// Eject dead people
-		if(occupant.stat == DEAD)
+		if(mob_occupant.stat == DEAD)
 			go_out()
 
 		// Allow a gap between entering the pod and actually despawning.
 		if(world.time - time_entered < time_till_despawn)
 			return
 
-		if(!occupant.client && occupant.stat<2) //Occupant is living and has no client.
+		if(!mob_occupant.client && mob_occupant.stat<2) //Occupant is living and has no client.
 			if(!control_computer)
 				if(!find_control_computer(urgent=1))
 					return
@@ -325,6 +326,7 @@
 // This function can not be undone; do not call this unless you are sure
 // Also make sure there is a valid control computer
 /obj/machinery/cryopod/proc/despawn_occupant()
+	var/mob/living/mob_occupant = occupant
 	//Drop all items into the pod.
 	for(var/obj/item/W in occupant)
 		transferItemToLoc(W,src,force)
@@ -332,19 +334,19 @@
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			if(should_preserve_item(W) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
 				continue
-			for(var/obj/item/O in W.contents)
-				if(istype(O,/obj/item/tank)) //Stop eating pockets, you fuck!
+			for(var/obj/item/L in W.contents)
+				if(istype(L,/obj/item/tank)) //Stop eating pockets, you fuck!
 					continue
-				O.forceMove(src)
+				L.forceMove(src)
 
 	for(var/obj/machinery/computer/cloning/cloner in GLOB.machines)
 		for(var/datum/data/record/R in active_record)
-			if(occupant.mind == locate(R.mind))
+			if(mob_occupant.mind == locate(R.mind))
 				cloner.records.Remove(R)
 
 	//Delete all items not on the preservation list.
 	var/list/items = contents
-	items -= occupant // Don't delete the occupant
+	items -= mob_occupant // Don't delete the occupant
 	items -= announce // or the autosay radio.
 
 	for(var/obj/item/W in items)
@@ -366,14 +368,14 @@
 			W.forceMove(loc)
 
 	// Skip past any cult sacrifice objective using this person
-	if(SSticker.mode.cult && is_sacrifice_target(occupant.mind))
+	if(SSticker.mode.cult && is_sacrifice_target(GLOB.sac_mind))
 		var/datum/game_mode/cult/cult_mode = SSticker.mode.cult
-		var/list/p_s_t = cult_objectives.Find("sacrifice")
+		var/list/p_s_t = SSticker.mode.cult_objectives.Find("sacrifice")
 		if(p_s_t.len)
-			cult_mode.is_sacrifice_target = pick(p_s_t)
-			for(var/datum/mind/H in SSticker.mode.cult)
+			SSticker.mode.cult.is_sacrifice_target = pick(p_s_t)
+			for(var/datum/mind/H in GLOB.sac_mind)
 				if(H.current)
-					to_chat(H.current, "<span class='danger'>[SSticker.mode.cultdat.entity_name]</span> murmurs, <span class='cultlarge'>[occupant] is beyond your reach. Sacrifice [cult_mode.sacrifice_target.current] instead...</span></span>")
+					to_chat(H.current, "<span class='danger'>[SSticker.mode.cultdat.entity_name]</span> murmurs, <span class='cultlarge'>[mob_occupant] is beyond your reach. Sacrifice [H.current] instead...</span></span>")
 		else
 			cult_mode.bypass_phase()
 
@@ -381,10 +383,11 @@
 	for(var/datum/objective/O in all_objectives)
 		// We don't want revs to get objectives that aren't for heads of staff. Letting
 		// them win or lose based on cryo is silly so we remove the objective.
-		if(istype(O,/datum/objective/revolution) && O.target == occupant.mind)
+		if(istype(O,/datum/objective/revolution) && O.target == mob_occupant.mind)
+			heads_to_kill -= head_mind
 			qdel(O)
 		else if(O.target && istype(O.target,/datum/mind))
-			if(O.target == occupant.mind)
+			if(O.target == mob_occupant.mind)
 				if(O.owner && O.owner.current)
 					to_chat(O.owner.current, "<BR><span class='userdanger'>You get the feeling your target is no longer within reach. Time for Plan [pick("A","B","C","D","X","Y","Z")]. Objectives updated!</span>")
 				//	O.owner.current << 'sound/ambience/alarm4.ogg'
@@ -396,19 +399,18 @@
 						all_objectives -= O
 						O.owner.objectives -= O
 						qdel(O)
-	if(occupant.mind && occupant.mind.assigned_role)
+	if(mob_occupant.mind && mob_occupant.mind.assigned_role)
 		//Handle job slot/tater cleanup.
-		var/job = occupant.mind.assigned_role
+		var/job = mob_occupant.mind.assigned_role
 
 		job_master.FreeRole(job)
 
-		if(occupant.mind.objectives.len)
-			occupant.mind.objectives.Cut()
-			occupant.mind.special_role = null
+		if(mob_occupant.mind.objectives.len)
+			mob_occupant.mind.objectives.Cut()
+			mob_occupant.mind.special_role = null
 		else
-			if(ticker.mode.name == "AutoTraitor")
-				var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-				current_mode.possible_traitors.Remove(occupant)
+			if(config.midround_antag[SSticker.mode.config_tag])
+				midround_antag.possible_traitors.Remove(mob_occupant)
 
 	// Delete them from datacore.
 
@@ -416,13 +418,13 @@
 	if(PDA_Manifest.len)
 		PDA_Manifest.Cut()
 	for(var/datum/data/record/R in GLOB.data_core.medical)
-		if((R.fields["name"] == occupant.real_name))
+		if((R.fields["name"] == mob_occupant.real_name))
 			qdel(R)
 	for(var/datum/data/record/T in GLOB.data_core.security)
-		if((T.fields["name"] == occupant.real_name))
+		if((T.fields["name"] == mob_occupant.real_name))
 			qdel(T)
 	for(var/datum/data/record/G in GLOB.data_core.general)
-		if((G.fields["name"] == occupant.real_name))
+		if((G.fields["name"] == mob_occupant.real_name))
 			announce_rank = G.fields["rank"]
 			qdel(G)
 
@@ -432,7 +434,7 @@
 		icon_state = base_icon_state
 
 	//Make an announcement and log the person entering storage.
-	control_computer.frozen_crew += "[occupant.real_name]"
+	control_computer.frozen_crew += "[mob_occupant.real_name]"
 
 	var/ailist[] = list()
 	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
@@ -440,23 +442,23 @@
 	if(ailist.len)
 		var/mob/living/silicon/ai/announcer = pick(ailist)
 		if (announce_rank)
-			announcer.say(";[occupant.real_name] ([announce_rank]) [on_store_message]")
+			announcer.say(";[mob_occupant.real_name] ([announce_rank]) [on_store_message]")
 		else
-			announcer.say(";[occupant.real_name] [on_store_message]")
+			announcer.say(";[mob_occupant.real_name] [on_store_message]")
 	else
 		if (announce_rank)
-			announce.autosay("[occupant.real_name]  ([announce_rank]) [on_store_message]", "[on_store_name]")
+			announce.autosay("[mob_occupant.real_name]  ([announce_rank]) [on_store_message]", "[on_store_name]")
 		else
-			announce.autosay("[occupant.real_name] [on_store_message]", "[on_store_name]")
-	visible_message("<span class='notice'>\The [src] hums and hisses as it moves [occupant.real_name] into storage.</span>")
+			announce.autosay("[mob_occupant.real_name] [on_store_message]", "[on_store_name]")
+	visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
 
 	// Ghost and delete the mob.
-	if(!occupant.get_ghost(1))
+	if(!mob_occupant.get_ghost(1))
 		if(TOO_EARLY_TO_GHOST)
-			occupant.ghostize(0) // Players despawned too early may not re-enter the game
+			mob_occupant.ghostize(0) // Players despawned too early may not re-enter the game
 		else
-			occupant.ghostize(1)
-	QDEL_NULL(occupant)
+			mob_occupant.ghostize(1)
+	QDEL_NULL(mob_occupant)
 	name = initial(name)
 
 #undef CRYO_DESTROY
@@ -471,7 +473,8 @@
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser() || !ishuman(user) && !isrobot(user))
 		return
 
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		to_chat(user, "<span class='boldnotice'>The cryo pod is already occupied!</span>")
 		return
 
@@ -511,7 +514,7 @@
 		if(do_after(user, 20, target = L))
 			if(!L) return
 
-			if(occupant)
+			if(mob_occupant)
 				to_chat(user, "<span class='boldnotice'>\The [src] is in use.</span>")
 				return
 			close_machine(target)
@@ -519,7 +522,8 @@
 			to_chat(user, "<span class='notice'>You stop [L == user ? "climbing into the cryo pod." : "putting [L] into the cryo pod."]</span>")
 
 /obj/machinery/cryopod/proc/take_occupant(var/mob/living/carbon/E, var/willing_factor = 1)
-	if(occupant)
+	var/mob/living/mob_occupant = occupant
+	if(mob_occupant)
 		return
 	if(!E)
 		return
@@ -531,8 +535,8 @@
 		icon_state = occupied_icon_state
 	to_chat(E, "<span class='notice'>[on_enter_occupant_message]</span>")
 	to_chat(E, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
-	occupant = E
-	name = "[name] ([occupant.name])"
+	mob_occupant = E
+	name = "[name] ([mob_occupant.name])"
 	time_entered = world.time
 	if(findtext("[E.key]","@",1,2))
 		var/FT = replacetext(E.key, "@", "")
@@ -549,11 +553,12 @@
 	set name = "Eject Pod"
 	set category = "Object"
 	set src in oview(1)
+	var/mob/living/mob_occupant = occupant
 
 	if(usr.stat != 0)
 		return
 
-	if(usr != occupant)
+	if(usr != mob_occupant)
 		to_chat(usr, "The cryopod is in use and locked!")
 		return
 
@@ -564,7 +569,7 @@
 
 	//Eject any items that aren't meant to be in the pod.
 	var/list/items = contents
-	if(occupant) items -= occupant
+	if(occupant) items -= mob_occupant
 	if(announce) items -= announce
 
 	for(var/obj/item/W in items)
@@ -580,11 +585,12 @@
 	set name = "Enter Pod"
 	set category = "Object"
 	set src in oview(1)
+	var/mob/living/mob_occupant = occupant
 
 	if(usr.stat != 0 || !check_occupant_allowed(usr))
 		return
 
-	if(occupant)
+	if(mob_occupant)
 		to_chat(usr, "<span class='boldnotice'>\The [src] is in use.</span>")
 		return
 
@@ -600,13 +606,13 @@
 		if(!usr || !usr.client)
 			return
 
-		if(occupant)
+		if(mob_occupant)
 			to_chat(usr, "<span class='boldnotice'>\The [src] is in use.</span>")
 			return
 
 		usr.stop_pulling()
 		usr.forceMove(src)
-		occupant = usr
+		mob_occupant = usr
 		time_till_despawn = initial(time_till_despawn) / willing_time_divisor
 
 		if(orient_right)
@@ -616,7 +622,7 @@
 
 		to_chat(usr, "<span class='notice'>[on_enter_occupant_message]</span>")
 		to_chat(usr, "<span class='boldnotice'>If you ghost, log out or close your client now, your character will shortly be permanently removed from the round.</span>")
-		occupant = usr
+		mob_occupant = usr
 		time_entered = world.time
 
 		add_fingerprint(usr)
@@ -625,11 +631,12 @@
 	return
 
 /obj/machinery/cryopod/proc/go_out()
-	if(!occupant)
+	var/mob/living/mob_occupant = occupant
+	if(!mob_occupant)
 		return
 
-	occupant.forceMove(get_turf(src))
-	occupant = null
+	mob_occupant.forceMove(get_turf(src))
+	mob_occupant = null
 
 	if(orient_right)
 		icon_state = "[base_icon_state]-r"
@@ -691,7 +698,8 @@
 		return 0
 	var/list/free_cryopods = list()
 	for(var/obj/machinery/cryopod/P in GLOB.machines)
-		if(!P.occupant && istype(get_area(P), /area/crew_quarters/sleep))
+		var/mob/living/mob_occupant = occupant
+		if(!P.mob_occupant && istype(get_area(P), /area/crew_quarters/sleep))
 			free_cryopods += P
 	var/obj/machinery/cryopod/target_cryopod = null
 	if(free_cryopods.len)
