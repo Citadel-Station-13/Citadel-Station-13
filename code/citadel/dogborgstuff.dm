@@ -23,7 +23,6 @@
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
 	w_class = 3
 	sharpness = IS_SHARP
-	var/emagged = 0
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
@@ -173,7 +172,6 @@
 	icon_state = "synthtongue"
 	hitsound = 'sound/effects/attackblob.ogg'
 	cleanspeed = 80
-	var/emagged = 0
 
 /obj/item/soap/tongue/New()
 	..()
