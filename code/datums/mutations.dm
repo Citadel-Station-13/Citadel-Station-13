@@ -117,9 +117,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 0
 	dna_block = NON_SCANNABLE
-	lowest_value = 256 * 12
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human") //no skeleton/lizard hulk
 	health_req = 25
