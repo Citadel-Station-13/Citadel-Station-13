@@ -415,8 +415,6 @@
 	// Delete them from datacore.
 
 	var/announce_rank = null
-	if(PDA_Manifest.len)
-		PDA_Manifest.Cut()
 	for(var/datum/data/record/R in GLOB.data_core.medical)
 		if((R.fields["name"] == mob_occupant.real_name))
 			qdel(R)
@@ -436,21 +434,8 @@
 	//Make an announcement and log the person entering storage.
 	control_computer.frozen_crew += "[mob_occupant.real_name]"
 
-	var/ailist[] = list()
-	for(var/mob/living/silicon/ai/A in GLOB.living_mob_list)
-		ailist += A
-	if(ailist.len)
-		var/mob/living/silicon/ai/announcer = pick(ailist)
-		if (announce_rank)
-			announcer.say(";[mob_occupant.real_name] ([announce_rank]) [on_store_message]")
-		else
-			announcer.say(";[mob_occupant.real_name] [on_store_message]")
-	else
-		if (announce_rank)
-			announce.autosay("[mob_occupant.real_name]  ([announce_rank]) [on_store_message]", "[on_store_name]")
-		else
-			announce.autosay("[mob_occupant.real_name] [on_store_message]", "[on_store_name]")
-	visible_message("<span class='notice'>\The [src] hums and hisses as it moves [mob_occupant.real_name] into storage.</span>")
+	var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+		announcer.announce("CRYOPOD", H.real_name, H.job)
 
 	// Ghost and delete the mob.
 	if(!mob_occupant.get_ghost(1))
@@ -460,6 +445,7 @@
 			mob_occupant.ghostize(1)
 	QDEL_NULL(mob_occupant)
 	name = initial(name)
+
 
 #undef CRYO_DESTROY
 #undef CRYO_PRESERVE
@@ -473,12 +459,11 @@
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser() || !ishuman(user) && !isrobot(user))
 		return
 
-	var/mob/living/mob_occupant = occupant
-	if(mob_occupant)
+	var/mob/living/L = occupant
+	if(L)
 		to_chat(user, "<span class='boldnotice'>The cryo pod is already occupied!</span>")
 		return
 
-	var/mob/living/L = O
 	if(!istype(L) || L.buckled)
 		return
 
