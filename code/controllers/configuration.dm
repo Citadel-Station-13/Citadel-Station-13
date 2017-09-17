@@ -108,6 +108,8 @@ GLOBAL_PROTECT(config_dir)
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_account_age_for_jobs = 0	//Uses the time they made the account for the job restriction stuff. New player joining alerts should be unaffected.
 	var/see_own_notes = 0 //Can players see their own admin notes (read-only)? Config option in config.txt
+	var/note_fresh_days
+	var/note_stale_days
 
 	var/use_exp_tracking = FALSE
 	var/use_exp_restrictions_heads = FALSE
@@ -127,6 +129,8 @@ GLOBAL_PROTECT(config_dir)
 	//game_options.txt configs
 	var/force_random_names = 0
 	var/list/mode_names = list()
+	var/list/mode_reports = list()
+	var/list/mode_false_report_weight = list()
 	var/list/modes = list()				// allowed modes
 	var/list/votable_modes = list()		// votable modes
 	var/list/probabilities = list()		// relative probability of each mode
@@ -280,6 +284,8 @@ GLOBAL_PROTECT(config_dir)
 
 	var/list/policies = list()
 
+	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -293,6 +299,8 @@ GLOBAL_PROTECT(config_dir)
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
+				mode_reports[M.config_tag] = M.generate_report()
+				mode_false_report_weight[M.config_tag] = M.false_report_weight
 				if(M.votable)
 					votable_modes += M.config_tag
 		qdel(M)
@@ -484,6 +492,10 @@ GLOBAL_PROTECT(config_dir)
 					showircname = 1
 				if("see_own_notes")
 					see_own_notes = 1
+				if("note_fresh_days")
+					note_fresh_days = text2num(value)
+				if("note_stale_days")
+					note_stale_days = text2num(value)
 				if("soft_popcap")
 					soft_popcap = text2num(value)
 				if("hard_popcap")
@@ -563,6 +575,8 @@ GLOBAL_PROTECT(config_dir)
 					error_msg_delay = text2num(value)
 				if("irc_announce_new_game")
 					irc_announce_new_game = TRUE
+				if("debug_admin_hrefs")
+					debug_admin_hrefs = TRUE
 				else
 #if DM_VERSION > 511
 #error Replace the line below with WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")

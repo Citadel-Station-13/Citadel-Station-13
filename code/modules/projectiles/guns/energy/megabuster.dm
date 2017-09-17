@@ -8,7 +8,9 @@
 	clumsy_check = 0
 	needs_permit = 0
 	selfcharge = 1
+	cell_type = "/obj/item/stock_parts/cell/pulse"
 	icon = 'icons/obj/guns/VGguns.dmi'
+
 /obj/item/gun/energy/megabuster/proto
 	name = "Proto-buster"
 	icon_state = "protobuster"
