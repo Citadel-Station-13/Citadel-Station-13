@@ -58989,10 +58989,7 @@
 	},
 /area/medical/chemistry)
 "ciA" = (
-/obj/machinery/chem_master{
-	layer = 2.7;
-	pixel_x = -2
-	},
+/obj/machinery/chem_master,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -63060,10 +63057,7 @@
 	},
 /area/medical/chemistry)
 "cqu" = (
-/obj/machinery/chem_master{
-	layer = 2.7;
-	pixel_x = -2
-	},
+/obj/machinery/chem_master,
 /obj/structure/noticeboard{
 	desc = "A board for pinning important notices upon. Probably helpful for keeping track of requests.";
 	dir = 1;
@@ -83140,10 +83134,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "dcM" = (
-/obj/machinery/chem_master{
-	pixel_x = -2;
-	pixel_y = 1
-	},
+/obj/machinery/chem_master,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -29
