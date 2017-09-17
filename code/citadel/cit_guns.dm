@@ -27,3 +27,25 @@
 	materials = list(MAT_GOLD = 2500, MAT_METAL = 5000, MAT_GLASS = 5000)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
+
+/obj/item/gun/ballistic/pistol/antitank
+	name = "Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "atp"
+	item_state = "pistol"
+	recoil = 2
+	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	fire_delay = 40
+	burst_size = 1
+	origin_tech = "combat=7"
+	can_suppress = 0
+	w_class = WEIGHT_CLASS_NORMAL
+	actions_types = list()
+
+
+/obj/item/gun/ballistic/pistol/antitank/update_icon()
+	if(magazine)
+		icon_state = "atp"
+	else
+		icon_state = "atp-e"
