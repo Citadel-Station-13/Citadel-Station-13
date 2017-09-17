@@ -221,6 +221,6 @@
 		var/mob/living/carbon/human/H = owner.current
 		var/obj/item/card/id/theID = H.get_idcard()
 		if(istype(theID))
-			if(!H.get_assignment() == "Assistant" && !H.get_assignment() == "No id" && !H.get_assignment() == "No job")
+			if(!(H.get_assignment() == "Assistant") && !(H.get_assignment() == "No id") && !(H.get_assignment() == "No job"))
 				return TRUE
 	return FALSE
