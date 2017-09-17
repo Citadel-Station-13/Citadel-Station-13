@@ -68,7 +68,7 @@
 /datum/objective/crew/bartender/responsibility/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.drunkenness >= 80)
-			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
+			if(H.z == ZLEVEL_STATION_PRIMARY || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				return FALSE
 	return TRUE
 
@@ -76,13 +76,13 @@
 
 /datum/objective/crew/janitor/clean //ported from old Hippie
 	var/list/areas = list()
-	var/hardmode = 0
+	var/hardmode = FALSE
 	explanation_text = "Ensure sure that (Yo, something broke. Yell about this in citadels devlopmeent discussion channel.) remain spotless at the end of the shift."
 
 /datum/objective/crew/janitor/clean/New()
 	. = ..()
 	if(prob(1))
-		hardmode = 1
+		hardmode = TRUE
 	var/list/blacklistnormal = list(typesof(/area/space) - typesof(/area/lavaland) - typesof(/area/mine) - typesof(/area/ai_monitored/turret_protected) - typesof(/area/tcommsat))
 	var/list/blacklisthard = list(typesof(/area/lavaland) - typesof(/area/mine))
 	var/list/possibleareas = list()
