@@ -19,9 +19,9 @@
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	if(!SSticker.mode.station_was_nuked && station_integrity >= target_amount)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/chiefengineer/poly
 	explanation_text = "Make sure Poly keeps his headset, and stays alive until the end of the shift."
@@ -30,8 +30,8 @@
 	for(var/mob/living/simple_animal/parrot/Poly/dumbbird in GLOB.mob_list)
 		if(!dumbbird.stat == DEAD && dumbbird.ears)
 			if(istype(dumbbird.ears, /obj/item/device/radio/headset))
-				return 1
-	return 0
+				return TRUE
+	return FALSE
 
 /datum/objective/crew/stationengineer
 
@@ -52,6 +52,6 @@
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	if(!SSticker.mode.station_was_nuked && station_integrity >= target_amount)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE

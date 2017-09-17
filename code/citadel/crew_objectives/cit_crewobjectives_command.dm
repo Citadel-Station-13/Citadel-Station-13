@@ -7,18 +7,18 @@
 
 /datum/objective/crew/captain/hat/check_completion()
 	if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/captain/datfukkendisk //Ported from old Hippie
 	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
 
 /datum/objective/crew/captain/datfukkendisk/check_completion()
 	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/headofpersonnel/
 
@@ -29,15 +29,15 @@
 	if(owner.current)
 		for(var/mob/living/simple_animal/pet/dog/corgi/Ian/goodboy in GLOB.mob_list)
 			if(goodboy.stat != DEAD && SSshuttle.emergency.shuttle_areas[get_area(goodboy)])
-				return 1
-		return 0
-	return 0
+				return TRUE
+		return FALSE
+	return FALSE
 
 /datum/objective/crew/headofpersonnel/datfukkendisk //Ported from old Hippie
 	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
 
 /datum/objective/crew/headofpersonnel/datfukkendisk/check_completion()
 	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE

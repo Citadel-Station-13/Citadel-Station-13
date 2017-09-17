@@ -30,9 +30,9 @@
 				if(P.reagents.has_reagent(targetchem))
 					pillcount--
 	if(pillcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/cook
 
@@ -56,9 +56,9 @@
 
 /datum/objective/crew/cook/foodhoard/check_completion()
 	if(owner.current && owner.current.check_contents_for(foodpath) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/bartender
 
@@ -69,8 +69,8 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.drunkenness >= 80)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /datum/objective/crew/janitor
 
@@ -111,8 +111,8 @@
 /datum/objective/crew/janitor/clean/check_completion()
 	for(var/area/A in areas)
 		for(var/obj/effect/decal/cleanable/C in area_contents(A))
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/objective/crew/clown
 
@@ -135,9 +135,9 @@
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
 				uniqueslips |= H
 	if(uniqueslips.len >= target_amount)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/mime
 
@@ -148,8 +148,8 @@
 	if(owner.current)
 		var/list/say_log = owner.current.logging[INDIVIDUAL_SAY_LOG]
 		if(say_log.len > 0)
-			return 0
-	return 1
+			return FALSE
+	return TRUE
 
 /datum/objective/crew/assistant
 
@@ -172,8 +172,8 @@
 	if(owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H.w_uniform, targetuniform))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/objective/crew/assistant/spacesuit //ported from Goon
 	explanation_text = "Get your grubby hands on a space suit."
@@ -209,9 +209,9 @@
 
 /datum/objective/crew/assistant/spacesuit/check_completion()
 	if(owner.current && owner.current.check_contents_for(typesof(/obj/item/clothing/suit/space)))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/assistant/promotion //ported from Goon
 	explanation_text = "Have a non-assistant ID registered to you at the end of the shift."
@@ -222,5 +222,5 @@
 		var/obj/item/card/id/theID = H.get_idcard()
 		if(istype(theID))
 			if(!H.get_assignment() == "Assistant" && !H.get_assignment() == "No id" && !H.get_assignment() == "No job")
-				return 1
-	return 0
+				return TRUE
+	return FALSE

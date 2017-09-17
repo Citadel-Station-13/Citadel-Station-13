@@ -26,9 +26,9 @@
 				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/cargotechnician
 
@@ -56,9 +56,9 @@
 				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/shaftminer
 
@@ -68,5 +68,5 @@
 /datum/objective/crew/shaftminer/bubblegum/check_completion()
 	for(var/mob/living/simple_animal/hostile/megafauna/bubblegum/B in GLOB.mob_list)
 		if(!B.stat == DEAD)
-			return 0
-	return 1
+			return FALSE
+	return TRUE

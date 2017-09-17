@@ -20,9 +20,9 @@
 		if(!R.stat == DEAD)
 			borgcount--
 	if(borgcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/roboticist/
 
@@ -44,6 +44,6 @@
 		if(!R.stat == DEAD)
 			borgcount--
 	if(borgcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE

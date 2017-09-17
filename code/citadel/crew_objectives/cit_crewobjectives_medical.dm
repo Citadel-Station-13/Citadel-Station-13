@@ -9,8 +9,8 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
 			if(get_area(H) != /area/medical/morgue)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /datum/objective/crew/chiefmedicalofficer/chems //Ported from old Hippie
 	var/targetchem = "none"
@@ -35,9 +35,9 @@
 	if(owner.current)
 		if(!owner.current.stat == DEAD && owner.current.reagents)
 			if(owner.current.reagents.has_reagent(targetchem))
-				return 1
+				return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/geneticist
 
@@ -48,8 +48,8 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
 			if(get_area(H) != /area/medical/morgue)
-				return 0
-	return 1
+				return FALSE
+	return TRUE
 
 /datum/objective/crew/chemist/
 
@@ -76,9 +76,9 @@
 	if(owner.current)
 		if(!owner.current.stat == DEAD && owner.current.reagents)
 			if(owner.current.reagents.has_reagent(targetchem))
-				return 1
+				return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/chemist/druglord //ported from old Hippie with adjustments
 	var/targetchem = "none"
@@ -107,9 +107,9 @@
 				if(P.reagents.has_reagent(targetchem))
 					pillcount--
 	if(pillcount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/virologist
 
@@ -121,8 +121,8 @@
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.check_virus() == 2)
-					return 0
-	return 1
+					return FALSE
+	return TRUE
 
 /datum/objective/crew/medicaldoctor
 
@@ -133,5 +133,5 @@
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION)
 			if(get_area(H) != /area/medical/morgue)
-				return 0
-	return 1
+				return FALSE
+	return TRUE

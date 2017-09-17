@@ -7,9 +7,9 @@
 
 /datum/objective/crew/headofsecurity/datfukkendisk/check_completion()
 	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/headofsecurity/enjoyyourstay
 	explanation_text = "Welcome to Space Station 13. Enjoy your stay."
@@ -20,18 +20,12 @@
 
 /datum/objective/crew/headofsecurity/enjoyyourstay/update_explanation_text()
 	. = ..()
-	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.")
+	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.", "Security is a mission, not an intermission.")
 	explanation_text = pick(edglines)
 
 /datum/objective/crew/headofsecurity/enjoyyourstay/check_completion()
-	explanation_text = "Enforce Space Law at all costs."
-	if(owner.current)
-		var/mob/living/carbon/human/H = owner.current
-		var/obj/item/card/id/theID = H.get_idcard()
-		if(istype(theID))
-			if(!H.get_assignment() == "Head of Security")
-				return 0
-	return 1
+	explanation_text = "Enforce Space Law to the best of your ability."
+	return TRUE
 
 /datum/objective/crew/securityofficer/
 
@@ -44,18 +38,12 @@
 
 /datum/objective/crew/securityofficer/enjoyyourstay/update_explanation_text()
 	. = ..()
-	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.")
+	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.", "Security is a mission, not an intermission.")
 	explanation_text = pick(edglines)
 
 /datum/objective/crew/securityofficer/enjoyyourstay/check_completion()
-	explanation_text = "Enforce Space Law at all costs."
-	if(owner.current)
-		var/mob/living/carbon/human/H = owner.current
-		var/obj/item/card/id/theID = H.get_idcard()
-		if(istype(theID))
-			if(!H.get_assignment() == "Security Officer")
-				return 0
-	return 1
+	explanation_text = "Enforce Space Law to the best of your ability."
+	return TRUE
 
 /datum/objective/crew/warden/
 
@@ -68,18 +56,12 @@
 
 /datum/objective/crew/warden/enjoyyourstay/update_explanation_text()
 	. = ..()
-	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.")
+	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.", "Security is a mission, not an intermission.")
 	explanation_text = pick(edglines)
 
 /datum/objective/crew/warden/enjoyyourstay/check_completion()
-	explanation_text = "Enforce Space Law at all costs."
-	if(owner.current)
-		var/mob/living/carbon/human/H = owner.current
-		var/obj/item/card/id/theID = H.get_idcard()
-		if(istype(theID))
-			if(!H.get_assignment() == "Warden")
-				return 0
-	return 1
+	explanation_text = "Enforce Space Law to the best of your ability."
+	return TRUE
 
 /datum/objective/crew/detective/
 
@@ -92,18 +74,12 @@
 
 /datum/objective/crew/detective/enjoyyourstay/update_explanation_text()
 	. = ..()
-	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.", "Well, at least you know fashion.")
+	var/list/edglines = list("Welcome to Space Station 13. Enjoy your stay.", "You signed up for this.", "Abandon hope.", "The tide's gonna stop eventually.", "Hey, someone's gotta do it.", "No, you can't resign.", "Security is a mission, not an intermission.", "Well, at least you know fashion.")
 	explanation_text = pick(edglines)
 
 /datum/objective/crew/detective/enjoyyourstay/check_completion()
-	explanation_text = "Enforce Space Law at all costs."
-	if(owner.current)
-		var/mob/living/carbon/human/H = owner.current
-		var/obj/item/card/id/theID = H.get_idcard()
-		if(istype(theID))
-			if(!H.get_assignment() == "Detective")
-				return 0
-	return 1
+	explanation_text = "Enforce Space Law to the best of your ability."
+	return TRUE
 
 /datum/objective/crew/lawyer/
 
@@ -115,5 +91,5 @@
 		for(var/datum/mind/M in SSticker.minds)
 			if(M.current && isliving(M.current))
 				if(!M.special_role && !M.assigned_role == "Security Officer" && !M.assigned_role == "Detective" && !M.assigned_role == "Head of Security" && !M.assigned_role == "Lawyer" && !M.assigned_role == "Warden" && get_area(M.current) != typesof(/area/security))
-					return 0
-		return 1
+					return FALSE
+		return TRUE
