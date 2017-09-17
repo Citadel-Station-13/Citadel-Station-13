@@ -403,7 +403,6 @@
 #include "code\game\gamemodes\antag_spawner_cit.dm"
 #include "code\game\gamemodes\cit_objectives.dm"
 #include "code\game\gamemodes\events.dm"
-#include "code\game\gamemodes\factions.dm"
 #include "code\game\gamemodes\game_mode.dm"
 #include "code\game\gamemodes\objective.dm"
 #include "code\game\gamemodes\objective_items.dm"
