@@ -32,6 +32,7 @@
 	if(ishuman(destination))
 		var/mob/living/carbon/human/H = destination
 		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
+		H.apply_vore_prefs() // possibly actually fixes losing bellies upon cloning too, maybe.
 	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
@@ -253,6 +254,7 @@
 		domutcheck()
 
 	give_genitals(TRUE)//Give all genitalia that DNA says you should have, remove any pre-existing ones as this is a hardset!
+	apply_vore_prefs()
 
 	if(mrace || newfeatures || ui)
 		update_body()

@@ -208,7 +208,6 @@
 		H.set_cloned_appearance()
 
 		H.suiciding = FALSE
-		H.apply_vore_prefs()
 	attempting = FALSE
 	return TRUE
 
