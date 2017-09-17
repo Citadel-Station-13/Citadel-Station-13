@@ -22,11 +22,7 @@
 	if(!QDELETED(C))
 		qdel(circuit)
 		circuit = C
-<<<<<<< HEAD
-		C.forceMove(null)
-=======
 		C.loc = null
->>>>>>> 85e6e41... Puts the computer circuit board back in nullspace where it supposedly belongs (#30762)
 
 /obj/machinery/computer/Destroy()
 	QDEL_NULL(circuit)
