@@ -168,9 +168,8 @@ Thus, the two variables affect pump operation are set in New():
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
+/obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user, turf/T in world)
 	. = ..()
-		var/turf/T = get_turf(src)
 		//var/area/A = get_area(src)
 		if(. && on && is_operational())
 			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
