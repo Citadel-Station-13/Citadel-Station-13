@@ -20,11 +20,8 @@ GLOBAL_LIST_INIT(huds, list(
 	ANTAG_HUD_SINTOUCHED = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_SOULLESS = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_CLOCKWORK = new/datum/atom_hud/antag(),
-<<<<<<< HEAD
 	ANTAG_HUD_BORER = new/datum/atom_hud/antag(),
-=======
 	ANTAG_HUD_BROTHER = new/datum/atom_hud/antag/hidden(),
->>>>>>> 1e4d1ca... Traitorbro gamemode (#30344)
 	))
 
 /datum/atom_hud
