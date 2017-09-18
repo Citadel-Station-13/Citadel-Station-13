@@ -258,12 +258,8 @@ Difficulty: Very Hard
 /obj/machinery/smartfridge/black_box/accept_check(obj/item/O)
 	if(!istype(O))
 		return FALSE
-<<<<<<< HEAD
-	if(is_type_in_typecache(O, blacklist))
-=======
 	if(blacklist[O])
 		visible_message("<span class='boldwarning'>[src] ripples as it rejects [O]. The device will not accept items that have been removed from it.</span>")
->>>>>>> 4ede789... The code standards keep changing and it frightens me
 		return FALSE
 	return TRUE
 
