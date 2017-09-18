@@ -40,11 +40,8 @@
 #define ANTAG_HUD_SINTOUCHED	16
 #define ANTAG_HUD_SOULLESS		17
 #define ANTAG_HUD_CLOCKWORK		18
-<<<<<<< HEAD
 #define ANTAG_HUD_BORER			19
-=======
-#define ANTAG_HUD_BROTHER		19
->>>>>>> 1e4d1ca... Traitorbro gamemode (#30344)
+#define ANTAG_HUD_BROTHER		20
 
 // Notification action types
 #define NOTIFY_JUMP "jump"
