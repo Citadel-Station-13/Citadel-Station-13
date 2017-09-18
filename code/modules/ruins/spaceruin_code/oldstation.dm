@@ -17,13 +17,8 @@
 
 /obj/item/paper/fluff/ruins/oldstation/protohealth
 	name = "Health Analyser Report"
-<<<<<<< HEAD
-	info = "<b>*Health Analyser*</b><br><br>The portable Health Analyser is essentially a handheld varient of a health analyser. Years of research have concluded with this device which is \
-	capable of diagnosing even the most critical, obscure or technical injuries any humanoid entity is suffering in a easy to understand format that even a non-trained health professional \
-=======
 	info = "<b>*Health Analyser*</b><br><br>The portable Health Analyser is essentially a handheld variant of a health analyser. Years of research have concluded with this device which is \
 	capable of diagnosing even the most critical, obscure or technical injuries any humanoid entity is suffering in an easy to understand format that even a non-trained health professional \
->>>>>>> 81e5154... Various grammar fixes
 	can understand.<br><br>The health analyser is expected to go into full production as standard issue medical kit."
 
 /obj/item/paper/fluff/ruins/oldstation/protogun
@@ -31,13 +26,8 @@
 	info = "<b>*K14-Multiphase Energy Gun*</b><br><br>The K14 Prototype Energy Gun is the first Energy Rifle that has been successfully been able to not only hold a larger ammo charge \
 	than other gun models, but is capable of swapping between different energy projectile types on command with no incidents.<br><br>The weapon still suffers several drawbacks, its alternative, \
 	non laser fire mode, can only fire one round before exhausting the energy cell, the weapon also remains prohibitively expensive, nonetheless NT Market Research fully believe this weapon \
-<<<<<<< HEAD
-	will form the backbone of our Energy weapon cataloge.<br><br>The K14 is expected to undergo revision to fix the ammo issues, the K15 is expected to replace the 'stun' setting with a \
-	'disable' setting in a attempt to bypass the ammo issues."
-=======
 	will form the backbone of our Energy weapon catalogue.<br><br>The K14 is expected to undergo revision to fix the ammo issues, the K15 is expected to replace the 'stun' setting with a \
 	'disable' setting in an attempt to bypass the ammo issues."
->>>>>>> 81e5154... Various grammar fixes
 
 /obj/item/paper/fluff/ruins/oldstation/protosing
 	name = "Singularity Generator"
