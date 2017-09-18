@@ -305,12 +305,8 @@ Difficulty: Very Hard
 //in it's own proc to avoid issues with items that nolonger exist in the code base.
 //try catch doesn't always prevent byond runtimes from halting a proc,
 /obj/machinery/smartfridge/black_box/proc/create_item(item_type)
-<<<<<<< HEAD
-	new item_type(src)
-=======
 	var/obj/O = new item_type(src)
 	blacklist[O] = TRUE
->>>>>>> 4ede789... The code standards keep changing and it frightens me
 
 /obj/machinery/smartfridge/black_box/Destroy(force = FALSE)
 	if(force)
