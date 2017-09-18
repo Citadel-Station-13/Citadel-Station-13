@@ -11,9 +11,9 @@
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 1
-	density = 1
-	use_power = 0
+	anchored = TRUE
+	density = TRUE
+	use_power = NO_POWER_USE
 
 	var/obj/machinery/atmospherics/components/binary/circulator/cold_circ
 	var/obj/machinery/atmospherics/components/binary/circulator/hot_circ
@@ -162,13 +162,7 @@
 
 		t += "<div class='statusDisplay'>"
 
-		var/displaygen = lastgenlev
-		if(displaygen < 1000000) //less than a MW
-			displaygen /= 1000
-			t += "Output: [round(displaygen,0.01)] kW"
-		else
-			displaygen /= 1000000
-			t += "Output: [round(displaygen,0.01)] MW"
+		t += "Output: [DisplayPower(lastgenlev)]"
 
 		t += "<BR>"
 

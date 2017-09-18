@@ -1,9 +1,9 @@
 //Will include consumable gene mods in the future.
 
-/obj/item/weapon/genemod
+/obj/item/genemod
 	name = "genetic modifier"
 	desc = "Microbodies which can grow, morph, or otherwise change an organism into something else."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "dnainjector"
 	throw_speed = 3
 	throw_range = 5
@@ -18,5 +18,5 @@
 
 	var/used = 0
 
-/obj/item/weapon/genemod/proc/use(mob/living/carbon/human/target)
+/obj/item/genemod/proc/use(mob/living/carbon/human/target)
 	return

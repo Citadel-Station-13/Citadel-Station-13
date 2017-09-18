@@ -3,7 +3,10 @@
 	var/shape = "human"
 	var/sensitivity = 1
 	var/list/genital_flags = list()
-	var/can_masturbate_with = 0
+	var/can_masturbate_with = FALSE
+	var/masturbation_verb = "masturbate"
+	var/can_climax = FALSE
+	var/fluid_transfer_factor = 0.0 //How much would a partner get in them if they climax using this?
 	var/size = 2 //can vary between num or text, just used in icon_state strings
 	var/fluid_id = null
 	var/fluid_max_volume = 50
@@ -13,6 +16,9 @@
 	var/producing = FALSE
 	var/aroused_state = FALSE //Boolean used in icon_state strings
 	var/aroused_amount = 50 //This is a num from 0 to 100 for arousal percentage for when to use arousal state icons.
+	var/obj/item/organ/genital/linked_organ
+	var/through_clothes = FALSE
+	var/internal 		= FALSE
 
 /obj/item/organ/genital/Initialize()
 	. = ..()
@@ -34,6 +40,52 @@
 	update_appearance()
 	update_link()
 
+//exposure and through-clothing code
+/mob/living/carbon
+	var/list/exposed_genitals = list() //Keeping track of them so we don't have to iterate through every genitalia and see if exposed
+
+/obj/item/organ/genital/proc/is_exposed()
+	if(!owner)
+		return FALSE
+	if(internal)
+		return FALSE
+	if(through_clothes)
+		return TRUE
+
+/obj/item/organ/genital/proc/toggle_through_clothes()
+	if(through_clothes)
+		through_clothes = FALSE
+		owner.exposed_genitals -= src
+	else
+		through_clothes = TRUE
+		owner.exposed_genitals += src
+	if(ishuman(owner)) //recast to use update genitals proc
+		var/mob/living/carbon/human/H = owner
+		H.update_genitals()
+
+/mob/living/carbon/verb/toggle_genitals()
+	set category = "IC"
+	set name = "Expose/Hide genitals"
+	set desc = "Allows you to toggle which genitals should show through clothes or not."
+
+	var/list/genital_list = list()
+	for(var/obj/item/organ/O in internal_organs)
+		if(istype(O, /obj/item/organ/genital))
+			var/obj/item/organ/genital/G = O
+			if(!G.internal)
+				genital_list += G
+	if(!genital_list.len) //There is nothing to expose
+		return
+	//Full list of exposable genitals created
+	var/obj/item/organ/genital/picked_organ
+	picked_organ = input(src, "Expose/Hide genitals", "Choose which genitalia to expose/hide", null) in genital_list
+	if(picked_organ)
+		picked_organ.toggle_through_clothes()
+	return
+
+
+
+
 /obj/item/organ/genital/proc/update_size()
 
 /obj/item/organ/genital/proc/update_appearance()
@@ -41,6 +93,9 @@
 /obj/item/organ/genital/proc/update_link()
 
 /obj/item/organ/genital/proc/remove_ref()
+	if(linked_organ)
+		linked_organ.linked_organ = null
+		linked_organ = null
 
 /obj/item/organ/genital/Insert(mob/living/carbon/M, special = 0)
 	..()
@@ -58,21 +113,21 @@
 		var/obj/item/organ/genital/GtoClean
 		for(GtoClean in internal_organs)
 			qdel(GtoClean)
-
-	if(dna.features["has_cock"])
-		give_penis()
-		if(dna.features["has_balls"])
-			give_balls()
-	else if(dna.features["has_ovi"])
-		give_ovipositor()
-		if(dna.features["has_eggsack"])
-			give_eggsack()
+	//Order should be very important. FIRST vagina, THEN testicles, THEN penis, as this affects the order they are rendered in.
 	if(dna.features["has_breasts"])
 		give_breasts()
 	if(dna.features["has_vag"])
 		give_vagina()
-		if(dna.features["has_womb"])
-			give_womb()
+	if(dna.features["has_womb"])
+		give_womb()
+	if(dna.features["has_balls"])
+		give_balls()
+	if(dna.features["has_cock"])
+		give_penis()
+	if(dna.features["has_ovi"])
+		give_ovipositor()
+	if(dna.features["has_eggsack"])
+		give_eggsack()
 
 /mob/living/carbon/human/proc/give_penis()
 	if(!dna)
@@ -208,17 +263,15 @@
 	if(H.disabilities & HUSK)
 		return
 	//start scanning for genitals
-	var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
-	if(H.is_groin_exposed(worn_stuff))
-		//ORDER is important here. Vaginas first, theoretical testes after, and penis LAST.
-		//The latter is always drawn on top of the former.
-		if(H.has_vagina())
-			genitals_to_add += H.getorganslot("vagina")
-		if(H.has_penis())
-			genitals_to_add += H.getorganslot("penis")
-	if(H.is_chest_exposed(worn_stuff))
-		if(H.has_breasts())
-			genitals_to_add += H.getorganslot("breasts")
+	//var/list/worn_stuff = H.get_equipped_items()//cache this list so it's not built again
+
+	for(var/obj/item/organ/O in H.internal_organs)
+		if(istype(O, /obj/item/organ/genital))
+			var/obj/item/organ/genital/G = O
+			if(G.is_exposed()) //Checks appropriate clothing slot and if it's through_clothes
+				genitals_to_add += H.getorganslot(G.slot)
+	//Now we added all genitals that aren't internal and should be rendered
+
 	var/image/I
 	//start applying overlays
 	for(var/layer in relevant_layers)
@@ -243,8 +296,10 @@
 				G.aroused_state = FALSE
 			icon_string = "[G.slot]_[S.icon_state]_[size]_[G.aroused_state]_[layertext]"
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
+
 			if(S.center)
 				I = center_image(I,S.dimension_x,S.dimension_y)
+
 			if(use_skintones && H.dna.features["genitals_use_skintone"])
 				I.color = "#[skintone2hex(H.skin_tone)]"
 			else

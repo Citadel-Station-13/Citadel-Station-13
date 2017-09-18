@@ -30,7 +30,7 @@
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
 	var/list/protected_areas = list()//Areas that are protected and excluded from the affected areas.
-	var/target_z = ZLEVEL_STATION //The z-level to affect
+	var/target_z = ZLEVEL_STATION_PRIMARY //The z-level to affect
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
@@ -69,7 +69,7 @@
 			if(telegraph_message)
 				to_chat(M, telegraph_message)
 			if(telegraph_sound)
-				M << sound(telegraph_sound)
+				SEND_SOUND(M, sound(telegraph_sound))
 	addtimer(CALLBACK(src, .proc/start), telegraph_duration)
 
 /datum/weather/proc/start()
@@ -83,7 +83,7 @@
 			if(weather_message)
 				to_chat(M, weather_message)
 			if(weather_sound)
-				M << sound(weather_sound)
+				SEND_SOUND(M, sound(weather_sound))
 	START_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/wind_down), weather_duration)
 
@@ -98,7 +98,7 @@
 			if(end_message)
 				to_chat(M, end_message)
 			if(end_sound)
-				M << sound(end_sound)
+				SEND_SOUND(M, sound(end_sound))
 	STOP_PROCESSING(SSweather, src)
 	addtimer(CALLBACK(src, .proc/end), end_duration)
 

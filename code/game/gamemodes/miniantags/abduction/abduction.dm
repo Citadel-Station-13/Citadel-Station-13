@@ -7,6 +7,7 @@
 	name = "abduction"
 	config_tag = "abduction"
 	antag_flag = ROLE_ABDUCTOR
+	false_report_weight = 1
 	recommended_enemies = 2
 	required_players = 15
 	maximum_players = 50
@@ -96,9 +97,9 @@
 	agent_landmarks.len = max_teams
 	scientist_landmarks.len = max_teams
 	for(var/obj/effect/landmark/abductor/A in GLOB.landmarks_list)
-		if(istype(A,/obj/effect/landmark/abductor/agent))
+		if(istype(A, /obj/effect/landmark/abductor/agent))
 			agent_landmarks[text2num(A.team)] = A
-		else if(istype(A,/obj/effect/landmark/abductor/scientist))
+		else if(istype(A, /obj/effect/landmark/abductor/scientist))
 			scientist_landmarks[text2num(A.team)] = A
 
 	var/team_name = team_names[team_number]
@@ -200,7 +201,7 @@
 	to_chat(world, text)
 
 //Landmarks
-// TODO: Split into seperate landmarks for prettier ships
+// TODO: Split into separate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1
 
@@ -210,7 +211,6 @@
 
 // OBJECTIVES
 /datum/objective/experiment
-	dangerrating = 10
 	target_amount = 6
 	var/team
 
@@ -244,3 +244,7 @@
 	var/datum/atom_hud/antag/hud = GLOB.huds[ANTAG_HUD_ABDUCTOR]
 	hud.leave_hud(alien_mind.current)
 	set_antag_hud(alien_mind.current, null)
+
+/datum/game_mode/abduction/generate_report()
+	return "Nearby spaceships report crewmembers having been [pick("kidnapped", "abducted", "captured")] and [pick("tortured", "experimented on", "probed", "implanted")] by mysterious \
+			grey humanoids, before being sent back.  Be advised that the kidnapped crewmembers behave strangely upon return to duties."

@@ -5,6 +5,7 @@
 	var/max_x = 0
 	var/max_y = 0
 	modules = list(/datum/mapGeneratorModule/river)
+	buildmode_name = "Pattern: Lava Rivers"
 
 /datum/mapGenerator/lavaland/defineRegion(turf/Start, turf/End, replace = 0)
 	start_z = Start.z
@@ -15,7 +16,7 @@
 	..()
 
 /datum/mapGeneratorModule/river
-	var/river_type = /turf/open/floor/plating/lava/smooth
+	var/river_type = /turf/open/lava/smooth
 	var/river_nodes = 4
 	var/start_z = 5
 

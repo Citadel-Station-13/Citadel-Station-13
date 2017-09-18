@@ -50,22 +50,21 @@
 			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
 
 		//Effects of bloodloss
+		var/word = pick("dizzy","woozy","faint")
 		switch(blood_volume)
 			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
 				if(prob(5))
-					to_chat(src, "<span class='warning'>You feel [pick("dizzy","woozy","faint")].</span>")
+					to_chat(src, "<span class='warning'>You feel [word].</span>")
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.01, 1))
 			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
 				adjustOxyLoss(round((BLOOD_VOLUME_NORMAL - blood_volume) * 0.02, 1))
 				if(prob(5))
 					blur_eyes(6)
-					var/word = pick("dizzy","woozy","faint")
 					to_chat(src, "<span class='warning'>You feel very [word].</span>")
 			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
 				adjustOxyLoss(5)
 				if(prob(15))
-					Paralyse(rand(1,3))
-					var/word = pick("dizzy","woozy","faint")
+					Unconscious(rand(20,60))
 					to_chat(src, "<span class='warning'>You feel extremely [word].</span>")
 			if(0 to BLOOD_VOLUME_SURVIVE)
 				death()
@@ -85,7 +84,7 @@
 
 		bleed_rate = max(bleed_rate - 0.5, temp_bleed)//if no wounds, other bleed effects (heparin) naturally decreases
 
-		if(bleed_rate && !bleedsuppress)
+		if(bleed_rate && !bleedsuppress && !(status_flags & FAKEDEATH))
 			bleed(bleed_rate)
 
 //Makes a blood drop, leaking amt units of blood from the mob
@@ -138,7 +137,8 @@
 		if(blood_id == C.get_blood_id())//both mobs have the same blood substance
 			if(blood_id == "blood") //normal blood
 				if(blood_data["viruses"])
-					for(var/datum/disease/D in blood_data["viruses"])
+					for(var/thing in blood_data["viruses"])
+						var/datum/disease/D = thing
 						if((D.spread_flags & SPECIAL) || (D.spread_flags & NON_CONTAGIOUS))
 							continue
 						C.ForceContractDisease(D)
@@ -163,7 +163,8 @@
 		blood_data["donor"] = src
 		blood_data["viruses"] = list()
 
-		for(var/datum/disease/D in viruses)
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
 			blood_data["viruses"] += D.Copy()
 
 		blood_data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)

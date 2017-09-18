@@ -20,7 +20,7 @@
 			name = real_name
 		qdel(P)
 		return
-	if(istype(O, /obj/item/weapon/newspaper))
+	if(istype(O, /obj/item/newspaper))
 		if(!stat)
 			user.visible_message("[user] baps [name] on the nose with the rolled up [O].")
 			spawn(0)
@@ -31,7 +31,7 @@
 		..()
 
 /mob/living/simple_animal/pet/Initialize()
-	..()
+	. = ..()
 	if(pcollar)
 		pcollar = new(src)
 		regenerate_icons()

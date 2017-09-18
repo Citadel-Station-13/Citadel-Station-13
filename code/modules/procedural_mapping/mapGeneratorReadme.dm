@@ -80,7 +80,7 @@ mapGeneratorModule
 Simple Workflow:
 
 	1. Define a/some mapGeneratorModule(s) to your liking, choosing atoms and turfs to spawn
-	 #Note: I chose to split Turfs and Atoms off into seperate modules, but this is NOT required.
+	 #Note: I chose to split Turfs and Atoms off into separate modules, but this is NOT required.
 	 #Note: A mapGeneratorModule may have turfs AND atoms, so long as each is in it's appropriate list
 
 	2. Define a mapGenerator type who's modules list contains the typepath(s) of all the module(s) you wish to use
@@ -98,7 +98,7 @@ Simple Workflow:
 
 Option Suggestions:
 
-	* Have seperate modules for Turfs and Atoms, this is not enforced, but it is how I have structured my nature example.
+	* Have separate modules for Turfs and Atoms, this is not enforced, but it is how I have structured my nature example.
 	* If your map doesn't look quite to your liking, simply jiggle with the variables on your modules and the type probabilities
 	* You can mix and map premade areas with the procedural generation, for example mapping an entire flat land but having code generate just the grass tufts
 
@@ -127,7 +127,7 @@ Variable Breakdown (For Mappers):
 		clusterCheckFlags - A Bitfield that controls how the cluster checks work, All based on clusterMin and clusterMax guides
 		allowAtomsOnSpace - A Boolean for if we allow atoms to spawn on space tiles
 
-		clusterCheckFlags flags:
+		clusterCheckFlags flags_1:
 			CLUSTER_CHECK_NONE	0 			   //No checks are done, cluster as much as possible
 			CLUSTER_CHECK_DIFFERENT_TURFS	2  //Don't let turfs of DIFFERENT types cluster
 			CLUSTER_CHECK_DIFFERENT_ATOMS	4  //Don't let atoms of DIFFERENT types cluster

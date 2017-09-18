@@ -17,7 +17,7 @@
 
 	area_type = /area
 	protected_areas = list(/area/space)
-	target_z = ZLEVEL_STATION
+	target_z = ZLEVEL_STATION_PRIMARY
 
 	overlay_layer = ABOVE_OPEN_TURF_LAYER //Covers floors only
 	immunity_type = "lava"
@@ -48,7 +48,7 @@
 	end_duration = 0
 
 	area_type = /area
-	target_z = ZLEVEL_STATION
+	target_z = ZLEVEL_STATION_PRIMARY
 
 /datum/weather/advanced_darkness/update_areas()
 	for(var/V in impacted_areas)
@@ -91,14 +91,21 @@
 
 	probability = 90
 
-/datum/weather/ash_storm/impact(mob/living/L)
-	if(istype(L.loc, /obj/mecha))
-		return
-	if(ishuman(L))
+/datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
+	if(istype(L.loc, /obj/mecha)) //Mechs are immune
+		return TRUE
+	if(ishuman(L)) //Are you immune?
 		var/mob/living/carbon/human/H = L
 		var/thermal_protection = H.get_thermal_protection()
 		if(thermal_protection >= FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-			return
+			return TRUE
+	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
+		return is_ash_immune(L.loc)
+	return FALSE //RIP you
+
+/datum/weather/ash_storm/impact(mob/living/L)
+	if(is_ash_immune(L))
+		return
 	L.adjustFireLoss(4)
 
 /datum/weather/ash_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.
@@ -134,8 +141,8 @@
 
 	area_type = /area
 	protected_areas = list(/area/maintenance, /area/ai_monitored/turret_protected/ai_upload, /area/ai_monitored/turret_protected/ai_upload_foyer,
-	/area/ai_monitored/turret_protected/ai, /area/storage/emergency, /area/storage/emergency2, /area/shuttle)
-	target_z = ZLEVEL_STATION
+	/area/ai_monitored/turret_protected/ai, /area/storage/emergency/starboard, /area/storage/emergency/port, /area/shuttle)
+	target_z = ZLEVEL_STATION_PRIMARY
 
 	immunity_type = "rad"
 
