@@ -19,7 +19,7 @@
 	features = random_features()
 	age = rand(AGE_MIN,AGE_MAX)
 
-/datum/preferences/proc/update_preview_icon()
+/datum/preferences/proc/update_preview_icon(nude = 0)
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
@@ -56,7 +56,7 @@
 				previewJob = job
 				break
 
-	if(previewJob)
+	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
 	CHECK_TICK
