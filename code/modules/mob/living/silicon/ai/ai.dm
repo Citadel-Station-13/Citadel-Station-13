@@ -512,11 +512,6 @@
 /mob/living/silicon/ai/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
-<<<<<<< HEAD
-	if (stat == 2)
-		return 1
-=======
->>>>>>> 51bdfae... Stops AIs from taking actions while depowered (#30723)
 	var/list/L = alarms[class]
 	for (var/I in L)
 		if (I == A.name)
