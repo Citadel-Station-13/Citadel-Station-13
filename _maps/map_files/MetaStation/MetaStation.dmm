@@ -3588,6 +3588,7 @@
 	pixel_y = 3
 	},
 /obj/item/gun/ballistic/shotgun/riot,
+/obj/item/gun/ballistic/shotgun/riot,
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
@@ -99820,7 +99821,7 @@ aVs
 aVs
 aVs
 cVF
-cVW
+cVF
 cWn
 cVF
 cVF
