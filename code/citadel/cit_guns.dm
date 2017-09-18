@@ -28,24 +28,36 @@
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
 	category = list("Weapons")
 
-/obj/item/gun/ballistic/pistol/antitank
+/obj/item/gun/ballistic/automatic/pistol/antitank
 	name = "Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate your wrist."
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "atp"
 	item_state = "pistol"
-	recoil = 2
+	recoil = 6
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
-	fire_delay = 40
+	fire_delay = 50
 	burst_size = 1
 	origin_tech = "combat=7"
 	can_suppress = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
+	fire_sound = 'sound/weapons/blastcannon.ogg'
+	spread = 30		//damn thing has no rifling.
 
 
-/obj/item/gun/ballistic/pistol/antitank/update_icon()
+/obj/item/gun/ballistic/automatic/pistol/antitank/update_icon()
+	..()
 	if(magazine)
-		icon_state = "atp"
+		cut_overlays()
+		add_overlay("atp-mag")
 	else
-		icon_state = "atp-e"
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+/obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	name = "Syndicate Anti Tank Pistol"
+	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
+	pin = /obj/item/device/firing_pin/implant/pindicate
+	origin_tech = "combat=7;syndicate=6"
+
