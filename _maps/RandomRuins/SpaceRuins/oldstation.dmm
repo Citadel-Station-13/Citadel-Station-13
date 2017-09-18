@@ -4274,7 +4274,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/showcase/oldpod,
+/obj/structure/showcase/machinery/oldpod,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kq" = (
@@ -4286,7 +4286,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/showcase/oldpod,
+/obj/structure/showcase/machinery/oldpod,
 /turf/open/floor/plasteel/floorgrime,
 /area/ruin/space/has_grav/ancientstation)
 "kr" = (
