@@ -22,3 +22,20 @@
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_SING_PULL "atom_sing_pull"					//from base of atom/singularity_pull(): (S, current_size)
 #define COMSIG_MOVABLE_CROSSED "movable_crossed"                //from base of atom/movable/Crossed(): (atom/movable)
+<<<<<<< HEAD
+=======
+#define COMSIG_MOVABLE_COLLIDE "movable_collide"				//from base of atom/movable/Collide(): (atom)
+#define COMSIG_MOVABLE_IMPACT "movable_impact"					//from base of atom/movable/throw_impact(): (atom, throwingdatum)
+
+// /obj/item signals
+#define COMSIG_ITEM_ATTACK "item_attack"						//from base of obj/item/attack(): (mob/living/target, mob/living/user)
+#define COMSIG_ITEM_ATTACK_SELF "item_attack_self"				//from base of obj/item/attack_self(): (mob)
+#define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"				//from base of obj/item/attack_obj(): (obj, mob)
+
+// /obj/item/clothing signals
+#define COMSIG_SHOES_STEP_ACTION "shoes_step_action"			//from base of obj/item/clothing/shoes/proc/step_action(): ()
+
+// /obj/machinery signals
+#define COMSIG_MACHINE_PROCESS "machine_process"				//from machinery subsystem fire(): ()
+#define COMSIG_MACHINE_PROCESS_ATMOS "machine_process_atmos"	//from air subsystem process_atmos_machinery(): () 
+>>>>>>> 76c08c6... New squeaky datum and plushes (#30710)

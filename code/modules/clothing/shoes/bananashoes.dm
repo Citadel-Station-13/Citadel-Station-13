@@ -8,18 +8,20 @@
 	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
 
+<<<<<<< HEAD
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
 	..()
 	bananium = new/datum/material_container(src,list(MAT_BANANIUM),200000)
+=======
+/obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
+	. = ..()
+	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
+>>>>>>> 76c08c6... New squeaky datum and plushes (#30710)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
+	. = ..()
 	if(on)
-		if(footstep > 1)//honks when its on
-			playsound(src, 'sound/items/bikehorn.ogg', 75, 1)
-			footstep = 0
-		else
-			footstep++
-
 		new/obj/item/grown/bananapeel/specialpeel(get_step(src,turn(usr.dir, 180))) //honk
 		bananium.use_amount_type(100, MAT_BANANIUM)
 		if(bananium.amount(MAT_BANANIUM) < 100)
@@ -27,8 +29,6 @@
 			flags_1 &= ~NOSLIP_1
 			update_icon()
 			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
-	else
-		..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
 	var/sheet_amount = bananium.retrieve_all()
