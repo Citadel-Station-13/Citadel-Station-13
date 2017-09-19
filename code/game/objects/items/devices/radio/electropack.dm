@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = TRUE
+<<<<<<< HEAD
 	var/code = 2
 	var/frequency = 1449
 	var/shock_cooldown = 0
@@ -24,6 +25,21 @@
 	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
 
 /obj/item/device/electropack/Destroy()
+=======
+	var/code = 2
+	var/frequency = 1449
+	var/shock_cooldown = 0
+
+/obj/item/device/electropack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] hooks [user.p_them()]self to the electropack and spams the trigger! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (FIRELOSS)
+
+/obj/item/device/electropack/Initialize()
+	. = ..()
+	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+
+/obj/item/device/electropack/Destroy()
+>>>>>>> 772924b... More Initialize() fixes, requires someone to test with DB (#30831)
 	SSradio.remove_object(src, frequency)
 	return ..()
 

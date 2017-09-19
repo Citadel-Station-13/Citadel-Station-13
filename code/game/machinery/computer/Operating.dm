@@ -6,6 +6,7 @@
 	circuit = /obj/item/circuitboard/computer/operating
 	var/mob/living/carbon/human/patient
 	var/obj/structure/table/optable/table
+<<<<<<< HEAD
 
 	light_color = LIGHT_COLOR_BLUE
 
@@ -14,6 +15,16 @@
 	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
+=======
+
+	light_color = LIGHT_COLOR_BLUE
+
+/obj/machinery/computer/operating/Initialize()
+	. = ..()
+	find_table()
+
+/obj/machinery/computer/operating/proc/find_table()
+>>>>>>> 772924b... More Initialize() fixes, requires someone to test with DB (#30831)
 	for(var/dir in GLOB.cardinals)
 		table = locate(/obj/structure/table/optable, get_step(src, dir))
 		if(table)

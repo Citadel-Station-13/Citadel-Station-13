@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/machinery/computer/pod
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
@@ -21,6 +22,31 @@
 		return
 
 	if(!connected)
+=======
+/obj/machinery/computer/pod
+	name = "mass driver launch control"
+	desc = "A combined blastdoor and mass driver control unit."
+	var/obj/machinery/mass_driver/connected = null
+	var/title = "Mass Driver Controls"
+	var/id = 1
+	var/timing = 0
+	var/time = 30
+	var/range = 4
+
+
+/obj/machinery/computer/pod/Initialize()
+	. = ..()
+	for(var/obj/machinery/mass_driver/M in range(range, src))
+		if(M.id == id)
+			connected = M
+
+
+/obj/machinery/computer/pod/proc/alarm()
+	if(stat & (NOPOWER|BROKEN))
+		return
+
+	if(!connected)
+>>>>>>> 772924b... More Initialize() fixes, requires someone to test with DB (#30831)
 		say("Cannot locate mass driver connector. Cancelling firing sequence!")
 		return
 
