@@ -361,7 +361,7 @@
 		taste_message += "[vore_taste]"
 	else
 		if(ishuman(src))
-			taste_message += "a normal [mrace]"
+			taste_message += "normal, like a critter should."
 		else
 			taste_message += "a plain old normal [src]"
 
