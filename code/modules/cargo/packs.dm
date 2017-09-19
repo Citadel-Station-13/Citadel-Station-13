@@ -1643,7 +1643,15 @@
 	                /obj/item/toy/talking/griffin,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
+<<<<<<< HEAD
 	                /obj/item/toy/carpplushie,
+=======
+	                /obj/item/toy/plush/carpplushie,
+	                /obj/item/toy/plush/lizardplushie,
+	                /obj/item/toy/plush/snakeplushie,
+	                /obj/item/toy/plush/nukeplushie,
+	                /obj/item/toy/plush/slimeplushie,
+>>>>>>> b4f2533... Adds some new plushies (#30751)
 	                /obj/item/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/gun/ballistic/shotgun/toy/crossbow,
