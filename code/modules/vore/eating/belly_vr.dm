@@ -149,7 +149,7 @@
 	prey.forceMove(owner)
 	internal_contents.Add(prey)
 
-	var/datum/belly/B = check_belly(owner)
+//	var/datum/belly/B = check_belly(owner)
 //	if(B.silenced == FALSE) //this needs more testing later
 	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
 
