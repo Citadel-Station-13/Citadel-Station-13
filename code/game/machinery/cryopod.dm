@@ -314,7 +314,7 @@
 
 /obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
 	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
-		if(istype(I, T.typepath) && T.GLOB.possible_items(I))
+		if(istype(I, T.typepath) && GLOB.possible_items(I))
 			return CRYO_OBJECTIVE
 	for(var/T in preserve_items)
 		if(istype(I, T) && !(I.type in do_not_preserve_items))
