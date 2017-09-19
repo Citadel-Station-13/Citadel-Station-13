@@ -8,16 +8,10 @@
 	var/datum/material_container/bananium
 	actions_types = list(/datum/action/item_action/toggle)
 
-<<<<<<< HEAD
-/obj/item/clothing/shoes/clown_shoes/banana_shoes/New()
-	..()
-	bananium = new/datum/material_container(src,list(MAT_BANANIUM),200000)
-=======
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/Initialize()
 	. = ..()
 	AddComponent(/datum/component/material_container, list(MAT_BANANIUM), 200000, TRUE)
 	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 75)
->>>>>>> 76c08c6... New squeaky datum and plushes (#30710)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/step_action()
 	. = ..()
