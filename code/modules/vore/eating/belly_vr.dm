@@ -153,12 +153,8 @@
 //	if(B.silenced == FALSE) //this needs more testing later
 	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
 
-	owner.updateVRPanel()
-	for(var/mob/living/M in internal_contents)
-		M.updateVRPanel()
-
 	if(inside_flavor)
-		to_chat(prey, "<span class='notice'>[inside_flavor]</span>")
+		to_chat(prey, "<span class='warning'><B>[src.inside_flavor]</B></span>")
 
 // Get the line that should show up in Examine message if the owner of this belly
 // is examined.   By making this a proc, we not only take advantage of polymorphism,
@@ -377,9 +373,6 @@
 	if(!silent)
 		for(var/mob/hearer in range(1,owner))
 			hearer << sound(target.vore_sound,volume=80)
-	owner.updateVRPanel()
-	for(var/mob/living/M in internal_contents)
-		M.updateVRPanel()
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes

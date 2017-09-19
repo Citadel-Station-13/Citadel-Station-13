@@ -7,7 +7,7 @@
 //	var/feeding = FALSE					// Are we going to feed someone else?
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
-	var/openpanel = FALSE					// Is the vore panel open?
+	var/openpanel = 0					// Is the vore panel open?
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -361,7 +361,7 @@
 		taste_message += "[vore_taste]"
 	else
 		if(ishuman(src))
-			taste_message += "normal, like a critter should."
+			taste_message += "normal, like a critter should"
 		else
 			taste_message += "a plain old normal [src]"
 

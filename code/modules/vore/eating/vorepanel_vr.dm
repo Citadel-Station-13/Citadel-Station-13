@@ -21,19 +21,6 @@
 	picker_holder.popup = new(src, "insidePanel","Vore Panel", 400, 600, picker_holder)
 	picker_holder.popup.set_content(dat)
 	picker_holder.popup.open()
-	src.openpanel = TRUE
-
-/mob/living/proc/updateVRPanel() //Panel popup update call from belly events.
-	if(src.openpanel == TRUE)
-		var/datum/vore_look/picker_holder = new()
-		picker_holder.loop = picker_holder
-		picker_holder.selected = vore_organs[vore_selected]
-
-		var/dat = picker_holder.gen_vui(src)
-
-		picker_holder.popup = new(src, "insidePanel","Vore Panel!", 400, 600, picker_holder)
-		picker_holder.popup.set_content(dat)
-		picker_holder.popup.open()
 
 //
 // Callback Handler for the Inside form
@@ -196,6 +183,7 @@
 	dat += "<a href='?src=\ref[src];refresh=1'>Refresh</a>"
 	dat += "<a href='?src=\ref[src];setflavor=1'>Set Flavor</a>"
 
+	dat += "<HR>"
 	switch(user.digestable)
 		if(TRUE)
 			dat += "<a href='?src=\ref[src];toggledg=1'>Toggle Digestable (Currently: ON)</a>"
@@ -217,7 +205,6 @@
 
 	if(href_list["close"])
 		qdel(src)  // Cleanup
-		user.openpanel = FALSE
 		return
 
 	if(href_list["show_int"])
@@ -264,7 +251,7 @@
 				if("Devour") //Eat the inside mob
 					if(!user.vore_selected)
 						to_chat(user, "<span class='warning'>Pick a belly on yourself first!</span>")
-						return TRUE
+						return
 
 					var/datum/belly/TB = user.vore_organs[user.vore_selected]
 					to_chat(user, "<span class='warning'>You begin to [lowertext(TB.vore_verb)] [M] into your [lowertext(TB.name)]!</span>")
@@ -293,7 +280,7 @@
 				if("Use Hand")
 					if(user.stat)
 						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return TRUE
+						return
 
 					user.ClickOn(T)
 					sleep(5) //Seems to exit too fast for the panel to update
@@ -306,26 +293,26 @@
 			intent = alert("Eject all, Move all?","Query","Eject all","Cancel","Move all")
 			switch(intent)
 				if("Cancel")
-					return TRUE
+					return
 
 				if("Eject all")
 					if(user.stat)
 						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return TRUE
+						return
 
 					selected.release_all_contents()
-					playsound(user, 'sound/vore/pred/escape.ogg', volume=80)
+					playsound(user, 'sound/vore/pred/escape.ogg', vol=80)
 					to_chat(user.loc,"<span class='danger'>Everything is released from [user]!</span>")
 
 				if("Move all")
 					if(user.stat)
 						to_chat(user, "<span class='warning'>You can't do that in your state!</span>")
-						return TRUE
+						return
 
 					var/choice = input("Move all where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
 
 					if(choice == "Cancel - Don't Move")
-						return TRUE
+						return
 					else
 						var/datum/belly/B = user.vore_organs[choice]
 						for(var/atom/movable/tgt in selected.internal_contents)
@@ -337,7 +324,7 @@
 
 		var/atom/movable/tgt = locate(href_list["insidepick"])
 		if(!(tgt in selected.internal_contents)) //Old menu, needs updating because they aren't really there.
-			return TRUE //Forces update
+			return TRUE//Forces update
 		intent = "Examine"
 		intent = alert("Examine, Eject, Move? Examine if you want to leave this box.","Query","Examine","Eject","Move")
 		switch(intent)
@@ -361,7 +348,7 @@
 				var/choice = input("Move [tgt] where?","Select Belly") in user.vore_organs + "Cancel - Don't Move"
 
 				if(choice == "Cancel - Don't Move")
-					return FALSE
+					return
 				else
 					var/datum/belly/B = user.vore_organs[choice]
 					if (!(tgt in selected.internal_contents))
@@ -488,7 +475,7 @@
 					selected.struggle_messages_inside = initial(selected.struggle_messages_inside)
 
 			if("Cancel - No Changes")
-				return FALSE
+				return
 
 	if(href_list["b_verb"])
 		var/new_verb = html_encode(input(usr,"New verb when eating (infinitive tense, e.g. nom or swallow):","New Verb") as text|null)
@@ -503,7 +490,7 @@
 		var/choice = input(user,"Currently set to [selected.vore_sound]","Select Sound") in GLOB.pred_vore_sounds + "Cancel - No Changes"
 
 		if(choice == "Cancel")
-			return FALSE
+			return
 
 		selected.vore_sound = GLOB.pred_vore_sounds[choice]
 
@@ -553,7 +540,7 @@
 		var/choice = input("Where do you want your [selected.name] to lead if prey resists?","Select Belly") as null|anything in (user.vore_organs + "None - Remove" - selected.name)
 
 		if(!choice) //They cancelled, no changes
-			return FALSE
+			return
 		else if(choice == "None - Remove")
 			selected.transferlocation = null
 		else
@@ -620,7 +607,7 @@
 		var/choice = alert(user, "This button is for those who don't like being digested. It can make you undigestable to all mobs. Digesting you is currently: [user.digestable ? "Allowed" : "Prevented"]", "", "Allow Digestion", "Cancel", "Prevent Digestion")
 		switch(choice)
 			if("Cancel")
-				return FALSE
+				return
 			if("Allow Digestion")
 				user.digestable = TRUE
 			if("Prevent Digestion")
