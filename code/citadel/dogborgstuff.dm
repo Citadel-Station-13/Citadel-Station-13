@@ -337,7 +337,6 @@
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
 		/obj/item/device/aicard,
-		/obj/item/device/paicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
@@ -352,7 +351,9 @@
 		/obj/item/nuke_core_container,
 		/obj/item/areaeditor/blueprints,
 		/obj/item/documents/syndicate,
-		/obj/item/disk/nuclear)
+		/obj/item/disk/nuclear,
+		/obj/item/bombcore,
+		/obj/item/grenade)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
