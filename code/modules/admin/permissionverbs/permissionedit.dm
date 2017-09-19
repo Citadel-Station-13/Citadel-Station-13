@@ -119,7 +119,7 @@
 	if(!adm_ckey || !istext(adm_ckey) || !isnum(new_permission))
 		return
 
-	var/datum/DBQuery/query_get_perms = SSdbcore.NewQuery("SELECT id, flags_1 FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
+	var/datum/DBQuery/query_get_perms = SSdbcore.NewQuery("SELECT id, flags FROM [format_table_name("admin")] WHERE ckey = '[adm_ckey]'")
 	if(!query_get_perms.warn_execute())
 		return
 
@@ -130,7 +130,7 @@
 	if(!admin_id)
 		return
 
-	var/datum/DBQuery/query_change_perms = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET flags_1 = [new_permission] WHERE id = [admin_id]")
+	var/datum/DBQuery/query_change_perms = SSdbcore.NewQuery("UPDATE `[format_table_name("admin")]` SET flags = [new_permission] WHERE id = [admin_id]")
 	if(!query_change_perms.warn_execute())
 		return
 	var/datum/DBQuery/query_change_perms_log = SSdbcore.NewQuery("INSERT INTO `[format_table_name("admin_log")]` (`id` ,`datetime` ,`adminckey` ,`adminip` ,`log` ) VALUES (NULL , NOW( ) , '[usr.ckey]', '[usr.client.address]', 'Edit permission [rights2text(new_permission)] (flag = [new_permission]) to admin [adm_ckey]');")
