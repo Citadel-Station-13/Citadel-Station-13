@@ -148,8 +148,8 @@
 		dat += "<br><a href='?src=\ref[src];b_sound=\ref[selected]'>Set Vore Sound</a>"
 		dat += "<a href='?src=\ref[src];b_soundtest=\ref[selected]'>Test</a>"
 
-		//Belly silence
-		dat += "<br><a href='?src=\ref[src];silenced=\ref[selected]'>Belly Silence ([selected.silenced ? "Silenced" : "Noisy"])</a>"
+	//	//Belly silence
+	//	dat += "<br><a href='?src=\ref[src];silenced=\ref[selected]'>Belly Silence ([selected.silenced ? "Silenced" : "Noisy"])</a>"
 
 		//Belly messages
 		dat += "<br><a href='?src=\ref[src];b_msgs=\ref[selected]'>Belly Messages</a>"
@@ -509,7 +509,7 @@
 
 	if(href_list["b_soundtest"])
 		user << selected.vore_sound
-
+/*
 	if(href_list["silenced"])
 		if(selected.silenced == FALSE)
 			selected.silenced = TRUE
@@ -517,7 +517,7 @@
 		else if(selected.silenced == TRUE)
 			selected.silenced = FALSE
 			to_chat(usr,"<span class='warning'>The [selected.name] will play the internal loop to prey within it.</span>")
-
+*/
 	if(href_list["b_tastes"])
 		selected.can_taste = !selected.can_taste
 

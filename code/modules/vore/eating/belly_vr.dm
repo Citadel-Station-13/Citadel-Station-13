@@ -23,7 +23,7 @@
 	var/escapable = FALSE					// Belly can be resisted out of at any time
 	var/escapetime = 60 SECONDS				// Deciseconds, how long to escape this belly
 	var/digestchance = 0					// % Chance of stomach beginning to digest if prey struggles
-	var/silenced = FALSE					// Will the heartbeat/fleshy internal loop play?
+//	var/silenced = FALSE					// Will the heartbeat/fleshy internal loop play?
 	var/escapechance = 0 					// % Chance of prey beginning to escape if prey struggles.
 	var/transferchance = 0 					// % Chance of prey being
 	var/can_taste = FALSE						// If this belly prints the flavor of prey when it eats someone.
@@ -150,8 +150,8 @@
 	internal_contents.Add(prey)
 
 	var/datum/belly/B = check_belly(owner)
-	if(B.silenced == FALSE)
-		prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
+//	if(B.silenced == FALSE) //this needs more testing later
+	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
 
 	owner.updateVRPanel()
 	for(var/mob/living/M in internal_contents)
