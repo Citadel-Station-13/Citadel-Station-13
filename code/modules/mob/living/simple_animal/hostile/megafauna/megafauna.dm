@@ -98,12 +98,16 @@
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return
-	visible_message(
-		"<span class='danger'>[src] devours [L]!</span>",
-		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
-		adjustBruteLoss(-L.maxHealth/2)
-	L.gib()
+	if(L.stat = SOFT_CRIT)
+		if(L.devourment = TRUE)
+			nom_mob
+		else
+			visible_message(
+				"<span class='danger'>[src] devours [L]!</span>",
+				"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+			if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
+				adjustBruteLoss(-L.maxHealth/2)
+			L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)
