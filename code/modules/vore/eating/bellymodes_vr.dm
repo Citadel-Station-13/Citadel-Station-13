@@ -21,7 +21,7 @@
 //////////////////////////// DM_DIGEST ////////////////////////////
 	if(digest_mode == DM_DIGEST)
 		for (var/mob/living/M in internal_contents)
-			if(prob(15))
+			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
@@ -62,14 +62,14 @@
 
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
-				M.adjustFireLoss(1)
+				M.adjustFireLoss(digest_burn)
 				owner.nutrition += 1
 		return
 
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		for (var/mob/living/M in internal_contents)
-			if(prob(15))
+			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
