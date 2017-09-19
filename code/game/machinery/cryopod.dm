@@ -312,9 +312,9 @@
 #define CRYO_PRESERVE 1
 #define CRYO_OBJECTIVE 2
 
-/obj/machinery/cryopod/proc/should_preserve_item()
+/obj/machinery/cryopod/proc/should_preserve_item(obj/item/I)
 	for(var/datum/objective_item/steal/T in control_computer.theft_cache)
-		if(istype(var/T))
+		if(istype(I, T.typepath) && T.GLOB.possible_items(I))
 			return CRYO_OBJECTIVE
 	for(var/T in preserve_items)
 		if(istype(I, T) && !(I.type in do_not_preserve_items))
@@ -326,8 +326,8 @@
 /obj/machinery/cryopod/proc/despawn_occupant()
 	var/mob/living/mob_occupant = occupant
 	//Drop all items into the pod.
-	for(var/obj/item/W in mob.occupant)
-		transferItemToLoc(W,src,force)
+	for(var/obj/item/W in occupant)
+		mob_occupant.transferItemToLoc(W,src,force)
 
 		if(W.contents.len) //Make sure we catch anything not handled by qdel() on the items.
 			if(should_preserve_item(W) != CRYO_DESTROY) // Don't remove the contents of things that need preservation
