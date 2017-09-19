@@ -99,7 +99,7 @@
 	if(!L)
 		return
 	if(L.stat = SOFT_CRIT)
-		if(L.devourment = TRUE)
+		if(vore_active = TRUE && L.devourment = TRUE)
 			nom_mob
 		else
 			visible_message(
