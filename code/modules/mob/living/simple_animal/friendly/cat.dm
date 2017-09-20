@@ -30,6 +30,7 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 	devourable = TRUE
+	no_vore = FALSE
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
