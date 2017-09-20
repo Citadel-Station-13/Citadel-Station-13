@@ -34,6 +34,8 @@
 	var/tmp/list/internal_contents = list()		// People/Things you've eaten into this belly!
 	var/tmp/is_full								// Flag for if digested remeans are present. (for disposal messages)
 	var/tmp/emotePend = FALSE					// If there's already a spawned thing counting for the next emote
+	var/swallow_time = 10 SECONDS			// for mob transfering automation
+	var/vore_capacity = 1				// The capacity (in people) this person can hold
 
 	// Don't forget to watch your commas at the end of each line if you change these.
 	var/list/struggle_messages_outside = list(

@@ -98,9 +98,9 @@
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return
-	if(L.stat = SOFT_CRIT)
-		if(vore_active = TRUE && L.devourment = TRUE)
-			nom_mob
+	if(L.stat == SOFT_CRIT)
+		if(vore_active == TRUE && L.devourable == TRUE)
+			animal_nom(L)
 		else
 			visible_message(
 				"<span class='danger'>[src] devours [L]!</span>",

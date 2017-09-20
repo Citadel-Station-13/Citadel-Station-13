@@ -161,7 +161,7 @@
 	belly_target.nom_mob(prey, user)
 //	user.update_icons()
 	stop_pulling()
-
+	
 	// Inform Admins
 	var/prey_braindead
 	var/prey_stat
