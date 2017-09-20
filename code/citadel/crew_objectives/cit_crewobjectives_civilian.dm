@@ -166,10 +166,10 @@
 
 /datum/objective/crew/assistant/departmentclothes/update_explanation_text()
 	. = ..()
-	explanation_text = "Be wearing a [targetuniform] at the end of the shift."
+	explanation_text = "Be wearing a [initial(targetuniform.name)] at the end of the shift."
 
 /datum/objective/crew/assistant/departmentclothes/check_completion()
-	if(owner.current)
+	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		if(istype(H.w_uniform, targetuniform))
 			return TRUE
@@ -184,7 +184,7 @@
 
 /datum/objective/crew/assistant/spacesuit/update_explanation_text()
 	. = ..()
-	if(owner.current)
+	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		explanation_text = "Get your "
 		if(H.dna.species.id == "avian")
@@ -217,7 +217,7 @@
 	explanation_text = "Have a non-assistant ID registered to you at the end of the shift."
 
 /datum/objective/crew/assistant/promotion/check_completion()
-	if(owner.current)
+	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		var/obj/item/card/id/theID = H.get_idcard()
 		if(istype(theID))
