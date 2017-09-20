@@ -1,8 +1,9 @@
 
-/mob/living/simple_animal/hostile/megafauna/dragon/
+/mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
-	vore_organs = list(/datum/belly/megafauna/dragon/maw,/datum/belly/megafauna/dragon/gullet,
-					/datum/belly/megafauna/dragon/gut)
+	vore_organs = list(new/datum/belly/megafauna/dragon/maw,
+					new/datum/belly/megafauna/dragon/gullet,
+					new/datum/belly/megafauna/dragon/gut)
 
 /datum/belly/megafauna/dragon
 	human_prey_swallow_time = 5 SECONDS // maybe enough to switch targets if distracted
