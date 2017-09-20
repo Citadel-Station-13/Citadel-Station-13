@@ -85,6 +85,8 @@
 	//domestication
 	var/tame = 0
 
+	no_vore = TRUE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals += src
