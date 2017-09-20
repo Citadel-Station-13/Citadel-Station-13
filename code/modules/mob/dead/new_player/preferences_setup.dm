@@ -1,10 +1,12 @@
-
-	//The mob should have a gender you want before running this proc. Will run fine without H
+//The mob should have a gender you want before running this proc. Will run fine without H
 /datum/preferences/proc/random_character(gender_override)
 	if(gender_override)
 		gender = gender_override
 	else
 		gender = pick(MALE,FEMALE)
+	underwear = random_underwear(gender)
+	undershirt = random_undershirt(gender)
+	socks = random_socks()
 	skin_tone = random_skin_tone()
 	hair_style = random_hair_style(gender)
 	facial_hair_style = random_facial_hair_style(gender)
@@ -18,16 +20,11 @@
 	age = rand(AGE_MIN,AGE_MAX)
 
 /datum/preferences/proc/update_preview_icon(nude = 0)
-	var/wide_icon = 0
-	var/stamp_x = 0
-	var/stamp_y = 1
-	if(features["taur"] != "None")
-		wide_icon = 1
 	// Silicons only need a very basic preview since there is no customization for them.
 	if(job_engsec_high)
 		switch(job_engsec_high)
 			if(AI_JF)
-				preview_icon = icon('icons/mob/AI.dmi', "AI", SOUTH)
+				preview_icon = icon('icons/mob/ai.dmi', "AI", SOUTH)
 				preview_icon.Scale(64, 64)
 				return
 			if(CYBORG)
@@ -36,7 +33,7 @@
 				return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = new()
+	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -62,39 +59,26 @@
 	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
-	mannequin.update_body()
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale((112), (32))
+	preview_icon.Scale(48+32, 16+32)
 	CHECK_TICK
 	mannequin.setDir(NORTH)
 
 	var/icon/stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	if(wide_icon)
-		stamp_x = 16
-	else
-		stamp_x = 32
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 25, 17)
 	CHECK_TICK
 	mannequin.setDir(WEST)
 	stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	if(wide_icon)
-		stamp_x = 48
-	else
-		stamp_x = 64
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 1, 9)
 	CHECK_TICK
 	mannequin.setDir(SOUTH)
 	stamp = getFlatIcon(mannequin)
 	CHECK_TICK
-	if(wide_icon)
-		stamp_x = -15
-	else
-		stamp_x = 1
-	preview_icon.Blend(stamp, ICON_OVERLAY, stamp_x, stamp_y)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 49, 1)
 	CHECK_TICK
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2) // Scaling here to prevent blurring in the browser.
 	CHECK_TICK
-	qdel(mannequin)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)

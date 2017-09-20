@@ -27,7 +27,7 @@
 	else
 		if(C.ears && (C.ears.flags_2 & HEALS_EARS_2))
 			deaf = max(deaf - 1, 1)
-			ear_damage = max(ear_damage - 0.10, 0)
+			ear_damage = max(ear_damage - 0.1, 0)
 		// if higher than UNHEALING_EAR_DAMAGE, no natural healing occurs.
 		if(ear_damage < UNHEALING_EAR_DAMAGE)
 			ear_damage = max(ear_damage - 0.05, 0)
@@ -79,9 +79,6 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
-
-/obj/item/organ/ears/cat/adjustEarDamage(ddmg, ddeaf)
-	..(ddmg*2,ddeaf*2)
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()

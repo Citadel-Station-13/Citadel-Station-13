@@ -9,6 +9,8 @@
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRIED
+	disliked_food = TOXIC
 
 /datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -24,12 +26,14 @@
 	say_mod = "chirps"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings")
+	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
 	default_features = list("snout" = "Sharp", "wings" = "None", "taur" = "None", "mam_body_markings" = "Hawk")
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -44,12 +48,14 @@
 	id = "aquatic"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears")
+	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None", "mam_ears" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT
+	disliked_food = TOXIC
 
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -64,12 +70,14 @@
 	id = "insect"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail")
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -98,6 +106,7 @@
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
 	roundstart = 1
+	liked_food = MEAT
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
 

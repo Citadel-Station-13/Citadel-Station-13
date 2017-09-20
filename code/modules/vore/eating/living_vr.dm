@@ -5,14 +5,20 @@
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
 //	var/feeding = FALSE					// Are we going to feed someone else?
-
+	var/vore_taste = null				// What the character tastes like
+	var/no_vore = FALSE 					// If the character/mob can vore.
+	var/openpanel = 0					// Is the vore panel open?
 
 //
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
+	M.verbs += /mob/living/proc/lick
+	if(M.no_vore) //If the mob isn's supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
+		M << "<span class='warning'>The creature that you are can not eat others.</span>"
+		return TRUE
+	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
@@ -21,7 +27,7 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return FALSE
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -32,7 +38,8 @@
 				var/datum/belly/B = new /datum/belly(M)
 				B.immutable = TRUE
 				B.name = "Stomach"
-				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
+				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]"
+				B.can_taste = TRUE
 				M.vore_organs[B.name] = B
 				M.vore_selected = B.name
 
@@ -302,6 +309,7 @@
 	P.digestable = src.digestable
 	P.devourable = src.devourable
 	P.belly_prefs = src.vore_organs
+	P.vore_taste = src.vore_taste
 
 	return TRUE
 
@@ -318,9 +326,48 @@
 	src.digestable = P.digestable
 	src.devourable = P.devourable
 	src.vore_organs = list()
+	src.vore_taste = P.vore_taste
 
 	for(var/I in P.belly_prefs)
 		var/datum/belly/Bp = P.belly_prefs[I]
 		src.vore_organs[Bp.name] = Bp.copy(src)
 
 	return TRUE
+//
+// Clearly super important. Obviously.
+//
+/mob/living/proc/lick(var/mob/living/tasted in oview(1))
+	set name = "Lick Someone"
+	set category = "Vore"
+	set desc = "Lick someone nearby!"
+
+	if(!istype(tasted))
+		return
+
+	if(src == stat)
+		return
+
+	src.setClickCooldown(50)
+
+	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
+
+
+/mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
+	if(!vore_taste && !allow_generic)
+		return FALSE
+
+	var/taste_message = ""
+	if(vore_taste && (vore_taste != ""))
+		taste_message += "[vore_taste]"
+	else
+		if(ishuman(src))
+			taste_message += "normal, like a critter should"
+		else
+			taste_message += "a plain old normal [src]"
+
+/*	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.touching.reagent_list.len) //Just the first one otherwise I'll go insane.
+			var/datum/reagent/R = H.touching.reagent_list[1]
+			taste_message += " You also get the flavor of [R.taste_description] from something on them"*/
+	return taste_message

@@ -1,6 +1,8 @@
 // Process the predator's effects upon the contents of its belly (i.e digestion/transformation etc)
 // Called from /mob/living/Life() proc.
 /datum/belly/proc/process_Life()
+	var/sound/prey_gurgle = sound(get_sfx("digest_prey"))
+	var/sound/prey_digest = sound(get_sfx("death_prey"))
 
 /////////////////////////// Auto-Emotes ///////////////////////////
 	if((digest_mode in emote_lists) && !emotePend)
@@ -19,11 +21,11 @@
 //////////////////////////// DM_DIGEST ////////////////////////////
 	if(digest_mode == DM_DIGEST)
 		for (var/mob/living/M in internal_contents)
-			if(prob(50))
+			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local("digest_prey",60)
+				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
 			//Pref protection!
 			if (!M.digestable)
@@ -50,9 +52,9 @@
 
 				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local("death_prey",60)
+				M.playsound_local(get_turf(M), null, 45, S = prey_digest)
 				digestion_death(M)
 				owner.update_icons()
 				continue
@@ -60,18 +62,18 @@
 
 			// Deal digestion damage (and feed the pred)
 			if(!(M.status_flags & GODMODE))
-				M.adjustFireLoss(1)
+				M.adjustFireLoss(digest_burn)
 				owner.nutrition += 1
 		return
 
 ///////////////////////////// DM_HEAL /////////////////////////////
 	if(digest_mode == DM_HEAL)
 		for (var/mob/living/M in internal_contents)
-			if(prob(50))
+			if(prob(25))
 				M.stop_sound_channel(CHANNEL_PRED)
-				playsound(get_turf(owner),"digest_pred",50,0,-6,0,channel=CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
-				M.playsound_local("digest_prey",60)
+				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
 			if(M.stat != DEAD)
 				if(owner.nutrition >= NUTRITION_LEVEL_STARVING && (M.health < M.maxHealth))
@@ -79,3 +81,13 @@
 					M.adjustFireLoss(-1)
 					owner.nutrition -= 10
 		return
+
+////////////////////////// DM_NOISY /////////////////////////////////
+//for when you just want people to squelch around
+	if(digest_mode == DM_NOISY)
+		for (var/mob/living/M in internal_contents)
+			if(prob(35))
+				M.stop_sound_channel(CHANNEL_PRED)
+				playsound(get_turf(owner),"digest_pred",35,0,-6,0,channel=CHANNEL_PRED)
+				M.stop_sound_channel(CHANNEL_PRED)
+				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
