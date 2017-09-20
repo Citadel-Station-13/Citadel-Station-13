@@ -367,10 +367,11 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(10) && !issilicon(humanc) && GLOB.master_mode != "extended")
+		if(prob(10) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed)
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
-			SSticker.generate_individual_objectives(humanc.mind)
+			if(config.allow_crew_objectives)
+				SSticker.generate_individual_objectives(humanc.mind)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
