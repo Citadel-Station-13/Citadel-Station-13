@@ -30,7 +30,6 @@
 	newObjective.owner = crewMind
 	crewMind.objectives += newObjective
 	to_chat(crewMind, "<B>Your objective:</B> [newObjective.explanation_text]")
-	//crewMind.announce_objectives()
 
 /datum/objective/crew/
 	explanation_text = "Yell on the development discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"

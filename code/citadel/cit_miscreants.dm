@@ -22,7 +22,6 @@
 	to_chat(crewMind, "<B><font size=3 color=red>You are a Miscreant.</font></B>")
 	to_chat(crewMind, "<B>Pursuing your objective is entirely optional, but it isn't tracked. Performing traitorous acts not directly related to your objective may result in permanent termination of your employment.</B>")
 	to_chat(crewMind, "<B>Your objective:</B> [newObjective.explanation_text]")
-	//crewMind.announce_objectives()
 
 /datum/objective/miscreant
 	explanation_text = "Something broke. Horribly. Dear god, im so sorry. Yell about this in the development discussion channel of citadels discord."
@@ -34,9 +33,6 @@
 
 /datum/objective/miscreant/incompetent
 	explanation_text = "Be as useless and incompetent as possible without getting killed."
-
-/datum/objective/miscreant/strike
-	explanation_text = "Try to convince your department to go on strike, and refuse to do any work."
 
 /datum/objective/miscreant/litterbug
 	explanation_text = "Make a huge mess wherever you go."
@@ -55,9 +51,6 @@
 
 /datum/objective/miscreant/whiny
 	explanation_text = "Complain incessantly about every minor issue you find."
-
-/datum/objective/miscreant/damage
-	explanation_text = "Cause as much property damage as possible without actually harming anyone."
 
 /*				Citadel's Miscreant Objectives				*/
 
