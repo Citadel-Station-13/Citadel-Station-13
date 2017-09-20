@@ -92,7 +92,9 @@
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_gurgle)
 
+
 //////////////////////////DM_DRAGON /////////////////////////////////////
+//because dragons need snowflake guts
 	if(digest_mode == DM_DRAGON)
 		for (var/mob/living/M in internal_contents)
 			if(prob(25))
@@ -120,9 +122,8 @@
 				//Send messages
 				to_chat(owner, "<span class='warning'>[digest_alert_owner]</span>")
 				to_chat(M, "<span class='warning'>[digest_alert_prey]</span>")
-				M.visible_message("<span class='notice'>You watch as [owner]'s form loses its additions.</span>")
+				M.visible_message("<span class='notice'>You watch as [owner]'s guts loudly rumble as it finishes off a meal.</span>")
 
-				owner.nutrition += 400 // so eating dead mobs gives you *something*.
 				M.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
@@ -137,5 +138,4 @@
 				M.adjustFireLoss(digest_burn)
 				M.adjustToxLoss(4) // something something plasma based acids
 				M.adjustCloneLoss(3) // eventually this'll kill you if you're healing everything else, you nerds.
-				owner.nutrition += 1
 		return
