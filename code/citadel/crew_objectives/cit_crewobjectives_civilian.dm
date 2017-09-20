@@ -187,21 +187,21 @@
 	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		explanation_text = "Get your "
-		if(H.dna.species == /datum/species/avian)
+		if(is_species(H, /datum/species/avian))
 			explanation_text += "scratchy claws "
-		else if(H.dna.species == /datum/species/mammal)
+		else if(is_species(H, /datum/species/mammal))
 			explanation_text += "dirty paws "
-		else if(H.dna.species == /datum/species/aquatic)
+		else if(is_species(H, /datum/species/aquatic))
 			explanation_text += "fishy hands "
-		else if(H.dna.species == /datum/species/xeno)
+		else if(is_species(H, /datum/species/xeno))
 			explanation_text += "weird claws "
-		else if(H.dna.species == /datum/species/guilmon)
+		else if(is_species(H, /datum/species/guilmon))
 			explanation_text += "digital claws "
-		else if(H.dna.species == /datum/species/lizard)
+		else if(is_species(H, /datum/species/lizard))
 			explanation_text += "slimy claws "
-		else if(H.dna.species == /datum/species/datashark)
+		else if(is_species(H, /datum/species/shark/datashark))
 			explanation_text += "glitchy hands "
-		else if(H.dna.species == /datum/species/insect)
+		else if(is_species(H, /datum/species/insect))
 			explanation_text += "gross grabbers "
 		else
 			explanation_text += "grubby hands "
