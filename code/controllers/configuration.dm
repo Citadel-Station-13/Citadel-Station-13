@@ -286,6 +286,10 @@ GLOBAL_PROTECT(config_dir)
 
 	var/debug_admin_hrefs = FALSE	//turns off admin href token protection for debugging purposes
 
+	var/allow_crew_objectives = FALSE
+	var/allow_miscreants = FALSE
+	var/allow_extended_miscreants = FALSE
+
 /datum/configuration/New()
 	gamemode_cache = typecacheof(/datum/game_mode,TRUE)
 	for(var/T in gamemode_cache)
@@ -816,6 +820,12 @@ GLOBAL_PROTECT(config_dir)
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
 					mice_roundstart = text2num(value)
+				if("allow_crew_objectives")
+					allow_crew_objectives = TRUE
+				if("allow_miscreants")
+					allow_miscreants = TRUE
+				if("allow_extended_miscreants")
+					allow_extended_miscreants = TRUE
 				else
 					WRITE_FILE(GLOB.config_error_log, "Unknown setting in configuration: '[name]'")
 		else if(type == "policies")
