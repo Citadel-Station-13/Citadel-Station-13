@@ -95,6 +95,9 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	if(vore_active)
+		init_belly()
+	verbs |= /mob/living/proc/animal_nom
 
 
 /mob/living/simple_animal/Login()

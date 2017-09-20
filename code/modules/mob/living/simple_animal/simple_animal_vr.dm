@@ -2,19 +2,17 @@
 	// List of targets excluded (for now) from being eaten by this mob.
 	var/list/prey_exclusions = list()
 	devourable = FALSE //insurance because who knows.
-	var/vore_active = FALSE					// If vore behavior is enabled for this mob
-	var/vore_ignores_undigestable = TRUE	// Refuse to eat mobs who are undigestable by the prefs toggle.
+	var/vore_active = FALSE				// If vore behavior is enabled for this mob
 
 	var/vore_capacity = 1				// The capacity (in people) this person can hold
-	var/vore_default_mode = DM_HOLD	// Default bellymode (DM_DIGEST, DM_HOLD, DM_ABSORB)
+	var/vore_default_mode = DM_DIGEST	// Default bellymode (DM_DIGEST, DM_HOLD, DM_ABSORB)
+	var/vore_digest_chance = 25			// Chance to switch to digest mode if resisted
+	var/vore_absorb_chance = 0			// Chance to switch to absorb mode if resisted
+	var/vore_escape_chance = 25			// Chance of resisting out of mob
+
 	var/vore_stomach_name				// The name for the first belly if not "stomach"
 	var/vore_stomach_flavor				// The flavortext for the first belly if not the default
 
-/mob/living/simple_animal/Initialize()
-	. = ..()
-	if(vore_active)
-		init_belly()
-	verbs |= /mob/living/proc/animal_nom
 
 // Release belly contents beforey being gc'd!
 /mob/living/simple_animal/Destroy()
@@ -24,28 +22,6 @@
 	prey_excludes.Cut()
 	. = ..()
 
-/*
-// Attempt to eat target
-// TODO - Review this.  Could be some issues here
-/mob/living/simple_animal/proc/EatTarget()
-	ai_log("vr/EatTarget() [target_mob]",2)
-	init_belly()
-	stop_automated_movement = 1
-	var/old_target = target_mob
-	handle_stance(STANCE_BUSY)
-	. = animal_nom(target_mob)
-	update_icon()
-	if(.)
-		// If we succesfully ate them, lose the target
-		LoseTarget()
-		return old_target
-	else if(old_target == target_mob)
-		// If we didn't but they are still our target, go back to attack.
-		// but don't run the handler immediately, wait until next tick
-		// Otherwise we'll be in a possibly infinate loop
-		set_stance(STANCE_ATTACK)
-	stop_automated_movement = 0
-*/
 /mob/living/simple_animal/death()
 	for(var/I in vore_organs)
 		var/datum/belly/B = vore_organs[I]
@@ -60,14 +36,13 @@
 		return
 
 	var/datum/belly/B = new /datum/belly(src)
-	B.immutable = 1
+	B.immutable = TRUE
 	B.name = vore_stomach_name ? vore_stomach_name : "stomach"
 	B.inside_flavor = vore_stomach_flavor ? vore_stomach_flavor : "Your surroundings are warm, soft, and slimy. Makes sense, considering you're inside \the [name]."
 	B.digest_mode = vore_default_mode
 	B.escapable = vore_escape_chance > 0
 	B.escapechance = vore_escape_chance
 	B.digestchance = vore_digest_chance
-	B.absorbchance = vore_absorb_chance
 	B.human_prey_swallow_time = swallowTime
 	B.nonhuman_prey_swallow_time = swallowTime
 	B.vore_verb = "swallow"
