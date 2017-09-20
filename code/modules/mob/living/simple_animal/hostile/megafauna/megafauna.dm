@@ -89,25 +89,25 @@
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
-		if(L.stat != DEAD)
-			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
+		if(L.stat >= SOFT_CRIT)
+			if(vore_active == TRUE && L.devourable == TRUE)
+				dragon_feeding(src,L)
+			else if(L.stat == DEAD)
+				devour(L)
 		else
-			devour(L)
+			if(L.stat != DEAD)
+				if(!client && ranged && ranged_cooldown <= world.time)
+					OpenFire()
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return
-	if(L.stat == SOFT_CRIT)
-		if(vore_active == TRUE && L.devourable == TRUE)
-			animal_nom(L)
-		else
-			visible_message(
-				"<span class='danger'>[src] devours [L]!</span>",
-				"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-			if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
-				adjustBruteLoss(-L.maxHealth/2)
-			L.gib()
+	visible_message(
+		"<span class='danger'>[src] devours [L]!</span>",
+		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
+	if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
+		adjustBruteLoss(-L.maxHealth/2)
+	L.gib()
 
 /mob/living/simple_animal/hostile/megafauna/ex_act(severity, target)
 	switch (severity)

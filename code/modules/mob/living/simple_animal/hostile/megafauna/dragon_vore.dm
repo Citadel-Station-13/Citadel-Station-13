@@ -1,9 +1,16 @@
-
 /mob/living/simple_animal/hostile/megafauna/dragon
 	vore_active = TRUE
-	vore_organs = list(new/datum/belly/megafauna/dragon/maw,
-					new/datum/belly/megafauna/dragon/gullet,
-					new/datum/belly/megafauna/dragon/gut)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
+	var/list/datum/belly/stomachs = list(
+				new /datum/belly/megafauna/dragon/maw(src),
+				new /datum/belly/megafauna/dragon/gullet(src),
+				new /datum/belly/megafauna/dragon/gut(src))
+	for(var/datum/belly/X in stomachs)
+		vore_organs[X.name] = X
+	var/datum/belly/selecting = stomachs[1]
+	vore_selected = selecting.name
+	return ..()
 
 /datum/belly/megafauna/dragon
 	human_prey_swallow_time = 5 SECONDS // maybe enough to switch targets if distracted

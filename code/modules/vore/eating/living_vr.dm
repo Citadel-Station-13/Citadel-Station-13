@@ -121,6 +121,42 @@
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
+//Dragon noms need to be faster
+/mob/living/proc/dragon_feeding(var/mob/living/user, var/mob/living/prey)
+	var/belly = user.vore_selected
+	return perform_dragon(user, prey, user, belly)
+
+/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 10)
+	//Sanity
+	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+		return
+
+	// The belly selected at the time of noms
+	var/datum/belly/belly_target = pred.vore_organs[belly]
+	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
+	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
+
+		// Prepare messages
+	if(user == pred) //Feeding someone to yourself
+		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+
+	// Announce that we start the attempt!
+	user.visible_message(attempt_msg)
+
+	if(!do_mob(src, user, swallow_time)) // one second should be good enough, right?
+		return FALSE // Prey escaped (or user disabled) before timer expired.
+
+	// If we got this far, nom successful! Announce it!
+	user.visible_message(success_msg)
+	playsound(user, belly_target.vore_sound, 100, 1)
+
+	// Actually shove prey into the belly.
+	belly_target.nom_mob(prey, user)
+	if (pred == user)
+		message_admins("[key_name(pred)] ate [key_name(prey)].")
+		log_attack("[key_name(pred)] ate [key_name(prey)]")
+	return TRUE
 //
 // Master vore proc that actually does vore procedures
 //
@@ -161,7 +197,7 @@
 	belly_target.nom_mob(prey, user)
 //	user.update_icons()
 	stop_pulling()
-	
+
 	// Inform Admins
 	var/prey_braindead
 	var/prey_stat
