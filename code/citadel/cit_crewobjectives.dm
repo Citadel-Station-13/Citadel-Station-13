@@ -8,6 +8,8 @@
 	return
 
 /datum/controller/subsystem/ticker/proc/generate_individual_objectives(var/datum/mind/crewMind)
+	if(!config.allow_crew_objectives)
+		return
 	if(!crewMind)
 		return
 	if(!crewMind.current || !crewMind.objectives || crewMind.special_role)
@@ -27,7 +29,8 @@
 		return
 	newObjective.owner = crewMind
 	crewMind.objectives += newObjective
-	crewMind.announce_objectives()
+	to_chat(crewMind, "<B>Your objective:</B> [newObjective.explanation_text]")
+	//crewMind.announce_objectives()
 
 /datum/objective/crew/
 	explanation_text = "Yell on the development discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"

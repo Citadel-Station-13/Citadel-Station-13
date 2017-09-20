@@ -93,6 +93,9 @@ GLOBAL_LIST_EMPTY(mentors)
 GLOBAL_VAR_INIT(looc_allowed, 1)
 GLOBAL_VAR_INIT(dlooc_allowed, 1)
 
+//Crew objective and miscreants stuff
+GLOBAL_VAR_INIT(miscreants_allowed, FALSE)
+
 /client/proc/reload_mentors()
 		set name = "Reload Mentors"
 		set category = "Admin"

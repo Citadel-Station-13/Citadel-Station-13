@@ -1,11 +1,13 @@
 /datum/controller/subsystem/ticker/proc/generate_miscreant_objectives(var/datum/mind/crewMind)
-	if(GLOB.master_mode == "extended")
-		return //Thinking about it, extended's chaos whether or not mini-antags are present. But eh, whatever. Here's a sanity check.
+	if(!GLOB.miscreants_allowed)
+		return
 	if(!crewMind)
 		return
 	if(!crewMind.current || !crewMind.objectives || crewMind.special_role)
 		return
 	if(!crewMind.assigned_role)
+		return
+	if(jobban_isbanned(crewMind, "Syndicate"))
 		return
 	var/list/objectiveTypes = typesof(/datum/objective/miscreant) - /datum/objective/miscreant
 	if(!objectiveTypes.len)
@@ -18,8 +20,9 @@
 	crewMind.objectives += newObjective
 	crewMind.special_role = "miscreant"
 	to_chat(crewMind, "<B><font size=3 color=red>You are a Miscreant.</font></B>")
-	to_chat(crewMind, "Pursuing your objective is entirely optional, but it isn't tracked. Performing traitorous acts not directly related to your objective may result in permanent termination of your employment.")
-	crewMind.announce_objectives()
+	to_chat(crewMind, "<B>Pursuing your objective is entirely optional, but it isn't tracked. Performing traitorous acts not directly related to your objective may result in permanent termination of your employment.</B>")
+	to_chat(crewMind, "<B>Your objective:</B> [newObjective.explanation_text]")
+	//crewMind.announce_objectives()
 
 /datum/objective/miscreant
 	explanation_text = "Something broke. Horribly. Dear god, im so sorry. Yell about this in the development discussion channel of citadels discord."
