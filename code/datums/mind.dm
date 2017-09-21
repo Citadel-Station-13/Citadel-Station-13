@@ -121,8 +121,9 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
-		L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
-		L.update_arousal_hud() //Removes the old icon
+		if(L.client && L.prefs)
+			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
+			L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
