@@ -128,6 +128,8 @@
 				playsound(get_turf(owner),"death_pred",45,0,-6,0,channel=CHANNEL_PRED)
 				M.stop_sound_channel(CHANNEL_PRED)
 				M.playsound_local(get_turf(M), null, 45, S = prey_digest)
+				M.spill_organs(FALSE,TRUE,TRUE)
+				M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
 				digestion_death(M)
 				owner.update_icons()
 				continue

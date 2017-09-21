@@ -8,6 +8,7 @@
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0					// Is the vore panel open?
+	var/consumed = FALSE				//is the mob devoured? Used for allowing simple_animals to LoseTarget faster
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -126,7 +127,7 @@
 	var/belly = user.vore_selected
 	return perform_dragon(user, prey, user, belly)
 
-/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 10)
+/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 20)
 	//Sanity
 	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
 		return
@@ -146,6 +147,7 @@
 
 	if(!do_mob(src, user, swallow_time)) // one second should be good enough, right?
 		return FALSE // Prey escaped (or user disabled) before timer expired.
+	if(user
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
@@ -285,6 +287,9 @@
 			for(var/atom/movable/M in B.internal_contents)
 				if(M.loc != src)
 					B.internal_contents.Remove(M)
+	if(!ismob(loc))
+		consumed = FALSE
+
 
 // OOC Escape code for pref-breaking or AFK preds
 //
