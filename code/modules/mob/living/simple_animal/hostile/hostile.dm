@@ -228,6 +228,9 @@
 	if(!target || !CanAttack(target))
 		LoseTarget()
 		return 0
+	if(isturf(target.loc))
+		LoseTarget()
+		return 0
 	if(target in possible_targets)
 		if(target.z != z)
 			LoseTarget()
