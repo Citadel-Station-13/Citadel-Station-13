@@ -178,6 +178,7 @@
 /datum/objective/crew/assistant/spacesuit //ported from Goon
 	explanation_text = "Get your grubby hands on a space suit."
 
+/* DM is not a sane language in any way, shape, or form. If anyone wants to try to get this bit functioning proper, I hold no responsibility for broken keyboards.
 /datum/objective/crew/assistant/spacesuit/New()
 	. = ..()
 	update_explanation_text()
@@ -186,27 +187,27 @@
 	. = ..()
 	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
-		if(H && H.dna && H.dna.species)
+		if(H && H.dna && H.dna.species && H.dna.species.id)
 			explanation_text = "Get your "
-			if(H.dna.species == /datum/species/avian)
+			if(H.dna.species.id == "avian")
 				explanation_text += "scratchy claws "
-			else if(H.dna.species == /datum/species/mammal)
+			else if(H.dna.species.id == "mammal")
 				explanation_text += "dirty paws "
-			else if(H.dna.species == /datum/species/aquatic)
+			else if(H.dna.species.id == "aquatic")
 				explanation_text += "fishy hands "
-			else if(H.dna.species == /datum/species/xeno)
+			else if(H.dna.species.id == "xeno")
 				explanation_text += "weird claws "
-			else if(H.dna.species == /datum/species/guilmon)
+			else if(H.dna.species.id == "guilmon")
 				explanation_text += "digital claws "
-			else if(H.dna.species == /datum/species/lizard)
+			else if(H.dna.species.id == "lizard")
 				explanation_text += "slimy claws "
-			else if(H.dna.species == /datum/species/shark/datashark)
+			else if(H.dna.species.id == "datashark")
 				explanation_text += "glitchy hands "
-			else if(H.dna.species == /datum/species/insect)
+			else if(H.dna.species.id == "insect")
 				explanation_text += "gross grabbers "
 			else
 				explanation_text += "grubby hands "
-			explanation_text += "on a space suit."
+			explanation_text += "on a space suit."*/
 
 /datum/objective/crew/assistant/spacesuit/check_completion()
 	if(owner.current && owner.current.check_contents_for(typesof(/obj/item/clothing/suit/space)))
