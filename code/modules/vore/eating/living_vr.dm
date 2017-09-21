@@ -8,7 +8,6 @@
 	var/vore_taste = null				// What the character tastes like
 	var/no_vore = FALSE 					// If the character/mob can vore.
 	var/openpanel = 0					// Is the vore panel open?
-	var/consumed = FALSE				//is the mob devoured? Used for allowing simple_animals to LoseTarget faster
 
 //
 // Hook for generic creation of stuff on new creatures
@@ -286,8 +285,6 @@
 			for(var/atom/movable/M in B.internal_contents)
 				if(M.loc != src)
 					B.internal_contents.Remove(M)
-	if(!ismob(loc))
-		consumed = FALSE
 
 
 // OOC Escape code for pref-breaking or AFK preds
