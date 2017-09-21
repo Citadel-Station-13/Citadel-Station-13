@@ -10506,6 +10506,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/structure/closet/l3closet/security,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -27154,6 +27155,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -34636,6 +34638,7 @@
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "bjG" = (
+/obj/structure/closet/l3closet/scientist,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 6
 	},
@@ -80685,13 +80688,13 @@ aDc
 aYc
 aYW
 byo
-byt
+byo
 bbx
 bcm
 bdd
 beb
-byy
-byA
+byo
+bys
 bfK
 aQd
 bgT
@@ -80941,14 +80944,14 @@ aWQ
 abt
 aYc
 aYW
-byp
+byo
 baI
 bby
 bcn
 bde
 bec
 beH
-byB
+byo
 bfK
 aQd
 bgU
@@ -81455,14 +81458,14 @@ aWS
 abt
 aYe
 aYW
-byr
+byo
 baK
 bbA
 bcp
 bdg
 bee
 beJ
-byC
+byo
 bfK
 avV
 bgU
@@ -81713,13 +81716,13 @@ aIZ
 aYc
 aYW
 bys
-byu
-byv
-byw
+byo
+byo
+byo
 bdh
-byx
-byz
-byD
+byo
+byo
+byo
 bfM
 avV
 bgV
