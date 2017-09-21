@@ -175,16 +175,20 @@
 			return TRUE
 	return FALSE
 
-/datum/objective/crew/assistant/spacesuit //ported from Goon
-	explanation_text = "Get your grubby hands on a space suit."
+/datum/objective/crew/assistant/pwrgame //ported from Goon
+	var/obj/item/clothing/targettidegarb
+	explanation_text = "Get your grubby hands on a [Dear god something broke. Report this to Citadel's development dicussion channel]."
 
-/* DM is not a sane language in any way, shape, or form. If anyone wants to try to get this bit functioning proper, I hold no responsibility for broken keyboards.
-/datum/objective/crew/assistant/spacesuit/New()
+/datum/objective/crew/assistant/pwrgame/New()
 	. = ..()
+	var/list/muhvalids = list(/obj/item/clothing/mask/gas, /obj/item/clothing/head/welding, /obj/item/clothing/head/ushanka, /obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas/owl_mask, /obj/item/clothing/suit/space)
+	targettidegarb = pick(muhvalids)
 	update_explanation_text()
 
-/datum/objective/crew/assistant/spacesuit/update_explanation_text()
+/datum/objective/crew/assistant/pwrgame/update_explanation_text()
 	. = ..()
+	explanation_text = "Get your grubby hands on a [initial(targettidegarb.name)]."
+/* DM is not a sane language in any way, shape, or form. If anyone wants to try to get this bit functioning proper, I hold no responsibility for broken keyboards.
 	if(owner && owner.current)
 		var/mob/living/carbon/human/H = owner.current
 		if(H && H.dna && H.dna.species && H.dna.species.id)
@@ -207,10 +211,10 @@
 				explanation_text += "gross grabbers "
 			else
 				explanation_text += "grubby hands "
-			explanation_text += "on a space suit."*/
+			explanation_text += "on a space suit."//replace this if you're making this monstrosity work	*/
 
-/datum/objective/crew/assistant/spacesuit/check_completion()
-	if(owner.current && owner.current.check_contents_for(typesof(/obj/item/clothing/suit/space)))
+/datum/objective/crew/assistant/pwrgame/check_completion()
+	if(owner.current && owner.current.check_contents_for(typesof(targettidegarb)))
 		return TRUE
 	else
 		return FALSE
