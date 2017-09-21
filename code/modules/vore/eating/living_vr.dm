@@ -147,7 +147,6 @@
 
 	if(!do_mob(src, user, swallow_time)) // one second should be good enough, right?
 		return FALSE // Prey escaped (or user disabled) before timer expired.
-	if(user
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
