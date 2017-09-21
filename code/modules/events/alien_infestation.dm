@@ -2,8 +2,9 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
+	earliest_start = 24000 //40 min
 
-	min_players = 10
+	min_players = 20 //Avoid lowpop rounds
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/alien_infestation
@@ -31,7 +32,7 @@
 
 /datum/round_event/ghost_role/alien_infestation/announce()
 	if(successSpawn)
-		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/AI/aliens.ogg')
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
 
 
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
@@ -39,7 +40,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology

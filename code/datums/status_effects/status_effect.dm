@@ -12,12 +12,26 @@
 	var/alert_type = /obj/screen/alert/status_effect //the alert thrown by the status effect, contains name and description
 	var/obj/screen/alert/status_effect/linked_alert = null //the alert itself, if it exists
 
-/datum/status_effect/New(mob/living/new_owner)
+/datum/status_effect/New(list/arguments)
+	on_creation(arglist(arguments))
+
+/datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
 	if(owner)
 		LAZYADD(owner.status_effects, src)
-	addtimer(CALLBACK(src, .proc/start_ticking), 1) //Give us time to set any variables
+	if(!owner || !on_apply())
+		qdel(src)
+		return
+	if(duration != -1)
+		duration = world.time + duration
+	tick_interval = world.time + tick_interval
+	if(alert_type)
+		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+		A.attached_effect = src //so the alert can reference us, if it needs to
+		linked_alert = A //so we can reference the alert, if we need to
+	START_PROCESSING(SSfastprocess, src)
+	return TRUE
 
 /datum/status_effect/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
@@ -27,21 +41,6 @@
 		on_remove()
 		owner = null
 	return ..()
-
-/datum/status_effect/proc/start_ticking()
-	if(!src)
-		return
-	if(!owner || !on_apply())
-		qdel(src)
-		return
-	if(duration != -1)
-		duration = world.time + initial(duration)
-	tick_interval = world.time + initial(tick_interval)
-	if(alert_type)
-		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
-		A.attached_effect = src //so the alert can reference us, if it needs to
-		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
 
 /datum/status_effect/process()
 	if(!owner)
@@ -53,9 +52,8 @@
 	if(duration != -1 && duration < world.time)
 		qdel(src)
 
-/datum/status_effect/proc/on_apply() //Called whenever the buff is applied.
+/datum/status_effect/proc/on_apply() //Called whenever the buff is applied; returning FALSE will cause it to autoremove itself.
 	return TRUE
-
 /datum/status_effect/proc/tick() //Called every tick.
 /datum/status_effect/proc/on_remove() //Called whenever the buff expires or is removed; do note that at the point this is called, it is out of the owner's status_effects but owner is not yet null
 /datum/status_effect/proc/be_replaced() //Called instead of on_remove when a status effect is replaced by itself or when a status effect with on_remove_on_mob_delete = FALSE has its mob deleted
@@ -77,7 +75,7 @@
 // HELPER PROCS //
 //////////////////
 
-/mob/living/proc/apply_status_effect(effect) //applies a given status effect to this mob, returning the effect if it was successful
+/mob/living/proc/apply_status_effect(effect, ...) //applies a given status effect to this mob, returning the effect if it was successful
 	. = FALSE
 	var/datum/status_effect/S1 = effect
 	LAZYINITLIST(status_effects)
@@ -87,7 +85,9 @@
 				S.be_replaced()
 			else
 				return
-	S1 = new effect(src)
+	var/list/arguments = args.Copy()
+	arguments[1] = src
+	S1 = new effect(arguments)
 	. = S1
 
 /mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed

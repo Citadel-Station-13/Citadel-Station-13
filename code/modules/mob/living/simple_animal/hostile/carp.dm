@@ -7,7 +7,7 @@
 	icon_gib = "carp_gib"
 	speak_chance = 0
 	turns_per_move = 5
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/carpmeat = 2)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/carpmeat = 2)
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "hits"
@@ -17,6 +17,7 @@
 	maxHealth = 25
 	health = 25
 	devourable = TRUE
+	no_vore = FALSE
 
 	harm_intent_damage = 8
 	obj_damage = 50

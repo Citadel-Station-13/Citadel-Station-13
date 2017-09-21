@@ -113,6 +113,7 @@
 		"xenohead" 			= "None",
 		"xenotail" 			= "None",
 		"exhibitionist" 	= FALSE,
+		"genitals_use_skintone"	= FALSE,
 		"has_cock"			= FALSE,
 		"cock_shape"		= pick(GLOB.cock_shapes_list),
 		"cock_length"		= 6,
@@ -155,7 +156,8 @@
 		"womb_cum_rate"		= CUM_RATE,
 		"womb_cum_mult"		= CUM_RATE_MULT,
 		"womb_efficiency"	= CUM_EFFICIENCY,
-		"womb_fluid" 		= "femcum"))
+		"womb_fluid" 		= "femcum",
+		"flavor_text"		= ""))
 
 /proc/random_hair_style(gender)
 	switch(gender)
@@ -340,6 +342,20 @@ Proc for attack log creation, because really why not
 		qdel(progbar)
 
 
+//some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
+/mob/proc/break_do_after_checks(list/checked_health, check_clicks)
+	if(check_clicks && next_move > world.time)
+		return FALSE
+	return TRUE
+
+//pass a list in the format list("health" = mob's health var) to check health during this
+/mob/living/break_do_after_checks(list/checked_health, check_clicks)
+	if(islist(checked_health))
+		if(health < checked_health["health"])
+			return FALSE
+		checked_health["health"] = health
+	return ..()
+
 /proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
@@ -375,7 +391,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(QDELETED(user) || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
+		if(QDELETED(user) || user.stat || user.IsKnockdown() || user.IsStun() || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
@@ -520,3 +536,39 @@ Proc for attack log creation, because really why not
 			to_chat(M, rendered_message)
 		else
 			to_chat(M, message)
+
+
+/proc/log_talk(mob/user,message,logtype)
+	var/turf/say_turf = get_turf(user)
+
+	var/sayloc = ""
+	if(say_turf)
+		sayloc = "([say_turf.x],[say_turf.y],[say_turf.z])"
+
+
+	var/logmessage = "[message] [sayloc]"
+
+	switch(logtype)
+
+		if(LOGDSAY)
+			log_dsay(logmessage)
+		if(LOGSAY)
+			log_say(logmessage)
+		if(LOGWHISPER)
+			log_whisper(logmessage)
+		if(LOGEMOTE)
+			log_emote(logmessage)
+		if(LOGPDA)
+			log_pda(logmessage)
+		if(LOGCHAT)
+			log_chat(logmessage)
+		if(LOGCOMMENT)
+			log_comment(logmessage)
+		if(LOGASAY)
+			log_adminsay(logmessage)
+		if(LOGOOC)
+			log_ooc(logmessage)
+		else
+			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
+			log_say(logmessage)
+

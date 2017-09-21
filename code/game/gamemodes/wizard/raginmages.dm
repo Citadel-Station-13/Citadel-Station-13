@@ -133,7 +133,7 @@
 
 /datum/game_mode/wizard/raginmages/declare_completion()
 	if(finished)
-		SSblackbox.set_details("round_end_result","loss - wizard killed")
+		SSticker.mode_result = "loss - wizard killed"
 		to_chat(world, "<FONT size=3><B>The crew has managed to hold off the wizard attack! The Space Wizards Federation has been taught a lesson they will not soon forget!</B></FONT>")
 	..(1)
 
@@ -142,7 +142,8 @@
 		return
 
 	//First we spawn a dude.
-	var/mob/living/carbon/human/new_character = new(pick(GLOB.latejoin))//The mob being spawned.
+	var/mob/living/carbon/human/new_character = new//The mob being spawned.
+	SSjob.SendToLateJoin(new_character)
 
 	G_found.client.prefs.copy_to(new_character)
 	new_character.dna.update_dna_identity()

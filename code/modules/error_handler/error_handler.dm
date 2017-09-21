@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		configured_error_silence_time = config.error_silence_time
 
 
-	//Each occurence of an unique error adds to its cooldown time...
+	//Each occurence of a unique error adds to its cooldown time...
 	cooldown = max(0, cooldown - (world.time - last_seen)) + configured_error_cooldown
 	// ... which is used to silence an error if it occurs too often, too fast
 	if(cooldown > configured_error_cooldown * configured_error_limit)
@@ -55,7 +55,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 			var/skipcount = abs(error_cooldown[erroruid]) - 1
 			error_cooldown[erroruid] = 0
 			if(skipcount > 0)
-				world.log << "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line]."
+				SEND_TEXT(world.log, "\[[time_stamp()]] Skipped [skipcount] runtimes in [E.file],[E.line].")
 				GLOB.error_cache.log_error(E, skip_count = skipcount)
 
 	error_last_seen[erroruid] = world.time
@@ -92,9 +92,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 	if(GLOB.error_cache)
 		GLOB.error_cache.log_error(E, desclines)
 
-	world.log << "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	SEND_TEXT(world.log, "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]")
 	for(var/line in desclines)
-		world.log << line
+		SEND_TEXT(world.log, line)
 
 /* This logs the runtime in the old format */
 

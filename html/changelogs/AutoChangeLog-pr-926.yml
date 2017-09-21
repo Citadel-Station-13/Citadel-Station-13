@@ -1,4 +1,0 @@
-author: "New Antag Alert sounds"
-delete-after: True
-changes: 
-  - soundadd: "added sounds that alert players to their antag status"

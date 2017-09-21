@@ -17,6 +17,9 @@
 /datum/language_holder/Destroy()
 	owner = null
 	QDEL_NULL(language_menu)
+	languages.Cut()
+	shadow_languages.Cut()
+	return ..()
 
 /datum/language_holder/proc/copy(newowner)
 	var/datum/language_holder/copy = new(newowner)
@@ -65,7 +68,7 @@
 	var/datum/language_holder/other
 	if(istype(thing, /datum/language_holder))
 		other = thing
-	else if(istype(thing, /atom/movable))
+	else if(ismovableatom(thing))
 		var/atom/movable/AM = thing
 		other = AM.get_language_holder()
 	else if(istype(thing, /datum/mind))
@@ -85,7 +88,7 @@
 	language_menu.ui_interact(user)
 
 /datum/language_holder/proc/get_atom()
-	if(istype(owner, /atom/movable))
+	if(ismovableatom(owner))
 		. = owner
 	else if(istype(owner, /datum/mind))
 		var/datum/mind/M = owner
@@ -107,7 +110,6 @@
 
 /datum/language_holder/construct
 	languages = list(/datum/language/common, /datum/language/narsie)
-	only_speaks_language = /datum/language/narsie
 
 /datum/language_holder/drone
 	languages = list(/datum/language/common, /datum/language/drone, /datum/language/machine)
@@ -125,7 +127,7 @@
 
 /datum/language_holder/synthetic
 	languages = list(/datum/language/common)
-	shadow_languages = list(/datum/language/machine, /datum/language/draconic)
+	shadow_languages = list(/datum/language/common, /datum/language/machine, /datum/language/draconic)
 
 /datum/language_holder/universal/New()
 	..()

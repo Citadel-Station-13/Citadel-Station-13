@@ -763,13 +763,12 @@
 	name = "Flash"
 	desc = "When a problem arises, SCIENCE is the solution."
 	id = "sflash"
-	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
 	construction_time = 100
 	build_path = /obj/item/device/assembly/flash/handheld
 	category = list("Misc")
-/*
+
 /datum/design/flightsuit		//Multi step build process/redo WIP
 	name = "Flight Suit"
 	desc = "A specialized hardsuit that is able to attach a flightpack and accessories.."
@@ -802,4 +801,3 @@
 	construction_time = 100
 	category = list("Misc")
 	req_tech = list("magnets" = 2, "combat" = 2, "plasmatech" = 3, "materials" = 3, "engineering" = 2, "powerstorage" = 2)
-*/
