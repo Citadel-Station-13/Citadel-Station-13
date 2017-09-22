@@ -201,7 +201,13 @@ function handle_pr($payload) {
 			break;
 		case 'edited':
 		case 'synchronize':
+<<<<<<< HEAD
 			tag_pr($payload, false);
+=======
+			$labels = tag_pr($payload, false);
+			if($payload['action'] == 'synchronize')
+				check_ready_for_review($payload, $labels);
+>>>>>>> 6652595... Fixes editing PRs dismissing reviews (#30718)
 			return;
 		case 'reopened':
 			$action = $payload['action'];
