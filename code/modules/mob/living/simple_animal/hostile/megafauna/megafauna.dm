@@ -89,11 +89,15 @@
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
-		if(L.stat != DEAD)
-			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
+		if(L.stat >= SOFT_CRIT)
+			if(vore_active == TRUE && L.devourable == TRUE)
+				dragon_feeding(src,L)
+			else if(L.stat == DEAD)
+				devour(L)
 		else
-			devour(L)
+			if(L.stat != DEAD)
+				if(!client && ranged && ranged_cooldown <= world.time)
+					OpenFire()
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)

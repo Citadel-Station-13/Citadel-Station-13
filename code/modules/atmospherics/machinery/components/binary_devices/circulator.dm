@@ -38,10 +38,6 @@
 		var/transfer_moles = pressure_delta*air1.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
 		last_pressure_delta = pressure_delta
-
-		//to_chat(world, "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];")
-
-		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
 
 		update_parents()
