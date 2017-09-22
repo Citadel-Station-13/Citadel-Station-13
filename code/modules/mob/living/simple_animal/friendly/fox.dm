@@ -21,6 +21,7 @@
 	devourable = TRUE
 	var/mob/living/simple_animal/mouse/movement_target
 	var/turns_since_scan = 0
+	no_vore = FALSE
 
 /mob/living/simple_animal/pet/fox/Life()
 	//MICE!
