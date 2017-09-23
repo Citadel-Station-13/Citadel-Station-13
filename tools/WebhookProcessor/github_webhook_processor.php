@@ -118,6 +118,32 @@ function tag_pr($payload, $opened) {
 		'user_agent' 	=> 'tgstation13.org-Github-Automation-Tools'
 	));
 
+<<<<<<< HEAD
+=======
+function get_labels($payload){
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	$existing_labels = json_decode(apisend($url), true);
+	$existing = array();
+	foreach($existing_labels as $label)
+		$existing[] = $label['name'];
+	return $existing;
+}
+
+function check_tag_and_replace($payload, $title_tag, $label, &$array_to_add_label_to){
+	$title = $payload['pull_request']['title'];
+	if(stripos($title, $title_tag) !== FALSE){
+		$array_to_add_label_to[] = $label;
+		$title = trim(str_ireplace($title_tag, '', $title));
+		apisend($payload['pull_request']['url'], 'PATCH', array('title' => $title));
+		return true;
+	}
+	return false;
+}
+
+//rip bs-12
+function tag_pr($payload, $opened) {
+	//get the mergeable state
+>>>>>>> d3804af... Merge pull request #30839 from Cyberboss/ReadyUp
 	$url = $payload['pull_request']['url'];
 	$payload['pull_request'] = json_decode(file_get_contents($url, false, stream_context_create($scontext)), true);
 	if($payload['pull_request']['mergeable'] == null) {
@@ -158,12 +184,18 @@ function tag_pr($payload, $opened) {
 		if(has_tree_been_edited($payload, $tree))
 			$tags[] = $tag;
 
+<<<<<<< HEAD
 	//only maintners should be able to remove these
 	if(strpos($lowertitle, '[dnm]') !== FALSE)
 		$tags[] = 'Do Not Merge';
 
 	if(strpos($lowertitle, '[wip]') !== FALSE)
 		$tags[] = 'Work In Progress';
+=======
+	check_tag_and_replace($payload, '[dnm]', 'Do Not Merge', $tags);
+	if(!check_tag_and_replace($payload, '[wip]', 'Work In Progress', $tags))
+		check_tag_and_replace($payload, '[ready]', 'Work In Progress', $remove);
+>>>>>>> d3804af... Merge pull request #30839 from Cyberboss/ReadyUp
 
 	$url = $payload['pull_request']['issue_url'] . '/labels';
 
