@@ -115,7 +115,7 @@
 		occupant_overlay.dir = SOUTH
 		occupant_overlay.pixel_y = 22
 
-		if(on && is_operational() && !running_bob_anim)
+		if(on && !running_bob_anim && is_operational())
 			icon_state = "pod-on"
 			running_bob_anim = TRUE
 			run_bob_anim(TRUE, occupant_overlay)
@@ -378,6 +378,8 @@
 		if("ejectbeaker")
 			if(beaker)
 				beaker.forceMove(loc)
+				if(Adjacent(usr) && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
 	update_icon()
@@ -393,5 +395,12 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/return_temperature()
+	var/datum/gas_mixture/G = AIR1
+
+	if(G.total_moles() > 10)
+		return G.temperature
+	return ..()
 
 #undef CRYOMOBS

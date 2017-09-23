@@ -68,3 +68,13 @@
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
 	var/bitesound = 'sound/items/bikehorn.ogg'
+
+
+
+/*Zigfie*/
+
+/obj/item/clothing/mask/luchador/zigfie
+	name = "Alboroto Rosa mask"
+	icon = 'icons/mob/mask.dmi'
+	icon_state = "lucharzigfie"
+	item_state = "lucharzigfie"
