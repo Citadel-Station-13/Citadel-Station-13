@@ -73,7 +73,8 @@
 
 /*Zigfie*/
 
-/obj/item/clothing/mask/luchador/Zigfie
+/obj/item/clothing/mask/luchador/zigfie
 	name = "Alboroto Rosa mask"
 	icon = 'icons/mob/mask.dmi'
 	icon_state = "lucharzigfie"
+	item_state = "lucharzigfie"

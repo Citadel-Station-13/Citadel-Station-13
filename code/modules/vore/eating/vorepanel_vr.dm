@@ -27,7 +27,7 @@
 //
 /datum/vore_look
 	var/datum/belly/selected
-	var/show_interacts = FALSE
+	var/show_interacts = TRUE
 	var/datum/browser/popup
 	var/loop = null;  // Magic self-reference to stop the handler from being GC'd before user takes action.
 
