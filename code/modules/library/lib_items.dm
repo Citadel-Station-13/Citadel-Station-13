@@ -16,22 +16,6 @@
 	icon_state = "bookempty"
 	anchored = FALSE
 	density = TRUE
-<<<<<<< HEAD
-	opacity = 0
-	resistance_flags = FLAMMABLE
-	max_integrity = 200
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 0)
-	var/state = 0
-	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
-
-
-/obj/structure/bookcase/Initialize(mapload)
-	..()
-	if(!mapload)
-		return
-	state = 2
-	icon_state = "book-0"
-=======
 	opacity = 0
 	resistance_flags = FLAMMABLE
 	max_integrity = 200
@@ -46,7 +30,6 @@
 		return
 	state = 2
 	icon_state = "book-0"
->>>>>>> 772924b... More Initialize() fixes, requires someone to test with DB (#30831)
 	anchored = TRUE
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/book))

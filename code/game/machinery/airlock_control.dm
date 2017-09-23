@@ -99,56 +99,6 @@
 
 	var/on = TRUE
 	var/alert = FALSE
-<<<<<<< HEAD
-
-
-/obj/machinery/airlock_sensor/update_icon()
-	if(on)
-		if(alert)
-			icon_state = "airlock_sensor_alert"
-		else
-			icon_state = "airlock_sensor_standby"
-	else
-		icon_state = "airlock_sensor_off"
-
-/obj/machinery/airlock_sensor/attack_hand(mob/user)
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.data["tag"] = master_tag
-	signal.data["command"] = "cycle"
-
-	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = GLOB.RADIO_AIRLOCK)
-	flick("airlock_sensor_cycle", src)
-
-/obj/machinery/airlock_sensor/process()
-	if(on)
-		var/datum/signal/signal = new
-		signal.transmission_method = 1 //radio signal
-		signal.data["tag"] = id_tag
-		signal.data["timestamp"] = world.time
-
-		var/datum/gas_mixture/air_sample = return_air()
-
-		var/pressure = round(air_sample.return_pressure(),0.1)
-		alert = (pressure < ONE_ATMOSPHERE*0.8)
-
-		signal.data["pressure"] = num2text(pressure)
-
-		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = GLOB.RADIO_AIRLOCK)
-
-	update_icon()
-
-/obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
-	SSradio.remove_object(src, frequency)
-	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_AIRLOCK)
-
-/obj/machinery/airlock_sensor/Initialize()
-	..()
-	set_frequency(frequency)
-
-/obj/machinery/airlock_sensor/Destroy()
-=======
 
 
 /obj/machinery/airlock_sensor/update_icon()
@@ -197,6 +147,5 @@
 	set_frequency(frequency)
 
 /obj/machinery/airlock_sensor/Destroy()
->>>>>>> 772924b... More Initialize() fixes, requires someone to test with DB (#30831)
 	SSradio.remove_object(src,frequency)
 	return ..()
