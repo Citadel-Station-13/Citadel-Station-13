@@ -69,6 +69,15 @@
 	resistance_flags = FLAMMABLE
 	var/bitesound = 'sound/items/bikehorn.ogg'
 
+/obj/item/clothing/neck/cloak/carrot
+	name = "brown cloak"
+	desc = "It's a cape that can be worn around your neck."
+	icon = 'icons/obj/clothing/cloaks.dmi'
+	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon_state = "carrotcloak"
+	item_state = "carrotcloak"
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
 
 /*Zigfie*/
@@ -78,3 +87,24 @@
 	icon = 'icons/mob/mask.dmi'
 	icon_state = "lucharzigfie"
 	item_state = "lucharzigfie"
+
+
+/*PLACEHOLDER*/
+
+/obj/item/clothing/head/hardhat/reindeer/fluff
+	name = "novelty reindeer hat"
+	desc = "Some fake antlers and a very fake red nose - Sponsored by PWR Game(tm)"
+	icon_state = "hardhat0_reindeer"
+	item_state = "hardhat0_reindeer"
+	item_color = "reindeer"
+	flags_inv = 0
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
+	brightness_on = 0 //luminosity when on
+	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/santa/fluff
+	name = "santa's hat"
+	desc = "On the first day of christmas my employer gave to me! - From Vlad with Salad"
+	icon_state = "santahatnorm"
+	item_state = "that"
+	dog_fashion = /datum/dog_fashion/head/santa
