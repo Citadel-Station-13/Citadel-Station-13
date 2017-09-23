@@ -184,7 +184,132 @@ function tag_pr($payload, $opened) {
 	$scontext['http']['method'] = 'PUT';
 	$scontext['http']['content'] = json_encode($final);
 
+<<<<<<< HEAD
 	echo file_get_contents($url, false, stream_context_create($scontext));
+=======
+	echo apisend($url, 'PUT', $final);
+
+	return $final;
+}
+
+function remove_ready_for_review($payload, $labels = null){
+	if($labels == null)
+		$labels = get_labels($payload);
+	$index = array_search('Ready for Review', $labels);
+	if($index !== FALSE)
+		unset($labels[$index]);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
+}
+
+function dismiss_review($payload, $id, $reason){
+	$content = array('message' => $reason);
+	apisend($payload['pull_request']['url'] . '/reviews/' . $id . '/dismissals', 'PUT', $content);
+}
+
+function get_reviews($payload){
+	return json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
+}
+
+function check_ready_for_review($payload, $labels = null){
+	$r4rlabel = 'Ready for Review';
+	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
+	$has_label_already = false;
+	$should_not_have_label = false;
+	if($labels == null)
+		$labels = get_labels($payload);
+	//if the label is already there we may need to remove it
+	foreach($labels as $L){
+		if(in_array($L, $labels_which_should_not_be_ready))
+			$should_not_have_label = true;
+		if($L == $r4rlabel)
+			$has_label_already = true;
+	}
+	
+	if($has_label_already && $should_not_have_label){
+		remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;
+	}
+
+	//find all reviews to see if changes were requested at some point
+	$reviews = get_reviews($payload);
+
+	$reviews_ids_with_changes_requested = array();
+	$dismissed_an_approved_review = false;
+
+	foreach($reviews as $R){
+		$lower_association = strtolower($R['author_association']);
+		if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
+			$lower_state = strtolower($R['state']);
+			if($lower_state == 'changes_requested')
+				$reviews_ids_with_changes_requested[] = $R['id'];
+			else if ($lower_state == 'approved'){
+				dismiss_review($payload, $R['id'], 'Out of date review');
+				$dismissed_an_approved_review = true;
+			}
+		}
+	}
+
+	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
+		if($has_label_already)
+			remove_ready_for_review($payload, $labels);
+		return;	//no need to be here
+	}
+
+	if(count($reviews_ids_with_changes_requested) > 0){
+		//now get the review comments for the offending reviews
+
+		$review_comments = json_decode(apisend($payload['pull_request']['review_comments_url']), true);
+
+		foreach($review_comments as $C){
+			//make sure they are part of an offending review
+			if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
+				continue;
+			
+			//review comments which are outdated have a null position
+			if($C['position'] !== null){
+				if($has_label_already)
+					remove_ready_for_review($payload, $labels);
+				return;	//no need to tag
+			}
+		}
+	}
+
+	//finally, add it if necessary
+	if(!$has_label_already){
+		$labels[] = $r4rlabel;
+		$url = $payload['pull_request']['issue_url'] . '/labels';
+		apisend($url, 'PUT', $labels);
+	}
+}
+
+function check_dismiss_changelog_review($payload){
+	global $require_changelog;
+	global $no_changelog;
+
+	if(!$require_changelog)
+		return;
+	
+	if(!$no_changelog)
+		checkchangelog($payload, false);
+	
+	$review_message = 'Your changelog for this PR is either malformed or non-existent. Please create one to document your changes.';
+
+	$reviews = get_reviews($payload);
+	if($no_changelog){
+		//check and see if we've already have this review
+		foreach($reviews as $R)
+			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
+				return;
+		//otherwise make it ourself
+		apisend($payload['pull_request']['url'] . '/reviews', 'POST', array('body' => $review_message, 'event' => 'REQUEST_CHANGES'));
+	}
+	else
+		//kill previous reviews
+		foreach($reviews as $R)
+			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
+				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
+>>>>>>> 8ac9502... Merge pull request #30910 from tgstation/Cyberboss-patch-2
 }
 
 function handle_pr($payload) {
