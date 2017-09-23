@@ -9,7 +9,7 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	unique_rename = 1
+	unique_rename = TRUE
 	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
