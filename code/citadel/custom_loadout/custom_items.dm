@@ -70,8 +70,8 @@
 	var/bitesound = 'sound/items/bikehorn.ogg'
 
 /obj/item/clothing/neck/cloak/carrot
-	name = "brown cloak"
-	desc = "It's a cape that can be worn around your neck."
+	name = "carrot cloak"
+	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_override = 'icons/mob/citadel/suit.dmi'
 	icon_state = "carrotcloak"
