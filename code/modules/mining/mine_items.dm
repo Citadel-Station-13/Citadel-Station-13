@@ -73,6 +73,9 @@
 		to_chat(user, "<span class='warning'>You get a feeling that leaving the station might be a REALLY dumb idea...</span>")
 		dumb_rev_heads += user.mind
 		return
+	if(user.faction == "ashwalker")
+		to_chat(user,"<span class='warning'>The unfamiliar light board makes no sense to your primitive mind. You cannot figure out the controls.</span>")
+		return
 	..()
 
 /**********************Mining car (Crate like thing, not the rail car)**************************/
