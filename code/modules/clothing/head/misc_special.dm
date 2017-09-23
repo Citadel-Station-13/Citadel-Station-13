@@ -46,7 +46,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 1000
+	heat = 100
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -60,10 +60,10 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 6
-	throwforce = 6
+	force = 2
+	throwforce = 2
 	damtype = BURN
-	hitsound = 'sound/items/Welder.ogg'
+	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/head/hardhat/cakehat/turn_off()
@@ -125,17 +125,22 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	color = "#999999"
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/kitty
 
-/obj/item/clothing/head/kitty/equipped(mob/user, slot)
-	if(user && slot == slot_head)
+/obj/item/clothing/head/kitty/equipped(mob/living/carbon/human/user, slot)
+	if(ishuman(user) && slot == slot_head)
 		update_icon(user)
+		user.update_inv_head() //Color might have been changed by update_icon.
 	..()
 
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
-	if(istype(user))
+	if(ishuman(user))
 		add_atom_colour("#[user.hair_color]", FIXED_COLOUR_PRIORITY)
+
+/obj/item/clothing/head/kitty/genuine
+	desc = "A pair of kitty ears. A tag on the inside says \"Hand made from real cats.\""
 
 
 /obj/item/clothing/head/hardhat/reindeer
@@ -147,6 +152,7 @@
 	flags_inv = 0
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 1 //luminosity when on
+	dynamic_hair_suffix = ""
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
 

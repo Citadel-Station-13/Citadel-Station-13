@@ -1,4 +1,4 @@
-datum/species/mammal
+/datum/species/mammal
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
@@ -9,6 +9,8 @@ datum/species/mammal
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRIED
+	disliked_food = TOXIC
 
 /datum/species/mammal/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -21,14 +23,17 @@ datum/species/mammal
 /datum/species/avian
 	name = "Avian"
 	id = "avian"
+	say_mod = "chirps"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings")
+	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
 	default_features = list("snout" = "Sharp", "wings" = "None", "taur" = "None", "mam_body_markings" = "Hawk")
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/avian/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -43,12 +48,14 @@ datum/species/mammal
 	id = "aquatic"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears")
+	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None", "mam_ears" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT
+	disliked_food = TOXIC
 
 /datum/species/aquatic/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -63,12 +70,14 @@ datum/species/mammal
 	id = "insect"
 	default_color = "BCAC9B"
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
-	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail")
+	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	roundstart = 1
+	liked_food = MEAT | FRUIT
+	disliked_food = TOXIC
 
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
@@ -77,6 +86,29 @@ datum/species/mammal
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
 //HERBIVOROUS//
+
+//Alien//
+/datum/species/xeno
+	// A cloning mistake, crossing human and xenomorph DNA
+	name = "xeno"
+	id = "xeno"
+	say_mod = "hisses"
+	default_color = "00FF00"
+	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
+	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
+	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
+	heatmod = 1.3
+	attack_verb = "slash"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
+	skinned_type = /obj/item/stack/sheet/animalhide/xeno
+	exotic_bloodtype = "L"
+	damage_overlay_type = "xeno"
+	roundstart = 1
+	liked_food = MEAT
+
+//Praise the Omnissiah, A challange worthy of my skills - HS
 
 //EXOTIC//
 //These races will likely include lots of downsides and upsides. Keep them relatively balanced.//
@@ -103,7 +135,7 @@ datum/species/mammal
 	exotic_blood = "xblood"
 	damage_overlay_type = "xeno"
 	no_equip = list(slot_glasses) //MY EYES, THEY'RE GONE
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno
+	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
 	roundstart = 0
@@ -205,3 +237,15 @@ datum/species/mammal
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
+
+/datum/species/guilmon
+	name = "Guilmon"
+	id = "guilmon"
+	default_color = "4B4B4B"
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
+	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
+	attack_verb = "claw"
+	attack_sound = 'sound/weapons/slash.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+	roundstart = 1

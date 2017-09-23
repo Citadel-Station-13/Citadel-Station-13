@@ -1,10 +1,10 @@
 /datum/round_event_control/borer
 	name = "Borer"
 	typepath = /datum/round_event/borer
-	weight = 15
-	max_occurrences = 0
-	min_players = 15
-	earliest_start = 12000
+	weight = 10 //Default weight
+	max_occurrences = 1
+	min_players = 20 //10 is MINIMUM needed, but this is not a gamemode that does well in lowpop
+	earliest_start = 24000 //40 min, double default timer
 
 /datum/round_event/borer
 	announceWhen = 2400 //Borers get 4 minutes till the crew tries to murder them.
@@ -26,7 +26,7 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+		if(temp_vent.loc.z == ZLEVEL_STATION_PRIMARY && !temp_vent.welded)
 			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent

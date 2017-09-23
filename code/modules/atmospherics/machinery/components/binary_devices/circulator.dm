@@ -12,9 +12,8 @@
 
 	var/last_pressure_delta = 0
 
-	anchored = 1
-	density = 1
-
+	anchored = TRUE
+	density = TRUE
 	var/global/const/CIRC_LEFT = 1
 	var/global/const/CIRC_RIGHT = 2
 
@@ -39,10 +38,6 @@
 		var/transfer_moles = pressure_delta*air1.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
 		last_pressure_delta = pressure_delta
-
-		//to_chat(world, "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];")
-
-		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
 
 		update_parents()
@@ -57,7 +52,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon()
-	if(stat & (BROKEN|NOPOWER))
+	if(!is_operational())
 		icon_state = "circ[side]-p"
 	else if(last_pressure_delta > 0)
 		if(last_pressure_delta > ONE_ATMOSPHERE)
@@ -66,5 +61,3 @@
 			icon_state = "circ[side]-slow"
 	else
 		icon_state = "circ[side]-off"
-
-	return 1

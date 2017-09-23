@@ -5,14 +5,20 @@
 	var/list/vore_organs = list()		// List of vore containers inside a mob
 	var/devourable = FALSE					// Can the mob be vored at all?
 //	var/feeding = FALSE					// Are we going to feed someone else?
-
+	var/vore_taste = null				// What the character tastes like
+	var/no_vore = FALSE 					// If the character/mob can vore.
+	var/openpanel = 0					// Is the vore panel open?
 
 //
 // Hook for generic creation of stuff on new creatures
 //
 /hook/living_new/proc/vore_setup(mob/living/M)
-	M.verbs += /mob/living/proc/insidePanel
 	M.verbs += /mob/living/proc/escapeOOC
+	M.verbs += /mob/living/proc/lick
+	if(M.no_vore) //If the mob isn's supposed to have a stomach, let's not give it an insidepanel so it can make one for itself, or a stomach.
+		M << "<span class='warning'>The creature that you are can not eat others.</span>"
+		return TRUE
+	M.verbs += /mob/living/proc/insidePanel
 
 	//Tries to load prefs if a client is present otherwise gives freebie stomach
 	if(!M.vore_organs || !M.vore_organs.len)
@@ -21,7 +27,7 @@
 
 			if(M.client && M.client.prefs_vr)
 				if(!M.copy_from_prefs_vr())
-					M << "<span class='warning'>ERROR: You seem to have saved VOREStation prefs, but they couldn't be loaded.</span>"
+					M << "<span class='warning'>ERROR: You seem to have saved vore prefs, but they couldn't be loaded.</span>"
 					return FALSE
 				if(M.vore_organs && M.vore_organs.len)
 					M.vore_selected = M.vore_organs[1]
@@ -32,7 +38,8 @@
 				var/datum/belly/B = new /datum/belly(M)
 				B.immutable = TRUE
 				B.name = "Stomach"
-				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]."
+				B.inside_flavor = "It appears to be rather warm and wet. Makes sense, considering it's inside \the [M.name]"
+				B.can_taste = TRUE
 				M.vore_organs[B.name] = B
 				M.vore_selected = B.name
 
@@ -114,6 +121,42 @@
 	var/belly = input("Choose Belly") in pred.vore_organs
 	return perform_the_nom(user, prey, pred, belly)
 
+//Dragon noms need to be faster
+/mob/living/proc/dragon_feeding(var/mob/living/user, var/mob/living/prey)
+	var/belly = user.vore_selected
+	return perform_dragon(user, prey, user, belly)
+
+/mob/living/proc/perform_dragon(var/mob/living/user, var/mob/living/prey, var/mob/living/pred, var/belly, swallow_time = 20)
+	//Sanity
+	if(!user || !prey || !pred || !belly || !(belly in pred.vore_organs))
+		return
+
+	// The belly selected at the time of noms
+	var/datum/belly/belly_target = pred.vore_organs[belly]
+	var/attempt_msg = "ERROR: Vore message couldn't be created. Notify a dev. (at)"
+	var/success_msg = "ERROR: Vore message couldn't be created. Notify a dev. (sc)"
+
+		// Prepare messages
+	if(user == pred) //Feeding someone to yourself
+		attempt_msg = text("<span class='warning'>[] starts to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+		success_msg = text("<span class='warning'>[] manages to [] [] into their []!</span>",pred,lowertext(belly_target.vore_verb),prey,lowertext(belly_target.name))
+
+	// Announce that we start the attempt!
+	user.visible_message(attempt_msg)
+
+	if(!do_mob(src, user, swallow_time)) // one second should be good enough, right?
+		return FALSE // Prey escaped (or user disabled) before timer expired.
+
+	// If we got this far, nom successful! Announce it!
+	user.visible_message(success_msg)
+	playsound(user, belly_target.vore_sound, 100, 1)
+
+	// Actually shove prey into the belly.
+	belly_target.nom_mob(prey, user)
+	if (pred == user)
+		message_admins("[key_name(pred)] ate [key_name(prey)].")
+		log_attack("[key_name(pred)] ate [key_name(prey)]")
+	return TRUE
 //
 // Master vore proc that actually does vore procedures
 //
@@ -173,9 +216,9 @@
 //
 //End vore code.
 /*
-	//Handle case: /obj/item/weapon/holder
-		if(/obj/item/weapon/holder/micro)
-			var/obj/item/weapon/holder/H = I
+	//Handle case: /obj/item/holder
+		if(/obj/item/holder/micro)
+			var/obj/item/holder/H = I
 
 			if(!isliving(user)) return 0 // Return 0 to continue upper procs
 			var/mob/living/attacker = user  // Typecast to living
@@ -243,6 +286,7 @@
 				if(M.loc != src)
 					B.internal_contents.Remove(M)
 
+
 // OOC Escape code for pref-breaking or AFK preds
 //
 /mob/living/proc/escapeOOC()
@@ -302,6 +346,7 @@
 	P.digestable = src.digestable
 	P.devourable = src.devourable
 	P.belly_prefs = src.vore_organs
+	P.vore_taste = src.vore_taste
 
 	return TRUE
 
@@ -318,9 +363,48 @@
 	src.digestable = P.digestable
 	src.devourable = P.devourable
 	src.vore_organs = list()
+	src.vore_taste = P.vore_taste
 
 	for(var/I in P.belly_prefs)
 		var/datum/belly/Bp = P.belly_prefs[I]
 		src.vore_organs[Bp.name] = Bp.copy(src)
 
 	return TRUE
+//
+// Clearly super important. Obviously.
+//
+/mob/living/proc/lick(var/mob/living/tasted in oview(1))
+	set name = "Lick Someone"
+	set category = "Vore"
+	set desc = "Lick someone nearby!"
+
+	if(!istype(tasted))
+		return
+
+	if(src == stat)
+		return
+
+	src.setClickCooldown(50)
+
+	src.visible_message("<span class='warning'>[src] licks [tasted]!</span>","<span class='notice'>You lick [tasted]. They taste rather like [tasted.get_taste_message()].</span>","<b>Slurp!</b>")
+
+
+/mob/living/proc/get_taste_message(allow_generic = TRUE, datum/species/mrace)
+	if(!vore_taste && !allow_generic)
+		return FALSE
+
+	var/taste_message = ""
+	if(vore_taste && (vore_taste != ""))
+		taste_message += "[vore_taste]"
+	else
+		if(ishuman(src))
+			taste_message += "normal, like a critter should"
+		else
+			taste_message += "a plain old normal [src]"
+
+/*	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.touching.reagent_list.len) //Just the first one otherwise I'll go insane.
+			var/datum/reagent/R = H.touching.reagent_list[1]
+			taste_message += " You also get the flavor of [R.taste_description] from something on them"*/
+	return taste_message

@@ -14,8 +14,11 @@
 	languages_possible = typecacheof(list(
 		/datum/language/common,
 		/datum/language/draconic,
+		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/ratvar
 	))
 
 /obj/item/organ/tongue/get_spans()
@@ -138,9 +141,7 @@
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
-	desc = "Apparently skeletons alter the sounds they produce \
-		through oscillation of their teeth, hence their characteristic \
-		rattling."
+	desc = "Apparently skeletons alter the sounds they produce through oscillation of their teeth, hence their characteristic rattling."
 	icon_state = "tonguebone"
 	say_mod = "rattles"
 	attack_verb = list("bitten", "chattered", "chomped", "enamelled", "boned")
@@ -150,7 +151,7 @@
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
 
-/obj/item/organ/tongue/bone/New()
+/obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
 

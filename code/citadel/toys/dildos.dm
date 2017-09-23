@@ -1,7 +1,7 @@
 //////////
 //DILDOS//
 //////////
-obj/item/weapon/dildo
+obj/item/dildo
 	name 				= "dildo"
 	desc 				= "Floppy!"
 	icon 				= 'code/citadel/icons/dildo.dmi'
@@ -19,7 +19,7 @@ obj/item/weapon/dildo
 	var/random_shape 	= FALSE
 	//Lists moved to _cit_helpers.dm as globals so they're not instanced individually
 
-obj/item/weapon/dildo/proc/update_appearance()
+obj/item/dildo/proc/update_appearance()
 	icon_state = "[dildo_type]_[dildo_shape]_[dildo_size]"
 	var/sizeword = ""
 	switch(dildo_size)
@@ -34,7 +34,7 @@ obj/item/weapon/dildo/proc/update_appearance()
 
 	name = "[sizeword][dildo_shape] [can_customize ? "custom " : ""][dildo_type]"
 
-obj/item/weapon/dildo/AltClick(mob/living/user)
+obj/item/dildo/AltClick(mob/living/user)
 	if(QDELETED(src))
 		return
 	if(!isliving(user))
@@ -45,7 +45,7 @@ obj/item/weapon/dildo/AltClick(mob/living/user)
 		return
 	customize(user)
 
-obj/item/weapon/dildo/proc/customize(mob/living/user)
+obj/item/dildo/proc/customize(mob/living/user)
 	if(!can_customize)
 		return FALSE
 	if(src && !user.incapacitated() && in_range(user,src))
@@ -74,7 +74,7 @@ obj/item/weapon/dildo/proc/customize(mob/living/user)
 	update_appearance()
 	return TRUE
 
-obj/item/weapon/dildo/Initialize()
+obj/item/dildo/Initialize()
 	. = ..()
 	if(random_color == TRUE)
 		var/randcolor = pick(GLOB.dildo_colors)
@@ -90,40 +90,40 @@ obj/item/weapon/dildo/Initialize()
 	pixel_y 	= rand(-7,7)
 	pixel_x 	= rand(-7,7)
 
-obj/item/weapon/dildo/examine(mob/user)
+obj/item/dildo/examine(mob/user)
 	..()
 	if(can_customize)
 		user << "<span class='notice'>Alt-Click \the [src.name] to customize it.</span>"
 
-obj/item/weapon/dildo/random//totally random
+obj/item/dildo/random//totally random
 	name 				= "random dildo"//this name will show up in vendors and shit so you know what you're vending(or don't, i guess :^))
 	random_color 		= TRUE
 	random_shape 		= TRUE
 	random_size 		= TRUE
 
 
-obj/item/weapon/dildo/knotted
+obj/item/dildo/knotted
 	dildo_shape 		= "knotted"
 	name 				= "knotted dildo"
 
-obj/item/weapon/dildo/human
+obj/item/dildo/human
 	dildo_shape 		= "human"
 	name 				= "human dildo"
 
-obj/item/weapon/dildo/plain
+obj/item/dildo/plain
 	dildo_shape 		= "plain"
 	name 				= "plain dildo"
 
-obj/item/weapon/dildo/flared
+obj/item/dildo/flared
 	dildo_shape 		= "flared"
 	name 				= "flared dildo"
 
-obj/item/weapon/dildo/flared/huge
+obj/item/dildo/flared/huge
 	name = "literal horse cock"
 	desc = "THIS THING IS HUGE!"
 	dildo_size = 4
 
-obj/item/weapon/dildo/custom
+obj/item/dildo/custom
 	name 				= "customizable dildo"
 	desc 				= "Thanks to significant advances in synthetic nanomaterials, this dildo is capable of taking on many different forms to fit the user's preferences! Pricy!"
 	can_customize		= TRUE

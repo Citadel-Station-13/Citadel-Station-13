@@ -28,6 +28,11 @@
 			return
 
 		to_chat(src, "<span class='userdanger'>You squirt a measure of [C.chemname] from your reservoirs into [victim]'s bloodstream.</span>")
+		if(C.chemname=="aphro" || C.chemname=="anaphro")
+			if(victim.canbearoused) //snowflake exception as these chems interact with client-specific optional stuff :S
+				to_chat(victim,C.chem_message)
+		else
+			to_chat(victim,C.chem_message)
 		victim.reagents.add_reagent(C.chemname, C.quantity)
 		chemicals -= C.chemuse
 		log_game("[src]/([src.ckey]) has injected [C.chemname] into their host [victim]/([victim.ckey])")

@@ -1,3 +1,3 @@
-[Note]: # (State what the issue is from a "whats wrong" perspective. Issue reports should clearly allow maintainers to understand whats wrong and how to test/reproduce if that is not obvious. Avoid ambiguity. Please enter the commit hash from the "Show Server Revision" verb if you can. Remove these notes before submitting your report.)
+[Directions]: # (Include the Round ID from the Status panel or retrieve it from https://atlantaned.space/newSS13tools/round.php ! If you believe the issue to be caused by a testmerge [OOC tab -> Show Server Revision], report it in the pull request's comment section instead. Explain your issue in detail, including the steps to reproduce it.)
 
-[GameAdmins]: # (If you are reporting a bug that occurred AFTER you used varedit/admin buttons to alter an object out of normal operating conditions, please verify that you can re-create the bug without the varedit usage/admin buttons before reporting the issue.)
+[For Admins]: # (Oddities induced by var-edits and other admin tools are not necessarily bugs. Verify that your issues occur under regular circumstances before reporting them.)

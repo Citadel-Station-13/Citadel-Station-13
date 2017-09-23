@@ -29,6 +29,10 @@
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
+	if(ishuman(destination))
+		var/mob/living/carbon/human/H = destination
+		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
+	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -228,9 +232,12 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
+		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
-		set_species(mrace, icon_update=0)
+		var/datum/species/newrace = new mrace.type
+		newrace.copy_properties_from(mrace)
+		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
 		real_name = newreal_name
@@ -246,6 +253,8 @@
 	if(se)
 		dna.struc_enzymes = se
 		domutcheck()
+
+	give_genitals(TRUE)//Give all genitalia that DNA says you should have, remove any pre-existing ones as this is a hardset!
 
 	if(mrace || newfeatures || ui)
 		update_body()
