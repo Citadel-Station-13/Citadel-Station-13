@@ -177,7 +177,7 @@
 
 /datum/objective/crew/assistant/pwrgame //ported from Goon
 	var/obj/item/clothing/targettidegarb
-	explanation_text = "Get your grubby hands on a [Dear god something broke. Report this to Citadel's development dicussion channel]."
+	explanation_text = "Get your grubby hands on a (Dear god something broke. Report this to Citadel's development dicussion channel)."
 
 /datum/objective/crew/assistant/pwrgame/New()
 	. = ..()
@@ -211,7 +211,7 @@
 				explanation_text += "gross grabbers "
 			else
 				explanation_text += "grubby hands "
-			explanation_text += "on a space suit."//replace this if you're making this monstrosity work	*/
+			explanation_text += "on a space suit." replace this if you're making this monstrosity work	*/
 
 /datum/objective/crew/assistant/pwrgame/check_completion()
 	if(owner.current && owner.current.check_contents_for(typesof(targettidegarb)))
