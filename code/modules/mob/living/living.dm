@@ -712,6 +712,7 @@
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
+<<<<<<< HEAD
 	var/loc_temp = T0C
 	if(istype(loc, /obj/mecha))
 		var/obj/mecha/M = loc
@@ -736,6 +737,17 @@
 	else
 		loc_temp = environment.temperature
 
+=======
+	var/loc_temp = environment ? environment.temperature : T0C
+	if(isobj(loc))
+		var/obj/oloc = loc
+		var/obj_temp = oloc.return_temperature()
+		if(obj_temp != null)
+			loc_temp = obj_temp
+	else if(isspaceturf(get_turf(src)))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+>>>>>>> 66a8bfb... Merge pull request #30881 from MoreRobustThanYou/patch-4
 	return loc_temp
 
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
