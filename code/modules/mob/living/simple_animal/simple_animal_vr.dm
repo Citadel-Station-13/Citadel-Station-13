@@ -4,14 +4,14 @@
 	devourable = FALSE //insurance because who knows.
 	var/vore_active = FALSE				// If vore behavior is enabled for this mob
 
-	var/vore_capacity = 1				// The capacity (in people) this person can hold
 	var/vore_default_mode = DM_DIGEST	// Default bellymode (DM_DIGEST, DM_HOLD, DM_ABSORB)
 	var/vore_digest_chance = 25			// Chance to switch to digest mode if resisted
-	var/vore_absorb_chance = 0			// Chance to switch to absorb mode if resisted
 	var/vore_escape_chance = 25			// Chance of resisting out of mob
 
 	var/vore_stomach_name				// The name for the first belly if not "stomach"
 	var/vore_stomach_flavor				// The flavortext for the first belly if not the default
+
+	var/vore_fullness = 0				// How "full" the belly is (controls icons)
 
 
 // Release belly contents beforey being gc'd!
@@ -21,6 +21,37 @@
 		B.release_all_contents() // When your stomach is empty
 	prey_excludes.Cut()
 	. = ..()
+
+
+// Update fullness based on size & quantity of belly contents
+/mob/living/simple_animal/proc/update_fullness(var/atom/movable/M)
+	var/new_fullness = 0
+	for(var/I in vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		if (!(M in B.internal_contents))
+			return FALSE // Nothing's inside
+		new_fullness += M
+
+	vore_fullness = new_fullness
+
+
+/mob/living/simple_animal/proc/swallow_check()
+	for(var/I in vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		if(vore_active)
+			update_fullness()
+			if(!vore_fullness)
+				// Nothing
+				return
+			else
+				addtimer(CALLBACK(src, .proc/swallow_mob), B.swallow_time)
+
+/mob/living/simple_animal/proc/swallow_mob()
+	for(var/I in vore_organs)
+		var/datum/belly/B = vore_organs[I]
+		for(var/mob/living/M in B.internal_contents)
+			B.transfer_contents(M, B.transferlocation)
+
 
 /mob/living/simple_animal/death()
 	for(var/I in vore_organs)
@@ -69,4 +100,3 @@
 		"The stomach glorps and gurgles as it tries to work you into slop.")
 	src.vore_organs[B.name] = B
 	src.vore_selected = B.name
-
