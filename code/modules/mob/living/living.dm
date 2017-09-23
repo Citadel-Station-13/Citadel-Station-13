@@ -718,11 +718,13 @@
 		var/obj_temp = oloc.return_temperature()
 		if(obj_temp != null)
 			loc_temp = obj_temp
-	if(ismob(loc))
+/*	if(ismob(loc))
 		var/mob/living/mloc = loc
 		var/mob_temp = mloc.return_temperature()
-		if(mloc = DEAD)
+		if(mloc == DEAD)
 			loc_temp = get_turf(loc) //wew
+		else
+			loc_temp = mob_temp */ //just gunna ommit this for now, it's on the 'to figgur out' list.
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
