@@ -136,7 +136,7 @@ GLOBAL_PROTECT(config_dir)
 	var/list/probabilities = list()		// relative probability of each mode
 	var/list/min_pop = list()			// overrides for acceptible player counts in a mode
 	var/list/max_pop = list()
-
+	var/list/repeated_mode_adjust = list() 			// weight adjustments for recent modes
 	var/humans_need_surnames = 0
 	var/allow_ai = 0					// allow ai job
 	var/forbid_secborg = 0				// disallow secborg module to be chosen.
@@ -278,6 +278,7 @@ GLOBAL_PROTECT(config_dir)
 	var/error_msg_delay = 50 // How long to wait between messaging admins about occurrences of a unique error
 
 	var/arrivals_shuttle_dock_window = 55	//Time from when a player late joins on the arrivals shuttle to when the shuttle docks on the station
+	var/arrivals_shuttle_require_undocked = FALSE	//Require the arrivals shuttle to be undocked before latejoiners can join
 	var/arrivals_shuttle_require_safe_latejoin = FALSE	//Require the arrivals shuttle to be operational in order for latejoiners to join
 
 	var/mice_roundstart = 10 // how many wire chewing rodents spawn at roundstart.
@@ -722,7 +723,14 @@ GLOBAL_PROTECT(config_dir)
 							WRITE_FILE(GLOB.config_error_log, "Unknown game mode probability configuration definition: [prob_name].")
 					else
 						WRITE_FILE(GLOB.config_error_log, "Incorrect probability configuration definition: [prob_name]  [prob_value].")
-
+				if("repeated_mode_adjust")
+					if(value)
+						repeated_mode_adjust.Cut()
+						var/values = splittext(value," ")
+						for(var/v in values)
+							repeated_mode_adjust += text2num(v)
+					else
+						WRITE_FILE(GLOB.config_error_log, "Incorrect round weight adjustment configuration definition for [value].")
 				if("protect_roles_from_antagonist")
 					protect_roles_from_antagonist	= 1
 				if("protect_assistant_from_antagonist")
@@ -818,6 +826,8 @@ GLOBAL_PROTECT(config_dir)
 					GLOB.MAX_EX_FLAME_RANGE = BombCap
 				if("arrivals_shuttle_dock_window")
 					arrivals_shuttle_dock_window = max(PARALLAX_LOOP_TIME, text2num(value))
+				if("arrivals_shuttle_require_undocked")
+					arrivals_shuttle_require_undocked = TRUE
 				if("arrivals_shuttle_require_safe_latejoin")
 					arrivals_shuttle_require_safe_latejoin = TRUE
 				if("mice_roundstart")
@@ -962,7 +972,6 @@ GLOBAL_PROTECT(config_dir)
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in gamemode_cache)
 		var/datum/game_mode/M = new T()
-		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -974,8 +983,15 @@ GLOBAL_PROTECT(config_dir)
 		if(max_pop[M.config_tag])
 			M.maximum_players = max_pop[M.config_tag]
 		if(M.can_start())
-			runnable_modes[M] = probabilities[M.config_tag]
-			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
+			var/final_weight = probabilities[M.config_tag]
+			if(SSpersistence.saved_modes.len == 3 && repeated_mode_adjust.len == 3)
+				var/recent_round = min(SSpersistence.saved_modes.Find(M.config_tag),3)
+				var/adjustment = 0
+				while(recent_round)
+					adjustment += repeated_mode_adjust[recent_round]
+					recent_round = SSpersistence.saved_modes.Find(M.config_tag,recent_round+1,0)
+				final_weight *= ((100-adjustment)/100)
+			runnable_modes[M] = final_weight
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

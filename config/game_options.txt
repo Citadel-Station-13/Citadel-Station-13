@@ -98,6 +98,9 @@ PROBABILITY DEVIL_AGENTS 0
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
 
+## Percent weight reductions for three of the most recent modes
+
+REPEATED_MODE_ADJUST 45 30 10
 
 ## Toggles for continuous modes.
 ## Modes that aren't continuous will end the instant all antagonists are dead.
@@ -485,6 +488,9 @@ Space_Budget 16
 ## Time in ds from when a player latejoins till the arrival shuttle docks at the station
 ## Must be at least 30 to not break parallax I recommended at least 55 to be visually/aurally appropriate
 ARRIVALS_SHUTTLE_DOCK_WINDOW 55
+
+## Uncomment to require the arrivals shuttle to be in flight (if it can fly) before late join players can join
+#ARRIVALS_SHUTTLE_REQUIRE_UNDOCKED
 
 ## Uncomment to prevent late join players from spawning if the arrivals shuttle is depressurized
 #ARRIVALS_SHUTTLE_REQUIRE_SAFE_LATEJOIN

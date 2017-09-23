@@ -17,6 +17,7 @@
 	maxHealth = 25
 	health = 25
 	devourable = TRUE
+	no_vore = FALSE
 
 	harm_intent_damage = 8
 	obj_damage = 50
