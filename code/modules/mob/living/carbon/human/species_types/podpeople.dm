@@ -10,8 +10,11 @@
 	burnmod = 1.25
 	heatmod = 1.5
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
-	disliked_food = NONE
-	liked_food = NONE
+	disliked_food = MEAT
+	liked_food = VEGETABLES | FRUIT
+	toxic_food = TOXIC | RAW
+	roundstart = 1
+
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -38,14 +41,17 @@
 			H.adjustToxLoss(-1)
 			H.adjustOxyLoss(-1)
 
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 55)
+		H.take_overall_damage(2,5)
+
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(5)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 		return 1
+		H.confused = max(H.confused, 1)
+
 
 /datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	switch(P.type)
