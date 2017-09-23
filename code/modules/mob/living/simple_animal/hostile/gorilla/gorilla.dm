@@ -33,6 +33,8 @@
 	minbodytemp = 270
 	maxbodytemp = 350
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
+	devourable = TRUE
+	no_vore = FALSE
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.

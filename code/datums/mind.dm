@@ -121,8 +121,9 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
-		L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
-		L.update_arousal_hud() //Removes the old icon
+		if(L.client && L.client.prefs)
+			L.canbearoused = L.client.prefs.arousable //Technically this should make taking over a character mean the body gain the new minds setting...
+			L.update_arousal_hud() //Removes the old icon
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -131,10 +132,10 @@
 	memory = null
 
 // Datum antag mind procs
-/datum/mind/proc/add_antag_datum(datum_type)
+/datum/mind/proc/add_antag_datum(datum_type, team)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = new datum_type(src)
+	var/datum/antagonist/A = new datum_type(src, team)
 	if(!A.can_be_owned(src))
 		qdel(A)
 		return
@@ -193,6 +194,11 @@
 	if(src in SSticker.mode.traitors)
 		src.remove_antag_datum(ANTAG_DATUM_TRAITOR)
 	SSticker.mode.update_traitor_icons_removed(src)
+
+/datum/mind/proc/remove_brother()
+	if(src in SSticker.mode.brothers)
+		src.remove_antag_datum(ANTAG_DATUM_BROTHER)
+	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
 	if(src in SSticker.mode.syndicates)
@@ -348,6 +354,12 @@
 		var/obj_count = 1
 		for(var/datum/objective/objective in objectives)
 			output += "<br><B>Objective #[obj_count++]</B>: [objective.explanation_text]"
+			var/list/datum/mind/other_owners = objective.get_owners() - src
+			if(other_owners.len)
+				output += "<ul>"
+				for(var/datum/mind/M in other_owners)
+					output += "<li>Conspirator: [M.name]</li>"
+				output += "</ul>"
 
 	if(window)
 		recipient << browse(output,"window=memory")
@@ -384,7 +396,7 @@
 
 	/** TRAITOR ***/
 	text = "traitor"
-	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan")
+	if (SSticker.mode.config_tag=="traitor" || SSticker.mode.config_tag=="traitorchan" || SSticker.mode.config_tag=="traitorbro")
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if (src in SSticker.mode.traitors)
@@ -403,6 +415,21 @@
 
 
 	if(ishuman(current) || ismonkey(current))
+
+		/** BROTHER **/
+		text = "brother"
+		if(SSticker.mode.config_tag == "traitorbro")
+			text = uppertext(text)
+		text = "<i><b>[text]</b></i>: "
+		if(src in SSticker.mode.brothers)
+			text += "<b>Brother</b> | <a href='?src=\ref[src];brother=clear'>no</a>"
+
+		if(current && current.client && (ROLE_BROTHER in current.client.prefs.be_special))
+			text += " | Enabled in Prefs"
+		else
+			text += " | Disabled in Prefs"
+
+		sections["brother"] = text
 
 		/** CHANGELING ***/
 		text = "changeling"
@@ -1252,7 +1279,6 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						//to_chat(world, "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!")
 					else if (istype(M) && length(M.viruses))
 						for(var/thing in M.viruses)
 							var/datum/disease/D = thing
@@ -1283,6 +1309,13 @@
 						H = M.humanize(TR_KEEPITEMS  |  TR_KEEPIMPLANTS  |  TR_KEEPORGANS  |  TR_KEEPDAMAGE  |  TR_KEEPVIRUS  |  TR_DEFAULTMSG)
 						if(H)
 							src = H.mind
+
+	else if (href_list["brother"])
+		switch(href_list["brother"])
+			if("clear")
+				remove_brother()
+				log_admin("[key_name(usr)] has de-brother'ed [current].")
+				SSticker.mode.update_brother_icons_removed(src)
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])

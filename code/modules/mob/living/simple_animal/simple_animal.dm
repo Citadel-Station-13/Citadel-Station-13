@@ -85,6 +85,8 @@
 	//domestication
 	var/tame = 0
 
+	no_vore = TRUE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals += src
@@ -95,6 +97,9 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	if(vore_active)
+		init_belly()
+	verbs |= /mob/living/proc/animal_nom
 
 
 /mob/living/simple_animal/Login()
@@ -228,7 +233,6 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
