@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/uses_glasses_colour = 0
 	
-	var/screenshake = 1
+	var/screenshake = 100
 	var/damagescreenshake = 2
 
 	//character preferences
@@ -364,10 +364,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "Disabled"
 				else
 					dat += "High"
-
 			dat += "</a><br>"
 
-			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==1) ? "Full" : ((screenshake==0) ? "None" : "Reduced")]</a><br>"
+			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : [screenshake])]</a><br>"
 
 			if (!user.client.prefs.screenshake==0)
 				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
@@ -1495,16 +1494,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["exhibitionist"] = TRUE
 						else
 							features["exhibitionist"] = FALSE
-				if("screenshake")
-					switch(screenshake)
-						if(0)
-							screenshake = 1
-						if(1)
-							screenshake = 2
-						if(2)
-							screenshake = 0
-						else
-							screenshake = 1
+				if ("screenshake")
+					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
+					if (!isnull(desiredshake))
+						screenshake = desiredshake
 				if("damagescreenshake")
 					switch(damagescreenshake)
 						if(0)
