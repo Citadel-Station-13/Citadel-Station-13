@@ -115,8 +115,7 @@ Thus, the two variables affect pump operation are set in New():
 		if("power")
 			on = !on
 			investigate_log("Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-			message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
-			log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
+			message_admins("Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 			. = TRUE
 		if("pressure")
 			var/pressure = params["pressure"]
@@ -133,8 +132,7 @@ Thus, the two variables affect pump operation are set in New():
 			if(.)
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
-				log_admin("[key_name(usr)] manipulated a pump at [x], [y], [z]")
+				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -171,14 +169,13 @@ Thus, the two variables affect pump operation are set in New():
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user, turf/T in world)
+/obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
-		var/area/A = get_area(src)
-		if(. && on && is_operational())
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-			return FALSE
-		else
-			investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-			message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]")
-			log_admin("[key_name(usr)] unwrenched a pump at [x], [y], [z]")
-			return TRUE
+	var/area/A = get_area(src)
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
+	else
+		investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [A]")
+		return TRUE

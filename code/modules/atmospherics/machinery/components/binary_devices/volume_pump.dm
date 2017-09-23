@@ -110,14 +110,12 @@ Thus, the two variables affect pump operation are set in New():
 	if(..())
 		return
 	var/turf/T = get_turf(src)
-	//var/area/A = get_area(src)
+	var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
-			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
-			log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
-
+			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -133,9 +131,8 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
-				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
-				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
-				log_admin("[key_name(usr)] manipulated a volume pump at [x], [y], [z]")
+				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
@@ -168,15 +165,13 @@ Thus, the two variables affect pump operation are set in New():
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user, turf/T in world)
+/obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
-		//var/area/A = get_area(src)
-		if(. && on && is_operational())
-			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
-			return FALSE
-		else
-			investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [loc.loc]", INVESTIGATE_ATMOS)
-			message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)]")
-			log_admin("[key_name(usr)] unwrenched a volume pump at [x], [y], [z]")
-			return
-
+	var/area/A = get_area(src)
+	if(. && on && is_operational())
+		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		return FALSE
+	else
+		investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
+		message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [A]")
+		return
