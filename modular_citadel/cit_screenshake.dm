@@ -8,8 +8,9 @@
 		return
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = ((C.prefs.screenshake==1) ? strength : strength*0.25) *world.icon_size
-	var/min = -(((C.prefs.screenshake==1) ? strength : strength*0.25)*world.icon_size)
+	var/clientscreenshake = (C.prefs.screenshake * 0.01)
+	var/max = (strength*clientscreenshake) * world.icon_size
+	var/min = -((strength*clientscreenshake) * world.icon_size)
 
 	for(var/i in 0 to duration-1)
 		if (i == 0)
