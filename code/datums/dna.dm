@@ -237,7 +237,7 @@
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
 		newrace.copy_properties_from(mrace)
-		set_species(newrace, icon_update=0))
+		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
 		real_name = newreal_name
