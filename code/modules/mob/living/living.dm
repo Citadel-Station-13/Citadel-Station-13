@@ -724,7 +724,9 @@
 		if(mloc == DEAD)
 			loc_temp = get_turf(loc) //wew
 		else
-			loc_temp = mob_temp */ //just gunna ommit this for now, it's on the 'to figgur out' list.
+			loc_temp = mob_temp
+*/
+//just gunna ommit this for now, it's on the 'to figgur out' list.
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
