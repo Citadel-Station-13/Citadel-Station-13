@@ -33,6 +33,7 @@ $maintainer_team_id = 133041;
 $validation = "org";
 $validation_count = 1;
 $tracked_branch = 'master';
+$require_changelogs = false;
 
 require_once 'secret.php';
 
@@ -129,7 +130,7 @@ function tag_pr($payload, $opened) {
 	$tags = array();
 	$title = $payload['pull_request']['title'];
 	if($opened) {	//you only have one shot on these ones so as to not annoy maintainers
-		$tags = checkchangelog($payload, true, false);
+		$tags = checkchangelog($payload, false);
 
 		$lowertitle = strtolower($title);
 		if(strpos($lowertitle, 'refactor') !== FALSE)
@@ -184,14 +185,142 @@ function tag_pr($payload, $opened) {
 	$scontext['http']['method'] = 'PUT';
 	$scontext['http']['content'] = json_encode($final);
 
+<<<<<<< HEAD
 	echo file_get_contents($url, false, stream_context_create($scontext));
+=======
+	echo apisend($url, 'PUT', $final);
+
+	return $final;
+}
+
+function remove_ready_for_review($payload, $labels = null){
+	if($labels == null)
+		$labels = get_labels($payload);
+	$index = array_search('Ready for Review', $labels);
+	if($index !== FALSE)
+		unset($labels[$index]);
+	$url = $payload['pull_request']['issue_url'] . '/labels';
+	apisend($url, 'PUT', $labels);
+}
+
+function dismiss_review($payload, $id, $reason){
+	$content = array('message' => $reason);
+	apisend($payload['pull_request']['url'] . '/reviews/' . $id . '/dismissals', 'PUT', $content);
+}
+
+function get_reviews($payload){
+	return json_decode(apisend($payload['pull_request']['url'] . '/reviews'), true);
+}
+
+function check_ready_for_review($payload, $labels = null){
+	$r4rlabel = 'Ready for Review';
+	$labels_which_should_not_be_ready = array('Do Not Merge', 'Work In Progress', 'Merge Conflict');
+	$has_label_already = false;
+	$should_not_have_label = false;
+	if($labels == null)
+		$labels = get_labels($payload);
+	//if the label is already there we may need to remove it
+	foreach($labels as $L){
+		if(in_array($L, $labels_which_should_not_be_ready))
+			$should_not_have_label = true;
+		if($L == $r4rlabel)
+			$has_label_already = true;
+	}
+	
+	if($has_label_already && $should_not_have_label){
+		remove_ready_for_review($payload, $labels, $r4rlabel);
+		return;
+	}
+
+	//find all reviews to see if changes were requested at some point
+	$reviews = get_reviews($payload);
+
+	$reviews_ids_with_changes_requested = array();
+	$dismissed_an_approved_review = false;
+
+	foreach($reviews as $R){
+		$lower_association = strtolower($R['author_association']);
+		if($lower_association == 'member' || $lower_association == 'contributor' || $lower_association == 'owner'){
+			$lower_state = strtolower($R['state']);
+			if($lower_state == 'changes_requested')
+				$reviews_ids_with_changes_requested[] = $R['id'];
+			else if ($lower_state == 'approved'){
+				dismiss_review($payload, $R['id'], 'Out of date review');
+				$dismissed_an_approved_review = true;
+			}
+		}
+	}
+
+	if(!$dismissed_an_approved_review && count($reviews_ids_with_changes_requested) == 0){
+		if($has_label_already)
+			remove_ready_for_review($payload, $labels);
+		return;	//no need to be here
+	}
+
+	if(count($reviews_ids_with_changes_requested) > 0){
+		//now get the review comments for the offending reviews
+
+		$review_comments = json_decode(apisend($payload['pull_request']['review_comments_url']), true);
+
+		foreach($review_comments as $C){
+			//make sure they are part of an offending review
+			if(!in_array($C['pull_request_review_id'], $reviews_ids_with_changes_requested))
+				continue;
+			
+			//review comments which are outdated have a null position
+			if($C['position'] !== null){
+				if($has_label_already)
+					remove_ready_for_review($payload, $labels);
+				return;	//no need to tag
+			}
+		}
+	}
+
+	//finally, add it if necessary
+	if(!$has_label_already){
+		$labels[] = $r4rlabel;
+		$url = $payload['pull_request']['issue_url'] . '/labels';
+		apisend($url, 'PUT', $labels);
+	}
+>>>>>>> 864276a... More changelog functions (#30711)
+}
+
+function check_dismiss_changelog_review($payload){
+	global $require_changelog;
+	global $no_changelog;
+
+	if(!$require_changelog)
+		return;
+	
+	if(!$no_changelog)
+		checkchangelog($payload, false);
+	
+	$review_message = 'Your changelog for this PR is either malformed or non-existent. Please create one to document your changes.';
+
+	$reviews = get_reviews($payload);
+	if($no_changelog){
+		//check and see if we've already have this review
+		foreach($reviews as $R)
+			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
+				return;
+		//otherwise make it ourself
+		apisend($payload['pull_request']['url'] . '/reviews', 'POST', array('body' => $review_message, 'event' => 'REQUEST_CHANGES'));
+	}
+	else
+		//kill previous reviews
+		foreach($reviews as $R){
+			if($R['body'] == $review_message && strtolower($R['state']) == 'changes_requested')
+				dismiss_review($payload, $R['id'], 'Changelog added/fixed.');
 }
 
 function handle_pr($payload) {
+	global $no_changelog;
 	$action = 'opened';
 	switch ($payload["action"]) {
 		case 'opened':
 			tag_pr($payload, true);
+			if($no_changelog)
+				check_dismiss_changelog_review($payload);
 			if(get_pr_code_friendliness($payload) < 0){
 				$balances = pr_balances();
 				$author = $payload['pull_request']['user']['login'];
@@ -200,6 +329,7 @@ function handle_pr($payload) {
 			}
 			break;
 		case 'edited':
+			check_dismiss_changelog_review($payload);
 		case 'synchronize':
 			tag_pr($payload, false);
 			return;
@@ -213,7 +343,7 @@ function handle_pr($payload) {
 			else {
 				$action = 'merged';
 				auto_update($payload);
-				checkchangelog($payload, true, true);
+				checkchangelog($payload, true);
 				update_pr_balance($payload);
 				$validated = TRUE; //pr merged events always get announced.
 			}
@@ -372,10 +502,16 @@ function has_tree_been_edited($payload, $tree){
 	return $github_diff !== FALSE && strpos($github_diff, 'diff --git a/' . $tree) !== FALSE;
 }
 
+<<<<<<< HEAD
 function checkchangelog($payload, $merge = false, $compile = true) {
 	global $apiKey;
 	if (!$merge)
 		return;
+=======
+$no_changelog = false;
+function checkchangelog($payload, $compile = true) {
+	global $no_changelog;
+>>>>>>> 864276a... More changelog functions (#30711)
 	if (!isset($payload['pull_request']) || !isset($payload['pull_request']['body'])) {
 		return;
 	}
@@ -449,10 +585,6 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'bugfix', 'body' => $item);
 				}
 				break;
-			case 'wip':
-				if($item != 'added a few works in progress')
-					$currentchangelogblock[] = array('type' => 'wip', 'body' => $item);
-				break;
 			case 'rsctweak':
 			case 'tweaks':
 			case 'tweak':
@@ -510,11 +642,6 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 					$currentchangelogblock[] = array('type' => 'spellcheck', 'body' => $item);
 				}
 				break;
-			case 'experimental':
-			case 'experiment':
-				if($item != 'added an experimental thingy')
-					$currentchangelogblock[] = array('type' => 'experiment', 'body' => $item);
-				break;
 			case 'balance':
 			case 'rebalance':
 				if($item != 'rebalanced something'){
@@ -525,6 +652,35 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 			case 'tgs':
 				$currentchangelogblock[] = array('type' => 'tgs', 'body' => $item);
 				break;
+			case 'code_imp':
+			case 'code':
+				if($item != 'changed some code'){
+					$tags[] = 'Code Improvement';
+					$currentchangelogblock[] = array('type' => 'code_imp', 'body' => $item);
+				}
+				break;
+			case 'refactor':
+				if($item != 'refactored some code'){
+					$tags[] = 'Refactor';
+					$currentchangelogblock[] = array('type' => 'refactor', 'body' => $item);
+				}
+				break;
+			case 'config':
+				if($item != 'changed some config setting'){
+					$tags[] = 'Config Update';
+					$currentchangelogblock[] = array('type' => 'config', 'body' => $item);
+				}
+				break;
+			case 'admin':
+				if($item != 'messed with admin stuff'){
+					$tags[] = 'Administration';
+					$currentchangelogblock[] = array('type' => 'admin', 'body' => $item);
+				}
+				break;
+			case 'server':
+				if($item != 'something server ops should know')
+					$currentchangelogblock[] = array('type' => 'server', 'body' => $item);
+				break;			
 			default:
 				//we add it to the last changelog entry as a separate line
 				if (count($currentchangelogblock) > 0)
@@ -533,7 +689,10 @@ function checkchangelog($payload, $merge = false, $compile = true) {
 		}
 	}
 
-	if (!count($changelogbody) || !$compile)
+	if(!count($changelogbody))
+		$no_changelog = true;
+
+	if ($no_changelog || !$compile)
 		return $tags;
 
 	$file = 'author: "'.trim(str_replace(array("\\", '"'), array("\\\\", "\\\""), $username)).'"'."\n";
