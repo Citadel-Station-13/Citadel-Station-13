@@ -369,7 +369,9 @@
 		P.original = targeted_atom
 		P.fire()
 		return P
-
+		
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
