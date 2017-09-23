@@ -60,6 +60,7 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
+	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()
@@ -352,9 +353,9 @@ Difficulty: Medium
 
 /obj/effect/temp_visual/dragon_flight/proc/flight(negative)
 	if(negative)
-		animate(src, pixel_x = -DRAKE_SWOOP_HEIGHT*0.10, pixel_z = DRAKE_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+		animate(src, pixel_x = -DRAKE_SWOOP_HEIGHT*0.1, pixel_z = DRAKE_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	else
-		animate(src, pixel_x = DRAKE_SWOOP_HEIGHT*0.10, pixel_z = DRAKE_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
+		animate(src, pixel_x = DRAKE_SWOOP_HEIGHT*0.1, pixel_z = DRAKE_SWOOP_HEIGHT*0.15, time = 3, easing = BOUNCE_EASING)
 	sleep(3)
 	icon_state = "swoop"
 	if(negative)

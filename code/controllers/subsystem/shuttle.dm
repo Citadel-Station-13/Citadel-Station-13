@@ -290,7 +290,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && T.z == ZLEVEL_STATION)
+		if(T && (T.z in GLOB.station_z_levels))
 			callShuttle = 0
 			break
 
@@ -384,7 +384,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/travel_dir = M.preferred_direction
 	// Remember, the direction is the direction we appear to be
 	// coming from
-	var/dock_angle = dir2angle(M.preferred_direction) + M.port_angle + 180
+	var/dock_angle = dir2angle(M.preferred_direction) + dir2angle(M.port_direction) + 180
 	var/dock_dir = angle2dir(dock_angle)
 
 	var/transit_width = SHUTTLE_TRANSIT_BORDER * 2
@@ -430,17 +430,14 @@ SUBSYSTEM_DEF(shuttle)
 					continue base
 				if(!(T.flags_1 & UNUSED_TRANSIT_TURF_1))
 					continue base
-			//to_chat(world, "[COORD(topleft)] and [COORD(bottomright)]")
 			break base
 
 	if((!proposed_zone) || (!proposed_zone.len))
 		return FALSE
 
 	var/turf/topleft = proposed_zone[1]
-	//to_chat(world, "[COORD(topleft)] is TOPLEFT")
 	// Then create a transit docking port in the middle
 	var/coords = M.return_coords(0, 0, dock_dir)
-	//to_chat(world, json_encode(coords))
 	/*  0------2
         |      |
         |      |
@@ -478,11 +475,9 @@ SUBSYSTEM_DEF(shuttle)
 		if(WEST)
 			transit_path = /turf/open/space/transit/west
 
-	//to_chat(world, "Docking port at [transit_x], [transit_y], [topleft.z]")
 	var/turf/midpoint = locate(transit_x, transit_y, topleft.z)
 	if(!midpoint)
 		return FALSE
-	//to_chat(world, "Making transit dock at [COORD(midpoint)]")
 	var/area/shuttle/transit/A = new()
 	A.parallax_movedir = travel_dir
 	A.contents = proposed_zone

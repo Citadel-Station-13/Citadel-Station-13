@@ -60,6 +60,7 @@
 	movement_type = FLYING
 	gold_core_spawnable = 2
 	devourable = TRUE
+	no_vore = FALSE
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -896,7 +897,7 @@
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)

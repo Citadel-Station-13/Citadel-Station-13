@@ -28,3 +28,15 @@
 /obj/item/storage/box/syndie_kit/holoparasite/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
+
+/datum/uplink_item/dangerous/antitank
+	name = "Anti Tank Pistol"
+	desc = "Essentially amounting to a sniper rifle with no stock and barrel (or indeed, any rifling at all),\
+			this extremely dubious pistol is guaranteed to dislocate your wrists and hit the broad side of a barn!\
+	 		Uses sniper ammo.\
+	 		Bullets tend to veer off-course. We are not responsible for any unintentional damage or injury resulting from inaacuracy."
+	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
+	refundable = TRUE
+	cost = 14
+	surplus = 25
+	include_modes = list(/datum/game_mode/nuclear)

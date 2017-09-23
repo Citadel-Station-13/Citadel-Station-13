@@ -115,6 +115,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
+	var/icon_override = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -215,9 +217,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
 	return message
-
-/obj/item/attack_self(mob/user)
-	interact(user)
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)

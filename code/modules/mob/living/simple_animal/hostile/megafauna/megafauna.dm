@@ -60,7 +60,7 @@
 	else
 		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
 		if(C && crusher_loot)
-			if(C.total_damage >= maxHealth * 0.60) //if you do at least 60% of its health with the crusher, you'll get the item
+			if(C.total_damage >= maxHealth * 0.6) //if you do at least 60% of its health with the crusher, you'll get the item
 				spawn_crusher_loot()
 		if(!admin_spawned)
 			SSblackbox.set_details("megafauna_kills","[initial(name)]")
@@ -89,11 +89,15 @@
 	. = ..()
 	if(. && isliving(target))
 		var/mob/living/L = target
-		if(L.stat != DEAD)
-			if(!client && ranged && ranged_cooldown <= world.time)
-				OpenFire()
+		if(L.stat >= SOFT_CRIT)
+			if(vore_active == TRUE && L.devourable == TRUE)
+				dragon_feeding(src,L)
+			else if(L.stat == DEAD)
+				devour(L)
 		else
-			devour(L)
+			if(L.stat != DEAD)
+				if(!client && ranged && ranged_cooldown <= world.time)
+					OpenFire()
 
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
@@ -101,7 +105,7 @@
 	visible_message(
 		"<span class='danger'>[src] devours [L]!</span>",
 		"<span class='userdanger'>You feast on [L], restoring your health!</span>")
-	if(z != ZLEVEL_STATION && !client) //NPC monsters won't heal while on station
+	if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
 		adjustBruteLoss(-L.maxHealth/2)
 	L.gib()
 
