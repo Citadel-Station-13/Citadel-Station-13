@@ -170,7 +170,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
-	
+
 	var/list/exp
 	var/list/menuoptions
 
@@ -922,7 +922,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("flavor_text")
 					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"])) as message
 					if(msg != null)
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+						msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 						msg = html_encode(msg)
 						features["flavor_text"] = msg
 
