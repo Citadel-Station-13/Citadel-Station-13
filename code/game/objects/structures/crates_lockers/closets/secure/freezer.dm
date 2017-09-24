@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-/obj/structure/closet/secure_closet/freezer
-	icon_state = "freezer"
-
-/obj/structure/closet/secure_closet/freezer/kitchen
-	name = "kitchen Cabinet"
-=======
 /obj/structure/closet/secure_closet/freezer
 	icon_state = "freezer"
 	var/jones = FALSE
@@ -17,7 +10,6 @@
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen Cabinet"
->>>>>>> ac67dfe... You can now Indiana Jones one explosion. (#30961)
 	req_access = list(ACCESS_KITCHEN)
 
 /obj/structure/closet/secure_closet/freezer/kitchen/PopulateContents()
