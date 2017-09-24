@@ -230,6 +230,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 		if(SEC_DEPT_SCIENCE)
 			ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
 			dep_access = list(ACCESS_RESEARCH)
+<<<<<<< HEAD
 			destination = /area/security/checkpoint/science
 			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
 			accessory = /obj/item/clothing/accessory/armband/science
@@ -315,3 +316,90 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 /obj/item/device/radio/headset/headset_sec/alt/department/sci
 	keyslot = new /obj/item/device/encryptionkey/headset_sec
 	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+=======
+			destination = /area/security/checkpoint/science
+			spawn_point = locate(/obj/effect/landmark/start/depsec/science) in GLOB.department_security_spawns
+			accessory = /obj/item/clothing/accessory/armband/science
+
+	if(accessory)
+		var/obj/item/clothing/under/U = H.w_uniform
+		U.attach_accessory(new accessory)
+	if(ears)
+		if(H.ears)
+			qdel(H.ears)
+		H.equip_to_slot_or_del(new ears(H),slot_ears)
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access |= dep_access
+
+	var/teleport = 0
+	if(!config.sec_start_brig)
+		if(destination || spawn_point)
+			teleport = 1
+	if(teleport)
+		var/turf/T
+		if(spawn_point)
+			T = get_turf(spawn_point)
+			H.Move(T)
+		else
+			var/safety = 0
+			while(safety < 25)
+				T = safepick(get_area_turfs(destination))
+				if(T && !H.Move(T))
+					safety += 1
+					continue
+				else
+					break
+	if(department)
+		to_chat(M, "<b>You have been assigned to [department]!</b>")
+	else
+		to_chat(M, "<b>You have not been assigned to any department. Patrol the halls and help where needed.</b>")
+
+
+
+/datum/outfit/job/security
+	name = "Security Officer"
+	jobtype = /datum/job/officer
+
+	belt = /obj/item/device/pda/security
+	ears = /obj/item/device/radio/headset/headset_sec/alt
+	uniform = /obj/item/clothing/under/rank/security
+	gloves = /obj/item/clothing/gloves/color/black
+	head = /obj/item/clothing/head/helmet/sec
+	suit = /obj/item/clothing/suit/armor/vest/alt
+	shoes = /obj/item/clothing/shoes/jackboots
+	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/device/assembly/flash/handheld
+	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	box = /obj/item/storage/box/security
+
+	implants = list(/obj/item/implant/mindshield)
+
+
+/obj/item/device/radio/headset/headset_sec/alt/department/Initialize()
+	. = ..()
+	wires = new/datum/wires/radio(src)
+	secure_radio_connections = new
+	recalculateChannels()
+
+/obj/item/device/radio/headset/headset_sec/alt/department/engi
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_eng
+
+/obj/item/device/radio/headset/headset_sec/alt/department/supply
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_cargo
+
+/obj/item/device/radio/headset/headset_sec/alt/department/med
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_med
+
+/obj/item/device/radio/headset/headset_sec/alt/department/sci
+	keyslot = new /obj/item/device/encryptionkey/headset_sec
+	keyslot2 = new /obj/item/device/encryptionkey/headset_sci
+>>>>>>> f14c719... Tiny batch of Initialize() fixes, mostly stuff that isn't around at roundstart (#30980)
