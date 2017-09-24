@@ -1,8 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Adds the Anti Tank Pistol"
-  - bugfix: "Anti Tank Pistol now chambers bullets properly."
-  - tweak: "sprites are slightly adjusted and the magazine in the sprites is actually the sniper's magazine."
-  - rscadd: "Anti Tank pistol is now available to Nuke Ops"
-  - tweak: "Anti Tank Pistol now has 3 times the recoil of the Sniper Rifle, 10 more firing delay, and has bullet spread."
