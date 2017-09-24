@@ -67,6 +67,7 @@
 	possible_destinations = "mining_home;mining_away;landing_zone_dock;mining_public"
 	no_destination_swap = 1
 	var/global/list/dumb_rev_heads = list()
+	req_access = list(ACCESS_MINING) // should slow the ashwalkers down.
 
 /obj/machinery/computer/shuttle/mining/attack_hand(mob/user)
 	if((user.z in GLOB.station_z_levels) && user.mind && (user.mind in SSticker.mode.head_revolutionaries) && !(user.mind in dumb_rev_heads))
