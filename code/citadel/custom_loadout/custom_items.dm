@@ -67,7 +67,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
-	var/bitesound = 'sound/items/bikehorn.ogg'
+	squeak_override = list('sound/items/bikehorn.ogg'= 1)
 
 /obj/item/clothing/neck/cloak/carrot
 	name = "carrot cloak"
