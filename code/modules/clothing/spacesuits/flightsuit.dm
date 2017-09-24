@@ -18,7 +18,7 @@
 	var/icon_state_boost = "flightpack_boost"
 	var/item_state_boost = "flightpack_boost"
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 75)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
 
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
@@ -34,7 +34,7 @@
 	var/flight = FALSE
 	var/flight_passflags = PASSTABLE
 	var/powersetting = 1
-	var/powersetting_high = 3
+	var/powersetting_high = 6
 	var/powersetting_low = 1
 	var/override_safe = FALSE
 
@@ -84,7 +84,7 @@
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
 
-	var/crash_damage = 0	//Same thing, but for crashes. This is in addition to possible amounts of brute damage to the wearer.
+	var/crash_damage = 10	//Same thing, but for crashes. This is in addition to possible amounts of brute damage to the wearer.
 	var/crash_damage_low = 1
 	var/crash_damage_high = 2.5
 	var/crash_disable_threshold = 5
@@ -102,8 +102,12 @@
 	var/obj/item/stock_parts/capacitor/part_cap = null
 	var/obj/item/stock_parts/micro_laser/part_laser = null
 	var/obj/item/stock_parts/matter_bin/part_bin = null
+	var/obj/item/stock_parts/cell/cell = null //Wew lad. about damn time now
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
+
+	var/s_delay = 50 // cell replacement delay
+
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -128,6 +132,8 @@
 	part_cap = new /obj/item/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/stock_parts/matter_bin/super(src)
+	cell = new/obj/item/stock_parts/cell/high
+	cell.charge = 9000
 	..()
 
 /obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
@@ -816,6 +822,22 @@
 					part_cap.forceMove(get_turf(src))
 				part_cap = I
 				changed = TRUE
+		if(istype(S, /obj/item/stock_parts/cell))
+			var/obj/item/stock_parts/cell/CELL = S
+			if(CELL.maxcharge > cell.maxcharge)
+				usermessage("<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>", mob_override = user)
+				if (do_after(user,s_delay, target = src))
+					user.transferItemToLoc(CELL, src)
+					CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
+					var/obj/item/stock_parts/cell/old_cell = cell
+					old_cell.charge = 0
+					user.put_in_hands(old_cell)
+					old_cell.add_fingerprint(user)
+					old_cell.update_icon()
+					cell = CELL
+					usermessage("<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>", mob_override = user)
+				else
+					usermessage("<span class='danger'>Procedure interrupted. Protocol terminated.</span>", mob_override = user)
 	if(changed)
 		update_parts()
 	..()
@@ -847,7 +869,7 @@
 	var/obj/item/device/flightpack/pack = null
 	var/mob/living/carbon/human/wearer = null
 	var/active = FALSE
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	pack = null
@@ -901,22 +923,28 @@
 	var/deployedpack = FALSE
 	var/deployedshoes = FALSE
 	var/locked = FALSE
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
 	jetpack = null
 	var/flightpack
 	var/flight = FALSE
 	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/gun, /obj/item/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
 	var/maint_panel = FALSE
-	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	var/obj/item/stock_parts/cell/cell
+	var/s_delay = 50
+
+/obj/item/clothing/suit/space/hardsuit/flightsuit/get_cell()
+	return cell
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/full/Initialize()
 	. = ..()
 	makepack()
 	makeshoes()
 	resync()
+	get_cell()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, span = "boldnotice")
 	var/mob/targ = user
@@ -931,6 +959,7 @@
 	to_chat(user, "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>")
 	to_chat(user, "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>")
 	to_chat(user, "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>")
+	to_chat(user, "<span class='boldnotice'>Current energy capacity: <B>[DisplayPower(cell.charge)]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
@@ -1223,12 +1252,12 @@
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	brightness_on = 7
+	resistance_flags = FIRE_PROOF
+	brightness_on = 4
 	light_color = "#30ffff"
-	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
-	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
-	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
+	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
+	var/list/datahuds = list(DATA_HUD_SECURITY_BASIC , DATA_HUD_MEDICAL_BASIC, DATA_HUD_DIAGNOSTIC)
 	var/zoom_range = 14
 	var/zoom = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
