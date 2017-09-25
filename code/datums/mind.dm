@@ -1488,7 +1488,6 @@
 	var/fail = 0
 	fail |= !SSticker.mode.equip_revolutionary(current)
 
-<<<<<<< HEAD
 /datum/mind/proc/make_Abductor()
 	var/role = alert("Abductor Role ?","Role","Agent","Scientist")
 	var/team = input("Abductor Team ?","Team ?") in list(1,2,3,4)
@@ -1533,9 +1532,7 @@
 			if("Scientist")
 				L = scientist_landmarks[team]
 		H.forceMove(L.loc)
-
-=======
->>>>>>> 18f329a... Datum abductors refactor (#30893)
+		
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
