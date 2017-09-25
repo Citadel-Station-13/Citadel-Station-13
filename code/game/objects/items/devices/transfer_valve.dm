@@ -159,53 +159,6 @@
 /obj/item/device/transfer_valve/proc/toggle_valve()
 	if(!valve_open && tank_one && tank_two)
 		valve_open = TRUE
-<<<<<<< HEAD
-		var/turf/bombturf = get_turf(src)
-		var/area/A = get_area(bombturf)
-
-		var/attachment = "no device"
-		if(attached_device)
-			if(istype(attached_device, /obj/item/device/assembly/signaler))
-				attachment = "<A HREF='?_src_=holder;secrets=list_signalers'>[attached_device]</A>"
-			else
-				attachment = attached_device
-
-		var/attacher_name = ""
-		if(!attacher)
-			attacher_name = "Unknown"
-		else
-			attacher_name = "[key_name_admin(attacher)]"
-
-		var/log_str1 = "Bomb valve opened in "
-		var/log_str2 = "with [attachment] attacher: [attacher_name]"
-
-		var/log_attacher = ""
-		if(attacher)
-			log_attacher = "[ADMIN_QUE(attacher)] [ADMIN_FLW(attacher)]"
-
-		var/mob/mob = get_mob_by_key(src.fingerprintslast)
-		var/last_touch_info = ""
-		if(mob)
-			last_touch_info = "[ADMIN_QUE(mob)] [ADMIN_FLW(mob)]"
-
-		var/log_str3 = " Last touched by: [key_name_admin(mob)]"
-
-		var/bomb_message = "[log_str1] [A.name][ADMIN_JMP(bombturf)] [log_str2][log_attacher] [log_str3][last_touch_info]"
-
-		GLOB.bombers += bomb_message
-
-		message_admins(bomb_message, 0, 1)
-		log_game("[log_str1] [A.name][COORD(bombturf)] [log_str2] [log_str3]")
-		merge_gases()
-		spawn(20) // In case one tank bursts
-			for (var/i=0,i<5,i++)
-				src.update_icon()
-				sleep(10)
-			src.update_icon()
-
-	else if(valve_open && tank_one && tank_two)
-		split_gases()
-=======
 		var/turf/bombturf = get_turf(src)
 		var/area/A = get_area(bombturf)
 
@@ -251,7 +204,6 @@
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
->>>>>>> 28d725e... Merge pull request #30975 from ShizCalev/href-tokens
 		valve_open = FALSE
 		src.update_icon()
 
