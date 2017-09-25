@@ -2274,6 +2274,7 @@
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
 #include "code\modules\zombie\organs.dm"
+#include "modular_citadel\cit_screenshake.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
