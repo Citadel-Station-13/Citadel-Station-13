@@ -28,11 +28,8 @@
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\callbacks.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\citadel_defines.dm"
-=======
 #include "code\__DEFINES\cinematics.dm"
->>>>>>> 1304e83... Refactors cinematics. (#30888)
 #include "code\__DEFINES\clockcult.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\components.dm"
