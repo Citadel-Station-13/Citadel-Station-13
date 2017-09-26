@@ -113,8 +113,8 @@
 /*Brian*/
 
 /obj/item/clothing/suit/trenchcoat/green
-	name = "green greatcoat"
-	desc = "A greatcoat with a green color scheme."
+	name = "Reece's Great Coat"
+	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon_state = "hos-g"
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
