@@ -108,3 +108,13 @@
 	icon_state = "santahatnorm"
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head/santa
+
+
+/*Brian*/
+
+/obj/item/clothing/suit/trenchcoat/green
+	name = "green greatcoat"
+	desc = "A greatcoat with a green color scheme."
+	icon_state = "hos-g"
+	item_state = "hos-g"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
