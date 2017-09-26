@@ -28,7 +28,11 @@
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\callbacks.dm"
+<<<<<<< HEAD
 #include "code\__DEFINES\citadel_defines.dm"
+=======
+#include "code\__DEFINES\cinematics.dm"
+>>>>>>> 1304e83... Refactors cinematics. (#30888)
 #include "code\__DEFINES\clockcult.dm"
 #include "code\__DEFINES\combat.dm"
 #include "code\__DEFINES\components.dm"
@@ -251,6 +255,7 @@
 #include "code\datums\beam.dm"
 #include "code\datums\browser.dm"
 #include "code\datums\callback.dm"
+#include "code\datums\cinematic.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datum.dm"
 #include "code\datums\datumvars.dm"

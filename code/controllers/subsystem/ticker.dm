@@ -51,13 +51,13 @@ SUBSYSTEM_DEF(ticker)
 	var/queue_delay = 0
 	var/list/queued_players = list()		//used for join queues when the server exceeds the hard population cap
 
-	var/obj/screen/cinematic = null			//used for station explosion cinematic
-
 	var/maprotatechecked = 0
 
 	var/news_report
 
 	var/late_join_disabled
+
+	var/roundend_check_paused = FALSE
 
 	var/round_start_time = 0
 	var/list/round_start_events
@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(ticker)
 			scripture_states = scripture_unlock_alert(scripture_states)
 			SSshuttle.autoEnd()
 
-			if(!mode.explosion_in_progress && mode.check_finished(force_ending) || force_ending)
+			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -274,6 +274,7 @@ SUBSYSTEM_DEF(ticker)
 		if(epi)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
+<<<<<<< HEAD
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
@@ -411,6 +412,8 @@ SUBSYSTEM_DEF(ticker)
 		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
 
+=======
+>>>>>>> 1304e83... Refactors cinematics. (#30888)
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -711,13 +714,11 @@ SUBSYSTEM_DEF(ticker)
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 	round_start_time = SSticker.round_start_time
 
 	queue_delay = SSticker.queue_delay
 	queued_players = SSticker.queued_players
-	cinematic = SSticker.cinematic
 	maprotatechecked = SSticker.maprotatechecked
 
 	modevoted = SSticker.modevoted
