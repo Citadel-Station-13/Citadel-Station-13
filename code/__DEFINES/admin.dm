@@ -6,7 +6,8 @@
 #define MUTE_PRAY		4
 #define MUTE_ADMINHELP	8
 #define MUTE_DEADCHAT	16
-#define MUTE_ALL		31
+#define MUTE_ALL		32
+#define MUTE_MENTORHELP	64
 
 //Some constants for DB_Ban
 #define BANTYPE_PERMA		1
@@ -113,7 +114,7 @@
 #error Remove the flag below , its been long enough
 #endif
 //legacy , remove post 512, it was replaced by R_POLL
-#define R_REJUVINATE	2 
+#define R_REJUVINATE	2
 
 #define R_MAXPERMISSION 4096 //This holds the maximum value for a permission. It is used in iteration, so keep it updated.
 

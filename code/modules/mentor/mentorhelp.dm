@@ -1,5 +1,5 @@
 /client/var/mentorhelptimerid = 0	//a timer id for returning the mhelp verb
-/client/var/datum/mentor_help/current_ticket	//the current ticket the (usually) not-mentor client is dealing with
+/client/var/datum/mentor_help/current_mticket	//the current ticket the (usually) not-mentor client is dealing with
 
 //
 //TICKET MANAGER
@@ -104,17 +104,17 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 
 //Reassociate still open ticket if one exists
 /datum/mentor_help_tickets/proc/ClientLogin(client/C)
-	C.current_ticket = CKey2ActiveTicket(C.ckey)
-	if(C.current_ticket)
-		C.current_ticket.initiator = C
-		C.current_ticket.AddInteraction("Client reconnected.")
+	C.current_mticket = CKey2ActiveTicket(C.ckey)
+	if(C.current_mticket)
+		C.current_mticket.initiator = C
+		C.current_mticket.AddInteraction("Client reconnected.")
 
 //Dissasociate ticket
 /datum/mentor_help_tickets/proc/ClientLogout(client/C)
-	if(C.current_ticket)
-		C.current_ticket.AddInteraction("Client disconnected.")
-		C.current_ticket.initiator = null
-		C.current_ticket = null
+	if(C.current_mticket)
+		C.current_mticket.AddInteraction("Client disconnected.")
+		C.current_mticket.initiator = null
+		C.current_mticket = null
 
 //Get a ticket given a ckey
 /datum/mentor_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -128,14 +128,14 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 //
 
 /obj/effect/statclick/ticket_list
-	var/current_state
+	var/current_mstate
 
 /obj/effect/statclick/ticket_list/New(loc, name, state)
-	current_state = state
+	current_mstate = state
 	..()
 
 /obj/effect/statclick/ticket_list/Click()
-	GLOB.mhelp_tickets.BrowseTickets(current_state)
+	GLOB.mhelp_tickets.BrowseTickets(current_mstate)
 
 //
 //TICKET DATUM
@@ -160,7 +160,7 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 
 	var/static/ticket_counter = 0
 
-//call this on its own to create a ticket, don't manually assign current_ticket
+//call this on its own to create a ticket, don't manually assign current_mticket
 //msg is the title of the ticket: usually the mhelp text
 //is_bwoink is TRUE if this ticket was started by an mentor PM
 /datum/mentor_help/New(msg, client/C, is_bwoink)
@@ -178,11 +178,11 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	initiator = C
 	initiator_ckey = initiator.ckey
 	initiator_key_name = key_name(initiator, FALSE, TRUE)
-	if(initiator.current_ticket)	//This is a bug
+	if(initiator.current_mticket)	//This is a bug
 		stack_trace("Multiple mhelp current_tickets")
-		initiator.current_ticket.AddInteraction("Ticket erroneously left open by code")
-		initiator.current_ticket.Close()
-	initiator.current_ticket = src
+		initiator.current_mticket.AddInteraction("Ticket erroneously left open by code")
+		initiator.current_mticket.Close()
+	initiator.current_mticket = src
 
 	TimeoutVerb()
 
@@ -190,14 +190,14 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	_interactions = list()
 
 	if(is_bwoink)
-		AddInteraction("<font color='blue'>[key_name_mentor(usr)] PM'd [LinkedReplyName()]</font>")
-		message_mentors("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
+		AddInteraction("<font color='blue'>[key_name_admin(usr)] PM'd [LinkedReplyName()]</font>")
+		message_admins("<font color='blue'>Ticket [TicketHref("#[id]")] created</font>")
 	else
 		MessageNoRecipient(msg)
 
 		//send it to irc if nobody is on and tell us how many were on
 		var/mentor_number_present = send2irc_mentorless_only(initiator_ckey, "Ticket #[id]: [name]")
-		log_mentor_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [mentor_number_present] non-AFK mentors who have +BAN.")
+		log_mentor("Ticket #[id]: [key_name(initiator)]: [name] - heard by [mentor_number_present] non-AFK mentors who have +BAN.")
 		if(mentor_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active mentors are online, your mentorhelp was sent to the mentor irc.</span>")
 			heard_by_no_mentors = TRUE
@@ -225,8 +225,8 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 /datum/mentor_help/proc/FullMontyMentor(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	. = mentor_FULLMONTYMENTOR_NONAME(initiator.mob)
-	if(state == mhelp_ACTIVE)
+	. = ADMIN_FLW(initiator.mob)
+	if(state == MHELP_ACTIVE)
 		. += ClosureLinks(ref_src)
 
 //private
@@ -254,14 +254,14 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 /datum/mentor_help/proc/MessageNoRecipient(msg)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all mentors
-	var/mentor_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> [keywords_lookup(msg)]</span>"
+	var/mentor_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [ADMIN_FLW(ref_src)]:</b> [keywords_lookup(msg)]</span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
 
 	//send this msg to all mentors
 	for(var/client/X in GLOB.mentors)
-		if(X.prefs.toggles & SOUND_mentorHELP)
-			SEND_SOUND(X, sound('sound/effects/adminhelp2.ogg'))
+		if(X.prefs.toggles & SOUND_MENTORHELP)
+			SEND_SOUND(X, sound('sound/effects/-adminhelp.ogg'))
 		window_flash(X, ignorepref = TRUE)
 		to_chat(X, mentor_msg)
 
@@ -270,7 +270,7 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 
 //Reopen a closed ticket
 /datum/mentor_help/proc/Reopen()
-	if(state == mhelp_ACTIVE)
+	if(state == MHELP_ACTIVE)
 		to_chat(usr, "<span class='warning'>This ticket is already open.</span>")
 		return
 
@@ -283,52 +283,52 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	GLOB.mhelp_tickets.closed_tickets -= src
 	GLOB.mhelp_tickets.resolved_tickets -= src
 	switch(state)
-		if(mhelp_CLOSED)
+		if(MHELP_CLOSED)
 			SSblackbox.dec("mhelp_close")
-		if(mhelp_RESOLVED)
+		if(MHELP_RESOLVED)
 			SSblackbox.dec("mhelp_resolve")
-	state = mhelp_ACTIVE
+	state = MHELP_ACTIVE
 	closed_at = null
 	if(initiator)
-		initiator.current_ticket = src
+		initiator.current_mticket = src
 
-	AddInteraction("<font color='purple'>Reopened by [key_name_mentor(usr)]</font>")
-	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_mentor(usr)].</span>"
-	message_mentors(msg)
-	log_mentor_private(msg)
+	AddInteraction("<font color='purple'>Reopened by [key_name_admin(usr)]</font>")
+	var/msg = "<span class='adminhelp'>Ticket [TicketHref("#[id]")] reopened by [key_name_admin(usr)].</span>"
+	to_chat(GLOB.admins, msg)
+	log_mentor(msg)
 	SSblackbox.inc("mhelp_reopen")
 	TicketPanel()	//can only be done from here, so refresh it
 
 //private
 /datum/mentor_help/proc/RemoveActive()
-	if(state != mhelp_ACTIVE)
+	if(state != MHELP_ACTIVE)
 		return
 	closed_at = world.time
 	QDEL_NULL(statclick)
 	GLOB.mhelp_tickets.active_tickets -= src
-	if(initiator && initiator.current_ticket == src)
-		initiator.current_ticket = null
+	if(initiator && initiator.current_mticket == src)
+		initiator.current_mticket = null
 
 //Mark open ticket as closed/meme
-/datum/mentor_help/proc/Close(key_name = key_name_mentor(usr), silent = FALSE)
-	if(state != mhelp_ACTIVE)
+/datum/mentor_help/proc/Close(key_name = key_name_admin(usr), silent = FALSE)
+	if(state != MHELP_ACTIVE)
 		return
 	RemoveActive()
-	state = mhelp_CLOSED
+	state = MHELP_CLOSED
 	GLOB.mhelp_tickets.ListInsert(src)
 	AddInteraction("<font color='red'>Closed by [key_name].</font>")
 	if(!silent)
 		SSblackbox.inc("mhelp_close")
 		var/msg = "Ticket [TicketHref("#[id]")] closed by [key_name]."
-		message_mentors(msg)
-		log_mentor_private(msg)
+		to_chat(GLOB.admins, msg)
+		log_mentor(msg)
 
 //Mark open ticket as resolved/legitimate, returns mhelp verb
-/datum/mentor_help/proc/Resolve(key_name = key_name_mentor(usr), silent = FALSE)
-	if(state != mhelp_ACTIVE)
+/datum/mentor_help/proc/Resolve(key_name = key_name_admin(usr), silent = FALSE)
+	if(state != MHELP_ACTIVE)
 		return
 	RemoveActive()
-	state = mhelp_RESOLVED
+	state = MHELP_RESOLVED
 	GLOB.mhelp_tickets.ListInsert(src)
 
 	addtimer(CALLBACK(initiator, /client/proc/givementorhelpverb), 50)
@@ -337,12 +337,12 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	if(!silent)
 		SSblackbox.inc("mhelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
-		message_mentors(msg)
-		log_mentor_private(msg)
+		to_chat(GLOB.admins, msg)
+		log_mentor(msg)
 
 //Close and return mhelp verb, use if ticket is incoherent
-/datum/mentor_help/proc/Reject(key_name = key_name_mentor(usr))
-	if(state != mhelp_ACTIVE)
+/datum/mentor_help/proc/Reject(key_name = key_name_admin(usr))
+	if(state != MHELP_ACTIVE)
 		return
 
 	if(initiator)
@@ -356,8 +356,8 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 
 	SSblackbox.inc("mhelp_reject")
 	var/msg = "Ticket [TicketHref("#[id]")] rejected by [key_name]"
-	message_mentors(msg)
-	log_mentor_private(msg)
+	to_chat(GLOB.admins, msg)
+	log_mentor(msg)
 	AddInteraction("Rejected by [key_name].")
 	Close(silent = TRUE)
 
@@ -368,23 +368,23 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	dat += "<h4>mentor Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
 	switch(state)
-		if(mhelp_ACTIVE)
+		if(MHELP_ACTIVE)
 			dat += "<font color='red'>OPEN</font>"
-		if(mhelp_RESOLVED)
+		if(MHELP_RESOLVED)
 			dat += "<font color='green'>RESOLVED</font>"
-		if(mhelp_CLOSED)
+		if(MHELP_CLOSED)
 			dat += "CLOSED"
 		else
 			dat += "UNKNOWN"
 	dat += "</b>[GLOB.TAB][TicketHref("Refresh", ref_src)][GLOB.TAB][TicketHref("Re-Title", ref_src, "retitle")]"
-	if(state != mhelp_ACTIVE)
+	if(state != MHELP_ACTIVE)
 		dat += "[GLOB.TAB][TicketHref("Reopen", ref_src, "reopen")]"
 	dat += "<br><br>Opened at: [gameTimestamp(wtime = opened_at)] (Approx [(world.time - opened_at) / 600] minutes ago)"
 	if(closed_at)
 		dat += "<br>Closed at: [gameTimestamp(wtime = closed_at)] (Approx [(world.time - closed_at) / 600] minutes ago)"
 	dat += "<br><br>"
 	if(initiator)
-		dat += "<b>Actions:</b> [FullMonty(ref_src)]<br>"
+		dat += "<b>Actions:</b> [ADMIN_FLW(ref_src)]<br>"
 	else
 		dat += "<b>DISCONNECTED</b>[GLOB.TAB][ClosureLinks(ref_src)]<br>"
 	dat += "<br><b>Log:</b><br><br>"
@@ -398,9 +398,9 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	if(new_title)
 		name = new_title
 		//not saying the original name cause it could be a long ass message
-		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_mentor(usr)]"
-		message_mentors(msg)
-		log_mentor_private(msg)
+		var/msg = "Ticket [TicketHref("#[id]")] titled [name] by [key_name_admin(usr)]"
+		to_chat(GLOB.admins, msg)
+		log_mentor(msg)
 	TicketPanel()	//we have to be here to do this
 
 //Forwarded action from mentor/Topic
@@ -453,7 +453,7 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 	mentorhelptimerid = 0
 
 /client/verb/mentorhelp(msg as text)
-	set category = "mentor"
+	set category = "Mentor"
 	set name = "mentorhelp"
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -471,37 +471,37 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 		return
 
 	SSblackbox.add_details("mentor_verb","mentorhelp") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	if(current_ticket)
+	if(current_mticket)
 		if(alert(usr, "You already have a ticket open. Is this for the same issue?",,"Yes","No") != "No")
-			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
-				current_ticket.TimeoutVerb()
+			if(current_mticket)
+				current_mticket.MessageNoRecipient(msg)
+				current_mticket.TimeoutVerb()
 				return
 			else
 				to_chat(usr, "<span class='warning'>Ticket not found, creating new one...</span>")
 		else
-			current_ticket.AddInteraction("[key_name_mentor(usr)] opened a new ticket.")
-			current_ticket.Close()
+			current_mticket.AddInteraction("[key_name_admin(usr)] opened a new ticket.")
+			current_mticket.Close()
 
 	new /datum/mentor_help(msg, src, FALSE)
 
 //mentor proc
 /client/proc/cmd_mentor_ticket_panel()
 	set name = "Show Ticket List"
-	set category = "mentor"
+	set category = "Mentor"
 
-	if(!check_rights(R_mentor, TRUE))
+	if(!check_rights(R_MENTOR, TRUE))
 		return
 
 	var/browse_to
 
 	switch(input("Display which ticket list?") as null|anything in list("Active Tickets", "Closed Tickets", "Resolved Tickets"))
 		if("Active Tickets")
-			browse_to = mhelp_ACTIVE
+			browse_to = MHELP_ACTIVE
 		if("Closed Tickets")
-			browse_to = mhelp_CLOSED
+			browse_to = MHELP_CLOSED
 		if("Resolved Tickets")
-			browse_to = mhelp_RESOLVED
+			browse_to = MHELP_RESOLVED
 		else
 			return
 
@@ -520,9 +520,9 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 		C = Mob.client
 	else
 		C = what
-	if(istype(C) && C.current_ticket)
-		C.current_ticket.AddInteraction(message)
-		return C.current_ticket
+	if(istype(C) && C.current_mticket)
+		C.current_mticket.AddInteraction(message)
+		return C.current_mticket
 	if(istext(what))	//ckey
 		var/datum/mentor_help/MH = GLOB.mhelp_tickets.CKey2ActiveTicket(what)
 		if(MH)
@@ -554,31 +554,19 @@ GLOBAL_DATUM_INIT(mhelp_tickets, /datum/mentor_help_tickets, new)
 		var/final = ""
 		var/list/afkments = ments["afk"]
 		var/list/allments = ments["total"]
-		if(!afkmins.len)
+		if(!afkments.len)
 			final = "[msg] - No mentors online"
 		else
 			final = "[msg] - All mentors are AFK\[[english_list(afkments)]\]! Total: [allments.len] "
 		send2irc(source,final)
 		send2otherserver(source,final)
 
-
+/*
 /proc/send2irc(msg,msg2)
 	if(world.RunningService())
-		world.ExportService("[SERVICE_REQUEST_IRC_MENTOR_CHANNEL_MESSAGE] [msg] | [msg2]")
+		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
 	else if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
-
-/proc/send2otherserver(source,msg,type = "mhelp")
-	if(config.cross_allowed)
-		var/list/message = list()
-		message["message_sender"] = source
-		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
-		message["crossmessage"] = type
-
-		world.Export("[config.cross_address]?[list2params(message)]")
-
+		shell("python nudge.py [msg] [msg2]") */
 
 /proc/ircmentorwho()
 	var/list/message = list("mentors: ")

@@ -146,7 +146,7 @@ SUBSYSTEM_DEF(vote)
 
 /datum/controller/subsystem/vote/proc/submit_vote(vote)
 	if(mode)
-		if(config.vote_no_dead && usr.stat == DEAD !check_rights_for(usr.client, R_ADMIN))
+		if(config.vote_no_dead && usr.stat == DEAD && !check_rights_for(usr.client, R_ADMIN))
 			return 0
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)

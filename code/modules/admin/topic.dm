@@ -1135,7 +1135,7 @@
 		if(!ismob(M))
 			return
 
-		if(M.client && if(M.client && check_rights_for(M.client, R_ADMIN)))
+		if(M.client && check_rights_for(M.client, R_ADMIN))
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))

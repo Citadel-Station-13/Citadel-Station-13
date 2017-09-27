@@ -38,6 +38,7 @@ GLOBAL_PROTECT(config_dir)
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
+	var/log_mentor = 0					// log mentor actions
 	var/log_game = 0					// log game events
 	var/log_vote = 0					// log voting
 	var/log_whisper = 0					// log client whisper
@@ -387,6 +388,8 @@ GLOBAL_PROTECT(config_dir)
 					log_say = 1
 				if("log_admin")
 					log_admin = 1
+				if("log_mentor")
+					log_mentor = 1
 				if("log_prayer")
 					log_prayer = 1
 				if("log_law")

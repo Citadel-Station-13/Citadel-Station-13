@@ -680,15 +680,3 @@ GLOBAL_LIST(external_rsc_urls)
 /client/proc/AnnouncePR(announcement)
 	if(prefs && prefs.chat_toggles & CHAT_PULLR)
 		to_chat(src, announcement)
-
-/client/proc/citadelmentormessage()
-	if(config.mentors_mobname_only)
-	var/mob/M = locate(href_list["mentor_msg"])
-		cmd_mentor_pm(M,null)
-	else
-		cmd_mentor_pm(href_list["mentor_msg"],null)
-
-/client/proc/citadelmentorfollow()
-	var/mob/living/M = locate(href_list["mentor_follow"])
-	if(istype(M))
-		mentor_follow(M)

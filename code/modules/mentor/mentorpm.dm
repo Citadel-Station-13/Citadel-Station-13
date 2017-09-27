@@ -40,14 +40,14 @@
 		if(holder)
 			to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
 		return
-	
-	var/datum/mentor_help/MH = C.current_ticket
+
+	var/datum/mentor_help/MH = C.current_mticket
 
 	if(MH)
-		message_mentors("[key_name_mentor(src)] has started replying to [key_name(C, 0, 0)]'s mentor help.")
+		to_chat(GLOB.admins, "[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s mentor help.")
 	var/msg = input(src,"Message:", "Mentor message to [key_name(C, 0, 0)]") as text|null
 	if (!msg)
-		message_mentors("[key_name_mentor(src)] has cancelled their reply to [key_name(C, 0, 0)]'s mentor help.")
+		to_chat(GLOB.admins, "[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s mentor help.")
 		return
 	cmd_mentor_pm(whom, msg)
 
@@ -58,7 +58,7 @@
 		to_chat(src, "<font color='red'>Error: Mentor-PM: You are unable to use mentor PM-s (muted).</font>")
 		return
 
-	if(!holder && !current_ticket)	//no ticket? 
+	if(!holder && !current_mticket)	//no ticket?
 		to_chat(src, "<font color='red'>You can no longer reply to this ticket, please open another one by using the Mentorhelp verb if need be.</font>")
 		to_chat(src, "<font color='blue'>Message: [msg]</font>")
 		return
@@ -74,7 +74,7 @@
 			recipient = GLOB.directory[whom]
 	else if(istype(whom, /client))
 		recipient = whom
-	
+
 
 	if(irc)
 		if(!ircreplyamount)	//to prevent people from spamming irc
@@ -95,7 +95,7 @@
 				to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
 				to_chat(src, msg)
 			else
-				current_ticket.MessageNoRecipient(msg)
+				current_mticket.MessageNoRecipient(msg)
 			return
 
 		//get message text, limit it's length.and clean/escape html
@@ -113,7 +113,7 @@
 				if(holder)
 					to_chat(src, "<font color='red'>Error: Mentor-PM: Client not found.</font>")
 				else
-					current_ticket.MessageNoRecipient(msg)
+					current_mticket.MessageNoRecipient(msg)
 				return
 
 	if (src.handle_spam_prevention(msg,MUTE_MENTORHELP))
@@ -137,67 +137,14 @@
 		var/datum/mentor_help/MH = mentor_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)] to <i>IRC</i>: [keywordparsedmsg]</font>")
 		ircreplyamount--
 		send2irc("[MH ? "#[MH.id] " : ""]Reply: [ckey]", rawmsg)
-	else
-		if(recipient.holder)
-			if(holder)	//both are mentors
-				to_chat(recipient, "<font color='green'>Mentor PM from-<b>[key_name(src, recipient, 1)]</b>: [keywordparsedmsg]</font>")
-				to_chat(src, "<font color='blue'>Mentor PM to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>")
-
-				//omg this is dumb, just fill in both their tickets
-				var/interaction_message = "<font color='purple'>PM from-<b>[key_name(src, recipient, 1)]</b> to-<b>[key_name(recipient, src, 1)]</b>: [keywordparsedmsg]</font>"
-				mentor_ticket_log(src, interaction_message)
-				if(recipient != src)	//reeee
-					mentor_ticket_log(recipient, interaction_message)
-
-			else		//recipient is an mentor but sender is not
-				var/replymsg = "<font color='green'>Reply PM from-<b>[key_name(src, recipient, 1)]</b>: [keywordparsedmsg]</font>"
-				mentor_ticket_log(src, replymsg)
-				to_chat(recipient, replymsg)
-				to_chat(src, "<font color='blue'>PM to-<b>Mentors</b>: [msg]</font>")
-
-			//play the recieving mentor the mentorhelp sound (if they have them enabled)
-			if(recipient.prefs.toggles & SOUND_MENTORHELP)
-				SEND_SOUND(recipient, sound('sound/effects/mentorhelp.ogg'))
-
-		else
-			if(holder)	//sender is an mentor but recipient is not. Do BIG RED TEXT
-				if(!recipient.current_ticket)
-					new /datum/mentor_help(msg, recipient, TRUE) // They actually don't have mentor help verbs, but uh...
-
-				to_chat(recipient, "<font color='red' size='4'><b>-- Mentor private message --</b></font>")
-				to_chat(recipient, "<font color='red'>Mentor PM from-<b>[key_name(src, recipient, 0)]</b>: [msg]</font>")
-				to_chat(recipient, "<font color='red'><i>Click on the Mentor's name to reply.</i></font>")
-				to_chat(src, "<font color='blue'>Mentor PM to-<b>[key_name(recipient, src, 1)]</b>: [msg]</font>")
-
-				mentor_ticket_log(recipient, "<font color='blue'>PM From [key_name_mentor(src)]: [keywordparsedmsg]</font>")
-
-				//always play non-mentor recipients the mentorhelp sound
-				SEND_SOUND(recipient, sound('sound/effects/mentorhelp.ogg'))
-
-				//MentorPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_MENTOR_PM in config.txt ~Carn
-				if(config.popup_mentor_pm)
-					spawn()	//so we don't hold the caller proc up
-						var/sender = src
-						var/sendername = key
-						var/reply = input(recipient, msg,"Mentor PM from-[sendername]", "") as text|null		//show message and await a reply
-						if(recipient && reply)
-							if(sender)
-								recipient.cmd_mentor_pm(sender,reply)										//sender is still about, let's reply to them
-							else
-								mentorhelp(reply)													//sender has left, mentorhelp instead
-						return
-
-			else		//neither are mentors
-				to_chat(src, "<font color='red'>Error: Mentor-PM: Non-mentor to non-mentor PM communication is forbidden.</font>")
-				return
 
 	if(irc)
-		log_mentor_private("PM: [key_name(src)]->IRC: [rawmsg]")
+		log_mentor("PM: [key_name(src)]->IRC: [rawmsg]")
 		for(var/client/X in GLOB.mentors)
 			to_chat(X, "<font color='blue'><B>PM: [key_name(src, X, 0)]-&gt;IRC:</B> [keywordparsedmsg]</font>")
 	else
 		window_flash(recipient, ignorepref = TRUE)
-		log_mentor_private("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
+		log_mentor("PM: [key_name(src)]->[key_name(recipient)]: [rawmsg]")
 		//we don't use message_mentors here because the sender/receiver might get it too
 		for(var/client/X in GLOB.mentors)
 			if(X.key!=key && X.key!=recipient.key)	//check client/X is an mentor and isn't the sender or recipient
@@ -206,11 +153,11 @@
 
 
 #define IRC_MHELP_USAGE "Usage: ticket <close|resolve|reject|reopen \[ticket #\]|list>"
-/proc/IrcPm(target,msg,sender)
+/proc/MIrcPm(target,msg,sender)
 	target = ckey(target)
 	var/client/C = GLOB.directory[target]
 
-	var/datum/mentor_help/ticket = C ? C.current_ticket : GLOB.mhelp_tickets.CKey2ActiveTicket(target)
+	var/datum/mentor_help/ticket = C ? C.current_mticket : GLOB.mhelp_tickets.CKey2ActiveTicket(target)
 	var/compliant_msg = trim(lowertext(msg))
 	var/irc_tagged = "[sender](IRC)"
 	var/list/splits = splittext(compliant_msg, " ")
@@ -226,10 +173,6 @@
 				if(ticket)
 					ticket.Resolve(irc_tagged)
 					return "Ticket #[ticket.id] successfully resolved"
-			if("icissue")
-				if(ticket)
-					ticket.ICIssue(irc_tagged)
-					return "Ticket #[ticket.id] successfully marked as IC issue"
 			if("reject")
 				if(ticket)
 					ticket.Reject(irc_tagged)
@@ -279,8 +222,8 @@
 	if(!msg)
 		return "Error: No message"
 
-	message_mentors("IRC message from [sender] to [key_name_mentor(C)] : [msg]")
-	log_mentor_private("IRC PM: [sender] -> [key_name(C)] : [msg]")
+	to_chat(GLOB.admins, "IRC message from [sender] to [key_name_admin(C)] : [msg]")
+	log_mentor("IRC PM: [sender] -> [key_name(C)] : [msg]")
 	msg = emoji_parse(msg)
 
 	to_chat(C, "<font color='red' size='4'><b>-- Mentoristrator private message --</b></font>")
@@ -291,23 +234,10 @@
 
 	window_flash(C, ignorepref = TRUE)
 	//always play non-mentor recipients the mentorhelp sound
-	SEND_SOUND(C, 'sound/effects/mentorhelp.ogg')
+	SEND_SOUND(C, 'sound/effects/-adminhelp.ogg')
 
 	C.ircreplyamount = IRCREPLYCOUNT
 
 	return "Message Successful"
-
-/proc/GenIrcStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
-		i = 1
-		for(var/P in GLOB.stealthminID)
-			if(num == GLOB.stealthminID[P])
-				num++
-				i = 0
-	var/stealth = "@[num2text(num)]"
-	GLOB.stealthminID["IRCKEY"] = stealth
-	return	stealth
 
 #undef IRCREPLYCOUNT

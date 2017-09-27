@@ -1,5 +1,6 @@
 var/list/mentor_datums
 /datum/mentors/var/following = null //Gross, but necessary as we loose all concept of who we're following otherwise
+
 /client/proc/mentor_follow(var/mob/living/M)
 	if(!check_rights(R_MENTOR))
 		return

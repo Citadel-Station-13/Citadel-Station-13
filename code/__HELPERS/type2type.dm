@@ -187,8 +187,8 @@
 		. += "[seperator]+BUILDMODE"
 	if(rights & R_ADMIN)
 		. += "[seperator]+ADMIN"
-  if(rights & R_MENTOR)
-    . += "[seperator]+MENTOR"
+	if(rights & R_MENTOR)
+		. += "[seperator]+MENTOR"
 	if(rights & R_BAN)
 		. += "[seperator]+BAN"
 	if(rights & R_FUN)

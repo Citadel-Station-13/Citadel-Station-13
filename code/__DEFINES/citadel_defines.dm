@@ -76,5 +76,5 @@ GLOBAL_VAR_INIT(CITADEL_MENTOR_OOC_COLOUR, "#FF3E96")
 #define MHELP_CLOSED 2
 #define MHELP_RESOLVED 3
 
-#define MENTOR_FULLMONTY_NONAME(user) "[MENTOR_FLW(user)]"
-#define MENTOR_FULLMONTYMENTOR(user) "[key_name_mentor(user)] [ADMIN_FULLMONTY_NONAME(user)]"
+#define MENTOR_FULLMONTY_NONAME(user) "[mentor_follow(user)]"
+#define MENTOR_FULLMONTYMENTOR(user) "[key_name_admin(user)] [MENTOR_FULLMONTY_NONAME(user)]"
