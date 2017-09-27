@@ -65,6 +65,7 @@
 
 /obj/structure/destructible/clockwork/massive/celestial_gateway/Destroy()
 	STOP_PROCESSING(SSprocessing, src)
+<<<<<<< HEAD
 	if(!purpose_fulfilled)
 		var/area/gate_area = get_area(src)
 		hierophant_message("<span class='large_brass'><b>An Ark of the Clockwork Justicar has fallen at [gate_area.map_name]!</b></span>")
@@ -73,6 +74,13 @@
 	SSshuttle.clearHostileEnvironment(src)
 	if(!was_stranded && !purpose_fulfilled)
 		priority_announce("Massive energy anomaly no longer on short-range scanners.","Anomaly Alert")
+=======
+	SSshuttle.clearHostileEnvironment(src)
+	if(!purpose_fulfilled && istype(SSticker.mode, /datum/game_mode/clockwork_cult))
+		hierophant_message("<span class='bold large_brass'>The Ark has fallen!</span>")
+		sound_to_playing_players(null, channel = CHANNEL_JUSTICAR_ARK)
+		SSticker.force_ending = TRUE //rip
+>>>>>>> 59e7559... Clockwork cult rework: Post-merge micro-patch (#31044)
 	if(glow)
 		qdel(glow)
 		glow = null
