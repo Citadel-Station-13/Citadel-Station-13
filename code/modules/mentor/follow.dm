@@ -1,4 +1,4 @@
-var/list/mentor_datums
+GLOBAL_LIST(mentor_datums)
 /datum/mentors/var/following = null //Gross, but necessary as we loose all concept of who we're following otherwise
 
 /client/proc/mentor_follow(var/mob/living/M)
@@ -11,9 +11,9 @@ var/list/mentor_datums
 	if(!istype(usr, /mob))
 		return
 
-	LAZYINITLIST(mentor_datums)
+	LAZYINITLIST(GLOB.mentor_datums)
 	if(!holder)
-		var/datum/mentors/mentor = mentor_datums[usr.client.ckey]
+		var/datum/mentors/mentor = GLOB.mentor_datums[usr.client.ckey]
 		mentor.following = M
 
 	usr.reset_perspective(M)
@@ -36,7 +36,7 @@ var/list/mentor_datums
 
 	var/following = null
 	if(!holder)
-		var/datum/mentors/mentor = mentor_datums[usr.client.ckey]
+		var/datum/mentors/mentor = GLOB.mentor_datums[usr.client.ckey]
 		following = mentor.following
 
 
