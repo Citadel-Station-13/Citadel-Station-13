@@ -18,7 +18,7 @@
 		message_admins("[usr.key] has attempted to override the admin panel!")
 		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
 		return
-	
+
 	if(!CheckAdminHref(href, href_list))
 		return
 
@@ -1135,7 +1135,7 @@
 		if(!ismob(M))
 			return
 
-		if(M.client && M.client.holder)
+		if(M.client && if(M.client && check_rights_for(M.client, R_ADMIN)))
 			return	//admins cannot be banned. Even if they could, the ban doesn't affect them anyway
 
 		switch(alert("Temporary Ban?",,"Yes","No", "Cancel"))

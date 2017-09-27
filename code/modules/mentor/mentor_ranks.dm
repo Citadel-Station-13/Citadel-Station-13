@@ -1,43 +1,18 @@
-/proc/load_mentors()
-	//clear the datums references
-	GLOB.mentor_datums.Cut()
-	GLOB.mentors.Cut()
+GLOBAL_PROTECT(admin_verbs_mentor)
+GLOBAL_LIST_INIT(admin_verbs_mentor, list(
+	/client/proc/cmd_mentor_say,
+	/client/proc/show_mentor_memo
+	))
 
-	if(!config.mentor_legacy_system)
-		if(!GLOB.dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_mentors()."
-			GLOB.diary << "Failed to connect to database in load_mentors()."
-			config.mentor_legacy_system = 1
-			load_mentors()
-			return
+/proc/IsMentor()
+	if(!usr || !usr.client)
+		return FALSE
+	return CkeyIsMentor(usr.ckey)
 
-		var/DBQuery/query = GLOB.dbcon.NewQuery("SELECT ckey FROM [format_table_name("mentor")]")
-		query.Execute()
-		while(query.NextRow())
-			var/ckey = ckey(query.item[1])
-			var/datum/mentors/D = new(ckey)				//create the mentor datum and store it for later use
-			if(!D)	continue									//will occur if an invalid rank is provided
-			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new mentor datum
-	else
-		world.log << "Using legacy mentor system."
-		var/list/Lines = file2list("config/mentors.txt")
-
-		//process each line seperately
-		for(var/line in Lines)
-			if(!length(line))				continue
-			if(findtextEx(line,"#",1,2))	continue
-
-			//ckey is before the first "="
-			var/ckey = ckey(line)
-			if(!ckey)						continue
-
-			var/datum/mentors/D = new(ckey)	//create the admin datum and store it for later use
-			if(!D)	continue									//will occur if an invalid rank is provided
-			D.associate(GLOB.directory[ckey])	//find the client for a ckey if they are connected and associate them with the new admin datum
-
-	#ifdef TESTING
-	var/msg = "mentors Built:\n"
-	for(var/ckey in GLOB.mentor_datums)
-		msg += "\t[ckey] - mentor\n"
-	testing(msg)
-	#endif
+/proc/CkeyIsMentor(ckey)
+	if(!GLOB.admin_datums[ckey])
+		return FALSE
+	var/datum/admins/admin_datum = GLOB.admin_datums[ckey]
+	if(admin_datum.rank.name == "Mentor")
+		return TRUE
+	return FALSE
