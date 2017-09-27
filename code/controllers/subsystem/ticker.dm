@@ -274,7 +274,6 @@ SUBSYSTEM_DEF(ticker)
 		if(epi)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
 
-<<<<<<< HEAD
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/controller/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null, atom/bomb = null)
 	if( cinematic )
@@ -411,9 +410,7 @@ SUBSYSTEM_DEF(ticker)
 		M.notransform = FALSE
 		if(actually_blew_up && !isnull(killz) && M.stat != DEAD && M.z == killz)
 			M.gib()
-
-=======
->>>>>>> 1304e83... Refactors cinematics. (#30888)
+			
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
