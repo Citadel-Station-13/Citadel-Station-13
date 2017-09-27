@@ -67,7 +67,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
-	var/bitesound = 'sound/items/bikehorn.ogg'
+	squeak_override = list('sound/items/bikehorn.ogg'= 1)
 
 /obj/item/clothing/neck/cloak/carrot
 	name = "carrot cloak"
@@ -108,3 +108,13 @@
 	icon_state = "santahatnorm"
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head/santa
+
+
+/*Brian*/
+
+/obj/item/clothing/suit/trenchcoat/green
+	name = "Reece's Great Coat"
+	desc = "You would swear this was in your nightmares after eating too many veggies."
+	icon_state = "hos-g"
+	item_state = "hos-g"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS

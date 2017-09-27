@@ -35,10 +35,10 @@
 	canMouseDown = TRUE
 	pin = null
 	var/aiming = FALSE
-	var/aiming_time = 7
-	var/aiming_time_fire_threshold = 2
-	var/aiming_time_left = 7
-	var/aiming_time_increase_user_movement = 3
+	var/aiming_time = 12
+	var/aiming_time_fire_threshold = 5
+	var/aiming_time_left = 12
+	var/aiming_time_increase_user_movement = 6
 	var/scoped_slow = 1
 	var/aiming_time_increase_angle_multiplier = 0.3
 
@@ -63,6 +63,8 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
+	
+	var/lastprocess = 0
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
@@ -246,9 +248,9 @@
 		return
 	check_user()
 	handle_zooming()
-	if(aiming_time_left > 0)
-		aiming_time_left--
-		aiming_beam(TRUE)
+	aiming_time_left = min(0, aiming_time_left - (world.time - lastprocess))
+	aiming_beam(TRUE)
+	lastprocess = world.time
 
 /obj/item/gun/energy/beam_rifle/proc/check_user(automatic_cleanup = TRUE)
 	if(!istype(current_user) || !isturf(current_user.loc) || !(src in current_user.held_items) || current_user.incapacitated())	//Doesn't work if you're not holding it!
@@ -678,7 +680,7 @@
 			pixel_x = pixel_x_offset
 			pixel_y = pixel_y_offset
 		else
-			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags_1 = ANIMATION_END_NOW)
+			animate(src, pixel_x = pixel_x_offset, pixel_y = pixel_y_offset, time = max(1, (delay <= 3 ? delay - 1 : delay)), flags = ANIMATION_END_NOW)
 		old_pixel_x = pixel_x_offset
 		old_pixel_y = pixel_y_offset
 		if(can_hit_target(original, permutated))
