@@ -195,7 +195,6 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
-<<<<<<< HEAD
 		var/servants = 0
 		var/production_time = SLAB_PRODUCTION_TIME
 		for(var/mob/living/M in GLOB.living_mob_list)
@@ -221,9 +220,6 @@
 		production_text += "</b>"
 		production_text += production_text_addon
 		production_text = production_text.Join()
-
-=======
->>>>>>> b7e7779... (Ready) Clockwork Cult Rework: Proof-of-concept (#29741)
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
 		<b><i>NOTICE:</b> This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.</i><br>\
