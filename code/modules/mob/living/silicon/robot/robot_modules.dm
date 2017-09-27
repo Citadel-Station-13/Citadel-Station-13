@@ -354,7 +354,7 @@
 		/obj/item/gun/energy/disabler/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
 	moduleselect_icon = "k9"
 	feedback_key = "cyborg_k9"
@@ -389,7 +389,7 @@
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
 	moduleselect_icon = "medihound"
 	feedback_key = "cyborg_medihound"
