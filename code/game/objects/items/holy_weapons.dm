@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
+	unique_rename = TRUE
 	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
@@ -244,6 +245,7 @@
 		S.name = name
 		S.ckey = theghost.ckey
 		S.status_flags |= GODMODE
+		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -381,11 +383,9 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
-	..()
-
-/obj/item/nullrod/tribal_knife/New()
-	..()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -408,7 +408,7 @@
 
 /obj/item/nullrod/egyptian
 	name = "egyptian staff"
-	desc = "A tutorial in mummification is carved into the staff. You could probably follow the steps yourself if you had some bandages."
+	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "pharoah_sceptre"
 	item_state = "pharoah_sceptre"

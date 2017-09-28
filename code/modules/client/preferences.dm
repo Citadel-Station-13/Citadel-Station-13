@@ -46,6 +46,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 
 	var/uses_glasses_colour = 0
+	
+	var/screenshake = 100
+	var/damagescreenshake = 2
 
 	//character preferences
 	var/real_name						//our character's name
@@ -170,7 +173,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/uplink_spawn_loc = UPLINK_PDA
-	
+
 	var/list/exp
 	var/list/menuoptions
 
@@ -362,6 +365,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dat += "High"
 			dat += "</a><br>"
+
+			dat += "<b>Screen Shake:</b> <a href='?_src_=prefs;preference=screenshake'>[(screenshake==100) ? "Full" : ((screenshake==0) ? "None" : "[screenshake]")]</a><br>"
+
+			if (!user.client.prefs.screenshake==0)
+				dat += "<b>Damage Screen Shake:</b> <a href='?_src_=prefs;preference=damagescreenshake'>[(damagescreenshake==1) ? "On" : ((damagescreenshake==0) ? "Off" : "Only when down")]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -922,7 +930,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("flavor_text")
 					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"])) as message
 					if(msg != null)
-						msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+						msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
 						msg = html_encode(msg)
 						features["flavor_text"] = msg
 
@@ -1486,6 +1494,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["exhibitionist"] = TRUE
 						else
 							features["exhibitionist"] = FALSE
+				if ("screenshake")
+					var/desiredshake = input(user, "Set the amount of screenshake you want. \n(0 = disabled, 100 = full, 200 = maximum.)", "Character Preference", screenshake)  as null|num
+					if (!isnull(desiredshake))
+						screenshake = desiredshake
+				if("damagescreenshake")
+					switch(damagescreenshake)
+						if(0)
+							damagescreenshake = 1
+						if(1)
+							damagescreenshake = 2
+						if(2)
+							damagescreenshake = 0
+						else
+							damagescreenshake = 1
 
 				if("publicity")
 					if(unlock_content)

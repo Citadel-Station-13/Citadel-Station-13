@@ -9,7 +9,6 @@
 	exotic_blood = "slimejelly"
 	damage_overlay_type = ""
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
-	toxic_food = NONE
 	liked_food = MEAT
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
@@ -60,6 +59,7 @@
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeheal"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/regenerate_limbs/IsAvailable()
@@ -128,7 +128,7 @@
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-/*		slime_split = new
+	/*	slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
 		swap_body.Grant(C) */
@@ -139,6 +139,10 @@
 			bodies |= C
 
 	C.faction |= "slime"
+
+//If you're cloned you get your body pool back
+/datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
+	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
@@ -154,6 +158,7 @@
 	name = "Split Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimesplit"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/split_body/IsAvailable()
@@ -220,6 +225,7 @@
 	name = "Swap Body"
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "slimeswap"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
 /datum/action/innate/swap_body/Activate()

@@ -235,7 +235,9 @@
 		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
-		set_species(mrace, icon_update=0)
+		var/datum/species/newrace = new mrace.type
+		newrace.copy_properties_from(mrace)
+		set_species(newrace, icon_update=0)
 
 	if(newreal_name)
 		real_name = newreal_name

@@ -119,6 +119,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
@@ -309,6 +310,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/New()
 	meteordrop += subtypesof(/obj/item/organ/alien)
+	meteordrop -= /obj/item/organ/alien/eggsac
 	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
