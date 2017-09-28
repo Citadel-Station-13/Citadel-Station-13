@@ -156,19 +156,7 @@
 /datum/objective/crew/chaplain/nullrod
 	explanation_text = "Don't lose your holy rod."
 
-/datum/objective/crew/chaplain/nullrod/New()
-	. = ..()
-	update_explanation_text()
-
-/datum/objective/crew/chaplain/nullrod/update_explanation_text()
-	. = ..()
-	explanation_text = "Don't lose your holy rod."
-	if(owner && owner.current)
-		if(owner.current.getorgan(/obj/item/organ/genital/penis))
-			explanation_text += " Interpret this as you wish."
-
 /datum/objective/crew/chaplain/nullrod/check_completion()
-	explanation_text = "Don't lose your holy rod."
 	if(owner && owner.current)
 		if(owner.current.check_contents_for(typesof(/obj/item/nullrod)))
 			return TRUE
@@ -180,7 +168,7 @@
 
 /datum/objective/crew/curator/reporter //ported from old hippie
 	var/charcount = 100
-	explanation_text = "Write at least (Yo something broke) articles containing at least (Report this to Citadels development channel) characters."
+	explanation_text = "Publish at least (Yo something broke) articles containing at least (Report this to Citadels development channel) characters."
 
 /datum/objective/crew/curator/reporter/New()
 	. = ..()
@@ -190,13 +178,14 @@
 
 /datum/objective/crew/curator/reporter/update_explanation_text()
 	. = ..()
-	explanation_text = "Write at least [target_amount] articles containing at least [charcount] characters."
+	explanation_text = "Publish at least [target_amount] articles containing at least [charcount] characters."
 
 /datum/objective/crew/curator/reporter/check_completion()
 	if(owner && owner.current)
+		var/ownername = "[ckey(owner.current.real_name)][ckey(owner.assigned_role)]"
 		for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
 			for(var/datum/newscaster/feed_message/msg in chan.messages)
-				if(msg.returnAuthor() == owner.current.real_name)
+				if(ckey(msg.returnAuthor()) == ckey(ownername))
 					if(length(msg.returnBody()) >= charcount)
 						target_amount--
 	if(target_amount <= 0)
