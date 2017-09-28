@@ -32,12 +32,3 @@
 				return TRUE
 		return FALSE
 	return FALSE
-
-/datum/objective/crew/headofpersonnel/datfukkendisk //Ported from old Hippie
-	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
-
-/datum/objective/crew/headofpersonnel/datfukkendisk/check_completion()
-	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return TRUE
-	else
-		return FALSE

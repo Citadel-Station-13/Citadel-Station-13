@@ -2,15 +2,6 @@
 
 /datum/objective/crew/headofsecurity/
 
-/datum/objective/crew/headofsecurity/datfukkendisk //Ported from old Hippie
-	explanation_text = "Defend the nuclear authentication disk at all costs, and be the one to personally deliver it to Centcom."
-
-/datum/objective/crew/headofsecurity/datfukkendisk/check_completion()
-	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
-		return TRUE
-	else
-		return FALSE
-
 /datum/objective/crew/headofsecurity/enjoyyourstay
 	explanation_text = "Welcome to Space Station 13. Enjoy your stay."
 
