@@ -1,6 +1,6 @@
 /datum/controller/subsystem/ticker/proc/generate_crew_objectives()
 	for(var/datum/mind/crewMind in SSticker.minds)
-		if(prob(10) && !issilicon(crewMind.current) && !jobban_isbanned(crewMind, "Syndicate") && GLOB.miscreants_allowed)
+		if(prob(2) && !issilicon(crewMind.current) && !jobban_isbanned(crewMind, "Syndicate") && GLOB.miscreants_allowed)
 			generate_miscreant_objectives(crewMind)
 		else
 			if(config.allow_crew_objectives)

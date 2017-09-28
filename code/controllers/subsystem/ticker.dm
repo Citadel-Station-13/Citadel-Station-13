@@ -614,21 +614,21 @@ SUBSYSTEM_DEF(ticker)
 				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
 
 	if (successfulCrew.len)
-		to_chat(world, "<B>The following crew members completed their Crew Objectives:</B>")
+		var/completedObjectives = "<B>The following crew members completed their Crew Objectives:</B><BR>"
 		for(var/i in successfulCrew)
-			to_chat(world, "[i]")
-		to_chat(world, "<BR>")
+			completedObjectives += "[i]<BR>"
+		to_chat(world, "[completedObjectives]<BR>")
 	else
-		to_chat(world, "<B>Nobody completed their Crew Objectives!</B>")
-		to_chat(world, "<BR>")
+		if(config.allow_crew_objectives)
+			to_chat(world, "<B>Nobody completed their Crew Objectives!</B><BR>")
 
 	CHECK_TICK
 
 	if (miscreants.len)
-		to_chat(world, "<B> The following crew members were miscreants:</B>")
+		var/miscreantObjectives = "<B>The following crew members were miscreants:</B><BR>"
 		for(var/i in miscreants)
-			to_chat(world, "[i]")
-		to_chat(world, "<BR>")
+			miscreantObjectives += "[i]<BR>"
+		to_chat(world, "[miscreantObjectives]<BR>")
 
 	CHECK_TICK
 

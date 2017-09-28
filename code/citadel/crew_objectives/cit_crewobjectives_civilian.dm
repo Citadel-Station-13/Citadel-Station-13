@@ -171,10 +171,10 @@
 	explanation_text = "Don't lose your holy rod."
 	if(owner && owner.current)
 		if(owner.current.check_contents_for(typesof(/obj/item/nullrod)))
-			return 1
+			return TRUE
 		if(owner.current.getorgan(/obj/item/organ/genital/penis))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/objective/crew/curator
 
@@ -200,9 +200,9 @@
 					if(length(msg.returnBody()) >= charcount)
 						target_amount--
 	if(target_amount <= 0)
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /datum/objective/crew/assistant
 
