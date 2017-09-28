@@ -39,6 +39,7 @@
 	update_explanation_text()
 
 /datum/objective/crew/quartermaster/points/update_explanation_text()
+	. = ..()
 	explanation_text = "Make sure the station has at least [target_amount] supply points at the end of the shift."
 
 /datum/objective/crew/quartermaster/points/check_completion()
@@ -86,6 +87,7 @@
 	update_explanation_text()
 
 /datum/objective/crew/cargotechnician/points/update_explanation_text()
+	. = ..()
 	explanation_text = "Make sure the station has at least [target_amount] supply points at the end of the shift."
 
 /datum/objective/crew/cargotechnician/points/check_completion()
@@ -104,3 +106,24 @@
 		if(!(B.stat == DEAD))
 			return FALSE
 	return TRUE
+
+/datum/objective/crew/shaftminer/fatstacks //ported from old hippie
+	explanation_text = "Have at least (something broke, report this to the development discussion channel of citadels discord) mining points on your ID at the end of the shift."
+
+/datum/objective/crew/shaftminer/fatstacks/New()
+	. = ..()
+	target_amount = rand(15000,50000)
+	update_explanation_text()
+
+/datum/objective/crew/shaftminer/fatstacks/update_explanation_text()
+	. = ..()
+	explanation_text = "Have at least [target_amount] mining points on your ID at the end of the shift."
+
+/datum/objective/crew/shaftminer/fatstacks/check_completion()
+	if(owner && owner.current)
+		var/mob/living/carbon/human/H = owner.current
+		var/obj/item/card/id/theID = H.get_idcard()
+		if(istype(theID))
+			if(theID.mining_points >= target_amount)
+				return TRUE
+	return FALSE
