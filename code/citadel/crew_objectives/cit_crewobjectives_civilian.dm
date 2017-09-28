@@ -130,7 +130,7 @@
 
 /datum/objective/crew/clown/slipster/check_completion()
 	var/list/uniqueslips = list()
-	if(owner.current)
+	if(owner && owner.current)
 		for(var/obj/item/device/pda/clown/PDA in owner.current.get_contents())
 			for(var/mob/living/carbon/human/H in PDA.slipvictims)
 				uniqueslips |= H
@@ -145,11 +145,64 @@
 	explanation_text = "Never break your vow of silence."
 
 /datum/objective/crew/mime/vow/check_completion()
-	if(owner.current)
+	if(owner && owner.current)
 		var/list/say_log = owner.current.logging[INDIVIDUAL_SAY_LOG]
 		if(say_log.len > 0)
 			return FALSE
 	return TRUE
+
+/datum/objective/crew/chaplain
+
+/datum/objective/crew/chaplain/nullrod
+	explanation_text = "Don't lose your holy rod."
+
+/datum/objective/crew/chaplain/nullrod/New()
+	. = ..()
+	update_explanation_text()
+
+/datum/objective/crew/chaplain/nullrod/update_explanation_text()
+	. = ..()
+	explanation_text = "Don't lose your holy rod."
+	if(owner && owner.current)
+		if(owner.current.getorgan(/obj/item/organ/genital/penis))
+			explanation_text += " Interpret this as you wish."
+
+/datum/objective/crew/chaplain/nullrod/check_completion()
+	explanation_text = "Don't lose your holy rod."
+	if(owner && owner.current)
+		if(owner.current.check_contents_for(typesof(/obj/item/nullrod)))
+			return 1
+		if(owner.current.getorgan(/obj/item/organ/genital/penis))
+			return 1
+	return 0
+
+/datum/objective/crew/curator
+
+/datum/objective/crew/curator/reporter //ported from old hippie
+	var/charcount = 100
+	explanation_text = "Write at least (Yo something broke) articles containing at least (Report this to Citadels development channel) characters."
+
+/datum/objective/crew/curator/reporter/New()
+	. = ..()
+	target_amount = rand(2,10)
+	charcount = rand(20,250)
+	update_explanation_text()
+
+/datum/objective/crew/curator/reporter/update_explanation_text()
+	. = ..()
+	explanation_text = "Write at least [target_amount] articles containing at least [charcount] characters."
+
+/datum/objective/crew/curator/reporter/check_completion()
+	if(owner && owner.current)
+		for(var/datum/newscaster/feed_channel/chan in GLOB.news_network.network_channels)
+			for(var/datum/newscaster/feed_message/msg in chan.messages)
+				if(msg.returnAuthor() == owner.current.real_name)
+					if(length(msg.returnBody()) >= charcount)
+						target_amount--
+	if(target_amount <= 0)
+		return 1
+	else
+		return 0
 
 /datum/objective/crew/assistant
 
