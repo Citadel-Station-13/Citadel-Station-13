@@ -30,6 +30,23 @@
 	else
 		return FALSE
 
+/datum/objective/crew/quartermaster/points //ported from old hippie
+	explanation_text = "Make sure the station has at least (Something broke, report this to the development discussion channel of citadels discord) supply points at the end of the shift."
+
+/datum/objective/crew/quartermaster/points/New()
+	. = ..()
+	target_amount = rand(25000,100000)
+	update_explanation_text()
+
+/datum/objective/crew/quartermaster/points/update_explanation_text()
+	explanation_text = "Make sure the station has at least [target_amount] supply points at the end of the shift."
+
+/datum/objective/crew/quartermaster/points/check_completion()
+	if(SSshuttle.points >= target_amount)
+		return TRUE
+	else
+		return FALSE
+
 /datum/objective/crew/cargotechnician
 
 /datum/objective/crew/cargotechnician/petsplosion
@@ -56,6 +73,23 @@
 				if(istype(H.wear_neck, /obj/item/clothing/neck/petcollar))
 					petcount--
 	if(petcount <= 0)
+		return TRUE
+	else
+		return FALSE
+
+/datum/objective/crew/cargotechnician/points //ported from old hippie
+	explanation_text = "Make sure the station has at least (Something broke, report this to the development discussion channel of citadels discord) supply points at the end of the shift."
+
+/datum/objective/crew/cargotechnician/points/New()
+	. = ..()
+	target_amount = rand(25000,100000)
+	update_explanation_text()
+
+/datum/objective/crew/cargotechnician/points/update_explanation_text()
+	explanation_text = "Make sure the station has at least [target_amount] supply points at the end of the shift."
+
+/datum/objective/crew/cargotechnician/points/check_completion()
+	if(SSshuttle.points >= target_amount)
 		return TRUE
 	else
 		return FALSE
