@@ -35,6 +35,11 @@
 	if (config.log_admin)
 		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]ADMINPRIVATE: [text]")
 
+/proc/log_mentor(text)
+	GLOB.mentor_log.Add(text)
+	if (config.log_mentor)
+		WRITE_FILE(GLOB.world_game_log, "\[[time_stamp()]]MENTOR: [text]")
+
 /proc/log_adminsay(text)
 	if (config.log_adminchat)
 		log_admin_private("ASAY: [text]")

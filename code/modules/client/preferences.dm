@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 
 	var/uses_glasses_colour = 0
-	
+
 	var/screenshake = 100
 	var/damagescreenshake = 2
 
@@ -299,9 +299,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>OOC Notes:</b> <a href='?_src_=prefs;preference=metadata;task=input'>Edit </a><br>"
 
 			if(user.client)
-				if(user.client.holder)
+				if(check_rights_for(user.client, R_ADMIN))
 					dat += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
 					dat += "<b>Announce Login:</b> <a href='?_src_=prefs;preference=announce_login'>[(toggles & ANNOUNCE_LOGIN)?"On":"Off"]</a><br>"
+
+				if(check_rights_for(user.client, R_MENTOR))
+					dat += "<b>Mentor help Sound:</b> <a href='?_src_=prefs;preference=hear_mentorhelps'>[(toggles & SOUND_MENTORHELP)?"On":"Off"]</a><br>"
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"

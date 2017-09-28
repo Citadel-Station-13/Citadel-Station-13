@@ -233,6 +233,9 @@ CREATE TABLE `library` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE TABLE `mentor_memo` (
+    `ckey` varchar(32) NOT NULL,
+    `memotext` text NOT NULL,
 --
 -- Table structure for table `messages`
 --
@@ -270,11 +273,11 @@ DROP TABLE IF EXISTS `role_time`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 
-CREATE TABLE `role_time` 
+CREATE TABLE `role_time`
 ( `ckey` VARCHAR(32) NOT NULL ,
  `job` VARCHAR(32) NOT NULL ,
  `minutes` INT UNSIGNED NOT NULL,
- PRIMARY KEY (`ckey`, `job`) 
+ PRIMARY KEY (`ckey`, `job`)
  ) ENGINE = InnoDB;
 
 --

@@ -68,6 +68,13 @@
 //Individual logging define
 #define INDIVIDUAL_LOOC_LOG "LOOC log"
 
-#define ADMIN_MARKREAD(client) "(<a href='?_src_=holder;markedread=\ref[client]'>MARK READ</a>)"//marks an adminhelp as read and under investigation
-#define ADMIN_IC(client) "(<a href='?_src_=holder;icissue=\ref[client]'>IC</a>)"//marks and adminhelp as an IC issue
-#define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer
+GLOBAL_VAR_INIT(CITADEL_MENTOR_OOC_COLOUR, "#FF3E96")
+#define R_MENTOR 8192
+#define R_MAXPERMISSION 8192
+
+#define MHELP_ACTIVE 1
+#define MHELP_CLOSED 2
+#define MHELP_RESOLVED 3
+
+#define MENTOR_FULLMONTY_NONAME(user) "[mentor_follow(user)]"
+#define MENTOR_FULLMONTYMENTOR(user) "[key_name_admin(user)] [MENTOR_FULLMONTY_NONAME(user)]"

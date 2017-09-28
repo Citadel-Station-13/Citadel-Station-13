@@ -57,6 +57,9 @@ LOG_ADMIN
 ## log admin chat
 LOG_ADMINCHAT
 
+## log mentor actions
+LOG_MENTOR
+
 ## log client access (logon/logoff)
 LOG_ACCESS
 
