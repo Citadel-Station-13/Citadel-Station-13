@@ -586,9 +586,6 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
-<<<<<<< HEAD
-=======
-
 /datum/species/golem/clockwork
 	name = "Clockwork Golem"
 	id = "clockwork golem"
@@ -639,9 +636,7 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-
-
->>>>>>> 59e7559... Clockwork cult rework: Post-merge micro-patch (#31044)
+	
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"
