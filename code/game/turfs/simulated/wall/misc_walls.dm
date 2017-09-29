@@ -55,6 +55,7 @@
 	sheet_type = /obj/item/stack/tile/brass
 	sheet_amount = 1
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
+	baseturf = /turf/open/floor/clockwork/reebe
 	var/obj/effect/clockwork/overlay/wall/realappearence
 	var/obj/structure/destructible/clockwork/cache/linkedcache
 
@@ -64,6 +65,7 @@
 	new /obj/effect/temp_visual/ratvar/beam(src)
 	realappearence = new /obj/effect/clockwork/overlay/wall(src)
 	realappearence.linked = src
+<<<<<<< HEAD
 	change_construction_value(5)
 
 /turf/closed/wall/clockwork/examine(mob/user)
@@ -76,6 +78,10 @@
 		linkedcache.linkedwall = null
 		linkedcache = null
 	change_construction_value(-5)
+=======
+
+/turf/closed/wall/clockwork/Destroy()
+>>>>>>> 5b73196... Reebe is fancier now (#31045)
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null
