@@ -10,10 +10,10 @@
 	burnmod = 1.25
 	heatmod = 1.5
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
-	disliked_food = MEAT
-	liked_food = VEGETABLES | FRUIT
-	toxic_food = TOXIC | RAW
-	roundstart = 1
+	disliked_food = NONE
+	liked_food = NONE
+	toxic_food = NONE
+	roundstart = TRUE
 
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -49,8 +49,8 @@
 	if(chem.id == "plantbgone")
 		H.adjustToxLoss(5)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
 		H.confused = max(H.confused, 1)
+		return TRUE
 
 
 /datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
