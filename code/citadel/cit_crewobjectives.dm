@@ -16,7 +16,7 @@
 		return
 	if(!crewMind.assigned_role)
 		return
-	var/validobjs = get_valid_crew_objs(ckey(crewMind.assigned_role))
+	var/list/validobjs = get_valid_crew_objs(ckey(crewMind.assigned_role))
 	if(isnull(validobjs))
 		return
 	if(!validobjs.len)
