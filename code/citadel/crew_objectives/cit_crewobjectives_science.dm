@@ -24,6 +24,48 @@
 	else
 		return FALSE
 
+/datum/objective/crew/researchdirector/research //inspired by old hippie's research level objective. should hopefully be compatible with techwebs when that gets finished. hopefully. should be easy to update in the event that it is incompatible with techwebs.
+	var/datum/design/targetdesign
+	explanation_text = "Make sure the research required to produce a (something broke, yell on citadel's development discussion channel about this) is available on the R&D server by the end of the shift."
+
+/datum/objective/crew/researchdirector/research/New()
+	. = ..()
+	targetdesign = pick(subtypesof(/datum/design))
+	update_explanation_text()
+
+/datum/objective/crew/researchdirector/research/update_explanation_text()
+	. = ..()
+	explanation_text = "Make sure the research required to produce a [initial(targetdesign.name)] is available on the R&D server by the end of the shift."
+
+/datum/objective/crew/researchdirector/research/check_completion()
+	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+		if(S && S.files && S.files.known_designs)
+			if(targetdesign in S.files.known_designs)
+				return TRUE
+	return FALSE
+
+/datum/objective/crew/scientist/
+
+/datum/objective/crew/scientist/research //inspired by old hippie's research level objective. should hopefully be compatible with techwebs when that gets finished. hopefully. should be easy to update in the event that it is incompatible with techwebs.
+	var/datum/design/targetdesign
+	explanation_text = "Make sure the research required to produce a (something broke, yell on citadel's development discussion channel about this) is available on the R&D server by the end of the shift."
+
+/datum/objective/crew/scientist/research/New()
+	. = ..()
+	targetdesign = pick(subtypesof(/datum/design))
+	update_explanation_text()
+
+/datum/objective/crew/scientist/research/update_explanation_text()
+	. = ..()
+	explanation_text = "Make sure the research required to produce a [initial(targetdesign.name)] is available on the R&D server by the end of the shift."
+
+/datum/objective/crew/scientist/research/check_completion()
+	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+		if(S && S.files && S.files.known_designs)
+			if(targetdesign in S.files.known_designs)
+				return TRUE
+	return FALSE
+
 /datum/objective/crew/roboticist/
 
 /datum/objective/crew/roboticist/cyborgs //Ported from old Hippie
