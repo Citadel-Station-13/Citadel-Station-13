@@ -1,23 +1,23 @@
 /*				MEDICAL OBJECTIVES				*/
 
-/datum/objective/crew/chiefmedicalofficer/
-
-/datum/objective/crew/chiefmedicalofficer/morgue //Ported from old Hippie
+/datum/objective/crew/morgue //Ported from old Hippie
 	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
+	jobs = "chiefmedicalofficer,geneticist,medicaldoctor"
 
-/datum/objective/crew/chiefmedicalofficer/morgue/check_completion()
+/datum/objective/crew/morgue/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(H.stat == DEAD && H.z == ZLEVEL_STATION_PRIMARY)
 			if(get_area(H) != /area/medical/morgue)
 				return FALSE
 	return TRUE
 
-/datum/objective/crew/chiefmedicalofficer/chems //Ported from old Hippie
+/datum/objective/crew/chems //Ported from old Hippie
 	var/targetchem = "none"
 	var/datum/reagent/chempath
 	explanation_text = "Have (yell about this in the development discussion channel of citadel's discord, something broke) in your bloodstream when the shift ends."
+	jobs = "chiefmedicalofficer,chemist"
 
-/datum/objective/crew/chiefmedicalofficer/chems/New()
+/datum/objective/crew/chems/New()
 	. = ..()
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
@@ -27,11 +27,11 @@
 	targetchem = initial(chempath.id)
 	update_explanation_text()
 
-/datum/objective/crew/chiefmedicalofficer/chems/update_explanation_text()
+/datum/objective/crew/chems/update_explanation_text()
 	. = ..()
 	explanation_text = "Have [initial(chempath.name)] in your bloodstream when the shift ends."
 
-/datum/objective/crew/chiefmedicalofficer/chems/check_completion()
+/datum/objective/crew/chems/check_completion()
 	if(owner.current)
 		if(!owner.current.stat == DEAD && owner.current.reagents)
 			if(owner.current.reagents.has_reagent(targetchem))
@@ -39,53 +39,13 @@
 	else
 		return FALSE
 
-/datum/objective/crew/geneticist
-
-/datum/objective/crew/geneticist/morgue //Ported from old Hippie
-	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
-
-/datum/objective/crew/geneticist/morgue/check_completion()
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(H.stat == DEAD && H.z == ZLEVEL_STATION_PRIMARY)
-			if(get_area(H) != /area/medical/morgue)
-				return FALSE
-	return TRUE
-
-/datum/objective/crew/chemist/
-
-/datum/objective/crew/chemist/chems //Ported from old Hippie
-	var/targetchem = "none"
-	var/datum/reagent/chempath
-	explanation_text = "Have (yell about this in the development discussion channel of citadel's discord, something broke) in your bloodstream when the shift ends."
-
-/datum/objective/crew/chemist/chems/New()
-	. = ..()
-	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol, /datum/reagent/medicine, /datum/reagent/medicine/adminordrazine, /datum/reagent/medicine/adminordrazine/nanites, /datum/reagent/medicine/mine_salve, /datum/reagent/medicine/omnizine, /datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/earthsblood, /datum/reagent/medicine/strange_reagent, /datum/reagent/medicine/miningnanites, /datum/reagent/medicine/changelingAdrenaline, /datum/reagent/medicine/changelingAdrenaline2)
-	var/drugs = typesof(/datum/reagent/drug) - blacklist
-	var/meds = typesof(/datum/reagent/medicine) - blacklist
-	var/chemlist = drugs + meds
-	chempath = pick(chemlist)
-	targetchem = initial(chempath.id)
-	update_explanation_text()
-
-/datum/objective/crew/chemist/chems/update_explanation_text()
-	. = ..()
-	explanation_text = "Have [initial(chempath.name)] in your bloodstream when the shift ends."
-
-/datum/objective/crew/chemist/chems/check_completion()
-	if(owner.current)
-		if(!owner.current.stat == DEAD && owner.current.reagents)
-			if(owner.current.reagents.has_reagent(targetchem))
-				return TRUE
-	else
-		return FALSE
-
-/datum/objective/crew/chemist/druglord //ported from old Hippie with adjustments
+/datum/objective/crew/druglordchem //ported from old Hippie with adjustments
 	var/targetchem = "none"
 	var/datum/reagent/chempath
 	explanation_text = "Have at least (somethin broke here) pills containing (report this on the development discussion channel of citadel's discord) when the shift ends."
+	jobs = "chemist"
 
-/datum/objective/crew/chemist/druglord/New()
+/datum/objective/crew/druglordchem/New()
 	. = ..()
 	target_amount = rand(5,50)
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol)
@@ -95,11 +55,11 @@
 	targetchem = initial(chempath.id)
 	update_explanation_text()
 
-/datum/objective/crew/chemist/druglord/update_explanation_text()
+/datum/objective/crew/druglordchem/update_explanation_text()
 	. = ..()
 	explanation_text = "Have at least [target_amount] pills containing [initial(chempath.name)] when the shift ends."
 
-/datum/objective/crew/chemist/druglord/check_completion()
+/datum/objective/crew/druglordchem/check_completion()
 	var/pillcount = target_amount
 	if(owner.current)
 		if(owner.current.contents)
@@ -111,27 +71,14 @@
 	else
 		return FALSE
 
-/datum/objective/crew/virologist
-
-/datum/objective/crew/virologist/noinfections
+/datum/objective/crew/noinfections
 	explanation_text = "Ensure no living crew members are infected with harmful viruses at the end of the shift"
+	jobs = "virologist"
 
-/datum/objective/crew/virologist/noinfections/check_completion()
+/datum/objective/crew/noinfections/check_completion()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		if(!H.stat == DEAD)
 			if(H.z == ZLEVEL_STATION_PRIMARY || SSshuttle.emergency.shuttle_areas[get_area(H)])
 				if(H.check_virus() == 2)
 					return FALSE
-	return TRUE
-
-/datum/objective/crew/medicaldoctor
-
-/datum/objective/crew/medicaldoctor/morgue //Ported from old Hippie
-	explanation_text = "Ensure there are no corpses on the station outside of the morgue when the shift ends."
-
-/datum/objective/crew/medicaldoctor/morgue/check_completion()
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		if(H.stat == DEAD && H.z == ZLEVEL_STATION_PRIMARY)
-			if(get_area(H) != /area/medical/morgue)
-				return FALSE
 	return TRUE

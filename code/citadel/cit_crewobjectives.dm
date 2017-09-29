@@ -16,22 +16,31 @@
 		return
 	if(!crewMind.assigned_role)
 		return
-	var/rolePathString = "/datum/objective/crew/[ckey(crewMind.assigned_role)]"
-	var/rolePath = text2path(rolePathString)
-	if (isnull(rolePath))
+	var/validobjs = get_valid_crew_objs(ckey(crewMind.assigned_role))
+	if(isnull(validobjs))
 		return
-	var/list/objectiveTypes = typesof(rolePath) - rolePath
-	if(!objectiveTypes.len)
+	if(!validobjs.len)
 		return
-	var/selectedType = pick(objectiveTypes)
-	var/datum/objective/crew/newObjective = new selectedType
+	var/selectedObj = pick(validobjs)
+	var/datum/objective/crew/newObjective = new selectedObj
 	if(!newObjective)
 		return
 	newObjective.owner = crewMind
 	crewMind.objectives += newObjective
 	to_chat(crewMind, "<B>Your objective:</B> [newObjective.explanation_text]")
 
+/datum/controller/subsystem/ticker/proc/get_valid_crew_objs(var/job = "")//taken from old hippie with adjustments
+	var/list/objpaths = typesof(/datum/objective/crew)
+	var/list/objlist = list()
+	for(/datum/objective/crew/obj in objpaths)
+		if(obj && initial(obj.jobs))
+			var/list/availableto = splittext(initial(obj.jobs),",")
+			if(job in availableto)
+				objlist += obj
+	return objlist
+
 /datum/objective/crew/
+	var/jobs = ""
 	explanation_text = "Yell on the development discussion channel on Citadels discord if this ever shows up. Something just broke here, dude"
 
 /datum/objective/crew/proc/setup()
