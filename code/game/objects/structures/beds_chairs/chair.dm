@@ -93,7 +93,7 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(config.ghost_interaction)
+	if(CONFIG_GET(flag/ghost_interaction))
 		spin()
 	else
 		if(!usr || !isturf(usr.loc))
