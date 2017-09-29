@@ -243,9 +243,15 @@
 
 /datum/ai_laws/proc/pick_weighted_lawset()
 	var/datum/ai_laws/lawtype
+<<<<<<< HEAD
 
 	while(!lawtype && config.law_weights.len)
 		var/possible_id = pickweight(config.law_weights)
+=======
+	var/list/law_weights = CONFIG_GET(keyed_number_list/law_weight)
+	while(!lawtype && law_weights.len)
+		var/possible_id = pickweight(law_weights)
+>>>>>>> f7171e7... Fixes AI law weights infinite loop
 		lawtype = lawid_to_type(possible_id)
 		if(!lawtype)
 			config.law_weights -= possible_id
