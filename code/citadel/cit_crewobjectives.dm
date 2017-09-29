@@ -32,7 +32,7 @@
 /datum/controller/subsystem/ticker/proc/get_valid_crew_objs(var/job = "")//taken from old hippie with adjustments
 	var/list/objpaths = typesof(/datum/objective/crew)
 	var/list/objlist = list()
-	for(/datum/objective/crew/obj in objpaths)
+	for(var/datum/objective/crew/obj in objpaths)
 		if(obj && initial(obj.jobs))
 			var/list/availableto = splittext(initial(obj.jobs),",")
 			if(job in availableto)
