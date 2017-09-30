@@ -1003,9 +1003,6 @@
 	loc = H
 	H.ContractDisease(P)
 	parrot_interest = null
-<<<<<<< HEAD
-	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
-=======
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
 
 
@@ -1026,4 +1023,3 @@
 
 /mob/living/simple_animal/parrot/clock_hawk/ratvar_act()
 	return
->>>>>>> 60d3ce5... Adds Nars-Ian and clock hawks (#30856)
