@@ -274,10 +274,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
 
 			dat += "</td></tr></table>"
-<<<<<<< HEAD
 //			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
 			dat += "<br>"
-=======
 
 			dat += "<h2>Body</h2>"
 			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
@@ -440,8 +438,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "</td>"
 
 			dat += "</tr></table>"
-
->>>>>>> 4178c20... Configuration datum refactor (#30763)
 
 		if (1) // Game Preferences
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
