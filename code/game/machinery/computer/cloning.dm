@@ -21,111 +21,6 @@
 
 /obj/machinery/computer/cloning/Initialize()
 	. = ..()
-<<<<<<< HEAD
-	updatemodules(TRUE)
-
-/obj/machinery/computer/cloning/Destroy()
-	if(pods)
-		for(var/P in pods)
-			DetachCloner(P)
-		pods = null
-	return ..()
-
-/obj/machinery/computer/cloning/proc/GetAvailablePod(mind = null)
-	if(pods)
-		for(var/P in pods)
-			var/obj/machinery/clonepod/pod = P
-			if(pod.occupant && pod.clonemind == mind)
-				return null
-			if(pod.is_operational() && !(pod.occupant || pod.mess))
-				return pod
-
-/obj/machinery/computer/cloning/proc/HasEfficientPod()
-	if(pods)
-		for(var/P in pods)
-			var/obj/machinery/clonepod/pod = P
-			if(pod.is_operational() && pod.efficiency > 5)
-				return TRUE
-
-/obj/machinery/computer/cloning/proc/GetAvailableEfficientPod(mind = null)
-	if(pods)
-		for(var/P in pods)
-			var/obj/machinery/clonepod/pod = P
-			if(pod.occupant && pod.clonemind == mind)
-				return pod
-			else if(!. && pod.is_operational() && !(pod.occupant || pod.mess) && pod.efficiency > 5)
-				. = pod
-
-/obj/machinery/computer/cloning/process()
-	if(!(scanner && LAZYLEN(pods) && autoprocess))
-		return
-
-	if(scanner.occupant && scanner.scan_level > 2)
-		scan_occupant(scanner.occupant)
-
-	for(var/datum/data/record/R in records)
-		var/obj/machinery/clonepod/pod = GetAvailableEfficientPod(R.fields["mind"])
-
-		if(!pod)
-			return
-
-		if(pod.occupant)
-			continue	//how though?
-
-		if(pod.growclone(R.fields["ckey"], R.fields["name"], R.fields["UI"], R.fields["SE"], R.fields["mind"], R.fields["mrace"], R.fields["features"], R.fields["factions"]))
-			records -= R
-
-/obj/machinery/computer/cloning/proc/updatemodules(findfirstcloner)
-	src.scanner = findscanner()
-	if(findfirstcloner && !LAZYLEN(pods))
-		findcloner()
-
-/obj/machinery/computer/cloning/proc/findscanner()
-	var/obj/machinery/dna_scannernew/scannerf = null
-
-	// Loop through every direction
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-
-		// Try to find a scanner in that direction
-		scannerf = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-
-		// If found and operational, return the scanner
-		if (!isnull(scannerf) && scannerf.is_operational())
-			return scannerf
-
-	// If no scanner was found, it will return null
-	return null
-
-/obj/machinery/computer/cloning/proc/findcloner()
-	var/obj/machinery/clonepod/podf = null
-
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
-
-		podf = locate(/obj/machinery/clonepod, get_step(src, dir))
-
-		if (!isnull(podf) && podf.is_operational())
-			AttachCloner(podf)
-
-/obj/machinery/computer/cloning/proc/AttachCloner(obj/machinery/clonepod/pod)
-	if(!pod.connected)
-		pod.connected = src
-		LAZYADD(pods, pod)
-
-/obj/machinery/computer/cloning/proc/DetachCloner(obj/machinery/clonepod/pod)
-	pod.connected = null
-	LAZYREMOVE(pods, pod)
-
-/obj/machinery/computer/cloning/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/disk/data)) //INSERT SOME DISKETTES
-		if (!src.diskette)
-			if(!user.drop_item())
-				return
-			W.loc = src
-			src.diskette = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-			src.updateUsrDialog()
-=======
 	updatemodules(TRUE)
 
 /obj/machinery/computer/cloning/Destroy()
@@ -228,7 +123,6 @@
 			to_chat(user, "<span class='notice'>You insert [W].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			src.updateUsrDialog()
->>>>>>> 8b54685... Cleanup to various loc assignments and nearby code (#31069)
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/P = W
 
