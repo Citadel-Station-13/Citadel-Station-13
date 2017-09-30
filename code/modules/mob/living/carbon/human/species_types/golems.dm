@@ -636,7 +636,7 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-	
+  
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"

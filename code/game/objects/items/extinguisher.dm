@@ -1,3 +1,4 @@
+
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -68,6 +69,7 @@
 	..()
 	if(reagents.total_volume)
 		to_chat(user, "It contains [round(reagents.total_volume)] units.")
+		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
 	else
 		to_chat(user, "It is empty.")
 
