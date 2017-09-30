@@ -163,7 +163,6 @@
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\swarmer.dm"
-<<<<<<< HEAD
 #include "code\citadel\_cit_helpers.dm"
 #include "code\citadel\cit_areas.dm"
 #include "code\citadel\cit_arousal.dm"
@@ -190,8 +189,6 @@
 #include "code\citadel\organs\vagina.dm"
 #include "code\citadel\organs\womb.dm"
 #include "code\citadel\toys\dildos.dm"
-=======
->>>>>>> ced1e24... Corrected shuttle refuel time (#31108)
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\configuration_citadel.dm"
@@ -2139,12 +2136,9 @@
 #include "code\modules\ruins\spaceruin_code\TheDerelict.dm"
 #include "code\modules\security_levels\keycard_authentication.dm"
 #include "code\modules\security_levels\security_levels.dm"
-<<<<<<< HEAD
 #include "code\modules\server_tools\server_tools.dm"
-=======
 #include "code\modules\server_tools\st_commands.dm"
 #include "code\modules\server_tools\st_interface.dm"
->>>>>>> ced1e24... Corrected shuttle refuel time (#31108)
 #include "code\modules\shuttle\arrivals.dm"
 #include "code\modules\shuttle\assault_pod.dm"
 #include "code\modules\shuttle\computer.dm"
