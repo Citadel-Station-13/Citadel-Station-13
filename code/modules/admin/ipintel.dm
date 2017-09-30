@@ -78,11 +78,7 @@
 	if (!SSipintel.enabled)
 		return
 
-<<<<<<< HEAD
-	var/list/http[] = world.Export("http://[config.ipintel_domain]/check.php?ip=[ip]&contact=[config.ipintel_email]&format=json&flags_1=f")
-=======
 	var/list/http[] = world.Export("http://[CONFIG_GET(string/ipintel_domain)]/check.php?ip=[ip]&contact=[CONFIG_GET(string/ipintel_email)]&format=json&flags=f")
->>>>>>> 4178c20... Configuration datum refactor (#30763)
 
 	if (http)
 		var/status = text2num(http["STATUS"])
