@@ -403,8 +403,5 @@
 	return
 
 /obj/item/paper/crumpled/bloody
-<<<<<<< HEAD
 	icon_state = "scrap_bloodied"
-=======
-	icon_state = "scrap_bloodied"
->>>>>>> 086d636... Alt-clicking descriptions when examining (#30988)
+
