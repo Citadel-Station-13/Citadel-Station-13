@@ -134,6 +134,7 @@
 
 /datum/wires/proc/pulse_color(color, mob/living/user)
 	pulse(get_wire(color), user)
+<<<<<<< HEAD
 
 /datum/wires/proc/pulse_assembly(obj/item/device/assembly/S)
 	for(var/color in assemblies)
@@ -177,6 +178,51 @@
 /datum/wires/proc/on_cut(wire, mend = FALSE)
 	return
 
+=======
+
+/datum/wires/proc/pulse_assembly(obj/item/device/assembly/S)
+	for(var/color in assemblies)
+		if(S == assemblies[color])
+			pulse_color(color)
+			return TRUE
+
+/datum/wires/proc/attach_assembly(color, obj/item/device/assembly/S)
+	if(S && istype(S) && S.attachable && !is_attached(color))
+		assemblies[color] = S
+		S.forceMove(holder)
+		S.connected = src
+		return S
+
+/datum/wires/proc/detach_assembly(color)
+	var/obj/item/device/assembly/S = get_attached(color)
+	if(S && istype(S))
+		assemblies -= color
+		S.connected = null
+		S.forceMove(holder.drop_location())
+		return S
+
+/datum/wires/proc/emp_pulse()
+	var/list/possible_wires = shuffle(wires)
+	var/remaining_pulses = MAXIMUM_EMP_WIRES
+
+	for(var/wire in possible_wires)
+		if(prob(33))
+			pulse(wire)
+		remaining_pulses--
+		if(remaining_pulses >= 0)
+			break
+
+// Overridable Procs
+/datum/wires/proc/interactable(mob/user)
+	return TRUE
+
+/datum/wires/proc/get_status()
+	return list()
+
+/datum/wires/proc/on_cut(wire, mend = FALSE)
+	return
+
+>>>>>>> 8b54685... Cleanup to various loc assignments and nearby code (#31069)
 /datum/wires/proc/on_pulse(wire, user)
 	return
 // End Overridable Procs
