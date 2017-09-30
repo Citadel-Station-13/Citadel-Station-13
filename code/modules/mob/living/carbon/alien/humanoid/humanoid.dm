@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /mob/living/carbon/alien/humanoid
 	name = "alien"
 	icon_state = "alien"
