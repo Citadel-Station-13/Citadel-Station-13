@@ -113,4 +113,3 @@
 		for(var/path in subtypesof(prototype))
 			L+= path
 		return L
->>>>>>> 4178c20... Configuration datum refactor (#30763)
