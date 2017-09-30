@@ -151,20 +151,6 @@
 
 /turf/open/floor/clockwork/Initialize()
 	. = ..()
-<<<<<<< HEAD
-	new /obj/effect/temp_visual/ratvar/floor(src)
-	new /obj/effect/temp_visual/ratvar/beam(src)
-	realappearence = new /obj/effect/clockwork/overlay/floor(src)
-	realappearence.linked = src
-	change_construction_value(1)
-
-/turf/open/floor/clockwork/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	change_construction_value(-1)
-	if(realappearence)
-		qdel(realappearence)
-		realappearence = null
-=======
 	if(uses_overlay)
 		new /obj/effect/temp_visual/ratvar/floor(src)
 		new /obj/effect/temp_visual/ratvar/beam(src)
@@ -175,7 +161,6 @@
 	STOP_PROCESSING(SSobj, src)
 	if(uses_overlay && realappearence)
 		QDEL_NULL(realappearence)
->>>>>>> 5b73196... Reebe is fancier now (#31045)
 	return ..()
 
 /turf/open/floor/clockwork/ReplaceWithLattice()
