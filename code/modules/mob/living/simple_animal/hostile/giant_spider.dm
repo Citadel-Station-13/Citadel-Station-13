@@ -48,9 +48,7 @@
 	see_in_dark = 4
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	var/playable_spider = FALSE
-<<<<<<< HEAD
 	devourable = TRUE
-=======
 	var/datum/action/innate/spider/lay_web/lay_web
 	var/directive = "" //Message passed down to children, to relay the creator's orders
 
@@ -62,7 +60,6 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/Destroy()
 	QDEL_NULL(lay_web)
 	return ..()
->>>>>>> 152c890... Adds action buttons for spiders, refactors action code, nurse spiders can set a hereditary directive for their children to follow (#30572)
 
 /mob/living/simple_animal/hostile/poison/giant_spider/Topic(href, href_list)
 	if(href_list["activate"])
