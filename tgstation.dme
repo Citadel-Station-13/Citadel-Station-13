@@ -193,7 +193,6 @@
 #include "code\controllers\admin.dm"
 #include "code\controllers\configuration.dm"
 #include "code\controllers\configuration_citadel.dm"
-=======
 #include "code\controllers\configuration\entries\comms.dm"
 #include "code\controllers\configuration\entries\config.dm"
 #include "code\controllers\configuration\entries\dbconfig.dm"
@@ -201,7 +200,6 @@
 #include "code\controllers\configuration\config_entry.dm"
 #include "code\controllers\configuration\configuration.dm"
 #include "code\controllers\admin.dm"
->>>>>>> 4178c20... Configuration datum refactor (#30763)
 #include "code\controllers\controller.dm"
 #include "code\controllers\failsafe.dm"
 #include "code\controllers\globals.dm"
