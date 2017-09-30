@@ -195,6 +195,19 @@
 			textlist += "HONOR RATVAR "
 		textlist += "</b></font>"
 	else
+		var/servants = 0
+		var/production_time = SLAB_PRODUCTION_TIME
+		for(var/mob/living/M in GLOB.living_mob_list)
+			if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+				servants++
+		if(servants > SCRIPT_SERVANT_REQ)
+			servants -= SCRIPT_SERVANT_REQ
+			production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
+		if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
+			production_time = "<b>[DisplayTimeText(production_time)]</b>, which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+		else
+			production_time = "<b>[DisplayTimeText(production_time)]</b>"
+
 		textlist = list("<font color=#BE8700 size=3><b><center>[text2ratvar("Purge all untruths and honor Engine.")]</center></b></font><br>\
 		\
 		<b><i>NOTICE:</b> This information is out of date. Read the Ark & You primer in your backpack or read the wiki page for current info.</i><br>\
@@ -287,12 +300,24 @@
 			dat += "<font color=#BE8700><b>Transmission:</b></font> Drains and stores power for clockwork structures. Feeding it brass sheets will create additional power.<br><br>"
 			dat += "<font color=#BE8700 size=3>-=-=-=-=-=-</font>"
 		if("Components")
+			var/servants = 0 //Calculate the current production time for slab components
+			var/production_time = SLAB_PRODUCTION_TIME
+			for(var/mob/living/M in GLOB.living_mob_list)
+				if(is_servant_of_ratvar(M) && (ishuman(M) || issilicon(M)))
+					servants++
+			if(servants > SCRIPT_SERVANT_REQ)
+				servants -= SCRIPT_SERVANT_REQ
+				production_time += min(SLAB_SERVANT_SLOWDOWN * servants, SLAB_SLOWDOWN_MAXIMUM)
+			if(production_time != SLAB_PRODUCTION_TIME+SLAB_SLOWDOWN_MAXIMUM)
+				production_time = "<b>[DisplayTimeText(production_time)]</b>, which increases for each human or silicon Servant above <b>[SCRIPT_SERVANT_REQ]</b>"
+			else
+				production_time = "<b>[DisplayTimeText(production_time)]</b>"
 			dat += "<font color=#BE8700 size=3>Components & Their Uses</font><br><br>"
 			dat += "<b>Components</b> are your primary resource as a Servant. There are five types of component, with each one being used in different roles:<br><br>"
 			dat += "Although this is a good rule of thumb, their effects become much more nuanced when used together. For instance, a turret might have both belligerent eyes and \
 			vanguard cogwheels as construction requirements, because it defends its allies by harming its enemies.<br><br>"
 			dat += "Components' primary use is fueling <b>scripture</b> (covered in its own section), and they can be created through various ways. This clockwork slab, for instance, \
-			will make a random component of every type - or a specific one, if you choose a target component from the interface - every <b>remove me already</b>. This number will increase \
+			will make a random component of every type - or a specific one, if you choose a target component from the interface - every [production_time]. This number will increase \
 			as the amount of Servants in the covenant increase; additionally, slabs can only produce components when held by a Servant, and holding more than one slab will cause both \
 			of them to halt progress until one of them is removed from their person.<br><br>"
 			dat += "Your slab has an internal storage of components, but it isn't meant to be the main one. Instead, there's a <b>global storage</b> of components that can be \
