@@ -163,7 +163,6 @@
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\swarmer.dm"
-<<<<<<< HEAD
 #include "code\citadel\_cit_helpers.dm"
 #include "code\citadel\cit_areas.dm"
 #include "code\citadel\cit_arousal.dm"
