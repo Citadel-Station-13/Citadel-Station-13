@@ -35,8 +35,6 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
-	if(CONFIG_GET(flag/irc_announce_new_game))
-		IRCBroadcast("New round starting on [SSmapping.config.map_name]!")
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
@@ -130,7 +128,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	var/comms_key = CONFIG_GET(string/comms_key)
-  var/key_valid = (comms_key && input["key"] == comms_key)
+	var/key_valid = (comms_key && input["key"] == comms_key)
 
 	if(pinging)
 		var/x = 1
