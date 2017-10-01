@@ -83,16 +83,8 @@
 	. = . && (vic.loc != tar.loc)
 
 /mob/Collide(atom/A)
-<<<<<<< HEAD
-	. = ..()
-	if(force_moving && force_moving.allow_climbing && istype(A, /obj/structure))
-		var/obj/structure/S = A
-		if(S.climbable)
-			S.do_climb(src)
-=======
 	. = ..()
 	if(force_moving && force_moving.allow_climbing && isstructure(A))
 		var/obj/structure/S = A
 		if(S.climbable)
 			S.do_climb(src)
->>>>>>> 7d0f936... Merge pull request #31138 from KorPhaeron/isstructure
