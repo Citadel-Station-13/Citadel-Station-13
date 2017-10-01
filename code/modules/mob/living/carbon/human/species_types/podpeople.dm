@@ -8,7 +8,7 @@
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
-	heatmod = 1.5
+	heatmod = 1.55
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = NONE
 	liked_food = NONE
@@ -38,11 +38,11 @@
 			H.nutrition = NUTRITION_LEVEL_FULL
 		if(light_amount > 0.2) //if there's enough light, heal
 			H.heal_overall_damage(1,1)
-			H.adjustToxLoss(-1)
-			H.adjustOxyLoss(-1)
+			H.adjustOxyLoss(-0.5)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 55)
-		H.take_overall_damage(2,5)
+		H.adjustOxyLoss(5,5) //can eat to negate this unfortunately
+		H.adjustToxLoss(3,0)
 
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
