@@ -172,6 +172,27 @@
 	spread = 30	//should be 40 for XCOM memes, but since its adminspawn only, might as well make it useable
 	recoil = 1
 
+///toy memes///
+
+/obj/item/ammo_box/magazine/toy/x9
+	name = "foam force X9 magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9magazine"
+	max_ammo = 30
+	multiple_sprites = 2
+
+/obj/item/gun/ballistic/automatic/x9/toy
+	name = "donksoft X9"
+	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "toy9"
+	can_suppress = 0
+	needs_permit = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/x9
+	casing_ejector = 0
+	spread = 45		//MAXIMUM XCOM MEMES (actually that'd be 90 spread)
+
+
 ////////XCOM2 Magpistol/////////
 
 //////projectiles//////
@@ -213,7 +234,7 @@
 
 //////magazines/////
 
-/obj/item/ammo_box/magazine/mmags
+/obj/item/ammo_box/magazine/mmag/small
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
@@ -223,7 +244,7 @@
 	max_ammo = 7
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/mmags/lethal
+/obj/item/ammo_box/magazine/mmag/small/lethal
 	name = "magpistol magazine (lethal)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
@@ -239,7 +260,7 @@
 	icon_state = "magpistol"
 	force = 10
 	fire_sound = 'sound/weapons/magpistol.ogg'
-	mag_type = /obj/item/ammo_box/magazine/mmags
+	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 5
@@ -276,7 +297,7 @@
 	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
-	build_path = /obj/item/ammo_box/magazine/mmags/lethal
+	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
 	category = list("Ammo")
 
 /datum/design/mag_magpistol/nl
@@ -285,7 +306,7 @@
 	id = "mag_magpistol_nl"
 	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5)
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
-	build_path = /obj/item/ammo_box/magazine/mmags
+	build_path = /obj/item/ammo_box/magazine/mmag/small
 
 //////toy memes/////
 
@@ -339,3 +360,412 @@
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/ballistic/shotgun/toy/mag
 	category = list("hacked", "Misc")
+
+//////Magrifle//////
+
+///projectiles///
+
+/obj/item/projectile/bullet/magrifle
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-large"
+	damage = 30
+	armour_penetration = 25
+	light_range = 3
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-large-nl"
+	damage = 5
+	knockdown = 30
+	stamina = 75
+	armour_penetration = 0
+	light_range = 3
+	light_color = LIGHT_COLOR_BLUE
+
+///ammo casings///
+
+/obj/item/ammo_casing/caseless/amagm
+	desc = "A large ferromagnetic slug intended to be launched out of a compatible weapon."
+	caliber = "magm"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "mag-casing-live"
+	projectile_type = /obj/item/projectile/bullet/magrifle
+
+/obj/item/ammo_casing/caseless/anlmagm
+	desc = "A large, specialized ferromagnetic slug designed with a less-than-lethal payload."
+	caliber = "magm"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "mag-casing-live"
+	projectile_type = /obj/item/projectile/bullet/nlmagrifle
+
+///magazines///
+
+/obj/item/ammo_box/magazine/mmag/
+	name = "magrifle magazine (non-lethal disabler)"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "mediummagmag"
+	origin_tech = "magnets=6"
+	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
+	caliber = "magm"
+	max_ammo = 15
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/mmag/lethal
+	name = "magrifle magazine (lethal)"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "mediummagmag"
+	origin_tech = "combat=6"
+	ammo_type = /obj/item/ammo_casing/caseless/amagm
+
+///the gun itself///
+
+/obj/item/gun/ballistic/automatic/magrifle
+	name = "\improper Magnetic Rifle"
+	desc = "A simple upscalling of the technologies used in the magpistol, the magrifle is capable of firing slightly larger slugs in bursts. Compatible with the magpistol's slugs."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "magrifle"
+	item_state = "arg"
+	slot_flags = 0
+	origin_tech = "combat=6;engineering=6;magnets=6"
+	mag_type = /obj/item/ammo_box/magazine/mmag
+	fire_sound = 'sound/weapons/magrifle.ogg'
+	can_suppress = 0
+	burst_size = 3
+	fire_delay = 2
+	spread = 15
+	recoil = 1
+	casing_ejector = 0
+
+///research///
+
+/obj/item/gun/ballistic/automatic/magrifle/nopin
+	pin = null
+
+/datum/design/magrifle
+	name = "Magrifle"
+	desc = "An upscaled Magpistol in rifle form."
+	id = "magrifle"
+	req_tech = list("combat" = 7, "magnets" = 7, "powerstorage" = 7)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
+	category = list("Weapons")
+
+/datum/design/mag_magrifle
+	name = "Magrifle Magazine (Lethal)"
+	desc = "A 15 round magazine for the Magrifle."
+	id = "mag_magrifle"
+	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5, "syndicate" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
+	build_path = /obj/item/ammo_box/magazine/mmag/lethal
+	category = list("Ammo")
+
+/datum/design/mag_magrifle/nl
+	name = "Magrifle Magazine (Non-Lethal)"
+	desc = "A 15 round non-lethal magazine for the Magrifle."
+	id = "mag_magrifle_nl"
+	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5)
+	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
+	build_path = /obj/item/ammo_box/magazine/mmag
+
+//////Hyper-Burst Rifle//////
+
+///projectiles///
+
+/obj/item/projectile/bullet/mags/hyper
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile"
+	damage = 10
+	armour_penetration = 10
+	stamina = 10
+	forcedodge = TRUE
+	range = 6
+	light_range = 1
+	light_color = LIGHT_COLOR_RED
+
+/obj/item/projectile/bullet/mags/hyper/inferno
+	icon_state = "magjectile-large"
+	stamina = 0
+	forcedodge = FALSE
+	range = 25
+	light_range = 4
+
+/obj/item/projectile/bullet/mags/hyper/inferno/on_hit(atom/target, blocked = FALSE)
+	..()
+	explosion(target, -1, 1, 2, 4, 5)
+	return 1
+
+///ammo casings///
+
+/obj/item/ammo_casing/caseless/ahyper
+	desc = "A large block of speciallized ferromagnetic material designed to be fired out of the experimental Hyper-Burst Rifle."
+	caliber = "hypermag"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "hyper-casing-live"
+	projectile_type = /obj/item/projectile/bullet/mags/hyper
+	pellets = 12
+	variance = 40
+
+/obj/item/ammo_casing/caseless/ahyper/inferno
+	projectile_type = /obj/item/projectile/bullet/mags/hyper/inferno
+	pellets = 1
+	variance = 0
+
+///magazines///
+
+/obj/item/ammo_box/magazine/mhyper
+	name = "hyper-burst rifle magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "hypermag-4"
+	ammo_type = /obj/item/ammo_casing/caseless/ahyper
+	caliber = "hypermag"
+	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that fragments into 12 smaller shards which can absolutely puncture anything, but has rather short effective range."
+	max_ammo = 4
+
+/obj/item/ammo_box/magazine/mhyper/update_icon()
+	..()
+	icon_state = "hypermag-[ammo_count() ? "4" : "0"]"
+
+/obj/item/ammo_box/magazine/mhyper/inferno
+	name = "hyper-burst rifle magazine (inferno)"
+	ammo_type = /obj/item/ammo_casing/caseless/ahyper/inferno
+	desc = "A magazine for the Hyper-Burst Rifle. Loaded with a special slug that violently reacts with whatever surface it strikes, generating a massive amount of heat and light."
+
+///gun itself///
+
+/obj/item/gun/ballistic/automatic/hyperburst
+	name = "\improper Hyper-Burst Rifle"
+	desc = "An extremely beefed up version of a stolen Nanotrasen weapon prototype, this 'rifle' is more like a cannon, with an extremely large bore barrel capable of generating several smaller magnetic 'barrels' to simultaneously launch multiple projectiles at once."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "hyperburst"
+	item_state = "arg"
+	slot_flags = 0
+	origin_tech = "combat=6;engineering=6;magnets=6;syndicate=6"
+	mag_type = /obj/item/ammo_box/magazine/mhyper
+	fire_sound = 'sound/weapons/magburst.ogg'
+	can_suppress = 0
+	burst_size = 1
+	fire_delay = 40
+	recoil = 2
+	casing_ejector = 0
+	weapon_weight = WEAPON_HEAVY
+
+/obj/item/gun/ballistic/automatic/hyperburst/update_icon()
+	..()
+	icon_state = "hyperburst[magazine ? "-[get_ammo()]" : ""][chambered ? "" : "-e"]"
+
+/*		made redundant by reskinnable stetchkins
+//////Stealth Pistol//////
+
+/obj/item/gun/ballistic/automatic/pistol/stealth
+	name = "stealth pistol"
+	desc = "A unique bullpup pistol with a compact frame. Has an integrated surpressor."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "stealthpistol"
+	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "combat=3;materials=3;syndicate=4"
+	mag_type = /obj/item/ammo_box/magazine/m10mm
+	can_suppress = 0
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	suppressed = 1
+	burst_size = 1
+
+/obj/item/gun/ballistic/automatic/pistol/stealth/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("stealthpistol-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+*/
+
+//////10mm soporific bullets//////
+
+obj/item/projectile/bullet/c10mm/soporific
+	name ="10mm soporific bullet"
+	armour_penetration = 0
+	nodamage = TRUE
+	dismemberment = 0
+	knockdown = 0
+
+/obj/item/projectile/bullet/c10mm/soporific/on_hit(atom/target, blocked = FALSE)
+	if((blocked != 100) && isliving(target))
+		var/mob/living/L = target
+		L.blur_eyes(6)
+		if(L.staminaloss >= 40)
+			L.Sleeping(250)
+		else
+			L.adjustStaminaLoss(58)
+	return 1
+
+/obj/item/ammo_casing/c10mm/soporific
+	name = ".10mm soporific bullet casing"
+	desc = "A 10mm soporific bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c10mm/soporific
+
+/obj/item/ammo_box/magazine/m10mm/soporific
+	name = "pistol magazine (10mm soporific)"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "9x19pS"
+	desc = "A gun magazine. Loaded with rounds which inject the target with a variety of illegal substances to induce sleep in the target."
+	ammo_type = /obj/item/ammo_casing/c10mm/soporific
+
+/obj/item/ammo_box/c10mm/soporific
+	name = "ammo box (10mm soporific)"
+	ammo_type = /obj/item/ammo_casing/c10mm/soporific
+	max_ammo = 24
+
+//////Flechette Launcher//////
+
+///projectiles///
+
+/obj/item/projectile/bullet/cflechetteap	//shreds armor
+	name = "flechette (armor piercing)"
+	damage = 8
+	armour_penetration = 80
+
+/obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
+	name = "flechette (serrated)"
+	damage = 8
+	dismemberment = 10
+	armour_penetration = -80
+
+/obj/item/projectile/bullet/cflechettes/on_hit(atom/target, blocked = FALSE)
+	if((blocked != 100) && iscarbon(target))
+		var/mob/living/carbon/C = target
+		C.bleed(10)
+	return ..()
+
+///ammo casings (CASELESS AMMO CASINGS WOOOOOOOO)///
+
+/obj/item/ammo_casing/caseless/flechetteap
+	name = "flechette (armor piercing)"
+	desc = "A flechette made with a tungsten alloy."
+	projectile_type = /obj/item/projectile/bullet/cflechetteap
+	caliber = "flechette"
+	throwforce = 1
+	throw_speed = 3
+
+/obj/item/ammo_casing/caseless/flechettes
+	name = "flechette (serrated)"
+	desc = "A serrated flechette made of a special alloy intended to deform drastically upon penetration of human flesh."
+	projectile_type = /obj/item/projectile/bullet/cflechettes
+	caliber = "flechette"
+	throwforce = 2
+	throw_speed = 3
+	embed_chance = 75
+
+///magazine///
+
+/obj/item/ammo_box/magazine/flechette
+	name = "flechette magazine (armor piercing)"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "flechettemag"
+	origin_tech = "combat=5;syndicate=1"
+	ammo_type = /obj/item/ammo_casing/caseless/flechetteap
+	caliber = "flechette"
+	max_ammo = 40
+	multiple_sprites = 2
+
+/obj/item/ammo_box/magazine/flechette/s
+	name = "flechette magazine (serrated)"
+	ammo_type = /obj/item/ammo_casing/caseless/flechettes
+
+///the gun itself///
+
+/obj/item/gun/ballistic/automatic/flechette
+	name = "\improper CX Flechette Launcher"
+	desc = "A flechette launching machine pistol with an unconventional bullpup frame."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "flechettegun"
+	item_state = "gun"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = 0
+	/obj/item/device/firing_pin/implant/pindicate
+	origin_tech = "combat=6;materials=2;syndicate=5"
+	mag_type = /obj/item/ammo_box/magazine/flechette/
+	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	can_suppress = 0
+	burst_size = 5
+	fire_delay = 1
+	casing_ejector = 0
+	spread = 20
+
+/obj/item/gun/ballistic/automatic/flechette/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("flechettegun-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+///unique variant///
+
+/obj/item/projectile/bullet/cflechetteshredder
+	name = "flechette (shredder)"
+	damage = 5
+	dismemberment = 40
+
+/obj/item/ammo_casing/caseless/flechetteshredder
+	name = "flechette (shredder)"
+	desc = "A serrated flechette made of a special alloy that forms a monofilament edge."
+	projectile_type = /obj/item/projectile/bullet/cflechettes
+
+/obj/item/ammo_box/magazine/flechette/shredder
+	name = "flechette magazine (shredder)"
+	icon_state = "shreddermag"
+	ammo_type = /obj/item/ammo_casing/caseless/flechetteshredder
+
+/obj/item/gun/ballistic/automatic/flechette/shredder
+	name = "\improper CX Shredder"
+	desc = "A flechette launching machine pistol made of ultra-light CFRP optimized for firing serrated monofillament flechettes."
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/flechette/shredder
+	spread = 30
+
+/obj/item/gun/ballistic/automatic/flechette/shredder/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("shreddergun-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+//////modular pistol////// (reskinnable stetchkins)
+
+/obj/item/gun/ballistic/automatic/pistol/modular
+	name = "modular pistol"
+	desc = "A small, easily concealable 10mm handgun. Has a threaded barrel for suppressors."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "cde"
+	can_unsuppress = TRUE
+	unique_rename = TRUE
+	unique_reskin = list("Default" = "cde",
+						"NT-99" = "n99",
+						"Stealth" = "stealthpistol",
+						"HKVP-78" = "vp78",
+						"Luger" = "p08b",
+						"Mk.58" = "secguncomp",
+						"PX4 Storm" = "px4"
+						)
+
+/obj/item/gun/ballistic/automatic/pistol/modular/update_icon()
+	..()
+	if(current_skin)
+		icon_state = "[unique_reskin[current_skin]][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	else
+		icon_state = "[initial(icon_state)][chambered ? "" : "-e"][suppressed ? "-suppressed" : ""]"
+	if(magazine && suppressed)
+		cut_overlays()
+		add_overlay("[unique_reskin[current_skin]]-magazine-sup")	//Yes, this means the default iconstate can't have a magazine overlay
+	else if (magazine)
+		cut_overlays()
+		add_overlay("[unique_reskin[current_skin]]-magazine")
+	else
+		cut_overlays()
