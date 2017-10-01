@@ -218,7 +218,7 @@
 	R.anchored = TRUE
 	sleep(2)
 	for(var/i in 1 to 4)
-		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/Welder.ogg', 'sound/items/Ratchet.ogg'), 80, 1, -1)
+		playsound(R, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, 1, -1)
 		sleep(12)
 	if(!prev_lockcharge)
 		R.SetLockdown(0)
@@ -251,7 +251,7 @@
 	emag_modules = list(/obj/item/melee/transforming/energy/sword/cyborg)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_standard"
@@ -282,7 +282,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
 	feedback_key = "cyborg_medical"
@@ -334,17 +334,12 @@
 		/obj/item/clothing/mask/gas/sechailer/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	feedback_key = "cyborg_security"
 	can_be_pushed = FALSE
 	hat_offset = 3
-
-/obj/item/robot_module/security/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 
 /obj/item/robot_module/k9
 	name = "Security K-9 Unit module"
@@ -359,7 +354,7 @@
 		/obj/item/gun/energy/disabler/cyborg)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
 	moduleselect_icon = "k9"
 	feedback_key = "cyborg_k9"
@@ -394,7 +389,7 @@
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
 	moduleselect_icon = "medihound"
 	feedback_key = "cyborg_medihound"
@@ -424,7 +419,7 @@
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
 	clean_on_move = TRUE
-
+	
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
@@ -436,6 +431,22 @@
 	..()
 	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
 
+
+/obj/item/robot_module/security/do_transform_animation()
+	..()
+	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
+	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
+
+/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
+	..()
+	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
+	if(T)
+		if(T.cell.charge < T.cell.maxcharge)
+			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
+			T.cell.give(S.e_cost * coeff)
+			T.update_icon()
+		else
+			T.charge_tick = 0
 
 /obj/item/robot_module/peacekeeper
 	name = "Peacekeeper"
@@ -451,7 +462,7 @@
 	emag_modules = list(/obj/item/reagent_containers/borghypo/peace/hacked)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/peacekeeper,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "peace"
 	moduleselect_icon = "standard"
 	feedback_key = "cyborg_peacekeeper"
@@ -584,7 +595,7 @@
 	emag_modules = list(/obj/item/borg/stun)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/miner,
-		/obj/item/clockwork/ratvarian_spear/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
 		/obj/item/borg/sight/xray/truesight_lens)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
@@ -604,7 +615,7 @@
 
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -631,7 +642,7 @@
 		/obj/item/gun/medbeam)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/ratvarian_spear/cyborg)
+		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
