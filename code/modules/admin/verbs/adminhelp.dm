@@ -590,7 +590,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 <<<<<<< HEAD
 	if(world.RunningService())
 		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
-	else if(config.useircbot)
+	else if(CONFIG_GET(flag/useircbot))
 		shell("python nudge.py [msg] [msg2]")
 =======
 	if(SERVER_TOOLS_PRESENT)
@@ -598,15 +598,16 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 >>>>>>> 62f788f... Server tools API v3.1 (#31000)
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(config.cross_allowed)
+	var/comms_key = CONFIG_GET(string/comms_key)
+	if(comms_key)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+		message["key"] = comms_key
 		message["crossmessage"] = type
 
-		world.Export("[config.cross_address]?[list2params(message)]")
+		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
 
 
 /proc/ircadminwho()
