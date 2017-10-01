@@ -211,9 +211,9 @@
 	"MediHound" = /obj/item/robot_module/medihound, \
 	"Security K9" = /obj/item/robot_module/k9, \
 	"Scrub Puppy" = /obj/item/robot_module/scrubpup)
-	if(!config.forbid_peaceborg)
+	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!config.forbid_secborg)
+	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
