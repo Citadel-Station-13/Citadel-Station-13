@@ -17,9 +17,7 @@
 	if(!crewMind.assigned_role)
 		return
 	var/list/validobjs = get_valid_crew_objs(ckey(crewMind.assigned_role))
-	if(isnull(validobjs))
-		return
-	if(!validobjs.len)
+	if(!validobjs || !validobjs.len)
 		return
 	var/selectedObj = pick(validobjs)
 	var/datum/objective/crew/newObjective = new selectedObj
@@ -32,11 +30,11 @@
 /datum/controller/subsystem/ticker/proc/get_valid_crew_objs(var/job = "")//taken from old hippie with adjustments
 	var/list/objpaths = typesof(/datum/objective/crew)
 	var/list/objlist = list()
-	for(var/datum/objective/crew/obj in objpaths)
-		if(obj && initial(obj.jobs))
-			var/list/availableto = splittext(initial(obj.jobs),",")
-			if(job in availableto)
-				objlist += obj
+	for(var/hoorayhackyshit in objpaths)
+		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
+		var/list/availableto = splittext(initial(obj.jobs),",")
+		if(job in availableto)
+			objlist += obj
 	return objlist
 
 /datum/objective/crew/
