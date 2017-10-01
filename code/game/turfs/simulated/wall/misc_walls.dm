@@ -57,7 +57,6 @@
 	girder_type = /obj/structure/destructible/clockwork/wall_gear
 	baseturf = /turf/open/floor/clockwork/reebe
 	var/obj/effect/clockwork/overlay/wall/realappearence
-	var/obj/structure/destructible/clockwork/cache/linkedcache
 
 /turf/closed/wall/clockwork/Initialize()
 	..()

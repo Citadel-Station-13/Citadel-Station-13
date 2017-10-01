@@ -142,11 +142,8 @@
 	name = "clockwork floor"
 	desc = "Tightly-pressed brass tiles. They emit minute vibration."
 	icon_state = "plating"
-<<<<<<< HEAD
-=======
 	baseturf = /turf/open/floor/clockwork
 	var/uses_overlay = TRUE
->>>>>>> 5b73196... Reebe is fancier now (#31045)
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
 /turf/open/floor/clockwork/Initialize()
@@ -224,6 +221,12 @@
 		animate(src, color = previouscolor, time = 8)
 		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
 
+/turf/open/floor/clockwork/reebe
+	name = "cogplate"
+	desc = "Warm brass plating. You can feel it gently vibrating, as if machinery is on the other side."
+	icon_state = "reebe"
+	baseturf = /turf/open/floor/clockwork/reebe
+	uses_overlay = FALSE
 
 /turf/open/floor/bluespace
 	slowdown = -1
