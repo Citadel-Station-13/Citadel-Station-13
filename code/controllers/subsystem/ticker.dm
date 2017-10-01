@@ -334,9 +334,14 @@ SUBSYSTEM_DEF(ticker)
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 
+<<<<<<< HEAD
 /*	var/nocredits = config.no_credits_round_end
 		for(var/client/C in GLOB.clients)
 		if(!C.credits && !nocredits)
+=======
+	for(var/client/C in GLOB.clients)
+		if(!C.credits)
+>>>>>>> 5ca0d30... Merge pull request #30773 from Cyberboss/Rats
 			C.RollCredits()
  		C.playtitlemusic(40)*/
 
