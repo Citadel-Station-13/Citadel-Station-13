@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // transit tube construction
 
 // normal transit tubes
@@ -5,6 +6,16 @@
 	name = "unattached transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
+=======
+// transit tube construction
+
+// normal transit tubes
+/obj/structure/c_transit_tube
+	name = "unattached transit tube"
+	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
+	icon_state = "straight"
+	desc = "An unattached segment of transit tube."
+>>>>>>> 3e4d747... Adds desc to things lacking them. (#31086)
 	density = FALSE
 	layer = LOW_ITEM_LAYER //same as the built tube
 	anchored = FALSE
