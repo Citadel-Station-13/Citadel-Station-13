@@ -18,7 +18,6 @@
 	var/drooling = 0 //For Neruotoxic spit overlays
 	bodyparts = list(/obj/item/bodypart/chest/alien, /obj/item/bodypart/head/alien, /obj/item/bodypart/l_arm/alien,
 					 /obj/item/bodypart/r_arm/alien, /obj/item/bodypart/r_leg/alien, /obj/item/bodypart/l_leg/alien)
-	devourable = TRUE
 
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
@@ -28,7 +27,10 @@
 
 /mob/living/carbon/alien/humanoid/movement_delay()
 	. = ..()
-	. += move_delay_add + config.alien_delay + sneaking //move_delay_add is used to slow aliens with stun
+	var/static/config_alien_delay
+	if(isnull(config_alien_delay))
+		config_alien_delay = CONFIG_GET(number/alien_delay)
+	. += move_delay_add + config_alien_delay + sneaking //move_delay_add is used to slow aliens with stun
 
 /mob/living/carbon/alien/humanoid/restrained(ignore_grab)
 	. = handcuffed

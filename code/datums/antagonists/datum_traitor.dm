@@ -138,10 +138,11 @@
 			assign_exchange_role(SSticker.mode.exchange_red)
 			assign_exchange_role(SSticker.mode.exchange_blue)
 		objective_count += 1					//Exchange counts towards number of objectives
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
+	var/toa = CONFIG_GET(number/traitor_objectives_amount)
+	for(var/i = objective_count, i < toa, i++)
 		forge_single_objective()
 
-	if(is_hijacker && objective_count <= config.traitor_objectives_amount) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
+	if(is_hijacker && objective_count <= toa) //Don't assign hijack if it would exceed the number of objectives set in config.traitor_objectives_amount
 		if (!(locate(/datum/objective/hijack) in owner.objectives))
 			var/datum/objective/hijack/hijack_objective = new
 			hijack_objective.owner = owner
@@ -173,18 +174,11 @@
 
 	if(prob(30))
 		objective_count += forge_single_objective()
-
-	for(var/i = objective_count, i < config.traitor_objectives_amount, i++)
-		if(prob(20)) //AI's are less likely to look for a late-joiner than normal traitors
-			var/datum/objective/assassinate/late/late_objective = new
-			late_objective.owner = owner
-			late_objective.find_target()
-			add_objective(late_objective)
-		else
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			add_objective(kill_objective)
+	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		add_objective(kill_objective)
 
 	var/datum/objective/survive/exist/exist_objective = new
 	exist_objective.owner = owner

@@ -1,4 +1,3 @@
-
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes
@@ -29,10 +28,6 @@
 	destination.dna.temporary_mutations = temporary_mutations.Copy()
 	if(transfer_SE)
 		destination.dna.struc_enzymes = struc_enzymes
-	if(ishuman(destination))
-		var/mob/living/carbon/human/H = destination
-		H.give_genitals(TRUE)//This gives the body the genitals of this DNA. Used for any transformations based on DNA
-	destination.flavor_text = destination.dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 /datum/dna/proc/copy_dna(datum/dna/new_dna)
 	new_dna.unique_enzymes = unique_enzymes
@@ -232,7 +227,6 @@
 
 	if(newfeatures)
 		dna.features = newfeatures
-		flavor_text = dna.features["flavor_text"] //Update the flavor_text to use new dna text
 
 	if(mrace)
 		var/datum/species/newrace = new mrace.type
@@ -254,8 +248,6 @@
 		dna.struc_enzymes = se
 		domutcheck()
 
-	give_genitals(TRUE)//Give all genitalia that DNA says you should have, remove any pre-existing ones as this is a hardset!
-
 	if(mrace || newfeatures || ui)
 		update_body()
 		update_hair()
@@ -266,7 +258,7 @@
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)
 	if(!dna.species)
-		var/rando_race = pick(config.roundstart_races)
+		var/rando_race = pick(CONFIG_GET(keyed_flag_list/roundstart_races))
 		dna.species = new rando_race()
 
 //proc used to update the mob's appearance after its dna UI has been changed

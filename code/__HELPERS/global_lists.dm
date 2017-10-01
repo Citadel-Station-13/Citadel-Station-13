@@ -29,7 +29,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
-
+	
 	//citadel code
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
@@ -57,12 +57,11 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	GLOB.breasts_size_list = list("a","b","c","d","e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
 
+
 	//Species
 	for(var/spath in subtypesof(/datum/species))
 		var/datum/species/S = new spath()
-		if(S.roundstart)
-			GLOB.roundstart_species[S.id] = S.type
-		GLOB.species_list[S.id] = S.type
+		GLOB.species_list[S.id] = spath
 
 	//Surgeries
 	for(var/path in subtypesof(/datum/surgery))
