@@ -61,6 +61,7 @@
 	name = "air tank"
 	desc = "Mixed anyone?"
 	icon_state = "air"
+	item_state = "air"
 	force = 10
 	dog_fashion = /datum/dog_fashion/back
 
@@ -181,4 +182,3 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 10
-	
