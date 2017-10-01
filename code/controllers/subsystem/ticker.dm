@@ -260,9 +260,9 @@ SUBSYSTEM_DEF(ticker)
 			qdel(S)
 	
 	//assign crew objectives and generate miscreants
-	if(config.allow_extended_miscreants && GLOB.master_mode == "extended")
+	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
-	if(config.allow_miscreants && GLOB.master_mode != "extended")
+	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
 		GLOB.miscreants_allowed = TRUE
 	generate_crew_objectives()
 
@@ -484,7 +484,7 @@ SUBSYSTEM_DEF(ticker)
 			completedObjectives += "[i]<BR>"
 		to_chat(world, "[completedObjectives]<BR>")
 	else
-		if(config.allow_crew_objectives)
+		if(CONFIG_GET(flag/allow_crew_objectives))
 			to_chat(world, "<B>Nobody completed their Crew Objectives!</B><BR>")
 
 	CHECK_TICK
