@@ -5,25 +5,7 @@
 	var/date
 
 /datum/getrev/New()
-<<<<<<< HEAD
-	if(world.RunningService())
-		var/file_name
-		if(ServiceVersion())	//will return null for versions < 3.0.91.0
-			file_name = SERVICE_PR_TEST_JSON_OLD
-		else
-			file_name = SERVICE_PR_TEST_JSON
-		if(fexists(file_name))
-			testmerge = json_decode(file2text(file_name))
-#ifdef SERVERTOOLS
-	else if(!world.RunningService() && fexists("../prtestjob.lk"))	//tgs2 support
-		var/list/tmp = world.file2list("..\\prtestjob.lk")
-		for(var/I in tmp)
-			if(I)
-				testmerge |= I
-#endif
-=======
 	testmerge = SERVER_TOOLS_PR_LIST
->>>>>>> 62f788f... Server tools API v3.1 (#31000)
 	log_world("Running /tg/ revision:")
 	var/list/logs = world.file2list(".git/logs/HEAD")
 	if(logs)
@@ -45,34 +27,7 @@
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-<<<<<<< HEAD
-/datum/getrev/proc/DownloadPRDetails()
-	var/repo_id = CONFIG_GET(number/githubrepoid)
-	if(!repo_id)
-		if(testmerge.len)
-			log_world("PR details download failed: No github repo config set")
-		return
-	for(var/line in testmerge)
-		if(!isnum(text2num(line)))
-			log_world("PR details download failed: Invalid PR number: [line]")
-			return
 
-		var/url = "https://api.github.com/repositories/[repo_id]/pulls/[line].json"
-		GLOB.valid_HTTPSGet = TRUE
-		var/json = HTTPSGet(url)
-		if(!json)
-			return
-
-		testmerge[line] = json_decode(json)
-
-		if(!testmerge[line])
-			log_world("PR details download failed: null details returned")
-			return
-		CHECK_TICK
-	log_world("PR details successfully downloaded")
-	has_pr_details = TRUE
-=======
->>>>>>> 62f788f... Server tools API v3.1 (#31000)
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
