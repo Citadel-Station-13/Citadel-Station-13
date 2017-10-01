@@ -30,6 +30,7 @@ GLOBAL_PROTECT(security_mode)
 	if(CONFIG_GET(flag/usewhitelist))
 		load_whitelist()
 	LoadBans()
+	reload_custom_roundstart_items_list()
 
 	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
