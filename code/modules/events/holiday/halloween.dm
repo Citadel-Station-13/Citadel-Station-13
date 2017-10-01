@@ -1,77 +1,3 @@
-<<<<<<< HEAD
-/datum/round_event_control/spooky
-	name = "2 SPOOKY! (Halloween)"
-	holidayID = HALLOWEEN
-	typepath = /datum/round_event/spooky
-	weight = -1							//forces it to be called, regardless of weight
-	max_occurrences = 1
-	earliest_start = 0
-
-/datum/round_event/spooky/start()
-	..()
-	for(var/mob/living/carbon/human/H in GLOB.mob_list)
-		var/obj/item/storage/backpack/b = locate() in H.contents
-		new /obj/item/storage/spooky(b)
-		if(ishuman(H) || islizard(H))
-			if(prob(50))
-				H.set_species(/datum/species/skeleton)
-			else
-				H.set_species(/datum/species/zombie)
-
-	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
-		Ian.place_on_head(new /obj/item/bedsheet(Ian))
-	for(var/mob/living/simple_animal/parrot/Poly/Poly in GLOB.mob_list)
-		new /mob/living/simple_animal/parrot/Poly/ghost(Poly.loc)
-		qdel(Poly)
-
-/datum/round_event/spooky/announce()
-	priority_announce(pick("RATTLE ME BONES!","THE RIDE NEVER ENDS!", "A SKELETON POPS OUT!", "SPOOKY SCARY SKELETONS!", "CREWMEMBERS BEWARE, YOU'RE IN FOR A SCARE!") , "THE CALL IS COMING FROM INSIDE THE HOUSE")
-
-//Eyeball migration
-/datum/round_event_control/carp_migration/eyeballs
-	name = "Eyeball Migration"
-	typepath = /datum/round_event/carp_migration/eyeballs
-	holidayID = HALLOWEEN
-	weight = 25
-	earliest_start = 0
-
-/datum/round_event/carp_migration/eyeballs/start()
-	for(var/obj/effect/landmark/C in GLOB.landmarks_list)
-		if(C.name == "carpspawn")
-			new /mob/living/simple_animal/hostile/carp/eyeball(C.loc)
-
-//Pumpking meteors waves
-/datum/round_event_control/meteor_wave/spooky
-	name = "Pumpkin Wave"
-	typepath = /datum/round_event/meteor_wave/spooky
-	holidayID = HALLOWEEN
-	weight = 20
-	max_occurrences = 2
-
-/datum/round_event/meteor_wave/spooky
-	endWhen	= 40
-
-/datum/round_event/meteor_wave/spooky/tick()
-	if(IsMultiple(activeFor, 4))
-		spawn_meteors(3, GLOB.meteorsSPOOKY) //meteor list types defined in gamemode/meteor/meteors.dm
-
-//Creepy clown invasion
-/datum/round_event_control/creepy_clowns
-	name = "Clowns"
-	typepath = /datum/round_event/creepy_clowns
-	holidayID = HALLOWEEN
-	weight = 20
-	earliest_start = 0
-
-/datum/round_event/creepy_clowns
-	endWhen = 40
-
-/datum/round_event/creepy_clowns/start()
-	for(var/mob/living/carbon/human/H in GLOB.living_mob_list)
-		if(!H.client || !istype(H))
-			return
-		to_chat(H, "<span class='danger'>Honk...</span>")
-=======
 /datum/round_event_control/spooky
 	name = "2 SPOOKY! (Halloween)"
 	holidayID = HALLOWEEN
@@ -143,7 +69,6 @@
 		if(!H.client || !istype(H))
 			return
 		to_chat(H, "<span class='danger'>Honk...</span>")
->>>>>>> 3358cbb... Cleans up some antag/event landmark checks (#31129)
 		SEND_SOUND(H, sound('sound/spookoween/scary_clown_appear.ogg'))
 		var/turf/T = get_turf(H)
 		if(T)
