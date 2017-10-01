@@ -1,4 +1,3 @@
-
 /obj/item/bodybag
 	name = "body bag"
 	desc = "A folded bag designed for the storage and transportation of cadavers."
@@ -31,6 +30,7 @@
 	icon_state = "bluebodybag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
+	flags_2 = NO_MAT_REDEMPTION_2
 	origin_tech = "bluespace=4;materials=4;plasmatech=4"
 
 /obj/item/bodybag/bluespace/examine(mob/user)
@@ -68,3 +68,4 @@
 		return
 	loc.visible_message("<span class='warning'>[user] suddenly appears in front of [loc]!</span>", "<span class='userdanger'>[user] breaks free of [src]!</span>")
 	qdel(src)
+

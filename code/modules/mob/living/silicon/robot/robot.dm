@@ -207,16 +207,11 @@
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
-<<<<<<< HEAD
 	"Service" = /obj/item/robot_module/butler, \
 	"MediHound" = /obj/item/robot_module/medihound, \
 	"Security K9" = /obj/item/robot_module/k9, \
 	"Scrub Puppy" = /obj/item/robot_module/scrubpup)
-	if(!config.forbid_peaceborg)
-=======
-	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
->>>>>>> 4178c20... Configuration datum refactor (#30763)
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security

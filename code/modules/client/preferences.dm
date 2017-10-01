@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/preferred_map = null
 
 	var/uses_glasses_colour = 0
-	
+
 	var/screenshake = 100
 	var/damagescreenshake = 2
 
@@ -571,7 +571,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dat += "[features["flavor_text"]]"
 			else
 				dat += "[TextPreview(features["flavor_text"])]...<BR>"
-			if(config.mutant_races)//really don't need this check, but fuck un-tabbing all those lines
+			if(CONFIG_GET(flag/join_with_mutant_race))//really don't need this check, but fuck un-tabbing all those lines
 				dat += "<h2>Body</h2>"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[gender == MALE ? "Male" : "Female"]</a><BR>"
 				dat += "<b>Species:</b><a href='?_src_=prefs;preference=species;task=input'>[pref_species.id]</a><BR>"
