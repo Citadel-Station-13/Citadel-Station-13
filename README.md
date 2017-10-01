@@ -65,8 +65,7 @@ config/admin_ranks.txt
 The format is
 
 ```
-byondkey = Rank 
-((i.e. spessmans = Host ))
+byondkey = Rank
 ```
 
 where the admin rank must be properly capitalised.
@@ -88,11 +87,17 @@ install, overwriting when prompted except if we've specified otherwise, and
 recompile the game.  Once you start the server up again, you should be running
 the new version.
 
+## HOSTING
+
+If you'd like a more robust server hosting option for tgstation and its
+derivatives. Check out our server tools suite at 
+https://github.com/tgstation/tgstation-server
+
 ## MAPS
 
-Citadel Station maintains their own map, but frequently uses /tg/station's currently maintained maps as well.
+/tg/station currently comes equipped with five maps.
 
-* [tgstation2 (default)](http://tgstation13.org/wiki/Boxstation)
+* [BoxStation (default)](http://tgstation13.org/wiki/Boxstation)
 * [MetaStation](https://tgstation13.org/wiki/MetaStation)
 * [DeltaStation](https://tgstation13.org/wiki/DeltaStation)
 * [OmegaStation](https://tgstation13.org/wiki/OmegaStation)
@@ -122,7 +127,7 @@ The SQL backend requires a MySQL server. SQL is required for the library, stats 
 ## IRC BOT SETUP
 
 Included in the repository is a python3 compatible IRC bot capable of relaying adminhelps to a specified
-IRC channel/server, see the /bot folder for more
+IRC channel/server, see the /tools/minibot folder for more
 
 ## CONTRIBUTING
 
@@ -140,8 +145,10 @@ See LICENSE-AGPLv3.txt and LICENSE-GPLv3.txt for more details.
 tgui clientside is licensed as a subproject under the MIT license.
 Font Awesome font files, used by tgui, are licensed under the SIL Open Font License v1.1
 tgui assets are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
+The TGS3 API is licensed as a subproject under the MIT license.
 
 See tgui/LICENSE.md for the MIT license.
 See tgui/assets/fonts/SIL-OFL-1.1-LICENSE.md for the SIL Open Font License.
+See the footers of code/\_\_DEFINES/server\_tools.dm, code/modules/server\_tools/st\_commands.dm, and code/modules/server\_tools/st\_inteface.dm for the MIT license.
 
 All assets including icons and sound are under a [Creative Commons 3.0 BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/) unless otherwise indicated.
