@@ -56,6 +56,7 @@
 	return TryToSwitchState(user)
 
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target)
+<<<<<<< HEAD
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
 	return !density
@@ -89,6 +90,41 @@
 	set_opacity(FALSE)
 	flick("[initial_state]opening",src)
 	sleep(10)
+=======
+	if(istype(mover, /obj/effect/beam))
+		return !opacity
+	return !density
+
+/obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
+	if(isSwitchingStates)
+		return
+	if(isliving(user))
+		var/mob/living/M = user
+		if(world.time - M.last_bumped <= 60)
+			return //NOTE do we really need that?
+		if(M.client)
+			if(iscarbon(M))
+				var/mob/living/carbon/C = M
+				if(!C.handcuffed)
+					SwitchState()
+			else
+				SwitchState()
+	else if(ismecha(user))
+		SwitchState()
+
+/obj/structure/mineral_door/proc/SwitchState()
+	if(state)
+		Close()
+	else
+		Open()
+
+/obj/structure/mineral_door/proc/Open()
+	isSwitchingStates = 1
+	playsound(src, openSound, 100, 1)
+	set_opacity(FALSE)
+	flick("[initial_state]opening",src)
+	sleep(10)
+>>>>>>> cc30923... ismecha define (#31192)
 	density = FALSE
 	state = 1
 	air_update_turf(1)

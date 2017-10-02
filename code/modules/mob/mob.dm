@@ -386,7 +386,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(istype(loc, /obj/mecha))
+	if(ismecha(loc))
 		return
 
 	if(incapacitated())
