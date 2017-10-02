@@ -118,3 +118,12 @@
 	icon_state = "hos-g"
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	
+	
+/*Slomek*/
+/*Slomek*/
+/obj/item/reagent_containers/food/drinks/flask/russian
+	name = "russian flask"
+	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	icon_state = "russianflask"
+	volume = 60
