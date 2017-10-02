@@ -3,12 +3,12 @@
 		if(prob(2) && !issilicon(crewMind.current) && !jobban_isbanned(crewMind, "Syndicate") && GLOB.miscreants_allowed)
 			generate_miscreant_objectives(crewMind)
 		else
-			if(config.allow_crew_objectives)
+			if(CONFIG_GET(flag/allow_crew_objectives))
 				generate_individual_objectives(crewMind)
 	return
 
 /datum/controller/subsystem/ticker/proc/generate_individual_objectives(var/datum/mind/crewMind)
-	if(!config.allow_crew_objectives)
+	if(!(CONFIG_GET(flag/allow_crew_objectives)))
 		return
 	if(!crewMind)
 		return
