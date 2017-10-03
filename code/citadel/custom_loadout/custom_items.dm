@@ -131,4 +131,5 @@
 	name = "russian flask"
 	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	icon_state = "russianflask"
+	item_state = "russianflask"
 	volume = 60
