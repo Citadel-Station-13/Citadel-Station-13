@@ -30,6 +30,14 @@
 	item_color = null
 	tagname = null
 
+/obj/item/clothing/accessory/medal/steele
+	name = "Insignia Of Steele"
+	desc = "An intricate pendant given to those who help a key member of the Steele Corporation."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "steele"
+	item_color = "steele"
+	medaltype = "medal-silver"
+
 /*DirtyOldHarry*/
 
 /obj/item/lighter/gold
