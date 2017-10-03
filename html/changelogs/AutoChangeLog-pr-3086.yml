@@ -1,0 +1,4 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - spellcheck: "uplink description for soporific magazines now correctly says at least three shots are needed, rather than two"
