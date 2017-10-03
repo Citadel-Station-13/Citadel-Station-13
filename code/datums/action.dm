@@ -591,3 +591,7 @@
 		var/mob/M = owner
 		var/datum/language_holder/H = M.get_language_holder()
 		H.open_language_menu(usr)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 380413f... Ports dash weapons to the dash datum (#31222)
