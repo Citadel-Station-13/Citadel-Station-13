@@ -536,8 +536,8 @@
 	icon_state = "potionflask"
 
 /obj/item/reagent_containers/glass/bottle/potion/flight
-	name = "strange elixir"
-	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
+	name = "red bull"
+	desc = "Red Bull gives you wings."
 	list_reagents = list("flightpotion" = 5)
 
 /obj/item/reagent_containers/glass/bottle/potion/update_icon()
@@ -547,7 +547,7 @@
 		icon_state = "potionflask_empty"
 
 /datum/reagent/flightpotion
-	name = "Flight Potion"
+	name = "Red Bull"
 	id = "flightpotion"
 	description = "Strange mutagenic compound of unknown origins."
 	reagent_state = LIQUID
