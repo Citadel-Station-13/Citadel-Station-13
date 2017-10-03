@@ -198,6 +198,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aC" = (
@@ -287,6 +288,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 4
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aN" = (
@@ -305,6 +307,7 @@
 /area/ruin/unpowered/ash_walkers)
 "aP" = (
 /obj/structure/stone_tile,
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aQ" = (
@@ -379,6 +382,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
+/obj/item/dildo/custom,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "aZ" = (
@@ -401,6 +405,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bb" = (
@@ -489,6 +494,7 @@
 	dir = 4
 	},
 /obj/item/storage/bag/plants/portaseeder,
+/obj/item/dildo/custom,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "bk" = (
@@ -509,6 +515,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "bm" = (
@@ -568,6 +575,7 @@
 /obj/structure/stone_tile{
 	dir = 8
 	},
+/obj/item/dildo/custom,
 /turf/open/indestructible/boss/air,
 /area/ruin/unpowered/ash_walkers)
 "br" = (
@@ -897,6 +905,7 @@
 /obj/structure/stone_tile/surrounding_tile/cracked{
 	dir = 8
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ci" = (
@@ -1042,6 +1051,7 @@
 	icon_state = "cracked_slab1";
 	dir = 4
 	},
+/obj/item/dildo/custom,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cB" = (
@@ -1475,6 +1485,26 @@
 /obj/structure/stone_tile,
 /turf/closed/mineral/volcanic,
 /area/lavaland/surface/outdoors)
+"dG" = (
+/obj/structure/stone_tile/slab,
+/obj/item/dildo/custom,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"dH" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/item/dildo/custom,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"dI" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/dildo/custom,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
 aa
@@ -1597,7 +1627,7 @@ aO
 bl
 bx
 bD
-bS
+dG
 de
 bV
 dg
@@ -1625,7 +1655,7 @@ ci
 bA
 ct
 bN
-bL
+dI
 cI
 ah
 ah
@@ -1732,7 +1762,7 @@ ak
 bP
 bL
 bX
-dh
+dH
 do
 du
 dz
