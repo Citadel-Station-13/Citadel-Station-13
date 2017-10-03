@@ -157,6 +157,7 @@ Code:
 	strip_delay = 60
 	equip_delay_other = 60
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
+	var/tagname = null
 
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
@@ -190,26 +191,34 @@ Code:
 	return
 
 /obj/item/device/electropack/shockcollar/attack_self(mob/user) //Turns out can't fully source this from the parent item, spritepath gets confused if power toggled. Will come back to this when I know how to code better and readd powertoggle..
+	var/option = "Change Name"
+	option = input(user, "What do you want to do?", "[src]", option) as null|anything in list("Change Name", "Change Frequency")
+	switch(option)
+		if("Change Name")
+			var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
+			if(t)
+				tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
+				name = "[initial(name)] - [tagname]"
+		if("Change Frequency")
+			if(!ishuman(user))
+				return
+				user.set_machine(src)
+			var/dat = {"<SK><BR>
+		<B>Frequency/Code</B> for shock collar:<BR>
+		Frequency:
+		<A href='byond://?src=\ref[src];freq=-10'>-</A>
+		<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
+		<A href='byond://?src=\ref[src];freq=2'>+</A>
+		<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
 
-	if(!ishuman(user))
-		return
-	user.set_machine(src)
-	var/dat = {"<SK><BR>
-<B>Frequency/Code</B> for shock collar:<BR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+		Code:
+		<A href='byond://?src=\ref[src];code=-5'>-</A>
+		<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
+		<A href='byond://?src=\ref[src];code=1'>+</A>
+		<A href='byond://?src=\ref[src];code=5'>+</A><BR>
+		</SK>"}
 
-Code:
-<A href='byond://?src=\ref[src];code=-5'>-</A>
-<A href='byond://?src=\ref[src];code=-1'>-</A> [code]
-<A href='byond://?src=\ref[src];code=1'>+</A>
-<A href='byond://?src=\ref[src];code=5'>+</A><BR>
-</SK>"}
-
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
-	return
+			user << browse(dat, "window=radio")
+			onclose(user, "radio")
+			return
 
