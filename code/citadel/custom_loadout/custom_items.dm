@@ -55,6 +55,12 @@
 	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/suit/toggle/labcoat/mad/red
+	name = "\improper The Mad's labcoat"
+	desc = "An oddly special looking coat."
+	icon_state = "labred"
+	item_state = "labred"
+
 
 /*PLACEHOLDER*/
 
@@ -118,9 +124,8 @@
 	icon_state = "hos-g"
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	
-	
-/*Slomek*/
+
+
 /*Slomek*/
 /obj/item/reagent_containers/food/drinks/flask/russian
 	name = "russian flask"
