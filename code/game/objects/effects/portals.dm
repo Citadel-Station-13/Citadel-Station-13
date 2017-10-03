@@ -1,4 +1,3 @@
-
 /proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
@@ -125,7 +124,7 @@
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M)
-	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
+	if(!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
@@ -153,4 +152,3 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
-
