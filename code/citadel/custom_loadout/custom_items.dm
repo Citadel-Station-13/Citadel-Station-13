@@ -130,5 +130,7 @@
 /obj/item/reagent_containers/food/drinks/flask/russian
 	name = "russian flask"
 	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	icon = 'icons/obj/custom.dmi'
 	icon_state = "russianflask"
+	item_state = "russianflask"
 	volume = 60
