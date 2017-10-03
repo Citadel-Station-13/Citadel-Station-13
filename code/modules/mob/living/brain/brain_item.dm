@@ -44,7 +44,11 @@
 	//Update the body's icon so it doesnt appear debrained anymore
 	C.update_hair()
 
+<<<<<<< HEAD
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0)
+=======
+/obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0, no_id_transfer = FALSE)
+>>>>>>> 085632f... Nightmare organs (#31034)
 	..()
 	if(!special)
 		if(C.has_brain_worms())

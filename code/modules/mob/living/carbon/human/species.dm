@@ -68,7 +68,11 @@
 
 	//Flight and floating
 	var/override_float = 0
+<<<<<<< HEAD
 
+=======
+	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
+>>>>>>> 085632f... Nightmare organs (#31034)
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands
