@@ -37,12 +37,12 @@
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(0.7)
+			H.heal_overall_damage(0,5)
 			H.adjustOxyLoss(-0.5)
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 55)
-		H.adjustOxyLoss(5,5) //can eat to negate this unfortunately
-		H.adjustToxLoss(3,0)
+		H.adjustOxyLoss(5) //can eat to negate this unfortunately
+		H.adjustToxLoss(3)
 
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
