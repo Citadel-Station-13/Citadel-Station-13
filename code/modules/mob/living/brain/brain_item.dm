@@ -46,15 +46,7 @@
 
 /obj/item/organ/brain/Remove(mob/living/carbon/C, special = 0,no_id_transfer = FALSE)
 	..()
-<<<<<<< HEAD
-	if(!special)
-		if(C.has_brain_worms())
-			var/mob/living/simple_animal/borer/B = C.has_brain_worms()
-			B.leave_victim() //Should remove borer if the brain is removed - RR
-	if(!gc_destroyed || (owner && !owner.gc_destroyed))
-=======
 	if((!gc_destroyed || (owner && !owner.gc_destroyed)) && !no_id_transfer)
->>>>>>> 85cd9e6... Organ initialization cleanup
 		transfer_identity(C)
 	C.update_hair()
 
