@@ -596,10 +596,10 @@ obj/item/projectile/bullet/c10mm/soporific
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(6)
-		if(L.staminaloss >= 40)
+		if(L.staminaloss >= 60)
 			L.Sleeping(250)
 		else
-			L.adjustStaminaLoss(58)
+			L.adjustStaminaLoss(25)
 	return 1
 
 /obj/item/ammo_casing/c10mm/soporific
