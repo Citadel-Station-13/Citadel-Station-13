@@ -105,8 +105,8 @@
 /obj/machinery/button/emag_act(mob/user)
 	if(emagged)
 		return
-	req_access = null
-	req_one_access = null
+	req_access = list()
+	req_one_access = list()
 	playsound(src, "sparks", 100, 1)
 	emagged = TRUE
 
@@ -127,10 +127,10 @@
 	if(panel_open)
 		if(device || board)
 			if(device)
-				device.loc = get_turf(src)
+				device.forceMove(drop_location())
 				device = null
 			if(board)
-				board.loc = get_turf(src)
+				board.forceMove(drop_location())
 				req_access = list()
 				req_one_access = list()
 				board = null

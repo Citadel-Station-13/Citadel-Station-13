@@ -72,7 +72,7 @@
 
 	var/lamp_max = 10 //Maximum brightness of a borg lamp. Set as a var for easy adjusting.
 	var/lamp_intensity = 0 //Luminosity of the headlamp. 0 is off. Higher settings than the minimum require power.
-	var/lamp_recharging = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
+	var/lamp_cooldown = 0 //Flag for if the lamp is on cooldown after being forcibly disabled.
 
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
@@ -129,6 +129,7 @@
 		builtInCamera = new (src)
 		builtInCamera.c_tag = real_name
 		builtInCamera.network = list("SS13")
+		builtInCamera.internal_light = FALSE
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.status = 0
 	module = new /obj/item/robot_module(src)
@@ -210,9 +211,9 @@
 	"MediHound" = /obj/item/robot_module/medihound, \
 	"Security K9" = /obj/item/robot_module/k9, \
 	"Scrub Puppy" = /obj/item/robot_module/scrubpup)
-	if(!config.forbid_peaceborg)
+	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
-	if(!config.forbid_secborg)
+	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
@@ -742,7 +743,7 @@
 	set_autosay()
 
 /mob/living/silicon/robot/proc/control_headlamp()
-	if(stat || lamp_recharging || low_power_mode)
+	if(stat || lamp_cooldown > world.time || low_power_mode)
 		to_chat(src, "<span class='danger'>This function is currently offline.</span>")
 		return
 
@@ -757,8 +758,7 @@
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
 		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
 		lamp_intensity = 0
-		lamp_recharging = TRUE
-		addtimer(CALLBACK(src, .proc/reset_headlamp), cooldown)
+		lamp_cooldown = world.time + cooldown
 	else
 		set_light(lamp_intensity)
 
@@ -766,9 +766,6 @@
 		lamp_button.icon_state = "lamp[lamp_intensity]"
 
 	update_icons()
-
-/mob/living/silicon/robot/proc/reset_headlamp()
-	lamp_recharging = FALSE
 
 /mob/living/silicon/robot/proc/deconstruct()
 	var/turf/T = get_turf(src)
@@ -813,7 +810,35 @@
 		cell = null
 	qdel(src)
 
-/mob/living/silicon/robot/syndicate
+/mob/living/silicon/robot/modules
+	var/set_module = null
+
+/mob/living/silicon/robot/modules/Initialize()
+	. = ..()
+	module.transform_to(set_module)
+
+/mob/living/silicon/robot/modules/standard
+	set_module = /obj/item/robot_module/standard
+
+/mob/living/silicon/robot/modules/medical
+	set_module = /obj/item/robot_module/medical
+
+/mob/living/silicon/robot/modules/engineering
+	set_module = /obj/item/robot_module/engineering
+
+/mob/living/silicon/robot/modules/security
+	set_module = /obj/item/robot_module/security
+
+/mob/living/silicon/robot/modules/peacekeeper
+	set_module = /obj/item/robot_module/peacekeeper
+
+/mob/living/silicon/robot/modules/miner
+	set_module = /obj/item/robot_module/miner
+
+/mob/living/silicon/robot/modules/janitor
+	set_module = /obj/item/robot_module/janitor
+
+/mob/living/silicon/robot/modules/syndicate
 	icon_state = "syndie_bloodhound"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
@@ -825,25 +850,24 @@
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
-	var/set_module = /obj/item/robot_module/syndicate
+	set_module = /obj/item/robot_module/syndicate
 
-/mob/living/silicon/robot/syndicate/Initialize()
-	..()
+/mob/living/silicon/robot/modules/syndicate/Initialize()
+	. = ..()
 	cell.maxcharge = 25000
 	cell.charge = 25000
 	radio = new /obj/item/device/radio/borg/syndicate(src)
-	module.transform_to(set_module)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
 
-/mob/living/silicon/robot/syndicate/proc/show_playstyle()
+/mob/living/silicon/robot/modules/syndicate/proc/show_playstyle()
 	if(playstyle_string)
 		to_chat(src, playstyle_string)
 
-/mob/living/silicon/robot/syndicate/ResetModule()
+/mob/living/silicon/robot/modules/syndicate/ResetModule()
 	return
 
-/mob/living/silicon/robot/syndicate/medical
+/mob/living/silicon/robot/modules/syndicate/medical
 	icon_state = "syndi-medi"
 	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
@@ -899,6 +923,7 @@
 	see_invisible = initial(see_invisible)
 	see_in_dark = initial(see_in_dark)
 	sight = initial(sight)
+	lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 
 	if(client.eye != src)
 		var/atom/A = client.eye

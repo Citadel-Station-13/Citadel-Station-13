@@ -13,6 +13,7 @@
 	speak_chance = 1
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
+	no_vore = FALSE
 
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"
@@ -24,11 +25,17 @@
 	butcher_results = list()
 	gold_core_spawnable = 2
 
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero
+	name = "Shamebrero penguin."
+	desc = "Shameful of all he surveys."
+	icon_state = "penguin_shamebrero"
+	icon_living = "penguin_shamebrero"
+
 /mob/living/simple_animal/pet/penguin/baby
 	speak = list("gah", "noot noot", "noot!", "noot", "squeee!", "noo!")
 	name = "Penguin chick"
 	real_name = "penguin"
-	desc = "Can't fly and can barely waddles, but the prince of all chicks."
+	desc = "Can't fly and barely waddles, yet the prince of all chicks."
 	icon_state = "penguin_baby"
 	icon_living = "penguin_baby"
 	icon_dead = "penguin_baby_dead"

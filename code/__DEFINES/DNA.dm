@@ -132,5 +132,6 @@
 #define NOLIVER 		29
 #define NOSTOMACH		30
 //citadel code
-#define NOAROUSAL		29//Stops all arousal effects
-#define NOGENITALS		30//Cannot create, use, or otherwise have genitals
+#define NOAROUSAL		29 //Stops all arousal effects
+#define NOGENITALS		30 //Cannot create, use, or otherwise have genitals
+#define NO_DNA_COPY     31

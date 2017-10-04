@@ -1,0 +1,6 @@
+author: "Daniel0Mclovin"
+delete-after: True
+changes: 
+  - rscadd: "Podpeople to roundstart"
+  - tweak: "Modified podpeople heatmod from 1.25 to 1.5"
+  - tweak: "plant-b-gone now does roughly 7 damage per tick on podpeople"

@@ -19,4 +19,5 @@ sound/music/shootingstars.ogg
 sound/music/oceanman.ogg
 sound/music/indeep.ogg
 sound/music/goodbyemoonmen.ogg
+sound/music/flytothemoon_otomatone.ogg
 sound/music/milkyway.ogg

@@ -250,7 +250,7 @@
 			oldpatient = user
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
-	if(H.stat == 2)
+	if(H.stat == DEAD)
 		return
 
 	if((H == oldpatient) && (world.time < last_found + 200))
@@ -543,4 +543,4 @@
 	declare_cooldown = world.time + 200
 
 /obj/machinery/bot_core/medbot
-	req_one_access =list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)

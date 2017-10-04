@@ -4,6 +4,7 @@
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "walkietalkie"
+	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
 	var/on = TRUE // 0 for off
 	var/last_transmission
@@ -426,7 +427,7 @@
 	signal.frequency = freqnum // Quick frequency set
 	for(var/obj/machinery/telecomms/receiver/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
-		
+
 	// Allinone can act as receivers. (Unless of course whoever coded this last time forgot to put it in somewhere!)
 	for(var/obj/machinery/telecomms/allinone/R in GLOB.telecomms_list)
 		R.receive_signal(signal)
@@ -449,6 +450,8 @@
 		return
 	if(broadcasting)
 		if(get_dist(src, speaker) <= canhear_range)
+			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
+				raw_message = stars(raw_message)
 			talk_into(speaker, raw_message, , spans, language=message_language)
 /*
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message)
@@ -553,7 +556,7 @@
 	flags_2 = NO_EMP_WIRES_2
 
 /obj/item/device/radio/borg/Initialize(mapload)
-	..()
+	. = ..()
 
 /obj/item/device/radio/borg/syndicate
 	syndie = 1

@@ -174,7 +174,7 @@
 		return
 
 	if(automute)
-		if(!config.automute_on)
+		if(!CONFIG_GET(flag/automute_on))
 			return
 	else
 		if(!check_rights())
@@ -344,7 +344,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		new_character.real_name = record_found.fields["name"]
 		new_character.gender = record_found.fields["sex"]
 		new_character.age = record_found.fields["age"]
-		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], record_found.fields["species"], record_found.fields["features"])
+		new_character.hardset_dna(record_found.fields["identity"], record_found.fields["enzymes"], record_found.fields["name"], record_found.fields["blood_type"], new record_found.fields["species"], record_found.fields["features"])
 	else
 		var/datum/preferences/A = new()
 		A.copy_to(new_character)
@@ -391,9 +391,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
 		if("Space Ninja")
 			var/list/ninja_spawn = list()
-			for(var/obj/effect/landmark/L in GLOB.landmarks_list)
-				if(L.name=="carpspawn")
-					ninja_spawn += L
+			for(var/obj/effect/landmark/carpspawn/L in GLOB.landmarks_list)
+				ninja_spawn += L
 			var/datum/antagonist/ninja/ninjadatum = new_character.mind.has_antag_datum(ANTAG_DATUM_NINJA)
 			ninjadatum.equip_space_ninja()
 			if(ninja_spawn.len)
@@ -652,6 +651,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		change_view(input("Select view range:", "FUCK YE", 7) in list(1,2,3,4,5,6,7,8,9,10,11,12,13,14,128))
 	else
 		change_view(world.view)
+
 	log_admin("[key_name(usr)] changed their view range to [view].")
 	//message_admins("\blue [key_name_admin(usr)] changed their view range to [view].")	//why? removed by order of XSI
 
@@ -706,8 +706,9 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(usr, "Nope you can't do this, the game's already started. This only works before rounds!")
 		return
 
-	if(config.force_random_names)
-		config.force_random_names = 0
+	var/frn = CONFIG_GET(flag/force_random_names)
+	if(frn)
+		CONFIG_SET(flag/force_random_names, FALSE)
 		message_admins("Admin [key_name_admin(usr)] has disabled \"Everyone is Special\" mode.")
 		to_chat(usr, "Disabled.")
 		return
@@ -725,7 +726,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.")
 
-	config.force_random_names = 1
+	CONFIG_SET(flag/force_random_names, TRUE)
 	SSblackbox.add_details("admin_verb","Make Everyone Random") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -733,15 +734,15 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Server"
 	set name = "Toggle random events on/off"
 	set desc = "Toggles random events such as meteors, black holes, blob (but not space dust) on/off"
-	if(!config.allow_random_events)
-		config.allow_random_events = 1
+	var/new_are = !CONFIG_GET(flag/allow_random_events)
+	CONFIG_SET(flag/allow_random_events, new_are)
+	if(new_are)
 		to_chat(usr, "Random events enabled")
 		message_admins("Admin [key_name_admin(usr)] has enabled random events.")
 	else
-		config.allow_random_events = 0
 		to_chat(usr, "Random events disabled")
 		message_admins("Admin [key_name_admin(usr)] has disabled random events.")
-	SSblackbox.add_details("admin_toggle","Toggle Random Events|[config.allow_random_events]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	SSblackbox.add_details("admin_toggle","Toggle Random Events|[new_are]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
 /client/proc/admin_change_sec_level()
@@ -843,8 +844,9 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 	var/dat = {"
 	<html><head><title>Create Outfit</title></head><body>
-	<form name="outfit" action="byond://?src=\ref[src]" method="get">
+	<form name="outfit" action="byond://?src=\ref[src];[HrefToken()]" method="get">
 	<input type="hidden" name="src" value="\ref[src]">
+	[HrefTokenFormField()]
 	<input type="hidden" name="create_outfit" value="1">
 	<table>
 		<tr>
@@ -968,10 +970,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	for(var/datum/atom_hud/H in GLOB.huds)
 		if(istype(H, /datum/atom_hud/antag))
 			(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
-
-	for(var/datum/gang/G in SSticker.mode.gangs)
-		var/datum/atom_hud/antag/H = G.ganghud
-		(adding_hud) ? H.add_hud_to(usr) : H.remove_hud_from(usr)
 
 	to_chat(usr, "You toggled your admin antag HUD [adding_hud ? "ON" : "OFF"].")
 	message_admins("[key_name_admin(usr)] toggled their admin antag HUD [adding_hud ? "ON" : "OFF"].")
@@ -1147,14 +1145,15 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 /datum/admins/proc/modify_goals()
 	var/dat = ""
 	for(var/datum/station_goal/S in SSticker.mode.station_goals)
-		dat += "[S.name] - <a href='?src=\ref[S];announce=1'>Announce</a> | <a href='?src=\ref[S];remove=1'>Remove</a><br>"
-	dat += "<br><a href='?src=\ref[src];add_station_goal=1'>Add New Goal</a>"
+		dat += "[S.name] - <a href='?src=\ref[S];[HrefToken()];announce=1'>Announce</a> | <a href='?src=\ref[S];[HrefToken()];remove=1'>Remove</a><br>"
+	dat += "<br><a href='?src=\ref[src];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	usr << browse(dat, "window=goals;size=400x400")
 
 
 /client/proc/toggle_hub()
 	set category = "Server"
 	set name = "Toggle Hub"
+
 	world.update_hub_visibility(!GLOB.hub_visibility)
 
 	log_admin("[key_name(usr)] has toggled the server's hub status for the round, it is now [(GLOB.hub_visibility?"on":"off")] the hub.")
@@ -1209,7 +1208,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
 	log_game("[key_name(usr)] triggered a CentCom recall, with the message of: [message]")
 	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
-	
+
 /client/proc/cmd_admin_check_player_exp()	//Allows admins to determine who the newer players are.
 	set category = "Admin"
 	set name = "Player Playtime"
@@ -1219,7 +1218,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/msg = list()
 	msg += "<html><head><title>Playtime Report</title></head><body>Playtime:<BR><UL>"
 	for(var/client/C in GLOB.clients)
-		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
+		msg += "<LI> - [key_name_admin(C)]: <A href='?_src_=holder;[HrefToken()];getplaytimewindow=\ref[C.mob]'>" + C.get_exp_living() + "</a></LI>"
 	msg += "</UL></BODY></HTML>"
 	src << browse(msg.Join(), "window=Player_playtime_check")
 
@@ -1233,7 +1232,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	var/list/body = list()
 	body += "<html><head><title>Playtime for [C.key]</title></head><BODY><BR>Playtime:"
 	body += C.get_exp_report()
-	body += "<A href='?_src_=holder;toggleexempt=\ref[C]'>Toggle Exempt status</a>"
+	body += "<A href='?_src_=holder;[HrefToken()];toggleexempt=\ref[C]'>Toggle Exempt status</a>"
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[C.ckey];size=550x615")
 

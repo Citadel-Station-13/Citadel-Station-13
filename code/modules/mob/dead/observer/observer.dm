@@ -106,7 +106,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		if(turfs.len)
 			T = pick(turfs)
 		else
-			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION)	//middle of the station
+			T = locate(round(world.maxx/2), round(world.maxy/2), ZLEVEL_STATION_PRIMARY)	//middle of the station
 
 	loc = T
 
@@ -309,9 +309,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		if(SSticker.HasRoundStarted())
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -714,9 +711,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	update_icon()
 
 /mob/dead/observer/canUseTopic(atom/movable/AM,be_close = FALSE)
-	if(check_rights(R_ADMIN, 0))
-		return 1
-	return
+	return IsAdminGhost(usr)
 
 /mob/dead/observer/is_literate()
 	return 1
@@ -823,8 +818,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.observer_default_invisibility = amount
 
 /mob/dead/observer/proc/open_spawners_menu()
-	set name = "Mob spawners menu"
-	set desc = "See all currently available ghost spawners"
+	set name = "Spawners Menu"
+	set desc = "See all currently available spawners"
 	set category = "Ghost"
 	if(!spawners_menu)
 		spawners_menu = new(src)

@@ -1,8 +1,8 @@
 /datum/sprite_accessory
-	var/extra = 0
+	var/extra = FALSE
 	var/extra_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra_color_src = MUTCOLORS2						//The color source for the extra overlay.
-	var/extra2 = 0
+	var/extra2 = FALSE
 	var/extra2_icon = 'icons/mob/mam_bodyparts.dmi'
 	var/extra2_color_src = MUTCOLORS3
 //	var/list/ckeys_allowed = null
@@ -12,6 +12,10 @@
 	name = "Anthro Digitigrade Legs"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 */
+
+/***************** Alphabetical Order please ***************
+************* Keep it to Ears, Tails, Tails Animated *********/
+
 
 /datum/sprite_accessory/tails/lizard/none
 	name = "None"
@@ -31,12 +35,17 @@
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/bear
+	name = "Bear"
+	icon_state = "bear"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	
 /datum/sprite_accessory/tails/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
-/datum/sprite_accessory/ears/human/bear
+/datum/sprite_accessory/tails_animated/human/bear
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
@@ -51,10 +60,27 @@
 	icon_state = "catbig"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
+/datum/sprite_accessory/ears/human/cow
+	name = "Cow"
+	icon_state = "cow"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	gender_specific = 1
+	
+/datum/sprite_accessory/tails/human/cow
+	name = "Cow"
+	icon_state = "cow"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/cow
+	name = "Cow"
+	icon_state = "cow"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
 /datum/sprite_accessory/ears/fennec
 	name = "Fennec"
 	icon_state = "fennec"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+	hasinner = 1
 
 /datum/sprite_accessory/tails/human/fennec
 	name = "Fennec"
@@ -76,37 +102,49 @@
 	name = "Fox"
 	icon_state = "fox"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/tails_animated/human/fox
 	name = "Fox"
 	icon_state = "fox"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
+
+/datum/sprite_accessory/tails/human/horse
+	name = "Horse"
+	icon_state = "horse"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	color_src = HAIR
+
+/datum/sprite_accessory/tails_animated/human/horse
+	name = "Horse"
+	icon_state = "horse"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	color_src = HAIR
 
 /datum/sprite_accessory/tails/human/husky
 	name = "Husky"
 	icon_state = "husky"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/tails_animated/human/husky
 	name = "Husky"
 	icon_state = "husky"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/tails/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = 1
+	extra = TRUE
 	extra_color_src = MUTCOLORS2
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = 1
+	extra = TRUE
 	extra_color_src = MUTCOLORS2
 	icon = 'icons/mob/mam_bodyparts.dmi'
 
@@ -146,6 +184,24 @@
 	name = "Otusian"
 	icon_state = "otie"
 
+/datum/sprite_accessory/ears/human/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+    icon = 'icons/mob/mam_bodyparts.dmi'
+	
+/datum/sprite_accessory/tails/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+
+/datum/sprite_accessory/tails_animated/human/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+	color_src = 0
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
@@ -191,7 +247,7 @@
 /datum/sprite_accessory/ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	extra = 1
+	hasinner = 1
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
@@ -202,18 +258,6 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/tails/human/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-	color_src = 0
-	icon = 'icons/mob/mam_bodyparts.dmi'
-
-/datum/sprite_accessory/ears/human/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
-    hasinner= 1
-    icon = 'icons/mob/mam_bodyparts.dmi'
 
 /******************************************
 *************** Body Parts ****************
@@ -248,36 +292,37 @@
 	name = "Beak"
 	icon_state = "bird"
 	icon = 'icons/mob/mam_bodyparts.dmi'
+	color_src = MUTCOLORS3
 
 /datum/sprite_accessory/snouts/lcanid
 	name = "Fox, Long"
 	icon_state = "lcanid"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/snouts/scanid
 	name = "Fox, Short"
 	icon_state = "scanid"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/snouts/wolf
 	name = "Wolf"
 	icon_state = "wolf"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/snouts/husky
 	name = "Husky"
 	icon_state = "husky"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/snouts/otie
 	name = "Otie"
 	icon_state = "otie"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /******************************************
 ************ Actual Species ***************
@@ -286,31 +331,30 @@
 /datum/sprite_accessory/mam_tails/ailurus
 	name = "Ailurus"
 	icon_state = "ailurus"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/ailurus
 	name = "Ailurus"
 	icon_state = "ailurus"
-	extra = 1
-	extra_color_src = MUTCOLORS2
-
-/datum/sprite_accessory/mam_tails/bear
-	name = "Bear"
-	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"
-	icon = 'icons/mob/mam_bodyparts.dmi'
+	
+/datum/sprite_accessory/mam_tails/bear
+	name = "Bear"
+	icon_state = "bear"
+
+/datum/sprite_accessory/mam_tails_animated/bear
+	name = "Bear"
+	icon_state = "bear"
 
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
 	icon_state = "cat"
 	hasinner = 1
-	icon = 'icons/mob/mutant_bodyparts.dmi'
-
+	
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -323,6 +367,14 @@
 	name = "Cow"
 	icon_state = "cow"
 	gender_specific = 1
+	
+/datum/sprite_accessory/mam_tail/cow
+	name = "Cow"
+	icon_state = "cow"
+
+/datum/sprite_accessory/mam_tails_animated/cow
+	name = "Cow"
+	icon_state = "cow"
 
 /datum/sprite_accessory/mam_ears/deer
 	name = "Deer"
@@ -331,8 +383,7 @@
 /datum/sprite_accessory/mam_tails/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/eevee
 	name = "Eevee"
@@ -341,8 +392,7 @@
 /datum/sprite_accessory/mam_tails_animated/eevee
 	name = "Eevee"
 	icon_state = "eevee"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/fennec
 	name = "Fennec"
@@ -360,25 +410,17 @@
 /datum/sprite_accessory/mam_ears/fox
 	name = "Fox"
 	icon_state = "fox"
-	hasinner = 0
+	hasinner = 1
 
 /datum/sprite_accessory/mam_tails/fox
 	name = "Fox"
 	icon_state = "fox"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/fox
 	name = "Fox"
 	icon_state = "fox"
-	extra = 1
-	extra_color_src = MUTCOLORS2
-
-/datum/sprite_accessory/mam_ears/husky
-	name = "Husky"
-	icon_state = "wolf"
-	icon = 'icons/mob/mam_bodyparts.dmi'
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails/hawk
 	name = "Hawk"
@@ -388,20 +430,36 @@
 	name = "Hawk"
 	icon_state = "hawk"
 
+/datum/sprite_accessory/mam_tails/horse
+	name = "Horse"
+	icon_state = "horse"
+	color_src = HAIR
+
+/datum/sprite_accessory/mam_tails_animated/horse
+	name = "Horse"
+	icon_state = "Horse"
+	color_src = HAIR
+
+/datum/sprite_accessory/mam_ears/husky
+	name = "Husky"
+	icon_state = "wolf"
+	icon = 'icons/mob/mam_bodyparts.dmi'
+	extra = TRUE
+
 /datum/sprite_accessory/mam_tails/husky
 	name = "Husky"
 	icon_state = "husky"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/husky
 	name = "Husky"
 	icon_state = "husky"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/kangaroo
 	name = "kangaroo"
 	icon_state = "kangaroo"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails/kangaroo
 	name = "kangaroo"
@@ -414,14 +472,12 @@
 /datum/sprite_accessory/mam_tails/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/kitsune
 	name = "Kitsune"
 	icon_state = "kitsune"
-	extra = 1
-	extra_color_src = MUTCOLORS2
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/lab
 	name = "Dog, Long"
@@ -462,6 +518,32 @@
 	name = "Otusian"
 	icon_state = "otie"
 
+/datum/sprite_accessory/mam_ears/rabbit
+    name = "Rabbit"
+    icon_state = "rabbit"
+    hasinner= 1
+	
+/datum/sprite_accessory/mam_tails/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/mam_tails_animated/rabbit
+	name = "Rabbit"
+	icon_state = "rabbit"
+
+/datum/sprite_accessory/mam_ears/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+	hasinner= 1
+
+/datum/sprite_accessory/mam_tails/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+
+/datum/sprite_accessory/mam_tails_animated/sergal
+	name = "Sergal"
+	icon_state = "sergal"
+
 /datum/sprite_accessory/mam_ears/skunk
 	name = "skunk"
 	icon_state = "skunk"
@@ -470,13 +552,13 @@
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = 0
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/skunk
 	name = "skunk"
 	icon_state = "skunk"
 	color_src = 0
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails/shark
 	name = "Shark"
@@ -486,19 +568,19 @@
 /datum/sprite_accessory/mam_tails_animated/shark
 	name = "Shark"
 	icon_state = "shark"
-	color_src = 0
+	color_src = MUTCOLORS
 
 /datum/sprite_accessory/mam_tails/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
-	extra = 1
-	extra2 = 1
+	extra = TRUE
+	extra2 = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/shepherd
 	name = "Shepherd"
 	icon_state = "shepherd"
-	extra = 1
-	extra2 = 1
+	extra = TRUE
+	extra2 = TRUE
 
 /datum/sprite_accessory/mam_ears/squirrel
 	name = "Squirrel"
@@ -516,7 +598,7 @@
 /datum/sprite_accessory/mam_ears/wolf
 	name = "Wolf"
 	icon_state = "wolf"
-	extra = 1
+	hasinner = 1
 
 /datum/sprite_accessory/mam_tails/wolf
 	name = "Wolf"
@@ -526,26 +608,13 @@
 	name = "Wolf"
 	icon_state = "wolf"
 
-/datum/sprite_accessory/mam_tails/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-
-/datum/sprite_accessory/mam_tails_animated/rabbit
-	name = "Rabbit"
-	icon_state = "rabbit"
-
-/datum/sprite_accessory/mam_ears/rabbit
-    name = "Rabbit"
-    icon_state = "rabbit"
-    hasinner= 1
-
 /******************************************
 ************ Body Markings ****************
 *******************************************/
 
 /datum/sprite_accessory/mam_body_markings
-	extra = 1
-	extra2 = 1
+	extra = TRUE
+	extra2 = TRUE
 	icon = 'icons/mob/mam_body_markings.dmi'
 
 /datum/sprite_accessory/mam_body_markings/none
@@ -555,8 +624,6 @@
 /datum/sprite_accessory/mam_body_markings/ailurus
 	name = "Red Panda"
 	icon_state = "ailurus"
-	extra_color_src = MUTCOLORS2
-	extra2_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/belly
@@ -598,13 +665,11 @@
 /datum/sprite_accessory/mam_body_markings/fennec
 	name = "Fennec"
 	icon_state = "Fennec"
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/fox
 	name = "Fox"
 	icon_state = "fox"
-	extra_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_body_markings/hawk
@@ -668,9 +733,9 @@
 /datum/sprite_accessory/taur
 	icon = 'icons/mob/mam_taur.dmi'
 	extra_icon = 'icons/mob/mam_taur.dmi'
-	extra = 1
+	extra = TRUE
 	extra2_icon = 'icons/mob/mam_taur.dmi'
-	extra2 = 1
+	extra2 = TRUE
 	center = TRUE
 	dimension_x = 64
 
@@ -805,19 +870,17 @@
 /datum/sprite_accessory/mam_body_markings/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra_color_src = MUTCOLORS2
-	extra2_color_src = MUTCOLORS3
 	gender_specific = 1
 
 /datum/sprite_accessory/mam_tails/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/guilmon
 	name = "Guilmon"
 	icon_state = "guilmon"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_ears/guilmon
 	name = "Guilmon"
@@ -834,33 +897,33 @@
 	name = "DataShark"
 	icon_state = "datashark"
 	color_src = 0
-	
+
 /*
 //Till I get my snowflake only ckey lock, these are locked-locked :D
 
 /datum/sprite_accessory/mam_ears/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	extra = 1
+	extra = TRUE
 	extra_color_src = MUTCOLORS3
 	locked = TRUE
 
 /datum/sprite_accessory/mam_tails/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	extra = 1
+	extra = TRUE
 	locked = TRUE
 
 /datum/sprite_accessory/mam_tails_animated/sabresune
 	name = "sabresune"
 	icon_state = "sabresune"
-	extra = 1
+	extra = TRUE
 
 /datum/sprite_accessory/mam_body_markings/sabresune
 	name = "Sabresune"
 	icon_state = "sabresune"
 	color_src = MUTCOLORS2
-	extra = 0
-	extra2 = 0
+	extra = FALSE
+	extra2 = FALSE
 	locked = TRUE
 */

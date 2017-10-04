@@ -41,7 +41,7 @@
 
 	for(var/obj/item/device/radio/beacon/B in GLOB.teleportbeacons)
 		var/turf/T = get_turf(B)
-		if(T.z == ZLEVEL_STATION)
+		if(T.z in GLOB.station_z_levels)
 			destinations += B
 
 	return destinations
@@ -93,8 +93,8 @@
 /obj/effect/portal/wormhole/jaunt_tunnel/teleport(atom/movable/M)
 	if(!ismob(M) && !isobj(M))	//No don't teleport lighting and effects!
 		return
-		
-	if(M.anchored && (!ismob(M) || (istype(M, /obj/mecha) && !mech_sized)))
+
+	if(M.anchored && (!ismob(M) || (ismecha(M) && !mech_sized)))
 		return
 
 	if(do_teleport(M, hard_target, 6))

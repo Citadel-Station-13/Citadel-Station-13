@@ -297,11 +297,14 @@
 
 
 /mob/living/carbon/proc/cuff_resist(obj/item/I, breakouttime = 600, cuff_break = 0)
+	if(I.being_removed)
+		to_chat(src, "<span class='warning'>You're already attempting to remove [I]!</span>")
+		return
+	I.being_removed = TRUE
 	breakouttime = I.breakouttime
-	var/displaytime = breakouttime / 600
 	if(!cuff_break)
 		visible_message("<span class='warning'>[src] attempts to remove [I]!</span>")
-		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [displaytime] minutes and you need to stand still.)</span>")
+		to_chat(src, "<span class='notice'>You attempt to remove [I]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)</span>")
 		if(do_after(src, breakouttime, 0, target = src))
 			clear_cuffs(I, cuff_break)
 		else
@@ -318,6 +321,7 @@
 
 	else if(cuff_break == INSTANT_CUFFBREAK)
 		clear_cuffs(I, cuff_break)
+	I.being_removed = FALSE
 
 /mob/living/carbon/proc/uncuff()
 	if (handcuffed)
@@ -420,23 +424,6 @@
 		if(61 to 90) //throw it down to the floor
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
-
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
 
 /mob/living/carbon/Stat()
 	..()
@@ -610,50 +597,94 @@
 	if(!client)
 		return
 
-	if(stat == UNCONSCIOUS && health <= HEALTH_THRESHOLD_CRIT)
+	if(health <= HEALTH_THRESHOLD_CRIT)
 		var/severity = 0
 		switch(health)
-			if(-20 to -10) severity = 1
-			if(-30 to -20) severity = 2
-			if(-40 to -30) severity = 3
-			if(-50 to -40) severity = 4
-			if(-60 to -50) severity = 5
-			if(-70 to -60) severity = 6
-			if(-80 to -70) severity = 7
-			if(-90 to -80) severity = 8
-			if(-95 to -90) severity = 9
-			if(-INFINITY to -95) severity = 10
+			if(-20 to -10)
+				severity = 1
+			if(-30 to -20)
+				severity = 2
+			if(-40 to -30)
+				severity = 3
+			if(-50 to -40)
+				severity = 4
+			if(-50 to -40)
+				severity = 5
+			if(-60 to -50)
+				severity = 6
+			if(-70 to -60)
+				severity = 7
+			if(-90 to -70)
+				severity = 8
+			if(-95 to -90)
+				severity = 9
+			if(-INFINITY to -95)
+				severity = 10
+		if(!InFullCritical())
+			var/visionseverity = 4
+			switch(health)
+				if(-8 to -4)
+					visionseverity = 5
+				if(-12 to -8)
+					visionseverity = 6
+				if(-16 to -12)
+					visionseverity = 7
+				if(-20 to -16)
+					visionseverity = 8
+				if(-24 to -20)
+					visionseverity = 9
+				if(-INFINITY to -24)
+					visionseverity = 10
+			overlay_fullscreen("critvision", /obj/screen/fullscreen/crit/vision, visionseverity)
+		else
+			clear_fullscreen("critvision")
 		overlay_fullscreen("crit", /obj/screen/fullscreen/crit, severity)
 	else
 		clear_fullscreen("crit")
-		if(oxyloss)
-			var/severity = 0
-			switch(oxyloss)
-				if(10 to 20) severity = 1
-				if(20 to 25) severity = 2
-				if(25 to 30) severity = 3
-				if(30 to 35) severity = 4
-				if(35 to 40) severity = 5
-				if(40 to 45) severity = 6
-				if(45 to INFINITY) severity = 7
-			overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
-		else
-			clear_fullscreen("oxy")
+		clear_fullscreen("critvision")
 
-		//Fire and Brute damage overlay (BSSR)
-		var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
-		if(hurtdamage)
-			var/severity = 0
-			switch(hurtdamage)
-				if(5 to 15) severity = 1
-				if(15 to 30) severity = 2
-				if(30 to 45) severity = 3
-				if(45 to 70) severity = 4
-				if(70 to 85) severity = 5
-				if(85 to INFINITY) severity = 6
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-		else
-			clear_fullscreen("brute")
+	//Oxygen damage overlay
+	if(oxyloss)
+		var/severity = 0
+		switch(oxyloss)
+			if(10 to 20)
+				severity = 1
+			if(20 to 25)
+				severity = 2
+			if(25 to 30)
+				severity = 3
+			if(30 to 35)
+				severity = 4
+			if(35 to 40)
+				severity = 5
+			if(40 to 45)
+				severity = 6
+			if(45 to INFINITY)
+				severity = 7
+		overlay_fullscreen("oxy", /obj/screen/fullscreen/oxy, severity)
+	else
+		clear_fullscreen("oxy")
+
+	//Fire and Brute damage overlay (BSSR)
+	var/hurtdamage = getBruteLoss() + getFireLoss() + damageoverlaytemp
+	if(hurtdamage)
+		var/severity = 0
+		switch(hurtdamage)
+			if(5 to 15)
+				severity = 1
+			if(15 to 30)
+				severity = 2
+			if(30 to 45)
+				severity = 3
+			if(45 to 70)
+				severity = 4
+			if(70 to 85)
+				severity = 5
+			if(85 to INFINITY)
+				severity = 6
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 /mob/living/carbon/update_health_hud(shown_health_amount)
 	if(!client || !hud_used)
@@ -688,20 +719,19 @@
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
-		if(health<= HEALTH_THRESHOLD_DEAD)
+		if(health <= HEALTH_THRESHOLD_DEAD)
 			death()
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_CRIT)
-			if(stat == CONSCIOUS)
-				stat = UNCONSCIOUS
-				blind_eyes(1)
-				update_canmove()
+		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (status_flags & FAKEDEATH) || health <= HEALTH_THRESHOLD_FULLCRIT)
+			stat = UNCONSCIOUS
+			blind_eyes(1)
 		else
-			if(stat == UNCONSCIOUS)
+			if(health <= HEALTH_THRESHOLD_CRIT)
+				stat = SOFT_CRIT
+			else
 				stat = CONSCIOUS
-				resting = 0
-				adjust_blindness(-1)
-				update_canmove()
+			adjust_blindness(-1)
+		update_canmove()
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
@@ -817,7 +847,7 @@
 /mob/living/carbon/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
-	.["Modify bodypart"] = "?_src_=vars;editbodypart=\ref[src]"
-	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"
-	.["Hallucinate"] = "?_src_=vars;hallucinate=\ref[src]"
+	.["Make AI"] = "?_src_=vars;[HrefToken()];makeai=\ref[src]"
+	.["Modify bodypart"] = "?_src_=vars;[HrefToken()];editbodypart=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;[HrefToken()];editorgans=\ref[src]"
+	.["Hallucinate"] = "?_src_=vars;[HrefToken()];hallucinate=\ref[src]"

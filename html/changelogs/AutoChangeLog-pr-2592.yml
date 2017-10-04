@@ -1,4 +1,0 @@
-author: "Jay"
-delete-after: True
-changes: 
-  - rscdel: "Removes swarmers from the event table for the time being."

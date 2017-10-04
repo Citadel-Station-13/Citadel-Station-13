@@ -3,6 +3,7 @@
 	name = "transit tube"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "straight"
+	desc = "A transit tube for moving things around."
 	density = TRUE
 	layer = LOW_ITEM_LAYER
 	anchored = TRUE
@@ -30,6 +31,7 @@
 	return ..()
 
 /obj/structure/transit_tube/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 

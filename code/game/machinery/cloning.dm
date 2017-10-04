@@ -218,6 +218,7 @@
 	if(!is_operational()) //Autoeject if power is lost
 		if(mob_occupant)
 			go_out()
+			mob_occupant.apply_vore_prefs()
 			connected_message("Clone Ejected: Loss of power.")
 
 	else if(mob_occupant && (mob_occupant.loc == src))
@@ -226,12 +227,13 @@
 			SPEAK("The cloning of [mob_occupant.real_name] has been \
 				aborted due to unrecoverable tissue failure.")
 			go_out()
+			mob_occupant.apply_vore_prefs()
 
 		else if(mob_occupant.cloneloss > (100 - heal_level))
 			mob_occupant.Unconscious(80)
-
+			var/dmg_mult = CONFIG_GET(number/damage_multiplier)
 			 //Slowly get that clone healed and finished.
-			mob_occupant.adjustCloneLoss(-((speed_coeff/2) * config.damage_multiplier))
+			mob_occupant.adjustCloneLoss(-((speed_coeff / 2) * dmg_mult))
 			var/progress = CLONE_INITIAL_DAMAGE - mob_occupant.getCloneLoss()
 			// To avoid the default cloner making incomplete clones
 			progress += (100 - MINIMUM_HEAL_LEVEL)
@@ -249,7 +251,7 @@
 					BP.attach_limb(mob_occupant)
 
 			//Premature clones may have brain damage.
-			mob_occupant.adjustBrainLoss(-((speed_coeff/2) * config.damage_multiplier))
+			mob_occupant.adjustBrainLoss(-((speed_coeff / 2) * dmg_mult))
 
 			check_brine()
 
@@ -270,6 +272,7 @@
 					BP.attach_limb(mob_occupant)
 
 			go_out()
+			mob_occupant.apply_vore_prefs()
 
 	else if (!mob_occupant || mob_occupant.loc != src)
 		occupant = null
@@ -392,6 +395,9 @@
 		QDEL_IN(mob_occupant, 40)
 
 /obj/machinery/clonepod/relaymove(mob/user)
+	container_resist()
+
+/obj/machinery/clonepod/container_resist(mob/living/user)
 	if(user.stat == CONSCIOUS)
 		go_out()
 

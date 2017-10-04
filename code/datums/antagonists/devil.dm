@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	update_hud()
 	switch(SOULVALUE)
 		if(0)
-			to_chat(owner.current, "<span class='warning'>Your hellish powers have been restored.")
+			to_chat(owner.current, "<span class='warning'>Your hellish powers have been restored.</span>")
 			give_appropriate_spells()
 		if(BLOOD_THRESHOLD)
 			increase_blood_lizard()
@@ -189,10 +189,10 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 		regress_humanoid()
 	if(SOULVALUE < 0)
 		give_appropriate_spells()
-		to_chat(owner.current, "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.")
+		to_chat(owner.current, "<span class='warning'>As punishment for your failures, all of your powers except contract creation have been revoked.</span>")
 
 /datum/antagonist/devil/proc/regress_humanoid()
-	to_chat(owner.current, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
+	to_chat(owner.current, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.</span>")
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
 		H.set_species(/datum/species/human, 1)
@@ -204,8 +204,8 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 /datum/antagonist/devil/proc/regress_blood_lizard()
 	var/mob/living/carbon/true_devil/D = owner.current
-	to_chat(D, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.")
-	D.oldform.loc = D.loc
+	to_chat(D, "<span class='warning'>Your powers weaken, have more contracts be signed to regain power.</span>")
+	D.oldform.forceMove(D.drop_location())
 	owner.transfer_to(D.oldform)
 	give_appropriate_spells()
 	qdel(D)
@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_blood_lizard()
-	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.")
+	to_chat(owner.current, "<span class='warning'>You feel as though your humanoid form is about to shed.  You will soon turn into a blood lizard.</span>")
 	sleep(50)
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/H = owner.current
@@ -232,11 +232,11 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 
 
 /datum/antagonist/devil/proc/increase_true_devil()
-	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.")
+	to_chat(owner.current, "<span class='warning'>You feel as though your current form is about to shed.  You will soon turn into a true devil.</span>")
 	sleep(50)
 	var/mob/living/carbon/true_devil/A = new /mob/living/carbon/true_devil(owner.current.loc)
 	A.faction |= "hell"
-	owner.current.loc = A
+	owner.current.forceMove(A)
 	A.oldform = owner.current
 	owner.transfer_to(A)
 	A.set_name()
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	if(!ascendable)
 		return
 	var/mob/living/carbon/true_devil/D = owner.current
-	to_chat(D, "<span class='warning'>You feel as though your form is about to ascend.")
+	to_chat(D, "<span class='warning'>You feel as though your form is about to ascend.</span>")
 	sleep(50)
 	if(!D)
 		return

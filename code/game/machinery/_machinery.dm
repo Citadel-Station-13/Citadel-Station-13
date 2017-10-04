@@ -35,13 +35,12 @@ Class Variables:
       Next uid value in sequence
 
    stat (bitflag)
-      Machine status bit flags_1.
-      Possible bit flags_1:
-         BROKEN:1 -- Machine is broken
-         NOPOWER:2 -- No power is being supplied to machine.
-         POWEROFF:4 -- tbd
-         MAINT:8 -- machine is currently under going maintenance.
-         EMPED:16 -- temporary broken by EMP pulse
+      Machine status bit flags.
+      Possible bit flags:
+         BROKEN -- Machine is broken
+         NOPOWER -- No power is being supplied to machine.
+         MAINT -- machine is currently under going maintenance.
+         EMPED -- temporary broken by EMP pulse
 
 Class Procs:
    Initialize()                     'game/machinery/machine.dm'
@@ -96,6 +95,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	desc = "Some kind of machine."
 	verb_say = "beeps"
 	verb_yell = "blares"
 	pressure_resistance = 15
@@ -430,7 +430,7 @@ Class Procs:
 							W.handle_item_insertion(A, 1)
 							component_parts -= A
 							component_parts += B
-							B.loc = null
+							B.moveToNullspace()
 							to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
 							shouldplaysound = 1 //Only play the sound when parts are actually replaced!
 							break

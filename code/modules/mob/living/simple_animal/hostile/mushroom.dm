@@ -21,7 +21,7 @@
 	attack_sound = 'sound/weapons/bite.ogg'
 	faction = list("mushroom")
 	environment_smash = ENVIRONMENT_SMASH_NONE
-	stat_attack = 2
+	stat_attack = DEAD
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speed = 1
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -60,7 +60,26 @@
 	cap_color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	UpdateMushroomCap()
 	health = maxHealth
-	..()
+	. = ..()
+
+/mob/living/simple_animal/hostile/mushroom/CanAttack(atom/the_target) // Mushroom-specific version of CanAttack to handle stupid attack_same = 2 crap so we don't have to do it for literally every single simple_animal/hostile because this shit never gets spawned
+	if(!the_target || isturf(the_target) || istype(the_target, /atom/movable/lighting_object)) 
+		return FALSE
+
+	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return FALSE
+
+	if(isliving(the_target))
+		var/mob/living/L = the_target
+
+		if (!faction_check_mob(L) && attack_same == 2)
+			return FALSE
+		if(L.stat > stat_attack)
+			return FALSE
+
+		return TRUE
+
+	return FALSE
 
 /mob/living/simple_animal/hostile/mushroom/adjustHealth(amount, updating_health = TRUE, forced = FALSE) //Possibility to flee from a fight just to make it more visually interesting
 	if(!retreat_distance && prob(33))

@@ -1,0 +1,7 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - tweak: "Flightsuits require power cells now to function"
+  - tweak: "Flightsuit HUDs reduced to AI standards rather than full advanced."
+  - tweak: "Suits will heavily drain while in gravity, but not much without it."
+  - tweak: "Swap batteries via clicking on your suit with one."

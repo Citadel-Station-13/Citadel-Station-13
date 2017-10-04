@@ -1,0 +1,8 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Adds Spinfusors, ordered from cargo, security locked crate"
+  - rscadd: "Adds the X9 Assault Rifle, adminspawn only"
+  - rscadd: "Adds the Magpistol, made in science, non-lethal by default, unlocked slightly later than the AEG"
+  - rscadd: "Adds the Foam Force Magpistol and Magfoam, made in autolathes"
+  - soundadd: "adds the Magpistol's firing sound"

@@ -6,6 +6,7 @@
 //trees
 /obj/structure/flora/tree
 	name = "tree"
+	desc = "A large tree."
 	density = TRUE
 	pixel_x = -16
 	layer = FLY_LAYER
@@ -40,6 +41,7 @@
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
+	desc = "A coniferous pine tree."
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_1"
 
@@ -49,6 +51,7 @@
 
 /obj/structure/flora/tree/pine/xmas
 	name = "xmas tree"
+	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
 
 /obj/structure/flora/tree/pine/xmas/Initialize()
@@ -57,10 +60,12 @@
 
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
+	desc = "A dead tree. How it died, you know not."
 	icon_state = "tree_1"
 
 /obj/structure/flora/tree/palm
 	icon = 'icons/misc/beach2.dmi'
+	desc = "A tree straight from the tropics."
 	icon_state = "palm1"
 
 /obj/structure/flora/tree/palm/Initialize()
@@ -98,6 +103,7 @@
 //grass
 /obj/structure/flora/grass
 	name = "grass"
+	desc = "A patch of overgrown grass."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	gender = PLURAL	//"this is grass" not "this is a grass"
 
@@ -127,6 +133,7 @@
 //bushes
 /obj/structure/flora/bush
 	name = "bush"
+	desc = "Some type of shrub."
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = TRUE
@@ -139,6 +146,7 @@
 
 /obj/structure/flora/ausbushes
 	name = "bush"
+	desc = "Some kind of plant."
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 
@@ -256,6 +264,7 @@
 	name = "potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-01"
+	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
 	force = 10
@@ -265,8 +274,10 @@
 
 /obj/item/twohanded/required/kirbyplants/equipped(mob/living/user)
 	var/image/I = image(icon = 'icons/obj/flora/plants.dmi' , icon_state = src.icon_state, loc = user)
+	I.copy_overlays(src)
 	I.override = 1
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
+	I.layer = ABOVE_MOB_LAYER
 	..()
 
 /obj/item/twohanded/required/kirbyplants/dropped(mob/living/user)
@@ -298,6 +309,13 @@
 	name = "RD's potted plant"
 	desc = "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
 	icon_state = "plant-25"
+
+/obj/item/twohanded/required/kirbyplants/photosynthetic
+	name = "photosynthetic potted plant"
+	desc = "A bioluminescent plant."
+	icon_state = "plant-09"
+	light_color = "#2cb2e8"
+	light_range = 3
 
 
 //a rock is flora according to where the icon file is
@@ -356,6 +374,7 @@
 
 /obj/structure/flora/junglebush
 	name = "bush"
+	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 

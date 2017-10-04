@@ -28,6 +28,9 @@
 	var/ranged_message = "fires" //Fluff text for ranged mobs
 	var/ranged_cooldown = 0 //What the current cooldown on ranged attacks is, generally world.time + ranged_cooldown_time
 	var/ranged_cooldown_time = 30 //How long, in deciseconds, the cooldown of ranged attacks is
+	var/ranged_telegraph = "prepares to fire at *TARGET*!" //A message shown when the mob prepares to fire; use *TARGET* if you want to show the target's name
+	var/ranged_telegraph_sound //A sound played when the mob prepares to fire
+	var/ranged_telegraph_time = 0 //In deciseconds, how long between the telegraph and ranged shot
 	var/ranged_ignores_vision = FALSE //if it'll fire ranged attacks even if it lacks vision on its target, only works with environment smash
 	var/check_friendly_fire = 0 // Should the ranged mob check for friendlies when shooting
 	var/retreat_distance = null //If our mob runs from players when they're too close, set in tile distance. By default, mobs do not retreat.
@@ -43,9 +46,9 @@
 	var/search_objects_timer_id //Timer for regaining our old search_objects value after being attacked
 	var/search_objects_regain_time = 30 //the delay between being attacked and gaining our old search_objects value back
 	var/list/wanted_objects = list() //A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/stat_attack = 0 //Mobs with stat_attack to 1 will attempt to attack things that are unconscious, Mobs with stat_attack set to 2 will attempt to attack the dead.
-	var/stat_exclusive = 0 //Mobs with this set to 1 will exclusively attack things defined by stat_attack, stat_attack 2 means they will only attack corpses
-	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction, or 2, to only ever attack our own faction
+	var/stat_attack = CONSCIOUS //Mobs with stat_attack to UNCONSCIOUS will attempt to attack things that are unconscious, Mobs with stat_attack set to DEAD will attempt to attack the dead.
+	var/stat_exclusive = FALSE //Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
+	var/attack_same = 0 //Set us to 1 to allow us to attack our own faction
 	var/AIStatus = AI_ON //The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever)
 	var/atom/targets_from = null //all range/attack/etc. calculations should be done from this atom, defaults to the mob itself, useful for Vehicles and such
 	var/attack_all_objects = FALSE //if true, equivalent to having a wanted_objects list containing ALL objects.
@@ -112,7 +115,11 @@
 			if(can_see(targets_from, HM, vision_range))
 				. += HM
 	else
-		. = oview(vision_range, targets_from)
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line, particularly when bees are involved
+		for (var/obj/A in oview(vision_range, targets_from))
+			. += A
+		for (var/mob/A in oview(vision_range, targets_from))
+			. += A
 
 /mob/living/simple_animal/hostile/proc/FindTarget(var/list/possible_targets, var/HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
 	. = list()
@@ -161,56 +168,55 @@
 	var/chosen_target = pick(Targets)//Pick the remaining targets (if any) at random
 	return chosen_target
 
+// Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(!the_target)
-		return 0
+	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+		return FALSE
+
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
-		return 0
+		return FALSE
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_mob(L)
 			if(robust_searching)
-				if(L.stat > stat_attack || L.stat != stat_attack && stat_exclusive == 1)
-					return 0
-				if(faction_check && !attack_same || !faction_check && attack_same == 2)
-					return 0
-				if(L in friends)
-					return 0
-			else
-				if(L.stat)
-					return 0
 				if(faction_check && !attack_same)
-					return 0
-			return 1
+					return FALSE
+				if(L.stat > stat_attack)
+					return FALSE
+				if(L in friends)
+					return FALSE
+			else
+				if((faction_check && !attack_same) || L.stat)
+					return FALSE
+			return TRUE
 
-		if(istype(the_target, /obj/mecha))
+		if(ismecha(the_target))
 			var/obj/mecha/M = the_target
 			if(M.occupant)//Just so we don't attack empty mechs
 				if(CanAttack(M.occupant))
-					return 1
+					return TRUE
 
 		if(istype(the_target, /obj/machinery/porta_turret))
 			var/obj/machinery/porta_turret/P = the_target
 			if(P.faction in faction)
-				return 0
+				return FALSE
 			if(P.has_cover &&!P.raised) //Don't attack invincible turrets
-				return 0
+				return FALSE
 			if(P.stat & BROKEN) //Or turrets that are already broken
-				return 0
-			return 1
+				return FALSE
+			return TRUE
 
 		if(istype(the_target, /obj/structure/destructible/clockwork/ocular_warden))
 			var/obj/structure/destructible/clockwork/ocular_warden/OW = the_target
 			if(OW.target != src)
 				return FALSE
 			return TRUE
-
-
 	if(isobj(the_target))
 		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
-			return 1
-	return 0
+			return TRUE
+
+	return FALSE
 
 /mob/living/simple_animal/hostile/proc/GiveTarget(new_target)//Step 4, give us our selected target
 	target = new_target
@@ -225,6 +231,9 @@
 	if(!target || !CanAttack(target))
 		LoseTarget()
 		return 0
+	if(ismob(target.loc))
+		LoseTarget()
+		return 0
 	if(target in possible_targets)
 		if(target.z != z)
 			LoseTarget()
@@ -232,7 +241,14 @@
 		var/target_distance = get_dist(targets_from,target)
 		if(ranged) //We ranged? Shoot at em
 			if(!target.Adjacent(targets_from) && ranged_cooldown <= world.time) //But make sure they're not in range for a melee attack and our range attack is off cooldown
-				OpenFire(target)
+				if(!ranged_telegraph_time || client)
+					OpenFire(target)
+				else
+					if(ranged_telegraph)
+						visible_message("<span class='danger'>[src] [replacetext(ranged_telegraph, "*TARGET*", "[target]")]</span>")
+					if(ranged_telegraph_sound)
+						playsound(src, ranged_telegraph_sound, 75, FALSE)
+					addtimer(CALLBACK(src, .proc/OpenFire, target), ranged_telegraph_time)
 		if(!Process_Spacemove()) //Drifting
 			walk(src,0)
 			return 1
@@ -356,22 +372,25 @@
 		P.original = targeted_atom
 		P.fire()
 		return P
-
+		
+/mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
+	return iswallturf(T) || ismineralturf(T)
 
 /mob/living/simple_animal/hostile/proc/DestroySurroundings()
 	if(environment_smash)
 		EscapeConfinement()
 		for(var/dir in GLOB.cardinals)
 			var/turf/T = get_step(targets_from, dir)
-			if(iswallturf(T) || ismineralturf(T))
+			if(CanSmashTurfs(T))
 				if(T.Adjacent(targets_from))
 					T.attack_animal(src)
 			for(var/a in T)
 				var/atom/A = a
 				if(!A.Adjacent(targets_from))
 					continue
-				if(is_type_in_typecache(A, environment_target_typecache))
+				if(is_type_in_typecache(A, environment_target_typecache) && !A.IsObscured())
 					A.attack_animal(src)
+
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
 	if(buckled)

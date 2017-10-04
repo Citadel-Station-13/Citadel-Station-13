@@ -35,10 +35,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	pressure_resistance = 4
 	var/obj/item/master = null
 
-	var/heat_protection = 0 //flags_1 which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags_1. See setup.dm
-	var/cold_protection = 0 //flags_1 which determine which body parts are protected from cold. Use the HEAD, CHEST, GROIN, etc. flags_1. See setup.dm
-	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags_1
-	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags_1
+	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
+	var/cold_protection = 0 //flags which determine which body parts are protected from cold. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
+	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
+	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
 	var/list/actions //list of /datum/action's that this item has.
 	var/list/actions_types //list of paths of action datums to give to the item on New().
@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/item_color = null //this needs deprecating, soonish
 
-	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags_1
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/heat_transfer_coefficient = 1 //0 prevents all transfers, 1 is invisible
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
@@ -61,9 +61,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/equip_delay_other = 20 //In deciseconds, how long an item takes to put on another person
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
+	var/being_removed = FALSE
 	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
+	var/emagged = FALSE
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
@@ -86,7 +88,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/embedded_unsafe_removal_pain_multiplier = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER //The coefficient of multiplication for the damage removing this without surgery causes (this*w_class)
 	var/embedded_unsafe_removal_time = EMBEDDED_UNSAFE_REMOVAL_TIME //A time in ticks, multiplied by the w_class.
 
-	var/flags_cover = 0 //for flags_1 such as GLASSESCOVERSEYES
+	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
 	var/sharpness = IS_BLUNT
 	var/toolspeed = 1
@@ -114,6 +116,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
+	var/icon_override = null
+
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -127,6 +131,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(force_string)
 		force_string_override = TRUE
+
+	if(!hitsound)
+		if(damtype == "fire")
+			hitsound = 'sound/items/welder.ogg'
+		if(damtype == "brute")
+			hitsound = "swing_hit"
 
 /obj/item/Destroy()
 	flags_1 &= ~DROPDEL_1	//prevent reqdels
@@ -208,9 +218,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
 	return message
-
-/obj/item/attack_self(mob/user)
-	interact(user)
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -542,9 +549,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		transfer_blood = 0
 
 /obj/item/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_FOUR)
 		throw_at(S,14,3, spin=0)
-	else ..()
+	else return
 
 /obj/item/throw_impact(atom/A)
 	if(A && !QDELETED(A))

@@ -4,8 +4,11 @@
 	icon_state = "xray"
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = list(/obj/item/ammo_casing/energy/plasmagun)
+	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_x_offset = 2
 	shaded_charge = 1
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
 
 
 /obj/item/gun/energy/plasma/rifle
@@ -47,8 +50,11 @@
 	icon_state = "xcomlasergun"
 	item_state = null
 	icon = 'icons/obj/guns/VGguns.dmi'
+	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
 	ammo_x_offset = 4
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
 
 /obj/item/gun/energy/laser/LaserAK
 	name = "Laser AK470"
@@ -56,5 +62,8 @@
 	icon_state = "LaserAK"
 	item_state = null
 	icon = 'icons/obj/guns/VGguns.dmi'
+	cell_type = "/obj/item/stock_parts/cell/pulse/carbine"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	ammo_x_offset = 4
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'

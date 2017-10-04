@@ -1,11 +1,10 @@
-
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	slot_flags = SLOT_EARS
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"

@@ -23,7 +23,6 @@
 	attack_verb = list("nibbled", "bit", "gnawed", "chomped", "nommed")
 	w_class = 3
 	sharpness = IS_SHARP
-	var/emagged = 0
 
 /obj/item/dogborg/jaws/attack(atom/A, mob/living/silicon/robot/user)
 	..()
@@ -173,7 +172,6 @@
 	icon_state = "synthtongue"
 	hitsound = 'sound/effects/attackblob.ogg'
 	cleanspeed = 80
-	var/emagged = 0
 
 /obj/item/soap/tongue/New()
 	..()
@@ -339,7 +337,6 @@
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
 		/obj/item/device/aicard,
-		/obj/item/device/paicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
 		/obj/item/clothing/shoes/magboots,
@@ -354,7 +351,9 @@
 		/obj/item/nuke_core_container,
 		/obj/item/areaeditor/blueprints,
 		/obj/item/documents/syndicate,
-		/obj/item/disk/nuclear)
+		/obj/item/disk/nuclear,
+		/obj/item/bombcore,
+		/obj/item/grenade)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()

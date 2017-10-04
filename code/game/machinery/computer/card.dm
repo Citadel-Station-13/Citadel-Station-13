@@ -19,7 +19,6 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	var/list/region_access = null
 	var/list/head_subordinates = null
 	var/target_dept = 0 //Which department this computer has access to. 0=all departments
-	var/prioritycount = 0 // we don't want 500 prioritized jobs
 
 	//Cooldown for closing positions in seconds
 	//if set to -1: No cooldown... probably a bad idea
@@ -48,29 +47,26 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/Initialize()
 	. = ..()
-	change_position_cooldown = config.id_console_jobslot_delay
+	change_position_cooldown = CONFIG_GET(number/id_console_jobslot_delay)
 
 /obj/machinery/computer/card/attackby(obj/O, mob/user, params)//TODO:SANITY
 	if(istype(O, /obj/item/card/id))
 		var/obj/item/card/id/idcard = O
 		if(check_access(idcard))
 			if(!scan)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				scan = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 			else if(!modify)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		else
 			if(!modify)
-				if(!usr.drop_item())
+				if (!user.transferItemToLoc(idcard,src))
 					return
-				idcard.loc = src
 				modify = idcard
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 	else
@@ -96,10 +92,10 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 
 /obj/machinery/computer/card/on_deconstruction()
 	if(scan)
-		scan.forceMove(loc)
+		scan.forceMove(drop_location())
 		scan = null
 	if(modify)
-		modify.forceMove(loc)
+		modify.forceMove(drop_location())
 		modify = null
 
 //Check if you can't open a new position for a certain job
@@ -209,7 +205,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if(job in SSjob.prioritized_jobs)
 							dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Deprioritize</a>"
 						else
-							if(prioritycount < 5)
+							if(SSjob.prioritized_jobs.len < 5)
 								dat += "<a href='?src=\ref[src];choice=prioritize_job;job=[job.title]'>Prioritize</a>"
 							else
 								dat += "Denied"
@@ -356,7 +352,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			if (modify)
 				GLOB.data_core.manifest_modify(modify.registered_name, modify.assignment)
 				modify.update_label()
-				modify.loc = loc
+				modify.forceMove(drop_location())
 				modify.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				modify = null
@@ -365,26 +361,24 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+					if (!usr.transferItemToLoc(I,src))
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
 					modify = I
 			authenticated = 0
 
 		if ("scan")
 			if (scan)
-				scan.loc = src.loc
+				scan.forceMove(drop_location())
 				scan.verb_pickup()
 				playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 				scan = null
 			else
 				var/obj/item/I = usr.get_active_held_item()
 				if (istype(I, /obj/item/card/id))
-					if(!usr.drop_item())
+					if (!usr.transferItemToLoc(I,src))
 						return
 					playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-					I.loc = src
 					scan = I
 			authenticated = 0
 		if ("auth")
@@ -530,11 +524,12 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 				var/priority = TRUE
 				if(j in SSjob.prioritized_jobs)
 					SSjob.prioritized_jobs -= j
-					prioritycount--
 					priority = FALSE
+				else if(j.total_positions <= j.current_positions)
+					to_chat(usr, "<span class='notice'>[j.title] has had all positions filled. Open up more slots before prioritizing it.</span>")
+					return
 				else
 					SSjob.prioritized_jobs += j
-					prioritycount++
 				to_chat(usr, "<span class='notice'>[j.title] has been successfully [priority ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 

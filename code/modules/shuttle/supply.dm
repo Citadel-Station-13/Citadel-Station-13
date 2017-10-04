@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	callTime = 600
 
 	dir = WEST
-	port_angle = 90
+	port_direction = EAST
 	width = 12
 	dwidth = 5
 	height = 7
@@ -45,7 +45,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	SSshuttle.supply = src
 
 /obj/docking_port/mobile/supply/canMove()
-	if(z == ZLEVEL_STATION)
+	if(z in GLOB.station_z_levels)
 		return check_blacklist(shuttle_areas)
 	return ..()
 

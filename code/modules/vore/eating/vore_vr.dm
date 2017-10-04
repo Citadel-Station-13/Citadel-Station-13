@@ -41,6 +41,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	var/digestable = TRUE
 	var/devourable = FALSE
 	var/list/belly_prefs = list()
+	var/vore_taste
 
 	//Mechanically required
 	var/path
@@ -101,6 +102,7 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	S["digestable"] >> digestable
 	S["devourable"] >> devourable
 	S["belly_prefs"] >> belly_prefs
+	S["vore_taste"] >> vore_taste
 
 	if(isnull(digestable))
 		digestable = TRUE
@@ -118,8 +120,23 @@ V::::::V           V::::::VO:::::::OOO:::::::ORR:::::R     R:::::REE::::::EEEEEE
 	if(!S)					return FALSE
 	S.cd = "/character[slot]"
 
-	S["digestable"] << digestable
-	S["devourable"] << devourable
-	S["belly_prefs"] << belly_prefs
+	WRITE_FILE(S["digestable"], digestable)
+	WRITE_FILE(S["devourable"], devourable)
+	WRITE_FILE(S["belly_prefs"], belly_prefs)
+	WRITE_FILE(S["vore_taste"], vore_taste)							
 
 	return TRUE
+
+#ifdef TESTING
+//DEBUG
+//Some crude tools for testing savefiles
+//path is the savefile path
+/client/verb/vore_savefile_export(path as text)
+	var/savefile/S = new /savefile(path)
+	S.ExportText("/",file("[path].txt"))
+//path is the savefile path
+/client/verb/vore_savefile_import(path as text)
+	var/savefile/S = new /savefile(path)
+	S.ImportText("/",file("[path].txt"))
+
+#endif

@@ -31,15 +31,16 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
 		var/startSide = pick(GLOB.cardinals)
-		pickedstart = spaceDebrisStartLoc(startSide, ZLEVEL_STATION)
-		pickedgoal = spaceDebrisFinishLoc(startSide, ZLEVEL_STATION)
+		var/startZ = pick(GLOB.station_z_levels)
+		pickedstart = spaceDebrisStartLoc(startSide, startZ)
+		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
 		max_i--
 		if(max_i<=0)
 			return
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart)
 	M.dest = pickedgoal
-	M.z_original = ZLEVEL_STATION
+	M.z_original = M.z
 	spawn(0)
 		walk_towards(M, M.dest, 1)
 
@@ -96,7 +97,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original = ZLEVEL_STATION
+	var/z_original = ZLEVEL_STATION_PRIMARY
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
 
@@ -119,6 +120,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
 	. = ..()
 
@@ -309,6 +311,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/New()
 	meteordrop += subtypesof(/obj/item/organ/alien)
+	meteordrop -= /obj/item/organ/alien/eggsac
 	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)

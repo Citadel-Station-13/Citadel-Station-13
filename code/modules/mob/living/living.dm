@@ -229,8 +229,8 @@
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
-		src.adjustOxyLoss(src.health - HEALTH_THRESHOLD_DEAD)
+		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", INDIVIDUAL_ATTACK_LOG)
+		adjustOxyLoss(health - HEALTH_THRESHOLD_DEAD)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
@@ -241,7 +241,10 @@
 		return 1
 
 /mob/living/proc/InCritical()
-	return (health < HEALTH_THRESHOLD_CRIT && health > HEALTH_THRESHOLD_DEAD && stat == UNCONSCIOUS)
+	return (health <= HEALTH_THRESHOLD_CRIT && (stat == SOFT_CRIT || stat == UNCONSCIOUS))
+
+/mob/living/proc/InFullCritical()
+	return (health <= HEALTH_THRESHOLD_FULLCRIT && stat == UNCONSCIOUS)
 
 //This proc is used for mobs which are affected by pressure to calculate the amount of pressure that actually
 //affects them once clothing is factored in. ~Errorage
@@ -409,7 +412,7 @@
 	set category = "OOC"
 	set src in view()
 
-	if(config.allow_Metadata)
+	if(CONFIG_GET(flag/allow_metadata))
 		if(client)
 			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
 		else
@@ -426,6 +429,7 @@
 		else
 			return 0
 
+	var/old_direction = dir
 	var/atom/movable/pullee = pulling
 	if(pullee && get_dist(src, pullee) > 1)
 		stop_pulling()
@@ -441,10 +445,6 @@
 
 		var/pull_dir = get_dir(src, pulling)
 		if(get_dist(src, pulling) > 1 || ((pull_dir - 1) & pull_dir)) //puller and pullee more than one tile away or in diagonal position
-			if(isliving(pulling))
-				var/mob/living/M = pulling
-				if(M.lying && !M.buckled && (prob(M.getBruteLoss()*200/M.maxHealth)))
-					M.makeTrail(T)
 			pulling.Move(T, get_dir(pulling, T)) //the pullee tries to reach our previous position
 			if(pulling && get_dist(src, pulling) > 1) //the pullee couldn't keep up
 				stop_pulling()
@@ -455,47 +455,57 @@
 	if (s_active && !(CanReach(s_active,view_only = TRUE)))
 		s_active.close(src)
 
+	if(lying && !buckled && prob(getBruteLoss()*200/maxHealth))
+
+		makeTrail(newloc, T, old_direction)
+
 /mob/living/movement_delay(ignorewalk = 0)
-	. = ..()
+	. = 0
 	if(isopenturf(loc) && !is_flying())
 		var/turf/open/T = loc
 		. += T.slowdown
+	var/static/config_run_delay
+	var/static/config_walk_delay
+	if(isnull(config_run_delay))
+		config_run_delay = CONFIG_GET(number/run_delay)
+		config_walk_delay = CONFIG_GET(number/walk_delay)
 	if(ignorewalk)
-		. += config.run_speed
+		. += config_run_delay
 	else
 		switch(m_intent)
 			if(MOVE_INTENT_RUN)
 				if(drowsyness > 0)
 					. += 6
-				. += config.run_speed
+				. += config_run_delay
 			if(MOVE_INTENT_WALK)
-				. += config.walk_speed
+				. += config_walk_delay
 
-/mob/living/proc/makeTrail(turf/T)
+/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
 		return
-	var/blood_exists = 0
+	var/blood_exists = FALSE
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in src.loc) //checks for blood splatter already on the floor
-		blood_exists = 1
-	if (isturf(src.loc))
+	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
+		blood_exists = TRUE
+	if(isturf(start))
 		var/trail_type = getTrail()
 		if(trail_type)
-			var/brute_ratio = round(getBruteLoss()/maxHealth, 0.1)
+			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(T, src.loc)
-				if(newdir != src.dir)
-					newdir = newdir | src.dir
+				var/newdir = get_dir(target_turf, start)
+				if(newdir != direction)
+					newdir = newdir | direction
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
 				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(T, src.loc), 180)
+					newdir = turn(get_dir(target_turf, start), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(src.loc)
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
+					new /obj/effect/decal/cleanable/trail_holder(start)
+
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
 						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
@@ -539,11 +549,14 @@
 	if(!force_moving)
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
+/mob/living/proc/can_resist()
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
 /mob/living/verb/resist()
 	set name = "Resist"
 	set category = "IC"
 
-	if(!isliving(src) || next_move > world.time || incapacitated(ignore_restraints = 1))
+	if(!can_resist())
 		return
 	changeNext_move(CLICK_CD_RESIST)
 
@@ -560,16 +573,16 @@
 
 	// climbing out of a gut
 	if(attempt_vr(src,"vore_process_resist",args)) return TRUE
-	
+
 	//Breaking out of a container (Locker, sleeper, cryo...)
 	else if(isobj(loc))
 		var/obj/C = loc
 		C.container_resist(src)
 
-	else if(has_status_effect(/datum/status_effect/freon))
+	else if(IsFrozen())
 		to_chat(src, "You start breaking out of the ice cube!")
 		if(do_mob(src, src, 40))
-			if(has_status_effect(/datum/status_effect/freon))
+			if(IsFrozen())
 				to_chat(src, "You break out of the ice cube!")
 				remove_status_effect(/datum/status_effect/freon)
 				update_canmove()
@@ -687,6 +700,7 @@
 						who.equip_to_slot(what, where, TRUE)
 
 /mob/living/singularity_pull(S, current_size)
+	..()
 	if(current_size >= STAGE_SIX)
 		throw_at(S,14,3, spin=1)
 	else
@@ -703,30 +717,24 @@
 	floating = 0 // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-
-	else if(istype(loc, /obj/structure/transit_tube_pod))
-		loc_temp = environment.temperature
-
+	var/loc_temp = environment ? environment.temperature : T0C
+	if(isobj(loc))
+		var/obj/oloc = loc
+		var/obj_temp = oloc.return_temperature()
+		if(obj_temp != null)
+			loc_temp = obj_temp
+/*	if(ismob(loc))
+		var/mob/living/mloc = loc
+		var/mob_temp = mloc.return_temperature()
+		if(mloc == DEAD)
+			loc_temp = get_turf(loc) //wew
+		else
+			loc_temp = mob_temp
+*/
+//just gunna ommit this for now, it's on the 'to figgur out' list.
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
-
-	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
-		var/datum/gas_mixture/G = C.AIR1
-
-		if(G.total_moles() < 10)
-			loc_temp = environment.temperature
-		else
-			loc_temp = G.temperature
-
-	else
-		loc_temp = environment.temperature
-
 	return loc_temp
 
 /mob/living/proc/get_standard_pixel_x_offset(lying = 0)
@@ -740,9 +748,6 @@
 
 	if(statpanel("Status"))
 		if(SSticker && SSticker.mode)
-			for(var/datum/gang/G in SSticker.mode.gangs)
-				if(G.is_dominating)
-					stat(null, "[G.name] Gang Takeover: [max(G.domination_time_remaining(), 0)]")
 			if(istype(SSticker.mode, /datum/game_mode/blob))
 				var/datum/game_mode/blob/B = SSticker.mode
 				if(B.message_sent)
@@ -879,7 +884,7 @@
 		on_fire = 1
 		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
-		src.set_light(3)
+		new/obj/effect/dummy/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
 		update_fire()
 		return TRUE
@@ -889,7 +894,8 @@
 	if(on_fire)
 		on_fire = 0
 		fire_stacks = 0
-		src.set_light(0)
+		for(var/obj/effect/dummy/fire/F in src)
+			qdel(F)
 		clear_alert("fire")
 		update_fire()
 
@@ -946,13 +952,14 @@
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_canmove()
-	var/ko = IsKnockdown() || IsUnconscious() || stat || (status_flags & FAKEDEATH)
+	var/ko = IsKnockdown() || IsUnconscious() || (stat && (stat != SOFT_CRIT || pulledby)) || (status_flags & FAKEDEATH)
+	var/move_and_fall = stat == SOFT_CRIT && !pulledby
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	var/has_legs = get_num_legs()
 	var/has_arms = get_num_arms()
 	var/ignore_legs = get_leg_ignore()
-	if(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || chokehold)
+	if(ko || resting || move_and_fall || IsStun() || chokehold)
 		drop_all_held_items()
 		unset_machine()
 		if(pulling)
@@ -965,9 +972,9 @@
 	else if(!lying)
 		if(resting)
 			fall()
-		else if(ko || (!has_legs && !ignore_legs) || chokehold)
+		else if(ko || move_and_fall || (!has_legs && !ignore_legs) || chokehold)
 			fall(forced = 1)
-	canmove = !(ko || resting || has_status_effect(STATUS_EFFECT_STUN) || has_status_effect(/datum/status_effect/freon) || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
+	canmove = !(ko || resting || IsStun() || IsFrozen() || chokehold || buckled || (!has_legs && !ignore_legs && !has_arms))
 	density = !lying
 	if(lying)
 		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
@@ -981,3 +988,19 @@
 			client.move_delay = world.time + movement_delay()
 	lying_prev = lying
 	return canmove
+
+/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
+	abilities.Add(A)
+	A.on_gain(src)
+	if(A.has_action)
+		A.action.Grant(src)
+
+/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
+	abilities.Remove(A)
+	A.on_lose(src)
+	if(A.action)
+		A.action.Remove(src)
+
+/mob/living/proc/add_abilities_to_panel()
+	for(var/obj/effect/proc_holder/A in abilities)
+		statpanel("[A.panel]",A.get_panel_text(),A)

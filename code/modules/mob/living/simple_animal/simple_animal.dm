@@ -85,6 +85,8 @@
 	//domestication
 	var/tame = 0
 
+	no_vore = TRUE
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	GLOB.simple_animals += src
@@ -95,6 +97,9 @@
 		real_name = name
 	if(!loc)
 		stack_trace("Simple animal being instantiated in nullspace")
+	if(vore_active)
+		init_belly()
+	verbs |= /mob/living/proc/animal_nom
 
 
 /mob/living/simple_animal/Login()
@@ -228,7 +233,6 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 	if(!environment_is_safe(environment))
@@ -267,11 +271,11 @@
 
 
 /mob/living/simple_animal/movement_delay()
-	. = ..()
-
-	. = speed
-
-	. += config.animal_delay
+	var/static/config_animal_delay
+	if(isnull(config_animal_delay))
+		config_animal_delay = CONFIG_GET(number/animal_delay)
+	. += config_animal_delay
+	return ..() + speed + config_animal_delay
 
 /mob/living/simple_animal/Stat()
 	..()
@@ -313,7 +317,7 @@
 		var/mob/living/L = the_target
 		if(L.stat != CONSCIOUS)
 			return 0
-	if (istype(the_target, /obj/mecha))
+	if (ismecha(the_target))
 		var/obj/mecha/M = the_target
 		if (M.occupant)
 			return 0

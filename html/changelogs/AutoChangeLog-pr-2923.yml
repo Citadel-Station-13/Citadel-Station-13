@@ -1,0 +1,4 @@
+author: "Improvedname"
+delete-after: True
+changes: 
+  - tweak: "You can now rename holy weapons"

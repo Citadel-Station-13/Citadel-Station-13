@@ -73,14 +73,14 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.species_traits)
-		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!")
+		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!</span>")
 		return
 	..()
 
-/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
-	if((target.disabilities & HUSK) || !target.has_dna())
+	if((target.disabilities & HUSK) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1

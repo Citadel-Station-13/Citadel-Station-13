@@ -14,7 +14,6 @@
  *		Cards
  *		Toy nuke
  *		Fake meteor
- *		Carp plushie
  *		Foam armblade
  *		Toy big red button
  *		Beach ball
@@ -40,6 +39,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
+
 
 /obj/item/toy/balloon/New()
 	create_reagents(10)
@@ -278,6 +278,8 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "foamblade"
 	item_state = "arm_blade"
+	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	attack_verb = list("pricked", "absorbed", "gored")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
@@ -288,6 +290,8 @@
 	desc = "A replica toolbox that rumbles when you turn the key"
 	icon_state = "his_grace"
 	item_state = "artistic_toolbox"
+	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	var/active = FALSE
 	icon = 'icons/obj/items_and_weapons.dmi'
 	attack_verb = list("robusted")
@@ -547,6 +551,8 @@
 	desc = "A tool to help you write fictional devils!"
 	icon = 'icons/obj/library.dmi'
 	icon_state = "demonomicon"
+	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	recharge_time = 60
 
@@ -979,32 +985,6 @@
 			if(!M.stat && !isAI(M))
 				shake_camera(M, 3, 1)
 		qdel(src)
-
-/*
- * Carp plushie
- */
-
-/obj/item/toy/carpplushie
-	name = "space carp plushie"
-	desc = "An adorable stuffed toy that resembles a space carp."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
-	item_state = "carp_plushie"
-	w_class = WEIGHT_CLASS_SMALL
-	attack_verb = list("bitten", "eaten", "fin slapped")
-	resistance_flags = FLAMMABLE
-	var/bitesound = 'sound/weapons/bite.ogg'
-
-//Attack mob
-/obj/item/toy/carpplushie/attack(mob/M, mob/user)
-	playsound(loc, bitesound, 20, 1)	//Play bite sound in local area
-	return ..()
-
-//Attack self
-/obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
-	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
-	return ..()
 
 /*
  * Toy big red button

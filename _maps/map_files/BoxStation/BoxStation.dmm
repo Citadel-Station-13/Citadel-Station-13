@@ -851,8 +851,7 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "acm" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	areastring = "/area/ai_monitored/security/armory";
 	name = "Armory APC";
@@ -2408,7 +2407,7 @@
 	dir = 4;
 	id = "pod3";
 	name = "escape pod 3";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -2423,8 +2422,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -3245,9 +3242,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/iv_drip{
-	density = 0
-	},
+/obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
@@ -6125,7 +6120,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ank" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -6369,7 +6364,7 @@
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 9
 	},
 /obj/docking_port/stationary{
@@ -6899,7 +6894,7 @@
 /area/security/detectives_office)
 "ape" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office B";
 	req_access_txt = "32"
 	},
@@ -7055,7 +7050,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "apx" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -7440,14 +7435,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/fitness)
 "aqs" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/crew_quarters/fitness)
-"aqt" = (
-/obj/effect/landmark/syndicate_breach_area,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -8058,8 +8045,6 @@
 /area/lawoffice)
 "asa" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/red/corner{
@@ -8272,7 +8257,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "asy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -8646,7 +8631,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "atB" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /turf/open/floor/plating,
@@ -9081,7 +9066,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "auG" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -9271,7 +9256,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avf" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Chemical Storage";
 	req_access_txt = "12"
 	},
@@ -10053,7 +10038,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Electrical Maintenance";
 	req_access_txt = "11"
 	},
@@ -10229,7 +10214,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "axj" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -13341,6 +13326,7 @@
 	id = "chapelgun";
 	name = "Chapel Launcher Door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/chapel/main)
 "aEo" = (
@@ -14783,7 +14769,6 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "aHr" = (
-/obj/effect/landmark/marauder_entry,
 /turf/open/space,
 /area/space)
 "aHs" = (
@@ -14800,8 +14785,6 @@
 /area/shuttle/arrival)
 "aHu" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/white/corner{
@@ -16485,7 +16468,7 @@
 	height = 7;
 	id = "arrival";
 	name = "arrival shuttle";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 8;
 	width = 15
 	},
@@ -17311,8 +17294,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel/bar,
@@ -18092,10 +18073,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "aPE" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall,
 /area/crew_quarters/locker)
 "aPF" = (
@@ -18207,10 +18185,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -18249,10 +18224,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
 	id = "bridge blast";
@@ -19446,8 +19418,6 @@
 "aTr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /turf/open/floor/plasteel,
@@ -20943,8 +20913,7 @@
 	},
 /area/bridge)
 "aWW" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Bridge APC";
 	areastring = "/area/bridge";
@@ -21395,7 +21364,7 @@
 /turf/open/floor/carpet,
 /area/chapel/main)
 "aXX" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Vacant Office A";
 	req_access_txt = "32"
 	},
@@ -22745,7 +22714,6 @@
 /area/quartermaster/storage)
 "bbu" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Captain's Office APC";
 	areastring = "/area/crew_quarters/heads/captain";
@@ -23453,8 +23421,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/blue/corner{
@@ -23802,8 +23768,7 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai_upload)
 "bed" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "Upload APC";
 	areastring = "/area/ai_monitored/turret_protected/ai_upload";
@@ -24403,10 +24368,7 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfw" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4
-	},
+/obj/machinery/status_display,
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/ai_upload)
 "bfx" = (
@@ -24458,7 +24420,7 @@
 /area/crew_quarters/heads/captain)
 "bfE" = (
 /obj/structure/table/wood,
-/obj/item/pinpointer,
+/obj/item/pinpointer/nuke,
 /obj/item/disk/nuclear,
 /obj/item/storage/secure/safe{
 	pixel_x = 35;
@@ -24703,7 +24665,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "bgp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
@@ -26465,8 +26427,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = 32
 	},
 /obj/machinery/aug_manipulator,
@@ -26550,7 +26510,6 @@
 /area/quartermaster/office)
 "bkx" = (
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = 2;
 	supply_display = 1
 	},
@@ -26903,7 +26862,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blh" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastright{
@@ -26981,7 +26940,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blp" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -27015,7 +26974,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "blr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -27435,8 +27394,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/brown/corner{
@@ -27937,6 +27894,7 @@
 	id = "trash";
 	name = "disposal bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "bnw" = (
@@ -29072,7 +29030,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "bpR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
@@ -29906,7 +29864,7 @@
 	},
 /area/science/explab)
 "brE" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -30357,8 +30315,6 @@
 /area/medical/medbay/central)
 "bsz" = (
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/white/side{
@@ -31912,7 +31868,6 @@
 	},
 /obj/machinery/light,
 /obj/machinery/status_display{
-	density = 0;
 	pixel_y = -30;
 	supply_display = 1
 	},
@@ -32546,7 +32501,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -34180,7 +34135,6 @@
 	pixel_y = -35
 	},
 /obj/machinery/status_display{
-	density = 0;
 	pixel_x = -32;
 	supply_display = 1
 	},
@@ -36558,7 +36512,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bGo" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -37441,8 +37395,6 @@
 "bIe" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -37967,7 +37919,7 @@
 	height = 5;
 	id = "mining";
 	name = "mining shuttle";
-	port_angle = 90;
+	port_direction = 4;
 	width = 7
 	},
 /obj/docking_port/stationary{
@@ -38895,7 +38847,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bKU" = (
-/obj/machinery/door/airlock/engineering{
+/obj/machinery/door/airlock/engineering/abandoned{
 	name = "Construction Area";
 	req_access_txt = "32"
 	},
@@ -39083,6 +39035,7 @@
 	id = "toxinsdriver";
 	name = "toxins launcher bay door"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/science/mixing)
 "bLm" = (
@@ -40584,7 +40537,6 @@
 "bOP" = (
 /obj/structure/table/glass,
 /obj/structure/reagent_dispensers/virusfood{
-	density = 0;
 	pixel_x = -30
 	},
 /obj/item/book/manual/wiki/infections{
@@ -41448,8 +41400,7 @@
 /area/science/misc_lab)
 "bQV" = (
 /obj/machinery/atmospherics/components/trinary/filter{
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
@@ -42341,8 +42292,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bSX" = (
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Virology APC";
 	areastring = "/area/medical/virology";
@@ -42583,7 +42533,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bTw" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
@@ -43924,8 +43874,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Telecomms Server APC";
 	areastring = "/area/tcommsat/server";
@@ -44808,7 +44757,7 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/maintenance/port/aft)
 "bYy" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Incinerator Access";
 	req_access_txt = "12"
 	},
@@ -46081,8 +46030,7 @@
 /obj/structure/closet/secure_closet/engineering_chief{
 	req_access_txt = "0"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "CE Office APC";
 	areastring = "/area/crew_quarters/heads/chief";
@@ -46159,7 +46107,7 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cbv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Research Delivery access";
 	req_access_txt = "12"
 	},
@@ -46304,7 +46252,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cbO" = (
-/obj/machinery/door/airlock/atmos{
+/obj/machinery/door/airlock/atmos/abandoned{
 	name = "Atmospherics Maintenance";
 	req_access_txt = "12;24"
 	},
@@ -46477,7 +46425,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Construction Area Maintenance";
 	req_access_txt = "32"
 	},
@@ -47850,7 +47798,7 @@
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
 "cfs" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Air Supply Maintenance";
 	req_access_txt = "12"
 	},
@@ -47875,7 +47823,7 @@
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
 "cfv" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Firefighting equipment";
 	req_access_txt = "12"
 	},
@@ -49118,8 +49066,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cib" = (
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -49156,8 +49103,7 @@
 	dir = 1
 	},
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/power/apc{
-	cell_type = 15000;
+/obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 1;
 	name = "Engineering APC";
 	areastring = "/area/engine/engineering";
@@ -50080,7 +50026,7 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ckm" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	name = "Biohazard Disposals";
 	req_access_txt = "12"
 	},
@@ -52688,7 +52634,7 @@
 	dir = 4;
 	id = "pod4";
 	name = "escape pod 4";
-	port_angle = 180;
+	port_direction = 2;
 	preferred_direction = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -52703,8 +52649,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -52754,7 +52698,7 @@
 /turf/open/space,
 /area/maintenance/disposal/incinerator)
 "cpR" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/abandoned{
 	name = "Observatory Access"
 	},
 /turf/open/floor/plating,
@@ -52995,7 +52939,7 @@
 	dir = 8;
 	id = "pod2";
 	name = "escape pod 2";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_2)
@@ -54600,13 +54544,8 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cup" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -54631,13 +54570,8 @@
 	},
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cur" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -54646,13 +54580,8 @@
 	},
 /area/ai_monitored/turret_protected/aisat_interior)
 "cus" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -54689,13 +54618,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/aisat_interior)
 "cuv" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -55811,8 +55735,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	cell_type = 5000;
+/obj/machinery/power/apc/highcap/five_k{
 	dir = 2;
 	name = "AI Chamber APC";
 	areastring = "/area/ai_monitored/turret_protected/ai";
@@ -56062,8 +55985,6 @@
 	dir = 8
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -56189,7 +56110,7 @@
 	height = 13;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_angle = 0;
+	port_direction = 1;
 	preferred_direction = 4;
 	roundstart_move = "ferry_away";
 	width = 5
@@ -56213,7 +56134,7 @@
 	dir = 8;
 	id = "pod1";
 	name = "escape pod 1";
-	port_angle = 180
+	port_direction = 2
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/pod_1)
@@ -56382,7 +56303,7 @@
 	id = "whiteship";
 	launch_status = 0;
 	name = "NT Medical Ship";
-	port_angle = -90;
+	port_direction = 8;
 	preferred_direction = 4;
 	roundstart_move = "whiteship_away";
 	timid = null;
@@ -56617,7 +56538,7 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "cyL" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "12"
 	},
 /obj/structure/cable{
@@ -56992,8 +56913,6 @@
 	dir = 4
 	},
 /obj/machinery/status_display{
-	density = 0;
-	layer = 3;
 	pixel_y = 32
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -57591,13 +57510,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 8;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = 9;
 	pixel_y = 2
 	},
@@ -57607,13 +57521,8 @@
 /turf/open/floor/plasteel/black,
 /area/ai_monitored/turret_protected/ai)
 "cAW" = (
-/obj/structure/showcase{
-	density = 0;
-	desc = "An old, deactivated cyborg. Whilst once actively used to guard against intruders, it now simply intimidates them with its cold, steely gaze.";
+/obj/structure/showcase/cyborg/old{
 	dir = 4;
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "robot_old";
-	name = "Cyborg Statue";
 	pixel_x = -9;
 	pixel_y = 2
 	},
@@ -60254,7 +60163,7 @@
 	icon_state = "2-4"
 	},
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/department/medical/morgue)
 "cHE" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Mech Bay Maintenance";
@@ -60916,7 +60825,7 @@
 	height = 24;
 	id = "syndicate";
 	name = "syndicate infiltrator";
-	port_angle = 0;
+	port_direction = 1;
 	roundstart_move = "syndicate_away";
 	width = 18
 	},
@@ -62503,7 +62412,6 @@
 /area/quartermaster/sorting)
 "cNL" = (
 /obj/machinery/power/apc{
-	cell_type = 2500;
 	dir = 1;
 	name = "Central Maintenance APC";
 	areastring = "/area/maintenance/central";
@@ -62606,7 +62514,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cNV" = (
-/obj/machinery/door/airlock/maintenance{
+/obj/machinery/door/airlock/maintenance/abandoned{
 	req_access_txt = "0";
 	req_one_access_txt = "8;12"
 	},
@@ -63930,6 +63838,191 @@
 	dir = 4
 	},
 /area/construction/mining/aux_base)
+"cTF" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTG" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTH" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"cTI" = (
+/obj/machinery/door/airlock/maintenance/abandoned{
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"cTJ" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTK" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTL" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/open/floor/plasteel/black,
+/area/medical/morgue)
+"cTM" = (
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Morgue Maintenance APC";
+	areastring = "/area/maintenance/department/medical/morgue";
+	pixel_x = 26
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/plasteel/black,
+/area/medical/morgue)
+"cTN" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTQ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTR" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTS" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTT" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTU" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"cTV" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
 
 (1,1,1) = {"
 aaa
@@ -83888,7 +83981,7 @@ bHE
 bYu
 bZk
 bCq
-bTz
+cTF
 bCq
 bCq
 bCq
@@ -85184,7 +85277,7 @@ bCq
 bCq
 bCq
 bCq
-bTz
+cTF
 bCq
 bLv
 bLv
@@ -86193,7 +86286,7 @@ bLv
 bPZ
 bHE
 bHE
-bTz
+cTF
 bHE
 bLv
 aoV
@@ -100778,7 +100871,7 @@ aaa
 aaa
 aaa
 aaa
-aqt
+aqs
 aro
 aro
 aro
@@ -103642,7 +103735,7 @@ bfL
 bhp
 biB
 biB
-biB
+cTL
 bkU
 bmX
 bpE
@@ -103899,7 +103992,7 @@ bfL
 bhq
 bhm
 bkb
-bhm
+cTM
 bla
 bmZ
 bpH
@@ -104414,7 +104507,7 @@ bfS
 biC
 bkd
 bfS
-bKH
+cTO
 bmZ
 bpJ
 brc
@@ -104928,7 +105021,7 @@ bfS
 biE
 bkf
 bfS
-bKH
+cTP
 bmZ
 bpL
 bre
@@ -105185,7 +105278,7 @@ bfS
 biD
 bke
 bfS
-bKH
+cTQ
 bmZ
 bpK
 brd
@@ -105442,7 +105535,7 @@ bfS
 bfS
 bfS
 bfS
-bKH
+cTR
 bmZ
 bon
 bon
@@ -105694,17 +105787,17 @@ aYV
 baR
 bcb
 bdl
-bdO
+cTJ
 cHD
 bgo
-bPv
-bPv
+cTK
+cTN
 blq
-bna
-bPv
+cTS
+cTT
 bpQ
-bPv
-bdO
+cTU
+cTV
 btm
 buy
 bvz
@@ -109860,7 +109953,7 @@ cmq
 ciI
 cnJ
 cri
-bYr
+cTI
 cmn
 cBT
 cBU
@@ -115214,7 +115307,7 @@ aaa
 aaa
 aaa
 bky
-btq
+btp
 brH
 bvQ
 bxt
@@ -115728,7 +115821,7 @@ aaa
 aaa
 aaa
 bZi
-btp
+btq
 brI
 bvR
 cNS

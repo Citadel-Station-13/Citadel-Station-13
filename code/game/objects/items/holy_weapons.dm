@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
+	unique_rename = TRUE
 	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
@@ -244,6 +245,7 @@
 		S.name = name
 		S.ckey = theghost.ckey
 		S.status_flags |= GODMODE
+		S.language_holder = user.language_holder.copy(S)
 		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
 
 		if(src && input)
@@ -333,9 +335,11 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "carpplushie"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "carpplush"
 	item_state = "carp_plushie"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	force = 15
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	hitsound = 'sound/weapons/bite.ogg'
@@ -379,11 +383,9 @@
 	flags_2 = SLOWS_WHILE_IN_HAND_2
 
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
-	..()
-
-/obj/item/nullrod/tribal_knife/New()
-	..()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -403,3 +405,14 @@
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
+
+/obj/item/nullrod/egyptian
+	name = "egyptian staff"
+	desc = "A tutorial in mummification is carved into the staff. You could probably craft the wraps if you had some cloth."
+	icon = 'icons/obj/guns/magic.dmi'
+	icon_state = "pharoah_sceptre"
+	item_state = "pharoah_sceptre"
+	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("bashes", "smacks", "whacks")

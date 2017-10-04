@@ -6,6 +6,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	antag_flag = ROLE_WIZARD
+	false_report_weight = 10
 	required_players = 20
 	required_enemies = 1
 	recommended_enemies = 1
@@ -29,7 +30,7 @@
 		to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 		return 0
 	for(var/datum/mind/wiz in wizards)
-		wiz.current.loc = pick(GLOB.wizardstart)
+		wiz.current.forceMove(pick(GLOB.wizardstart))
 
 	return 1
 
@@ -46,6 +47,10 @@
 	..()
 	return
 
+/datum/game_mode/wizard/generate_report()
+	return "A dangerous Wizards' Federation individual by the name of [pick(GLOB.wizard_first)] [pick(GLOB.wizard_second)] has recently escaped confinement from an unlisted prison facility. This \
+		man is a dangerous mutant with the ability to alter himself and the world around him by what he and his leaders believe to be magic. If this man attempts an attack on your station, \
+		his execution is highly encouraged, as is the preservation of his body for later study."
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
 	switch(rand(1,100))
@@ -239,15 +244,6 @@
 	return 1
 
 //OTHER PROCS
-
-//To batch-remove wizard spells. Linked to mind.dm.
-/mob/proc/spellremove(mob/M)
-	if(!mind)
-		return
-	for(var/X in src.mind.spell_list)
-		var/obj/effect/proc_holder/spell/spell_to_remove = X
-		qdel(spell_to_remove)
-		mind.spell_list -= spell_to_remove
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)

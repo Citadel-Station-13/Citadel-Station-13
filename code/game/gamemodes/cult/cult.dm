@@ -21,6 +21,8 @@
 			return FALSE
 		if(M.mind.enslaved_to && !iscultist(M.mind.enslaved_to))
 			return FALSE
+		if(M.mind.unconvertable)
+			return FALSE
 	else
 		return FALSE
 	if(M.isloyal() || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M))
@@ -31,6 +33,7 @@
 	name = "cult"
 	config_tag = "cult"
 	antag_flag = ROLE_CULTIST
+	false_report_weight = 10
 	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 24
@@ -54,10 +57,10 @@
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
 
-	if(config.protect_roles_from_antagonist)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
 
-	if(config.protect_assistant_from_antagonist)
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
 	//cult scaling goes here
@@ -104,7 +107,7 @@
 	if(!GLOB.summon_spots.len)
 		while(GLOB.summon_spots.len < SUMMON_POSSIBILITIES)
 			var/area/summon = pick(GLOB.sortedAreas - GLOB.summon_spots)
-			if((summon.z == ZLEVEL_STATION) && summon.valid_territory)
+			if((summon.z in GLOB.station_z_levels) && summon.valid_territory)
 				GLOB.summon_spots += summon
 	cult_objectives += "eldergod"
 
@@ -144,7 +147,7 @@
 		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
 		return 0
 	else
-		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].")
+		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
 			var/obj/item/storage/B = mob.back
 			B.orient2hud(mob)
@@ -258,6 +261,12 @@
 	..()
 	return 1
 
+/datum/game_mode/cult/generate_report()
+	return "Some stations in your sector have reported evidence of blood sacrifice and strange magic. Ties to the Wizards' Federation have been proven not to exist, and many employees \
+			have disappeared; even Central Command employees light-years away have felt strange presences and at times hysterical compulsions. Interrogations point towards this being the work of \
+			the cult of Nar-Sie. If evidence of this cult is discovered aboard your station, extreme caution and extreme vigilance must be taken going forward, and all resources should be \
+			devoted to stopping this cult. Note that holy water seems to weaken and eventually return the minds of cultists that ingest it, and mindshield implants will prevent conversion \
+			altogether."
 
 /datum/game_mode/proc/datum_cult_completion()
 	var/text = ""

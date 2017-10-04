@@ -283,7 +283,7 @@
 
 /obj/item/clothing/head/crown/fancy
 	name = "magnificent crown"
-	desc = "A crown worn by only the highest emperors of the land."
+	desc = "A crown worn by only the highest emperors of the <s>land</s> space."
 	icon_state = "fancycrown"
 
 /obj/item/clothing/head/scarecrow_hat
@@ -302,3 +302,9 @@
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat2"
 	dynamic_hair_suffix = ""
+
+/obj/item/clothing/head/nemes
+	name = "headress of Nemes"
+	desc = "Lavish space tomb not included."
+	icon_state = "nemes_headdress"
+	icon_state = "nemes_headdress"

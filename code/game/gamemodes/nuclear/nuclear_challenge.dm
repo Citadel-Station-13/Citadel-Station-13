@@ -6,7 +6,9 @@
 /obj/item/device/nuclear_challenge
 	name = "Declaration of War (Challenge Mode)"
 	icon_state = "gangtool-red"
-	item_state = "walkietalkie"
+	item_state = "radio"
+	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	desc = "Use to send a declaration of hostilities to the target, delaying your shuttle departure for 20 minutes while they prepare for your assault.  \
 			Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals.  \
 			Must be used within five minutes, or your benefactors will lose interest."
@@ -17,7 +19,7 @@
 		return
 
 	declaring_war = TRUE
-	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [-round((world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)/10)] seconds to decide", "Declare war?", "Yes", "No")
+	var/are_you_sure = alert(user, "Consult your team carefully before you declare war on [station_name()]]. Are you sure you want to alert the enemy crew? You have [DisplayTimeText(world.time-SSticker.round_start_time - CHALLENGE_TIME_LIMIT)] to decide", "Declare war?", "Yes", "No")
 	declaring_war = FALSE
 
 	if(!check_allowed(user))
@@ -56,7 +58,7 @@
 	U.hidden_uplink.owner = "[user.key]"
 	U.hidden_uplink.telecrystals = CHALLENGE_TELECRYSTALS
 	U.hidden_uplink.set_gamemode(/datum/game_mode/nuclear)
-	config.shuttle_refuel_delay = max(config.shuttle_refuel_delay, CHALLENGE_SHUTTLE_DELAY)
+	CONFIG_SET(number/shuttle_refuel_delay, max(CONFIG_GET(number/shuttle_refuel_delay), CHALLENGE_SHUTTLE_DELAY))
 	SSblackbox.set_val("nuclear_challenge_mode",1)
 	qdel(src)
 

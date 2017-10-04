@@ -1,0 +1,8 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Firing most guns will now cause your screen to shake subtly."
+  - rscadd: "Being hit by melee weapons with a force over 10 will now cause subtle screenshake"
+  - rscadd: "Hitting someone with a melee weapon with a force over 10 will now cause subtle screenshake"
+  - rscadd: "Hitting an object with a melee weapon with a force over 20 will now cause subtle screenshake"
+  - rscadd: "Added two options to the Game Settings menu: Screen Shake and Damage Screen Shake. Screen Shake controls (most) screenshake in the game, and allows you to set the percentage of screenshake from most sources, or simply turn it off entirely. Damage Screen Shake controls the screenshake when you get hit by weapons, and has three settings, on, off, and only when down. The defaults are 100%, and only when down, respectively."

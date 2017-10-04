@@ -29,6 +29,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/obj/item/udder/udder = null
 	devourable = TRUE
+	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize()
 	udder = new()
@@ -119,6 +120,7 @@
 	gold_core_spawnable = 2
 	blood_volume = BLOOD_VOLUME_NORMAL
 	devourable = TRUE
+	no_vore = FALSE
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
@@ -251,6 +253,7 @@
 	gold_core_spawnable = 2
 	var/static/chicken_count = 0
 	devourable = TRUE
+	no_vore = FALSE
 
 /mob/living/simple_animal/chicken/Initialize()
 	. = ..()
@@ -275,7 +278,6 @@
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//to_chat(world, eggsleft)
 		else
 			to_chat(user, "<span class='warning'>[name] doesn't seem hungry!</span>")
 	else
