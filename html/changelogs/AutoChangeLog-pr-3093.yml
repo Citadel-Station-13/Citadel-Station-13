@@ -1,0 +1,6 @@
+author: "Shock Collars"
+delete-after: True
+changes: 
+  - rscadd: "Added Shock Collars to hacked autolathes."
+  - imageadd: "On character sprites, credit to Toriate"
+  - imageadd: "Object sprite, credit to Toriate"

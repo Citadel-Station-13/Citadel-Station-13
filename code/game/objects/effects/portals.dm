@@ -39,10 +39,10 @@
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		teleport(user)
+		user.forceMove(get_turf(src))
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
-	if(get_turf(oldloc) == get_turf(linked))
+	if(linked && (get_turf(oldloc) == get_turf(linked)))
 		return ..()
 	if(!teleport(AM))
 		return ..()
@@ -52,7 +52,7 @@
 
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
-		teleport(user)
+		user.forceMove(get_turf(src))
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
