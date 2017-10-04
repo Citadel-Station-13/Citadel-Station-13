@@ -608,6 +608,14 @@
 	build_path = /obj/item/device/electropack
 	category = list("hacked", "Tools")
 
+/datum/design/shock_collar
+	name = "Shock Collar"
+	id = "shock_collar"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2000)
+	build_path = /obj/item/device/electropack/shockcollar
+	category = list("hacked", "Security")
+
 /datum/design/large_welding_tool
 	name = "Industrial Welding Tool"
 	id = "large_welding_tool"
