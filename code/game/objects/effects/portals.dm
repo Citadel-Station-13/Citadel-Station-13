@@ -1,4 +1,3 @@
-
 /proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
@@ -40,10 +39,10 @@
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
-		teleport(user)
+		user.forceMove(get_turf(src))
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
-	if(get_turf(oldloc) == get_turf(linked))
+	if(linked && (get_turf(oldloc) == get_turf(linked)))
 		return ..()
 	if(!teleport(AM))
 		return ..()
@@ -53,7 +52,7 @@
 
 /obj/effect/portal/attack_hand(mob/user)
 	if(Adjacent(user))
-		teleport(user)
+		user.forceMove(get_turf(src))
 
 /obj/effect/portal/Initialize(mapload, _creator, _lifespan = 0, obj/effect/portal/_linked, automatic_link = FALSE, turf/hard_target_override, atmos_link_override)
 	. = ..()
@@ -125,7 +124,7 @@
 	return ..()
 
 /obj/effect/portal/proc/teleport(atom/movable/M)
-	if(!istype(M) || istype(M, /obj/effect) || (istype(M, /obj/mecha) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
+	if(!istype(M) || istype(M, /obj/effect) || (ismecha(M) && !mech_sized) || (!isobj(M) && !ismob(M))) //Things that shouldn't teleport.
 		return
 	var/turf/real_target = get_link_target_turf()
 	if(!istype(real_target))
@@ -153,4 +152,3 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
-

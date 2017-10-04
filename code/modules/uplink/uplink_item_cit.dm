@@ -55,7 +55,7 @@
 /datum/uplink_item/ammo/pistolzzz
 	name = "10mm Soporific Magazine"
 	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. Loaded with soporific rounds that put the target to sleep. \
-			NOTE: Soporific is not instant acting due to the constraints of the round's scale. Will usually require two shots to take effect."
+			NOTE: Soporific is not instant acting due to the constraints of the round's scale. Will usually require three shots to take effect."
 	item = /obj/item/ammo_box/magazine/m10mm/soporific
 	cost = 2
 

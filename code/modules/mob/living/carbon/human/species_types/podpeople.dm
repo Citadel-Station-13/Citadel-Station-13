@@ -8,10 +8,13 @@
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	burnmod = 1.25
-	heatmod = 1.5
+	heatmod = 1.55
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/plant
 	disliked_food = NONE
 	liked_food = NONE
+	toxic_food = NONE
+	roundstart = TRUE
+
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -34,18 +37,21 @@
 		if(H.nutrition > NUTRITION_LEVEL_FULL)
 			H.nutrition = NUTRITION_LEVEL_FULL
 		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1)
-			H.adjustToxLoss(-1)
-			H.adjustOxyLoss(-1)
+			H.heal_overall_damage(0.75,0)
+			H.adjustOxyLoss(-0.5)
 
-	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
-		H.take_overall_damage(2,0)
+	if(H.nutrition < NUTRITION_LEVEL_STARVING + 55)
+		H.adjustOxyLoss(5) //can eat to negate this unfortunately
+		H.adjustToxLoss(3)
+
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
-		H.adjustToxLoss(3)
+		H.adjustToxLoss(5)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
-		return 1
+		H.confused = max(H.confused, 1)
+		return TRUE
+
 
 /datum/species/pod/on_hit(obj/item/projectile/P, mob/living/carbon/human/H)
 	switch(P.type)

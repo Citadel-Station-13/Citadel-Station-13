@@ -100,17 +100,13 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Nar-Sien Hardsuit")
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	var/pickedtype
 	switch(choice)
 		if("Shielded Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/berserker
-<<<<<<< HEAD
-		if("Nar-Sien Hardsuit")
-			pickedtype = /obj/item/clothing/suit/space/hardsuit/cult
-=======
 		if("Bastard Sword")
 			if((world.time - SSticker.round_start_time) >= 12000)
 				pickedtype = /obj/item/twohanded/required/cult_bastard
@@ -119,7 +115,6 @@
 				to_chat(user, "<span class='cultitalic'>The forge fires are not yet hot enough for this weapon, give it another [DisplayTimeText(cooldowntime)].</span>")
 				cooldowntime = 0
 				return
->>>>>>> e997bc4... Merge pull request #31198 from Jordie0608/apparentlythisbuildcompletedthefirsttimeidkhow
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		var/obj/item/N = new pickedtype(get_turf(src))
