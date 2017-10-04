@@ -16,8 +16,11 @@
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
+<<<<<<< HEAD
 	if(!(flags_1 & REAGENT_NOREACT))
 		START_PROCESSING(SSobj, src)
+=======
+>>>>>>> b8ea267... Merge pull request #31281 from vuonojenmustaturska/clowncult
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
@@ -54,7 +57,6 @@
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -288,6 +290,7 @@
 		C.update_stamina()
 	update_total()
 
+<<<<<<< HEAD
 /datum/reagents/process()
 	var/list/cached_reagents = reagent_list
 	if(flags_1 & REAGENT_NOREACT)
@@ -307,6 +310,14 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 		flags_1 |= REAGENT_NOREACT
+=======
+
+/datum/reagents/proc/set_reacting(react = TRUE)
+	if(react)
+		flags &= ~(REAGENT_NOREACT)
+	else
+		flags |= REAGENT_NOREACT
+>>>>>>> b8ea267... Merge pull request #31281 from vuonojenmustaturska/clowncult
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
