@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //The code execution of the emote datum is located at code/datums/emotes.dm
 /mob/living/emote(act, m_type = null, message = null)
 	act = lowertext(act)
