@@ -68,7 +68,7 @@
 
 	//Flight and floating
 	var/override_float = 0
-	
+
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -112,7 +112,7 @@
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
@@ -246,7 +246,7 @@
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 
-	regenerate_organs(C,old_species)		
+	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -1331,28 +1331,45 @@
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
 
-
-
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	var/aim_for_mouth  = user.zone_selected == "mouth"
-	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
-	var/target_aiming_for_mouth = target.zone_selected == "mouth"
-	var/target_restrained = target.restrained()
-	if(aim_for_mouth && ( target_on_help_and_unarmed || target_restrained || target_aiming_for_mouth))
+	var/obj/item/bodypart/user_hand
+	var/obj/item/bodypart/target_bodypart
+	var/target_same_as_target = (user.zone_selected == target.zone_selected)
+	var/target_peaceful = (target.a_intent == INTENT_HELP && !target.get_active_held_item()) || target.restrained()
+	var/facing_dir = check_target_facings(user,target)
+	user_hand = user.held_index_to_dir(user.active_hand_index) == "r" ? "r_hand" : "l_hand"
+	target_bodypart = target.get_bodypart(user.zone_selected)
+	if(user.zone_selected == "mouth" && (target_same_as_target || target_peaceful)) // Face Slap
 		playsound(target.loc, 'sound/weapons/slap.ogg', 50, 1, -1)
-		user.visible_message("<span class='danger'>[user] slaps [target] in the face!</span>",
-			"<span class='notice'>You slap [target] in the face! </span>",\
-		"You hear a slap.")
+		user.visible_message(\
+			"<span class='danger'>[user] slaps [target]'s face!</span>",\
+			"<span class='notice'>You slap [target]'s face! </span>",\
+			"You hear a slap."\
+		)
 		target.endTailWag()
 		return FALSE
-	else if(target.check_block())
+	else if(user.zone_selected == "groin" && (target_same_as_target || target_peaceful) && facing_dir != FACING_EACHOTHER) // Butt Slap
+		playsound(target.loc, "sound/weapons/slap.ogg", 50, 1, -1)
+		target_bodypart = target.get_bodypart("chest")
+		var/butt_state = "butt"
+		if(target.nutrition >= 400)
+			butt_state = "fat ass"
+		user.visible_message(\
+			"<span class='danger'>[user] slaps [target]'s [butt_state]!</span>",\
+			"<span class='notice'>You slap [target]'s [butt_state]! </span>",\
+			"You hear a slap."\
+		)
+		target.apply_damage(1, BRUTE, target_bodypart)
+		user.apply_damage(1, BRUTE, user_hand)
+		//add_logs(user, target, "slapped (butt slap)")
+		return FALSE
+	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s disarm attempt!</span>")
 		return 0
 	if(attacker_style && attacker_style.disarm_act(user,target))
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
@@ -1365,7 +1382,6 @@
 			target.forcesay(GLOB.hit_appends)
 			add_logs(user, target, "disarmed", " pushing them to the ground")
 			return
-
 		if(randn <= 60)
 			var/obj/item/I = null
 			if(target.pulling)
@@ -1381,13 +1397,9 @@
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 			add_logs(user, target, "disarmed", "[I ? " removing \the [I]" : ""]")
 			return
-
-
 		playsound(target, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 		target.visible_message("<span class='danger'>[user] attempted to disarm [target]!</span>", \
 						"<span class='userdanger'>[user] attemped to disarm [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-
-
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
