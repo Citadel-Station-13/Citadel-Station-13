@@ -44,7 +44,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
-
+	var/pda_style = MONO
+	
 	var/uses_glasses_colour = 0
 
 	var/screenshake = 100
@@ -446,6 +447,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
 			dat += "<b>Action Buttons:</b> <a href='?_src_=prefs;preference=action_buttons'>[(buttons_locked) ? "Locked In Place" : "Unlocked"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
+			dat += "<b>PDA Style:</b> <a href='?_src_=prefs;task=input;preference=PDA'>[pda_style]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Window Flashing:</b> <a href='?_src_=prefs;preference=winflash'>[(windowflashing) ? "Yes" : "No"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -1449,6 +1451,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference")  as null|anything in list("Midnight", "Plasmafire", "Retro", "Slimecore", "Operative", "Clockwork")
 					if(pickedui)
 						UI_style = pickedui
+				if("PDA")
+					var/pickedPDA = input(user, "Choose your PDA style.", "Character Preference")  as null|anything in list(MONO, SHARE, ORBITRON, VT)
+					if(pickedPDA)
+						pda_style = pickedPDA
 
 				//citadel code
 				if("cock_color")
