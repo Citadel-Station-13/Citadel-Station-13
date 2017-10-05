@@ -11,7 +11,7 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags_1
+	var/flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
