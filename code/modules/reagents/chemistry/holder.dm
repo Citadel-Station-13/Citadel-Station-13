@@ -16,12 +16,6 @@
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
-<<<<<<< HEAD
-	if(!(flags_1 & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
-=======
->>>>>>> b8ea267... Merge pull request #31281 from vuonojenmustaturska/clowncult
-
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -290,34 +284,11 @@
 		C.update_stamina()
 	update_total()
 
-<<<<<<< HEAD
-/datum/reagents/process()
-	var/list/cached_reagents = reagent_list
-	if(flags_1 & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		R.on_tick()
-
-/datum/reagents/proc/set_reacting(react = TRUE)
-	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
-		flags_1 &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
-	else
-		STOP_PROCESSING(SSobj, src)
-		flags_1 |= REAGENT_NOREACT
-=======
-
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
 		flags &= ~(REAGENT_NOREACT)
 	else
 		flags |= REAGENT_NOREACT
->>>>>>> b8ea267... Merge pull request #31281 from vuonojenmustaturska/clowncult
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
