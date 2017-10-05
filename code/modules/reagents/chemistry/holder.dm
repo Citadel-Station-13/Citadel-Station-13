@@ -11,13 +11,10 @@
 	var/last_tick = 1
 	var/addiction_tick = 1
 	var/list/datum/reagent/addiction_list = new/list()
-	var/flags_1
+	var/flags
 
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
-
-	if(!(flags_1 & REAGENT_NOREACT))
-		START_PROCESSING(SSobj, src)
 
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
@@ -54,7 +51,6 @@
 
 /datum/reagents/Destroy()
 	. = ..()
-	STOP_PROCESSING(SSobj, src)
 	var/list/cached_reagents = reagent_list
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -288,25 +284,11 @@
 		C.update_stamina()
 	update_total()
 
-/datum/reagents/process()
-	var/list/cached_reagents = reagent_list
-	if(flags_1 & REAGENT_NOREACT)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
-		R.on_tick()
-
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
-		// Order is important, process() can remove from processing if
-		// the flag is present
-		flags_1 &= ~(REAGENT_NOREACT)
-		START_PROCESSING(SSobj, src)
+		flags &= ~(REAGENT_NOREACT)
 	else
-		STOP_PROCESSING(SSobj, src)
-		flags_1 |= REAGENT_NOREACT
+		flags |= REAGENT_NOREACT
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
@@ -326,7 +308,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_reactions = GLOB.chemical_reactions_list
 	var/datum/cached_my_atom = my_atom
-	if(flags_1 & REAGENT_NOREACT)
+	if(flags & REAGENT_NOREACT)
 		return //Yup, no reactions here. No siree.
 
 	var/reaction_occurred = 0

@@ -101,13 +101,6 @@
 		init_belly()
 	verbs |= /mob/living/proc/animal_nom
 
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = list()
-		client.screen += client.void
-	..()
-
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = Clamp(health, 0, maxHealth)
