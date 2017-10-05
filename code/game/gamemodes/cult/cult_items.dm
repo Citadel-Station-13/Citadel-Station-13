@@ -72,8 +72,6 @@
 		if(is_servant_of_ratvar(C) && C.reagents)
 			C.reagents.add_reagent("heparin", 1)
 
-<<<<<<< HEAD
-=======
 /obj/item/twohanded/required/cult_bastard
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar-Sien cultists to rapidly harvest the souls of non-believers."
@@ -100,7 +98,6 @@
 	var/datum/action/innate/cult/spin2win/linked_action
 	var/spinning = FALSE
 	var/spin_cooldown = 250
-	var/list/shards = list()
 	var/dash_toggled = TRUE
 
 /obj/item/twohanded/required/cult_bastard/Initialize()
@@ -176,11 +173,12 @@
 		if(H.stat != CONSCIOUS)
 			var/obj/item/device/soulstone/SS = new /obj/item/device/soulstone(src)
 			SS.attack(H, user)
-			shards += SS
-		return
+			if(!LAZYLEN(SS.contents))
+				qdel(SS)
 	if(istype(target, /obj/structure/constructshell) && contents.len)
 		var/obj/item/device/soulstone/SS = contents[1]
-		if(istype(SS) && SS.transfer_soul("CONSTRUCT",target,user))
+		if(istype(SS))
+			SS.transfer_soul("CONSTRUCT",target,user)
 			qdel(SS)
 
 /datum/action/innate/dash/cult
@@ -238,7 +236,6 @@
 	sword.slowdown -= 1.5
 	sleep(sword.spin_cooldown)
 	holder.update_action_buttons_icon()
->>>>>>> 380413f... Ports dash weapons to the dash datum (#31222)
 
 /obj/item/restraints/legcuffs/bola/cult
 	name = "nar'sien bola"
