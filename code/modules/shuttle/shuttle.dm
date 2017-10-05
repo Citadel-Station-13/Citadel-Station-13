@@ -625,8 +625,6 @@
 		internal_area.afterShuttleMove()																	//areas
 		CHECK_TICK
 
-<<<<<<< HEAD
-=======
 	// Parallax handling
 	var/new_parallax_dir = FALSE
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
@@ -635,8 +633,6 @@
 		var/area/place = i
 		place.parallax_movedir = new_parallax_dir
 		CHECK_TICK
-
->>>>>>> e16fd1b... Makes shuttle movement a bit smoother and faster (#31255)
 	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
