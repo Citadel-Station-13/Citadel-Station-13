@@ -59,7 +59,7 @@
 		return FALSE
 
 /datum/objective/crew/responsibility
-	explanation_text = "Make sure nobody dies of alcohol poisoning."
+	explanation_text = "Make sure nobody dies with alcohol poisoning."
 	jobs = "bartender"
 
 /datum/objective/crew/responsibility/check_completion()
