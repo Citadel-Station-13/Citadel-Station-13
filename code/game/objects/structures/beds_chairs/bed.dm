@@ -197,5 +197,10 @@
 
 /obj/structure/bed/alien
 	name = "resting contraption"
+<<<<<<< HEAD
 	desc = "This looks similar to contraptions from earth. Could aliens be stealing our technology?"
 	icon_state = "abed"
+=======
+	desc = "This looks similar to contraptions from Earth. Could aliens be stealing our technology?"
+	icon_state = "abed"
+>>>>>>> 5a0bb2f... Grammar fixes to atom descriptions (#31293)

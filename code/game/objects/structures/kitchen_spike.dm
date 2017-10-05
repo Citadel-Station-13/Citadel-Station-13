@@ -8,6 +8,7 @@
 	desc = "The frame of a meat spike."
 	density = TRUE
 	anchored = FALSE
+<<<<<<< HEAD
 	max_integrity = 200
 
 /obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
@@ -46,6 +47,46 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
 	desc = "A spike for collecting meat from animals"
+=======
+	max_integrity = 200
+
+/obj/structure/kitchenspike_frame/attackby(obj/item/I, mob/user, params)
+	add_fingerprint(user)
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
+		if(R.get_amount() >= 4)
+			R.use(4)
+			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
+			var/obj/F = new /obj/structure/kitchenspike(src.loc)
+			transfer_fingerprints_to(F)
+			qdel(src)
+	else if(istype(I, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = I
+		if(!WT.remove_fuel(0, user))
+			return
+		to_chat(user, "<span class='notice'>You begin cutting \the [src] apart...</span>")
+		playsound(src.loc, WT.usesound, 40, 1)
+		if(do_after(user, 40*WT.toolspeed, 1, target = src))
+			if(!WT.isOn())
+				return
+			playsound(src.loc, WT.usesound, 50, 1)
+			visible_message("<span class='notice'>[user] slices apart \the [src].</span>",
+							"<span class='notice'>You cut \the [src] apart with \the [WT].</span>",
+							"<span class='italics'>You hear welding.</span>")
+			new /obj/item/stack/sheet/metal(src.loc, 4)
+			qdel(src)
+		return
+	else
+		return ..()
+
+/obj/structure/kitchenspike
+	name = "meat spike"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "spike"
+	desc = "A spike for collecting meat from animals."
+>>>>>>> 5a0bb2f... Grammar fixes to atom descriptions (#31293)
 	density = TRUE
 	anchored = TRUE
 	buckle_lying = 0
