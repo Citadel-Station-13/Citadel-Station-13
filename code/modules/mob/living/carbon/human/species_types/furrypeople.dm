@@ -94,7 +94,7 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
+	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,) //Nixing Pierceimmune. Not being able to wear helmets is not = to total immunity to shrapnel, embedded objects, syringes, ninja stars, and half of bomb damage. Also it fucks with broken bones. So no. You can have your reskinned not!human xeno without the codebreaking shittery.
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
 	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
 	heatmod = 1.3
