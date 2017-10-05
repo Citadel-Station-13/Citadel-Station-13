@@ -17,12 +17,19 @@
 		if(legcuffed)
 			. += legcuffed.slowdown
 
+		for(var/obj/item/bodypart/X in bodyparts)
+			if(!X.broken)
+				return
+			if(X.body_part == LEG_RIGHT || X.body_part == LEG_LEFT)
+				. += 2 //can't move fast with a broken leg
+
 	if(stat == SOFT_CRIT)
 		. += SOFTCRIT_ADD_SLOWDOWN
- 
+
 /mob/living/carbon/slip(knockdown_amount, obj/O, lube)
 	if(movement_type & FLYING)
 		return 0
+
 	if(!(lube&SLIDE_ICE))
 		add_logs(src,, "slipped",, "on [O ? O.name : "floor"]")
 	return loc.handle_slip(src, knockdown_amount, O, lube)

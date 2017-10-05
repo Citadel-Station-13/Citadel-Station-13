@@ -164,6 +164,13 @@ MASS SPECTROMETER
 		if(advanced)
 			to_chat(user, "\t<span class='info'>Radiation Level: [M.radiation]%.</span>")
 
+	var/list/broken_stuff = list()
+	for(var/obj/item/bodypart/B in C.bodyparts)
+		if(B.broken)
+			broken_stuff += B.name
+	if(broken_stuff.len)
+		to_chat(user, "\t<span class='alert'>Bone fractures detected. Subject's [english_list(broken_stuff)] [broken_stuff.len > 1 ? "require" : "requires"] surgical treatment!</span>")
+
 	if(advanced && M.hallucinating())
 		to_chat(user, "\t<span class='info'>Subject is hallucinating.</span>")
 

@@ -390,6 +390,7 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
+	mend_fractures()
 	disabilities = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.

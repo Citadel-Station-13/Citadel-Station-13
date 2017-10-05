@@ -68,7 +68,7 @@
 
 	//Flight and floating
 	var/override_float = 0
-	
+
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -112,7 +112,7 @@
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
@@ -246,7 +246,7 @@
 	if(DIGITIGRADE in species_traits)
 		C.Digitigrade_Leg_Swap(FALSE)
 
-	regenerate_organs(C,old_species)		
+	regenerate_organs(C,old_species)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
 		C.dna.blood_type = exotic_bloodtype
@@ -1454,6 +1454,12 @@
 		if(affecting.dismember(I.damtype))
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
+
+	if(I.damtype == BRUTE && I.force >= 10 && prob(I.force * 2))
+		if(I.sharpness && prob(50))//if it stabs, you won't break bones with it as effectively.
+			return
+		affecting.break_bone()
+		H.visible_message("<span class='warning'>You hear a cracking sound coming from [H]'s [parse_zone(affecting)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(affecting)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
 
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))

@@ -52,6 +52,9 @@
 /mob/proc/update_inv_gloves()
 	return
 
+/mob/proc/update_inv_splints()
+	return
+
 /mob/proc/update_inv_wear_id()
 	return
 

@@ -152,6 +152,19 @@
 					msg += " and [t_his] soul has departed"
 		msg += "...</span>\n"
 
+	var/list/broken_stuff = list()
+	var/list/splinted_stuff = list()
+	for(var/obj/item/bodypart/B in bodyparts)
+		if(B.splinted)
+			splinted_stuff += B.name
+		else if(B.broken)
+			broken_stuff += B.name
+	if(broken_stuff.len)
+		msg += "<span class='warning'><B>[t_His] [english_list(broken_stuff)] appear[broken_stuff.len > 1 ? "" : "s"] to be broken!</B></span>\n"
+	if(splinted_stuff.len)
+		msg += "<span class='warning'><B>[t_His] [english_list(splinted_stuff)] [splinted_stuff.len > 1 ? "are" : "is"] splinted!</B></span>\n"
+
+
 	if(get_bodypart("head") && !getorgan(/obj/item/organ/brain))
 		msg += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>\n"
 
@@ -266,7 +279,7 @@
 				msg += "[t_He] looks like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
-				
+
 	for (var/I in src.vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		msg += B.get_examine_msg()
@@ -344,7 +357,7 @@
 						msg += "<a href='?src=\ref[src];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
-		
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

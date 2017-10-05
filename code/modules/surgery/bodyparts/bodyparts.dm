@@ -21,6 +21,8 @@
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+	var/broken = FALSE //If bones are broke or not
+	var/splinted = FALSE //If splinted or not. Movement doesn't deal damage, but you still move slowly.
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -101,6 +103,26 @@
 		playsound(T, 'sound/misc/splort.ogg', 50, 1, -1)
 	for(var/obj/item/I in src)
 		I.forceMove(T)
+
+/obj/item/bodypart/proc/break_bone()
+	if(status == BODYPART_ROBOTIC)
+		return
+	broken = TRUE
+
+/obj/item/bodypart/proc/fix_bone()
+	broken = FALSE
+	splinted = FALSE
+	owner.update_inv_splints()
+
+/obj/item/bodypart/on_mob_move()
+	if(!broken || status == BODYPART_ROBOTIC || !owner || splinted)
+		return
+
+	if(prob(5))
+		to_chat(owner, "<span class='warning'>[pick("You feel broken bones moving around in your [src]!", "There are broken bones moving around in your [src]!", "The bones in your [src] are moving around!")]</span>")
+		receive_damage(rand(1, 3))
+		//1-3 damage every 20 tiles for every broken bodypart.
+		//A single broken bodypart will give you an average of 650 tiles to run before you get a total of 100 damage and fall into crit.
 
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc

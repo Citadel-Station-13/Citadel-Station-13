@@ -252,7 +252,9 @@
 /mob/proc/become_husk()
 	return
 
-
+//////////////////////////////// BROKEN BONES ///////////////////////////:
+/mob/proc/mend_fractures()
+	return
 
 
 
