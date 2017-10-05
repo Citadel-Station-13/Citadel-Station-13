@@ -148,10 +148,91 @@
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
+	var/obj/item/card/id/id = null
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
+
+/obj/item/clothing/neck/petcollar/proc/remove_id()
+	if (id)
+		if (ismob(loc))
+			var/mob/M = loc
+			M.put_in_hands(id)
+			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+		else
+			id.loc = get_turf(src)
+		id = null
+
+/obj/item/clothing/neck/petcollar/verb/verb_remove_id()
+	set category = "Object"
+	set name = "Remove ID"
+	set src in usr
+
+	if(issilicon(usr))
+		return
+
+	if (usr.canUseTopic(src))
+		if(id)
+			remove_id()
+		else
+			to_chat(usr, "<span class='warning'>This collar does not have an ID in it!</span>")
+
+/obj/item/clothing/neck/petcollar/proc/id_check(mob/user, obj/item/card/id/I)
+	if(!I)
+		if(id)
+			remove_id()
+			return 1
+		else
+			var/obj/item/card/id/C = user.get_active_held_item()
+			if(istype(C))
+				I = C
+
+	if(I)
+		if(!user.transferItemToLoc(I, src))
+			return 0
+		var/obj/old_id = id
+		id = I
+		if(old_id)
+			user.put_in_hands(old_id)
+		update_icon()
+	return 1
+
+/obj/item/clothing/neck/petcollar/AltClick()
+	if(issilicon(usr))
+		return
+	if(usr.canUseTopic(src))
+		if(id)
+			remove_id()
+	return ..()
+
+/obj/item/clothing/neck/petcollar/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/card/id))
+		var/obj/item/card/id/idcard = C
+		if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
+			if(!id_check(user, idcard))
+				to_chat(user, "<span class='warning'>There is already \a [id] clipped onto \the [src]</span>")
+				return
+			to_chat(user, "<span class='notice'>\The [id] clips onto \the [src] snugly.</span>")
+			return
+	if(!user.transferItemToLoc(C, src))
+		return
+		return ..()
+
+/obj/item/clothing/neck/petcollar/GetAccess()
+	if(id)
+		return id.GetAccess()
+	else
+		return ..()
+
+/obj/item/clothing/neck/petcollar/examine(mob/user)
+	if(id)
+		to_chat(user, "There is [icon(id)] \a [id] clipped onto it.")
+	else
+		return ..()
+
+obj/item/clothing/neck/petcollar/GetID()
+	return id
 
 //////////////
 //DOPE BLING//
