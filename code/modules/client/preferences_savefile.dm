@@ -2,12 +2,8 @@
 #define SAVEFILE_VERSION_MIN	15
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-<<<<<<< HEAD
 #define SAVEFILE_VERSION_MAX	20
-=======
-#define SAVEFILE_VERSION_MAX	19
->>>>>>> f770b69... Makes the pda font a prefernce (#31193)
-/*
+
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
@@ -111,7 +107,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			joblessrole = BEASSISTANT
 	if(current_version < 17)
 		features["legs"] = "Normal Legs"
-<<<<<<< HEAD
 	if(current_version < 20)//Raise this to the max savefile version every time we change something so we don't sanitize this whole list every time you save.
 		features["mam_body_markings"] 	= sanitize_inlist(features["mam_body_markings"], GLOB.mam_body_markings_list)
 		features["mam_ears"] 			= sanitize_inlist(features["mam_ears"], GLOB.mam_ears_list)
@@ -144,11 +139,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
-=======
 	if(current_version < 19)
 		pda_style = "mono"
-
->>>>>>> f770b69... Makes the pda font a prefernce (#31193)
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -197,16 +189,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
-<<<<<<< HEAD
 	S["parallax"]			>> parallax
 	S["menuoptions"]			>> menuoptions
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
-=======
 	S["pda_style"]			>> pda_style
->>>>>>> f770b69... Makes the pda font a prefernce (#31193)
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -231,13 +220,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
-<<<<<<< HEAD
 	screenshake			= sanitize_integer(screenshake, 0, 200, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
-
-=======
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
->>>>>>> f770b69... Makes the pda font a prefernce (#31193)
 
 	return 1
 
@@ -277,14 +262,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
-<<<<<<< HEAD
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
-=======
 	WRITE_FILE(S["pda_style"], pda_style)
->>>>>>> f770b69... Makes the pda font a prefernce (#31193)
 
 	return 1
 
