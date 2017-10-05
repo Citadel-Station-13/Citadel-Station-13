@@ -1455,12 +1455,6 @@
 			I.add_mob_blood(H)
 			playsound(get_turf(H), I.get_dismember_sound(), 80, 1)
 
-	if(I.damtype == BRUTE && I.force >= 10 && prob(I.force * 2))
-		if(I.sharpness && prob(50))//if it stabs, you won't break bones with it as effectively.
-			return
-		affecting.break_bone()
-		H.visible_message("<span class='warning'>You hear a cracking sound coming from [H]'s [parse_zone(affecting)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(affecting)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
-
 	var/bloody = 0
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
@@ -1515,7 +1509,7 @@
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, break_modifier = 1)
 	var/hit_percent = (100-(blocked+armor))/100
 	if(!damage || hit_percent <= 0)
 		return 0
@@ -1534,14 +1528,14 @@
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(damage * hit_percent * brutemod, 0))
+				if(BP.receive_damage(damage * hit_percent * brutemod, 0, break_modifier = break_modifier))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent * burnmod))
+				if(BP.receive_damage(0, damage * hit_percent * burnmod, break_modifier = break_modifier))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage * hit_percent* burnmod)

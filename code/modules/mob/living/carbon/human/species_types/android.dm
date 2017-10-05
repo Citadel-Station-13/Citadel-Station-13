@@ -2,7 +2,7 @@
 	name = "Android"
 	id = "android"
 	say_mod = "states"
-	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT)
+	species_traits = list(NOBREATH,RESISTHOT,RESISTCOLD,RESISTPRESSURE,NOFIRE,NOBLOOD,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYLIMBATTACHMENT,NO_BONES)
 	meat = null
 	damage_overlay_type = "synth"
 	mutanttongue = /obj/item/organ/tongue/robot
