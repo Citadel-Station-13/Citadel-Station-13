@@ -1509,7 +1509,7 @@
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, break_modifier = 1)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, break_modifier = 1.4)
 	var/hit_percent = (100-(blocked+armor))/100
 	if(!damage || hit_percent <= 0)
 		return 0

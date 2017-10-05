@@ -138,7 +138,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1, break_modifier = 1)
+/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1, break_modifier = 1.4)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
