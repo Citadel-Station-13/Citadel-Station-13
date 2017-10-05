@@ -193,7 +193,7 @@
 	phaseout = /obj/effect/temp_visual/dir_setting/cult/phase/out
 
 /datum/action/innate/dash/cult/IsAvailable()
-	if(iscultist(holder) && charged)
+	if(iscultist(holder) && current_charges)
 		return TRUE
 	else
 		return FALSE
