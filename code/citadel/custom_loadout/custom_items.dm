@@ -30,6 +30,14 @@
 	item_color = null
 	tagname = null
 
+/obj/item/clothing/accessory/medal/steele
+	name = "Insignia Of Steele"
+	desc = "An intricate pendant given to those who help a key member of the Steele Corporation."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "steele"
+	item_color = "steele"
+	medaltype = "medal-silver"
+
 /*DirtyOldHarry*/
 
 /obj/item/lighter/gold
@@ -54,6 +62,12 @@
 	desc = "A fashionable collar"
 	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
+
+/obj/item/clothing/suit/toggle/labcoat/mad/red
+	name = "\improper The Mad's labcoat"
+	desc = "An oddly special looking coat."
+	icon_state = "labred"
+	item_state = "labred"
 
 
 /*PLACEHOLDER*/
@@ -118,3 +132,13 @@
 	icon_state = "hos-g"
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+
+/*Slomek*/
+/obj/item/reagent_containers/food/drinks/flask/russian
+	name = "russian flask"
+	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "russianflask"
+	item_state = "russianflask"
+	volume = 60

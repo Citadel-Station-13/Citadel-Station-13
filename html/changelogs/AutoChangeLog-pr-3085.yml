@@ -1,0 +1,4 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - balance: "10mm Soporific bullets now have a threshold of 60 stamina damage, up from 40, and deal 25 with each shot, down from 50"
