@@ -64090,7 +64090,9 @@
 /area/space)
 "cUi" = (
 /obj/effect/spawner/lootdrop/grille_or_trash,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/maintenance/port/aft)
 "cUj" = (
 /obj/structure/lattice,
@@ -64258,6 +64260,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -64346,7 +64351,9 @@
 /obj/item/shard,
 /obj/item/wirecutters,
 /obj/item/wallframe/camera,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/bar)
 "cVb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -64356,6 +64363,12 @@
 /turf/closed/wall,
 /area/maintenance/bar)
 "cVd" = (
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1459;
+	name = "Station Intercom (General)";
+	pixel_x = -30
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -64398,6 +64411,7 @@
 	name = "2maintenance loot spawner"
 	},
 /obj/item/crowbar,
+/obj/item/device/electropack/shockcollar,
 /turf/open/floor/plating,
 /area/maintenance/bar)
 "cVl" = (
@@ -64408,7 +64422,9 @@
 	name = "dried semen"
 	},
 /obj/effect/spawner/lootdrop/costume,
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
 /area/maintenance/bar)
 "cVm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -64465,12 +64481,18 @@
 /area/maintenance/bar)
 "cVu" = (
 /obj/item/lighter/greyscale,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/semen{
+	desc = "Blech.";
+	name = "dried semen"
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/bar)
 "cVv" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/effect/decal/cleanable/blood/old,
+/obj/item/device/assembly/signaler,
 /turf/open/floor/plating,
 /area/maintenance/bar)
 "cVw" = (
@@ -64586,6 +64608,9 @@
 /turf/closed/wall,
 /area/maintenance/bar)
 "cVV" = (
+/obj/structure/sign/poster/random{
+	pixel_x = -32
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -64619,11 +64644,14 @@
 /area/maintenance/bar)
 "cWb" = (
 /obj/structure/table/wood/bar,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
-/obj/item/toy/cards/deck/cas,
+/obj/item/pen,
+/obj/machinery/newscaster{
+	pixel_x = 30
+	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "cWc" = (
@@ -64679,6 +64707,9 @@
 /area/maintenance/bar)
 "cWk" = (
 /obj/structure/table/wood/bar,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
 	},
@@ -64719,6 +64750,9 @@
 	},
 /area/maintenance/bar)
 "cWs" = (
+/obj/structure/sign/poster/random{
+	pixel_y = -32
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -64730,6 +64764,36 @@
 "cWu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
+/area/maintenance/bar)
+"cWv" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
+"cWw" = (
+/obj/structure/sign/poster/official/no_erp,
+/turf/closed/wall,
+/area/maintenance/bar)
+"cWx" = (
+/obj/machinery/computer/security/telescreen/entertainment{
+	pixel_x = -31
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
+"cWy" = (
+/obj/structure/sign/poster/random{
+	pixel_y = -32
+	},
+/turf/open/floor/wood,
+/area/maintenance/bar)
+"cWz" = (
+/obj/structure/chair/stool,
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -35
+	},
+/turf/open/floor/wood,
 /area/maintenance/bar)
 
 (1,1,1) = {"
@@ -80823,7 +80887,7 @@ aaa
 aaa
 aaa
 aaa
-cTX
+cTW
 aaa
 aHr
 aaa
@@ -81080,7 +81144,7 @@ aaa
 aaa
 aaa
 aaa
-cTY
+cTW
 aaa
 aHr
 aaa
@@ -81337,7 +81401,7 @@ aaa
 aaa
 aaa
 aaa
-cTZ
+cTW
 aaa
 aHr
 aaa
@@ -81594,7 +81658,7 @@ aaa
 aaa
 aaa
 aaa
-cUa
+cTW
 aaa
 aHr
 aaa
@@ -81851,7 +81915,7 @@ aaa
 aaa
 aaa
 aaa
-cUb
+cTW
 aaa
 aHr
 aaa
@@ -82108,7 +82172,7 @@ aaa
 aaa
 aaa
 aaa
-cUc
+cTW
 aaa
 aHr
 aaa
@@ -82365,7 +82429,7 @@ aaa
 aaa
 aaa
 aaa
-cUd
+cTW
 aaa
 aHr
 aaa
@@ -82622,7 +82686,7 @@ aaa
 aaa
 aaa
 aaa
-cUe
+cTW
 aaa
 aHr
 aaa
@@ -82879,7 +82943,7 @@ aaa
 aaa
 aaa
 aaa
-cUf
+cTW
 aaa
 aHr
 aaa
@@ -83136,7 +83200,7 @@ aaa
 aaa
 aaa
 aaa
-cUg
+cTW
 cUj
 aHr
 aaa
@@ -83393,10 +83457,10 @@ aaa
 aaf
 aaf
 aaf
-cUh
-cUk
+cTW
+cUj
 aaf
-cUo
+cUj
 bVx
 caf
 aoV
@@ -85194,7 +85258,7 @@ aaa
 bCq
 bPV
 bCq
-cUn
+cUm
 bTw
 bCq
 bVD
@@ -85452,7 +85516,7 @@ bCq
 bPW
 cUl
 bSp
-bTv
+cUr
 bCq
 bVC
 bWx
@@ -86224,19 +86288,19 @@ bPY
 cOw
 bCq
 cUs
-cUz
-cUH
-cUR
-cVc
+cUs
+cUs
+cUs
+cUs
 cVn
-cVx
-cVH
-cjn
-cjn
-cjn
-cjn
-cjn
-cjn
+cUs
+cUs
+cUs
+cUs
+cUs
+cUs
+cUs
+cUs
 bUs
 bLv
 aaa
@@ -86480,20 +86544,20 @@ bCq
 bPX
 bRg
 bRg
-cUt
+cUs
 cUA
-bVG
+cWv
 cUS
 cVd
-bVG
+cUA
 cVy
-cVI
-bVG
+cUs
+cUA
 cVV
-bVG
-bVG
+cWx
+cUA
 cWq
-cjn
+cUs
 bUs
 bLv
 aaa
@@ -86737,20 +86801,20 @@ bLv
 bQa
 bHE
 bHE
-cUu
+cUs
 cUB
 cUI
 cUT
 cVe
 cVo
-cVz
+cVe
 cVJ
-cVP
-cVW
+cVe
+cVe
 cWd
-cWm
-bVG
-cjn
+cWa
+cWy
+cUs
 bUs
 bLv
 aaf
@@ -87002,12 +87066,12 @@ cVf
 cVp
 cVA
 cVK
-cVQ
+cVA
 cVX
 cWe
 bdV
-bVG
-cjn
+cUA
+cUs
 bUs
 bLv
 aaa
@@ -87251,20 +87315,20 @@ bLv
 bHE
 bHE
 bSs
-cUw
+cUs
 cUD
 cUK
 cUV
 cVg
-cVq
-bVG
-cVL
+cUK
+cUA
+cWw
 cVR
 cCa
 cWf
 cCa
 cWr
-cjn
+cUs
 bUs
 bLv
 aaa
@@ -87508,20 +87572,20 @@ bCq
 bHE
 bRh
 bSr
-cUx
+cUs
 cUE
 cUL
 cUW
 cVh
 cVr
 cVB
-cVM
+cUs
 bdV
 cVY
-cWg
+cWf
 cCa
-bdV
-cjn
+cWz
+cUs
 bUs
 bLv
 aaf
@@ -87765,20 +87829,20 @@ bCq
 bOK
 bCq
 bCq
-cUy
+cUs
 cUF
 cUM
 cUX
 cVi
 cVs
-cVC
-cjn
+cUs
+cUs
 bdV
 cVZ
-cWh
+cWf
 cWn
 bdV
-cjn
+cUs
 bUs
 bLv
 aaa
@@ -88024,18 +88088,18 @@ bLv
 aaa
 bLv
 cUG
-cUN
-cUY
-cVj
-cVt
-cVD
-bVG
-bVG
+cUM
+cUs
+cUs
+cUs
+cUs
+cUA
+cUA
 bdV
 cWi
 bdV
 cWs
-cjn
+cUs
 bUs
 bLv
 aaa
@@ -88280,19 +88344,19 @@ bHE
 bLv
 aaf
 bLv
-bUt
-cUO
+cUG
+cUM
 cUZ
 cVk
 cVu
 cVE
-bVG
+cUA
 cVS
 cWa
 cWj
-bVG
-bVG
-cjn
+cUA
+cUA
+cUs
 bUs
 bLv
 aaf
@@ -88538,18 +88602,18 @@ bCq
 aaa
 bLv
 bUz
-cUP
+cUM
 cVa
 cVl
 cVv
-cVF
+cUs
 cVN
 cVT
 cWb
 cWk
 cWo
 cWt
-cjn
+cUs
 bUs
 bCq
 aaa
@@ -88797,15 +88861,15 @@ bTB
 bUv
 cUQ
 cVb
-cVm
-cVw
-cVG
-cVO
-cVU
-cWc
-cWl
-cWp
-cWu
+cVb
+cVb
+cVb
+cVb
+cVb
+cVb
+cVb
+cVb
+cVb
 car
 bUs
 bCq
