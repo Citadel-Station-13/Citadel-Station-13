@@ -64304,6 +64304,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "cUT" = (
@@ -64611,6 +64614,9 @@
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken7"
 	},
@@ -64707,8 +64713,8 @@
 /area/maintenance/bar)
 "cWk" = (
 /obj/structure/table/wood/bar,
-/obj/structure/sign/poster/random{
-	pixel_x = 32
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken6"
@@ -64731,6 +64737,9 @@
 "cWo" = (
 /obj/structure/table/wood/bar,
 /obj/item/reagent_containers/spray/cleaner,
+/obj/structure/sign/poster/random{
+	pixel_x = 32
+	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "cWp" = (
@@ -86554,7 +86563,7 @@ cVy
 cUs
 cUA
 cVV
-cWx
+cWv
 cUA
 cWq
 cUs
