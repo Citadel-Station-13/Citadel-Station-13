@@ -11,7 +11,7 @@
 	var/bitesize_mod = 0
 	var/splat_type = /obj/effect/decal/cleanable/plant_smudge
 	// If set, bitesize = 1 + round(reagents.total_volume / bitesize_mod)
-	dried_type = -1
+	dried_type = 1
 	// Saves us from having to define each stupid grown's dried_type as itself.
 	// If you don't want a plant to be driable (watermelons) set this to null in the time definition.
 	resistance_flags = FLAMMABLE
@@ -30,7 +30,7 @@
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
-	if(dried_type == -1)
+	if(dried_type == 1)
 		dried_type = src.type
 
 	if(seed)
