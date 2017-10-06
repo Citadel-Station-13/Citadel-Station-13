@@ -1,6 +1,6 @@
 /datum/surgery/embedded_removal
 	name = "removal of embedded objects"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object, /datum/surgery_step/close)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
 
