@@ -148,7 +148,7 @@
 	icon_state = "petcollar"
 	item_color = "petcollar"
 	var/tagname = null
-	var/obj/item/card/id/id = null
+	var/obj/item/card/id/id
 
 /obj/item/clothing/neck/petcollar/attack_self(mob/user)
 	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
@@ -161,7 +161,7 @@
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(get_turf(src))
 		id = null
 
 /obj/item/clothing/neck/petcollar/verb/verb_remove_id()
@@ -182,7 +182,7 @@
 	if(!I)
 		if(id)
 			remove_id()
-			return 1
+			return TRUE
 		else
 			var/obj/item/card/id/C = user.get_active_held_item()
 			if(istype(C))
@@ -190,13 +190,13 @@
 
 	if(I)
 		if(!user.transferItemToLoc(I, src))
-			return 0
+			return FALSE
 		var/obj/old_id = id
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
-	return 1
+	return TRUE
 
 /obj/item/clothing/neck/petcollar/AltClick()
 	if(issilicon(usr))

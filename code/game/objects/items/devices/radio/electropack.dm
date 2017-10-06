@@ -230,7 +230,7 @@ Code:
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(get_turf(src))
 		id = null
 
 /obj/item/device/electropack/shockcollar/verb/verb_remove_id()
@@ -251,7 +251,7 @@ Code:
 	if(!I)
 		if(id)
 			remove_id()
-			return 1
+			return TRUE
 		else
 			var/obj/item/card/id/C = user.get_active_held_item()
 			if(istype(C))
@@ -259,13 +259,13 @@ Code:
 
 	if(I)
 		if(!user.transferItemToLoc(I, src))
-			return 0
+			return FALSE
 		var/obj/old_id = id
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
 		update_icon()
-	return 1
+	return TRUE
 
 /obj/item/device/electropack/shockcollar/AltClick()
 	if(issilicon(usr))
