@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Added a maintenance bar to Boxstation. It has a kinkmate. It has booze. It has a table for Dare Dice."
+  - rscadd: "Also added dorms to maintenance in the place of boxstation's default maint bar."
