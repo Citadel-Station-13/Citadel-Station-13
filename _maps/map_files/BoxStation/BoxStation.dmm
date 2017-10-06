@@ -2282,6 +2282,7 @@
 	},
 /obj/docking_port/mobile/emergency{
 	name = "Box emergency shuttle";
+	
 	},
 /obj/docking_port/stationary{
 	dir = 4;
