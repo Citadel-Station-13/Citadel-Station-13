@@ -324,8 +324,8 @@
 					clear_alert("embeddedobject")
 
 /mob/living/carbon/human/proc/handle_fractures()
-	//this whole thing is hacky and WILL NOT work right with multiple hands
-	//you've been warned
+	//this whole thing is hacky and WILL NOT work right with more than two hands.
+	//you've been warned.
 	var/obj/item/bodypart/L = get_bodypart("l_arm")
 	var/obj/item/bodypart/R = get_bodypart("r_arm")
 

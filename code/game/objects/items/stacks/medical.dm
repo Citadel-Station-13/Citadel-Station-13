@@ -92,6 +92,7 @@
 
 	if(iscarbon(M))
 		var/mob/living/carbon/C = M
+		affecting = C.get_bodypart(check_zone(user.zone_selected))
 		if(!affecting) //Missing limb?
 			to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 			return

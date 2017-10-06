@@ -28,6 +28,7 @@
 		new /datum/data/mining_equipment("Explorer's Webbing",	/obj/item/storage/belt/mining,									500),
 		new /datum/data/mining_equipment("Survival Medipen",	/obj/item/reagent_containers/hypospray/medipen/survival,			500),
 		new /datum/data/mining_equipment("Brute First-Aid Kit",	/obj/item/storage/firstaid/brute,								600),
+		new /datum/data/mining_equipment("Bone Splint",			/obj/item/stack/medical/splint,									500),
 		new /datum/data/mining_equipment("Tracking Implant Kit", /obj/item/storage/box/minertracker,								600),
 		new /datum/data/mining_equipment("Jaunter",				/obj/item/device/wormhole_jaunter,										750),
 		new /datum/data/mining_equipment("Kinetic Crusher",		/obj/item/twohanded/required/kinetic_crusher,						750),
@@ -121,7 +122,7 @@
 				I.loc = src
 				inserted_id = I
 				to_chat(usr, "<span class='notice'>You insert the ID into [src]'s card slot.</span>")
-			else 
+			else
 				to_chat(usr, "<span class='warning'>Error: No valid ID!</span>")
 				flick(icon_deny, src)
 	if(href_list["purchase"])
