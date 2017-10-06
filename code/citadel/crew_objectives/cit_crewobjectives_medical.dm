@@ -42,12 +42,14 @@
 /datum/objective/crew/druglordchem //ported from old Hippie with adjustments
 	var/targetchem = "none"
 	var/datum/reagent/chempath
-	explanation_text = "Have at least (somethin broke here) pills containing (report this on the development discussion channel of citadel's discord) when the shift ends."
+	var/chemamount = 0
+	explanation_text = "Have at least (somethin broke here) pills containing at least (like really broke) units of(report this on the development discussion channel of citadel's discord) when the shift ends."
 	jobs = "chemist"
 
 /datum/objective/crew/druglordchem/New()
 	. = ..()
 	target_amount = rand(5,50)
+	chemamount = rand(1,20)
 	var/blacklist = list(/datum/reagent/drug, /datum/reagent/drug/nicotine, /datum/reagent/drug/menthol)
 	var/drugs = typesof(/datum/reagent/drug) - blacklist
 	var/chemlist = drugs
@@ -57,14 +59,14 @@
 
 /datum/objective/crew/druglordchem/update_explanation_text()
 	. = ..()
-	explanation_text = "Have at least [target_amount] pills containing [initial(chempath.name)] when the shift ends."
+	explanation_text = "Have at least [target_amount] pills containing at least [chemamount] units of [initial(chempath.name)] when the shift ends."
 
 /datum/objective/crew/druglordchem/check_completion()
 	var/pillcount = target_amount
 	if(owner.current)
 		if(owner.current.contents)
 			for(var/obj/item/reagent_containers/pill/P in owner.current.get_contents())
-				if(P.reagents.has_reagent(targetchem))
+				if(P.reagents.has_reagent(targetchem, chemamount))
 					pillcount--
 	if(pillcount <= 0)
 		return TRUE
