@@ -142,7 +142,7 @@
 	
 /datum/export/weapon/flight //if xenobiology ever reaches the point to get these without shuttle being called they deserve it
 	cost = 10000
-	unit_name = "Strange Elixer"
+	unit_name = "Red Bull"
 	export_types = list(/obj/item/reagent_containers/glass/bottle/potion/flight)
 	
 /datum/export/weapon/cheart //is a very powerfull healing artifact in the robust hands

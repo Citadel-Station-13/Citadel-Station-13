@@ -632,7 +632,7 @@
 	..()
 
 /datum/chemical_reaction/slime/flight_potion
-	name = "Flight Potion"
+	name = "Red Bull"
 	id = "flightpotion"
 	required_reagents = list("holywater" = 5, "uranium" = 5)
 	required_other = 1
