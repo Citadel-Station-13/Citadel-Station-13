@@ -34,6 +34,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ai" = (
@@ -500,6 +501,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/floorgrime,
 /area/shuttle/escape)
 "bG" = (
@@ -573,6 +575,13 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"bS" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/item/stack/medical/splint,
+/turf/open/floor/engine,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -750,7 +759,7 @@ ak
 ap
 ab
 ay
-ay
+bS
 ay
 aS
 aY

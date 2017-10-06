@@ -75,6 +75,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "as" = (
@@ -220,6 +221,7 @@
 	pixel_y = 1
 	},
 /obj/item/wrench/medical,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aO" = (

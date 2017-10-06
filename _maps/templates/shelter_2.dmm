@@ -95,6 +95,7 @@
 /obj/item/storage/firstaid/brute{
 	pixel_x = 5
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/pod,
 /area/survivalpod)
 "q" = (

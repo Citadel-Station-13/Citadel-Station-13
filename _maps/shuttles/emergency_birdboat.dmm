@@ -16,6 +16,9 @@
 	pixel_y = 5
 	},
 /obj/item/hemostat,
+/obj/item/bonegel,
+/obj/item/bonesetter,
+/obj/item/cautery,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "ae" = (
@@ -276,6 +279,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white,
 /area/shuttle/escape)
 "aV" = (

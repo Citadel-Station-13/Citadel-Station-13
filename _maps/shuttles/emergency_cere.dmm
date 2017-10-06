@@ -71,6 +71,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/darkyellow,
 /area/shuttle/escape)
 "ao" = (
@@ -493,6 +494,7 @@
 /obj/structure/table,
 /obj/item/storage/box/teargas,
 /obj/item/storage/box/zipties,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/plastitanium/brig{
 	icon_state = "darkred";
 	dir = 2;
@@ -646,6 +648,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "bW" = (
@@ -831,6 +834,8 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -906,6 +911,8 @@
 	pixel_x = 4
 	},
 /obj/item/retractor,
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel/whiteblue,
 /area/shuttle/escape)
 "cG" = (
@@ -1122,6 +1129,7 @@
 /obj/structure/sign/enginesafety{
 	pixel_y = -32
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/yellow/side,
 /area/shuttle/escape)
 "dm" = (

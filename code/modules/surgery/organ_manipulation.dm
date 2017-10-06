@@ -3,13 +3,12 @@
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/prep_bone, /datum/surgery_step/set_bone, /datum/surgery_step/mend_bone, /datum/surgery_step/close)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest", "head")
-	requires_organic_bodypart = FALSE
+	requires_organic_bodypart = TRUE
 	requires_real_bodypart = TRUE
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders,
-	/datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
@@ -17,42 +16,27 @@
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
 
-/datum/surgery/organ_manipulation_boneless
-	name = "boneless prgan manipulation"
+/datum/surgery/organ_manipulation/boneless
+	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
 	requires_organic_bodypart = 1
 	species = list(/mob/living/carbon/human/species/abductor, /mob/living/carbon/human/species/jelly, /mob/living/carbon/human/species/skeleton, /mob/living/carbon/human/species/pod, /mob/living/carbon/human/species/plasma) //bones for some of these later
+
 
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
 	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/wirecutters = 55)
-	var/current_type
+	var/implements_finish = list(/obj/item/retractor = 100, /obj/item/wrench = 55)
 	var/obj/item/organ/I = null
+	var/current_type
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
-	implements = implements + implements_extract
+	implements = implements + implements_extract + implements_finish
 
-/datum/surgery_step/manipulate_organs/tool_check(mob/user, obj/item/tool)
-	if(istype(tool, /obj/item/weldingtool))
-		var/obj/item/weldingtool/WT = tool
-		if(!WT.isOn())
-			return 0
-
-	else if(istype(tool, /obj/item/lighter))
-		var/obj/item/lighter/L = tool
-		if(!L.lit)
-			return 0
-
-	else if(istype(tool, /obj/item/match))
-		var/obj/item/match/M = tool
-		if(!M.lit)
-			return 0
-
-	return 1
 
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -104,11 +88,20 @@
 			else
 				return -1
 
+	else if(implement_type in implements_finish)
+		current_type = "finish"
+		user.visible_message("[user] begins to pull [target]'s [parse_zone(target_zone)]'s flesh back into place.",
+			"<span class='notice'>You begin pull [target]'s [parse_zone(target_zone)]'s flesh back into place...</span>")
+
 	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
 		return -1
 
-		return 1
+/datum/surgery_step/manipulate_organs/proc/next_step(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(current_type == "finish")
+		user.visible_message("[user] pulls the flesh in [target]'s [parse_zone(target_zone)] back into place.",
+			"<span class='notice'>You pull the flesh in [target]'s [parse_zone(target_zone)] back into place.</span>")
+
 	else if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]

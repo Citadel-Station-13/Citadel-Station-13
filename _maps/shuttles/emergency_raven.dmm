@@ -59,6 +59,7 @@
 "al" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "am" = (
@@ -147,6 +148,9 @@
 /obj/item/circular_saw,
 /obj/item/retractor,
 /obj/item/hemostat,
+/obj/item/cautery,
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
@@ -447,6 +451,8 @@
 "bg" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
 	},
@@ -1633,7 +1639,7 @@ cu
 bF
 be
 be
-eO
+eF
 be
 be
 cd
@@ -1692,19 +1698,19 @@ cu
 cu
 cs
 ar
-eG
+eE
 aC
 eH
 ar
 bT
 bo
-eK
+eE
 bZ
 ca
 aC
 bZ
 ca
-eR
+eH
 ab
 ch
 ar
@@ -1800,13 +1806,13 @@ bP
 ar
 bU
 bo
-eL
+eE
 bZ
 ca
 aC
 bZ
 ca
-eS
+eH
 ab
 ci
 ar
@@ -1830,7 +1836,7 @@ bz
 cs
 bH
 bG
-eI
+eH
 cs
 cs
 cs
@@ -1972,9 +1978,9 @@ aa
 cs
 cs
 cs
-eM
+eE
 aC
-eP
+eH
 cs
 cs
 cs
@@ -2110,7 +2116,7 @@ aZ
 aZ
 eN
 aZ
-eQ
+eN
 aZ
 aZ
 ce

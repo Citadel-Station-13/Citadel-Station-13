@@ -24,7 +24,7 @@
 	desc = "Mends yer bones."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bone-gel"
-	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	materials = list(MAT_METAL=5000, MAT_GLASS=3500)
 	flags_1 = CONDUCT_1
 	w_class = WEIGHT_CLASS_TINY
 	origin_tech = "materials=1;biotech=1"

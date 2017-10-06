@@ -35,6 +35,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "ai" = (
@@ -127,6 +128,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "az" = (
@@ -322,6 +324,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/noslip,
 /area/shuttle/escape)
 "bc" = (

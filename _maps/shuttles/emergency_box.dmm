@@ -39,6 +39,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/storage/firstaid/fire,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aj" = (
@@ -156,6 +157,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aF" = (
@@ -328,6 +330,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bf" = (
