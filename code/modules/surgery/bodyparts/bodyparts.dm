@@ -36,7 +36,7 @@
 	var/no_update = 0
 
 	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
-	var/dismemberable = 1 //whether it can be dismembered with a weapon.
+	var/dismemberable = TRUE //whether it can be dismembered with a weapon.
 
 	var/px_x = 0
 	var/px_y = 0
@@ -138,7 +138,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1, break_modifier = 1.4)
+/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = TRUE, break_modifier = 1.4)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
@@ -186,7 +186,7 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
+/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
 
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
@@ -424,19 +424,19 @@
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_chest"
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/chest/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_chest"
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	animal_origin = LARVA_BODYPART
 
@@ -451,7 +451,7 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
-	held_index = 1
+	held_index = TRUE
 	px_x = -6
 	px_y = 0
 
@@ -467,12 +467,12 @@
 	icon_state = "alien_l_arm"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_arm/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -501,12 +501,12 @@
 	icon_state = "alien_r_arm"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_arm/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -537,12 +537,12 @@
 	icon_state = "alien_l_leg"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_leg/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -575,12 +575,12 @@
 	icon_state = "alien_r_leg"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_leg/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 

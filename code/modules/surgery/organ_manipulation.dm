@@ -5,6 +5,7 @@
 	possible_locs = list("chest", "head")
 	requires_organic_bodypart = TRUE
 	requires_real_bodypart = TRUE
+	has_bones = TRUE
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
@@ -19,10 +20,9 @@
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
 	requires_organic_bodypart = 1
-	species = list(/mob/living/carbon/human/species/abductor, /mob/living/carbon/human/species/jelly, /mob/living/carbon/human/species/skeleton, /mob/living/carbon/human/species/pod, /mob/living/carbon/human/species/plasma) //bones for some of these later
-
+	has_bones = FALSE
 
 /datum/surgery_step/manipulate_organs
 	time = 64
@@ -90,8 +90,8 @@
 
 	else if(implement_type in implements_finish)
 		current_type = "finish"
-		user.visible_message("[user] begins to pull [target]'s [parse_zone(target_zone)]'s flesh back into place.",
-			"<span class='notice'>You begin pull [target]'s [parse_zone(target_zone)]'s flesh back into place...</span>")
+		user.visible_message("[user] begins to pull [target]'s [parse_zone(target_zone)] flesh back into place.",
+			"<span class='notice'>You begin pull [target]'s [parse_zone(target_zone)] flesh back into place...</span>")
 
 	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
