@@ -80,7 +80,7 @@
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
 			if(time_remaining > 0)
-				stat("Time To Start:", "[round(time_remaining/10)]s")			
+				stat("Time To Start:", "[round(time_remaining/10)]s")
 			else if(time_remaining == -10)
 				stat("Time To Start:", "DELAYED")
 			else
@@ -375,7 +375,7 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(2) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed)
+		if(prob(2) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in crewmind.prefs.be_special)
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
 			if(CONFIG_GET(flag/allow_crew_objectives))

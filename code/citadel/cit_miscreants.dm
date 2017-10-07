@@ -7,6 +7,8 @@
 		return
 	if(!crewMind.assigned_role)
 		return
+	if(ROLE_MISCREANT in crewmind.prefs.be_special)
+		return
 	if(jobban_isbanned(crewMind, "Syndicate"))
 		return
 	var/list/objectiveTypes = typesof(/datum/objective/miscreant) - /datum/objective/miscreant
@@ -59,3 +61,6 @@
 
 /datum/objective/miscreant/racism
 	explanation_text = "Attempt to establish superiority of your species."
+
+/datum/objective/miscreant/cargonia
+	explanation_text = "Attempt to establish independence of your department."
