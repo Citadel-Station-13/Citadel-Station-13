@@ -20,6 +20,13 @@
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
 	requires_bones = FALSE
 
+	/datum/surgery/organ_manipulation/golem
+	name = "golem organ manipulation"
+	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
+	species = list(/mob/living/carbon/human/species/golem)
+	steps = list(/datum/surgery_step/saw, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/retract_skin, /datum/surgery_step/manipulate_organs, /datum/surgery_step/prep_bone, /datum/surgery_step/set_bone, /datum/surgery_step/mend_bone, /datum/surgery_step/close)
+	requires_bones = FALSE
+
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
