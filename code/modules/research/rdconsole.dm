@@ -324,11 +324,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 				if(linked_lathe) //Also sends salvaged materials to a linked protolathe, if any.
 					for(var/material in linked_destroy.loaded_item.materials)
-<<<<<<< HEAD
-						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10))), material)
-=======
 						linked_materials.insert_amount(min((linked_materials.max_amount - linked_materials.total_amount), (min(linked_destroy.loaded_item.materials[material]*(linked_destroy.decon_mod/10), linked_destroy.loaded_item.materials[material]))), material)
->>>>>>> fab4dd3... Update rdconsole.dm
 					SSblackbox.add_details("item_deconstructed","[linked_destroy.loaded_item.type]")
 				linked_destroy.loaded_item = null
 				for(var/obj/I in linked_destroy.contents)
