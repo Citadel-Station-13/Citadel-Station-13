@@ -111,13 +111,21 @@
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
-					if(objective.check_completion())
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+					if(istype(objective, /datum/objective/crew))
+						if(objective.check_completion())
+							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
+							SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+						else
+							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
+							SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
 					else
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = 0
+						if(objective.check_completion())
+							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+							SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+						else
+							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+							SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
+							traitorwin = 0
 					count++
 
 			if(uplink_true)

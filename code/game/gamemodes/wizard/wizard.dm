@@ -212,13 +212,21 @@
 			var/count = 1
 			var/wizardwin = 1
 			for(var/datum/objective/objective in wizard.objectives)
-				if(objective.check_completion())
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
+				if(istype(objective, /datum/objective/crew))
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
+						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
+						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
 				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
-					wizardwin = 0
+					if(objective.check_completion())
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
+					else
+						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
+						wizardwin = 0
 				count++
 
 			if(wizard.current && wizard.current.stat!=2 && wizardwin)

@@ -1,0 +1,5 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Ported Crew Objectives from Goon, featuring objectives from both Goon and old Hippie."
+  - rscadd: "Ported Miscreants from Goon. They will appear based on the server's configuration."
