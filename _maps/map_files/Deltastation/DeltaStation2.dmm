@@ -97094,8 +97094,7 @@
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/abandoned)
 "dHa" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dHb" = (
@@ -113139,6 +113138,14 @@
 "esH" = (
 /turf/closed/wall,
 /area/maintenance/department/medical/morgue)
+"esI" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"esJ" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 
 (1,1,1) = {"
 aaa
@@ -137474,7 +137481,7 @@ dmb
 dnA
 doK
 dqw
-diJ
+esJ
 aJm
 aHW
 aaf
@@ -143545,7 +143552,7 @@ aib
 asx
 atw
 auQ
-aic
+esI
 awX
 aye
 azn
