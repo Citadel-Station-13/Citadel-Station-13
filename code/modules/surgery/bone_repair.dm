@@ -16,7 +16,7 @@ datum/surgery/bone_repair/monkey
 			return TRUE
 		return FALSE
 
-/datum/surgery/bone_repair/can_start(mob/user, mob/living/carbon/target)
+/datum/surgery/bone_repair/monkey/can_start(mob/user, mob/living/carbon/target)
 	if(istype(target,/mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/H = target
 		var/obj/item/bodypart/affected = H.get_bodypart(user.zone_selected)
