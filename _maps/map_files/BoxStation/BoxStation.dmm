@@ -2281,7 +2281,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	name = "Box emergency shuttle";
+	name = "Box emergency shuttle"
 	},
 /obj/docking_port/stationary{
 	dir = 4;
@@ -64040,6 +64040,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "cTW" = (
+<<<<<<< HEAD
 /obj/structure/lattice/catwalk,
 /turf/open/space/basic,
 /area/space)
@@ -64803,6 +64804,11 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+=======
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/abandoned)
+>>>>>>> 943da9a... Adds navigation consoles to boxstation and metastation white ships. (#31367)
 
 (1,1,1) = {"
 aaa
@@ -76763,7 +76769,7 @@ aaa
 cyc
 cyy
 cyc
-czy
+cTW
 cyO
 cyi
 cyi
