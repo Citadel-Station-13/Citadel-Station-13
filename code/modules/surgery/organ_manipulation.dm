@@ -5,24 +5,28 @@
 	possible_locs = list("chest", "head")
 	requires_organic_bodypart = TRUE
 	requires_real_bodypart = TRUE
-	has_bones = TRUE
+	requires_bones = TRUE
+	can_cancel = FALSE
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
+	requires_bones = TRUE
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
 	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
 	species = list(/mob/living/carbon/alien/humanoid)
 	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
+	requires_bones = FALSE
 
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
 	requires_organic_bodypart = 1
-	has_bones = FALSE
+	requires_bones = FALSE
+	cantbebones = TRUE
 
 /datum/surgery_step/manipulate_organs
 	time = 64
