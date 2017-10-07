@@ -258,6 +258,13 @@ SUBSYSTEM_DEF(ticker)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
 		if(S.name != "AI")
 			qdel(S)
+	
+	//assign crew objectives and generate miscreants
+	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
+		GLOB.miscreants_allowed = TRUE
+	if(CONFIG_GET(flag/allow_miscreants) && GLOB.master_mode != "extended")
+		GLOB.miscreants_allowed = TRUE
+	generate_crew_objectives()
 
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["present"]
@@ -333,6 +340,8 @@ SUBSYSTEM_DEF(ticker)
 	var/num_survivors = 0
 	var/num_escapees = 0
 	var/num_shuttle_escapees = 0
+	var/list/successfulCrew = list()
+	var/list/miscreants = list()
 
 	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
@@ -456,6 +465,37 @@ SUBSYSTEM_DEF(ticker)
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	CHECK_TICK
+
+	for(var/datum/mind/crewMind in minds)
+		if(!crewMind.current || !crewMind.objectives.len)
+			continue
+		for(var/datum/objective/miscreant/MO in crewMind.objectives)
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
+		for(var/datum/objective/crew/CO in crewMind.objectives)
+			if(CO.check_completion())
+				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
+			else
+				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
+
+	if (successfulCrew.len)
+		var/completedObjectives = "<B>The following crew members completed their Crew Objectives:</B><BR>"
+		for(var/i in successfulCrew)
+			completedObjectives += "[i]<BR>"
+		to_chat(world, "[completedObjectives]<BR>")
+	else
+		if(CONFIG_GET(flag/allow_crew_objectives))
+			to_chat(world, "<B>Nobody completed their Crew Objectives!</B><BR>")
+
+	CHECK_TICK
+
+	if (miscreants.len)
+		var/miscreantObjectives = "<B>The following crew members were miscreants:</B><BR>"
+		for(var/i in miscreants)
+			miscreantObjectives += "[i]<BR>"
+		to_chat(world, "[miscreantObjectives]<BR>")
 
 	CHECK_TICK
 

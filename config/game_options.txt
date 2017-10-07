@@ -496,3 +496,14 @@ ARRIVALS_SHUTTLE_DOCK_WINDOW 55
 
 MICE_ROUNDSTART 10
 
+
+## CREW OBJECTIVES ##
+## Comment to disable objectives for innocent crew members.
+ALLOW_CREW_OBJECTIVES
+
+## MISCREANTS ##
+## Comment to allow miscreants to spawn. Miscreants are a mini-antag with objectives that are not tracked.
+ALLOW_MISCREANTS
+
+## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
+#ALLOW_EXTENDED_MISCREANTS
