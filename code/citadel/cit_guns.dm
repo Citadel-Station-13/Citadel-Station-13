@@ -618,11 +618,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/magtag)
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toyburst"
-	clumsy_check = 0
-	needs_permit = 0
+	clumsy_check = FALSE
+	needs_permit = FALSE
 	fire_delay = 40
 	weapon_weight = WEAPON_HEAVY
-	selfcharge = 1
+	selfcharge = TRUE
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
@@ -675,9 +675,9 @@
 	icon_state = "foamsp"
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
-	can_suppress = 0
+	can_suppress = FALSE
 	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
-	suppressed = 1
+	suppressed = TRUE
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -906,7 +906,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon_state = "raygun"
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
-	selfcharge = 1
+	selfcharge = TRUE
 
 /datum/design/toyray
 	name = "RayTag Gun"
