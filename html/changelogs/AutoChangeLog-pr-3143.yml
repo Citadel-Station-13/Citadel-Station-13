@@ -1,0 +1,7 @@
+author: "Kevak/Neri"
+delete-after: True
+changes: 
+  - rscadd: "Readds Cult Hardsuits. or more specifically, makes cult forges be able to make hardsuits. They never got removed from the code."
+  - tweak: "Cultforge uses Option instead of Choice. (Aka ye get a menu instead of three buttons)"
+  - balance: "Cultforge can make hardsuits again."
+  - bugfix: "Fixed Cultforge procs, Slightly cleaner code."
