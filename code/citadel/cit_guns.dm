@@ -182,7 +182,7 @@
 	multiple_sprites = 2
 
 /obj/item/gun/ballistic/automatic/x9/toy
-	name = "donksoft X9"
+	name = "\improper Foam Force X9"
 	desc = "An old but reliable assault rifle made for combat against unknown enemies. Appears to be hastily converted. Ages 8 and up."
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "toy9"
@@ -191,6 +191,14 @@
 	mag_type = /obj/item/ammo_box/magazine/toy/x9
 	casing_ejector = 0
 	spread = 45		//MAXIMUM XCOM MEMES (actually that'd be 90 spread)
+
+/datum/design/foam_x9
+	name = "Foam Force X9 Rifle"
+	id = "foam_x9"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000)
+	build_path = /obj/item/gun/ballistic/automatic/x9/toy
+	category = list("hacked", "Misc")
 
 
 ////////XCOM2 Magpistol/////////
@@ -470,6 +478,34 @@
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 
+///foamagrifle///
+
+/obj/item/ammo_box/magazine/toy/foamag
+	name = "foam force magrifle magazine"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamagmag"
+	max_ammo = 15
+	multiple_sprites = 2
+	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+
+/obj/item/gun/ballistic/automatic/magrifle/toy
+	name = "foamag rifle"
+	desc = "A foam launching magnetic rifle. Ages 8 and up."
+	icon_state = "foamagrifle"
+	needs_permit = 0
+	mag_type = /obj/item/ammo_box/magazine/toy/foamag
+	casing_ejector = FALSE
+	origin_tech = "combat=2;engineering=2;magnets=2"
+
+/datum/design/foam_magrifle
+	name = "Foam Force MagRifle"
+	id = "foam_magrifle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 7500)
+	build_path = /obj/item/gun/ballistic/automatic/magrifle/toy
+	category = list("hacked", "Misc")
+
+
 //////Hyper-Burst Rifle//////
 
 ///projectiles///
@@ -556,6 +592,53 @@
 	..()
 	icon_state = "hyperburst[magazine ? "-[get_ammo()]" : ""][chambered ? "" : "-e"]"
 
+///toy memes///
+
+/obj/item/projectile/beam/lasertag/mag		//the projectile, compatible with regular laser tag armor
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "magjectile-toy"
+	name = "lasertag magbolt"
+	forcedodge = TRUE		//for penetration memes
+	range = 5		//so it isn't super annoying
+	light_range = 2
+	light_color = LIGHT_COLOR_YELLOW
+	eyeblur = 0
+
+/obj/item/ammo_casing/energy/laser/magtag
+	projectile_type = /obj/item/projectile/beam/lasertag/mag
+	select_name = "magtag"
+	pellets = 3
+	variance = 30
+	e_cost = 1000
+	fire_sound = 'sound/weapons/magburst.ogg'
+
+/obj/item/gun/energy/laser/practice/hyperburst
+	name = "toy hyper-burst launcher"
+	desc = "A toy laser with a unique beam shaping lens that projects harmless bolts capable of going through objects. Compatible with existing laser tag systems."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/magtag)
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "toyburst"
+	clumsy_check = FALSE
+	needs_permit = FALSE
+	fire_delay = 40
+	weapon_weight = WEAPON_HEAVY
+	selfcharge = TRUE
+	charge_delay = 2
+	recoil = 2
+	cell_type = /obj/item/stock_parts/cell/toymagburst
+
+/obj/item/stock_parts/cell/toymagburst
+	name = "toy mag burst rifle power supply"
+	maxcharge = 4000
+
+/datum/design/foam_hyperburst
+	name = "MagTag Hyper Rifle"
+	id = "foam_hyperburst"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 35000, MAT_GLASS = 15000)
+	build_path = /obj/item/gun/energy/laser/practice/hyperburst
+	category = list("hacked", "Misc")
+
 /*		made redundant by reskinnable stetchkins
 //////Stealth Pistol//////
 
@@ -582,6 +665,40 @@
 	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 
 */
+
+///foam stealth pistol///
+
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth
+	name = "foam force stealth pistol"
+	desc = "A small, easily concealable toy bullpup handgun. Ages 8 and up."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "foamsp"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol
+	can_suppress = FALSE
+	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
+	suppressed = TRUE
+	burst_size = 1
+	fire_delay = 0
+	actions_types = list()
+
+/obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
+	..()
+	if(magazine)
+		cut_overlays()
+		add_overlay("foamsp-magazine")
+	else
+		cut_overlays()
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
+
+/datum/design/foam_sp
+	name = "Foam Force Stealth Pistol"
+	id = "foam_sp"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 1000)
+	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
+	category = list("hacked", "Misc")
+
 
 //////10mm soporific bullets//////
 
@@ -769,3 +886,32 @@ obj/item/projectile/bullet/c10mm/soporific
 		add_overlay("[unique_reskin[current_skin]]-magazine")
 	else
 		cut_overlays()
+
+/////////RAYGUN MEMES/////////
+
+/obj/item/projectile/beam/lasertag/ray		//the projectile, compatible with regular laser tag armor
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "ray"
+	name = "ray bolt"
+	eyeblur = 0
+
+/obj/item/ammo_casing/energy/laser/raytag
+	projectile_type = /obj/item/projectile/beam/lasertag/ray
+	select_name = "raytag"
+	fire_sound = 'sound/weapons/raygun.ogg'
+
+/obj/item/gun/energy/laser/practice/raygun
+	name = "toy ray gun"
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "raygun"
+	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
+	selfcharge = TRUE
+
+/datum/design/toyray
+	name = "RayTag Gun"
+	id = "toyray"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
+	build_path = /obj/item/gun/energy/laser/practice/raygun
+	category = list("hacked", "Misc")

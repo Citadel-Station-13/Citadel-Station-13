@@ -498,3 +498,14 @@ MICE_ROUNDSTART 10
 
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
+
+## CREW OBJECTIVES ##
+## Comment to disable objectives for innocent crew members.
+ALLOW_CREW_OBJECTIVES
+
+## MISCREANTS ##
+## Comment to allow miscreants to spawn. Miscreants are a mini-antag with objectives that are not tracked.
+ALLOW_MISCREANTS
+
+## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
+#ALLOW_EXTENDED_MISCREANTS
