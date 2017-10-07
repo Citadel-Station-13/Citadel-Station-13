@@ -351,7 +351,11 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
+<<<<<<< HEAD
 	hook_vr("client_new",list(src))
+=======
+	Master.UpdateTickRate()
+>>>>>>> bc4d4e7... Merge pull request #31374 from MrStonedOne/highpopmode
 
 //////////////
 //DISCONNECT//
@@ -399,6 +403,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	Master.UpdateTickRate()
 	return ..()
 
 /client/Destroy()
