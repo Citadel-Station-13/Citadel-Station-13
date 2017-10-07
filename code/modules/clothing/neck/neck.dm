@@ -155,14 +155,13 @@
 	name = "[initial(name)] - [tagname]"
 
 /obj/item/clothing/neck/petcollar/proc/remove_id()
-	if (id)
-		if (ismob(loc))
-			var/mob/M = loc
-			M.put_in_hands(id)
-			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
-		else
-			id.forceMove(get_turf(src))
-		id = null
+	if (id && ismob(loc))
+		var/mob/M = loc
+		M.put_in_hands(id)
+		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+	else
+		id.forceMove(drop_location())
+	id = null
 
 /obj/item/clothing/neck/petcollar/verb/verb_remove_id()
 	set category = "Object"
@@ -196,7 +195,7 @@
 		if(old_id)
 			user.put_in_hands(old_id)
 		else
-			id.forceMove(get_turf(src))
+			id.forceMove(drop_location())
 		update_icon()
 	return TRUE
 
