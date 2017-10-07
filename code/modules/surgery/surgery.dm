@@ -40,7 +40,6 @@
 	// put special restrictions here
 	return 1
 
-
 /datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
 		return 1

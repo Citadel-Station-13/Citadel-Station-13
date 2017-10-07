@@ -34,13 +34,13 @@
 	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
 	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/wirecutters = 55)
 	var/implements_finish = list(/obj/item/retractor = 100, /obj/item/wrench = 55)
-	var/obj/item/organ/I = null
 	var/current_type
+	var/obj/item/organ/I
+
 
 /datum/surgery_step/manipulate_organs/New()
 	..()
 	implements = implements + implements_extract + implements_finish
-
 
 
 /datum/surgery_step/manipulate_organs/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -96,17 +96,14 @@
 		current_type = "finish"
 		user.visible_message("[user] begins to pull [target]'s [parse_zone(target_zone)] flesh back into place.",
 			"<span class='notice'>You begin pull [target]'s [parse_zone(target_zone)] flesh back into place...</span>")
+		return 1
 
 	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
 		return -1
 
-/datum/surgery_step/manipulate_organs/proc/next_step(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(current_type == "finish")
-		user.visible_message("[user] pulls the flesh in [target]'s [parse_zone(target_zone)] back into place.",
-			"<span class='notice'>You pull the flesh in [target]'s [parse_zone(target_zone)] back into place.</span>")
-
-	else if(current_type == "insert")
+/datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(current_type == "insert")
 		if(istype(tool, /obj/item/organ_storage))
 			I = tool.contents[1]
 			tool.icon_state = "evidenceobj"
@@ -119,6 +116,7 @@
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
+		return 0
 
 	else if(current_type == "extract")
 		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
@@ -133,8 +131,13 @@
 				"<span class='notice'>You successfully extract [I] from [target]'s [parse_zone(target_zone)].</span>")
 			add_logs(user, target, "surgically removed [I.name] from", addition="INTENT: [uppertext(user.a_intent)]")
 			I.Remove(target)
-			I.loc = get_turf(target)
+			I.forceMove(get_turf(target))
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
-	return 0
+		return 0
+
+	if(current_type == "finish")
+		user.visible_message("[user] pulls the flesh in [target]'s [parse_zone(target_zone)] back into place.",
+			"<span class='notice'>You pull the flesh in [target]'s [parse_zone(target_zone)] back into place.</span>")
+		return 1
