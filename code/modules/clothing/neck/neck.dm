@@ -216,7 +216,6 @@
 			to_chat(user, "<span class='notice'>\The [id] clips onto \the [src] snugly.</span>")
 			return
 	if(!user.transferItemToLoc(C, src))
-		return
 		return ..()
 
 /obj/item/clothing/neck/petcollar/GetAccess()
