@@ -20,6 +20,7 @@
 
 /obj/structure/Destroy()
 	GLOB.cameranet.updateVisibility(src)
+<<<<<<< HEAD
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
@@ -61,6 +62,49 @@
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
+=======
+	if(smooth)
+		queue_smooth_neighbors(src)
+	return ..()
+
+/obj/structure/attack_hand(mob/user)
+	. = ..()
+	add_fingerprint(user)
+	if(structureclimber && structureclimber != user)
+		user.changeNext_move(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
+		structureclimber.Knockdown(40)
+		structureclimber.visible_message("<span class='warning'>[structureclimber.name] has been knocked off the [src]", "You're knocked off the [src]!", "You see [structureclimber.name] get knocked off the [src]</span>")
+	interact(user)
+
+/obj/structure/interact(mob/user)
+	ui_interact(user)
+
+/obj/structure/ui_act(action, params)
+	..()
+	add_fingerprint(usr)
+
+/obj/structure/MouseDrop_T(atom/movable/O, mob/user)
+	. = ..()
+	if(!climbable)
+		return
+	if(user == O && iscarbon(O))
+		if(user.canmove)
+			climb_structure(user)
+			return
+	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
+		return
+	if(iscyborg(user))
+		return
+	if(!user.drop_all_held_items())
+		return
+	if (O.loc != src.loc)
+		step(O, get_dir(O, src))
+	return
+
+/obj/structure/proc/do_climb(atom/movable/A)
+	if(climbable)
+>>>>>>> b6d349e... Remove drop_item, drop_item_v, put_in_hands_or_del (#31386)
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE

@@ -46,6 +46,7 @@
 
 /obj/machinery/pdapainter/Destroy()
 	QDEL_NULL(storedpda)
+<<<<<<< HEAD
 	return ..()
 
 /obj/machinery/pdapainter/on_deconstruction()
@@ -103,6 +104,61 @@
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+=======
+	return ..()
+
+/obj/machinery/pdapainter/on_deconstruction()
+	if(storedpda)
+		storedpda.forceMove(loc)
+		storedpda = null
+
+/obj/machinery/pdapainter/contents_explosion(severity, target)
+	if(storedpda)
+		storedpda.ex_act(severity, target)
+
+/obj/machinery/pdapainter/handle_atom_del(atom/A)
+	if(A == storedpda)
+		storedpda = null
+		update_icon()
+
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
+	if(default_unfasten_wrench(user, O))
+		power_change()
+		return
+
+	else if(istype(O, /obj/item/device/pda))
+		if(storedpda)
+			to_chat(user, "<span class='warning'>There is already a PDA inside!</span>")
+			return
+		else if(!user.transferItemToLoc(O, src))
+			return
+		storedpda = O
+		O.add_fingerprint(user)
+		update_icon()
+
+	else if(istype(O, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
+		var/obj/item/weldingtool/WT = O
+		if(stat & BROKEN)
+			if(WT.remove_fuel(0,user))
+				user.visible_message("[user] is repairing [src].", \
+								"<span class='notice'>You begin repairing [src]...</span>", \
+								"<span class='italics'>You hear welding.</span>")
+				playsound(loc, WT.usesound, 40, 1)
+				if(do_after(user,40*WT.toolspeed, 1, target = src))
+					if(!WT.isOn() || !(stat & BROKEN))
+						return
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
+					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
+					stat &= ~BROKEN
+					obj_integrity = max_integrity
+					update_icon()
+		else
+			to_chat(user, "<span class='notice'>[src] does not need repairs.</span>")
+	else
+		return ..()
+
+/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
+>>>>>>> b6d349e... Remove drop_item, drop_item_v, put_in_hands_or_del (#31386)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(!(stat & BROKEN))
 			stat |= BROKEN
