@@ -264,6 +264,8 @@ Code:
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
+		else
+			id.forceMove(get_turf(src))
 		update_icon()
 	return TRUE
 
