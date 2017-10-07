@@ -58,4 +58,4 @@
 	explanation_text = "Act as out of character as you possibly can."
 
 /datum/objective/miscreant/racism
-	explanation_text = "Attempt to establish superiority of your race."
+	explanation_text = "Attempt to establish superiority of your species."

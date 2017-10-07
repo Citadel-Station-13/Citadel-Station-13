@@ -74,7 +74,7 @@
 		return FALSE
 
 /datum/objective/crew/noinfections
-	explanation_text = "Ensure no living crew members are infected with harmful viruses at the end of the shift"
+	explanation_text = "Make sure there are no crew members with harmful diseases at the end of the shift."
 	jobs = "virologist"
 
 /datum/objective/crew/noinfections/check_completion()
