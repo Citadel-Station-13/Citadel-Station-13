@@ -1,0 +1,5 @@
+author: "Kevak/Neri"
+delete-after: True
+changes: 
+  - bugfix: "Fixed plasmaman organsprites being missing"
+  - imageadd: "Plasmaman organ sprites added. Credit to Toriate for the sprites"
