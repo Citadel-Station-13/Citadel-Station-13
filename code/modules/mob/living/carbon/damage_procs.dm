@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, break_modifier = 1)
+/mob/living/silicon/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, break_modifier)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || hit_percent <= 0)
 		return 0
