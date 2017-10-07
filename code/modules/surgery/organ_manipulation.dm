@@ -23,7 +23,7 @@
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
+	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
 	requires_organic_bodypart = 1
 	requires_bones = FALSE
 	cantbebones = TRUE
