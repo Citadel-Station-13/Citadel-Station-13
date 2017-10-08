@@ -250,8 +250,9 @@ Code:
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
-			else
-				id.forceMove(drop_location())
+			return TRUE
+		else
+			id.forceMove(drop_location())
 		update_icon()
 	return TRUE
 
