@@ -1,49 +1,3 @@
-<<<<<<< HEAD
-/proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
-	var/t_amount = 0
-	if(t_max == -1)
-		if(extractor)
-			t_max = rand(1,4) * extractor.seed_multiplier
-		else
-			t_max = rand(1,4)
-
-	var/seedloc = O.loc
-	if(extractor)
-		seedloc = extractor.loc
-
-	if(istype(O, /obj/item/reagent_containers/food/snacks/grown/))
-		var/obj/item/reagent_containers/food/snacks/grown/F = O
-		if(F.seed)
-			if(user && !user.drop_item()) //couldn't drop the item
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = seedloc
-				t_amount++
-			qdel(O)
-			return 1
-
-	else if(istype(O, /obj/item/grown))
-		var/obj/item/grown/F = O
-		if(F.seed)
-			if(user && !user.drop_item())
-				return
-			while(t_amount < t_max)
-				var/obj/item/seeds/t_prod = F.seed.Copy()
-				t_prod.loc = seedloc
-				t_amount++
-			qdel(O)
-		return 1
-
-	return 0
-
-
-/obj/machinery/seed_extractor
-	name = "seed extractor"
-	desc = "Extracts and bags seeds from produce."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "sextractor"
-=======
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	if(t_max == -1)
@@ -88,7 +42,6 @@
 	desc = "Extracts and bags seeds from produce."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "sextractor"
->>>>>>> b6d349e... Remove drop_item, drop_item_v, put_in_hands_or_del (#31386)
 	density = TRUE
 	anchored = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
