@@ -157,7 +157,8 @@
 /obj/item/clothing/neck/petcollar/proc/remove_id()
 	if (id && ismob(loc))
 		var/mob/M = loc
-		M.put_in_hands(id)
+		if(!M.put_in_hands(id))
+			id.forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 	else
 		id.forceMove(drop_location())

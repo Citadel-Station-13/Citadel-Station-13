@@ -158,7 +158,7 @@ Code:
 	equip_delay_other = 60
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	var/tagname = null
-	var/obj/item/card/id/id = null
+	var/obj/item/card/id/id
 
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
@@ -226,7 +226,8 @@ Code:
 /obj/item/device/electropack/shockcollar/proc/remove_id()
 	if (id && ismob(loc))
 		var/mob/M = loc
-		M.put_in_hands(id)
+		if(!M.put_in_hands(id))
+			id.forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 	else
 		id.forceMove(drop_location())
