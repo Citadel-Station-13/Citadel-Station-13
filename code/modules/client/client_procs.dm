@@ -351,11 +351,8 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-<<<<<<< HEAD
 	hook_vr("client_new",list(src))
-=======
 	Master.UpdateTickRate()
->>>>>>> bc4d4e7... Merge pull request #31374 from MrStonedOne/highpopmode
 
 //////////////
 //DISCONNECT//
