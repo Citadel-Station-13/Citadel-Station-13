@@ -39,9 +39,8 @@
 		else if(!uses)
 			to_chat(user, "<span class='notice'>[src] has already been used up.</span>")
 			return
-		if(!user.drop_item())
+		if(!user.transferItemToLoc(I, src))
 			return
-		I.loc = src
 		storedorgan = I
 		to_chat(user, "<span class='notice'>You insert the [I] into [src].</span>")
 	else if(istype(I, /obj/item/screwdriver))
@@ -56,7 +55,7 @@
 			if(uses != INFINITE)
 				uses--
 			if(!uses)
-				desc = "[initial(desc)] Looks like it's been used up."
+desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/device/autoimplanter/cmo
 	name = "medical HUD autoimplanter"
