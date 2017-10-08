@@ -24,6 +24,7 @@
 #define ROLE_SERVANT_OF_RATVAR	"servant of Ratvar"
 #define ROLE_BORER				"borer"
 #define ROLE_BROTHER			"blood brother"
+#define ROLE_MISCREANT	"miscreant"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -46,7 +47,8 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_ABDUCTOR = /datum/game_mode/abduction,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_BORER,
-	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult
+	ROLE_SERVANT_OF_RATVAR = /datum/game_mode/clockwork_cult,
+	ROLE_MISCREANT
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

@@ -1,0 +1,9 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "Crew objectives are now more clearly stated to be assigned by Nanotrasen."
+  - tweak: "You can now opt out of being a miscreant in your preferences"
+  - tweak: "Round end objective display is a lot more readable"
+  - tweak: "Crew objectives and miscreant objectives now have more emphasis on being optional"
+  - tweak: "Space suits are a much rarer target for the pwrgame objective"
+  - rscdel: "Got rid of the departmental clothing objective"

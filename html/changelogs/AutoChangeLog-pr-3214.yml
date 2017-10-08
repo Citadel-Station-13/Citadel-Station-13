@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Added kinkmates to Delta in the gambling den (replacing the cigarette vendor), abandoned theatre (replacing a plant), and the abandoned theatre backstage in port bow maintenance."
+  - rscadd: "Added kinkmates to Meta in the abandoned bar, maintenance storage room (replacing an easel), and in maintenance right below science (also replacing an easel)."
+  - tweak: "Made the atmos pipes in maint dorms hidden."
