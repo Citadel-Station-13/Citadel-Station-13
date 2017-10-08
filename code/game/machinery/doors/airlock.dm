@@ -127,7 +127,6 @@
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
 				here.ChangeTurf(/turf/closed/wall)
-				return INITIALIZE_HINT_QDEL
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -1170,10 +1169,9 @@
 			to_chat(user, "<span class='warning'>The maintenance panel is destroyed!</span>")
 			return
 		to_chat(user, "<span class='warning'>You apply [C]. Next time someone opens the door, it will explode.</span>")
-		user.drop_item()
 		panel_open = FALSE
 		update_icon()
-		C.forceMove(src)
+		user.transferItemToLoc(C, src, TRUE)
 		charge = C
 	else if(istype(C, /obj/item/paper) || istype(C, /obj/item/photo))
 		if(note)

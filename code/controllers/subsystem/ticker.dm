@@ -68,10 +68,57 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
-	var/list/music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+
+	var/list/byond_sound_formats = list(
+		"mid"  = TRUE,
+		"midi" = TRUE,
+		"mod"  = TRUE,
+		"it"   = TRUE,
+		"s3m"  = TRUE,
+		"xm"   = TRUE,
+		"oxm"  = TRUE,
+		"wav"  = TRUE,
+		"ogg"  = TRUE,
+		"raw"  = TRUE,
+		"wma"  = TRUE,
+		"aiff" = TRUE
+	)
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+	
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+				
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+
 	login_music = pick(music)
 
 	if(!GLOB.syndicate_code_phrase)
@@ -258,7 +305,7 @@ SUBSYSTEM_DEF(ticker)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
 		if(S.name != "AI")
 			qdel(S)
-	
+
 	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
@@ -282,7 +329,7 @@ SUBSYSTEM_DEF(ticker)
 		qdel(bomb)
 		if(epi)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
-			
+
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -472,13 +519,13 @@ SUBSYSTEM_DEF(ticker)
 		if(!crewMind.current || !crewMind.objectives.len)
 			continue
 		for(var/datum/objective/miscreant/MO in crewMind.objectives)
-			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [MO.explanation_text] <font color='grey'>(Optional)</font><BR>"
 		for(var/datum/objective/crew/CO in crewMind.objectives)
 			if(CO.check_completion())
-				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
-				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
+				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font><BR>"
 			else
-				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
+				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
 
 	if (successfulCrew.len)
 		var/completedObjectives = "<B>The following crew members completed their Crew Objectives:</B><BR>"
