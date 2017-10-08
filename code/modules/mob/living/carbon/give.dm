@@ -44,7 +44,7 @@
 					user << "<span class='warning'>Your hands are full.</span>"
 					user << "<span class='warning'>Their hands are full.</span>"
 					return
-				if(!user.drop_item(I))
+				if(!user.dropItemToGround(I))
 					src << "<span class='warning'>[user] can't let go of \the [I]!</span>"
 					user << "<span class='warning'>You can't seem to let go of \the [I].</span>"
 					return

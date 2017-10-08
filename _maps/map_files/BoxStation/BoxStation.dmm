@@ -42543,14 +42543,14 @@
 	},
 /area/maintenance/port/aft)
 "bTt" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/structure/closet/secure_closet/personal,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "bTu" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
@@ -42564,9 +42564,9 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "bTw" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
 /obj/machinery/light/small,
 /obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/manifold/general/hidden,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "bTx" = (
@@ -64149,19 +64149,19 @@
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cUq" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 5
-	},
 /obj/machinery/light/small,
 /obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 5
+	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cUr" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
 /obj/structure/bed,
 /obj/item/bedsheet,
+/obj/machinery/atmospherics/pipe/simple/general/hidden{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
 "cUs" = (
