@@ -55,7 +55,7 @@
 			if(uses != INFINITE)
 				uses--
 			if(!uses)
-desc = "[initial(desc)] Looks like it's been used up."
+				desc = "[initial(desc)] Looks like it's been used up."
 
 /obj/item/device/autoimplanter/cmo
 	name = "medical HUD autoimplanter"
