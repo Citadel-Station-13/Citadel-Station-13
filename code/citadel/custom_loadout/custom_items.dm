@@ -93,6 +93,17 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
+/obj/item/toy/plush/tree
+	name = "christmass tree plushie"
+	desc = "A festive plush that squeeks when you squeeze it!"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "pine_c"
+	item_state = "pine_c"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("slapped")
+	resistance_flags = FLAMMABLE
+	squeak_override = list('sound/items/bikehorn.ogg'= 1)
+
 
 /*Zigfie*/
 
