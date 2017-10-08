@@ -54544,9 +54544,7 @@
 	name = "Mix to MiniSat"
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuo" = (
 /obj/machinery/portable_atmospherics/canister/air,
@@ -54570,9 +54568,7 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cuq" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -54581,9 +54577,7 @@
 	on = 0
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/atmos)
 "cur" = (
 /obj/structure/showcase/cyborg/old{
@@ -54644,15 +54638,11 @@
 	pixel_y = 30
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
 "cuw" = (
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating{
-	icon_plating = "warnplate"
-	},
+/turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/service)
 "cux" = (
 /obj/structure/table,
