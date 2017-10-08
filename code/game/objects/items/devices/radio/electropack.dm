@@ -224,14 +224,12 @@ Code:
 			return
 
 /obj/item/device/electropack/shockcollar/proc/remove_id()
-	if (id && ismob(loc))
+	if(id && ismob(loc))
 		var/mob/M = loc
 		if(!M.put_in_hands(id))
-			id.forceMove(drop_location())
+			id.loc = forceMove(drop_location())
 		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
-	else
-		id.forceMove(drop_location())
-	id = null
+		id = null
 
 /obj/item/device/electropack/shockcollar/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
@@ -252,7 +250,7 @@ Code:
 			user.put_in_hands(old_id)
 			return TRUE
 		else
-			id.forceMove(drop_location())
+			id.loc = forceMove(drop_location())
 		update_icon()
 	return TRUE
 
@@ -273,8 +271,8 @@ Code:
 				return
 			to_chat(user, "<span class='notice'>\The [id] slots into \the [src] snugly.</span>")
 			return
-		if(!user.transferItemToLoc(C, src))
-			return ..()
+	if(!user.transferItemToLoc(C, src))
+		return ..()
 
 /obj/item/device/electropack/shockcollar/GetAccess()
 	if(id)
