@@ -31874,9 +31874,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -31939,9 +31936,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -51678,6 +51672,11 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/black,
 /area/engine/engine_smes)
 "cnP" = (
@@ -52054,6 +52053,11 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
@@ -52461,12 +52465,22 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpn" = (
 /obj/machinery/light,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpo" = (
@@ -65088,7 +65102,7 @@
 	desc = "A remote control switch for the vault shutters.";
 	id = "vault";
 	name = "vault shutter control";
-	normaldoorcontrol = 1;
+	normaldoorcontrol = 0;
 	pixel_x = 8;
 	pixel_y = -24;
 	req_access_txt = "63"
@@ -65155,6 +65169,11 @@
 /area/engine/engine_smes)
 "cXs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
 "cXt" = (
@@ -65219,6 +65238,11 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "cXz" = (
@@ -65264,6 +65288,7 @@
 "cXG" = (
 /obj/machinery/power/terminal,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/structure/cable,
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
 "cXH" = (
@@ -65927,6 +65952,33 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre/clown)
+"cZs" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/gravity_generator)
+"cZt" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/gravity_generator)
+"cZu" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/closed/wall/r_wall,
+/area/engine/gravity_generator)
 
 (1,1,1) = {"
 aaa
@@ -88987,10 +89039,10 @@ cnP
 coz
 cpn
 cXs
-bgO
-bgO
+cZs
+cZt
 cXy
-bgO
+cZu
 cXG
 cXK
 cXP
@@ -94341,7 +94393,7 @@ cXd
 buP
 bwm
 bxH
-byS
+aXf
 aJq
 cXq
 bCs
@@ -94855,7 +94907,7 @@ cXf
 cXk
 cXn
 cXp
-bvW
+aNr
 bAf
 bBp
 aHP
@@ -95369,7 +95421,7 @@ cXh
 buR
 aFM
 bxJ
-bwb
+aNs
 aJq
 bBr
 bCv
@@ -101765,7 +101817,7 @@ aGI
 aId
 aJD
 aKP
-aMx
+aOL
 aNJ
 aQe
 aOL
