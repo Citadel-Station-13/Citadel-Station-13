@@ -64756,6 +64756,7 @@
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
+<<<<<<< HEAD
 /area/maintenance/bar)
 "cWs" = (
 /obj/structure/sign/poster/random{
@@ -64803,6 +64804,22 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/bar)
+=======
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
+"Qlj" = (
+/obj/docking_port/stationary{
+ 	dheight = 9;
+ 	dir = 2;
+ 	dwidth = 5;
+ 	height = 24;
+	id = "syndicate_nw";
+	name = "northwest of station";
+	turf_type = /turf/open/space
+},
+/turf/open/space/basic,
+/area/space)
+>>>>>>> 1fc4537... Kept the wrong dock on box (#31473)
 
 (1,1,1) = {"
 aaa
