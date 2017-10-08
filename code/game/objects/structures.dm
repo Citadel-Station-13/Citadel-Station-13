@@ -49,11 +49,11 @@
 		if(user.canmove)
 			climb_structure(user)
 			return
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_held_item() != O))
+	if ((!( istype(O, /obj/item) ) || user.get_active_held_item() != O))
 		return
 	if(iscyborg(user))
 		return
-	if(!user.drop_item())
+	if(!user.drop_all_held_items())
 		return
 	if (O.loc != src.loc)
 		step(O, get_dir(O, src))

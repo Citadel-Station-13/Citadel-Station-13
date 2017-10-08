@@ -185,29 +185,6 @@
 	else
 		return FALSE
 
-/datum/objective/crew/departmentclothes
-	var/obj/item/clothing/under/rank/targetuniform
-	explanation_text = "Be wearing a (Yo, this objective broke. report this to citadels discord via the development channel) at the end of the shift."
-	jobs = "assistant"
-
-/datum/objective/crew/departmentclothes/New()
-	. = ..()
-	var/list/blacklist = list(/obj/item/clothing/under/rank, /obj/item/clothing/under/rank/miner, /obj/item/clothing/under/rank/medical/blue, /obj/item/clothing/under/rank/medical/green, /obj/item/clothing/under/rank/medical/purple, /obj/item/clothing/under/rank/security/grey, /obj/item/clothing/under/rank/warden/grey, /obj/item/clothing/under/rank/head_of_security/grey, /obj/item/clothing/under/rank/mailman, /obj/item/clothing/under/rank/psyche, /obj/item/clothing/under/rank/clown/sexy, /obj/item/clothing/under/rank/centcom_officer, /obj/item/clothing/under/rank/centcom_commander, /obj/item/clothing/under/rank/security/navyblue/russian, /obj/item/clothing/under/rank/security/blueshirt)
-	var/list/validclothes = typesof(/obj/item/clothing/under/rank) - blacklist
-	targetuniform = pick(validclothes)
-	update_explanation_text()
-
-/datum/objective/crew/departmentclothes/update_explanation_text()
-	. = ..()
-	explanation_text = "Be wearing a [initial(targetuniform.name)] at the end of the shift."
-
-/datum/objective/crew/departmentclothes/check_completion()
-	if(owner && owner.current)
-		var/mob/living/carbon/human/H = owner.current
-		if(istype(H.w_uniform, targetuniform))
-			return TRUE
-	return FALSE
-
 /datum/objective/crew/pwrgame //ported from Goon with adjustments
 	var/obj/item/clothing/targettidegarb
 	explanation_text = "Get your grubby hands on a (Dear god something broke. Report this to Citadel's development dicussion channel)."
@@ -215,7 +192,9 @@
 
 /datum/objective/crew/pwrgame/New()
 	. = ..()
-	var/list/muhvalids = list(/obj/item/clothing/mask/gas, /obj/item/clothing/head/welding, /obj/item/clothing/head/ushanka, /obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas/owl_mask, /obj/item/clothing/suit/space)
+	var/list/muhvalids = list(/obj/item/clothing/mask/gas, /obj/item/clothing/head/welding, /obj/item/clothing/head/ushanka, /obj/item/clothing/gloves/color/yellow, /obj/item/clothing/mask/gas/owl_mask)
+	if(prob(10))
+		muhvalids += list(/obj/item/clothing/suit/space)
 	targettidegarb = pick(muhvalids)
 	update_explanation_text()
 
