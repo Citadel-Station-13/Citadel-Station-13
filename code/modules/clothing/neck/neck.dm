@@ -164,20 +164,6 @@
 		id.forceMove(drop_location())
 	id = null
 
-/obj/item/clothing/neck/petcollar/verb/verb_remove_id()
-	set category = "Object"
-	set name = "Remove ID"
-	set src in usr
-
-	if(issilicon(usr))
-		return
-
-	if (usr.canUseTopic(src))
-		if(id)
-			remove_id()
-		else
-			to_chat(usr, "<span class='warning'>This collar does not have an ID in it!</span>")
-
 /obj/item/clothing/neck/petcollar/proc/id_check(mob/user, obj/item/card/id/I)
 	if(!I)
 		if(id)
@@ -195,8 +181,8 @@
 		id = I
 		if(old_id)
 			user.put_in_hands(old_id)
-		else
-			id.forceMove(drop_location())
+			else
+				id.forceMove(drop_location())
 		update_icon()
 	return TRUE
 
