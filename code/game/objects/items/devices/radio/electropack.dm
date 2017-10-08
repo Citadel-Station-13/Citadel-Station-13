@@ -273,8 +273,8 @@ Code:
 				return
 			to_chat(user, "<span class='notice'>\The [id] slots into \the [src] snugly.</span>")
 			return
-	if(!user.transferItemToLoc(C, src))
-		return ..()
+		if(!user.transferItemToLoc(C, src))
+			return ..()
 
 /obj/item/device/electropack/shockcollar/GetAccess()
 	if(id)
