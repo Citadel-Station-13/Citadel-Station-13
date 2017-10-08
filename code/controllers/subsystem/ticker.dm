@@ -258,7 +258,7 @@ SUBSYSTEM_DEF(ticker)
 		//Deleting Startpoints but we need the ai point to AI-ize people later
 		if(S.name != "AI")
 			qdel(S)
-	
+
 	//assign crew objectives and generate miscreants
 	if(CONFIG_GET(flag/allow_extended_miscreants) && GLOB.master_mode == "extended")
 		GLOB.miscreants_allowed = TRUE
@@ -282,7 +282,7 @@ SUBSYSTEM_DEF(ticker)
 		qdel(bomb)
 		if(epi)
 			explosion(epi, 0, 256, 512, 0, TRUE, TRUE, 0, TRUE)
-			
+
 /datum/controller/subsystem/ticker/proc/create_characters()
 	for(var/mob/dead/new_player/player in GLOB.player_list)
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -472,13 +472,13 @@ SUBSYSTEM_DEF(ticker)
 		if(!crewMind.current || !crewMind.objectives.len)
 			continue
 		for(var/datum/objective/miscreant/MO in crewMind.objectives)
-			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [MO.explanation_text]"
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [MO.explanation_text] <font color='grey'>(Optional)</font><BR>"
 		for(var/datum/objective/crew/CO in crewMind.objectives)
 			if(CO.check_completion())
-				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
-				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>). <B>Objective</B>: [CO.explanation_text]"
+				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font><BR>"
 			else
-				to_chat(crewMind.current, "<br><B>Your objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
+				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
 
 	if (successfulCrew.len)
 		var/completedObjectives = "<B>The following crew members completed their Crew Objectives:</B><BR>"
