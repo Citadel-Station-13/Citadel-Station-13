@@ -34,7 +34,12 @@ Bonus
 					  <b>Transmission 8:</b> Causes extreme pain to the host, weakening it."
 
 /datum/symptom/flesh_eating/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["resistance"] >= 7) //extra bleeding
 		bleed = TRUE
 	if(A.properties["transmittable"] >= 8) //extra stamina damage
@@ -99,7 +104,12 @@ Bonus
 					  <b>Stealth 5:</b> The symptom remains hidden until active."
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 5)
 		suppress_warning = TRUE
 	if(A.properties["stage_rate"] >= 7) //bleeding and hunger

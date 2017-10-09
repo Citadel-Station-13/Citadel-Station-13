@@ -45,11 +45,20 @@ Bonus
 			to_chat(C, "<span class='warning'>[pick("Your skin feels itchy.", "You feel light headed.")]</span>")
 			C.dna.remove_mutation_group(possible_mutations)
 			for(var/i in 1 to power)
+<<<<<<< HEAD
 				C.randmut(possible_mutations)
 
 // Archive their DNA before they were infected.
 /datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
 	..()
+=======
+				C.randmut(possible_mutations)
+
+// Archive their DNA before they were infected.
+/datum/symptom/genetic_mutation/Start(datum/disease/advance/A)
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 5) //don't restore dna after curing
 		no_reset = TRUE
 	if(A.properties["stage_rate"] >= 10) //mutate more often
@@ -57,6 +66,7 @@ Bonus
 		symptom_delay_max = 60
 	if(A.properties["resistance"] >= 8) //mutate twice
 		power = 2
+<<<<<<< HEAD
 	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
 	var/mob/living/carbon/M = A.affected_mob
 	if(M)
@@ -66,6 +76,19 @@ Bonus
 
 // Give them back their old DNA when cured.
 /datum/symptom/genetic_mutation/End(datum/disease/advance/A)
+=======
+	possible_mutations = (GLOB.bad_mutations | GLOB.not_good_mutations) - GLOB.mutations_list[RACEMUT]
+	var/mob/living/carbon/M = A.affected_mob
+	if(M)
+		if(!M.has_dna())
+			return
+		archived_dna = M.dna.struc_enzymes
+
+// Give them back their old DNA when cured.
+/datum/symptom/genetic_mutation/End(datum/disease/advance/A)
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(!no_reset)
 		var/mob/living/carbon/M = A.affected_mob
 		if(M && archived_dna)

@@ -32,7 +32,12 @@ Bonus
 					  <b>Stealth 4:</b> The virus mimics positive symptoms.."
 
 /datum/symptom/hallucigen/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 4) //fake good symptom messages
 		fake_healthy = TRUE
 		base_message_chance = 50

@@ -31,7 +31,12 @@ Bonus
 					  <b>Stage Speed 10:</b> Further increases cooling speed."
 
 /datum/symptom/fever/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stage_speed"] >= 5) //dangerous cold
 		power = 1.5
 		unsafe = TRUE

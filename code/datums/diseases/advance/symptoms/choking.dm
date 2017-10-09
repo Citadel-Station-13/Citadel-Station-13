@@ -32,7 +32,12 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stage_rate"] >= 8)
 		symptom_delay_min = 7
 		symptom_delay_max = 24
@@ -100,7 +105,12 @@ Bonus
 	var/paralysis = FALSE
 
 /datum/symptom/asphyxiation/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stage_rate"] >= 8)
 		paralysis = TRUE
 	if(A.properties["transmission"] >= 8)

@@ -31,7 +31,12 @@ Bonus
 					  <b>Stealth 4:</b> The symptom remains hidden until active."
 
 /datum/symptom/dizzy/Start(datum/disease/advance/A)
+<<<<<<< HEAD
 	..()
+=======
+	if(!..())
+		return
+>>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 4)
 		suppress_warning = TRUE
 	if(A.properties["transmittable"] >= 6) //druggy
