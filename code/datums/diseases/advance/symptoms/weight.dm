@@ -31,12 +31,8 @@ Bonus
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_gain/Start(datum/disease/advance/A)
-<<<<<<< HEAD
-	..()
-=======
 	if(!..())
 		return
->>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 
@@ -86,12 +82,8 @@ Bonus
 	threshold_desc = "<b>Stealth 4:</b> The symptom is less noticeable."
 
 /datum/symptom/weight_loss/Start(datum/disease/advance/A)
-<<<<<<< HEAD
-	..()
-=======
 	if(!..())
 		return
->>>>>>> 1940af0... Fixes Start() of symptoms still working when neutered (#31435)
 	if(A.properties["stealth"] >= 4) //warn less often
 		base_message_chance = 25
 
