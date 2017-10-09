@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -1040,6 +1040,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "acc" = (
@@ -3457,6 +3458,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/retractor,
 /obj/item/hemostat,
+/obj/item/bonegel,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -19753,6 +19755,7 @@
 	dir = 2;
 	name = "cargo camera"
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -24253,6 +24256,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -38
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aYK" = (
@@ -25106,6 +25110,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "baz" = (
@@ -28917,6 +28922,7 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/glass/bottle/charcoal,
 /obj/item/reagent_containers/syringe,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 10
 	},
@@ -41019,6 +41025,7 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bDT" = (
@@ -63108,6 +63115,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/gateway)
 "ctX" = (
@@ -70365,6 +70373,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -72617,6 +72626,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cMP" = (
@@ -74063,6 +74073,9 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -74261,6 +74274,7 @@
 "cPU" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cPV" = (
@@ -75536,6 +75550,8 @@
 "cSs" = (
 /obj/structure/table,
 /obj/item/folder/white,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 8
 	},
@@ -81720,6 +81736,7 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/vault,
 /area/medical/abandoned)
 "dfu" = (
@@ -81730,6 +81747,7 @@
 /obj/item/hemostat,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/bonesetter,
 /turf/open/floor/plating,
 /area/medical/abandoned)
 "dfv" = (
@@ -84369,6 +84387,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/bonegel,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "dkP" = (
@@ -85571,6 +85590,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/bonesetter,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 5
 	},
@@ -85593,6 +85613,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/bonegel,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9
 	},
@@ -92878,6 +92899,8 @@
 /obj/item/surgical_drapes,
 /obj/item/cautery,
 /obj/effect/turf_decal/bot,
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dBB" = (
@@ -92903,6 +92926,7 @@
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/surgicaldrill,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dBE" = (
@@ -98280,6 +98304,8 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
+/obj/item/bonesetter,
+/obj/item/bonegel,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "dMe" = (
@@ -99512,6 +99538,7 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -101754,6 +101781,7 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
+/obj/item/stack/medical/splint,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
@@ -102052,6 +102080,7 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/delivery,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit/departure_lounge)
 "dUb" = (
@@ -105422,6 +105451,7 @@
 "eaG" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "eaH" = (
