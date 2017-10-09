@@ -1040,7 +1040,6 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/shuttle/arrival)
 "acc" = (
@@ -3449,7 +3448,6 @@
 /obj/structure/table_frame,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -3459,8 +3457,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/retractor,
 /obj/item/hemostat,
-/obj/item/bonegel,
-/obj/item/bonesetter,
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
@@ -4980,110 +4976,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
-<<<<<<< HEAD
-"amN" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/item/bodypart/r_arm/robot,
-/obj/item/bodypart/l_arm/robot,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amO" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Surgery";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amP" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amQ" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/splint,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amR" = (
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/splint,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amS" = (
-/obj/item/device/sbeacondrop/bomb{
-	pixel_y = 5
-	},
-/obj/item/device/sbeacondrop/bomb,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"amT" = (
-/obj/item/grenade/syndieminibomb{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/grenade/syndieminibomb{
-	pixel_x = -1
-	},
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"amU" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Technological Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"amV" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/item/device/aicard,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-=======
->>>>>>> master
 "amW" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -5813,55 +5705,6 @@
 	dir = 4
 	},
 /area/maintenance/disposal)
-<<<<<<< HEAD
-"aoz" = (
-/obj/item/cautery,
-/obj/item/scalpel,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"aoA" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"aoB" = (
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/structure/table/reinforced,
-/obj/item/bonegel,
-/obj/item/bonesetter,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"aoC" = (
-/obj/structure/shuttle/engine/heater,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating/airless,
-/area/shuttle/syndicate)
-"aoD" = (
-/turf/open/space,
-/area/shuttle/syndicate)
-"aoE" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-"aoF" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-=======
->>>>>>> master
 "aoG" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/landmark/xeno_spawn,
@@ -9014,7 +8857,6 @@
 "auQ" = (
 /obj/structure/table_frame/wood,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/redblue,
 /area/maintenance/port/fore)
 "auR" = (
@@ -19911,7 +19753,6 @@
 	dir = 2;
 	name = "cargo camera"
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -21118,8 +20959,6 @@
 /obj/structure/table/glass,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 8
 	},
@@ -25290,8 +25129,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/shuttle/mining)
 "baB" = (
@@ -28979,8 +28816,6 @@
 	dir = 8;
 	name = "cargo camera"
 	},
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown{
 	dir = 6
 	},
@@ -41184,7 +41019,6 @@
 /obj/item/folder/yellow,
 /obj/item/pen,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bDT" = (
@@ -70531,7 +70365,6 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/blue,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -71597,7 +71430,6 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -74429,7 +74261,6 @@
 "cPU" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral,
 /area/crew_quarters/fitness/recreation)
 "cPV" = (
@@ -75046,10 +74877,6 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -77896,7 +77723,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cWT" = (
@@ -81894,7 +81720,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/vault,
 /area/medical/abandoned)
 "dfu" = (
@@ -81905,7 +81730,6 @@
 /obj/item/hemostat,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/bonegel,
 /turf/open/floor/plating,
 /area/medical/abandoned)
 "dfv" = (
@@ -82069,7 +81893,6 @@
 /obj/structure/table/wood/poker,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
 "dfL" = (
@@ -85770,8 +85593,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/bonesetter,
-/obj/item/bonegel,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 9
 	},
@@ -93057,8 +92878,6 @@
 /obj/item/surgical_drapes,
 /obj/item/cautery,
 /obj/effect/turf_decal/bot,
-/obj/item/bonegel,
-/obj/item/bonesetter,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dBB" = (
@@ -96603,7 +96422,6 @@
 	name = "science camera";
 	network = list("SS13","RD")
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 4
 	},
@@ -98462,9 +98280,6 @@
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/reinforced,
-/obj/item/bonegel,
-/obj/item/bonesetter,
-/obj/item/cautery,
 /turf/open/floor/plasteel/cmo,
 /area/shuttle/escape)
 "dMe" = (
@@ -99697,7 +99512,6 @@
 	pixel_y = 3
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 4
 	},
@@ -101940,7 +101754,6 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/splint,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
@@ -105609,7 +105422,6 @@
 "eaG" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/vault,
 /area/shuttle/escape)
 "eaH" = (

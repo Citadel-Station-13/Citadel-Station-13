@@ -4983,7 +4983,6 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ajY" = (
@@ -5202,7 +5201,6 @@
 /obj/item/dice/d8,
 /obj/item/device/healthanalyzer,
 /obj/effect/spawner/lootdrop/maintenance,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "akt" = (
@@ -5953,7 +5951,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 10
 	},
@@ -20809,7 +20806,6 @@
 /obj/structure/table,
 /obj/item/folder,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -21924,7 +21920,6 @@
 /obj/item/folder/yellow,
 /obj/item/folder/yellow,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -24600,7 +24595,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/delivery,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aVI" = (
@@ -32601,7 +32595,6 @@
 	icon_state = "1-2"
 	},
 /obj/structure/table/glass,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/darkgreen/corner{
 	dir = 1
 	},
@@ -33937,7 +33930,6 @@
 	pixel_y = 4
 	},
 /obj/structure/table/glass,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bnf" = (
@@ -45793,7 +45785,6 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -53330,8 +53321,6 @@
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/dropper,
-/obj/item/stack/medical/splint,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -53970,7 +53959,6 @@
 	dir = 10
 	},
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -60520,7 +60508,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmW" = (
@@ -60563,7 +60550,6 @@
 /obj/item/clothing/head/soft/mime,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/item/bonegel,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cnb" = (
@@ -60656,8 +60642,6 @@
 /obj/structure/table,
 /obj/item/surgicaldrill,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/bonegel,
-/obj/item/bonesetter,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -62078,7 +62062,6 @@
 /obj/item/stack/medical/bruise_pack,
 /obj/item/stack/medical/ointment,
 /obj/item/clothing/glasses/hud/health,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cpM" = (
@@ -72317,7 +72300,6 @@
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/mask/breath/medical,
-/obj/item/stack/medical/splint,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -72376,7 +72358,6 @@
 /obj/item/razor{
 	pixel_y = 5
 	},
-/obj/item/surgicaldrill,
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
@@ -72872,9 +72853,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -29
 	},
-/obj/item/bonegel,
-/obj/item/bonesetter,
-/obj/item/cautery,
 /turf/open/floor/plasteel/white/corner{
 	dir = 4
 	},
@@ -75476,7 +75454,6 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -77912,353 +77889,6 @@
 	},
 /turf/open/space,
 /area/space)
-<<<<<<< HEAD
-"cTY" = (
-/obj/structure/tank_dispenser/oxygen,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cTZ" = (
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUa" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/syndicate)
-"cUb" = (
-/obj/machinery/sleeper/syndie{
-	dir = 4
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUc" = (
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 6
-	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
-	pixel_x = 6;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/syringe/epinephrine{
-	pixel_x = 2;
-	pixel_y = 8
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUd" = (
-/obj/machinery/door/airlock/external{
-	name = "E.V.A. Gear Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUe" = (
-/obj/machinery/door/airlock/external{
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUf" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "EVA Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUg" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/shuttle/syndicate)
-"cUh" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/black/red,
-/obj/item/clothing/head/helmet/space/syndicate/black/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUi" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. Evilly";
-	freerange = 1;
-	frequency = 1213;
-	name = "Syndicate Intercom";
-	pixel_x = -32;
-	subspace_transmission = 1;
-	syndie = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUj" = (
-/obj/structure/closet/syndicate/nuclear,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUk" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUl" = (
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/medical/bruise_pack,
-/obj/item/stack/medical/ointment,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUm" = (
-/obj/structure/bed/roller,
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUn" = (
-/obj/item/screwdriver{
-	pixel_y = 9
-	},
-/obj/item/device/assembly/voice{
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUo" = (
-/obj/item/stock_parts/cell/high{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stock_parts/cell/high,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUp" = (
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/signaler,
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/device/assembly/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUq" = (
-/obj/item/wrench,
-/obj/item/device/assembly/infra,
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUr" = (
-/obj/item/weldingtool/largetank{
-	pixel_y = 3
-	},
-/obj/item/device/multitool,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUs" = (
-/obj/structure/sign/bluecross_2,
-/turf/closed/wall/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUt" = (
-/obj/machinery/door/window/westright{
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUu" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/syndicate,
-/obj/item/crowbar/red,
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUv" = (
-/obj/machinery/door/airlock/hatch{
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUw" = (
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Infirmary";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/syndicate)
-"cUx" = (
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Tool Storage";
-	req_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-"cUy" = (
-/obj/machinery/door/window{
-	dir = 1;
-	name = "Surgery";
-	req_access_txt = "150"
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUz" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/item/bodypart/r_arm/robot,
-/obj/item/bodypart/l_arm/robot,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUA" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/splint,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUB" = (
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUC" = (
-/obj/item/grenade/syndieminibomb{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/grenade/syndieminibomb{
-	pixel_x = -1
-	},
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/obj/item/grenade/plastic/c4,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUD" = (
-/obj/item/device/sbeacondrop/bomb{
-	pixel_y = 5
-	},
-/obj/item/device/sbeacondrop/bomb,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUE" = (
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/table/reinforced,
-/obj/item/stack/medical/splint,
-/turf/open/floor/plasteel/vault,
-/area/shuttle/syndicate)
-"cUF" = (
-/obj/item/surgicaldrill,
-/obj/item/circular_saw,
-/obj/structure/table/reinforced,
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"cUG" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/mineral/plastitanium,
-/area/shuttle/syndicate)
-=======
->>>>>>> master
 "cUH" = (
 /obj/structure/table/optable,
 /turf/open/floor/plasteel/white,
@@ -80223,7 +79853,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cYD" = (
@@ -80472,7 +80101,6 @@
 	},
 /obj/item/lazarus_injector,
 /obj/effect/turf_decal/bot,
-/obj/item/stack/medical/splint,
 /mob/living/simple_animal/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
@@ -80655,7 +80283,6 @@
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cZv" = (
@@ -80862,7 +80489,6 @@
 "cZT" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
-/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "cZU" = (
@@ -81051,9 +80677,6 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
-/obj/item/bonegel,
-/obj/item/bonesetter,
-/obj/item/cautery,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "dat" = (
@@ -81427,40 +81050,6 @@
 	},
 /turf/open/floor/circuit/killroom,
 /area/science/xenobiology)
-<<<<<<< HEAD
-"dbx" = (
-/obj/structure/table/optable,
-/obj/item/surgical_drapes,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dby" = (
-/obj/item/cautery,
-/obj/item/scalpel,
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dbz" = (
-/obj/item/retractor,
-/obj/item/hemostat,
-/obj/structure/table/reinforced,
-/obj/item/bonegel,
-/obj/item/bonesetter,
-/turf/open/floor/plasteel/vault{
-	dir = 8
-	},
-/area/shuttle/syndicate)
-"dbA" = (
-/obj/machinery/telecomms/allinone{
-	intercept = 1
-	},
-/turf/open/floor/circuit/red,
-/area/shuttle/syndicate)
-=======
->>>>>>> master
 "dbB" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -81824,7 +81413,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -86620,16 +86208,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-<<<<<<< HEAD
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
-"dDN" = (
-/obj/structure/table,
-/obj/item/stack/medical/splint,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/mining)
-=======
 /obj/effect/decal/cleanable/dirt{
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
@@ -86670,7 +86248,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
->>>>>>> master
 
 (1,1,1) = {"
 aaa
@@ -101413,7 +100990,7 @@ atq
 aaf
 aaa
 awN
-dDN
+ayg
 azh
 dlB
 azi

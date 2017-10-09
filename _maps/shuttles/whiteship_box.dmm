@@ -296,7 +296,6 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "bh" = (
