@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /datum/disease/magnitis
 	name = "Magnitis"
 	max_stages = 4
@@ -19,6 +20,29 @@
 				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
 			if(prob(2))
 				for(var/obj/M in orange(2,affected_mob))
+=======
+/datum/disease/magnitis
+	name = "Magnitis"
+	max_stages = 4
+	spread_text = "Airborne"
+	cure_text = "Iron"
+	cures = list("iron")
+	agent = "Fukkos Miracos"
+	viable_mobtypes = list(/mob/living/carbon/human)
+	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
+	permeability_mod = 0.75
+	desc = "This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field."
+	severity = VIRUS_SEVERITY_MEDIUM
+
+/datum/disease/magnitis/stage_act()
+	..()
+	switch(stage)
+		if(2)
+			if(prob(2))
+				to_chat(affected_mob, "<span class='danger'>You feel a slight shock course through your body.</span>")
+			if(prob(2))
+				for(var/obj/M in orange(2,affected_mob))
+>>>>>>> db0c10e... Refactors virus spreading (#31066)
 					if(!M.anchored && (M.flags_1 & CONDUCT_1))
 						step_towards(M,affected_mob)
 				for(var/mob/living/silicon/S in orange(2,affected_mob))
