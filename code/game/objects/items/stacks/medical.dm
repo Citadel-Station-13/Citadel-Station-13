@@ -49,7 +49,7 @@
 					to_chat(user, "<span class='warning'>[H] isn't bleeding!</span>")
 					return
 
-		if(splint_fracture)
+		if(splint_fracture = TRUE)
 			if(!(affecting.body_part in list(ARM_LEFT, ARM_RIGHT, LEG_LEFT, LEG_RIGHT)))
 				to_chat(user, "<span class='warning'>You can't splint that bodypart!</span>")
 				return
