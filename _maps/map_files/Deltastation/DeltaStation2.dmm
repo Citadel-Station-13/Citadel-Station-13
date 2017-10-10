@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -95768,7 +95768,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/vending/kink,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -109399,6 +109399,14 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"YGJ" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"YGK" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 
 (1,1,1) = {"
 aaa
@@ -133734,7 +133742,7 @@ dmb
 dnA
 doK
 dqw
-diJ
+YGK
 aJm
 aHW
 aaf
@@ -139805,7 +139813,7 @@ aib
 asx
 atw
 auQ
-aic
+YGJ
 awX
 aye
 azn
