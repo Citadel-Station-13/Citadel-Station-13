@@ -1,0 +1,4 @@
+author: "Neri/Kevak"
+delete-after: True
+changes: 
+  - bugfix: "Fixes shockcollar pocketstick bug."
