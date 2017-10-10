@@ -148,7 +148,7 @@
 /datum/surgery_step/drill/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] drills into [target]'s [parse_zone(target_zone)]!",
 		"<span class='notice'>You drill into [target]'s [parse_zone(target_zone)].</span>")
-	return 1
+	return TRUE
 
 //set bone
 /datum/surgery_step/set_bone
@@ -171,6 +171,7 @@
 /datum/surgery_step/set_bone/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully sets the bones in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully set the bones in [target]'s [target_zone].</span>")
+	return TRUE
 
 //prep bone
 /datum/surgery_step/prep_bone
@@ -182,7 +183,7 @@
 	/obj/item/paper = 35 //Paper until I port tape. Then tape will replace paper.
 	)
 
-/datum/surgery_step/set_bone/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/prep_bone/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target_zone == "skull")
 		user.visible_message("[user] begins to line [target]'s shattered skull with [tool]...",
 		"<span class='notice'>You begin to line [target]'s shattered skull with [tool]...</span>")
@@ -190,9 +191,10 @@
 		user.visible_message("[user] begins to line the bones in [target]'s [target_zone] with [tool]...",
 		"<span class='notice'>You begin lining the bones in [target]'s [target_zone] with [tool]...</span>")
 
-/datum/surgery_step/set_bone/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/prep_bone/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully lines the bones in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully line the bones in [target]'s [target_zone].</span>")
+	return TRUE
 
 //mend bone
 /datum/surgery_step/mend_bone
@@ -204,7 +206,7 @@
 	/obj/item/stack/rods = 35
 	)
 
-/datum/surgery_step/set_bone/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/mend_bone/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(target_zone == "skull")
 		user.visible_message("[user] begins to reinforce [target]'s cracked skull with [tool]...",
 		"<span class='notice'>You begin to reinforce [target]'s cracked skull with [tool]...</span>")
@@ -212,7 +214,7 @@
 		user.visible_message("[user] begins to reinforce the bones in [target]'s [target_zone] with [tool]...",
 		"<span class='notice'>You begin reinforcing the bones in [target]'s [target_zone] with [tool]...</span>")
 
-/datum/surgery_step/set_bone/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/mend_bone/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully reinforces the bones in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully reinforce the bones in [target]'s [target_zone].</span>")
 	surgery.operated_bodypart.fix_bone()
@@ -240,6 +242,7 @@
 /datum/surgery_step/saw_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] pull apart the material in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully pull apart the material in [target]'s [target_zone].</span>")
+	return TRUE
 
 //Atypical A: material retract
 /datum/surgery_step/retract_material
@@ -258,7 +261,7 @@
 /datum/surgery_step/retract_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] pull apart the material in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully pull apart the material in [target]'s [target_zone].</span>")
-
+	return TRUE
 
 //Atypical A: Prep Material For Closing.
 /datum/surgery_step/prep_material
@@ -280,6 +283,7 @@
 /datum/surgery_step/prep_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully lines the material in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully line the material in [target]'s [target_zone].</span>")
+	return TRUE
 
 //Atypical A: Set Material For Closing.
 /datum/surgery_step/set_material
@@ -302,6 +306,7 @@
 /datum/surgery_step/set_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully sets the material in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully set the material in [target]'s [target_zone].</span>")
+	return TRUE
 
 //Atypical A: Reinforce Material For Closing.
 /datum/surgery_step/reinforce_material
@@ -323,3 +328,6 @@
 /datum/surgery_step/reinforce_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] successfully reinforces the material in [target]'s [target_zone]!",
 	"<span class='notice'>You successfully reinforce the material in [target]'s [target_zone].</span>")
+	return TRUE
+
+
