@@ -3006,6 +3006,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/structure/table/glass,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -9451,6 +9452,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avS" = (
@@ -10589,6 +10591,7 @@
 "ayt" = (
 /obj/structure/table/glass,
 /obj/item/hemostat,
+/obj/item/bonesetter,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayu" = (
@@ -10940,6 +10943,7 @@
 "azn" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azo" = (
@@ -13122,6 +13126,7 @@
 "aEo" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aEp" = (
@@ -13384,6 +13389,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aES" = (
@@ -15214,6 +15220,7 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aJa" = (
@@ -19306,6 +19313,7 @@
 "aUc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUd" = (
@@ -24626,6 +24634,7 @@
 "bhf" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bhg" = (
@@ -28054,6 +28063,8 @@
 "boL" = (
 /obj/structure/table,
 /obj/item/retractor,
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel/black,
 /area/science/robotics/lab)
 "boM" = (
@@ -29314,6 +29325,7 @@
 	},
 /obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -31386,6 +31398,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bwa" = (
@@ -33136,6 +33149,8 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
@@ -34531,6 +34546,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCU" = (
@@ -34652,6 +34669,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bDl" = (
@@ -45002,6 +45020,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cax" = (
@@ -54212,6 +54231,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/storage/firstaid/fire,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwH" = (
@@ -54352,6 +54372,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxc" = (
@@ -54670,6 +54691,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxU" = (
@@ -55225,6 +55247,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czC" = (
@@ -60880,6 +60903,11 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space)
+"QqR" = (
+/obj/structure/table,
+/obj/item/stack/medical/splint,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aaa
@@ -76972,7 +77000,7 @@ aaa
 aaa
 aaa
 aaa
-Qnh
+Qng
 aaa
 aHr
 aaa
@@ -77229,7 +77257,7 @@ aaa
 aaa
 aaa
 aaa
-Qni
+Qng
 aaa
 aHr
 aaa
@@ -77486,7 +77514,7 @@ aaa
 aaa
 aaa
 aaa
-Qnj
+Qng
 aaa
 aHr
 aaa
@@ -77743,7 +77771,7 @@ aaa
 aaa
 aaa
 aaa
-Qnk
+Qng
 aaa
 aHr
 aaa
@@ -78000,7 +78028,7 @@ aaa
 aaa
 aaa
 aaa
-Qnl
+Qng
 aaa
 aHr
 aaa
@@ -78257,7 +78285,7 @@ aaa
 aaa
 aaa
 aaa
-Qnm
+Qng
 aaa
 aHr
 aaa
@@ -78514,7 +78542,7 @@ aaa
 aaa
 aaa
 aaa
-Qnn
+Qng
 aaa
 aHr
 aaa
@@ -78771,7 +78799,7 @@ aaa
 aaa
 aaa
 aaa
-Qno
+Qng
 aaa
 aHr
 aaa
@@ -79028,7 +79056,7 @@ aaa
 aaa
 aaa
 aaa
-Qnp
+Qng
 aaa
 aHr
 aaa
@@ -79285,8 +79313,8 @@ aaa
 aaa
 aaa
 aaa
-Qnq
-Qnt
+Qng
+QmH
 aHr
 aaa
 apQ
@@ -79542,10 +79570,10 @@ aaa
 aaf
 aaf
 aaf
-Qnr
-Qnu
+Qng
+QmH
 aaf
-Qny
+QmH
 bVx
 caf
 aoV
@@ -80562,7 +80590,7 @@ aaa
 aaa
 aaa
 cTg
-bGg
+QqR
 cTo
 cMl
 bHx
@@ -80776,7 +80804,7 @@ avY
 axo
 ayB
 Qlm
-Qlt
+Qlr
 QlC
 QlJ
 QlN
@@ -81343,7 +81371,7 @@ aaa
 bCq
 bPV
 bCq
-Qnx
+Qnw
 bTw
 bCq
 bVD
@@ -81549,12 +81577,12 @@ ayC
 azH
 Qlw
 aBS
-aDr
-aDr
-aDr
-aDr
-aDr
-aDr
+QlJ
+QlJ
+QlJ
+QlJ
+QlJ
+QlJ
 aLE
 aLE
 aOl
@@ -81601,7 +81629,7 @@ bCq
 bPW
 Qnv
 bSp
-bTv
+QnB
 bCq
 bVC
 bWx
@@ -82145,7 +82173,7 @@ cqv
 cqL
 bJe
 bLv
-QpX
+QmH
 aaT
 aaT
 aaT
@@ -82317,7 +82345,7 @@ aag
 avY
 axo
 ayB
-Qlq
+Qln
 Qlz
 QlG
 aDv
@@ -82373,19 +82401,19 @@ bPY
 cOw
 bCq
 QnC
-QnJ
-QnR
-Qob
-Qom
+QnC
+QnC
+QnC
+QnC
 Qox
-QoI
-QoS
-cjn
-cjn
-cjn
-cjn
-cjn
-cjn
+QnC
+QnC
+QnC
+QnC
+QnC
+QnC
+QnC
+QnC
 bUs
 bLv
 aaa
@@ -82402,16 +82430,16 @@ bCq
 bCq
 bCq
 bCq
-QpY
-Qqh
-Qql
+QmH
+QmH
+QmH
 aaa
 aaa
-Qqv
+QmH
 aaa
 aaa
 aaa
-QqJ
+QmH
 aaf
 aaf
 aaf
@@ -82629,20 +82657,20 @@ bCq
 bPX
 bRg
 bRg
-QnD
+QnC
 QnK
 bVG
 Qoc
 Qon
-Qoy
+QnK
 QoJ
-QoT
-bcU
+QnC
+QnK
 Qpg
 bVG
-bcU
+QnK
 QpB
-cjn
+QnC
 bUs
 bLv
 aaa
@@ -82670,7 +82698,7 @@ QqA
 btG
 btG
 aaa
-QqP
+QmH
 aaa
 aaa
 aaa
@@ -82839,7 +82867,7 @@ QlS
 QlZ
 Qmf
 Qml
-aKx
+Qmm
 aLE
 aMS
 aOi
@@ -82886,20 +82914,20 @@ bLv
 bQa
 bHE
 bHE
-QnE
+QnC
 QnL
 QnS
 Qod
 Qoo
 Qoz
-QoK
+Qoo
 QoU
-Qpa
-Qph
+Qoo
+Qoo
 Qpo
-Qpx
+Qpl
 QpC
-cjn
+QnC
 bUs
 bLv
 aaf
@@ -82926,7 +82954,7 @@ bgN
 QqB
 bgN
 btG
-QqL
+QmH
 aaT
 abY
 abY
@@ -83151,12 +83179,12 @@ Qop
 QoA
 QoL
 QoV
-Qpb
+QoL
 Qpi
 Qpp
 bdV
-bcU
-cjn
+QnK
+QnC
 bUs
 bLv
 aaa
@@ -83400,20 +83428,20 @@ bLv
 bHE
 bHE
 bSs
-QnG
+QnC
 QnN
 QnU
 Qof
 Qoq
-QoB
-bcU
+QnU
+QnK
 QoW
 Qpc
 cCa
 Qpq
 cCa
 QpD
-cjn
+QnC
 bUs
 bLv
 aaa
@@ -83432,7 +83460,7 @@ QpQ
 btF
 bsc
 Qqj
-Qqo
+Qqn
 bnU
 bgN
 big
@@ -83440,7 +83468,7 @@ bgN
 bkZ
 bgN
 btG
-QqM
+QmH
 aaT
 ctv
 abY
@@ -83657,20 +83685,20 @@ bCq
 bHE
 bRh
 bSr
-QnH
+QnC
 QnO
 QnV
 Qog
 Qor
 QoC
 QoM
-QoX
+QnC
 bdV
 Qpj
-Qpr
+Qpq
 cCa
 QpE
-cjn
+QnC
 bUs
 bLv
 aaf
@@ -83689,7 +83717,7 @@ QpR
 btG
 Qqc
 bsc
-Qqp
+Qqn
 bnV
 bgN
 bii
@@ -83914,20 +83942,20 @@ bCq
 bOK
 bCq
 bCq
-QnI
+QnC
 QnP
 QnW
 Qoh
 Qos
 QoD
-QoN
-cjn
+QnC
+QnC
 bdV
 Qpk
-Qps
+Qpq
 Qpy
 bdV
-cjn
+QnC
 bUs
 bLv
 aaa
@@ -83941,9 +83969,9 @@ coz
 cpn
 QpJ
 QpK
-QpN
+QpK
 QpS
-QpW
+QpK
 Qqd
 Qqk
 Qqq
@@ -84173,18 +84201,18 @@ bLv
 aaa
 bLv
 QnQ
-QnX
-Qoi
-Qot
-QoE
-QoO
-bcU
-bcU
+QnW
+QnC
+QnC
+QnC
+QnC
+QnK
+QnK
 bdV
 Qpt
 bdV
 QpF
-cjn
+QnC
 bUs
 bLv
 aaa
@@ -84211,7 +84239,7 @@ bgO
 QqD
 btG
 btG
-QqN
+QmH
 aaT
 ctv
 abY
@@ -84429,19 +84457,19 @@ bHE
 bLv
 aaf
 bLv
-bUt
-QnY
+QnQ
+QnW
 Qoj
 Qou
 QoF
 QoP
-bcU
+QnK
 Qpd
 Qpl
 Qpu
-bcU
-bcU
-cjn
+QnK
+QnK
+QnC
 bUs
 bLv
 aaf
@@ -84456,17 +84484,17 @@ cjJ
 cjJ
 aaa
 aaa
-QpU
+QpT
 aaf
 aaa
 aaa
 aaa
-Qqs
+QmH
 aaa
 aaa
-Qqw
-QqE
-QqG
+QmH
+QmH
+QmH
 aaa
 aaa
 aaT
@@ -84687,18 +84715,18 @@ bCq
 aaa
 bLv
 bUz
-QnZ
+QnW
 Qok
 Qov
 QoG
-QoQ
+QnC
 QoY
 Qpe
 Qpm
 Qpv
 Qpz
 QpG
-cjn
+QnC
 bUs
 bCq
 aaa
@@ -84713,18 +84741,18 @@ cpo
 cjJ
 aaa
 aaa
-QpV
+QpT
 aaf
-Qqf
+QmH
 aaa
 aaa
-Qqt
+QmH
 aaa
 aaa
-Qqx
-QqF
-QqH
-QqK
+QmH
+QmH
+QmH
+QmH
 aaa
 aaT
 ctv
@@ -84946,15 +84974,15 @@ bTB
 bUv
 Qoa
 Qol
-Qow
-QoH
-QoR
-QoZ
-Qpf
-Qpn
-Qpw
-QpA
-QpH
+Qol
+Qol
+Qol
+Qol
+Qol
+Qol
+Qol
+Qol
+Qol
 car
 bUs
 bCq
@@ -84972,17 +85000,17 @@ aaf
 aaf
 cig
 aaf
-Qqg
+QmH
 aaa
 aaa
-Qqu
+QmH
 aaa
 aaa
-Qqy
+QmH
 aaa
-QqI
+QmH
 aaf
-QqO
+QmH
 aaT
 aaT
 aaT
@@ -85240,7 +85268,7 @@ aaa
 aaa
 aaa
 aaf
-QqQ
+QmH
 aaa
 aaa
 aaa
@@ -88773,13 +88801,13 @@ aaf
 aaf
 QmH
 aaa
-QmJ
+QmH
 aaa
 QmP
-bsb
-bsb
-bsb
-bsb
+QmP
+QmP
+QmP
+QmP
 aXf
 aJq
 byU
@@ -89032,11 +89060,11 @@ aBb
 aBb
 QmK
 aaa
-bsb
+QmP
 QmR
 QmY
 Qnb
-bsb
+QmP
 aXf
 aJq
 bBi
@@ -89281,7 +89309,7 @@ aZR
 aZR
 aZR
 bft
-Qmv
+Qmt
 aBa
 aBT
 bmv
@@ -89289,7 +89317,7 @@ aEN
 aGb
 bpg
 aaa
-bsb
+QmP
 QmS
 buP
 bwm
@@ -89538,7 +89566,7 @@ bbm
 bdh
 bee
 bfv
-Qmw
+Qmt
 aBa
 QmF
 aEM
@@ -89795,7 +89823,7 @@ bcf
 bdg
 bed
 bfv
-Qmx
+Qmt
 aBa
 aBV
 alu
@@ -90052,7 +90080,7 @@ bbm
 bdh
 bef
 bfv
-Qmy
+Qmt
 aBa
 QmG
 aEO
@@ -90309,7 +90337,7 @@ aZR
 aZR
 aZR
 bfw
-Qmz
+Qmt
 aBa
 aBW
 bjy
@@ -90317,7 +90345,7 @@ aEP
 aGe
 bpi
 aaa
-bsb
+QmP
 QmW
 buR
 aFM
@@ -90574,11 +90602,11 @@ aBc
 aBc
 QmM
 aaa
-bsb
+QmP
 QmX
 Qna
 Qnd
-bsb
+QmP
 aJq
 aJq
 bBu
@@ -90823,19 +90851,19 @@ bcg
 aZU
 beg
 aYB
-QmB
-QmE
+Qmt
+QmD
 aaf
 aaf
-QmI
+QmH
 aaa
-QmN
+QmH
 aaa
-bsb
-bsb
-bsb
-bsb
-bsb
+QmP
+QmP
+QmP
+QmP
+QmP
 aJq
 aJq
 bBt
