@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -28435,7 +28435,7 @@
 	},
 /area/security/checkpoint/engineering)
 "bcO" = (
-/obj/structure/easel,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -64043,10 +64043,10 @@
 /turf/open/space,
 /area/space)
 "ctn" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cto" = (
@@ -80969,7 +80969,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dbl" = (
-/obj/structure/easel,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dbm" = (
