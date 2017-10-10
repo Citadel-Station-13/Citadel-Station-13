@@ -869,7 +869,8 @@
 	var/obj/item/device/flightpack/pack = null
 	var/mob/living/carbon/human/wearer = null
 	var/active = FALSE
-	resistance_flags = FIRE_PROOF
+	permeability_coefficient = 0.01
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	pack = null
