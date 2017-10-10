@@ -2,7 +2,11 @@
 //make incision
 /datum/surgery_step/incise
 	name = "make incision"
+<<<<<<< HEAD:code/modules/surgery/generic_steps.dm
 	implements = list(/obj/item/scalpel = 100, /obj/item/melee/transforming/energy/sword = 75, /obj/item/kitchen/knife = 65,
+=======
+	implements = list(/obj/item/scalpel = 100, /obj/item/melee/transforming/energy/sword = 75, /obj/item/kitchen/knife = 65,
+>>>>>>> fb3a6bf... [ReadyForReview]Correct organ manipulation step for robotic prosthesis surgery (#30818):code/modules/surgery/organic_steps.dm
 		/obj/item/shard = 45, /obj/item = 30) // 30% success with any sharp item.
 	time = 16
 
@@ -87,7 +91,11 @@
 //saw bone
 /datum/surgery_step/saw
 	name = "saw bone"
+<<<<<<< HEAD:code/modules/surgery/generic_steps.dm
 	implements = list(/obj/item/circular_saw = 100, /obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
+=======
+	implements = list(/obj/item/circular_saw = 100, /obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
+>>>>>>> fb3a6bf... [ReadyForReview]Correct organ manipulation step for robotic prosthesis surgery (#30818):code/modules/surgery/organic_steps.dm
 		/obj/item/melee/arm_blade = 75, /obj/item/mounted_chainsaw = 65, /obj/item/twohanded/required/chainsaw = 50,
 		/obj/item/twohanded/fireaxe = 50, /obj/item/hatchet = 35, /obj/item/kitchen/knife/butcher = 25)
 	time = 54
