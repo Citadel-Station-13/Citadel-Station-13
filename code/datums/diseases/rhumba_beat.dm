@@ -1,20 +1,3 @@
-<<<<<<< HEAD
-/datum/disease/rhumba_beat
-	name = "The Rhumba Beat"
-	max_stages = 5
-	spread_text = "On contact"
-	spread_flags = CONTACT_GENERAL
-	cure_text = "Chick Chicky Boom!"
-	cures = list("plasma")
-	agent = "Unknown"
-	viable_mobtypes = list(/mob/living/carbon/human)
-	permeability_mod = 1
-	severity = BIOHAZARD
-
-/datum/disease/rhumba_beat/stage_act()
-	..()
-	if(affected_mob.ckey == "rosham")
-=======
 /datum/disease/rhumba_beat
 	name = "The Rhumba Beat"
 	max_stages = 5
@@ -30,7 +13,6 @@
 /datum/disease/rhumba_beat/stage_act()
 	..()
 	if(affected_mob.ckey == "rosham")
->>>>>>> db0c10e... Refactors virus spreading (#31066)
 		cure()
 		return
 	switch(stage)
