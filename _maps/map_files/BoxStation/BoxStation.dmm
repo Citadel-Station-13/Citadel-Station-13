@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
@@ -58924,32 +58924,21 @@
 /area/science/xenobiology)
 "Qlj" = (
 /obj/docking_port/stationary{
- 	dheight = 9;
- 	dir = 2;
- 	dwidth = 5;
- 	height = 24;
+	 dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
 	id = "syndicate_nw";
 	name = "northwest of station";
-	turf_type = /turf/open/space
-<<<<<<< HEAD
+	turf_type = /turf/open/space<<<<<<< HEAD
 	},
 /turf/open/space/basic,
 /area/space)
 "Qlk" = (
-<<<<<<< HEAD
-/obj/structure/chair,
+<<<<<<< HEAD/obj/structure/chair,
 /obj/item/stack/medical/splint,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
-"Qll" = (
-/obj/structure/table,
-/obj/item/stack/medical/splint,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/mining)
-=======
-/obj/machinery/vending/kink,
-/turf/open/floor/plating,
-/area/maintenance/starboard/fore)
 "Qll" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -60875,12 +60864,9 @@
 /area/space)
 "QqQ" = (
 /obj/structure/lattice,
-=======
-},
->>>>>>> parent of e2b786a32... Merge pull request #13 from Citadel-Station-13/master
-/turf/open/space/basic,
+=======},
+>>>>>>> parent of e2b786a32... Merge pull request #13 from Citadel-Station-13/master/turf/open/space/basic,
 /area/space)
->>>>>>> master
 
 (1,1,1) = {"
 aaa
