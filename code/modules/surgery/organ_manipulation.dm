@@ -1,7 +1,21 @@
 /datum/surgery/organ_manipulation
 	name = "organ manipulation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/prep_bone, /datum/surgery_step/set_bone, /datum/surgery_step/mend_bone, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/saw,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/incise,
+	/datum/surgery_step/manipulate_organs,
+	/datum/surgery_step/prep_bone,
+	/datum/surgery_step/set_bone,
+	/datum/surgery_step/mend_bone,
+	/datum/surgery_step/close
+	)
+	species = list(
+	/mob/living/carbon/human,
+	/mob/living/carbon/monkey
+	)
 	possible_locs = list("chest", "head")
 	requires_organic_bodypart = TRUE
 	requires_real_bodypart = TRUE
@@ -10,14 +24,30 @@
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/incise,
+	/datum/surgery_step/manipulate_organs,
+	/datum/surgery_step/close
+	)
 	requires_bones = TRUE
 
 /datum/surgery/organ_manipulation/alien
 	name = "alien organ manipulation"
 	possible_locs = list("chest", "head", "groin", "eyes", "mouth", "l_arm", "r_arm")
-	species = list(/mob/living/carbon/alien/humanoid)
-	steps = list(/datum/surgery_step/saw, /datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/saw, /datum/surgery_step/manipulate_organs, /datum/surgery_step/close)
+	species = list(
+	/mob/living/carbon/alien/humanoid
+	)
+	steps = list(
+	/datum/surgery_step/saw,
+	/datum/surgery_step/incise,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/saw,
+	/datum/surgery_step/manipulate_organs,
+	/datum/surgery_step/close
+	)
 	requires_bones = FALSE
 
 ///datum/surgery/organ_manipulation/golem
@@ -30,7 +60,14 @@
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/incise,
+	/datum/surgery_step/manipulate_organs,
+	/datum/surgery_step/close
+	)
 	requires_organic_bodypart = TRUE
 	requires_bones = FALSE
 	cantbebones = TRUE
@@ -38,9 +75,19 @@
 /datum/surgery_step/manipulate_organs
 	time = 64
 	name = "manipulate organs"
-	implements = list(/obj/item/organ = 100, /obj/item/reagent_containers/food/snacks/organ = 0, /obj/item/organ_storage = 100)
-	var/implements_extract = list(/obj/item/hemostat = 100, /obj/item/wirecutters = 55)
-	var/implements_finish = list(/obj/item/retractor = 100, /obj/item/wrench = 55)
+	implements = list(
+	/obj/item/organ = 100,
+	/obj/item/reagent_containers/food/snacks/organ = 0,
+	/obj/item/organ_storage = 100
+	)
+	var/implements_extract = list(
+	/obj/item/hemostat = 100,
+	/obj/item/wirecutters = 55
+	)
+	var/implements_finish = list(
+	/obj/item/retractor = 100,
+	/obj/item/wrench = 55
+	)
 	var/current_type
 	var/obj/item/organ/I
 

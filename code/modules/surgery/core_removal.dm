@@ -1,6 +1,9 @@
 /datum/surgery/core_removal
 	name = "core removal"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/extract_core)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/extract_core
+	)
 	species = list(/mob/living/simple_animal/slime)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 

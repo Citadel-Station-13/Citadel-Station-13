@@ -1,11 +1,16 @@
 /datum/surgery/dental_implant
 	name = "dental implant"
-	steps = list(/datum/surgery_step/drill, /datum/surgery_step/insert_pill)
+	steps = list(
+	/datum/surgery_step/drill,
+	/datum/surgery_step/insert_pill
+	)
 	possible_locs = list("mouth")
 
 /datum/surgery_step/insert_pill
 	name = "insert pill"
-	implements = list(/obj/item/reagent_containers/pill = 100)
+	implements = list(
+	/obj/item/reagent_containers/pill = 100
+	)
 	time = 16
 
 /datum/surgery_step/insert_pill/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

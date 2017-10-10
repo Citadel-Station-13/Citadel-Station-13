@@ -5,7 +5,9 @@
 
 /datum/surgery_step/replace
 	name = "sever muscles"
-	implements = list(/obj/item/scalpel = 100, /obj/item/wirecutters = 55)
+	implements = list(
+	/obj/item/scalpel = 100,
+	/obj/item/wirecutters = 55)
 	time = 32
 
 
@@ -15,7 +17,9 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100)
+	implements = list(
+	/obj/item/bodypart = 100
+	)
 	time = 32
 	var/obj/item/bodypart/L // L because "limb"
 

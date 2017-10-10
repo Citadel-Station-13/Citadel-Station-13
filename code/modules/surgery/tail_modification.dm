@@ -5,8 +5,13 @@
 
 /datum/surgery/tail_removal
 	name = "tail removal"
-	steps = list(/datum/surgery_step/sever_tail, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human)
+	steps = list(
+	/datum/surgery_step/sever_tail,
+	/datum/surgery_step/close
+	)
+	species = list(
+	/mob/living/carbon/human
+	)
 	possible_locs = list("groin")
 
 /datum/surgery/tail_removal/can_start(mob/user, mob/living/carbon/target)
@@ -17,11 +22,18 @@
 
 /datum/surgery_step/sever_tail
 	name = "sever tail"
-	implements = list(/obj/item/scalpel = 100, /obj/item/circular_saw = 100,
-	/obj/item/melee/sabre = 100, /obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
-	/obj/item/melee/arm_blade = 80, /obj/item/twohanded/required/chainsaw = 80,
-	/obj/item/mounted_chainsaw = 80, /obj/item/twohanded/fireaxe = 50,
-	/obj/item/hatchet = 40, /obj/item = 30) // 30% success with any sharp item.
+	implements = list(
+	/obj/item/scalpel = 100,
+	/obj/item/circular_saw = 100,
+	/obj/item/melee/sabre = 100,
+	/obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
+	/obj/item/melee/arm_blade = 80,
+	/obj/item/twohanded/required/chainsaw = 80,
+	/obj/item/mounted_chainsaw = 80,
+	/obj/item/twohanded/fireaxe = 50,
+	/obj/item/hatchet = 40,
+	/obj/item = 30   // 30% success with any sharp item.
+	)
 	time = 64
 
 /datum/surgery_step/sever_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -52,8 +64,15 @@
 
 /datum/surgery/tail_attachment
 	name = "tail attachment"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/attach_tail, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/replace,
+	/datum/surgery_step/attach_tail,
+	/datum/surgery_step/close)
+	species = list(/mob/living/carbon/human
+	)
 	possible_locs = list("groin")
 
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)
@@ -64,7 +83,9 @@
 
 /datum/surgery_step/attach_tail
 	name = "attach tail"
-	implements = list(/obj/item/severedtail = 100)
+	implements = list(
+	/obj/item/severedtail = 100
+	)
 	time = 64
 
 /datum/surgery_step/attach_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
