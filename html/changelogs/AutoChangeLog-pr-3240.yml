@@ -1,0 +1,13 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Readded maint bar and maint dorms from my previous map edit PR"
+  - rscadd: "Added an Abandoned Cafe to Boxstation, right above the new Clown and Mime offices."
+  - tweak: "Cit's maintenance bar is now all access."
+  - tweak: "The kitchen's deep fryers have been moved into the kitchen's island counter, just as the deep fryer was on old Hippie."
+  - tweak: "Recreated several changes from old Hippie's Boxstation. They are as follows."
+  - rscadd: "Added Clown and Mime offices to Boxstation. The Clown and Mime will now spawn there instead of the Theatre."
+  - tweak: "There is now a maintenance tunnel connecting the Captain's office to the meeting room."
+  - tweak: "The Gravity Generator has been moved to Engineering, and the Vault has been moved to the Gravity Generator's former place."
+  - tweak: "Added an extra airlock on the west side of the bar."
+  - tweak: "Added an extra airlock on the west side of Bar Storage, connecting it with the rest of the bar."
