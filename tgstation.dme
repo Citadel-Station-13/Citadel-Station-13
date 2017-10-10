@@ -2220,6 +2220,7 @@
 #include "code\modules\stock_market\stockmarket.dm"
 #include "code\modules\stock_market\stocks.dm"
 #include "code\modules\surgery\amputation.dm"
+#include "code\modules\surgery\bone_repair.dm"
 #include "code\modules\surgery\cavity_implant.dm"
 #include "code\modules\surgery\core_removal.dm"
 #include "code\modules\surgery\dental_implant.dm"

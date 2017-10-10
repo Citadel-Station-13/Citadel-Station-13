@@ -31,7 +31,7 @@
 	name = "boneless organ manipulation"
 	possible_locs = list("chest","head","groin", "eyes", "mouth", "l_arm", "r_arm")
 	steps = list(/datum/surgery_step/incise, /datum/surgery_step/retract_skin, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/incise, /datum/surgery_step/manipulate_organs,/datum/surgery_step/close)
-	requires_organic_bodypart = 1
+	requires_organic_bodypart = TRUE
 	requires_bones = FALSE
 	cantbebones = TRUE
 
@@ -55,18 +55,18 @@
 	if(istype(tool, /obj/item/organ_storage))
 		if(!tool.contents.len)
 			to_chat(user, "<span class='notice'>There is nothing inside [tool]!</span>")
-			return -1
+			return FALSE
 		I = tool.contents[1]
 		if(!isorgan(I))
 			to_chat(user, "<span class='notice'>You cannot put [I] into [target]'s [parse_zone(target_zone)]!</span>")
-			return -1
+			return FALSE
 		tool = I
 	if(isorgan(tool))
 		current_type = "insert"
 		I = tool
 		if(target_zone != I.zone || target.getorganslot(I.slot))
 			to_chat(user, "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
-			return -1
+			return FALSE
 
 		user.visible_message("[user] begins to insert [tool] into [target]'s [parse_zone(target_zone)].",
 			"<span class='notice'>You begin to insert [tool] into [target]'s [parse_zone(target_zone)]...</span>")
@@ -83,7 +83,7 @@
 
 		if(!organs.len)
 			to_chat(user, "<span class='notice'>There are no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
-			return -1
+			return FALSE
 		else
 			for(var/obj/item/organ/O in organs)
 				O.on_find(user)
@@ -93,21 +93,21 @@
 			I = input("Remove which organ?", "Surgery", null, null) as null|anything in organs
 			if(I && user && target && user.Adjacent(target) && user.get_active_held_item() == tool)
 				I = organs[I]
-				if(!I) return -1
+				if(!I) return FALSE
 				user.visible_message("[user] begins to extract [I] from [target]'s [parse_zone(target_zone)].",
 					"<span class='notice'>You begin to extract [I] from [target]'s [parse_zone(target_zone)]...</span>")
 			else
-				return -1
+				return FALSE
 
 	else if(implement_type in implements_finish)
 		current_type = "finish"
 		user.visible_message("[user] begins to pull [target]'s [parse_zone(target_zone)] flesh back into place.",
 			"<span class='notice'>You begin pull [target]'s [parse_zone(target_zone)] flesh back into place...</span>")
-		return 1
+		return TRUE
 
 	else if(istype(tool, /obj/item/reagent_containers/food/snacks/organ))
 		to_chat(user, "<span class='warning'>[tool] was bitten by someone! It's too damaged to use!</span>")
-		return -1
+		return FALSE
 
 /datum/surgery_step/manipulate_organs/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(current_type == "insert")
@@ -123,7 +123,7 @@
 		I.Insert(target)
 		user.visible_message("[user] inserts [tool] into [target]'s [parse_zone(target_zone)]!",
 			"<span class='notice'>You insert [tool] into [target]'s [parse_zone(target_zone)].</span>")
-		return 0
+		return FALSE
 
 	else if(current_type == "extract")
 		var/mob/living/simple_animal/borer/B = target.has_brain_worms()
@@ -142,9 +142,9 @@
 		else
 			user.visible_message("[user] can't seem to extract anything from [target]'s [parse_zone(target_zone)]!",
 				"<span class='notice'>You can't extract anything from [target]'s [parse_zone(target_zone)]!</span>")
-		return 0
+		return FALSE
 
 	if(current_type == "finish")
 		user.visible_message("[user] pulls the flesh in [target]'s [parse_zone(target_zone)] back into place.",
 			"<span class='notice'>You pull the flesh in [target]'s [parse_zone(target_zone)] back into place.</span>")
-		return 1
+		return TRUE

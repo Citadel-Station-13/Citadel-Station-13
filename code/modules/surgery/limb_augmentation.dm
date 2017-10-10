@@ -17,17 +17,17 @@
 	name = "replace limb"
 	implements = list(/obj/item/bodypart = 100)
 	time = 32
-	var/obj/item/bodypart/L = null // L because "limb"
+	var/obj/item/bodypart/L // L because "limb"
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/aug = tool
 	if(aug.status != BODYPART_ROBOTIC)
 		to_chat(user, "<span class='warning'>that's not an augment silly!</span>")
-		return -1
+		return FALSE
 	if(aug.body_zone != target_zone)
 		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
-		return -1
+		return FALSE
 	L = surgery.operated_bodypart
 	if(L)
 		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
@@ -59,4 +59,4 @@
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return 1
+	return TRUE
