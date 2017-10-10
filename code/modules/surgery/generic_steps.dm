@@ -222,9 +222,14 @@
 /datum/surgery_step/saw_material
 	name = "Saw Material"
 	implements = list(
-	/obj/item/retractor = 100,
-	/obj/item/screwdriver = 45,
-	/obj/item/wirecutters = 35
+	/obj/item/circular_saw = 100,
+	/obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
+	/obj/item/melee/arm_blade = 75,
+	/obj/item/mounted_chainsaw = 65,
+	/obj/item/twohanded/required/chainsaw = 50,
+	/obj/item/twohanded/fireaxe = 50,
+	/obj/item/hatchet = 35,
+	/obj/item/kitchen/knife/butcher = 25
 	)
 	time = 64
 

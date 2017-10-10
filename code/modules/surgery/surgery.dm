@@ -17,6 +17,7 @@
 	var/requires_bones = FALSE								//Some surgeries require bones to be done.
 	var/cantbebones = FALSE									//Some surgeries cannot be done on those with bones.
 	var/material_flesh = FALSE								//Some surgeries require extra effort to cut through the 'flesh.'
+	var/cantbematerial = FALSE								//Some surgeries cannot be done on those with atypical flesh.
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

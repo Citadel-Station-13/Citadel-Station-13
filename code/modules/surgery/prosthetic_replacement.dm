@@ -12,6 +12,7 @@
 	)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
 	requires_bodypart = FALSE //need a missing limb
+	cantbematerial = TRUE
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
 	if(!iscarbon(target))
@@ -29,6 +30,7 @@
 	)
 	requires_bones = FALSE
 	material_flesh = TRUE
+	cantbematerial = FALSE
 
 
 /datum/surgery_step/add_prosthetic

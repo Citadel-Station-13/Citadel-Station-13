@@ -57,6 +57,7 @@
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 	requires_real_bodypart = TRUE
 	requires_bones = TRUE
+	cantbematerial = TRUE
 
 /datum/surgery/augmentation/golem
 	name = "material augmentation"
@@ -70,6 +71,7 @@
 	)
 	requires_bones = FALSE
 	material_flesh = TRUE
+	cantbematerial = FALSE
 
 /datum/surgery/augmentation/boneless
 	name = "boneless augmentation"

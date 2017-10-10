@@ -11,6 +11,7 @@
 	possible_locs = list("chest")
 	requires_organic_bodypart = FALSE
 	requires_bones = TRUE
+	cantbematerial = TRUE
 
 /datum/surgery/implant_removal/golem
 	name = "material implant removal"
@@ -25,6 +26,7 @@
 	)
 	requires_bones = FALSE
 	material_flesh = TRUE
+	cantbematerial = FALSE
 
 
 //extract implant

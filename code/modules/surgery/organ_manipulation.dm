@@ -21,6 +21,7 @@
 	requires_real_bodypart = TRUE
 	requires_bones = TRUE
 	can_cancel = FALSE
+	cantbematerial = TRUE
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm", "l_leg", "r_leg")
@@ -67,6 +68,7 @@
 	)
 	requires_bones = FALSE
 	material_flesh = TRUE
+	cantbematerial = FALSE
 
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"

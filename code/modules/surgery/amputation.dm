@@ -15,6 +15,8 @@
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
 	requires_organic_bodypart = FALSE
 	requires_bones = TRUE
+	cantbematerial = TRUE
+
 
 /datum/surgery/amputation/boneless
 	name = "boneless amputation"
@@ -39,6 +41,7 @@
 	)
 	requires_bones = FALSE
 	material_flesh = TRUE
+	cantbematerial = FALSE
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
