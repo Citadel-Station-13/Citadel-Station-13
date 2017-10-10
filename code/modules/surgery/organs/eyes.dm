@@ -16,7 +16,7 @@
 	var/see_invisible = SEE_INVISIBLE_LIVING
 	var/lighting_alpha
 
-/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = FALSE)
+/obj/item/organ/eyes/Insert(mob/living/carbon/M, special = 0)
 	..()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/HMN = owner

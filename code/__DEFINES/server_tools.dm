@@ -1,4 +1,4 @@
-// /tg/station 13 server tools API v3.1.0.2
+// /tg/station 13 server tools API v3.1.0.1
 
 //CONFIGURATION
 //use this define if you want to do configuration outside of this file
@@ -64,7 +64,7 @@
 
 //IMPLEMENTATION
 
-#define SERVICE_API_VERSION_STRING "3.1.0.2"
+#define SERVICE_API_VERSION_STRING "3.1.0.1"
 
 #define REBOOT_MODE_NORMAL 0
 #define REBOOT_MODE_HARD 1
