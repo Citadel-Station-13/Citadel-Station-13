@@ -118,19 +118,9 @@
 							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
 							SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
 					else
-<<<<<<< HEAD
-						if(objective.check_completion())
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-							SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
-						else
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-							SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-							traitorwin = 0
-=======
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
 						traitorwin = FALSE
->>>>>>> b9e981a... Removes a spawn from traitor code (#31465)
 					count++
 
 			if(uplink_true)
