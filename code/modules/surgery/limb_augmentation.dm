@@ -56,6 +56,7 @@
 	)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 	requires_real_bodypart = TRUE
+	requires_bones = TRUE
 
 /datum/surgery/augmentation/golem
 	name = "material augmentation"
@@ -67,6 +68,7 @@
 	/datum/surgery_step/saw_material,
 	/datum/surgery_step/add_limb
 	)
+	requires_bones = FALSE
 	material_flesh = TRUE
 
 /datum/surgery/augmentation/boneless
@@ -78,6 +80,8 @@
 	/datum/surgery_step/replace,
 	/datum/surgery_step/add_limb
 	)
+	requires_organic_bodypart = TRUE
+	requires_bones = FALSE
 	cantbebones = TRUE
 
 //SURGERY STEP SUCCESSES

@@ -13,6 +13,7 @@
 	)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
+	requires_bones = TRUE
 
 /datum/surgery/cavity_implant/boneless
 	name = "boneless cavity implant"
@@ -25,6 +26,7 @@
 	/datum/surgery_step/close
 	)
 	requires_organic_bodypart = TRUE
+	requires_bones = FALSE
 	cantbebones = TRUE
 
 /datum/surgery/cavity_implant/golem
@@ -40,6 +42,7 @@
 	/datum/surgery_step/reinforce_material,
 	/datum/surgery_step/close
 	)
+	requires_bones = FALSE
 	material_flesh = TRUE
 
 

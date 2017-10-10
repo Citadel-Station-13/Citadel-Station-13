@@ -27,6 +27,7 @@
 	/datum/surgery_step/retract_material,
 	/datum/surgery_step/add_prosthetic
 	)
+	requires_bones = FALSE
 	material_flesh = TRUE
 
 

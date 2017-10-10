@@ -20,7 +20,9 @@
 	/datum/surgery_step/reinforce_material,
 	/datum/surgery_step/close
 	)
+	requires_bones = FALSE
 	material_flesh = TRUE
+
 
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"

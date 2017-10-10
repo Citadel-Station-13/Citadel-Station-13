@@ -75,7 +75,7 @@
 	)
 	possible_locs = list("groin")
 
-/datum/surgery/tail_attachment
+/datum/surgery/tail_attachment/golem
 	name = "material tail attachment"
 	steps = list(
 	/datum/surgery_step/saw_material,
@@ -88,7 +88,9 @@
 	/datum/surgery_step/reinforce_material,
 	/datum/surgery_step/close
 	)
+	requires_bones = FALSE
 	material_flesh = TRUE
+
 
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
