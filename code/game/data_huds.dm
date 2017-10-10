@@ -169,15 +169,6 @@
 		holder.icon_state = "hudxeno"
 	else if(stat == DEAD || (status_flags & FAKEDEATH))
 		holder.icon_state = "huddead"
-<<<<<<< HEAD
-	else if(has_brain_worms() && B != null && B.controlling)
-		holder.icon_state = "hudbrainworm"
-	else if(virus_state == 2)
-		holder.icon_state = "hudill"
-	else if(virus_state == 1)
-		holder.icon_state = "hudbuff"
-=======
->>>>>>> db0c10e... Refactors virus spreading (#31066)
 	else
 		switch(virus_threat)
 			if(VIRUS_SEVERITY_BIOHAZARD)
