@@ -1275,6 +1275,7 @@
 #include "code\modules\clothing\masks\vg_masks.dm"
 #include "code\modules\clothing\neck\neck.dm"
 #include "code\modules\clothing\outfits\ert.dm"
+#include "code\modules\clothing\outfits\event.dm"
 #include "code\modules\clothing\outfits\standard.dm"
 #include "code\modules\clothing\shoes\bananashoes.dm"
 #include "code\modules\clothing\shoes\colour.dm"
