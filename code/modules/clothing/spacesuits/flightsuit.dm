@@ -869,12 +869,8 @@
 	var/obj/item/device/flightpack/pack = null
 	var/mob/living/carbon/human/wearer = null
 	var/active = FALSE
-<<<<<<< HEAD
-	resistance_flags = FIRE_PROOF
-=======
 	permeability_coefficient = 0.01
 	resistance_flags = FIRE_PROOF | ACID_PROOF
->>>>>>> db0c10e... Refactors virus spreading (#31066)
 
 /obj/item/clothing/shoes/flightshoes/Destroy()
 	pack = null
