@@ -14,6 +14,34 @@
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
 
+/datum/surgery/cavity_implant/boneless
+	name = "boneless cavity implant"
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/incise,
+	/datum/surgery_step/handle_cavity,
+	/datum/surgery_step/close
+	)
+	requires_organic_bodypart = TRUE
+	cantbebones = TRUE
+
+/datum/surgery/cavity_implant/golem
+	name = "material cavity implant"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/handle_cavity,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	material_flesh = TRUE
+
 
 //handle cavity
 /datum/surgery_step/handle_cavity

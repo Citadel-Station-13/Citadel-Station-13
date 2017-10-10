@@ -16,7 +16,7 @@
 	var/requires_real_bodypart = FALSE						//Some surgeries don't work on limbs that don't really exist
 	var/requires_bones = FALSE								//Some surgeries require bones to be done.
 	var/cantbebones = FALSE									//Some surgeries cannot be done on those with bones.
-//	var/materialflesh = FALSE								//Some surgeries require extra effort to cut through the 'flesh.'
+	var/material_flesh = FALSE								//Some surgeries require extra effort to cut through the 'flesh.'
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()

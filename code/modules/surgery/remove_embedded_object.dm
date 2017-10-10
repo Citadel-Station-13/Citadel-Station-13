@@ -9,6 +9,18 @@
 	)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 
+/datum/surgery/embedded_removal/golem
+	name = "material removal of embedded objects"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/remove_object,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	material_flesh = TRUE
 
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"

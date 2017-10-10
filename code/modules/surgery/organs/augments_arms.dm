@@ -51,7 +51,7 @@
 	..()
 
 /obj/item/organ/cyberimp/arm/emag_act()
-	return 0
+	return FALSE
 
 /obj/item/organ/cyberimp/arm/gun/emp_act(severity)
 	if(prob(15/severity) && owner)
@@ -144,7 +144,7 @@
 		owner.adjust_fire_stacks(20)
 		owner.IgniteMob()
 		owner.adjustFireLoss(25)
-		crit_fail = 1
+		crit_fail = TRUE
 	else // The gun will still discharge anyway.
 		..()
 
@@ -175,8 +175,14 @@
 	name = "integrated toolset implant"
 	desc = "A stripped-down version of engineering cyborg toolset, designed to be installed on subject's arm. Contains all necessary tools."
 	origin_tech = "materials=3;engineering=4;biotech=3;powerstorage=4"
-	contents = newlist(/obj/item/screwdriver/cyborg, /obj/item/wrench/cyborg, /obj/item/weldingtool/largetank/cyborg,
-		/obj/item/crowbar/cyborg, /obj/item/wirecutters/cyborg, /obj/item/device/multitool/cyborg)
+	contents = newlist(
+	/obj/item/screwdriver/cyborg,
+	/obj/item/wrench/cyborg,
+	/obj/item/weldingtool/largetank/cyborg,
+	/obj/item/crowbar/cyborg,
+	/obj/item/wirecutters/cyborg,
+	/obj/item/device/multitool/cyborg
+	)
 
 /obj/item/organ/cyberimp/arm/toolset/l
 	zone = "l_arm"
@@ -221,7 +227,11 @@
 /obj/item/organ/cyberimp/arm/combat
 	name = "combat cybernetics implant"
 	desc = "A powerful cybernetic implant that contains combat modules built into the user's arm"
-	contents = newlist(/obj/item/melee/transforming/energy/blade/hardlight, /obj/item/gun/medbeam, /obj/item/borg/stun, /obj/item/device/assembly/flash/armimplant)
+	contents = newlist(
+	/obj/item/melee/transforming/energy/blade/hardlight,
+	/obj/item/gun/medbeam, /obj/item/borg/stun,
+	/obj/item/device/assembly/flash/armimplant
+	)
 	origin_tech = "materials=5;combat=7;biotech=5;powerstorage=5;syndicate=6;programming=5"
 
 /obj/item/organ/cyberimp/arm/combat/Initialize()
@@ -233,5 +243,15 @@
 /obj/item/organ/cyberimp/arm/surgery
 	name = "surgical toolset implant"
 	desc = "A set of surgical tools hidden behind a concealed panel on the user's arm"
-	contents = newlist(/obj/item/retractor/augment, /obj/item/hemostat/augment, /obj/item/cautery/augment, /obj/item/surgicaldrill/augment, /obj/item/scalpel/augment, /obj/item/circular_saw/augment, /obj/item/surgical_drapes)
+	contents = newlist(
+	/obj/item/retractor/augment,
+	/obj/item/hemostat/augment,
+	/obj/item/cautery/augment,
+	/obj/item/surgicaldrill/augment,
+	/obj/item/scalpel/augment,
+	/obj/item/circular_saw/augment,
+	/obj/item/surgical_drapes,
+	/obj/item/bonesetter/augment,
+	/obj/item/bonegel/augment
+	)
 	origin_tech = "materials=3;engineering=3;biotech=3;programming=2;magnets=3"

@@ -75,6 +75,21 @@
 	)
 	possible_locs = list("groin")
 
+/datum/surgery/tail_attachment
+	name = "material tail attachment"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/attach_tail,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	material_flesh = TRUE
+
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(!("tail_lizard" in L.dna.species.mutant_bodyparts) && !("waggingtail_lizard" in L.dna.species.mutant_bodyparts))

@@ -135,4 +135,5 @@
 #define NO_BONES		29
 #define NOAROUSAL		30 //Stops all arousal effects
 #define NOGENITALS		31 //Cannot create, use, or otherwise have genitals
-#define NO_DNA_COPY     32
+#define NO_DNA_COPY		32
+#define MATERIALFLESH	33

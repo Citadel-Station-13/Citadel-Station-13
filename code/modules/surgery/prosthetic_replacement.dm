@@ -1,5 +1,5 @@
 /datum/surgery/prosthetic_replacement
-	name = "prosthetic replacement"
+	name = "limb replacement"
 	steps = list(
 	/datum/surgery_step/incise,
 	/datum/surgery_step/clamp_bleeders,
@@ -20,10 +20,18 @@
 	if(!C.get_bodypart(user.zone_selected)) //can only start if limb is missing
 		return TRUE
 
+/datum/surgery/prosthetic_replacement/golem
+	name = "material limb replacement"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/add_prosthetic
+	)
+	material_flesh = TRUE
 
 
 /datum/surgery_step/add_prosthetic
-	name = "add prosthetic"
+	name = "add limb"
 	implements = list(/obj/item/bodypart = 100, /obj/item/organ_storage = 100, /obj/item/twohanded/required/chainsaw = 100, /obj/item/melee/synthetic_arm_blade = 100)
 	time = 32
 	var/organ_rejection_dam = 0

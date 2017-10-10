@@ -35,6 +35,8 @@
 					continue
 				if(S.cantbebones && affecting.has_bones == TRUE)
 					continue
+				if(S.material_flesh && affecting.material == TRUE)
+					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
 			else if(C && S.requires_bodypart) //mob with no limb in surgery zone when we need a limb

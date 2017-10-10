@@ -174,7 +174,7 @@
 
 //prep bone
 /datum/surgery_step/prep_bone
-	name = "prep bone"
+	name = "Prep bone with Gel."
 
 	time = 64
 	implements = list(
@@ -196,7 +196,7 @@
 
 //mend bone
 /datum/surgery_step/mend_bone
-	name = "mend bone"
+	name = "Mend bone with gel."
 
 	time = 64
 	implements = list(
@@ -228,13 +228,17 @@
 	)
 	time = 64
 
-/datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/saw_material/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("[user] begins to saw through the material in [target]'s [parse_zone(target_zone)].",
 		"<span class='notice'>You begin sawing through the material [target]'s [parse_zone(target_zone)]...</span>")
 
+/datum/surgery_step/saw_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] pull apart the material in [target]'s [target_zone]!",
+	"<span class='notice'>You successfully pull apart the material in [target]'s [target_zone].</span>")
+
 //Atypical A: material retract
 /datum/surgery_step/retract_material
-	name = "Saw Material"
+	name = "Retract Material"
 	implements = list(
 	/obj/item/retractor = 100,
 	/obj/item/screwdriver = 45,
@@ -242,6 +246,75 @@
 	)
 	time = 54
 
-/datum/surgery_step/retract_skin/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	user.visible_message("[user] begins to pull apart material in [target]'s [parse_zone(target_zone)].",
+/datum/surgery_step/retract_material/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] begins to pull apart the material in [target]'s [parse_zone(target_zone)].",
 		"<span class='notice'>You begin to pull apart the material in [target]'s [parse_zone(target_zone)]...</span>")
+
+/datum/surgery_step/retract_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] pull apart the material in [target]'s [target_zone]!",
+	"<span class='notice'>You successfully pull apart the material in [target]'s [target_zone].</span>")
+
+
+//Atypical A: Prep Material For Closing.
+/datum/surgery_step/prep_material
+	name = "Line material with gel."
+	time = 64
+	implements = list(
+	/obj/item/bonegel = 100,
+	/obj/item/paper = 35 //Paper until I port tape. Then tape will replace paper.
+	)
+
+/datum/surgery_step/prep_material/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone == "skull")
+		user.visible_message("[user] begins to line [target]'s evicerated skull with [tool]...",
+		"<span class='notice'>You begin to line [target]'s evicerated skull with [tool]...</span>")
+	else
+		user.visible_message("[user] begins to line the chipped material in [target]'s [target_zone] with [tool]...",
+		"<span class='notice'>You begin lining the chipped material in [target]'s [target_zone] with [tool]...</span>")
+
+/datum/surgery_step/prep_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] successfully lines the material in [target]'s [target_zone]!",
+	"<span class='notice'>You successfully line the material in [target]'s [target_zone].</span>")
+
+//Atypical A: Set Material For Closing.
+/datum/surgery_step/set_material
+	name = "set material"
+
+	time = 64
+	implements = list(
+	/obj/item/bonesetter = 100,
+	/obj/item/wrench = 35
+	)
+
+/datum/surgery_step/set_material/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone == "skull")
+		user.visible_message("[user] begins to set the material in [target]'s skull with [tool]...",
+		"<span class='notice'>You begin to set the material in [target]'s skull with [tool]...</span>")
+	else
+		user.visible_message("[user] begins to set the material in [target]'s [target_zone] with [tool]...",
+		"<span class='notice'>You begin setting the material in [target]'s [target_zone] with [tool]...</span>")
+
+/datum/surgery_step/set_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] successfully sets the material in [target]'s [target_zone]!",
+	"<span class='notice'>You successfully set the material in [target]'s [target_zone].</span>")
+
+//Atypical A: Reinforce Material For Closing.
+/datum/surgery_step/reinforce_material
+	name = "Reinforce material with gel."
+	time = 64
+	implements = list(
+	/obj/item/bonegel = 100,
+	/obj/item/stack/rods = 35
+	)
+
+/datum/surgery_step/reinforce_material/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	if(target_zone == "skull")
+		user.visible_message("[user] begins to reinforce [target]'s skull with [tool]...",
+		"<span class='notice'>You begin to reinforce [target]'s skull with [tool]...</span>")
+	else
+		user.visible_message("[user] begins to reinforce the material in [target]'s [target_zone] with [tool]...",
+		"<span class='notice'>You begin reinforcing the material in [target]'s [target_zone] with [tool]...</span>")
+
+/datum/surgery_step/reinforce_material/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+	user.visible_message("[user] successfully reinforces the material in [target]'s [target_zone]!",
+	"<span class='notice'>You successfully reinforce the material in [target]'s [target_zone].</span>")

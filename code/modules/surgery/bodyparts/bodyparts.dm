@@ -24,6 +24,7 @@
 	var/broken = FALSE //If bones are broke or not
 	var/splinted = FALSE //If splinted or not. Movement doesn't deal damage, but you still move slowly.
 	var/has_bones = FALSE
+	var/material = FALSE
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -107,12 +108,14 @@
 
 /obj/item/bodypart/proc/can_break_bone()
 	if(broken)
-		return 0
+		return FALSE
 	if(status == BODYPART_ROBOTIC)
-		return 0
+		return FALSE
+	if(status == MATERIALFLESH)
+		return FALSE
 	if(!has_bones)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 /obj/item/bodypart/proc/break_bone()
 	if(!can_break_bone())
 		return
@@ -272,6 +275,9 @@
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
+
+		if(MATERIALFLESH in S.species_traits)
+			material = TRUE
 
 		if(NO_BONES in S.species_traits)
 			has_bones = FALSE
