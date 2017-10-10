@@ -158,12 +158,7 @@
 /mob/living/carbon/med_hud_set_status()
 	var/image/holder = hud_list[STATUS_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
-<<<<<<< HEAD
-	var/virus_state = check_virus()
-	var/mob/living/simple_animal/borer/B = has_brain_worms()
-=======
 	var/virus_threat = check_virus()
->>>>>>> db0c10e... Refactors virus spreading (#31066)
 	holder.pixel_y = I.Height() - world.icon_size
 	if(status_flags & XENO_HOST)
 		holder.icon_state = "hudxeno"
