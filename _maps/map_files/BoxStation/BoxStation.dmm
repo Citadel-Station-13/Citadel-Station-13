@@ -13691,7 +13691,7 @@
 /area/security/checkpoint/customs)
 "aFI" = (
 /obj/machinery/camera{
-	c_tag = "Security Checkpoint";
+	c_tag = "Customs";
 	dir = 1
 	},
 /obj/machinery/airalarm{
@@ -15787,7 +15787,13 @@
 /area/storage/primary)
 "aKt" = (
 /obj/machinery/door/airlock/freezer{
+	boltDown = null;
+	boltUp = null;
+	doorClose = null;
+	doorDeni = null;
+	doorOpen = null;
 	name = "Mime's Office";
+	noPower = null;
 	req_access_txt = "46"
 	},
 /turf/open/floor/plasteel/white/side{
@@ -16286,6 +16292,9 @@
 /obj/machinery/camera{
 	c_tag = "Port Hallway 2";
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
@@ -19172,6 +19181,10 @@
 /obj/structure/table,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
+/obj/machinery/camera{
+	c_tag = "Art Storage";
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/storage/art)
 "aTH" = (
@@ -59231,6 +59244,10 @@
 /area/crew_quarters/theatre/mime)
 "QlW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Mime's Office";
+	dir = 8
+	},
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -59240,6 +59257,11 @@
 	pixel_x = -28
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/camera{
+	c_tag = "Clown's Office";
+	c_tag_order = 999;
+	dir = 4
+	},
 /turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/theatre/clown)
 "QlY" = (
@@ -81019,7 +81041,7 @@ QlV
 Qmb
 Qmh
 aKt
-aLL
+aLE
 bDe
 aOl
 aPF
