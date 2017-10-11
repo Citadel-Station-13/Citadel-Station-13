@@ -265,6 +265,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
+	
+	if(VIRUSIMMUNE in species_traits)
+		for(var/datum/disease/A in C.viruses)
+			A.cure(FALSE)
+		
 
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE

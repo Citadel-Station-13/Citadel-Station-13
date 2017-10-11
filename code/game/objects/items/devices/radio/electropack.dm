@@ -162,8 +162,9 @@ Code:
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
 		if(slot_flags == SLOT_NECK)
-			to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
-			return
+			if(user.get_item_by_slot(slot_neck))
+				to_chat(user, "<span class='warning'>The collar is fastened tight! You'll need help taking this off!</span>")
+				return
 	..()
 
 /obj/item/device/electropack/shockcollar/receive_signal(datum/signal/signal)
