@@ -17,7 +17,6 @@
 	if(!crewMind.assigned_role)
 		return
 	var/list/validobjs = crewobjjobs["[ckey(crewMind.assigned_role)]"]
-	//var/list/validobjs = get_valid_crew_objs(ckey(crewMind.assigned_role))
 	if(!validobjs || !validobjs.len)
 		return
 	var/selectedObj = pick(validobjs)
@@ -28,15 +27,6 @@
 	crewMind.objectives += newObjective
 	to_chat(crewMind, "<B>As a part of Nanotrasen's anti-tide efforts, you have been assigned an optional objective. It will be checked at the end of the shift. <font color=red>Performing traitorous acts in pursuit of your objective may result in termination of your employment.</font></B>")
 	to_chat(crewMind, "<B>Your optional objective:</B> [newObjective.explanation_text]")
-
-/*/datum/controller/subsystem/ticker/proc/get_valid_crew_objs(var/job = "")//taken from old hippie with adjustments
-	var/list/objlist = list()
-	for(var/hoorayhackyshit in crewobjlist)
-		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
-		var/list/availableto = splittext(initial(obj.jobs),",")
-		if(job in availableto)
-			objlist += obj
-	return objlist*/
 
 /datum/objective/crew/
 	var/jobs = ""

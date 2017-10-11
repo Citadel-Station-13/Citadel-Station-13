@@ -128,7 +128,7 @@ SUBSYSTEM_DEF(ticker)
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
-	for(var/hoorayhackyshit in crewobjlist)
+	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
 		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
 		var/list/availableto = splittext(initial(obj.jobs),",")
 		for(var/job in availableto)
