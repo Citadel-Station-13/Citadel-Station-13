@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(ticker)
 	login_music = pick(music)
 
 	crewobjlist = typesof(/datum/objective/crew)
-	miscreantobjlist = typesof(/datum/objective/miscreant)
+	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
 	for(var/hoorayhackyshit in crewobjlist)
 		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
 		var/list/availableto = splittext(initial(obj.jobs),",")
