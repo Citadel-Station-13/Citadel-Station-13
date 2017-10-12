@@ -11,7 +11,7 @@
 		return
 	if(jobban_isbanned(crewMind, "Syndicate"))
 		return
-	var/list/objectiveTypes = typesof(/datum/objective/miscreant) - /datum/objective/miscreant
+	var/list/objectiveTypes = miscreantobjlist
 	if(!objectiveTypes.len)
 		return
 	var/selectedType = pick(objectiveTypes)
