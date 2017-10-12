@@ -110,19 +110,26 @@
 
 /datum/world_topic/adminmsg
 	keyword = "adminmsg"
+	require_comms_key = TRUE
 
 /datum/world_topic/adminmsg/Run(list/input)
 	return IrcPm(input[keyword], input["msg"], input["sender"])
 
 /datum/world_topic/namecheck
 	keyword = "namecheck"
+	require_comms_key = TRUE
 
 /datum/world_topic/namecheck/Run(list/input)
 	var/datum/server_tools_command/namecheck/NC = new
 	return NC.Run(input["sender"], input["namecheck"])
 
 /datum/world_topic/adminwho
+<<<<<<< HEAD
 	keyword = "namecheck"
+=======
+	keyword = "adminwho"
+	require_comms_key = TRUE
+>>>>>>> 9a91eeb... Add require_comms_key = TRUE to some topic that need it
 
 /datum/world_topic/adminwho/Run(list/input)
 	return ircadminwho()
