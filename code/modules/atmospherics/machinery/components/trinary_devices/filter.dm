@@ -28,6 +28,12 @@
 	if(frequency)
 		radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
+<<<<<<< HEAD
+=======
+/obj/machinery/atmospherics/components/trinary/filter/New()
+	..()
+
+>>>>>>> 945a58c... unfucks filters (#31599)
 /obj/machinery/atmospherics/components/trinary/filter/Destroy()
 	SSradio.remove_object(src,frequency)
 	return ..()
@@ -86,11 +92,20 @@
 		if(!removed)
 			return
 
+<<<<<<< HEAD
 		var/filtering = filter_type ? TRUE : FALSE
 
 		if(filtering && !istext(filter_type))
 			WARNING("Wrong gas ID in [src]'s filter_type var. filter_type == [filter_type]")
 			filtering = FALSE
+=======
+		var/filtering = TRUE
+		if(!ispath(filter_type))
+			if(filter_type)
+				filter_type = gas_id2path(filter_type) //support for mappers so they don't need to type out paths
+			else
+				filtering = FALSE
+>>>>>>> 945a58c... unfucks filters (#31599)
 
 		if(filtering && removed.gases[filter_type])
 			var/datum/gas_mixture/filtered_out = new
@@ -124,7 +139,14 @@
 	data["on"] = on
 	data["pressure"] = round(target_pressure)
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
+<<<<<<< HEAD
 	data["filter_type"] = filter_type
+=======
+	if(filter_type)
+		data["filter_type"] = GLOB.meta_gas_info[filter_type][META_GAS_ID] //ui code is garbage and this is needed for it to work grr
+	else
+		data["filter_type"] = "none"
+>>>>>>> 945a58c... unfucks filters (#31599)
 	return data
 
 /obj/machinery/atmospherics/components/trinary/filter/ui_act(action, params)
@@ -153,7 +175,11 @@
 		if("filter")
 			filter_type = ""
 			var/filter_name = "nothing"
+<<<<<<< HEAD
 			var/gas = params["mode"]
+=======
+			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
+>>>>>>> 945a58c... unfucks filters (#31599)
 			if(gas in GLOB.meta_gas_info)
 				filter_type = gas
 				filter_name	= GLOB.meta_gas_info[gas][META_GAS_NAME]
