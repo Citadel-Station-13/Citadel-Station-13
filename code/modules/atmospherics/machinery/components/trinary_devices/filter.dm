@@ -6,7 +6,7 @@
 	can_unwrench = TRUE
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
-	var/filter_type = ""
+	var/filter_type = null
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 
@@ -158,7 +158,7 @@
 				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
-			filter_type = ""
+			filter_type = null
 			var/filter_name = "nothing"
 			var/gas = text2path(params["mode"]) || gas_id2path(params["mode"])
 			if(gas in GLOB.meta_gas_info)
