@@ -437,14 +437,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-<<<<<<< HEAD
-		if(dir < 0 && dir < 16)
-			if(dir & 1)
-=======
 		var/tdir = variable
 		if(tdir > 0 && tdir < 16)
 			if(tdir & 1)
->>>>>>> 428922c... Fixes VVing associated values in lists when the value was a number. (#31511)
 				dir_text += "NORTH"
 			if(dir & 2)
 				dir_text += "SOUTH"
