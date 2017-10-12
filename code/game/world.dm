@@ -120,8 +120,13 @@ GLOBAL_PROTECT(security_mode)
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
+<<<<<<< HEAD
 		if(input[I])
 			handler = I
+=======
+		if(I in input)
+			handler = topic_handlers[I]
+>>>>>>> e4a63bb... Merge pull request #31631 from tgstation/Cyberboss-patch-2
 			break
 	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
