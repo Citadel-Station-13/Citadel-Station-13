@@ -194,42 +194,6 @@
 			var/list/filtered_gases = filtered_out.gases
 			filtered_out.temperature = removed.temperature
 
-<<<<<<< HEAD
-			if(scrub_Toxins && removed_gases["plasma"])
-				ADD_GAS("plasma", filtered_out.gases)
-				filtered_gases["plasma"][MOLES] = removed_gases["plasma"][MOLES]
-				removed.gases["plasma"][MOLES] = 0
-
-			if(scrub_CO2 && removed_gases["co2"])
-				ADD_GAS("co2", filtered_out.gases)
-				filtered_gases["co2"][MOLES] = removed_gases["co2"][MOLES]
-				removed_gases["co2"][MOLES] = 0
-
-			if(removed_gases["agent_b"])
-				ADD_GAS("agent_b", filtered_out.gases)
-				filtered_gases["agent_b"][MOLES] = removed_gases["agent_b"][MOLES]
-				removed_gases["agent_b"][MOLES] = 0
-
-			if(scrub_N2O && removed_gases["n2o"])
-				ADD_GAS("n2o", filtered_out.gases)
-				filtered_gases["n2o"][MOLES] = removed_gases["n2o"][MOLES]
-				removed_gases["n2o"][MOLES] = 0
-
-			if(scrub_BZ && removed_gases["bz"])
-				ADD_GAS("bz", filtered_out.gases)
-				filtered_gases["bz"][MOLES] = removed_gases["bz"][MOLES]
-				removed_gases["bz"][MOLES] = 0
-
-			if(scrub_Freon && removed_gases["freon"])
-				ADD_GAS("freon", filtered_out.gases)
-				filtered_gases["freon"][MOLES] = removed_gases["freon"][MOLES]
-				removed_gases["freon"][MOLES] = 0
-
-			if(scrub_WaterVapor && removed_gases["water_vapor"])
-				ADD_GAS("water_vapor", filtered_out.gases)
-				filtered_gases["water_vapor"][MOLES] = removed_gases["water_vapor"][MOLES]
-				removed_gases["water_vapor"][MOLES] = 0
-=======
 			if(scrub_Toxins && removed_gases[/datum/gas/plasma])
 				ADD_GAS(/datum/gas/plasma, filtered_out.gases)
 				filtered_gases[/datum/gas/plasma][MOLES] = removed_gases[/datum/gas/plasma][MOLES]
@@ -264,7 +228,6 @@
 				ADD_GAS(/datum/gas/water_vapor, filtered_out.gases)
 				filtered_gases[/datum/gas/water_vapor][MOLES] = removed_gases[/datum/gas/water_vapor][MOLES]
 				removed_gases[/datum/gas/water_vapor][MOLES] = 0
->>>>>>> 454d16f... Minor refactor of how gas IDs are handled (#31528)
 
 			removed.garbage_collect()
 
