@@ -12,9 +12,6 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 		if(initial(gas.moles_visible) != null)
 			gas_info[META_GAS_OVERLAY] = new /obj/effect/overlay/gas(initial(gas.gas_overlay))
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
-<<<<<<< HEAD
-		.[initial(gas.id)] = gas_info
-=======
 		gas_info[META_GAS_ID] = initial(gas.id)
 		.[gas_path] = gas_info
 
@@ -23,7 +20,6 @@ GLOBAL_LIST_INIT(hardcoded_gases, list("o2","n2","co2","plasma")) //the main fou
 	for(var/path in meta_gas)
 		if(meta_gas[path][META_GAS_ID] == id)
 			return path
->>>>>>> 7da4694... Fixes init times (#31580)
 
 /*||||||||||||||/----------\||||||||||||||*\
 ||||||||||||||||[GAS DATUMS]||||||||||||||||
