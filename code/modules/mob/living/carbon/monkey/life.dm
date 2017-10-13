@@ -24,7 +24,7 @@
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
 	if(radiation)
-		if(radiation > RAD_MOB_KNOCKDOWN
+		if(radiation > RAD_MOB_KNOCKDOWN)
 			if(!IsKnockdown())
 				emote("collapse")
 			Knockdown(200)
