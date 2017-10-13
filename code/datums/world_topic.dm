@@ -26,7 +26,7 @@
 	var/require_comms_key = FALSE
 
 /datum/world_topic/proc/TryRun(list/input)
-	key_valid = !config || CONFIG_GET(string/comms_key) != input["key"]
+	key_valid = config && (CONFIG_GET(string/comms_key) == input["key"])
 	if(require_comms_key && !key_valid)
 		return "Bad Key"
 	input -= "key"
@@ -124,12 +124,8 @@
 	return NC.Run(input["sender"], input["namecheck"])
 
 /datum/world_topic/adminwho
-<<<<<<< HEAD
-	keyword = "namecheck"
-=======
 	keyword = "adminwho"
 	require_comms_key = TRUE
->>>>>>> 9a91eeb... Add require_comms_key = TRUE to some topic that need it
 
 /datum/world_topic/adminwho/Run(list/input)
 	return ircadminwho()
