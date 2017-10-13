@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-
-
-//centcomAway items
-
-=======
 //centcomAway areas
 
 /area/awaymission/centcomAway
@@ -42,7 +36,6 @@
 
 //centcomAway items
 
->>>>>>> 477384c... Refactors away mission & space ruin area code (#31512)
 /obj/item/paper/pamphlet/centcom/visitor_info
 	name = "Visitor Info Pamphlet"
 	info = "<b> XCC-P5831 Visitor Information </b><br>\
