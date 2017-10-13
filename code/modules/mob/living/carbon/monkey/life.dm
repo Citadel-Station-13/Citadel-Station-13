@@ -23,13 +23,19 @@
 				walk_to(src,0)
 
 /mob/living/carbon/monkey/handle_mutations_and_radiation()
+<<<<<<< HEAD
 
 	if (radiation)
 		if (radiation > 100)
+=======
+	if(radiation)
+		if(radiation > RAD_MOB_KNOCKDOWN)
+>>>>>>> 456cd10... Radiation rework and subsystem (#30909)
 			if(!IsKnockdown())
 				emote("collapse")
 			Knockdown(200)
 			to_chat(src, "<span class='danger'>You feel weak.</span>")
+<<<<<<< HEAD
 		if(radiation > 30 && prob((radiation - 30) * (radiation - 30) * 0.0002))
 			gorillize()
 			return
@@ -49,6 +55,19 @@
 					emote("gasp")
 					domutcheck()
 		..()
+=======
+		if(radiation > RAD_MOB_MUTATE)
+			if(prob(1))
+				to_chat(src, "<span class='danger'>You mutate!</span>")
+				randmutb()
+				emote("gasp")
+				domutcheck()
+
+				if(radiation > RAD_MOB_MUTATE * 2 && prob(50))
+					gorillize()
+					return
+	return ..()
+>>>>>>> 456cd10... Radiation rework and subsystem (#30909)
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
 	if(abs(310.15 - breath.temperature) > 50)
