@@ -121,7 +121,7 @@ GLOBAL_PROTECT(security_mode)
 	for(var/I in topic_handlers)
 		if(I in input)
 			handler = topic_handlers[I]
-break
+			break
 	
 	if((!handler || initial(handler.log)) && config && CONFIG_GET(flag/log_world_topic))
 		WRITE_FILE(GLOB.world_game_log, "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
