@@ -29,7 +29,7 @@
 
 	else
 		to_chat(user, "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers.")
-		to_chat(user, "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first.")
+		to_chat(user, "Your head pounds for a moment, before your vision clears. ")
 
 		charges--
 		insisting = 0
@@ -38,16 +38,5 @@
 		user.dna.add_mutation(XRAY)
 		user.dna.add_mutation(COLDRES)
 		user.dna.add_mutation(TK)
-
-		SSticker.mode.traitors += user.mind
-		user.mind.special_role = "Avatar of the Wish Granter"
-
-		var/datum/objective/hijack/hijack = new
-		hijack.owner = user.mind
-		user.mind.objectives += hijack
-
-		user.mind.announce_objectives()
-
 		to_chat(user, "You have a very bad feeling about this.")
-
 	return
