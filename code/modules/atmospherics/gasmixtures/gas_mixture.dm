@@ -71,12 +71,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[MOLES] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
-<<<<<<< HEAD
-=======
 	if(!. && temperature) //if temp isn't defined, this mixture isn't a vacuum like space is. it hasn't been filled with *anything* so we want it to take on the properties of whatever gas enters it
 		. += HEAT_CAPACITY_VACUUM //however, if temp is defined but HC is still 0, then we want the mixture to behave like space does, as a heat sink
 
->>>>>>> 40ffeff... Merge pull request #31643 from duncathan/letsallsitdownbythefireplaceandwarmup
 
 /datum/gas_mixture/proc/heat_capacity_archived() //joules per kelvin
 	var/list/cached_gases = gases
