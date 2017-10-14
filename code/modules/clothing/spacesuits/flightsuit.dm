@@ -19,12 +19,7 @@
 	icon_state = FLIGHTPACK_SPRITE_BASE
 	item_state = FLIGHTPACK_SPRITE_BASE
 	actions_types = list(/datum/action/item_action/flightpack/toggle_flight, /datum/action/item_action/flightpack/engage_boosters, /datum/action/item_action/flightpack/toggle_stabilizers, /datum/action/item_action/flightpack/change_power, /datum/action/item_action/flightpack/toggle_airbrake)
-<<<<<<< HEAD
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
-
-=======
 	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 75)
->>>>>>> 8d647ff... Flying mobs now clip past non flying mobs, various flightsuit/iontrail/movement tweaks/code improvements/bugfixes (#30570)
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = SLOT_BACK
 	resistance_flags = FIRE_PROOF
@@ -86,18 +81,6 @@
 	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
-
-<<<<<<< HEAD
-	var/crash_damage = 10	//Same thing, but for crashes. This is in addition to possible amounts of brute damage to the wearer.
-	var/crash_damage_low = 1
-	var/crash_damage_high = 2.5
-	var/crash_disable_threshold = 5
-	var/crash_heal_amount = 0.06
-	var/crash_disabled = FALSE
-	var/crash_dampening = 0
-
-=======
->>>>>>> 8d647ff... Flying mobs now clip past non flying mobs, various flightsuit/iontrail/movement tweaks/code improvements/bugfixes (#30570)
 	var/requires_suit = TRUE
 
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
@@ -112,13 +95,8 @@
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
 
-<<<<<<< HEAD
-	var/s_delay = 50 // cell replacement delay
-
-=======
 	var/atom/movable/cached_pull		//recipe for disaster again.
 	var/afterForceMove = FALSE
->>>>>>> 8d647ff... Flying mobs now clip past non flying mobs, various flightsuit/iontrail/movement tweaks/code improvements/bugfixes (#30570)
 
 /obj/item/device/flightpack/proc/changeWearer(mob/changeto)
 	if(wearer)
@@ -808,40 +786,18 @@
 	var/deployedpack = FALSE
 	var/deployedshoes = FALSE
 	var/locked = FALSE
-<<<<<<< HEAD
-	resistance_flags = FIRE_PROOF
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/flightsuit
-	jetpack = null
-	var/flightpack
-	var/flight = FALSE
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals, /obj/item/gun, /obj/item/reagent_containers/spray/pepper, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
-	actions_types = list(/datum/action/item_action/flightsuit/toggle_helmet, /datum/action/item_action/flightsuit/toggle_boots, /datum/action/item_action/flightsuit/toggle_flightpack, /datum/action/item_action/flightsuit/lock_suit)
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
-	var/maint_panel = FALSE
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	var/obj/item/stock_parts/cell/cell
-	var/s_delay = 50
-
-/obj/item/clothing/suit/space/hardsuit/flightsuit/get_cell()
-	return cell
-=======
 	var/flightpack
 	var/flight = FALSE
 	var/maint_panel = FALSE
->>>>>>> 8d647ff... Flying mobs now clip past non flying mobs, various flightsuit/iontrail/movement tweaks/code improvements/bugfixes (#30570)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/full/Initialize()
 	makepack()
 	makeshoes()
 	resync()
-<<<<<<< HEAD
-	get_cell()
-=======
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/ui_action_click()
 	return	//Handled in action datums.
->>>>>>> 8d647ff... Flying mobs now clip past non flying mobs, various flightsuit/iontrail/movement tweaks/code improvements/bugfixes (#30570)
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/proc/usermessage(message, span = "boldnotice")
 	var/mob/targ = user
