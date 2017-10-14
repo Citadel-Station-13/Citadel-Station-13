@@ -28095,6 +28095,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "bgw" = (
@@ -28944,7 +28945,7 @@
 /area/security/brig)
 "bio" = (
 /obj/machinery/light/small,
-/obj/machinery/holopad,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whitered/side,
 /area/security/brig)
 "bip" = (
@@ -41783,21 +41784,11 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bFj" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/security/brig)
 "bFk" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -41812,11 +41803,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
@@ -43788,12 +43774,6 @@
 	},
 /area/hallway/primary/starboard)
 "bIY" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -45782,11 +45762,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
@@ -48042,12 +48017,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bQV" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -106597,11 +106566,10 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "efr" = (
-/obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
 	},
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 9
 	},
@@ -108983,11 +108951,6 @@
 	},
 /area/maintenance/port/fore)
 "erg" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -159408,13 +159371,13 @@ bwi
 bxY
 efF
 bjQ
-bDn
-bFi
-bHa
 bdi
-bDn
-bFi
-bHa
+bdi
+bdi
+bdi
+bdi
+bdi
+bdi
 bdi
 bTh
 bVn
@@ -159927,7 +159890,7 @@ bFk
 bHc
 bAb
 bLc
-bit
+bgA
 bOO
 bIZ
 bTj
