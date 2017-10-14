@@ -274,13 +274,8 @@
 		to_chat(user, "<span class='notice'>You stop charging [target].</span>")
 
 /obj/item/device/harmalarm
-<<<<<<< HEAD
-	name = "Sonic Harm Prevention Tool"
-	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH"
-=======
 	name = "\improper Sonic Harm Prevention Tool"
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
->>>>>>> 7998a3c... Merge pull request #31601 from AutomaticFrenzy/patch/thethe
 	icon_state = "megaphone"
 	var/cooldown = 0
 
