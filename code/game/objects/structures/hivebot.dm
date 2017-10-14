@@ -5,37 +5,6 @@
 	icon_state = "def_radar-off"
 	anchored = TRUE
 	density = TRUE
-<<<<<<< HEAD
-	var/bot_type = "norm"
-	var/bot_amt = 10
-
-/obj/structure/hivebot_beacon/New()
-	..()
-	var/datum/effect_system/smoke_spread/smoke = new
-	smoke.set_up(2, loc)
-	smoke.start()
-	visible_message("<span class='boldannounce'>The [src] warps in!</span>")
-	playsound(src.loc, 'sound/effects/empulse.ogg', 25, 1)
-	addtimer(CALLBACK(src, .proc/warpbots), rand(10, 600))
-
-/obj/structure/hivebot_beacon/proc/warpbots()
-	icon_state = "def_radar"
-	visible_message("<span class='danger'>The [src] turns on!</span>")
-	while(bot_amt > 0)
-		bot_amt--
-		switch(bot_type)
-			if("norm")
-				new /mob/living/simple_animal/hostile/hivebot(get_turf(src))
-			if("range")
-				new /mob/living/simple_animal/hostile/hivebot/range(get_turf(src))
-			if("rapid")
-				new /mob/living/simple_animal/hostile/hivebot/rapid(get_turf(src))
-	sleep(100)
-	visible_message("<span class='boldannounce'>The [src] warps out!</span>")
-	playsound(src.loc, 'sound/effects/empulse.ogg', 25, 1)
-	qdel(src)
-	return
-=======
 	var/bot_type = "norm"
 	var/bot_amt = 10
 
@@ -65,4 +34,3 @@
 	playsound(src.loc, 'sound/effects/empulse.ogg', 25, 1)
 	qdel(src)
 	return
->>>>>>> 7998a3c... Merge pull request #31601 from AutomaticFrenzy/patch/thethe
