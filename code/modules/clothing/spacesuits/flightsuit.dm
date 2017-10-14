@@ -33,7 +33,7 @@
 	var/flight = FALSE
 	var/flight_passflags = PASSTABLE
 	var/powersetting = 1
-	var/powersetting_high = 6
+	var/powersetting_high = 3
 	var/powersetting_low = 1
 	var/override_safe = FALSE
 
@@ -81,6 +81,7 @@
 	var/emp_heal_amount = 0.06		//How much emp damage to heal per process.
 	var/emp_disable_threshold = 3	//3 weak ion, 2 strong ion hits.
 	var/emp_disabled = FALSE
+
 	var/requires_suit = TRUE
 
 	var/datum/effect_system/trail_follow/ion/flight/ion_trail
@@ -91,7 +92,6 @@
 	var/obj/item/stock_parts/capacitor/part_cap = null
 	var/obj/item/stock_parts/micro_laser/part_laser = null
 	var/obj/item/stock_parts/matter_bin/part_bin = null
-	var/obj/item/stock_parts/cell/cell = null //Wew lad. about damn time now
 
 	var/crashing = FALSE	//Are we currently getting wrecked?
 
@@ -123,8 +123,6 @@
 	part_cap = new /obj/item/stock_parts/capacitor/super(src)
 	part_laser = new /obj/item/stock_parts/micro_laser/ultra(src)
 	part_bin = new /obj/item/stock_parts/matter_bin/super(src)
-	cell = new/obj/item/stock_parts/cell/high
-	cell.charge = 9000
 	..()
 
 /obj/item/device/flightpack/proc/usermessage(message, span = "boldnotice", mob/mob_override = null)
@@ -678,22 +676,6 @@
 					part_cap.forceMove(get_turf(src))
 				part_cap = I
 				changed = TRUE
-		if(istype(S, /obj/item/stock_parts/cell))
-			var/obj/item/stock_parts/cell/CELL = S
-			if(CELL.maxcharge > cell.maxcharge)
-				usermessage("<span class='notice'>Higher maximum capacity detected.\nUpgrading...</span>", mob_override = user)
-				if (do_after(user,s_delay, target = src))
-					user.transferItemToLoc(CELL, src)
-					CELL.charge = min(CELL.charge+cell.charge, CELL.maxcharge)
-					var/obj/item/stock_parts/cell/old_cell = cell
-					old_cell.charge = 0
-					user.put_in_hands(old_cell)
-					old_cell.add_fingerprint(user)
-					old_cell.update_icon()
-					cell = CELL
-					usermessage("<span class='notice'>Upgrade complete. Maximum capacity: <b>[round(cell.maxcharge/100)]</b>%</span>", mob_override = user)
-				else
-					usermessage("<span class='danger'>Procedure interrupted. Protocol terminated.</span>", mob_override = user)
 	if(changed)
 		update_parts()
 	..()
@@ -812,7 +794,6 @@
 	to_chat(user, "<span class='boldnotice'>SUIT: [locked ? "LOCKED" : "UNLOCKED"]</span>")
 	to_chat(user, "<span class='boldnotice'>FLIGHTPACK: [deployedpack ? "ENGAGED" : "DISENGAGED"] FLIGHTSHOES : [deployedshoes ? "ENGAGED" : "DISENGAGED"] HELMET : [suittoggled ? "ENGAGED" : "DISENGAGED"]</span>")
 	to_chat(user, "<span class='boldnotice'>Its maintainence panel is [maint_panel ? "OPEN" : "CLOSED"]</span>")
-	to_chat(user, "<span class='boldnotice'>Current energy capacity: <B>[DisplayPower(cell.charge)]</span>")
 
 /obj/item/clothing/suit/space/hardsuit/flightsuit/Destroy()
 	dropped()
@@ -1020,9 +1001,10 @@
 			maint_panel = TRUE
 		else
 			maint_panel = FALSE
-		usermessage("You [maint_panel? "open" : "close"] the maintainence panel.")
+		usermessage("You [maint_panel? "open" : "close"] the maintenance panel.")
+		return FALSE
 	else if(!maint_panel)
-		usermessage("The maintainence panel is closed!", "boldwarning")
+		usermessage("The maintenance panel is closed!", "boldwarning")
 		return FALSE
 	else if(istype(I, /obj/item/crowbar))
 		var/list/inputlist = list()
@@ -1047,6 +1029,7 @@
 				usermessage("Disengage the shoes first!", "boldwarning")
 				return FALSE
 			detach_shoes()
+		return TRUE
 	else if(istype(I, /obj/item/device/flightpack))
 		var/obj/item/device/flightpack/F = I
 		if(pack)
@@ -1070,6 +1053,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(F))
 			attach_pack(F)
+		return TRUE
 	else if(istype(I, /obj/item/clothing/shoes/flightshoes))
 		var/obj/item/clothing/shoes/flightshoes/S = I
 		if(shoes)
@@ -1077,6 +1061,7 @@
 			return FALSE
 		if(user.temporarilyRemoveItemFromInventory(S))
 			attach_shoes(S)
+		return TRUE
 	. = ..()
 
 //FLIGHT HELMET----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1086,12 +1071,12 @@
 	icon_state = "flighthelmet"
 	item_state = "flighthelmet"
 	item_color = "flight"
-	resistance_flags = FIRE_PROOF
-	brightness_on = 4
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	brightness_on = 7
 	light_color = "#30ffff"
-	armor = list(melee = 0, bullet = 0, laser = 0, energy = 10, bomb = 30, bio = 100, rad = 10, fire = 50, acid = 35)
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-	var/list/datahuds = list(DATA_HUD_SECURITY_BASIC , DATA_HUD_MEDICAL_BASIC, DATA_HUD_DIAGNOSTIC)
+	armor = list(melee = 20, bullet = 20, laser = 20, energy = 10, bomb = 30, bio = 100, rad = 75, fire = 100, acid = 100)
+	max_heat_protection_temperature = FIRE_HELM_MAX_TEMP_PROTECT
+	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC)
 	var/zoom_range = 14
 	var/zoom = FALSE
 	actions_types = list(/datum/action/item_action/toggle_helmet_light, /datum/action/item_action/flightpack/zoom)
