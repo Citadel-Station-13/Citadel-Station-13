@@ -101,6 +101,10 @@
 		init_belly()
 	verbs |= /mob/living/proc/animal_nom
 
+/mob/living/simple_animal/Destroy()
+	GLOB.simple_animals -= src
+	return ..()
+
 /mob/living/simple_animal/updatehealth()
 	..()
 	health = Clamp(health, 0, maxHealth)
