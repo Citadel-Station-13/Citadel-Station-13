@@ -116,11 +116,10 @@ GLOBAL_PROTECT(security_mode)
 
 /world/Topic(T, addr, master, key)
 	var/static/list/topic_handlers = TopicHandlers()
-
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)
-		if(input[I])
+		if(I in input)
 			handler = topic_handlers[I]
 			break
 	
