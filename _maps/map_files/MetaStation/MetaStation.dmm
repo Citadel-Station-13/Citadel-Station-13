@@ -59050,6 +59050,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cjV" = (
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
