@@ -898,7 +898,7 @@
 /obj/item/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot/R = user
 	if(R && !R.pounce_cooldown)
-		pounce_cooldown = !pounce_cooldown
+		R.pounce_cooldown = !R.pounce_cooldown
 		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
 		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
