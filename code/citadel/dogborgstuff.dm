@@ -899,7 +899,7 @@
 	var/mob/living/silicon/robot/R = user
 	if(R)
 		visible_message("<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='warning'>Your targetting systems lock on to [A]...</span>")
-		addtimer(CALLBACK(R, R.proc/leap_at, A), pounce_spoolup)
+		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), pounce_spoolup)
 
 /mob/living/silicon/robot/proc/leap_at(atom/A)
 	if(pounce_cooldown)
