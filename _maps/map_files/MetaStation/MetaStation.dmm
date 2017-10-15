@@ -5236,25 +5236,21 @@
 	},
 /area/security/brig)
 "akv" = (
-/obj/structure/table,
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/chem_dispenser{
+	layer = 2.7
+	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
 /area/security/brig)
 "akw" = (
-/obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -12672,11 +12668,6 @@
 "ayx" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
@@ -12705,11 +12696,6 @@
 "ayz" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
@@ -12725,11 +12711,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayA" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -13274,11 +13255,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azE" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azF" = (
@@ -15317,12 +15293,6 @@
 	},
 /area/hallway/primary/fore)
 "aDz" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Cells";
 	dir = 2;
@@ -85683,11 +85653,6 @@
 	},
 /area/maintenance/starboard/fore)
 "dCj" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -111035,7 +111000,7 @@ awZ
 ayw
 azD
 aAY
-aCk
+ajm
 aDw
 aDC
 aGb
@@ -111292,8 +111257,8 @@ axa
 ayx
 azE
 azE
-aCl
-aDx
+ajm
+aDw
 aEK
 aGc
 aHx
@@ -111549,7 +111514,7 @@ axb
 ayy
 azF
 aAZ
-aCm
+ajm
 aDw
 aEL
 aGd
@@ -111807,7 +111772,7 @@ ahx
 ahx
 ahx
 ajm
-aDy
+aDw
 aEM
 aGe
 aHx
@@ -112063,7 +112028,7 @@ axd
 ayw
 azG
 aAY
-aCk
+ajm
 aDw
 aEN
 aGf
@@ -112320,8 +112285,8 @@ axe
 ayz
 dCj
 azE
-aCl
-aDx
+ajm
+aDw
 dCo
 aGg
 aHx
@@ -112577,7 +112542,7 @@ axb
 ayy
 azF
 aBa
-aCm
+ajm
 aDw
 aEO
 aGh
@@ -113091,7 +113056,7 @@ axd
 ayw
 azH
 aAY
-aCk
+ajm
 aDw
 aEO
 aGg
@@ -113348,8 +113313,8 @@ axa
 ayA
 azE
 azE
-aCl
-aDx
+ajm
+aDw
 aEQ
 aGj
 aHz
@@ -113605,7 +113570,7 @@ axg
 ayy
 azF
 aBb
-aCm
+ajm
 aDw
 aEN
 aGk
