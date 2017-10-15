@@ -897,15 +897,17 @@
 
 /obj/item/dogborg/pounce/afterattack(atom/A, mob/user)
 	var/mob/living/silicon/robot/R = user
-	if(R)
-		visible_message("<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='warning'>Your targetting systems lock on to [A]...</span>")
+	if(R && !R.pounce_cooldown)
+		pounce_cooldown = !pounce_cooldown
+		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
+		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
+		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
+		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
 		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
+	else if(R && R.pounce_cooldown)
+		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
 /mob/living/silicon/robot/proc/leap_at(atom/A)
-	if(pounce_cooldown)
-		to_chat(src,"<span class='danger'>Your leg actuators are still recharging!</span>")
-		return
-
 	if(leaping || stat || buckled || lying)
 		return
 
@@ -925,7 +927,6 @@
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		cell.use(500) //Doubled the energy consumption
 		weather_immunities -= "lava"
-		pounce_cooldown = !pounce_cooldown
 		spawn(pounce_cooldown_time)
 			pounce_cooldown = !pounce_cooldown
 
@@ -945,6 +946,7 @@
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
 				L.Knockdown(40)
+				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
@@ -954,7 +956,7 @@
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
+			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
 			Knockdown(40, 1, 1)
 
 		if(leaping)
