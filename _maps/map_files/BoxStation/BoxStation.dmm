@@ -6168,6 +6168,10 @@
 /area/hallway/primary/fore)
 "anC" = (
 /obj/effect/spawner/structure/window,
+/obj/machinery/door/poddoor/preopen{
+	id = "seclobby";
+	name = "security lobby blast door"
+	},
 /turf/open/floor/plating,
 /area/security/courtroom)
 "anD" = (
@@ -61591,7 +61595,7 @@
 	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Security Lobby";
-	req_access_txt = "63"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
@@ -61627,7 +61631,7 @@
 	cyclelinkeddir = 1;
 	id_tag = "outerbrig";
 	name = "Security Lobby";
-	req_access_txt = "63"
+	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/hallway/primary/fore)
