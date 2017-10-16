@@ -889,6 +889,7 @@
 	var/leaping = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 50 //Nearly doubled, u happy?
+	var/pounce_spoolup = 5
 	var/leap_at
 	var/disabler
 	var/laser
@@ -901,10 +902,11 @@
 	var/mob/living/silicon/robot/R = user
 	if(R && !R.pounce_cooldown)
 		R.pounce_cooldown = !R.pounce_cooldown
+		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
 		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
 		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
-		R.leap_at(A)
+		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
 		spawn(R.pounce_cooldown_time)
 			R.pounce_cooldown = !R.pounce_cooldown
 	else if(R && R.pounce_cooldown)

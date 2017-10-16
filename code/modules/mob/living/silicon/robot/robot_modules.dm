@@ -406,7 +406,6 @@
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
 	basic_modules = list(
-		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/dogborg/jaws/small,
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue/scrubpup,
