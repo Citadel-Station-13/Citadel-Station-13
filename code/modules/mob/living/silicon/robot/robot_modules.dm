@@ -423,10 +423,10 @@
 	moduleselect_icon = "scrubpup"
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	clean_on_move = TRUE
-=======
->>>>>>> master
+//=======
+//>>>>>>> master
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

@@ -67,12 +67,10 @@
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
 
-<<<<<<< HEAD
-	//Flight and floating
-	var/override_float = 0
+//<<<<<<< HEAD
 
-=======
->>>>>>> master
+//======= A reminder to use // when dividing sections off people. Otherwise you get Errors. Why do I have to debug somebody else's code?
+//>>>>>>> master
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -270,11 +268,11 @@
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
 				C.put_in_hands(new mutanthands())
-	
+
 	if(VIRUSIMMUNE in species_traits)
 		for(var/datum/disease/A in C.viruses)
 			A.cure(FALSE)
-		
+
 
 	if(NOAROUSAL in species_traits)
 		C.canbearoused = FALSE
@@ -1152,7 +1150,7 @@
 			H.emote("collapse")
 		H.Knockdown(RAD_KNOCKDOWN_TIME)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
-	
+
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")
