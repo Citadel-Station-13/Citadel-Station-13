@@ -125,6 +125,8 @@
 	spawn(1)//because otherwise it pops before the punch message; we don't want that
 		owner.visible_message("<span class='userdanger'>You hear a cracking sound coming from [owner]'s [parse_zone(src)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(src)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
 
+//Very minor runtime from this proc if you varedit Broken = 1 Does not repeatedly loop. Just doesn't inform player of broken status unless they directly examine.
+
 /obj/item/bodypart/proc/fix_bone()
 	broken = FALSE
 	splinted = FALSE
