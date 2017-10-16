@@ -7,7 +7,7 @@
 
 /obj/item/organ/cyberimp/chest/nutriment
 	name = "Nutriment pump implant"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
@@ -119,8 +119,13 @@
 /obj/item/organ/cyberimp/chest/thrusters
 	name = "implantable thrusters set"
 	desc = "An implantable set of thruster ports. They use the gas from environment or subject's internals for propulsion in zero-gravity areas. \
+<<<<<<< HEAD
 	Unlike regular jetpack, this device has no stabilization system."
 	slot = "thrusters"
+=======
+	Unlike regular jetpacks, this device has no stabilization system."
+	slot = ORGAN_SLOT_THRUSTERS
+>>>>>>> 807bbbb... Fixes various spelling and grammar errors. (#31764)
 	icon_state = "imp_jetpack"
 	origin_tech = "materials=4;magnets=4;biotech=4;engineering=5"
 	implant_overlay = null
