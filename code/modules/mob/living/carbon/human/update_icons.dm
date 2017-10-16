@@ -221,13 +221,7 @@ There are several things that need to be remembered:
 				client.screen += glasses				//Either way, add the item to the HUD
 		update_observer_view(glasses,1)
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
-<<<<<<< HEAD
-
-			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi'))
-=======
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
-
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
 		if(OFFSET_GLASSES in dna.species.offset_features)
 			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
@@ -253,17 +247,12 @@ There are several things that need to be remembered:
 				client.screen += ears					//add it to the client's screen
 		update_observer_view(ears,1)
 
-<<<<<<< HEAD
-		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi'))
-
-=======
 		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
 		var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
 		overlays_standing[EARS_LAYER] = ears_overlay
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
 	apply_overlay(EARS_LAYER)
 
 
@@ -283,17 +272,12 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-<<<<<<< HEAD
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi'))
-=======
 		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
 		overlays_standing[SHOES_LAYER] = shoes_overlay
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
-
 	apply_overlay(SHOES_LAYER)
 
 
@@ -350,18 +334,12 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = belt.icon_state
 
-<<<<<<< HEAD
-		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi'))
-
-=======
 		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
 		overlays_standing[BELT_LAYER] = belt_overlay
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
-
 	apply_overlay(BELT_LAYER)
 
 
@@ -380,17 +358,12 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-<<<<<<< HEAD
-		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi'))
-
-=======
 		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
 		overlays_standing[SUIT_LAYER] = suit_overlay
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
 	update_hair()
 	update_mutant_bodyparts()
 
