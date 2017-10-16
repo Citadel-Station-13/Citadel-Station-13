@@ -163,7 +163,7 @@
 	item_state = "russianflask"
 	volume = 60
 
-/obj/item/clothing/mask/gas
+/obj/item/clothing/mask/gas/stalker
 	name = "S.T.A.L.K.E.R. mask"
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
