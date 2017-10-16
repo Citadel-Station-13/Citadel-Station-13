@@ -66,6 +66,11 @@ SUBSYSTEM_DEF(ticker)
 
 	var/modevoted = FALSE					//Have we sent a vote for the gamemode?
 
+	//Crew Objective/Miscreant stuff
+	var/list/crewobjlist = list()
+	var/list/crewobjjobs = list()
+	var/list/miscreantobjlist = list()
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -87,7 +92,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
 	var/use_rare_music = prob(1)
-	
+
 	for(var/S in provisional_title_music)
 		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
@@ -115,11 +120,21 @@ SUBSYSTEM_DEF(ticker)
 			if(byond_sound_formats[ext])
 				continue
 		music -= S
-				
+
 	if(isemptylist(music))
 		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
+	
 
-	login_music = pick(music)
+	crewobjlist = typesof(/datum/objective/crew)
+	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
+	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
+		var/datum/objective/crew/obj = hoorayhackyshit //dm is not a sane language in any way, shape, or form.
+		var/list/availableto = splittext(initial(obj.jobs),",")
+		for(var/job in availableto)
+			crewobjjobs["[job]"] += list(obj)
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
@@ -519,11 +534,11 @@ SUBSYSTEM_DEF(ticker)
 		if(!crewMind.current || !crewMind.objectives.len)
 			continue
 		for(var/datum/objective/miscreant/MO in crewMind.objectives)
-			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [MO.explanation_text] <font color='grey'>(Optional)</font><BR>"
+			miscreants += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [MO.explanation_text] <font color='grey'>(Optional)</font>"
 		for(var/datum/objective/crew/CO in crewMind.objectives)
 			if(CO.check_completion())
 				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font>")
-				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font><BR>"
+				successfulCrew += "<B>[crewMind.current.real_name]</B> (Played by: <B>[crewMind.key]</B>)<BR><B>Objective</B>: [CO.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
 			else
 				to_chat(crewMind.current, "<br><B>Your optional objective</B>: [CO.explanation_text] <font color='red'><B>Failed.</B></font>")
 

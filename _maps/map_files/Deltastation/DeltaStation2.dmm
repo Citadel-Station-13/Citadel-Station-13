@@ -6989,7 +6989,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -8741,19 +8741,30 @@
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "auC" = (
+/obj/machinery/camera{
+	c_tag = "Supermatter Chamber";
+	dir = 2;
+	network = list("Engine");
+	pixel_x = 23
+	},
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
+"auD" = (
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 8
+	},
+/obj/structure/window/plasma/reinforced/spawner/east,
 /obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
+/obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/open/floor/circuit/green,
-/area/engine/supermatter)
-"auD" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "auE" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -8768,24 +8779,24 @@
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "auG" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 4
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "auH" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-4";
-	d2 = 4
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/camera{
-	c_tag = "Supermatter Chamber";
-	name = "atmospherics camera";
-	network = list("Engine")
-	},
-/turf/open/floor/circuit/green,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "auI" = (
 /obj/structure/cable{
@@ -9305,22 +9316,32 @@
 /turf/open/floor/plasteel,
 /area/engine/atmospherics_engine)
 "avP" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 5
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/east,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "avQ" = (
 /obj/machinery/power/supermatter_shard/crystal/engine,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "avR" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/west,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable/yellow{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "avS" = (
 /obj/structure/cable{
@@ -10813,7 +10834,7 @@
 /area/shuttle/supply)
 "aza" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	name = "nitrogen filter"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -23010,7 +23031,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	name = "co2 filter";
 	on = 1
 	},
@@ -24584,7 +24605,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	name = "oxygen filter";
 	on = 1
 	},
@@ -25846,7 +25867,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	name = "waste filter";
 	on = 1
 	},
@@ -27489,7 +27510,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -28079,6 +28100,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "bgw" = (
@@ -28929,7 +28951,7 @@
 /area/security/brig)
 "bio" = (
 /obj/machinery/light/small,
-/obj/machinery/holopad,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whitered/side,
 /area/security/brig)
 "bip" = (
@@ -29213,7 +29235,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	name = "n2o filter";
 	on = 1
 	},
@@ -39373,6 +39395,7 @@
 	pixel_y = -3
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel,
 /area/storage/tech)
 "bAP" = (
@@ -41768,21 +41791,11 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bFj" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/security/brig)
 "bFk" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -41797,11 +41810,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
@@ -43773,12 +43781,6 @@
 	},
 /area/hallway/primary/starboard)
 "bIY" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -45767,11 +45769,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
@@ -47792,6 +47789,7 @@
 	pixel_y = 4
 	},
 /obj/item/hand_tele,
+/obj/item/melee/chainofcommand,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "bQC" = (
@@ -48026,12 +48024,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bQV" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -73619,8 +73611,8 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cOM" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cON" = (
@@ -79317,6 +79309,7 @@
 	pixel_y = 7;
 	req_access_txt = "33"
 	},
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/corner{
 	dir = 8
 	},
@@ -105739,7 +105732,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -106603,11 +106596,10 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "efr" = (
-/obj/structure/table/glass,
-/obj/machinery/computer/med_data/laptop,
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
 	},
+/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 9
 	},
@@ -108989,11 +108981,6 @@
 	},
 /area/maintenance/port/fore)
 "erg" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -134446,8 +134433,8 @@ ard
 asi
 ehy
 auC
-auC
-auC
+auH
+auH
 ehy
 azc
 aAc
@@ -134703,7 +134690,7 @@ are
 asj
 ehy
 auD
-avP
+auD
 avP
 axP
 ehJ
@@ -135731,7 +135718,7 @@ ari
 asn
 ehy
 auG
-avR
+auG
 avR
 axT
 ehJ
@@ -135988,8 +135975,8 @@ ebP
 aso
 ehy
 auH
-ehF
-ehF
+auH
+auH
 ehy
 azg
 aAe
@@ -141463,7 +141450,7 @@ ecI
 cJK
 cLq
 cNa
-cOL
+cYG
 cQH
 cRX
 cTK
@@ -159414,13 +159401,13 @@ bwi
 bxY
 efF
 bjQ
-bDn
-bFi
-bHa
 bdi
-bDn
-bFi
-bHa
+bdi
+bdi
+bdi
+bdi
+bdi
+bdi
 bdi
 bTh
 bVn
@@ -159933,7 +159920,7 @@ bFk
 bHc
 bAb
 bLc
-bit
+bgA
 bOO
 bIZ
 bTj

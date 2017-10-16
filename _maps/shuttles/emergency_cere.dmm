@@ -429,7 +429,6 @@
 /area/shuttle/escape)
 "bs" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /obj/machinery/light{
@@ -444,7 +443,6 @@
 /area/shuttle/escape)
 "bt" = (
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /turf/open/floor/plasteel,
@@ -452,7 +450,6 @@
 "bu" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/line{
-	icon_state = "warningline";
 	dir = 1
 	},
 /obj/structure/closet,

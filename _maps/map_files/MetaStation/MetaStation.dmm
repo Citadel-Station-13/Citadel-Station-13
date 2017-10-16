@@ -5238,25 +5238,21 @@
 	},
 /area/security/brig)
 "akv" = (
-/obj/structure/table,
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/chem_dispenser{
+	layer = 2.7
+	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
 /area/security/brig)
 "akw" = (
-/obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
+/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -12675,11 +12671,6 @@
 "ayx" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
@@ -12708,11 +12699,6 @@
 "ayz" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
@@ -12728,11 +12714,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayA" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -13277,11 +13258,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azE" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azF" = (
@@ -15320,12 +15296,6 @@
 	},
 /area/hallway/primary/fore)
 "aDz" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Cells";
 	dir = 2;
@@ -27688,6 +27658,7 @@
 /obj/item/circuitboard/machine/clonescanner,
 /obj/item/circuitboard/machine/clonepod,
 /obj/item/circuitboard/computer/scan_consolenew,
+/obj/item/circuitboard/machine/smoke_machine,
 /turf/open/floor/plasteel/black,
 /area/storage/tech)
 "bbo" = (
@@ -46869,7 +46840,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "n2o";
+	filter_type = /datum/gas/nitrous_oxide;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49926,7 +49897,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "plasma";
+	filter_type = /datum/gas/plasma;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52645,7 +52616,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = "co2";
+	filter_type = /datum/gas/carbon_dioxide;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54534,7 +54505,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "n2";
+	filter_type = /datum/gas/nitrogen;
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54589,7 +54560,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = "o2";
+	filter_type = /datum/gas/oxygen;
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -59064,6 +59035,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "cjV" = (
+/obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/whiteyellow/side{
 	dir = 4
 	},
@@ -80925,16 +80897,21 @@
 	},
 /area/maintenance/port/fore)
 "daY" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "daZ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dbb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -81445,13 +81422,6 @@
 /area/science/xenobiology)
 "dce" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 7
-	},
-/obj/item/storage/box/syringes{
-	pixel_y = 5
-	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 2;
 	pixel_y = -2
@@ -81808,8 +81778,15 @@
 	},
 /area/science/xenobiology)
 "dcL" = (
-/obj/machinery/chem_dispenser/constructable,
 /obj/machinery/light,
+/obj/structure/table/glass,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/storage/box/syringes{
+	pixel_y = 5
+	},
 /turf/open/floor/plasteel/whitepurple/side,
 /area/science/xenobiology)
 "dcM" = (
@@ -82704,7 +82681,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "freon";
+	filter_type = /datum/gas/freon;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82746,8 +82723,10 @@
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "deU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -82857,15 +82836,25 @@
 /area/engine/supermatter)
 "dfk" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dfm" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating,
+/obj/structure/window/plasma/reinforced/spawner/north,
+/obj/machinery/power/rad_collector/anchored,
+/obj/structure/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/turf/open/floor/engine,
 /area/engine/supermatter)
 "dfp" = (
 /obj/effect/turf_decal/bot{
@@ -82878,15 +82867,15 @@
 /turf/open/floor/plasteel/black,
 /area/engine/engineering)
 "dfq" = (
-/obj/machinery/power/rad_collector/anchored,
-/obj/structure/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 4;
 	network = list("Engine")
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -82904,7 +82893,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = "n2"
+	filter_type = /datum/gas/nitrogen
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85690,11 +85679,6 @@
 	},
 /area/maintenance/starboard/fore)
 "dCj" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -111047,7 +111031,7 @@ awZ
 ayw
 azD
 aAY
-aCk
+ajm
 aDw
 aDC
 aGb
@@ -111304,8 +111288,8 @@ axa
 ayx
 azE
 azE
-aCl
-aDx
+ajm
+aDw
 aEK
 aGc
 aHx
@@ -111561,7 +111545,7 @@ axb
 ayy
 azF
 aAZ
-aCm
+ajm
 aDw
 aEL
 aGd
@@ -111819,7 +111803,7 @@ ahx
 ahx
 ahx
 ajm
-aDy
+aDw
 aEM
 aGe
 aHx
@@ -112075,7 +112059,7 @@ axd
 ayw
 azG
 aAY
-aCk
+ajm
 aDw
 aEN
 aGf
@@ -112332,8 +112316,8 @@ axe
 ayz
 dCj
 azE
-aCl
-aDx
+ajm
+aDw
 dCo
 aGg
 aHx
@@ -112589,7 +112573,7 @@ axb
 ayy
 azF
 aBa
-aCm
+ajm
 aDw
 aEO
 aGh
@@ -113103,7 +113087,7 @@ axd
 ayw
 azH
 aAY
-aCk
+ajm
 aDw
 aEO
 aGg
@@ -113360,8 +113344,8 @@ axa
 ayA
 azE
 azE
-aCl
-aDx
+ajm
+aDw
 aEQ
 aGj
 aHz
@@ -113617,7 +113601,7 @@ axg
 ayy
 azF
 aBb
-aCm
+ajm
 aDw
 aEN
 aGk
@@ -129561,7 +129545,7 @@ dbb
 dfa
 aNv
 dfk
-dlS
+daY
 djx
 dfG
 cXz
@@ -129818,7 +129802,7 @@ dbb
 aMk
 aNv
 dfm
-dlS
+daY
 djt
 dbg
 dfR

@@ -26,6 +26,7 @@
 	new /obj/item/storage/box/beanbag(src)
 	new /obj/item/clothing/suit/armor/vest/alt(src)
 	new /obj/item/clothing/glasses/sunglasses/reagent(src)
+	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/storage/belt/bandolier(src)
 
 /obj/structure/closet/chefcloset
@@ -364,4 +365,3 @@
 	new /obj/item/clothing/under/rank/curator/treasure_hunter(src)
 	new /obj/item/clothing/shoes/workboots/mining(src)
 	new /obj/item/storage/backpack/satchel/explorer(src)
-

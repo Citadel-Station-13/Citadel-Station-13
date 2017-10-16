@@ -217,7 +217,7 @@
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
 	cell.emp_act()
-	visible_message("<span class='danger'> The [src] malfunctions, spraying chemicals everywhere!</span>")
+	visible_message("<span class='danger'>[src] malfunctions, spraying chemicals everywhere!</span>")
 	..()
 
 /obj/machinery/chem_dispenser/constructable

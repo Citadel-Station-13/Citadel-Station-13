@@ -102,7 +102,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("slapped")
 	resistance_flags = FLAMMABLE
-	squeak_override = list('sound/items/bikehorn.ogg'= 1)
+	squeak_override = list('sound/misc/server-ready.ogg'= 1)
 
 
 /*Zigfie*/
@@ -134,6 +134,15 @@
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head/santa
 
+//Removed all of the space flags from this suit so it utilizes nothing special.
+/obj/item/clothing/suit/space/santa/fluff
+	name = "Santa's suit"
+	desc = "Festive!"
+	icon_state = "santa"
+	item_state = "santa"
+	slowdown = 0
+
+
 
 /*Brian*/
 
@@ -153,3 +162,15 @@
 	icon_state = "russianflask"
 	item_state = "russianflask"
 	volume = 60
+
+
+
+
+/*Sylas*/
+/obj/item/clothing/neck/petcollar/stripe //don't really wear this though please c'mon seriously guys
+	name = "collar"
+	desc = "It's a collar..."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "petcollar-stripe"
+	item_color = "petcollar-stripe"
+	tagname = null
