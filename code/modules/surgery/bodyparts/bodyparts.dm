@@ -24,7 +24,6 @@
 	var/broken = FALSE //If bones are broke or not
 	var/splinted = FALSE //If splinted or not. Movement doesn't deal damage, but you still move slowly.
 	var/has_bones = FALSE
-	var/material = FALSE
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -107,15 +106,18 @@
 		I.forceMove(T)
 
 /obj/item/bodypart/proc/can_break_bone()
-	if(broken)
+	if(broken == FALSE)
 		return FALSE
 	if(status == BODYPART_ROBOTIC)
 		return FALSE
-	if(status == MATERIALFLESH)
+	if(status == BODYPART_MATERIAL)
 		return FALSE
-	if(!has_bones)
+	if(status == BODYPART_FLUBBER)
 		return FALSE
-	return TRUE
+	if(has_bones == FALSE)
+		return FALSE
+	else return TRUE
+
 /obj/item/bodypart/proc/break_bone()
 	if(!can_break_bone())
 		return
@@ -129,11 +131,11 @@
 	owner.update_inv_splints()
 
 /obj/item/bodypart/on_mob_move()
-	if(!broken || status == BODYPART_ROBOTIC || !owner || splinted)
+	if(!broken || status == BODYPART_ROBOTIC || status == BODYPART_MATERIAL || status == BODYPART_FLUBBER || !owner || splinted)
 		return
 
 	if(prob(5))
-		to_chat(owner, "<span class='userdanger'>[pick("You feel broken bones moving around in your [src]!", "There are broken bones moving around in your [src]!", "The bones in your [src] are moving around!")]</span>")
+		to_chat(owner, "<span class='userdanger'>[pick("You feel broken bones moving around in your [src.name]!", "There are broken bones moving around in your [src.name]!", "The bones in your [src.name] are moving around!")]</span>")
 		receive_damage(rand(1, 3))
 		//1-3 damage every 20 tiles for every broken bodypart.
 		//A single broken bodypart will give you an average of 650 tiles to run before you get a total of 100 damage and fall into crit.
@@ -194,7 +196,7 @@
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
 
-	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
+	if((only_organic && status != BODYPART_ORGANIC) || (only_organic && status != BODYPART_MATERIAL) || (only_organic && status != BODYPART_FLUBBER)) //This makes robolimbs not healable by chems.
 		return
 
 	brute_dam	= max(brute_dam - brute, 0)
@@ -232,7 +234,7 @@
 		burnstate = 0
 
 	if(change_icon_to_default)
-		if(status == BODYPART_ORGANIC)
+		if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 			icon = DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
 			icon = DEFAULT_BODYPART_ICON_ROBOTIC
@@ -256,16 +258,19 @@
 		C = owner
 		no_update = 0
 
-	has_bones = C.has_bones//get the carbon's default bone settings
+	if(status == BODYPART_ORGANIC)
+		has_bones = TRUE
+	else
+		has_bones = FALSE
 
 	if(C.disabilities & HUSK)
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
 		should_draw_greyscale = FALSE
-		no_update = 1
+		no_update = TRUE
 
-	if(no_update)
+	if(no_update == TRUE)
 		return
 
 	if(!animal_origin)
@@ -275,15 +280,6 @@
 		var/datum/species/S = H.dna.species
 		species_id = S.limbs_id
 		species_flags_list = H.dna.species.species_traits
-
-		if(MATERIALFLESH in S.species_traits)
-			material = TRUE
-
-		if(NO_BONES in S.species_traits)
-			has_bones = FALSE
-			fix_bone()
-		else
-			has_bones = TRUE
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
@@ -350,7 +346,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(status == BODYPART_ORGANIC)
+		if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -366,7 +362,7 @@
 	if((body_zone != "head" && body_zone != "chest"))
 		should_draw_gender = FALSE
 
-	if(status == BODYPART_ORGANIC)
+	if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)

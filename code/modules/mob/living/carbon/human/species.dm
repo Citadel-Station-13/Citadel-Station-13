@@ -54,6 +54,7 @@
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
+
 	// species flags_1. these can be found in flags_1.dm
 	var/list/species_traits = list()
 

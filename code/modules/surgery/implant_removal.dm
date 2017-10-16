@@ -9,9 +9,7 @@
 	)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
-	requires_organic_bodypart = FALSE
-	requires_bones = TRUE
-	cantbematerial = TRUE
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
 
 /datum/surgery/implant_removal/golem
 	name = "material implant removal"
@@ -25,8 +23,7 @@
 	/datum/surgery_step/close
 	)
 	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
 
 
 //extract implant

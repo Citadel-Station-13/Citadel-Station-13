@@ -8,11 +8,13 @@
 	)
 	species = list(
 	/mob/living/carbon/human,
-	/mob/living/carbon/monkey
+	/mob/living/carbon/monkey,
+	!/mob/living/carbon/human/species/golem
 	)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
 	requires_bodypart = FALSE //need a missing limb
-	cantbematerial = TRUE
+	requires_bodypart_type = 0
+
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
 	if(!iscarbon(target))
@@ -28,9 +30,9 @@
 	/datum/surgery_step/retract_material,
 	/datum/surgery_step/add_prosthetic
 	)
-	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	species = list(
+	/mob/living/carbon/human/species/golem
+	)
 
 
 /datum/surgery_step/add_prosthetic

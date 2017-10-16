@@ -8,7 +8,7 @@
 	/datum/surgery_step/close
 	)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
-	cantbematerial = TRUE
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
 
 /datum/surgery/embedded_removal/golem
 	name = "material removal of embedded objects"
@@ -21,9 +21,7 @@
 	/datum/surgery_step/reinforce_material,
 	/datum/surgery_step/close
 	)
-	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
 
 
 /datum/surgery_step/remove_object

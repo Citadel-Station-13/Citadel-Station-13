@@ -1,4 +1,4 @@
-/datum/surgery/eye_surgery
+/datum/surgery/eye_surgery //Todo for Bones2 Give specialized eyetypes and surgeries.
 	name = "eye surgery"
 	steps = list(
 	/datum/surgery_step/incise,
@@ -9,7 +9,6 @@
 	)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("eyes")
-	requires_organic_bodypart = FALSE
 
 //fix eyes
 /datum/surgery_step/fix_eyes

@@ -74,7 +74,7 @@
 	species = list(/mob/living/carbon/human
 	)
 	possible_locs = list("groin")
-	cantbematerial = TRUE
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
 
 /datum/surgery/tail_attachment/golem
 	name = "material tail attachment"
@@ -89,9 +89,8 @@
 	/datum/surgery_step/reinforce_material,
 	/datum/surgery_step/close
 	)
-	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
+
 
 
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)

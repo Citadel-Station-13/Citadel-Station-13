@@ -17,11 +17,10 @@
 	/mob/living/carbon/monkey
 	)
 	possible_locs = list("chest", "head")
-	requires_organic_bodypart = TRUE
 	requires_real_bodypart = TRUE
 	requires_bones = TRUE
 	can_cancel = FALSE
-	cantbematerial = TRUE
+	requires_bodypart_type = BODYPART_ORGANIC
 
 /datum/surgery/organ_manipulation/soft
 	possible_locs = list("groin", "eyes", "mouth", "l_arm", "r_arm", "l_leg", "r_leg")
@@ -67,8 +66,7 @@
 	/datum/surgery_step/close
 	)
 	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
 
 /datum/surgery/organ_manipulation/boneless
 	name = "boneless organ manipulation"
@@ -81,9 +79,8 @@
 	/datum/surgery_step/manipulate_organs,
 	/datum/surgery_step/close
 	)
-	requires_organic_bodypart = TRUE
 	requires_bones = FALSE
-	cantbebones = TRUE
+	requires_bodypart_type = BODYPART_FLUBBER
 
 /datum/surgery_step/manipulate_organs
 	time = 64

@@ -29,15 +29,9 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					continue
 				if(S.requires_bones && affecting.has_bones == FALSE)
-					continue
-				if(S.cantbebones && affecting.has_bones == TRUE)
-					continue
-				if(S.material_flesh && affecting.material == FALSE)
-					continue
-				if(S.cantbematerial && affecting.material == TRUE)
 					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
@@ -64,7 +58,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					return
 			else if(C && S.requires_bodypart)
 				return

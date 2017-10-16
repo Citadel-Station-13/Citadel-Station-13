@@ -13,10 +13,8 @@
 	/mob/living/carbon/monkey
 	)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
-	requires_organic_bodypart = FALSE
+	requires_bodypart_type = BODYPART_ORGANIC
 	requires_bones = TRUE
-	cantbematerial = TRUE
-
 
 /datum/surgery/amputation/boneless
 	name = "boneless amputation"
@@ -26,9 +24,8 @@
 	/datum/surgery_step/clamp_bleeders,
 	/datum/surgery_step/sever_limb
 	)
-	requires_organic_bodypart = TRUE
+	requires_bodypart_type = BODYPART_FLUBBER
 	requires_bones = FALSE
-	cantbebones = TRUE
 
 /datum/surgery/amputation/golem
 	name = "material amputation"
@@ -40,8 +37,7 @@
 	/datum/surgery_step/sever_limb
 	)
 	requires_bones = FALSE
-	material_flesh = TRUE
-	cantbematerial = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
 
 /datum/surgery_step/sever_limb
 	name = "sever limb"
