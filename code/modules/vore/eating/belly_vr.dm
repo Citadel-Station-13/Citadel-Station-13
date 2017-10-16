@@ -120,6 +120,12 @@
 		M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
 		internal_contents.Remove(M)  // Remove from the belly contents
 
+		if(M.handcuffed && obj/item/restraints/handcuffs/cable/vorecuffs/I && !ismob(loc))
+			handcuffed = null
+			update_handcuffed(M)
+			qdel(I)
+			return
+
 		var/datum/belly/B = check_belly(owner) // This makes sure that the mob behaves properly if released into another mob
 		if(B)
 			B.internal_contents.Add(M)
@@ -137,6 +143,13 @@
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
 	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
 	src.internal_contents.Remove(M)  // Remove from the belly contents
+
+	if(M.handcuffed && obj/item/restraints/handcuffs/cable/vorecuffs/I && !ismob(loc))
+		handcuffed = null
+		update_handcuffed(M)
+		qdel(I)
+		return
+
 	var/datum/belly/B = check_belly(owner)
 	if(B)
 		B.internal_contents.Add(M)
@@ -158,6 +171,11 @@
 //	var/datum/belly/B = check_belly(owner)
 //	if(B.silenced == FALSE) //this needs more testing later
 	prey << sound('sound/vore/prey/loop.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_PREYLOOP)
+
+	//Apply prey cuffs
+	if(!prey.handcuffed)
+		prey.handcuffed = new /obj/item/restraints/handcuffs/cable/vorecuffs/used(prey)
+		prey.update_handcuffed()
 
 	// Handle prey messages
 	if(inside_flavor)
@@ -288,6 +306,9 @@
 
 	//Drop all items into the belly/floor.
 	for(var/obj/item/W in M)
+		internal_contents += new /obj/structure/closet/crate/vore(src)
+		
+
 		if(!M.dropItemToGround(W))
 			qdel(W)
 

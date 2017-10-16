@@ -111,10 +111,10 @@
 		var/list/env_gases = environment.gases
 
 		environment.assert_gases(arglist(GLOB.hardcoded_gases))
-		var/o2_concentration = env_gases["o2"][MOLES]/total_moles
-		var/n2_concentration = env_gases["n2"][MOLES]/total_moles
-		var/co2_concentration = env_gases["co2"][MOLES]/total_moles
-		var/plasma_concentration = env_gases["plasma"][MOLES]/total_moles
+		var/o2_concentration = env_gases[/datum/gas/oxygen][MOLES]/total_moles
+		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
+		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
+		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
 		environment.garbage_collect()
 
 		if(abs(n2_concentration - N2STANDARD) < 20)
@@ -371,9 +371,6 @@
 		return
 	if(!ishuman(target))
 		return
-	if(!target.devourable)
-		to_chat(user, "<span class='warning'>This person is incompatible with our equipment.</span>")
-		return
 	if(target.buckled)
 		to_chat(user, "<span class='warning'>The user is buckled and can not be put into your [src.name].</span>")
 		return
@@ -396,6 +393,20 @@
 			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has eaten [key_name(patient)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
+
+/obj/item/device/dogborg/sleeper/proc/container_resist(mob/living/user)
+	hound = loc
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message("<span class='notice'>You see [user] kicking against the expanded material of [hound.name]'s gut!</span>", \
+		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
+		"<span class='italics'>You hear a thump from [hound.name].</span>")
+	if(do_after(user, breakout_time, target = src))
+		if(!user || user.stat != CONSCIOUS || user.loc != src )
+			return
+		user.visible_message("<span class='warning'>[user] successfully broke out of [hound.name]!</span>", \
+			"<span class='notice'>You successfully break out of [hound.name]!</span>")
+		go_out()
 
 /obj/item/device/dogborg/sleeper/proc/go_out(var/target)
 	hound = src.loc
