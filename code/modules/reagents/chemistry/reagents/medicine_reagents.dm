@@ -671,11 +671,7 @@
 	taste_description = "dull toxin"
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-	var/obj/item/organ/eyes/eyes = M.getorganslot("eyes_sight")
-=======
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
->>>>>>> 04c05d8... Adds defines for organ slots (#31737)
 	if (!eyes)
 		return
 	if(M.disabilities & BLIND)
