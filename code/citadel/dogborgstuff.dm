@@ -357,14 +357,9 @@
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
 		/obj/item/grenade,
-		/obj/item/melee,
 		/obj/item/key,
-		/obj/item/kitchen/knife,
-		/obj/item/storage,
 		/obj/item/restraints,
-		/obj/item/clockwork,
-		/obj/item/device/pda,
-		/obj/item/device/assembly/flash)
+		/obj/item/device/pda)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
@@ -906,13 +901,12 @@
 	var/mob/living/silicon/robot/R = user
 	if(R && !R.pounce_cooldown)
 		R.pounce_cooldown = !R.pounce_cooldown
-		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
 		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
 		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
 		R.leap_at(A)
-		spawn(pounce_cooldown_time)
-			pounce_cooldown = !pounce_cooldown
+		spawn(R.pounce_cooldown_time)
+			R.pounce_cooldown = !R.pounce_cooldown
 	else if(R && R.pounce_cooldown)
 		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
@@ -952,12 +946,12 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(40)
+				L.Knockdown(45)
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				Knockdown(45, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
@@ -965,7 +959,7 @@
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
 			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
-			Knockdown(40, 1, 1)
+			Knockdown(45, 1, 1)
 
 		if(leaping)
 			leaping = 0
