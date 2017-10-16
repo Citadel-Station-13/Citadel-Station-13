@@ -351,10 +351,9 @@
 		/obj/item/soap/tongue,
 		/obj/item/device/analyzer/nose,
 		/obj/item/device/dogborg/sleeper/K9,
-		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/nuke)
+		/obj/item/pinpointer/crew)
+	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
@@ -421,6 +420,7 @@
 	moduleselect_icon = "scrubpup"
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
+	clean_on_move = TRUE
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

@@ -338,7 +338,7 @@
 	var/list/items_preserved = list()
 	var/list/important_items = list(
 		/obj/item/hand_tele,
-		/obj/item/card/id/captains_spare,
+		/obj/item/card/id,
 		/obj/item/device/aicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
@@ -356,7 +356,15 @@
 		/obj/item/documents/syndicate,
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
-		/obj/item/grenade)
+		/obj/item/grenade,
+		/obj/item/melee,
+		/obj/item/key,
+		/obj/item/kitchen/knife,
+		/obj/item/storage,
+		/obj/item/restraints,
+		/obj/item/clockwork,
+		/obj/item/device/pda,
+		/obj/item/device/assembly/flash)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
@@ -806,7 +814,7 @@
 	inject_amount = 10
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
-	var/max_item_count = 48
+	var/max_item_count = 20
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
 	compactor.afterattack(src, user ,1)
@@ -828,7 +836,7 @@
 		if(target_obj.type in important_items)
 			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
-		if(target_obj.w_class > WEIGHT_CLASS_SMALL)
+		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
@@ -885,8 +893,7 @@
 /mob/living/silicon/robot
 	var/leaping = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 40 //Nearly doubled, u happy?
-	var/pounce_spoolup = 5
+	var/pounce_cooldown_time = 50 //Nearly doubled, u happy?
 	var/leap_at
 	var/disabler
 	var/laser
@@ -903,7 +910,9 @@
 		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
 		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
-		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
+		R.leap_at(A)
+		spawn(pounce_cooldown_time)
+			pounce_cooldown = !pounce_cooldown
 	else if(R && R.pounce_cooldown)
 		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
@@ -927,8 +936,6 @@
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		cell.use(500) //Doubled the energy consumption
 		weather_immunities -= "lava"
-		spawn(pounce_cooldown_time)
-			pounce_cooldown = !pounce_cooldown
 
 /mob/living/silicon/robot/throw_impact(atom/A)
 
@@ -957,6 +964,7 @@
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
+			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
 			Knockdown(40, 1, 1)
 
 		if(leaping)
