@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "The game will no longer take 2-3 minutes to start up during highpop. Hooray optimization!"
+  - tweak: "Miscreants now have a 5% chance of being generated instead of a 2% chance."
+  - tweak: "Crew objective display at the end of the round is now a lot more compact."

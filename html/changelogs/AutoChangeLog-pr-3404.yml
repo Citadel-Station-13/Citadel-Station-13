@@ -1,0 +1,8 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Boxstation's security now has a high security cell, accessible via fake wall from the execution room."
+  - rscadd: "Boxstation's security now has a public lobby, complete with water cooler and soda dispenser!"
+  - rscadd: "Boxstation now has a non-lethal armory, containing hardsuits, armor, barrier grenades, and mounted flashers"
+  - tweak: "Security on all maps now have reinforced walls in place of electrified windows."
+  - tweak: "Security on all maps now have a chem dispenser and chemmaster."

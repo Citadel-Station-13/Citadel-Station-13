@@ -24,6 +24,9 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+
+	ComponentInitialize()
+
 	. = ..()
 
 /mob/dead/new_player/prepare_huds()
@@ -375,7 +378,7 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(2) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
+		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
 			if(CONFIG_GET(flag/allow_crew_objectives))
