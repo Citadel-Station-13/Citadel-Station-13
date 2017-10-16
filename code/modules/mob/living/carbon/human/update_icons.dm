@@ -160,16 +160,11 @@ There are several things that need to be remembered:
 		update_observer_view(wear_id)
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
-<<<<<<< HEAD
-		overlays_standing[ID_LAYER] = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = ((wear_id.icon_override) ? wear_id.icon_override : 'icons/mob/mob.dmi'))
-=======
 		id_overlay = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = 'icons/mob/mob.dmi')
 		if(OFFSET_ID in dna.species.offset_features)
 			id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 			id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
 		overlays_standing[ID_LAYER] = id_overlay
->>>>>>> 068f91e...  Refactors species-based offsets, condenses all offsets into a single list, adds support for all other standing icons (#31642)
-
 	apply_overlay(ID_LAYER)
 
 
