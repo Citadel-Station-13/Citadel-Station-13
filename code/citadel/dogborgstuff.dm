@@ -889,7 +889,7 @@
 	var/leaping = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 50 //Nearly doubled, u happy?
-	var/pounce_spoolup = 5
+	var/pounce_spoolup = 2
 	var/leap_at
 	var/disabler
 	var/laser
