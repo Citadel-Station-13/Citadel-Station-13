@@ -223,10 +223,11 @@ There are several things that need to be remembered:
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
 			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
-		if(OFFSET_GLASSES in dna.species.offset_features)
-			glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
-			glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
-		overlays_standing[GLASSES_LAYER] = glasses_overlay
+		if(glasses_overlay)
+			if(OFFSET_GLASSES in dna.species.offset_features)
+				glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
+				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
+			overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
 
 
