@@ -386,7 +386,7 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/twohanded/shockpaddles/hound,
 		/obj/item/reagent_containers/borghypo,
 		/obj/item/device/sensor_device)

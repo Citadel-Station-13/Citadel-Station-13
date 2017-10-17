@@ -342,7 +342,7 @@
 	var/list/items_preserved = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id,
-		/obj/item/device/pda/PDA,
+		/obj/item/device/pda,
 		/obj/item/device/aicard,
 		/obj/item/gun,
 		/obj/item/pinpointer,
@@ -361,7 +361,8 @@
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
 		/obj/item/grenade
-	)
+		)
+
 	var/list/important_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
@@ -382,7 +383,8 @@
 		/obj/item/documents/syndicate,
 		/obj/item/disk/nuclear,
 		/obj/item/bombcore,
-		/obj/item/grenade)
+		/obj/item/grenade
+		)
 
 /obj/item/device/dogborg/sleeper/New()
 	..()
