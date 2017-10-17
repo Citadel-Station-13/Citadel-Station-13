@@ -388,7 +388,7 @@
 		/obj/item/device/healthanalyzer,
 		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/twohanded/shockpaddles/hound,
-		/obj/item/reagent_containers/borghypo,
+		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,

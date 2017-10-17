@@ -329,11 +329,12 @@
 	var/mob/living/carbon/patient = null
 	var/mob/living/silicon/robot/hound = null
 	var/inject_amount = 10
-	var/min_health = -99 //they're dead at -100, shouldn't be able to dose 'em up
+	var/min_health = -100
 	var/cleaning = FALSE
 	var/patient_laststat = null
-	var/mob_energy = 30000 //Energy gained from digesting mobs (including PCs)
+	var/mob_energy = 300 //Energy gained from digesting mobs (including PCs)
 	var/trash_energy = 5
+	var/energy_drain = 20
 	var/list/injection_chems = list("antitoxin", "morphine", "salbutamol", "bicaridine", "kelotane", "epinephrine"),
 	var/eject_port = "ingestion"
 	var/escape_in_progress = FALSE
@@ -426,6 +427,8 @@
 	hound = loc
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
+	if(user.a_intent == INTENT_HELP)
+		return
 	user.visible_message("<span class='notice'>You see [user] kicking against the expanded material of [hound.name]'s gut!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
 		"<span class='italics'>You hear a thump from [hound.name].</span>")
@@ -466,7 +469,7 @@
 		cleaning = FALSE
 		update_patient()
 
-/obj/item/device/dogborg/sleeper/proc/drain(var/amt = 3) //Slightly reduced cost (before, it was always injecting inaprov)
+/obj/item/device/dogborg/sleeper/proc/drain(var/amt = 0) //Slightly reduced cost (before, it was always injecting inaprov)
 	if (amt > 0)
 		hound.cell.give(amt)
 	else
@@ -482,7 +485,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "dogborg_sleeper", name, 375, 550, master_ui, state)
 		ui.open()
 
 /obj/item/device/dogborg/sleeper/ui_data()
@@ -547,26 +550,22 @@
 			if(inject_chem(chem))
 				. = TRUE
 		if("clean")
-			if(!cleaning)
-				var/confirm = alert(usr, "You are about to engage self-cleaning mode. This will fill your [src] with caustic enzymes to remove any objects or biomatter, and convert them into energy. Are you sure?", "Confirmation", "Self-Clean", "Cancel")
-				if(confirm == "Self-Clean")
-					if(cleaning)
-						return
-					else
-						cleaning = TRUE
-						drain(500)
-						START_PROCESSING(SSobj, src)
-						if(patient)
-							to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
-						return
-			if(cleaning)
-				return
+			switch(cleaning)
+				if(TRUE)
+					. = FALSE
+				if(FALSE)
+					drain(500)
+					START_PROCESSING(SSobj, src)
+					if(patient)
+						to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
+					. = TRUE
+					
 		if("port")
 			switch(eject_port)
 				if("ingestion")
-					eject_port = "disposal"
+					. = "disposal"
 				if("disposal")
-					eject_port = "ingestion"
+					. = "ingestion"
 			return
 
 /obj/item/device/dogborg/sleeper/process()
@@ -583,6 +582,7 @@
 		src.drain()
 		if((patient.reagents.get_reagent_amount("epinephrine") < 5) && (patient.health < 0)) //Stop pumping people full of drugs. Don't heal people you're digesting, meanie.
 			patient.reagents.add_reagent("epinephrine", 5)
+			src.drain(15)
 		return
 
 	if(!patient && !cleaning) //We think we're done working.
@@ -652,7 +652,7 @@
 	//Belly is entirely empty
 	if(!length(contents))
 		to_chat(hound, "<span class='notice'>Your [src.name] is now clean. Ending self-cleaning cycle.</span>")
-		cleaning = 0
+		cleaning = FALSE
 		update_patient()
 		return
 
@@ -688,7 +688,7 @@
 				message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
 				to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
 				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
-				src.drain(-30000) //Fueeeeellll
+				src.drain(-3000) //Fueeeeellll
 				T.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				T.stop_sound_channel(CHANNEL_PRED)
