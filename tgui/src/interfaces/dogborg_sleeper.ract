@@ -2,6 +2,10 @@
   <ui-section label='Occupant'>
 	 <span>{{data.occupant.name ? data.occupant.name : "No Occupant"}}</span>
   </ui-section>
+  {{#if data.items}}
+    <ui-section label='Items in storage'>
+	  <span>{{data.items}}</span>
+	</ui-section>
   {{#if data.occupied}}
     <ui-section label='State'>
       <span class='{{data.occupant.statstate}}'>{{data.occupant.stat}}</span>
@@ -30,13 +34,17 @@
     </ui-section>
   {{/if}}
 </ui-display>
-<ui-display title='Controls'>
-	<ui-section label='Door'>
-    <ui-button icon='{{data.open ? "unlock" : "lock"}}' action='door'>{{data.open ? "Open" : "Closed"}}</ui-button>
+<ui-display title='Operations'>
+	<ui-section label='Eject All'>
+	  <ui-button action='eject'</ui-button>
+	</ui-section>
+	<ui-section label='Ejection Port'>
+      <ui-button state='{{data.eject_port ? "ingestion" : "disposal"}}' action='port'>{{data.eject_port ? "Ingestion" : "Disposal"}}</ui-button>
 	</ui-section>
   <ui-section label='Inject'>
     {{#each data.chems}}
       <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
     {{/each}}
   </ui-section>
+  
 </ui-display>

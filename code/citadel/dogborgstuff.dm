@@ -321,21 +321,47 @@
 //Sleeper
 
 /obj/item/device/dogborg/sleeper
-	name = "Medbelly"
-	desc = "Equipment for medical hound. A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves."
+	name = "hound sleeper"
+	desc = "nothing should see this."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "sleeper"
 	w_class = WEIGHT_CLASS_TINY
 	var/mob/living/carbon/patient = null
 	var/mob/living/silicon/robot/hound = null
 	var/inject_amount = 10
-	var/min_health = -100
-	var/cleaning = 0
+	var/min_health = -99 //they're dead at -100, shouldn't be able to dose 'em up
+	var/cleaning = FALSE
 	var/patient_laststat = null
 	var/mob_energy = 30000 //Energy gained from digesting mobs (including PCs)
-	var/list/injection_chems = list("antitoxin", "morphine", "salbutamol", "bicaridine", "kelotane"),
+	var/trash_energy = 5
+	var/list/injection_chems = list("antitoxin", "morphine", "salbutamol", "bicaridine", "kelotane", "epinephrine"),
 	var/eject_port = "ingestion"
-	var/list/items_preserved = list()
+	var/escape_in_progress = FALSE
+	var/message_cooldown
+	var/breakout_time = 300
+	var/list/items_preserved = list(
+		/obj/item/hand_tele,
+		/obj/item/card/id,
+		/obj/item/device/pda/PDA,
+		/obj/item/device/aicard,
+		/obj/item/gun,
+		/obj/item/pinpointer,
+		/obj/item/clothing/shoes/magboots,
+		/obj/item/clothing/head/helmet/space,
+		/obj/item/clothing/suit/space,
+		/obj/item/reagent_containers/hypospray/CMO,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/clothing/accessory/medal/gold/captain,
+		/obj/item/clothing/suit/armor,
+		/obj/item/documents,
+		/obj/item/nuke_core,
+		/obj/item/nuke_core_container,
+		/obj/item/areaeditor/blueprints,
+		/obj/item/documents/syndicate,
+		/obj/item/disk/nuclear,
+		/obj/item/bombcore,
+		/obj/item/grenade
+	)
 	var/list/important_items = list(
 		/obj/item/hand_tele,
 		/obj/item/card/id/captains_spare,
@@ -377,7 +403,7 @@
 	if(patient)
 		to_chat(user, "<span class='warning'>Your [src.name] is already occupied.</span>")
 		return
-	user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src]...</span>")
+	user.visible_message("<span class='warning'>[hound.name] is carefully inserting [target.name] into their [src.name].</span>", "<span class='notice'>You start placing [target] into your [src]...</span>")
 	if(!patient && ishuman(target) && !target.buckled && do_after (user, 50, target = target))
 
 		if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
@@ -390,11 +416,11 @@
 			target.reset_perspective(src)
 			update_patient()
 			START_PROCESSING(SSobj, src)
-			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
+			user.visible_message("<span class='warning'>[hound.name]'s medical pod lights up and expands as [target.name] slips inside into their [src.name].</span>", "<span class='notice'>Your medical pod lights up as [target] slips into your [src]. Life support functions engaged.</span>")
 			message_admins("[key_name(hound)] has eaten [key_name(patient)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
 			playsound(hound, 'sound/effects/bin_close.ogg', 100, 1)
 
-/obj/item/device/dogborg/sleeper/proc/container_resist(mob/living/user)
+/obj/item/device/dogborg/sleeper/container_resist(mob/living/user)
 	hound = loc
 	user.changeNext_move(CLICK_CD_BREAKOUT)
 	user.last_special = world.time + CLICK_CD_BREAKOUT
@@ -430,12 +456,12 @@
 					var/obj/T = C
 					T.loc = hound.loc
 		items_preserved.Cut()
-		cleaning = 0
+		cleaning = FALSE
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		update_patient()
 	else //You clicked eject with nothing in you, let's just reset stuff to be sure.
 		items_preserved.Cut()
-		cleaning = 0
+		cleaning = FALSE
 		update_patient()
 
 /obj/item/device/dogborg/sleeper/proc/drain(var/amt = 3) //Slightly reduced cost (before, it was always injecting inaprov)
@@ -447,155 +473,99 @@
 /obj/item/device/dogborg/sleeper/attack_self(mob/user)
 	if(..())
 		return
-	sleeperUI(user)
+	ui_interact(user)
 
-/obj/item/device/dogborg/sleeper/proc/sleeperUI(mob/user)
-	var/dat
-	dat += "<h3>Injector</h3>"
+/obj/item/device/dogborg/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 
-	if(patient && !(patient.stat & DEAD))
-		dat += "<A href='?src=\ref[src];inject=epinephrine'>Inject Epinephrine</A>"
-	else
-		dat += "<span class='linkOff'>Inject Epinephrine</span>"
-	if(patient && patient.health > min_health)
-		for(var/re in injection_chems)
-			var/datum/reagent/C = GLOB.chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><A href='?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
-	else
-		for(var/re in injection_chems)
-			var/datum/reagent/C = GLOB.chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui.open()
 
-	dat += "<h3>Sleeper Status</h3>"
-	dat += "<A id='refbutton' href='?src=\ref[src];refresh=1'>Refresh</A>"
-	dat += "<A href='?src=\ref[src];eject=1'>Eject All</A>"
-	dat += "<A href='?src=\ref[src];port=1'>Eject port: [eject_port]</A>"
-	if(!cleaning)
-		dat += "<A href='?src=\ref[src];clean=1'>Self-Clean</A>"
-	else
-		dat += "<span class='linkOff'>Self-Clean</span>"
+/obj/item/device/dogborg/sleeper/ui_data()
+	var/list/data = list()
+	data["occupied"] = patient ? 1 : 0
 
-	dat += "<div class='statusDisplay'>"
-
-	//Cleaning and there are still un-preserved items
 	if(cleaning && length(contents - items_preserved))
-		dat += "<font color='red'><B>Self-cleaning mode.</B> [length(contents - items_preserved)] object(s) remaining.</font><BR>"
+		data["items"] = "<font color='red'><B>Self-cleaning mode.</B> [length(contents - items_preserved)] object(s) remaining.</font><BR>"
 
-	//There are no items to be processed other than un-preserved items
-	else if(cleaning && length(items_preserved))
-		dat += "<font color='red'><B>Self-cleaning done. Eject remaining objects now.</B></font><BR>"
+	if(injection_chems != null)
+		data["chems"] = list()
+		for(var/chem in injection_chems)
+			var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
+			data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
 
-	//Preserved items count when the list is populated
-	if(length(items_preserved))
-		dat += "<font color='red'>[length(items_preserved)] uncleanable object(s).</font><BR>"
+	data["occupant"] = list()
+	var/mob/living/mob_occupant = patient
+	if(mob_occupant)
+		data["occupant"]["name"] = mob_occupant.name
+		switch(mob_occupant.stat)
+			if(CONSCIOUS)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "good"
+			if(SOFT_CRIT)
+				data["occupant"]["stat"] = "Conscious"
+				data["occupant"]["statstate"] = "average"
+			if(UNCONSCIOUS)
+				data["occupant"]["stat"] = "Unconscious"
+				data["occupant"]["statstate"] = "average"
+			if(DEAD)
+				data["occupant"]["stat"] = "Dead"
+				data["occupant"]["statstate"] = "bad"
+		data["occupant"]["health"] = mob_occupant.health
+		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
+		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["bruteLoss"] = mob_occupant.getBruteLoss()
+		data["occupant"]["oxyLoss"] = mob_occupant.getOxyLoss()
+		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
+		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
+		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["reagents"] = list()
+		if(mob_occupant.reagents.reagent_list.len)
+			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
+				data["occupant"]["reagents"] += list(list("name" = R.name, "volume" = R.volume))
+	return data
 
-	if(!patient)
-		dat += "Sleeper Unoccupied"
-	else
-		dat += "[patient.name] => "
-
-		switch(patient.stat)
-			if(0)
-				dat += "<span class='good'>Conscious</span>"
-			if(1)
-				dat += "<span class='average'>Unconscious</span>"
-			else
-				dat += "<span class='bad'>DEAD</span>"
-
-		var/healthcolor = (patient.health > 0 ? "color:white;" : "color:red;")
-		var/brutecolor = (patient.getBruteLoss() < 60 ? "color:gray;" : "color:red;")
-		var/o2color = (patient.getOxyLoss() < 60 ? "color:gray;" : "color:red;")
-		var/toxcolor = (patient.getToxLoss() < 60 ? "color:gray;" : "color:red;")
-		var/burncolor = (patient.getFireLoss() < 60 ? "color:gray;" : "color:red;")
-
-		dat += "<span style='[healthcolor]'>\t-Overall Health %: [round(patient.health)]</span><BR>"
-		dat += "<span style='[brutecolor]'>\t-Brute Damage %: [patient.getBruteLoss()]</span><BR>"
-		dat += "<span style='[o2color]'>\t-Respiratory Damage %: [patient.getOxyLoss()]</span><BR>"
-		dat += "<span style='[toxcolor]'>\t-Toxin Content %: [patient.getToxLoss()]</span><BR>"
-		dat += "<span style='[burncolor]'>\t-Burn Severity %: [patient.getFireLoss()]</span><BR>"
-
-		if(patient.getBrainLoss())
-			dat += "<div class='line'><span class='average'>Significant brain damage detected.</span></div><br>"
-		if(patient.getCloneLoss())
-			dat += "<div class='line'><span class='average'>Patient may be improperly cloned.</span></div><br>"
-		if(patient.reagents.reagent_list.len)
-			for(var/datum/reagent/R in patient.reagents.reagent_list)
-				dat += "<div class='line'><div style='width: 170px;' class='statusLabel'>[R.name]:</div><div class='statusValue'>[round(R.volume, 0.1)] units</div></div><br>"
-	dat += "</div>"
-
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.set_content(dat)
-	popup.open()
-	return
-
-
-/obj/item/device/dogborg/sleeper/Topic(href, href_list)
-	if(..() || usr == patient)
+/obj/item/device/dogborg/sleeper/ui_act(action, params)
+	if(..())
 		return
-	usr.set_machine(src)
-	if(href_list["refresh"])
-		update_patient()
-		src.updateUsrDialog()
-		sleeperUI(usr)
-		return
-	if(href_list["eject"])
-		go_out()
-		sleeperUI(usr)
-		return
-	if(href_list["clean"])
-		if(!cleaning)
-			var/confirm = alert(usr, "You are about to engage self-cleaning mode. This will fill your [src] with caustic enzymes to remove any objects or biomatter, and convert them into energy. Are you sure?", "Confirmation", "Self-Clean", "Cancel")
-			if(confirm == "Self-Clean")
-				if(cleaning)
-					return
-				else
-					cleaning = 1
-					drain(500)
-					START_PROCESSING(SSobj, src)
-					sleeperUI(usr)
-					if(patient)
-						to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
-					return
-		if(cleaning)
-			sleeperUI(usr)
-			return
-	if(href_list["port"])
-		switch(eject_port)
-			if("ingestion")
-				eject_port = "disposal"
-			if("disposal")
-				eject_port = "ingestion"
-		sleeperUI(usr)
-		return
+	var/mob/living/mob_occupant = patient
 
-	if(patient && !(patient.stat & DEAD))
-		if(href_list["inject"] == "epinephrine" || patient.health > min_health)
-			inject_chem(usr, href_list["inject"])
-		else
-			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for injections.</span>")
-	else
-		to_chat(usr,"<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
-
-	src.updateUsrDialog()
-	sleeperUI(usr) //Needs a callback to boop the page to refresh.
-	return
-
-/obj/item/device/dogborg/sleeper/proc/inject_chem(mob/user, chem)
-	if(patient && patient.reagents)
-		if(chem in injection_chems + "epinephrine")
-			if(hound.cell.charge < 800) //This is so borgs don't kill themselves with it.
-				to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
+	switch(action)
+		if("eject")
+			go_out()
+		if("inject")
+			var/chem = params["chem"]
+			if(!mob_occupant)
 				return
-			else if(patient.reagents.get_reagent_amount(chem) + 10 >= 20) //Preventing people from accidentally killing themselves by trying to inject too many chemicals!
-				to_chat(hound, "<span class='notice'>Your stomach is currently too full of fluids to secrete more fluids of this kind.</span>")
-			else if(patient.reagents.get_reagent_amount(chem) + 10 <= 20) //No overdoses for you
-				patient.reagents.add_reagent(chem, inject_amount)
-				drain(750) //-750 charge per injection
-			var/units = round(patient.reagents.get_reagent_amount(chem))
-			to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [injection_chems[chem]] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
+			if(mob_occupant.health < min_health && chem != "epinephrine")
+				return
+			if(inject_chem(chem))
+				. = TRUE
+		if("clean")
+			if(!cleaning)
+				var/confirm = alert(usr, "You are about to engage self-cleaning mode. This will fill your [src] with caustic enzymes to remove any objects or biomatter, and convert them into energy. Are you sure?", "Confirmation", "Self-Clean", "Cancel")
+				if(confirm == "Self-Clean")
+					if(cleaning)
+						return
+					else
+						cleaning = TRUE
+						drain(500)
+						START_PROCESSING(SSobj, src)
+						if(patient)
+							to_chat(patient, "<span class='danger'>[hound.name]'s [src.name] fills with caustic enzymes around you!</span>")
+						return
+			if(cleaning)
+				return
+		if("port")
+			switch(eject_port)
+				if("ingestion")
+					eject_port = "disposal"
+				if("disposal")
+					eject_port = "ingestion"
+			return
 
 /obj/item/device/dogborg/sleeper/process()
 
@@ -603,16 +573,13 @@
 		src.clean_cycle()
 		return
 
-	if(patient)	//We're caring for the patient. Medical emergency! Or endo scene.
+	if(patient)	//We're caring for the patient. Medical emergency! Or endo scene. Sleeper shouldn't be more effective at combat healing than regular ones
 		update_patient()
 		if(patient.health < 0)
 			patient.adjustOxyLoss(-1) //Heal some oxygen damage if they're in critical condition
 			patient.updatehealth()
-		patient.AdjustStun(-80)
-		patient.AdjustKnockdown(-80)
-		patient.AdjustUnconscious(-80)
 		src.drain()
-		if((patient.reagents.get_reagent_amount("epinephrine") < 5) && (patient.health < patient.maxHealth)) //Stop pumping full HP people full of drugs. Don't heal people you're digesting, meanie.
+		if((patient.reagents.get_reagent_amount("epinephrine") < 5) && (patient.health < 0)) //Stop pumping people full of drugs. Don't heal people you're digesting, meanie.
 			patient.reagents.add_reagent("epinephrine", 5)
 		return
 
@@ -691,7 +658,7 @@
 	for(var/mob/living/M in contents)
 		if(prob(20))
 			M.stop_sound_channel(CHANNEL_PRED)
-			playsound(get_turf(hound),"digest_pred",75,0,-6,0,channel=CHANNEL_PRED)
+			playsound(get_turf(hound),"digest_pred",75,0,-7,0,channel=CHANNEL_PRED)
 			M.stop_sound_channel(CHANNEL_PRED)
 			M.playsound_local("digest_prey",60)
 
@@ -731,38 +698,44 @@
 		else
 			var/obj/T = target
 
-			//If the object is in the items_preserved global list //POLARISTODO
+			//If the object is in the items_preserved global list
 
 			if(T.type in important_items)
 				src.items_preserved += T
 
 			//If the object is not one to preserve
 			else
-				//Special case for PDAs as they are dumb. TODO fix Del on PDAs to be less dumb.
-				if (istype(T, /obj/item/device/pda))
-					var/obj/item/device/pda/PDA = T
-					if (PDA.id)
-						PDA.id.forceMove(src)
-						PDA.id = null
-					qdel(T)
+				qdel(T)
+				src.update_patient()
+				src.hound.cell.give(5)
 
-				//Special case for IDs to make them digested
-			//else if (istype(T, /obj/item/card/id))
-				//var/obj/item/card/id/ID = T
-				//ID.digest() //Need the digest proc, first.
+/obj/item/device/dogborg/sleeper/proc/inject_chem(mob/user, chem)
+	if(patient && patient.reagents)
+		if(chem in injection_chems)
+			if(hound.cell.charge < 800) //This is so borgs don't kill themselves with it.
+				to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
+				return
+			else if(patient.reagents.get_reagent_amount(chem) + 10 >= 20) //Preventing people from accidentally killing themselves by trying to inject too many chemicals!
+				to_chat(hound, "<span class='notice'>Your stomach is currently too full of fluids to secrete more fluids of this kind.</span>")
+			else if(patient.reagents.get_reagent_amount(chem) + 10 <= 20) //No overdoses for you
+				patient.reagents.add_reagent(chem, inject_amount)
+				drain(750) //-750 charge per injection
+			var/units = round(patient.reagents.get_reagent_amount(chem))
+			to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [injection_chems[chem]] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
 
-				//Anything not perserved, PDA, or ID
-				else
-					//Spill(T) //Needs the spill proc to be added
-					qdel(T)
-					src.update_patient()
-					src.hound.cell.give(30) //10 charge? that was such a practically nonexistent number it hardly gave any purpose for this bit :v *cranks up*
+/obj/item/device/dogborg/sleeper/proc/chem_allowed(chem)
+	var/mob/living/mob_occupant = patient
+	if(!mob_occupant)
 		return
+	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20
+	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	return amount && occ_health
 
-
-/obj/item/device/dogborg/sleeper/container_resist()
-	if(prob(8))
-		go_out()
+/obj/item/device/dogborg/sleeper/medihound //Medihound sleeper
+	name = "Mobile Sleeper"
+	desc = "Equipment for medical hound. A mounted sleeper that stabilizes patients and can inject reagents in the borg's reserves."
+	icon = 'icons/mob/dogborg.dmi'
+	icon_state = "sleeper"
 
 /obj/item/device/dogborg/sleeper/K9 //The K9 portabrig
 	name = "Mobile Brig"
@@ -814,9 +787,9 @@
 	desc = "A mounted garbage compactor unit with fuel processor."
 	icon = 'icons/mob/dogborg.dmi'
 	icon_state = "compactor"
-	inject_amount = 10
+	inject_amount = 0
 	min_health = -100
-	injection_chems = null //So they don't have all the same chems as the medihound!
+	injection_chems = null
 	var/max_item_count = 48
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
@@ -839,7 +812,7 @@
 		if(target_obj.type in important_items)
 			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
-		if(target_obj.w_class > WEIGHT_CLASS_SMALL)
+		if(target_obj.w_class > WEIGHT_CLASS_NORMAL)
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
