@@ -60,6 +60,9 @@ All ShuttleMove procs go here
 	//Source turf changes
 	ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
 
+	if(rotation)
+		newT.shuttleRotate(rotation) //see shuttle_rotate.dm
+
 	return TRUE
 
 // Called on the new turf after everything has been moved
@@ -160,8 +163,9 @@ All ShuttleMove procs go here
 
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	GLOB.cameranet.removeCamera(src)
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+		GLOB.cameranet.removeCamera(src)
 
 /obj/machinery/camera/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -198,7 +202,8 @@ All ShuttleMove procs go here
 
 /obj/machinery/thruster/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/machinery/atmospherics/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -299,11 +304,13 @@ All ShuttleMove procs go here
 
 /obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/structure/lattice/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/structure/disposalpipe/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
@@ -317,7 +324,8 @@ All ShuttleMove procs go here
 		
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
-	. |= MOVE_CONTENTS
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 
 /************************************Misc move procs************************************/
