@@ -1,6 +1,10 @@
 #define PUMP_OUT "out"
 #define PUMP_IN "in"
+<<<<<<< HEAD
 #define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 10)
+=======
+#define PUMP_MAX_PRESSURE (ONE_ATMOSPHERE * 25)
+>>>>>>> 0ff5e9d... Merge pull request #31775 from duncathan/atmos-patch11
 #define PUMP_MIN_PRESSURE (ONE_ATMOSPHERE / 10)
 #define PUMP_DEFAULT_PRESSURE (ONE_ATMOSPHERE)
 
