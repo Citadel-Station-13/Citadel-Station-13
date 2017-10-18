@@ -179,8 +179,6 @@
 	resistance_flags = 0
 
 
-
-
 /*Sylas*/
 /obj/item/clothing/neck/petcollar/stripe //don't really wear this though please c'mon seriously guys
 	name = "collar"
@@ -189,3 +187,20 @@
 	icon_state = "petcollar-stripe"
 	item_color = "petcollar-stripe"
 	tagname = null
+
+
+/*PLACEHOLDER*/
+
+/obj/item/clothing/under/custom
+	name = "bluish performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "singer"
+	item_state = "singer"
+	item_color = "singer"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+
+
