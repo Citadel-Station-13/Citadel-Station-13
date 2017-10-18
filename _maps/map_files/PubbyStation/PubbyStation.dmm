@@ -54018,6 +54018,7 @@
 /obj/machinery/smoke_machine,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+<<<<<<< HEAD
 "YXI" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -54044,6 +54045,13 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "YXM" = (
+=======
+"cBQ" = (
+/obj/machinery/power/rad_collector/anchored,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"cBR" = (
+>>>>>>> 376afc8... Cleaned duplicated keys
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -54057,6 +54065,7 @@
 /obj/item/tank/internals/plasma,
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+<<<<<<< HEAD
 "YXN" = (
 /obj/structure/window/plasma/reinforced{
 	dir = 8
@@ -54080,6 +54089,9 @@
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
 "YXP" = (
+=======
+"cBS" = (
+>>>>>>> 376afc8... Cleaned duplicated keys
 /obj/structure/window/plasma/reinforced{
 	dir = 8
 	},
@@ -81758,7 +81770,11 @@ bOG
 bva
 bDi
 bXk
+<<<<<<< HEAD
 YXJ
+=======
+cBQ
+>>>>>>> 376afc8... Cleaned duplicated keys
 cbX
 cdK
 bXk
@@ -82015,7 +82031,11 @@ bOG
 bTE
 cae
 bXk
+<<<<<<< HEAD
 YXK
+=======
+cBQ
+>>>>>>> 376afc8... Cleaned duplicated keys
 cbX
 cdK
 bXk
@@ -83824,7 +83844,11 @@ cfU
 cgu
 cgU
 chw
+<<<<<<< HEAD
 YXM
+=======
+cBR
+>>>>>>> 376afc8... Cleaned duplicated keys
 chw
 chw
 chw
@@ -85612,8 +85636,13 @@ bYi
 bYV
 bZA
 cdN
+<<<<<<< HEAD
 YXI
 YXL
+=======
+ccW
+ceY
+>>>>>>> 376afc8... Cleaned duplicated keys
 cda
 cdV
 cex
@@ -86651,11 +86680,19 @@ cfV
 cgv
 cfV
 chz
+<<<<<<< HEAD
 YXN
 chz
 YXO
 chz
 YXP
+=======
+cBS
+chz
+cBS
+chz
+cBS
+>>>>>>> 376afc8... Cleaned duplicated keys
 chz
 cfV
 cfV
