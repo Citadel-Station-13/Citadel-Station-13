@@ -191,7 +191,7 @@
 
 /*PLACEHOLDER*/
 
-/obj/item/clothing/under/custom
+/obj/item/clothing/under/singery/custom
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
