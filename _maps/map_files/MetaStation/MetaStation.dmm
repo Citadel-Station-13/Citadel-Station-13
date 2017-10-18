@@ -54611,12 +54611,14 @@
 /area/engine/atmos)
 "cbm" = (
 /obj/docking_port/mobile{
+	callTime = 250;
 	dheight = 0;
 	dir = 2;
 	dwidth = 11;
 	height = 15;
 	id = "whiteship";
 	launch_status = 0;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0);
 	name = "NT Recovery White-Ship";
 	port_direction = 8;
 	preferred_direction = 4;
@@ -95755,7 +95757,7 @@ aaa
 aaa
 aaa
 aaa
-EDa
+aaa
 aaa
 aaa
 aaa
@@ -96055,7 +96057,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+EDa
 aaa
 aaa
 aaa
