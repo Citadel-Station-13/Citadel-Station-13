@@ -1,14 +1,34 @@
 /datum/surgery/embedded_removal
 	name = "removal of embedded objects"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/remove_object)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/remove_object,
+	/datum/surgery_step/close
+	)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
+
+/datum/surgery/embedded_removal/golem
+	name = "material removal of embedded objects"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/remove_object,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	requires_bodypart_type = BODYPART_MATERIAL
 
 
 /datum/surgery_step/remove_object
 	name = "remove embedded objects"
 	time = 32
-	accept_hand = 1
-	var/obj/item/bodypart/L = null
+	accept_hand = TRUE
+	var/obj/item/bodypart/L
 
 
 /datum/surgery_step/remove_object/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -39,4 +59,4 @@
 	else
 		to_chat(user, "<span class='warning'>You can't find [target]'s [parse_zone(user.zone_selected)], let alone any objects embedded in it!</span>")
 
-	return 1
+	return TRUE

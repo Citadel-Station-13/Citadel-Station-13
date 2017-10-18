@@ -2,18 +2,20 @@
 	var/name = "surgery"
 	var/status = 1
 	var/list/steps = list()									//Steps in a surgery
-	var/step_in_progress = 0								//Actively performing a Surgery
-	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
+	var/step_in_progress = FALSE							//Actively performing a Surgery
+	var/can_cancel = TRUE									//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
 	var/location = "chest"									//Surgery location
-	var/requires_organic_bodypart = 1						//Prevents you from performing an operation on robotic limbs
 	var/list/possible_locs = list() 						//Multiple locations
-	var/ignore_clothes = 0									//This surgery ignores clothes
+	var/ignore_clothes = FALSE								//This surgery ignores clothes
 	var/mob/living/carbon/target							//Operation target mob
 	var/obj/item/bodypart/operated_bodypart					//Operable body part
 	var/requires_bodypart = TRUE							//Surgery available only when a bodypart is present, or only when it is missing.
 	var/success_multiplier = 0								//Step success propability multiplier
-	var/requires_real_bodypart = 0							//Some surgeries don't work on limbs that don't really exist
+	var/requires_real_bodypart = FALSE						//Some surgeries don't work on limbs that don't really exist
+	var/requires_bodypart_type = BODYPART_ORGANIC			//Checks for type of bodypart. 0 for any type. Totes stolen from the upstream PR.
+	var/requires_bones = FALSE								//Some surgeries require bones to be done.
+
 
 /datum/surgery/New(surgery_target, surgery_location, surgery_bodypart)
 	..()
@@ -36,18 +38,17 @@
 /datum/surgery/proc/can_start(mob/user, mob/living/carbon/target)
 	// if 0 surgery wont show up in list
 	// put special restrictions here
-	return 1
-
+	return TRUE
 
 /datum/surgery/proc/next_step(mob/user)
 	if(step_in_progress)
-		return 1
+		return TRUE
 
 	var/datum/surgery_step/S = get_surgery_step()
 	if(S)
 		if(S.try_op(user, target, user.zone_selected, user.get_active_held_item(), src))
-			return 1
-	return 0
+			return TRUE
+	return FALSE
 
 /datum/surgery/proc/get_surgery_step()
 	var/step_type = steps[status]

@@ -28,6 +28,7 @@
 	pixel_y = 4
 	},
 /obj/structure/table,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "f" = (
@@ -188,6 +189,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "E" = (
@@ -204,6 +206,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "G" = (
@@ -278,6 +281,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 
@@ -481,7 +485,7 @@ b
 B
 b
 b
-G
+b
 b
 b
 b

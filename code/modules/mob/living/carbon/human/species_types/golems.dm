@@ -28,6 +28,20 @@
 	var/human_surname_chance = 3
 	var/special_name_chance = 5
 
+
+/datum/species/golem/on_species_gain(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_MATERIAL, FALSE, TRUE)
+
+/datum/species/golem/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)
+
+
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
@@ -629,7 +643,7 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-  
+
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"

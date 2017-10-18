@@ -1,3 +1,45 @@
+/obj/item/bonesetter
+	name = "bone setter"
+	desc = "Sets yer bones."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone setter"
+	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+
+/obj/item/bonesetter/augment
+	name = "Hydraulic bonesetting apparatus."
+	desc = "Micro-mechanical manipulator for retracting stuff."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "retractor"
+	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
+
+/obj/item/bonegel
+	name = "bone gel"
+	desc = "Mends yer bones."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone-gel"
+	materials = list(MAT_METAL=5000, MAT_GLASS=3500)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+
+/obj/item/bonegel/augment
+	name = "toolarm retractor"
+	desc = "Internally synthesized medical glue and nanomachines for repairing damaged skeletons."
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone-gel"
+	materials = list(MAT_METAL=6000, MAT_GLASS=3000)
+	flags_1 = CONDUCT_1
+	w_class = WEIGHT_CLASS_TINY
+	origin_tech = "materials=1;biotech=1"
+	toolspeed = 0.5
+
 /obj/item/retractor
 	name = "retractor"
 	desc = "Retracts stuff."

@@ -190,6 +190,7 @@
 "aH" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "aI" = (

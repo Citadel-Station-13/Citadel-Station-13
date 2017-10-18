@@ -112,3 +112,7 @@
 	status_flags |= DISFIGURED	//makes them unknown
 	update_body()
 	return 1
+
+/mob/living/carbon/mend_fractures()
+	for(var/obj/item/bodypart/B in bodyparts)
+		B.fix_bone()

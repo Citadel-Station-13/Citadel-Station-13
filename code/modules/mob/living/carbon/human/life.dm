@@ -45,6 +45,10 @@
 		//Stuff jammed in your limbs hurts
 		handle_embedded_objects()
 
+	if(stat != DEAD)
+		//Fractured bones
+		handle_fractures()
+
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
@@ -244,7 +248,7 @@
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
-	
+
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
 
@@ -318,6 +322,24 @@
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
+
+/mob/living/carbon/human/proc/handle_fractures()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+
+		if(BP.broken && (BP.body_part == ARM_LEFT))
+			if(held_items[1] && prob(30))
+				emote("scream")
+				visible_message("<span class='warning'>[src] screams and lets go of [held_items[1]] in pain.</span>", "<span class='userdanger'>A horrible pain in your [parse_zone(BP)] makes it impossible to hold [held_items[1]]!</span>")
+				dropItemToGround(held_items[1])
+
+		if(BP.broken && (BP.body_part == ARM_RIGHT))
+			if(held_items[2] && prob(30))
+				emote("scream")
+				visible_message("<span class='warning'>[src] screams and lets go of [held_items[2]] in pain.</span>", "<span class='userdanger'>A horrible pain in your [parse_zone(BP)] makes it impossible to hold [held_items[2]]!</span>")
+				dropItemToGround(held_items[2])
+
+
 
 /mob/living/carbon/human/proc/can_heartattack()
 	CHECK_DNA_AND_SPECIES(src)

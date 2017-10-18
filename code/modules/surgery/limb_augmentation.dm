@@ -5,7 +5,9 @@
 
 /datum/surgery_step/replace
 	name = "sever muscles"
-	implements = list(/obj/item/scalpel = 100, /obj/item/wirecutters = 55)
+	implements = list(
+	/obj/item/scalpel = 100,
+	/obj/item/wirecutters = 55)
 	time = 32
 
 
@@ -15,19 +17,21 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/bodypart = 100)
+	implements = list(
+	/obj/item/bodypart = 100
+	)
 	time = 32
-	var/obj/item/bodypart/L = null // L because "limb"
+	var/obj/item/bodypart/L // L because "limb"
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/aug = tool
 	if(aug.status != BODYPART_ROBOTIC)
 		to_chat(user, "<span class='warning'>that's not an augment silly!</span>")
-		return -1
+		return FALSE
 	if(aug.body_zone != target_zone)
 		to_chat(user, "<span class='warning'>[tool] isn't the right type for [parse_zone(target_zone)].</span>")
-		return -1
+		return FALSE
 	L = surgery.operated_bodypart
 	if(L)
 		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
@@ -39,10 +43,46 @@
 
 /datum/surgery/augmentation
 	name = "augmentation"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/saw, /datum/surgery_step/add_limb)
-	species = list(/mob/living/carbon/human)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/replace,
+	/datum/surgery_step/saw,
+	/datum/surgery_step/add_limb
+	)
+	species = list(
+	/mob/living/carbon/human
+	)
 	possible_locs = list("r_arm","l_arm","r_leg","l_leg","chest","head")
 	requires_real_bodypart = TRUE
+	requires_bones = TRUE
+	requires_bodypart_type = BODYPART_ORGANIC
+
+/datum/surgery/augmentation/golem
+	name = "material augmentation"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/add_limb
+	)
+	requires_bones = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
+
+/datum/surgery/augmentation/boneless
+	name = "boneless augmentation"
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/replace,
+	/datum/surgery_step/add_limb
+	)
+	requires_bodypart_type = BODYPART_FLUBBER
+	requires_bones = FALSE
 
 //SURGERY STEP SUCCESSES
 
@@ -59,4 +99,4 @@
 		add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")
 	else
 		to_chat(user, "<span class='warning'>[target] has no organic [parse_zone(target_zone)] there!</span>")
-	return 1
+	return TRUE

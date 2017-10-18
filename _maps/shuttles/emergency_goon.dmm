@@ -102,6 +102,7 @@
 "v" = (
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "w" = (
@@ -202,6 +203,7 @@
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/light/small,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "M" = (
@@ -211,6 +213,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "N" = (

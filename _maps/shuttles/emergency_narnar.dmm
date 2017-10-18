@@ -31,6 +31,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "h" = (
@@ -105,6 +106,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "v" = (

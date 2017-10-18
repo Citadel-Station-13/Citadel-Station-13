@@ -3058,6 +3058,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/structure/table/glass,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -9456,6 +9457,7 @@
 /obj/structure/table/wood,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avS" = (
@@ -10594,6 +10596,7 @@
 "ayt" = (
 /obj/structure/table/glass,
 /obj/item/hemostat,
+/obj/item/bonesetter,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayu" = (
@@ -10945,6 +10948,7 @@
 "azn" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness)
 "azo" = (
@@ -13127,6 +13131,7 @@
 "aEo" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "aEp" = (
@@ -13389,6 +13394,7 @@
 	},
 /obj/item/storage/firstaid/regular,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/gateway)
 "aES" = (
@@ -15219,6 +15225,7 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "aJa" = (
@@ -19311,6 +19318,7 @@
 "aUc" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/bridge)
 "aUd" = (
@@ -24629,6 +24637,7 @@
 "bhf" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "bhg" = (
@@ -28067,6 +28076,8 @@
 "boL" = (
 /obj/structure/table,
 /obj/item/retractor,
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel/black,
 /area/science/robotics/lab)
 "boM" = (
@@ -29327,6 +29338,7 @@
 	},
 /obj/item/hand_labeler,
 /obj/item/stack/packageWrap,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white/side{
 	dir = 2
 	},
@@ -31399,6 +31411,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bwa" = (
@@ -33149,6 +33162,8 @@
 /obj/item/cautery{
 	pixel_x = 4
 	},
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzT" = (
@@ -34544,6 +34559,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCU" = (
@@ -34665,6 +34682,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bDl" = (
@@ -45017,6 +45035,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cax" = (
@@ -54222,6 +54241,7 @@
 	},
 /obj/item/crowbar,
 /obj/item/storage/firstaid/fire,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cwH" = (
@@ -54360,6 +54380,7 @@
 	pixel_y = 3
 	},
 /obj/item/crowbar,
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxc" = (
@@ -54678,6 +54699,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cxU" = (
@@ -55233,6 +55255,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "czC" = (
@@ -60907,6 +60930,12 @@
 /turf/open/space/basic,
 /area/space)
 "QqR" = (
+<<<<<<< HEAD
+/obj/structure/table,
+/obj/item/stack/medical/splint,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
+=======
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space)
@@ -61745,6 +61774,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+>>>>>>> master
 
 (1,1,1) = {"
 aaa
@@ -81427,7 +81457,7 @@ aaa
 aaa
 aaa
 cTg
-bGg
+QqR
 cTo
 cMl
 bHx
@@ -83597,6 +83627,57 @@ aaa
 aaa
 aaa
 aaa
+<<<<<<< HEAD
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+=======
+>>>>>>> master
 aaa
 aaa
 aaa

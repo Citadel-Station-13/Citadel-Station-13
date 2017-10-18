@@ -4945,6 +4945,7 @@
 	dir = 4
 	},
 /obj/item/storage/firstaid/brute,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ajT" = (
@@ -4984,6 +4985,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "ajY" = (
@@ -5948,6 +5950,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 10
 	},
@@ -16558,6 +16561,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown{
 	dir = 2
 	},
@@ -20777,6 +20781,7 @@
 /obj/structure/table,
 /obj/item/folder,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/neutral/corner{
 	dir = 1
 	},
@@ -21891,6 +21896,7 @@
 /obj/item/folder/yellow,
 /obj/item/folder/yellow,
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/brown/corner{
 	dir = 1
 	},
@@ -26142,6 +26148,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aYM" = (
@@ -29314,6 +29321,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "beC" = (
@@ -33895,6 +33903,7 @@
 	pixel_y = 7
 	},
 /obj/item/storage/belt/utility,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "bne" = (
@@ -45757,6 +45766,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -53293,6 +53303,9 @@
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/dropper,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -53931,6 +53944,8 @@
 	dir = 10
 	},
 /obj/item/storage/firstaid/regular,
+/obj/item/stack/medical/splint,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 1
 	},
@@ -59288,6 +59303,7 @@
 /obj/structure/table,
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/shard,
+/obj/item/stack/medical/splint,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "ckx" = (
@@ -60481,6 +60497,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 2
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "cmW" = (
@@ -61252,6 +61269,7 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/item/bonesetter,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cou" = (
@@ -72359,6 +72377,10 @@
 	dir = 1;
 	pixel_y = 1
 	},
+/obj/item/bonesetter,
+/obj/item/bonegel,
+/obj/item/cautery,
+/obj/item/surgicaldrill,
 /turf/open/floor/plasteel/white/side{
 	dir = 8
 	},
@@ -79826,6 +79848,7 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cYD" = (
@@ -80650,6 +80673,8 @@
 	name = "Station Intercom (General)";
 	pixel_x = -27
 	},
+/obj/item/bonegel,
+/obj/item/bonesetter,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "dat" = (
@@ -81391,6 +81416,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/stack/medical/splint,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 1
 	},
@@ -86233,6 +86259,11 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"EDb" = (
+/obj/structure/table,
+/obj/item/stack/medical/splint,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/mining)
 
 (1,1,1) = {"
 aaa
@@ -101489,7 +101520,7 @@ atq
 aaf
 aaa
 awN
-ayg
+EDb
 azh
 azh
 azi

@@ -55,6 +55,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/device/assault_pod/mining(src)
+	new /obj/item/stack/medical/splint
 
 
 /**********************Shuttle Computer**************************/

@@ -7,7 +7,7 @@
 	icon_state = "liver"
 	origin_tech = "biotech=3"
 	w_class = WEIGHT_CLASS_NORMAL
-	zone = "chest"
+	zone = "groin"
 	slot = "liver"
 	desc = "Pairing suggestion: chianti and fava beans."
 	var/damage = 0 //liver damage, 0 is no damage, damage=maxHealth causes liver failure

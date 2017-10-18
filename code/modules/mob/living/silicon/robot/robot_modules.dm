@@ -273,6 +273,8 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
+		/obj/item/bonesetter,
+		/obj/item/bonegel,
 		/obj/item/extinguisher/mini,
 		/obj/item/roller/robo,
 		/obj/item/borg/cyborghug/medical,
@@ -421,6 +423,10 @@
 	moduleselect_icon = "scrubpup"
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
+//<<<<<<< HEAD
+	clean_on_move = TRUE
+//=======
+//>>>>>>> master
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

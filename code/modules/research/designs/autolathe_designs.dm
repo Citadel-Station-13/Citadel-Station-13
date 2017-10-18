@@ -367,6 +367,22 @@
 	build_path = /obj/item/retractor
 	category = list("initial", "Medical")
 
+/datum/design/bonesetter
+	name = "Bone Setter"
+	id = "bonesetter"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 3000)
+	build_path = /obj/item/bonesetter
+	category = list("initial", "Medical")
+
+/datum/design/bonegel
+	name = "Bone Gel"
+	id = "bonegel"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 3500)
+	build_path = /obj/item/bonegel
+	category = list("initial", "Medical")
+
 /datum/design/cautery
 	name = "Cautery"
 	id = "cautery"

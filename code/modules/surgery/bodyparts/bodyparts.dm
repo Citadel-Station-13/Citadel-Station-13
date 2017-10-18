@@ -21,6 +21,9 @@
 	var/list/embedded_objects = list()
 	var/held_index = 0 //are we a hand? if so, which one!
 	var/is_pseudopart = FALSE //For limbs that don't really exist, eg chainsaws
+	var/broken = FALSE //If bones are broke or not
+	var/splinted = FALSE //If splinted or not. Movement doesn't deal damage, but you still move slowly.
+	var/has_bones = FALSE
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
@@ -33,7 +36,7 @@
 	var/no_update = 0
 
 	var/animal_origin = null //for nonhuman bodypart (e.g. monkey)
-	var/dismemberable = 1 //whether it can be dismembered with a weapon.
+	var/dismemberable = TRUE //whether it can be dismembered with a weapon.
 
 	var/px_x = 0
 	var/px_y = 0
@@ -102,10 +105,47 @@
 	for(var/obj/item/I in src)
 		I.forceMove(T)
 
+/obj/item/bodypart/proc/can_break_bone()
+	if(broken == FALSE)
+		return FALSE
+	if(status == BODYPART_ROBOTIC)
+		return FALSE
+	if(status == BODYPART_MATERIAL)
+		return FALSE
+	if(status == BODYPART_FLUBBER)
+		return FALSE
+	if(has_bones == FALSE)
+		return FALSE
+	else return TRUE
+
+/obj/item/bodypart/proc/break_bone()
+	if(!can_break_bone())
+		return
+	broken = TRUE
+	spawn(1)//because otherwise it pops before the punch message; we don't want that
+		owner.visible_message("<span class='userdanger'>You hear a cracking sound coming from [owner]'s [parse_zone(src)].</span>", "<span class='warning'>You feel something crack in your [parse_zone(src)]!</span>", "<span class='warning'>You hear an awful cracking sound.</span>")
+
+//Very minor runtime from this proc if you varedit Broken = 1 Does not repeatedly loop. Just doesn't inform player of broken status unless they directly examine.
+
+/obj/item/bodypart/proc/fix_bone()
+	broken = FALSE
+	splinted = FALSE
+	owner.update_inv_splints()
+
+/obj/item/bodypart/on_mob_move()
+	if(!broken || status == BODYPART_ROBOTIC || status == BODYPART_MATERIAL || status == BODYPART_FLUBBER || !owner || splinted)
+		return
+
+	if(prob(5))
+		to_chat(owner, "<span class='userdanger'>[pick("You feel broken bones moving around in your [src.name]!", "There are broken bones moving around in your [src.name]!", "The bones in your [src.name] are moving around!")]</span>")
+		receive_damage(rand(1, 3))
+		//1-3 damage every 20 tiles for every broken bodypart.
+		//A single broken bodypart will give you an average of 650 tiles to run before you get a total of 100 damage and fall into crit.
+
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = 1)
+/obj/item/bodypart/proc/receive_damage(brute, burn, updating_health = TRUE, break_modifier = 1.4)
 	if(owner && (owner.status_flags & GODMODE))
 		return 0	//godmode
 	var/dmg_mlt = CONFIG_GET(number/damage_multiplier)
@@ -120,6 +160,9 @@
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn
 			burn *= 2
+
+	if(prob(brute*break_modifier) && ((brute_dam + burn_dam)/max_damage) > 0.3 )
+		break_bone()
 
 	var/can_inflict = max_damage - (brute_dam + burn_dam)
 	if(!can_inflict)
@@ -150,12 +193,12 @@
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
 //Cannot remove negative damage (i.e. apply damage)
-/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = 0, only_organic = 1, updating_health = 1)
+/obj/item/bodypart/proc/heal_damage(brute, burn, only_robotic = FALSE, only_organic = TRUE, updating_health = TRUE)
 
 	if(only_robotic && status != BODYPART_ROBOTIC) //This makes organic limbs not heal when the proc is in Robotic mode.
 		return
 
-	if(only_organic && status != BODYPART_ORGANIC) //This makes robolimbs not healable by chems.
+	if((only_organic && status != BODYPART_ORGANIC) || (only_organic && status != BODYPART_MATERIAL) || (only_organic && status != BODYPART_FLUBBER)) //This makes robolimbs not healable by chems.
 		return
 
 	brute_dam	= max(brute_dam - brute, 0)
@@ -193,7 +236,7 @@
 		burnstate = 0
 
 	if(change_icon_to_default)
-		if(status == BODYPART_ORGANIC)
+		if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 			icon = DEFAULT_BODYPART_ICON_ORGANIC
 		else if(status == BODYPART_ROBOTIC)
 			icon = DEFAULT_BODYPART_ICON_ROBOTIC
@@ -217,14 +260,19 @@
 		C = owner
 		no_update = 0
 
+	if(status == BODYPART_ORGANIC)
+		has_bones = TRUE
+	else
+		has_bones = FALSE
+
 	if(C.disabilities & HUSK)
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE
 		should_draw_greyscale = FALSE
-		no_update = 1
+		no_update = TRUE
 
-	if(no_update)
+	if(no_update == TRUE)
 		return
 
 	if(!animal_origin)
@@ -300,7 +348,7 @@
 	. += limb
 
 	if(animal_origin)
-		if(status == BODYPART_ORGANIC)
+		if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 			limb.icon = 'icons/mob/animal_parts.dmi'
 			if(species_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
@@ -316,7 +364,7 @@
 	if((body_zone != "head" && body_zone != "chest"))
 		should_draw_gender = FALSE
 
-	if(status == BODYPART_ORGANIC)
+	if((status == BODYPART_ORGANIC) || (status == BODYPART_MATERIAL) || (status == BODYPART_FLUBBER))
 		if(should_draw_greyscale)
 			limb.icon = 'icons/mob/human_parts_greyscale.dmi'
 			if(should_draw_gender)
@@ -380,19 +428,19 @@
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "alien_chest"
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 500
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/chest/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
 /obj/item/bodypart/chest/larva
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "larva_chest"
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 50
 	animal_origin = LARVA_BODYPART
 
@@ -407,7 +455,7 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
-	held_index = 1
+	held_index = TRUE
 	px_x = -6
 	px_y = 0
 
@@ -423,12 +471,12 @@
 	icon_state = "alien_l_arm"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_arm/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -457,12 +505,12 @@
 	icon_state = "alien_r_arm"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_arm/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -493,12 +541,12 @@
 	icon_state = "alien_l_leg"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/l_leg/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 
@@ -531,12 +579,12 @@
 	icon_state = "alien_r_leg"
 	px_x = 0
 	px_y = 0
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 100
 	animal_origin = ALIEN_BODYPART
 
 /obj/item/bodypart/r_leg/devil
-	dismemberable = 0
+	dismemberable = FALSE
 	max_damage = 5000
 	animal_origin = DEVIL_BODYPART
 

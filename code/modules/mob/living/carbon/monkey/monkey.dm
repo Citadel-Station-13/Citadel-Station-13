@@ -14,6 +14,7 @@
 	unique_name = 1
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
+	has_bones = TRUE
 	devourable = TRUE
 
 
@@ -62,7 +63,7 @@
 
 	if (bodytemperature < 283.222)
 		. += (283.222 - bodytemperature) / 10 * 1.75
-		
+
 	var/static/config_monkey_delay
 	if(isnull(config_monkey_delay))
 		config_monkey_delay = CONFIG_GET(number/monkey_delay)

@@ -1,17 +1,40 @@
 /datum/surgery/implant_removal
 	name = "implant removal"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/extract_implant, /datum/surgery_step/close)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/extract_implant,
+	/datum/surgery_step/close
+	)
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("chest")
-	requires_organic_bodypart = 0
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
+
+/datum/surgery/implant_removal/golem
+	name = "material implant removal"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/extract_implant,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	requires_bones = FALSE
+	requires_bodypart_type = BODYPART_MATERIAL
 
 
 //extract implant
 /datum/surgery_step/extract_implant
 	name = "extract implant"
-	implements = list(/obj/item/hemostat = 100, /obj/item/crowbar = 65)
+	implements = list(
+	/obj/item/hemostat = 100,
+	/obj/item/crowbar = 65
+	)
 	time = 64
-	var/obj/item/implant/I = null
+	var/obj/item/implant/I
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	for(var/obj/item/O in target.implants)
@@ -43,4 +66,4 @@
 
 	else
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
-	return 1
+	return TRUE

@@ -52,6 +52,7 @@
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
+
 	// species flags_1. these can be found in flags_1.dm
 	var/list/species_traits = list()
 
@@ -64,6 +65,10 @@
 	var/obj/item/organ/lungs/mutantlungs = null
 	var/breathid = "o2"
 
+//<<<<<<< HEAD
+
+//======= A reminder to use // when dividing sections off people. Otherwise you get Errors. Why do I have to debug somebody else's code?
+//>>>>>>> master
 	var/obj/item/organ/brain/mutant_brain = /obj/item/organ/brain
 	var/obj/item/organ/eyes/mutanteyes = /obj/item/organ/eyes
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
@@ -108,7 +113,7 @@
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
@@ -1149,7 +1154,7 @@
 			H.emote("collapse")
 		H.Knockdown(RAD_KNOCKDOWN_TIME)
 		to_chat(H, "<span class='danger'>You feel weak.</span>")
-	
+
 	if(radiation > RAD_MOB_MUTATE)
 		if(prob(1))
 			to_chat(H, "<span class='danger'>You mutate!</span>")
@@ -1511,7 +1516,7 @@
 			H.forcesay(GLOB.hit_appends)	//forcesay checks stat already.
 	return TRUE
 
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H)
+/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, break_modifier = 1.4)
 	var/hit_percent = (100-(blocked+armor))/100
 	if(!damage || hit_percent <= 0)
 		return 0
@@ -1530,14 +1535,14 @@
 		if(BRUTE)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(damage * hit_percent * brutemod, 0))
+				if(BP.receive_damage(damage * hit_percent * brutemod, 0, break_modifier = break_modifier))
 					H.update_damage_overlays()
 			else//no bodypart, we deal damage with a more general method.
 				H.adjustBruteLoss(damage * hit_percent * brutemod)
 		if(BURN)
 			H.damageoverlaytemp = 20
 			if(BP)
-				if(BP.receive_damage(0, damage * hit_percent * burnmod))
+				if(BP.receive_damage(0, damage * hit_percent * burnmod, break_modifier = break_modifier))
 					H.update_damage_overlays()
 			else
 				H.adjustFireLoss(damage * hit_percent* burnmod)

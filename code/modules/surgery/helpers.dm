@@ -29,7 +29,9 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
+					continue
+				if(S.requires_bones && affecting.has_bones == FALSE)
 					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
@@ -56,7 +58,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status != S.requires_bodypart_type)
 					return
 			else if(C && S.requires_bodypart)
 				return
@@ -122,43 +124,42 @@
 	switch(location)
 		if("head")
 			if(covered_locations & HEAD)
-				return 0
+				return FALSE
 		if("eyes")
 			if(covered_locations & HEAD || face_covered & HIDEEYES || eyesmouth_covered & GLASSESCOVERSEYES)
-				return 0
+				return FALSE
 		if("mouth")
 			if(covered_locations & HEAD || face_covered & HIDEFACE || eyesmouth_covered & MASKCOVERSMOUTH || eyesmouth_covered & HEADCOVERSMOUTH)
-				return 0
+				return FALSE
 		if("chest")
 			if(covered_locations & CHEST)
-				return 0
+				return FALSE
 		if("groin")
 			if(covered_locations & GROIN)
-				return 0
+				return FALSE
 		if("l_arm")
 			if(covered_locations & ARM_LEFT)
-				return 0
+				return FALSE
 		if("r_arm")
 			if(covered_locations & ARM_RIGHT)
-				return 0
+				return FALSE
 		if("l_leg")
 			if(covered_locations & LEG_LEFT)
-				return 0
+				return FALSE
 		if("r_leg")
 			if(covered_locations & LEG_RIGHT)
-				return 0
+				return FALSE
 		if("l_hand")
 			if(covered_locations & HAND_LEFT)
-				return 0
+				return FALSE
 		if("r_hand")
 			if(covered_locations & HAND_RIGHT)
-				return 0
+				return FALSE
 		if("l_foot")
 			if(covered_locations & FOOT_LEFT)
-				return 0
+				return FALSE
 		if("r_foot")
 			if(covered_locations & FOOT_RIGHT)
-				return 0
+				return FALSE
 
-	return 1
-
+	return TRUE

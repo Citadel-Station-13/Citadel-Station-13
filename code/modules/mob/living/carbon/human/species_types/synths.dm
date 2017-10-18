@@ -1,3 +1,5 @@
+//Warning. Synths are broken as shit and awaiting review.
+
 /datum/species/synth
 	name = "Synth" //inherited from the real species, for health scanners and things
 	id = "synth"
@@ -119,3 +121,16 @@
 			return ..()
 	else
 		return ..()
+
+/datum/species/synth/on_species_gain(mob/living/carbon/C) //Robotic
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ROBOTIC, FALSE, TRUE)
+
+/datum/species/synth/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	for(var/X in C.bodyparts)
+		var/obj/item/bodypart/O = X
+		O.change_bodypart_status(BODYPART_ORGANIC,FALSE, TRUE)
+

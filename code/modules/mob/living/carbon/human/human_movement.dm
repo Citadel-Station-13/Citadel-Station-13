@@ -61,6 +61,9 @@
 	. = ..()
 	if(buckled_mobs && buckled_mobs.len && riding_datum)
 		riding_datum.on_vehicle_move()
+	if(!lying)
+		for(var/obj/item/bodypart/B in bodyparts)
+			B.on_mob_move()
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
 	if(..())

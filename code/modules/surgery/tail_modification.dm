@@ -5,23 +5,35 @@
 
 /datum/surgery/tail_removal
 	name = "tail removal"
-	steps = list(/datum/surgery_step/sever_tail, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human)
+	steps = list(
+	/datum/surgery_step/sever_tail,
+	/datum/surgery_step/close
+	)
+	species = list(
+	/mob/living/carbon/human
+	)
 	possible_locs = list("groin")
 
 /datum/surgery/tail_removal/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(("tail_lizard" in L.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in L.dna.species.mutant_bodyparts))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/surgery_step/sever_tail
 	name = "sever tail"
-	implements = list(/obj/item/scalpel = 100, /obj/item/circular_saw = 100,
-	/obj/item/melee/sabre = 100, /obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
-	/obj/item/melee/arm_blade = 80, /obj/item/twohanded/required/chainsaw = 80,
-	/obj/item/mounted_chainsaw = 80, /obj/item/twohanded/fireaxe = 50,
-	/obj/item/hatchet = 40, /obj/item = 30) // 30% success with any sharp item.
+	implements = list(
+	/obj/item/scalpel = 100,
+	/obj/item/circular_saw = 100,
+	/obj/item/melee/sabre = 100,
+	/obj/item/melee/transforming/energy/sword/cyborg/saw = 100,
+	/obj/item/melee/arm_blade = 80,
+	/obj/item/twohanded/required/chainsaw = 80,
+	/obj/item/mounted_chainsaw = 80,
+	/obj/item/twohanded/fireaxe = 50,
+	/obj/item/hatchet = 40,
+	/obj/item = 30   // 30% success with any sharp item.
+	)
 	time = 64
 
 /datum/surgery_step/sever_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -46,25 +58,52 @@
 	S.add_atom_colour("#[L.dna.features["mcolor"]]", FIXED_COLOUR_PRIORITY)
 	S.markings = "[L.dna.features["tail_lizard"]]"
 	L.update_body()
-	return 1
+	return TRUE
 
 // TAIL ATTACHMENT
 
 /datum/surgery/tail_attachment
 	name = "tail attachment"
-	steps = list(/datum/surgery_step/incise, /datum/surgery_step/clamp_bleeders, /datum/surgery_step/retract_skin, /datum/surgery_step/replace, /datum/surgery_step/attach_tail, /datum/surgery_step/close)
-	species = list(/mob/living/carbon/human)
+	steps = list(
+	/datum/surgery_step/incise,
+	/datum/surgery_step/clamp_bleeders,
+	/datum/surgery_step/retract_skin,
+	/datum/surgery_step/replace,
+	/datum/surgery_step/attach_tail,
+	/datum/surgery_step/close)
+	species = list(/mob/living/carbon/human
+	)
 	possible_locs = list("groin")
+	requires_bodypart_type = (BODYPART_ORGANIC) || (BODYPART_FLUBBER)
+
+/datum/surgery/tail_attachment/golem
+	name = "material tail attachment"
+	steps = list(
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/saw_material,
+	/datum/surgery_step/retract_material,
+	/datum/surgery_step/attach_tail,
+	/datum/surgery_step/prep_material,
+	/datum/surgery_step/set_material,
+	/datum/surgery_step/reinforce_material,
+	/datum/surgery_step/close
+	)
+	requires_bodypart_type = BODYPART_MATERIAL
+
+
 
 /datum/surgery/tail_attachment/can_start(mob/user, mob/living/carbon/target)
 	var/mob/living/carbon/human/L = target
 	if(!("tail_lizard" in L.dna.species.mutant_bodyparts) && !("waggingtail_lizard" in L.dna.species.mutant_bodyparts))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /datum/surgery_step/attach_tail
 	name = "attach tail"
-	implements = list(/obj/item/severedtail = 100)
+	implements = list(
+	/obj/item/severedtail = 100
+	)
 	time = 64
 
 /datum/surgery_step/attach_tail/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -80,4 +119,4 @@
 	L.dna.species.mutant_bodyparts += "tail_lizard"
 	qdel(tool)
 	L.update_mutant_bodyparts()
-	return 1
+	return TRUE
