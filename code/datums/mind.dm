@@ -1435,19 +1435,6 @@
 	add_antag_datum(head)
 	special_role = "Head Revolutionary"
 
-<<<<<<< HEAD
-	SSticker.mode.forge_revolutionary_objectives(src)
-	SSticker.mode.greet_revolutionary(src,0)
-
-	var/list/L = current.get_contents()
-	var/obj/item/device/assembly/flash/flash = locate() in L
-	qdel(flash)
-	take_uplink()
-	var/fail = 0
-	fail |= !SSticker.mode.equip_revolutionary(current)
-		
-=======
->>>>>>> bfc5a2c... Datum rev & related upgrades to base datum antag (#31630)
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	spell_list += S
 	S.action.Grant(current)
