@@ -193,9 +193,8 @@
 /obj/item/clothing/under/singery/custom
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
-	icon = 'icons/obj/custom.dmi'
-	icon_state = "singer"
-	item_state = "singer"
+	icon_state = "s-sing"
+	item_state = "s-sing"
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
