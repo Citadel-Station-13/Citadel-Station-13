@@ -7,22 +7,7 @@
 	..()
 
 /mob/living/carbon/Destroy()
-<<<<<<< HEAD
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
-	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
-	return ..()
-=======
-	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
 	QDEL_LIST(internal_organs)
@@ -31,7 +16,6 @@
 	QDEL_LIST(implants)
 	remove_from_all_data_huds()
 	QDEL_NULL(dna)
->>>>>>> 9176e2f... Merge pull request #31774 from optimumtact/dummiecode
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
