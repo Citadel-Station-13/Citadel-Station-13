@@ -6987,7 +6987,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen
+	filter_type = "n2"
 	},
 /turf/open/floor/plasteel/neutral,
 /area/engine/atmospherics_engine)
@@ -10839,7 +10839,7 @@
 /area/shuttle/supply)
 "aza" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	name = "nitrogen filter"
 	},
 /turf/open/floor/plasteel/yellow,
@@ -23035,7 +23035,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = "co2";
 	name = "co2 filter";
 	on = 1
 	},
@@ -24608,7 +24608,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/oxygen;
+	filter_type = "o2";
 	name = "oxygen filter";
 	on = 1
 	},
@@ -25869,7 +25869,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/plasma;
+	filter_type = "plasma";
 	name = "waste filter";
 	on = 1
 	},
@@ -27512,7 +27512,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = "n2";
 	name = "nitrogen filter";
 	on = 1
 	},
@@ -28102,7 +28102,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "bgw" = (
@@ -28952,7 +28951,7 @@
 /area/security/brig)
 "bio" = (
 /obj/machinery/light/small,
-/obj/machinery/chem_master,
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/whitered/side,
 /area/security/brig)
 "bip" = (
@@ -29236,7 +29235,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 2;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = "n2o";
 	name = "n2o filter";
 	on = 1
 	},
@@ -41791,11 +41790,21 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bFj" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/security/brig)
 "bFk" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -41810,6 +41819,11 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
@@ -43781,6 +43795,12 @@
 	},
 /area/hallway/primary/starboard)
 "bIY" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE";
+	pixel_x = 32
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -45769,6 +45789,11 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
@@ -48024,6 +48049,12 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bQV" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'HIGH VOLTAGE'";
+	icon_state = "shock";
+	name = "HIGH VOLTAGE";
+	pixel_x = 32
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -95768,7 +95799,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/vending/kink,
+/obj/item/twohanded/required/kirbyplants/random,
 /turf/open/floor/wood{
 	icon_state = "wood-broken3"
 	},
@@ -105709,7 +105740,7 @@
 	},
 /obj/machinery/atmospherics/components/trinary/filter/critical{
 	dir = 4;
-	filter_type = /datum/gas/freon;
+	filter_type = "freon";
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/plasteel/neutral,
@@ -106573,10 +106604,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "efr" = (
+/obj/structure/table/glass,
+/obj/machinery/computer/med_data/laptop,
 /obj/structure/sign/poster/official/cleanliness{
 	pixel_y = 32
 	},
-/obj/machinery/chem_dispenser,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 9
 	},
@@ -108958,6 +108990,11 @@
 	},
 /area/maintenance/port/fore)
 "erg" = (
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -109394,15 +109431,6 @@
 /turf/open/space/basic,
 /area/space)
 "YGJ" = (
-<<<<<<< HEAD
-/obj/machinery/vending/kink,
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"YGK" = (
-/obj/machinery/vending/kink,
-/turf/open/floor/plating,
-/area/crew_quarters/abandoned_gambling_den)
-=======
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -109430,7 +109458,6 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
->>>>>>> 6f3b4a5... Fixes mapping issues introduced in #30909 (#31791)
 
 (1,1,1) = {"
 aaa
@@ -121785,7 +121812,7 @@ aaa
 aaa
 aaa
 aaa
-YGI
+aaa
 aaa
 aaa
 aaa
@@ -125921,7 +125948,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+YGI
 aaa
 aaa
 aaa
@@ -133766,7 +133793,7 @@ dmb
 dnA
 doK
 dqw
-YGK
+diJ
 aJm
 aHW
 aaf
@@ -139837,7 +139864,7 @@ aib
 asx
 atw
 auQ
-YGJ
+aic
 awX
 aye
 azn
@@ -159408,13 +159435,13 @@ bwi
 bxY
 efF
 bjQ
+bDn
+bFi
+bHa
 bdi
-bdi
-bdi
-bdi
-bdi
-bdi
-bdi
+bDn
+bFi
+bHa
 bdi
 bTh
 bVn
@@ -159927,7 +159954,7 @@ bFk
 bHc
 bAb
 bLc
-bgA
+bit
 bOO
 bIZ
 bTj
