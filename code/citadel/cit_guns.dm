@@ -915,3 +915,260 @@ obj/item/projectile/bullet/c10mm/soporific
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/raygun
 	category = list("hacked", "Misc")
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////
+							The Recolourable Gun
+*//////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/gun/ballistic/automatic/pistol/p37
+	name = "\improper CX Mk.37P"
+	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses 9mm bullets loaded into proprietary magazines."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "p37"
+	w_class = WEIGHT_CLASS_NORMAL
+	spawnwithmagazine = FALSE
+	mag_type = /obj/item/ammo_box/magazine/m9mm/p37
+	can_suppress = FALSE
+	actions_types = list(/datum/action/item_action/pick_color)
+
+	var/frame_color = "#808080" //RGB
+	var/receiver_color = "#808080"
+	var/body_color = "#0098FF"
+	var/barrel_color = "#808080"
+	var/tip_color = "#808080"
+	var/arm_color = "#808080"
+	var/grip_color = "#00FFCB"	//Does not actually colour the grip, just the lights surrounding it
+	var/energy_color = "#00FFCB"
+
+///Defining all the colourable bits and displaying them///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/update_icon()
+	var/mutable_appearance/frame_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_frame")
+	var/mutable_appearance/receiver_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_receiver")
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_body")
+	var/mutable_appearance/barrel_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_barrel")
+	var/mutable_appearance/tip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_tip")
+	var/mutable_appearance/grip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_grip")
+	var/mutable_appearance/energy_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_light")
+	var/mutable_appearance/arm_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm")
+	var/mutable_appearance/arm_overlay_e = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm-e")
+
+	if(frame_color)
+		frame_overlay.color = frame_color
+	if(receiver_color)
+		receiver_overlay.color = receiver_color
+	if(body_color)
+		body_overlay.color = body_color
+	if(barrel_color)
+		barrel_overlay.color = barrel_color
+	if(tip_color)
+		tip_overlay.color = tip_color
+	if(grip_color)
+		grip_overlay.color = grip_color
+	if(energy_color)
+		energy_overlay.color = energy_color
+	if(arm_color)
+		arm_overlay.color = arm_color
+	if(arm_color)
+		arm_overlay_e.color = arm_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(frame_overlay)
+	add_overlay(receiver_overlay)
+	add_overlay(body_overlay)
+	add_overlay(barrel_overlay)
+	add_overlay(tip_overlay)
+	add_overlay(grip_overlay)
+	add_overlay(energy_overlay)
+
+	if(magazine)	//does not need a cut_overlays proc call here because it's already called further up
+		add_overlay("p37_mag")
+
+	if(chambered)
+		cut_overlay(arm_overlay_e)
+		add_overlay(arm_overlay)
+	else
+		cut_overlay(arm_overlay)
+		add_overlay(arm_overlay_e)
+
+///letting you actually recolor things///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+
+		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")	//so you don't need to carefully click 8 times if you accidentally click on this
+
+			var/frame_color_input = input(usr,"Choose Frame Color") as color|null
+			if(frame_color_input)
+				frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
+
+			var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
+			if(receiver_color_input)
+				receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
+
+			var/body_color_input = input(usr,"Choose Body Color") as color|null
+			if(body_color_input)
+				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+
+			var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
+			if(barrel_color_input)
+				barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
+
+			var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
+			if(tip_color_input)
+				tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
+
+			var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
+			if(grip_color_input)
+				grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
+
+			var/energy_color_input = input(usr,"Choose Light Color") as color|null
+			if(energy_color_input)
+				energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+
+			var/arm_color_input = input(usr,"Choose Arm Color") as color|null
+			if(arm_color_input)
+				arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
+
+			update_icon()
+	else
+		..()
+
+///boolets///
+
+/obj/item/projectile/bullet/c9mm/frangible
+	name = "9mm frangible bullet"
+	damage = 15
+	stamina = 65
+	armour_penetration = -15
+
+/obj/item/projectile/bullet/c9mm/rubber
+	name = "9mm rubber bullet"
+	damage = 5
+	stamina = 50
+	knockdown = 60
+
+/obj/item/ammo_casing/c9mm/frangible
+	name = "9mm frangible bullet casing"
+	desc = "A 9mm frangible bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c9mm/frangible
+
+/obj/item/ammo_casing/c9mm/rubber
+	name = "9mm rubber bullet casing"
+	desc = "A 9mm rubber bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c9mm/rubber
+
+/obj/item/ammo_box/magazine/m9mm/p37
+	name = "\improper P37 magazine (9mm frangible)"
+	desc = "A gun magazine. Loaded with plastic composite rounds which fragment upon impact to minimize collateral damage."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "11mm"		//topkek
+	ammo_type = /obj/item/ammo_casing/c9mm/frangible
+	caliber = "9mm"
+	max_ammo = 11
+	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m9mm/p37/fmj
+	name = "\improper P37 magazine (9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	desc = "A gun magazine. Loaded with conventional full metal jacket rounds."
+
+/obj/item/ammo_box/magazine/m9mm/p37/rubber
+	name = "\improper P37 magazine (9mm Non-Lethal Rubbershot)"
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+	desc = "A gun magazine. Loaded with less-than-lethal rubber bullets."
+
+/obj/item/ammo_box/c9mm/frangible
+	name = "ammo box (9mm frangible)"
+	ammo_type = /obj/item/ammo_casing/c9mm/frangible
+
+/obj/item/ammo_box/c9mm/rubber
+	name = "ammo box (9mm non-lethal rubbershot)"
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+
+/datum/design/c9mmfrag
+	name = "Box of 9mm Frangible Bullets"
+	id = "9mm_frag"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c9mm/frangible
+	category = list("initial", "Security")
+
+/datum/design/c9mmrubber
+	name = "Box of 9mm Rubber Bullets"
+	id = "9mm_rubber"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c9mm/rubber
+	category = list("initial", "Security")
+
+
+///Security Variant///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/sec
+	name = "\improper CX Mk.37S"
+	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. Uses 9mm bullets loaded into proprietary magazines."
+	spawnwithmagazine = FALSE
+	actions_types = list()	//so you can't recolor it
+
+	frame_color = "#808080" //RGB
+	receiver_color = "#808080"
+	body_color = "#282828"
+	barrel_color = "#808080"
+	tip_color = "#808080"
+	arm_color = "#800000"
+	grip_color = "#FFFF00"	//Does not actually colour the grip, just the lights surrounding it
+	energy_color = "#FFFF00"
+
+///Foam Variant because WE NEED MEMES///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/foam
+	name = "\improper Foam Force Mk.37F"
+	desc = "A licensed foam-firing reproduction of a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses standard foam pistol magazines."
+	icon_state = "p37_foam"
+	spawnwithmagazine = TRUE
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol
+	can_suppress = FALSE
+	actions_types = list(/datum/action/item_action/pick_color)
+
+/datum/design/foam_p37
+	name = "Foam Force Mk.37F"
+	id = "foam_p37"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
+	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
+	category = list("hacked", "Misc")
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////
+							The Recolourable Energy Gun
+*//////////////////////////////////////////////////////////////////////////////////////////////
+
+obj/item/gun/energy/e_gun/cx
+	name = "\improper CX Model D Energy Gun"
+	desc = "An overpriced hybrid energy gun with three settings: disable, stun, and kill. Manufactured by CX Armories. Has a polychromic coating."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	origin_tech = "combat=4;magnets=3"
+	flight_x_offset = 15
+	flight_y_offset = 10
+	actions_types = list(/datum/action/item_action/pick_color)
+	var/body_color = "#252528"
+
+obj/item/gun/energy/e_gun/cx/update_icon()
+	..()
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "cxegun_body")
+	if(body_color)
+		body_overlay.color = body_color
+	add_overlay(body_overlay)
+
+obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+			var/body_color_input = input(usr,"Choose Body Color") as color|null
+			if(body_color_input)
+				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+	else
+		..()

@@ -1304,9 +1304,6 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
@@ -26100,6 +26097,32 @@
 /area/maintenance/disposal)
 "bkA" = (
 /obj/effect/landmark/event_spawn,
+/obj/structure/rack,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/item/gun/ballistic/automatic/pistol/p37/sec,
+/obj/item/gun/ballistic/automatic/pistol/p37/sec,
+/obj/item/gun/ballistic/automatic/pistol/p37/sec,
+/obj/item/ammo_box/magazine/m9mm/p37/rubber,
+/obj/item/ammo_box/magazine/m9mm/p37/rubber,
+/obj/item/ammo_box/magazine/m9mm/p37/rubber,
+/obj/item/ammo_box/magazine/m9mm/p37{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m9mm/p37{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/ammo_box/magazine/m9mm/p37{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bkB" = (
@@ -51770,6 +51793,26 @@
 	},
 /obj/item/storage/box/rubbershot{
 	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/c9mm/rubber{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/c9mm/rubber{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/c9mm/rubber{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/c9mm/frangible{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_box/c9mm/frangible{
+	pixel_x = -3;
 	pixel_y = -3
 	},
 /turf/open/floor/plasteel/vault{
@@ -85738,8 +85781,8 @@ afy
 agh
 afA
 QrJ
-QrP
-QrS
+QrK
+QrK
 aiV
 ajs
 akb
@@ -85996,7 +86039,7 @@ agg
 afA
 QrK
 QrQ
-QrT
+QrK
 aiV
 ajr
 aka
@@ -86253,7 +86296,7 @@ afA
 afA
 QrL
 QrR
-QrU
+QrK
 aiV
 aju
 akd
@@ -89085,8 +89128,8 @@ agj
 aja
 akl
 Qsa
-Qsd
-amh
+Qsc
+Qsh
 ami
 aiX
 anw
@@ -90092,7 +90135,7 @@ aaa
 aaa
 aaa
 aaf
-QqS
+QqR
 aaf
 aaZ
 Qra
@@ -90349,12 +90392,12 @@ aaa
 aaa
 aaa
 aaf
-QqT
+QqR
 aaf
 aaZ
 Qrb
 Qrj
-Qrr
+Qrq
 aaZ
 acl
 cxA
@@ -90367,7 +90410,7 @@ ahx
 ahS
 aiK
 ajc
-QrW
+QrV
 akm
 akT
 alf
@@ -90606,10 +90649,10 @@ aaa
 aaa
 aaa
 aaf
-QqU
+QqR
 aaf
 aaZ
-Qrc
+Qrb
 Qrk
 Qrs
 aaZ
@@ -90863,7 +90906,7 @@ aaa
 aaa
 aaa
 aaf
-QqV
+QqR
 aaf
 aaZ
 Qrd
@@ -91120,12 +91163,12 @@ aaa
 aaa
 aaa
 aaf
-QqW
+QqR
 aaf
 aaZ
 Qre
 Qrm
-Qru
+Qrt
 aaZ
 QrA
 coS
@@ -91377,7 +91420,7 @@ aaa
 aaa
 aaa
 aaf
-QqX
+QqR
 aaf
 aaZ
 Qrf
@@ -91403,7 +91446,7 @@ amn
 amV
 Qsu
 anB
-QsG
+Qsq
 aod
 aqf
 ahT
@@ -91634,7 +91677,7 @@ aaa
 aaa
 aaa
 aaf
-QqY
+QqR
 aaf
 aaZ
 Qrg
@@ -91891,7 +91934,7 @@ aaa
 aaa
 aaa
 aaf
-QqZ
+QqR
 aaf
 aaZ
 Qrh
@@ -91914,9 +91957,9 @@ akr
 amS
 alC
 Qsm
-amX
-amX
-amX
+Qsm
+Qsm
+Qsm
 aoB
 aod
 aqe
@@ -92171,8 +92214,8 @@ QrZ
 akW
 anw
 amo
-amX
-amX
+Qsm
+Qsm
 QsA
 QsH
 QsI
@@ -92684,10 +92727,10 @@ ajK
 aks
 akY
 Qsg
-Qso
+Qsn
 Qsr
 amo
-QsC
+QsB
 aoC
 aod
 aqe
@@ -92943,7 +92986,7 @@ aiX
 akz
 Qsp
 Qss
-Qsw
+Qss
 QsD
 aoF
 apo
