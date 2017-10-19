@@ -39,14 +39,11 @@
   <ui-section label='Inject'>
     {{#each data.chems}}
       <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
-    {{/each}}
+  {{/each}}
   </ui-section>
 	<ui-section label='Eject'>
 	    <ui-button icon='sign-out' action='eject'>Eject Contents</ui-button>
 	</ui-section>
 	<ui-section label='Self Cleaning'>
-		<ui-button
-		icon='{{data.cleancycle ? "FALSE" : "TRUE" }}'
-		style='{{data.cleancycle ? data.iscleaning ? "caution" : "danger" : null}}'
-		action='cleaning'>{{data.cleancycle ? "Cleaning - OFF" : "Cleaning - ON"}}</ui-button>
+		<ui-button icon='recycle' action='cleaning'>Self-Clean Cycle</ui-button>
 </ui-display>
