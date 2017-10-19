@@ -902,6 +902,9 @@
 /area/security/main)
 "acq" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acr" = (
@@ -42505,8 +42508,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -61798,7 +61801,21 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "QsN" = (
+/obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsO" = (
 /obj/structure/closet/l3closet/security,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsP" = (
+/obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 
@@ -92460,7 +92477,7 @@ abO
 abO
 abO
 acO
-abl
+abO
 abO
 abO
 afc
@@ -92969,13 +92986,13 @@ aaa
 aaa
 abp
 abO
+QsN
+QsP
 acq
 acq
 acq
 acq
-acq
-acq
-acq
+abO
 aew
 afe
 afS
@@ -93483,13 +93500,13 @@ aaa
 aaa
 abp
 aco
-QsN
+QsO
 abP
 abR
 abP
 abP
 abP
-abP
+abl
 abp
 abp
 abp
