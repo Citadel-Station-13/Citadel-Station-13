@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 /datum/game_mode/blob/send_intercept(report = 0)
@@ -40,6 +41,8 @@
 
 
 
+=======
+>>>>>>> be748e3... Disentangles blob from blob mode/removes blob mode (#31780)
 /datum/station_state
 	var/floor = 0
 	var/wall = 0
