@@ -37,7 +37,7 @@
 </ui-display>
 <ui-display title='Operations'>
   <ui-section label='Inject'>
-    {{#each data.chems}}
+    {{#each data.chem}}
       <ui-button icon='flask' state='{{data.occupied ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
     {{/each}}
   </ui-section>

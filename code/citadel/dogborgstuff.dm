@@ -333,11 +333,7 @@
 	var/cleaning = FALSE
 	var/cleaning_cycles = 10
 	var/patient_laststat = null
-	var/mob_energy = 30000 //Energy gained from digesting mobs (including PCs)
-	var/energy_drain = 20
-	var/trash_energy = 10
-	var/list/available_chems
-	var/list/injection_chems = list("antitoxin", "morphine", "salbutamol", "bicaridine", "kelotane", "epinephrine"),
+	var/list/injection_chems = list("antitoxin", "epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane")
 	var/eject_port = "ingestion"
 	var/escape_in_progress = FALSE
 	var/message_cooldown
@@ -482,12 +478,6 @@
 		hound.visible_message("<span class='warning'>[hound.name] belches, torso flexing.</span>")
 		update_gut()
 
-/obj/item/device/dogborg/sleeper/proc/drain(var/amt = 0) //Slightly reduced cost (before, it was always injecting inaprov)
-	if (amt > 0)
-		hound.cell.give(amt)
-	else
-		hound.cell.use(amt)
-
 /obj/item/device/dogborg/sleeper/attack_self(mob/user)
 	if(..())
 		return
@@ -509,10 +499,10 @@
 		data["items"] = "Self-cleaning mode active: [length(contents - items_preserved)] object(s) remaining."
 	data["cleaning"] = cleaning
 	if(injection_chems != null)
-		data["chems"] = list()
+		data["chem"] = list()
 		for(var/chem in injection_chems)
 			var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-			data["chems"] += list(list("name" = R.name, "id" = R.id))
+			data["chem"] += list(list("name" = R.name, "id" = R.id))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = patient
@@ -558,8 +548,8 @@
 			var/chem = params["chem"]
 			if(!patient)
 				return
-			if(inject_chem(chem))
-				. = TRUE
+			inject_chem(chem)
+			. = TRUE
 		if("cleaning")
 			testing("cleaning attempted")
 			if(!contents)
@@ -666,16 +656,6 @@
 			M.stop_sound_channel(CHANNEL_PRED)
 			M.playsound_local("digest_prey",60)
 
-	//If there are items to be touched
-	if(length(touchable_items))
-		//Burn all the mobs or add them to the exclusion list
-		for(var/mob/living/carbon/human/T in (touchable_items))
-			if((T.status_flags & GODMODE) || !T.digestable)
-				src.items_preserved += T
-			else
-				T.adjustBruteLoss(2)
-				T.adjustFireLoss(3)
-				src.update_gut()
 
 		//Pick a random item to deal with (if there are any)
 		var/atom/target = pick(touchable_items)
@@ -689,7 +669,7 @@
 				message_admins("[key_name(hound)] has digested [key_name(T)] as a dogborg. ([hound ? "<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[hound.x];Y=[hound.y];Z=[hound.z]'>JMP</a>" : "null"])")
 				to_chat(hound,"<span class='notice'>You feel your belly slowly churn around [T], breaking them down into a soft slurry to be used as power for your systems.</span>")
 				to_chat(T,"<span class='notice'>You feel [hound]'s belly slowly churn around your form, breaking you down into a soft slurry to be used as power for [hound]'s systems.</span>")
-				src.drain(-30000) //Fueeeeellll
+				src.hound.cell.give(30000) //Fueeeeellll
 				T.stop_sound_channel(CHANNEL_PRED)
 				playsound(get_turf(hound),"death_pred",50,0,-6,0,channel=CHANNEL_PRED)
 				T.stop_sound_channel(CHANNEL_PRED)
@@ -713,7 +693,7 @@
 				src.hound.cell.give(10)
 	return
 
-/obj/item/device/dogborg/sleeper/proc/inject_chem(mob/user, chem)
+/obj/item/device/dogborg/sleeper/proc/inject_chem(chem)
 	testing("inject chem triggered, checking power")
 	if(hound.cell.charge <= 800) //This is so borgs don't kill themselves with it. Remember, 750 charge used every injection.
 		to_chat(hound, "<span class='notice'>You don't have enough power to synthesize fluids.</span>")
@@ -725,7 +705,7 @@
 	testing("isn't overdosing, attempting to add_reagent")
 	patient.reagents.add_reagent(chem, 10)
 	testing("add_reagent")
-	drain(750) //-750 charge per injection
+	src.hound.cell.use(750) //-750 charge per injection
 	testing("draining power")
 	var/units = round(patient.reagents.get_reagent_amount(chem))
 	to_chat(hound, "<span class='notice'>Injecting [units] unit\s of [chem] into occupant.</span>") //If they were immersed, the reagents wouldn't leave with them.
@@ -900,6 +880,7 @@
 		return
 
 	if(cell.charge <= 500)
+		to_chat(src,"<span class='danger'>Insufficent reserves for jump actuators!</span>")
 		return
 
 	else
