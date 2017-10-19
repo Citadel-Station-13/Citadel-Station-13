@@ -38,8 +38,8 @@
 <ui-display title='Operations'>
   <ui-section label='Inject'>
     {{#each data.chems}}
-      <ui-button icon='flask' state='{{data.occupied && allowed ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
-  {{/each}}
+      <ui-button icon='flask' state='{{data.occupied ? null : "disabled"}}' action='inject' params='{"chem": "{{id}}"}'>{{name}}</ui-button><br/>
+    {{/each}}
   </ui-section>
 	<ui-section label='Eject'>
 	    <ui-button icon='sign-out' action='eject'>Eject Contents</ui-button>
