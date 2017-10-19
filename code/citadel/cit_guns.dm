@@ -1147,9 +1147,9 @@ obj/item/projectile/bullet/c10mm/soporific
 
 obj/item/gun/energy/e_gun/cx
 	name = "\improper CX Model D Energy Gun"
-	desc = "An overpriced hybrid energy gun with three settings: disable, stun, and kill. Manufactured by CX Armories. Has a polychromic coating."
+	desc = "An overpriced hybrid energy gun with two settings: stun, and kill. Manufactured by CX Armories. Has a polychromic coating."
 	icon = 'icons/obj/guns/cit_guns.dmi'
-	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
+	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=4;magnets=3"
 	flight_x_offset = 15
 	flight_y_offset = 10
