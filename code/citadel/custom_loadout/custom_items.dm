@@ -193,8 +193,9 @@
 /obj/item/clothing/under/singery/custom
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
-	icon_state = "s-sing"
-	item_state = "s-sing"
+	icon_state = "ssing"
+	item_state = "ssing"
+	item_color = "ssing"
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
