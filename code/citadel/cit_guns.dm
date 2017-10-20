@@ -1149,6 +1149,9 @@ obj/item/gun/energy/e_gun/cx
 	name = "\improper CX Model D Energy Gun"
 	desc = "An overpriced hybrid energy gun with two settings: stun, and kill. Manufactured by CX Armories. Has a polychromic coating."
 	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "cxe"
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode, /obj/item/ammo_casing/energy/laser)
 	origin_tech = "combat=4;magnets=3"
 	flight_x_offset = 15
@@ -1172,3 +1175,10 @@ obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 		update_icon()
 	else
 		..()
+
+obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")
+		body_inhand.color = body_color
+		. += body_inhand
