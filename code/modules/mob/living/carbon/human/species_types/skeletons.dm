@@ -10,4 +10,13 @@
 	mutanttongue = /obj/item/organ/tongue/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
+<<<<<<< HEAD
 	liked_food = NONE
+=======
+	liked_food = GROSS | MEAT | RAW
+
+/datum/species/skeleton/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
+		return TRUE
+	return ..()
+>>>>>>> dcddc79... Allows species to be blocked from ever being roundstart, can now choose your Halloween species (#31877)
