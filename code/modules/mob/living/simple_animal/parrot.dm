@@ -514,7 +514,8 @@
 			return
 
 		walk_to(src, parrot_interest, 1, parrot_speed)
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -534,7 +535,8 @@
 			return
 
 		walk_to(src, parrot_perch, 1, parrot_speed)
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -547,7 +549,8 @@
 		walk_away(src, parrot_interest, 1, parrot_speed)
 		/*if(parrot_been_shot > 0)
 			parrot_been_shot--  didn't work anyways, and besides, any bullet poly survives isn't worth the speed boost.*/
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -586,7 +589,8 @@
 		//Otherwise, fly towards the mob!
 		else
 			walk_to(src, parrot_interest, 1, parrot_speed)
-			if(isStuck()) return
+			if(isStuck())
+				return
 
 		return
 //-----STATE MISHAP

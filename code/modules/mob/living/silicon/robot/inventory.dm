@@ -19,18 +19,6 @@
 	else if(istype(O, /obj/item/storage/bag/tray/))
 		var/obj/item/storage/bag/tray/T = O
 		T.do_quick_empty()
-	else if(istype(O,/obj/item/gun/energy/laser/cyborg))
-		laser = 0
-		update_icons()
-	else if(istype(O,/obj/item/gun/energy/disabler/cyborg))
-		disabler = 0
-		update_icons()
-	else if(istype(O,/obj/item/device/dogborg/sleeper))
-		sleeper_g = 0
-		sleeper_r = 0
-		update_icons()
-		var/obj/item/device/dogborg/sleeper/S = O
-		S.go_out()
 	if(client)
 		client.screen -= O
 	observer_screen_update(O,FALSE)
@@ -62,12 +50,6 @@
 	if(activated(O))
 		to_chat(src, "<span class='warning'>That module is already activated.</span>")
 		return
-	if(istype(O,/obj/item/gun/energy/laser/cyborg))
-		laser = 1
-		update_icons()
-	if(istype(O,/obj/item/gun/energy/disabler/cyborg))
-		disabler = 1
-		update_icons()
 	if(!held_items[1])
 		held_items[1] = O
 		O.screen_loc = inv1.screen_loc
@@ -194,7 +176,8 @@
 
 //toggle_module(module) - Toggles the selection of the module slot specified by "module".
 /mob/living/silicon/robot/proc/toggle_module(module) //Module is 1-3
-	if(module < 1 || module > 3) return
+	if(module < 1 || module > 3)
+		return
 
 	if(module_selected(module))
 		deselect_module(module)

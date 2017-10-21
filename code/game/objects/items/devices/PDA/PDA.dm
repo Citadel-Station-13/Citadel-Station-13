@@ -849,7 +849,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 
 /obj/item/device/pda/afterattack(atom/A as mob|obj|turf|area, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	switch(scanmode)
 
 		if(3)
@@ -899,7 +900,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 
 /obj/item/device/pda/proc/explode() //This needs tuning.
-	if(!detonatable) return
+	if(!detonatable)
+		return
 	var/turf/T = get_turf(src)
 
 	if (ismob(loc))
@@ -1011,5 +1013,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	. = list()
 	// Returns a list of PDAs which can be viewed from another PDA/message monitor.
 	for(var/obj/item/device/pda/P in GLOB.PDAs)
-		if(!P.owner || P.toff || P.hidden) continue
+		if(!P.owner || P.toff || P.hidden)
+			continue
 		. += P

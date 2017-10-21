@@ -168,12 +168,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
-	
-	
+
+
 	var/datum/component/material_container/linked_materials
 	if(linked_lathe)
 		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
-	
+
 	var/datum/component/material_container/imprinter_materials
 	if(linked_imprinter)
 		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)
@@ -303,7 +303,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				break
 		if(!cancontinue)
 			var/choice = input("This item does not raise tech levels. Proceed destroying loaded item anyway?") in list("Proceed", "Cancel")
-			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item) return
+			if(choice == "Cancel" || !linked_destroy || !linked_destroy.loaded_item)
+				return
 		linked_destroy.busy = TRUE
 		screen = 0.1
 		updateUsrDialog()
@@ -642,20 +643,22 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			if(linked_imprinter == null)
 				screen = 4.0
 
-	
+
 	var/datum/component/material_container/linked_materials
 	if(linked_lathe)
 		linked_materials = linked_lathe.GetComponent(/datum/component/material_container)
-	
+
 	var/datum/component/material_container/imprinter_materials
 	if(linked_imprinter)
 		imprinter_materials = linked_imprinter.GetComponent(/datum/component/material_container)
 	switch(screen)
 
 		//////////////////////R&D CONSOLE SCREENS//////////////////
-		if(0.0) dat += "<div class='statusDisplay'>Updating Database....</div>"
+		if(0.0)
+			dat += "<div class='statusDisplay'>Updating Database....</div>"
 
-		if(0.1) dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
+		if(0.1)
+			dat += "<div class='statusDisplay'>Processing and Updating Database...</div>"
 
 		if(0.2)
 			dat += "<div class='statusDisplay'>SYSTEM LOCKED</div>"
@@ -740,13 +743,20 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 					dat += "Name: [D.name]<BR>"
 					if(D.build_type)
 						dat += "Lathe Types:<BR>"
-						if(D.build_type & IMPRINTER) dat += "Circuit Imprinter<BR>"
-						if(D.build_type & PROTOLATHE) dat += "Protolathe<BR>"
-						if(D.build_type & AUTOLATHE) dat += "Autolathe<BR>"
-						if(D.build_type & MECHFAB) dat += "Exosuit Fabricator<BR>"
-						if(D.build_type & BIOGENERATOR) dat += "Biogenerator<BR>"
-						if(D.build_type & LIMBGROWER) dat += "Limbgrower<BR>"
-						if(D.build_type & SMELTER) dat += "Smelter<BR>"
+						if(D.build_type & IMPRINTER)
+							dat += "Circuit Imprinter<BR>"
+						if(D.build_type & PROTOLATHE)
+							dat += "Protolathe<BR>"
+						if(D.build_type & AUTOLATHE)
+							dat += "Autolathe<BR>"
+						if(D.build_type & MECHFAB)
+							dat += "Exosuit Fabricator<BR>"
+						if(D.build_type & BIOGENERATOR)
+							dat += "Biogenerator<BR>"
+						if(D.build_type & LIMBGROWER)
+							dat += "Limbgrower<BR>"
+						if(D.build_type & SMELTER)
+							dat += "Smelter<BR>"
 					dat += "Required Materials:<BR>"
 					var/all_mats = D.materials + D.reagents_list
 					for(var/M in all_mats)
@@ -935,9 +945,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/mat_id in linked_materials.materials)
 					var/datum/material/M = linked_materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+						dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5)
+						dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+						dat += "<A href='?src=\ref[src];ejectsheet=[M.id];eject_amt=50'>All</A>"
 					dat += "<BR>"
 			dat += "</div>"
 
@@ -1047,9 +1060,12 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				for(var/mat_id in imprinter_materials.materials)
 					var/datum/material/M = imprinter_materials.materials[mat_id]
 					dat += "* [M.amount] of [M.name]: "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
-					if(M.amount >= MINERAL_MATERIAL_AMOUNT) dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+						dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=1'>Eject</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT*5)
+						dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=5'>5x</A> "
+					if(M.amount >= MINERAL_MATERIAL_AMOUNT)
+						dat += "<A href='?src=\ref[src];imprinter_ejectsheet=[M.id];eject_amt=50'>All</A>"
 					dat += "<BR>"
 			dat += "</div>"
 

@@ -95,7 +95,8 @@
 					if(!usr.transferItemToLoc(I, src))
 						return
 					inserted_id = I
-				else to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				else
+					to_chat(usr, "<span class='danger'>No valid ID.</span>")
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
