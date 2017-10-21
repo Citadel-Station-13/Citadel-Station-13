@@ -104305,7 +104305,7 @@
 "dYq" = (
 /obj/item/twohanded/required/kirbyplants/random,
 /obj/structure/sign/nosmoking_2{
-	pixel_x = 32
+	pixel_x = 31
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
