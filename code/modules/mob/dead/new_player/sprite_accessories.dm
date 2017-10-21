@@ -503,7 +503,7 @@
 /datum/sprite_accessory/hair/largebun
 	name = "Large Bun"
 	icon_state = "hair_largebun"
-	
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -1039,7 +1039,7 @@
 	name = "Alien Shirt"
 	icon_state = "shirt_alien"
 	gender = NEUTER
-	
+
 /datum/sprite_accessory/undershirt/sports_bra
 	name = "Sports Bra"
 	icon_state = "sports_bra"
@@ -1049,8 +1049,6 @@
 	name = "Alt Sports Bra"
 	icon_state = "sports_bra_alt"
 	gender = NEUTER
-
-
 
 ///////////////////////
 // Socks Definitions //
