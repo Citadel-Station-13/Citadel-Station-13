@@ -164,7 +164,6 @@ Difficulty: Very Hard
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	P.current = startloc
 	P.starting = startloc
 	P.firer = src
 	if(marker)
@@ -758,7 +757,7 @@ Difficulty: Very Hard
 
 /obj/effect/proc_holder/spell/targeted/exit_possession
 	name = "Exit Possession"
-	desc = "Exits the body you are possessing"
+	desc = "Exits the body you are possessing."
 	charge_max = 60
 	clothes_req = 0
 	invocation_type = "none"

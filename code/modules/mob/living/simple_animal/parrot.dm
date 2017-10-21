@@ -514,7 +514,8 @@
 			return
 
 		walk_to(src, parrot_interest, 1, parrot_speed)
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -534,7 +535,8 @@
 			return
 
 		walk_to(src, parrot_perch, 1, parrot_speed)
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -547,7 +549,8 @@
 		walk_away(src, parrot_interest, 1, parrot_speed)
 		/*if(parrot_been_shot > 0)
 			parrot_been_shot--  didn't work anyways, and besides, any bullet poly survives isn't worth the speed boost.*/
-		if(isStuck()) return
+		if(isStuck())
+			return
 
 		return
 
@@ -586,7 +589,8 @@
 		//Otherwise, fly towards the mob!
 		else
 			walk_to(src, parrot_interest, 1, parrot_speed)
-			if(isStuck()) return
+			if(isStuck())
+				return
 
 		return
 //-----STATE MISHAP
@@ -901,9 +905,6 @@
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		rounds_survived = max(++rounds_survived,1)
-		if(rounds_survived > longest_survival)
-			longest_survival = rounds_survived
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 	..()
@@ -969,7 +970,7 @@
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
-	desc = "Doomed to squawk the earth."
+	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF77"
 	speak_chance = 20
 	status_flags = GODMODE
@@ -1003,7 +1004,6 @@
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
-
 
 /mob/living/simple_animal/parrot/clock_hawk
 	name = "clock hawk"

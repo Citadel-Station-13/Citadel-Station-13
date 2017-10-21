@@ -1,13 +1,13 @@
 /obj/item/organ/cyberimp/chest
 	name = "cybernetic torso implant"
-	desc = "implants for the organs in your torso"
+	desc = "Implants for the organs in your torso."
 	icon_state = "chest_implant"
 	implant_overlay = "chest_implant_overlay"
 	zone = "chest"
 
 /obj/item/organ/cyberimp/chest/nutriment
 	name = "Nutriment pump implant"
-	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
+	desc = "This implant will synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
 	icon_state = "chest_implant"
 	implant_color = "#00AA00"
 	var/hunger_threshold = NUTRITION_LEVEL_STARVING
