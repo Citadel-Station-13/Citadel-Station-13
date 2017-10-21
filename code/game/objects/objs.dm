@@ -13,6 +13,7 @@
 	var/integrity_failure = 0 //0 if we have no special broken behavior
 
 	var/resistance_flags = 0 // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
+	var/can_be_hit = TRUE //can this be bludgeoned by items?
 
 	var/acid_level = 0 //how much acid is on that obj
 
@@ -188,7 +189,7 @@
 /obj/proc/check_uplink_validity()
 	return 1
 
-/obj/proc/on_mob_move(dir, mob, oldLoc)
+/obj/proc/on_mob_move(dir, mob, oldLoc, forced)
 	return
 
 /obj/proc/on_mob_turn(dir, mob)

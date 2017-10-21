@@ -427,9 +427,8 @@
 		else if(cell)
 			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.transferItemToLoc(W, src))
 				return
-			W.loc = src
 			cell = W
 			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
 		update_icons()
@@ -518,7 +517,7 @@
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(U))
 				return
 			if(U.action(src))
 				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
@@ -529,12 +528,13 @@
 					upgrades += U
 			else
 				to_chat(user, "<span class='danger'>Upgrade error.</span>")
+				U.forceMove(drop_location())
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
 			to_chat(user, "<span class='warning'>The toner level of [src] is at its highest level possible!</span>")
 		else
-			if(!user.drop_item())
+			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			toner = tonermax
 			qdel(W)
@@ -1149,7 +1149,7 @@
 
 /mob/living/silicon/robot/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
 	if(!is_type_in_typecache(M, can_ride_typecache))
-		M.visible_message("<span class='warning'>[M] really can't seem to mount the [src]...</span>")
+		M.visible_message("<span class='warning'>[M] really can't seem to mount [src]...</span>")
 		return
 	if(!riding_datum)
 		riding_datum = new /datum/riding/cyborg(src)

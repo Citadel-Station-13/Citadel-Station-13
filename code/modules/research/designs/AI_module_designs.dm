@@ -21,8 +21,8 @@
 	category = list("AI Modules")
 
 /datum/design/board/onehuman_module
-	name = "Module Design (OneHuman)"
-	desc = "Allows for the construction of a OneHuman AI Module."
+	name = "Module Design (OneCrew)"
+	desc = "Allows for the construction of a OneCrew AI Module."
 	id = "onehuman_module"
 	req_tech = list("programming" = 6, "materials" = 4)
 	materials = list(MAT_GLASS = 1000, MAT_DIAMOND = 100)

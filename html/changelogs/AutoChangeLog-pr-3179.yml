@@ -1,0 +1,10 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - rscadd: "Added foam Magrifles"
+  - rscadd: "Added foam Stealth Pistols"
+  - rscadd: "Added toy Hyper Burst Rifles"
+  - rscadd: "Added toy ray gun"
+  - tweak: "foam X9s now available in autolathe"
+  - soundadd: "added raygun noises"
+  - imageadd: "added all the sprites for all those toys"

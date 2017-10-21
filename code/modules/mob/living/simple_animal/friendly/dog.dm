@@ -176,7 +176,7 @@
 						usr.visible_message("[usr] pets [src].","<span class='notice'>You rest your hand on [src]'s back for a moment.</span>")
 						return
 
-					if(!usr.drop_item())
+					if(!usr.temporarilyRemoveItemFromInventory(item_to_add))
 						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
 						return
 
@@ -191,7 +191,7 @@
 
 					if(!allowed)
 						to_chat(usr, "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>")
-						item_to_add.loc = loc
+						item_to_add.forceMove(drop_location())
 						if(prob(25))
 							step_rand(item_to_add)
 						for(var/i in list(1,2,4,8,4,8,4,dir))
@@ -199,8 +199,7 @@
 							sleep(1)
 						return
 
-					usr.drop_item()
-					item_to_add.loc = src
+					item_to_add.forceMove(src)
 					src.inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
@@ -228,7 +227,7 @@
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
-	if(user && !user.drop_item())
+	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
 		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
 		return 0
 
@@ -245,13 +244,13 @@
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
 				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags [p_their()] tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
-		item_to_add.loc = src
+		item_to_add.forceMove(src)
 		src.inventory_head = item_to_add
 		update_corgi_fluff()
 		regenerate_icons()
 	else
 		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
-		item_to_add.loc = loc
+		item_to_add.forceMove(drop_location())
 		if(prob(25))
 			step_rand(item_to_add)
 		for(var/i in list(1,2,4,8,4,8,4,dir))

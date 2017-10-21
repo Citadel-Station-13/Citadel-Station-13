@@ -122,7 +122,7 @@
 					continue
 				var/datum/clockwork_scripture/quickbind_slot = quickbound[i]
 				to_chat(user, "<b>Quickbind</b> button: <span class='[get_component_span(initial(quickbind_slot.primary_component))]'>[initial(quickbind_slot.name)]</span>.")
-		to_chat(user, "<b>Available Power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())]</span>")
+		to_chat(user, "<b>Available power:</b> <span class='bold brass'>[DisplayPower(get_clockwork_power())].</span>")
 
 //Slab actions; Hierophant, Quickbind
 /obj/item/clockwork/slab/ui_action_click(mob/user, action)
@@ -136,7 +136,7 @@
 		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
-		user.drop_item()
+		user.dropItemToGround(src)
 		user.emote("scream")
 		user.apply_damage(5, BURN, "l_arm")
 		user.apply_damage(5, BURN, "r_arm")
@@ -398,15 +398,15 @@
 
 	switch(selected_scripture) //display info based on selected scripture tier
 		if(SCRIPTURE_DRIVER)
-			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+			data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 		if(SCRIPTURE_SCRIPT)
 			if(SSticker.scripture_states[SCRIPTURE_SCRIPT])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>These scriptures will automatically unlock when the Ark is halfway ready or if [DisplayPower(SCRIPT_UNLOCK_THRESHOLD)] of power is reached.</i></font>"
 		if(SCRIPTURE_APPLICATION)
 			if(SSticker.scripture_states[SCRIPTURE_APPLICATION])
-				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permenantly unlocked.</b></font>"
+				data["tier_info"] = "<font color=#B18B25><b>These scriptures are permanently unlocked.</b></font>"
 			else
 				data["tier_info"] = "<font color=#B18B25><i>Unlock these optional scriptures by converting another servant or if [DisplayPower(APPLICATION_UNLOCK_THRESHOLD)] of power is reached..</i></font>"
 

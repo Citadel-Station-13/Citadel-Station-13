@@ -24,6 +24,9 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+
+	ComponentInitialize()
+
 	. = ..()
 
 /mob/dead/new_player/prepare_huds()
@@ -79,9 +82,12 @@
 
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining >= 0)
-				time_remaining /= 10
-			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
+			if(time_remaining > 0)
+				stat("Time To Start:", "[round(time_remaining/10)]s")
+			else if(time_remaining == -10)
+				stat("Time To Start:", "DELAYED")
+			else
+				stat("Time To Start:", "SOON")
 
 			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
@@ -372,6 +378,11 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
+		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
+			SSticker.generate_miscreant_objectives(humanc.mind)
+		else
+			if(CONFIG_GET(flag/allow_crew_objectives))
+				SSticker.generate_individual_objectives(humanc.mind)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
@@ -384,6 +395,8 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.

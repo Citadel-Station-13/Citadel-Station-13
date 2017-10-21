@@ -164,7 +164,6 @@ Difficulty: Very Hard
 		return
 	var/turf/startloc = get_turf(src)
 	var/obj/item/projectile/P = new /obj/item/projectile/colossus(startloc)
-	P.current = startloc
 	P.starting = startloc
 	P.firer = src
 	if(marker)
@@ -635,6 +634,7 @@ Difficulty: Very Hard
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	AIStatus = AI_OFF
 	stop_automated_movement = 1
+	gold_core_spawnable = TRUE
 	var/heal_power = 5
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize()

@@ -28,7 +28,7 @@
 	if(bomb)
 		bomb.forceMove(user.loc)
 		user.put_in_hands(bomb)
-		user.visible_message("<span class='warning'>[user] detaches the [bomb] from the [src]</span>")
+		user.visible_message("<span class='warning'>[user] detaches [bomb] from [src].</span>")
 		bomb = null
 	update_icon()
 	return ..()
@@ -49,12 +49,11 @@
 		if(!T.tank_one || !T.tank_two)
 			to_chat(user, "<span class='warning'>What good would an incomplete bomb do?</span>")
 			return FALSE
-		if(!user.drop_item(O))
-			to_chat(user, "<span class='warning'>The [O] seems to be stuck to your hand!</span>")
+		if(!user.transferItemToLoc(O, src))
+			to_chat(user, "<span class='warning'>[O] seems to be stuck to your hand!</span>")
 			return FALSE
-		user.visible_message("<span class='warning'>[user] attaches the [O] to the [src]!</span>")
+		user.visible_message("<span class='warning'>[user] attaches [O] to [src]!</span>")
 		bomb = O
-		O.forceMove(src)
 		update_icon()
 		return TRUE
 	return ..()

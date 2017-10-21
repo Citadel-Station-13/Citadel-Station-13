@@ -339,6 +339,18 @@
 
 	if(ismob(AM))
 		var/mob/M = AM
+
+		//Share diseases that are spread by touch
+		for(var/thing in viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				M.ContactContractDisease(D)
+
+		for(var/thing in M.viruses)
+			var/datum/disease/D = thing
+			if(D.spread_flags & VIRUS_SPREAD_CONTACT_SKIN)
+				ContactContractDisease(D)
+
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
 			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
@@ -346,6 +358,9 @@
 			M.LAssailant = null
 		else
 			M.LAssailant = usr
+
+/mob/proc/can_resist()
+	return FALSE		//overridden in living.dm
 
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
@@ -372,12 +387,14 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+		var/mob/living/ex_pulled = pulling
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+		
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)
@@ -943,6 +960,16 @@
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/get_static_viruses() //used when creating blood and other infective objects
+	if(!LAZYLEN(viruses))
+		return
+	var/list/datum/disease/diseases = list()
+	for(var/datum/disease/D in viruses)
+		var/static_virus = D.Copy()
+		diseases += static_virus
+	return diseases
+
 
 /mob/vv_get_dropdown()
 	. = ..()
