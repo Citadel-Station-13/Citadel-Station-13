@@ -462,12 +462,18 @@
 	. = new_slime
 	qdel(src)
 
+<<<<<<< HEAD
 /mob/proc/become_overmind(mode_made, starting_points = 60)
 	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made, starting_points)
 	if(mind)
 		mind.transfer_to(B)
 	else
 		B.key = key
+=======
+/mob/proc/become_overmind(starting_points = 60)
+	var/mob/camera/blob/B = new /mob/camera/blob(loc, starting_points)
+	B.key = key
+>>>>>>> 7034a22... Blob fixes (#31913)
 	. = B
 	qdel(src)
 

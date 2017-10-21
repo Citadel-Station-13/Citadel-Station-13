@@ -63,8 +63,56 @@
 				place_blob_core(base_point_rate, 1)
 		else
 			qdel(src)
+<<<<<<< HEAD
 	..()
 
+=======
+	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
+		victory_in_progress = TRUE
+		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		set_security_level("delta")
+		max_blob_points = INFINITY
+		blob_points = INFINITY
+		addtimer(CALLBACK(src, .proc/victory), 450)
+	..()
+
+
+/mob/camera/blob/proc/victory()
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	sleep(100)
+	for(var/mob/living/L in GLOB.mob_list)
+		var/turf/T = get_turf(L)
+		if(!T || !(T.z in GLOB.station_z_levels))
+			continue
+
+		if(L in GLOB.overminds || L.checkpass(PASSBLOB))
+			continue
+
+		var/area/Ablob = get_area(T)
+
+		if(!Ablob.blob_allowed)
+			continue
+
+		playsound(L, 'sound/effects/splat.ogg', 50, 1)
+		L.death()
+		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+
+		for(var/V in GLOB.sortedAreas)
+			var/area/A = V
+			if(!A.blob_allowed)
+				continue
+			A.color = blob_reagent_datum.color
+			A.name = "blob"
+			A.icon = 'icons/mob/blob.dmi'
+			A.icon_state = "blob_shield"
+			A.layer = BELOW_MOB_LAYER
+			A.invisibility = 0
+			A.blend_mode = 0
+	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
+	SSticker.news_report = BLOB_WIN
+	SSticker.force_ending = 1
+
+>>>>>>> 7034a22... Blob fixes (#31913)
 /mob/camera/blob/Destroy()
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
