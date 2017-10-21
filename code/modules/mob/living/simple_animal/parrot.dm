@@ -901,9 +901,6 @@
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		rounds_survived = max(++rounds_survived,1)
-		if(rounds_survived > longest_survival)
-			longest_survival = rounds_survived
 		Write_Memory(FALSE)
 		memory_saved = TRUE
 	..()
@@ -1003,7 +1000,6 @@
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
-
 
 /mob/living/simple_animal/parrot/clock_hawk
 	name = "clock hawk"
