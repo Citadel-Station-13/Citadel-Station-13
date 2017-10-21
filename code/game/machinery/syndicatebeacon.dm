@@ -9,53 +9,6 @@
 
 	anchored = FALSE
 	density = TRUE
-<<<<<<< HEAD
-	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
-	stat = 0
-	verb_say = "states"
-	var/cooldown = 0
-
-	var/active = 0
-	var/icontype = "beacon"
-
-
-/obj/machinery/power/singularity_beacon/proc/Activate(mob/user = null)
-	if(surplus() < 1500)
-		if(user) to_chat(user, "<span class='notice'>The connected wire doesn't have enough current.</span>")
-		return
-	for(var/obj/singularity/singulo in GLOB.singularities)
-		if(singulo.z == z)
-			singulo.target = src
-	icon_state = "[icontype]1"
-	active = 1
-	if(user)
-		to_chat(user, "<span class='notice'>You activate the beacon.</span>")
-
-
-/obj/machinery/power/singularity_beacon/proc/Deactivate(mob/user = null)
-	for(var/obj/singularity/singulo in GLOB.singularities)
-		if(singulo.target == src)
-			singulo.target = null
-	icon_state = "[icontype]0"
-	active = 0
-	if(user)
-		to_chat(user, "<span class='notice'>You deactivate the beacon.</span>")
-
-
-/obj/machinery/power/singularity_beacon/attack_ai(mob/user)
-	return
-
-
-/obj/machinery/power/singularity_beacon/attack_hand(mob/user)
-	if(anchored)
-		return active ? Deactivate(user) : Activate(user)
-	else
-		to_chat(user, "<span class='warning'>You need to screw the beacon to the floor first!</span>")
-		return
-
-
-/obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
-=======
 	layer = BELOW_MOB_LAYER //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
 	verb_say = "states"
@@ -102,7 +55,6 @@
 
 
 /obj/machinery/power/singularity_beacon/attackby(obj/item/W, mob/user, params)
->>>>>>> d3dcc11... Merge pull request #31340 from Firecage/codeshitnotshit
 	if(istype(W, /obj/item/screwdriver))
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
