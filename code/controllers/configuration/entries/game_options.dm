@@ -256,6 +256,10 @@ CONFIG_DEF(number/bombcap)
 	value = 14
 	min_val = 4
 
+CONFIG_DEF(flag/allow_crew_objectives)
+CONFIG_DEF(flag/allow_miscreants)
+CONFIG_DEF(flag/allow_extended_miscreants)
+
 /datum/config_entry/number/bombcap/ValidateAndSet(str_val)
 	. = ..()
 	if(.)
@@ -264,3 +268,8 @@ CONFIG_DEF(number/bombcap)
 		GLOB.MAX_EX_LIGHT_RANGE = value
 		GLOB.MAX_EX_FLASH_RANGE = value
 		GLOB.MAX_EX_FLAME_RANGE = value
+
+CONFIG_DEF(number/emergency_shuttle_autocall_threshold)
+	min_val = 0
+	max_val = 1
+	integer = FALSE

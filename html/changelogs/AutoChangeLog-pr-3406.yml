@@ -1,0 +1,13 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Dogborgs will now telegraph their attacks when pouncing."
+  - balance: "Dogborg pounces will now only stun for as long necessary to handcuff the target."
+  - balance: "Scrubpups will no longer automatically clean tiles they walk on. There's janiborgs for that!"
+  - balance: "Scrubpups have a much, much faster tongue that cleans much faster than normal. It's faster than mops."
+  - balance: "Scrubpups can now only swallow small items or smaller."
+  - balance: "Scrubpups can now carry 48 items in their compactor."
+  - balance: "Scrubpups only need half the time to swallow items."
+  - balance: "Sechounds now have a crew pinpointer."
+  - balance: "Sechounds now need to be emagged to access their disabler. Sechounds also have a nuke disk pinpointer when emagged."
+  - balance: "Medihounds now have a hypospray."

@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "Reflectors can now be at any angle you want. Alt click them to set angle!"

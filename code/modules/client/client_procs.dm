@@ -352,6 +352,7 @@ GLOBAL_LIST(external_rsc_urls)
 			menuitem.Load_checked(src)
 
 	hook_vr("client_new",list(src))
+	Master.UpdateTickRate()
 
 //////////////
 //DISCONNECT//
@@ -399,6 +400,7 @@ GLOBAL_LIST(external_rsc_urls)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	Master.UpdateTickRate()
 	return ..()
 
 /client/Destroy()
@@ -629,10 +631,9 @@ GLOBAL_LIST(external_rsc_urls)
 /client/Stat()
 	. = ..()
 	if (holder)
-		sleep(1)
+		stoplag(1)
 	else
-		sleep(5)
-		stoplag()
+		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -662,6 +663,7 @@ GLOBAL_LIST(external_rsc_urls)
 			return FALSE
 		if ("key")
 			return FALSE
+	. = ..()
 
 
 /client/proc/change_view(new_size)

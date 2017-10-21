@@ -15,7 +15,7 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
-	var/min_health = -25
+	var/min_health = 30
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
@@ -42,7 +42,7 @@
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) * E
+	min_health = initial(min_health) - (10*E)
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]
@@ -174,7 +174,7 @@
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	scramble_chem_buttons()
-	to_chat(user, "<span class='warning'>You scramble the sleepers user interface!</span>")
+	to_chat(user, "<span class='warning'>You scramble the sleeper's user interface!</span>")
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))

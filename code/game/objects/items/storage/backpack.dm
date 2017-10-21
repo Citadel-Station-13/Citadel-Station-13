@@ -48,7 +48,7 @@
 
 /obj/item/storage/backpack/holding/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is jumping into [src]! It looks like [user.p_theyre()] trying to commit suicide.</span>")
-	user.drop_item()
+	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
 	playsound(src, "rustle", 50, 1, -5)
@@ -309,7 +309,7 @@
 /obj/item/storage/backpack/satchel/flat/secret/Initialize()
 	. = ..()
 
-	if(isfloorturf(loc) && !istype(loc, /turf/open/floor/plating/))
+	if(isfloorturf(loc) && !isplatingturf(loc))
 		hide(1)
 
 /obj/item/storage/backpack/satchel/flat/secret/hide(intact)
