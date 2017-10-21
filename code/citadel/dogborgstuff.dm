@@ -173,6 +173,9 @@
 	hitsound = 'sound/effects/attackblob.ogg'
 	cleanspeed = 80
 
+/obj/item/soap/tongue/scrubpup
+	cleanspeed = 25 //slightly faster than a mop.
+
 /obj/item/soap/tongue/New()
 	..()
 	flags_1 |= NOBLUDGEON_1 //No more attack messages
@@ -192,13 +195,13 @@
 			desc = "Your tongue has been upgraded successfully. Congratulations."
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "syndietongue"
-			cleanspeed = 60 //(nerf'd)tator soap stat
+			cleanspeed = 10 //(nerf'd)tator soap stat
 		else
 			name = "synthetic tongue"
 			desc = "Useful for slurping mess off the floor before affectionally licking the crew members in the face."
 			icon = 'icons/mob/dogborg.dmi'
 			icon_state = "synthtongue"
-			cleanspeed = 80
+			cleanspeed = initial(cleanspeed)
 		update_icon()
 
 /obj/item/soap/tongue/afterattack(atom/target, mob/user, proximity)
@@ -803,7 +806,7 @@
 	inject_amount = 10
 	min_health = -100
 	injection_chems = null //So they don't have all the same chems as the medihound!
-	var/max_item_count = 32
+	var/max_item_count = 48
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
 	compactor.afterattack(src, user ,1)
@@ -825,11 +828,11 @@
 		if(target_obj.type in important_items)
 			to_chat(user,"<span class='warning'>\The [target] registers an error code to your [src.name]</span>")
 			return
-		if(target_obj.w_class > WEIGHT_CLASS_BULKY)
+		if(target_obj.w_class > WEIGHT_CLASS_SMALL)
 			to_chat(user,"<span class='warning'>\The [target] is too large to fit into your [src.name]</span>")
 			return
 		user.visible_message("<span class='warning'>[hound.name] is ingesting [target.name] into their [src.name].</span>", "<span class='notice'>You start ingesting [target] into your [src.name]...</span>")
-		if(do_after(user, 30, target = target) && length(contents) < max_item_count)
+		if(do_after(user, 15, target = target) && length(contents) < max_item_count)
 			if(!in_range(src, target)) //Proximity is probably old news by now, do a new check.
 				return //If they moved away, you can't eat them. This still applies to items, don't magically eat things I picked up already.
 			target.forceMove(src)
@@ -883,6 +886,7 @@
 	var/leaping = 0
 	var/pounce_cooldown = 0
 	var/pounce_cooldown_time = 40 //Nearly doubled, u happy?
+	var/pounce_spoolup = 5
 	var/leap_at
 	var/disabler
 	var/laser
@@ -892,14 +896,18 @@
 #define MAX_K9_LEAP_DIST 4 //because something's definitely borked the pounce functioning from a distance.
 
 /obj/item/dogborg/pounce/afterattack(atom/A, mob/user)
-	var/mob/living/silicon/robot.R = user
-	R.leap_at(A)
+	var/mob/living/silicon/robot/R = user
+	if(R && !R.pounce_cooldown)
+		R.pounce_cooldown = !R.pounce_cooldown
+		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
+		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
+		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
+		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
+		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
+	else if(R && R.pounce_cooldown)
+		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
 /mob/living/silicon/robot/proc/leap_at(atom/A)
-	if(pounce_cooldown)
-		to_chat(src,"<span class='danger'>Your leg actuators are still recharging!</span>")
-		return
-
 	if(leaping || stat || buckled || lying)
 		return
 
@@ -919,7 +927,6 @@
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		cell.use(500) //Doubled the energy consumption
 		weather_immunities -= "lava"
-		pounce_cooldown = !pounce_cooldown
 		spawn(pounce_cooldown_time)
 			pounce_cooldown = !pounce_cooldown
 
@@ -938,7 +945,8 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(100)
+				L.Knockdown(40)
+				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
@@ -948,7 +956,7 @@
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
-			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='alertalien'>[src] smashes into [A]!</span>")
+			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
 			Knockdown(40, 1, 1)
 
 		if(leaping)

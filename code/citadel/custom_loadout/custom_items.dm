@@ -30,6 +30,14 @@
 	item_color = null
 	tagname = null
 
+/obj/item/clothing/accessory/medal/steele
+	name = "Insignia Of Steele"
+	desc = "An intricate pendant given to those who help a key member of the Steele Corporation."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "steele"
+	item_color = "steele"
+	medaltype = "medal-silver"
+
 /*DirtyOldHarry*/
 
 /obj/item/lighter/gold
@@ -55,6 +63,12 @@
 	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
 
+/obj/item/clothing/suit/toggle/labcoat/mad/red
+	name = "\improper The Mad's labcoat"
+	desc = "An oddly special looking coat."
+	icon_state = "labred"
+	item_state = "labred"
+
 
 /*PLACEHOLDER*/
 
@@ -78,6 +92,17 @@
 	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
+/obj/item/toy/plush/tree
+	name = "christmass tree plushie"
+	desc = "A festive plush that squeeks when you squeeze it!"
+	icon = 'icons/obj/plushes.dmi'
+	icon_state = "pine_c"
+	item_state = "pine_c"
+	w_class = WEIGHT_CLASS_SMALL
+	attack_verb = list("slapped")
+	resistance_flags = FLAMMABLE
+	squeak_override = list('sound/misc/server-ready.ogg'= 1)
 
 
 /*Zigfie*/
@@ -109,6 +134,15 @@
 	item_state = "that"
 	dog_fashion = /datum/dog_fashion/head/santa
 
+//Removed all of the space flags from this suit so it utilizes nothing special.
+/obj/item/clothing/suit/space/santa/fluff
+	name = "Santa's suit"
+	desc = "Festive!"
+	icon_state = "santa"
+	item_state = "santa"
+	slowdown = 0
+
+
 
 /*Brian*/
 
@@ -118,3 +152,53 @@
 	icon_state = "hos-g"
 	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+
+/*Slomek*/
+/obj/item/reagent_containers/food/drinks/flask/russian
+	name = "russian flask"
+	desc = "Every good russian spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "russianflask"
+	item_state = "russianflask"
+	volume = 60
+
+/obj/item/clothing/mask/gas/stalker
+	name = "S.T.A.L.K.E.R. mask"
+	desc = "Smells like reactor four."
+	icon = 'icons/obj/custom.dmi'
+	item_state = "stalker"
+	icon_state = "stalker"
+	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
+	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
+	w_class = WEIGHT_CLASS_NORMAL
+	item_state = "gas_alt"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
+	resistance_flags = 0
+
+
+/*Sylas*/
+/obj/item/clothing/neck/petcollar/stripe //don't really wear this though please c'mon seriously guys
+	name = "collar"
+	desc = "It's a collar..."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "petcollar-stripe"
+	item_color = "petcollar-stripe"
+	tagname = null
+
+
+/*PLACEHOLDER*/
+/obj/item/clothing/under/singery/custom
+	name = "bluish performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "ssing"
+	item_state = "ssing"
+	item_color = "ssing"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+
+

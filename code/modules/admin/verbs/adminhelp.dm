@@ -242,7 +242,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;[HrefToken()];ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
+	return "<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 //private
 /datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
@@ -335,6 +335,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
+	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
 	if(!silent)
 		SSblackbox.inc("ahelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
@@ -488,7 +489,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
+	
+	msg = trim(msg)
+	
 	if(!msg)
 		return
 
@@ -587,21 +590,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(world.RunningService())
-		world.ExportService("[SERVICE_REQUEST_IRC_ADMIN_CHANNEL_MESSAGE] [msg] | [msg2]")
-	else if(config.useircbot)
-		shell("python nudge.py [msg] [msg2]")
+	if(SERVER_TOOLS_PRESENT)
+		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
-	if(config.cross_allowed)
+	var/comms_key = CONFIG_GET(string/comms_key)
+	if(comms_key)
 		var/list/message = list()
 		message["message_sender"] = source
 		message["message"] = msg
-		message["source"] = "([config.cross_name])"
-		message["key"] = global.comms_key
+		message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+		message["key"] = comms_key
 		message["crossmessage"] = type
 
-		world.Export("[config.cross_address]?[list2params(message)]")
+		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
 
 
 /proc/ircadminwho()

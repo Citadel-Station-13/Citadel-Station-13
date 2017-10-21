@@ -1,5 +1,5 @@
 /obj/structure/grille
-	desc = "A flimsy lattice of metal rods, with screws to secure it to the floor."
+	desc = "A flimsy framework of metal rods."
 	name = "grille"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "grille"
@@ -16,6 +16,17 @@
 	var/rods_broken = TRUE
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
+
+/obj/structure/grille/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
+/obj/structure/grille/examine(mob/user)
+	..()
+	if(anchored)
+		to_chat(user, "<span class='notice'>It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.</span>")
+	if(!anchored)
+		to_chat(user, "<span class='notice'>The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.</span>")
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -55,6 +66,10 @@
 	var/mob/M = AM
 	shock(M, 70)
 
+/obj/structure/grille/attack_animal(mob/user)
+	. = ..()
+	if(!shock(user, 70))
+		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)

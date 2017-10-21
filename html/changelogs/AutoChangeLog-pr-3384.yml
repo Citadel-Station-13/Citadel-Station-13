@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscdel: "Security will no longer hallucinate edgy \"Centcom-assigned\" objectives at the start of the shift."

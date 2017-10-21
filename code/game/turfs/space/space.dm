@@ -14,6 +14,7 @@
 
 	var/global/datum/gas_mixture/immutable/space/space_gas = new
 	plane = PLANE_SPACE
+	layer = SPACE_LAYER
 	light_power = 0.25
 	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
 
@@ -43,6 +44,8 @@
 	if (opacity)
 		has_opaque_atom = TRUE
 
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/open/space/attack_ghost(mob/dead/observer/user)
@@ -66,7 +69,7 @@
 	return
 
 /turf/open/space/proc/update_starlight()
-	if(config.starlight)
+	if(CONFIG_GET(flag/starlight))
 		for(var/t in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			if(isspaceturf(t))
 				//let's NOT update this that much pls

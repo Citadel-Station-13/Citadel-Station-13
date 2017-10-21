@@ -139,6 +139,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, 0)
 		//womb features
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
+	if(current_version < 19)
+		pda_style = "mono"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -193,6 +195,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
+	S["pda_style"]			>> pda_style
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -219,7 +222,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special		= SANITIZE_LIST(be_special)
 	screenshake			= sanitize_integer(screenshake, 0, 200, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
-
+	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
 
 	return 1
 
@@ -263,6 +266,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["screenshake"], screenshake)
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
+	WRITE_FILE(S["pda_style"], pda_style)
 
 	return 1
 
@@ -290,11 +294,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	if(config.mutant_races && species_id && (species_id in GLOB.roundstart_species))
-		var/newtype = GLOB.roundstart_species[species_id]
+	var/list/roundstart_races = CONFIG_GET(keyed_flag_list/roundstart_races)
+	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (config.roundstart_races.len)
-		var/rando_race = pick(config.roundstart_races)
+	else if (roundstart_races.len)
+		var/rando_race = pick(roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
 
@@ -327,8 +332,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_lizard_spines"]			>> features["spines"]
 	S["feature_lizard_body_markings"]	>> features["body_markings"]
 	S["feature_lizard_legs"]			>> features["legs"]
-	S["feature_human_tail"]				>> features["tail_human"]
-	S["feature_human_ears"]				>> features["ears"]
+	if(!CONFIG_GET(flag/join_with_mutant_humans))
+		features["tail_human"] = "none"
+		features["ears"] = "none"
+	else
+		S["feature_human_tail"]				>> features["tail_human"]
+		S["feature_human_ears"]				>> features["ears"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]

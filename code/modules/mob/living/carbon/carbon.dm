@@ -7,19 +7,15 @@
 	..()
 
 /mob/living/carbon/Destroy()
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
+//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
+	QDEL_LIST(internal_organs)
+	QDEL_LIST(stomach_contents)
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(implants)
 	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
-	return ..()
+	QDEL_NULL(dna)
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
@@ -425,23 +421,6 @@
 			var/turf/target = get_turf(loc)
 			I.throw_at(target,I.throw_range,I.throw_speed,src)
 
-/mob/living/carbon/proc/AddAbility(obj/effect/proc_holder/alien/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-	sortInsert(abilities, /proc/cmp_abilities_cost, 0)
-
-/mob/living/carbon/proc/RemoveAbility(obj/effect/proc_holder/alien/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/carbon/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/alien/A in abilities)
-		statpanel("[A.panel]",A.plasma_cost > 0?"([A.plasma_cost])":"",A)
-
 /mob/living/carbon/Stat()
 	..()
 	if(statpanel("Status"))
@@ -773,7 +752,7 @@
 		B.damaged_brain = 0
 	for(var/thing in viruses)
 		var/datum/disease/D = thing
-		if(D.severity != NONTHREAT)
+		if(D.severity != VIRUS_SEVERITY_POSITIVE)
 			D.cure(0)
 	if(admin_revive)
 		regenerate_limbs()

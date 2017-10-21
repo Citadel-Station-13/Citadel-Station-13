@@ -62,7 +62,6 @@
 					// redirect the projectile
 					P.original = locate(new_x, new_y, P.z)
 					P.starting = curloc
-					P.current = curloc
 					P.firer = src
 					P.yo = new_y - curloc.y
 					P.xo = new_x - curloc.x
@@ -205,7 +204,7 @@
 		return 0
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
-		if(get_active_held_item() && drop_item())
+		if(dropItemToGround(get_active_held_item()))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -259,7 +258,7 @@
 			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			if(get_active_held_item() && drop_item())
+			if(dropItemToGround(get_active_held_item()))
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")

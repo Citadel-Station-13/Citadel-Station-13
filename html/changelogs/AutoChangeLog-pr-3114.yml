@@ -1,0 +1,4 @@
+author: "Daniel0Mclovin"
+delete-after: True
+changes: 
+  - tweak: "Modify health regeneration from 0.05 to 0.75"

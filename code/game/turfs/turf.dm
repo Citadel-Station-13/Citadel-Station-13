@@ -56,6 +56,9 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
@@ -121,8 +124,6 @@
 	return FALSE
 
 /turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
-	if (!mover)
-		return TRUE
 	// First, make sure it can leave its square
 	if(isturf(mover.loc))
 		// Nothing but border objects stop you from leaving a tile, only one loop is needed
@@ -131,32 +132,28 @@
 				mover.Collide(obstacle)
 				return FALSE
 
-	var/list/large_dense = list()
-
-	//Next, check objects to block entry that are on the border
-	for(var/atom/movable/border_obstacle in src)
-		if(border_obstacle.flags_1 & ON_BORDER_1)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1) && (forget != border_obstacle))
-				mover.Collide(border_obstacle)
-				return FALSE
-		else
-			large_dense += border_obstacle
-
 	//Then, check the turf itself
 	if (!src.CanPass(mover, src))
 		mover.Collide(src)
 		return FALSE
 
-	//Finally, check objects/mobs to block entry that are not on the border
-	var/atom/movable/tompost_bump
+
+	var/atom/movable/topmost_bump
 	var/top_layer = FALSE
-	for(var/atom/movable/obstacle in large_dense)
+
+	//Next, check objects to block entry that are on the border
+	for(var/atom/movable/obstacle in src)
 		if(!obstacle.CanPass(mover, mover.loc, 1) && (forget != obstacle))
-			if(obstacle.layer > top_layer)
-				tompost_bump = obstacle
-				top_layer = obstacle.layer
-	if(tompost_bump)
-		mover.Collide(tompost_bump)
+			if(obstacle.flags_1 & ON_BORDER_1)
+				mover.Collide(obstacle)
+				return FALSE
+			else
+				if(obstacle.layer > top_layer)
+					topmost_bump = obstacle
+					top_layer = obstacle.layer
+
+	if(topmost_bump)
+		mover.Collide(topmost_bump)
 		return FALSE
 
 	return TRUE //Nothing found to block so return success!
@@ -282,12 +279,12 @@
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	if(blocks_air)
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
+	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
@@ -295,14 +292,11 @@
 			continue
 		var/list/S_gases = S.air.gases
 		for(var/id in S_gases)
-			total.assert_gas(id)
+			ASSERT_GAS(id, total)
 			total_gases[id][MOLES] += S_gases[id][MOLES]
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)
-
-	if(!turf_count) //if there weren't any open turfs, no need to update.
-		return
 
 	var/list/air_gases = air.gases
 	for(var/id in air_gases)
@@ -336,7 +330,7 @@
 	var/list/things = src_object.contents.Copy()
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /obj/item/storage.proc/mass_remove_from_storage, src, things, progress)))
-		sleep(1)
+		stoplag(1)
 	qdel(progress)
 
 	return TRUE
@@ -444,7 +438,7 @@
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(ignore_typecache), ignored_atoms)
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(), ignored_atoms | ignore_typecache)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]

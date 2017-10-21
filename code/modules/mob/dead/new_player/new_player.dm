@@ -24,6 +24,9 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+
+	ComponentInitialize()
+
 	. = ..()
 
 /mob/dead/new_player/prepare_huds()
@@ -79,9 +82,12 @@
 
 		if(SSticker.current_state == GAME_STATE_PREGAME)
 			var/time_remaining = SSticker.GetTimeLeft()
-			if(time_remaining >= 0)
-				time_remaining /= 10
-			stat("Time To Start:", (time_remaining >= 0) ? "[round(time_remaining)]s" : "DELAYED")
+			if(time_remaining > 0)
+				stat("Time To Start:", "[round(time_remaining/10)]s")
+			else if(time_remaining == -10)
+				stat("Time To Start:", "DELAYED")
+			else
+				stat("Time To Start:", "SOON")
 
 			stat("Players:", "[SSticker.totalPlayers]")
 			if(client.holder)
@@ -97,10 +103,12 @@
 
 	//Determines Relevent Population Cap
 	var/relevant_cap
-	if(config.hard_popcap && config.extreme_popcap)
-		relevant_cap = min(config.hard_popcap, config.extreme_popcap)
+	var/hpc = CONFIG_GET(number/hard_popcap)
+	var/epc = CONFIG_GET(number/extreme_popcap)
+	if(hpc && epc)
+		relevant_cap = min(hpc, epc)
 	else
-		relevant_cap = max(config.hard_popcap, config.extreme_popcap)
+		relevant_cap = max(hpc, epc)
 
 	if(href_list["show_preferences"])
 		client.prefs.ShowChoices(src)
@@ -133,7 +141,7 @@
 			return
 
 		if(SSticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in GLOB.admin_datums)))
-			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
+			to_chat(usr, "<span class='danger'>[CONFIG_GET(string/hard_popcap_message)]</span>")
 
 			var/queue_position = SSticker.queued_players.Find(usr)
 			if(queue_position == 1)
@@ -271,7 +279,7 @@
 
 	observer.started_as_observer = TRUE
 	close_spawn_windows()
-	var/obj/O = locate("landmark*Observer-Start")
+	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, "<span class='notice'>Now teleporting.</span>")
 	if (O)
 		observer.loc = O.loc
@@ -309,7 +317,7 @@
 		return 0
 	if(job.required_playtime_remaining(client))
 		return 0
-	if(config.enforce_human_authority && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
+	if(CONFIG_GET(flag/enforce_human_authority) && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
 		return 0
 	return 1
 
@@ -326,11 +334,11 @@
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
 		close_spawn_windows()	//In case we get held up
-		if(SSshuttle.arrivals.damaged && config.arrivals_shuttle_require_safe_latejoin)
+		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
 			src << alert("The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
 
-		if(config.arrivals_shuttle_require_undocked)
+		if(CONFIG_GET(flag/arrivals_shuttle_require_undocked))
 			SSshuttle.arrivals.RequireUndocked(src)
 		arrivals_docked = SSshuttle.arrivals.mode != SHUTTLE_CALL
 
@@ -370,11 +378,16 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
+		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
+			SSticker.generate_miscreant_objectives(humanc.mind)
+		else
+			if(CONFIG_GET(flag/allow_crew_objectives))
+				SSticker.generate_individual_objectives(humanc.mind)
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
 
-	if(config.allow_latejoin_antagonists && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
+	if(CONFIG_GET(flag/allow_latejoin_antagonists) && humanc)	//Borgs aren't allowed to be antags. Will need to be tweaked if we get true latejoin ais.
 		if(SSshuttle.emergency)
 			switch(SSshuttle.emergency.mode)
 				if(SHUTTLE_RECALL, SHUTTLE_IDLE)
@@ -382,6 +395,8 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -458,7 +473,7 @@
 
 	var/mob/living/carbon/human/H = new(loc)
 
-	if(config.force_random_names || jobban_isbanned(src, "appearance"))
+	if(CONFIG_GET(flag/force_random_names) || jobban_isbanned(src, "appearance"))
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
 	client.prefs.copy_to(H)

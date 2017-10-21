@@ -46,7 +46,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 	brightness_on = 2 //luminosity when on
 	flags_cover = HEADCOVERSEYES
-	heat = 100
+	heat = 1000
 
 /obj/item/clothing/head/hardhat/cakehat/process()
 	var/turf/location = src.loc
@@ -60,8 +60,8 @@
 
 /obj/item/clothing/head/hardhat/cakehat/turn_on()
 	..()
-	force = 2
-	throwforce = 2
+	force = 15
+	throwforce = 15
 	damtype = BURN
 	hitsound = 'sound/items/welder.ogg'
 	START_PROCESSING(SSobj, src)
@@ -177,3 +177,45 @@
 /obj/item/clothing/head/cardborg/dropped(mob/living/user)
 	..()
 	user.remove_alt_appearance("standard_borg_disguise")
+
+
+
+/obj/item/clothing/head/wig
+	name = "wig"
+	desc = "A bunch of hair without a head attached."
+	icon_state = ""
+	item_state = "pwig"
+	flags_inv = HIDEHAIR
+	var/hair_style = "Very Long Hair"
+	var/hair_color = "#000"
+
+/obj/item/clothing/head/wig/Initialize(mapload)
+	. = ..()
+	update_icon()
+
+/obj/item/clothing/head/wig/update_icon()
+	cut_overlays()
+	var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+	if(!S)
+		icon_state = "pwig"
+	else
+		var/mutable_appearance/M = mutable_appearance(S.icon,S.icon_state)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		add_overlay(M)
+
+/obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
+	. = list()
+	if(!isinhands)
+		var/datum/sprite_accessory/S = GLOB.hair_styles_list[hair_style]
+		if(!S)
+			return
+		var/mutable_appearance/M = mutable_appearance(S.icon, S.icon_state,layer = -HAIR_LAYER)
+		M.appearance_flags |= RESET_COLOR
+		M.color = hair_color
+		. += M
+
+/obj/item/clothing/head/wig/random/Initialize(mapload)
+	hair_style = pick(GLOB.hair_styles_list - "Bald") //Don't want invisible wig
+	hair_color = "#[random_short_color()]"
+	. = ..()
