@@ -693,8 +693,6 @@
 	can_adjust = FALSE
 	resistance_flags = NONE
 
-<<<<<<< HEAD
-=======
 /obj/item/clothing/under/draculass
 	name = "draculass coat"
 	desc = "A dress inspired by the ancient \"Victorian\" era."
@@ -722,7 +720,6 @@
 	fitted = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
->>>>>>> 5a0bb2f... Grammar fixes to atom descriptions (#31293)
 /obj/item/clothing/under/skeleton
 	name = "skeleton jumpsuit"
 	desc = "A black jumpsuit with a white bone pattern printed on it. Spooky!"
