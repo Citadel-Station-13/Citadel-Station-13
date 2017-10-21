@@ -5240,9 +5240,6 @@
 /obj/machinery/airalarm{
 	pixel_y = 28
 	},
-/obj/machinery/chem_dispenser{
-	layer = 2.7
-	},
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -5251,7 +5248,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/chem_master,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -9434,18 +9430,9 @@
 	req_access_txt = "2"
 	},
 /obj/machinery/button/door{
-	id = "Secure Gate";
-	name = "Cell Window Control";
-	normaldoorcontrol = 0;
-	pixel_x = -5;
-	pixel_y = -3;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/obj/machinery/button/door{
 	id = "briglockdown";
 	name = "Brig Lockdown Control";
-	pixel_x = 5;
+	pixel_x = 0;
 	pixel_y = -3;
 	req_access_txt = "0"
 	},
@@ -12681,6 +12668,11 @@
 	id = "Cell 1";
 	name = "Cell 1"
 	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayy" = (
@@ -12709,6 +12701,11 @@
 	id = "Cell 2";
 	name = "Cell 2"
 	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayA" = (
@@ -12725,6 +12722,11 @@
 /obj/machinery/door/window/brigdoor/security/cell{
 	id = "Cell 3";
 	name = "Cell 3"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
@@ -13256,6 +13258,11 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azE" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azF" = (
@@ -14051,12 +14058,22 @@
 "aAY" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "aAZ" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 1";
 	name = "Cell 1 Locker"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -14065,12 +14082,22 @@
 	id = "Cell 2";
 	name = "Cell 2 Locker"
 	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "aBb" = (
 /obj/structure/closet/secure_closet/brig{
 	id = "Cell 3";
 	name = "Cell 3 Locker"
+	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -46832,7 +46859,7 @@
 "bMk" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/nitrous_oxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -49889,7 +49916,7 @@
 "bSj" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/plasma;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -52608,7 +52635,7 @@
 "bXq" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 1;
-	filter_type = /datum/gas/carbon_dioxide;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced{
@@ -54492,7 +54519,7 @@
 "cbd" = (
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/nitrogen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /obj/structure/window/reinforced,
@@ -54547,7 +54574,7 @@
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/components/trinary/filter{
 	dir = 4;
-	filter_type = /datum/gas/oxygen;
+	filter_type = !INVALID_VALUE!;
 	on = 1
 	},
 /turf/open/floor/plasteel/blue,
@@ -82657,7 +82684,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/freon;
+	filter_type = !INVALID_VALUE!;
 	name = "gas filter (freon)"
 	},
 /turf/open/floor/engine,
@@ -82873,7 +82900,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	filter_type = /datum/gas/nitrogen
+	filter_type = !INVALID_VALUE!
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -85660,6 +85687,11 @@
 /area/maintenance/starboard/fore)
 "dCj" = (
 /obj/effect/landmark/event_spawn,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "dCk" = (
@@ -86238,6 +86270,105 @@
 	},
 /turf/open/space/basic,
 /area/space)
+"EDb" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"EDc" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"EDd" = (
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-4";
+	d1 = 1;
+	d2 = 4
+	},
+/turf/open/floor/plasteel/floorgrime,
+/area/security/brig)
+"EDe" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDf" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDg" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDh" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDi" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDj" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDk" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDl" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
+"EDm" = (
+/obj/structure/cable/yellow,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/security/brig)
 
 (1,1,1) = {"
 aaa
@@ -111006,7 +111137,7 @@ awZ
 ayw
 azD
 aAY
-ajm
+EDe
 aDw
 aDC
 aGb
@@ -111262,8 +111393,8 @@ awb
 axa
 ayx
 azE
-azE
-ajm
+EDb
+EDf
 aDw
 aEK
 aGc
@@ -111520,7 +111651,7 @@ axb
 ayy
 azF
 aAZ
-ajm
+EDg
 aDw
 aEL
 aGd
@@ -112034,7 +112165,7 @@ axd
 ayw
 azG
 aAY
-ajm
+EDh
 aDw
 aEN
 aGf
@@ -112290,8 +112421,8 @@ awe
 axe
 ayz
 dCj
-azE
-ajm
+EDc
+EDi
 aDw
 dCo
 aGg
@@ -112548,7 +112679,7 @@ axb
 ayy
 azF
 aBa
-ajm
+EDj
 aDw
 aEO
 aGh
@@ -113062,7 +113193,7 @@ axd
 ayw
 azH
 aAY
-ajm
+EDk
 aDw
 aEO
 aGg
@@ -113318,8 +113449,8 @@ awf
 axa
 ayA
 azE
-azE
-ajm
+EDd
+EDl
 aDw
 aEQ
 aGj
@@ -113576,7 +113707,7 @@ axg
 ayy
 azF
 aBb
-ajm
+EDm
 aDw
 aEN
 aGk
