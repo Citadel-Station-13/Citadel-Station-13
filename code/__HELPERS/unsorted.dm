@@ -137,7 +137,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 				return
 			if(destination.y>world.maxy || destination.y<1)
 				return
-	else	return
+	else
+		return
 
 	return destination
 
@@ -1219,6 +1220,9 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 
 //gives us the stack trace from CRASH() without ending the current proc.
 /proc/stack_trace(msg)
+	CRASH(msg)
+
+/datum/proc/stack_trace(msg)
 	CRASH(msg)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.

@@ -1,5 +1,5 @@
 /obj/item/banhammer
-	desc = "A banhammer"
+	desc = "A banhammer."
 	name = "banhammer"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "toyhammer"
@@ -192,7 +192,7 @@
 
 /obj/item/katana
 	name = "katana"
-	desc = "Woefully underpowered in D20"
+	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
 	item_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -201,7 +201,7 @@
 	slot_flags = SLOT_BELT | SLOT_BACK
 	force = 40
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_HUGE
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	block_chance = 50
@@ -257,7 +257,7 @@
 
 /obj/item/throwing_star
 	name = "throwing star"
-	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"
+	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
 	item_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
@@ -390,7 +390,7 @@
 
 /obj/item/ectoplasm
 	name = "ectoplasm"
-	desc = "spooky"
+	desc = "Spooky."
 	gender = PLURAL
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
@@ -590,6 +590,7 @@
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
+	item_state = "nothing"
 	force = 1
 	throwforce = 0
 	flags_1 = DROPDEL_1 | ABSTRACT_1

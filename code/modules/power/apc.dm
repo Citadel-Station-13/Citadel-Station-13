@@ -600,7 +600,8 @@
 							"<span class='italics'>You hear welding.</span>")
 		playsound(src.loc, WT.usesound, 50, 1)
 		if(do_after(user, 50*W.toolspeed, target = src))
-			if(!src || !WT.remove_fuel(3, user)) return
+			if(!src || !WT.remove_fuel(3, user))
+				return
 			if ((stat & BROKEN) || opened==2)
 				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message(\
@@ -737,7 +738,7 @@
 
 /obj/machinery/power/apc/ui_data(mob/user)
 	var/list/data = list(
-		"locked" = integration_cog ? !is_servant_of_ratvar(user) : locked,
+		"locked" = locked && !(integration_cog && is_servant_of_ratvar(user)),
 		"failTime" = failure_timer,
 		"isOperating" = operating,
 		"externalPower" = main_status,
@@ -833,7 +834,7 @@
 	return TRUE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && !(integration_cog && (is_servant_of_ratvar(usr)))))
 		return
 	switch(action)
 		if("lock")

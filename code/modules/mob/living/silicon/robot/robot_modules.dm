@@ -305,6 +305,7 @@
 		/obj/item/device/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/device/electroadaptive_pseudocircuit,
@@ -385,9 +386,9 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/twohanded/shockpaddles/hound,
-		/obj/item/reagent_containers/borghypo,
+		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,

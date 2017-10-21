@@ -1,0 +1,4 @@
+author: "yourdoom9898"
+delete-after: True
+changes: 
+  - rscdel: "Removed chat message from slimepeople when they had enough slime to split"

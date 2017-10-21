@@ -28,6 +28,7 @@
 	var/mob/living/carbon/occupant = null
 	var/step_in = 10 //make a step in step_in/10 sec.
 	var/dir_in = 2//What direction will the mech face when entered/powered on? Defaults to South.
+	var/normal_step_energy_drain = 10 //How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
 	var/step_energy_drain = 10
 	var/melee_energy_drain = 15
 	var/overload_step_energy_drain_min = 100
@@ -210,7 +211,8 @@
 	var/obj/item/stock_parts/scanning_module/SM = locate() in contents
 	var/obj/item/stock_parts/capacitor/CP = locate() in contents
 	if(SM)
-		step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		normal_step_energy_drain = 20 - (5 * SM.rating) //10 is normal, so on lowest part its worse, on second its ok and on higher its real good up to 0 on best
+		step_energy_drain = normal_step_energy_drain
 		qdel(SM)
 	if(CP)
 		armor["energy"] += (CP.rating * 10) //Each level of capacitor protects the mech against emp by 10%
@@ -594,7 +596,8 @@
 ///////////////////////////////////
 
 /obj/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || isemptylist(possible_int_damage)) return
+	if(!islist(possible_int_damage) || isemptylist(possible_int_damage))
+		return
 	if(prob(20))
 		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)

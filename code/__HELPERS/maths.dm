@@ -13,7 +13,8 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return x!=0?x/abs(x):0
 
 /proc/Atan2(x, y)
-	if(!x && !y) return 0
+	if(!x && !y)
+		return 0
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
@@ -24,6 +25,9 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	return round(x / y) * y
 
 #define Clamp(CLVALUE,CLMIN,CLMAX) ( max( (CLMIN), min((CLVALUE), (CLMAX)) ) )
+
+/proc/Modulus(x, y)	//Byond's modulus doesn't work with decimals.
+	return x - y * round(x / y)
 
 // cotangent
 /proc/Cot(x)
@@ -100,10 +104,12 @@ GLOBAL_LIST_INIT(sqrtTable, list(1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4,
 	. = list()
 	var/d		= b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0) return
+	if(d < 0)
+		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
-	if(!d) return
+	if(!d)
+		return
 	. += (-b - root) / bottom
 
 // tangent
