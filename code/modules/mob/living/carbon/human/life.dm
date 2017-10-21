@@ -59,6 +59,8 @@
 		return ONE_ATMOSPHERE
 	if(ismob(loc))
 		return ONE_ATMOSPHERE
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return ONE_ATMOSPHERE
 	else
 		return pressure
 
@@ -133,6 +135,12 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	if(ismob(loc))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -244,7 +252,9 @@
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
-	
+
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return 1 //freezing to death in sleepers ruins fun.
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
 
