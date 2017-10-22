@@ -127,3 +127,14 @@
 		reagents.chem_temp = max(reagents.chem_temp, 1000)
 		reagents.handle_reactions()
 	..()
+
+
+/obj/item/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this //fuckin' Phil
+	set name = "Set transfer amount"
+	set category = "Object"
+	set src in range(0)
+	if(usr.incapacitated())
+		return
+	var/N = input("Amount per transfer from this:","[src]") as null|anything in possible_transfer_amounts
+	if (N)
+		amount_per_transfer_from_this = N
