@@ -231,14 +231,9 @@
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
-<<<<<<< HEAD
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-=======
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
->>>>>>> 7feea9a... Merge pull request #31849 from AnturK/commsconsolecleanup
 			state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
 			state = STATE_ALERT_LEVEL
@@ -367,14 +362,9 @@
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
-<<<<<<< HEAD
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-=======
 			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
->>>>>>> 7feea9a... Merge pull request #31849 from AnturK/commsconsolecleanup
 			var/old_level = GLOB.security_level
 			if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
 			if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
