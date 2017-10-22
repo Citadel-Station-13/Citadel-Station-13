@@ -63,10 +63,6 @@
 				place_blob_core(base_point_rate, 1)
 		else
 			qdel(src)
-<<<<<<< HEAD
-	..()
-
-=======
 	else if(!victory_in_progress && (blobs_legit.len >= blobwincount))
 		victory_in_progress = TRUE
 		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
@@ -112,7 +108,6 @@
 	SSticker.news_report = BLOB_WIN
 	SSticker.force_ending = 1
 
->>>>>>> 7034a22... Blob fixes (#31913)
 /mob/camera/blob/Destroy()
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
