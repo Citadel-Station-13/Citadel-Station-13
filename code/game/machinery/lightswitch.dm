@@ -8,11 +8,18 @@
 	anchored = TRUE
 	desc = "Make dark."
 	var/on = TRUE
+<<<<<<< HEAD
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
 
 /obj/machinery/light_switch/Initialize()
+=======
+	var/area/area = null
+	var/otherarea = null
+
+/obj/machinery/light_switch/Initialize()
+>>>>>>> afd8bb7... Code Consistency: luminosity --> light_range (#31355)
 	. = ..()
 	area = get_area(src)
 
