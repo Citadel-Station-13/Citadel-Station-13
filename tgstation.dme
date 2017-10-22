@@ -1266,19 +1266,16 @@
 #include "code\modules\clothing\glasses\_glasses.dm"
 #include "code\modules\clothing\glasses\engine_goggles.dm"
 #include "code\modules\clothing\glasses\hud.dm"
-<<<<<<< HEAD
 #include "code\modules\clothing\glasses\vg_glasses.dm"
 #include "code\modules\clothing\gloves\boxing.dm"
 #include "code\modules\clothing\gloves\color.dm"
 #include "code\modules\clothing\gloves\miscellaneous.dm"
 #include "code\modules\clothing\gloves\vg_gloves.dm"
-=======
 #include "code\modules\clothing\gloves\_gloves.dm"
 #include "code\modules\clothing\gloves\boxing.dm"
 #include "code\modules\clothing\gloves\color.dm"
 #include "code\modules\clothing\gloves\miscellaneous.dm"
 #include "code\modules\clothing\head\_head.dm"
->>>>>>> f910aa9... Merge pull request #31960 from lzimann/split
 #include "code\modules\clothing\head\beanie.dm"
 #include "code\modules\clothing\head\cit_hats.dm"
 #include "code\modules\clothing\head\collectable.dm"
@@ -1288,22 +1285,16 @@
 #include "code\modules\clothing\head\misc.dm"
 #include "code\modules\clothing\head\misc_special.dm"
 #include "code\modules\clothing\head\soft_caps.dm"
-<<<<<<< HEAD
 #include "code\modules\clothing\head\vg_hats.dm"
-=======
 #include "code\modules\clothing\masks\_masks.dm"
->>>>>>> f910aa9... Merge pull request #31960 from lzimann/split
 #include "code\modules\clothing\masks\boxing.dm"
 #include "code\modules\clothing\masks\breath.dm"
 #include "code\modules\clothing\masks\gasmask.dm"
 #include "code\modules\clothing\masks\hailer.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
-<<<<<<< HEAD
 #include "code\modules\clothing\masks\vg_masks.dm"
 #include "code\modules\clothing\neck\neck.dm"
-=======
 #include "code\modules\clothing\neck\_neck.dm"
->>>>>>> f910aa9... Merge pull request #31960 from lzimann/split
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
 #include "code\modules\clothing\outfits\standard.dm"
@@ -1312,22 +1303,16 @@
 #include "code\modules\clothing\shoes\colour.dm"
 #include "code\modules\clothing\shoes\magboots.dm"
 #include "code\modules\clothing\shoes\miscellaneous.dm"
-<<<<<<< HEAD
 #include "code\modules\clothing\shoes\vg_shoes.dm"
-=======
 #include "code\modules\clothing\spacesuits\_spacesuits.dm"
->>>>>>> f910aa9... Merge pull request #31960 from lzimann/split
 #include "code\modules\clothing\spacesuits\chronosuit.dm"
 #include "code\modules\clothing\spacesuits\flightsuit.dm"
 #include "code\modules\clothing\spacesuits\hardsuit.dm"
 #include "code\modules\clothing\spacesuits\miscellaneous.dm"
 #include "code\modules\clothing\spacesuits\plasmamen.dm"
 #include "code\modules\clothing\spacesuits\syndi.dm"
-<<<<<<< HEAD
 #include "code\modules\clothing\spacesuits\vg_spess.dm"
-=======
 #include "code\modules\clothing\suits\_suits.dm"
->>>>>>> f910aa9... Merge pull request #31960 from lzimann/split
 #include "code\modules\clothing\suits\armor.dm"
 #include "code\modules\clothing\suits\bio.dm"
 #include "code\modules\clothing\suits\cloaks.dm"
