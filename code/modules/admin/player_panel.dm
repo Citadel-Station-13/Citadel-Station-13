@@ -593,19 +593,8 @@
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
-<<<<<<< HEAD
-
-		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/mode = SSticker.mode
-				blob_minds |= mode.blob_overminds
-				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
-
-=======
 			if(blob_minds.len)
 				dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
->>>>>>> 7034a22... Blob fixes (#31913)
 			for(var/datum/mind/blob in blob_minds)
 				var/mob/M = blob.current
 				if(M)
