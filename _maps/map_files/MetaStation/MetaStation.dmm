@@ -4821,11 +4821,13 @@
 "ajE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajG" = (
@@ -4840,11 +4842,13 @@
 "ajH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajI" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault,
 /area/security/main)
 "ajJ" = (

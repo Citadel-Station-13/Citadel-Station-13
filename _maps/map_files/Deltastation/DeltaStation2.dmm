@@ -31711,6 +31711,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -32839,6 +32840,7 @@
 /area/security/main)
 "bpz" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -33557,6 +33559,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -34196,6 +34199,7 @@
 	pixel_x = 32
 	},
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
