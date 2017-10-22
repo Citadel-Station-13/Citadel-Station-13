@@ -158,6 +158,7 @@ Code:
 	equip_delay_other = 60
 	materials = list(MAT_METAL=5000, MAT_GLASS=2000)
 	var/tagname = null
+	var/obj/item/card/id/id
 
 /obj/item/device/electropack/shockcollar/attack_hand(mob/user)
 	if(loc == user)
@@ -196,7 +197,7 @@ Code:
 	option = input(user, "What do you want to do?", "[src]", option) as null|anything in list("Change Name", "Change Frequency")
 	switch(option)
 		if("Change Name")
-			var/t = input(user, "Would you like to change the name on the tag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
+			var/t = input(user, "Would you like to change the name on the nametag?", "Name your new pet", tagname ? tagname : "Spot") as null|text
 			if(t)
 				tagname = copytext(sanitize(t), 1, MAX_NAME_LEN)
 				name = "[initial(name)] - [tagname]"
@@ -223,3 +224,68 @@ Code:
 			onclose(user, "radio")
 			return
 
+/obj/item/device/electropack/shockcollar/proc/remove_id()
+	if(id && ismob(loc))
+		var/mob/M = loc
+		if(!M.put_in_hands(id))
+			id.loc = forceMove(drop_location())
+		to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
+		id = null
+
+/obj/item/device/electropack/shockcollar/proc/id_check(mob/user, obj/item/card/id/I)
+	if(!I)
+		if(id)
+			remove_id()
+			return TRUE
+		else
+			var/obj/item/card/id/C = user.get_active_held_item()
+			if(istype(C))
+				I = C
+
+	if(I)
+		if(!user.transferItemToLoc(I, src))
+			return FALSE
+		var/obj/old_id = id
+		id = I
+		if(old_id)
+			user.put_in_hands(old_id)
+			return TRUE
+		else
+			id.loc = forceMove(drop_location())
+		update_icon()
+	return TRUE
+
+/obj/item/device/electropack/shockcollar/AltClick()
+	if(issilicon(usr))
+		return
+	if(usr.canUseTopic(src))
+		if(id)
+			remove_id()
+	return ..()
+
+/obj/item/device/electropack/shockcollar/attackby(obj/item/C, mob/user, params)
+	if(istype(C, /obj/item/card/id))
+		var/obj/item/card/id/idcard = C
+		if(((src in user.contents) || (isturf(loc) && in_range(src, user))) && (C in user.contents))
+			if(!id_check(user, idcard))
+				to_chat(user, "<span class='warning'>There is already \a [id] slotted into \the [src]</span>")
+				return
+			to_chat(user, "<span class='notice'>\The [id] slots into \the [src] snugly.</span>")
+			return
+	if(!user.transferItemToLoc(C, src))
+		return ..()
+
+/obj/item/device/electropack/shockcollar/GetAccess()
+	if(id)
+		return id.GetAccess()
+	else
+		return ..()
+
+/obj/item/device/electropack/shockcollar/examine(mob/user)
+	if(id)
+		to_chat(user, "There is [icon(id)] \a [id] clipped onto it.")
+	else
+		return ..()
+
+obj/item/device/electropack/shockcollar/GetID()
+	return id
