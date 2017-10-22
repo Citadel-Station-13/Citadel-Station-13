@@ -503,14 +503,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	var/y=arcsin(x/sqrt(1+x*x))
 	return y
 
-<<<<<<< HEAD
-/atom/proc/GetAllContents(list/output=list())
-	. = output
-	output += src
-	for(var/i in 1 to contents.len)
-		var/atom/thing = contents[i]
-		thing.GetAllContents(output)
-=======
 /*
 Recursively gets all contents of contents and returns them all in a list.
 
@@ -519,15 +511,14 @@ Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that 
 */
 /atom/proc/GetAllContents(list/output=list(), recursive_depth=MAX_PROC_DEPTH, _current_depth=0)
 	. = output
-	output += src 
+	output += src
 	if(_current_depth == recursive_depth)
 		if(_current_depth == MAX_PROC_DEPTH)
 			WARNING("Get all contents reached the max recursive depth of [MAX_PROC_DEPTH]. More and we would break shit. Offending atom: [src]")
 		return
-	for(var/i in 1 to contents.len) 
-		var/atom/thing = contents[i] 
-		thing.GetAllContents(output, recursive_depth, ++_current_depth) 
->>>>>>> 179cd9d... Merge pull request #31927 from ninjanomnom/recursive-depth
+	for(var/i in 1 to contents.len)
+		var/atom/thing = contents[i]
+		thing.GetAllContents(output, recursive_depth, ++_current_depth)
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
