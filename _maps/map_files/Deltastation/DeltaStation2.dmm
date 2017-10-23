@@ -54606,6 +54606,10 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
+/obj/machinery/magnetic_controller{
+	autolink = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/security/range)
 "ckm" = (
@@ -77490,6 +77494,10 @@
 	pixel_y = 3
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/magnetic_controller{
+	autolink = 1;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "dhw" = (
