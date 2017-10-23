@@ -474,6 +474,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = ABSTRACT_1 | NODROP_1
 
+<<<<<<< HEAD
 /obj/effect/golemrune
 	anchored = TRUE
 	desc = "A strange rune used to create golems. It glows when spirits are nearby."
@@ -542,6 +543,8 @@
 	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
 	qdel(src)
 
+=======
+>>>>>>> 67f87bb... Removes golem rune code (#31990)
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"
