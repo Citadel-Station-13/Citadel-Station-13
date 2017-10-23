@@ -739,7 +739,7 @@ Do not set recursive depth higher than MAX_PROC_DEPTH as byond breaks when that 
 
 */
 
-/proc/get_turf_pixel(atom/movable/AM)
+/proc/get_turf_pixel(atom/AM)
 	if(!istype(AM))
 		return
 
