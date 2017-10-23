@@ -10,25 +10,14 @@
 	var/mob/living/carbon/attached = null
 	var/mode = IV_INJECTING
 	var/obj/item/reagent_containers/beaker = null
-<<<<<<< HEAD
-	var/list/drip_containers = list(/obj/item/reagent_containers/blood,
-											/obj/item/reagent_containers/food,
-											/obj/item/reagent_containers/glass)
-=======
 	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
 									/obj/item/reagent_containers/food,
 									/obj/item/reagent_containers/glass))
->>>>>>> 8e434b7... Removes duplicate typecaches (#31883)
 
 /obj/machinery/iv_drip/Initialize()
 	. = ..()
 	update_icon()
-<<<<<<< HEAD
-	drip_containers = typecacheof(drip_containers)
-	
-=======
 
->>>>>>> 8e434b7... Removes duplicate typecaches (#31883)
 /obj/machinery/iv_drip/Destroy()
 	attached = null
 	QDEL_NULL(beaker)
