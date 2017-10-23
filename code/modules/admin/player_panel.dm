@@ -441,7 +441,7 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table>"
-      
+
 		if(SSticker.mode.changelings.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/changeling in SSticker.mode.changelings)
@@ -593,7 +593,8 @@
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
-
+			if(blob_minds.len)
+				dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/blob in blob_minds)
 				var/mob/camera/blob/M = blob.current
 				if(M)
