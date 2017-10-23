@@ -26,11 +26,6 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-<<<<<<< HEAD
-	can_ride_typecache = typecacheof(can_ride_typecache)
-	hook_vr("mob_new",list(src))
-=======
->>>>>>> 8e434b7... Removes duplicate typecaches (#31883)
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
