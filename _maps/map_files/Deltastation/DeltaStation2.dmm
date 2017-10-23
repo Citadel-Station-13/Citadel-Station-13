@@ -8795,7 +8795,7 @@
 /obj/machinery/camera{
 	c_tag = "Supermatter Chamber";
 	dir = 2;
-	network = list("Engine");
+	network = list("Engine")
 	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
@@ -31711,6 +31711,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -32839,6 +32840,7 @@
 /area/security/main)
 "bpz" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -33557,6 +33559,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -34196,6 +34199,7 @@
 	pixel_x = 32
 	},
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -41790,21 +41794,11 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bFj" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/security/brig)
 "bFk" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -41819,11 +41813,6 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
@@ -43795,12 +43784,6 @@
 	},
 /area/hallway/primary/starboard)
 "bIY" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -45790,11 +45773,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
 	name = "Cell 2"
@@ -45860,6 +45838,13 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
 /obj/item/gun/ballistic/shotgun/riot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bNh" = (
@@ -46820,6 +46805,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bOX" = (
@@ -48049,12 +48037,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bQV" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -48139,6 +48121,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bRd" = (
@@ -49580,6 +49565,10 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/ai_monitored/security/armory)
 "bTv" = (
@@ -53355,12 +53344,12 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "caE" = (
-/obj/machinery/computer/security,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -53376,7 +53365,6 @@
 	},
 /area/security/brig)
 "caG" = (
-/obj/machinery/computer/secure_data,
 /obj/structure/cable/white{
 	d1 = 1;
 	d2 = 2;
@@ -54283,17 +54271,15 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "cco" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/table/reinforced,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/item/clipboard,
-/obj/item/toy/figure/secofficer,
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -54302,17 +54288,26 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/security/brig)
 "ccq" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -54322,17 +54317,22 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
 /area/security/brig)
 "ccs" = (
-/obj/structure/cable/white{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cct" = (
@@ -55186,11 +55186,6 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdZ" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
@@ -55202,69 +55197,36 @@
 	dir = 1;
 	name = "security camera"
 	},
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/toy/figure/secofficer,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "cea" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
 /area/security/brig)
 "ceb" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
-	name = "Security Desk";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/red/side{
-	dir = 8
-	},
+/turf/closed/wall,
 /area/security/brig)
 "cec" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
 "ced" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/structure/chair{
 	dir = 1
 	},
@@ -106863,11 +106825,6 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "efM" = (
-/obj/structure/cable/white{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/machinery/light/small{
@@ -108990,11 +108947,6 @@
 	},
 /area/maintenance/port/fore)
 "erg" = (
-/obj/structure/cable/white{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -109458,6 +109410,24 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
+"YGL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_security{
+	name = "Security Desk";
+	req_access_txt = "63"
+	},
+/obj/structure/cable/white{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/security/brig)
 
 (1,1,1) = {"
 aaa
@@ -159435,20 +159405,20 @@ bwi
 bxY
 efF
 bjQ
-bDn
-bFi
-bHa
 bdi
-bDn
-bFi
-bHa
+bdi
+bdi
+bdi
+bdi
+bdi
+bdi
 bdi
 bTh
 bVn
 bWY
 bdi
-bdi
-bDq
+bIZ
+YGL
 ceb
 bdi
 cgU
@@ -159954,7 +159924,7 @@ bFk
 bHc
 bAb
 bLc
-bit
+bgA
 bOO
 bIZ
 bTj

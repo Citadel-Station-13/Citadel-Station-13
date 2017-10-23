@@ -902,6 +902,9 @@
 /area/security/main)
 "acq" = (
 /obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "acr" = (
@@ -1117,7 +1120,6 @@
 /turf/open/floor/plasteel/bar,
 /area/crew_quarters/bar)
 "acO" = (
-/obj/structure/closet/l3closet/security,
 /obj/machinery/camera{
 	c_tag = "Brig Equipment Room";
 	dir = 4
@@ -3272,7 +3274,8 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/chem_master,
+/obj/machinery/iv_drip,
+/obj/item/reagent_containers/blood/empty,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 5
 	},
@@ -3313,7 +3316,8 @@
 	name = "Station Intercom (General)";
 	pixel_y = 24
 	},
-/obj/machinery/chem_dispenser,
+/obj/structure/table/glass,
+/obj/machinery/computer/med_data/laptop,
 /turf/open/floor/plasteel/whitered/side{
 	dir = 1
 	},
@@ -3640,6 +3644,13 @@
 	pixel_y = 8;
 	req_access_txt = "2"
 	},
+/obj/machinery/button/door{
+	id = "seclobby";
+	name = "Security Lobby Lockdown";
+	pixel_x = -27;
+	pixel_y = -2;
+	req_access_txt = "2"
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahS" = (
@@ -3710,8 +3721,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/vehicle/secway,
-/obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -4821,7 +4830,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/red/side,
+/turf/open/floor/plasteel/red/side{
+	dir = 5
+	},
 /area/security/brig)
 "akt" = (
 /obj/machinery/light,
@@ -4873,6 +4884,9 @@
 /area/security/courtroom)
 "akz" = (
 /obj/structure/chair,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -5102,8 +5116,12 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "seclobby";
+	name = "security shutters"
+	},
 /turf/open/floor/plasteel/red/side{
-	dir = 5
+	dir = 9
 	},
 /area/security/brig)
 "akX" = (
@@ -5128,7 +5146,20 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/closed/wall/r_wall,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "seclobby";
+	name = "security shutters"
+	},
+/obj/machinery/door/airlock/glass_security{
+	cyclelinkeddir = 2;
+	id_tag = "innerbrig";
+	name = "Brig";
+	req_access_txt = "63"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 5
+	},
 /area/security/brig)
 "akZ" = (
 /obj/structure/cable{
@@ -5319,6 +5350,10 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "alx" = (
+/obj/machinery/flasher{
+	id = "Cell 4";
+	pixel_x = -28
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "aly" = (
@@ -5668,6 +5703,10 @@
 /area/security/brig)
 "amq" = (
 /obj/machinery/vending/snack/random,
+/obj/machinery/flasher{
+	id = "brigentry";
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -6178,9 +6217,9 @@
 /area/hallway/primary/fore)
 "anC" = (
 /obj/effect/spawner/structure/window,
-/obj/machinery/door/poddoor/preopen{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "seclobby";
-	name = "security lobby blast door"
+	name = "security shutters"
 	},
 /turf/open/floor/plating,
 /area/security/courtroom)
@@ -6317,9 +6356,9 @@
 "anT" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/preopen{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "seclobby";
-	name = "security lobby blast door"
+	name = "security shutters"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
@@ -6328,9 +6367,9 @@
 /obj/machinery/door/airlock/glass{
 	name = "Courtroom"
 	},
-/obj/machinery/door/poddoor/preopen{
+/obj/machinery/door/poddoor/shutters/preopen{
 	id = "seclobby";
-	name = "security lobby blast door"
+	name = "security shutters"
 	},
 /turf/open/floor/plasteel/black,
 /area/security/courtroom)
@@ -7200,8 +7239,8 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j1"
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
@@ -42469,8 +42508,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -61608,10 +61647,6 @@
 	},
 /area/hallway/primary/fore)
 "Qst" = (
-/obj/machinery/flasher{
-	id = "brigentry";
-	pixel_x = 28
-	},
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -61637,15 +61672,15 @@
 /turf/open/floor/plasteel/black,
 /area/security/brig)
 "Qsv" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "seclobby";
-	name = "security blast door"
-	},
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "seclobby";
+	name = "security shutters"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "Qsw" = (
@@ -61753,6 +61788,36 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
+"QsL" = (
+/obj/structure/window/reinforced,
+/obj/vehicle/secway,
+/obj/item/key/security,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsM" = (
+/obj/structure/window/reinforced,
+/obj/vehicle/secway,
+/obj/item/key/security,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsN" = (
+/obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsO" = (
+/obj/structure/closet/l3closet/security,
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
+"QsP" = (
+/obj/effect/landmark/secequipment,
+/obj/effect/turf_decal/bot{
+	dir = 2
+	},
+/turf/open/floor/plasteel/showroomfloor,
+/area/security/main)
 
 (1,1,1) = {"
 aaa
@@ -85738,8 +85803,8 @@ afy
 agh
 afA
 QrJ
-QrP
-QrS
+QrK
+QrK
 aiV
 ajs
 akb
@@ -85996,7 +86061,7 @@ agg
 afA
 QrK
 QrQ
-QrT
+QrK
 aiV
 ajr
 aka
@@ -86253,7 +86318,7 @@ afA
 afA
 QrL
 QrR
-QrU
+QrK
 aiV
 aju
 akd
@@ -87802,7 +87867,7 @@ akj
 agj
 agj
 agj
-aiX
+agj
 aiX
 anQ
 aov
@@ -89085,8 +89150,8 @@ agj
 aja
 akl
 Qsa
-Qsd
-amh
+Qsc
+Qsh
 ami
 aiX
 anw
@@ -89835,7 +89900,7 @@ aaf
 aaf
 aaf
 aaf
-aaf
+abY
 aaR
 aaZ
 aaZ
@@ -90092,7 +90157,7 @@ aaa
 aaa
 aaa
 aaf
-QqS
+QqR
 aaf
 aaZ
 Qra
@@ -90349,12 +90414,12 @@ aaa
 aaa
 aaa
 aaf
-QqT
+QqR
 aaf
 aaZ
 Qrb
 Qrj
-Qrr
+Qrq
 aaZ
 acl
 cxA
@@ -90367,10 +90432,10 @@ ahx
 ahS
 aiK
 ajc
-QrW
+QrV
 akm
 akT
-alf
+aly
 alx
 amQ
 aiX
@@ -90606,10 +90671,10 @@ aaa
 aaa
 aaa
 aaf
-QqU
+QqR
 aaf
 aaZ
-Qrc
+Qrb
 Qrk
 Qrs
 aaZ
@@ -90627,8 +90692,8 @@ ajc
 ajI
 akl
 akS
-Qsf
-Qsk
+Qsc
+Qsh
 amp
 aiX
 anS
@@ -90860,10 +90925,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+QmH
+QmH
 aaf
-QqV
+QqR
 aaf
 aaZ
 Qrd
@@ -91120,12 +91185,12 @@ aaa
 aaa
 aaa
 aaf
-QqW
+QqR
 aaf
 aaZ
 Qre
 Qrm
-Qru
+Qrt
 aaZ
 QrA
 coS
@@ -91377,7 +91442,7 @@ aaa
 aaa
 aaa
 aaf
-QqX
+QqR
 aaf
 aaZ
 Qrf
@@ -91403,7 +91468,7 @@ amn
 amV
 Qsu
 anB
-QsG
+Qsq
 aod
 aqf
 ahT
@@ -91634,7 +91699,7 @@ aaa
 aaa
 aaa
 aaf
-QqY
+QqR
 aaf
 aaZ
 Qrg
@@ -91891,7 +91956,7 @@ aaa
 aaa
 aaa
 aaf
-QqZ
+QqR
 aaf
 aaZ
 Qrh
@@ -91914,9 +91979,9 @@ akr
 amS
 alC
 Qsm
-amX
-amX
-amX
+Qsm
+Qsm
+Qsm
 aoB
 aod
 aqe
@@ -92148,8 +92213,8 @@ aaa
 aaa
 aaf
 aaf
-abY
-aaf
+aaZ
+aaZ
 aaZ
 aaZ
 Qrp
@@ -92167,12 +92232,12 @@ aii
 agn
 ajd
 ajI
-QrZ
-akW
-anw
+akp
+amS
+Qsn
 amo
-amX
-amX
+Qsm
+Qsm
 QsA
 QsH
 QsI
@@ -92404,15 +92469,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
-aaf
+QmH
 abp
-aco
+QsL
+QsM
+abO
 abO
 abO
 acO
-abl
+abO
 abO
 abO
 afc
@@ -92424,9 +92489,9 @@ ahZ
 adR
 aiQ
 ajI
-ahY
+QrZ
 akW
-anA
+anw
 Qsn
 Qsq
 anB
@@ -92662,9 +92727,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
 abo
+abO
+abO
 abO
 abO
 abO
@@ -92683,11 +92748,11 @@ ajf
 ajK
 aks
 akY
-Qsg
-Qso
+anA
+Qsn
 Qsr
 amo
-QsC
+QsB
 aoC
 aod
 aqe
@@ -92919,15 +92984,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaf
 abp
 abO
+QsN
+QsP
 acq
 acq
 acq
 acq
-acq
+abO
 aew
 afe
 afS
@@ -92943,7 +93008,7 @@ aiX
 akz
 Qsp
 Qss
-Qsw
+Qss
 QsD
 aoF
 apo
@@ -93176,9 +93241,9 @@ aaa
 aaa
 aaa
 aaf
-aaf
-aaf
 abo
+abO
+abO
 abO
 abO
 acp
@@ -93433,15 +93498,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 abp
+aco
+QsO
 abP
 abR
 abP
 abP
 abP
-abP
+abl
 abp
 abp
 abp
@@ -93690,8 +93755,8 @@ aaa
 aaa
 aaf
 aaf
-aaf
-aaf
+abp
+abp
 abp
 abq
 abq
