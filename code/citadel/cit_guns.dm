@@ -922,13 +922,17 @@ obj/item/projectile/bullet/c10mm/soporific
 
 /obj/item/gun/ballistic/automatic/pistol/p37
 	name = "\improper CX Mk.37P"
-	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses 9mm bullets loaded into proprietary magazines."
+	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. \
+			This model is coated with a special polychromic material. \
+			Has a small warning on the receiver that boldly states 'WARNING: WILL DETONATE UPON UNAUTHORIZED USE'. \
+			Uses 9mm bullets loaded into proprietary magazines."
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "p37"
 	w_class = WEIGHT_CLASS_NORMAL
 	spawnwithmagazine = FALSE
 	mag_type = /obj/item/ammo_box/magazine/m9mm/p37
 	can_suppress = FALSE
+	pin = /obj/item/device/firing_pin/dna/dredd		//goes boom if whoever isn't DNA locked to it tries to use it
 	actions_types = list(/datum/action/item_action/pick_color)
 
 	var/frame_color = "#808080" //RGB
@@ -997,41 +1001,60 @@ obj/item/projectile/bullet/c10mm/soporific
 /obj/item/gun/ballistic/automatic/pistol/p37/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 
-		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")	//so you don't need to carefully click 8 times if you accidentally click on this
+		var/choice = input(user,"Mk.37P polychrome options", "Gun Recolor") in list("Frame Color","Receiver Color","Body Color",
+																"Barrel Color", "Barrel Tip Color", "Grip Light Color",
+																"Light Color", "Arm Color", "*CANCEL*")
 
-			var/frame_color_input = input(usr,"Choose Frame Color") as color|null
-			if(frame_color_input)
-				frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
+		switch(choice)
 
-			var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
-			if(receiver_color_input)
-				receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
+			if("Frame Color")
+				var/frame_color_input = input(usr,"Choose Frame Color") as color|null
+				if(frame_color_input)
+					frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/body_color_input = input(usr,"Choose Body Color") as color|null
-			if(body_color_input)
-				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+			if("Receiver Color")
+				var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
+				if(receiver_color_input)
+					receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
-			if(barrel_color_input)
-				barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
+			if("Body Color")
+				var/body_color_input = input(usr,"Choose Body Color") as color|null
+				if(body_color_input)
+					body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
-			if(tip_color_input)
-				tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
+			if("Barrel Color")
+				var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
+				if(barrel_color_input)
+					barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
-			if(grip_color_input)
-				grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
+			if("Barrel Tip Color")
+				var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
+				if(tip_color_input)
+					tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/energy_color_input = input(usr,"Choose Light Color") as color|null
-			if(energy_color_input)
-				energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+			if("Grip Light Color")
+				var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
+				if(grip_color_input)
+					grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			var/arm_color_input = input(usr,"Choose Arm Color") as color|null
-			if(arm_color_input)
-				arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
+			if("Light Color")
+				var/energy_color_input = input(usr,"Choose Light Color") as color|null
+				if(energy_color_input)
+					energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+				update_icon()
 
-			update_icon()
+			if("Arm Color")
+				var/arm_color_input = input(usr,"Choose Arm Color") as color|null
+				if(arm_color_input)
+					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
 	else
 		..()
 
@@ -1110,6 +1133,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "\improper CX Mk.37S"
 	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. Uses 9mm bullets loaded into proprietary magazines."
 	spawnwithmagazine = FALSE
+	pin = /obj/item/device/firing_pin/implant/mindshield
 	actions_types = list()	//so you can't recolor it
 
 	frame_color = "#808080" //RGB
