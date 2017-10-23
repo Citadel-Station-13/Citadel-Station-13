@@ -47,7 +47,4 @@
 	buckle_lying = FALSE
 
 	var/creamed = FALSE //to use with creampie overlays
-<<<<<<< HEAD
-=======
 	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/slime, /mob/living/simple_animal/parrot))
->>>>>>> 8e434b7... Removes duplicate typecaches (#31883)
