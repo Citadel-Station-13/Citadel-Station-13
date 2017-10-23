@@ -190,13 +190,15 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/x9
 	casing_ejector = 0
-	spread = 45		//MAXIMUM XCOM MEMES (actually that'd be 90 spread)
+	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
 	id = "foam_x9"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000)
+	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
 	category = list("hacked", "Misc")
 
@@ -496,6 +498,9 @@
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
 	origin_tech = "combat=2;engineering=2;magnets=2"
+	spread = 60
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 
 /datum/design/foam_magrifle
 	name = "Foam Force MagRifle"
@@ -635,7 +640,7 @@
 	name = "MagTag Hyper Rifle"
 	id = "foam_hyperburst"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 15000)
+	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
 	build_path = /obj/item/gun/energy/laser/practice/hyperburst
 	category = list("hacked", "Misc")
 
@@ -680,6 +685,7 @@
 	suppressed = TRUE
 	burst_size = 1
 	fire_delay = 0
+	spread = 60
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
@@ -695,7 +701,7 @@
 	name = "Foam Force Stealth Pistol"
 	id = "foam_sp"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
 	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
 	category = list("hacked", "Misc")
 
