@@ -39265,17 +39265,11 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "bFj" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
 /area/security/brig)
 "bFk" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -39286,9 +39280,6 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig1";
@@ -41137,12 +41128,6 @@
 	},
 /area/hallway/primary/starboard)
 "bIY" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -43009,9 +42994,6 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "2-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
 	},
 /obj/machinery/door/window/brigdoor/security/cell/westright{
 	id = "brig2";
@@ -45147,12 +45129,6 @@
 /turf/open/floor/plasteel/neutral,
 /area/hallway/primary/starboard)
 "bQV" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_x = 32
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
@@ -50025,10 +50001,10 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "caE" = (
-/obj/machinery/computer/security,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
@@ -50044,7 +50020,6 @@
 	},
 /area/security/brig)
 "caG" = (
-/obj/machinery/computer/secure_data,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
@@ -50887,15 +50862,13 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "cco" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/structure/table/reinforced,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/item/clipboard,
-/obj/item/toy/figure/secofficer,
+/obj/structure/cable/white{
+	icon_state = "1-4"
+	},
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -50904,15 +50877,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/neutral,
 /area/security/brig)
 "ccq" = (
-/obj/structure/cable/white{
-	icon_state = "1-2"
-	},
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/structure/cable/white{
+	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/red/side{
 	dir = 4
@@ -50922,15 +50900,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/red/corner{
 	dir = 1
 	},
 /area/security/brig)
 "ccs" = (
-/obj/structure/cable/white{
-	icon_state = "2-4"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "cct" = (
@@ -51704,9 +51685,6 @@
 /turf/open/floor/wood,
 /area/lawoffice)
 "cdZ" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
@@ -51718,57 +51696,36 @@
 	dir = 1;
 	name = "security camera"
 	},
+/obj/structure/table/reinforced,
+/obj/item/clipboard,
+/obj/item/toy/figure/secofficer,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "cea" = (
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_y = -26
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
 /area/security/brig)
 "ceb" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/glass_security{
-	name = "Security Desk";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/red/side{
-	dir = 8
-	},
+/turf/closed/wall,
 /area/security/brig)
 "cec" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/red/corner,
 /area/security/brig)
 "ced" = (
-/obj/structure/cable/white{
-	icon_state = "1-8"
-	},
 /obj/structure/chair{
 	dir = 1
 	},
@@ -89848,7 +89805,7 @@
 /area/crew_quarters/theatre/abandoned)
 "dHa" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/machinery/vending/kink,
 /turf/open/floor/wood,
 /area/crew_quarters/theatre/abandoned)
 "dHb" = (
@@ -100197,9 +100154,6 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "efM" = (
-/obj/structure/cable/white{
-	icon_state = "1-4"
-	},
 /obj/structure/table/reinforced,
 /obj/item/paper_bin,
 /obj/machinery/light/small{
@@ -102223,9 +102177,6 @@
 	},
 /area/maintenance/port/fore)
 "erg" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
@@ -102666,6 +102617,30 @@
 	},
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
+"YGM" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
+"YGN" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable/white{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/glass_security{
+	name = "Security Desk";
+	req_access_txt = "63"
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/security/brig)
+"YGO" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/crew_quarters/abandoned_gambling_den)
 
 (1,1,1) = {"
 aaa
@@ -127001,7 +126976,7 @@ dmb
 dnA
 doK
 dqw
-diJ
+YGO
 aJm
 aHW
 aaf
@@ -133072,7 +133047,7 @@ aib
 asx
 atw
 auQ
-aic
+YGM
 awX
 aye
 azn
@@ -152643,20 +152618,20 @@ bwi
 bxY
 efF
 bjQ
-bDn
-bFi
-bHa
 bdi
-bDn
-bFi
-bHa
+bdi
+bdi
+bdi
+bdi
+bdi
+bdi
 bdi
 bTh
 bVn
 bWY
 bdi
-bdi
-bDq
+bIZ
+YGN
 ceb
 bdi
 cgU
@@ -153162,7 +153137,7 @@ bFk
 bHc
 bAb
 bLc
-bit
+bgA
 bOO
 bIZ
 bTj
