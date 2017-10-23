@@ -27,13 +27,9 @@
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker = null
-<<<<<<< HEAD
-	var/lastattacked = null
-	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG, INDIVIDUAL_LOOC_LOG)
-=======
 	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
->>>>>>> 032c864... Removes mob.lastattacked and replaces lastattacker with a string (#31981)
+
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/disabilities = 0	//Carbon
