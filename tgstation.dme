@@ -1293,7 +1293,6 @@
 #include "code\modules\clothing\masks\hailer.dm"
 #include "code\modules\clothing\masks\miscellaneous.dm"
 #include "code\modules\clothing\masks\vg_masks.dm"
-#include "code\modules\clothing\neck\neck.dm"
 #include "code\modules\clothing\neck\_neck.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
