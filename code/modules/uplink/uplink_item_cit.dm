@@ -161,3 +161,17 @@
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
 
 ///End of Bundle stuff///
+
+
+/*/////////////////////////////////////////////////////////////////////////
+/////////////		The TRUE Energy Sword		///////////////////////////
+*//////////////////////////////////////////////////////////////////////////
+
+/datum/uplink_item/dangerous/cxneb
+	name = "CX Type-69 Non-Eutactic Blade"
+	desc = "An interesting weapon that is functionally identical to the energy sword, \
+			the Non-Eutactic Blade (NEB) forges a hardlight blade on-demand, \
+	 		generating an extremely sharp, unbreakable edge that is guaranteed to satisfy your every need. \
+	 		This particular model has a polychromic hardlight generator, allowing you to murder in style!"
+	item = /obj/item/melee/transforming/energy/sword/cx
+	cost = 8
