@@ -930,7 +930,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
 		return FALSE
 	else
-		return ..()
+		..()
 
 /obj/item/ammo_box/magazine/internal/shot/toy
 	var/riotdartcompatible = FALSE
@@ -939,7 +939,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
 		return FALSE
 	else
-		return ..()
+		..()
 
 /obj/item/ammo_box/magazine/toy/smg/riot
 	riotdartcompatible = TRUE
