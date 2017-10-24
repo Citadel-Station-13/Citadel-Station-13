@@ -168,7 +168,7 @@
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker"
-	icon_state = "stalker"
+	icon_state = "stalker-w"
 	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
