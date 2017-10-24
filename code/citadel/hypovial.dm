@@ -42,7 +42,7 @@
 	name = "large hypospray vial"
 	desc = "This is a vial suitable for loading into the Chief Medical Officer's Hypospray mk II."
 	icon_state = "hypoviallarge"
-	volume = 120
+	volume = 60
 
 /obj/item/reagent_containers/glass/bottle/vial/New()
 	..()
@@ -77,24 +77,24 @@
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/CMO
 	name = "large vial (CMO Special)"
 	icon_state = "hypoviallarge-cmos"
-	comes_with = list("epinephrine" = 30, "kelotane" = 30, "antitoxin" = 30, "bicaridine" = 30)
+	comes_with = list("epinephrine" = 15, "kelotane" = 15, "charcoal" = 15, "bicaridine" = 15)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/bicaridine
 	name = "large vial (bicaridine)"
 	icon_state = "hypoviallarge-b"
-	comes_with = list("bicaridine" = 120)
+	comes_with = list("bicaridine" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/antitoxin
 	name = "large vial (Anti-Tox)"
 	icon_state = "hypoviallarge-a"
-	comes_with = list("antitoxin" = 120)
+	comes_with = list("antitoxin" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/kelotane
 	name = "large vial (kelotane)"
 	icon_state = "hypoviallarge-k"
-	comes_with = list("kelotane" = 120)
+	comes_with = list("kelotane" = 60)
 
 /obj/item/reagent_containers/glass/bottle/vial/large/preloaded/dexalin
 	name = "large vial (dexalin)"
 	icon_state = "hypoviallarge-d"
-	comes_with = list("dexalin" = 120)
+	comes_with = list("dexalin" = 60)

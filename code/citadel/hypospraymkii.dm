@@ -42,27 +42,20 @@
 /obj/item/reagent_containers/hypospray/mkii/examine(mob/user)
 	to_chat(user, "[src] is set to [src.mode ? "Inject" : "Spray"] contents on application.")
 
-/obj/item/reagent_containers/hypospray/mkii/attack_hand(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
-	if(loc !=user)
-		..()
-		return
+/obj/item/reagent_containers/hypospray/mkii/proc/unload_hypo(obj/item/reagent_containers/glass/bottle/vial/W, mob/user as mob)
+	reagents.add_reagent_list(W.reagents,volume)
+	src.volume = 0
+	W.loc = get_turf(src.loc)
+	W.update_icon()
+	user.put_in_hands(W)
+	vials -= W
+	to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
+	update_icon()
+	playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
+	return
 
-	if(W)
-		reagents.add_reagent_list(W.reagents,volume)
-		reagents.total_volume = 0
-		W.loc = get_turf(src.loc)
-		W.update_icon()
-		user.put_in_hands(loaded_vial)
-		vials -= W
-		to_chat(user, "<span class='notice'>You remove the vial from the [src].</span>")
-		update_icon()
-		playsound(src.loc, 'sound/weapons/empty.ogg', 50, 1)
-		return
 
-	else
-		return ..()
-
-/obj/item/reagent_containers/hypospray/mkii/attackby(obj/item/reagent_containers/glass/bottle/vial/W, mob/user, params)
+/obj/item/reagent_containers/hypospray/mkii/proc/attackby(obj/item/reagent_containers/glass/bottle/vial/W, mob/user, params)
 	if(is_type_in_list(W, allowed_containers))
 		. = 1 //no afterattack
 		if(vials.len == 1)
@@ -74,7 +67,7 @@
 			if(!do_after(user,30) || W || !(W in user))
 				return FALSE
 			vial += W
-			reagents.total_volume = W.reagents.total_volume
+			reagents.volume = W.reagents.volume
 			W.reagents.add_reagent_list(reagents,volume)
 			user.visible_message("<span class='notice'>[user] has loaded a vial into \the [src].</span>","<span class='notice'>You have loaded [W] into \the [src].</span>")
 			update_icon()
@@ -207,3 +200,15 @@
 	var/obj/item/reagent_containers/glass/bottle/vial/W
 	src.volume = W.volume
 	src.reagents.maximum_volume = W.reagents.maximum_volume
+
+
+/obj/item/reagent_containers/hypospray/mkii/verb/eject_vial()
+	set name = "Eject Hypo Vial"
+	set category = "Object"
+	set src in range(0)
+	if(usr.incapacitated())
+		return
+	if(!loaded)
+		to_chat(usr, "This Hypo needs to be loaded first!")
+		return
+	unload_hypo()
