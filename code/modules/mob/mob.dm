@@ -26,8 +26,6 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
-	hook_vr("mob_new",list(src))
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
