@@ -932,6 +932,15 @@ obj/item/projectile/bullet/c10mm/soporific
 	else
 		return ..()
 
+/obj/item/ammo_box/magazine/internal/shot/toy
+	var/riotdartcompatible = FALSE
+
+/obj/item/ammo_box/magazine/internal/shot/toy/give_round(obj/item/ammo_casing/R, replace_spent = FALSE)
+	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
+		return FALSE
+	else
+		return ..()
+
 /obj/item/ammo_box/magazine/toy/smg/riot
 	riotdartcompatible = TRUE
 
