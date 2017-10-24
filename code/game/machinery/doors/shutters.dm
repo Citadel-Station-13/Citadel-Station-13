@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters
 	gender = PLURAL
 	name = "shutters"
@@ -8,6 +9,18 @@
 
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
+=======
+/obj/machinery/door/poddoor/shutters
+	gender = PLURAL
+	name = "shutters"
+	desc = "Heavy duty metal shutters that opens mechanically."
+	icon = 'icons/obj/doors/shutters.dmi'
+	layer = SHUTTER_LAYER
+	damage_deflection = 20
+
+/obj/machinery/door/poddoor/shutters/preopen
+	icon_state = "open"
+>>>>>>> ca7adb4... Moves opened firedoors underneath opened airlocks (#32018)
 	density = FALSE
 	opacity = 0
 
