@@ -921,3 +921,25 @@ obj/item/projectile/bullet/c10mm/soporific
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/raygun
 	category = list("hacked", "Misc")
+
+////// Cit-specific toy gun stuff to discourage being morons with riot darts as a non-antag //////
+/obj/item/ammo_box/magazine/toy
+	var/riotdartcompatible = FALSE
+
+/obj/item/ammo_box/magazine/toy/give_round(obj/item/ammo_casing/R, replace_spent = FALSE)
+	if(!riotdartcompatible && R && istype(R, /obj/item/ammo_casing/caseless/foam_dart/riot))
+		return FALSE
+	else
+		return ..()
+
+/obj/item/ammo_box/magazine/toy/smg/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/pistol/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/smgm45/riot
+	riotdartcompatible = TRUE
+
+/obj/item/ammo_box/magazine/toy/m762/riot
+	riotdartcompatible = TRUE
