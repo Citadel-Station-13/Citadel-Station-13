@@ -234,8 +234,8 @@
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-  		if(!tmp_alertlevel)
+			tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
@@ -365,7 +365,7 @@
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			var/old_level = GLOB.security_level
