@@ -18,7 +18,7 @@
 
 	if (active)
 		to_chat(user, "<span class='notice'>You activate the holographic blade with a press of a button.</span>")
-		playsound(user, 'sound/weapons/saberon.ogg', 20, 1)
+		playsound(user, 'sound/weapons/nebon.ogg', 50, 1)
 		w_class = WEIGHT_CLASS_BULKY
 		attack_verb = list("slashed", "stabbed", "ravaged")
 		set_light(light_brightness)
@@ -26,7 +26,7 @@
 
 	else
 		to_chat(user, "<span class='notice'>You deactivate the holographic blade with a press of a button.</span>")
-		playsound(user, 'sound/weapons/saberoff.ogg', 20, 1)
+		playsound(user, 'sound/weapons/neboff.ogg', 50, 1)
 		w_class = WEIGHT_CLASS_SMALL
 		attack_verb = list("poked", "jabbed", "hit")
 		set_light(0)
@@ -72,7 +72,7 @@
 			blade_inhand.color = light_color
 			. += blade_inhand
 
-///autolathe memes/// I really need to stop doing this and find a proper way of adding in my toys
+/*///autolathe memes/// I really need to stop doing this and find a proper way of adding in my toys
 
 /datum/design/toyneb
 	name = "Non-Euplastic Blade"
@@ -81,6 +81,13 @@
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000)
 	build_path = /obj/item/toy/sword/cx
 	category = list("hacked", "Misc")
+*/					// There, I stopped doing it
+
+/datum/crafting_recipe/toyneb
+	name = "Non-Euplastic Blade"
+	reqs = list(/obj/item/light/bulb = 1, /obj/item/stack/cable_coil = 1, /obj/item/toy/sword = 1)
+	result = /obj/item/toy/sword/cx
+	category = CAT_MISC
 
 /*/////////////////////////////////////////////////////////////////////////
 /////////////		The TRUE Energy Sword		///////////////////////////
@@ -97,15 +104,16 @@
 	force = 3
 	throwforce = 5
 	hitsound = "swing_hit" //it starts deactivated
+	hitsound_on = 'sound/weapons/nebhit.ogg'
 	attack_verb_off = list("tapped", "poked")
 	throw_speed = 3
 	throw_range = 5
 	sharpness = IS_SHARP
-	embed_chance = 75
+	embed_chance = 40
 	embedded_impact_pain_multiplier = 10
-	armour_penetration = 35
-	origin_tech = "combat=3;magnets=4;syndicate=4"
-	block_chance = 50
+	armour_penetration = 0
+	origin_tech = "combat=3;magnets=4"
+	block_chance = 60
 	light_color = "#37FFF7"
 	actions_types = list(/datum/action/item_action/pick_color)
 
@@ -136,6 +144,11 @@
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE
+
+/obj/item/melee/transforming/energy/sword/cx/transform_messages(mob/living/user, supress_message_text)
+	playsound(user, active ? 'sound/weapons/nebon.ogg' : 'sound/weapons/neboff.ogg', 65, 1)
+	if(!supress_message_text)
+		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/energy/sword/cx/update_icon()
 	var/mutable_appearance/blade_overlay = mutable_appearance('icons/obj/cit_weapons.dmi', "cxsword_blade")
@@ -174,3 +187,21 @@
 			var/mutable_appearance/blade_inhand = mutable_appearance(icon_file, "cxsword_blade")
 			blade_inhand.color = light_color
 			. += blade_inhand
+
+/obj/item/melee/transforming/energy/sword/cx/traitor
+	name = "\improper Dragon's Tooth Sword"
+	desc = "The Dragon's Tooth sword is a blackmarket modification of the CX Armouries Type-69 NEB, \
+			which utilizes a hardlight blade that is dynamically 'forged' on demand to create a deadly sharp edge that is unbreakable. \
+			It appears to have a wooden grip and a shaved down guard."
+	icon_state = "cxsword_hilt_traitor"
+	armour_penetration = 35
+	embed_chance = 75
+	block_chance = 50
+	origin_tech = "combat=3;magnets=4;syndicate=4"
+	hitsound_on = 'sound/weapons/blade1.ogg'
+	light_color = "#37F0FF"
+
+/obj/item/melee/transforming/energy/sword/cx/traitor/transform_messages(mob/living/user, supress_message_text)
+	playsound(user, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, 1)
+	if(!supress_message_text)
+		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
