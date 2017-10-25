@@ -29,7 +29,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					continue
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status == BODYPART_ROBOTIC)
 					continue
 				if(S.requires_real_bodypart && affecting.is_pseudopart)
 					continue
@@ -56,7 +56,7 @@
 			if(affecting)
 				if(!S.requires_bodypart)
 					return
-				if(S.requires_organic_bodypart && affecting.status == BODYPART_ROBOTIC)
+				if(S.requires_bodypart_type && affecting.status == BODYPART_ROBOTIC)
 					return
 			else if(C && S.requires_bodypart)
 				return
@@ -78,13 +78,23 @@
 			user.visible_message("[user] removes the drapes from [M]'s [parse_zone(selected_zone)].", \
 				"<span class='notice'>You remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
 			qdel(current_surgery)
-		else if(istype(user.get_inactive_held_item(), /obj/item/cautery) && current_surgery.can_cancel)
-			M.surgeries -= current_surgery
-			user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
-				"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
-			qdel(current_surgery)
 		else if(current_surgery.can_cancel)
-			to_chat(user, "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>")
+			if(current_surgery.requires_bodypart_type == BODYPART_ORGANIC)
+				if(istype(user.get_inactive_held_item(), /obj/item/cautery))
+					M.surgeries -= current_surgery
+					user.visible_message("[user] mends the incision and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+						"<span class='notice'>You mend the incision and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+					qdel(current_surgery)
+				else
+					to_chat(user, "<span class='warning'>You need to hold a cautery in inactive hand to stop [M]'s surgery!</span>")
+			else if(current_surgery.requires_bodypart_type == BODYPART_ROBOTIC)
+				if(istype(user.get_inactive_held_item(), /obj/item/screwdriver))
+					M.surgeries -= current_surgery
+					user.visible_message("[user] screw the shell and removes the drapes from [M]'s [parse_zone(selected_zone)].", \
+						"<span class='notice'>You screw the shell and remove the drapes from [M]'s [parse_zone(selected_zone)].</span>")
+					qdel(current_surgery)
+				else
+					to_chat(user, "<span class='warning'>You need to hold a screwdriver in inactive hand to stop [M]'s surgery!</span>")
 
 	return 1
 
@@ -161,4 +171,3 @@
 				return 0
 
 	return 1
-
