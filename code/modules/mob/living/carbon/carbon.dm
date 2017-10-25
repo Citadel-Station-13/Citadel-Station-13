@@ -7,19 +7,15 @@
 	..()
 
 /mob/living/carbon/Destroy()
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
+//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
+	QDEL_LIST(internal_organs)
+	QDEL_LIST(stomach_contents)
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(implants)
 	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
-	return ..()
+	QDEL_NULL(dna)
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)

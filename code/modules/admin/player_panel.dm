@@ -441,7 +441,7 @@
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
 					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
 			dat += "</table>"
-      
+
 		if(SSticker.mode.changelings.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Changelings</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/changeling in SSticker.mode.changelings)
@@ -593,20 +593,15 @@
 		var/list/blob_minds = list()
 		for(var/mob/camera/blob/B in GLOB.mob_list)
 			blob_minds |= B.mind
-
-		if(istype(SSticker.mode, /datum/game_mode/blob) || blob_minds.len)
-			dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/mode = SSticker.mode
-				blob_minds |= mode.blob_overminds
-				dat += "<tr><td><i>Progress: [GLOB.blobs_legit.len]/[mode.blobwincount]</i></td></tr>"
-
+			if(blob_minds.len)
+				dat += "<br><table cellspacing=5><tr><td><B>Blob</B></td><td></td><td></td></tr>"
 			for(var/datum/mind/blob in blob_minds)
-				var/mob/M = blob.current
+				var/mob/camera/blob/M = blob.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+					dat += "<tr><td><i>Progress: [M.blobs_legit.len]/[M.blobwincount]</i></td></tr>"
 				else
 					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[blob]'>[blob.name]([blob.key])</a><i>Blob not found!</i></td>"
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"

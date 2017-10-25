@@ -9,7 +9,7 @@ Buildable meters
 
 /obj/item/pipe
 	name = "pipe"
-	desc = "A pipe"
+	desc = "A pipe."
 	var/pipe_type = 0
 	var/pipename
 	force = 7
@@ -32,7 +32,6 @@ Buildable meters
 		PIPE_HE_MANIFOLD, \
 		PIPE_HE_4WAYMANIFOLD, \
 		PIPE_JUNCTION, \
-		PIPE_BLUESPACE, \
 		\
 		PIPE_CONNECTOR, \
 		PIPE_UVENT, \
@@ -111,7 +110,6 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 	"[PIPE_HE_MANIFOLD]"	 = "he_manifold", \
 	"[PIPE_HE_4WAYMANIFOLD]" = "he_manifold4w", \
 	"[PIPE_JUNCTION]"		 = "junction", \
-	"[PIPE_BLUESPACE]"		 = "bluespace", \
 	\
 	"[PIPE_CONNECTOR]"		 = "connector", \
 	"[PIPE_UVENT]"			 = "uvent", \
@@ -141,7 +139,6 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 		"[PIPE_HE_MANIFOLD]"	= "h/e manifold", \
 		"[PIPE_HE_4WAYMANIFOLD]"= "h/e 4-way manifold", \
 		"[PIPE_JUNCTION]" 		= "junction", \
-		"[PIPE_BLUESPACE]" 		= "bluespace pipe", \
 		\
 		"[PIPE_CONNECTOR]" 		= "connector", \
 		"[PIPE_UVENT]" 			= "vent", \
@@ -301,7 +298,7 @@ GLOBAL_LIST_INIT(pipeID2State, list(
 
 /obj/item/pipe_meter
 	name = "meter"
-	desc = "A meter that can be laid on pipes"
+	desc = "A meter that can be laid on pipes."
 	icon = 'icons/obj/atmospherics/pipes/pipe_item.dmi'
 	icon_state = "meter"
 	item_state = "buildpipe"

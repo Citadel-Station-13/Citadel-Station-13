@@ -1,0 +1,12 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - balance: "Sec doggos have a disabler again"
+  - balance: "Sec doggos need 1 more second for their leg actuators to recharge after a pounce."
+  - balance: "Sec doggos no longer have a nuke pinpointer when emagged"
+  - balance: "Sechounds stun for half a second longer"
+  - balance: "Sechound pounce spoolup has been reduced from 0.5 seconds to 0.3 seconds."
+  - balance: "Scrubpups now have actual working mops on their feet instead of cheap plastic imitations"
+  - balance: "Scrubpups can eat normal-sized items again"
+  - balance: "Scrubpups can only carry 20 items now"
+  - balance: "Scrubpups no longer have flashes"

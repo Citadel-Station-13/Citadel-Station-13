@@ -102,9 +102,12 @@
 			if (I && istype(I))
 				if(ACCESS_CAPTAIN in I.access)
 					var/old_level = GLOB.security_level
-					if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
-					if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+					if(!tmp_alertlevel)
+						tmp_alertlevel = SEC_LEVEL_GREEN
+					if(tmp_alertlevel < SEC_LEVEL_GREEN)
+						tmp_alertlevel = SEC_LEVEL_GREEN
+					if(tmp_alertlevel > SEC_LEVEL_BLUE)
+						tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
 					set_security_level(tmp_alertlevel)
 					if(GLOB.security_level != old_level)
 						to_chat(usr, "<span class='notice'>Authorization confirmed. Modifying security level.</span>")
@@ -231,8 +234,8 @@
 		if("status")
 			state = STATE_STATUSDISPLAY
 		if("securitylevel")
-			tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel)
+			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+  		if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
@@ -362,13 +365,16 @@
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
-			tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			var/old_level = GLOB.security_level
-			if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+			if(!tmp_alertlevel)
+				tmp_alertlevel = SEC_LEVEL_GREEN
+			if(tmp_alertlevel < SEC_LEVEL_GREEN)
+				tmp_alertlevel = SEC_LEVEL_GREEN
+			if(tmp_alertlevel > SEC_LEVEL_BLUE)
+				tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
 			set_security_level(tmp_alertlevel)
 			if(GLOB.security_level != old_level)
 				//Only notify the admins if an actual change happened
@@ -692,7 +698,8 @@
 
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
 
-	if(!frequency) return
+	if(!frequency)
+		return
 
 	var/datum/signal/status_signal = new
 	status_signal.source = src

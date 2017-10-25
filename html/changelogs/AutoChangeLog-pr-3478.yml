@@ -1,0 +1,5 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - balance: "Sleepers are no longer go-to magic fix alls"
+  - tweak: "Minimum Heal values at tier 4 is now 1 instead of -100 for Sleepers"
