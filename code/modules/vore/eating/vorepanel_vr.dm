@@ -8,7 +8,7 @@
 #define BELLIES_DESC_MAX 1024
 #define FLAVOR_MAX 40
 
-/mob/living/proc/insidePanel()
+/mob/living/verb/insidePanel()
 	set name = "Vore Panel"
 	set category = "Vore"
 
