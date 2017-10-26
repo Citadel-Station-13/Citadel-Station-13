@@ -51,6 +51,14 @@
 		return FALSE
 	return ..()
 
+<<<<<<< HEAD
+=======
+/datum/config_entry/proc/VASProcCallGuard(str_val)
+	. = !(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	if(!.)
+		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
+
+>>>>>>> 039fe55... [512] The great \ref purge (#31824)
 /datum/config_entry/proc/ValidateAndSet(str_val)
 	CRASH("Invalid config entry type!")
 

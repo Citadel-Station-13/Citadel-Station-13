@@ -147,6 +147,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 	"1357" = "Engineering",
 	"1359" = "Security",
 	"1337" = "CentCom",
+<<<<<<< HEAD
 	"1213" = "Syndicate",
 	"1347" = "Supply",
 	"1349" = "Service",
@@ -292,6 +293,153 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/signal/proc/debug_print()
 	if (source)
+=======
+	"1213" = "Syndicate",
+	"1347" = "Supply",
+	"1349" = "Service",
+	"1447" = "AI Private",
+	"1215" = "Red Team",
+	"1217" = "Blue Team"
+))
+
+//depenging helpers
+GLOBAL_VAR_CONST(SYND_FREQ, 1213) //nuke op frequency, coloured dark brown in chat window
+GLOBAL_VAR_CONST(SUPP_FREQ, 1347) //supply, coloured light brown in chat window
+GLOBAL_VAR_CONST(SERV_FREQ, 1349) //service, coloured green in chat window
+GLOBAL_VAR_CONST(SCI_FREQ, 1351) //science, coloured plum in chat window
+GLOBAL_VAR_CONST(COMM_FREQ, 1353) //command, colored gold in chat window
+GLOBAL_VAR_CONST(MED_FREQ, 1355) //medical, coloured blue in chat window
+GLOBAL_VAR_CONST(ENG_FREQ, 1357) //engineering, coloured orange in chat window
+GLOBAL_VAR_CONST(SEC_FREQ, 1359) //security, coloured red in chat window
+GLOBAL_VAR_CONST(CENTCOM_FREQ, 1337) //centcom frequency, coloured grey in chat window
+GLOBAL_VAR_CONST(AIPRIV_FREQ, 1447) //AI private, colored magenta in chat window
+GLOBAL_VAR_CONST(REDTEAM_FREQ, 1215) // red team (CTF) frequency, coloured red
+GLOBAL_VAR_CONST(BLUETEAM_FREQ, 1217) // blue team (CTF) frequency, coloured blue
+
+#define TRANSMISSION_WIRE	0
+#define TRANSMISSION_RADIO	1
+
+/* filters */
+GLOBAL_VAR_INIT(RADIO_TO_AIRALARM, "1")
+GLOBAL_VAR_INIT(RADIO_FROM_AIRALARM, "2")
+GLOBAL_VAR_INIT(RADIO_CHAT, "3") //deprecated
+GLOBAL_VAR_INIT(RADIO_ATMOSIA, "4")
+GLOBAL_VAR_INIT(RADIO_NAVBEACONS, "5")
+GLOBAL_VAR_INIT(RADIO_AIRLOCK, "6")
+GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
+
+/datum/radio_frequency
+
+	var/frequency as num
+	var/list/list/obj/devices = list()
+
+//If range > 0, only post to devices on the same z_level and within range
+//Use range = -1, to restrain to the same z_level without limiting range
+/datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
+
+	//Apply filter to the signal. If none supply, broadcast to every devices
+	//_default channel is always checked
+	var/list/filter_list
+
+	if(filter)
+		filter_list = list(filter,"_default")
+	else
+		filter_list = devices
+
+	//If checking range, find the source turf
+	var/turf/start_point
+	if(range)
+		start_point = get_turf(source)
+		if(!start_point)
+			return 0
+
+	//Send the data
+	for(var/current_filter in filter_list)
+		for(var/obj/device in devices[current_filter])
+			if(device == source)
+				continue
+			if(range)
+				var/turf/end_point = get_turf(device)
+				if(!end_point)
+					continue
+				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
+					continue
+			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+
+/datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
+	if (!filter)
+		filter = "_default"
+
+	var/list/devices_line = devices[filter]
+	if(!devices_line)
+		devices_line = list()
+		devices[filter] = devices_line
+	devices_line += device
+
+
+/datum/radio_frequency/proc/remove_listener(obj/device)
+	for(var/devices_filter in devices)
+		var/list/devices_line = devices[devices_filter]
+		if(!devices_line)
+			devices -= devices_filter
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
+
+
+
+
+
+/client/proc/print_pointers()
+	set name = "Debug Signals"
+	set category = "Debug"
+
+	if(!holder)
+		return
+
+	var/datum/signal/S
+	to_chat(src, "There are [S.pointers.len] pointers:")
+	for(var/p in S.pointers)
+		to_chat(src, p)
+		S = locate(p)
+		if(istype(S))
+			to_chat(src, S.debug_print())
+
+/obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+	return
+
+/datum/signal
+	var/obj/source
+
+	var/transmission_method = 0
+	//0 = wire
+	//1 = radio transmission
+	//2 = subspace transmission
+
+	var/data = list()
+	var/encryption
+
+	var/frequency = 0
+	var/static/list/pointers = list()
+
+/datum/signal/New()
+	..()
+	pointers += "[REF(src)]"
+
+/datum/signal/Destroy()
+	pointers -= "[REF(src)]"
+	return ..()
+
+/datum/signal/proc/copy_from(datum/signal/model)
+	source = model.source
+	transmission_method = model.transmission_method
+	data = model.data
+	encryption = model.encryption
+	frequency = model.frequency
+
+/datum/signal/proc/debug_print()
+	if (source)
+>>>>>>> 039fe55... [512] The great \ref purge (#31824)
 		. = "signal = {source = '[source]' [COORD(source)]\n"
 	else
 		. = "signal = {source = '[source]' ()\n"
