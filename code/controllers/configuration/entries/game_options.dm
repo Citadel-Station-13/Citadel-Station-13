@@ -110,6 +110,7 @@ CONFIG_DEF(number/shuttle_refuel_delay)
 
 CONFIG_DEF(flag/show_game_type_odds)	//if set this allows players to see the odds of each roundtype on the get revision screen
 
+<<<<<<< HEAD
 CONFIG_DEF(flag/join_with_mutant_race)	//players can choose their mutant race before joining the game
 
 CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go. If left undefined the game's roundstart var for species is used
@@ -133,6 +134,9 @@ CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the ge
 			value = old_val
 		else
 			first_edit = FALSE
+=======
+CONFIG_DEF(keyed_flag_list/roundstart_races)	//races you can play as from the get go.
+>>>>>>> 360fbff... Fixes losing species preferences (#32093)
 
 CONFIG_DEF(flag/join_with_mutant_humans)	//players can pick mutant bodyparts for humans before joining the game
 

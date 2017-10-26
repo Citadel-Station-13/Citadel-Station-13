@@ -294,6 +294,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
+<<<<<<< HEAD
 	var/list/roundstart_races = CONFIG_GET(keyed_flag_list/roundstart_races)
 	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
 		var/newtype = GLOB.species_list[species_id]
@@ -302,6 +303,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/rando_race = pick(roundstart_races)
 		if (rando_race)
 			pref_species = new rando_race()
+=======
+	if(species_id)
+		var/newtype = GLOB.species_list[species_id]
+		pref_species = new newtype()
+>>>>>>> 360fbff... Fixes losing species preferences (#32093)
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
