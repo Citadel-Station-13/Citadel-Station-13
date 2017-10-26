@@ -192,6 +192,7 @@
 	interact(user)
 
 /obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu
+<<<<<<< HEAD
 	var/is_chamber_empty = FALSE
 	var/is_beaker_ready = FALSE
 	var/processing_chamber = ""
@@ -208,6 +209,49 @@
 			processing_chamber = "Nothing."
 		if (!beaker)
 			beaker_contents = "<B>No beaker attached.</B><br>"
+=======
+		var/is_chamber_empty = 0
+		var/is_beaker_ready = 0
+		var/processing_chamber = ""
+		var/beaker_contents = ""
+		var/dat = ""
+
+		if(!operating)
+				for (var/obj/item/O in holdingitems)
+						processing_chamber += "\A [O.name]<BR>"
+
+				if (!processing_chamber)
+						is_chamber_empty = 1
+						processing_chamber = "Nothing."
+				if (!beaker)
+						beaker_contents = "<B>No beaker attached.</B><br>"
+				else
+						is_beaker_ready = 1
+						beaker_contents = "<B>The beaker contains:</B><br>"
+						var/anything = 0
+						for(var/datum/reagent/R in beaker.reagents.reagent_list)
+								anything = 1
+								beaker_contents += "[R.volume] - [R.name]<br>"
+						if(!anything)
+								beaker_contents += "Nothing<br>"
+
+
+				dat = {"
+		<b>Processing chamber contains:</b><br>
+		[processing_chamber]<br>
+		[beaker_contents]<hr>
+		"}
+				if (is_beaker_ready)
+						if(!is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
+								dat += "<A href='?src=[REF(src)];action=grind'>Grind the reagents</a><BR>"
+								dat += "<A href='?src=[REF(src)];action=juice'>Juice the reagents</a><BR><BR>"
+						else if (beaker.reagents.total_volume)
+								dat += "<A href='?src=[REF(src)];action=mix'>Mix the reagents</a><BR><BR>"
+				if(holdingitems && holdingitems.len > 0)
+						dat += "<A href='?src=[REF(src)];action=eject'>Eject the reagents</a><BR>"
+				if (beaker)
+						dat += "<A href='?src=[REF(src)];action=detach'>Detach the beaker</a><BR>"
+>>>>>>> 039fe55... [512] The great \ref purge (#31824)
 		else
 			is_beaker_ready = TRUE
 			beaker_contents = "<B>The beaker contains:</B><br>"

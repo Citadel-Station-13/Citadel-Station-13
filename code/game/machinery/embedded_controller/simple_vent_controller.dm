@@ -53,6 +53,7 @@
 
 /obj/machinery/embedded_controller/radio/simple_vent_controller/Initialize(mapload)
 	. = ..()
+<<<<<<< HEAD
 	if(!mapload)
 		return
 	var/datum/computer/file/embedded_program/simple_vent_controller/new_prog = new
@@ -77,3 +78,29 @@
 [state_options]<HR>"}
 
 	return output
+=======
+	if(!mapload)
+		return
+	var/datum/computer/file/embedded_program/simple_vent_controller/new_prog = new
+
+	new_prog.airpump_tag = airpump_tag
+	new_prog.master = src
+	program = new_prog
+
+/obj/machinery/embedded_controller/radio/simple_vent_controller/update_icon()
+	if(on && program)
+		icon_state = "airlock_control_standby"
+	else
+		icon_state = "airlock_control_off"
+
+
+/obj/machinery/embedded_controller/radio/simple_vent_controller/return_text()
+	var/state_options = null
+	state_options = {"<A href='?src=[REF(src)];command=vent_inactive'>Deactivate Vent</A><BR>
+<A href='?src=[REF(src)];command=vent_pump'>Activate Vent / Pump</A><BR>
+<A href='?src=[REF(src)];command=vent_clear'>Activate Vent / Clear</A><BR>"}
+	var/output = {"<B>Vent Control Console</B><HR>
+[state_options]<HR>"}
+
+	return output
+>>>>>>> 039fe55... [512] The great \ref purge (#31824)
