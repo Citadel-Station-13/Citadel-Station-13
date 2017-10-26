@@ -59,7 +59,7 @@
 	if(previewJob && !nude)
 		mannequin.job = previewJob.title
 		previewJob.equip(mannequin, TRUE)
-	mannequin.compile_overlays()
+	COMPILE_OVERLAYS(mannequin)
 	CHECK_TICK
 	preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(48+32, 16+32)
