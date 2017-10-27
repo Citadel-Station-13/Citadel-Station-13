@@ -58,7 +58,12 @@
 		return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+<<<<<<< HEAD
 	if(user.client && (target in user.client.screen))
+=======
+	target.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
+>>>>>>> 5dde2e3... Merge pull request #31864 from ninjanomnom/thermite
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
