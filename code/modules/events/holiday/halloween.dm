@@ -10,17 +10,8 @@
 	..()
 	for(var/mob/living/carbon/human/H in GLOB.mob_list)
 		var/obj/item/storage/backpack/b = locate() in H.contents
-<<<<<<< HEAD
-		new /obj/item/storage/spooky(b)
-		if(ishuman(H) || islizard(H))
-			if(prob(50))
-				H.set_species(/datum/species/skeleton)
-			else
-				H.set_species(/datum/species/zombie)
-=======
 		if(b)
 			new /obj/item/storage/spooky(b)
->>>>>>> 00396d0... Halloween Tweaks (#32087)
 
 	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_list)
 		Ian.place_on_head(new /obj/item/bedsheet(Ian))
