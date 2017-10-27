@@ -178,10 +178,7 @@ Thus, the two variables affect pump operation are set in New():
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-<<<<<<< HEAD
 	else
 		investigate_log("Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 		message_admins("Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(user)] at [A]")
 		return TRUE
-=======
->>>>>>> e8c2109... Atmos construction rework again (#31944)
