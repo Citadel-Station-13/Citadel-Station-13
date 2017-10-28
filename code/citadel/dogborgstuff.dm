@@ -768,8 +768,8 @@
 	icon_state = "compactor"
 	inject_amount = 0
 	min_health = -100
-	injection_chems = null
-	var/max_item_count = 48
+	injection_chems = null //So they don't have all the same chems as the medihound!
+	var/max_item_count = 30
 
 /obj/item/storage/attackby(obj/item/device/dogborg/sleeper/compactor, mob/user, proximity) //GIT CIRCUMVENTED YO!
 	compactor.afterattack(src, user ,1)
@@ -848,8 +848,8 @@
 /mob/living/silicon/robot
 	var/leaping = 0
 	var/pounce_cooldown = 0
-	var/pounce_cooldown_time = 40 //Nearly doubled, u happy?
-	var/pounce_spoolup = 5
+	var/pounce_cooldown_time = 50 //Nearly doubled, u happy?
+	var/pounce_spoolup = 3
 	var/leap_at
 	var/disabler
 	var/laser
@@ -862,11 +862,10 @@
 	var/mob/living/silicon/robot/R = user
 	if(R && !R.pounce_cooldown)
 		R.pounce_cooldown = !R.pounce_cooldown
-		playsound(R, 'sound/items/jaws_pry.ogg', 50, 1)
-		playsound(R, 'sound/machines/buzz-sigh.ogg', 50, 1)
 		to_chat(R, "<span class ='warning'>Your targeting systems lock on to [A]...</span>")
-		A.visible_message("<span class ='warning'>[R]'s eyes flash brightly, staring directly at [A]!</span>", "<span class ='userdanger'>[R]'s eyes flash brightly, staring directly at you!'</span>")
 		addtimer(CALLBACK(R, /mob/living/silicon/robot.proc/leap_at, A), R.pounce_spoolup)
+		spawn(R.pounce_cooldown_time)
+			R.pounce_cooldown = !R.pounce_cooldown
 	else if(R && R.pounce_cooldown)
 		to_chat(R, "<span class='danger'>Your leg actuators are still recharging!</span>")
 
@@ -891,8 +890,6 @@
 		throw_at(A, MAX_K9_LEAP_DIST, 1, spin=0, diagonals_first = 1)
 		cell.use(500) //Doubled the energy consumption
 		weather_immunities -= "lava"
-		spawn(pounce_cooldown_time)
-			pounce_cooldown = !pounce_cooldown
 
 /mob/living/silicon/robot/throw_impact(atom/A)
 
@@ -909,19 +906,20 @@
 					blocked = 1
 			if(!blocked)
 				L.visible_message("<span class ='danger'>[src] pounces on [L]!</span>", "<span class ='userdanger'>[src] pounces on you!</span>")
-				L.Knockdown(40)
+				L.Knockdown(45)
 				playsound(src, 'sound/weapons/Egloves.ogg', 50, 1)
 				sleep(2)//Runtime prevention (infinite bump() calls on hulks)
 				step_towards(src,L)
 			else
-				Knockdown(40, 1, 1)
+				Knockdown(45, 1, 1)
 
 			pounce_cooldown = !pounce_cooldown
 			spawn(pounce_cooldown_time) //3s by default
 				pounce_cooldown = !pounce_cooldown
 		else if(A.density && !A.CanPass(src))
 			visible_message("<span class ='danger'>[src] smashes into [A]!</span>", "<span class ='userdanger'>You smash into [A]!</span>")
-			Knockdown(40, 1, 1)
+			playsound(src, 'sound/items/trayhit1.ogg', 50, 1)
+			Knockdown(45, 1, 1)
 
 		if(leaping)
 			leaping = 0

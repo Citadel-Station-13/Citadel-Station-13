@@ -1,0 +1,7 @@
+author: "Toriate"
+delete-after: True
+changes: 
+  - balance: "OP foam stuff now cost slightly more to build from autolathes"
+  - balance: "OP foam stuff now turned into total memes instead of practical weapons, all burst firing foam guns have at least 60 spread. Stealth pistol also has 60 spread."
+  - balance: "Foam X9 and Mag Rifle now requires two hands to fire"
+  - bugfix: "Foam Force X9 and Mag Rifle now has its correct weight class of NOT FITTING IN FUCKING BACKPACKS"

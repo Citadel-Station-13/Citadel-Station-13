@@ -166,17 +166,8 @@
 /obj/item/clothing/mask/gas/stalker
 	name = "S.T.A.L.K.E.R. mask"
 	desc = "Smells like reactor four."
-	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker"
 	icon_state = "stalker"
-	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
-	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
-	w_class = WEIGHT_CLASS_NORMAL
-	item_state = "gas_alt"
-	gas_transfer_coefficient = 0.01
-	permeability_coefficient = 0.01
-	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
-	resistance_flags = 0
 
 
 /*Sylas*/
@@ -199,6 +190,11 @@
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
+
+
+/obj/item/clothing/shoes/sneakers/pink
+	icon_state = "pink"
+	item_state = "pink"
 
 
 

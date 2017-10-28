@@ -26,13 +26,12 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
-	hook_vr("mob_new",list(src))
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	hook_vr("mob_new",list(src))
 	. = ..()
 
 /atom/proc/prepare_huds()
@@ -391,7 +390,7 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
-		
+
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold

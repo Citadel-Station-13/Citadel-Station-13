@@ -1,0 +1,13 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - tweak: "All maps have been hard synced with upstream. Thank upstream for messing with the cables. Refer to upstream map changelogs for details."
+  - tweak: "Map changes from prior to the sync have been re-added."
+  - tweak: "Boxstation security's equipment room is now two tiles larger. The security vendor, biohazard locker, and bomb suit locker are now on the same wall as the rest of the sec equipment lockers."
+  - tweak: "Boxstation's security equipment room is now equipped with two secways."
+  - tweak: "Security on all maps no longer contain chem dispensers or chemmasters."
+  - tweak: "All maps now share the same vulnerability involving the security desk that Boxstation does."
+  - tweak: "Deltastation's map changes have been restored after the previous sync."
+  - tweak: "Boxstation's security lobby disposals has been fixed"
+  - tweak: "Fixed stray r-wall between the evidence room and cell 1 in Boxstation."
+  - tweak: "Replaced the blast doors in Boxstation's security lobby with shutters."
