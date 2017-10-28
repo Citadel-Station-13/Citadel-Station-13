@@ -6,52 +6,6 @@
 	icon_state = "strangepresent"
 	density = TRUE
 	anchored = FALSE
-<<<<<<< HEAD
-
-/obj/effect/beam
-	name = "beam"
-	var/def_zone
-	pass_flags = PASSTABLE
-
-/obj/effect/spawner
-	name = "object spawner"
-
-/obj/effect/list_container
-	name = "list container"
-
-/obj/effect/list_container/mobl
-	name = "mobl"
-	var/master = null
-
-	var/list/container = list(  )
-
-//Makes a tile fully lit no matter what
-/obj/effect/fullbright
-	icon = 'icons/effects/alphacolors.dmi'
-	icon_state = "white"
-	plane = LIGHTING_PLANE
-	layer = LIGHTING_LAYER
-	blend_mode = BLEND_ADD
-
-/obj/effect/abstract/marker
-	name = "marker"
-	icon = 'icons/effects/effects.dmi'
-	anchored = TRUE
-	icon_state = "wave3"
-	layer = RIPPLE_LAYER
-
-/obj/effect/abstract/marker/Initialize(mapload)
-	. = ..()
-	GLOB.all_abstract_markers += src
-
-/obj/effect/abstract/marker/Destroy()
-	GLOB.all_abstract_markers -= src
-	. = ..()
-
-/obj/effect/abstract/marker/at
-	name = "active turf marker"
-
-=======
 
 /obj/effect/beam
 	name = "beam"
@@ -105,5 +59,3 @@
 
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
-
->>>>>>> 5dde2e3... Merge pull request #31864 from ninjanomnom/thermite
