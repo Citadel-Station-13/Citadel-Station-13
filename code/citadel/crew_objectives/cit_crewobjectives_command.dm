@@ -5,7 +5,7 @@
 	jobs = "captain"
 
 /datum/objective/crew/caphat/check_completion()
-	if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat))
+	if(owner && owner.current && owner.current.check_contents_for(/obj/item/clothing/head/caphat))
 		return TRUE
 	else
 		return FALSE
@@ -15,7 +15,7 @@
 	jobs = "captain" //give this to other heads at your own risk.
 
 /datum/objective/crew/datfukkendisk/check_completion()
-	if(owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
+	if(owner && owner.current && owner.current.check_contents_for(/obj/item/disk/nuclear) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return TRUE
 	else
 		return FALSE
@@ -25,7 +25,7 @@
 	jobs = "headofpersonnel"
 
 /datum/objective/crew/ian/check_completion()
-	if(owner.current)
+	if(owner && owner.current)
 		for(var/mob/living/simple_animal/pet/dog/corgi/Ian/goodboy in GLOB.mob_list)
 			if(goodboy.stat != DEAD && SSshuttle.emergency.shuttle_areas[get_area(goodboy)])
 				return TRUE
