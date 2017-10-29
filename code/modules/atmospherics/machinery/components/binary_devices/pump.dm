@@ -26,6 +26,9 @@ Thus, the two variables affect pump operation are set in New():
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
+	construction_type = /obj/item/pipe/directional
+	pipe_state = "pump"
+
 /obj/machinery/atmospherics/components/binary/pump/on
 	on = TRUE
 

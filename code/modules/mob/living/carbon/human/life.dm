@@ -59,6 +59,8 @@
 		return ONE_ATMOSPHERE
 	if(ismob(loc))
 		return ONE_ATMOSPHERE
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return ONE_ATMOSPHERE
 	else
 		return pressure
 
@@ -91,7 +93,7 @@
 #define HUMAN_CRIT_MAX_OXYLOSS (SSmobs.wait/30)
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
-	var/L = getorganslot("lungs")
+	var/L = getorganslot(ORGAN_SLOT_LUNGS)
 
 	if(!L)
 		if(health >= HEALTH_THRESHOLD_CRIT)
@@ -133,6 +135,12 @@
 
 /mob/living/carbon/human/proc/get_thermal_protection()
 	var/thermal_protection = 0 //Simple check to estimate how protected we are against multiple temperatures
+
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+	if(ismob(loc))
+		return FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
+
 	if(wear_suit)
 		if(wear_suit.max_heat_protection_temperature >= FIRE_SUIT_MAX_TEMP_PROTECT)
 			thermal_protection += (wear_suit.max_heat_protection_temperature*0.7)
@@ -244,7 +252,9 @@
 
 	if(dna && (RESISTCOLD in dna.species.species_traits))
 		return 1
-	
+
+	if(istype(loc, /obj/item/device/dogborg/sleeper))
+		return 1 //freezing to death in sleepers ruins fun.
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
 
@@ -328,7 +338,7 @@
 /mob/living/carbon/human/proc/undergoing_cardiac_arrest()
 	if(!can_heartattack())
 		return FALSE
-	var/obj/item/organ/heart/heart = getorganslot("heart")
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(istype(heart) && heart.beating)
 		return FALSE
 	return TRUE
@@ -337,7 +347,7 @@
 	if(!can_heartattack())
 		return FALSE
 
-	var/obj/item/organ/heart/heart = getorganslot("heart")
+	var/obj/item/organ/heart/heart = getorganslot(ORGAN_SLOT_HEART)
 	if(!istype(heart))
 		return
 

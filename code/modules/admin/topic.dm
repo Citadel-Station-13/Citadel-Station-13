@@ -165,6 +165,7 @@
 			return
 		var/datum/round_event_control/E = locate(href_list["forceevent"]) in SSevents.control
 		if(E)
+			E.admin_setup(usr)
 			var/datum/round_event/event = E.runEvent()
 			if(event.announceWhen>0)
 				event.processing = FALSE
@@ -2240,7 +2241,7 @@
 			if(!newname)
 				return
 			G.name = newname
-			var/description = input("Enter centcom message contents:") as message|null
+			var/description = input("Enter CentCom message contents:") as message|null
 			if(!description)
 				return
 			G.report_message = description

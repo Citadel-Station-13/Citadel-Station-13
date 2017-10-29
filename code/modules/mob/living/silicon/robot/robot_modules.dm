@@ -352,10 +352,9 @@
 		/obj/item/soap/tongue,
 		/obj/item/device/analyzer/nose,
 		/obj/item/device/dogborg/sleeper/K9,
-		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg,
 		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/nuke)
+		/obj/item/pinpointer/crew)
+	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
@@ -387,9 +386,9 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/twohanded/shockpaddles/hound,
-		/obj/item/reagent_containers/borghypo,
+		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
@@ -408,7 +407,6 @@
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
 	basic_modules = list(
-		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/dogborg/jaws/small,
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue/scrubpup,
@@ -422,6 +420,7 @@
 	moduleselect_icon = "scrubpup"
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
+	clean_on_move = TRUE
 
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()

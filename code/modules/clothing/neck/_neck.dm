@@ -1,3 +1,20 @@
+/obj/item/clothing/neck
+	name = "necklace"
+	icon = 'icons/obj/clothing/neck.dmi'
+	body_parts_covered = NECK
+	slot_flags = SLOT_NECK
+	strip_delay = 40
+	equip_delay_other = 40
+
+/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+	. = list()
+	if(!isinhands)
+		if(body_parts_covered & HEAD)
+			if(damaged_clothes)
+				. += mutable_appearance('icons/effects/item_damage.dmi', "damagedmask")
+			if(blood_DNA)
+				. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+
 /obj/item/clothing/neck/tie
 	name = "tie"
 	desc = "A neosilk clip-on tie."
@@ -42,8 +59,8 @@
 			var/heart_strength = "<span class='danger'>no</span>"
 			var/lung_strength = "<span class='danger'>no</span>"
 
-			var/obj/item/organ/heart/heart = M.getorganslot("heart")
-			var/obj/item/organ/lungs/lungs = M.getorganslot("lungs")
+			var/obj/item/organ/heart/heart = M.getorganslot(ORGAN_SLOT_HEART)
+			var/obj/item/organ/lungs/lungs = M.getorganslot(ORGAN_SLOT_LUNGS)
 
 			if(!(M.stat == DEAD || (M.status_flags&FAKEDEATH)))
 				if(heart && istype(heart))

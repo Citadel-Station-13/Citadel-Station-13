@@ -136,7 +136,8 @@
 	if (usr.restrained() || usr.stat || usr.get_active_held_item() != src)
 		return
 	if (href_list["make"])
-		if (get_amount() < 1) qdel(src) //Never should happen
+		if (get_amount() < 1)
+			qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
@@ -167,6 +168,11 @@
 			var/obj/structure/window/W = O
 			W.ini_dir = W.dir
 		//END: oh fuck i'm so sorry
+
+		else if(istype(O, /obj/item/restraints/handcuffs/cable))
+			var/obj/item/cuffs = O
+			cuffs.item_color = item_color
+			cuffs.update_icon()
 
 		if (QDELETED(O))
 			return //It's a stack and has already been merged
@@ -244,6 +250,7 @@
 	S.copy_evidences(src)
 	use(transfer, TRUE)
 	S.add(transfer)
+	return transfer
 
 /obj/item/stack/Crossed(obj/o)
 	if(istype(o, merge_type) && !o.throwing)
@@ -259,7 +266,7 @@
 	if (user.get_inactive_held_item() == src)
 		if(zero_amount())
 			return
-		change_stack(user,1)
+		return change_stack(user,1)
 	else
 		..()
 
@@ -296,10 +303,10 @@
 
 
 /obj/item/stack/attackby(obj/item/W, mob/user, params)
-	if(istype(W, merge_type) && amount < max_amount)
+	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
-		merge(S)
-		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
+		if(merge(S))
+			to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		. = ..()
 

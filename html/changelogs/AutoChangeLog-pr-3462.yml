@@ -1,0 +1,10 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "fixed medihound having to respect devourable settings."
+  - bugfix: "fixed other borg sleepers to not inject any regents."
+  - rscadd: "Tgui menus for borg sleepers. Is pretty."
+  - bugfix: "Fixed analyzer nose to work as intended."
+  - bugfix: "infinite energy loop is gone."
+  - tweak: "Removed borg hypo from Medihound. The sleeper works now."
+  - balance: "Medihound sleeper will swap from anti-tox to pure toxin if the patient is a slime."
