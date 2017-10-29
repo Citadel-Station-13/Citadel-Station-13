@@ -626,7 +626,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("xenodorsal" in pref_species.mutant_bodyparts)
 				dat += "<b>Dorsal Tubes: </b><a href='?_src_=prefs;preference=xenodorsal;task=input'>[features["xenodorsal"]]</a><BR>"
 
-	dat += "</td><td width='300px' height='300px' valign='top'>"
+			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 
 			dat += "<h2>Clothing & Equipment</h2>"
