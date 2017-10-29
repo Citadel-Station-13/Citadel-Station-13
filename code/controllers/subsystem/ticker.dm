@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(ticker)
 	var/force_ending = 0					//Round was ended by admin intervention
 	// If true, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
-	var/setup_done = FALSE //All game setup done including mode post setup and 
+	var/setup_done = FALSE //All game setup done including mode post setup and
 
 	var/hide_mode = 0
 	var/datum/game_mode/mode = null
@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "config/title_music/sounds/[pick(music)]"
-	
+
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
@@ -141,6 +141,7 @@ SUBSYSTEM_DEF(ticker)
 		GLOB.syndicate_code_phrase	= generate_code_phrase()
 	if(!GLOB.syndicate_code_response)
 		GLOB.syndicate_code_response = generate_code_phrase()
+
 	..()
 	start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 
