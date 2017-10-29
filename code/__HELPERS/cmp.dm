@@ -67,3 +67,4 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_profile_count_dsc(list/A, list/B)
 	return B[PROFILE_ITEM_COUNT] - A[PROFILE_ITEM_COUNT]
+
