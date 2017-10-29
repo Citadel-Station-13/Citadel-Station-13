@@ -135,6 +135,7 @@
 #define NOAROUSAL		29 //Stops all arousal effects
 #define NOGENITALS		30 //Cannot create, use, or otherwise have genitals
 #define NO_DNA_COPY     31
+#define DRINKSBLOOD		32
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
