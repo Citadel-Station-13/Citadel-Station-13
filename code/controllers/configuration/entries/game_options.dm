@@ -166,7 +166,7 @@ CONFIG_DEF(number/run_delay)	//Used for modifying movement speed for mobs.
 
 CONFIG_DEF(number/walk_delay)
 
-	
+
 CONFIG_DEF(number/human_delay)	//Mob specific modifiers. NOTE: These will affect different mob types in different ways
 CONFIG_DEF(number/robot_delay)
 CONFIG_DEF(number/monkey_delay)

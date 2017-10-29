@@ -237,6 +237,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=handleissue'>HANDLE</A>)"
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)
@@ -382,6 +383,22 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	AddInteraction("Marked as IC issue by [key_name]")
 	Resolve(silent = TRUE)
 
+//Let the initiator know their ahelp is being handled
+/datum/admin_help/proc/HandleIssue(key_name = key_name_admin(usr))
+	if(state != AHELP_ACTIVE)
+		return
+
+	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please be patient.</span>"
+
+	if(initiator)
+		to_chat(initiator, msg)
+
+	SSblackbox.inc("ahelp_handleissue")
+	msg = "Ticket [TicketHref("#[id]")] is being handled by [key_name]"
+	message_admins(msg)
+	log_admin_private(msg)
+	AddInteraction("Being handled by [key_name]")
+
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
 	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
@@ -442,6 +459,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			Close()
 		if("resolve")
 			Resolve()
+		if("handleissue")
+			HandleIssue()
 		if("reopen")
 			Reopen()
 
@@ -489,9 +508,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-	
+
 	msg = trim(msg)
-	
+
 	if(!msg)
 		return
 

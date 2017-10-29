@@ -8,7 +8,6 @@
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRIED
 	disliked_food = TOXIC
 
@@ -31,7 +30,6 @@
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 
@@ -53,7 +51,6 @@
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT
 	disliked_food = TOXIC
 
@@ -75,7 +72,6 @@
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 
@@ -105,7 +101,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
-	roundstart = 1
 	liked_food = MEAT
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
@@ -138,7 +133,6 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
-	roundstart = 0
 //	whitelisted = 1
 //	whitelist = list("talkingcactus") //testing whitelisting
 
@@ -182,7 +176,6 @@
 	punchdamagehigh = 14
 	punchstunthreshold = 13
 	blacklisted = 1
-	roundstart = 0
 	whitelist = 1
 	whitelist = list("talkingcactus")
 
@@ -233,7 +226,6 @@
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-//	roundstart = 1
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
@@ -248,4 +240,3 @@
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
