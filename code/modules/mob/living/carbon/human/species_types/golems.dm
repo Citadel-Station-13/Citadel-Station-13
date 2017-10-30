@@ -648,13 +648,8 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-<<<<<<< HEAD
-  
-=======
 	random_eligible = FALSE
 
-
->>>>>>> def425f... Excludes clockwork wargolems from golem mutation toxin, nerfs normal clockwork golems (#32041)
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"
