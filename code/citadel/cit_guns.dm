@@ -111,7 +111,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = 0
 	burst_size = 1
-	fire_delay = 20
+	fire_delay = 40
 	select = 0
 	actions_types = list()
 	casing_ejector = 0
@@ -140,14 +140,14 @@
 
 /datum/supply_pack/security/armory/spinfusor
 	name = "Stormhammer Spinfusor Crate"
-	cost = 7000
+	cost = 14000
 	contains = list(/obj/item/gun/ballistic/automatic/spinfusor,
 					/obj/item/gun/ballistic/automatic/spinfusor)
 	crate_name = "spinfusor crate"
 
 /datum/supply_pack/security/armory/spinfusorammo
 	name = "Spinfusor Disk Crate"
-	cost = 4000
+	cost = 7000
 	contains = list(/obj/item/ammo_box/aspinfusor,
 					/obj/item/ammo_box/aspinfusor,
 					/obj/item/ammo_box/aspinfusor,
@@ -210,7 +210,7 @@
 /obj/item/projectile/bullet/mags
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile"
-	damage = 25
+	damage = 15
 	armour_penetration = 10
 	light_range = 2
 	light_color = LIGHT_COLOR_RED
@@ -218,9 +218,9 @@
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 2
-	knockdown = 15
-	stamina = 50
+	damage = 1
+	knockdown = 0
+	stamina = 25
 	armour_penetration = -10
 	light_range = 2
 	light_color = LIGHT_COLOR_BLUE
@@ -378,7 +378,7 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 30
+	damage = 25
 	armour_penetration = 25
 	light_range = 3
 	light_color = LIGHT_COLOR_RED
@@ -386,10 +386,10 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 5
-	knockdown = 30
-	stamina = 75
-	armour_penetration = 0
+	damage = 2
+	knockdown = 0
+	stamina = 30
+	armour_penetration = -10
 	light_range = 3
 	light_color = LIGHT_COLOR_BLUE
 
@@ -443,7 +443,7 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	spread = 15
+	spread = 30
 	recoil = 1
 	casing_ejector = 0
 
@@ -719,8 +719,8 @@ obj/item/projectile/bullet/c10mm/soporific
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(6)
-		if(L.staminaloss >= 60)
-			L.Sleeping(250)
+		if(L.getStaminaLoss() >= 60)
+			L.Sleeping(300)
 		else
 			L.adjustStaminaLoss(25)
 	return 1
@@ -753,7 +753,7 @@ obj/item/projectile/bullet/c10mm/soporific
 
 /obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
 	name = "flechette (serrated)"
-	damage = 8
+	damage = 15
 	dismemberment = 10
 	armour_penetration = -80
 
@@ -1069,14 +1069,14 @@ obj/item/projectile/bullet/c10mm/soporific
 /obj/item/projectile/bullet/c9mm/frangible
 	name = "9mm frangible bullet"
 	damage = 15
-	stamina = 65
-	armour_penetration = -15
+	stamina = 0
+	armour_penetration = -25
 
 /obj/item/projectile/bullet/c9mm/rubber
 	name = "9mm rubber bullet"
-	damage = 5
-	stamina = 50
-	knockdown = 60
+	damage = 2
+	stamina = 25
+	knockdown = 0
 
 /obj/item/ammo_casing/c9mm/frangible
 	name = "9mm frangible bullet casing"

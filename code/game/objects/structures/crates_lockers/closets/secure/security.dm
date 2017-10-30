@@ -29,10 +29,6 @@
 	new /obj/item/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/storage/belt/sabre(src)
 	new /obj/item/gun/energy/e_gun/cx(src)
-	new /obj/item/gun/ballistic/automatic/pistol/p37(src)
-	new /obj/item/ammo_box/magazine/m9mm/p37(src)
-	new /obj/item/ammo_box/magazine/m9mm/p37/rubber(src)
-	new /obj/item/ammo_box/magazine/m9mm/p37/rubber(src)
 	new /obj/item/door_remote/captain(src)
 
 /obj/structure/closet/secure_closet/hop
