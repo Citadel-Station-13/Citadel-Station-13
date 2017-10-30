@@ -228,7 +228,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	dat += "<HR>"
 
 	switch(current_tab)
-		if (0) // Character Settings#
+		if (0) // Character Settings
 			if(path)
 				var/savefile/S = new /savefile(path)
 				if(S)
@@ -278,14 +278,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "</td></tr></table>"
 //			dat += "<b>Size:</b> <a href='?_src_=prefs;preference=character_size;task=input'>[character_size]</a><BR>"
 			dat += "<br>"
-
-			dat += "<h2>Body</h2>"
-			dat += "<a href='?_src_=prefs;preference=all;task=random'>Random Body</A> "
-			dat += "<a href='?_src_=prefs;preference=all'>Always Random Body: [be_random_body ? "Yes" : "No"]</A><br>"
-
-			dat += "<table width='100%'><tr><td width='24%' valign='top'>"
-
-			dat += "<b>Species:</b><BR><a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a><BR>"
 
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
