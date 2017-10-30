@@ -13,7 +13,6 @@
 
 	//Order matters here.
 	var/list/transition_config = list(CENTCOM = SELFLOOPING,
-									CITY_OF_COGS = SELFLOOPING,
 									MAIN_STATION = CROSSLINKED,
 									EMPTY_AREA_1 = CROSSLINKED,
 									EMPTY_AREA_2 = CROSSLINKED,
@@ -93,7 +92,7 @@
 		return
 
 	var/tc = json["transition_config"]
-	if(tc != "default")
+	if(tc != null && tc != "default")
 		if(!islist(tc))
 			log_world("transition_config is not a list!")
 			return
