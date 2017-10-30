@@ -457,8 +457,6 @@
 		flamethrower_screwdriver(I, user)
 	else if(istype(I, /obj/item/stack/rods))
 		flamethrower_rods(I, user)
-<<<<<<< HEAD
-=======
 	else if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
 		var/amountNeeded = max_fuel - get_fuel()
 		var/obj/item/reagent_containers/container = I
@@ -468,7 +466,6 @@
 		if(amountNeeded > 0 && container.reagents.has_reagent("welding_fuel"))
 			container.reagents.trans_id_to(src, "welding_fuel", amountNeeded)
 			to_chat(user, "<span class='notice'>You transfer some fuel from [container] to [src].</span>")
->>>>>>> dda2e62... welder refuelling hotfix
 	else
 		return ..()
 
