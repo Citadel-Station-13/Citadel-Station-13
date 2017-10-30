@@ -52,8 +52,9 @@
 	message_admins(message)
 	log_game("[key_name(user)] has primed \a [src] for detonation at [A.name] [COORD(T)].")
 
-/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE)
+/obj/item/grenade/proc/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
+<<<<<<< HEAD
 	log_grenade(user, T)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
@@ -64,6 +65,19 @@
 	active = TRUE
 	icon_state = initial(icon_state) + "_active"
 	add_fingerprint(user)
+=======
+	log_grenade(user, T) //Inbuilt admin procs already handle null users
+	if(user)
+		add_fingerprint(user)
+		if(iscarbon(user))
+			var/mob/living/carbon/C = user
+			C.throw_mode_on()
+		if(msg)
+			to_chat(user, "<span class='warning'>You prime \the [src]! [det_time/10] seconds!</span>")
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	active = TRUE
+	icon_state = initial(icon_state) + "_active"
+>>>>>>> 695fa5f... You can now hide grenades in plushies (#31986)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/proc/prime()
