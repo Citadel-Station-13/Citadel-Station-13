@@ -96,14 +96,9 @@
 		log_world("Map file ([path]) does not exist!")
 		return
 
-<<<<<<< HEAD
-	if(json["transition_config"] != "default")
-		if(!islist(json["transition_config"]))
-=======
 	var/tc = json["transition_config"]
 	if(tc != null && tc != "default")
 		if(!islist(tc))
->>>>>>> 9375965... Fixes map_config validation (#32206)
 			log_world("transition_config is not a list!")
 			return
 
