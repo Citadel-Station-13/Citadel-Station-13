@@ -333,6 +333,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["feature_human_tail"]				>> features["tail_human"]
 		S["feature_human_ears"]				>> features["ears"]
+	S["human_name"]         >> custom_names["human"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -486,6 +487,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["real_name"], real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
+<<<<<<< HEAD
 	WRITE_FILE(S["gender"], gender)
 	WRITE_FILE(S["age"], age)
 	WRITE_FILE(S["hair_color"], hair_color)
@@ -517,6 +519,40 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["religion_name"], custom_names["religion"])
 	WRITE_FILE(S["deity_name"], custom_names["deity"])
 	WRITE_FILE(S["prefered_security_department"], prefered_security_department)
+=======
+	WRITE_FILE(S["gender"]				, gender)
+	WRITE_FILE(S["age"]				, age)
+	WRITE_FILE(S["hair_color"]			, hair_color)
+	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
+	WRITE_FILE(S["eye_color"]			, eye_color)
+	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["hair_style_name"]	, hair_style)
+	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
+	WRITE_FILE(S["underwear"]			, underwear)
+	WRITE_FILE(S["undershirt"]			, undershirt)
+	WRITE_FILE(S["socks"]				, socks)
+	WRITE_FILE(S["backbag"]			, backbag)
+	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
+	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
+	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
+	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
+	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])
+	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
+	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
+	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
+	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
+	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["human_name"]			, custom_names["human"])
+	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
+	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
+	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
+	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
+	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
+	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
+>>>>>>> 3dd3e49... Merge pull request #32131 from KorPhaeron/protecthumanauthority
 
 	//Jobs
 	WRITE_FILE(S["joblessrole"], joblessrole)

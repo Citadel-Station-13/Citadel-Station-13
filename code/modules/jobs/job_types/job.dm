@@ -72,13 +72,20 @@
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
-	if(!visualsOnly && announce)
-		announce(H)
-
 	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
+<<<<<<< HEAD
 		H.dna.features["tail_human"] = "None"
 		H.dna.features["ears"] = "None"
 		H.regenerate_icons()
+=======
+		if(H.dna.species.id != "human")
+			H.set_species(/datum/species/human)
+			H.rename_self("human", H.client)
+		H.remove_catshit()
+>>>>>>> 3dd3e49... Merge pull request #32131 from KorPhaeron/protecthumanauthority
+
+	if(!visualsOnly && announce)
+		announce(H)
 
 /datum/job/proc/get_access()
 	if(!config)	//Needed for robots.
