@@ -87,21 +87,13 @@
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
-	if(H.dna && H.dna.species && ((H.dna.features["tail_lizard"] != "None") || (H.dna.features["tail_human"] != "None") || ("mam_tail" in H.dna.species.mutant_bodyparts)))
-=======
 	if(H.dna && H.dna.species && (("tail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || (H.dna.features["tail_human"] != "None")))
->>>>>>> 0eeddd8... tail wag fix
 		return TRUE
 
 /datum/emote/living/carbon/human/wag/select_message_type(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user
-<<<<<<< HEAD
-	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts) || ("mam_waggingtail" in H.dna.species.mutant_bodyparts))
-=======
 	if(("waggingtail_lizard" in H.dna.species.mutant_bodyparts) || ("waggingtail_human" in H.dna.species.mutant_bodyparts))
->>>>>>> 0eeddd8... tail wag fix
 		. = null
 
 //Don't know where else to put this, it's basically an emote
