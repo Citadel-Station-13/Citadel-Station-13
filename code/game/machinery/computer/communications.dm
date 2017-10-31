@@ -8,9 +8,10 @@
 	circuit = /obj/item/circuitboard/computer/communications
 	var/authenticated = 0
 	var/auth_id = "Unknown" //Who is currently logged in?
-	var/list/datum/comm_message/messages = list()
-	var/datum/comm_message/currmsg 
-	var/datum/comm_message/aicurrmsg
+	var/list/messagetitle = list()
+	var/list/messagetext = list()
+	var/currmsg = 0
+	var/aicurrmsg = 0
 	var/state = STATE_DEFAULT
 	var/aistate = STATE_DEFAULT
 	var/message_cooldown = 0
@@ -47,7 +48,7 @@
 /obj/machinery/computer/communications/process()
 	if(..())
 		if(state != STATE_STATUSDISPLAY)
-			updateDialog()
+			src.updateDialog()
 
 
 /obj/machinery/computer/communications/Topic(href, href_list)
@@ -64,7 +65,7 @@
 	switch(href_list["operation"])
 		// main interface
 		if("main")
-			state = STATE_DEFAULT
+			src.state = STATE_DEFAULT
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		if("login")
 			var/mob/M = usr
@@ -74,13 +75,13 @@
 				I = M.get_idcard()
 
 			if(I && istype(I))
-				if(check_access(I))
+				if(src.check_access(I))
 					authenticated = 1
 					auth_id = "[I.registered_name] ([I.assignment])"
 					if((20 in I.access))
 						authenticated = 2
 					playsound(src, 'sound/machines/terminal_on.ogg', 50, 0)
-				if(emagged)
+				if(src.emagged)
 					authenticated = 2
 					auth_id = "Unknown"
 					to_chat(M, "<span class='warning'>[src] lets out a quiet alarm as its login is overriden.</span>")
@@ -131,7 +132,7 @@
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
 		if("announce")
-			if(authenticated==2)
+			if(src.authenticated==2)
 				playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 				make_announcement(usr)
 
@@ -185,56 +186,53 @@
 							to_chat(usr, "Not enough credits.")
 
 		if("callshuttle")
-			state = STATE_DEFAULT
-			if(authenticated)
-				state = STATE_CALLSHUTTLE
+			src.state = STATE_DEFAULT
+			if(src.authenticated)
+				src.state = STATE_CALLSHUTTLE
 		if("callshuttle2")
-			if(authenticated)
+			if(src.authenticated)
 				SSshuttle.requestEvac(usr, href_list["call"])
 				if(SSshuttle.emergency.timer)
 					post_status("shuttle")
-			state = STATE_DEFAULT
+			src.state = STATE_DEFAULT
 		if("cancelshuttle")
-			state = STATE_DEFAULT
-			if(authenticated)
-				state = STATE_CANCELSHUTTLE
+			src.state = STATE_DEFAULT
+			if(src.authenticated)
+				src.state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
-			if(authenticated)
+			if(src.authenticated)
 				SSshuttle.cancelEvac(usr)
-			state = STATE_DEFAULT
+			src.state = STATE_DEFAULT
 		if("messagelist")
-			currmsg = 0
-			state = STATE_MESSAGELIST
+			src.currmsg = 0
+			src.state = STATE_MESSAGELIST
 		if("viewmessage")
-			state = STATE_VIEWMESSAGE
-			if (!currmsg)
+			src.state = STATE_VIEWMESSAGE
+			if (!src.currmsg)
 				if(href_list["message-num"])
-					var/msgnum = text2num(href_list["message-num"])
-					currmsg = messages[msgnum]
+					src.currmsg = text2num(href_list["message-num"])
 				else
-					state = STATE_MESSAGELIST
+					src.state = STATE_MESSAGELIST
 		if("delmessage")
-			state = currmsg ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
 		if("delmessage2")
-			if(authenticated)
-				if(currmsg)
-					if(aicurrmsg == currmsg)
-						aicurrmsg = null
-					messages -= currmsg
-					currmsg = null
-				state = STATE_MESSAGELIST
+			if(src.authenticated)
+				if(src.currmsg)
+					var/title = src.messagetitle[src.currmsg]
+					var/text  = src.messagetext[src.currmsg]
+					src.messagetitle.Remove(title)
+					src.messagetext.Remove(text)
+					if(src.currmsg == src.aicurrmsg)
+						src.aicurrmsg = 0
+					src.currmsg = 0
+				src.state = STATE_MESSAGELIST
 			else
-				state = STATE_VIEWMESSAGE
-		if("respond")
-			var/answer = text2num(href_list["answer"])
-			if(!currmsg || !answer || currmsg.possible_answers.len < answer)
-				state = STATE_MESSAGELIST
-			currmsg.answered = answer
-			state = STATE_VIEWMESSAGE
+				src.state = STATE_VIEWMESSAGE
 		if("status")
-			state = STATE_STATUSDISPLAY
+			src.state = STATE_STATUSDISPLAY
+
 		if("securitylevel")
-			tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			state = STATE_CONFIRM_LEVEL
@@ -247,12 +245,12 @@
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			state = STATE_DEFAULT
+			src.state = STATE_DEFAULT
 		if("disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			state = STATE_DEFAULT
+			src.state = STATE_DEFAULT
 
 		// Status display stuff
 		if("setstat")
@@ -267,14 +265,14 @@
 
 		if("setmsg1")
 			stat_msg1 = reject_bad_text(input("Line 1", "Enter Message Text", stat_msg1) as text|null, 40)
-			updateDialog()
+			src.updateDialog()
 		if("setmsg2")
 			stat_msg2 = reject_bad_text(input("Line 2", "Enter Message Text", stat_msg2) as text|null, 40)
-			updateDialog()
+			src.updateDialog()
 
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentCom")
-			if(authenticated==2)
+			if(src.authenticated==2)
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					return
@@ -290,7 +288,7 @@
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((authenticated==2) && (emagged))
+			if((src.authenticated==2) && (src.emagged))
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling.  Please stand by.</span>")
 					playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
@@ -308,10 +306,10 @@
 			to_chat(usr, "<span class='notice'>Backup routing data restored!</span>")
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			emagged = FALSE
-			updateDialog()
+			src.updateDialog()
 
 		if("nukerequest") //When there's no other way
-			if(authenticated==2)
+			if(src.authenticated==2)
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
@@ -327,45 +325,41 @@
 
 		// AI interface
 		if("ai-main")
-			aicurrmsg = null
-			aistate = STATE_DEFAULT
+			src.aicurrmsg = 0
+			src.aistate = STATE_DEFAULT
 		if("ai-callshuttle")
-			aistate = STATE_CALLSHUTTLE
+			src.aistate = STATE_CALLSHUTTLE
 		if("ai-callshuttle2")
 			SSshuttle.requestEvac(usr, href_list["call"])
-			aistate = STATE_DEFAULT
+			src.aistate = STATE_DEFAULT
 		if("ai-messagelist")
-			aicurrmsg = null
-			aistate = STATE_MESSAGELIST
+			src.aicurrmsg = 0
+			src.aistate = STATE_MESSAGELIST
 		if("ai-viewmessage")
-			aistate = STATE_VIEWMESSAGE
-			if (!aicurrmsg)
+			src.aistate = STATE_VIEWMESSAGE
+			if (!src.aicurrmsg)
 				if(href_list["message-num"])
-					var/msgnum = text2num(href_list["message-num"])
-					aicurrmsg = messages[msgnum]
+					src.aicurrmsg = text2num(href_list["message-num"])
 				else
-					aistate = STATE_MESSAGELIST
+					src.aistate = STATE_MESSAGELIST
 		if("ai-delmessage")
-			aistate = aicurrmsg ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			src.aistate = (src.aicurrmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
 		if("ai-delmessage2")
-			if(aicurrmsg)
-				if(currmsg == aicurrmsg)
-					currmsg = null
-				messages -= aicurrmsg
-				aicurrmsg = null
-			aistate = STATE_MESSAGELIST
-		if("ai-respond")
-			var/answer = text2num(href_list["answer"])
-			if(!aicurrmsg || !answer || aicurrmsg.possible_answers.len < answer)
-				aistate = STATE_MESSAGELIST
-			aicurrmsg.answered = answer
-			aistate = STATE_VIEWMESSAGE
+			if(src.aicurrmsg)
+				var/title = src.messagetitle[src.aicurrmsg]
+				var/text  = src.messagetext[src.aicurrmsg]
+				src.messagetitle.Remove(title)
+				src.messagetext.Remove(text)
+				if(src.currmsg == src.aicurrmsg)
+					src.currmsg = 0
+				src.aicurrmsg = 0
+			src.aistate = STATE_MESSAGELIST
 		if("ai-status")
-			aistate = STATE_STATUSDISPLAY
+			src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
 			make_announcement(usr, 1)
 		if("ai-securitylevel")
-			tmp_alertlevel = text2num( href_list["newalertlevel"] )
+			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
 			if(!tmp_alertlevel)
 				tmp_alertlevel = 0
 			var/old_level = GLOB.security_level
@@ -386,23 +380,24 @@
 					if(SEC_LEVEL_BLUE)
 						SSblackbox.inc("alert_comms_blue",1)
 			tmp_alertlevel = 0
-			aistate = STATE_DEFAULT
+			src.aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
-			aistate = STATE_ALERT_LEVEL
+			src.aistate = STATE_ALERT_LEVEL
+
 		if("ai-emergencyaccess")
-			aistate = STATE_TOGGLE_EMERGENCY
+			src.aistate = STATE_TOGGLE_EMERGENCY
 		if("ai-enableemergency")
 			make_maint_all_access()
 			log_game("[key_name(usr)] enabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			aistate = STATE_DEFAULT
+			src.aistate = STATE_DEFAULT
 		if("ai-disableemergency")
 			revoke_maint_all_access()
 			log_game("[key_name(usr)] disabled emergency maintenance access.")
 			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			aistate = STATE_DEFAULT
+			src.aistate = STATE_DEFAULT
 
-	updateUsrDialog()
+	src.updateUsrDialog()
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/card/id))
@@ -422,7 +417,7 @@
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
-	if (z > 6)
+	if (src.z > 6)
 		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 		return
 
@@ -434,19 +429,19 @@
 
 
 	var/datum/browser/popup = new(user, "communications", "Communications Console", 400, 500)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 
 	if(issilicon(user))
-		var/dat2 = interact_ai(user) // give the AI a different interact proc to limit its access
+		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
 			popup.set_content(dat)
 			popup.open()
 		return
 
-	switch(state)
+	switch(src.state)
 		if(STATE_DEFAULT)
-			if (authenticated)
+			if (src.authenticated)
 				if(SSshuttle.emergencyCallAmount)
 					if(SSshuttle.emergencyLastCallLoc)
 						dat += "Most recent shuttle call/recall traced to: <b>[format_text(SSshuttle.emergencyLastCallLoc.name)]</b><BR>"
@@ -454,33 +449,33 @@
 						dat += "Unable to trace most recent shuttle call/recall signal.<BR>"
 				dat += "Logged in as: [auth_id]"
 				dat += "<BR>"
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=logout'>Log Out</A> \]<BR>"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=logout'>Log Out</A> \]<BR>"
 				dat += "<BR><B>General Functions</B>"
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=messagelist'>Message List</A> \]"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=messagelist'>Message List</A> \]"
 				switch(SSshuttle.emergency.mode)
 					if(SHUTTLE_IDLE, SHUTTLE_RECALL)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=callshuttle'>Call Emergency Shuttle</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=callshuttle'>Call Emergency Shuttle</A> \]"
 					else
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=cancelshuttle'>Cancel Shuttle Call</A> \]"
 
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=status'>Set Status Display</A> \]"
-				if (authenticated==2)
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=status'>Set Status Display</A> \]"
+				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(CONFIG_GET(string/cross_server_address))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=crossserver'>Send a message to an allied station</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=changeseclevel'>Change Alert Level</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
 					if(!emagged)
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to CentCom</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageSyndicate'>Send Message to \[UNKNOWN\]</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=RestoreBackup'>Restore Backup Routing Data</A> \]"
 			else
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=login'>Log In</A> \]"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=login'>Log In</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += get_call_shuttle_form()
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
@@ -489,63 +484,56 @@
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
-			for(var/i in 1 to messages.len)
-				var/datum/comm_message/M = messages[i]
-				dat += "<BR><A HREF='?src=[REF(src)];operation=viewmessage;message-num=[i]'>[M.title]</A>"
+			for(var/i = 1; i<=src.messagetitle.len; i++)
+				dat += "<BR><A HREF='?src=\ref[src];operation=viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_VIEWMESSAGE)
-			if (currmsg)
-				dat += "<B>[currmsg.title]</B><BR><BR>[currmsg.content]"
-				if(!currmsg.answered && currmsg.possible_answers.len)
-					for(var/i in 1 to currmsg.possible_answers.len)
-						var/answer = currmsg.possible_answers[i]
-						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=respond;answer=[i]'>Answer : [answer]</A> \]"
-				else if(currmsg.answered)
-					var/answered = currmsg.possible_answers[currmsg.answered]
-					dat += "<br> Archived Answer : [answered]"
-				dat += "<BR><BR>\[ <A HREF='?src=[REF(src)];operation=delmessage'>Delete</A> \]"
+			if (src.currmsg)
+				dat += "<B>[src.messagetitle[src.currmsg]]</B><BR><BR>[src.messagetext[src.currmsg]]"
+				if (src.authenticated)
+					dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=delmessage'>Delete</a> \]"
 			else
-				aistate = STATE_MESSAGELIST
-				attack_hand(user)
-				return null
+				src.state = STATE_MESSAGELIST
+				src.attack_hand(user)
+				return
 		if(STATE_DELMESSAGE)
-			if (currmsg)
-				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=[REF(src)];operation=delmessage2'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
+			if (src.currmsg)
+				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
-				state = STATE_MESSAGELIST
-				attack_hand(user)
+				src.state = STATE_MESSAGELIST
+				src.attack_hand(user)
 				return
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=message'>Message</A> \]"
-			dat += "<ul><li> Line 1: <A HREF='?src=[REF(src)];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Line 2: <A HREF='?src=[REF(src)];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "\[ Alert: <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=default'>None</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A> \]"
+			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
+			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
+			dat += "\[ Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
-				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
-				dat += "<A HREF='?src=[REF(src)];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
+				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
+				dat += "<A HREF='?src=\ref[src];operation=securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 		if(STATE_CONFIRM_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			dat += "Confirm the change to: [num2seclevel(tmp_alertlevel)]<BR>"
-			dat += "<A HREF='?src=[REF(src)];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
+			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 		if(STATE_TOGGLE_EMERGENCY)
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 			if(GLOB.emergency_access == 1)
 				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
-				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=[REF(src)];operation=disableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
+				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 			else
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
-				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=viewmessage'>Cancel</A> \]"
+				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 
 		if(STATE_PURCHASE)
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
@@ -556,9 +544,9 @@
 					dat += "[S.description]<BR>"
 					if(S.prerequisites)
 						dat += "Prerequisites: [S.prerequisites]<BR>"
-					dat += "<A href='?src=[REF(src)];operation=buyshuttle;chosen_shuttle=[REF(S)]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
-	dat += "<BR><BR>\[ [(state != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
+	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 
 	popup.set_content(dat)
 	popup.open()
@@ -585,8 +573,8 @@
 /obj/machinery/computer/communications/proc/get_call_shuttle_form(ai_interface = 0)
 	var/form_id = "callshuttle"
 	var/dat = get_javascript_header(form_id)
-	dat += "<form name='callshuttle' id='[form_id]' action='?src=[REF(src)]' method='get' style='display: inline'>"
-	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
+	dat += "<form name='callshuttle' id='[form_id]' action='?src=\ref[src]' method='get' style='display: inline'>"
+	dat += "<input type='hidden' name='src' value='\ref[src]'>"
 	dat += "<input type='hidden' name='operation' value='[ai_interface ? "ai-callshuttle2" : "callshuttle2"]'>"
 	dat += "<b>Nature of emergency:</b><BR> <input type='text' id='reasonfield' name='call' style='width:250px; background-color:#FFDDDD; onkeydown='getLength() onkeyup='getLength()' onkeypress='getLength()'>"
 	dat += "<BR>Are you sure you want to call the shuttle? \[ <a href='#' onclick='submit()'>Call</a> \]"
@@ -595,8 +583,8 @@
 /obj/machinery/computer/communications/proc/get_cancel_shuttle_form()
 	var/form_id = "cancelshuttle"
 	var/dat = get_javascript_header(form_id)
-	dat += "<form name='cancelshuttle' id='[form_id]' action='?src=[REF(src)]' method='get' style='display: inline'>"
-	dat += "<input type='hidden' name='src' value='[REF(src)]'>"
+	dat += "<form name='cancelshuttle' id='[form_id]' action='?src=\ref[src]' method='get' style='display: inline'>"
+	dat += "<input type='hidden' name='src' value='\ref[src]'>"
 	dat += "<input type='hidden' name='operation' value='cancelshuttle2'>"
 
 	dat += "<BR>Are you sure you want to cancel the shuttle? \[ <a href='#' onclick='submit()'>Cancel</a> \]"
@@ -604,7 +592,7 @@
 
 /obj/machinery/computer/communications/proc/interact_ai(mob/living/silicon/ai/user)
 	var/dat = ""
-	switch(aistate)
+	switch(src.aistate)
 		if(STATE_DEFAULT)
 			if(SSshuttle.emergencyCallAmount)
 				if(SSshuttle.emergencyLastCallLoc)
@@ -616,73 +604,65 @@
 			else
 				dat += "Current login: None"
 			dat += "<BR><BR><B>General Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-messagelist'>Message List</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-messagelist'>Message List</A> \]"
 			if(SSshuttle.emergency.mode == SHUTTLE_IDLE)
-				dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-status'>Set Status Display</A> \]"
+				dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-callshuttle'>Call Emergency Shuttle</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-status'>Set Status Display</A> \]"
 			dat += "<BR><BR><B>Special Functions</B>"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-announce'>Make an Announcement</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-changeseclevel'>Change Alert Level</A> \]"
-			dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-announce'>Make an Announcement</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-changeseclevel'>Change Alert Level</A> \]"
+			dat += "<BR>\[ <A HREF='?src=\ref[src];operation=ai-emergencyaccess'>Emergency Maintenance Access</A> \]"
 		if(STATE_CALLSHUTTLE)
 			dat += get_call_shuttle_form(1)
 		if(STATE_MESSAGELIST)
 			dat += "Messages:"
-			for(var/i in 1 to messages.len)
-				var/datum/comm_message/M = messages[i]
-				dat += "<BR><A HREF='?src=[REF(src)];operation=ai-viewmessage;message-num=[i]'>[M.title]</A>"
+			for(var/i = 1; i<=src.messagetitle.len; i++)
+				dat += "<BR><A HREF='?src=\ref[src];operation=ai-viewmessage;message-num=[i]'>[src.messagetitle[i]]</A>"
 		if(STATE_VIEWMESSAGE)
-			if (aicurrmsg)
-				dat += "<B>[aicurrmsg.title]</B><BR><BR>[aicurrmsg.content]"
-				if(!aicurrmsg.answered && aicurrmsg.possible_answers.len)
-					for(var/i in 1 to aicurrmsg.possible_answers.len)
-						var/answer = aicurrmsg.possible_answers[i]
-						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=ai-respond;answer=[i]'>Answer : [answer]</A> \]"
-				else if(aicurrmsg.answered)
-					var/answered = aicurrmsg.possible_answers[aicurrmsg.answered]
-					dat += "<br> Archived Answer : [answered]"
-				dat += "<BR><BR>\[ <A HREF='?src=[REF(src)];operation=ai-delmessage'>Delete</A> \]"
+			if (src.aicurrmsg)
+				dat += "<B>[src.messagetitle[src.aicurrmsg]]</B><BR><BR>[src.messagetext[src.aicurrmsg]]"
+				dat += "<BR><BR>\[ <A HREF='?src=\ref[src];operation=ai-delmessage'>Delete</A> \]"
 			else
-				aistate = STATE_MESSAGELIST
-				attack_hand(user)
+				src.aistate = STATE_MESSAGELIST
+				src.attack_hand(user)
 				return null
 		if(STATE_DELMESSAGE)
-			if(aicurrmsg)
-				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=[REF(src)];operation=ai-delmessage2'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
+			if(src.aicurrmsg)
+				dat += "Are you sure you want to delete this message? \[ <A HREF='?src=\ref[src];operation=ai-delmessage2'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
 			else
-				aistate = STATE_MESSAGELIST
-				attack_hand(user)
+				src.aistate = STATE_MESSAGELIST
+				src.attack_hand(user)
 				return
 
 		if(STATE_STATUSDISPLAY)
 			dat += "Set Status Displays<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-			dat += "\[ <A HREF='?src=[REF(src)];operation=setstat;statdisp=message'>Message</A> \]"
-			dat += "<ul><li> Line 1: <A HREF='?src=[REF(src)];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
-			dat += "<li> Line 2: <A HREF='?src=[REF(src)];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
-			dat += "\[ Alert: <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=default'>None</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
-			dat += " <A HREF='?src=[REF(src)];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=blank'>Clear</A> \]<BR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
+			dat += "\[ <A HREF='?src=\ref[src];operation=setstat;statdisp=message'>Message</A> \]"
+			dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];operation=setmsg1'>[ stat_msg1 ? stat_msg1 : "(none)"]</A>"
+			dat += "<li> Line 2: <A HREF='?src=\ref[src];operation=setmsg2'>[ stat_msg2 ? stat_msg2 : "(none)"]</A></ul><br>"
+			dat += "\[ Alert: <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=default'>None</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=redalert'>Red Alert</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=lockdown'>Lockdown</A> |"
+			dat += " <A HREF='?src=\ref[src];operation=setstat;statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR><HR>"
 
 		if(STATE_ALERT_LEVEL)
 			dat += "Current alert level: [get_security_level()]<BR>"
 			if(GLOB.security_level == SEC_LEVEL_DELTA)
 				dat += "<font color='red'><b>The self-destruct mechanism is active. Find a way to deactivate the mechanism to lower the alert level or evacuate.</b></font>"
 			else
-				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
-				dat += "<A HREF='?src=[REF(src)];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
+				dat += "<A HREF='?src=\ref[src];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_BLUE]'>Blue</A><BR>"
+				dat += "<A HREF='?src=\ref[src];operation=ai-securitylevel;newalertlevel=[SEC_LEVEL_GREEN]'>Green</A>"
 
 		if(STATE_TOGGLE_EMERGENCY)
 			if(GLOB.emergency_access == 1)
 				dat += "<b>Emergency Maintenance Access is currently <font color='red'>ENABLED</font></b>"
-				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=[REF(src)];operation=ai-disableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
+				dat += "<BR>Restore maintenance access restrictions? <BR>\[ <A HREF='?src=\ref[src];operation=ai-disableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
 			else
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
-				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=[REF(src)];operation=ai-enableemergency'>OK</A> | <A HREF='?src=[REF(src)];operation=ai-viewmessage'>Cancel</A> \]"
+				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=ai-enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=ai-viewmessage'>Cancel</A> \]"
 
-	dat += "<BR><BR>\[ [(aistate != STATE_DEFAULT) ? "<A HREF='?src=[REF(src)];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=[REF(user)];mach_close=communications'>Close</A> \]"
+	dat += "<BR><BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user, is_silicon)
@@ -733,3 +713,4 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered
+	

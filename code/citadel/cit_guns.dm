@@ -1157,6 +1157,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "\improper Foam Force Mk.37F"
 	desc = "A licensed foam-firing reproduction of a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses standard foam pistol magazines."
 	icon_state = "p37_foam"
+	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
