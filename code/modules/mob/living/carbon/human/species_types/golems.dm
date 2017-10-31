@@ -22,6 +22,7 @@
 	limbs_id = "golem"
 	fixed_mut_color = "aaa"
 	var/info_text = "As an <span class='danger'>Iron Golem</span>, you don't have any special traits."
+	var/random_eligible = TRUE //If false, the golem subtype can't be made through golem mutation toxin
 
 	var/prefix = "Iron"
 	var/list/special_names
@@ -44,6 +45,7 @@
 	name = "Random Golem"
 	blacklisted = FALSE
 	dangerous_existence = FALSE
+	var/static/list/random_golem_types
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -601,7 +603,7 @@
 	info_text = "<span class='bold alloy'>As a </span><span class='bold brass'>clockwork golem</span><span class='bold alloy'>, you are faster than \
 	other types of golem (being a machine), and are immune to electric shocks.</span>"
 	species_traits = list(NO_UNDERWEAR, NOTRANSSTING, NOBREATH, NOZOMBIE, VIRUSIMMUNE, RADIMMUNE, NOBLOOD, RESISTCOLD, RESISTPRESSURE, PIERCEIMMUNE)
-	armor = 40 //Reinforced, but also slim to allow for fast movement
+	armor = 20 //Reinforced, but much less so to allow for fast movement
 	attack_verb = "smash"
 	attack_sound = 'sound/magic/clockwork/anima_fragment_attack.ogg'
 	sexes = FALSE
@@ -643,7 +645,8 @@
 	has_corpse = TRUE
 	blacklisted = TRUE
 	dangerous_existence = TRUE
-  
+	random_eligible = FALSE
+
 /datum/species/golem/cloth
 	name = "Cloth Golem"
 	id = "cloth golem"
