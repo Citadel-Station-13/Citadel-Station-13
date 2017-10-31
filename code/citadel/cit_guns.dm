@@ -213,6 +213,8 @@
 	damage = 15
 	armour_penetration = 10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
@@ -220,9 +222,11 @@
 	icon_state = "magjectile-nl"
 	damage = 1
 	knockdown = 0
-	stamina = 25
+	stamina = 30
 	armour_penetration = -10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
 
@@ -378,19 +382,23 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 25
+	damage = 20
 	armour_penetration = 25
 	light_range = 3
+	speed = 1.2
+	range = 35
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 2
+	damage = 1
 	knockdown = 0
-	stamina = 30
+	stamina = 35
 	armour_penetration = -10
 	light_range = 3
+	speed = 1.0
+	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
 ///ammo casings///
@@ -1070,12 +1078,16 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "9mm frangible bullet"
 	damage = 15
 	stamina = 0
+	speed = 1.0
+	range = 20
 	armour_penetration = -25
 
 /obj/item/projectile/bullet/c9mm/rubber
 	name = "9mm rubber bullet"
-	damage = 2
-	stamina = 25
+	damage = 5
+	stamina = 30
+	speed = 1.2
+	range = 14
 	knockdown = 0
 
 /obj/item/ammo_casing/c9mm/frangible
