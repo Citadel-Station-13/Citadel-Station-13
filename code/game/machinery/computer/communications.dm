@@ -463,12 +463,12 @@
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(CONFIG_GET(string/cross_server_address))
-						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
+						dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=crossserver'>Send a message to an allied station</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
-					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=changeseclevel'>Change Alert Level</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
 					if(!emagged)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else
