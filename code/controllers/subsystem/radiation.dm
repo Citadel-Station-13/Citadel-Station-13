@@ -4,16 +4,21 @@ PROCESSING_SUBSYSTEM_DEF(radiation)
 	priority = 25
 
 	var/list/warned_atoms = list()
-	var/list/next_warn = list()
-	var/last_warn = 0
 
-/datum/controller/subsystem/processing/radiation/proc/warn(datum/component/radioactive)
-	if(!radioactive || QDELETED(radioactive))
+/datum/controller/subsystem/processing/radiation/proc/warn(datum/component/radioactive/contamination)
+	if(!contamination || QDELETED(contamination))
 		return
+<<<<<<< HEAD
 	if(warned_atoms["\ref[radioactive.parent]"])
+=======
+	var/ref = REF(contamination.parent)
+	if(warned_atoms[ref])
+>>>>>>> b78e060... Merge pull request #32247 from ninjanomnom/minor-rad-fixes
 		return
-	var/atom/master = radioactive.parent
+	warned_atoms[ref] = TRUE
+	var/atom/master = contamination.parent
 	SSblackbox.add_details("contaminated", "[master.type]")
+<<<<<<< HEAD
 	next_warn["\ref[master]"] = "\ref[radioactive]"
 	var/wait_time = max(0, 500-(world.time-last_warn))+20 // wait at least 20 ticks, longer if we just messaged
 	addtimer(CALLBACK(src, .proc/send_warn), wait_time, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -39,3 +44,7 @@ PROCESSING_SUBSYSTEM_DEF(radiation)
 	src.next_warn = list()
 	last_warn = world.time
 	message_admins(msg)
+=======
+	var/msg = "has become contamintaed with enough radiation to contaminate other objects. || Source: [contamination.source] || Strength: [contamination.strength]"
+	master.investigate_log(msg, INVESTIGATE_RADIATION)
+>>>>>>> b78e060... Merge pull request #32247 from ninjanomnom/minor-rad-fixes
