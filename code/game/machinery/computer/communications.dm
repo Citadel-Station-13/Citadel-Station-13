@@ -713,3 +713,4 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered
+	
