@@ -1132,9 +1132,9 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "Box of 9mm Frangible Bullets"
 	id = "9mm_frag"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(MAT_METAL = 25000)
 	build_path = /obj/item/ammo_box/c9mm/frangible
-	category = list("initial", "Security")
+	category = list("hacked", "Security")
 
 /datum/design/c9mmrubber
 	name = "Box of 9mm Rubber Bullets"
