@@ -151,44 +151,7 @@
 	var/mob/living/carbon/human/H = user
 	if(H.dna && H.dna.species && (H.dna.features["wings"] != "None"))
 		return TRUE
-
-<<<<<<< HEAD
-//Don't know where else to put this, it's basically an emote
-/mob/living/carbon/human/proc/startTailWag()
-	if(!dna || !dna.species)
-		return
-	if("tail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_lizard"
-		dna.species.mutant_bodyparts -= "spines"
-		dna.species.mutant_bodyparts |= "waggingtail_lizard"
-		dna.species.mutant_bodyparts |= "waggingspines"
-	if("tail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "tail_human"
-		dna.species.mutant_bodyparts |= "waggingtail_human"
-	if("mam_tail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "mam_tail"
-		dna.species.mutant_bodyparts |= "mam_waggingtail"
-	update_body()
-
-
-/mob/living/carbon/human/proc/endTailWag()
-	if(!dna || !dna.species)
-		return
-	if("waggingtail_lizard" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_lizard"
-		dna.species.mutant_bodyparts -= "waggingspines"
-		dna.species.mutant_bodyparts |= "tail_lizard"
-		dna.species.mutant_bodyparts |= "spines"
-	if("waggingtail_human" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "waggingtail_human"
-		dna.species.mutant_bodyparts |= "tail_human"
-	if("mam_waggingtail" in dna.species.mutant_bodyparts)
-		dna.species.mutant_bodyparts -= "mam_waggingtail"
-		dna.species.mutant_bodyparts |= "mam_tail"
-	update_body()
-
-=======
->>>>>>> 0eeddd8... tail wag fix
+		
 /mob/living/carbon/human/proc/OpenWings()
 	if(!dna || !dna.species)
 		return
