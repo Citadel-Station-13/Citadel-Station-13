@@ -494,7 +494,7 @@
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = 0
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
 	origin_tech = "combat=2;engineering=2;magnets=2"
@@ -1158,6 +1158,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A licensed foam-firing reproduction of a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses standard foam pistol magazines."
 	icon_state = "p37_foam"
 	spawnwithmagazine = TRUE
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
