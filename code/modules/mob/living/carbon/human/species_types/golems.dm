@@ -47,10 +47,6 @@
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-<<<<<<< HEAD
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
-=======
 	if(!random_golem_types)
 		random_golem_types = subtypesof(/datum/species/golem) - type
 		for(var/V in random_golem_types)
@@ -58,7 +54,6 @@
 			if(!initial(G.random_eligible))
 				random_golem_types -= G
 	var/datum/species/golem/golem_type = pick(random_golem_types)
->>>>>>> c6f1d6f... Merge pull request #32277 from YPOQ/patch-1
 	var/mob/living/carbon/human/H = C
 	H.set_species(golem_type)
 	to_chat(H, "[initial(golem_type.info_text)]")
