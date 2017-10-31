@@ -463,21 +463,12 @@
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
 					if(CONFIG_GET(string/cross_server_address))
-<<<<<<< HEAD
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=crossserver'>Send a message to an allied station</A> \]"
-					if(SSmapping.config.allow_custom_shuttles == "yes")
-						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
-=======
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=crossserver'>Send a message to an allied station</A> \]"
 					if(SSmapping.config.allow_custom_shuttles)
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
->>>>>>> 379869e... Fixes allow_custom_shuttles default (#32221)
 					if(!emagged)
 						dat += "<BR>\[ <A HREF='?src=\ref[src];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else
@@ -713,8 +704,6 @@
 /obj/machinery/computer/communications/proc/overrideCooldown()
 	var/obj/item/circuitboard/computer/communications/CM = circuit
 	CM.lastTimeUsed = 0
-<<<<<<< HEAD
-=======
 
 /obj/machinery/computer/communications/proc/add_message(datum/comm_message/new_message)
 	messages += new_message
@@ -724,4 +713,3 @@
 	var/content
 	var/list/possible_answers = list()
 	var/answered
->>>>>>> 379869e... Fixes allow_custom_shuttles default (#32221)
