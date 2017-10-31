@@ -23,7 +23,7 @@
 
 /datum/objective/crew/druglordbot/check_completion()
 	var/pillcount = target_amount
-	if(owner.current)
+	if(owner && owner.current)
 		if(owner.current.contents)
 			for(var/obj/item/reagent_containers/food/snacks/grown/P in owner.current.get_contents())
 				if(P.reagents.has_reagent(targetchem))
@@ -53,7 +53,7 @@
 	explanation_text = "Personally deliver at least [target_amount] [initial(foodpath.name)]s to Centcom."
 
 /datum/objective/crew/foodhoard/check_completion()
-	if(owner.current && owner.current.check_contents_for(foodpath) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
+	if(owner && owner.current && owner.current.check_contents_for(foodpath) && SSshuttle.emergency.shuttle_areas[get_area(owner.current)])
 		return TRUE
 	else
 		return FALSE
@@ -151,8 +151,9 @@
 
 /datum/objective/crew/nullrod/check_completion()
 	if(owner && owner.current)
-		if(owner.current.check_contents_for(typesof(/obj/item/nullrod)))
-			return TRUE
+		for(var/nullrodtypes in typesof(/obj/item/nullrod))
+			if(owner.current.check_contents_for(nullrodtypes))
+				return TRUE
 		if(owner.current.getorgan(/obj/item/organ/genital/penis))
 			return TRUE
 	return FALSE
@@ -227,10 +228,11 @@
 			explanation_text += "on a space suit." replace this if you're making this monstrosity work	*/
 
 /datum/objective/crew/pwrgame/check_completion()
-	if(owner.current && owner.current.check_contents_for(typesof(targettidegarb)))
-		return TRUE
-	else
-		return FALSE
+	if(owner && owner.current)
+		for(var/tidegarbtypes in typesof(targettidegarb))
+			if(owner.current.check_contents_for(tidegarbtypes))
+				return TRUE
+	return FALSE
 
 /datum/objective/crew/promotion //ported from Goon
 	explanation_text = "Have a non-assistant ID registered to you at the end of the shift."

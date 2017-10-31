@@ -39983,7 +39983,9 @@
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "bTm" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/atmospherics/components/trinary/mixer/flipped{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "bTn" = (
@@ -48489,12 +48491,8 @@
 	},
 /area/ai_monitored/security/armory)
 "coT" = (
-/obj/item/pipe{
-	dir = 4;
-	icon_state = "mixer";
-	name = "gas mixer fitting";
-	pipe_type = 14
-	},
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/science/misc_lab)
 "coZ" = (
@@ -53801,7 +53799,7 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cCW" = (
-/obj/machinery/portable_atmospherics/canister/freon,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "cCY" = (
@@ -86228,7 +86226,7 @@ bVI
 cay
 ccw
 chY
-cCW
+ciZ
 ciW
 ckB
 ckB
@@ -108055,7 +108053,7 @@ cBE
 bOE
 bEC
 bQV
-bSi
+coT
 bTm
 bUn
 bXr
@@ -108312,8 +108310,8 @@ bNu
 bMv
 bEC
 bQT
-bSh
-coT
+bSi
+bUn
 bTl
 bXr
 bNZ

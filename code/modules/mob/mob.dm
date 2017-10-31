@@ -4,6 +4,8 @@
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -31,6 +33,7 @@
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	hook_vr("mob_new",list(src))
 	. = ..()
 
 /atom/proc/prepare_huds()
@@ -389,7 +392,7 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
-		
+
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold

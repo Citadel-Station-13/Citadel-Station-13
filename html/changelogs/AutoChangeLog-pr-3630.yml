@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Admins are now able to mark open tickets as being handled. This makes it easier for staff members to provide feedback to players reporting issues via the admin help button."
