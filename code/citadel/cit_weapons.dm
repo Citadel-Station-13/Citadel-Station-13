@@ -72,6 +72,9 @@
 			blade_inhand.color = light_color
 			. += blade_inhand
 
+/obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
+	return	//NO MORE MAKING DUAL ESWORDS
+
 /*///autolathe memes/// I really need to stop doing this and find a proper way of adding in my toys
 
 /datum/design/toyneb
