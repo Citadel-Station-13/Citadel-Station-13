@@ -133,8 +133,20 @@
 	set waitfor = FALSE
 	return
 
+<<<<<<< HEAD
 /datum/component/proc/_GetInverseTypeList(current_type)
 	. = list(current_type)
+=======
+/datum/component/proc/_GetInverseTypeList(our_type = type)
+#if DM_VERSION > 511
+#warning Remove this hack for http://www.byond.com/forum/?post=73469
+#endif
+	set invisibility = 101
+	//we can do this one simple trick
+	var/current_type = parent_type
+	. = list(our_type, current_type)
+	//and since most components are root level + 1, this won't even have to run
+>>>>>>> 828ff86... Merge pull request #32307 from tgstation/Cyberboss-patch-1
 	while (current_type != /datum/component)
 		current_type = type2parent(current_type)
 		. += current_type
