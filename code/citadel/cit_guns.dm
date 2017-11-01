@@ -1068,6 +1068,7 @@ obj/item/projectile/bullet/c10mm/soporific
 				if(arm_color_input)
 					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
 				update_icon()
+				A.UpdateButtonIcon()
 
 	else
 		..()
@@ -1210,6 +1211,10 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		body_overlay.color = body_color
 	add_overlay(body_overlay)
 
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
 obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
@@ -1217,6 +1222,7 @@ obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 			if(body_color_input)
 				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+		A.UpdateButtonIcon()
 	else
 		..()
 
