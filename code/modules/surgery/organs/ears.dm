@@ -15,7 +15,10 @@
 	// without external aid (earmuffs, drugs)
 	var/ear_damage = 0
 
-	var/bang_protect = 0	//Resistance against loud noises
+	//Resistance against loud noises
+	var/bang_protect = 0
+	// Multiplier for both long term and short term ear damage
+	var/damage_multiplier = 1
 
 /obj/item/organ/ears/on_life()
 	if(!iscarbon(owner))
@@ -43,14 +46,14 @@
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)
-	ear_damage = max(ear_damage + ddmg, 0)
-	deaf = max(deaf + ddeaf, 0)
+	ear_damage = max(ear_damage + (ddmg*damage_multiplier), 0)
+	deaf = max(deaf + (ddeaf*damage_multiplier), 0)
 
 /obj/item/organ/ears/proc/minimumDeafTicks(value)
 	deaf = max(deaf, value)
 
-/obj/item/organ/ears/invincible/adjustEarDamage(ddmg, ddeaf)
-	return
+/obj/item/organ/ears/invincible
+	damage_multiplier = 0
 
 
 /mob/proc/restoreEars()
@@ -79,15 +82,28 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
+<<<<<<< HEAD
+=======
+	damage_multiplier = 2
+>>>>>>> b5e0746... Refactor of catpeople mutant organs (#32101)
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
-	color = H.hair_color
-	H.dna.features["ears"] = "Cat"
-	H.update_body()
+	if(istype(H))
+		color = H.hair_color
+		H.dna.species.mutant_bodyparts |= "ears"
+		H.dna.features["ears"] = "Cat"
+		H.update_body()
 
 /obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
+<<<<<<< HEAD
 	color = H.hair_color
 	H.dna.features["ears"] = "None"
 	H.update_body()
+=======
+	if(istype(H))
+		color = H.hair_color
+		H.dna.species.mutant_bodyparts -= "ears"
+		H.update_body()
+>>>>>>> b5e0746... Refactor of catpeople mutant organs (#32101)
