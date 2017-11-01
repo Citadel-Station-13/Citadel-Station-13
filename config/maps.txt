@@ -32,3 +32,9 @@ endmap
 map deltastation
 	minplayers 50
 endmap
+<<<<<<< HEAD
+=======
+
+map runtimestation
+endmap
+>>>>>>> 7eaa92a... Merge pull request #32234 from ninjanomnom/runtime-default
