@@ -233,8 +233,9 @@
 
 /datum/mind/proc/remove_rev()
 	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	remove_antag_datum(rev.type)
-	special_role = null
+	if(rev)
+		remove_antag_datum(rev.type)
+		special_role = null
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -1038,7 +1039,7 @@
 				remove_wizard()
 				log_admin("[key_name(usr)] has de-wizard'ed [current].")
 			if("wizard")
-				if(has_antag_datum(/datum/antagonist/wizard))
+				if(!has_antag_datum(/datum/antagonist/wizard))
 					special_role = "Wizard"
 					add_antag_datum(/datum/antagonist/wizard)
 					message_admins("[key_name_admin(usr)] has wizard'ed [current].")
