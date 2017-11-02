@@ -32,6 +32,10 @@
 		set_light(0)
 		update_icon()
 
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
+
 	add_fingerprint(user)
 
 /obj/item/toy/sword/cx/update_icon()
@@ -49,6 +53,10 @@
 	if(active)
 		add_overlay(blade_overlay)
 
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
 /obj/item/toy/sword/cx/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
@@ -56,10 +64,8 @@
 			if(energy_color_input)
 				light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 			update_icon()
-			if(ismob(loc))
-				var/mob/M = loc
-				M.update_inv_hands()
 			update_light()
+			A.UpdateButtonIcon()
 
 	else
 		..()
@@ -146,6 +152,9 @@
 		update_icon()
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
+	for(var/X in actions)
+		var/datum/action/A = X
+		A.UpdateButtonIcon()
 	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/transform_messages(mob/living/user, supress_message_text)
@@ -168,6 +177,10 @@
 	if(active)
 		add_overlay(blade_overlay)
 
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
 /obj/item/melee/transforming/energy/sword/cx/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
@@ -175,10 +188,8 @@
 			if(energy_color_input)
 				light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 			update_icon()
-			if(ismob(loc))
-				var/mob/M = loc
-				M.update_inv_hands()
 			update_light()
+			A.UpdateButtonIcon()
 
 	else
 		..()
