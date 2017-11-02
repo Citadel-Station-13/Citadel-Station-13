@@ -655,12 +655,9 @@
 		new_parallax_dir = preferred_direction
 	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
-<<<<<<< HEAD
-=======
 		var/area/internal_area = areas_to_move[i]
 		internal_area.afterShuttleMove(new_parallax_dir)													//areas
 
->>>>>>> 4d420b8... Shuttle rotation refactor and significant performance upgrade (#31942)
 	check_poddoors()
 	new_dock.last_dock_time = world.time
 	setDir(new_dock.dir)
