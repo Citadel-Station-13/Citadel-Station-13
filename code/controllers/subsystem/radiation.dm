@@ -8,7 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(radiation)
 /datum/controller/subsystem/processing/radiation/proc/warn(datum/component/radioactive/contamination)
 	if(!contamination || QDELETED(contamination))
 		return
-	var/ref = \ref(contamination.parent)
+	var/ref = REF(contamination.parent)
 	if(warned_atoms[ref])
 		return
 	warned_atoms[ref] = TRUE
