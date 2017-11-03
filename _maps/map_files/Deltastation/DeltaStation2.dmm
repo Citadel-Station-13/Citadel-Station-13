@@ -1703,9 +1703,7 @@
 /area/construction/mining/aux_base)
 "aeg" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/glass{
 	amount = 30
 	},
@@ -1765,12 +1763,8 @@
 /area/construction/mining/aux_base)
 "aep" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/rods/fifty,
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
@@ -16643,9 +16637,7 @@
 	pixel_y = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/stack/sheet/rglass{
 	amount = 20;
 	pixel_x = 2;
@@ -27726,24 +27718,16 @@
 /area/engine/atmos)
 "bjh" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bji" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/machinery/newscaster{
@@ -33750,9 +33734,7 @@
 /area/engine/break_room)
 "bvk" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 30;
 	pixel_x = 2;
@@ -33767,9 +33749,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/crowbar/power,
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -38517,9 +38497,7 @@
 	pixel_y = -26
 	},
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 20
-	},
+/obj/item/stack/sheet/plasteel/twenty,
 /obj/item/wrench,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -42839,12 +42817,8 @@
 /area/storage/tools)
 "bMM" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/rods/fifty,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -47590,12 +47564,8 @@
 /area/ai_monitored/security/armory)
 "bVC" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 20
 	},
@@ -52966,15 +52936,9 @@
 /turf/closed/wall,
 /area/security/range)
 "cgY" = (
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/target,
 /obj/item/target/syndicate,
 /obj/item/target/alien,
@@ -59648,10 +59612,7 @@
 	dir = 1;
 	pixel_y = 1
 	},
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/clothing/shoes/magboots{
 	pixel_x = -4;
 	pixel_y = 3
@@ -61074,10 +61035,7 @@
 	req_access_txt = "19"
 	},
 /obj/structure/window/reinforced,
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
+/obj/structure/rack,
 /obj/item/tank/jetpack/carbondioxide{
 	pixel_x = 4;
 	pixel_y = -1
@@ -62588,9 +62546,7 @@
 /area/engine/storage)
 "cBj" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	amount = 50
-	},
+/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 50;
 	pixel_x = 2;
@@ -63210,9 +63166,7 @@
 /area/engine/storage)
 "cCE" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/wrench,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/turf_decal/bot,
@@ -70734,12 +70688,8 @@
 /area/science/research)
 "cSp" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/packageWrap,
 /obj/machinery/light,
 /turf/open/floor/plasteel/whitepurple/corner,
@@ -72312,12 +72262,8 @@
 /area/science/lab)
 "cVH" = (
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/wrench,
 /obj/item/clothing/glasses/welding,
 /obj/machinery/newscaster{
@@ -77516,15 +77462,9 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "dhx" = (
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/target,
 /obj/item/target/syndicate,
 /obj/item/target/alien,
@@ -80984,12 +80924,8 @@
 /area/science/research/abandoned)
 "doT" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/device/assembly/flash/handheld,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
@@ -83491,18 +83427,10 @@
 	},
 /area/crew_quarters/heads/hor)
 "dtX" = (
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/structure/table/reinforced,
 /obj/machinery/requests_console{
 	department = "Robotics Lab";
@@ -88169,15 +88097,9 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dDL" = (
-/obj/item/stack/rods{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/metal/fifty,
 /obj/item/target,
 /obj/item/target/syndicate,
 /obj/item/target/alien,
@@ -97654,9 +97576,7 @@
 /obj/item/stack/sheet/metal{
 	amount = 30
 	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar/red,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
@@ -98048,9 +97968,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dYV" = (
@@ -100249,18 +100167,10 @@
 /area/security/courtroom)
 "efU" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
-	},
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
@@ -100272,9 +100182,7 @@
 /area/engine/storage)
 "efV" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/rods{
-	amount = 50
-	},
+/obj/item/stack/rods/fifty,
 /obj/item/wrench,
 /obj/item/storage/box/lights/mixed,
 /obj/effect/decal/cleanable/dirt,
