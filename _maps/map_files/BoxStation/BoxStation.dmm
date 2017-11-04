@@ -3405,10 +3405,10 @@
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "ahQ" = (
-/obj/machinery/computer/security,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "ahR" = (
@@ -59707,8 +59707,8 @@
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "Qts" = (
-/obj/item/storage/box/drinkingglasses,
 /obj/structure/table/wood,
+/obj/item/storage/box/drinkingglasses,
 /turf/open/floor/wood,
 /area/maintenance/bar)
 "Qtt" = (
@@ -81180,8 +81180,8 @@ aaa
 aaa
 aaf
 aaa
-bLv
 bCq
+bLv
 bLv
 bLv
 bLv
@@ -87624,8 +87624,8 @@ aaf
 aaa
 aaa
 aaa
-aaf
 aaa
+aaf
 aaa
 aaa
 aaa
@@ -88789,8 +88789,8 @@ agn
 agR
 agn
 agR
-agn
 Qvj
+agn
 QpG
 akv
 QpL
@@ -92246,10 +92246,10 @@ aaa
 aaa
 aaf
 aaa
+aaa
 aaf
 ctv
 aaT
-aaa
 aaf
 aaa
 aaa
@@ -92502,11 +92502,11 @@ ccw
 aaf
 aaf
 aaf
+Qoi
 aaf
 aaf
 ctv
 aaT
-Qoi
 aaf
 aaa
 aaa
@@ -93016,11 +93016,11 @@ aaa
 aaa
 aaa
 aaa
-aaT
-aaT
-aaT
-aaT
 aaa
+aaT
+aaT
+aaT
+aaT
 aaa
 aae
 aaa
