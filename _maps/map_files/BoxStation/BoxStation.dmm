@@ -60533,7 +60533,7 @@
 "Qvy" = (
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
-/area/space)
+/area/maintenance/starboard/fore)
 "Qvz" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -107043,7 +107043,7 @@ aaf
 aaf
 aaf
 aaf
-QoE
+alP
 Qvy
 alP
 anf
@@ -107300,8 +107300,8 @@ aaa
 aaa
 aaa
 aaa
-QoE
-QoE
+alP
+alP
 alP
 anf
 alP
