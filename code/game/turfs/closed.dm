@@ -36,7 +36,11 @@
 
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
+<<<<<<< HEAD
 	icon = 'config/title_screens/images/title1.dmi'
+=======
+	icon = 'icons/blank_title.png'
+>>>>>>> 96390b7... Fixed required images being in the config folder (#32375)
 	icon_state = ""
 	layer = FLY_LAYER
 
