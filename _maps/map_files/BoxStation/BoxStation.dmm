@@ -6681,9 +6681,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "waste_out"
+	id = "waste_out";
+	volume_rate = 200
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "apJ" = (
 /turf/closed/wall,
@@ -54653,9 +54655,16 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+<<<<<<< HEAD
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
+=======
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	dir = 4;
+	name = "Output Release";
+	open = 1
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 	},
 /turf/open/floor/engine,
 /area/engine/engineering)
@@ -83031,6 +83040,7 @@ aaH
 bCq
 bHE
 bRh
+<<<<<<< HEAD
 bSr
 Qsw
 QsD
@@ -83040,6 +83050,17 @@ Qtg
 Qtr
 QtB
 QtM
+=======
+bLu
+bCq
+bHE
+bLv
+apQ
+apQ
+aoV
+aoV
+aaH
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 bdV
 QtY
 Qug
@@ -87952,6 +87973,11 @@ cFJ
 cSH
 cGu
 cGH
+<<<<<<< HEAD
+=======
+QoB
+QoB
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 cGR
 cHa
 csd
@@ -88174,7 +88200,7 @@ cjL
 cCb
 bNI
 bEP
-bVL
+bLu
 bVJ
 bVJ
 bVJ
@@ -88721,7 +88747,11 @@ cFe
 cMD
 cFM
 czE
+<<<<<<< HEAD
 cGu
+=======
+Qov
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 ccw
 cGT
 csd
@@ -89749,7 +89779,11 @@ cFh
 cMD
 cFM
 czE
+<<<<<<< HEAD
 cGu
+=======
+Qov
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 ccw
 cGT
 csd
@@ -90006,7 +90040,11 @@ cEz
 cMD
 cFR
 cSJ
+<<<<<<< HEAD
 cGu
+=======
+Qov
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 cMm
 ciZ
 cHd
@@ -90269,6 +90307,10 @@ cGS
 cHe
 cHe
 cHr
+<<<<<<< HEAD
+=======
+QoI
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 ccw
 aaf
 aaT
@@ -90522,6 +90564,11 @@ cFT
 cSK
 cGx
 cGK
+<<<<<<< HEAD
+=======
+QoC
+QoC
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 cGY
 cEk
 csd
@@ -106955,7 +107002,7 @@ cls
 cmr
 cNW
 cOe
-cmo
+cPa
 cNW
 aaf
 aaf
@@ -108999,7 +109046,7 @@ bPN
 bWr
 cbZ
 bQZ
-cmo
+cPa
 cNW
 cOx
 cNW
