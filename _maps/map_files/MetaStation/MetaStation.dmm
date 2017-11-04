@@ -73035,9 +73035,11 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1;
 	frequency = 1441;
-	id = "n2_in"
+	id = "n2_in";
+	volume_rate = 200
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "cVB" = (
 /obj/structure/chair{
@@ -122319,7 +122321,11 @@ cbe
 ccO
 bza
 aaf
+<<<<<<< HEAD
 bza
+=======
+EDo
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 chO
 cjd
 ckG
@@ -123347,7 +123353,11 @@ cbi
 ccS
 bza
 aaf
+<<<<<<< HEAD
 bza
+=======
+EDo
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 chR
 cjg
 ckH
@@ -124375,7 +124385,11 @@ cVJ
 ccQ
 bza
 aaf
+<<<<<<< HEAD
 bza
+=======
+EDo
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 chU
 cjj
 ckJ
@@ -125901,6 +125915,7 @@ bza
 bFZ
 bAR
 bCA
+<<<<<<< HEAD
 bza
 bFZ
 bAR
@@ -125910,6 +125925,17 @@ bFZ
 bAR
 bCA
 bza
+=======
+EDo
+bFZ
+bAR
+bCA
+EDo
+bFZ
+bAR
+bCA
+EDo
+>>>>>>> 2b16a1a... Fixes waste loop outlet burning down atmospherics (#32405)
 bFZ
 bAR
 aaf
