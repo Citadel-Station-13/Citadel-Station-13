@@ -56,27 +56,15 @@
 		return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
-<<<<<<< HEAD
-	caster.loc = shape
-	caster.status_flags |= GODMODE
-=======
 	H = new(shape,src,caster)
->>>>>>> 28bd643... Shapeshift tweaks. (#32260)
-
 	clothes_req = 0
 	human_req = 0
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Restore(mob/living/shape)
 	var/obj/shapeshift_holder/H = locate() in shape
 	if(!H)
-		return
-<<<<<<< HEAD
-	caster.loc = shape.loc
-	caster.status_flags &= ~GODMODE
-=======
-	
+		return	
 	H.restore()
->>>>>>> 28bd643... Shapeshift tweaks. (#32260)
 
 	clothes_req = initial(clothes_req)
 	human_req = initial(human_req)
