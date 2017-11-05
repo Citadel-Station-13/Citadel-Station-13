@@ -172,6 +172,7 @@
 #include "code\citadel\cit_arousal.dm"
 #include "code\citadel\cit_clothes.dm"
 #include "code\citadel\cit_crewobjectives.dm"
+#include "code\citadel\cit_displaycases.dm"
 #include "code\citadel\cit_emotes.dm"
 #include "code\citadel\cit_genemods.dm"
 #include "code\citadel\cit_guns.dm"
