@@ -539,11 +539,7 @@
 	screen_loc = ui_healthdoll
 
 /obj/screen/splash
-<<<<<<< HEAD
-	icon = 'config/title_screens/images/title1.dmi'
-=======
 	icon = 'icons/blank_title.png'
->>>>>>> 96390b7... Fixed required images being in the config folder (#32375)
 	icon_state = ""
 	screen_loc = "1,1"
 	layer = SPLASHSCREEN_LAYER
