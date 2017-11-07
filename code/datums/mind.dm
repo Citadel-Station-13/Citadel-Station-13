@@ -442,20 +442,6 @@
 		if (SSticker.mode.config_tag=="changeling" || SSticker.mode.config_tag=="traitorchan")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-<<<<<<< HEAD
-		if ((src in SSticker.mode.changelings) && special_role)
-			text += "<b>YES</b> | <a href='?src=\ref[src];changeling=clear'>no</a>"
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
-		else if(src in SSticker.mode.changelings) //Station Aligned Changeling
-			text += "<b>YES (but not an antag)</b> | <a href='?src=\ref[src];changeling=clear'>no</a>"
-			if (objectives.len==0)
-				text += "<br>Objectives are empty! <a href='?src=\ref[src];changeling=autoobjectives'>Randomize!</a>"
-			if(changeling && changeling.stored_profiles.len && (current.real_name != changeling.first_prof.name) )
-				text += "<br><a href='?src=\ref[src];changeling=initialdna'>Transform to initial appearance.</a>"
-=======
 		var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
 		if(C)
 			text += "<b>[C.name]</b> | <a href='?src=[REF(src)];changeling=clear'>No</a>"
@@ -463,7 +449,6 @@
 				text += "<br>Objectives are empty! <a href='?src=[REF(src)];changeling=autoobjectives'>Randomize!</a>"
 			if(C.stored_profiles.len && (current.real_name != C.first_prof.name) )
 				text += "<br><a href='?src=[REF(src)];changeling=initialdna'>Transform to initial appearance.</a>"
->>>>>>> 70d0357... Ling datum antag standarization. (#32183)
 		else
 			text += "<a href='?src=\ref[src];changeling=changeling'>yes</a> | <b>NO</b>"
 
