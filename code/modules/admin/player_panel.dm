@@ -450,11 +450,7 @@
 				var/datum/antagonist/changeling/lingantag = changeling.has_antag_datum(/datum/antagonist/changeling)
 				var/mob/M = changeling.current
 				if(M)
-<<<<<<< HEAD
-					dat += "<tr><td>[M.mind.changeling.changelingID] as <a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-=======
 					dat += "<tr><td>[lingantag.changelingID]([lingantag.name]) as <a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
->>>>>>> 70d0357... Ling datum antag standarization. (#32183)
 					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
 					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td>"
 					dat += "<td><A HREF='?_src_=holder;[HrefToken()];traitor=\ref[M]'>Show Objective</A></td></tr>"
