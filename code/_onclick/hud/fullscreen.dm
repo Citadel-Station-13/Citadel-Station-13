@@ -174,4 +174,4 @@
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
->>>>>>> 3a3a779... Scale fullscreen overlays to the view size (#32379)
+	
