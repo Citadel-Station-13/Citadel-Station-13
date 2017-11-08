@@ -25,12 +25,6 @@
 		var/matrix/M = matrix()
 		M.Turn(rotation)
 		src.transform = M
-<<<<<<< HEAD
-
-	add_atom_colour(main, FIXED_COLOUR_PRIORITY)
-=======
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
-
->>>>>>> 8c3948b... Crayon rotation as a type var (#32441)
