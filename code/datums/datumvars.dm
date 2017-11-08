@@ -53,7 +53,11 @@
 		return
 
 	var/title = ""
+<<<<<<< HEAD
 	var/refid = "\ref[D]"
+=======
+	var/refid = REF(D)
+>>>>>>> bd5f864... Fixes VV not displaying false values in keyed lists (#32498)
 	var/icon/sprite
 	var/hash
 
@@ -453,7 +457,7 @@
 				var/val
 				if (IS_NORMAL_LIST(L) && !isnum(key))
 					val = L[key]
-				if (!val)
+				if (isnull(val))	// we still want to display non-null false values, such as 0 or ""
 					val = key
 					key = i
 
