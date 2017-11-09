@@ -53,11 +53,7 @@
 		return
 
 	var/title = ""
-<<<<<<< HEAD
-	var/refid = "\ref[D]"
-=======
 	var/refid = REF(D)
->>>>>>> bd5f864... Fixes VV not displaying false values in keyed lists (#32498)
 	var/icon/sprite
 	var/hash
 
