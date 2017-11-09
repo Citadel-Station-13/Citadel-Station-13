@@ -237,6 +237,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
 	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+	. += " (<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=handleissue'>HANDLE</A>)"
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)
@@ -335,10 +336,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	addtimer(CALLBACK(initiator, /client/proc/giveadminhelpverb), 50)
 
 	AddInteraction("<font color='green'>Resolved by [key_name].</font>")
+	to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
 	if(!silent)
 		SSblackbox.inc("ahelp_resolve")
 		var/msg = "Ticket [TicketHref("#[id]")] resolved by [key_name]"
-		to_chat(initiator, "<span class='adminhelp'>Your ticket has been resolved by an admin. The Adminhelp verb will be returned to you shortly.</span>")
 		message_admins(msg)
 		log_admin_private(msg)
 
@@ -381,6 +382,22 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	log_admin_private(msg)
 	AddInteraction("Marked as IC issue by [key_name]")
 	Resolve(silent = TRUE)
+
+//Let the initiator know their ahelp is being handled
+/datum/admin_help/proc/HandleIssue(key_name = key_name_admin(usr))
+	if(state != AHELP_ACTIVE)
+		return
+
+	var/msg = "<span class ='adminhelp'>Your ticket is now being handled by an admin. Please be patient.</span>"
+
+	if(initiator)
+		to_chat(initiator, msg)
+
+	SSblackbox.inc("ahelp_handleissue")
+	msg = "Ticket [TicketHref("#[id]")] is being handled by [key_name]"
+	message_admins(msg)
+	log_admin_private(msg)
+	AddInteraction("Being handled by [key_name]")
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
@@ -442,6 +459,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			Close()
 		if("resolve")
 			Resolve()
+		if("handleissue")
+			HandleIssue()
 		if("reopen")
 			Reopen()
 
@@ -489,6 +508,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		return
 	if(handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
+
+	msg = trim(msg)
 
 	if(!msg)
 		return
@@ -588,8 +609,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 
 /proc/send2irc(msg,msg2)
-	if(SERVER_TOOLS_PRESENT)
-		SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
+	msg = replacetext(replacetext(msg, "\proper", ""), "\improper", "")
+	msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
+	SERVER_TOOLS_RELAY_BROADCAST("[msg] | [msg2]")
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)

@@ -15,7 +15,7 @@
  Override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
 
-	if(!category)
+	if(!category || QDELETED(src))
 		return
 
 	var/obj/screen/alert/thealert
@@ -173,7 +173,7 @@
 
 /obj/screen/alert/verygross
 	name = "Very grossed out."
-	desc = "I'm not feeling very well.."
+	desc = "You're not feeling very well..."
 	icon_state = "gross2"
 
 /obj/screen/alert/disgusted
@@ -243,7 +243,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /obj/screen/alert/fire/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.canmove)
@@ -491,8 +491,10 @@ so as to remain in compliance with the most up-to-date laws."
 	var/atom/target = null
 
 /obj/screen/alert/hackingapc/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/living/silicon/ai/AI = usr
 	var/turf/T = get_turf(target)
 	if(T)
@@ -515,7 +517,8 @@ so as to remain in compliance with the most up-to-date laws."
 	timeout = 300
 
 /obj/screen/alert/notify_cloning/Click()
-	if(!usr || !usr.client) return
+	if(!usr || !usr.client)
+		return
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
@@ -528,10 +531,13 @@ so as to remain in compliance with the most up-to-date laws."
 	var/action = NOTIFY_JUMP
 
 /obj/screen/alert/notify_action/Click()
-	if(!usr || !usr.client) return
-	if(!target) return
+	if(!usr || !usr.client)
+		return
+	if(!target)
+		return
 	var/mob/dead/observer/G = usr
-	if(!istype(G)) return
+	if(!istype(G))
+		return
 	switch(action)
 		if(NOTIFY_ATTACK)
 			target.attack_ghost(G)
@@ -559,7 +565,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if((L.canmove) && (L.last_special <= world.time))
@@ -567,7 +573,7 @@ so as to remain in compliance with the most up-to-date laws."
 
 /obj/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
-	if(!L.can_resist())
+	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)
@@ -623,4 +629,5 @@ so as to remain in compliance with the most up-to-date laws."
 	. = ..()
 	severity = 0
 	master = null
+	mob_viewer = null
 	screen_loc = ""

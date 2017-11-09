@@ -4,6 +4,7 @@
 	species = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	possible_locs = list("r_arm", "l_arm", "l_leg", "r_leg", "head")
 	requires_bodypart = FALSE //need a missing limb
+	requires_bodypart_type = 0
 
 /datum/surgery/prosthetic_replacement/can_start(mob/user, mob/living/carbon/target)
 	if(!iscarbon(target))
@@ -59,8 +60,8 @@
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/organ_storage))
-		tool.icon_state = "evidenceobj"
-		tool.desc = "A container for holding body parts."
+		tool.icon_state = initial(tool.icon_state)
+		tool.desc = initial(tool.desc)
 		tool.cut_overlays()
 		tool = tool.contents[1]
 	if(istype(tool, /obj/item/bodypart) && user.temporarilyRemoveItemFromInventory(tool))
@@ -84,4 +85,3 @@
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
-

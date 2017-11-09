@@ -75,10 +75,17 @@
 	if (opacity && isturf(loc))
 		var/turf/T = loc
 		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 //called if Initialize returns INITIALIZE_HINT_LATELOAD
 /atom/proc/LateInitialize()
+	return
+
+// Put your AddComponent() calls here
+/atom/proc/ComponentInitialize()
 	return
 
 /atom/Destroy()
@@ -236,32 +243,6 @@
 			return 1
 	else if(src in container)
 		return 1
-
-/*
- *	atom/proc/search_contents_for(path,list/filter_path=null)
- * Recursevly searches all atom contens (including contents contents and so on).
- *
- * ARGS: path - search atom contents for atoms of this type
- *       list/filter_path - if set, contents of atoms not of types in this list are excluded from search.
- *
- * RETURNS: list of found atoms
- */
-
-/atom/proc/search_contents_for(path,list/filter_path=null)
-	var/list/found = list()
-	for(var/atom/A in src)
-		if(istype(A, path))
-			found += A
-		if(filter_path)
-			var/pass = 0
-			for(var/type in filter_path)
-				pass |= istype(A, type)
-			if(!pass)
-				continue
-		if(A.contents.len)
-			found += A.search_contents_for(path,filter_path)
-	return found
-
 
 /atom/proc/examine(mob/user)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
@@ -444,7 +425,8 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 	return 1
 
 /atom/proc/get_global_map_pos()
-	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map)) return
+	if(!islist(GLOB.global_map) || isemptylist(GLOB.global_map))
+		return
 	var/cur_x = null
 	var/cur_y = null
 	var/list/y_arr = null
@@ -478,19 +460,18 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 
 /atom/proc/acid_act(acidpwr, acid_volume)
 	SendSignal(COMSIG_ATOM_ACID_ACT, acidpwr, acid_volume)
-	return
 
 /atom/proc/emag_act()
 	SendSignal(COMSIG_ATOM_EMAG_ACT)
-	return
+
+/atom/proc/rad_act(strength)
+	SendSignal(COMSIG_ATOM_RAD_ACT)
 
 /atom/proc/narsie_act()
 	SendSignal(COMSIG_ATOM_NARSIE_ACT)
-	return
 
 /atom/proc/ratvar_act()
 	SendSignal(COMSIG_ATOM_RATVAR_ACT)
-	return
 
 /atom/proc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	return FALSE

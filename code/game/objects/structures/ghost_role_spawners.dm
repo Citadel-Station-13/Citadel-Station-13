@@ -122,10 +122,10 @@
 	golems, so that no golem may ever be forced to serve again.</b>"
 
 /obj/effect/mob_spawn/human/golem/Initialize(mapload, datum/species/golem/species = null, mob/creator = null)
-	. = ..()
-	if(species)
+	if(species) //spawners list uses object name to register so this goes before ..()
 		name += " ([initial(species.prefix)])"
 		mob_species = species
+	. = ..()
 	var/area/A = get_area(src)
 	if(!mapload && A)
 		notify_ghosts("\A [initial(species.prefix)] golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -316,10 +316,10 @@
 
 /obj/effect/mob_spawn/human/hotel_staff/security
 	name = "hotel security sleeper"
-	mob_name = "hotel security memeber"
+	mob_name = "hotel security member"
 	outfit = /datum/outfit/hotelstaff/security
-	flavour_text = "You are a peacekeeper assigned to this hotel to protect the intrests of the company while keeping the peace between \
-		guests and the staff.Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
+	flavour_text = "You are a peacekeeper assigned to this hotel to protect the interests of the company while keeping the peace between \
+		guests and the staff. Do <font size=6><b>NOT</b></font> leave the hotel, as that is grounds for contract termination."
 	objectives = "Do not leave your assigned hotel. Try and keep the peace between staff and guests, non-lethal force heavily advised if possible."
 
 /datum/outfit/hotelstaff/security
@@ -458,7 +458,7 @@
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise a security uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a security officer"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -482,7 +482,7 @@
 
 /obj/effect/mob_spawn/human/oldeng
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise an engineering uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "an engineer"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"
@@ -506,7 +506,7 @@
 
 /obj/effect/mob_spawn/human/oldsci
 	name = "old cryogenics pod"
-	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant"
+	desc = "A humming cryo pod. You can barely recognise a science uniform underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a scientist"
 	icon = 'icons/obj/cryogenic2.dmi'
 	icon_state = "sleeper"

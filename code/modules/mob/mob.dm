@@ -4,6 +4,8 @@
 	GLOB.living_mob_list -= src
 	GLOB.all_clockwork_mobs -= src
 	GLOB.mob_directory -= tag
+	for (var/alert in alerts)
+		clear_alert(alert, TRUE)
 	if(observers && observers.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -26,13 +28,12 @@
 	else
 		GLOB.living_mob_list += src
 	prepare_huds()
-	can_ride_typecache = typecacheof(can_ride_typecache)
-	hook_vr("mob_new",list(src))
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
+	hook_vr("mob_new",list(src))
 	. = ..()
 
 /atom/proc/prepare_huds()
@@ -46,7 +47,8 @@
 	set category = "Admin"
 	set hidden = 1
 
-	if(!loc) return 0
+	if(!loc)
+		return 0
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -197,7 +199,8 @@
 //set disable_warning to disable the 'you are unable to equip that' warning.
 //unset redraw_mob to prevent the mob from being redrawn at the end.
 /mob/proc/equip_to_slot_if_possible(obj/item/W, slot, qdel_on_fail = FALSE, disable_warning = FALSE, redraw_mob = TRUE, bypass_equip_delay_self = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	if(!W.mob_can_equip(src, null, slot, disable_warning, bypass_equip_delay_self))
 		if(qdel_on_fail)
 			qdel(W)
@@ -221,7 +224,8 @@
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return 0
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
@@ -356,6 +360,9 @@
 		else
 			M.LAssailant = usr
 
+/mob/proc/can_resist()
+	return FALSE		//overridden in living.dm
+
 /mob/proc/spin(spintime, speed)
 	set waitfor = 0
 	var/D = dir
@@ -381,12 +388,14 @@
 
 	if(pulling)
 		pulling.pulledby = null
-		if(isliving(pulling))
-			var/mob/living/L = pulling
-			L.update_canmove()// mob gets up if it was lyng down in a chokehold
+		var/mob/living/ex_pulled = pulling
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+
+		if(isliving(ex_pulled))
+			var/mob/living/L = ex_pulled
+			L.update_canmove()// mob gets up if it was lyng down in a chokehold
 
 /mob/proc/update_pull_hud_icon()
 	if(hud_used)

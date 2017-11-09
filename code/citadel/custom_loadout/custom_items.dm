@@ -163,7 +163,11 @@
 	item_state = "russianflask"
 	volume = 60
 
-
+/obj/item/clothing/mask/gas/stalker
+	name = "S.T.A.L.K.E.R. mask"
+	desc = "Smells like reactor four."
+	item_state = "stalker"
+	icon_state = "stalker"
 
 
 /*Sylas*/
@@ -174,3 +178,23 @@
 	icon_state = "petcollar-stripe"
 	item_color = "petcollar-stripe"
 	tagname = null
+
+
+/*PLACEHOLDER*/
+/obj/item/clothing/under/singery/custom
+	name = "bluish performer's outfit"
+	desc = "Just looking at this makes you want to sing."
+	icon_state = "ssing"
+	item_state = "ssing"
+	item_color = "ssing"
+	fitted = NO_FEMALE_UNIFORM
+	alternate_worn_layer = ABOVE_SHOES_LAYER
+	can_adjust = 0
+
+
+/obj/item/clothing/shoes/sneakers/pink
+	icon_state = "pink"
+	item_state = "pink"
+
+
+

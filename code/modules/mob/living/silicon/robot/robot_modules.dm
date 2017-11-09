@@ -305,6 +305,7 @@
 		/obj/item/device/multitool/cyborg,
 		/obj/item/device/t_scanner,
 		/obj/item/device/analyzer,
+		/obj/item/device/geiger_counter,
 		/obj/item/device/assembly/signaler/cyborg,
 		/obj/item/areaeditor/blueprints/cyborg,
 		/obj/item/device/electroadaptive_pseudocircuit,
@@ -351,7 +352,8 @@
 		/obj/item/soap/tongue,
 		/obj/item/device/analyzer/nose,
 		/obj/item/device/dogborg/sleeper/K9,
-		/obj/item/gun/energy/disabler/cyborg)
+		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/pinpointer/crew)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
@@ -384,8 +386,9 @@
 		/obj/item/device/analyzer/nose,
 		/obj/item/soap/tongue,
 		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper,
+		/obj/item/device/dogborg/sleeper/medihound,
 		/obj/item/twohanded/shockpaddles/hound,
+		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/device/sensor_device)
 	emag_modules = list(/obj/item/dogborg/pounce)
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
@@ -404,10 +407,9 @@
 /obj/item/robot_module/scrubpup
 	name = "Janitor"
 	basic_modules = list(
-		/obj/item/device/assembly/flash/cyborg,
 		/obj/item/dogborg/jaws/small,
 		/obj/item/device/analyzer/nose,
-		/obj/item/soap/tongue,
+		/obj/item/soap/tongue/scrubpup,
 		/obj/item/device/lightreplacer/cyborg,
 		/obj/item/device/dogborg/sleeper/compactor)
 	emag_modules = list(/obj/item/dogborg/pounce)
@@ -419,7 +421,7 @@
 	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
 	clean_on_move = TRUE
-	
+
 /obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
 	..()
 	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
@@ -632,14 +634,17 @@
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,
+		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/roller/robo,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
+		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/gun/medbeam)
+		/obj/item/gun/medbeam,
+		/obj/item/organ_storage)
 	ratvar_modules = list(
 		/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)

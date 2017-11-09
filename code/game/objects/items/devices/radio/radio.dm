@@ -29,6 +29,7 @@
 	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
 	flags_1 = CONDUCT_1 | HEAR_1
+	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
@@ -195,9 +196,11 @@
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
-	if(!on) return // the device has to be on
+	if(!on)
+		return // the device has to be on
 	//  Fix for permacell radios, but kinda eh about actually fixing them.
-	if(!M || !message) return
+	if(!M || !message)
+		return
 
 	if(wires.is_cut(WIRE_TX))
 		return

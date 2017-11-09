@@ -26,7 +26,7 @@ obj/item/antag_spawner/syndi_borer/spawn_antag(client/C, turf/T, mob/owner)
 		to_chat(B, "<B>You are awake at last! Seek out whoever released you and aid them as best you can!</B>")
 		if(new_objective)
 			to_chat(B, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
-		SSticker.mode.update_borer_icons_added(B)
+
 /obj/item/antag_spawner/syndi_borer/proc/check_usability(mob/user)
 	if(used)
 		to_chat(user, "<span class='warning'>[src] appears to be empty!</span>")

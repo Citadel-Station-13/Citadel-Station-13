@@ -382,7 +382,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	switch(new_character.mind.special_role)
 		if("Wizard")
 			new_character.forceMove(pick(GLOB.wizardstart))
-			SSticker.mode.equip_wizard(new_character)
+			var/datum/antagonist/wizard/A = new_character.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
+			A.equip_wizard()
 		if("Syndicate")
 			new_character.forceMove(pick(GLOB.nukeop_start))
 			call(/datum/game_mode/proc/equip_syndicate)(new_character)
@@ -398,7 +399,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		else//They may also be a cyborg or AI.
 			switch(new_character.mind.assigned_role)
 				if("Cyborg")//More rigging to make em' work and check if they're traitor.
-					new_character = new_character.Robotize()
+					new_character = new_character.Robotize(TRUE)
 				if("AI")
 					new_character = new_character.AIize()
 				else
@@ -544,15 +545,20 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/devastation = input("Range of total devastation. -1 to none", text("Input"))  as num|null
-	if(devastation == null) return
+	if(devastation == null)
+		return
 	var/heavy = input("Range of heavy impact. -1 to none", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light impact. -1 to none", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 	var/flash = input("Range of flash. -1 to none", text("Input"))  as num|null
-	if(flash == null) return
+	if(flash == null)
+		return
 	var/flames = input("Range of flames. -1 to none", text("Input"))  as num|null
-	if(flames == null) return
+	if(flames == null)
+		return
 
 	if ((devastation != -1) || (heavy != -1) || (light != -1) || (flash != -1) || (flames != -1))
 		if ((devastation > 20) || (heavy > 20) || (light > 20) || (flames > 20))
@@ -576,9 +582,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		return
 
 	var/heavy = input("Range of heavy pulse.", text("Input"))  as num|null
-	if(heavy == null) return
+	if(heavy == null)
+		return
 	var/light = input("Range of light pulse.", text("Input"))  as num|null
-	if(light == null) return
+	if(light == null)
+		return
 
 	if (heavy || light)
 
@@ -959,7 +967,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	set name = "Toggle AntagHUD"
 	set desc = "Toggles the Admin AntagHUD"
 
-	if(!holder) return
+	if(!holder)
+		return
 
 	var/adding_hud = !has_antag_hud()
 
@@ -1165,7 +1174,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!holder)
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1185,6 +1194,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
 			bluespace_artillery(target)
+		if(ADMIN_PUNISHMENT_FIREBALL)
+			new /obj/effect/temp_visual/target(get_turf(target))
 
 	var/msg = "[key_name_admin(usr)] punished [key_name_admin(target)] with [punishment]."
 	message_admins(msg)

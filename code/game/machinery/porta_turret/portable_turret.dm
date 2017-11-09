@@ -517,11 +517,7 @@
 
 
 	//Shooting Code:
-	A.original = target
-	A.starting = T
-	A.current = T
-	A.yo = U.y - T.y
-	A.xo = U.x - T.x
+	A.preparePixelProjectile(target, src)
 	A.fire()
 	return A
 
@@ -627,6 +623,15 @@
 
 /obj/machinery/porta_turret/centcom_shuttle/setup()
 	return
+
+/obj/machinery/porta_turret/centcom_shuttle/weak
+	max_integrity = 120
+	integrity_failure = 60
+	name = "Old Laser Turret"
+	desc = "A turret built with substandard parts and run down further with age. Still capable of delivering lethal lasers to the odd space carp, but not much else."
+	stun_projectile = /obj/item/projectile/beam/weak
+	lethal_projectile = /obj/item/projectile/beam/weak
+	faction = "neutral"
 
 ////////////////////////
 //Turret Control Panel//
@@ -794,7 +799,7 @@
 
 /obj/item/wallframe/turret_control
 	name = "turret control frame"
-	desc = "Used for building turret control panels"
+	desc = "Used for building turret control panels."
 	icon_state = "apc"
 	result_path = /obj/machinery/turretid
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)

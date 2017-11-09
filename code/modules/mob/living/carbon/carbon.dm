@@ -7,19 +7,15 @@
 	..()
 
 /mob/living/carbon/Destroy()
-	for(var/guts in internal_organs)
-		qdel(guts)
-	for(var/atom/movable/food in stomach_contents)
-		qdel(food)
-	for(var/BP in bodyparts)
-		qdel(BP)
-	for(var/imp in implants)
-		qdel(imp)
-	bodyparts = list()
+//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	. =  ..()
+
+	QDEL_LIST(internal_organs)
+	QDEL_LIST(stomach_contents)
+	QDEL_LIST(bodyparts)
+	QDEL_LIST(implants)
 	remove_from_all_data_huds()
-	if(dna)
-		qdel(dna)
-	return ..()
+	QDEL_NULL(dna)
 
 /mob/living/carbon/relaymove(mob/user, direction)
 	if(user in src.stomach_contents)
@@ -228,7 +224,7 @@
 						internal = null
 						update_internals_hud_icon(0)
 					else if(ITEM && istype(ITEM, /obj/item/tank))
-						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot("breathing_tube"))
+						if((wear_mask && (wear_mask.flags_1 & MASKINTERNALS_1)) || getorganslot(ORGAN_SLOT_BREATHING_TUBE))
 							internal = ITEM
 							update_internals_hud_icon(1)
 
@@ -527,7 +523,7 @@
 
 	sight = initial(sight)
 	lighting_alpha = initial(lighting_alpha)
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(!E)
 		update_tint()
 	else
@@ -584,7 +580,7 @@
 	if(wear_mask)
 		. += wear_mask.tint
 
-	var/obj/item/organ/eyes/E = getorganslot("eye_sight")
+	var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
 	if(E)
 		. += E.tint
 

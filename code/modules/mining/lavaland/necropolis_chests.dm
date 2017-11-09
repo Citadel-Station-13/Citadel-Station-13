@@ -132,7 +132,7 @@
 
 /datum/design/unique_modkit/bounty
 	name = "Kinetic Accelerator Death Syphon Mod"
-	desc = "A device which causes kinetic accelerators to permenantly gain damage against creature types killed with it."
+	desc = "A device which causes kinetic accelerators to permanently gain damage against creature types killed with it."
 	id = "bountymod"
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 4000, MAT_GOLD = 4000, MAT_BLUESPACE = 4000)
 	reagents_list = list("blood" = 40)
@@ -194,7 +194,7 @@
 	desc = "Happy to light your way."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "orb"
-	luminosity = 7
+	light_range = 7
 	layer = ABOVE_ALL_MOB_LAYER
 
 //Red/Blue Cubes
@@ -275,7 +275,7 @@
 
 /obj/item/ammo_casing/magic/hook
 	name = "hook"
-	desc = "a hook."
+	desc = "A hook."
 	projectile_type = /obj/item/projectile/hook
 	caliber = "hook"
 	icon_state = "hook"
@@ -880,11 +880,7 @@
 	var/create_delay = 30
 	var/reset_cooldown = 50
 	var/timer = 0
-	var/banned_turfs
-
-/obj/item/lava_staff/Initialize()
-	. = ..()
-	banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
+	var/static/list/banned_turfs = typecacheof(list(/turf/open/space/transit, /turf/closed))
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	..()
@@ -969,7 +965,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	color = "#FF0000"
-	desc = "Mark your target for death. "
+	desc = "Mark your target for death."
 	var/used = FALSE
 
 /obj/item/blood_contract/attack_self(mob/user)

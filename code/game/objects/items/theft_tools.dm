@@ -33,7 +33,7 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
-		radiation_pulse(get_turf(src), 1, 4, 40, 1)
+		radiation_pulse(src, 400, 2)
 
 //nuke core box, for carrying the core
 /obj/item/nuke_core_container
@@ -140,7 +140,7 @@
 		return
 	else
 		to_chat(user, "<span class='notice'>As it touches \the [src], both \the [src] and \the [W] burst into dust!</span>")
-		radiation_pulse(get_turf(user), 1, 2, 10, 1)
+		radiation_pulse(user, 100)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 		qdel(W)
 		qdel(src)
@@ -151,13 +151,13 @@
 		return FALSE
 	var/mob/ded = user
 	to_chat(user, "<span class='warning'>You reach for the supermatter sliver with your hands. That was dumb.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	radiation_pulse(user, 500, 2)
 	playsound(get_turf(user), 'sound/effects/supermatter.ogg', 50, 1)
 	ded.dust()
 
 /obj/item/nuke_core_container/supermatter
 	name = "supermatter bin"
-	desc = "A tiny receptacle that releases an inert freon mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
+	desc = "A tiny receptacle that releases an inert hyper-noblium mix upon sealing, allowing a sliver of a supermatter crystal to be safely stored.."
 	var/obj/item/nuke_core/supermatter_sliver/sliver
 
 /obj/item/nuke_core_container/supermatter/Destroy()
@@ -193,7 +193,7 @@
 
 /obj/item/scalpel/supermatter
 	name = "supermatter scalpel"
-	desc = "A scalpel with a tip of condensed freon gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
+	desc = "A scalpel with a tip of condensed hyper-noblium gas, searingly cold to the touch, that can safely shave a sliver off a supermatter crystal."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_scalpel"
 	toolspeed = 0.5
@@ -202,7 +202,7 @@
 
 /obj/item/hemostat/supermatter
 	name = "supermatter extraction tongs"
-	desc = "A pair of tongs made from condensed freon gas, searingly cold to the touch, that can safely grip a supermatter sliver."
+	desc = "A pair of tongs made from condensed hyper-noblium gas, searingly cold to the touch, that can safely grip a supermatter sliver."
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "supermatter_tongs"
 	toolspeed = 0.75
@@ -240,7 +240,7 @@
 	user.visible_message("<span class='danger'>As [user] touches \the [AM] with \a [src], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [AM] with \the [src], and everything suddenly goes silent.</span>\n<span class='notice'>\The [AM] flashes into dust, and soon as you can register this, you do as well.</span>",\
 			"<span class='italics'>Everything suddenly goes silent.</span>")
-	radiation_pulse(get_turf(user), 2, 4, 50, 1)
+	radiation_pulse(user, 500, 2)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, 1)
 	user.dust()
 	icon_state = "supermatter_tongs"

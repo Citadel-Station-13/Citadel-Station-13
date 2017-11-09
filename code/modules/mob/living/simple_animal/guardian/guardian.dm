@@ -143,7 +143,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			qdel(src)
 	else
 		to_chat(src, "<span class='danger'>Your summoner has died!</span>")
-		visible_message("<span class='danger'><B>The [src] dies along with its user!</B></span>")
+		visible_message("<span class='danger'><B>[src] dies along with its user!</B></span>")
 		death(TRUE)
 		qdel(src)
 	snapback()
@@ -320,6 +320,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		forceMove(summoner.loc)
 		new /obj/effect/temp_visual/guardian/phase(loc)
 		cooldown = world.time + 10
+		reset_perspective()
 		return TRUE
 	return FALSE
 
@@ -460,7 +461,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /obj/item/guardiancreator
 	name = "deck of tarot cards"
-	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power. "
+	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_syndicate_full"
 	var/used = FALSE

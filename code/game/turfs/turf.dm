@@ -56,6 +56,9 @@
 
 	if (opacity)
 		has_opaque_atom = TRUE
+
+	ComponentInitialize()
+
 	return INITIALIZE_HINT_NORMAL
 
 /turf/proc/Initalize_Atmos(times_fired)
@@ -112,7 +115,8 @@
 	return FALSE
 
 /turf/CanPass(atom/movable/mover, turf/target)
-	if(!target) return FALSE
+	if(!target)
+		return FALSE
 
 	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
 		return !density
@@ -276,12 +280,12 @@
 
 //////Assimilate Air//////
 /turf/open/proc/Assimilate_Air()
-	if(blocks_air)
+	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
+	if(blocks_air || !turf_count) //if there weren't any open turfs, no need to update.
 		return
 
 	var/datum/gas_mixture/total = new//Holders to assimilate air from nearby turfs
 	var/list/total_gases = total.gases
-	var/turf_count = LAZYLEN(atmos_adjacent_turfs)
 
 	for(var/T in atmos_adjacent_turfs)
 		var/turf/open/S = T
@@ -294,9 +298,6 @@
 		total.temperature += S.air.temperature
 
 	air.copy_from(total)
-
-	if(!turf_count) //if there weren't any open turfs, no need to update.
-		return
 
 	var/list/air_gases = air.gases
 	for(var/id in air_gases)
@@ -347,7 +348,8 @@
 //  possible. It results in more efficient (CPU-wise) pathing
 //  for bots and anything else that only moves in cardinal dirs.
 /turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T) return FALSE
+	if(!src || !T)
+		return FALSE
 	return abs(x - T.x) + abs(y - T.y)
 
 ////////////////////////////////////////////////////
@@ -438,13 +440,13 @@
 /turf/proc/empty(turf_type=/turf/open/space, baseturf_type, list/ignore_typecache, forceop = FALSE)
 	// Remove all atoms except observers, landmarks, docking ports
 	var/static/list/ignored_atoms = typecacheof(list(/mob/dead, /obj/effect/landmark, /obj/docking_port, /atom/movable/lighting_object))
-	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContents(), ignored_atoms | ignore_typecache)
+	var/list/allowed_contents = typecache_filter_list_reverse(GetAllContentsIgnoring(ignore_typecache), ignored_atoms)
 	allowed_contents -= src
 	for(var/i in 1 to allowed_contents.len)
 		var/thing = allowed_contents[i]
 		qdel(thing, force=TRUE)
 
-	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop = forceop)
+	var/turf/newT = ChangeTurf(turf_type, baseturf_type, FALSE, FALSE, forceop)
 
 	SSair.remove_from_active(newT)
 	newT.CalculateAdjacentTurfs()

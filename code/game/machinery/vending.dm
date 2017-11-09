@@ -411,16 +411,6 @@
 	if(..())
 		return
 
-	if(issilicon(usr))
-		if(iscyborg(usr))
-			var/mob/living/silicon/robot/R = usr
-			if(!(R.module && istype(R.module, /obj/item/robot_module/butler) ))
-				to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-				return
-		else
-			to_chat(usr, "<span class='notice'>The vending machine refuses to interface with you, as you are not in its target demographic!</span>")
-			return
-
 	if(href_list["remove_coin"])
 		if(!(coin || bill))
 			to_chat(usr, "<span class='notice'>There is no money in this machine.</span>")
@@ -806,7 +796,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 //This one's from bay12
 /obj/machinery/vending/cart
 	name = "\improper PTech"
-	desc = "Cartridges for PDAs"
+	desc = "Cartridges for PDAs."
 	product_slogans = "Carts to go!"
 	icon_state = "cart"
 	icon_deny = "cart-deny"
@@ -900,7 +890,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/security
 	name = "\improper SecTech"
-	desc = "A security equipment vendor"
+	desc = "A security equipment vendor."
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	icon_state = "sec"
 	icon_deny = "sec-deny"
@@ -990,8 +980,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/mask/gas/cyborg = 1, /obj/item/clothing/suit/holidaypriest = 1, /obj/item/clothing/head/wizard/marisa/fake = 1,
 					/obj/item/clothing/suit/wizrobe/marisa/fake = 1, /obj/item/clothing/under/sundress = 1, /obj/item/clothing/head/witchwig = 1, /obj/item/staff/broom = 1,
 					/obj/item/clothing/suit/wizrobe/fake = 1, /obj/item/clothing/head/wizard/fake = 1, /obj/item/staff = 3, /obj/item/clothing/mask/gas/sexyclown = 1,
-					/obj/item/clothing/under/rank/clown/sexy = 1, /obj/item/clothing/mask/gas/sexymime = 1, /obj/item/clothing/under/sexymime = 1, /obj/item/clothing/mask/rat/bat = 1, /obj/item/clothing/mask/rat/bee = 1, /obj/item/clothing/mask/rat/bear = 1, /obj/item/clothing/mask/rat/raven = 1, /obj/item/clothing/mask/rat/jackal = 1, /obj/item/clothing/mask/rat/fox = 1, /obj/item/clothing/mask/rat/tribal = 1, /obj/item/clothing/mask/rat = 1, /obj/item/clothing/suit/apron/overalls = 1,
-					/obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
+					/obj/item/clothing/under/rank/clown/sexy = 1, /obj/item/clothing/mask/gas/sexymime = 1, /obj/item/clothing/under/sexymime = 1, /obj/item/clothing/mask/rat/bat = 1, /obj/item/clothing/mask/rat/bee = 1, /obj/item/clothing/mask/rat/bear = 1, /obj/item/clothing/mask/rat/raven = 1, /obj/item/clothing/mask/rat/jackal = 1, /obj/item/clothing/mask/rat/fox = 1, /obj/item/clothing/mask/frog = 1, /obj/item/clothing/mask/rat/tribal = 1, /obj/item/clothing/mask/rat = 1,
+					/obj/item/clothing/suit/apron/overalls = 1, /obj/item/clothing/head/rabbitears =1, /obj/item/clothing/head/sombrero = 1, /obj/item/clothing/head/sombrero/green = 1, /obj/item/clothing/suit/poncho = 1,
 					/obj/item/clothing/suit/poncho/green = 1, /obj/item/clothing/suit/poncho/red = 1,
 					/obj/item/clothing/under/maid = 1, /obj/item/clothing/under/janimaid = 1, /obj/item/clothing/glasses/cold=1, /obj/item/clothing/glasses/heat=1,
 					/obj/item/clothing/suit/whitedress = 1,
@@ -1008,15 +998,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/scratch = 1,
 					/obj/item/clothing/under/sailor = 1,
-					/obj/item/clothing/ears/headphones = 2,
-					/obj/item/clothing/head/wig/random = 3)
+        			/obj/item/clothing/ears/headphones = 2,
+        			/obj/item/clothing/head/wig/random = 3)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1, /obj/item/clothing/head/powdered_wig = 1, /obj/item/gun/magic/wand = 2, /obj/item/clothing/glasses/sunglasses/garb = 2, /obj/item/clothing/glasses/sunglasses/blindfold = 1, /obj/item/clothing/mask/muzzle = 2)
 	premium = list(/obj/item/clothing/suit/pirate/captain = 2, /obj/item/clothing/head/pirate/captain = 2, /obj/item/clothing/head/helmet/roman = 1, /obj/item/clothing/head/helmet/roman/legionaire = 1, /obj/item/clothing/under/roman = 1, /obj/item/clothing/shoes/roman = 1, /obj/item/shield/riot/roman = 1, /obj/item/skub = 1)
 	refill_canister = /obj/item/vending_refill/autodrobe
 
 /obj/machinery/vending/dinnerware
 	name = "\improper Plasteel Chef's Dinnerware Vendor"
-	desc = "A kitchen and restaurant equipment vendor"
+	desc = "A kitchen and restaurant equipment vendor."
 	product_ads = "Mm, food stuffs!;Food and food accessories.;Get your plates!;You like forks?;I like forks.;Woo, utensils.;You don't really need these..."
 	icon_state = "dinnerware"
 	products = list(/obj/item/storage/bag/tray = 8, /obj/item/kitchen/fork = 6, /obj/item/kitchen/knife = 6, /obj/item/kitchen/rollingpin = 2, /obj/item/reagent_containers/food/drinks/drinkingglass = 8, /obj/item/clothing/suit/apron/chef = 2, /obj/item/reagent_containers/food/condiment/pack/ketchup = 5, /obj/item/reagent_containers/food/condiment/pack/hotsauce = 5, /obj/item/reagent_containers/food/condiment/saltshaker = 5, /obj/item/reagent_containers/food/condiment/peppermill = 5, /obj/item/reagent_containers/glass/bowl = 20)
@@ -1026,7 +1016,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/sovietsoda
 	name = "\improper BODA"
-	desc = "Old sweet water vending machine"
+	desc = "Old sweet water vending machine."
 	icon_state = "sovietsoda"
 	product_ads = "For Tsar and Country.;Have you fulfilled your nutrition quota today?;Very nice!;We are simple people, for this is all we eat.;If there is a person, there is a problem. If there is no person, then there is no problem."
 	products = list(/obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda = 30)

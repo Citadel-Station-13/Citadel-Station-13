@@ -5,8 +5,10 @@
 
 #ifdef TESTING
 //#define GC_FAILURE_HARD_LOOKUP	//makes paths that fail to GC call find_references before del'ing.
-									//Also allows for recursive reference searching of datums.
-									//Sets world.loop_checks to false and prevents find references from sleeping
+								//implies FIND_REF_NO_CHECK_TICK
+
+//#define FIND_REF_NO_CHECK_TICK	//Sets world.loop_checks to false and prevents find references from sleeping
+
 
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
@@ -33,9 +35,10 @@
 #define MAX_CHARTER_LEN			80
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN				18	//youngest a character can be
+#define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
+#define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
 #define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
@@ -52,9 +55,14 @@
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
-//Additional code for the above flags_1.
+//Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.
+#endif
+
+
+#ifdef GC_FAILURE_HARD_LOOKUP
+#define FIND_REF_NO_CHECK_TICK
 #endif
 
 #ifdef TRAVISTESTING
@@ -72,4 +80,4 @@
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
 #define DB_MAJOR_VERSION 3
-#define DB_MINOR_VERSION 3
+#define DB_MINOR_VERSION 4

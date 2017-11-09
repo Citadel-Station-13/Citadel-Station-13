@@ -31,6 +31,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/mob/observetarget = null	//The target mob that the ghost is observing. Used as a reference in logout()
 	var/ghost_hud_enabled = 1 //did this ghost disable the on-screen HUD?
 	var/data_huds_on = 0 //Are data HUDs currently enabled?
+	var/health_scan = FALSE //Are health scans currently enabled?
 	var/list/datahuds = list(DATA_HUD_SECURITY_ADVANCED, DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC) //list of data HUDs shown to ghosts.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
@@ -305,15 +306,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/is_active()
 	return 0
 
-/mob/dead/observer/Stat()
-	..()
-	if(statpanel("Status"))
-		if(SSticker.HasRoundStarted())
-			if(istype(SSticker.mode, /datum/game_mode/blob))
-				var/datum/game_mode/blob/B = SSticker.mode
-				if(B.message_sent)
-					stat(null, "Blobs to Blob Win: [GLOB.blobs_legit.len]/[B.blobwincount]")
-
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
 	set name = "Re-enter Corpse"
@@ -486,7 +478,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Boo!"
 	set desc= "Scare your crew members because of boredom!"
 
-	if(bootime > world.time) return
+	if(bootime > world.time)
+		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L)
 		L.flicker()
@@ -586,6 +579,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, "<span class='warning'>This creature is too powerful for you to possess!</span>")
 		return 0
 
+	if(istype (target, /mob/living/simple_animal/hostile/spawner))
+		to_chat(src, "<span class='warning'>This isn't really a creature, now is it!</span>")
+		return 0
+
 	if(can_reenter_corpse && mind && mind.current)
 		if(alert(src, "Your soul is still tied to your former life as [mind.current.name], if you go forward there is no going back to that life. Are you sure you wish to continue?", "Move On", "Yes", "No") == "No")
 			return 0
@@ -596,14 +593,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	target.key = key
 	target.faction = list("neutral")
 	return 1
-
-/proc/show_server_hop_transfer_screen(expected_key)
-	//only show it to incoming ghosts
-	for(var/mob/dead/observer/O in GLOB.player_list)
-		if(O.key == expected_key)
-			if(O.client)
-				new /obj/screen/splash(O.client, TRUE)
-			break
 
 //this is a mob verb instead of atom for performance reasons
 //see /mob/verb/examinate() in mob.dm for more info
@@ -626,7 +615,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
-	if(!usr || !over) return
+	if(!usr || !over)
+		return
 	if (isobserver(usr) && usr.client.holder && isliving(over))
 		if (usr.client.holder.cmd_ghost_drag(src,over))
 			return
@@ -681,6 +671,18 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		show_data_huds()
 		to_chat(src, "<span class='notice'>Data HUDs enabled.</span>")
 		data_huds_on = 1
+
+/mob/dead/observer/verb/toggle_health_scan()
+	set name = "Toggle Health Scan"
+	set desc = "Toggles whether you health-scan living beings on click"
+	set category = "Ghost"
+
+	if(health_scan) //remove old huds
+		to_chat(src, "<span class='notice'>Health scan disabled.</span>")
+		health_scan = FALSE
+	else
+		to_chat(src, "<span class='notice'>Health scan enabled.</span>")
+		health_scan = TRUE
 
 /mob/dead/observer/verb/restore_ghost_appearance()
 	set name = "Restore Ghost Character"

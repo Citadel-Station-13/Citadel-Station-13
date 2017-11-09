@@ -149,7 +149,7 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(user, belly_target.vore_sound, 100, 1)
+	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0)
 
 	// Actually shove prey into the belly.
 	belly_target.nom_mob(prey, user)
@@ -191,7 +191,7 @@
 
 	// If we got this far, nom successful! Announce it!
 	user.visible_message(success_msg)
-	playsound(user, belly_target.vore_sound, 100, 1)
+	playsound(get_turf(user), belly_target.vore_sound,75,0,-6,0)
 
 	// Actually shove prey into the belly.
 	belly_target.nom_mob(prey, user)
@@ -243,7 +243,7 @@
 					I.loc = src
 					B.internal_contents += I
 					src.visible_message("<span class='warning'>[src] is fed the beacon!</span>","You're fed the beacon!")
-					playsound(src, B.vore_sound, 100, 1)
+					playsound(get_turf(src), B.vore_sound,50,0,-6,0)
 					return 1
 				else
 					return 1 //You don't get to hit someone 'later'

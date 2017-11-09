@@ -24,6 +24,9 @@
 		loc = pick(GLOB.newplayer_start)
 	else
 		loc = locate(1,1,1)
+
+	ComponentInitialize()
+
 	. = ..()
 
 /mob/dead/new_player/prepare_huds()
@@ -375,7 +378,7 @@
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
 			humanc.make_scottish()
-		if(prob(2) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
+		if(prob(5) && !issilicon(humanc) && !jobban_isbanned(humanc.mind, "Syndicate") && GLOB.miscreants_allowed && ROLE_MISCREANT in humanc.client.prefs.be_special)
 			SSticker.generate_miscreant_objectives(humanc.mind)
 		else
 			if(CONFIG_GET(flag/allow_crew_objectives))
@@ -392,6 +395,8 @@
 				if(SHUTTLE_CALL)
 					if(SSshuttle.emergency.timeLeft(1) > initial(SSshuttle.emergencyCallTime)*0.5)
 						SSticker.mode.make_antag_chance(humanc)
+
+	log_manifest(character.mind.key,character.mind,character,latejoin = TRUE)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -447,7 +452,8 @@
 			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 	if(!job_count) //if there's nowhere to go, assistant opens up.
 		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant") continue
+			if(job.title != "Assistant")
+				continue
 			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
 			break
 	dat += "</div></div>"
@@ -474,6 +480,8 @@
 	client.prefs.copy_to(H)
 	H.dna.update_dna_identity()
 	if(mind)
+		if(transfer_after)
+			mind.late_joiner = TRUE
 		mind.active = 0					//we wish to transfer the key manually
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 

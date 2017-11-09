@@ -17,6 +17,10 @@
 	var/grille_type = null
 	var/broken_type = /obj/structure/grille/broken
 
+/obj/structure/grille/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
+
 /obj/structure/grille/examine(mob/user)
 	..()
 	if(anchored)
@@ -31,7 +35,8 @@
 		if(RCD_WINDOWGRILLE)
 			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			else
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)
@@ -62,6 +67,10 @@
 	var/mob/M = AM
 	shock(M, 70)
 
+/obj/structure/grille/attack_animal(mob/user)
+	. = ..()
+	if(!shock(user, 70))
+		take_damage(rand(5,10), BRUTE, "melee", 1)
 
 /obj/structure/grille/attack_paw(mob/user)
 	attack_hand(user)

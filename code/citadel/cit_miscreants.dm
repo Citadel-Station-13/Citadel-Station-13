@@ -7,11 +7,11 @@
 		return
 	if(!crewMind.assigned_role)
 		return
-	if(ROLE_MISCREANT in crewMind.current.client.prefs.be_special)
+	if(!(ROLE_MISCREANT in crewMind.current.client.prefs.be_special))
 		return
 	if(jobban_isbanned(crewMind, "Syndicate"))
 		return
-	var/list/objectiveTypes = typesof(/datum/objective/miscreant) - /datum/objective/miscreant
+	var/list/objectiveTypes = miscreantobjlist
 	if(!objectiveTypes.len)
 		return
 	var/selectedType = pick(objectiveTypes)
