@@ -27,10 +27,5 @@
 	if (ismob(O) && motioncameras.len)
 		for(var/X in motioncameras)
 			var/obj/machinery/camera/cam = X
-<<<<<<< HEAD
-			cam.lostTarget(O)
-			return
-=======
 			cam.lostTargetRef(WEAKREF(O))
 			return
->>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
