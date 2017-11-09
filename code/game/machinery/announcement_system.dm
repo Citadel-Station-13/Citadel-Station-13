@@ -22,6 +22,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/arrivalToggle = 1
 	var/newhead = "%PERSON, %RANK, is the department head."
 	var/newheadToggle = 1
+	var/cryopod = "%PERSON, %RANK, has entered long term cryogenics storage."
+	var/cryopodToggle = 1
 
 	var/greenlight = "Light_Green"
 	var/pinklight = "Light_Pink"
@@ -92,6 +94,9 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
+	else if(message_type == "CRYOPOD" && arrivalToggle)
+		message = CompileText(cryopod, user, rank)
+
 	if(channels.len == 0)
 		radio.talk_into(src, message, null, list(SPAN_ROBOT), get_default_language())
 	else
@@ -109,6 +114,8 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 
 	var/contents = "Arrival Announcement:  <A href='?src=\ref[src];ArrivalT-Topic=1'>([(arrivalToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];ArrivalTopic=1'>[arrival]</a><br><br>\n"
 	contents += "Departmental Head Announcement:  <A href='?src=\ref[src];NewheadT-Topic=1'>([(newheadToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];NewheadTopic=1'>[newhead]</a><br><br>\n"
+	contents += "Cryopod Announcement:  <A href='?src=\ref[src];CryopodT-Topic=1'>([(cryopodToggle ? "On" : "Off")])</a><br>\n<A href='?src=\ref[src];CryopodTopic=1'>[cryopod]</a><br><br>\n"
+
 
 	var/datum/browser/popup = new(user, "announcement_config", "Automated Announcement Configuration", 370, 220)
 	popup.set_content(contents)
@@ -133,11 +140,21 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		if(NewMessage)
 			newhead = NewMessage
 
+	if(href_list["CryopodTopic"])
+		var/NewMessage = stripped_input(usr, "Enter in the cryopod announcement configuration.", "Cryopod Announcement Config", cryopod)
+		if(!in_range(src, usr) && src.loc != usr && (!isAI(usr) && !IsAdminGhost(usr)))
+			return
+		if(NewMessage)
+			cryopod = NewMessage
+
 	else if(href_list["NewheadT-Topic"])
 		newheadToggle = !newheadToggle
 		update_icon()
 	else if(href_list["ArrivalT-Topic"])
 		arrivalToggle = !arrivalToggle
+		update_icon()
+	else if(href_list["CryopodT-Topic"])
+		arrivalToggle = !cryopodToggle
 		update_icon()
 
 	add_fingerprint(usr)
