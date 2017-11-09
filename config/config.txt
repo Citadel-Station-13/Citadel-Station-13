@@ -358,8 +358,6 @@ MINUTE_TOPIC_LIMIT 100
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
 DEBUG_ADMIN_HREFS
-<<<<<<< HEAD
-=======
 
 ###Master Controller High Pop Mode###
 
@@ -380,10 +378,6 @@ HIGH_POP_MC_MODE_AMOUNT 65
 
 ##Disengage high pop mode if player count drops below this
 DISABLE_HIGH_POP_MC_MODE_AMOUNT 60
-<<<<<<< HEAD
->>>>>>> bc4d4e7... Merge pull request #31374 from MrStonedOne/highpopmode
-=======
 
 ## Uncomment to prevent the world from sleeping while no players are connected after initializations
 #RESUME_AFTER_INITIALIZATIONS
->>>>>>> 73fbac3... Adds a config option to change world.sleep_offline (#32505)
