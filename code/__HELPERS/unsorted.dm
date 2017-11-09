@@ -1440,10 +1440,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_low = num2hex(world.time, 3)
 
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
-
-<<<<<<< HEAD
-	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
-=======
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
@@ -1459,4 +1455,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
->>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
