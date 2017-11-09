@@ -3,6 +3,11 @@
     var/list/active_timers  //for SStimer
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
+<<<<<<< HEAD
+=======
+    var/use_tag = FALSE
+    var/datum/weakref/weak_reference
+>>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
 
 #ifdef TESTING
     var/running_find_references
@@ -14,6 +19,7 @@
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE, ...)
 	tag = null
+	weak_reference = null	//ensure prompt GCing of weakref.
 	var/list/timers = active_timers
 	active_timers = null
 	for(var/thing in timers)
