@@ -32,13 +32,8 @@
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
-<<<<<<< HEAD
-	targets |= "\ref[target]"
-	return 1
-=======
 	targets |= WEAKREF(target)
 	return TRUE
->>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
 
 /obj/machinery/camera/Destroy()
 	var/area/ai_monitored/A = get_area(src)
@@ -49,11 +44,7 @@
 
 /obj/machinery/camera/proc/lostTargetRef(datum/weakref/R)
 	var/list/targets = getTargetList()
-<<<<<<< HEAD
-	targets -= "\ref[target]"
-=======
 	targets -= R
->>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
 	if (targets.len == 0)
 		cancelAlarm()
 
