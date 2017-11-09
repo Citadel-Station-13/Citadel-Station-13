@@ -102531,6 +102531,7 @@
 /turf/open/floor/circuit/green,
 /area/engine/supermatter)
 "YGM" = (
+<<<<<<< HEAD
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -102554,6 +102555,35 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
+=======
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGN" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGO" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGP" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGQ" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGR" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"YGS" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+>>>>>>> 8cc1b5b... Replaces glass in atmos tank windows with reinforced plasma glass (#32253)
 
 (1,1,1) = {"
 aaa
@@ -124240,19 +124270,19 @@ aNF
 aPi
 aNV
 aSK
-aIU
+YGN
 aWc
 aNV
 aSK
-aIU
+YGP
 aWc
 aNV
 aSK
-aIU
+YGR
 aWc
 aNV
 aWc
-aIU
+YGS
 aSK
 aNV
 aaH
@@ -130663,15 +130693,15 @@ aaa
 aaf
 aNV
 aPy
-aIU
+YGM
 aTf
 aNV
 aWv
-aIU
+YGO
 aZy
 aNV
 aWv
-aIU
+YGQ
 aZy
 aNV
 aJg
