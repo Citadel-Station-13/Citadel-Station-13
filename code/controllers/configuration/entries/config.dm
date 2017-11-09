@@ -372,3 +372,13 @@ CONFIG_TWEAK(number/mc_tick_rate/ValidateAndSet(str_val))
 	. = ..()
 	if (.)
 		Master.UpdateTickRate()
+<<<<<<< HEAD
+=======
+
+CONFIG_DEF(flag/resume_after_initializations)
+
+CONFIG_TWEAK(flag/ValidateAndSet(str_val))
+	. = ..()
+	if(. && Master.current_runlevel)
+		world.sleep_offline = !value
+>>>>>>> 73fbac3... Adds a config option to change world.sleep_offline (#32505)
