@@ -281,8 +281,6 @@ SUBSYSTEM_DEF(ticker)
 	collect_minds()
 	equip_characters()
 
-	SSoverlays.Flush()	//Flush the majority of the shit
-
 	GLOB.data_core.manifest()
 
 	transfer_characters()	//transfer keys to the new mobs
