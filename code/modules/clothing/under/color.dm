@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /obj/item/clothing/under/color
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
 
@@ -17,6 +18,30 @@
 	resistance_flags = 0
 
 /obj/item/clothing/under/color/black/ghost
+=======
+/obj/item/clothing/under/color
+	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
+
+/obj/item/clothing/under/color/random
+	icon_state = "random_jumpsuit"
+
+/obj/item/clothing/under/color/random/New()
+	..()
+	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
+	name = initial(C.name)
+	icon_state = initial(C.icon_state)
+	item_state = initial(C.item_state)
+	item_color = initial(C.item_color)
+
+/obj/item/clothing/under/color/black
+	name = "black jumpsuit"
+	icon_state = "black"
+	item_state = "bl_suit"
+	item_color = "black"
+	resistance_flags = 0
+
+/obj/item/clothing/under/color/black/ghost
+>>>>>>> 179e653... Adds icons for items with randomization (#32523)
 	flags_1 = NODROP_1|DROPDEL_1
 
 /obj/item/clothing/under/color/grey
