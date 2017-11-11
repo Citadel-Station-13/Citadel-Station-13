@@ -1411,8 +1411,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //checks if a turf is in the planet z list.
 /proc/turf_z_is_planet(turf/T)
 	return GLOB.z_is_planet["[T.z]"]
-<<<<<<< HEAD
-=======
 
 //returns a GUID like identifier (using a mostly made up record format)
 //guids are not on their own suitable for access or security tokens, as most of their bits are predictable.
@@ -1445,4 +1443,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			else
 				return "\[[url_encode(thing.tag)]\]"
 	return "\ref[input]"
->>>>>>> 626302c... Merge pull request #32161 from ninjanomnom/512-experimental
