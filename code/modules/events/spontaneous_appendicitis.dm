@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /datum/round_event_control/spontaneous_appendicitis
 	name = "Spontaneous Appendicitis"
 	typepath = /datum/round_event/spontaneous_appendicitis
@@ -8,6 +9,21 @@
 
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+=======
+/datum/round_event_control/spontaneous_appendicitis
+	name = "Spontaneous Appendicitis"
+	typepath = /datum/round_event/spontaneous_appendicitis
+	weight = 20
+	max_occurrences = 4
+	earliest_start = 6000
+	min_players = 5 // To make your chance of getting help a bit higher.
+
+/datum/round_event/spontaneous_appendicitis
+	fakeable = FALSE
+
+/datum/round_event/spontaneous_appendicitis/start()
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+>>>>>>> 3093d86... Makes false alarm use more explicit in event code. (#32559)
 		if(!H.client)
 			continue
 		if(H.stat == DEAD)
