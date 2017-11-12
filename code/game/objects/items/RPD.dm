@@ -86,12 +86,6 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 /datum/pipe_info/pipe/Params()
 	return "makepipe=[id]&type=[dirtype]"
 
-<<<<<<< HEAD
-/datum/pipe_info/pipe/Render(dispenser,label,dir=NORTH)
-	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
-=======
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
-
 /datum/pipe_info/meter
 	categoryId = CATEGORY_ATMOS
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
@@ -102,25 +96,6 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=1&type=[dirtype]"
-
-<<<<<<< HEAD
-/datum/pipe_info/meter/Render(dispenser,label)
-	return "<li><a href='?src=\ref[dispenser];makemeter=1;type=[dirtype]'>[label]</a></li>" //hardcoding is no
-
-GLOBAL_LIST_INIT(disposalpipeID2State, list(
-	"pipe-s",
-	"pipe-c",
-	"pipe-j1",
-	"pipe-j2",
-	"pipe-y",
-	"pipe-t",
-	"disposal",
-	"outlet",
-	"intake",
-	"pipe-j1s",
-	"pipe-j2s"))
-=======
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
@@ -133,17 +108,10 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 	icon_state = initial(path.icon_state)
 	if(ispath(path, /obj/structure/disposalpipe))
 		icon_state = "con[icon_state]"
-
-<<<<<<< HEAD
-/datum/pipe_info/disposal/Render(dispenser,label)
-	return "<li><a href='?src=\ref[dispenser];dmake=[id];type=[dirtype]'>[label]</a></li>" //avoid hardcoding.
-=======
 	dirtype = dt
 
 /datum/pipe_info/disposal/Params()
 	return "dmake=[id]&type=[dirtype]"
-
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 
 
 /obj/item/pipe_dispenser
@@ -226,19 +194,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 
 	dat += "<b>Category:</b><ul>"
 	if(screen == CATEGORY_ATMOS)
-<<<<<<< HEAD
-		dat += "<span class='linkOn'>Atmospherics</span> <A href='?src=\ref[src];screen=[CATEGORY_DISPOSALS];dmake=0;type=0'>Disposals</A><BR>"
-	else if(screen == CATEGORY_DISPOSALS)
-		dat += "<A href='?src=\ref[src];screen=[CATEGORY_ATMOS];makepipe=[/obj/machinery/atmospherics/pipe/simple];dir=1;type=0'>Atmospherics</A> <span class='linkOn'>Disposals</span><BR>"
-	var/generated_layer_list = ""
-	var/layers_total = PIPING_LAYER_MAX - PIPING_LAYER_MIN + 1
-	for(var/iter = PIPING_LAYER_MIN, iter <= layers_total, iter++)
-		if(iter == piping_layer)
-			generated_layer_list += "<span class='linkOn'><A href='?src=\ref[src];setlayer=[iter]'>[iter]</A></span>"
-		else
-			generated_layer_list += "<A href='?src=\ref[src];setlayer=[iter]'>[iter]</A>"
-	dat += "Atmospherics Piping Layer: [generated_layer_list]<BR>"
-=======
 		var/list/recipes = GLOB.disposal_pipe_recipes
 		var/datum/pipe_info/first_recipe = recipes[recipes[1]][1]
 		dat += "<span class='linkOn'>Atmospherics</span> "
@@ -258,8 +213,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 		var/datum/pipe_info/first_recipe = recipes[recipes[1]][1]
 		dat += "<A href='?src=[REF(src)]&screen=[CATEGORY_ATMOS]&[first_recipe.Params()]'>Atmospherics</A> "
 		dat += "<span class='linkOn'>Disposals</span><BR>"
-
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 	dat += "</ul>"
 
 	var/icon/preview=null
@@ -329,13 +282,8 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[NORTH]" title="vertical">&#8597;</a>
 			<a href="?src=[REF(src)];setdir=[EAST]" title="horizontal">&harr;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 				"}
 
@@ -361,16 +309,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="vertical">&#8597;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="horizontal">&harr;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=9; flipped=0" title="West to North">&#9565;</a>
-			<a href="?src=\ref[src];setdir=5; flipped=0" title="North to East">&#9562;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=10; flipped=0" title="South to West">&#9559;</a>
-			<a href="?src=\ref[src];setdir=6; flipped=0" title="East to South">&#9556;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[NORTH]" title="vertical">&#8597;</a>
 			<a href="?src=[REF(src)];setdir=[EAST]" title="horizontal">&harr;</a>
 			<br />
@@ -379,7 +317,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			<br />
 			<a href="?src=[REF(src)];setdir=[SOUTHWEST]" title="South to West">&#9559;</a>
 			<a href="?src=[REF(src)];setdir=[SOUTHEAST]" title="East to South">&#9556;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 				"}
 		if(PIPE_TRINARY) // Manifold
@@ -399,19 +336,11 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[NORTH]" title="West, South, East">&#9574;</a>
 			<a href="?src=[REF(src)];setdir=[EAST]" title="North, West, South">&#9571;</a>
 			<br />
 			<a href="?src=[REF(src)];setdir=[SOUTH]" title="East, North, West">&#9577;</a>
 			<a href="?src=[REF(src)];setdir=[WEST]" title="South, East, North">&#9568;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 				"}
 		if(PIPE_TRIN_M) // Mirrored ones
@@ -441,19 +370,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=4; flipped=0" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=2; flipped=0" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=8; flipped=0" title="South, East, North">&#9568;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=6; flipped=1" title="West, South, East">&#9574;</a>
-			<a href="?src=\ref[src];setdir=5; flipped=1" title="North, West, South">&#9571;</a>
-			<br />
-			<a href="?src=\ref[src];setdir=9; flipped=1" title="East, North, West">&#9577;</a>
-			<a href="?src=\ref[src];setdir=10; flipped=1" title="South, East, North">&#9568;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[NORTH]" title="West, South, East">&#9574;</a>
 			<a href="?src=[REF(src)];setdir=[EAST]" title="North, West, South">&#9571;</a>
 			<br />
@@ -465,7 +381,6 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			<br />
 			<a href="?src=[REF(src)];setdir=[NORTHWEST];flipped=1" title="East, North, West">&#9577;</a>
 			<a href="?src=[REF(src)];setdir=[SOUTHWEST];flipped=1" title="South, East, North">&#9568;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 				"}
 		if(PIPE_UNARY) // Stuff with four directions - includes pumps etc.
@@ -484,17 +399,10 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=[NORTH]; flipped=0" title="North">&uarr;</a>
-			<a href="?src=\ref[src];setdir=[EAST]; flipped=0" title="East">&rarr;</a>
-			<a href="?src=\ref[src];setdir=[SOUTH]; flipped=0" title="South">&darr;</a>
-			<a href="?src=\ref[src];setdir=[WEST]; flipped=0" title="West">&larr;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[NORTH]" title="North">&uarr;</a>
 			<a href="?src=[REF(src)];setdir=[EAST]" title="East">&rarr;</a>
 			<a href="?src=[REF(src)];setdir=[SOUTH]" title="South">&darr;</a>
 			<a href="?src=[REF(src)];setdir=[WEST]" title="West">&larr;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 					"}
 		if(PIPE_ONEDIR) // Single icon_state (eg 4-way manifolds)
@@ -507,11 +415,7 @@ GLOBAL_LIST_INIT(disposalpipeID2State, list(
 			else
 				dirsel+={"
 		<p>
-<<<<<<< HEAD
-			<a href="?src=\ref[src];setdir=1; flipped=0" title="Pipe">&#8597;</a>
-=======
 			<a href="?src=[REF(src)];setdir=[SOUTH]" title="Pipe">&#8597;</a>
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 		</p>
 				"}
 
