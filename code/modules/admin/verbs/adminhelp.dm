@@ -248,13 +248,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //private
 /datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
 	if(!ref_src)
-<<<<<<< HEAD
-		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;[HrefToken()];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
-=======
 		ref_src = "[REF(src)]"
 	return "<A HREF='?_src_=holder;[HrefToken(TRUE)];ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
->>>>>>> 626302c... Merge pull request #32161 from ninjanomnom/512-experimental
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
