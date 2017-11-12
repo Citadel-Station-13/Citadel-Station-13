@@ -14,36 +14,6 @@
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
-<<<<<<< HEAD
-	var/dat = {"
-PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=\ref[src];layer_up=1'>++</A><BR>
-<b>Pipes:</b><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/simple];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/simple];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/manifold];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/layer_manifold];dir=1'>Layer Manifold</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/manifold4w];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/valve];dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/valve/digital];dir=1'>Digital Valve</A><BR>
-<b>Devices:</b><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/portables_connector];dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/vent_pump];dir=1'>Vent</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/pump];dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/passive_gate];dir=1'>Passive Gate</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/binary/volume_pump];dir=1'>Volume Pump</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/vent_scrubber];dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/trinary/filter];dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/trinary/mixer];dir=1'>Gas Mixer</A><BR>
-<b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/simple];dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/simple];dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/manifold];dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w];dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/junction];dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/heat_exchanger];dir=1'>Heat Exchanger</A><BR>
-"}
-=======
 	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
 	var/recipes = GLOB.atmos_pipe_recipes
@@ -51,7 +21,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	for(var/category in recipes)
 		var/list/cat_recipes = recipes[category]
 		dat += "<b>[category]:</b><ul>"
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 
 		for(var/i in cat_recipes)
 			var/datum/pipe_info/I = i
@@ -154,19 +123,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	if(..())
 		return 1
 
-<<<<<<< HEAD
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_JUNCTION]'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_YJUNCTION]'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_TRUNK]'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_BIN]'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_OUTLET]'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
-<A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
-"}
-=======
 	var/dat = ""
 	var/recipes = GLOB.disposal_pipe_recipes
 
@@ -179,7 +135,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 			dat += I.Render(src)
 
 		dat += "</ul>"
->>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
