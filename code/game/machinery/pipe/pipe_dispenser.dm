@@ -14,6 +14,7 @@
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
 		return 1
+<<<<<<< HEAD
 	var/dat = {"
 PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=\ref[src];layer_up=1'>++</A><BR>
 <b>Pipes:</b><BR>
@@ -42,7 +43,21 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 <A href='?src=\ref[src];make=[/obj/machinery/atmospherics/pipe/heat_exchanging/junction];dir=1'>Junction</A><BR>
 <A href='?src=\ref[src];make=[/obj/machinery/atmospherics/components/unary/heat_exchanger];dir=1'>Heat Exchanger</A><BR>
 "}
+=======
+	var/dat = "PIPING LAYER: <A href='?src=[REF(src)];layer_down=1'>--</A><b>[piping_layer]</b><A href='?src=[REF(src)];layer_up=1'>++</A><BR>"
 
+	var/recipes = GLOB.atmos_pipe_recipes
+
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
+>>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
+
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			dat += I.Render(src)
+
+		dat += "</ul>"
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
@@ -56,9 +71,9 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 		return 1
 	usr.set_machine(src)
 	add_fingerprint(usr)
-	if(href_list["make"])
+	if(href_list["makepipe"])
 		if(wait < world.time)
-			var/p_type = text2path(href_list["make"])
+			var/p_type = text2path(href_list["makepipe"])
 			var/p_dir = text2num(href_list["dir"])
 			var/obj/item/pipe/P = new (loc, p_type, p_dir)
 			P.setPipingLayer(piping_layer)
@@ -118,14 +133,6 @@ PIPING LAYER: <A href='?src=\ref[src];layer_down=1'>--</A><b>[piping_layer]</b><
 	density = TRUE
 	anchored = TRUE
 
-/*
-//Allow you to push disposal pipes into it (for those with density 1)
-/obj/machinery/pipedispenser/disposal/Crossed(var/obj/structure/disposalconstruct/pipe as obj)
-	if(istype(pipe) && !pipe.anchored)
-		qdel(pipe)
-
-Nah
-*/
 
 //Allow you to drag-drop disposal pipes and transit tubes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/pipe, mob/usr)
@@ -147,6 +154,7 @@ Nah
 	if(..())
 		return 1
 
+<<<<<<< HEAD
 	var/dat = {"<b>Disposal Pipes</b><br><br>
 <A href='?src=\ref[src];dmake=[DISP_PIPE_STRAIGHT]'>Pipe</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_PIPE_BENT]'>Bent Pipe</A><BR>
@@ -158,6 +166,20 @@ Nah
 <A href='?src=\ref[src];dmake=[DISP_END_CHUTE]'>Chute</A><BR>
 <A href='?src=\ref[src];dmake=[DISP_SORTJUNCTION]'>Sort Junction</A><BR>
 "}
+=======
+	var/dat = ""
+	var/recipes = GLOB.disposal_pipe_recipes
+
+	for(var/category in recipes)
+		var/list/cat_recipes = recipes[category]
+		dat += "<b>[category]:</b><ul>"
+
+		for(var/i in cat_recipes)
+			var/datum/pipe_info/I = i
+			dat += I.Render(src)
+
+		dat += "</ul>"
+>>>>>>> 8b5cd7f... Disposal pipes and pipe dispensers refactor (#32435)
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
@@ -170,8 +192,8 @@ Nah
 	add_fingerprint(usr)
 	if(href_list["dmake"])
 		if(wait < world.time)
-			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (loc,p_type)
+			var/p_type = text2path(href_list["dmake"])
+			var/obj/structure/disposalconstruct/C = new (loc, p_type)
 
 			if(!C.can_place())
 				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
