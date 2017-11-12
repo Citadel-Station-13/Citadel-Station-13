@@ -18,6 +18,7 @@
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	blob_allowed = FALSE
+	ambientsounds = HIGHSEC
 
 /area/shuttle/syndicate/bridge
 	name = "Syndicate Infiltrator Control"
