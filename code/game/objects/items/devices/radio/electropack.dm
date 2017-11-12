@@ -220,4 +220,4 @@ Code:
 
 			user << browse(dat, "window=radio")
 			onclose(user, "radio")
-return
+			return
