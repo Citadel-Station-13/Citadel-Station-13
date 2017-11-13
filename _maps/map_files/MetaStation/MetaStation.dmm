@@ -71801,10 +71801,7 @@
 /turf/open/floor/plating,
 /area/chapel/main)
 "cRM" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 2
 	},
@@ -73037,7 +73034,8 @@
 	frequency = 1441;
 	id = "n2_in"
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "cVB" = (
 /obj/structure/chair{
@@ -80789,6 +80787,34 @@
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned)
+"EDo" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDp" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDq" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDr" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDs" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDt" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
+"EDu" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating,
+/area/engine/atmos)
 
 (1,1,1) = {"
 aaa
@@ -122316,7 +122342,7 @@ cbe
 ccO
 bza
 aaf
-bza
+EDs
 chO
 cjd
 ckG
@@ -123344,7 +123370,7 @@ cbi
 ccS
 bza
 aaf
-bza
+EDt
 chR
 cjg
 ckH
@@ -124372,7 +124398,7 @@ cVJ
 ccQ
 bza
 aaf
-bza
+EDu
 chU
 cjj
 ckJ
@@ -125894,19 +125920,19 @@ aaa
 aaf
 bAR
 dBC
-bza
+EDo
 bFZ
 bAR
 bCA
-bza
+EDp
 bFZ
 bAR
 bCA
-bza
+EDq
 bFZ
 bAR
 bCA
-bza
+EDr
 bFZ
 bAR
 aaf

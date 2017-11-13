@@ -51,6 +51,11 @@
 		return FALSE
 	return ..()
 
+/datum/config_entry/proc/VASProcCallGuard(str_val)
+	. = !(IsAdminAdvancedProcCall() && GLOB.LastAdminCalledProc == "ValidateAndSet" && GLOB.LastAdminCalledTargetRef == "[REF(src)]")
+	if(!.)
+		log_admin_private("Config set of [type] to [str_val] attempted by [key_name(usr)]")
+		
 /datum/config_entry/proc/ValidateAndSet(str_val)
 	CRASH("Invalid config entry type!")
 

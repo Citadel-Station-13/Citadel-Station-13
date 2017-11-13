@@ -4496,6 +4496,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "akq" = (
@@ -6671,7 +6672,8 @@
 	frequency = 1441;
 	id = "waste_out"
 	},
-/turf/open/floor/plating/airless,
+/obj/structure/lattice/catwalk,
+/turf/open/space,
 /area/engine/atmos)
 "apJ" = (
 /turf/closed/wall,
@@ -11594,7 +11596,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/space)
+/area/crew_quarters/theatre)
 "aCr" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre)
@@ -12174,7 +12176,7 @@
 /turf/open/floor/plasteel/white/side{
 	dir = 4
 	},
-/area/space)
+/area/crew_quarters/theatre)
 "aDS" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Showers";
@@ -12784,7 +12786,7 @@
 	},
 /obj/structure/dresser,
 /turf/open/floor/plasteel/redblue/redside,
-/area/space)
+/area/crew_quarters/theatre)
 "aFm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -13352,7 +13354,7 @@
 	pixel_x = -28
 	},
 /turf/open/floor/plasteel/redblue,
-/area/space)
+/area/crew_quarters/theatre)
 "aGE" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
@@ -13954,7 +13956,7 @@
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/bananalamp,
 /turf/open/floor/plasteel/redblue,
-/area/space)
+/area/crew_quarters/theatre)
 "aIa" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -36960,10 +36962,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "bMl" = (
-/obj/machinery/processor{
-	desc = "A machine used to process slimes and retrieve their extract.";
-	name = "Slime Processor"
-	},
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
@@ -38749,7 +38748,7 @@
 	},
 /area/engine/atmos)
 "bQA" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating/airless,
 /area/engine/atmos)
 "bQB" = (
@@ -60298,6 +60297,7 @@
 /obj/item/pen,
 /obj/item/hand_labeler,
 /obj/item/book/manual/wiki/security_space_law,
+/obj/machinery/light,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "Qvn" = (
@@ -84171,7 +84171,7 @@ cjJ
 cjJ
 aaa
 aaa
-QvL
+QvK
 aaf
 aaa
 aaa
@@ -84428,7 +84428,7 @@ cpo
 cjJ
 aaa
 aaa
-QvM
+QvK
 aaf
 Qoi
 aaa
@@ -88293,7 +88293,7 @@ cSH
 cGu
 cGH
 QvT
-QvW
+QvT
 cGR
 csd
 csd
@@ -89061,7 +89061,7 @@ cFe
 cMD
 cFM
 czE
-QvO
+QvN
 ccw
 cGT
 csd
@@ -89477,11 +89477,11 @@ anS
 aoy
 Qvz
 QvA
-QvB
-QvC
-QvD
-QvE
-QvF
+QvA
+QvA
+QvA
+QvA
+QvA
 QvG
 axB
 anz
@@ -90089,7 +90089,7 @@ cFh
 cMD
 cFM
 czE
-QvP
+QvN
 ccw
 cGT
 csd
@@ -90346,7 +90346,7 @@ cEz
 cMD
 cFR
 cSJ
-QvQ
+QvN
 cMm
 ciZ
 cHd
@@ -90609,7 +90609,7 @@ cGS
 cHe
 cHe
 cHr
-Qwb
+Qwa
 ccw
 aaf
 aaT
@@ -90863,7 +90863,7 @@ cSK
 cGx
 cGK
 QvU
-QvX
+QvU
 cGY
 csd
 csd
@@ -91010,7 +91010,7 @@ agn
 ajd
 ajb
 akr
-Qvx
+Qvw
 QpO
 amo
 QpU
@@ -92532,9 +92532,9 @@ aaa
 aaa
 aaf
 aaf
-QoE
-QoE
-QoE
+abp
+abp
+abp
 abq
 abq
 abq
