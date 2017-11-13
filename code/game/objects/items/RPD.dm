@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 /datum/pipe_info/pipe/Params()
 	return "makepipe=[id]&type=[dirtype]"
 
+
 /datum/pipe_info/meter
 	categoryId = CATEGORY_ATMOS
 	icon = 'icons/obj/atmospherics/pipes/simple.dmi'
@@ -96,6 +97,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 
 /datum/pipe_info/meter/Params()
 	return "makemeter=1&type=[dirtype]"
+
 
 /datum/pipe_info/disposal
 	categoryId = CATEGORY_DISPOSALS
@@ -108,10 +110,12 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	icon_state = initial(path.icon_state)
 	if(ispath(path, /obj/structure/disposalpipe))
 		icon_state = "con[icon_state]"
+
 	dirtype = dt
 
 /datum/pipe_info/disposal/Params()
 	return "dmake=[id]&type=[dirtype]"
+
 
 
 /obj/item/pipe_dispenser
@@ -173,7 +177,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 	var/selected=" class=\"imglink\""
 	if(_dir == p_dir)
 		selected=" class=\"imglink selected\""
-	return "<a href=\"?src=\ref[src];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
+	return "<a href=\"?src=[REF(src)];setdir=[_dir];flipped=[flipped]\" title=\"[title]\"[selected]\"><img src=\"[pic]\" /></a>"
 
 
 /obj/item/pipe_dispenser/proc/show_menu(mob/user)
@@ -183,11 +187,11 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 <b>Utilities:</b>
 <ul>"}
 	if(p_class != EATING_MODE)
-		dat += "<li><a href='?src=\ref[src];eatpipes=1;type=-1'>Eat Pipes</a></li>"
+		dat += "<li><a href='?src=[REF(src)];eatpipes=1;type=-1'>Eat Pipes</a></li>"
 	else
 		dat += "<li><span class='linkOn'>Eat Pipes</span></li>"
 	if(p_class != PAINT_MODE)
-		dat += "<li><a href='?src=\ref[src];paintpipes=1;type=-1'>Paint Pipes</a></li>"
+		dat += "<li><a href='?src=[REF(src)];paintpipes=1;type=-1'>Paint Pipes</a></li>"
 	else
 		dat += "<li><span class='linkOn'>Paint Pipes</span></li>"
 	dat += "</ul>"
@@ -213,6 +217,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		var/datum/pipe_info/first_recipe = recipes[recipes[1]][1]
 		dat += "<A href='?src=[REF(src)]&screen=[CATEGORY_ATMOS]&[first_recipe.Params()]'>Atmospherics</A> "
 		dat += "<span class='linkOn'>Disposals</span><BR>"
+
 	dat += "</ul>"
 
 	var/icon/preview=null
@@ -260,7 +265,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		var/selected=""
 		if(color_name==paint_color)
 			selected = " selected"
-		color_picker += {"<a class="color [color_name][selected]" href="?src=\ref[src];set_color=[color_name]">&bull;</a>"}
+		color_picker += {"<a class="color [color_name][selected]" href="?src=[REF(src)];set_color=[color_name]">&bull;</a>"}
 
 	var/dirsel="<h2>Direction</h2>"
 	switch(p_conntype)

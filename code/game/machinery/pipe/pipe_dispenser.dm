@@ -175,16 +175,16 @@
 		return 1
 
 	var/dat = {"<B>Transit Tubes:</B><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT]'>Straight Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STRAIGHT_CROSSING]'>Straight Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_CURVED]'>Curved Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL]'>Diagonal Tube</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_DIAGONAL_CROSSING]'>Diagonal Tube with Crossing</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_JUNCTION]'>Junction</A><BR>
 <b>Station Equipment:</b><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
-<A href='?src=\ref[src];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_STATION]'>Through Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_TERMINUS]'>Terminus Tube Station</A><BR>
+<A href='?src=[REF(src)];tube=[TRANSIT_TUBE_POD]'>Transit Tube Pod</A><BR>
 "}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
