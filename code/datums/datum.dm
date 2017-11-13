@@ -3,11 +3,8 @@
     var/list/active_timers  //for SStimer
     var/list/datum_components //for /datum/components
     var/ui_screen = "home"  //for tgui
-<<<<<<< HEAD
-=======
     var/use_tag = FALSE
     var/datum/weakref/weak_reference
->>>>>>> 4edd802... Weak references + Cameras now use them (#32504)
 
 #ifdef TESTING
     var/running_find_references
