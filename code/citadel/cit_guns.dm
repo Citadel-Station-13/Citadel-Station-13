@@ -213,6 +213,8 @@
 	damage = 15
 	armour_penetration = 10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
@@ -220,9 +222,11 @@
 	icon_state = "magjectile-nl"
 	damage = 1
 	knockdown = 0
-	stamina = 25
+	stamina = 30
 	armour_penetration = -10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
 
@@ -378,19 +382,23 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 25
+	damage = 20
 	armour_penetration = 25
 	light_range = 3
+	speed = 1.2
+	range = 35
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 2
+	damage = 1
 	knockdown = 0
-	stamina = 30
+	stamina = 35
 	armour_penetration = -10
 	light_range = 3
+	speed = 1.0
+	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
 ///ammo casings///
@@ -494,7 +502,7 @@
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = 0
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
 	origin_tech = "combat=2;engineering=2;magnets=2"
@@ -1060,6 +1068,7 @@ obj/item/projectile/bullet/c10mm/soporific
 				if(arm_color_input)
 					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
 				update_icon()
+				A.UpdateButtonIcon()
 
 	else
 		..()
@@ -1070,12 +1079,16 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "9mm frangible bullet"
 	damage = 15
 	stamina = 0
+	speed = 1.0
+	range = 20
 	armour_penetration = -25
 
 /obj/item/projectile/bullet/c9mm/rubber
 	name = "9mm rubber bullet"
-	damage = 2
-	stamina = 25
+	damage = 5
+	stamina = 30
+	speed = 1.2
+	range = 14
 	knockdown = 0
 
 /obj/item/ammo_casing/c9mm/frangible
@@ -1120,9 +1133,9 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "Box of 9mm Frangible Bullets"
 	id = "9mm_frag"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(MAT_METAL = 25000)
 	build_path = /obj/item/ammo_box/c9mm/frangible
-	category = list("initial", "Security")
+	category = list("hacked", "Security")
 
 /datum/design/c9mmrubber
 	name = "Box of 9mm Rubber Bullets"
@@ -1159,6 +1172,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	icon_state = "p37_foam"
 	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
@@ -1197,6 +1211,10 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		body_overlay.color = body_color
 	add_overlay(body_overlay)
 
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
 obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
@@ -1204,6 +1222,7 @@ obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 			if(body_color_input)
 				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+		A.UpdateButtonIcon()
 	else
 		..()
 
