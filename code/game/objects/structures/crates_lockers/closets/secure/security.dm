@@ -67,6 +67,8 @@
 	new /obj/item/device/radio/headset/heads/hos(src)
 	new /obj/item/clothing/under/hosparadefem(src)
 	new /obj/item/clothing/under/hosparademale(src)
+	new /obj/item/clothing/under/rank/head_of_security/skirt(src)
+	new /obj/item/clothing/suit/armor/hos/trenchcoat/cloak(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security/alt(src)
@@ -117,6 +119,7 @@
 
 /obj/structure/closet/secure_closet/security/PopulateContents()
 	..()
+	new /obj/item/clothing/under/rank/security/skirt(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet/sec(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
