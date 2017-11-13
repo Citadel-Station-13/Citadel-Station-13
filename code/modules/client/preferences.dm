@@ -938,10 +938,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("flavor_text")
-					var/msg = input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"])) as message
+					var/msg = stripped_multiline_input(usr,"Set the flavor text in your 'examine' verb. This can also be used for OOC notes and preferences!","Flavor Text",html_decode(features["flavor_text"]), MAX_MESSAGE_LEN*2, TRUE) as message
 					if(msg != null)
-						msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-						msg = html_encode(msg)
+						msg = copytext(msg, 1, MAX_MESSAGE_LEN*2)
 						features["flavor_text"] = msg
 
 				if("metadata")
