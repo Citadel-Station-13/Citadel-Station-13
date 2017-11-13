@@ -5,6 +5,9 @@
 	max_occurrences = 3
 	min_players = 10
 
+/datum/round_event/spacevine
+	fakeable = FALSE
+
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
@@ -390,7 +393,7 @@
 /datum/spacevine_controller/vv_get_dropdown()
 	. = ..()
 	. += "---"
-	.["Delete Vines"] = "?_src_=\ref[src];[HrefToken()];purge_vines=1"
+	.["Delete Vines"] = "?_src_=[REF(src)];[HrefToken()];purge_vines=1"
 
 /datum/spacevine_controller/Topic(href, href_list)
 	if(..() || !check_rights(R_ADMIN, FALSE) || !usr.client.holder.CheckAdminHref(href, href_list))
