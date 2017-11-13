@@ -1,7 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added security skirts"
-  - rscadd: "Added security skirts to security lockers"
-  - rscadd: "Added the HoS Trenchcloak"
-  - imageadd: "added Security Skirt and Trenchcloak sprites"

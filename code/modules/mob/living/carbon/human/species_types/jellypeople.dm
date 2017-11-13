@@ -128,10 +128,10 @@
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	if(ishuman(C))
-	/*	slime_split = new
+		slime_split = new
 		slime_split.Grant(C)
 		swap_body = new
-		swap_body.Grant(C) */
+		swap_body.Grant(C)
 
 		if(!bodies || !bodies.len)
 			bodies = list(C)
@@ -145,10 +145,10 @@
 	bodies = old_species.bodies
 
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
-	/*if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
-			to_chat(H, "<span class='notice'>You feel very bloated!</span>")*/
-	if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
+			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
+	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
 		H.nutrition -= 2.5
 
@@ -276,7 +276,7 @@
 		L["status"] = stat
 		L["exoticblood"] = body.blood_volume
 		L["name"] = body.name
-		L["ref"] = "\ref[body]"
+		L["ref"] = "[REF(body)]"
 		L["is_current"] = current
 		var/button
 		if(current)

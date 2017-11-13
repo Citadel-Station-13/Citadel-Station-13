@@ -1,6 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added micromedkits"
-  - tweak: "medkits now use Cameron's sprites"
-  - imageadd: "added @CameronWoof 's Medkit sprites"
