@@ -504,6 +504,7 @@ MICE_ROUNDSTART 10
 ## If the percentage of players alive (doesn't count conversions) drops below this threshold the emergency shuttle will be forcefully called (provided it can be)
 #EMERGENCY_SHUTTLE_AUTOCALL_THRESHOLD 0.2
 
+<<<<<<< HEAD
 ## CREW OBJECTIVES ##
 ## Comment to disable objectives for innocent crew members.
 ALLOW_CREW_OBJECTIVES
@@ -514,3 +515,7 @@ ALLOW_MISCREANTS
 
 ## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
 #ALLOW_EXTENDED_MISCREANTS
+=======
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING
+>>>>>>> bdfbafd... [READY]integrated circuitry port+upgrade. (#32481)
