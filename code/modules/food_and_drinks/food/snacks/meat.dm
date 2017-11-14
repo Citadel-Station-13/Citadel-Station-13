@@ -228,11 +228,7 @@
 /obj/item/reagent_containers/food/snacks/meat/slab/gorilla
 	name = "gorilla meat"
 	desc = "Much meatier than monkey meat."
-<<<<<<< HEAD
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)	
-=======
 	list_reagents = list("nutriment" = 5, "vitamin" = 1, "cooking_oil" = 5) //Plenty of fat!
->>>>>>> 5946689... Improves the deep fryer (#32482)
 
 /obj/item/reagent_containers/food/snacks/meat/rawbacon
 	name = "raw piece of bacon"
