@@ -1055,21 +1055,10 @@
 				message_admins("[key_name_admin(usr)] has de-changeling'ed [current].")
 				log_admin("[key_name(usr)] has de-changeling'ed [current].")
 			if("changeling")
-<<<<<<< HEAD
-				if(!(src in SSticker.mode.changelings))
-					SSticker.mode.changelings += src
-					current.make_changeling()
-					special_role = "Changeling"
-					to_chat(current, "<span class='boldannounce'>Your powers are awoken. A flash of memory returns to us...we are [changeling.changelingID], a changeling!</span>")
-					message_admins("[key_name_admin(usr)] has changeling'ed [current].")
-					log_admin("[key_name(usr)] has changeling'ed [current].")
-					SSticker.mode.update_changeling_icons_added(src)
-=======
 				var/datum/antagonist/changeling/C = make_Changling()
 				to_chat(current, "<span class='boldannounce'>Our powers have awoken. A flash of memory returns to us...we are [C.changelingID], a changeling!</span>")
 				message_admins("[key_name_admin(usr)] has changeling'ed [current].")
 				log_admin("[key_name(usr)] has changeling'ed [current].")
->>>>>>> 05c4194... adds 1 gbp to armhulen's account (grammar fix) (#32698)
 			if("autoobjectives")
 				SSticker.mode.forge_changeling_objectives(src)
 				to_chat(usr, "<span class='notice'>The objectives for changeling [key] have been generated. You can edit them and anounce manually.</span>")
