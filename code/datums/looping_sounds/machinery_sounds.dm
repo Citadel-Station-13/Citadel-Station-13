@@ -21,9 +21,6 @@
 	mid_sounds = list('sound/machines/generator/generator_mid1.ogg'=1, 'sound/machines/generator/generator_mid2.ogg'=1, 'sound/machines/generator/generator_mid3.ogg'=1)
 	mid_length = 4
 	end_sound = 'sound/machines/generator/generator_end.ogg'
-<<<<<<< HEAD
-	volume = 40
-=======
 	volume = 40
 
 
@@ -63,4 +60,3 @@
 	mid_length = 17
 	range_modifier = -4.5
 	volume = 70
->>>>>>> ea52308... [WIP] Floyd's wild sound adventure (Adds sound_loop datums to a bunch of machinery) (#32336)
