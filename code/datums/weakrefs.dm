@@ -15,9 +15,4 @@
 
 /datum/weakref/proc/resolve()
 	var/datum/D = locate(reference)
-<<<<<<< HEAD
-	return D.weak_reference == src? D : null
-=======
 	return (!QDELETED(D) && D.weak_reference == src) ? D : null
-
->>>>>>> bdfbafd... [READY]integrated circuitry port+upgrade. (#32481)
