@@ -164,27 +164,11 @@
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
 
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
-<<<<<<< HEAD
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-7, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-2, 0)
-			. = 1
-=======
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
 		M.status_flags &= ~DISFIGURED
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
->>>>>>> 5cf4809... Merge pull request #32723 from nicbn/ohnoohnoohno
 	..()
 
 /datum/reagent/medicine/rezadone
