@@ -317,7 +317,7 @@ All ShuttleMove procs go here
 	var/turf/T = loc
 	if(level==1)
 		hide(T.intact)
-		
+
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
 	if(. & MOVE_AREA)
