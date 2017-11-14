@@ -395,7 +395,10 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3f58245... Minor speedups to movement: First Blood Part 2 (#32702)
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold
@@ -675,8 +678,6 @@
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(client.moving)
 		return 0
 	if(world.time < client.move_delay)
 		return 0
