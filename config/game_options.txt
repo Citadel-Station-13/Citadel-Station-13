@@ -514,3 +514,6 @@ ALLOW_MISCREANTS
 
 ## Uncomment to let miscreants spawn during Extended. I hold no responsibility for fun that may occur while this is enabled.
 #ALLOW_EXTENDED_MISCREANTS
+
+## Determines if players are allowed to print integrated circuits, uncomment to allow.
+#IC_PRINTING
