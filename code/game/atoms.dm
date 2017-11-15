@@ -99,7 +99,6 @@
 
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
-	//SSoverlays.processing -= src	//we COULD do this, but it's better to just let it fall out of the processing queue
 
 	QDEL_NULL(light)
 
@@ -624,6 +623,9 @@ GLOBAL_LIST_EMPTY(blood_splatter_icons)
 // Default tool behaviors proc
 
 /atom/proc/crowbar_act(mob/user, obj/item/tool)
+	return
+
+/atom/proc/multitool_act(mob/user, obj/item/tool)
 	return
 
 /atom/proc/screwdriver_act(mob/user, obj/item/tool)
