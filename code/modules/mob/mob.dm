@@ -395,7 +395,6 @@
 		pulling = null
 		grab_state = 0
 		update_pull_hud_icon()
-
 		if(isliving(ex_pulled))
 			var/mob/living/L = ex_pulled
 			L.update_canmove()// mob gets up if it was lyng down in a chokehold
@@ -652,8 +651,9 @@
 
 	if(mind)
 		add_spells_to_statpanel(mind.spell_list)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			add_stings_to_statpanel(changeling.purchasedpowers)
 	add_spells_to_statpanel(mob_spell_list)
 
 /mob/proc/add_spells_to_statpanel(list/spells)
@@ -675,8 +675,6 @@
 // facing verbs
 /mob/proc/canface()
 	if(!canmove)
-		return 0
-	if(client.moving)
 		return 0
 	if(world.time < client.move_delay)
 		return 0
