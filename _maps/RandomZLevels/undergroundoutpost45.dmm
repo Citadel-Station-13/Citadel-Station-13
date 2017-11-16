@@ -2266,6 +2266,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "eY" = (
 /obj/machinery/computer/security{
+	dir = 1;
 	network = list("UO45")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -3720,6 +3721,7 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
 /obj/machinery/computer/rdconsole/core{
+	dir = 4;
 	id = 3;
 	req_access = null
 	},
@@ -6546,6 +6548,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "no" = (
 /obj/machinery/computer/security{
+	dir = 4;
 	network = list("UO45")
 	},
 /turf/open/floor/plasteel/red/side{
@@ -7382,7 +7385,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "oB" = (
-/obj/machinery/computer/aifixer,
+/obj/machinery/computer/aifixer{
+	dir = 8
+	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5;
 	heat_capacity = 1e+006
@@ -9066,7 +9071,9 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "rC" = (
-/obj/machinery/computer/rdservercontrol,
+/obj/machinery/computer/rdservercontrol{
+	dir = 1
+	},
 /turf/open/floor/plasteel/black{
 	heat_capacity = 1e+006
 	},
@@ -9974,6 +9981,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tc" = (
 /obj/machinery/computer/atmos_control/tank{
+	dir = 8;
 	frequency = 1441;
 	input_tag = "UO45_mix_in";
 	name = "Gas Mix Tank Control";
@@ -10217,6 +10225,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tz" = (
 /obj/machinery/computer/security{
+	dir = 1;
 	network = list("UO45")
 	},
 /obj/machinery/button/door{
@@ -10653,6 +10662,7 @@
 	dir = 4
 	},
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "UO45_n2_in";
 	name = "Nitrogen Supply Control";
@@ -10694,6 +10704,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/cyan/visible,
 /obj/machinery/computer/atmos_control/tank{
+	dir = 1;
 	frequency = 1441;
 	input_tag = "UO45_o2_in";
 	name = "Oxygen Supply Control";
@@ -10784,6 +10795,7 @@
 "uA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
+	dir = 4;
 	frequency = 1441;
 	name = "Tank Monitor";
 	sensors = list("UO45_n2_sensor" = "Nitrogen", "UO45_o2_sensor" = "Oxygen", "UO45_mix_sensor" = "Gas Mix Tank")
@@ -10974,6 +10986,7 @@
 "uU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
+	dir = 4;
 	frequency = 1441;
 	level = 3;
 	name = "Distribution and Waste Monitor";
@@ -11234,7 +11247,9 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "vs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 4
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 8;
 	heat_capacity = 1e+006
@@ -11440,7 +11455,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 4
+	},
 /turf/open/floor/plasteel/caution{
 	dir = 10;
 	heat_capacity = 1e+006
@@ -12195,7 +12212,9 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xi" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	dir = 1
+	},
 /turf/open/floor/plasteel/neutral{
 	dir = 2;
 	heat_capacity = 1e+006
@@ -12203,7 +12222,9 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "xj" = (
 /obj/machinery/light/small,
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	dir = 1
+	},
 /obj/machinery/button/door{
 	desc = "A remote control-switch for the engineering security doors.";
 	id = "UO45_Engineering";
@@ -12227,6 +12248,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "xk" = (
 /obj/machinery/computer/monitor{
+	dir = 1;
 	name = "primary power monitoring console"
 	},
 /obj/structure/cable,
@@ -12552,7 +12574,9 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "xQ" = (
-/obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 1
+	},
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
