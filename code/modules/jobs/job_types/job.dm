@@ -72,12 +72,6 @@
 
 	H.dna.species.after_equip_job(src, H, visualsOnly)
 
-	if(CONFIG_GET(flag/enforce_human_authority) && (title in GLOB.command_positions))
-		if(H.dna.species.id != "human")
-			H.set_species(/datum/species/human)
-			H.rename_self("human", H.client)
-		purrbation_remove(H, silent=TRUE)
-
 	if(!visualsOnly && announce)
 		announce(H)
 
