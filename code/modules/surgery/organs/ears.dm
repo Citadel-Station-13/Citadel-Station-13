@@ -82,10 +82,6 @@
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
-<<<<<<< HEAD
-=======
-	damage_multiplier = 2
->>>>>>> b5e0746... Refactor of catpeople mutant organs (#32101)
 
 /obj/item/organ/ears/cat/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
 	..()
@@ -97,13 +93,7 @@
 
 /obj/item/organ/ears/cat/Remove(mob/living/carbon/human/H,  special = 0)
 	..()
-<<<<<<< HEAD
-	color = H.hair_color
-	H.dna.features["ears"] = "None"
-	H.update_body()
-=======
 	if(istype(H))
 		color = H.hair_color
 		H.dna.species.mutant_bodyparts -= "ears"
 		H.update_body()
->>>>>>> b5e0746... Refactor of catpeople mutant organs (#32101)
