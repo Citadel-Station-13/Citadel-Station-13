@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "disable_warning wasn't getting checked and the chat was being spammed"
