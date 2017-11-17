@@ -89,6 +89,7 @@
 			var/count = 1
 			var/wizardwin = 1
 			for(var/datum/objective/objective in wizard.objectives)
+<<<<<<< HEAD
 				if(istype(objective, /datum/objective/crew))
 					if(objective.check_completion())
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
@@ -104,14 +105,23 @@
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
 						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
 						wizardwin = 0
+=======
+				if(objective.check_completion())
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
+					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
+				else
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
+					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
+					wizardwin = 0
+>>>>>>> 8b19b49... JSON feedback (#32188)
 				count++
 
 			if(wizard.current && wizard.current.stat!=2 && wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				SSblackbox.add_details("wizard_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "wizard_success", 1, "SUCCESS")
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				SSblackbox.add_details("wizard_success","FAIL")
+				SSblackbox.record_feedback("tally", "wizard_success", 1, "FAIL")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1

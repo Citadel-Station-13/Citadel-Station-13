@@ -26,11 +26,16 @@ All ShuttleMove procs go here
 				if(M.pulledby)
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
+<<<<<<< HEAD
 				M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
 				if(M.key || M.get_ghost(TRUE))
 					SSblackbox.add_details("shuttle_gib", "[type]")
 				else
 					SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
+=======
+				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
+				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
+>>>>>>> 8b19b49... JSON feedback (#32188)
 				M.gib()
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
@@ -183,7 +188,7 @@ All ShuttleMove procs go here
 /obj/machinery/computer/auxillary_base/afterShuttleMove(list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
-		SSblackbox.add_details("colonies_dropped", "[x]|[y]|[z]") //Number of times a base has been dropped!
+		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
 /obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode)
 	. = ..()
