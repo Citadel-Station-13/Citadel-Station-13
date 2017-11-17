@@ -175,6 +175,7 @@
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
+<<<<<<< HEAD
 		var/should_we_scrub = FALSE
 		for(var/id in env_gases)
 			if(id == /datum/gas/nitrogen || id == /datum/gas/oxygen)
@@ -183,6 +184,9 @@
 				should_we_scrub = TRUE
 				break
 		if(should_we_scrub)
+=======
+		if(length(env_gases & filter_types))
+>>>>>>> 841a321... fixes scrubbers being unable to scrub (#32823)
 			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
