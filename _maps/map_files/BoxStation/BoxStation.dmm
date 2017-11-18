@@ -10692,7 +10692,12 @@
 /obj/machinery/power/apc{
 	areastring = "/area/security/checkpoint/customs";
 	dir = 2;
+<<<<<<< HEAD
 	name = "Customs APC";
+=======
+	name = "Security Checkpoint APC";
+	areastring = "/area/security/checkpoint/auxiliary";
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 	pixel_x = 1;
 	pixel_y = -24
 	},
@@ -11321,6 +11326,7 @@
 /area/hallway/secondary/entry)
 "aBI" = (
 /turf/closed/wall,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
 "aBJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -11330,6 +11336,17 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+"aBJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/closed/wall,
+/area/security/checkpoint/auxiliary)
+"aBK" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/closed/wall,
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aBL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Tool Storage Maintenance";
@@ -11606,7 +11623,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aCt" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -11749,7 +11770,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 9
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aCM" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -11828,12 +11853,20 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aCZ" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 5
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aDa" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -11866,7 +11899,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aDd" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -11888,7 +11925,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aDg" = (
 /obj/machinery/biogenerator,
 /turf/open/floor/plasteel,
@@ -12513,7 +12554,11 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEF" = (
 /obj/structure/table/glass,
 /obj/item/reagent_containers/food/snacks/grown/wheat,
@@ -12532,31 +12577,51 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEH" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEJ" = (
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aEL" = (
 /obj/machinery/door/airlock{
 	name = "Garden";
@@ -12934,7 +12999,11 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/red/side,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aFI" = (
 /obj/machinery/camera{
 	c_tag = "Security Checkpoint";
@@ -12954,7 +13023,11 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aFJ" = (
 /obj/machinery/atmospherics/pipe/simple/supplymain/hidden,
 /obj/effect/landmark/event_spawn,
@@ -12971,7 +13044,11 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/red/side,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aFL" = (
 /obj/item/device/radio/off,
 /obj/item/crowbar,
@@ -12980,14 +13057,18 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aFM" = (
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /obj/structure/table,
 /turf/open/floor/plasteel/red/side,
-/area/security/checkpoint/checkpoint2)
+/area/security/checkpoint/auxiliary)
 "aFN" = (
 /obj/structure/table/glass,
 /obj/item/cultivator,
@@ -13566,7 +13647,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aHa" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
@@ -13735,7 +13820,11 @@
 "aHy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "aHz" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plasteel/green/side{
@@ -30609,7 +30698,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/red/side,
+<<<<<<< HEAD
 /area/security/checkpoint/customs)
+=======
+/area/security/checkpoint/auxiliary)
+>>>>>>> e157e68... Merge pull request #32525 from ShizCalev/delta-fixes
 "bxN" = (
 /obj/structure/sink{
 	dir = 8;
