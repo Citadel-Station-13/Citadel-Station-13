@@ -272,13 +272,8 @@
 		if("monkey")
 			if(!check_rights(R_FUN))
 				return
-<<<<<<< HEAD
-			SSblackbox.add_details("admin_secrets_fun_used","Monkeyize All Humans")
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
-=======
 			SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "Monkeyize All Humans")
-			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
->>>>>>> 8b19b49... JSON feedback (#32188)
+			for(var/mob/living/carbon/human/H in GLOB.mob_list)
 				spawn(0)
 					H.monkeyize()
 			ok = 1
