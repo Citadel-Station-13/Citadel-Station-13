@@ -393,7 +393,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(initiator)
 		to_chat(initiator, msg)
 
-	SSblackbox.inc("ahelp_handleissue")
+	SSblackbox.record_feedback("tally", "ahelp_stats", 1, "handling")
 	msg = "Ticket [TicketHref("#[id]")] is being handled by [key_name]"
 	message_admins(msg)
 	log_admin_private(msg)
