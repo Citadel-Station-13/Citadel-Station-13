@@ -113,31 +113,21 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			if(changeling.objectives.len)
 				var/count = 1
 				for(var/datum/objective/objective in changeling.objectives)
-<<<<<<< HEAD
 					if(istype(objective, /datum/objective/crew))
 						if(objective.check_completion())
 							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|SUCCESS")
+							SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "SUCCESS"))
 						else
 							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|FAIL")
+							SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "FAIL"))
 					else
 						if(objective.check_completion())
 							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|SUCCESS")
+							SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "SUCCESS"))
 						else
 							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|FAIL")
+							SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "FAIL"))
 							changelingwin = 0
-=======
-					if(objective.check_completion())
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "SUCCESS"))
-					else
-						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "FAIL"))
-						changelingwin = 0
->>>>>>> 8b19b49... JSON feedback (#32188)
 					count++
 
 			if(changelingwin)
