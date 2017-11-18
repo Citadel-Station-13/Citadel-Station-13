@@ -26,16 +26,8 @@ All ShuttleMove procs go here
 				if(M.pulledby)
 					M.pulledby.stop_pulling()
 				M.stop_pulling()
-<<<<<<< HEAD
-				M.visible_message("<span class='warning'>[src] slams into [M]!</span>")
-				if(M.key || M.get_ghost(TRUE))
-					SSblackbox.add_details("shuttle_gib", "[type]")
-				else
-					SSblackbox.add_details("shuttle_gib_unintelligent", "[type]")
-=======
 				M.visible_message("<span class='warning'>[shuttle] slams into [M]!</span>")
 				SSblackbox.record_feedback("tally", "shuttle_gib", 1, M.type)
->>>>>>> 8b19b49... JSON feedback (#32188)
 				M.gib()
 
 		else //non-living mobs shouldn't be affected by shuttles, which is why this is an else
