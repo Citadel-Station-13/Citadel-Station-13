@@ -504,13 +504,8 @@
 		if("dorf")
 			if(!check_rights(R_FUN))
 				return
-<<<<<<< HEAD
-			SSblackbox.add_details("admin_secrets_fun_used","Dwarf Beards")
-			for(var/mob/living/carbon/human/B in GLOB.mob_list)
-=======
 			SSblackbox.record_feedback("tally", "admin_secrets_fun_used", 1, "Dwarf Beards")
-			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
->>>>>>> 8b19b49... JSON feedback (#32188)
+			for(var/mob/living/carbon/human/B in GLOB.mob_list)
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")
