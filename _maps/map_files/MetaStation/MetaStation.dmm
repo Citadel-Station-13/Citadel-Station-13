@@ -51090,7 +51090,13 @@
 /turf/closed/wall,
 /area/security/checkpoint/medical)
 "cbQ" = (
+<<<<<<< HEAD
 /obj/machinery/computer/secure_data,
+=======
+/obj/machinery/computer/secure_data{
+	dir = 4
+	},
+>>>>>>> d922591... Corrects Meta console direction (#32818)
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for monitoring medbay to ensure patient safety.";
 	dir = 1;
