@@ -2,13 +2,10 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/carbon/Initialize()
+	. = ..()
 	create_reagents(1000)
 	update_body_parts() //to update the carbon's new bodyparts appearance
-<<<<<<< HEAD
-	..()
-=======
 	GLOB.carbon_list += src
->>>>>>> 39375d5... Replaces a bunch of mob loops with hopefully better ones (#32786)
 
 /mob/living/carbon/Destroy()
 //This must be done first, so the mob ghosts correctly before DNA etc is nulled
