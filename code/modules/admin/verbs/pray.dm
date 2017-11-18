@@ -41,19 +41,11 @@
 			if(C.prefs.toggles & SOUND_PRAYERS)
 				if(usr.job == "Chaplain")
 					SEND_SOUND(C, sound('sound/effects/pray.ogg'))
-<<<<<<< HEAD
-	to_chat(usr, "Your prayers have been received by the gods.")
-
-	SSblackbox.add_details("admin_verb","Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	//log_admin("HELP: [key_name(src)]: [msg]")
-
-=======
 	to_chat(usr, "Your prayers have been received by the gods.")
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Prayer") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
->>>>>>> 8b19b49... JSON feedback (#32188)
 /proc/CentCom_announce(text , mob/Sender)
 	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
