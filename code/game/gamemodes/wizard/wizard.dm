@@ -89,31 +89,21 @@
 			var/count = 1
 			var/wizardwin = 1
 			for(var/datum/objective/objective in wizard.objectives)
-<<<<<<< HEAD
 				if(istype(objective, /datum/objective/crew))
 					if(objective.check_completion())
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
+						SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
 				else
 					if(objective.check_completion())
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
 						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
+						SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
 						wizardwin = 0
-=======
-				if(objective.check_completion())
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
-				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
-					wizardwin = 0
->>>>>>> 8b19b49... JSON feedback (#32188)
 				count++
 
 			if(wizard.current && wizard.current.stat!=2 && wizardwin)
