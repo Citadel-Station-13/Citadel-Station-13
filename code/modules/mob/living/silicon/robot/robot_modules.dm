@@ -353,7 +353,6 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
 	moduleselect_icon = "k9"
-	feedback_key = "cyborg_k9"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -389,7 +388,6 @@
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
 	moduleselect_icon = "medihound"
-	feedback_key = "cyborg_medihound"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -412,7 +410,6 @@
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "scrubpup"
 	moduleselect_icon = "scrubpup"
-	feedback_key = "cyborg_scrubpup"
 	hat_offset = INFINITY
 	clean_on_move = TRUE
 
