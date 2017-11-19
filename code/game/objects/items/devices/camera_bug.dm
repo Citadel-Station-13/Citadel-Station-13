@@ -12,8 +12,7 @@
 	w_class		= WEIGHT_CLASS_TINY
 	item_state	= "camera_bug"
 	throw_speed	= 4
-	throw_range	= 20
-	origin_tech = "syndicate=1;engineering=3"
+	throw_range	= 20
 	flags_1 = NOBLUDGEON_1
 
 	var/obj/machinery/camera/current = null

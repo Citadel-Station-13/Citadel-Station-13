@@ -3,8 +3,7 @@
 	name = "syndicate minibomb"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
-	item_state = "flashbang"
-	origin_tech = "materials=3;magnets=4;syndicate=3"
+	item_state = "flashbang"
 
 
 /obj/item/grenade/syndieminibomb/prime()
@@ -15,8 +14,7 @@
 /obj/item/grenade/syndieminibomb/concussion
 	name = "HE Grenade"
 	desc = "A compact shrapnel grenade meant to devestate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
-	icon_state = "concussion"
-	origin_tech = "materials=3;magnets=4;syndicate=2"
+	icon_state = "concussion"
 
 /obj/item/grenade/syndieminibomb/concussion/prime()
 	update_mob()

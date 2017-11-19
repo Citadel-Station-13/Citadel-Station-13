@@ -66,8 +66,7 @@
 	desc = "Device used to transmit exosuit data."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
-	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "programming=2;magnets=2"
+	w_class = WEIGHT_CLASS_SMALL
 	var/ai_beacon = FALSE //If this beacon allows for AI control. Exists to avoid using istype() on checking.
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
@@ -118,8 +117,7 @@
 
 /obj/item/mecha_parts/mecha_tracking/ai_control
 	name = "exosuit AI control beacon"
-	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
-	origin_tech = "programming=3;magnets=2;engineering=2"
+	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
 	ai_beacon = TRUE
 
 

@@ -166,8 +166,7 @@
 /*
  * Sleepypens
  */
-/obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
+/obj/item/pen/sleepy
 	container_type = OPENCONTAINER_1
 
 
@@ -191,8 +190,7 @@
 /*
  * (Alan) Edaggers
  */
-/obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
+/obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 

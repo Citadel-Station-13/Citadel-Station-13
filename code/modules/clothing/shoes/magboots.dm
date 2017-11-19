@@ -9,8 +9,7 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	strip_delay = 70
 	equip_delay_other = 70
-	resistance_flags = FIRE_PROOF
-	origin_tech = "materials=3;magnets=4;engineering=4"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/clothing/shoes/magboots/verb/toggle()
 	set name = "Toggle Magboots"
@@ -58,5 +57,4 @@
 	desc = "Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders."
 	name = "blood-red magboots"
 	icon_state = "syndiemag0"
-	magboot_state = "syndiemag"
-	origin_tech = "magnets=4;syndicate=2"
+	magboot_state = "syndiemag"

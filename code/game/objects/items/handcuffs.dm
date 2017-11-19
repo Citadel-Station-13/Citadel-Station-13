@@ -17,8 +17,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	materials = list(MAT_METAL=500)
-	origin_tech = "engineering=3;combat=3"
+	materials = list(MAT_METAL=500)
 	breakouttime = 600 //Deciseconds = 60s = 1 minute
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 	var/cuffsound = 'sound/weapons/handcuffs.ogg'
@@ -94,8 +93,7 @@
 	color = "#ff0000"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150, MAT_GLASS=75)
-	origin_tech = "engineering=2"
+	materials = list(MAT_METAL=150, MAT_GLASS=75)
 	breakouttime = 300 //Deciseconds = 30s
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 	var/datum/robot_energy_storage/wirestorage = null
@@ -252,8 +250,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	flags_1 = CONDUCT_1
 	throwforce = 0
-	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=3;combat=3"
+	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 300	//Deciseconds = 30s = 0.5 minute
 
@@ -262,8 +259,7 @@
 	throw_speed = 1
 	throw_range = 1
 	icon_state = "beartrap"
-	desc = "A trap used to catch bears and other legged creatures."
-	origin_tech = "engineering=4"
+	desc = "A trap used to catch bears and other legged creatures."
 	var/armed = 0
 	var/trap_damage = 20
 
@@ -341,8 +337,7 @@
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
 	breakouttime = 35//easy to apply, easy to break out of
-	gender = NEUTER
-	origin_tech = "engineering=3;combat=1"
+	gender = NEUTER
 	var/knockdown = 0
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
@@ -367,8 +362,7 @@
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
-	breakouttime = 70
-	origin_tech = "engineering=4;combat=3"
+	breakouttime = 70
 	knockdown = 20
 
 /obj/item/restraints/legcuffs/bola/energy //For Security

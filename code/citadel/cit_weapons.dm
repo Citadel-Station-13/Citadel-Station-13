@@ -121,7 +121,6 @@
 	embed_chance = 40
 	embedded_impact_pain_multiplier = 10
 	armour_penetration = 0
-	origin_tech = "combat=3;magnets=4"
 	block_chance = 60
 	light_color = "#37FFF7"
 	actions_types = list(/datum/action/item_action/pick_color)
@@ -211,7 +210,6 @@
 	armour_penetration = 35
 	embed_chance = 75
 	block_chance = 50
-	origin_tech = "combat=3;magnets=4;syndicate=4"
 	hitsound_on = 'sound/weapons/blade1.ogg'
 	light_color = "#37F0FF"
 

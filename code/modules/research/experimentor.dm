@@ -576,8 +576,7 @@
 /obj/item/relic
 	name = "strange object"
 	desc = "What mysteries could this hold?"
-	icon = 'icons/obj/assemblies.dmi'
-	origin_tech = "combat=1;plasmatech=1;powerstorage=1;materials=1"
+	icon = 'icons/obj/assemblies.dmi'
 	var/realName = "defined object"
 	var/revealed = FALSE
 	var/realProc

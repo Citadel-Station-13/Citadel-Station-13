@@ -50,8 +50,7 @@
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 	flags_1 = CONDUCT_1
-	slot_flags = SLOT_BELT
-	origin_tech = "magnets=3;engineering=4"
+	slot_flags = SLOT_BELT
 	force = 8
 
 	var/max_uses = 20

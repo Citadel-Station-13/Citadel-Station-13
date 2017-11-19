@@ -53,8 +53,7 @@
 	name = "optical meson scanner"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
-	item_state = "meson"
-	origin_tech = "magnets=1;engineering=2"
+	item_state = "meson"
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
@@ -64,8 +63,7 @@
 	name = "night vision meson scanner"
 	desc = "An optical meson scanner fitted with an amplified visible light spectrum overlay, providing greater visual clarity in darkness."
 	icon_state = "nvgmeson"
-	item_state = "nvgmeson"
-	origin_tech = "magnets=4;engineering=5;plasmatech=4"
+	item_state = "nvgmeson"
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -86,8 +84,7 @@
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
-	item_state = "glasses"
-	origin_tech = "magnets=2;engineering=1"
+	item_state = "glasses"
 	scan_reagents = 1 //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
@@ -102,8 +99,7 @@
 	name = "night vision goggles"
 	desc = "You can totally see in the dark now!"
 	icon_state = "night"
-	item_state = "glasses"
-	origin_tech = "materials=4;magnets=4;plasmatech=4;engineering=4"
+	item_state = "glasses"
 	darkness_view = 8
 	vision_flags = SEE_BLACKNESS
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
@@ -125,8 +121,7 @@
 	name = "optical material scanner"
 	desc = "Very confusing glasses."
 	icon_state = "material"
-	item_state = "glasses"
-	origin_tech = "magnets=3;engineering=3"
+	item_state = "glasses"
 	vision_flags = SEE_OBJS
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
@@ -134,8 +129,7 @@
 	name = "optical material scanner"
 	desc = "Used by miners to detect ores deep within the rock."
 	icon_state = "material"
-	item_state = "glasses"
-	origin_tech = "magnets=3;engineering=3"
+	item_state = "glasses"
 	darkness_view = 0
 
 /obj/item/clothing/glasses/material/mining/gar
@@ -185,8 +179,7 @@
 
 /obj/item/clothing/glasses/sunglasses/reagent
 	name = "beer goggles"
-	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
-	origin_tech = "magnets=2;engineering=2"
+	desc = "A pair of sunglasses outfitted with apparatus to scan reagents."
 	scan_reagents = 1
 
 /obj/item/clothing/glasses/sunglasses/garb
@@ -266,8 +259,7 @@
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
-	item_state = "glasses"
-	origin_tech = "magnets=3"
+	item_state = "glasses"
 	vision_flags = SEE_MOBS
 	invis_view = 2
 	flash_protect = 0
@@ -279,8 +271,7 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "chameleon thermals"
-	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
-	origin_tech = "magnets=3;syndicate=4"
+	desc = "A pair of thermal optic goggles with an onboard chameleon generator."
 	flash_protect = -1
 
 	var/datum/action/item_action/chameleon/change/chameleon_action

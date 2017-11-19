@@ -11,8 +11,7 @@
 	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
-	var/toggle = 1
-	origin_tech = "materials=1;engineering=1"
+	var/toggle = 1
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return TRUE

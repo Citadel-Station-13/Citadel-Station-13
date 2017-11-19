@@ -347,8 +347,7 @@
 	materials = list()
 	brightness_on = 6 //luminosity when on
 
-/obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=1"
+/obj/item/device/flashlight/emp
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

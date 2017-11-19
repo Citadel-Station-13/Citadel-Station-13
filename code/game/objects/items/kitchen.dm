@@ -9,8 +9,7 @@
  */
 
 /obj/item/kitchen
-	icon = 'icons/obj/kitchen.dmi'
-	origin_tech = "materials=1"
+	icon = 'icons/obj/kitchen.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 
@@ -110,8 +109,7 @@
 	item_state = "knife"
 	desc = "A military combat utility survival knife."
 	force = 20
-	throwforce = 20
-	origin_tech = "materials=3;combat=4"
+	throwforce = 20
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
 	bayonet = TRUE
 
@@ -151,8 +149,7 @@
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	force = 8
 	throwforce = 12//fuck git
-	materials = list()
-	origin_tech = "biotech=3;combat=2"
+	materials = list()
 	attack_verb = list("shanked", "shivved")
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 0, acid = 0)
 

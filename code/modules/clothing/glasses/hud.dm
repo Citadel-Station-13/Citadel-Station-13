@@ -1,8 +1,7 @@
 /obj/item/clothing/glasses/hud
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
-	flags_1 = null //doesn't protect eyes because it's a monocle, duh
-	origin_tech = "magnets=3;biotech=2"
+	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	var/hud_type = null
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
@@ -33,8 +32,7 @@
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-	icon_state = "healthhud"
-	origin_tech = "magnets=3;biotech=2"
+	icon_state = "healthhud"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
@@ -42,8 +40,7 @@
 	name = "night vision health scanner HUD"
 	desc = "An advanced medical head-up display that allows doctors to find patients in complete darkness."
 	icon_state = "healthhudnight"
-	item_state = "glasses"
-	origin_tech = "magnets=4;biotech=4;plasmatech=4;engineering=5"
+	item_state = "glasses"
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -51,8 +48,7 @@
 /obj/item/clothing/glasses/hud/health/sunglasses
 	name = "medical HUDSunglasses"
 	desc = "Sunglasses with a medical HUD."
-	icon_state = "sunhudmed"
-	origin_tech = "magnets=3;biotech=3;engineering=3"
+	icon_state = "sunhudmed"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
@@ -61,8 +57,7 @@
 /obj/item/clothing/glasses/hud/diagnostic
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
-	icon_state = "diagnostichud"
-	origin_tech = "magnets=2;engineering=2"
+	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
@@ -70,8 +65,7 @@
 	name = "night vision diagnostic HUD"
 	desc = "A robotics diagnostic HUD fitted with a light amplifier."
 	icon_state = "diagnostichudnight"
-	item_state = "glasses"
-	origin_tech = "magnets=4;powerstorage=4;plasmatech=4;engineering=5"
+	item_state = "glasses"
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green
@@ -79,8 +73,7 @@
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
-	icon_state = "securityhud"
-	origin_tech = "magnets=3;combat=2"
+	icon_state = "securityhud"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
@@ -114,8 +107,7 @@
 /obj/item/clothing/glasses/hud/security/sunglasses
 	name = "security HUDSunglasses"
 	desc = "Sunglasses with a security HUD."
-	icon_state = "sunhudsec"
-	origin_tech = "magnets=3;combat=3;engineering=3"
+	icon_state = "sunhudsec"
 	darkness_view = 1
 	flash_protect = 1
 	tint = 1
@@ -124,8 +116,7 @@
 /obj/item/clothing/glasses/hud/security/night
 	name = "night vision security HUD"
 	desc = "An advanced heads-up display which provides id data and vision in complete darkness."
-	icon_state = "securityhudnight"
-	origin_tech = "magnets=4;combat=4;plasmatech=4;engineering=5"
+	icon_state = "securityhudnight"
 	darkness_view = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	glass_colour_type = /datum/client_colour/glass_colour/green

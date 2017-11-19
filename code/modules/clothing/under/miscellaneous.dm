@@ -661,8 +661,7 @@
 /obj/item/device/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
-	icon_state = "plasmarefill"
-	origin_tech = "materials=2;plasmatech=3;biotech=1"
+	icon_state = "plasmarefill"
 
 /obj/item/clothing/under/rank/security/navyblue/russian
 	name = "russian officer's uniform"

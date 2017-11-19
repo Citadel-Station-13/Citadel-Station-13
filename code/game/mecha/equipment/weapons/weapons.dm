@@ -1,7 +1,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon
 	name = "mecha weapon"
-	range = RANGED
-	origin_tech = "materials=3;combat=3"
+	range = RANGED
 	var/projectile
 	var/fire_sound
 	var/projectiles_per_shot = 1
@@ -72,8 +71,7 @@
 	equip_cooldown = 8
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
-	icon_state = "mecha_laser"
-	origin_tech = "magnets=3;combat=3;engineering=3"
+	icon_state = "mecha_laser"
 	energy_drain = 30
 	projectile = /obj/item/projectile/beam/laser
 	fire_sound = 'sound/weapons/laser.ogg'
@@ -82,8 +80,7 @@
 	equip_cooldown = 15
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
-	icon_state = "mecha_laser"
-	origin_tech = "magnets=4;combat=4;engineering=3"
+	icon_state = "mecha_laser"
 	energy_drain = 60
 	projectile = /obj/item/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/weapons/lasercannonfire.ogg'
@@ -92,8 +89,7 @@
 	equip_cooldown = 20
 	name = "\improper MKIV ion heavy cannon"
 	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
-	icon_state = "mecha_ion"
-	origin_tech = "materials=4;combat=5;magnets=4"
+	icon_state = "mecha_ion"
 	energy_drain = 120
 	projectile = /obj/item/projectile/ion
 	fire_sound = 'sound/weapons/laser.ogg'
@@ -102,8 +98,7 @@
 	equip_cooldown = 35
 	name = "\improper MKI Tesla Cannon"
 	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine."
-	icon_state = "mecha_ion"
-	origin_tech = "materials=4;engineering=4;combat=6;magnets=6"
+	icon_state = "mecha_ion"
 	energy_drain = 500
 	projectile = /obj/item/projectile/energy/tesla/cannon
 	fire_sound = 'sound/magic/lightningbolt.ogg'
@@ -114,8 +109,7 @@
 	name = "eZ-13 MK2 heavy pulse rifle"
 	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
-	energy_drain = 120
-	origin_tech = "materials=3;combat=6;powerstorage=4"
+	energy_drain = 120
 	projectile = /obj/item/projectile/beam/pulse/heavy
 	fire_sound = 'sound/weapons/marauder.ogg'
 
@@ -127,8 +121,7 @@
 	item_state = "plasmacutter"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	energy_drain = 30
-	origin_tech = "materials=3;plasmatech=4;engineering=3"
+	energy_drain = 30
 	projectile = /obj/item/projectile/plasma/adv/mech
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 
@@ -142,8 +135,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
-	icon_state = "mecha_taser"
-	origin_tech = "combat=3"
+	icon_state = "mecha_taser"
 	energy_drain = 20
 	equip_cooldown = 8
 	projectile = /obj/item/projectile/energy/electrode
@@ -246,8 +238,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
-	icon_state = "mecha_carbine"
-	origin_tech = "materials=4;combat=4"
+	icon_state = "mecha_carbine"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/incendiary/fnx99
 	projectiles = 24
@@ -266,8 +257,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	name = "\improper LBX AC 10 \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
-	icon_state = "mecha_scatter"
-	origin_tech = "combat=4"
+	icon_state = "mecha_scatter"
 	equip_cooldown = 20
 	projectile = /obj/item/projectile/bullet/scattershot
 	projectiles = 40
@@ -278,8 +268,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
-	icon_state = "mecha_uac2"
-	origin_tech = "combat=4"
+	icon_state = "mecha_uac2"
 	equip_cooldown = 10
 	projectile = /obj/item/projectile/bullet/lmg
 	projectiles = 300
@@ -292,8 +281,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	name = "\improper SRM-8 missile rack"
 	desc = "A weapon for combat exosuits. Shoots light explosive missiles."
-	icon_state = "mecha_missilerack"
-	origin_tech = "combat=5;materials=4;engineering=4"
+	icon_state = "mecha_missilerack"
 	projectile = /obj/item/projectile/bullet/srmrocket
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 8
@@ -325,8 +313,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
 	name = "\improper SGL-6 grenade launcher"
 	desc = "A weapon for combat exosuits. Launches primed flashbangs."
-	icon_state = "mecha_grenadelnchr"
-	origin_tech = "combat=4;engineering=4"
+	icon_state = "mecha_grenadelnchr"
 	projectile = /obj/item/grenade/flashbang
 	fire_sound = 'sound/weapons/grenadelaunch.ogg'
 	projectiles = 6
@@ -343,8 +330,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/clusterbang //Because I am a heartless bastard -Sieve //Heartless? for making the poor man's honkblast? - Kaze
 	name = "\improper SOB-3 grenade launcher"
-	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
-	origin_tech = "combat=4;materials=4"
+	desc = "A weapon for combat exosuits. Launches primed clusterbangs. You monster."
 	projectiles = 3
 	projectile = /obj/item/grenade/clusterbuster
 	projectile_energy_cost = 1600 //getting off cheap seeing as this is 3 times the flashbangs held in the grenade launcher.

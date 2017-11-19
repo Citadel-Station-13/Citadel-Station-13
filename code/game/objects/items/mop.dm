@@ -78,7 +78,6 @@
 	item_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	origin_tech = "materials=3;engineering=3"
 	force = 6
 	throwforce = 8
 	throw_range = 4

@@ -13,8 +13,7 @@
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
 	slot_flags = SLOT_BELT
 	var/scanning = 0
-	var/list/log = list()
-	origin_tech = "engineering=4;biotech=2;programming=5"
+	var/list/log = list()
 	var/range = 8
 	var/view_check = TRUE
 

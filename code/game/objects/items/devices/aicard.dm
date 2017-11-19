@@ -10,8 +10,7 @@
 	slot_flags = SLOT_BELT
 	flags_1 = NOBLUDGEON_1
 	var/flush = FALSE
-	var/mob/living/silicon/ai/AI
-	origin_tech = "programming=3;materials=3"
+	var/mob/living/silicon/ai/AI
 
 /obj/item/device/aicard/afterattack(atom/target, mob/user, proximity)
 	..()

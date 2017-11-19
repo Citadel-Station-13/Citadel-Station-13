@@ -4,8 +4,7 @@
 
 /obj/item/organ/liver
 	name = "liver"
-	icon_state = "liver"
-	origin_tech = "biotech=3"
+	icon_state = "liver"
 	w_class = WEIGHT_CLASS_NORMAL
 	zone = "chest"
 	slot = ORGAN_SLOT_LIVER
@@ -67,14 +66,12 @@
 /obj/item/organ/liver/cybernetic
 	name = "cybernetic liver"
 	icon_state = "liver-c"
-	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
-	origin_tech = "biotech=4"
+	desc = "An electronic device designed to mimic the functions of a human liver. It has no benefits over an organic liver, but is easy to produce."
 
 /obj/item/organ/liver/cybernetic/upgraded
 	name = "upgraded cybernetic liver"
 	icon_state = "liver-c-u"
-	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
-	origin_tech = "biotech=6"
+	desc = "An upgraded version of the cybernetic liver, designed to improve upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	alcohol_tolerance = 0.001
 	maxHealth = 200 //double the health of a normal liver
 	toxTolerance = 15 //can shrug off up to 15u of toxins
