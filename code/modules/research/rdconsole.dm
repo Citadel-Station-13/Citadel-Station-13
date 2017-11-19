@@ -37,9 +37,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/obj/item/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/disk/design_disk/d_disk = null	//Stores the design disk.
 
-	var/obj/machinery/r_n_d/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
-	var/obj/machinery/r_n_d/protolathe/linked_lathe = null				//Linked Protolathe
-	var/obj/machinery/r_n_d/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
+	var/obj/machinery/rnd/destructive_analyzer/linked_destroy = null	//Linked Destructive Analyzer
+	var/obj/machinery/rnd/protolathe/linked_lathe = null				//Linked Protolathe
+	var/obj/machinery/rnd/circuit_imprinter/linked_imprinter = null	//Linked Circuit Imprinter
 
 	var/screen = 1.0	//Which screen is currently showing.
 	var/id = 0			//ID of the computer (for server restrictions).
@@ -70,18 +70,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	return "ERROR: Report This"
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in oview(3,src))
+	for(var/obj/machinery/rnd/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
-		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))
+		if(istype(D, /obj/machinery/rnd/destructive_analyzer))
 			if(linked_destroy == null)
 				linked_destroy = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/protolathe))
+		else if(istype(D, /obj/machinery/rnd/protolathe))
 			if(linked_lathe == null)
 				linked_lathe = D
 				D.linked_console = src
-		else if(istype(D, /obj/machinery/r_n_d/circuit_imprinter))
+		else if(istype(D, /obj/machinery/rnd/circuit_imprinter))
 			if(linked_imprinter == null)
 				linked_imprinter = D
 				D.linked_console = src
@@ -89,7 +89,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 //Have it automatically push research to the centcom server so wild griffins can't fuck up R&D's work --NEO
 /obj/machinery/computer/rdconsole/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
+	for(var/obj/machinery/rnd/server/centcom/C in GLOB.machines)
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
@@ -359,11 +359,11 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+					for(var/obj/machinery/rnd/server/S in GLOB.machines)
 						var/server_processed = 0
 						if(S.disabled)
 							continue
-						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
+						if((id in S.id_with_upload) || istype(S, /obj/machinery/rnd/server/centcom))
 							for(var/v in files.known_tech)
 								var/datum/tech/T = files.known_tech[v]
 								S.files.AddTech2Known(T)
@@ -372,7 +372,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+						if(((id in S.id_with_download) && !istype(S, /obj/machinery/rnd/server/centcom)) || S.hacked)
 							for(var/v in S.files.known_tech)
 								var/datum/tech/T = S.files.known_tech[v]
 								files.AddTech2Known(T)
@@ -381,7 +381,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								files.AddDesign2Known(D)
 							files.RefreshResearch()
 							server_processed = 1
-						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
+						if(!istype(S, /obj/machinery/rnd/server/centcom) && server_processed)
 							S.produce_heat(100)
 					screen = 1.6
 					updateUsrDialog()

@@ -4,7 +4,7 @@ a /datum/desgin on the linked R&D console. You can then print them out in a fasi
 using metal and glass, it uses glass and reagents (usually sulfuric acis).
 
 */
-/obj/machinery/r_n_d/circuit_imprinter
+/obj/machinery/rnd/circuit_imprinter
 	name = "circuit imprinter"
 	desc = "Manufactures circuit boards for the construction of machines."
 	icon_state = "circuit_imprinter"
@@ -27,14 +27,14 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
-/obj/machinery/r_n_d/circuit_imprinter/Initialize()
+/obj/machinery/rnd/circuit_imprinter/Initialize()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	materials.precise_insertion = TRUE
 	create_reagents(0)
 	return ..()
 
-/obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
+/obj/machinery/rnd/circuit_imprinter/RefreshParts()
 	reagents.maximum_volume = 0
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.maximum_volume += G.volume
@@ -50,11 +50,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		T += M.rating
 	efficiency_coeff = 2 ** (T - 1) //Only 1 manipulator here, you're making runtimes Razharas
 
-/obj/machinery/r_n_d/circuit_imprinter/blob_act(obj/structure/blob/B)
+/obj/machinery/rnd/circuit_imprinter/blob_act(obj/structure/blob/B)
 	if (prob(50))
 		qdel(src)
 
-/obj/machinery/r_n_d/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
+/obj/machinery/rnd/circuit_imprinter/proc/check_mat(datum/design/being_built, M)	// now returns how many times the item can be built with the material
 	var/list/all_materials = being_built.reagents_list + being_built.materials
 
 	GET_COMPONENT(materials, /datum/component/material_container)
@@ -65,7 +65,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	return round(A / max(1, (all_materials[M]/efficiency_coeff)))
 
 //we eject the materials upon deconstruction.
-/obj/machinery/r_n_d/circuit_imprinter/on_deconstruction()
+/obj/machinery/rnd/circuit_imprinter/on_deconstruction()
 	for(var/obj/item/reagent_containers/glass/G in component_parts)
 		reagents.trans_to(G, G.reagents.maximum_volume)
 	GET_COMPONENT(materials, /datum/component/material_container)
@@ -73,11 +73,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	..()
 
 
-/obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
+/obj/machinery/rnd/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
 
-/obj/machinery/r_n_d/circuit_imprinter/ComponentActivated(datum/component/C)
+/obj/machinery/rnd/circuit_imprinter/ComponentActivated(datum/component/C)
 	..()
 	if(istype(C, /datum/component/material_container))
 		var/datum/component/material_container/M = C

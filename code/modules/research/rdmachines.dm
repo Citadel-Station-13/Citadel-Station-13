@@ -3,7 +3,7 @@
 //All devices that link into the R&D console fall into thise type for easy identification and some shared procs.
 
 
-/obj/machinery/r_n_d
+/obj/machinery/rnd
 	name = "R&D Device"
 	icon = 'icons/obj/machines/research.dmi'
 	density = TRUE
@@ -16,15 +16,15 @@
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
 
-/obj/machinery/r_n_d/Initialize()
+/obj/machinery/rnd/Initialize()
 	. = ..()
-	wires = new /datum/wires/r_n_d(src)
+	wires = new /datum/wires/rnd(src)
 
-/obj/machinery/r_n_d/Destroy()
+/obj/machinery/rnd/Destroy()
 	QDEL_NULL(wires)
 	return ..()
 
-/obj/machinery/r_n_d/proc/shock(mob/user, prb)
+/obj/machinery/rnd/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return 0
 	if(!prob(prb))
@@ -35,7 +35,7 @@
 	else
 		return 0
 
-/obj/machinery/r_n_d/attack_hand(mob/user)
+/obj/machinery/rnd/attack_hand(mob/user)
 	if(shocked)
 		if(shock(user,50))
 			return
@@ -44,7 +44,7 @@
 
 
 
-/obj/machinery/r_n_d/attackby(obj/item/O, mob/user, params)
+/obj/machinery/rnd/attackby(obj/item/O, mob/user, params)
 	if (shocked)
 		if(shock(user,50))
 			return 1
@@ -64,15 +64,15 @@
 		return ..()
 
 //to disconnect the machine from the r&d console it's linked to
-/obj/machinery/r_n_d/proc/disconnect_console()
+/obj/machinery/rnd/proc/disconnect_console()
 	linked_console = null
 
-//proc used to handle inserting items or reagents into r_n_d machines
-/obj/machinery/r_n_d/proc/Insert_Item(obj/item/I, mob/user)
+//proc used to handle inserting items or reagents into rnd machines
+/obj/machinery/rnd/proc/Insert_Item(obj/item/I, mob/user)
 	return
 
 //whether the machine can have an item inserted in its current state.
-/obj/machinery/r_n_d/proc/is_insertion_ready(mob/user)
+/obj/machinery/rnd/proc/is_insertion_ready(mob/user)
 	if(panel_open)
 		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
 		return
@@ -102,7 +102,7 @@
 
 
 //we eject the loaded item when deconstructing the machine
-/obj/machinery/r_n_d/on_deconstruction()
+/obj/machinery/rnd/on_deconstruction()
 	if(loaded_item)
 		loaded_item.forceMove(loc)
 	..()

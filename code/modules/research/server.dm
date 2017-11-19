@@ -1,4 +1,4 @@
-/obj/machinery/r_n_d/server
+/obj/machinery/rnd/server
 	name = "R&D Server"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
@@ -14,22 +14,22 @@
 	var/delay = 10
 	req_access = list(ACCESS_RD) //ONLY THE R&D CAN CHANGE SERVER SETTINGS.
 
-/obj/machinery/r_n_d/server/Initialize()
+/obj/machinery/rnd/server/Initialize()
 	. = ..()
 	var/obj/item/circuitboard/machine/B = new /obj/item/circuitboard/machine/rdserver(null)
 	B.apply_default_parts(src)
 
-/obj/machinery/r_n_d/server/Destroy()
+/obj/machinery/rnd/server/Destroy()
 	griefProtection()
 	return ..()
 
-/obj/machinery/r_n_d/server/RefreshParts()
+/obj/machinery/rnd/server/RefreshParts()
 	var/tot_rating = 0
 	for(var/obj/item/stock_parts/SP in src)
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/Initialize(mapload)
+/obj/machinery/rnd/server/Initialize(mapload)
 	. = ..()
 	if(!files)
 		files = new /datum/research(src)
@@ -45,7 +45,7 @@
 		for(var/N in temp_list)
 			id_with_download += text2num(N)
 
-/obj/machinery/r_n_d/server/process()
+/obj/machinery/rnd/server/process()
 	var/datum/gas_mixture/environment = loc.return_air()
 	switch(environment.temperature)
 		if(0 to T0C)
@@ -73,17 +73,17 @@
 		delay = initial(delay)
 
 
-/obj/machinery/r_n_d/server/emp_act(severity)
+/obj/machinery/rnd/server/emp_act(severity)
 	griefProtection()
 	..()
 
-/obj/machinery/r_n_d/server/ex_act(severity, target)
+/obj/machinery/rnd/server/ex_act(severity, target)
 	griefProtection()
 	..()
 
 //Backup files to centcom to help admins recover data after greifer attacks
-/obj/machinery/r_n_d/server/proc/griefProtection()
-	for(var/obj/machinery/r_n_d/server/centcom/C in GLOB.machines)
+/obj/machinery/rnd/server/proc/griefProtection()
+	for(var/obj/machinery/rnd/server/centcom/C in GLOB.machines)
 		for(var/v in files.known_tech)
 			var/datum/tech/T = files.known_tech[v]
 			C.files.AddTech2Known(T)
@@ -92,7 +92,7 @@
 			C.files.AddDesign2Known(D)
 		C.files.RefreshResearch()
 
-/obj/machinery/r_n_d/server/proc/produce_heat(heat_amt)
+/obj/machinery/rnd/server/proc/produce_heat(heat_amt)
 	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/L = loc
 		if(istype(L))
@@ -114,29 +114,29 @@
 				air_update_turf()
 
 //called when the server is deconstructed.
-/obj/machinery/r_n_d/server/on_deconstruction()
+/obj/machinery/rnd/server/on_deconstruction()
 	griefProtection()
 	..()
 
-/obj/machinery/r_n_d/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
+/obj/machinery/rnd/server/attack_hand(mob/user as mob) // I guess only exists to stop ninjas or hell does it even work I dunno.  See also ninja gloves.
 	if (disabled)
 		return
 	if (shocked)
 		shock(user,50)
 	return
 
-/obj/machinery/r_n_d/server/centcom
+/obj/machinery/rnd/server/centcom
 	name = "CentCom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/Initialize()
+/obj/machinery/rnd/server/centcom/Initialize()
 	. = ..()
 	fix_noid_research_servers()
 
 /proc/fix_noid_research_servers()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
-	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		switch(S.server_id)
 			if(-1)
 				continue
@@ -145,7 +145,7 @@
 			else
 				server_ids += S.server_id
 
-	for(var/obj/machinery/r_n_d/server/S in no_id_servers)
+	for(var/obj/machinery/rnd/server/S in no_id_servers)
 		var/num = 1
 		while(!S.server_id)
 			if(num in server_ids)
@@ -155,7 +155,7 @@
 				server_ids += num
 		no_id_servers -= S
 
-/obj/machinery/r_n_d/server/centcom/process()
+/obj/machinery/rnd/server/centcom/process()
 	return PROCESS_KILL	//don't need process()
 
 
@@ -165,7 +165,7 @@
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	var/screen = 0
-	var/obj/machinery/r_n_d/server/temp_server
+	var/obj/machinery/rnd/server/temp_server
 	var/list/servers = list()
 	var/list/consoles = list()
 	var/badmin = 0
@@ -188,7 +188,7 @@
 		temp_server = null
 		consoles = list()
 		servers = list()
-		for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+		for(var/obj/machinery/rnd/server/S in GLOB.machines)
 			if(S.server_id == text2num(href_list["access"]) || S.server_id == text2num(href_list["data"]) || S.server_id == text2num(href_list["transfer"]))
 				temp_server = S
 				break
@@ -201,7 +201,7 @@
 			screen = 2
 		else if(href_list["transfer"])
 			screen = 3
-			for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+			for(var/obj/machinery/rnd/server/S in GLOB.machines)
 				if(S == src)
 					continue
 				servers += S
@@ -249,8 +249,8 @@
 		if(0) //Main Menu
 			dat += "Connected Servers:<BR><BR>"
 
-			for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
-				if(istype(S, /obj/machinery/r_n_d/server/centcom) && !badmin)
+			for(var/obj/machinery/rnd/server/S in GLOB.machines)
+				if(istype(S, /obj/machinery/rnd/server/centcom) && !badmin)
 					continue
 				dat += "[S.name] || "
 				dat += "<A href='?src=[REF(src)];access=[S.server_id]'>Access Rights</A> | "
@@ -298,7 +298,7 @@
 		if(3) //Server Data Transfer
 			dat += "[temp_server.name] Server to Server Transfer<BR><BR>"
 			dat += "Send Data to what server?<BR>"
-			for(var/obj/machinery/r_n_d/server/S in servers)
+			for(var/obj/machinery/rnd/server/S in servers)
 				dat += "[S.name] <A href='?src=[REF(src)];send_to=[S.server_id]'>(Transfer)</A><BR>"
 			dat += "<HR><A href='?src=[REF(src)];main=1'>Main Menu</A>"
 	user << browse("<TITLE>R&D Server Control</TITLE><HR>[dat]", "window=server_control;size=575x400")
@@ -316,14 +316,14 @@
 	emagged = TRUE
 	to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 
-/obj/machinery/r_n_d/server/robotics
+/obj/machinery/rnd/server/robotics
 	name = "Robotics R&D Server"
 	id_with_upload_string = "1;2"
 	id_with_download_string = "1;2"
 	server_id = 2
 
 
-/obj/machinery/r_n_d/server/core
+/obj/machinery/rnd/server/core
 	name = "Core R&D Server"
 	id_with_upload_string = "1"
 	id_with_download_string = "1"
