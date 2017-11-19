@@ -5046,7 +5046,6 @@
 /obj/structure/cable/yellow{
 	icon_state = "4-8"
 	},
-/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 1
 	},
@@ -15997,7 +15996,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aGW" = (
@@ -16455,7 +16453,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "aHY" = (
@@ -22031,7 +22028,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/rnd/protolathe/department/cargo,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUj" = (
@@ -23934,6 +23930,7 @@
 	pixel_y = -3
 	},
 /obj/item/circuitboard/machine/destructive_analyzer,
+/obj/item/circuitboard/machine/protolathe,
 /obj/item/circuitboard/computer/aifixer,
 /obj/item/circuitboard/computer/teleporter,
 /obj/item/circuitboard/machine/circuit_imprinter,
@@ -26529,7 +26526,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plasteel/brown{
 	dir = 8
 	},
@@ -30938,7 +30934,8 @@
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bmh" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/mineral/ore_redemption,
 /turf/open/floor/plasteel/black,
 /area/quartermaster/office)
 "bmi" = (
@@ -51833,7 +51830,6 @@
 /area/medical/storage)
 "cdu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/whiteblue/corner{
 	dir = 4
 	},
@@ -54345,7 +54341,7 @@
 	},
 /area/medical/chemistry)
 "ciB" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
@@ -54362,10 +54358,10 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciD" = (
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciE" = (
@@ -54527,7 +54523,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciU" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -55004,9 +55000,11 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjZ" = (
+/obj/machinery/r_n_d/circuit_imprinter{
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cka" = (
@@ -66582,7 +66580,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -67240,7 +67238,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cIe" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/robotics,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cIf" = (
@@ -68125,7 +68123,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cJV" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cJW" = (
@@ -80818,17 +80816,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"EDv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"EDw" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/hydroponics)
 
 (1,1,1) = {"
 aaa
@@ -113389,7 +113376,7 @@ cEu
 cHe
 cIe
 cIY
-cIe
+cJV
 cIg
 cPe
 dvY
@@ -114893,7 +114880,7 @@ bNA
 bOU
 bQD
 bRS
-EDw
+bST
 bUi
 bVu
 bWO
@@ -121279,7 +121266,7 @@ aEn
 aFv
 aGV
 aHX
-EDv
+aEi
 aKA
 aMc
 aEi

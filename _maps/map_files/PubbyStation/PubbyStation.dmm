@@ -9010,7 +9010,6 @@
 	dir = 4;
 	pixel_x = 28
 	},
-/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkblue/side{
 	dir = 4
 	},
@@ -25967,7 +25966,7 @@
 	},
 /area/science/robotics/lab)
 "blM" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/core,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25984,7 +25983,7 @@
 /turf/open/floor/plasteel/black/telecomms/server/walkway,
 /area/science/server)
 "blO" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/robotics,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25999,7 +25998,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blQ" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blR" = (
@@ -26755,7 +26754,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bnO" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -29729,7 +29728,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/explab)
 "bup" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/explab)
@@ -29740,8 +29739,8 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bur" = (
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bus" = (
@@ -30278,9 +30277,11 @@
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bvy" = (
+/obj/machinery/r_n_d/circuit_imprinter{
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/delivery,
-/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/explab)
 "bvz" = (
@@ -34100,17 +34101,11 @@
 	},
 /area/hallway/primary/aft)
 "bDB" = (
-<<<<<<< HEAD
 /obj/machinery/computer/aifixer,
-=======
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/machinery/airalarm{
 	dir = 4;
 	locked = 0;
 	pixel_x = -23
-	},
-/obj/machinery/computer/rdconsole{
-	dir = 4
 	},
 /turf/open/floor/plasteel/darkpurple/side{
 	dir = 8
@@ -39522,6 +39517,7 @@
 	pixel_y = -3
 	},
 /obj/item/circuitboard/machine/destructive_analyzer,
+/obj/item/circuitboard/machine/protolathe,
 /obj/item/circuitboard/computer/aifixer,
 /obj/item/circuitboard/computer/teleporter,
 /obj/item/circuitboard/machine/circuit_imprinter,
@@ -43039,7 +43035,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYL" = (
@@ -43070,7 +43065,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYN" = (
@@ -43092,7 +43086,6 @@
 	icon_state = "map-pubby";
 	pixel_y = 32
 	},
-/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bYO" = (
@@ -51234,131 +51227,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
-<<<<<<< HEAD
-=======
-"cBT" = (
-/obj/effect/spawner/structure/window/plasma/reinforced,
-/turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
-"cBU" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cBV" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cBW" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cBX" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cBY" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cBZ" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCa" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCb" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCc" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCd" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCe" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCf" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCg" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCh" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCi" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCj" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCk" = (
-/turf/closed/wall/r_wall,
-/area/gateway)
-"cCl" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCm" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCn" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCo" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCp" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCq" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCr" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCs" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCt" = (
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"cCu" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCv" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCw" = (
-/turf/open/floor/plasteel/white,
-/area/science/lab)
-"cCx" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCy" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCz" = (
-/turf/closed/wall/r_wall,
-/area/science/lab)
-"cCA" = (
-/turf/closed/wall,
-/area/science/lab)
-"cCB" = (
-/obj/machinery/rnd/protolathe/department/security,
-/turf/open/floor/plasteel,
-/area/security/main)
-"cCC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/cargo,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"cCD" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/crew_quarters/kitchen)
-"cCE" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
 (1,1,1) = {"
 aaa
@@ -76106,7 +75974,7 @@ agP
 ajn
 ajW
 ajV
-cCB
+alE
 amp
 and
 and
@@ -78231,7 +78099,7 @@ bBa
 bCj
 bsA
 bEw
-cCE
+bkh
 bkh
 bId
 bFO
@@ -79747,7 +79615,7 @@ aRN
 aRN
 aZZ
 bbf
-cCD
+aRN
 aRN
 beo
 aRN
@@ -84387,19 +84255,11 @@ bjo
 bjq
 cqh
 bjo
-<<<<<<< HEAD
 bjw
 bjw
 bjw
 bjw
 bjw
-=======
-cCl
-cCl
-cCl
-cCl
-cCl
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 bxa
 byD
 bAm
@@ -84652,19 +84512,11 @@ blv
 bkn
 cqi
 boP
-<<<<<<< HEAD
 bjw
 brp
 bsQ
 buo
 bjw
-=======
-cCl
-brp
-bsQ
-buo
-cCl
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 bxb
 byE
 bAn
@@ -84917,17 +84769,10 @@ blw
 bkn
 cqi
 boQ
-<<<<<<< HEAD
 bjw
 brq
 bqs
 bqs
-=======
-cCl
-brq
-cCt
-cCt
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 bvv
 bxc
 byF
@@ -85181,11 +85026,7 @@ blx
 bkn
 bnI
 boR
-<<<<<<< HEAD
 bjw
-=======
-cCl
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 brr
 bsR
 bup
@@ -86213,17 +86054,10 @@ blA
 bmJ
 bnL
 boU
-<<<<<<< HEAD
 bjw
 bjw
 bjw
 bjw
-=======
-cCl
-cCl
-cCl
-cCl
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 bqb
 bxh
 bqb
@@ -86680,15 +86514,9 @@ aaa
 aaa
 aaa
 aht
-<<<<<<< HEAD
 anX
 anX
 anX
-=======
-cBU
-cBU
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 apT
 apT
 apT
@@ -86943,11 +86771,7 @@ aaa
 aaa
 aaa
 aht
-<<<<<<< HEAD
 anX
-=======
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aoA
 apq
 apU
@@ -87204,11 +87028,7 @@ aaa
 aaa
 aaa
 aht
-<<<<<<< HEAD
 anX
-=======
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aoB
 apr
 apV
@@ -87216,11 +87036,7 @@ aqR
 arY
 atb
 aug
-<<<<<<< HEAD
 anX
-=======
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 awk
 axn
 axn
@@ -87469,11 +87285,7 @@ aaa
 aaa
 aaa
 aht
-<<<<<<< HEAD
 anX
-=======
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aoC
 aps
 apW
@@ -87730,19 +87542,11 @@ aaa
 aaa
 aaa
 aht
-<<<<<<< HEAD
 anX
 anX
 anX
 anX
 anX
-=======
-cBU
-cBU
-cBU
-cBU
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 asa
 atd
 aui
@@ -87999,19 +87803,11 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
 anX
 anX
 anX
 anX
 anX
-=======
-cBU
-cBU
-cBU
-cBU
-cBU
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 awd
 axi
 aaa
@@ -90366,7 +90162,7 @@ aNR
 bix
 aFi
 bkx
-blM
+blO
 bmU
 bnT
 bpc
@@ -91638,7 +91434,7 @@ aVz
 aWz
 aVz
 aYz
-cCC
+aZo
 baC
 bbI
 bbI

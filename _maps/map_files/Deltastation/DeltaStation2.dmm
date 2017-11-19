@@ -18676,12 +18676,7 @@
 	dir = 1
 	},
 /area/quartermaster/office)
-<<<<<<< HEAD
 "aQk" = (
-=======
-"aTW" = (
-/obj/machinery/rnd/protolathe/department/cargo,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /turf/open/floor/plasteel/brown{
 	dir = 1
 	},
@@ -22646,7 +22641,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/plasteel/loadingarea{
 	dir = 1
 	},
@@ -27966,16 +27960,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-<<<<<<< HEAD
 "bjJ" = (
 /obj/machinery/mineral/ore_redemption,
-=======
-"bnz" = (
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "bjK" = (
@@ -37917,6 +37906,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
+/obj/item/circuitboard/machine/protolathe,
 /obj/item/circuitboard/machine/mechfab,
 /obj/item/circuitboard/machine/circuit_imprinter{
 	pixel_x = 3;
@@ -68481,7 +68471,6 @@
 /area/medical/storage)
 "cNN" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/rnd/protolathe/department/medical,
 /turf/open/floor/plasteel/cmo,
 /area/medical/storage)
 "cNO" = (
@@ -73102,13 +73091,8 @@
 "cXu" = (
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
-<<<<<<< HEAD
 "cXv" = (
 /obj/machinery/r_n_d/destructive_analyzer,
-=======
-"dcI" = (
-/obj/machinery/rnd/destructive_analyzer,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -73120,12 +73104,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
-<<<<<<< HEAD
 "cXx" = (
 /obj/machinery/r_n_d/protolathe,
-=======
-"dcK" = (
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
@@ -73135,7 +73115,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cXy" = (
@@ -73788,17 +73767,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/lab)
-<<<<<<< HEAD
 "cYX" = (
 /obj/machinery/r_n_d/circuit_imprinter,
-=======
-"dej" = (
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cYY" = (
@@ -80999,13 +80973,8 @@
 	dir = 8
 	},
 /area/science/explab)
-<<<<<<< HEAD
 "dpa" = (
 /obj/machinery/r_n_d/experimentor,
-=======
-"duA" = (
-/obj/machinery/rnd/experimentor,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/vault{
 	dir = 8
@@ -86440,13 +86409,8 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
-<<<<<<< HEAD
 "dAj" = (
 /obj/machinery/r_n_d/circuit_imprinter,
-=======
-"dGe" = (
-/obj/machinery/rnd/circuit_imprinter,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -88315,13 +88279,8 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/storage)
-<<<<<<< HEAD
 "dEe" = (
 /obj/machinery/r_n_d/server/core,
-=======
-"dKe" = (
-/obj/machinery/rnd/server,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
@@ -88333,13 +88292,8 @@
 	dir = 8
 	},
 /area/science/server)
-<<<<<<< HEAD
 "dEg" = (
 /obj/machinery/r_n_d/server/robotics,
-=======
-"dKg" = (
-/obj/machinery/rnd/server,
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
@@ -94042,7 +93996,9 @@
 /area/library/abandoned)
 "dQO" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/organ/tongue/bone,
+/obj/item/organ/tongue/bone{
+	origin_tech = "biotech=0"
+	},
 /turf/open/floor/plating,
 /area/library/abandoned)
 "dQP" = (
@@ -98884,7 +98840,6 @@
 /obj/machinery/power/tracker,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/aft)
-<<<<<<< HEAD
 "eaY" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -105499,37 +105454,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
-=======
-"eht" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/mineral/ore_redemption{
-	input_dir = 4;
-	output_dir = 8
-	},
-/turf/open/floor/plasteel/neutral,
-/area/quartermaster/storage)
-"ehu" = (
-/obj/machinery/rnd/protolathe/department/security,
-/turf/open/floor/plasteel/neutral,
-/area/security/main)
-"ehv" = (
-/obj/machinery/rnd/circuit_imprinter,
-/turf/open/floor/plasteel/yellow/side,
-/area/engine/engineering)
-"ehw" = (
-/obj/machinery/computer/rdconsole/production,
-/turf/open/floor/plasteel/yellow/side,
-/area/engine/engineering)
-"ehx" = (
-/obj/structure/cable/white{
-	icon_state = "4-8"
-	},
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel/neutral,
-/area/engine/engineering)
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
 (1,1,1) = {"
 aaa
@@ -105759,266 +105683,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-"}
-(2,1,1) = {"
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aaa
 aaa
 aaa
@@ -130226,126 +129890,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
-alT
-amH
-anG
-amH
-amH
-amH
-ark
-asp
-atN
-auW
-awe
-axu
-ayI
-azR
-aAT
-aCj
-aCj
-aEn
-aFw
-aGY
-aIz
-aJU
-aLo
-aMH
-aOf
-aPL
-aRv
-aSW
-aUR
-aWH
-aYg
-aMB
-aWH
-aMB
-aWH
-aWH
-bhj
-bjd
-bkP
-bmQ
-bop
-bpY
-bsc
-btT
-bve
-aMG
-bxK
-bzn
-bAV
-bCR
-bEH
-bGm
-bHY
-bJZ
-bLT
-bNW
-bHV
-bSf
-bTX
-bWo
-bYy
-cau
-cbY
-cdM
-cfF
-chx
-cji
-ckD
-clY
-car
-cpd
-cqv
-crP
-cqv
-cuU
-car
-cxE
-cjn
-cAM
-ehv
-cDY
-cFQ
-cHk
-car
-cJV
-cLs
-cMO
-cMO
-cMO
-cMS
-cTx
-cMO
-cMO
-cMO
-cMO
-cLs
-cJT
-caE
-caE
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-dhQ
-aad
-ajr
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aaa
 aaa
 aaa
@@ -130602,127 +130146,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
-ajr
-aad
-alT
-amI
-amH
-amH
-amH
-amH
-ark
-asq
-atO
-auX
-awf
-axv
-axv
-azS
-awi
-aCk
-aDn
-aEo
-aFx
-aGZ
-aBf
-aJV
-aLp
-aMG
-aOg
-aPK
-aRv
-aSW
-aUS
-aMB
-aYh
-baa
-bbF
-bdg
-beB
-bfZ
-bhk
-bje
-bkQ
-bmR
-boq
-bpZ
-bsd
-aYn
-bvf
-aMG
-bxL
-bzo
-bAR
-bCS
-bEI
-bGn
-bHZ
-bHZ
-bLU
-bNX
-bHV
-bSg
-bTW
-bWn
-bTZ
-cau
-cbZ
-cdN
-cfG
-chx
-cjj
-cjn
-clZ
-cnF
-car
-cqw
-car
-cqw
-car
-car
-cxF
-cjn
-cAN
-ehw
-cDZ
-ehx
-cHl
-cIq
-cJW
-cLE
-cwp
-cqL
-cQt
-cRO
-cTy
-cQt
-cWU
-cRO
-cqL
-cEo
-ddO
-cQt
-dgl
-dhQ
-djn
-dle
-dmr
-dog
-dpW
-drz
-dhQ
-dul
-dvZ
-dxH
-dze
-dAp
-dBT
-dDg
-dhQ
-aad
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aaa
 aaa
 aaa
@@ -148008,7 +147431,6 @@ aua
 azM
 aAI
 aBQ
-<<<<<<< HEAD
 aDc
 aEs
 aFP
@@ -148035,37 +147457,6 @@ bkZ
 bmX
 boR
 bqt
-=======
-avQ
-avQ
-aFi
-aFi
-aHP
-aJp
-aKN
-aFi
-aFi
-aHL
-aQJ
-aSh
-avW
-aVG
-aXq
-eht
-baQ
-baQ
-baU
-bfq
-bgG
-bie
-baU
-baQ
-baQ
-boS
-bqU
-bsO
-buq
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aaa
 aaf
 aaa
@@ -159579,117 +158970,6 @@ aaa
 aaa
 aaa
 aaa
-<<<<<<< HEAD
-=======
-aFn
-aGK
-aIg
-aJB
-aKY
-aMj
-aNF
-aPn
-aRe
-aKV
-aUA
-aWf
-aXO
-aZw
-bbk
-aKV
-aFm
-aad
-bhd
-biM
-ehu
-bkw
-bnR
-bpq
-brv
-btu
-bkw
-bku
-bxr
-byP
-bAt
-bCn
-bhd
-bFR
-bHK
-bJE
-bLs
-bNr
-bPy
-bRu
-bTj
-bVq
-bXP
-bZW
-cbJ
-cds
-cfp
-che
-ciO
-bmc
-clL
-cnp
-coW
-clA
-aad
-aad
-cuM
-cwe
-cxx
-czh
-cAz
-cCl
-cCl
-cCl
-cCl
-cCl
-cJu
-cLk
-cMG
-cCl
-cCl
-cCl
-cCl
-cCl
-cWD
-cAz
-dac
-cxy
-ddw
-cuM
-aad
-dhC
-diZ
-dkT
-cHU
-dnY
-dpM
-dfX
-aad
-dfX
-dvS
-dxA
-dyU
-dAn
-dBJ
-dDe
-dyU
-aad
-ajr
-ajr
-ajr
-aad
-ajr
-ajr
-ajr
-aad
-aad
-aad
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 aad
 aaa
 aaa

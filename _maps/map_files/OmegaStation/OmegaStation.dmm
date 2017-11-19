@@ -319,15 +319,16 @@
 	},
 /area/bridge)
 "aaJ" = (
+/obj/machinery/computer/station_alert,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/rdconsole,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
 /area/bridge)
 "aaK" = (
+/obj/machinery/computer/atmos_alert,
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Bridge";
@@ -335,7 +336,6 @@
 	name = "Bridge RC";
 	pixel_y = 32
 	},
-/obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plasteel/darkyellow/side{
 	dir = 1
 	},
@@ -5248,7 +5248,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/rnd/protolathe/department/cargo,
 /turf/open/floor/plasteel/brown{
 	dir = 4
 	},
@@ -6918,7 +6917,6 @@
 	dir = 4;
 	network = list("MINE")
 	},
-/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/neutral/side{
 	dir = 8
 	},
@@ -19478,7 +19476,6 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel/neutral,
 /area/engine/engineering)
 "aKK" = (
@@ -19536,10 +19533,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/engine/engineering)
 "aKO" = (
-<<<<<<< HEAD
 /obj/machinery/computer/station_alert,
-=======
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
@@ -19548,9 +19542,6 @@
 	},
 /obj/structure/cable/white{
 	icon_state = "4-8"
-	},
-/obj/machinery/computer/rdconsole/production{
-	dir = 8
 	},
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
@@ -20111,7 +20102,6 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
-/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel/yellow/side{
 	dir = 4
 	},
@@ -24188,7 +24178,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/hallway/primary/central)
 "aUA" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -24201,11 +24191,11 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aUC" = (
+/obj/machinery/r_n_d/protolathe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/rnd/protolathe/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aUD" = (
@@ -24608,12 +24598,12 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aVv" = (
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/rnd/circuit_imprinter/department/science,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "aVw" = (
@@ -25058,7 +25048,7 @@
 	},
 /area/science/research)
 "aWs" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/core,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},
@@ -25073,7 +25063,7 @@
 	},
 /area/science/research)
 "aWu" = (
-/obj/machinery/rnd/server,
+/obj/machinery/r_n_d/server/robotics,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
@@ -33907,33 +33897,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-<<<<<<< HEAD
-=======
-"sws" = (
-/obj/docking_port/stationary{
-	dheight = 9;
-	dir = 2;
-	dwidth = 5;
-	height = 24;
-	id = "syndicate_sw";
-	name = "southwest of station";
-	turf_type = /turf/open/space;
-	width = 18
-	},
-/turf/open/space,
-/area/space)
-"swt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/service,
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar/atrium)
-"swu" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/closed/wall,
-/area/medical/medbay/zone3)
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
 (1,1,1) = {"
 aaa
@@ -71587,7 +71550,7 @@ aUm
 aVe
 aWa
 aWJ
-swu
+aSh
 aXQ
 aYI
 aZE
@@ -75678,7 +75641,7 @@ avi
 azK
 aAP
 aBZ
-swt
+avi
 aDP
 aEX
 aFO
