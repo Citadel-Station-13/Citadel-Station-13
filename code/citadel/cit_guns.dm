@@ -180,6 +180,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -193,6 +194,7 @@
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
@@ -293,6 +295,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magpistol
 	name = "Magpistol"
@@ -351,6 +354,7 @@
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/ammo_box/foambox/mag
 	name = "ammo box (Magnetic Foam Darts)"
@@ -459,6 +463,7 @@
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magrifle
 	name = "Magrifle"
@@ -497,6 +502,7 @@
 	max_ammo = 15
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/magrifle/toy
 	name = "foamag rifle"
@@ -505,7 +511,7 @@
 	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
-	origin_tech = "combat=2;engineering=2;magnets=2"
+	origin_tech = "combat=1;engineering=1;magnets=1"
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -639,6 +645,7 @@
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
@@ -695,6 +702,7 @@
 	fire_delay = 0
 	spread = 60
 	actions_types = list()
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
 	..()
@@ -921,6 +929,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/toyray
 	name = "RayTag Gun"
@@ -1176,6 +1185,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_p37
 	name = "Foam Force Mk.37F"
@@ -1232,3 +1242,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")
 		body_inhand.color = body_color
 		. += body_inhand
+
+/obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
+	..()
+	materials = list(MAT_METAL = 200)
