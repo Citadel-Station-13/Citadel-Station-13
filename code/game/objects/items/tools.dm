@@ -27,8 +27,7 @@
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
 	usesound = 'sound/items/ratchet.ogg'
-	materials = list(MAT_METAL=150)
-	origin_tech = "materials=1;engineering=1"
+	materials = list(MAT_METAL=150)
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -56,8 +55,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "wrench"
 	usesound = 'sound/effects/empulse.ogg'
-	toolspeed = 0.1
-	origin_tech = "materials=5;engineering=5;abductor=3"
+	toolspeed = 0.1
 
 /obj/item/wrench/power
 	name = "hand drill"
@@ -67,8 +65,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/drill_use.ogg'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25) //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -91,8 +88,7 @@
 	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
-	throwforce = 4
-	origin_tech = "materials=1;engineering=1;biotech=3"
+	throwforce = 4
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
@@ -233,8 +229,7 @@
 	item_state = "drill"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25) //done for balance reasons, making them high value for research, but harder to get
 	force = 8 //might or might not be too high, subject to change
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 8
@@ -282,8 +277,7 @@
 	materials = list(MAT_METAL=80)
 	attack_verb = list("pinched", "nipped")
 	hitsound = 'sound/items/wirecutter.ogg'
-	usesound = 'sound/items/wirecutter.ogg'
-	origin_tech = "materials=1;engineering=1"
+	usesound = 'sound/items/wirecutter.ogg'
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
 	var/random_color = TRUE
@@ -326,8 +320,7 @@
 	desc = "Extremely sharp wirecutters, made out of a silvery-green metal."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "cutters"
-	toolspeed = 0.1
-	origin_tech = "materials=5;engineering=4;abductor=3"
+	toolspeed = 0.1
 	random_color = FALSE
 
 /obj/item/wirecutters/cyborg
@@ -339,8 +332,7 @@
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science. It's fitted with a cutting head."
 	icon_state = "jaws_cutter"
-	item_state = "jawsoflife"
-	origin_tech = "materials=2;engineering=2"
+	item_state = "jawsoflife"
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_cut.ogg'
 	toolspeed = 0.25
@@ -388,8 +380,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 30)
 	resistance_flags = FIRE_PROOF
 
-	materials = list(MAT_METAL=70, MAT_GLASS=30)
-	origin_tech = "engineering=1;plasmatech=1"
+	materials = list(MAT_METAL=70, MAT_GLASS=30)
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
 	var/status = TRUE 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
@@ -632,8 +623,7 @@
 	desc = "A slightly larger welder with a larger tank."
 	icon_state = "indwelder"
 	max_fuel = 40
-	materials = list(MAT_GLASS=60)
-	origin_tech = "engineering=2;plasmatech=2"
+	materials = list(MAT_GLASS=60)
 
 /obj/item/weldingtool/largetank/cyborg
 	name = "integrated welding tool"
@@ -663,8 +653,7 @@
 	icon_state = "welder"
 	toolspeed = 0.1
 	light_intensity = 0
-	change_icons = 0
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
+	change_icons = 0
 
 /obj/item/weldingtool/abductor/process()
 	if(get_fuel() <= max_fuel)
@@ -677,8 +666,7 @@
 	icon_state = "upindwelder"
 	item_state = "upindwelder"
 	max_fuel = 80
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "engineering=3;plasmatech=2"
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
 
 /obj/item/weldingtool/experimental
 	name = "experimental welding tool"
@@ -686,8 +674,7 @@
 	icon_state = "exwelder"
 	item_state = "exwelder"
 	max_fuel = 40
-	materials = list(MAT_METAL=70, MAT_GLASS=120)
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
+	materials = list(MAT_METAL=70, MAT_GLASS=120)
 	var/last_gen = 0
 	change_icons = 0
 	can_off_process = 1
@@ -727,8 +714,7 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=50)
-	origin_tech = "engineering=1;combat=1"
+	materials = list(MAT_METAL=50)
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 	toolspeed = 1
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 30)
@@ -755,8 +741,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "crowbar"
-	toolspeed = 0.1
-	origin_tech = "combat=4;engineering=4;abductor=3"
+	toolspeed = 0.1
 
 /obj/item/crowbar/large
 	name = "crowbar"
@@ -784,8 +769,7 @@
 	item_state = "jawsoflife"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-	origin_tech = "materials=2;engineering=2"
+	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 15
 	toolspeed = 0.25

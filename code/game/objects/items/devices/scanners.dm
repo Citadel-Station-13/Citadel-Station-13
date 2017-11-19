@@ -18,8 +18,7 @@ MASS SPECTROMETER
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=150)
-	origin_tech = "magnets=1;engineering=1"
+	materials = list(MAT_METAL=150)
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -72,8 +71,7 @@ MASS SPECTROMETER
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=200)
-	origin_tech = "magnets=1;biotech=1"
+	materials = list(MAT_METAL=200)
 	var/mode = 1
 	var/scanmode = 0
 	var/advanced = FALSE
@@ -315,8 +313,7 @@ MASS SPECTROMETER
 /obj/item/device/healthanalyzer/advanced
 	name = "advanced health analyzer"
 	icon_state = "health_adv"
-	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
-	origin_tech = "magnets=3;biotech=3"
+	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	advanced = TRUE
 
 /obj/item/device/analyzer
@@ -332,8 +329,7 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=30, MAT_GLASS=20)
-	origin_tech = "magnets=1;engineering=1"
+	materials = list(MAT_METAL=30, MAT_GLASS=20)
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
@@ -409,8 +405,7 @@ MASS SPECTROMETER
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
-	materials = list(MAT_METAL=150, MAT_GLASS=100)
-	origin_tech = "magnets=2;biotech=1;plasmatech=2"
+	materials = list(MAT_METAL=150, MAT_GLASS=100)
 	var/details = 0
 
 /obj/item/device/mass_spectrometer/New()
@@ -455,8 +450,7 @@ MASS SPECTROMETER
 /obj/item/device/mass_spectrometer/adv
 	name = "advanced mass-spectrometer"
 	icon_state = "adv_spectrometer"
-	details = 1
-	origin_tech = "magnets=4;biotech=3;plasmatech=3"
+	details = 1
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"
@@ -464,8 +458,7 @@ MASS SPECTROMETER
 	icon_state = "adv_spectrometer"
 	item_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	origin_tech = "biotech=2"
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = CONDUCT_1
 	throwforce = 0

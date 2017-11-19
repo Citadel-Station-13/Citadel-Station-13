@@ -5,8 +5,7 @@
 	item_state = "signaler"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_METAL=400, MAT_GLASS=120)
-	origin_tech = "magnets=1;bluespace=1"
+	materials = list(MAT_METAL=400, MAT_GLASS=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = 1
 

@@ -52,8 +52,7 @@
 
 /obj/item/organ/body_egg/changeling_egg
 	name = "changeling egg"
-	desc = "Twitching and disgusting."
-	origin_tech = "biotech=7" // You need to be really lucky to obtain it.
+	desc = "Twitching and disgusting." // You need to be really lucky to obtain it.
 	var/datum/mind/origin
 	var/time
 

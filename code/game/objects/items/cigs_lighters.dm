@@ -23,8 +23,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/lit = FALSE
 	var/burnt = FALSE
 	var/smoketime = 5
-	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "materials=1"
+	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
 
 /obj/item/match/process()

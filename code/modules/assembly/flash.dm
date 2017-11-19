@@ -7,8 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
-	origin_tech = "magnets=2;combat=1"
+	materials = list(MAT_METAL = 300, MAT_GLASS = 300)
 
 	crit_fail = 0     //Is the flash burnt out?
 	var/times_used = 0 //Number of times it's been used.
@@ -228,8 +227,7 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
-	origin_tech = "materials=3;combat=4"
+	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
 	attack_verb = list("shoved", "bashed")
 	block_chance = 50
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 0, bomb = 30, bio = 0, rad = 0, fire = 80, acid = 70)

@@ -42,13 +42,11 @@
 		return ..(freq, level)
 	return -1
 
-/obj/item/device/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
-	origin_tech = "syndicate=3"
+/obj/item/device/radio/headset/syndicate //disguised to look like a normal headset for stealth ops
 
 /obj/item/device/radio/headset/syndicate/alt //undisguised bowman with flash protection
 	name = "syndicate headset"
-	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.\nTo access the syndicate channel, use ; before speaking."
-	origin_tech = "syndicate=3"
+	desc = "A syndicate headset that can be used to hear all radio frequencies. Protects ears from flashbangs.\nTo access the syndicate channel, use ; before speaking."
 	icon_state = "syndie_headset"
 	item_state = "syndie_headset"
 	flags_2 = BANG_PROTECT_2 | NO_EMP_WIRES_2
@@ -61,8 +59,7 @@
 	. = ..()
 	make_syndie()
 
-/obj/item/device/radio/headset/binary
-	origin_tech = "syndicate=3"
+/obj/item/device/radio/headset/binary
 /obj/item/device/radio/headset/binary/Initialize()
 	. = ..()
 	qdel(keyslot)

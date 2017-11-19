@@ -108,8 +108,7 @@
 	icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
-	origin_tech = "bluespace=6;syndicate=5"
+	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
 	w_class = WEIGHT_CLASS_SMALL
 	var/droptype = /obj/machinery/power/singularity_beacon/syndicate
 
@@ -124,10 +123,8 @@
 
 /obj/item/device/sbeacondrop/bomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a high-ordinance explosive to your location</i>."
-	droptype = /obj/machinery/syndicatebomb
-	origin_tech = "bluespace=5;syndicate=5"
+	droptype = /obj/machinery/syndicatebomb
 
 /obj/item/device/sbeacondrop/powersink
 	desc = "A label on it reads: <i>Warning: Activating this device will send a power draining device to your location</i>."
-	droptype = /obj/item/device/powersink
-	origin_tech = "bluespace=4;syndicate=5"
+	droptype = /obj/item/device/powersink

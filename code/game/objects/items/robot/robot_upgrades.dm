@@ -5,8 +5,7 @@
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
 	icon = 'icons/obj/module.dmi'
-	icon_state = "cyborg_upgrade"
-	origin_tech = "programming=2"
+	icon_state = "cyborg_upgrade"
 	var/locked = FALSE
 	var/installed = 0
 	var/require_module = 0
@@ -71,8 +70,7 @@
 	name = "cyborg VTEC module"
 	desc = "Used to kick in a cyborg's VTEC systems, increasing their speed."
 	icon_state = "cyborg_upgrade2"
-	require_module = 1
-	origin_tech = "engineering=4;materials=5;programming=4"
+	require_module = 1
 
 /obj/item/borg/upgrade/vtec/action(mob/living/silicon/robot/R)
 	if(..())
@@ -91,8 +89,7 @@
 	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/security
-	origin_tech = "engineering=4;powerstorage=4;combat=4"
+	module_type = /obj/item/robot_module/security
 
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R)
 	if(..())
@@ -114,8 +111,7 @@
 /obj/item/borg/upgrade/thrusters
 	name = "ion thruster upgrade"
 	desc = "An energy-operated thruster system for cyborgs."
-	icon_state = "cyborg_upgrade3"
-	origin_tech = "engineering=4;powerstorage=4"
+	icon_state = "cyborg_upgrade3"
 
 /obj/item/borg/upgrade/thrusters/action(mob/living/silicon/robot/R)
 	if(..())
@@ -133,8 +129,7 @@
 	desc = "A diamond drill replacement for the mining module's standard drill."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
-	origin_tech = "engineering=4;materials=5"
+	module_type = /obj/item/robot_module/miner
 
 /obj/item/borg/upgrade/ddrill/action(mob/living/silicon/robot/R)
 	if(..())
@@ -155,8 +150,7 @@
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
-	origin_tech = "engineering=4;materials=4;bluespace=4"
+	module_type = /obj/item/robot_module/miner
 
 /obj/item/borg/upgrade/soh/action(mob/living/silicon/robot/R)
 	if(..())
@@ -174,8 +168,7 @@
 	name = "illegal equipment module"
 	desc = "Unlocks the hidden, deadlier functions of a cyborg."
 	icon_state = "cyborg_upgrade3"
-	require_module = 1
-	origin_tech = "combat=4;syndicate=1"
+	require_module = 1
 
 /obj/item/borg/upgrade/syndicate/action(mob/living/silicon/robot/R)
 	if(..())
@@ -194,8 +187,7 @@
 	icon_state = "ash_plating"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	require_module = 1
-	module_type = /obj/item/robot_module/miner
-	origin_tech = "engineering=4;materials=4;plasmatech=4"
+	module_type = /obj/item/robot_module/miner
 
 /obj/item/borg/upgrade/lavaproof/action(mob/living/silicon/robot/R)
 	if(..())
@@ -332,22 +324,19 @@
 	desc = "An upgrade to the Medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list("mannitol", "oculine", "inacusiate",
-		"mutadone", "haloperidol")
-	origin_tech = "programming=5;engineering=4;biotech=5"
+		"mutadone", "haloperidol")
 
 /obj/item/borg/upgrade/hypospray/high_strength
 	name = "medical cyborg high-strength hypospray"
 	desc = "An upgrade to the Medical module's hypospray, containing \
 		stronger versions of existing chemicals."
 	additional_reagents = list("oxandrolone", "sal_acid", "rezadone",
-		"pen_acid")
-	origin_tech = "programming=5;engineering=5;biotech=6"
+		"pen_acid")
 
 /obj/item/borg/upgrade/piercing_hypospray
 	name = "cyborg piercing hypospray"
 	desc = "An upgrade to a cyborg's hypospray, allowing it to \
-		pierce armor and thick material."
-	origin_tech = "materials=5;engineering=7;combat=3"
+		pierce armor and thick material."
 	icon_state = "cyborg_upgrade3"
 
 /obj/item/borg/upgrade/piercing_hypospray/action(mob/living/silicon/robot/R)
@@ -370,8 +359,7 @@
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
-	module_type = /obj/item/robot_module/medical
-	origin_tech = "programming=4;engineering=6;materials=5;powerstorage=5;biotech=5"
+	module_type = /obj/item/robot_module/medical
 
 /obj/item/borg/upgrade/defib/action(mob/living/silicon/robot/R)
 	if(..())
@@ -386,8 +374,7 @@
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
 	desc = "Bluespace Optimized Remote Intelligence Synchronization. An uplink device which takes the place of an MMI in cyborg endoskeletons, creating a robotic shell controlled by an AI."
-	icon_state = "boris"
-	origin_tech = "engineering=4;magnets=4;programming=4"
+	icon_state = "boris"
 
 /obj/item/borg/upgrade/ai/action(mob/living/silicon/robot/R)
 	if(..())

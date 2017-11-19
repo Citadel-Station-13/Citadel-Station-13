@@ -5,8 +5,7 @@
 	item_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	var/code = "electronic"
-	origin_tech = "bluespace=1"
+	var/code = "electronic"
 	dog_fashion = null
 
 /obj/item/device/radio/beacon/Initialize()

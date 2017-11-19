@@ -1,7 +1,6 @@
 /obj/item/stack/sheet/animalhide
 	name = "hide"
-	desc = "Something went wrong."
-	origin_tech = "biotech=3"
+	desc = "Something went wrong."
 	novariants = TRUE
 
 /obj/item/stack/sheet/animalhide/human
@@ -136,8 +135,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	name = "leather"
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
-	icon_state = "sheet-leather"
-	origin_tech = "materials=2"
+	icon_state = "sheet-leather"
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1), \
@@ -162,8 +160,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon = 'icons/obj/mining.dmi'
 	desc = "Long stringy filaments which presumably came from a watcher's wings."
 	singular_name = "watcher sinew"
-	icon_state = "sinew"
-	origin_tech = "biotech=4"
+	icon_state = "sinew"
 	novariants = TRUE
 
 

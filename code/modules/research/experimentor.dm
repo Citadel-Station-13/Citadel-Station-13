@@ -17,7 +17,7 @@
 #define EFFECT_PROB_VERYHIGH 95
 
 #define FAIL 8
-/obj/machinery/r_n_d/experimentor
+/obj/machinery/rnd/experimentor
 	name = "\improper E.X.P.E.R.I-MENTOR"
 	desc = "A \"replacement\" for the deconstructive analyzer with a slight tendency to catastrophically fail."
 	icon = 'icons/obj/machines/heavy_lathe.dmi'
@@ -37,14 +37,14 @@
 	var/list/valid_items = list() //valid items for special reactions like transforming
 	var/list/critical_items = list() //items that can cause critical reactions
 
-/obj/machinery/r_n_d/experimentor/proc/ConvertReqString2List(list/source_list)
+/obj/machinery/rnd/experimentor/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
 /* //uncomment to enable forced reactions.
-/obj/machinery/r_n_d/experimentor/verb/forceReaction()
+/obj/machinery/rnd/experimentor/verb/forceReaction()
 	set name = "Force Experimentor Reaction"
 	set category = "Debug"
 	set src in oview(1)
@@ -57,7 +57,7 @@
 			item_reactions["[loaded_item.type]"] = oldReaction
 */
 
-/obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
+/obj/machinery/rnd/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
 	for(var/I in typesof(/obj/item))
 		if(istype(I, /obj/item/relic))
@@ -83,14 +83,14 @@
 				critical_items += I
 
 
-/obj/machinery/r_n_d/experimentor/Initialize()
+/obj/machinery/rnd/experimentor/Initialize()
 	. = ..()
 
 	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/Ian) in GLOB.mob_living_list
 	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/Runtime) in GLOB.mob_living_list
 	SetTypeReactions()
 
-/obj/machinery/r_n_d/experimentor/RefreshParts()
+/obj/machinery/rnd/experimentor/RefreshParts()
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		if(resetTime > 0 && (resetTime - M.rating) >= 1)
 			resetTime -= M.rating
@@ -99,7 +99,7 @@
 	for(var/obj/item/stock_parts/micro_laser/M in component_parts)
 		badThingCoeff += M.rating
 
-/obj/machinery/r_n_d/experimentor/proc/checkCircumstances(obj/item/O)
+/obj/machinery/rnd/experimentor/proc/checkCircumstances(obj/item/O)
 	//snowflake check to only take "made" bombs
 	if(istype(O, /obj/item/device/transfer_valve))
 		var/obj/item/device/transfer_valve/T = O
@@ -107,7 +107,7 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/r_n_d/experimentor/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/experimentor/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
@@ -130,11 +130,11 @@
 
 
 
-/obj/machinery/r_n_d/experimentor/default_deconstruction_crowbar(obj/item/O)
+/obj/machinery/rnd/experimentor/default_deconstruction_crowbar(obj/item/O)
 	ejectItem()
 	..(O)
 
-/obj/machinery/r_n_d/experimentor/attack_hand(mob/user)
+/obj/machinery/rnd/experimentor/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
 	if(!linked_console)
@@ -165,7 +165,7 @@
 	onclose(user, "experimentor")
 
 
-/obj/machinery/r_n_d/experimentor/proc/matchReaction(matching,reaction)
+/obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
 	var/obj/item/D = matching
 	if(D)
 		if(item_reactions.Find("[D.type]"))
@@ -179,7 +179,7 @@
 	else
 		return FAIL
 
-/obj/machinery/r_n_d/experimentor/proc/ejectItem(delete=FALSE)
+/obj/machinery/rnd/experimentor/proc/ejectItem(delete=FALSE)
 	if(loaded_item)
 		if(cloneMode && cloneCount > 0)
 			visible_message("<span class='notice'>A duplicate [loaded_item] pops out!</span>")
@@ -197,12 +197,12 @@
 			qdel(loaded_item)
 		loaded_item = null
 
-/obj/machinery/r_n_d/experimentor/proc/throwSmoke(turf/where)
+/obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
 	var/datum/effect_system/smoke_spread/smoke = new
 	smoke.set_up(0, where)
 	smoke.start()
 
-/obj/machinery/r_n_d/experimentor/proc/pickWeighted(list/from)
+/obj/machinery/rnd/experimentor/proc/pickWeighted(list/from)
 	var/result = FALSE
 	var/counter = 1
 	while(!result)
@@ -215,7 +215,7 @@
 		else
 			counter = 1
 
-/obj/machinery/r_n_d/experimentor/proc/experiment(exp,obj/item/exp_on)
+/obj/machinery/rnd/experimentor/proc/experiment(exp,obj/item/exp_on)
 	recentlyExperimented = 1
 	icon_state = "h_lathe_wloop"
 	var/chosenchem
@@ -495,14 +495,14 @@
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
 
-/obj/machinery/r_n_d/experimentor/proc/reset_exp()
+/obj/machinery/rnd/experimentor/proc/reset_exp()
 	update_icon()
 	recentlyExperimented = FALSE
 
-/obj/machinery/r_n_d/experimentor/update_icon()
+/obj/machinery/rnd/experimentor/update_icon()
 	icon_state = "h_lathe"
 
-/obj/machinery/r_n_d/experimentor/Topic(href, href_list)
+/obj/machinery/rnd/experimentor/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)
@@ -549,7 +549,7 @@
 	return
 
 //~~~~~~~~Admin logging proc, aka the Powergamer Alarm~~~~~~~~
-/obj/machinery/r_n_d/experimentor/proc/warn_admins(mob/user, ReactionName)
+/obj/machinery/rnd/experimentor/proc/warn_admins(mob/user, ReactionName)
 	var/turf/T = get_turf(src)
 	message_admins("Experimentor reaction: [ReactionName] generated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_COORDJMP(T)]",0,1)
 	log_game("Experimentor reaction: [ReactionName] generated by [key_name(user)] in ([T.x],[T.y],[T.z])")
@@ -576,8 +576,7 @@
 /obj/item/relic
 	name = "strange object"
 	desc = "What mysteries could this hold?"
-	icon = 'icons/obj/assemblies.dmi'
-	origin_tech = "combat=1;plasmatech=1;powerstorage=1;materials=1"
+	icon = 'icons/obj/assemblies.dmi'
 	var/realName = "defined object"
 	var/revealed = FALSE
 	var/realProc

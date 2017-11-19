@@ -278,5 +278,4 @@ That prevents a few funky behaviors.
 
 
 /obj/item/circuitboard/aicore
-	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent
-	origin_tech = "programming=3"
+	name = "AI core (AI Core Board)" //Well, duh, but best to be consistent

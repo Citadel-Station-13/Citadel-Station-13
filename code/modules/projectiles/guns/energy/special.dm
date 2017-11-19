@@ -2,8 +2,7 @@
 	name = "ion rifle"
 	desc = "A man-portable anti-armor weapon designed to disable mechanical threats at range."
 	icon_state = "ionrifle"
-	item_state = null	//so the human update icon uses the icon_state instead.
-	origin_tech = "combat=4;magnets=4"
+	item_state = null	//so the human update icon uses the icon_state instead.
 	can_flashlight = 1
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 =  CONDUCT_1
@@ -30,8 +29,7 @@
 /obj/item/gun/energy/decloner
 	name = "biological demolecularisor"
 	desc = "A gun that discharges high amounts of controlled radiation to slowly break a target into component elements."
-	icon_state = "decloner"
-	origin_tech = "combat=4;materials=4;biotech=5;plasmatech=6"
+	icon_state = "decloner"
 	ammo_type = list(/obj/item/ammo_casing/energy/declone)
 	pin = null
 	ammo_x_offset = 1
@@ -47,8 +45,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "flora"
 	item_state = "gun"
-	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
-	origin_tech = "materials=2;biotech=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
@@ -88,8 +85,7 @@
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=2000)
-	origin_tech = "combat=4;magnets=4;syndicate=5"
+	materials = list(MAT_METAL=2000)
 	suppressed = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
@@ -113,8 +109,7 @@
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=4000)
-	origin_tech = "combat=4;magnets=4;syndicate=2"
+	materials = list(MAT_METAL=4000)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
@@ -123,8 +118,7 @@
 	name = "plasma cutter"
 	desc = "A mining tool capable of expelling concentrated plasma bursts. You could use it to cut limbs off xenos! Or, you know, mine stuff."
 	icon_state = "plasmacutter"
-	item_state = "plasmacutter"
-	origin_tech = "combat=1;materials=3;magnets=2;plasmatech=3;engineering=1"
+	item_state = "plasmacutter"
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma)
 	flags_1 = CONDUCT_1
 	container_type = OPENCONTAINER_1
@@ -160,8 +154,7 @@
 
 /obj/item/gun/energy/plasmacutter/adv
 	name = "advanced plasma cutter"
-	icon_state = "adv_plasmacutter"
-	origin_tech = "combat=3;materials=4;magnets=3;plasmatech=4;engineering=2"
+	icon_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
 
@@ -170,8 +163,7 @@
 	desc = "A projector that emits high density quantum-coupled bluespace beams."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
-	icon_state = "wormhole_projector"
-	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
+	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 
@@ -244,16 +236,14 @@
 /obj/item/gun/energy/temperature
 	name = "temperature gun"
 	icon_state = "freezegun"
-	desc = "A gun that changes temperatures."
-	origin_tech = "combat=4;materials=4;powerstorage=3;magnets=2"
+	desc = "A gun that changes temperatures."
 	ammo_type = list(/obj/item/ammo_casing/energy/temp, /obj/item/ammo_casing/energy/temp/hot)
 	cell_type = "/obj/item/stock_parts/cell/high"
 	pin = null
 
 /obj/item/gun/energy/temperature/security
 	name = "security temperature gun"
-	desc = "A weapon that can only be used to its full potential by the truly robust."
-	origin_tech = "combat=2;materials=2;powerstorage=1;magnets=1"
+	desc = "A weapon that can only be used to its full potential by the truly robust."
 	pin = /obj/item/device/firing_pin
 
 /obj/item/gun/energy/laser/instakill
@@ -262,8 +252,7 @@
 	item_state = "instagib"
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit."
 	ammo_type = list(/obj/item/ammo_casing/energy/instakill)
-	force = 60
-	origin_tech = "combat=7;magnets=6"
+	force = 60
 
 /obj/item/gun/energy/laser/instakill/red
 	desc = "A specialized ASMD laser-rifle, capable of flat-out disintegrating most targets in a single hit. This one has a red design."
@@ -283,8 +272,7 @@
 /obj/item/gun/energy/gravity_gun
 	name = "one-point bluespace-gravitational manipulator"
 	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
-	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
-	origin_tech = "combat=4;magnets=4;materials=6;powerstorage=4;bluespace=4"
+	ammo_type = list(/obj/item/ammo_casing/energy/gravityrepulse, /obj/item/ammo_casing/energy/gravityattract, /obj/item/ammo_casing/energy/gravitychaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4

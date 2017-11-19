@@ -7,31 +7,31 @@ It is used to destroy hand-held objects and advance technological research. Cont
 
 Note: Must be placed within 3 tiles of the R&D Console
 */
-/obj/machinery/r_n_d/destructive_analyzer
+/obj/machinery/rnd/destructive_analyzer
 	name = "destructive analyzer"
 	desc = "Learn science by destroying things!"
 	icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 	var/decon_mod = 0
 
-/obj/machinery/r_n_d/destructive_analyzer/RefreshParts()
+/obj/machinery/rnd/destructive_analyzer/RefreshParts()
 	var/T = 0
 	for(var/obj/item/stock_parts/S in component_parts)
 		T += S.rating
 	decon_mod = T
 
 
-/obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
+/obj/machinery/rnd/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
-/obj/machinery/r_n_d/destructive_analyzer/disconnect_console()
+/obj/machinery/rnd/destructive_analyzer/disconnect_console()
 	linked_console.linked_destroy = null
 	..()
 
-/obj/machinery/r_n_d/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
+/obj/machinery/rnd/destructive_analyzer/Insert_Item(obj/item/O, mob/user)
 	if(user.a_intent != INTENT_HARM)
 		. = 1
 		if(!is_insertion_ready(user))
@@ -52,9 +52,9 @@ Note: Must be placed within 3 tiles of the R&D Console
 		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/finish_loading), 10)
 
-/obj/machinery/r_n_d/destructive_analyzer/proc/finish_loading()
+/obj/machinery/rnd/destructive_analyzer/proc/finish_loading()
 	update_icon()
 	busy = FALSE
 
-/obj/machinery/r_n_d/destructive_analyzer/update_icon()
+/obj/machinery/rnd/destructive_analyzer/update_icon()
 	icon_state = "d_analyzer_l"

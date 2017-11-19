@@ -142,7 +142,7 @@
 		var/datum/research/files = C.files
 		files.LowerTech(target_id,1)
 		new /obj/effect/temp_visual/emp(get_turf(C))
-	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
 		if(S.stat & (NOPOWER|BROKEN))
 			continue
 		var/datum/research/files = S.files
