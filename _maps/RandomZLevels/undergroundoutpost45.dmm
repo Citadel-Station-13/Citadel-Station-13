@@ -3440,7 +3440,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "hB" = (
-/obj/machinery/r_n_d/destructive_analyzer,
+/obj/machinery/rnd/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3458,7 +3458,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "hD" = (
-/obj/machinery/r_n_d/protolathe,
+/obj/machinery/rnd/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -3720,7 +3720,11 @@
 /area/awaymission/undergroundoutpost45/gateway)
 "ig" = (
 /obj/machinery/computer/rdconsole/core{
+<<<<<<< HEAD
 	id = 3;
+=======
+	dir = 4;
+>>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	req_access = null
 	},
 /turf/open/floor/plasteel{
@@ -3733,7 +3737,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "ii" = (
-/obj/machinery/r_n_d/circuit_imprinter,
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -8629,9 +8633,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/r_n_d/server/core{
-	id_with_download_string = "3";
-	id_with_upload_string = "3";
+/obj/machinery/rnd/server{
 	req_access = null
 	},
 /turf/open/floor/circuit{

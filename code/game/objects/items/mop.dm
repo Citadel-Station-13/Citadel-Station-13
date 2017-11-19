@@ -78,7 +78,10 @@
 	item_state = "mop"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
+<<<<<<< HEAD
 	origin_tech = "materials=3;engineering=3"
+=======
+>>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	force = 6
 	throwforce = 8
 	throw_range = 4

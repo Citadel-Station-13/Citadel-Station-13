@@ -6,6 +6,7 @@
 	item_state = "pen"
 	var/pointer_icon_state
 	flags_1 = CONDUCT_1 | NOBLUDGEON_1
+<<<<<<< HEAD
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
@@ -15,6 +16,16 @@
 	var/max_energy = 5
 	var/effectchance = 33
 	var/recharging = 0
+=======
+	slot_flags = SLOT_BELT
+	materials = list(MAT_METAL=500, MAT_GLASS=500)
+	w_class = WEIGHT_CLASS_SMALL
+	var/turf/pointer_loc
+	var/energy = 5
+	var/max_energy = 5
+	var/effectchance = 33
+	var/recharging = 0
+>>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	var/recharge_locked = FALSE
 	var/obj/item/stock_parts/micro_laser/diode //used for upgrading!
 

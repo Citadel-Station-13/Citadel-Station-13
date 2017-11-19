@@ -15,9 +15,14 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
+<<<<<<< HEAD
 	origin_tech = "combat=1"
 	needs_permit = 1
 	unique_rename = 0
+=======
+	needs_permit = TRUE
+	unique_rename = FALSE
+>>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
