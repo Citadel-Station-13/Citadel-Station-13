@@ -13,7 +13,6 @@
 	disliked_food = NONE
 	liked_food = NONE
 	toxic_food = NONE
-	roundstart = TRUE
 
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)

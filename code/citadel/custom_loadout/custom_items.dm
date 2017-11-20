@@ -192,4 +192,9 @@
 	can_adjust = 0
 
 
+/obj/item/clothing/shoes/sneakers/pink
+	icon_state = "pink"
+	item_state = "pink"
+
+
 

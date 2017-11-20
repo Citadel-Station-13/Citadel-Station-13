@@ -46,6 +46,7 @@
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
 	var/real_name = null
+	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
@@ -133,8 +134,6 @@
 
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
-
-	var/list/permanent_huds = list()
 
 	var/resize = 1 //Badminnery resize
 
