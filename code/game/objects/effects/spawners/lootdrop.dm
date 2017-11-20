@@ -162,9 +162,6 @@
 	name = "25% cyborg mask spawner"
 	loot = list(
 		/obj/item/clothing/mask/gas/cyborg = 25,
-<<<<<<< HEAD
-		"" = 75)
-=======
 		"" = 75)
 
 /obj/effect/spawner/lootdrop/aimodule_harmless // These shouldn't allow the AI to start butchering people
@@ -197,4 +194,3 @@
 				/obj/item/aiModule/core/full/tyrant,
 				/obj/item/aiModule/core/full/thermurderdynamic
 				)
->>>>>>> de7a093... Merge pull request #32905 from vuonojenmustaturska/aispawner
