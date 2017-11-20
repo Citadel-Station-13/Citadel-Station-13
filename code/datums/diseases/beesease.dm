@@ -35,6 +35,10 @@
 				affected_mob.visible_message("<span class='danger'>[affected_mob] coughs up a swarm of bees!</span>", \
 													"<span class='userdanger'>You cough up a swarm of bees!</span>")
 				new /mob/living/simple_animal/hostile/poison/bees(affected_mob.loc)
+<<<<<<< HEAD
 		//if(5)
 		//Plus if you die, you explode into bees
 	return
+=======
+	return
+>>>>>>> b7a9a2a... Merge pull request #32844 from ShizCalev/code-cleanup

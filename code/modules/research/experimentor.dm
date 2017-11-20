@@ -43,6 +43,7 @@
 		temp_list[O] = text2num(temp_list[O])
 	return temp_list
 
+<<<<<<< HEAD
 /* //uncomment to enable forced reactions.
 /obj/machinery/r_n_d/experimentor/verb/forceReaction()
 	set name = "Force Experimentor Reaction"
@@ -56,6 +57,8 @@
 		if(loaded_item)
 			item_reactions["[loaded_item.type]"] = oldReaction
 */
+=======
+>>>>>>> b7a9a2a... Merge pull request #32844 from ShizCalev/code-cleanup
 
 /obj/machinery/r_n_d/experimentor/proc/SetTypeReactions()
 	var/probWeight = 0
