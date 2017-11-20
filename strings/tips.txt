@@ -153,6 +153,7 @@ As a Cultist, your team starts off very weak, but if necessary can quickly conve
 As a Cultist, the Blood Boil rune will deal massive amounts of brute damage to non-cultists, stamina damage to Ratvarian scum, and some damage to fellow cultists of Nar-Sie nearby, but will create a fire where the rune stands on use.
 As a Cultist, you can create an army of manifested goons using a combination of the Manifest rune, which creates homunculi from ghosts, and the Blood Drain rune, which drains life from anyone standing on any blood drain rune.
 As a Cultist or Servant, check the alert in the upper-right of your screen for all the details about your cult's current status and objective.
+<<<<<<< HEAD
 As a Servant, your Clockwork Slab fits in pockets and does not need to be held to communicate with other Servants.
 As a Servant, remember that while the selection of scripture and tools Servant cyborgs get is limited, it is still extremely useful, and some of it is unique; for example, engineering and janitor cyborgs get a proselytizer that can use their own power in addition to its own.
 As a Servant, the Judicial Visor is an effective defensive combat tool in small spaces, as it immediately slows and briefly knocks down enemies hit while giving them incentive to avoid staying in the hit area.
@@ -166,6 +167,17 @@ As a Servant, creating and activating the Gateway to the Celestial Derelict is y
 As a Servant, you can impale human targets with a Ratvarian Spear by pulling them, then attacking them. This does massive damage and stuns them, and should effectively win the fight.
 As a Servant, Sentinel's Compromise can instantly return you or another Servant to a fighting state by converting half of all their brute, burn, and oxygen damage to toxin, effectively halving the damage they have. Clockwork Floors will also rapidly heal toxin damage in Servants, allowing the Compromise more effectiveness.
 As a Servant, you can unwrench Clockwork Structures to move them around.
+=======
+As a Servant, your jumpsuit functions like a chameleon suit and can take on a lot of different appearances. Use this for stealth and disguise!
+As a Servant, you can unlock scripture tiers early by stockpiling large amounts of power.
+As a Servant, stargazers are a very important tool for power generation, and you should be making them constantly.
+As a Servant, stargazers only work if they can see space, and do *not* work on the City of Cogs.
+As a Servant, Abscond also brings anyone you're dragging to Reebe at the cost of some extra power.
+As a Servant, wraith spectacles let you see everything through walls at virtually no drawback. Just take them off if someone might see you!
+As a Servant, declaring war empowers a huge amount of your tools and constructs, and makes you into a spaceproof, armored clockwork automaton.
+As a Servant, converting or sabotaging Science and Genetics can make defending the Ark much easier.
+As a Servant, the Clockwork Arnaments scripture allows you to summon armor and/or a weapon at will. Use it whenever you unlock it!
+>>>>>>> d2bab31... Merge pull request #32256 from Xhuis/clock_tips
 You can deconvert Cultists of Nar-Sie and Servants of Ratvar by feeding them large amounts of holy water.
 As a Wizard, you can turn people to stone, then animate the resulting statue with a staff of animation to create an extremely powerful minion, for all of 5 minutes at least.
 As a Wizard, the fireball spell performs very poorly at close range, as it can easily catch you in the blast. It is best used as a form of artillery down long hallways.

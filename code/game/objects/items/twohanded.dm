@@ -148,7 +148,8 @@
 
 /obj/item/twohanded/required/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
 	if(wielded && !slot_flags)
-		to_chat(M, "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>")
+		if(!disable_warning)
+			to_chat(M, "<span class='warning'>[src] is too cumbersome to carry with anything but your hands!</span>")
 		return 0
 	return ..()
 
@@ -457,15 +458,15 @@
 			explosive.prime()
 			qdel(src)
 
-/obj/item/twohanded/spear/AltClick()
-	..()
-	if(!explosive)
-		return
-	if(ismob(loc))
-		var/mob/M = loc
-		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
-		if(input)
-			src.war_cry = input
+/obj/item/twohanded/spear/AltClick(mob/user)
+	if(user.canUseTopic(src, be_close=TRUE))
+		..()
+		if(!explosive)
+			return
+		if(istype(user) && loc == user)
+			var/input = stripped_input(user,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
+			if(input)
+				src.war_cry = input
 
 /obj/item/twohanded/spear/CheckParts(list/parts_list)
 	var/obj/item/twohanded/spear/S = locate() in parts_list
@@ -567,7 +568,7 @@
 	..()
 	if(!proximity)
 		return
-	user.faction |= "greytide(\ref[user])"
+	user.faction |= "greytide([REF(user)])"
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(istype (L, /mob/living/simple_animal/hostile/illusion))

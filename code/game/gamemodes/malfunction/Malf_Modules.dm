@@ -133,9 +133,9 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
 	for(var/datum/AI_Module/large/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	for(var/datum/AI_Module/small/module in possible_modules)
-		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
+		dat += "<A href='byond://?src=[REF(src)];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=[REF(src)];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
 	if(temp)
 		dat += "[temp]"
@@ -375,7 +375,8 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 /obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION_PRIMARY)
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	for(var/mob/living/L in GLOB.mob_list)
+	for(var/i in GLOB.mob_living_list)
+		var/mob/living/L = i
 		var/turf/T = get_turf(L)
 		if(!T || !(T.z in GLOB.station_z_levels))
 			continue
@@ -679,7 +680,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		C.images -= I
 
 /mob/living/silicon/ai/proc/can_place_transformer(datum/action/innate/ai/place_transformer/action)
-	if(!eyeobj || !isturf(loc) || !canUseTopic() || !action)
+	if(!eyeobj || !isturf(loc) || incapacitated() || !action)
 		return
 	var/turf/middle = get_turf(eyeobj)
 	var/list/turfs = list(middle, locate(middle.x - 1, middle.y, middle.z), locate(middle.x + 1, middle.y, middle.z))

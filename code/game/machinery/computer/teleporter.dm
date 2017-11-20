@@ -27,8 +27,8 @@
 /obj/machinery/computer/teleporter/proc/link_power_station()
 	if(power_station)
 		return
-	for(dir in GLOB.cardinals)
-		power_station = locate(/obj/machinery/teleport/station, get_step(src, dir))
+	for(var/direction in GLOB.cardinals)
+		power_station = locate(/obj/machinery/teleport/station, get_step(src, direction))
 		if(power_station)
 			break
 	return power_station
@@ -70,16 +70,16 @@
 			data += "Calibration: <font color='red'>Sub-Optimal</font>"
 		data += "</div><BR>"
 
-		data += "<A href='?src=\ref[src];regimeset=1'>Change regime</A><BR>"
-		data += "<A href='?src=\ref[src];settarget=1'>Set target</A><BR>"
+		data += "<A href='?src=[REF(src)];regimeset=1'>Change regime</A><BR>"
+		data += "<A href='?src=[REF(src)];settarget=1'>Set target</A><BR>"
 		if(locked)
-			data += "<BR><A href='?src=\ref[src];locked=1'>Get target from memory</A><BR>"
-			data += "<A href='?src=\ref[src];eject=1'>Eject GPS device</A><BR>"
+			data += "<BR><A href='?src=[REF(src)];locked=1'>Get target from memory</A><BR>"
+			data += "<A href='?src=[REF(src)];eject=1'>Eject GPS device</A><BR>"
 		else
 			data += "<BR><span class='linkOff'>Get target from memory</span><BR>"
 			data += "<span class='linkOff'>Eject GPS device</span><BR>"
 
-		data += "<BR><A href='?src=\ref[src];calibrate=1'>Calibrate Hub</A>"
+		data += "<BR><A href='?src=[REF(src)];calibrate=1'>Calibrate Hub</A>"
 
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)

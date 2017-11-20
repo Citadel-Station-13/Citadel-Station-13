@@ -11,7 +11,7 @@
 	var/virus_type
 
 
-/datum/round_event/disease_outbreak/announce()
+/datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()
@@ -21,7 +21,7 @@
 	if(!virus_type)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
-	for(var/mob/living/carbon/human/H in shuffle(GLOB.living_mob_list))
+	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue

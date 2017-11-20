@@ -7,9 +7,9 @@
 	dat +={"
 			<B>General Secrets</B><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=list_job_debug'>Show Job Debug</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=admin_log'>Admin Log</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=show_admins'>Show Admin List</A><BR>
 			<BR>
 			"}
 
@@ -17,58 +17,55 @@
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=list_bombers'>Bombing List</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=showailaws'>Show AI Laws</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=showgm'>Show Game Mode</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=manifest'>Show Crew Manifest</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=DNA'>List DNA (Blood)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=fingerprints'>List Fingerprints</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=clear_virus'>Cure all diseases currently in existence</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=list_bombers'>Bombing List</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=check_antagonist'>Show current traitors and objectives</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=list_signalers'>Show last [length(GLOB.lastsignalers)] signalers</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=list_lawchanges'>Show last [length(GLOB.lawchanges)] law changes</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=showailaws'>Show AI Laws</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=showgm'>Show Game Mode</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=manifest'>Show Crew Manifest</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=DNA'>List DNA (Blood)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=fingerprints'>List Fingerprints</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=ctfbutton'>Enable/Disable CTF</A><BR><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=tdomereset'>Reset Thunderdome to default state</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=set_name'>Rename Station Name</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=reset_name'>Reset Station Name</A><BR>
 			<BR>
 			<B>Shuttles</B><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=moveferry'>Move Ferry</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=moveferry'>Move Ferry</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=togglearrivals'>Toggle Arrivals Ferry</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=moveminingshuttle'>Move Mining Shuttle</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=movelaborshuttle'>Move Labor Shuttle</A><BR>
 			<BR>
 			"}
 
 	if(check_rights(R_FUN,0))
 		dat += {"
-			<B>Fun Secrets</B><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=virus'>Trigger a Virus Outbreak</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=monkey'>Turn all humans into monkeys</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=anime'>Chinese Cartoons</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=allspecies'>Change the species of all humans</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=ak47s'>AK-47s For Everyone!</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=magic'>Summon Magic</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=whiteout'>Fix all lights</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
-			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=changebombcap'>Change bomb cap</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=masspurrbation'>Mass Purrbation</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massremovepurrbation'>Mass Remove Purrbation</A><BR>
 			"}
 
 	dat += "<BR>"
@@ -77,9 +74,9 @@
 		dat += {"
 			<B>Security Level Elevated</B><BR>
 			<BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];[HrefToken()];secrets=infinite_sec'>Remove cap on security officers</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=infinite_sec'>Remove cap on security officers</A><BR>
 			<BR>
 			"}
 
@@ -256,7 +253,7 @@
 				return
 			var/dat = "<B>Showing DNA from blood.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.dna.blood_type]</td></tr>"
 			dat += "</table>"
@@ -266,7 +263,7 @@
 				return
 			var/dat = "<B>Showing Fingerprints.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 				if(H.ckey)
 					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
 			dat += "</table>"
@@ -276,7 +273,7 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Monkeyize All Humans")
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 				spawn(0)
 					H.monkeyize()
 			ok = 1
@@ -290,7 +287,7 @@
 				log_admin("[key_name(usr)] turned all humans into [result]", 1)
 				message_admins("\blue [key_name_admin(usr)] turned all humans into [result]")
 				var/newtype = GLOB.species_list[result]
-				for(var/mob/living/carbon/human/H in GLOB.mob_list)
+				for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 					H.set_species(newtype)
 
 		if("tripleAI")
@@ -383,7 +380,7 @@
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Chinese Cartoons")
 			message_admins("[key_name_admin(usr)] made everything kawaii.")
-			for(var/mob/living/carbon/human/H in GLOB.mob_list)
+			for(var/mob/living/carbon/human/H in GLOB.carbon_list)
 				SEND_SOUND(H, sound('sound/ai/animes.ogg'))
 
 				if(H.dna.species.id == "human")
@@ -508,7 +505,7 @@
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.add_details("admin_secrets_fun_used","Dwarf Beards")
-			for(var/mob/living/carbon/human/B in GLOB.mob_list)
+			for(var/mob/living/carbon/human/B in GLOB.carbon_list)
 				B.facial_hair_style = "Dward Beard"
 				B.update_hair()
 			message_admins("[key_name_admin(usr)] activated dorf mode")

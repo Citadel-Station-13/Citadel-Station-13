@@ -180,6 +180,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -193,6 +194,7 @@
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
@@ -213,6 +215,8 @@
 	damage = 15
 	armour_penetration = 10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
@@ -220,9 +224,11 @@
 	icon_state = "magjectile-nl"
 	damage = 1
 	knockdown = 0
-	stamina = 25
+	stamina = 30
 	armour_penetration = -10
 	light_range = 2
+	speed = 1.2
+	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
 
@@ -289,6 +295,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magpistol
 	name = "Magpistol"
@@ -347,6 +354,7 @@
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/ammo_box/foambox/mag
 	name = "ammo box (Magnetic Foam Darts)"
@@ -378,19 +386,23 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 25
+	damage = 20
 	armour_penetration = 25
 	light_range = 3
+	speed = 1.2
+	range = 35
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 2
+	damage = 1
 	knockdown = 0
-	stamina = 30
+	stamina = 35
 	armour_penetration = -10
 	light_range = 3
+	speed = 1.0
+	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
 ///ammo casings///
@@ -451,6 +463,7 @@
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magrifle
 	name = "Magrifle"
@@ -489,15 +502,16 @@
 	max_ammo = 15
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/magrifle/toy
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = 0
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
-	origin_tech = "combat=2;engineering=2;magnets=2"
+	origin_tech = "combat=1;engineering=1;magnets=1"
 	spread = 60
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
@@ -631,6 +645,7 @@
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
@@ -687,6 +702,7 @@
 	fire_delay = 0
 	spread = 60
 	actions_types = list()
+	origin_tech = "combat=1;magnets=1"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
 	..()
@@ -913,6 +929,7 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/toyray
 	name = "RayTag Gun"
@@ -1060,6 +1077,7 @@ obj/item/projectile/bullet/c10mm/soporific
 				if(arm_color_input)
 					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
 				update_icon()
+				A.UpdateButtonIcon()
 
 	else
 		..()
@@ -1070,12 +1088,16 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "9mm frangible bullet"
 	damage = 15
 	stamina = 0
+	speed = 1.0
+	range = 20
 	armour_penetration = -25
 
 /obj/item/projectile/bullet/c9mm/rubber
 	name = "9mm rubber bullet"
-	damage = 2
-	stamina = 25
+	damage = 5
+	stamina = 30
+	speed = 1.2
+	range = 14
 	knockdown = 0
 
 /obj/item/ammo_casing/c9mm/frangible
@@ -1120,9 +1142,9 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "Box of 9mm Frangible Bullets"
 	id = "9mm_frag"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 30000)
+	materials = list(MAT_METAL = 25000)
 	build_path = /obj/item/ammo_box/c9mm/frangible
-	category = list("initial", "Security")
+	category = list("hacked", "Security")
 
 /datum/design/c9mmrubber
 	name = "Box of 9mm Rubber Bullets"
@@ -1157,10 +1179,13 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "\improper Foam Force Mk.37F"
 	desc = "A licensed foam-firing reproduction of a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses standard foam pistol magazines."
 	icon_state = "p37_foam"
+	pin = /obj/item/device/firing_pin
 	spawnwithmagazine = TRUE
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
+	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_p37
 	name = "Foam Force Mk.37F"
@@ -1196,6 +1221,10 @@ obj/item/gun/energy/e_gun/cx/update_icon()
 		body_overlay.color = body_color
 	add_overlay(body_overlay)
 
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
 obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 	if(istype(A, /datum/action/item_action/pick_color))
 		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
@@ -1203,6 +1232,7 @@ obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
 			if(body_color_input)
 				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
 		update_icon()
+		A.UpdateButtonIcon()
 	else
 		..()
 
@@ -1212,3 +1242,7 @@ obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
 		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")
 		body_inhand.color = body_color
 		. += body_inhand
+
+/obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
+	..()
+	materials = list(MAT_METAL = 200)
