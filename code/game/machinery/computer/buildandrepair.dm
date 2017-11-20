@@ -141,10 +141,6 @@
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())
 		if(state >= 3)
-<<<<<<< HEAD
-			new /obj/item/stack/cable_coil(loc , 5)
-	..()
-=======
 			new /obj/item/stack/cable_coil(drop_location(), 5)
 	..()
 
@@ -158,4 +154,3 @@
 		return
 
 	setDir(turn(dir, -90))
->>>>>>> d89eb78... Allows rotating computer frames, fixes rotation on deconstruction, switches dropped materials to use drop_location() (#32877)
