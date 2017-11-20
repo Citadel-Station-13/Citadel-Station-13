@@ -120,6 +120,7 @@
 		var/obj/machinery/camera/C = target
 		if(prob(effectchance * diode.rating))
 			C.emp_act(EMP_HEAVY)
+<<<<<<< HEAD
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			add_logs(user, C, "EMPed", src)
 		else
@@ -150,6 +151,47 @@
 			START_PROCESSING(SSobj, src)
 		if(energy <= 0)
 			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
+=======
+			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
+			add_logs(user, C, "EMPed", src)
+		else
+			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
+
+	//catpeople
+	for(var/mob/living/carbon/human/H in view(1,targloc))
+		if(ishumanbasic(H) && (H.getorgan(/obj/item/organ/tail/cat) || H.getorgan(/obj/item/organ/ears/cat) || H.dna.features["ears"] == "Cat" || H.dna.features["human_tail"] == "Cat"))
+			if(!H.incapacitated() && !H.lying)
+				H.visible_message("<span class='warning'>[H] pounces on the light!</span>","<span class='userdanger'>LIGHT!</span>")
+				H.Knockdown(10)
+				H.Move(targloc)
+				H.setDir(NORTH) //Facedown looks best imo
+
+	//laser pointer image
+	icon_state = "pointer_[pointer_icon_state]"
+	var/image/I = image('icons/obj/projectiles.dmi',targloc,pointer_icon_state,10)
+	var/list/click_params = params2list(params)
+	if(click_params)
+		if(click_params["icon-x"])
+			I.pixel_x = (text2num(click_params["icon-x"]) - 16)
+		if(click_params["icon-y"])
+			I.pixel_y = (text2num(click_params["icon-y"]) - 16)
+	else
+		I.pixel_x = target.pixel_x + rand(-5,5)
+		I.pixel_y = target.pixel_y + rand(-5,5)
+
+	if(outmsg)
+		to_chat(user, outmsg)
+	else
+		to_chat(user, "<span class='info'>You point [src] at [target].</span>")
+
+	energy -= 1
+	if(energy <= max_energy)
+		if(!recharging)
+			recharging = 1
+			START_PROCESSING(SSobj, src)
+		if(energy <= 0)
+			to_chat(user, "<span class='warning'>[src]'s battery is overused, it needs time to recharge!</span>")
+>>>>>>> 4f319c6... Buffs laserpointers (#32906)
 			recharge_locked = TRUE
 
 	flick_overlay_view(I, targloc, 10)
