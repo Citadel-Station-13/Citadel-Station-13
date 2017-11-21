@@ -635,17 +635,12 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/prison)
 "abN" = (
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
 	name = "Armoury Shutter"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-=======
-/obj/structure/closet/secure_closet/lethalshots,
-/turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/ai_monitored/security/armory)
 "abO" = (
 /turf/open/floor/plasteel/showroomfloor,
@@ -823,7 +818,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aci" = (
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
 	name = "Armoury Shutter"
@@ -831,10 +825,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-=======
-/obj/vehicle/secway,
-/turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/machinery/light{
@@ -5039,14 +5029,10 @@
 	pixel_x = -28;
 	pixel_y = -8
 	},
-<<<<<<< HEAD
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
 /turf/open/floor/plasteel/black,
-=======
-/turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/security/brig)
 "alA" = (
 /obj/structure/table/reinforced,
@@ -11978,38 +11964,16 @@
 /turf/closed/wall,
 /area/crew_quarters/theatre/mime)
 "aDs" = (
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/crew_quarters/theatre/mime)
-=======
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/plasteel/vault{
-	dir = 1
-	},
-/area/ai_monitored/nuke_storage)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 "aDt" = (
 /turf/closed/wall,
 /area/crew_quarters/theatre/clown)
 "aDv" = (
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/crew_quarters/theatre/clown)
-=======
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/plasteel/vault{
-	dir = 4
-	},
-/area/ai_monitored/nuke_storage)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 "aDw" = (
 /obj/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -24423,15 +24387,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/vault{
 	dir = 4
 	},
 /area/ai_monitored/nuke_storage)
-=======
-/turf/open/floor/plasteel/dark,
-/area/engine/gravity_generator)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 "bjz" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/central)
@@ -25668,15 +25627,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/vault{
 	dir = 1
 	},
 /area/ai_monitored/nuke_storage)
-=======
-/turf/open/floor/plasteel/dark,
-/area/engine/gravity_generator)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 "bmw" = (
 /obj/machinery/light{
 	dir = 4
@@ -26313,13 +26267,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/vault,
 /area/ai_monitored/nuke_storage)
-=======
-/turf/open/floor/plasteel/dark,
-/area/engine/gravity_generator)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 "bnV" = (
 /obj/machinery/camera/motion{
 	c_tag = "Vault";
@@ -47921,12 +47870,8 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
-/turf/open/floor/plasteel/black,
-=======
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/engine/engine_smes)
 "cnP" = (
 /obj/machinery/power/terminal{
@@ -47936,14 +47881,10 @@
 /obj/structure/cable/yellow{
 	icon_state = "0-8"
 	},
-<<<<<<< HEAD
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 6
 	},
-/turf/open/floor/plasteel/black,
-=======
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/engine/engine_smes)
 "cnQ" = (
 /obj/structure/cable{
@@ -60222,7 +60163,6 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-<<<<<<< HEAD
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "Qvx" = (
@@ -60254,48 +60194,6 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-=======
-/obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoD" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoE" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoG" = (
-/obj/structure/girder,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoH" = (
-/obj/item/wrench,
-/obj/item/weldingtool,
-/obj/item/clothing/head/welding{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/structure/rack,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoI" = (
-/obj/machinery/light,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "QvA" = (
@@ -60311,23 +60209,10 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-<<<<<<< HEAD
 /area/engine/gravity_generator)
 "QvB" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
-=======
-/area/engine/engineering)
-"QoK" = (
-/obj/item/crowbar/large,
-/obj/structure/rack,
-/obj/item/device/flashlight,
-/turf/open/floor/plasteel/dark,
-/area/engine/engineering)
-"QoL" = (
-/obj/machinery/camera{
-	c_tag = "Kitchen Cold Room"
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 	},
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
@@ -60352,24 +60237,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-<<<<<<< HEAD
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
-=======
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"QoS" = (
-/obj/machinery/computer/rdconsole/production,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"QoT" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/showroomfloor,
-/area/crew_quarters/kitchen)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 
 (1,1,1) = {"
 aaa

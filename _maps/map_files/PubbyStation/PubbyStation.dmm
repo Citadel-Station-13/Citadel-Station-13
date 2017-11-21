@@ -51246,103 +51246,6 @@
 "cCA" = (
 /turf/closed/wall,
 /area/science/lab)
-<<<<<<< HEAD
-=======
-"cCB" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"cCC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/cargo,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"cCD" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/crew_quarters/kitchen)
-"cCE" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"cCF" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/tcommsat/computer)
-"cCH" = (
-/obj/effect/turf_decal/bot/left,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCI" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cCJ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cCK" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cCL" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cCM" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/engine/engineering)
-"cCN" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
-"cCO" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/security/brig)
-"cCP" = (
-/obj/effect/turf_decal/bot/right,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCQ" = (
-/obj/effect/turf_decal/bot/right,
-/turf/open/floor/plasteel/white,
-/area/engine/gravity_generator)
-"cCR" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/maintenance/department/chapel/monastery)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 
 (1,1,1) = {"
 aaa
@@ -66441,11 +66344,7 @@ cvX
 cke
 cky
 cld
-<<<<<<< HEAD
 ceA
-=======
-cCR
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 aaa
 aaa
 aaa
@@ -81075,13 +80974,8 @@ cam
 cam
 cdQ
 cet
-<<<<<<< HEAD
 ceY
 cbX
-=======
-cCI
-cfV
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 cfU
 cgu
 cgU
@@ -81594,13 +81488,8 @@ ccc
 ccV
 cdR
 cet
-<<<<<<< HEAD
 ceY
 cbX
-=======
-cCI
-cfV
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 cfU
 cgv
 cgV
@@ -83655,13 +83544,8 @@ cch
 cdc
 cdX
 cet
-<<<<<<< HEAD
 ceY
 cbX
-=======
-cCI
-cfV
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 cfU
 cgv
 cgV
@@ -83917,13 +83801,8 @@ cam
 cam
 cdQ
 cet
-<<<<<<< HEAD
 ceY
 cbX
-=======
-cCI
-cfV
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 cfV
 cgv
 cfV
@@ -84179,13 +84058,8 @@ cci
 cam
 cdQ
 cet
-<<<<<<< HEAD
 ceY
 cbX
-=======
-cCI
-cfV
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 cfU
 cgx
 cgU

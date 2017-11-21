@@ -13643,14 +13643,7 @@
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
-<<<<<<< HEAD
 /turf/closed/wall,
-=======
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/security/brig)
 "aCr" = (
 /obj/machinery/door/airlock/security{
@@ -14260,14 +14253,10 @@
 	pixel_x = 29;
 	pixel_y = -2
 	},
-<<<<<<< HEAD
 /obj/structure/filingcabinet/chestdrawer{
 	pixel_y = 3
 	},
-/turf/open/floor/plasteel/black,
-=======
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/security/brig)
 "aDI" = (
 /obj/machinery/requests_console{
@@ -14950,7 +14939,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-<<<<<<< HEAD
 /obj/structure/table,
 /obj/item/folder/red{
 	pixel_x = 3
@@ -14960,10 +14948,7 @@
 	pixel_y = 2
 	},
 /obj/item/restraints/handcuffs,
-/turf/open/floor/plasteel/black,
-=======
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/security/brig)
 "aEZ" = (
 /obj/structure/window/reinforced{
@@ -15673,15 +15658,10 @@
 	network = list("Prison");
 	pixel_y = -30
 	},
-<<<<<<< HEAD
 /obj/machinery/computer/secure_data{
 	dir = 1
 	},
-/turf/open/floor/plasteel/black,
-=======
-/obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/security/brig)
 "aGs" = (
 /obj/structure/table,
@@ -30930,12 +30910,7 @@
 "bmh" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/mineral/ore_redemption,
-<<<<<<< HEAD
-/turf/open/floor/plasteel/black,
-=======
-/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel/dark,
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 /area/quartermaster/office)
 "bmi" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -80768,42 +80743,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
-<<<<<<< HEAD
-=======
-"EDv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"EDw" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/hydroponics)
-"EDx" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/hallway/secondary/entry)
-"EDy" = (
-/turf/open/space,
-/turf/closed/wall/mineral/plastitanium{
-	dir = 1;
-	icon_state = "diagonalWall3"
-	},
-/area/hallway/secondary/entry)
-"EDz" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/security/prison)
-"EDA" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/security/prison)
-"EDB" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/crew_quarters/fitness/recreation)
-"EDC" = (
-/turf/closed/wall/mineral/plastitanium,
-/area/engine/break_room)
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 
 (1,1,1) = {"
 aaa

@@ -25902,14 +25902,9 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
-<<<<<<< HEAD
 /turf/open/floor/plasteel/loadingarea{
-=======
-/obj/effect/turf_decal/loading_area{
->>>>>>> 84f0306... Cleans up floors.dmi a bit and adds new turf decals. (#32860)
 	dir = 1
 	},
-/obj/machinery/rnd/protolathe/department/service,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/service)
 "bcb" = (
