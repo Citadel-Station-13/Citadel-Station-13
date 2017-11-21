@@ -79941,7 +79941,7 @@
 	name = "Security Desk";
 	req_access_txt = "63"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "dBI" = (
 /obj/effect/spawner/structure/window/reinforced,

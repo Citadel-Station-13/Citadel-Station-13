@@ -671,7 +671,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory)
 "abR" = (
 /obj/structure/closet/secure_closet/security/sec,
@@ -5032,7 +5032,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "alA" = (
 /obj/structure/table/reinforced,
@@ -57585,32 +57585,32 @@
 	pixel_y = -7
 	},
 /obj/item/stack/cable_coil,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoD" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoG" = (
 /obj/structure/girder,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoH" = (
 /obj/item/wrench,
@@ -57620,7 +57620,7 @@
 	pixel_y = 5
 	},
 /obj/structure/rack,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoI" = (
 /obj/machinery/light,
@@ -57634,7 +57634,7 @@
 /obj/item/crowbar/large,
 /obj/structure/rack,
 /obj/item/device/flashlight,
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "QoL" = (
 /obj/machinery/camera{
@@ -58310,7 +58310,7 @@
 	name = "Brig Desk";
 	req_access_txt = "2"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "Qqg" = (
 /turf/open/floor/plasteel/red/side{
@@ -58364,7 +58364,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "Qqo" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -60184,7 +60184,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "Qvz" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -60220,7 +60220,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "QvD" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -60231,7 +60231,7 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/black,
+/turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "QvE" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
