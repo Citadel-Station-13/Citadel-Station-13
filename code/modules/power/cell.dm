@@ -24,12 +24,12 @@
 /obj/item/stock_parts/cell/get_cell()
 	return src
 
-/obj/item/stock_parts/cell/Initialize()
+/obj/item/stock_parts/cell/New()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	charge = maxcharge
 	if(ratingdesc)
-		desc += " This one has a power rating of [maxcharge], and you should not swallow it."
+		desc += " This one has a power rating of [DisplayPower(maxcharge)], and you should not swallow it."
 	update_icon()
 
 /obj/item/stock_parts/cell/Destroy()
@@ -74,7 +74,7 @@
 		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		SSblackbox.record_feedback("tally", "cell_used", 1, type)
+		SSblackbox.record_feedback("tally", "cell_used", 1, "[src.type]")
 	return 1
 
 // recharge the cell
@@ -111,12 +111,6 @@
 
 /obj/item/stock_parts/cell/proc/explode()
 	var/turf/T = get_turf(src.loc)
-/*
- * 1000-cell	explosion(T, -1, 0, 1, 1)
- * 2500-cell	explosion(T, -1, 0, 1, 1)
- * 10000-cell	explosion(T, -1, 1, 3, 3)
- * 15000-cell	explosion(T, -1, 2, 4, 4)
- * */
 	if (charge==0)
 		return
 	var/devastation_range = -1 //round(charge/11000)
