@@ -124,29 +124,3 @@
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 					if(reagents.remove_reagent(I, 1))
 						assembly.give_power(fuel[I])
-<<<<<<< HEAD
-
-
-// For really fat machines.
-/obj/item/integrated_circuit/passive/power/relay/large
-	name = "large tesla power relay"
-	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industiral size!"
-	w_class = WEIGHT_CLASS_BULKY
-	extended_desc = "The siphon generates 1 kW of power, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
-	from the 'equipment' power channel."
-	icon_state = "power_relay"
-	complexity = 15
-	origin_tech = list(TECH_POWER = 6, TECH_ENGINEERING = 5, TECH_DATA = 4)
-	spawn_flags = IC_SPAWN_RESEARCH
-	power_amount = 1000
-
-/obj/item/integrated_circuit/passive/power/relay/make_energy()
-	if(!assembly)
-		return
-	var/area/A = get_area(src)
-	if(A)
-		if(A.powered(EQUIP) && assembly.give_power(power_amount))
-			A.use_power(power_amount, EQUIP)
-			// give_power() handles CELLRATE on its own.
-=======
->>>>>>> b161b18... Integrated circuit fixes and code improvements (#32773)
