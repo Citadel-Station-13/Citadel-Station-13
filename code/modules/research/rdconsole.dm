@@ -168,6 +168,219 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		var/temp_screen = text2num(href_list["menu"])
 		screen = temp_screen
 
+<<<<<<< HEAD
+=======
+	l += "</tr></table></div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_header()
+	var/list/l = list()
+	l += "<h2>Nanotrasen Research and Development</h2>[RDSCREEN_NOBREAK]"
+	l += "<div class='statusDisplay'><b>Connected Technology database: [stored_research == SSresearch.science_tech? "Nanotrasen" : "Third Party"]"
+	l += "Available Points: [stored_research.research_points]"
+	l += "Security protocols: [emagged? "<font color='red'>Disabled</font>" : "<font color='green'>Enabled</font>"]"
+	l += "Design Disk: [d_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"] | \
+	 Technology Disk: [t_disk? "<font color='green'>Loaded</font>" : "<font color='red'>Not Loaded</font>"]</b>"
+	l += "<a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU]'>Main Menu</a> | <a href='?src=[REF(src)];switch_screen=[back]'>Back</a></div>[RDSCREEN_NOBREAK]"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_main_menu()
+	var/list/l = list()
+	if(research_control)
+		l += "<H2><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHWEB]'>Technology</a>"
+	if(d_disk)
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DESIGNDISK]'>Design Disk</a>"
+	if(t_disk)
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_TECHDISK]'>Tech Disk</a>"
+	if(linked_destroy)
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_DECONSTRUCT]'>Deconstructive Analyzer</a>"
+	if(linked_lathe)
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe</a>"
+	if(linked_imprinter)
+		l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter</a>"
+	l += "<hr><a href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings</a></H2>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_locked()
+	return list("<h3><a href='?src=[REF(src)];switch_screen=[RDSCREEN_MENU];unlock_console=1'>SYSTEM LOCKED</a></h3></br>")
+
+/obj/machinery/computer/rdconsole/proc/ui_settings()
+	var/list/l = list()
+	l += "<div class='statusDisplay'><h3>R&D Console Settings:</h3>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_DEVICE_LINKING]'>Device Linkage Menu</A>"
+	l += "<A href='?src=[REF(src)];lock_console=1'>Lock Console</A></div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_device_linking()
+	var/list/l = list()
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_SETTINGS]'>Settings Menu</A><div class='statusDisplay'>"
+	l += "<h3>R&D Console Device Linkage Menu:</h3>"
+	l += "<A href='?src=[REF(src)];find_device=1'>Re-sync with Nearby Devices</A>"
+	l += "<h3>Linked Devices:</h3>"
+	l += linked_destroy? "* Destructive Analyzer <A href='?src=[REF(src)];disconnect=destroy'>Disconnect</A>" : "* No Destructive Analyzer Linked"
+	l += linked_lathe? "* Protolathe <A href='?src=[REF(src)];disconnect=lathe'>Disconnect</A>" : "* No Protolathe Linked"
+	l += linked_imprinter? "* Circuit Imprinter <A href='?src=[REF(src)];disconnect=imprinter'>Disconnect</A>" : "* No Circuit Imprinter Linked"
+	l += "</div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_header()
+	var/list/l = list()
+	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE]'>Protolathe Menu</A>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_MATERIALS]'><B>Material Amount:</B> [linked_lathe.materials.total_amount] / [linked_lathe.materials.max_amount]</A>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_PROTOLATHE_CHEMICALS]'><B>Chemical volume:</B> [linked_lathe.reagents.total_volume] / [linked_lathe.reagents.maximum_volume]</A></div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_category_view()	//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
+	var/coeff = linked_lathe.efficiency_coeff
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
+		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
+			continue
+		var/temp_material
+		var/c = 50
+		var/t
+
+		var/all_materials = D.materials + D.reagents_list
+		for(var/M in all_materials)
+			t = linked_lathe.check_mat(D, M)
+			temp_material += " | "
+			if (t < 1)
+				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+			else
+				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+			c = min(c,t)
+
+		if (c >= 1)
+			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
+			if(c >= 5)
+				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
+			if(c >= 10)
+				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
+			l += "[temp_material][RDSCREEN_NOBREAK]"
+		else
+			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+		l += ""
+	l += "</div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe()		//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+
+	l += "<form name='search' action='?src=[REF(src)]'>\
+	<input type='hidden' name='src' value='[REF(src)]'>\
+	<input type='hidden' name='search' value='to_search'>\
+	<input type='hidden' name='type' value='proto'>\
+	<input type='text' name='to_search'>\
+	<input type='submit' value='Search'>\
+	</form><HR>"
+
+	l += list_categories(linked_lathe.categories, RDSCREEN_PROTOLATHE_CATEGORY_VIEW)
+
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_search()		//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+	var/coeff = linked_lathe.efficiency_coeff
+	for(var/datum/design/D in matching_designs)
+		var/temp_material
+		var/c = 50
+		var/t
+		var/all_materials = D.materials + D.reagents_list
+		for(var/M in all_materials)
+			t = linked_lathe.check_mat(D, M)
+			temp_material += " | "
+			if (t < 1)
+				temp_material += "<span class='bad'>[all_materials[M]*coeff] [CallMaterialName(M)]</span>"
+			else
+				temp_material += " [all_materials[M]*coeff] [CallMaterialName(M)]"
+			c = min(c,t)
+
+		if (c >= 1)
+			l += "<A href='?src=[REF(src)];build=[D.id];amount=1'>[D.name]</A>[RDSCREEN_NOBREAK]"
+			if(c >= 5)
+				l += "<A href='?src=[REF(src)];build=[D.id];amount=5'>x5</A>[RDSCREEN_NOBREAK]"
+			if(c >= 10)
+				l += "<A href='?src=[REF(src)];build=[D.id];amount=10'>x10</A>[RDSCREEN_NOBREAK]"
+			l += "[temp_material][RDSCREEN_NOBREAK]"
+		else
+			l += "<span class='linkOff'>[D.name]</span>[temp_material][RDSCREEN_NOBREAK]"
+		l += ""
+	l += "</div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_materials()		//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+	l += "<div class='statusDisplay'><h3>Material Storage:</h3>"
+	for(var/mat_id in linked_lathe.materials.materials)
+		var/datum/material/M = linked_lathe.materials.materials[mat_id]
+		l += "* [M.amount] of [M.name]: "
+		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=1'>Eject</A> [RDSCREEN_NOBREAK]"
+		if(M.amount >= MINERAL_MATERIAL_AMOUNT*5) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=5'>5x</A> [RDSCREEN_NOBREAK]"
+		if(M.amount >= MINERAL_MATERIAL_AMOUNT) l += "<A href='?src=[REF(src)];ejectsheet=[M.id];eject_amt=50'>All</A>[RDSCREEN_NOBREAK]"
+		l += ""
+	l += "</div>[RDSCREEN_NOBREAK]"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_protolathe_chemicals()		//Legacy code
+	RDSCREEN_UI_LATHE_CHECK
+	var/list/l = list()
+	l += ui_protolathe_header()
+	l += "<div class='statusDisplay'><A href='?src=[REF(src)];disposeallP=1'>Disposal All Chemicals in Storage</A>"
+	l += "<h3>Chemical Storage:</h3>"
+	for(var/datum/reagent/R in linked_lathe.reagents.reagent_list)
+		l += "[R.name]: [R.volume]"
+		l += "<A href='?src=[REF(src)];disposeP=[R.id]'>Purge</A>"
+	l += "</div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_circuit_header()		//Legacy Code
+	var/list/l = list()
+	l += "<div class='statusDisplay'><A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER]'>Circuit Imprinter Menu</A>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_MATERIALS]'><B>Material Amount:</B> [linked_imprinter.materials.total_amount] / [linked_imprinter.materials.max_amount]</A>"
+	l += "<A href='?src=[REF(src)];switch_screen=[RDSCREEN_IMPRINTER_CHEMICALS]'><B>Chemical volume:</B> [linked_imprinter.reagents.total_volume] / [linked_imprinter.reagents.maximum_volume]</A></div>"
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_circuit()		//Legacy code
+	RDSCREEN_UI_IMPRINTER_CHECK
+	var/list/l = list()
+	l += ui_circuit_header()
+	l += "<h3>Circuit Imprinter Menu:</h3>"
+
+	l += "<form name='search' action='?src=[REF(src)]'>\
+	<input type='hidden' name='src' value='[REF(src)]'>\
+	<input type='hidden' name='search' value='to_search'>\
+	<input type='hidden' name='type' value='imprint'>\
+	<input type='text' name='to_search'>\
+	<input type='submit' value='Search'>\
+	</form><HR>"
+
+	l += list_categories(linked_imprinter.categories, RDSCREEN_IMPRINTER_CATEGORY_VIEW)
+	return l
+
+/obj/machinery/computer/rdconsole/proc/ui_circuit_category_view()	//Legacy code
+	RDSCREEN_UI_IMPRINTER_CHECK
+	var/list/l = list()
+	l += ui_circuit_header()
+	l += "<div class='statusDisplay'><h3>Browsing [selected_category]:</h3>"
+
+	var/coeff = linked_imprinter.efficiency_coeff
+	for(var/v in stored_research.researched_designs)
+		var/datum/design/D = stored_research.researched_designs[v]
+		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
+			continue
+		var/temp_materials
+		var/check_materials = TRUE
+>>>>>>> 458331f... Cleans up RND Menu
 
 	var/datum/component/material_container/linked_materials
 	if(linked_lathe)
