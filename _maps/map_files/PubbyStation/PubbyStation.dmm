@@ -51261,39 +51261,6 @@
 "cCA" = (
 /turf/closed/wall,
 /area/science/lab)
-<<<<<<< HEAD
-=======
-"cCB" = (
-/obj/machinery/rnd/protolathe/department/security,
-/turf/open/floor/plasteel,
-/area/security/main)
-"cCC" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/cargo,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"cCD" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/crew_quarters/kitchen)
-"cCE" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/central)
-"cCF" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
-	},
-/turf/open/floor/plating/airless,
-/area/maintenance/department/chapel/monastery)
-"cCG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
-/area/tcommsat/computer)
 "cCH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -51330,7 +51297,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
->>>>>>> 569a326... Merge pull request #32919 from ShizCalev/Corrects-pubby-AT-issues
 
 (1,1,1) = {"
 aaa
