@@ -34047,22 +34047,7 @@
 	width = 18
 	},
 /turf/open/space,
-<<<<<<< HEAD
-/area/space)
-=======
 /area/space/nearstation)
-"swt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/rnd/protolathe/department/service,
-/turf/open/floor/plasteel/redyellow,
-/area/crew_quarters/bar/atrium)
-"swu" = (
-/obj/machinery/rnd/protolathe/department/medical,
-/turf/closed/wall,
-/area/medical/medbay/zone3)
->>>>>>> e7197ec... Nearstation fixes (#32931)
 
 (1,1,1) = {"
 aaa
