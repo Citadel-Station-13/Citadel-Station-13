@@ -51294,6 +51294,35 @@
 	},
 /turf/open/floor/plating/airless,
 /area/engine/engineering)
+"cCN" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/main)
+"cCO" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/security/brig)
+"cCP" = (
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCQ" = (
+/obj/effect/turf_decal/bot/right,
+/turf/open/floor/plasteel/white,
+/area/engine/gravity_generator)
+"cCR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/maintenance/department/chapel/monastery)
 
 (1,1,1) = {"
 aaa
