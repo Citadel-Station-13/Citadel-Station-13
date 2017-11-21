@@ -80679,19 +80679,6 @@
 /obj/effect/spawner/structure/window/plasma/reinforced,
 /turf/open/floor/plating,
 /area/engine/atmos)
-<<<<<<< HEAD
-=======
-"EDv" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"EDw" = (
-/obj/machinery/rnd/protolathe/department/service,
-/turf/closed/wall,
-/area/hydroponics)
 "EDx" = (
 /turf/open/space,
 /turf/closed/wall/mineral/plastitanium{
@@ -80706,7 +80693,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/hallway/secondary/entry)
->>>>>>> a394a18... Various Meta area fixes (#32856)
 
 (1,1,1) = {"
 aaa
