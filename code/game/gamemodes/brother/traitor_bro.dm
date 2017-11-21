@@ -122,12 +122,11 @@
 					win = FALSE
 			objective_count++
 		if(win)
-			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"		
-			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")		
-		else		
-			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"		
+			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"
+			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")
+		else
+			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
 			SSblackbox.record_feedback("tally", "brother_success", 1, "FAIL")
-
 		text += "<br>"
 	to_chat(world, text)
 
