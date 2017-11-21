@@ -51246,6 +51246,12 @@
 "cCA" = (
 /turf/closed/wall,
 /area/science/lab)
+"cCB" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "cCF" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 1
