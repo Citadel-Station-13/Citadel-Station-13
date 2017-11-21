@@ -80757,6 +80757,18 @@
 	icon_state = "diagonalWall3"
 	},
 /area/hallway/secondary/entry)
+"EDz" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/security/prison)
+"EDA" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/security/prison)
+"EDB" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/crew_quarters/fitness/recreation)
+"EDC" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/engine/break_room)
 
 (1,1,1) = {"
 aaa
