@@ -56,15 +56,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
-
-<<<<<<< HEAD
-				/*	- At the time of commit, setting status displays didn't work properly
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
-				if(CC)
-					CC.post_status("alert", "redalert")*/
 				sound_to_playing_players('sound/misc/voyalert.ogg')
-=======
->>>>>>> b7a9a2a... Merge pull request #32844 from ShizCalev/code-cleanup
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(FA.z in GLOB.station_z_levels)
 						FA.update_icon()
