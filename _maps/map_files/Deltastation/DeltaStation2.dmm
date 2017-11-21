@@ -57607,9 +57607,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/neutral,
 /area/teleporter)
 "cmH" = (
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/neutral,
 /area/teleporter)
 "cmI" = (

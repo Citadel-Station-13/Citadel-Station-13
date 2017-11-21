@@ -25865,7 +25865,7 @@
 	forwards = 2;
 	id = "packageSort2"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bbP" = (
 /obj/structure/disposalpipe/segment,
