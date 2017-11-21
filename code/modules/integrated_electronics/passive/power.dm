@@ -56,30 +56,53 @@
 	name = "tesla power relay"
 	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them."
 	w_class = WEIGHT_CLASS_SMALL
-	extended_desc = "The siphon generates 50 W of power, so long as an APC is in the same room, with a cell that has energy.  It will always drain \
+	extended_desc = "The siphon generates 50 W of energy, so long as an APC is in the same room, with a cell that has energy. It will always drain \
 	from the 'equipment' power channel."
 	icon_state = "power_relay"
 	complexity = 7
 	origin_tech = list(TECH_POWER = 3, TECH_ENGINEERING = 3, TECH_DATA = 2)
 	spawn_flags = IC_SPAWN_RESEARCH
 	var/power_amount = 50
-//fuel cell
 
+
+/obj/item/integrated_circuit/passive/power/relay/make_energy()
+	if(!assembly)
+		return
+	var/area/A = get_area(src)
+	if(A && A.powered(EQUIP) && assembly.give_power(power_amount))
+		A.use_power(power_amount, EQUIP)
+		// give_power() handles CELLRATE on its own.
+
+
+// For really fat machines.
+/obj/item/integrated_circuit/passive/power/relay/large
+	name = "large tesla power relay"
+	desc = "A seemingly enigmatic device which connects to nearby APCs wirelessly and draws power from them, now in industiral size!"
+	w_class = WEIGHT_CLASS_BULKY
+	extended_desc = "The siphon generates 2 kW of energy, so long as an APC is in the same room, with a cell that has energy. It will always drain \
+	from the 'equipment' power channel."
+	icon_state = "power_relay"
+	complexity = 15
+	spawn_flags = IC_SPAWN_RESEARCH
+	power_amount = 1000
+
+
+//fuel cell
 /obj/item/integrated_circuit/passive/power/chemical_cell
 	name = "fuel cell"
 	desc = "Produces electricity from chemicals."
 	icon_state = "chemical_cell"
-	extended_desc = "This is effectively an internal beaker.It will consume and produce power from phoron, slime jelly, welding fuel, carbon,\
+	extended_desc = "This is effectively an internal beaker. It will consume and produce power from plasma, slime jelly, welding fuel, carbon,\
 	 ethanol, nutriments and blood , in order of decreasing efficiency. It will consume fuel only if the battery can take more energy."
 	container_type = OPENCONTAINER_1
 	complexity = 4
 	inputs = list()
-	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER, "self reference" = IC_PINTYPE_REF)
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/volume = 60
-	var/list/fuel = list("plasma" = 10000, "welding_fuel" = 3000, "carbon" = 2000, "ethanol"= 2000, "nutriment" =1600, "blood" = 1000)
+	var/list/fuel = list("plasma" = 10000, "welding_fuel" = 3000, "carbon" = 2000, "ethanol" = 2000, "nutriment" = 1600, "blood" = 1000)
 
 /obj/item/integrated_circuit/passive/power/chemical_cell/New()
 	..()
@@ -101,6 +124,7 @@
 				if((assembly.battery.maxcharge-assembly.battery.charge) / GLOB.CELLRATE > fuel[I])
 					if(reagents.remove_reagent(I, 1))
 						assembly.give_power(fuel[I])
+<<<<<<< HEAD
 
 
 // For really fat machines.
@@ -124,3 +148,5 @@
 		if(A.powered(EQUIP) && assembly.give_power(power_amount))
 			A.use_power(power_amount, EQUIP)
 			// give_power() handles CELLRATE on its own.
+=======
+>>>>>>> b161b18... Integrated circuit fixes and code improvements (#32773)
