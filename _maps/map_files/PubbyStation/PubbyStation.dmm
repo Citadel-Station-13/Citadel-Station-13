@@ -51258,6 +51258,42 @@
 	},
 /turf/open/floor/plating/airless,
 /area/tcommsat/computer)
+"cCH" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"cCI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"cCJ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"cCK" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"cCL" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
+"cCM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -80986,8 +81022,8 @@ cam
 cam
 cdQ
 cet
-ceY
-cbX
+cCH
+cfV
 cfU
 cgu
 cgU
@@ -81243,8 +81279,8 @@ cam
 cam
 cdQ
 cet
-ceY
-cbX
+cCI
+cfV
 cfV
 cgv
 cfV
@@ -81500,8 +81536,8 @@ ccc
 ccV
 cdR
 cet
-ceY
-cbX
+cCJ
+cfV
 cfU
 cgv
 cgV
@@ -83556,8 +83592,8 @@ cch
 cdc
 cdX
 cet
-ceY
-cbX
+cCK
+cfV
 cfU
 cgv
 cgV
@@ -83813,8 +83849,8 @@ cam
 cam
 cdQ
 cet
-ceY
-cbX
+cCL
+cfV
 cfV
 cgv
 cfV
@@ -84070,8 +84106,8 @@ cci
 cam
 cdQ
 cet
-ceY
-cbX
+cCM
+cfV
 cfU
 cgx
 cgU
