@@ -372,12 +372,8 @@
 		P.preparePixelProjectile(targeted_atom, src)
 		P.fire()
 		return P
-<<<<<<< HEAD
-		
-=======
 
 
->>>>>>> ce82a2e... Fixes hostile mobs attacking surrounding tiles when trying to attack someone: the stunning finale (#32699)
 /mob/living/simple_animal/hostile/proc/CanSmashTurfs(turf/T)
 	return iswallturf(T) || ismineralturf(T)
 
