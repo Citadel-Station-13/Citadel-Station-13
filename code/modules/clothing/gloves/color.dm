@@ -77,13 +77,8 @@
 	name = "insulated gloves"
 	desc = "These gloves will protect the wearer from electric shock."
 	siemens_coefficient = 0
-<<<<<<< HEAD
 	permeability_coefficient = 0.5
-	resistance_flags = 0
-=======
-	permeability_coefficient = 0.05
 	resistance_flags = NONE
->>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 
 /obj/item/clothing/gloves/color/rainbow
 	name = "rainbow gloves"
