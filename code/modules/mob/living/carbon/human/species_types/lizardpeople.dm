@@ -4,8 +4,13 @@
 	id = "lizard"
 	say_mod = "hisses"
 	default_color = "00FF00"
+<<<<<<< HEAD
 	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,FACEHAIR)
 	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs", "taur")
+=======
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,LIPS)
+	mutant_bodyparts = list("tail_lizard", "snout", "spines", "horns", "frills", "body_markings", "legs")
+>>>>>>> 9d487d2... Divides species in subtypes, makes viruses able to infect certain subtypes (#32858)
 	mutanttongue = /obj/item/organ/tongue/lizard
 	mutanttail = /obj/item/organ/tail/lizard
 	coldmod = 1.5

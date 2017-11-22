@@ -127,6 +127,7 @@
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	26
+<<<<<<< HEAD
 #define MUTCOLORS2		27
 #define MUTCOLORS3		28
 #define NOLIVER 		29
@@ -136,6 +137,16 @@
 #define NOGENITALS		30 //Cannot create, use, or otherwise have genitals
 #define NO_DNA_COPY     31
 #define DRINKSBLOOD		32
+=======
+#define NOLIVER			27
+#define NOSTOMACH		28
+#define NO_DNA_COPY     29
+#define DRINKSBLOOD		30
+#define SPECIES_ORGANIC 31
+#define SPECIES_INORGANIC 32
+#define SPECIES_UNDEAD  33
+#define SPECIES_ROBOTIC 34
+>>>>>>> 9d487d2... Divides species in subtypes, makes viruses able to infect certain subtypes (#32858)
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"
