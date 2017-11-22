@@ -115,8 +115,9 @@
 	icon_state = "hazard"
 	item_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/device/t_scanner, /obj/item/device/radio)
-	resistance_flags = 0
+	allowed = list(/obj/item/device/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/device/t_scanner, /obj/item/device/radio)
+	resistance_flags = NONE
+
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
 	name = "blue suit jacket"
