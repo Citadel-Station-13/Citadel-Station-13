@@ -20,6 +20,12 @@ SUBSYSTEM_DEF(blackbox)
 	var/list/feedback = list()	//list of datum/feedback_variable
 	var/triggertime = 0
 	var/sealed = FALSE	//time to stop tracking stats?
+<<<<<<< HEAD
+=======
+	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
+	var/list/versions = list("time_dilation_current" = 2,
+							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+>>>>>>> f5269e9... Feedback fixes (#32959)
 
 
 /datum/controller/subsystem/blackbox/Initialize()

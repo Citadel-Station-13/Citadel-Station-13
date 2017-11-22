@@ -35,4 +35,8 @@ SUBSYSTEM_DEF(time_track)
 	last_tick_realtime = current_realtime
 	last_tick_byond_time = current_byondtime
 	last_tick_tickcount = current_tickcount
+<<<<<<< HEAD
 	SSblackbox.add_details("time_dilation_current", time_dilation_current)
+=======
+	SSblackbox.record_feedback("associative", "time_dilation_current", 1, list("[time_dilation_current]" = "[SQLtime()]"))
+>>>>>>> f5269e9... Feedback fixes (#32959)
