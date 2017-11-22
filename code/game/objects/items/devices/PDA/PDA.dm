@@ -155,15 +155,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	return
 
 /obj/item/device/pda/attack_self(mob/user)
-<<<<<<< HEAD
-=======
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	. = ..()
 
->>>>>>> ccd4981... Merge pull request #32624 from kevinz000/component_uplinks
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 
