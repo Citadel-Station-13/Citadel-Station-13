@@ -205,8 +205,8 @@
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	origin_tech = "syndicate=2"
 	sensor_mode = SENSOR_OFF //Hey who's this guy on the Syndicate Shuttle??
-	random_sensor = 0
-	resistance_flags = 0
+	random_sensor = FALSE
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -235,8 +235,12 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
+<<<<<<< HEAD
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
+=======
+	resistance_flags = NONE
+>>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -257,8 +261,12 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
+<<<<<<< HEAD
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
+=======
+	resistance_flags = NONE
+>>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -280,7 +288,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -302,7 +310,7 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -338,7 +346,7 @@
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
-	resistance_flags = 0
+	resistance_flags = NONE
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	flags_1 = BLOCK_GAS_SMOKE_EFFECT_1 | MASKINTERNALS_1
@@ -392,8 +400,12 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	flags_1 = NOSLIP_1
+<<<<<<< HEAD
 	origin_tech = "syndicate=2"
 	resistance_flags = 0
+=======
+	resistance_flags = NONE
+>>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
