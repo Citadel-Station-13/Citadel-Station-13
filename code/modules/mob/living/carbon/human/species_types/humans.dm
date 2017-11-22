@@ -2,15 +2,9 @@
 	name = "Human"
 	id = "human"
 	default_color = "FFFFFF"
-<<<<<<< HEAD
-	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "taur")
-	default_features = list("tail_human" = "None", "ears" = "None", "taur" = "none")
-=======
-	species_traits = list(SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
-	mutant_bodyparts = list("tail_human", "ears", "wings")
-	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None")
->>>>>>> 9d487d2... Divides species in subtypes, makes viruses able to infect certain subtypes (#32858)
+	species_traits = list(MUTCOLORS_PARTSONLY,SPECIES_ORGANIC,EYECOLOR,HAIR,FACEHAIR,LIPS)
+	mutant_bodyparts = list("tail_human", "ears", "wings", "taur")
+	default_features = list("mcolor" = "FFF", "tail_human" = "None", "ears" = "None", "wings" = "None", "taur" = "none")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW
