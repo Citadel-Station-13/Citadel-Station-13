@@ -193,6 +193,7 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stock_parts/subspace/filter = 1)
 
+<<<<<<< HEAD
 /obj/item/circuitboard/machine/exonet_node
 	name = "Exonet Node(machine board)"
 	build_path = /obj/machinery/exonet_node
@@ -206,6 +207,8 @@
 							/obj/item/stock_parts/subspace/treatment = 2,
 							/obj/item/stack/cable_coil = 2)
 
+=======
+>>>>>>> 92632ec... Merge pull request #32914 from kevinz000/NTNet
 /obj/item/circuitboard/machine/teleporter_hub
 	name = "Teleporter Hub (Machine Board)"
 	build_path = /obj/machinery/teleport/hub
