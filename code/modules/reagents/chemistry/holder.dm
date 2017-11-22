@@ -732,18 +732,6 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
-<<<<<<< HEAD
-=======
-
-/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
-	var/temp_delta = (temperature - chem_temp) * coeff
-	if(temp_delta > 0)
-		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
-	else
-		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
-	chem_temp = round(chem_temp)
-	handle_reactions()
->>>>>>> ccd4981... Merge pull request #32624 from kevinz000/component_uplinks
 
 ///////////////////////////////////////////////////////////////////////////////////
 
