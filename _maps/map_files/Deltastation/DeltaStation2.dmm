@@ -89139,7 +89139,6 @@
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "dAB" = (
-/turf/open/floor/plating,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
