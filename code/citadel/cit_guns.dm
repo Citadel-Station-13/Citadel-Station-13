@@ -396,7 +396,7 @@
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 1
+	damage = 0
 	knockdown = 0
 	stamina = 35
 	armour_penetration = -10
