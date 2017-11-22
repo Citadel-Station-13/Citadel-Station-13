@@ -91,10 +91,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	if(item)
-<<<<<<< HEAD:code/modules/uplink/uplink_item.dm
-		SSblackbox.add_details("traitor_uplink_items_bought", "[name]|[cost]")
-=======
->>>>>>> ccd4981... Merge pull request #32624 from kevinz000/component_uplinks:code/datums/uplink_items.dm
 		return new item(loc)
 
 /datum/uplink_item/Destroy()
