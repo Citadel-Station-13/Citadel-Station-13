@@ -235,12 +235,8 @@
 	icon_state = "armor"
 	item_state = "armor"
 	blood_overlay_type = "armor"
-<<<<<<< HEAD
 	origin_tech = "syndicate=2"
-	resistance_flags = 0
-=======
 	resistance_flags = NONE
->>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -261,12 +257,8 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	item_state = "meson"
-<<<<<<< HEAD
 	origin_tech = "syndicate=2"
-	resistance_flags = 0
-=======
 	resistance_flags = NONE
->>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
@@ -400,12 +392,8 @@
 	desc = "A pair of black shoes."
 	permeability_coefficient = 0.05
 	flags_1 = NOSLIP_1
-<<<<<<< HEAD
 	origin_tech = "syndicate=2"
-	resistance_flags = 0
-=======
 	resistance_flags = NONE
->>>>>>> b0f24a8... Fixes bartender suit having an adjust state (#32968)
 	pockets = /obj/item/storage/internal/pocket/shoes
 	armor = list(melee = 10, bullet = 10, laser = 10, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 50, acid = 50)
 
