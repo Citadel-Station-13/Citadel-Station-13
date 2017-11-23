@@ -11,7 +11,6 @@
 	fire_sound = 'sound/weapons/wave.ogg'
 	charge_cost = 100
 	projectile_type = /obj/item/projectile/beam/shrinklaser
-	origin_tech = "redspace=1;bluespace=4"
 	modifystate = "sizegun-shrink"
 	selfcharge = 1
 	firemodes = list(
@@ -88,7 +87,6 @@ datum/design/sizeray
 	name = "Size Ray"
 	desc = "Abuse bluespace tech to alter living matter scale."
 	id = "sizeray"
-	req_tech = list("combat" = 5, "materials" = 4, "engineering" = 5, "bluespace" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_DIAMOND = 2500, MAT_URANIUM = 2500, MAT_TITANIUM = 1000)
 	build_path = /obj/item/gun/energy/laser/sizeray
@@ -155,7 +153,6 @@ datum/design/sizeray
 	desc = "Size manipulator using bluespace breakthroughs."
 	item_state = null	//so the human update icon uses the icon_state instead.
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/shrinkray, /obj/item/ammo_casing/energy/laser/growthray)
-	origin_tech = "combat=1;magnets=2"
 	selfcharge = 1
 	charge_delay = 5
 	ammo_x_offset = 2

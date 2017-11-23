@@ -162,8 +162,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
 <<<<<<< HEAD
-	toolspeed = 0.1
-	origin_tech = "magnets=5;engineering=5;abductor=3"
+	toolspeed = 0.1
 =======
 	toolspeed = 0.1
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb

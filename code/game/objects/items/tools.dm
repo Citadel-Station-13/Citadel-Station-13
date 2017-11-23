@@ -29,7 +29,6 @@
 	usesound = 'sound/items/ratchet.ogg'
 	materials = list(MAT_METAL=150)
 <<<<<<< HEAD
-	origin_tech = "materials=1;engineering=1"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
@@ -61,7 +60,6 @@
 	usesound = 'sound/effects/empulse.ogg'
 	toolspeed = 0.1
 <<<<<<< HEAD
-	origin_tech = "materials=5;engineering=5;abductor=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
@@ -74,8 +72,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/drill_use.ogg'
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-<<<<<<< HEAD
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+<<<<<<< HEAD //done for balance reasons, making them high value for research, but harder to get
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	force = 8 //might or might not be too high, subject to change
@@ -102,7 +99,6 @@
 	force = 2 //MEDICAL
 	throwforce = 4
 <<<<<<< HEAD
-	origin_tech = "materials=1;engineering=1;biotech=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
@@ -250,8 +246,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
-<<<<<<< HEAD
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
+<<<<<<< HEAD //done for balance reasons, making them high value for research, but harder to get
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	force = 8 //might or might not be too high, subject to change
@@ -303,7 +298,6 @@
 	hitsound = 'sound/items/wirecutter.ogg'
 	usesound = 'sound/items/wirecutter.ogg'
 <<<<<<< HEAD
-	origin_tech = "materials=1;engineering=1"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	toolspeed = 1
@@ -350,7 +344,6 @@
 	icon_state = "cutters"
 	toolspeed = 0.1
 <<<<<<< HEAD
-	origin_tech = "materials=5;engineering=4;abductor=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	random_color = FALSE
@@ -366,7 +359,6 @@
 	icon_state = "jaws_cutter"
 	item_state = "jawsoflife"
 <<<<<<< HEAD
-	origin_tech = "materials=2;engineering=2"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
@@ -418,7 +410,6 @@
 
 	materials = list(MAT_METAL=70, MAT_GLASS=30)
 <<<<<<< HEAD
-	origin_tech = "engineering=1;plasmatech=1"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
@@ -665,7 +656,6 @@
 	max_fuel = 40
 	materials = list(MAT_GLASS=60)
 <<<<<<< HEAD
-	origin_tech = "engineering=2;plasmatech=2"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
@@ -699,7 +689,6 @@
 	light_intensity = 0
 	change_icons = 0
 <<<<<<< HEAD
-	origin_tech = "plasmatech=5;engineering=5;abductor=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
@@ -716,7 +705,6 @@
 	max_fuel = 80
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 <<<<<<< HEAD
-	origin_tech = "engineering=3;plasmatech=2"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
@@ -728,7 +716,6 @@
 	max_fuel = 40
 	materials = list(MAT_METAL=70, MAT_GLASS=120)
 <<<<<<< HEAD
-	origin_tech = "materials=4;engineering=4;bluespace=3;plasmatech=4"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	var/last_gen = 0
@@ -772,7 +759,6 @@
 	w_class = WEIGHT_CLASS_SMALL
 	materials = list(MAT_METAL=50)
 <<<<<<< HEAD
-	origin_tech = "engineering=1;combat=1"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
@@ -803,7 +789,6 @@
 	icon_state = "crowbar"
 	toolspeed = 0.1
 <<<<<<< HEAD
-	origin_tech = "combat=4;engineering=4;abductor=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
@@ -835,7 +820,6 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	materials = list(MAT_METAL=150,MAT_SILVER=50,MAT_TITANIUM=25)
 <<<<<<< HEAD
-	origin_tech = "materials=2;engineering=2"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	usesound = 'sound/items/jaws_pry.ogg'

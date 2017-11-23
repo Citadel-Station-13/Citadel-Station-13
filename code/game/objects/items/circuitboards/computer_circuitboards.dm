@@ -315,6 +315,5 @@
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
 <<<<<<< HEAD
-	origin_tech = "engineering=3"
 =======
 >>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb

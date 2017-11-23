@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 7
 	flags_1 = CONDUCT_1
-	origin_tech = "programming=5;bluespace=2;syndicate=5"
 	var/datum/gang/gang //Which gang uses this?
 	var/recalling = 0
 	var/outfits = 2

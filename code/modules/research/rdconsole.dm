@@ -913,11 +913,11 @@ doesn't have toxins access.
 			griefProtection() //Putting this here because I dont trust the sync process
 			spawn(30)
 				if(src)
-					for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
+					for(var/obj/machinery/rnd/server/S in GLOB.machines)
 						var/server_processed = 0
 						if(S.disabled)
 							continue
-						if((id in S.id_with_upload) || istype(S, /obj/machinery/r_n_d/server/centcom))
+						if((id in S.id_with_upload) || istype(S, /obj/machinery/rnd/server/centcom))
 							for(var/v in files.known_tech)
 								var/datum/tech/T = files.known_tech[v]
 								S.files.AddTech2Known(T)
@@ -926,7 +926,7 @@ doesn't have toxins access.
 								S.files.AddDesign2Known(D)
 							S.files.RefreshResearch()
 							server_processed = 1
-						if(((id in S.id_with_download) && !istype(S, /obj/machinery/r_n_d/server/centcom)) || S.hacked)
+						if(((id in S.id_with_download) && !istype(S, /obj/machinery/rnd/server/centcom)) || S.hacked)
 							for(var/v in S.files.known_tech)
 								var/datum/tech/T = S.files.known_tech[v]
 								files.AddTech2Known(T)
@@ -935,7 +935,7 @@ doesn't have toxins access.
 								files.AddDesign2Known(D)
 							files.RefreshResearch()
 							server_processed = 1
-						if(!istype(S, /obj/machinery/r_n_d/server/centcom) && server_processed)
+						if(!istype(S, /obj/machinery/rnd/server/centcom) && server_processed)
 							S.produce_heat(100)
 					screen = 1.6
 					updateUsrDialog()

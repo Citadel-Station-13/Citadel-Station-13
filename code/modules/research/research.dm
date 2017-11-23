@@ -288,20 +288,17 @@ research holder datum.
 /datum/tech/explosives
 	name = "Explosives Research"
 	desc = "The creation and application of explosive materials."
-	id = "explosives"
-	req_tech = list("materials" = 3)
+	id = "explosives"
 
 /datum/tech/generators
 	name = "Power Generation Technology"
 	desc = "Research into more powerful and more reliable sources."
-	id = "generators"
-	req_tech = list("powerstorage" = 2)
+	id = "generators"
 
 /datum/tech/robotics
 	name = "Robotics Technology"
 	desc = "The development of advanced automated, autonomous machines."
-	id = "robotics"
-	req_tech = list("materials" = 3, "programming" = 3)
+	id = "robotics"
 */
 
 

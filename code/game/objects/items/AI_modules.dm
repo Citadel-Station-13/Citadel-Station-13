@@ -175,8 +175,7 @@ AI MODULES
 /obj/item/aiModule/zeroth/oneHuman
 	name = "'OneCrew' AI Module"
 	var/targetName = ""
-<<<<<<< HEAD
-	origin_tech = "programming=4;materials=4"
+<<<<<<< HEAD
 	laws = list("Only SUBJECT is crew.")
 =======
 	laws = list("Only SUBJECT is human.")
