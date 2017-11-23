@@ -114,19 +114,19 @@
 		for(var/datum/objective/objective in team.objectives)
 			if(objective.check_completion())
 				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-				SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
 			else
 				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-				SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
+				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
 				if(!(istype(objective, /datum/objective/crew)))
 					win = FALSE
 			objective_count++
 		if(win)
 			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"
-			SSblackbox.add_details("brother_success","SUCCESS")
+			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")
 		else
 			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
-			SSblackbox.add_details("brother_success","FAIL")
+			SSblackbox.record_feedback("tally", "brother_success", 1, "FAIL")
 		text += "<br>"
 	to_chat(world, text)
 

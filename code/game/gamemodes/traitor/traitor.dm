@@ -115,10 +115,10 @@
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-						SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
 						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
 						if(!(istype(objective, /datum/objective/crew)))
 							traitorwin = FALSE
 					count++
@@ -140,10 +140,10 @@
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				SSblackbox.add_details("traitor_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "SUCCESS")
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				SSblackbox.add_details("traitor_success","FAIL")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "FAIL")
 				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
 
 			text += "<br>"
