@@ -57608,19 +57608,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-<<<<<<< HEAD
-/turf/open/floor/plasteel/neutral,
-/area/teleporter)
-"cmH" = (
-/obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/neutral,
-=======
 /turf/open/floor/plasteel,
 /area/teleporter)
 "cmH" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel,
->>>>>>> 8f164a6... Fixes deleted turfs (#33010)
 /area/teleporter)
 "cmI" = (
 /obj/structure/table,
