@@ -25863,6 +25863,10 @@
 	forwards = 2;
 	id = "packageSort2"
 	},
+<<<<<<< HEAD
+=======
+/obj/effect/turf_decal/loading_area,
+>>>>>>> 8f164a6... Fixes deleted turfs (#33010)
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bbP" = (
