@@ -186,13 +186,8 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-<<<<<<< HEAD
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
-		return 0
-=======
 	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return FALSE
->>>>>>> f6881d3... Merge pull request #32925 from ninjanomnom/maths
 	queue.Cut(index,++index)
 	return 1
 
