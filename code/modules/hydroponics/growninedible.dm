@@ -28,7 +28,11 @@
 
 		if(istype(src, seed.product)) // no adding reagents if it is just a trash item
 			seed.prepare_result(src)
+<<<<<<< HEAD
 		transform *= TransformUsingVariable(seed.potency, 100, 0.5)
+=======
+		transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5
+>>>>>>> b726f9d... Merge pull request #33030 from ninjanomnom/math-fix
 		add_juice()
 
 
