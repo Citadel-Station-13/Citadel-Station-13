@@ -131,14 +131,9 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	else
 		total_amount += amount
 
-<<<<<<< HEAD
-	cost *= GLOB.E**(-1*k_elasticity*amount)		//marginal cost modifier
+	cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
 	SSblackbox.add_details("export_sold_amount","[O.type]|[amount]")
 	SSblackbox.add_details("export_sold_cost","[O.type]|[the_cost]")
-=======
-	cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
-	SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[the_cost]"))
->>>>>>> f6881d3... Merge pull request #32925 from ninjanomnom/maths
 
 // Total printout for the cargo console.
 // Called before the end of current export cycle.
