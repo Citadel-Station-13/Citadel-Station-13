@@ -133,14 +133,9 @@ Thus, the two variables affect pump operation are set in New():
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-<<<<<<< HEAD
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
-=======
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
->>>>>>> f6881d3... Merge pull request #32925 from ninjanomnom/maths
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
