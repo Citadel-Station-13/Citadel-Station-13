@@ -10,17 +10,6 @@
 	build_path = /obj/item/circuitboard/machine/telecomms/receiver
 	category = list("Subspace Telecomms")
 
-<<<<<<< HEAD
-/datum/design/board/exonet_node
-	name = "Machine Design (Exonet Node)"
-	desc = "Allows for the construction of Exonet Node."
-	id = "e-node"
-	req_tech = list("programming" = 2, "engineering" = 3, "bluespace" = 1)
-	build_path = /obj/item/circuitboard/machine/exonet_node
-	category = list("Subspace Telecomms")
-
-=======
->>>>>>> 92632ec... Merge pull request #32914 from kevinz000/NTNet
 /datum/design/board/telecomms_bus
 	name = "Machine Design (Bus Mainframe)"
 	desc = "Allows for the construction of Telecommunications Bus Mainframes."
