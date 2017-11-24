@@ -82,16 +82,6 @@ If you create T5+ please take a pass at gene_modder.dm [L40]. Max_values MUST fi
 
 //Rating 1
 
-<<<<<<< HEAD
-/obj/item/stock_parts/console_screen
-	name = "console screen"
-	desc = "Used in the construction of computers and other devices with an interactive console."
-	icon_state = "screen"
-	origin_tech = "materials=1"
-	materials = list(MAT_GLASS=200)
-
-=======
->>>>>>> 4c909b5... Replaces "console screen" stock part with glass sheets (#33018)
 /obj/item/stock_parts/capacitor
 	name = "capacitor"
 	desc = "A basic capacitor used in the construction of a variety of devices."
