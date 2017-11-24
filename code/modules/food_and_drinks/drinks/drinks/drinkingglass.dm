@@ -74,15 +74,9 @@
 		desc = "A shot glass - the universal symbol for bad decisions."
 		return
 
-<<<<<<< HEAD
-/obj/item/reagent_containers/food/drinks/drinkingglass/filled/New()
-	..()
-	on_reagent_change()
-=======
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/Initialize()
 	. = ..()
 	on_reagent_change(ADD_REAGENT)
->>>>>>> 73b25d7... Refactor on_reagent_change to pass through the change type (#32805)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"
