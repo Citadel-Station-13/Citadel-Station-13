@@ -134,8 +134,12 @@ Thus, the two variables affect pump operation are set in New():
 				. = TRUE
 			if(.)
 				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+<<<<<<< HEAD
 				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+=======
+				investigate_log("was set to [transfer_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
+>>>>>>> 7c69cdc... Revert math (#33059)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/volume_pump/receive_signal(datum/signal/signal)
