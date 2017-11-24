@@ -1486,6 +1486,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/tcommsat/lounge
 	name = "Telecommunications Satellite Lounge"
 	icon_state = "tcomsatlounge"
+<<<<<<< HEAD
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -1519,3 +1520,5 @@ GLOBAL_LIST_INIT(the_station_areas, list (
 	/area/ai_monitored/turret_protected/ai_upload_foyer,
 	/area/ai_monitored/turret_protected/ai,
 ))
+=======
+>>>>>>> 3d28b08... Merge pull request #32998 from ShizCalev/area-list
