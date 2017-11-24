@@ -7,7 +7,6 @@
 	invisibility = INVISIBILITY_ABSTRACT 		//nope, can't see this
 	anchored = TRUE
 	density = TRUE
-<<<<<<< HEAD
 	opacity = 0
 
 	var/static/list/AllTeleporters
@@ -19,20 +18,6 @@
 /obj/effect/bump_teleporter/Destroy()
 	LAZYREMOVE(AllTeleporters, src)
 	return ..()
-
-=======
-	opacity = 0
-
-	var/static/list/AllTeleporters
-
-/obj/effect/bump_teleporter/New()
-	..()
-	LAZYADD(AllTeleporters, src)
-
-/obj/effect/bump_teleporter/Destroy()
-	LAZYREMOVE(AllTeleporters, src)
-	return ..()
-
 
 /obj/effect/bump_teleporter/singularity_act()
 	return
@@ -40,7 +25,6 @@
 /obj/effect/bump_teleporter/singularity_pull()
 	return
 
->>>>>>> f912b6e... Fixes Lord Singuloth hungering for more than he should (#33025)
 /obj/effect/bump_teleporter/CollidedWith(atom/movable/AM)
 	if(!ismob(AM))
 		return
