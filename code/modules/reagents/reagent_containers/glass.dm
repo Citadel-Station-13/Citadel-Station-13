@@ -126,7 +126,7 @@
 	. = ..()
 	update_icon()
 
-/obj/item/reagent_containers/glass/beaker/on_reagent_change()
+/obj/item/reagent_containers/glass/beaker/on_reagent_change(changetype)
 	update_icon()
 
 /obj/item/reagent_containers/glass/beaker/update_icon()
