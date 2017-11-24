@@ -57608,11 +57608,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmH" = (
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmI" = (
 /obj/structure/table,

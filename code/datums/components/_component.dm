@@ -10,8 +10,6 @@
 		qdel(src)
 		CRASH("[type] instantiated!")
 
-<<<<<<< HEAD
-=======
 	//check for common mishaps
 	if(!isnum(dupe_mode))
 		qdel(src)
@@ -20,7 +18,6 @@
 		qdel(src)
 		CRASH("[type]: Invalid dupe_type!")
 
->>>>>>> 807311a... Fixes component runtimes (#33045)
 	parent = P
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
