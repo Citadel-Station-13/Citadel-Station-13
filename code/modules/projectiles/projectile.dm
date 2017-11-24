@@ -397,9 +397,15 @@
 		//Calculate the "resolution" of screen based on client's view and world's icon size. This will work if the user can view more tiles than average.
 		var/screenview = (user.client.view * 2 + 1) * world.icon_size //Refer to http://www.byond.com/docs/ref/info.html#/client/var/view for mad maths
 
+<<<<<<< HEAD
 		var/ox = round(screenview/2) - user.client.pixel_x //"origin" x
 		var/oy = round(screenview/2) - user.client.pixel_y //"origin" y
 		angle = Atan2(y - oy, x - ox)
+=======
+		var/ox = x - (round(screenview/2) - user.client.pixel_x) //"origin" x
+		var/oy = y - (round(screenview/2) - user.client.pixel_y) //"origin" y
+		angle = ATAN2(oy, ox)
+>>>>>>> faaf151... all this wrapping and it's not even christmas (#33035)
 	return list(angle, p_x, p_y)
 
 /obj/item/projectile/Crossed(atom/movable/AM) //A mob moving on a tile with a projectile is hit by it.
