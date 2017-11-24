@@ -2402,4 +2402,5 @@
 #include "interface\skin.dmf"
 #include "modular_citadel\cit_medkits.dm"
 #include "modular_citadel\cit_screenshake.dm"
+#include "modular_citadel\cit_turfs.dm"
 // END_INCLUDE
