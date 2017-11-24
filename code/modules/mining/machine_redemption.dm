@@ -82,7 +82,7 @@
 		if(!M || !redemption_mat)
 			return 0
 
-		var/smeltable_sheets = Floor(redemption_mat.amount / M)
+		var/smeltable_sheets = FLOOR(redemption_mat.amount / M, 1)
 
 		if(!smeltable_sheets)
 			return 0
