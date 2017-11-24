@@ -121,7 +121,7 @@
 		add_overlay("waitlight")
 
 /obj/machinery/computer/pandemic/proc/eject_beaker()
-	beaker.forceMove(get_turf(src))
+	beaker.forceMove(drop_location())
 	beaker = null
 	update_icon()
 
@@ -186,7 +186,7 @@
 			var/id = get_virus_id_by_index(text2num(params["index"]))
 			var/datum/disease/advance/A = new(FALSE, SSdisease.archive_diseases[id])
 			var/list/data = list("viruses" = list(A))
-			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
 			B.name = "[A.name] culture bottle"
 			B.desc = "A small bottle. Contains [A.agent] culture in synthblood medium."
 			B.reagents.add_reagent("blood", 20, data)
@@ -195,9 +195,15 @@
 			addtimer(CALLBACK(src, .proc/reset_replicator_cooldown), 50)
 			. = TRUE
 		if("create_vaccine_bottle")
+<<<<<<< HEAD
 			var/index = text2num(params["index"])
 			var/datum/disease/D = SSdisease.archive_diseases[get_virus_id_by_index(index)]
 			var/obj/item/reagent_containers/glass/bottle/B = new(get_turf(src))
+=======
+			var/id = params["index"]
+			var/datum/disease/D = SSdisease.archive_diseases[id]
+			var/obj/item/reagent_containers/glass/bottle/B = new(drop_location())
+>>>>>>> ed12ad4... Updates some item drops to use drop_location() (#32994)
 			B.name = "[D.name] vaccine bottle"
 			B.reagents.add_reagent("vaccine", 15, list(index))
 			wait = TRUE
@@ -237,6 +243,6 @@
 
 /obj/machinery/computer/pandemic/on_deconstruction()
 	if(beaker)
-		beaker.forceMove(get_turf(src))
+		beaker.forceMove(drop_location())
 		beaker = null
 	. = ..()
