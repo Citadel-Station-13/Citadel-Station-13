@@ -187,7 +187,11 @@
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
 	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+<<<<<<< HEAD
 		return 0
+=======
+		return FALSE
+>>>>>>> 7c69cdc... Revert math (#33059)
 	queue.Cut(index,++index)
 	return 1
 
