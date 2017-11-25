@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 				var/objschecked
 				for(var/atom/childobj in contents)
 					if(childobj.footstepsoundoverride && childobj.invisibility < INVISIBILITY_MAXIMUM)
-						if(isfile(S.footstepsoundoverride))
+						if(isfile(childobj.footstepsoundoverride))
 							overriddenfootstepsound = list(childobj.footstepsoundoverride)
 						else
 							overriddenfootstepsound = childobj.footstepsoundoverride
