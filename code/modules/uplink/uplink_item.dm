@@ -1381,13 +1381,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	cant_discount = TRUE
 
-<<<<<<< HEAD:code/modules/uplink/uplink_item.dm
 /datum/uplink_item/badass/surplus/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
-=======
-/datum/uplink_item/badass/surplus/spawn_item(turf/loc, datum/component/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
->>>>>>> 63b7e4a... Adds null checks to uplink item generation for ssticker mode, so spawned uplinks work pre-game (#33053):code/datums/uplink_items.dm
 
 	var/crate_value = 50
 	var/obj/structure/closet/crate/C = new(loc)
@@ -1414,13 +1409,8 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	cost = 0
 	cant_discount = TRUE
 
-<<<<<<< HEAD:code/modules/uplink/uplink_item.dm
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
-	var/list/uplink_items = get_uplink_items(SSticker.mode)
-=======
-/datum/uplink_item/badass/random/spawn_item(turf/loc, datum/component/uplink/U)
 	var/list/uplink_items = get_uplink_items(SSticker && SSticker.mode? SSticker.mode : null)
->>>>>>> 63b7e4a... Adds null checks to uplink item generation for ssticker mode, so spawned uplinks work pre-game (#33053):code/datums/uplink_items.dm
 	var/list/possible_items = list()
 	for(var/category in uplink_items)
 		for(var/item in uplink_items[category])
