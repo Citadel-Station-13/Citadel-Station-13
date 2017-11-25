@@ -11,6 +11,7 @@
 /atom
 	var/footstepsoundoverride
 
+//All of these sounds are from CEV Eris as of 11/25/2017, the time when the original PR adding footstep sounds was made.
 GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 				"floor" = list('modular_citadel/sound/footstep/floor1.ogg','modular_citadel/sound/footstep/floor2.ogg','modular_citadel/sound/footstep/floor3.ogg','modular_citadel/sound/footstep/floor4.ogg','modular_citadel/sound/footstep/floor5.ogg'),
 				"plating" = list('modular_citadel/sound/footstep/plating1.ogg','modular_citadel/sound/footstep/plating2.ogg','modular_citadel/sound/footstep/plating3.ogg','modular_citadel/sound/footstep/plating4.ogg','modular_citadel/sound/footstep/plating5.ogg'),
