@@ -1,7 +1,66 @@
 //Yes, hi. This is the file that handles Citadel's turf modifications.
+
+//But before we touch turfs, we'll take some time to define a couple of things for footstep sounds.
+/mob/living
+	var/makesfootstepsounds
+	var/footstepcount
+
+/mob/living/carbon/human
+	makesfootstepsounds = TRUE
+
+/atom
+	var/footstepsoundoverride
+
+GLOBAL_LIST_INIT(turf_footstep_sounds, list(
+				"floor" = list('modular_citadel/sound/footstep/floor1.ogg','modular_citadel/sound/footstep/floor2.ogg','modular_citadel/sound/footstep/floor3.ogg','modular_citadel/sound/footstep/floor4.ogg','modular_citadel/sound/footstep/floor5.ogg'),
+				"plating" = list('modular_citadel/sound/footstep/plating1.ogg','modular_citadel/sound/footstep/plating2.ogg','modular_citadel/sound/footstep/plating3.ogg','modular_citadel/sound/footstep/plating4.ogg','modular_citadel/sound/footstep/plating5.ogg'),
+				"wood" = list('modular_citadel/sound/footstep/wood1.ogg','modular_citadel/sound/footstep/wood2.ogg','modular_citadel/sound/footstep/wood3.ogg','modular_citadel/sound/footstep/wood4.ogg','modular_citadel/sound/footstep/wood5.ogg'),
+				"carpet" = list('modular_citadel/sound/footstep/carpet1.ogg','modular_citadel/sound/footstep/carpet2.ogg','modular_citadel/sound/footstep/carpet3.ogg','modular_citadel/sound/footstep/carpet4.ogg','modular_citadel/sound/footstep/carpet5.ogg'),
+				"hull" = list('modular_citadel/sound/footstep/hull1.ogg','modular_citadel/sound/footstep/hull2.ogg','modular_citadel/sound/footstep/hull3.ogg','modular_citadel/sound/footstep/hull4.ogg','modular_citadel/sound/footstep/hull5.ogg'),
+				"catwalk" = list('modular_citadel/sound/footstep/catwalk1.ogg','modular_citadel/sound/footstep/catwalk2.ogg','modular_citadel/sound/footstep/catwalk3.ogg','modular_citadel/sound/footstep/catwalk4.ogg','modular_citadel/sound/footstep/catwalk5.ogg'),
+				"asteroid" = list('modular_citadel/sound/footstep/asteroid1.ogg','modular_citadel/sound/footstep/asteroid2.ogg','modular_citadel/sound/footstep/asteroid3.ogg','modular_citadel/sound/footstep/asteroid4.ogg','modular_citadel/sound/footstep/asteroid5.ogg')
+				))
+
+/turf/open/floor
+	var/footstepsounds = "floor"
+
+/turf/open/floor/plating
+	footstepsounds = "plating"
+
+/turf/open/floor/wood
+	footstepsounds = "wood"
+
+/turf/open/floor/plating/asteroid
+	footstepsounds = "asteroid"
+
+/turf/open/floor/grass
+	footstepsounds = "grass"
+
+/turf/open/floor/carpet
+	footstepsounds = "carpet"
+
+/obj/machinery/atmospherics/components/unary/vent_pump
+	footstepsoundoverride = "catwalk"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber
+	footstepsoundoverride = "catwalk"
+
+/obj/structure/disposalpipe
+	footstepsoundoverride = "catwalk"
+
+/obj/machinery/holopad
+	footstepsoundoverride = "catwalk"
+
+/obj/structure/table
+	footstepsoundoverride = "hull"
+
+/obj/structure/table/wood
+	footstepsoundoverride = "wood"
+
 /turf/open/floor/Entered(atom/obj, atom/oldloc)
 	. = ..()
 	CitDirtify(obj, oldloc)
+	CitFootstep(obj)
 
 //Baystation-styled tile dirtification. Except 31 lines more complex than it probably has to be.
 /turf/open/floor/proc/CitDirtify(atom/obj, atom/oldloc)
@@ -43,3 +102,39 @@
 							dirt.add_atom_colour(color_matrix_add(origdirtcolor, colordirt), FIXED_COLOUR_PRIORITY)
 			dirt.alpha = dirtamount
 	return TRUE
+
+//The proc that handles footsteps! It's pure, unfiltered spaghetti code.
+/turf/open/floor/proc/CitFootstep(atom/obj)
+	if(obj && has_gravity(src) && footstepsounds && istype(obj, /mob/living))
+		var/mob/living/steppingman = obj
+		steppingman.footstepcount++
+		if(steppingman && steppingman.makesfootstepsounds && steppingman.m_intent == MOVE_INTENT_RUN && steppingman.canmove && steppingman.footstepcount >= 3)
+			steppingman.footstepcount = 0
+			var/overriddenfootstepsound
+			if(obj.footstepsoundoverride)
+				if(isfile(obj.footstepsoundoverride))
+					overriddenfootstepsound = list(obj.footstepsoundoverride)
+				else
+					overriddenfootstepsound = obj.footstepsoundoverride
+			if(!overriddenfootstepsound && istype(obj, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = obj
+				if(H && H.shoes)
+					var/obj/item/clothing/shoes/S = H.shoes
+					if(S && S.footstepsoundoverride)
+						if(isfile(S.footstepsoundoverride))
+							overriddenfootstepsound = list(S.footstepsoundoverride)
+						else
+							overriddenfootstepsound = S.footstepsoundoverride
+			if(!overriddenfootstepsound)
+				var/objschecked
+				for(var/atom/childobj in contents)
+					if(childobj.footstepsoundoverride && childobj.invisibility < INVISIBILITY_MAXIMUM)
+						if(isfile(S.footstepsoundoverride))
+							overriddenfootstepsound = list(childobj.footstepsoundoverride)
+						else
+							overriddenfootstepsound = childobj.footstepsoundoverride
+						break
+					objschecked++
+					if(objschecked >= 25)
+						break //walking on 50k foam darts didn't crash the server during my testing, but its better to be safe than sorry
+			playsound(src,(overriddenfootstepsound ? (islist(overriddenfootstepsound) ? pick(overriddenfootstepsound) : pick(GLOB.turf_footstep_sounds[overriddenfootstepsound])) : (islist(footstepsounds) ? pick(footstepsounds) : pick(GLOB.turf_footstep_sounds[footstepsounds]))),50, 1)
