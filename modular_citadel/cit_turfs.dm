@@ -35,9 +35,12 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 	footstepsounds = "asteroid"
 
 /turf/open/floor/grass
-	footstepsounds = "grass"
+	footstepsounds = "asteroid"
 
 /turf/open/floor/carpet
+	footstepsounds = "carpet"
+
+/turf/open/floor/plasteel/grimy
 	footstepsounds = "carpet"
 
 /obj/machinery/atmospherics/components/unary/vent_pump
