@@ -113,6 +113,7 @@ GLOBAL_LIST_EMPTY(mutations_list)
 /datum/mutation/human/proc/get_spans()
 	return list()
 
+<<<<<<< HEAD
 /datum/mutation/human/hulk
 
 	name = "Hulk"
@@ -650,6 +651,8 @@ GLOBAL_LIST_EMPTY(mutations_list)
 		owner.LaserEyes(target, mouseparams)
 
 
+=======
+>>>>>>> b6741ca... Splits mutations from mutations.dm into a subfolder, /datums/mutations (#33079)
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
 
