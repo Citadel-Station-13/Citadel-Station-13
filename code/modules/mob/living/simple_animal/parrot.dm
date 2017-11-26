@@ -59,9 +59,13 @@
 	friendly = "grooms"
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
+<<<<<<< HEAD
 	gold_core_spawnable = 2
 	devourable = TRUE
 	no_vore = FALSE
+=======
+	gold_core_spawnable = FRIENDLY_SPAWN
+>>>>>>> 2abae67... Cleans up goldcore defines (#33090)
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -871,7 +875,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	speak = list("Poly wanna cracker!", ":e Check the crystal, you chucklefucks!",":e Wire the solars, you lazy bums!",":e WHO TOOK THE DAMN HARDSUITS?",":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE")
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	speak_chance = 3
 	var/memory_saved = FALSE
 	var/rounds_survived = 0
@@ -1012,7 +1016,7 @@
 	emote_hear = list("squawks rustily.", "bawks metallically!")
 	emote_see = list("flutters its metal wings.")
 	faction = list("ratvar")
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 	del_on_death = TRUE
 	death_sound = 'sound/magic/clockwork/anima_fragment_death.ogg'
 

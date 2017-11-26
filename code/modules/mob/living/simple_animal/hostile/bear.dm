@@ -36,9 +36,13 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
+<<<<<<< HEAD
 	gold_core_spawnable = 1
 	devourable = TRUE
 	no_vore = FALSE
+=======
+	gold_core_spawnable = HOSTILE_SPAWN
+>>>>>>> 2abae67... Cleans up goldcore defines (#33090)
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson

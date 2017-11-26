@@ -17,6 +17,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
+<<<<<<< HEAD
 	gold_core_spawnable = 2
 	devourable = TRUE
 	var/mob/living/simple_animal/mouse/movement_target
@@ -59,10 +60,13 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
+=======
+	gold_core_spawnable = FRIENDLY_SPAWN
+>>>>>>> 2abae67... Cleans up goldcore defines (#33090)
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
 	gender = FEMALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN

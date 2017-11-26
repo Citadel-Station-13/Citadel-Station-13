@@ -31,7 +31,7 @@
 	var/obj/item/inventory_head
 	var/obj/item/inventory_back
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -42,7 +42,7 @@
 	icon_living = "pug"
 	icon_dead = "pug_dead"
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/pug = 3)
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 
 /mob/living/simple_animal/pet/dog/Initialize()
 	. = ..()
@@ -290,7 +290,7 @@
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 	var/age = 0
 	var/record_age = 1
 	var/memory_saved = FALSE
@@ -438,7 +438,7 @@
 	icon_living = "narsian"
 	icon_dead = "narsian_dead"
 	faction = list("dog", "cult")
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 	nofur = TRUE
 
 /mob/living/simple_animal/pet/dog/corgi/narsie/Life()
@@ -560,7 +560,7 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/puppies = 0
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
 
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
