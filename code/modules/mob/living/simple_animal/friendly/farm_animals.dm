@@ -195,12 +195,8 @@
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-<<<<<<< HEAD
-	gold_core_spawnable = 2
-	devourable = TRUE
-=======
 	gold_core_spawnable = FRIENDLY_SPAWN
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
+	devourable = TRUE
 
 /mob/living/simple_animal/chick/Initialize()
 	. = ..()
