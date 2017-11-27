@@ -48,48 +48,4 @@ Bonus
 		else
 			to_chat(M, "<span class='warning'><i>[pick("So hungry...", "You'd kill someone for a bite of food...", "Hunger cramps seize you...")]</i></span>")
 			M.overeatduration = max(M.overeatduration - 100, 0)
-<<<<<<< HEAD
 			M.nutrition = max(M.nutrition - 100, 0)
-
-/*
-//////////////////////////////////////
-
-Weight Even
-
-	Very Noticable.
-	Decreases resistance.
-	Decreases stage speed.
-	Reduced transmittable.
-	High level.
-
-Bonus
-	Causes the weight of the mob to
-	be even, meaning eating isn't
-	required anymore.
-
-//////////////////////////////////////
-*/
-
-/datum/symptom/weight_even
-
-	name = "Weight Even"
-	desc = "The virus alters the host's metabolism, making it far more efficient then normal, and synthesizing nutrients from normally unedible sources."
-	stealth = -3
-	resistance = -2
-	stage_speed = -2
-	transmittable = -2
-	level = 4
-	symptom_delay_min = 5
-	symptom_delay_max = 5
-
-/datum/symptom/weight_even/Activate(datum/disease/advance/A)
-	if(!..())
-		return
-	var/mob/living/M = A.affected_mob
-	switch(A.stage)
-		if(4, 5)
-			M.overeatduration = 0
-			M.nutrition = NUTRITION_LEVEL_WELL_FED + 50
-=======
-			M.nutrition = max(M.nutrition - 100, 0)
->>>>>>> fbe8889... [Super-Ready for review]Reworks healing symptoms into conditional healing symptoms (#32432)
