@@ -28,13 +28,9 @@
 	response_harm   = "kicks"
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
-<<<<<<< HEAD
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	devourable = TRUE
 	no_vore = FALSE
-=======
-	gold_core_spawnable = FRIENDLY_SPAWN
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
 
 /mob/living/simple_animal/pet/cat/Initialize()
 	. = ..()
