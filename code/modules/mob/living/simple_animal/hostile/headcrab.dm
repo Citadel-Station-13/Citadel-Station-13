@@ -22,11 +22,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/datum/mind/origin
 	var/egg_lain = 0
-<<<<<<< HEAD
-//	gold_core_spawnable = 1 //are you sure about this??
-=======
-	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
+//	gold_core_spawnable = HOSTILE_SPAWN //are you sure about this??
 
 /mob/living/simple_animal/hostile/headcrab/proc/Infect(mob/living/carbon/victim)
 	var/obj/item/organ/body_egg/changeling_egg/egg = new(victim)
