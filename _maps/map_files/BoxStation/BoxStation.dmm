@@ -17888,7 +17888,7 @@
 /area/crew_quarters/kitchen)
 "aSP" = (
 /obj/machinery/smartfridge,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "aSQ" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -47211,6 +47211,7 @@
 /area/engine/engineering)
 "clS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/rnd/protolathe/department/security,
 /turf/open/floor/plasteel/red/side,
 /area/security/main)
 "clT" = (
@@ -48351,6 +48352,9 @@
 	name = "HIGH VOLTAGE";
 	pixel_x = -32
 	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cps" = (
@@ -48560,12 +48564,12 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_smes)
 "cpV" = (
-/obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Engineering Storage";
 	dir = 4;
 	network = list("SS13")
 	},
+/obj/machinery/rnd/protolathe/department/engineering,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpW" = (
@@ -48779,13 +48783,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cqw" = (
-/obj/structure/table,
-/obj/item/stack/sheet/plasteel{
-	amount = 10
-	},
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/rnd/circuit_imprinter,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqx" = (
@@ -48910,6 +48911,9 @@
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
 /obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/plasteel{
+	amount = 10
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cqO" = (
@@ -57610,9 +57614,15 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
 "QoM" = (
+<<<<<<< HEAD
 /obj/structure/grille,
 /turf/open/space/basic,
 /area/space/nearstation)
+=======
+/obj/machinery/rnd/protolathe/department/service,
+/turf/open/floor/plating,
+/area/crew_quarters/kitchen)
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 "QoN" = (
 /obj/structure/grille,
 /turf/open/space/basic,
@@ -57973,6 +57983,7 @@
 	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/ai_monitored/security/armory)
 "QpB" = (
 /obj/structure/closet/secure_closet/lethalshots,
@@ -60346,6 +60357,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+=======
+/area/engine/engineering)
+"QoT" = (
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/plasteel/showroomfloor,
+/area/crew_quarters/kitchen)
+"QoU" = (
+/obj/structure/closet/crate/freezer/surplus_limbs,
+/obj/item/reagent_containers/glass/beaker/synthflesh,
+/turf/open/floor/plasteel/white/side{
+	dir = 8
+	},
+/area/medical/sleeper)
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 
 (1,1,1) = {"
 aaa
@@ -72777,6 +72802,172 @@ aaa
 aaa
 aaa
 aaa
+<<<<<<< HEAD
+=======
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+"}
+(49,1,1) = {"
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 apJ
 apJ
 apJ
@@ -82098,6 +82289,7 @@ bRg
 QsM
 QsU
 bVG
+<<<<<<< HEAD
 Qtm
 Qtx
 QsU
@@ -82109,6 +82301,19 @@ bVG
 QsU
 QuM
 QsM
+=======
+bHE
+bHE
+bHE
+bLv
+aaf
+aoV
+aoV
+aoV
+aoV
+aoV
+bLv
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bLv
 aaa
@@ -82352,6 +82557,7 @@ bLv
 bQa
 bHE
 bHE
+<<<<<<< HEAD
 QsM
 QsV
 Qtc
@@ -82366,6 +82572,22 @@ Qux
 Quu
 QuN
 QsM
+=======
+bCq
+bHE
+bLv
+bLv
+bLv
+bLv
+bLv
+aoV
+aoV
+aoV
+aoV
+aoV
+aaf
+bLv
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bLv
 aaf
@@ -82866,6 +83088,7 @@ bLv
 bHE
 bHE
 bSs
+<<<<<<< HEAD
 QsM
 QsX
 Qte
@@ -82875,6 +83098,17 @@ Qte
 QsU
 Qug
 Qum
+=======
+bCq
+bHE
+bLv
+aoV
+aoV
+aoV
+bcU
+aaf
+aaH
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 cCa
 Quz
 QuH
@@ -83123,6 +83357,7 @@ bCq
 bHE
 bRh
 bLu
+<<<<<<< HEAD
 QsM
 QsY
 Qtf
@@ -83137,6 +83372,22 @@ Quz
 QuH
 QuP
 QsM
+=======
+bCq
+bHE
+bLv
+aaf
+aaf
+aoV
+aoV
+aaH
+bdV
+aaH
+aaf
+aaf
+aaf
+bLv
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bLv
 aaf
@@ -83638,6 +83889,7 @@ bHE
 bLv
 aaa
 bLv
+<<<<<<< HEAD
 Qta
 Qtg
 QsM
@@ -83651,6 +83903,21 @@ QuC
 cCa
 QuQ
 QsM
+=======
+bHE
+bLv
+aoV
+aoV
+aoV
+aoV
+aoV
+aaH
+aaf
+aoV
+aoV
+aoV
+bLv
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bLv
 aaa
@@ -83895,6 +84162,7 @@ bHE
 bLv
 aaf
 bLv
+<<<<<<< HEAD
 Qta
 Qtg
 Qtt
@@ -83908,6 +84176,21 @@ QuD
 QsU
 QsU
 QsM
+=======
+bUt
+bLv
+aaf
+aaf
+aoV
+aoV
+aoV
+aaH
+aoV
+aoV
+aaf
+aaf
+bLv
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bLv
 aaf
@@ -84152,6 +84435,7 @@ bLv
 bCq
 aaa
 bLv
+<<<<<<< HEAD
 Qta
 Qtg
 Qtu
@@ -84165,6 +84449,21 @@ QuE
 QuK
 QuR
 QsM
+=======
+bUs
+bLv
+aoV
+aoV
+aoV
+aoV
+aoV
+aaf
+aoV
+aoV
+aoV
+aoV
+bCq
+>>>>>>> 59dc33d... unkevinz the station maps (#33091)
 bUs
 bCq
 aaa
@@ -95191,7 +95490,7 @@ bvh
 bzS
 bBc
 bCJ
-buk
+QoU
 cCp
 bvd
 bKH
@@ -98018,7 +98317,7 @@ bvj
 bCN
 bEa
 bFA
-bGS
+QoQ
 bIm
 bJD
 bKK
