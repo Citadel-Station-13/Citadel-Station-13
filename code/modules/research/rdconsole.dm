@@ -133,45 +133,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		. = ..()
 	updateUsrDialog()
 
-<<<<<<< HEAD
-=======
-/obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
-	if(!stored_research.available_nodes[id] || stored_research.researched_nodes[id])
-		say("Node unlock failed: Either already researched or not available!")
-		return FALSE
-	var/datum/techweb_node/TN = SSresearch.techweb_nodes[id]
-	if(!istype(TN))
-		say("Node unlock failed: Unknown error.")
-		return FALSE
-	var/price = TN.get_price(stored_research)
-	if(stored_research.research_points >= price)
-		investigate_log("[key_name(user)] researched [id]([price]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
-		if(stored_research == SSresearch.science_tech)
-			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "price" = "[price]", "time" = "[SQLtime()]"))
-		if(stored_research.research_node(SSresearch.techweb_nodes[id]))
-			say("Sucessfully researched [TN.display_name].")
-			var/logname = "Unknown"
-			if(isAI(user))
-				logname = "AI: [user.name]"
-			if(iscarbon(user))
-				var/obj/item/card/id/idcard = user.get_active_held_item()
-				if(istype(idcard))
-					logname = "User: [idcard.registered_name]"
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				var/obj/item/I = H.wear_id
-				if(istype(I))
-					var/obj/item/card/id/ID = I.GetID()
-					if(istype(ID))
-						logname = "User: [ID.registered_name]"
-			stored_research.research_logs += "[logname] researched node id [id] for [price] points."
-			return TRUE
-		else
-			say("Failed to research node: Internal database error!")
-			return FALSE
-	say("Not enough research points...")
-	return FALSE
->>>>>>> b09b1c3... A few investigate_log and message_admin fixes (#32993)
 
 /obj/machinery/computer/rdconsole/on_deconstruction()
 	if(linked_destroy)
