@@ -19,12 +19,8 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
-<<<<<<< HEAD
-	gold_core_spawnable = 2
-	devourable = TRUE
-=======
 	gold_core_spawnable = FRIENDLY_SPAWN
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
+	devourable = TRUE
 
 /mob/living/simple_animal/crab/Life()
 	..()
