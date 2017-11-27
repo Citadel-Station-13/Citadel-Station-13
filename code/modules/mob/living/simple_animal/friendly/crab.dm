@@ -19,7 +19,7 @@
 	ventcrawler = VENTCRAWLER_ALWAYS
 	var/obj/item/inventory_head
 	var/obj/item/inventory_mask
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	devourable = TRUE
 
 /mob/living/simple_animal/crab/Life()
@@ -44,7 +44,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil
 	name = "Evil Crab"
@@ -56,7 +56,7 @@
 	response_help = "pokes"
 	response_disarm = "shoves"
 	response_harm = "stomps"
-	gold_core_spawnable = TRUE
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /mob/living/simple_animal/crab/kreb
 	name = "Kreb"
@@ -68,7 +68,7 @@
 	response_help  = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
-	gold_core_spawnable = FALSE
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/simple_animal/crab/evil/kreb
 	name = "Evil Kreb"

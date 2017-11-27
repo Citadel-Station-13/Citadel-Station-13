@@ -17,7 +17,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	devourable = TRUE
 	var/mob/living/simple_animal/mouse/movement_target
 	var/turns_since_scan = 0
@@ -65,4 +65,4 @@
 	name = "Renault"
 	desc = "Renault, the Captain's trustworthy fox."
 	gender = FEMALE
-	gold_core_spawnable = 0
+	gold_core_spawnable = NO_SPAWN
