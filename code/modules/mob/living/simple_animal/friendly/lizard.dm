@@ -18,12 +18,8 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-<<<<<<< HEAD
-	gold_core_spawnable = 2
-	devourable = TRUE
-=======
 	gold_core_spawnable = FRIENDLY_SPAWN
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
+	devourable = TRUE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	var/static/list/edibles = typecacheof(list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/cockroach)) //list of atoms, however turfs won't affect AI, but will affect consumption.
