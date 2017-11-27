@@ -17,8 +17,7 @@
 	response_help = "pets"
 	response_disarm = "gently pushes aside"
 	response_harm = "kicks"
-<<<<<<< HEAD
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	devourable = TRUE
 	var/mob/living/simple_animal/mouse/movement_target
 	var/turns_since_scan = 0
@@ -60,9 +59,6 @@
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src,movement_target,0,3)
-=======
-	gold_core_spawnable = FRIENDLY_SPAWN
->>>>>>> 2abae67... Cleans up goldcore defines (#33090)
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/Renault
