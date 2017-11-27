@@ -11,9 +11,15 @@
 	for(var/V in D.tech_stored)
 		if(!V)
 			continue
+<<<<<<< HEAD
 		var/datum/tech/tech = V
 		cost += tech.getCost(techLevels[tech.id])
 	return ..() * cost
+=======
+		var/datum/techweb_node/TWN = D.stored_research.researched_nodes[V]
+		cost += TWN.export_price
+	return cost
+>>>>>>> ef0973c... Merge pull request #33063 from kevinz000/patch-394
 
 /datum/export/tech/sell_object(obj/O)
 	..()
