@@ -108,6 +108,7 @@
 	category = list("Mining Designs", "Cyborg Upgrade Modules")
 	req_tech = list("materials" = 12) //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
