@@ -62,8 +62,12 @@
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
+<<<<<<< HEAD
 	origin_tech = "magnets=2;engineering=2"
 	hud_type = DATA_HUD_DIAGNOSTIC
+=======
+	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+>>>>>>> 069f909... Added bot path data huds (#32967)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
