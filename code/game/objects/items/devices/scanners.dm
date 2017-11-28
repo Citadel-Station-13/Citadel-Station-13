@@ -2,10 +2,8 @@
 /*
 CONTAINS:
 T-RAY
-DETECTIVE SCANNER
 HEALTH ANALYZER
 GAS ANALYZER
-MASS SPECTROMETER
 
 */
 /obj/item/device/t_scanner
@@ -395,6 +393,7 @@ MASS SPECTROMETER
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
 
 
+<<<<<<< HEAD
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
@@ -458,6 +457,8 @@ MASS SPECTROMETER
 	details = 1
 	origin_tech = "magnets=4;biotech=3;plasmatech=3"
 
+=======
+>>>>>>> 81fb344... Removes mass-spectrometers (#32965)
 /obj/item/device/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."

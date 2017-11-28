@@ -2,6 +2,7 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+<<<<<<< HEAD
 
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
@@ -23,6 +24,8 @@
 	build_path = /obj/item/device/mass_spectrometer/adv
 	category = list("Medical Designs")
 
+=======
+>>>>>>> 81fb344... Removes mass-spectrometers (#32965)
 /datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
