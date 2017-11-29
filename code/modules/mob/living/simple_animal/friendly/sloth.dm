@@ -19,8 +19,13 @@
 	melee_damage_upper = 18
 	health = 50
 	maxHealth = 50
+<<<<<<< HEAD
 	speed = 2
 	devourable = TRUE
+=======
+	speed = 10
+	glide_size = 2
+>>>>>>> 01ad14d... Makes the sloth an actual sloth (#33131)
 
 
 //Cargo Sloth
