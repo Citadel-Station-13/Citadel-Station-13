@@ -19,9 +19,9 @@
 	melee_damage_upper = 18
 	health = 50
 	maxHealth = 50
-	speed = 2
+	speed = 10
+	glide_size = 2
 	devourable = TRUE
-
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork
