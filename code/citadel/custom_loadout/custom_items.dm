@@ -104,6 +104,15 @@
 	resistance_flags = FLAMMABLE
 	squeak_override = list('sound/misc/server-ready.ogg'= 1)
 
+/obj/item/clothing/neck/cloak/festive
+	name = "Celebratory Cloak of Morozko"
+	desc = " It probably will protect from snow, charcoal or elves."
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "festive"
+	item_state = "festive"
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
 
 /*Zigfie*/
 
