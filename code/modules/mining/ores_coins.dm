@@ -69,36 +69,24 @@
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
-<<<<<<< HEAD
-	icon_state = "Uranium ore"
-	origin_tech = "materials=5"
-=======
 	icon_state = "ore_uranium"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=5"
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
-<<<<<<< HEAD
-	icon_state = "Iron ore"
-	origin_tech = "materials=1"
-=======
 	icon_state = "ore_iron"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=1"
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
-<<<<<<< HEAD
-	icon_state = "Glass ore"
-	origin_tech = "materials=1"
-=======
 	icon_state = "ore_glass"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=1"
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
@@ -148,12 +136,8 @@
 
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
-<<<<<<< HEAD
-	icon_state = "Plasma ore"
-	origin_tech = "plasmatech=2;materials=2"
-=======
 	icon_state = "ore_plasma"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "plasmatech=2;materials=2"
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
@@ -169,60 +153,40 @@
 
 /obj/item/stack/ore/silver
 	name = "silver ore"
-<<<<<<< HEAD
-	icon_state = "Silver ore"
-	origin_tech = "materials=3"
-=======
 	icon_state = "ore_silver"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=3"
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
-<<<<<<< HEAD
-	icon_state = "Gold ore"
-	origin_tech = "materials=4"
-=======
 	icon_state = "ore_gold"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=4"
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
-<<<<<<< HEAD
-	icon_state = "Diamond ore"
-	origin_tech = "materials=6"
-=======
 	icon_state = "ore_diamond"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=6"
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
-<<<<<<< HEAD
-	icon_state = "Clown ore"
-	origin_tech = "materials=4"
-=======
 	icon_state = "ore_clown"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=4"
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
-<<<<<<< HEAD
-	icon_state = "Titanium ore"
-	origin_tech = "materials=4"
-=======
 	icon_state = "ore_titanium"
->>>>>>> 8e1ac57... Ore Stacking (#33062)
+	origin_tech = "materials=4"
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
