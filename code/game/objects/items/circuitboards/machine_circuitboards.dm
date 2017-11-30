@@ -66,9 +66,9 @@
 	build_path = /obj/machinery/launchpad
 	origin_tech = "programming=3;engineering=3;plasmatech=2;bluespace=3"
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/manipulator = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/limbgrower
 	name = "Limb Grower (Machine Board)"
@@ -84,11 +84,11 @@
 	build_path = /obj/machinery/quantumpad
 	origin_tech = "programming=3;engineering=3;plasmatech=3;bluespace=4"
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/capacitor = 1,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/cable_coil = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/recharger
 	name = "Weapon Recharger (Machine Board)"
@@ -197,19 +197,19 @@
 	build_path = /obj/machinery/teleport/hub
 	origin_tech = "programming=3;engineering=4;bluespace=4;materials=4"
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 3,
+		/obj/item/stack/ore/bluespace_crystal = 3,
 		/obj/item/stock_parts/matter_bin = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/teleporter_station
 	name = "Teleporter Station (Machine Board)"
 	build_path = /obj/machinery/teleport/station
 	origin_tech = "programming=4;engineering=4;bluespace=4;plasmatech=3"
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 2,
+		/obj/item/stack/ore/bluespace_crystal = 2,
 		/obj/item/stock_parts/capacitor = 2,
 		/obj/item/stack/sheet/glass = 1)
-	def_components = list(/obj/item/ore/bluespace_crystal = /obj/item/ore/bluespace_crystal/artificial)
+	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/item/circuitboard/machine/vendor
 	name = "Booze-O-Mat Vendor (Machine Board)"
@@ -700,7 +700,7 @@
 	build_path = /obj/machinery/bsa/middle
 	origin_tech = "engineering=2;combat=2;bluespace=2"
 	req_components = list(
-		/obj/item/ore/bluespace_crystal = 20,
+		/obj/item/stack/ore/bluespace_crystal = 20,
 		/obj/item/stack/cable_coil = 2)
 
 /obj/item/circuitboard/machine/bsa/front
