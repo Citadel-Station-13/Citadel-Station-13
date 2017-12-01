@@ -198,6 +198,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
+<<<<<<< HEAD
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
 
@@ -208,6 +209,43 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
 		else
 			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+=======
+	if(!user.research_scanner)
+		return
+
+	// Research prospects, including boostable nodes and point values.
+	// Deliver to a console to know whether the boosts have already been used.
+	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
+	var/sep = ""
+	var/list/boostable_nodes = techweb_item_boost_check(src)
+	if (boostable_nodes)
+		for(var/id in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			research_msg += sep
+			research_msg += node.display_name
+			sep = ", "
+	var/points = techweb_item_point_check(src)
+	if (points)
+		research_msg += sep
+		research_msg += "[points] points"
+		sep = ", "
+
+	if (!sep) // nothing was shown
+		research_msg += "None"
+
+	// Extractable materials. Only shows the names, not the amounts.
+	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
+	if (materials.len)
+		sep = ""
+		for(var/mat in materials)
+			research_msg += sep
+			research_msg += CallMaterialName(mat)
+			sep = ", "
+	else
+		research_msg += "None"
+	research_msg += "."
+	to_chat(user, research_msg.Join())
+>>>>>>> 29c0b4d... Merge pull request #33151 from AutomaticFrenzy/patch/techwebs-ui
 
 
 		if(materials.len)
