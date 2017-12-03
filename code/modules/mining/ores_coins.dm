@@ -68,7 +68,10 @@
 /obj/item/ore/uranium
 	name = "uranium ore"
 	icon_state = "Uranium ore"
+<<<<<<< HEAD
 	origin_tech = "materials=5"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 30
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
@@ -76,7 +79,10 @@
 /obj/item/ore/iron
 	name = "iron ore"
 	icon_state = "Iron ore"
+<<<<<<< HEAD
 	origin_tech = "materials=1"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 1
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/metal
@@ -84,7 +90,10 @@
 /obj/item/ore/glass
 	name = "sand pile"
 	icon_state = "Glass ore"
+<<<<<<< HEAD
 	origin_tech = "materials=1"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 1
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/glass
@@ -135,7 +144,10 @@
 /obj/item/ore/plasma
 	name = "plasma ore"
 	icon_state = "Plasma ore"
+<<<<<<< HEAD
 	origin_tech = "plasmatech=2;materials=2"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 15
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
@@ -152,7 +164,10 @@
 /obj/item/ore/silver
 	name = "silver ore"
 	icon_state = "Silver ore"
+<<<<<<< HEAD
 	origin_tech = "materials=3"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 16
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
@@ -160,7 +175,10 @@
 /obj/item/ore/gold
 	name = "gold ore"
 	icon_state = "Gold ore"
+<<<<<<< HEAD
 	origin_tech = "materials=4"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 18
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
@@ -168,7 +186,10 @@
 /obj/item/ore/diamond
 	name = "diamond ore"
 	icon_state = "Diamond ore"
+<<<<<<< HEAD
 	origin_tech = "materials=6"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 50
 	materials = list(MAT_DIAMOND=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
@@ -176,7 +197,10 @@
 /obj/item/ore/bananium
 	name = "bananium ore"
 	icon_state = "Clown ore"
+<<<<<<< HEAD
 	origin_tech = "materials=4"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 60
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
@@ -184,7 +208,10 @@
 /obj/item/ore/titanium
 	name = "titanium ore"
 	icon_state = "Titanium ore"
+<<<<<<< HEAD
 	origin_tech = "materials=4"
+=======
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 	points = 50
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium

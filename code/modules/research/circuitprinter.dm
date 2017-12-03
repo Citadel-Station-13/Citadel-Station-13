@@ -27,8 +27,13 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 								"Computer Parts"
 								)
 
+<<<<<<< HEAD
 /obj/machinery/r_n_d/circuit_imprinter/Initialize()
 	var/datum/component/material_container/materials = AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
+=======
+/obj/machinery/rnd/circuit_imprinter/Initialize()
+	materials = AddComponent(/datum/component/material_container, list(MAT_GLASS, MAT_GOLD, MAT_DIAMOND, MAT_METAL, MAT_BLUESPACE),
+>>>>>>> 80aad8c... Merge pull request #33165 from MrStonedOne/revert-33062-ore_stacking
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready))
 	materials.precise_insertion = TRUE
 	create_reagents(0)
