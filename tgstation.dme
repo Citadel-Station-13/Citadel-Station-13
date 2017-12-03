@@ -306,7 +306,6 @@
 #include "code\datums\progressbar.dm"
 #include "code\datums\radiation_wave.dm"
 #include "code\datums\recipe.dm"
-#include "code\datums\riding.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\shuttles.dm"
 #include "code\datums\soullink.dm"
@@ -339,6 +338,7 @@
 #include "code\datums\components\paintable.dm"
 #include "code\datums\components\rad_insulation.dm"
 #include "code\datums\components\radioactive.dm"
+#include "code\datums\components\riding.dm"
 #include "code\datums\components\signal_redirect.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spooky.dm"
@@ -2381,15 +2381,22 @@
 #include "code\modules\tgui\states\self.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tooltip\tooltip.dm"
+<<<<<<< HEAD
 #include "code\modules\uplink\uplink.dm"
 #include "code\modules\uplink\uplink_item.dm"
 #include "code\modules\uplink\uplink_item_cit.dm"
+=======
+#include "code\modules\vehicles\_vehicle.dm"
+>>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
+#include "code\modules\vehicles\entered.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"
+#include "code\modules\vehicles\ridden.dm"
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\secway.dm"
 #include "code\modules\vehicles\speedbike.dm"
+<<<<<<< HEAD
 #include "code\modules\vehicles\vehicle.dm"
 #include "code\modules\vore\hook-defs_vr.dm"
 #include "code\modules\vore\trycatch_vr.dm"
@@ -2399,6 +2406,10 @@
 #include "code\modules\vore\eating\simple_animal_vr.dm"
 #include "code\modules\vore\eating\vore_vr.dm"
 #include "code\modules\vore\eating\vorepanel_vr.dm"
+=======
+#include "code\modules\vehicles\vehicle_actions.dm"
+#include "code\modules\vehicles\vehicle_key.dm"
+>>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 #include "code\modules\VR\vr_human.dm"
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
