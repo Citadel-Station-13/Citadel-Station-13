@@ -242,12 +242,8 @@
 	icon_state = "tube-empty"
 	start_with_cell = FALSE
 
-<<<<<<< HEAD
-/obj/machinery/light/built/New()
-=======
 /obj/machinery/light/built/Initialize()
 	. = ..()
->>>>>>> fe816da... Adds emergency lights, built into light fixtures (#33213)
 	status = LIGHT_EMPTY
 	update(0)
 	..()
@@ -262,15 +258,10 @@
 
 
 // create a new lighting fixture
-<<<<<<< HEAD
-/obj/machinery/light/New()
-	..()
-=======
 /obj/machinery/light/Initialize()
 	. = ..()
 	if(start_with_cell && !no_emergency)
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
->>>>>>> fe816da... Adds emergency lights, built into light fixtures (#33213)
 	spawn(2)
 		switch(fitting)
 			if("tube")
