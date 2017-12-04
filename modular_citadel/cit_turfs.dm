@@ -22,8 +22,11 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 				"asteroid" = list('modular_citadel/sound/footstep/asteroid1.ogg','modular_citadel/sound/footstep/asteroid2.ogg','modular_citadel/sound/footstep/asteroid3.ogg','modular_citadel/sound/footstep/asteroid4.ogg','modular_citadel/sound/footstep/asteroid5.ogg')
 				))
 
+/turf/open
+	var/footstepsounds
+
 /turf/open/floor
-	var/footstepsounds = "floor"
+	footstepsounds = "floor"
 
 /turf/open/floor/plating
 	footstepsounds = "plating"
@@ -32,6 +35,9 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 	footstepsounds = "wood"
 
 /turf/open/floor/plating/asteroid
+	footstepsounds = "asteroid"
+
+/turf/open/floor/plating/dirt
 	footstepsounds = "asteroid"
 
 /turf/open/floor/grass
@@ -64,9 +70,13 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 /turf/open/floor/Entered(atom/obj, atom/oldloc)
 	. = ..()
 	CitDirtify(obj, oldloc)
-	CitFootstep(obj)
 
-//Baystation-styled tile dirtification. Except 31 lines more complex than it probably has to be.
+/mob/living/Move(atom/newloc, direct)
+	. = ..()
+	if(makesfootstepsounds)
+		CitFootstep(newloc)
+
+//Baystation-styled tile dirtification.
 /turf/open/floor/proc/CitDirtify(atom/obj, atom/oldloc)
 	if(prob(50))
 		if(has_gravity(src) && !isobserver(obj))
@@ -81,47 +91,24 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 				var/obj/effect/decal/cleanable/dirt/spreadindirt = locate(/obj/effect/decal/cleanable/dirt, oldloc)
 				if(spreadindirt && spreadindirt.alpha)
 					dirtamount += round(spreadindirt.alpha * 0.05)
-			dirtamount = min(dirtamount,255)
-			var/mob/living/carbon/human/H = obj
-			if(H && istype(H, /mob/living/carbon/human))
-				var/obj/item/clothing/shoes/S = H.shoes
-				if(S && !(S.blood_state == BLOOD_STATE_NOT_BLOODY))
-					if(!dirt.atom_colours || !dirt.atom_colours.len)
-						dirt.add_atom_colour(color_matrix_identity(), FIXED_COLOUR_PRIORITY)
-					var/list/origdirtcolor = dirt.atom_colours[FIXED_COLOUR_PRIORITY]
-					var/list/colordirt = color_matrix_identity()
-					switch(S.blood_state)
-						if(BLOOD_STATE_HUMAN)
-							dirt.remove_atom_colour(FIXED_COLOUR_PRIORITY)
-							colordirt = list(0,0,0,0, 0,-0.15,0,0, 0,0,-0.15,0, 0,0,0,0, 0,0,0,0)
-							dirt.add_atom_colour(color_matrix_add(origdirtcolor, colordirt), FIXED_COLOUR_PRIORITY)
-							dirt.alpha = dirtamount
-						if(BLOOD_STATE_XENO)
-							dirt.remove_atom_colour(FIXED_COLOUR_PRIORITY)
-							colordirt = list(-0.15,0,0,0, 0,0,0,0, 0,0,-0.15,0, 0,0,0,0, 0,0,0,0)
-							dirt.add_atom_colour(color_matrix_add(origdirtcolor, colordirt), FIXED_COLOUR_PRIORITY)
-						if(BLOOD_STATE_OIL)
-							dirt.remove_atom_colour(FIXED_COLOUR_PRIORITY)
-							colordirt = list(-0.15,0,0,0, 0,-0.15,0,0, 0,0,-0.15,0, 0,0,0,0, 0,0,0,0)
-							dirt.add_atom_colour(color_matrix_add(origdirtcolor, colordirt), FIXED_COLOUR_PRIORITY)
-			dirt.alpha = dirtamount
+			dirt.alpha = min(dirtamount,255)
 	return TRUE
 
 //The proc that handles footsteps! It's pure, unfiltered spaghetti code.
-/turf/open/floor/proc/CitFootstep(atom/obj)
-	if(obj && has_gravity(src) && footstepsounds && istype(obj, /mob/living))
-		var/mob/living/steppingman = obj
-		steppingman.footstepcount++
-		if(steppingman && steppingman.makesfootstepsounds && steppingman.m_intent == MOVE_INTENT_RUN && steppingman.canmove && steppingman.footstepcount >= 3)
-			steppingman.footstepcount = 0
+/mob/living/proc/CitFootstep(turf/open/floor)
+	if(floor && istype(floor,/turf/open) && floor.footstepsounds)
+		if(has_gravity(floor) || prob(25))
+			footstepcount++
+		if(canmove && !lying && !buckled && makesfootstepsounds && m_intent == MOVE_INTENT_RUN && footstepcount >= 3)
+			footstepcount = 0
 			var/overriddenfootstepsound
-			if(obj.footstepsoundoverride)
-				if(isfile(obj.footstepsoundoverride))
-					overriddenfootstepsound = list(obj.footstepsoundoverride)
+			if(footstepsoundoverride)
+				if(isfile(footstepsoundoverride))
+					overriddenfootstepsound = list(footstepsoundoverride)
 				else
-					overriddenfootstepsound = obj.footstepsoundoverride
-			if(!overriddenfootstepsound && istype(obj, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = obj
+					overriddenfootstepsound = footstepsoundoverride
+			if(!overriddenfootstepsound && istype(src, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = src
 				if(H && H.shoes)
 					var/obj/item/clothing/shoes/S = H.shoes
 					if(S && S.footstepsoundoverride)
@@ -129,9 +116,9 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 							overriddenfootstepsound = list(S.footstepsoundoverride)
 						else
 							overriddenfootstepsound = S.footstepsoundoverride
-			if(!overriddenfootstepsound)
+			if(!overriddenfootstepsound && floor.contents)
 				var/objschecked
-				for(var/atom/childobj in contents)
+				for(var/atom/childobj in floor.contents)
 					if(childobj.footstepsoundoverride && childobj.invisibility < INVISIBILITY_MAXIMUM)
 						if(isfile(childobj.footstepsoundoverride))
 							overriddenfootstepsound = list(childobj.footstepsoundoverride)
@@ -141,4 +128,4 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 					objschecked++
 					if(objschecked >= 25)
 						break //walking on 50k foam darts didn't crash the server during my testing, but its better to be safe than sorry
-			playsound(src,(overriddenfootstepsound ? (islist(overriddenfootstepsound) ? pick(overriddenfootstepsound) : pick(GLOB.turf_footstep_sounds[overriddenfootstepsound])) : (islist(footstepsounds) ? pick(footstepsounds) : pick(GLOB.turf_footstep_sounds[footstepsounds]))),50, 1)
+			playsound(src,(overriddenfootstepsound ? (islist(overriddenfootstepsound) ? pick(overriddenfootstepsound) : pick(GLOB.turf_footstep_sounds[overriddenfootstepsound])) : (islist(floor.footstepsounds) ? pick(floor.footstepsounds) : pick(GLOB.turf_footstep_sounds[floor.footstepsounds]))),50, 1)
