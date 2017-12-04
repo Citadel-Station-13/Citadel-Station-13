@@ -18,7 +18,7 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
-	gold_core_spawnable = 2
+	gold_core_spawnable = FRIENDLY_SPAWN
 	devourable = TRUE
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE

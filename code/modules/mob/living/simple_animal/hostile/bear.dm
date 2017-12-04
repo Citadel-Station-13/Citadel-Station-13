@@ -36,7 +36,7 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	devourable = TRUE
 	no_vore = FALSE
 
