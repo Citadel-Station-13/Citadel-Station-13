@@ -2376,12 +2376,6 @@
 #include "code\modules\tgui\states\self.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tooltip\tooltip.dm"
-<<<<<<< HEAD
-#include "code\modules\uplink\uplink.dm"
-#include "code\modules\uplink\uplink_item.dm"
-#include "code\modules\uplink\uplink_item_cit.dm"
-=======
->>>>>>> ccd4981... Merge pull request #32624 from kevinz000/component_uplinks
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\pimpin_ride.dm"
@@ -2407,4 +2401,5 @@
 #include "interface\skin.dmf"
 #include "modular_citadel\cit_medkits.dm"
 #include "modular_citadel\cit_screenshake.dm"
+#include "modular_citadel\code\datums\uplink_items_cit.dm"
 // END_INCLUDE
