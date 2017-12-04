@@ -187,7 +187,6 @@
 			var/datum/component/C = I
 			if(!C.enabled)
 				continue
-			var/list/sps = C.signal_procs
 			var/datum/callback/CB = C.signal_procs[sigtype]
 			if(!CB)
 				continue
