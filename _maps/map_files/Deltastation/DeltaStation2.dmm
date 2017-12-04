@@ -22746,7 +22746,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/quartermaster/storage)
+=======
+/area/quartermaster/office)
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 "aVH" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -23603,7 +23607,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+<<<<<<< HEAD
 /area/quartermaster/storage)
+=======
+/area/quartermaster/office)
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 "aXr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -104801,13 +104809,53 @@
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/aft)
 "eht" = (
+<<<<<<< HEAD
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/quartermaster/office)
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 "ehu" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
+=======
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/hallway/secondary/service)
+"ehI" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -26
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/clipboard,
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
+/area/hallway/secondary/service)
+"ehJ" = (
+/obj/effect/turf_decal/stripes/box,
+/obj/machinery/rnd/protolathe/department/cargo,
+/turf/open/floor/plasteel/brown,
+/area/quartermaster/office)
+"ehK" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
+	},
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/glass_security{
 	name = "Security Desk";
@@ -136745,7 +136793,11 @@ aaO
 aaO
 aaO
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaa
 aad
@@ -140593,14 +140645,22 @@ aaa
 aad
 aaa
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaO
 aaO
 aaO
 aaO
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaa
 aad
@@ -142135,14 +142195,22 @@ aaa
 aad
 aaa
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaO
 aaO
 aaO
 aaO
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaa
 aad
@@ -145117,13 +145185,21 @@ aaa
 dSU
 dVl
 dSU
+<<<<<<< HEAD
 dVl
+=======
+ehM
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 dSU
 aad
 aad
 aad
 dSU
+<<<<<<< HEAD
 dVl
+=======
+ehM
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 eek
 eeT
 eek
@@ -145219,14 +145295,22 @@ aaa
 aad
 aaa
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaO
 aaO
 aaO
 aaO
 aaO
+<<<<<<< HEAD
 aeb
+=======
+ehy
+>>>>>>> 8c3a237... Merge pull request #33183 from Okand37/deltacargopowerfix
 aaO
 aaa
 aad
