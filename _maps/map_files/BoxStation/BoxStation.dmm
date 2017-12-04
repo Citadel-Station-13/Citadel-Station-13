@@ -33081,7 +33081,7 @@
 /obj/machinery/camera{
 	c_tag = "Custodial Closet"
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /turf/open/floor/plasteel,
 /area/janitor)
 "bDL" = (
@@ -57645,7 +57645,7 @@
 /area/space/nearstation)
 "QoV" = (
 /obj/structure/window/reinforced,
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/machinery/door/window/eastleft{
 	name = "Secway Docking Port"
@@ -57655,7 +57655,7 @@
 /area/security/main)
 "QoW" = (
 /obj/structure/window/reinforced,
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/machinery/door/window/eastleft{
 	name = "Secway Docking Port"

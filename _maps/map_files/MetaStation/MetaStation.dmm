@@ -8769,7 +8769,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -29270,7 +29270,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/item/key/janitor,
 /turf/open/floor/plating,
 /area/janitor)
