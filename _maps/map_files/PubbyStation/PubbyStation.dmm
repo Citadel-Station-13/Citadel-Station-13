@@ -5716,7 +5716,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "apA" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -14612,7 +14611,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKo" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -24725,7 +24723,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "biB" = (
@@ -32699,8 +32696,8 @@
 /area/science/lab)
 "bAq" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/manipulator,
@@ -47954,8 +47951,8 @@
 /area/tcommsat/server)
 "cnw" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/micro_laser,
 /turf/open/floor/plasteel/dark/telecomms,

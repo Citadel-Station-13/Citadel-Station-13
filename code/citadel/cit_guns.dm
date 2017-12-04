@@ -215,7 +215,7 @@
 	damage = 15
 	armour_penetration = 10
 	light_range = 2
-	speed = 1.2
+	speed = 0.6
 	range = 25
 	light_color = LIGHT_COLOR_RED
 
@@ -224,10 +224,10 @@
 	icon_state = "magjectile-nl"
 	damage = 1
 	knockdown = 0
-	stamina = 30
+	stamina = 25
 	armour_penetration = -10
 	light_range = 2
-	speed = 1.2
+	speed = 0.7
 	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
@@ -257,7 +257,7 @@
 	origin_tech = "magnets=5"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
 	caliber = "mags"
-	max_ammo = 7
+	max_ammo = 15
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
@@ -279,7 +279,7 @@
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
 	casing_ejector = 0
-	fire_delay = 5
+	fire_delay = 2
 	origin_tech = "combat=4;magnets=4"
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
@@ -389,7 +389,7 @@
 	damage = 20
 	armour_penetration = 25
 	light_range = 3
-	speed = 1.2
+	speed = 0.7
 	range = 35
 	light_color = LIGHT_COLOR_RED
 
@@ -398,10 +398,10 @@
 	icon_state = "magjectile-large-nl"
 	damage = 0
 	knockdown = 0
-	stamina = 35
+	stamina = 20
 	armour_penetration = -10
 	light_range = 3
-	speed = 1.0
+	speed = 0.65
 	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
@@ -430,7 +430,7 @@
 	origin_tech = "magnets=6"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 15
+	max_ammo = 27
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
@@ -439,6 +439,7 @@
 	icon_state = "mediummagmag"
 	origin_tech = "combat=6"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
+	max_ammo = 21
 
 ///the gun itself///
 
@@ -455,7 +456,7 @@
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	spread = 30
+	spread = 20
 	recoil = 1
 	casing_ejector = 0
 

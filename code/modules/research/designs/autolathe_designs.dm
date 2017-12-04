@@ -123,14 +123,6 @@
 	build_path = /obj/item/storage/toolbox
 	category = list("initial","Tools")
 
-/datum/design/console_screen
-	name = "Console Screen"
-	id = "console_screen"
-	build_type = AUTOLATHE
-	materials = list(MAT_GLASS = 200)
-	build_path = /obj/item/stock_parts/console_screen
-	category = list("initial", "Electronics")
-
 /datum/design/apc_board
 	name = "APC Module"
 	id = "power control"
@@ -806,4 +798,12 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
+	category = list("initial", "Misc")
+
+/datum/design/holodisk
+	name = "Holodisk"
+	id = "holodisk"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
