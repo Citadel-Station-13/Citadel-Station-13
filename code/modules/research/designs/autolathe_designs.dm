@@ -799,3 +799,11 @@
 	materials = list(MAT_METAL = 300, MAT_GLASS = 200)
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
+
+/datum/design/holodisk
+	name = "Holodisk"
+	id = "holodisk"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/disk/holodisk
+	category = list("initial", "Misc")
