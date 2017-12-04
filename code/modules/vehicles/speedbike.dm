@@ -15,11 +15,7 @@
 	var/overlay_state = "cover_blue"
 	var/mutable_appearance/overlay
 
-<<<<<<< HEAD
-/obj/vehicle/space/speedbike/New()
-=======
 /obj/vehicle/ridden/space/speedbike/Initialize()
->>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 	. = ..()
 	overlay = mutable_appearance(icon, overlay_state, ABOVE_MOB_LAYER)
 	add_overlay(overlay)
