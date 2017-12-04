@@ -8766,14 +8766,10 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "asy" = (
-<<<<<<< HEAD
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/vehicle/secway,
-=======
 /obj/vehicle/ridden/secway,
->>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10

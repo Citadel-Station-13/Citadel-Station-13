@@ -818,7 +818,6 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "aci" = (
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
 	name = "Armoury Shutter"
@@ -826,10 +825,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
-=======
-/obj/vehicle/ridden/secway,
-/turf/open/floor/plasteel/dark,
->>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/machinery/light{
@@ -57650,7 +57645,7 @@
 /area/space/nearstation)
 "QoV" = (
 /obj/structure/window/reinforced,
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/machinery/door/window/eastleft{
 	name = "Secway Docking Port"
@@ -57660,7 +57655,7 @@
 /area/security/main)
 "QoW" = (
 /obj/structure/window/reinforced,
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/machinery/door/window/eastleft{
 	name = "Secway Docking Port"
