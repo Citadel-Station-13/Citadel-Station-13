@@ -307,9 +307,12 @@
 #include "code\datums\radiation_wave.dm"
 #include "code\datums\recipe.dm"
 #include "code\datums\ruins.dm"
+#include "code\datums\saymode.dm"
 #include "code\datums\shuttles.dm"
 #include "code\datums\soullink.dm"
 #include "code\datums\spawners_menu.dm"
+#include "code\datums\uplink_items.dm"
+#include "code\datums\uplink_purchase_log.dm"
 #include "code\datums\verbs.dm"
 #include "code\datums\weakrefs.dm"
 #include "code\datums\world_topic.dm"
@@ -344,6 +347,7 @@
 #include "code\datums\components\spooky.dm"
 #include "code\datums\components\squeek.dm"
 #include "code\datums\components\thermite.dm"
+#include "code\datums\components\uplink.dm"
 #include "code\datums\diseases\_disease.dm"
 #include "code\datums\diseases\_MobProcs.dm"
 #include "code\datums\diseases\anxiety.dm"
@@ -388,6 +392,7 @@
 #include "code\datums\diseases\advance\symptoms\shivering.dm"
 #include "code\datums\diseases\advance\symptoms\skin.dm"
 #include "code\datums\diseases\advance\symptoms\sneeze.dm"
+#include "code\datums\diseases\advance\symptoms\species.dm"
 #include "code\datums\diseases\advance\symptoms\symptoms.dm"
 #include "code\datums\diseases\advance\symptoms\viral.dm"
 #include "code\datums\diseases\advance\symptoms\vision.dm"
@@ -915,6 +920,7 @@
 #include "code\game\objects\items\devices\taperecorder.dm"
 #include "code\game\objects\items\devices\traitordevices.dm"
 #include "code\game\objects\items\devices\transfer_valve.dm"
+#include "code\game\objects\items\devices\uplink_devices.dm"
 #include "code\game\objects\items\devices\PDA\cart.dm"
 #include "code\game\objects\items\devices\PDA\PDA.dm"
 #include "code\game\objects\items\devices\PDA\PDA_types.dm"
@@ -2381,13 +2387,10 @@
 #include "code\modules\tgui\states\self.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tooltip\tooltip.dm"
-<<<<<<< HEAD
 #include "code\modules\uplink\uplink.dm"
 #include "code\modules\uplink\uplink_item.dm"
 #include "code\modules\uplink\uplink_item_cit.dm"
-=======
 #include "code\modules\vehicles\_vehicle.dm"
->>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\entered.dm"
@@ -2396,8 +2399,8 @@
 #include "code\modules\vehicles\scooter.dm"
 #include "code\modules\vehicles\secway.dm"
 #include "code\modules\vehicles\speedbike.dm"
-<<<<<<< HEAD
-#include "code\modules\vehicles\vehicle.dm"
+#include "code\modules\vehicles\vehicle_actions.dm"
+#include "code\modules\vehicles\vehicle_key.dm"
 #include "code\modules\vore\hook-defs_vr.dm"
 #include "code\modules\vore\trycatch_vr.dm"
 #include "code\modules\vore\eating\belly_vr.dm"
@@ -2406,10 +2409,6 @@
 #include "code\modules\vore\eating\simple_animal_vr.dm"
 #include "code\modules\vore\eating\vore_vr.dm"
 #include "code\modules\vore\eating\vorepanel_vr.dm"
-=======
-#include "code\modules\vehicles\vehicle_actions.dm"
-#include "code\modules\vehicles\vehicle_key.dm"
->>>>>>> 5182128... refactors riding datums to a component, vehicle refactor staging for mech overhaul (#32249)
 #include "code\modules\VR\vr_human.dm"
 #include "code\modules\VR\vr_sleeper.dm"
 #include "code\modules\zombie\items.dm"
@@ -2421,4 +2420,5 @@
 #include "modular_citadel\cit_medkits.dm"
 #include "modular_citadel\cit_screenshake.dm"
 #include "modular_citadel\polychromic_clothes.dm"
+#include "modular_citadel\code\datums\uplink_items_cit.dm"
 // END_INCLUDE

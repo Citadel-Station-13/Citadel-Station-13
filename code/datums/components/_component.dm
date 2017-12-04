@@ -1,5 +1,5 @@
 /datum/component
-	var/enabled = TRUE
+	var/enabled = FALSE
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	var/dupe_type
 	var/list/signal_procs
@@ -24,7 +24,7 @@
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
 		qdel(src, TRUE, TRUE)
 		return
-	
+
 	_CheckDupesAndJoinParent(P)
 
 /datum/component/proc/_CheckDupesAndJoinParent()
@@ -53,12 +53,12 @@
 	if(!old)
 		//let the others know
 		P.SendSignal(COMSIG_COMPONENT_ADDED, src)
-	
+
 	//lazy init the parent's dc list
 	var/list/dc = P.datum_components
 	if(!dc)
 		P.datum_components = dc = list()
-	
+
 	//set up the typecache
 	var/our_type = type
 	for(var/I in _GetInverseTypeList(our_type))
@@ -122,7 +122,7 @@
 	if(!procs)
 		procs = list()
 		signal_procs = procs
-	
+
 	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
 		if(!override)
@@ -133,6 +133,8 @@
 		if(!istype(proc_or_callback, /datum/callback)) //if it wasnt a callback before, it is now
 			proc_or_callback = CALLBACK(src, proc_or_callback)
 		procs[sig_type] = proc_or_callback
+	
+	enabled = TRUE
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
@@ -172,8 +174,7 @@
 		var/datum/component/C = target
 		if(!C.enabled)
 			return NONE
-		var/list/sps = C.signal_procs
-		var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+		var/datum/callback/CB = C.signal_procs[sigtype]
 		if(!CB)
 			return NONE
 		. = CB.InvokeAsync(arglist(arguments))
@@ -185,9 +186,8 @@
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
-				continue			
-			var/list/sps = C.signal_procs
-			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
+				continue
+			var/datum/callback/CB = C.signal_procs[sigtype]
 			if(!CB)
 				continue
 			var/retval = CB.InvokeAsync(arglist(arguments))
@@ -264,3 +264,6 @@
 			target.TakeComponent(I)
 	else
 		target.TakeComponent(comps)
+
+/datum/component/ui_host()
+	return parent

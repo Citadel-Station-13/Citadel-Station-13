@@ -110,6 +110,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "festive-w"
 	item_state = "festive-i"
+	icon = 'icons/obj/custom.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
