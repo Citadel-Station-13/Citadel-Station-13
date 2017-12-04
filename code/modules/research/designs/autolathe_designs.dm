@@ -800,6 +800,14 @@
 	build_path = /obj/item/device/slime_scanner
 	category = list("initial", "Misc")
 
+/datum/design/miniature_power_cell
+	name = "Light Fixture Battery"
+	id = "miniature_power_cell"
+	build_type = AUTOLATHE
+	materials = list(MAT_GLASS = 20)
+	build_path = /obj/item/stock_parts/cell/emergency_light
+	category = list("initial", "Electronics")
+
 /datum/design/holodisk
 	name = "Holodisk"
 	id = "holodisk"
