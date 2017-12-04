@@ -186,14 +186,8 @@
 		for(var/I in target)
 			var/datum/component/C = I
 			if(!C.enabled)
-<<<<<<< HEAD
-				continue			
-			var/list/sps = C.signal_procs
-			var/datum/callback/CB = LAZYACCESS(sps, sigtype)
-=======
 				continue
 			var/datum/callback/CB = C.signal_procs[sigtype]
->>>>>>> 4e01bba... SendSignal optimization (#33220)
 			if(!CB)
 				continue
 			var/retval = CB.InvokeAsync(arglist(arguments))
