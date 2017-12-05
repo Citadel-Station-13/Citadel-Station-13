@@ -17,7 +17,7 @@
 	name = "Kiara's Cloak"
 	desc = "The design on this seems a little too familiar."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "infcloak"
+	icon_state = "infcloak-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "infcloak-w"
 	w_class = WEIGHT_CLASS_SMALL
@@ -27,7 +27,7 @@
 	name = "Kiara's Collar"
 	desc = "A soft black collar that seems to stretch to fit whoever wears it."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "infcollar"
+	icon_state = "infcollar-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "infcollar-w"
 	item_color = null
@@ -62,7 +62,7 @@
 /obj/item/clothing/neck/scarf/zomb //Default white color, same functionality as beanies.
 	name = "A special scarf"
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "zombscarf"
+	icon_state = "zombscarf-i"
 	desc = "A fashionable collar"
 	icon_override = 'icons/obj/custom.dmi'
 	item_color = "zombscarf-w"
@@ -72,7 +72,7 @@
 	name = "\improper The Mad's labcoat"
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "labred"
+	icon_state = "labred-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "labred-w"
 
@@ -95,7 +95,7 @@
 	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/obj/custom.dmi'
-	icon_state = "carrotcloak"
+	icon_state = "carrotcloak-i"
 	item_state = "carrotcloak-w"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -115,9 +115,9 @@
 	name = "Celebratory Cloak of Morozko"
 	desc = " It probably will protect from snow, charcoal or elves."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "festive-w"
-	item_state = "festive-i"
-	icon = 'icons/obj/custom.dmi'
+	icon_state = "festive-i"
+	item_state = "festive-w"
+	icon_override = 'icons/obj/custom.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -127,7 +127,7 @@
 /obj/item/clothing/mask/luchador/zigfie
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "lucharzigfie"
+	icon_state = "lucharzigfie-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "lucharzigfie-w"
 
@@ -168,7 +168,7 @@
 	name = "Reece's Great Coat"
 	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "hos-g"
+	icon_state = "hos-g-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "hos-g-w"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
@@ -188,7 +188,7 @@
 	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker-w"
 	icon_override = 'icons/obj/custom.dmi'
-	icon_state = "stalker"
+	icon_state = "stalker-i"
 
 
 /*Sylas*/
@@ -196,7 +196,7 @@
 	name = "collar"
 	desc = "It's a collar..."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "petcollar-stripe"
+	icon_state = "petcollar-stripe-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "petcollar-stripe-w"
 	tagname = null
@@ -207,10 +207,10 @@
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "singer"
+	icon_state = "singer-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "singer-w"
-	item_color = "singer"
+	item_color = "singer-i"
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
@@ -218,7 +218,7 @@
 
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "pink"
+	icon_state = "pink-i"
 	icon_override = 'icons/obj/custom.dmi'
 	item_state = "pink-w"
 
@@ -228,10 +228,10 @@
 /obj/item/clothing/suit/vermillion
 	name = "vermillion clothing"
 	desc = "Some clothing."
-	icon_state = "vermillion-w"
-	item_state = "vermillion-i"
+	icon_state = "vermillion-i"
+	item_state = "vermillion-w"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/obj/custom.dmi'
 
 
 
