@@ -28,9 +28,10 @@
 	var/smoke_radius = 5
 	var/notified = FALSE
 
-/obj/item/integrated_circuit/reagent/smoke/on_reagent_change()
-	//reset warning
-	notified = FALSE
+/obj/item/integrated_circuit/reagent/smoke/on_reagent_change(changetype)
+	//reset warning only if we have reagents now
+	if(changetype == ADD_REAGENT)
+		notified = FALSE
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -48,7 +49,6 @@
 	if(S)
 		S.set_up(reagents, smoke_radius, location, notified)
 		if(!notified)
-			//we have now notified
 			notified = TRUE
 		S.start()
 
@@ -83,7 +83,7 @@
 	..()
 
 
-/obj/item/integrated_circuit/reagent/injector/on_reagent_change()
+/obj/item/integrated_circuit/reagent/injector/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
@@ -263,7 +263,7 @@
 	push_data()
 	..()
 
-/obj/item/integrated_circuit/reagent/storage/on_reagent_change()
+/obj/item/integrated_circuit/reagent/storage/on_reagent_change(changetype)
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 

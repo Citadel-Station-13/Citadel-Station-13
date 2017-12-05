@@ -510,7 +510,7 @@
 		if(icon_vend) //Show the vending animation if needed
 			flick(icon_vend,src)
 		new R.product_path(get_turf(src))
-		SSblackbox.add_details("vending_machine_usage","[type]|[R.product_path]")
+		SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 		vend_ready = 1
 		return
 
@@ -1066,7 +1066,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/crowbar = 12, /obj/item/wirecutters = 12, /obj/item/device/multitool = 12, /obj/item/wrench = 12, /obj/item/device/t_scanner = 12,
 					/obj/item/stock_parts/cell = 8, /obj/item/weldingtool = 8, /obj/item/clothing/head/welding = 8,
 					/obj/item/light/tube = 10, /obj/item/clothing/suit/fire = 4, /obj/item/stock_parts/scanning_module = 5, /obj/item/stock_parts/micro_laser = 5,
-					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5, /obj/item/stock_parts/console_screen = 5)
+					/obj/item/stock_parts/matter_bin = 5, /obj/item/stock_parts/manipulator = 5)
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 

@@ -15,7 +15,7 @@
 	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
 
-/obj/item/reagent_containers/food/drinks/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
 	if (gulp_size < 5)
 		gulp_size = 5
 	else
@@ -209,7 +209,7 @@
 	item_state = "coffee"
 	spillable = TRUE
 
-/obj/item/reagent_containers/food/drinks/mug/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/mug/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = "tea"
 	else
@@ -261,7 +261,7 @@
 	spillable = TRUE
 	isGlass = FALSE
 
-/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/on_reagent_change(changetype)
 	if(reagents.total_volume)
 		icon_state = "water_cup"
 	else
@@ -289,7 +289,7 @@
 	transfer_fingerprints_to(B)
 	qdel(src)
 
-/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change()
+/obj/item/reagent_containers/food/drinks/sillycup/smallcarton/on_reagent_change(changetype)
 	if (reagents.reagent_list.len)
 		switch(reagents.get_master_reagent_id())
 			if("orangejuice")

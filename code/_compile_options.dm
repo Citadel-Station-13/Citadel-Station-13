@@ -35,7 +35,7 @@
 #define MAX_CHARTER_LEN			80
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN				17	//youngest a character can be
+#define AGE_MIN				18	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
@@ -79,5 +79,5 @@
 
 //Update this whenever the db schema changes
 //make sure you add an update to the schema_version stable in the db changelog
-#define DB_MAJOR_VERSION 3
-#define DB_MINOR_VERSION 4
+#define DB_MAJOR_VERSION 4
+#define DB_MINOR_VERSION 0
