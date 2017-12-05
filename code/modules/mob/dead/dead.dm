@@ -13,6 +13,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 	if(CONFIG_GET(string/cross_server_address))
 		verbs += /mob/dead/proc/server_hop
+	set_focus(src)
 	return INITIALIZE_HINT_NORMAL
 
 /mob/dead/dust()	//ghosts can't be vaporised.
