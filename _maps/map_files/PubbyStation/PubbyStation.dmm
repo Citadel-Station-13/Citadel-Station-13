@@ -50614,11 +50614,6 @@
 /area/library)
 "czr" = (
 /obj/structure/table/wood/fancy,
-/obj/item/toy/cards/deck/cas/black{
-	pixel_x = -2;
-	pixel_y = 6
-	},
-/obj/item/toy/cards/deck/cas,
 /turf/open/floor/carpet,
 /area/library)
 "czs" = (
@@ -51326,6 +51321,29 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/department/chapel/monastery)
+<<<<<<< HEAD
+=======
+"cCS" = (
+/obj/machinery/rnd/protolathe/department/security,
+/turf/open/floor/plasteel/dark,
+/area/security/main)
+"cCT" = (
+/obj/machinery/rnd/protolathe/department/cargo,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
+"cCU" = (
+/obj/machinery/rnd/circuit_imprinter,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cCV" = (
+/obj/machinery/rnd/protolathe/department/engineering,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
+"cCW" = (
+/obj/machinery/vending/games,
+/turf/open/floor/plasteel/dark,
+/area/library)
+>>>>>>> dd67e1e...  Good Clean Fun: A vending machine for games! (#33265)
 
 (1,1,1) = {"
 aaa
@@ -67341,7 +67359,7 @@ aaa
 aiu
 aiu
 aiu
-apA
+aoK
 aqf
 ajD
 aiu
@@ -67977,13 +67995,13 @@ aaa
 aaa
 aaa
 cjp
-ckW
+cCW
 ckH
 cyZ
 ckH
 czl
 czr
-czA
+czr
 czI
 ckH
 ckH
@@ -68239,7 +68257,7 @@ ckH
 ckH
 ckH
 czl
-czs
+czr
 czB
 czI
 czV
@@ -91543,7 +91561,7 @@ bdI
 bbI
 bhr
 bbI
-biA
+aTx
 bjw
 bkB
 blS
