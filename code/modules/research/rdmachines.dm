@@ -107,7 +107,7 @@
 		loaded_item.forceMove(loc)
 	..()
 
-/obj/machinery/rnd/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
+/obj/machinery/r_n_d/proc/AfterMaterialInsert(type_inserted, id_inserted, amount_inserted)
 	var/stack_name
 	if(ispath(type_inserted, /obj/item/ore/bluespace_crystal))
 		stack_name = "bluespace"
