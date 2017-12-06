@@ -24,7 +24,7 @@
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
 #define STONER		"Stoner"
-#define UNINTELLIGABLE		"Unintelligable"
+#define UNINTELLIGIBLE		"Unintelligible"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
@@ -69,6 +69,7 @@
 #define DNA_GENDER_BLOCK			5
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
+<<<<<<< HEAD
 #define DNA_EYE_COLOR_TWO_BLOCK		8
 #define DNA_EYE_COLOR_SWITCH_BLOCK	9
 #define DNA_EYE_COLOR_BLOCK			10
@@ -83,6 +84,10 @@
 #define DNA_MUTANTWING_BLOCK		18
 #define DNA_WINGCOLOR_BLOCK			19
 #define DNA_STRUC_ENZYMES_BLOCKS	19
+=======
+
+#define DNA_STRUC_ENZYMES_BLOCKS	18
+>>>>>>> 550d711... Brain Traumas (#31727)
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff

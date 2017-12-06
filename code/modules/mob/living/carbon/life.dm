@@ -13,9 +13,17 @@
 		handle_blood()
 
 	if(stat != DEAD)
+<<<<<<< HEAD
 		for(var/V in internal_organs)
 			var/obj/item/organ/O = V
 			O.on_life()
+=======
+		handle_brain_damage()
+
+	if(stat != DEAD)
+		handle_liver()
+
+>>>>>>> 550d711... Brain Traumas (#31727)
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 
@@ -437,3 +445,20 @@
 	adjustToxLoss(8)
 	if(prob(30))
 		to_chat(src, "<span class='notice'>You feel confused and nauseous...</span>")//actual symptoms of liver failure
+
+
+////////////////
+//BRAIN DAMAGE//
+////////////////
+
+/mob/living/carbon/proc/handle_brain_damage()
+	for(var/T in get_traumas())
+		var/datum/brain_trauma/BT = T
+		BT.on_life()
+
+	if(getBrainLoss() >= BRAIN_DAMAGE_DEATH) //rip
+		to_chat(src, "<span class='userdanger'>The last spark of life in your brain fizzles out...<span>")
+		death()
+		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
+		if(B)
+			B.damaged_brain = TRUE
