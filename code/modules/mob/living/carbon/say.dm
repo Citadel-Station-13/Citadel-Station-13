@@ -36,9 +36,6 @@
 	if(T)
 		. = T.could_speak_in_language(dt)
 	else
-<<<<<<< HEAD
-		. = initial(dt.flags_1) & TONGUELESS_SPEECH
-=======
 		. = initial(dt.flags) & TONGUELESS_SPEECH
 
 /mob/living/carbon/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
@@ -48,4 +45,3 @@
 		var/datum/brain_trauma/trauma = T
 		message = trauma.on_hear(message, speaker, message_language, raw_message, radio_freq)
 	return ..()
->>>>>>> 550d711... Brain Traumas (#31727)
