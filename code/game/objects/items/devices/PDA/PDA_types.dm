@@ -10,16 +10,11 @@
 
 /obj/item/device/pda/clown/Initialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING)
+	AddComponent(/datum/component/slippery, 120, NO_SLIP_WHEN_WALKING, CALLBACK(src, .proc/AfterSlip))
 
-/obj/item/device/pda/clown/ComponentActivated(datum/component/C)
-	..()
-	var/datum/component/slippery/S = C
-	if(!istype(S))
-		return
-	var/mob/living/carbon/human/M = S.slip_victim
-	if (istype(M) && (M.real_name != src.owner))
-		slipvictims |= M
+/obj/item/device/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
+	if (istype(M) && (M.real_name != owner))
+		slipvictims |=M
 		var/obj/item/cartridge/virus/clown/cart = cartridge
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
