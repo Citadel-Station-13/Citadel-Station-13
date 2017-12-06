@@ -78,21 +78,3 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 /obj/machinery/r_n_d/circuit_imprinter/disconnect_console()
 	linked_console.linked_imprinter = null
 	..()
-
-/obj/machinery/r_n_d/circuit_imprinter/ComponentActivated(datum/component/C)
-	..()
-	if(istype(C, /datum/component/material_container))
-		var/datum/component/material_container/M = C
-		if(!M.last_insert_success)
-			return
-		var/lit = M.last_inserted_type
-		var/stack_name
-		if(ispath(lit, /obj/item/ore/bluespace_crystal))
-			stack_name = "bluespace"
-			use_power(MINERAL_MATERIAL_AMOUNT / 10)
-		else
-			var/obj/item/stack/S = lit
-			stack_name = initial(S.name)
-			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT * M.last_amount_inserted / 10)))
-		add_overlay("protolathe_[stack_name]")
-		addtimer(CALLBACK(src, /atom/proc/cut_overlay, "protolathe_[stack_name]"), 10)
