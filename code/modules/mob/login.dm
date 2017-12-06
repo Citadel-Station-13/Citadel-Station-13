@@ -33,16 +33,14 @@
 
 	sync_mind()
 
-<<<<<<< HEAD
 	client.sethotkeys() //set mob specific hotkeys
-=======
+
 	//Reload alternate appearances
 	for(var/v in GLOB.active_alternate_appearances)
 		if(!v)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
->>>>>>> 550d711... Brain Traumas (#31727)
 
 	update_client_colour()
 	if(client)
