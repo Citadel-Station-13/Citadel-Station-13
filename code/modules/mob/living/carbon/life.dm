@@ -13,17 +13,11 @@
 		handle_blood()
 
 	if(stat != DEAD)
-<<<<<<< HEAD
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
-			O.on_life()
-=======
 		handle_brain_damage()
 
 	if(stat != DEAD)
 		handle_liver()
 
->>>>>>> 550d711... Brain Traumas (#31727)
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 
