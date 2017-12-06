@@ -180,9 +180,7 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-<<<<<<< HEAD
 	origin_tech = "biotech=6"
-=======
 
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
@@ -226,4 +224,3 @@
 		var/datum/brain_trauma/trauma = X
 		if(cure_permanent || !trauma.permanent)
 			qdel(trauma)
->>>>>>> 550d711... Brain Traumas (#31727)
