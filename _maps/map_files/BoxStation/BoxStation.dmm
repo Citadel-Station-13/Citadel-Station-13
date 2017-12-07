@@ -60319,6 +60319,7 @@
 /turf/open/floor/plasteel/dark/side{
 	dir = 8
 	},
+<<<<<<< HEAD
 /area/ai_monitored/storage/eva)
 "QvZ" = (
 /turf/open/floor/plasteel/dark/side{
@@ -60344,6 +60345,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+=======
+/area/medical/sleeper)
+"QoV" = (
+/obj/structure/rack,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoW" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoX" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+>>>>>>> 2b49bb7... [Box] Moves drone dispenser to Robotics maintenance (#33342)
 
 (1,1,1) = {"
 aaa
@@ -100825,7 +100847,7 @@ aYV
 aYV
 bfO
 bfS
-biC
+biD
 bkd
 bfS
 cTO
@@ -101596,8 +101618,8 @@ aYV
 bez
 bfP
 bfS
-biD
-bke
+bfS
+bfS
 bfS
 cTO
 bmZ
@@ -101853,9 +101875,9 @@ bci
 beB
 bfS
 bfS
-bfS
-bfS
-bfS
+QoV
+QoW
+QoX
 cTO
 bmZ
 bon
