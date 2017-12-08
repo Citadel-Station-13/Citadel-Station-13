@@ -440,15 +440,9 @@
 	list_reagents = list("lemon_lime" = 30)
 	foodtype = FRUIT
 
-<<<<<<< HEAD
-/obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/New()
-	..()
-	name = "Lemon-Lime Soda"
-=======
 /obj/item/reagent_containers/food/drinks/soda_cans/lemon_lime/Initialize()
 	. = ..()
 	name = "lemon-lime soda"
->>>>>>> eddf889... Merge pull request #33341 from ShizCalev/31-bottles-of-beer
 
 /obj/item/reagent_containers/food/drinks/soda_cans/space_up
 	name = "Space-Up!"
