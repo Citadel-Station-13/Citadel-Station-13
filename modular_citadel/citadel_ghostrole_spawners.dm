@@ -2,7 +2,7 @@
 	name = "odd cryogenics pod"
 	desc = "A humming cryo pod. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
 	mob_name = "a displaced knight from another dimension"
-	icon = 'icons/obj/cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	roundstart = FALSE
 	death = FALSE
