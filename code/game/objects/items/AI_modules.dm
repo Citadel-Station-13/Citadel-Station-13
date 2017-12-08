@@ -175,11 +175,7 @@ AI MODULES
 /obj/item/aiModule/zeroth/oneHuman
 	name = "'OneCrew' AI Module"
 	var/targetName = ""
-<<<<<<< HEAD
 	laws = list("Only SUBJECT is crew.")
-=======
-	laws = list("Only SUBJECT is human.")
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 
 /obj/item/aiModule/zeroth/oneHuman/attack_self(mob/user)
 	var/targName = stripped_input(user, "Please enter the subject who is the only crew.", "Who?", user.real_name,MAX_NAME_LEN)

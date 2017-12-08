@@ -257,8 +257,4 @@
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)
-<<<<<<< HEAD
-=======
-
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	..()
