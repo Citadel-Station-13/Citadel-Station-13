@@ -65,13 +65,9 @@
 
 /obj/item/restraints/handcuffs/clockwork
 	name = "replicant manacles"
-<<<<<<< HEAD
-	desc = "Cold, heavy manacles made out of some strange black metal."
-	origin_tech = "materials=2;magnets=5"
-=======
 	desc = "Heavy manacles made out of freezing-cold metal. It looks like brass, but feels much more solid."
 	icon_state = "brass_manacles"
->>>>>>> 32c68a6... Clockwork Cult Defenses Patch - Leader role, traps and wiring, hulk and mech soft-counters, +more (#32935)
+	origin_tech = "materials=2;magnets=5"
 	flags_1 = DROPDEL_1
 
 /obj/item/restraints/handcuffs/clockwork/dropped(mob/user)
