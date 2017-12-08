@@ -315,7 +315,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
-				set_light(brightness, 1, "#FFFFFF")
+				set_light(brightness, ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_power : 1), ((SSnightshift.nightshift && obeysnightshift) ? SSnightshift.nightshift_light_color : "#FFFFFF")) // Citadel change. Allows nightshift and admins to modify station light power and color
 	else if(has_emergency_power() && !turned_off())
 		use_power = IDLE_POWER_USE
 		emergency_mode = TRUE

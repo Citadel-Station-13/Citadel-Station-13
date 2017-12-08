@@ -2422,5 +2422,6 @@
 #include "modular_citadel\cydonian_armor.dm"
 #include "modular_citadel\hypereutactic_blade.dm"
 #include "modular_citadel\polychromic_clothes.dm"
+#include "modular_citadel\code\controllers\subsystem\cit_nightshift.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
 // END_INCLUDE

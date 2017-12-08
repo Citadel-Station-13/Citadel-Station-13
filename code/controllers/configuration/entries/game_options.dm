@@ -245,9 +245,18 @@ CONFIG_DEF(number/bombcap)
 	value = 14
 	min_val = 4
 
+//==========	Cit-specific config additions	==========\\
 CONFIG_DEF(flag/allow_crew_objectives)
 CONFIG_DEF(flag/allow_miscreants)
 CONFIG_DEF(flag/allow_extended_miscreants)
+
+CONFIG_DEF(flag/nightshift_enabled)
+CONFIG_DEF(number/nightshift_start)
+	value = 20
+
+CONFIG_DEF(number/nightshift_finish)
+	value = 6
+//==========	Cit-specific config ends here	==========\\
 
 /datum/config_entry/number/bombcap/ValidateAndSet(str_val)
 	. = ..()
