@@ -524,4 +524,4 @@ NIGHTSHIFT_ENABLED
 
 ## These values determine the start and end of night shift. By default, night shift starts at 8 PM, and ends at 6 AM.
 NIGHTSHIFT_START 20
-NIGHTSHIFT_END 6
+NIGHTSHIFT_FINISH 6

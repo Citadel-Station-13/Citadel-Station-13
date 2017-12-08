@@ -1,5 +1,6 @@
 /obj/machinery/light
 	var/obeysnightshift = FALSE
+	var/nightshift = FALSE
 
 /obj/machinery/light/Initialize()
 	. = ..()
@@ -22,19 +23,19 @@ SUBSYSTEM_DEF(nightshift)
 	var/nightshift_light_power = 0.4
 	var/nightshift_light_color = "#FFCCBB"
 
-	var/list/nightlights
+	var/list/nightlights = list()
 
 /datum/controller/subsystem/nightshift/Initialize()
-	if(config.nightshift_enabled)
+	if(CONFIG_GET(flag/nightshift_enabled))
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
-		if(nighttime >= config.nightshift_start || nighttime <= config.nightshift_finish)
+		if((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish) && !nightshift))
 			nightshift = TRUE
 	. = ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = 0)
-	if(config.nightshift_enabled)
+	if(CONFIG_GET(flag/nightshift_enabled))
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
-		if((nighttime >= config.nightshift_start || nighttime <= config.nightshift_finish) && !nightshift)
+		if((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish) && !nightshift))
 			nightshift = TRUE
 			for(var/obj/machinery/light/nightlight in nightlights)
 				if(nightlight)

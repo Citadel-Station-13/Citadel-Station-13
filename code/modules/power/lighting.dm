@@ -305,8 +305,9 @@
 			on = FALSE
 	emergency_mode = FALSE
 	if(on)
-		if(!light || light.light_range != brightness)
+		if(!light || light.light_range != brightness || SSnightshift.nightshift != nightshift)
 			switchcount++
+			nightshift = SSnightshift.nightshift
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
 					explode()
