@@ -42,9 +42,14 @@
 /atom/proc/prepare_huds()
 	hud_list = list()
 	for(var/hud in hud_possible)
-		var/image/I = image('icons/mob/hud.dmi', src, "")
-		I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
-		hud_list[hud] = I
+		var/hint = hud_possible[hud]
+		switch(hint)
+			if(HUD_LIST_LIST)
+				hud_list[hud] = list()
+			else
+				var/image/I = image('icons/mob/hud.dmi', src, "")
+				I.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				hud_list[hud] = I
 
 /mob/proc/Cell()
 	set category = "Admin"
@@ -420,18 +425,6 @@
 		I.attack_self(src)
 		update_inv_hands()
 
-
-/*
-/mob/verb/dump_source()
-
-	var/master = "<PRE>"
-	for(var/t in typesof(/area))
-		master += text("[]\n", t)
-		//Foreach goto(26)
-	src << browse(master)
-	return
-*/
-
 /mob/verb/memory()
 	set name = "Notes"
 	set category = "IC"
@@ -781,14 +774,14 @@
 
 //Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M in buckled_mobs)//post buckling
-		var/height = M.get_mob_buckling_height(src)
-		M.pixel_y = initial(M.pixel_y) + height
-		if(M.layer < layer)
-			M.layer = layer + 0.1
-	else //post unbuckling
-		M.layer = initial(M.layer)
-		M.pixel_y = initial(M.pixel_y)
+	var/height = M.get_mob_buckling_height(src)
+	M.pixel_y = initial(M.pixel_y) + height
+	if(M.layer < layer)
+		M.layer = layer + 0.1
+
+/mob/post_unbuckle_mob(mob/living/M)
+	M.layer = initial(M.layer)
+	M.pixel_y = initial(M.pixel_y)
 
 //returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)

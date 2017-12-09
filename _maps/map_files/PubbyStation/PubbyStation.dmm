@@ -2614,7 +2614,7 @@
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "ail" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/dark,
 /area/security/armory)
 "aim" = (
@@ -2647,7 +2647,7 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/main)
 "air" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/showroomfloor,
@@ -5716,7 +5716,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "apA" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -14612,7 +14611,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKo" = (
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
@@ -21626,7 +21624,7 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "baX" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -24725,7 +24723,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/mouse/gray,
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "biB" = (
@@ -25937,7 +25934,7 @@
 	},
 /area/science/robotics/lab)
 "blM" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/r_n_d/server/core,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25954,7 +25951,7 @@
 /turf/open/floor/plasteel/dark/telecomms/server/walkway,
 /area/science/server)
 "blO" = (
-/obj/machinery/rnd/server/robotics,
+/obj/machinery/r_n_d/server/robotics,
 /obj/structure/sign/poster/random{
 	pixel_y = 32
 	},
@@ -25969,7 +25966,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "blQ" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "blR" = (
@@ -26721,7 +26718,7 @@
 /turf/open/floor/plasteel,
 /area/science/research/lobby)
 "bnO" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -29703,7 +29700,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "bup" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -29714,7 +29711,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bur" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -30247,7 +30244,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "bvy" = (
-/obj/machinery/rnd/circuit_imprinter{
+/obj/machinery/r_n_d/circuit_imprinter{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
@@ -32699,8 +32696,8 @@
 /area/science/lab)
 "bAq" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/capacitor,
 /obj/item/stock_parts/manipulator,
@@ -47954,8 +47951,8 @@
 /area/tcommsat/server)
 "cnw" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/item/stock_parts/micro_laser,
 /turf/open/floor/plasteel/dark/telecomms,

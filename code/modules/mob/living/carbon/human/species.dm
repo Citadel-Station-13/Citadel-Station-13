@@ -71,6 +71,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/ears/mutantears = /obj/item/organ/ears
 	var/obj/item/mutanthands
 	var/obj/item/organ/tongue/mutanttongue = /obj/item/organ/tongue
+	var/obj/item/organ/tail/mutanttail = null
 
 	var/obj/item/organ/liver/mutantliver
 	var/obj/item/organ/stomach/mutantstomach
@@ -147,6 +148,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/obj/item/organ/tongue/tongue = C.getorganslot(ORGAN_SLOT_TONGUE)
 	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	var/obj/item/organ/stomach/stomach = C.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/tail/tail = C.getorganslot(ORGAN_SLOT_TAIL)
 
 	var/should_have_brain = TRUE
 	var/should_have_heart = !(NOBLOOD in species_traits)
@@ -157,6 +159,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/should_have_tongue = TRUE
 	var/should_have_liver = !(NOLIVER in species_traits)
 	var/should_have_stomach = !(NOSTOMACH in species_traits)
+	var/should_have_tail = mutanttail
 
 	if(brain && (replace_current || !should_have_brain))
 		if(!brain.decoy_override)//Just keep it if it's fake
@@ -173,7 +176,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		heart = new mutant_heart()
 		heart.Insert(C)
 
-	if(lungs && (replace_current || !should_have_lungs))
+	if(lungs && (!should_have_lungs || replace_current))
 		lungs.Remove(C,1)
 		QDEL_NULL(lungs)
 	if(should_have_lungs && !lungs)
@@ -209,6 +212,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(should_have_appendix && !appendix)
 		appendix = new()
 		appendix.Insert(C)
+
+	if(tail && (!should_have_tail || replace_current))
+		tail.Remove(C,1)
+		QDEL_NULL(tail)
+	if(should_have_tail && !tail)
+		tail = new mutanttail()
+		tail.Insert(C)
 
 	if(C.get_bodypart("head"))
 		if(eyes && (replace_current || !should_have_eyes))
@@ -443,9 +453,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(!(H.disabilities & HUSK))
+	if(HD && !(H.disabilities & HUSK))
 		// lipstick
-		if(H.lip_style && (LIPS in species_traits) && HD)
+		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
 			lip_overlay.color = H.lip_color
 			if(OFFSET_FACE in H.dna.species.offset_features)
@@ -454,13 +464,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			standing += lip_overlay
 
 		// eyes
-		if((EYECOLOR in species_traits) && HD)
-			var/mutable_appearance/eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		var/has_eyes = H.getorganslot(ORGAN_SLOT_EYES)
+		var/mutable_appearance/eye_overlay
+		if(!has_eyes)
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes_missing", -BODY_LAYER)
+		else
+			eye_overlay = mutable_appearance('icons/mob/human_face.dmi', "eyes", -BODY_LAYER)
+		if((EYECOLOR in species_traits) && has_eyes)
 			eye_overlay.color = "#" + H.eye_color
-			if(OFFSET_FACE in H.dna.species.offset_features)
-				eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-				eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-			standing += eye_overlay
+		if(OFFSET_FACE in H.dna.species.offset_features)
+			eye_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+			eye_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+		standing += eye_overlay
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))

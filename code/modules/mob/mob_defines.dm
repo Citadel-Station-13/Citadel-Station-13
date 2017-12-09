@@ -33,7 +33,6 @@
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 	var/disabilities = 0	//Carbon
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
@@ -109,9 +108,6 @@
 	var/list/obj/user_movement_hooks	//Passes movement in client/Move() to these!
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
-
-//Changlings, but can be used in other modes
-//	var/obj/effect/proc_holder/changpower/list/power_list = list()
 
 //List of active diseases
 

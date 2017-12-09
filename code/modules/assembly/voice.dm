@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 /obj/item/device/assembly/voice
 	name = "voice analyzer"
 	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
 	icon_state = "voice"
 	materials = list(MAT_METAL=500, MAT_GLASS=50)
-=======
-/obj/item/device/assembly/voice
-	name = "voice analyzer"
-	desc = "A small electronic device able to record a voice sample, and send a signal when that sample is repeated."
-	icon_state = "voice"
-	materials = list(MAT_METAL=500, MAT_GLASS=50)
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	flags_1 = HEAR_1
 	attachable = 1
 	verb_say = "beeps"

@@ -8769,7 +8769,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /obj/item/key/security,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
@@ -25863,6 +25863,7 @@
 	forwards = 2;
 	id = "packageSort2"
 	},
+/obj/effect/turf_decal/loading_area,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bbP" = (
@@ -29269,7 +29270,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/item/key/janitor,
 /turf/open/floor/plating,
 /area/janitor)
@@ -32246,10 +32247,12 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/machinery/photocopier,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/easel,
+/obj/item/canvas/twentythreeXtwentythree,
+/obj/item/canvas/twentythreeXtwentythree,
 /turf/open/floor/plasteel,
 /area/storage/art)
 "boP" = (
@@ -50276,7 +50279,7 @@
 /area/science/research)
 "caA" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/electronics/airlock,
 /obj/item/device/assembly/timer{
 	pixel_x = -4;
@@ -52867,7 +52870,7 @@
 "cfC" = (
 /obj/item/trash/pistachios,
 /obj/structure/closet,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/extinguisher,
 /obj/item/storage/belt/utility,
 /turf/open/floor/plating,
@@ -54304,7 +54307,7 @@
 	},
 /area/medical/chemistry)
 "ciB" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -23
@@ -54321,7 +54324,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ciD" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -54485,7 +54488,7 @@
 /turf/open/floor/engine,
 /area/science/explab)
 "ciU" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /turf/open/floor/engine,
 /area/science/explab)
 "ciV" = (
@@ -54963,7 +54966,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjZ" = (
-/obj/machinery/rnd/circuit_imprinter{
+/obj/machinery/r_n_d/circuit_imprinter{
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/sulphuric,
@@ -56851,9 +56854,9 @@
 /area/science/lab)
 "cnW" = (
 /obj/structure/table,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/cell/high{
 	charge = 100;
 	maxcharge = 15000
@@ -66517,7 +66520,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
@@ -67173,7 +67176,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cIe" = (
-/obj/machinery/rnd/server/robotics,
+/obj/machinery/r_n_d/server/robotics,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cIf" = (
@@ -68058,7 +68061,7 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cJV" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/r_n_d/server/core,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "cJW" = (
@@ -74120,7 +74123,6 @@
 	desc = "A thin layer of dust coating the floor.";
 	name = "dust"
 	},
-/obj/item/device/mass_spectrometer,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/abandoned)
 "cXL" = (
@@ -101206,7 +101208,7 @@ bzE
 bLk
 bML
 bue
-bMQ
+bzE
 bRj
 bSB
 bPR

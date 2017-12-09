@@ -47,7 +47,7 @@
 	for(var/datum/mind/wizard in wizards)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return FALSE
-	
+
 	for(var/obj/item/phylactery/P in GLOB.poi_list) //TODO : IsProperlyDead()
 		if(P.mind && P.mind.has_antag_datum(/datum/antagonist/wizard))
 			return FALSE
@@ -55,7 +55,7 @@
 	if(SSevents.wizardmode) //If summon events was active, turn it off
 		SSevents.toggleWizardmode()
 		SSevents.resetFrequency()
-	
+
 	return TRUE
 
 /datum/game_mode/wizard/declare_completion()
@@ -89,29 +89,22 @@
 			var/count = 1
 			var/wizardwin = 1
 			for(var/datum/objective/objective in wizard.objectives)
-				if(istype(objective, /datum/objective/crew))
-					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
-					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
+				if(objective.check_completion())
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
 				else
-					if(objective.check_completion())
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|SUCCESS")
-					else
-						text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.add_details("wizard_objective","[objective.type]|FAIL")
+					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
+					if(!(istype(objective, /datum/objective/crew)))
 						wizardwin = 0
 				count++
 
-			if(wizard.current && wizard.current.stat!=2 && wizardwin)
+			if(wizard.current && wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				SSblackbox.add_details("wizard_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "wizard_success", 1, "SUCCESS")
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				SSblackbox.add_details("wizard_success","FAIL")
+				SSblackbox.record_feedback("tally", "wizard_success", 1, "FAIL")
 			if(wizard.spell_list.len>0)
 				text += "<br><B>[wizard.name] used the following spells: </B>"
 				var/i = 1

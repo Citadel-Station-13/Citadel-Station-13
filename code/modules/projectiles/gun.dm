@@ -15,13 +15,8 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-<<<<<<< HEAD
-	needs_permit = 1
-	unique_rename = 0
-=======
 	needs_permit = TRUE
 	unique_rename = FALSE
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -282,7 +277,7 @@
 
 	if(user)
 		user.update_inv_hands()
-	SSblackbox.add_details("gun_fired","[src.type]")
+	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	return TRUE
 
 /obj/item/gun/proc/reset_semicd()

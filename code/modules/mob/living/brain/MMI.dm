@@ -70,7 +70,7 @@
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		update_icon()
 
-		SSblackbox.inc("cyborg_mmis_filled",1)
+		SSblackbox.record_feedback("amount", "mmis_filled", 1)
 
 	else if(brainmob)
 		O.attack(brainmob, user) //Oh noooeeeee

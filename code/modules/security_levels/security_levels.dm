@@ -56,11 +56,6 @@ GLOBAL_VAR_INIT(security_level, 0)
 				else
 					minor_announce(CONFIG_GET(string/alert_red_downto), "Attention! Code red!")
 				GLOB.security_level = SEC_LEVEL_RED
-
-				/*	- At the time of commit, setting status displays didn't work properly
-				var/obj/machinery/computer/communications/CC = locate(/obj/machinery/computer/communications,world)
-				if(CC)
-					CC.post_status("alert", "redalert")*/
 				sound_to_playing_players('sound/misc/voyalert.ogg')
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
 					if(FA.z in GLOB.station_z_levels)
@@ -81,6 +76,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, level)
 	else
 		return
 
@@ -116,15 +112,3 @@ GLOBAL_VAR_INIT(security_level, 0)
 			return SEC_LEVEL_RED
 		if("delta")
 			return SEC_LEVEL_DELTA
-
-
-/*DEBUG
-/mob/verb/set_thing0()
-	set_security_level(0)
-/mob/verb/set_thing1()
-	set_security_level(1)
-/mob/verb/set_thing2()
-	set_security_level(2)
-/mob/verb/set_thing3()
-	set_security_level(3)
-*/

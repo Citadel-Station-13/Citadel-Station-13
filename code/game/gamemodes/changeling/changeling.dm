@@ -113,29 +113,22 @@ GLOBAL_VAR(changeling_team_objective_type) //If this is not null, we hand our th
 			if(changeling.objectives.len)
 				var/count = 1
 				for(var/datum/objective/objective in changeling.objectives)
-					if(istype(objective, /datum/objective/crew))
-						if(objective.check_completion())
-							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|SUCCESS")
-						else
-							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|FAIL")
+					if(objective.check_completion())
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
-						if(objective.check_completion())
-							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <font color='green'><b>Success!</b></font>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|SUCCESS")
-						else
-							text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span>"
-							SSblackbox.add_details("changeling_objective","[objective.type]|FAIL")
+						text += "<br><b>Objective #[count]</b>: [objective.explanation_text] <span class='danger'>Fail.</span> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+						SSblackbox.record_feedback("nested tally", "changeling_objective", 1, list("[objective.type]", "FAIL"))
+						if(!(istype(objective, /datum/objective/crew)))
 							changelingwin = 0
 					count++
 
 			if(changelingwin)
 				text += "<br><font color='green'><b>The changeling was successful!</b></font>"
-				SSblackbox.add_details("changeling_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "changeling_success", 1, "SUCCESS")
 			else
 				text += "<br><span class='boldannounce'>The changeling has failed.</span>"
-				SSblackbox.add_details("changeling_success","FAIL")
+				SSblackbox.record_feedback("tally", "changeling_success", 1, "FAIL")
 			text += "<br>"
 
 		to_chat(world, text)

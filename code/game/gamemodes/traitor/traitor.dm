@@ -103,27 +103,24 @@
 			var/TC_uses = 0
 			var/uplink_true = FALSE
 			var/purchases = ""
-			for(var/obj/item/device/uplink/H in GLOB.uplinks)
+			for(var/datum/component/uplink/H in GLOB.uplinks)
 				if(H && H.owner && H.owner == traitor.key)
 					TC_uses += H.spent_telecrystals
 					uplink_true = TRUE
-					purchases += H.purchase_log
+					purchases += H.purchase_log.generate_render(FALSE)
 
 			var/objectives = ""
 			if(traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
-					if(istype(objective, /datum/objective/crew))
-						if(objective.check_completion())
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("traitor_objective","[objective.type]|SUCCESS")
-						else
-							objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> <font color='grey'>(Optional)</font>"
-							SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
+					if(objective.check_completion())
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
 					else
-						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font>"
-						SSblackbox.add_details("traitor_objective","[objective.type]|FAIL")
-						traitorwin = FALSE
+						objectives += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
+						SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
+						if(!(istype(objective, /datum/objective/crew)))
+							traitorwin = FALSE
 					count++
 
 			if(uplink_true)
@@ -143,10 +140,10 @@
 
 			if(traitorwin)
 				text += "<br><font color='green'><B>The [special_role_text] was successful!</B></font>"
-				SSblackbox.add_details("traitor_success","SUCCESS")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "SUCCESS")
 			else
 				text += "<br><font color='red'><B>The [special_role_text] has failed!</B></font>"
-				SSblackbox.add_details("traitor_success","FAIL")
+				SSblackbox.record_feedback("tally", "traitor_success", 1, "FAIL")
 				SEND_SOUND(traitor.current, 'sound/ambience/ambifailure.ogg')
 
 			text += "<br>"

@@ -314,6 +314,3 @@
 /obj/item/circuitboard/computer/sat_control
 	name = "Satellite Network Control (Computer Board)"
 	build_path = /obj/machinery/computer/sat_control
-<<<<<<< HEAD
-=======
->>>>>>> 1d16b05... Merge pull request #31026 from kevinz000/rnd_techweb

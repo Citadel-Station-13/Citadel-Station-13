@@ -104,6 +104,16 @@
 	resistance_flags = FLAMMABLE
 	squeak_override = list('sound/misc/server-ready.ogg'= 1)
 
+/obj/item/clothing/neck/cloak/festive
+	name = "Celebratory Cloak of Morozko"
+	desc = " It probably will protect from snow, charcoal or elves."
+	icon = 'icons/obj/clothing/cloaks.dmi'
+	icon_override = 'icons/mob/citadel/suit.dmi'
+	icon_state = "festivecloak"
+	item_state = "festiveloak"
+	w_class = WEIGHT_CLASS_SMALL
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+
 
 /*Zigfie*/
 
@@ -195,6 +205,17 @@
 /obj/item/clothing/shoes/sneakers/pink
 	icon_state = "pink"
 	item_state = "pink"
+
+
+/*Fractious*/
+
+/obj/item/clothing/suit/vermillion
+	name = "vermillion clothing"
+	desc = "Some clothing."
+	icon_state = "vermillion-w"
+	item_state = "vermillion-i"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	icon = 'icons/obj/custom.dmi'
 
 
 

@@ -3164,7 +3164,7 @@
 	name = "dust"
 	},
 /obj/structure/frame/computer,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/whitepurple/side{
 	dir = 8
 	},
@@ -7652,8 +7652,8 @@
 	},
 /obj/item/stack/cable_coil/white,
 /obj/item/stack/cable_coil/white,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/item/circuitboard/machine/microwave,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/electronic_marketing_den)
@@ -10106,7 +10106,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/janitor)
 "avA" = (
-/obj/vehicle/janicart,
+/obj/vehicle/ridden/janicart,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
@@ -43446,9 +43446,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -48974,7 +48974,7 @@
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "bVp" = (
-/obj/vehicle/secway,
+/obj/vehicle/ridden/secway,
 /turf/open/floor/plasteel/vault{
 	dir = 8
 	},
@@ -57608,11 +57608,11 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmH" = (
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plasteel/neutral,
+/turf/open/floor/plasteel,
 /area/teleporter)
 "cmI" = (
 /obj/structure/table,
@@ -61739,7 +61739,7 @@
 /obj/item/clipboard,
 /obj/item/folder/blue,
 /obj/item/electronics/firelock,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/maintenance/port)
@@ -75440,7 +75440,7 @@
 /obj/structure/table,
 /obj/item/clipboard,
 /obj/item/electronics/airlock,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/device/assembly/signaler,
 /obj/machinery/airalarm{
 	dir = 1;
@@ -77980,7 +77980,7 @@
 /turf/open/floor/plasteel/neutral,
 /area/science/lab)
 "dcI" = (
-/obj/machinery/rnd/destructive_analyzer,
+/obj/machinery/r_n_d/destructive_analyzer,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
@@ -77993,7 +77993,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dcK" = (
-/obj/machinery/rnd/protolathe,
+/obj/machinery/r_n_d/protolathe,
 /obj/machinery/ai_status_display{
 	pixel_x = 32
 	},
@@ -78652,7 +78652,7 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "dej" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
@@ -79144,9 +79144,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
@@ -84059,9 +84059,9 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
 /obj/item/stock_parts/cell/high,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
@@ -86074,7 +86074,7 @@
 /area/science/research/abandoned)
 "dus" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/item/stock_parts/micro_laser,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/delivery,
@@ -86137,7 +86137,7 @@
 	},
 /area/science/explab)
 "duA" = (
-/obj/machinery/rnd/experimentor,
+/obj/machinery/r_n_d/experimentor,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel/vault{
@@ -87643,7 +87643,7 @@
 /obj/item/clipboard,
 /obj/item/folder/yellow,
 /obj/item/electronics/firealarm,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/construction)
@@ -90494,7 +90494,7 @@
 "dDk" = (
 /obj/structure/frame/machine,
 /obj/machinery/light/small,
-/obj/item/stock_parts/console_screen,
+/obj/item/stack/sheet/glass,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/science/research/abandoned)
@@ -91867,7 +91867,7 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dGe" = (
-/obj/machinery/rnd/circuit_imprinter,
+/obj/machinery/r_n_d/circuit_imprinter,
 /obj/item/reagent_containers/glass/beaker/sulphuric,
 /obj/machinery/airalarm{
 	dir = 8;
@@ -93833,7 +93833,7 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKe" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/r_n_d/server/core,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},
@@ -93846,7 +93846,7 @@
 	},
 /area/science/server)
 "dKg" = (
-/obj/machinery/rnd/server/robotics,
+/obj/machinery/r_n_d/server/robotics,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 9
 	},
