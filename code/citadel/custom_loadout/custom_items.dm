@@ -231,7 +231,5 @@
 	icon_state = "vermillion-i"
 	item_state = "vermillion-w"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
+	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/obj/custom.dmi'
-
-
-
