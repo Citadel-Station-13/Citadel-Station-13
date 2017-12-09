@@ -11,7 +11,7 @@
 	attack_verb = list("poked", "jabbed", "hit")
 	light_color = "#37FFF7"
 	var/light_brightness = 3
-	actions_types = list(/datum/action/item_action/pick_color)
+	actions_types = list()
 
 /obj/item/toy/sword/cx/attack_self(mob/user)
 	active = !( active )
@@ -57,18 +57,21 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-/obj/item/toy/sword/cx/ui_action_click(mob/user, var/datum/action/A)
-	if(istype(A, /datum/action/item_action/pick_color))
-		if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
-			var/energy_color_input = input(usr,"Choose Energy Color") as color|null
-			if(energy_color_input)
-				light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
-			update_icon()
-			update_light()
-			A.UpdateButtonIcon()
+/obj/item/toy/sword/cx/AltClick(mob/living/user)
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
+		return
 
-	else
-		..()
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		if(energy_color_input)
+			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
 
 /obj/item/toy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()
@@ -79,7 +82,21 @@
 			. += blade_inhand
 
 /obj/item/toy/sword/cx/attackby(obj/item/W, mob/living/user, params)
-	return	//NO MORE MAKING DUAL ESWORDS
+	if(istype(W, /obj/item/toy/sword/cx))
+		if((W.flags_1 & NODROP_1) || (flags_1 & NODROP_1))
+			to_chat(user, "<span class='warning'>\the [flags_1 & NODROP_1 ? src : W] is stuck to your hand, you can't attach it to \the [flags_1 & NODROP_1 ? W : src]!</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>You combine the two plastic swords, making a single supermassive toy! You're fake-cool.</span>")
+			new /obj/item/twohanded/hypereutactic/toy(user.loc)
+			qdel(W)
+			qdel(src)
+	else
+		return ..()
+
+/obj/item/toy/sword/cx/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
 /*///autolathe memes/// I really need to stop doing this and find a proper way of adding in my toys
 
@@ -123,7 +140,7 @@
 	armour_penetration = 0
 	block_chance = 60
 	light_color = "#37FFF7"
-	actions_types = list(/datum/action/item_action/pick_color)
+	actions_types = list()
 
 /obj/item/melee/transforming/energy/sword/cx/transform_weapon(mob/living/user, supress_message_text)
 	active = !active				//I'd use a ..() here but it'd inherit from the regular esword's proc instead, so SPAGHETTI CODE
@@ -151,9 +168,6 @@
 		update_icon()
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 	return TRUE
 
 /obj/item/melee/transforming/energy/sword/cx/transform_messages(mob/living/user, supress_message_text)
@@ -180,18 +194,25 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
-/obj/item/melee/transforming/energy/sword/cx/ui_action_click(mob/user, var/datum/action/A)
-	if(istype(A, /datum/action/item_action/pick_color))
-		if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
-			var/energy_color_input = input(usr,"Choose Energy Color") as color|null
-			if(energy_color_input)
-				light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
-			update_icon()
-			update_light()
-			A.UpdateButtonIcon()
+/obj/item/melee/transforming/energy/sword/cx/AltClick(mob/living/user)
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(!in_range(src, user))
+		return
+	if(user.incapacitated() || !istype(user) || !in_range(src, user))
+		return
 
-	else
-		..()
+	if(alert("Are you sure you want to recolor your blade?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		if(energy_color_input)
+			light_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		update_light()
+
+/obj/item/melee/transforming/energy/sword/cx/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Alt-click to recolor it.</span>")
 
 /obj/item/melee/transforming/energy/sword/cx/worn_overlays(isinhands, icon_file)
 	. = ..()

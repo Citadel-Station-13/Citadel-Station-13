@@ -1,8 +1,8 @@
 /datum/round_event_control/borer
 	name = "Borer"
 	typepath = /datum/round_event/borer
-	weight = 10 //Default weight
-	max_occurrences = 1
+	weight = 0
+	max_occurrences = 0
 	min_players = 20 //10 is MINIMUM needed, but this is not a gamemode that does well in lowpop
 	earliest_start = 24000 //40 min, double default timer
 

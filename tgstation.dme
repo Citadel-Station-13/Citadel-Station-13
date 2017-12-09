@@ -872,6 +872,7 @@
 #include "code\game\objects\items\mop.dm"
 #include "code\game\objects\items\paint.dm"
 #include "code\game\objects\items\paiwire.dm"
+#include "code\game\objects\items\pet_carrier.dm"
 #include "code\game\objects\items\pinpointer.dm"
 #include "code\game\objects\items\plushes.dm"
 #include "code\game\objects\items\pneumaticCannon.dm"
@@ -2429,6 +2430,9 @@
 #include "interface\skin.dmf"
 #include "modular_citadel\cit_medkits.dm"
 #include "modular_citadel\cit_screenshake.dm"
+#include "modular_citadel\citadel_ghostrole_spawners.dm"
+#include "modular_citadel\cydonian_armor.dm"
+#include "modular_citadel\hypereutactic_blade.dm"
 #include "modular_citadel\polychromic_clothes.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
 // END_INCLUDE

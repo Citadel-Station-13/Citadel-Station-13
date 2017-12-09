@@ -74,6 +74,7 @@
 	new /obj/item/door_remote/chief_medical_officer(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/circuitboard/machine/protolathe/department/medical(src)
+	new /obj/item/pet_carrier(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control"
