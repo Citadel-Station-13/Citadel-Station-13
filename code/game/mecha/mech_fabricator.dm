@@ -37,10 +37,10 @@
 	var/datum/component/material_container/materials
 
 /obj/machinery/mecha_part_fabricator/Initialize()
-    materials = AddComponent(/datum/component/material_container,
-     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-        FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-    materials.precise_insertion = TRUE
+	materials = AddComponent(/datum/component/material_container,
+	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+	materials.precise_insertion = TRUE
 	stored_research = new
 	return ..()
 

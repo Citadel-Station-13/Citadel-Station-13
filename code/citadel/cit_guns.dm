@@ -188,7 +188,6 @@
 	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_HEAVY
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
@@ -272,7 +271,6 @@
 	can_suppress = 0
 	casing_ejector = 0
 	fire_delay = 2
-	origin_tech = "combat=4;magnets=4"
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -343,7 +341,6 @@
 	fire_sound = 'sound/weapons/magpistol.ogg'
 	slot_flags = SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/ammo_box/foambox/mag
 	name = "ammo box (Magnetic Foam Darts)"
@@ -627,7 +624,6 @@
 	charge_delay = 2
 	recoil = 2
 	cell_type = /obj/item/stock_parts/cell/toymagburst
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/stock_parts/cell/toymagburst
 	name = "toy mag burst rifle power supply"
@@ -683,7 +679,6 @@
 	fire_delay = 0
 	spread = 60
 	actions_types = list()
-	origin_tech = "combat=1;magnets=1"
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
 	..()
@@ -908,7 +903,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	desc = "A toy laser with a classic, retro feel and look. Compatible with existing laser tag systems."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/raytag)
 	selfcharge = TRUE
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/toyray
 	name = "RayTag Gun"
@@ -1164,7 +1158,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
 	can_suppress = FALSE
 	actions_types = list(/datum/action/item_action/pick_color)
-	origin_tech = "combat=1;magnets=1"
 
 /datum/design/foam_p37
 	name = "Foam Force Mk.37F"

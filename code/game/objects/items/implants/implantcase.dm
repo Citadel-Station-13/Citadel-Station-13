@@ -16,11 +16,9 @@
 /obj/item/implantcase/update_icon()
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
-		origin_tech = imp.origin_tech
 		reagents = imp.reagents
 	else
 		icon_state = "implantcase-0"
-		origin_tech = initial(origin_tech)
 		reagents = null
 
 

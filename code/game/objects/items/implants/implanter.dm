@@ -17,10 +17,8 @@
 /obj/item/implanter/update_icon()
 	if(imp)
 		icon_state = "implanter1"
-		origin_tech = imp.origin_tech
 	else
 		icon_state = "implanter0"
-		origin_tech = initial(origin_tech)
 
 
 /obj/item/implanter/attack(mob/living/M, mob/user)
