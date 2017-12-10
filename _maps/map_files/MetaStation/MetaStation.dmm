@@ -80772,8 +80772,6 @@
 "EDC" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
-<<<<<<< HEAD
-=======
 "EDD" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
@@ -80810,7 +80808,6 @@
 /obj/machinery/droneDispenser,
 /turf/open/floor/plating,
 /area/maintenance/aft)
->>>>>>> d784e2d... [Metastation] Moves drone dispenser to Robotics maint (#33267)
 
 (1,1,1) = {"
 aaa
