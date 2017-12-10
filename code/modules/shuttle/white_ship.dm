@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-/obj/machinery/computer/shuttle/white_ship
-	name = "White Ship Console"
-	desc = "Used to control the White Ship."
-	circuit = /obj/item/circuitboard/computer/white_ship
-	shuttleId = "whiteship"
-	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;whiteship_custom"
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship
-	name = "White Ship Navigation Computer"
-	desc = "Used to designate a precise transit location for the White Ship."
-	shuttleId = "whiteship"
-	station_lock_override = TRUE
-	shuttlePortId = "whiteship_custom"
-	shuttlePortName = "Custom Location"
-	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1)
-	view_range = 20
-	x_offset = -6
-	y_offset = -10
-=======
 /obj/machinery/computer/shuttle/white_ship
 	name = "White Ship Console"
 	desc = "Used to control the White Ship."
@@ -37,5 +17,3 @@
 	x_offset = -6
 	y_offset = -10
 	designate_time = 100
-
->>>>>>> 05d7402... Allowed shuttle docking ports to be hidden from some shuttle docking computers (#33148)
