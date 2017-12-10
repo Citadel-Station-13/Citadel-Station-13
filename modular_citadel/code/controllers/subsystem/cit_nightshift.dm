@@ -22,26 +22,28 @@ SUBSYSTEM_DEF(nightshift)
 	var/nightshift = FALSE
 	var/nightshift_light_power = 0.4
 	var/nightshift_light_color = "#FFCCBB"
+	var/nightshift_override = FALSE
 
 	var/list/nightlights = list()
 
 /datum/controller/subsystem/nightshift/Initialize()
-	if(CONFIG_GET(flag/nightshift_enabled))
+	if(CONFIG_GET(flag/nightshift_enabled) && !nightshift_override)
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
-		if((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish) && !nightshift))
+		if(!nightshift && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
 			nightshift = TRUE
 	. = ..()
 
 /datum/controller/subsystem/nightshift/fire(resumed = 0)
-	if(CONFIG_GET(flag/nightshift_enabled))
+	if(CONFIG_GET(flag/nightshift_enabled) && !nightshift_override)
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
-		if((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish) && !nightshift))
+		if(!nightshift && GLOB.security_level < SEC_LEVEL_RED && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
 			nightshift = TRUE
-			for(var/obj/machinery/light/nightlight in nightlights)
-				if(nightlight)
-					nightlight.update(FALSE)
+			updatenightlights()
 		else if(nightshift)
 			nightshift = FALSE
-			for(var/obj/machinery/light/nightlight in nightlights)
-				if(nightlight)
-					nightlight.update(FALSE)
+			updatenightlights()
+
+/datum/controller/subsystem/nightshift/proc/updatenightlights()
+	for(var/obj/machinery/light/nightlight in nightlights)
+		if(nightlight)
+			nightlight.update(FALSE)
