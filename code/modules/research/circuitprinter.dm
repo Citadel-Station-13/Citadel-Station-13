@@ -12,6 +12,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 
 	var/efficiency_coeff
+<<<<<<< HEAD
+=======
+
+	var/datum/component/material_container/materials	//Store for hyper speed!
+>>>>>>> 1f32d16... Automatic changelog compile, [ci skip] (#33393)
 
 	var/list/categories = list(
 								"AI Modules",
@@ -34,6 +39,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
 	create_reagents(0)
+	RefreshParts()
 	return ..()
 
 /obj/machinery/r_n_d/circuit_imprinter/RefreshParts()
