@@ -178,12 +178,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/exp
 	var/list/menuoptions
 
-<<<<<<< HEAD
+	var/action_buttons_screen_locs = list()
+
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
-=======
-	var/action_buttons_screen_locs = list()
->>>>>>> f07421a... Makes actionbuttons remember positions where you locked them. (#33150)
 
 /datum/preferences/New(client/C)
 	parent = C
