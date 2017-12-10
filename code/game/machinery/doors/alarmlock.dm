@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-/obj/machinery/door/airlock/alarmlock
-
-	name = "glass alarm airlock"
-	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-	opacity = 0
-	assemblytype = /obj/structure/door_assembly/door_assembly_glass
-=======
 /obj/machinery/door/airlock/alarmlock
 	name = "glass alarm airlock"
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	opacity = 0
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
->>>>>>> 09be3e9... Airlock Construction Update (#33152)
 	glass = TRUE
 
 	var/datum/radio_frequency/air_connection
