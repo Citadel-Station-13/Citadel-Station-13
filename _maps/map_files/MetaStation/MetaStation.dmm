@@ -43906,8 +43906,9 @@
 /obj/structure/sign/kiddieplaque/perfect_drone{
 	pixel_y = 32
 	},
-/obj/machinery/droneDispenser,
-/obj/machinery/door/window/southleft,
+/obj/structure/table/wood,
+/obj/item/storage/backpack/duffelbag/drone,
+/obj/structure/window/reinforced,
 /turf/open/floor/carpet,
 /area/bridge/showroom/corporate)
 "bNc" = (
@@ -69205,8 +69206,12 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMl" = (
-/obj/machinery/space_heater,
-/obj/effect/landmark/blobstart,
+/obj/structure/table,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/stack/sheet/metal/fifty,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMm" = (
@@ -80752,6 +80757,42 @@
 "EDC" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
+"EDD" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/effect/landmark/start/security_officer,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel/red/side{
+	dir = 8
+	},
+/area/security/main)
+"EDE" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/engine/engineering)
+"EDF" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/aft)
+"EDG" = (
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
+"EDH" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 
 (1,1,1) = {"
 aaa
@@ -110231,13 +110272,13 @@ cIN
 cJM
 cCq
 cgM
+EDF
 cwc
 cNe
 cNT
 cNe
 ack
 ack
-aaf
 aaf
 aaf
 aaa
@@ -110488,11 +110529,11 @@ cFh
 cFh
 cKH
 cLz
+EDG
 cMk
 bTs
 bTs
 bTs
-aaf
 aaa
 aaa
 aaa
@@ -110746,8 +110787,8 @@ cJN
 cCq
 cgN
 cMl
+EDH
 bTs
-aaf
 aaf
 aaf
 aaf
@@ -111004,7 +111045,7 @@ cCq
 cLA
 bTs
 bTs
-aaa
+bTs
 aaf
 aaa
 aaa
@@ -111261,7 +111302,7 @@ cKI
 cQr
 cQR
 cRa
-cRe
+cSd
 cRe
 cRe
 cRe
