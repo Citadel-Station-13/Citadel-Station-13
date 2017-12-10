@@ -51321,29 +51321,10 @@
 	},
 /turf/open/floor/plating/airless,
 /area/maintenance/department/chapel/monastery)
-<<<<<<< HEAD
-=======
-"cCS" = (
-/obj/machinery/rnd/protolathe/department/security,
-/turf/open/floor/plasteel/dark,
-/area/security/main)
-"cCT" = (
-/obj/machinery/rnd/protolathe/department/cargo,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
-"cCU" = (
-/obj/machinery/rnd/circuit_imprinter,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
-"cCV" = (
-/obj/machinery/rnd/protolathe/department/engineering,
-/turf/open/floor/plasteel,
-/area/engine/engineering)
 "cCW" = (
 /obj/machinery/vending/games,
 /turf/open/floor/plasteel/dark,
 /area/library)
->>>>>>> dd67e1e...  Good Clean Fun: A vending machine for games! (#33265)
 
 (1,1,1) = {"
 aaa

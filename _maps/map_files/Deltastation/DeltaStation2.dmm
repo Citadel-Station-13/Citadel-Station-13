@@ -104797,23 +104797,17 @@
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
-<<<<<<< HEAD
 /area/security/brig)
 "ehv" = (
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/crew_quarters/abandoned_gambling_den)
-=======
-/obj/effect/turf_decal/caution/stand_clear,
-/turf/open/floor/plasteel,
-/area/hallway/secondary/exit/departure_lounge)
 "ehP" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel/dark,
 /area/library)
->>>>>>> dd67e1e...  Good Clean Fun: A vending machine for games! (#33265)
 
 (1,1,1) = {"
 aaa
