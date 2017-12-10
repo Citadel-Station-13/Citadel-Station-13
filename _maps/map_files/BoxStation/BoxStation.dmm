@@ -5971,15 +5971,11 @@
 /area/hallway/primary/fore)
 "anU" = (
 /obj/machinery/door/firedoor,
-<<<<<<< HEAD
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "seclobby";
 	name = "security shutters"
 	},
-/obj/machinery/door/airlock/glass{
-=======
 /obj/machinery/door/airlock/public/glass{
->>>>>>> 09be3e9... Airlock Construction Update (#33152)
 	name = "Courtroom"
 	},
 /turf/open/floor/plasteel/dark,
