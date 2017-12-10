@@ -11,7 +11,13 @@
 	use_power = IDLE_POWER_USE
 	var/busy = FALSE
 	var/hacked = FALSE
+<<<<<<< HEAD
 	var/disabled = 0
+=======
+	var/console_link = TRUE		//allow console link.
+	var/requires_console = TRUE
+	var/disabled = FALSE
+>>>>>>> 1f32d16... Automatic changelog compile, [ci skip] (#33393)
 	var/shocked = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
@@ -75,6 +81,7 @@
 /obj/machinery/r_n_d/proc/is_insertion_ready(mob/user)
 	if(panel_open)
 		to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
+<<<<<<< HEAD
 		return
 	if (disabled)
 		return
@@ -87,19 +94,32 @@
 			to_chat(user, "<span class='warning'>[src] must be linked to an R&D console first!</span>")
 			return
 	if (busy)
+=======
+		return FALSE
+	if(disabled)
+		return FALSE
+	if(requires_console && !linked_console)
+		to_chat(user, "<span class='warning'>[src] must be linked to an R&D console first!</span>")
+		return FALSE
+	if(busy)
+>>>>>>> 1f32d16... Automatic changelog compile, [ci skip] (#33393)
 		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
-		return
+		return FALSE
 	if(stat & BROKEN)
 		to_chat(user, "<span class='warning'>[src] is broken.</span>")
-		return
+		return FALSE
 	if(stat & NOPOWER)
 		to_chat(user, "<span class='warning'>[src] has no power.</span>")
-		return
+		return FALSE
 	if(loaded_item)
 		to_chat(user, "<span class='warning'>[src] is already loaded.</span>")
+<<<<<<< HEAD
 		return
 	return 1
-
+=======
+		return FALSE
+	return TRUE
+>>>>>>> 1f32d16... Automatic changelog compile, [ci skip] (#33393)
 
 //we eject the loaded item when deconstructing the machine
 /obj/machinery/r_n_d/on_deconstruction()
