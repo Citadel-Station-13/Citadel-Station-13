@@ -1,7 +1,8 @@
 /*/obj/item/clothing/suit/space/hardsuit/engine
 	snowflake_sprites = list(
 								"Naga" = 'modular_citadel/icons/mob/nagasuit.dmi'
-								) //Gonna have to figure out how to handle off-center suit sprites */
+								) //Gonna have to figure out how to handle off-center suit sprites
+*/
 
 /obj/item/clothing/helmet/space/hardsuit/engine
 	snowflake_sprites = list(
