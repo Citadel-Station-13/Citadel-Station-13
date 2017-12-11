@@ -1,10 +1,13 @@
-/*/obj/item/clothing/suit/space/hardsuit/engine
+/obj/item/clothing/suit/space/hardsuit/engine
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAURCONDITIONAL
+	worn_icon_autocenter = TRUE
+	snowflake_type = "taur"
 	snowflake_sprites = list(
 								"Naga" = 'modular_citadel/icons/mob/nagasuit.dmi'
-								) //Gonna have to figure out how to handle off-center suit sprites
-*/
+								)
 
-/obj/item/clothing/helmet/space/hardsuit/engine
+/obj/item/clothing/head/helmet/space/hardsuit/engine
+	snowflake_type = "snout"
 	snowflake_sprites = list(
 								"Beak" = 'modular_citadel/icons/mob/snouthead.dmi',
 								"Fox, Long" = 'modular_citadel/icons/mob/snouthead.dmi',

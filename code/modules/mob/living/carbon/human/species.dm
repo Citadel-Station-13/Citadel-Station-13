@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
@@ -601,7 +601,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			bodyparts_to_add -= "mam_ears"
 
 	if("taur" in mutant_bodyparts)
-		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None")
+		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || H.wear_suit && (H.wear_suit.snowflake_sprites["[H.dna.features["taur"]]"] & H.wear_suit.flags_inv & HIDETAURCONDITIONAL || H.wear_suit.flags_inv & HIDETAUR))
 			bodyparts_to_add -= "taur"
 
 	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more agressive updating than most limbs.
