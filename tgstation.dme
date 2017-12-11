@@ -2440,4 +2440,5 @@
 #include "modular_citadel\hypereutactic_blade.dm"
 #include "modular_citadel\polychromic_clothes.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
+#include "modular_citadel\code\game\objects\items.dm"
 // END_INCLUDE

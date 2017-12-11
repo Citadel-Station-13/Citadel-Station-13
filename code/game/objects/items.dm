@@ -118,8 +118,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
-	var/icon_override = null
-
 /obj/item/Initialize()
 	if (!materials)
 		materials = list()
@@ -704,4 +702,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-
