@@ -398,6 +398,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/L = I
 		L.notransform = FALSE
 
+<<<<<<< HEAD
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
@@ -596,6 +597,8 @@ SUBSYSTEM_DEF(ticker)
 	else
 		CRASH("Attempted standard reboot without ticker roundend completion")
 
+=======
+>>>>>>> 3d81385... Roundend report refactor (#33246)
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/m
 	if(selected_tip)

@@ -27,6 +27,7 @@
 	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
 	var/num_modifier = 0 // Used for gamemodes, that are a child of traitor, that need more than the usual.
 	var/antag_datum = ANTAG_DATUM_TRAITOR //what type of antag to create
+	var/traitors_required = TRUE //Will allow no traitors
 
 
 /datum/game_mode/traitor/pre_setup()
@@ -55,7 +56,7 @@
 		log_game("[traitor.key] (ckey) has been selected as a [traitor_name]")
 		antag_candidates.Remove(traitor)
 
-	return pre_traitors.len > 0
+	return !traitors_required || pre_traitors.len > 0
 
 
 /datum/game_mode/traitor/post_setup()
@@ -85,6 +86,7 @@
 	new_antag.should_specialise = TRUE
 	character.add_antag_datum(new_antag)
 
+<<<<<<< HEAD
 
 
 /datum/game_mode/traitor/declare_completion()
@@ -154,10 +156,11 @@
 
 	return TRUE
 
+=======
+>>>>>>> 3d81385... Roundend report refactor (#33246)
 /datum/game_mode/traitor/generate_report()
 	return "Although more specific threats are commonplace, you should always remain vigilant for Syndicate agents aboard your station. Syndicate communications have implied that many \
 		Nanotrasen employees are Syndicate agents with hidden memories that may be activated at a moment's notice, so it's possible that these agents might not even know their positions."
-
 
 /datum/game_mode/proc/update_traitor_icons_added(datum/mind/traitor_mind)
 	var/datum/atom_hud/antag/traitorhud = GLOB.huds[ANTAG_HUD_TRAITOR]

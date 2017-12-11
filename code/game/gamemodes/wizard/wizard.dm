@@ -58,20 +58,13 @@
 
 	return TRUE
 
-/datum/game_mode/wizard/declare_completion()
+/datum/game_mode/wizard/set_round_result()
+	..()
 	if(finished)
 		SSticker.mode_result = "loss - wizard killed"
-		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
-
 		SSticker.news_report = WIZARD_KILLED
-	..()
-	return 1
 
-
-/datum/game_mode/proc/auto_declare_completion_wizard()
-	if(wizards.len)
-		var/text = "<br><font size=3><b>the wizards/witches were:</b></font>"
-
+<<<<<<< HEAD
 		for(var/datum/mind/wizard in wizards)
 
 			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
@@ -114,9 +107,12 @@
 						text += ", "
 					i++
 			text += "<br>"
+=======
+/datum/game_mode/wizard/special_report()
+	if(finished)
+		return "<span class='redtext big'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+>>>>>>> 3d81385... Roundend report refactor (#33246)
 
-		to_chat(world, text)
-	return 1
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
 	return M.mind && M.mind.has_antag_datum(/datum/antagonist/wizard,TRUE)
