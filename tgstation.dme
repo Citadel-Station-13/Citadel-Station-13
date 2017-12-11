@@ -2402,11 +2402,11 @@
 #include "code\modules\tgui\states\self.dm"
 #include "code\modules\tgui\states\zlevel.dm"
 #include "code\modules\tooltip\tooltip.dm"
-#include "code\modules\vehicles\_vehicle.dm"
 #include "code\modules\uplink\uplink.dm"
 #include "code\modules\uplink\uplink_devices.dm"
 #include "code\modules\uplink\uplink_items.dm"
 #include "code\modules\uplink\uplink_purchase_log.dm"
+#include "code\modules\vehicles\_vehicle.dm"
 #include "code\modules\vehicles\atv.dm"
 #include "code\modules\vehicles\bicycle.dm"
 #include "code\modules\vehicles\entered.dm"
@@ -2441,4 +2441,5 @@
 #include "modular_citadel\polychromic_clothes.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
 #include "modular_citadel\code\game\objects\items.dm"
+#include "modular_citadel\code\modules\clothing\spacesuits\hardsuits.dm"
 // END_INCLUDE

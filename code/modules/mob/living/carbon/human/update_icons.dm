@@ -129,10 +129,10 @@ There are several things that need to be remembered:
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (dna.features["taur"] in w_uniform.taursprites ? w_uniform.taursprites[dna.features["taur"]] : ((w_uniform.icon_override) ? w_uniform.icon_override : 'icons/mob/uniform.dmi')), isinhands = FALSE, femaleuniform = U.fitted)
+				uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (dna.features["taur"] in w_uniform.snowflake_sprites ? w_uniform.snowflake_sprites[dna.features["taur"]] : ((w_uniform.icon_override) ? w_uniform.icon_override : 'icons/mob/uniform.dmi')), isinhands = FALSE, femaleuniform = U.fitted)
 
 		if(!uniform_overlay)
-			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (dna.features["taur"] in w_uniform.taursprites ? w_uniform.taursprites[dna.features["taur"]] : ((w_uniform.icon_override) ? w_uniform.icon_override : 'icons/mob/uniform.dmi')), isinhands = FALSE)
+			uniform_overlay = U.build_worn_icon(state = "[t_color]", default_layer = UNIFORM_LAYER, default_icon_file = (dna.features["taur"] in w_uniform.snowflake_sprites ? w_uniform.snowflake_sprites[dna.features["taur"]] : ((w_uniform.icon_override) ? w_uniform.icon_override : 'icons/mob/uniform.dmi')), isinhands = FALSE)
 
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
@@ -160,7 +160,7 @@ There are several things that need to be remembered:
 		update_observer_view(wear_id)
 
 		//TODO: add an icon file for ID slot stuff, so it's less snowflakey
-		id_overlay = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = (dna.features["taur"] in wear_id.taursprites ? wear_id.taursprites[dna.features["taur"]] : (wear_id.icon_override) ? wear_id.icon_override : 'icons/mob/mob.dmi'))
+		id_overlay = wear_id.build_worn_icon(state = wear_id.item_state, default_layer = ID_LAYER, default_icon_file = (dna.features["taur"] in wear_id.snowflake_sprites ? wear_id.snowflake_sprites[dna.features["taur"]] : (wear_id.icon_override) ? wear_id.icon_override : 'icons/mob/mob.dmi'))
 		if(OFFSET_ID in dna.species.offset_features)
 			id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 			id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
@@ -195,7 +195,7 @@ There are several things that need to be remembered:
 		var/t_state = gloves.item_state
 		if(!t_state)
 			t_state = gloves.icon_state
-		overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = (dna.features["taur"] in gloves.taursprites ? gloves.taursprites[dna.features["taur"]] : ((gloves.icon_override) ? gloves.icon_override : 'icons/mob/hands.dmi')))
+		overlays_standing[GLOVES_LAYER] = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = (dna.features["taur"] in gloves.snowflake_sprites ? gloves.snowflake_sprites[dna.features["taur"]] : ((gloves.icon_override) ? gloves.icon_override : 'icons/mob/hands.dmi')))
 		gloves_overlay = overlays_standing[GLOVES_LAYER]
 		if(OFFSET_GLOVES in dna.species.offset_features)
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
@@ -221,7 +221,7 @@ There are several things that need to be remembered:
 				client.screen += glasses				//Either way, add the item to the HUD
 		update_observer_view(glasses,1)
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
-			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = (dna.features["taur"] in glasses.taursprites ? glasses.taursprites[dna.features["taur"]] : ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi')))
+			overlays_standing[GLASSES_LAYER] = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = (dna.features["snout"] in glasses.snowflake_sprites ? glasses.snowflake_sprites[dna.features["taur"]] : ((glasses.icon_override) ? glasses.icon_override : 'icons/mob/eyes.dmi')))
 		var/mutable_appearance/glasses_overlay = overlays_standing[GLASSES_LAYER]
 		if(glasses_overlay)
 			if(OFFSET_GLASSES in dna.species.offset_features)
@@ -248,7 +248,7 @@ There are several things that need to be remembered:
 				client.screen += ears					//add it to the client's screen
 		update_observer_view(ears,1)
 
-		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = (ears.features["taur"] in w_uniform.taursprites ? ears.taursprites[dna.features["taur"]] : ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi')))
+		overlays_standing[EARS_LAYER] = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = (dna.features["mam_ears"] in ears.snowflake_sprites ? ears.snowflake_sprites[dna.features["taur"]] : ((ears.icon_override) ? ears.icon_override : 'icons/mob/ears.dmi')))
 		var/mutable_appearance/ears_overlay = overlays_standing[EARS_LAYER]
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
@@ -273,7 +273,7 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open
 				client.screen += shoes					//add it to client's screen
 		update_observer_view(shoes,1)
-		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = (dna.features["taur"] in shoes.taursprites ? shoes.taursprites[dna.features["taur"]] : ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi')))
+		overlays_standing[SHOES_LAYER] = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = (dna.features["taur"] in shoes.snowflake_sprites ? shoes.snowflake_sprites[dna.features["taur"]] : ((shoes.icon_override) ? shoes.icon_override : 'icons/mob/feet.dmi')))
 		var/mutable_appearance/shoes_overlay = overlays_standing[SHOES_LAYER]
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
@@ -297,7 +297,7 @@ There are several things that need to be remembered:
 		var/t_state = s_store.item_state
 		if(!t_state)
 			t_state = s_store.icon_state
-		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance((dna.features["taur"] in s_store.taursprites ? s_store.taursprites[dna.features["taur"]] : ((s_store.icon_override) ? s_store.icon_override : 'icons/mob/belt_mirror.dmi')), t_state, -SUIT_STORE_LAYER)
+		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance((dna.features["taur"] in s_store.snowflake_sprites ? s_store.snowflake_sprites[dna.features["taur"]] : ((s_store.icon_override) ? s_store.icon_override : 'icons/mob/belt_mirror.dmi')), t_state, -SUIT_STORE_LAYER)
 		var/mutable_appearance/s_store_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
@@ -335,7 +335,7 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = belt.icon_state
 
-		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = (dna.features["taur"] in belt.taursprites ? belt.taursprites[dna.features["taur"]] : ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi')))
+		overlays_standing[BELT_LAYER] = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = (dna.features["taur"] in belt.snowflake_sprites ? belt.snowflake_sprites[dna.features["taur"]] : ((belt.icon_override) ? belt.icon_override : 'icons/mob/belt.dmi')))
 		var/mutable_appearance/belt_overlay = overlays_standing[BELT_LAYER]
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
@@ -359,7 +359,7 @@ There are several things that need to be remembered:
 				client.screen += wear_suit
 		update_observer_view(wear_suit,1)
 
-		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = (dna.features["taur"] in wear_suit.taursprites ? wear_suit.taursprites[dna.features["taur"]] : ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi')))
+		overlays_standing[SUIT_LAYER] = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = (dna.features["taur"] in wear_suit.snowflake_sprites ? wear_suit.snowflake_sprites[dna.features["taur"]] : ((wear_suit.icon_override) ? wear_suit.icon_override : 'icons/mob/suit.dmi')))
 		var/mutable_appearance/suit_overlay = overlays_standing[SUIT_LAYER]
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
