@@ -1,11 +1,8 @@
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
-<<<<<<< HEAD
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-=======
 	var/volume = 0
->>>>>>> 15d4205... Fixes integrated circuit reagent components not working while in mobs, adds new helper procs (#33434)
 
 /obj/item/integrated_circuit/reagent/Initialize()
 	. = ..()
@@ -36,11 +33,7 @@
 		"on smoked" = IC_PINTYPE_PULSE_OUT
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-<<<<<<< HEAD
 	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 3)
-	volume = 100
-=======
->>>>>>> 15d4205... Fixes integrated circuit reagent components not working while in mobs, adds new helper procs (#33434)
 	power_draw_per_use = 20
 	var/smoke_radius = 5
 	var/notified = FALSE
@@ -297,11 +290,7 @@
 		)
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-<<<<<<< HEAD
 	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-	volume = 60
-=======
->>>>>>> 15d4205... Fixes integrated circuit reagent components not working while in mobs, adds new helper procs (#33434)
 
 
 /obj/item/integrated_circuit/reagent/storage/interact(mob/user)
