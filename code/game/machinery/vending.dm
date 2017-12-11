@@ -138,7 +138,7 @@
 		if(isnull(amount))
 			amount = 0
 
-		var/atom/temp = new typepath(null)
+		var/atom/temp = typepath
 		var/datum/data/vending_product/R = new /datum/data/vending_product()
 		R.product_name = initial(temp.name)
 		R.product_path = typepath
@@ -638,7 +638,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 					/obj/item/reagent_containers/food/drinks/bottle/cream = 4, /obj/item/reagent_containers/food/drinks/soda_cans/tonic = 8,
 					/obj/item/reagent_containers/food/drinks/soda_cans/cola = 8, /obj/item/reagent_containers/food/drinks/soda_cans/sodawater = 15,
 					/obj/item/reagent_containers/food/drinks/drinkingglass = 30, /obj/item/reagent_containers/food/drinks/ice = 10,
-					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3)
+					/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12, /obj/item/reagent_containers/food/drinks/flask = 3,
+					/obj/item/reagent_containers/food/drinks/beer = 6)
 	contraband = list(/obj/item/reagent_containers/food/drinks/mug/tea = 12)
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
@@ -678,6 +679,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/snack/random
 	name = "\improper Random Snackies"
+	icon_state = "random_snack"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/snack/random/Initialize()
@@ -730,6 +732,7 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 
 /obj/machinery/vending/cola/random
 	name = "\improper Random Drinkies"
+	icon_state = "random_cola"
 	desc = "Uh oh!"
 
 /obj/machinery/vending/cola/random/Initialize()
@@ -1172,8 +1175,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
 
-<<<<<<< HEAD
-=======
 /obj/machinery/vending/games
 	name = "\improper Good Clean Fun"
 	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
@@ -1188,7 +1189,6 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	refill_canister = /obj/item/vending_refill/games
 
 
->>>>>>> 9460277... Merge pull request #33316 from ShizCalev/games-vendor
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE
 #undef COIN_CHARGE
