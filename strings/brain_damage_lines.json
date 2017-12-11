@@ -152,11 +152,16 @@
         "sybl",
         "mrs sybil",
         "mr basil",
+<<<<<<< HEAD
 		"sisadel",
 		"dullus",
 		"colon marhens",
 		"haylo",
 		"EEGEE"
+=======
+        "mr terry",
+        "berry"
+>>>>>>> e9f0f8c... Merge pull request #33445 from MoreRobustThanYou/patch-36
     ],
 
     "create_verbs": [
