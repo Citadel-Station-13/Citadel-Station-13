@@ -3709,7 +3709,6 @@
 "ig" = (
 /obj/machinery/computer/rdconsole/core{
 	dir = 4;
-	id = 3;
 	req_access = null
 	},
 /turf/open/floor/plasteel{
@@ -8603,8 +8602,6 @@
 	pixel_x = -22
 	},
 /obj/machinery/rnd/server{
-	id_with_download_string = "3";
-	id_with_upload_string = "3";
 	req_access = null
 	},
 /turf/open/floor/circuit{
