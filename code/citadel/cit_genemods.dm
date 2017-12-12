@@ -8,7 +8,6 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	origin_tech = "biotech=3"
 	var/applied_region = "chest"
 	var/list/add_mutations = list()
 	var/list/remove_mutations = list()
