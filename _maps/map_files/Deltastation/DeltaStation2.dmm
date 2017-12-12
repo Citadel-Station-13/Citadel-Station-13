@@ -93833,7 +93833,7 @@
 /turf/open/floor/plasteel,
 /area/science/storage)
 "dKe" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/simple/general/hidden{
 	dir = 5
 	},

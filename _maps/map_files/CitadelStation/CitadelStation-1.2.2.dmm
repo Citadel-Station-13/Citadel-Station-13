@@ -43179,7 +43179,7 @@
 	name = "AI Maintenance"
 	})
 "bLq" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit{
 	name = "Server Base";
 	initial_gas_mix = "n2=500;TEMP=80"

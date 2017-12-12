@@ -25592,7 +25592,7 @@
 	},
 /area/science/research)
 "aWs" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/rnd/server,
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 8
 	},

@@ -32280,7 +32280,7 @@
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBT" = (
-/obj/machinery/rnd/server/core,
+/obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "bBU" = (
