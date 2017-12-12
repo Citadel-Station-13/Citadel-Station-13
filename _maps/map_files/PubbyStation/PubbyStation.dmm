@@ -16841,7 +16841,7 @@
 	name = "Security Post - Cargo APC";
 	pixel_x = -24
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/cargo,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -25671,6 +25671,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 8
 	},
@@ -26220,7 +26221,7 @@
 	dir = 4;
 	network = list("SS13")
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/med,
 /turf/open/floor/plasteel/red/side{
 	dir = 10
 	},
@@ -34088,6 +34089,7 @@
 /area/security/checkpoint/science)
 "bDI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -34751,7 +34753,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/checkpoint/science)
 "bEY" = (
-/obj/structure/closet/wardrobe/red,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Science Security APC";
@@ -34761,6 +34762,7 @@
 /obj/structure/cable{
 	icon_state = "0-8"
 	},
+/obj/structure/closet/secure_closet/security/science,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
@@ -41881,6 +41883,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/closet/wardrobe/red,
 /turf/open/floor/plasteel/red/side{
 	dir = 4
 	},
@@ -42230,7 +42233,7 @@
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = 32
 	},
-/obj/structure/closet/wardrobe/red,
+/obj/structure/closet/secure_closet/security/engine,
 /turf/open/floor/plasteel/red/side{
 	dir = 6
 	},
