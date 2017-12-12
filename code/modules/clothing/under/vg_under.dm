@@ -5,7 +5,7 @@
 	item_color = "stripper_p"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/stripper_green
@@ -15,7 +15,7 @@
 	item_color = "stripper_g"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 
@@ -27,7 +27,7 @@
 	item_color = "bride_orange"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/wedding/bride_purple
@@ -38,7 +38,7 @@
 	item_color = "bride_purple"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/wedding/bride_blue
@@ -49,7 +49,7 @@
 	item_color = "bride_blue"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/wedding/bride_red
@@ -60,7 +60,7 @@
 	item_color = "bride_red"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/wedding/bride_white
@@ -71,7 +71,7 @@
 	item_color = "bride_white"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/mankini
@@ -81,7 +81,7 @@
 	item_color = "mankini"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 /*
 
 /obj/item/clothing/under/psysuit
@@ -92,7 +92,7 @@
 	item_color = "psysuit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/officeruniform
@@ -103,7 +103,7 @@
 	item_color = "officeruniform"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/soldieruniform
@@ -114,7 +114,7 @@
 	item_color = "soldieruniform"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 */
 /obj/item/clothing/under/squatter_outfit
@@ -125,7 +125,7 @@
 	item_color = "squatteroutfit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/russobluecamooutfit
@@ -136,7 +136,7 @@
 	item_color = "russobluecamo"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/stilsuit
@@ -147,7 +147,7 @@
 	item_color = "stilsuit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/aviatoruniform
@@ -158,7 +158,7 @@
 	item_color = "aviator_uniform"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/bikersuit
@@ -168,7 +168,7 @@
 	item_color = "biker"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/jacketsuit
@@ -179,7 +179,7 @@
 	item_color = "jacket"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 obj/item/clothing/under/mega
@@ -190,7 +190,7 @@ obj/item/clothing/under/mega
 	item_color = "mega"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/proto
@@ -201,7 +201,7 @@ obj/item/clothing/under/mega
 	item_color = "proto"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/megax
@@ -212,7 +212,7 @@ obj/item/clothing/under/mega
 	item_color = "megax"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/joe
@@ -223,7 +223,7 @@ obj/item/clothing/under/mega
 	item_color = "joe"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/roll
@@ -234,7 +234,7 @@ obj/item/clothing/under/mega
 	item_color = "roll"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/gokugidown
@@ -245,7 +245,7 @@ obj/item/clothing/under/mega
 	item_color = "gokugidown"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/gokugi
@@ -256,7 +256,7 @@ obj/item/clothing/under/mega
 	item_color = "gokugi"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/doomguy
@@ -267,7 +267,7 @@ obj/item/clothing/under/mega
 	item_color = "doom"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/vault13
@@ -278,7 +278,7 @@ obj/item/clothing/under/mega
 	item_color = "v13-jumpsuit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/vault
@@ -289,7 +289,7 @@ obj/item/clothing/under/mega
 	item_color = "v-jumpsuit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/clownpiece
@@ -300,7 +300,7 @@ obj/item/clothing/under/mega
 	item_color = "clownpiece"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/cia
@@ -311,7 +311,7 @@ obj/item/clothing/under/mega
 	item_color = "cia"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/greaser
@@ -321,7 +321,7 @@ obj/item/clothing/under/mega
 	item_state = "greaser_default"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/greaser/New()
@@ -350,7 +350,7 @@ obj/item/clothing/under/mega
 	item_color = "shizunewinter"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 
@@ -362,7 +362,7 @@ obj/item/clothing/under/mega
 	item_color = "shizunenormal"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/keyholesweater
@@ -373,7 +373,7 @@ obj/item/clothing/under/mega
 	item_color = "keyholesweater"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/casualhoodie
@@ -384,7 +384,7 @@ obj/item/clothing/under/mega
 	item_color = "hoodiejeans"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 
@@ -404,7 +404,7 @@ obj/item/clothing/under/mega
 	can_adjust = 0
 	has_sensor = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 
 
 /obj/item/clothing/under/neorussian
@@ -415,7 +415,7 @@ obj/item/clothing/under/mega
 	item_color = "nr_uniform"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'
 */
 
 /obj/item/clothing/under/rottensuit
@@ -426,4 +426,4 @@ obj/item/clothing/under/mega
 	item_color = "rottensuit"
 	can_adjust = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/uniforms.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/uniforms.dmi'

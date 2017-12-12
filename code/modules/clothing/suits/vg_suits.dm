@@ -8,7 +8,7 @@
 	armor = list(melee = 50, bullet = 50, laser = 50, energy = 30, bomb = 60, bio = 30, rad = 20)
 	siemens_coefficient = 0.5
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/xcomsquaddie/dredd
 	name = "Judge Armor"
@@ -16,7 +16,7 @@
 	icon_state = "dredd-suit"
 	item_state = "dredd-suit"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 
 /obj/item/clothing/suit/armor/xcomarmor
@@ -29,7 +29,7 @@
 	slowdown = 1
 	siemens_coefficient = 0.5
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/vest/neorussian
 	name = "neo-Russian vest"
@@ -37,7 +37,7 @@
 	icon_state = "nr_vest"
 	item_state = "nr_vest"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/armor/doomguy
 	name = "Doomguy's armor"
@@ -48,7 +48,7 @@
 	slowdown = 0
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 30, bio = 0, rad = 0)
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 
 /obj/item/clothing/suit/kaminacape
@@ -57,7 +57,7 @@
 	icon_state = "kaminacape"
 	body_parts_covered = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/officercoat
 	name = "Officer's Coat"
@@ -68,7 +68,7 @@
 
 /obj/item/clothing/suit/soldiercoat
 	name = "Soldier's Coat"
-	desc = "Und das heißt: Erika."
+	desc = "Und das heiï¿½t: Erika."
 	icon_state = "soldiersuit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
@@ -80,7 +80,7 @@
 	allowed = list(/obj/item/gun)
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/doshjacket
 	name = "Plasterer's Jacket"
@@ -88,7 +88,7 @@
 	icon_state = "doshjacket"
 	body_parts_covered = CHEST|GROIN|ARMS
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/maidapron
 	name = "Apron"
@@ -96,7 +96,7 @@
 	icon_state = "maidapron"
 	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/clownpiece
 	name = "small fairy wings"
@@ -104,14 +104,14 @@
 	icon_state = "clownpiece"
 	body_parts_covered = 0
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/clownpiece/flying
 	name = "small fairy wings"
 	desc = "Some small and translucid insect-like wings. Looks like these are the real deal!"
 	icon_state = "clownpiece-fly"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 /obj/item/clothing/suit/raincoat
 	name = "Raincoat"
@@ -119,6 +119,6 @@
 	icon_state = "raincoat"
 	body_parts_covered =CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
-	icon_override = 'icons/mob/citadel/suit.dmi'
+	alternate_worn_icon = 'icons/mob/citadel/suit.dmi'
 
 

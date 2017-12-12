@@ -2,7 +2,7 @@
 	name = "polychromic suit"
 	desc = "For when you want to show off your horrible colour coordination skills."
 	icon = 'modular_citadel/icons/polyclothes/item/uniform.dmi'
-	icon_override = 'modular_citadel/icons/polyclothes/mob/uniform.dmi'
+	alternate_worn_icon = 'modular_citadel/icons/polyclothes/mob/uniform.dmi'
 	icon_state = "polysuit"
 	item_color = "polysuit"
 	item_state = "sl_suit"

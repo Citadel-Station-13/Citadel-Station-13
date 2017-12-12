@@ -18,7 +18,7 @@
 	desc = "The design on this seems a little too familiar."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcloak-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "infcloak-w"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -28,7 +28,7 @@
 	desc = "A soft black collar that seems to stretch to fit whoever wears it."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "infcollar-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "infcollar-w"
 	item_color = null
 	tagname = null
@@ -64,7 +64,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "zombscarf-i"
 	desc = "A fashionable collar"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_color = "zombscarf-w"
 	dog_fashion = /datum/dog_fashion/head
 
@@ -73,7 +73,7 @@
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "labred-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "labred-w"
 
 
@@ -94,7 +94,7 @@
 	name = "carrot cloak"
 	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	icon_state = "carrotcloak-i"
 	item_state = "carrotcloak-w"
 	w_class = WEIGHT_CLASS_SMALL
@@ -117,7 +117,7 @@
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "festive-i"
 	item_state = "festive-w"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -128,7 +128,7 @@
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "lucharzigfie-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "lucharzigfie-w"
 
 
@@ -169,7 +169,7 @@
 	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "hos-g-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "hos-g-w"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
@@ -187,7 +187,7 @@
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
 	item_state = "stalker-w"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	icon_state = "stalker-i"
 
 
@@ -197,7 +197,7 @@
 	desc = "It's a collar..."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "petcollar-stripe-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "petcollar-stripe-w"
 	tagname = null
 
@@ -208,7 +208,7 @@
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "singer-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "singer-w"
 	item_color = "singer-i"
 	fitted = NO_FEMALE_UNIFORM
@@ -219,7 +219,7 @@
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
 	icon_state = "pink-i"
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
 	item_state = "pink-w"
 
 
@@ -232,4 +232,4 @@
 	item_state = "vermillion-w"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/obj/custom.dmi'
+	alternate_worn_icon = 'icons/obj/custom.dmi'
