@@ -109,7 +109,6 @@
 	)
 	outputs = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3)
 
 /obj/item/integrated_circuit/output/light/advanced/on_data_written()
 	update_lighting()
@@ -182,7 +181,6 @@
 		"secure day"	= 'sound/voice/bsecureday.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_ILLEGAL = 1)
 
 /obj/item/integrated_circuit/output/sound/medbot
 	name = "medbot sound circuit"
@@ -205,7 +203,6 @@
 		"no"			= 'sound/voice/mno.ogg',
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 1)
 
 /obj/item/integrated_circuit/output/sound/vox
 	name = "ai vox sound circuit"

@@ -22,7 +22,6 @@
 	unwieldsound = 'sound/weapons/neboff.ogg'
 	hitsound = "swing_hit"
 	armour_penetration = 40
-	origin_tech = "magnets=6;syndicate=1"
 	light_color = "#37FFF7"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "destroyed", "ripped", "devastated", "shredded")
 	block_chance = 75
@@ -180,7 +179,6 @@
 	throw_range = 5
 	force_unwielded = 0
 	force_wielded = 0
-	origin_tech = null
 	attack_verb = list("attacked", "struck", "hit")
 
 /obj/item/twohanded/hypereutactic/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
