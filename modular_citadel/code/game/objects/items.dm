@@ -4,4 +4,4 @@
 	var/worn_icon_autocenter
 
 	var/snowflake_type
-	var/list/snowflake_sprites = list()
+	var/list/snowflake_sprites
