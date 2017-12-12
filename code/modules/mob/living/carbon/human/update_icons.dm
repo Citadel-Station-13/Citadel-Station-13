@@ -501,10 +501,10 @@ in this situation default_icon_file is expected to match either the lefthand_ or
 femalueuniform: A value matching a uniform item's fitted var, if this is anything but NO_FEMALE_UNIFORM, we
 generate/load female uniform sprites matching all previously decided variables
 
-	to_chat(world,"[default_icon_file] [state]")
+
 */
 /obj/item/proc/build_worn_icon(var/state = "", var/default_layer = 0, var/default_icon_file = null, var/isinhands = FALSE, var/femaleuniform = NO_FEMALE_UNIFORM)
-
+	to_chat(world,"[default_icon_file] [state]")
 	//Find a valid icon file from variables+arguments
 	var/file2use
 	if(!isinhands && alternate_worn_icon)
