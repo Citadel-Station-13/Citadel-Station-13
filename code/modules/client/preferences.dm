@@ -178,6 +178,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/list/exp
 	var/list/menuoptions
 
+	var/action_buttons_screen_locs = list()
+
 	//citadel code
 	var/arousable = TRUE //Allows players to disable arousal from the character creation menu
 

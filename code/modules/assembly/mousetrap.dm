@@ -139,4 +139,4 @@
 
 /obj/item/device/assembly/mousetrap/armed
 	icon_state = "mousetraparmed"
-	armed = 1
+	armed = TRUE
