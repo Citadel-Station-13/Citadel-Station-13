@@ -23,11 +23,7 @@
 /obj/item/stock_parts/cell/get_cell()
 	return src
 
-<<<<<<< HEAD
-/obj/item/stock_parts/cell/New()
-=======
 /obj/item/stock_parts/cell/Initialize(mapload, override_maxcharge)
->>>>>>> ccfe2d4... Merge pull request #33481 from AutomaticFrenzy/patch/celldesc
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if (override_maxcharge)
