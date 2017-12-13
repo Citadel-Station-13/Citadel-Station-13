@@ -184,12 +184,8 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
-<<<<<<< HEAD
-/obj/structure/filingcabinet/employment/New()
-=======
 /obj/structure/filingcabinet/employment/Initialize()
 	. = ..()
->>>>>>> a162837... Replaces a bunch of loc assignments with forcemoves and moves to nullspace (#33465)
 	GLOB.employmentCabinets += src
 	return ..()
 
