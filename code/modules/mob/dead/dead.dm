@@ -24,8 +24,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 /mob/dead/ConveyorMove()	//lol
 	return
 
-<<<<<<< HEAD
-=======
 /mob/dead/Stat()
 	..()
 
@@ -43,8 +41,6 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		stat(null, "Time To Start: DELAYED")
 	else
 		stat(null, "Time To Start: SOON")
->>>>>>> a01cf60... Fixes lobby stat entries not showing (#33496)
-
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"
