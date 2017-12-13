@@ -24,6 +24,7 @@
 	max_temperature = 35000
 	leg_overload_coeff = 100
 	operation_req_access = list(ACCESS_SYNDICATE)
+<<<<<<< HEAD
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	max_equip = 4
 
@@ -66,3 +67,45 @@
 	..()
 	thrusters_action.Remove(user)
 
+=======
+	wreckage = /obj/structure/mecha_wreckage/gygax/dark
+	max_equip = 4
+
+/obj/mecha/combat/gygax/dark/loaded/New()
+	..()
+	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/teleporter
+	ME.attach(src)
+	ME = new /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
+	ME.attach(src)
+	return
+
+/obj/mecha/combat/gygax/dark/add_cell(obj/item/stock_parts/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new /obj/item/stock_parts/cell/hyper(src)
+
+
+/obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Grant(user, src)
+
+/obj/mecha/combat/gygax/dark/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	thrusters_action.Grant(user, src)
+
+
+/obj/mecha/combat/gygax/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	overload_action.Remove(user)
+
+/obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	thrusters_action.Remove(user)
+
+>>>>>>> ccfe2d4... Merge pull request #33481 from AutomaticFrenzy/patch/celldesc
