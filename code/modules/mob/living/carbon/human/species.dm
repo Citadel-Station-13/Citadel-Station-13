@@ -602,7 +602,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	if("mam_body_markings" in mutant_bodyparts)
 		if(!H.dna.features["mam_body_markings"] || H.dna.features["mam_body_markings"] == "None")
-			bodyparts_to_add -= "mam_ears"
+			bodyparts_to_add -= "mam_body_markings"
 
 	if("taur" in mutant_bodyparts)
 		if(!H.dna.features["taur"] || H.dna.features["taur"] == "None" || H.wear_suit && (H.wear_suit.flags_inv & HIDETAUR))

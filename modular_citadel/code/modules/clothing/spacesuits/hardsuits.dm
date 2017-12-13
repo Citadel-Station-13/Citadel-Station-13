@@ -1,5 +1,5 @@
 /obj/item/clothing/suit/space/hardsuit/engine
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAURCONDITIONAL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAUR
 	worn_icon_autocenter = TRUE
 	snowflake_type = "taur"
 	snowflake_sprites = list(
