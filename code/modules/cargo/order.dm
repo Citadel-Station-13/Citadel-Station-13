@@ -55,38 +55,6 @@
 
 /datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/P = new(C, id, pack.cost)
-<<<<<<< HEAD
-
-	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
-
-	P.name = "shipping manifest - #[id] ([pack.name])"
-	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
-	P.info += "<hr/>"
-	P.info += "Order #[id]<br/>"
-	P.info += "Destination: [station_name]<br/>"
-	P.info += "Item: [pack.name]<br/>"
-	P.info += "Contents: <br/>"
-	P.info += "<ul>"
-	for(var/atom/movable/AM in C.contents - P)
-		if((P.errors & MANIFEST_ERROR_CONTENTS))
-			if(prob(50))
-				P.info += "<li>[AM.name]</li>"
-			else
-				continue
-		P.info += "<li>[AM.name]</li>"
-	P.info += "</ul>"
-	P.info += "<h4>Stamp below to confirm receipt of goods:</h4>"
-
-	P.update_icon()
-	P.loc = C
-	C.manifest = P
-	C.update_icon()
-
-	return P
-
-/datum/supply_order/proc/generate(turf/T)
-	var/obj/structure/closet/crate/C = pack.generate(T)
-=======
 
 	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
 
@@ -117,7 +85,6 @@
 
 /datum/supply_order/proc/generate(turf/T)
 	var/obj/structure/closet/crate/C = pack.generate(T)
->>>>>>> a162837... Replaces a bunch of loc assignments with forcemoves and moves to nullspace (#33465)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/M = generateManifest(C)
 
 	if(M.errors & MANIFEST_ERROR_ITEM)
