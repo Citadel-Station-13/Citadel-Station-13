@@ -191,6 +191,13 @@ Credit where due:
 	. = ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
+<<<<<<< HEAD
+=======
+	return main_clockcult.check_clockwork_victory()
+
+/datum/game_mode/clockwork_cult/set_round_result()
+	..()
+>>>>>>> 171aca5... Roundend fixes (#33477)
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON
 		return TRUE
