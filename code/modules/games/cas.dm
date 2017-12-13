@@ -53,10 +53,6 @@
 		P.card_icon = "cas_white"
 		cards += P
 	shuffle_inplace(cards) // distribute blank cards throughout deck
-<<<<<<< HEAD
-	..()
-=======
->>>>>>> cfb0b8a... Merge pull request #33493 from vuonojenmustaturska/initializefixes
 
 /obj/item/toy/cards/deck/cas/attack_hand(mob/user)
 	if(user.lying)
