@@ -121,10 +121,18 @@ Note: Must be placed within 3 tiles of the R&D Console
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(linked_console) || !user.Adjacent(linked_console) || QDELETED(src))
 			return FALSE
+<<<<<<< HEAD
 		var/dtype = loaded_item.type
 		if(destroy_item(loaded_item))
 			linked_console.stored_research.research_points += point_value
 			linked_console.stored_research.deconstructed_items[dtype] = point_value
+=======
+		var/loaded_type = loaded_item.type
+		if(destroy_item(loaded_item))
+			linked_console.stored_research.research_points += point_value
+			linked_console.stored_research.deconstructed_items[loaded_type] = point_value
+
+>>>>>>> 805f0be... Fixes two unrelated runtimes (#33494)
 	return TRUE
 
 /obj/machinery/rnd/destructive_analyzer/proc/unload_item()
