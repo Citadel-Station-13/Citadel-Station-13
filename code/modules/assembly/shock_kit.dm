@@ -7,6 +7,7 @@
 	var/obj/item/device/electropack/part2 = null
 	w_class = WEIGHT_CLASS_HUGE
 	flags_1 = CONDUCT_1
+<<<<<<< HEAD
 
 /obj/item/assembly/shock_kit/Destroy()
 	qdel(part1)
@@ -40,3 +41,35 @@
 		var/obj/structure/chair/e_chair/C = loc
 		C.shock()
 	return
+=======
+
+/obj/item/assembly/shock_kit/Destroy()
+	qdel(part1)
+	qdel(part2)
+	return ..()
+
+/obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/wrench))
+		part1.forceMove(drop_location())
+		part2.forceMove(drop_location())
+		part1.master = null
+		part2.master = null
+		part1 = null
+		part2 = null
+		qdel(src)
+		return
+	add_fingerprint(user)
+	return
+
+/obj/item/assembly/shock_kit/attack_self(mob/user)
+	part1.attack_self(user)
+	part2.attack_self(user)
+	add_fingerprint(user)
+	return
+
+/obj/item/assembly/shock_kit/receive_signal()
+	if(istype(loc, /obj/structure/chair/e_chair))
+		var/obj/structure/chair/e_chair/C = loc
+		C.shock()
+	return
+>>>>>>> 5233ec1... Finishes the forceMove port (#33519)

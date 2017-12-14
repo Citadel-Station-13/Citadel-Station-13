@@ -6,6 +6,7 @@
 	anchored = TRUE
 	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+<<<<<<< HEAD
 	see_in_dark = 7
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
@@ -13,3 +14,15 @@
 
 /mob/camera/experience_pressure_difference()
 	return
+=======
+	see_in_dark = 7
+	invisibility = INVISIBILITY_ABSTRACT // No one can see us
+	sight = SEE_SELF
+	move_on_shuttle = 0
+
+/mob/camera/experience_pressure_difference()
+	return
+
+/mob/camera/forceMove(atom/destination)
+	loc = destination
+>>>>>>> 5233ec1... Finishes the forceMove port (#33519)
