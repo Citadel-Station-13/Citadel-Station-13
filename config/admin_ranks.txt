@@ -42,8 +42,4 @@ Lazy Master 	= +EVERYTHING -AUTOLOGIN
 
 Host			= +EVERYTHING
 
-<<<<<<< HEAD
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN
-=======
-Coder			= +DEBUG +VAREDIT +SERVER +SPAWN +POLL -AUTOLOGIN
->>>>>>> 4e929c7... Deadmin tweaks: Admins without +AUTOLOGIN start deadmined. AUTOLOGIN defaults to on. (#33480)
+Coder			= +DEBUG +VAREDIT +SERVER +SPAWN -AUTOLOGIN
