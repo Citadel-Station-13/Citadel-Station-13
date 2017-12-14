@@ -175,12 +175,8 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-<<<<<<< HEAD
-/obj/item/pen/sleepy/New()
-=======
 /obj/item/pen/sleepy/Initialize()
 	. = ..()
->>>>>>> d447acd... All-In-One grinder results are now defined by type, not by huge lists (#33181)
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
