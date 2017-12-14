@@ -112,8 +112,13 @@
 		return 0
 
 	if(!forced)
+<<<<<<< HEAD
 		Radio.set_frequency(GLOB.SEC_FREQ)
 		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", GLOB.SEC_FREQ, get_default_language())
+=======
+		Radio.set_frequency(FREQ_SECURITY)
+		Radio.talk_into(src, "Timer has expired. Releasing prisoner.", FREQ_SECURITY)
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 	timing = FALSE
 	activation_time = null

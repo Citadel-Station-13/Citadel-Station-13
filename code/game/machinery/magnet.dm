@@ -278,11 +278,15 @@
 	if(href_list["radio-op"])
 
 		// Prepare signal beforehand, because this is a radio operation
+<<<<<<< HEAD
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 // radio transmission
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
+=======
+		var/datum/signal/signal = new(list("code" = code))
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 		// Apply any necessary commands
 		switch(href_list["radio-op"])
@@ -345,11 +349,15 @@
 		looping = 1
 
 		// Prepare the radio signal
+<<<<<<< HEAD
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 // radio transmission
 		signal.source = src
 		signal.frequency = frequency
 		signal.data["code"] = code
+=======
+		var/datum/signal/signal = new(list("code" = code))
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 		if(pathpos > rpath.len) // if the position is greater than the length, we just loop through the list!
 			pathpos = 1

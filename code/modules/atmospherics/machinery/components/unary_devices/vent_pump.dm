@@ -178,11 +178,15 @@
 	if(!radio_connection)
 		return
 
+<<<<<<< HEAD
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
+=======
+	var/datum/signal/signal = new(list(
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VP",
@@ -193,7 +197,7 @@
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
-	)
+	))
 
 	var/area/A = get_area(src)
 	if(!A.air_vent_names[id_tag])

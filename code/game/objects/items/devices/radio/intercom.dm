@@ -101,22 +101,27 @@
 	..()
 	ui_interact(user, state = GLOB.default_state)
 
-/obj/item/device/radio/intercom/receive_range(freq, level)
+/obj/item/device/radio/intercom/can_receive(freq, level)
 	if(!on)
-		return -1
+		return FALSE
 	if(wires.is_cut(WIRE_RX))
-		return -1
+		return FALSE
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
-			return -1
+			return FALSE
 	if(!src.listening)
+<<<<<<< HEAD
 		return -1
 	if(freq == GLOB.SYND_FREQ)
+=======
+		return FALSE
+	if(freq == FREQ_SYNDICATE)
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		if(!(src.syndie))
-			return -1//Prevents broadcast of messages over devices lacking the encryption
+			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
-	return canhear_range
+	return TRUE
 
 
 /obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
