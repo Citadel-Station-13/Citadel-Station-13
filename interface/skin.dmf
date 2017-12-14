@@ -1146,7 +1146,7 @@ window "mainwindow"
 		left = "mapwindow"
 		right = "infowindow"
 		is-vert = true
-		splitter = 50
+		splitter = 75
 		show-splitter = true
 		lock = none
 	elem "input"
