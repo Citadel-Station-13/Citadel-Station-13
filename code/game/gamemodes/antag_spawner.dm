@@ -222,7 +222,7 @@
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
 
 
-/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "", datum/mind/user)
 
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
