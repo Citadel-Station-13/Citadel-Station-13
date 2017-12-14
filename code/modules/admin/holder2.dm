@@ -149,13 +149,6 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 //This proc checks whether subject has at least ONE of the rights specified in rights_required.
 /proc/check_rights_for(client/subject, rights_required)
-<<<<<<< HEAD
-	if(subject && subject.holder && subject.holder.rank)
-		if(rights_required && !(rights_required & subject.holder.rank.rights))
-			return 0
-		return 1
-	return 0
-=======
 	if(subject && subject.holder)
 		return subject.holder.check_for_rights(rights_required)
 	return 0
@@ -181,4 +174,3 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 
 /proc/HrefTokenFormField(forceGlobal = FALSE)
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
->>>>>>> 4e929c7... Deadmin tweaks: Admins without +AUTOLOGIN start deadmined. AUTOLOGIN defaults to on. (#33480)
