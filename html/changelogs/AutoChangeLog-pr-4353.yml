@@ -1,0 +1,7 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "All maps now have departmental lathes as they're supposed to."
+  - rscadd: "Pubbystation and Omegastation now have kinkmates! This does not add them back to the rotation, though. Tell Jay to re-enable Pubby and Omega in the server's config."
+  - rscadd: "Omegastation's dorms now have bolt buttons."
+  - bugfix: "The table in the back of Boxstation's maint bar gambling area will no longer throw people around."
