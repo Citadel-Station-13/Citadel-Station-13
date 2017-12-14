@@ -23,6 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
+	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
@@ -174,7 +175,12 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
+<<<<<<< HEAD
 /obj/item/pen/sleepy/New()
+=======
+/obj/item/pen/sleepy/Initialize()
+	. = ..()
+>>>>>>> d447acd... All-In-One grinder results are now defined by type, not by huge lists (#33181)
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
