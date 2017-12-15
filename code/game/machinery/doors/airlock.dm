@@ -34,7 +34,7 @@
 
 #define AIRLOCK_INTEGRITY_N			 300 // Normal airlock integrity
 #define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
-#define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_N  21  // Normal airlock damage deflection
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
 #define NOT_ELECTRIFIED 0
@@ -209,23 +209,27 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
+	var/obj/machinery/door/airlock/cult/A
 	if(glass)
 		if(runed)
-			new/obj/machinery/door/airlock/cult/glass(T)
+			A = new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
 	else
 		if(runed)
-			new/obj/machinery/door/airlock/cult(T)
+			A = new/obj/machinery/door/airlock/cult(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned(T)
+			A = new/obj/machinery/door/airlock/cult/unruned(T)
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	var/obj/machinery/door/airlock/clockwork/A
 	if(glass)
-		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
 	else
-		new/obj/machinery/door/airlock/clockwork(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
@@ -1036,7 +1040,7 @@
 		panel_open = TRUE
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.loc = get_turf(src)
+		charge.forceMove(drop_location())
 		charge.ex_act(EXPLODE_DEVASTATE)
 		detonated = 1
 		charge = null
@@ -1340,7 +1344,7 @@
 			else
 				ae = electronics
 				electronics = null
-				ae.loc = src.loc
+				ae.forceMove(drop_location())
 	qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

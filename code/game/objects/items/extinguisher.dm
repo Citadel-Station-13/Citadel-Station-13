@@ -1,4 +1,3 @@
-
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."

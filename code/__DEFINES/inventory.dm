@@ -86,7 +86,7 @@
 			. = SLOT_POCKET
 
 
-//Bit flags_1 for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
+//Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 #define HIDEGLOVES		1
 #define HIDESUITSTORAGE	2
 #define HIDEJUMPSUIT	4	//these first four are only used in exterior suits
@@ -134,17 +134,17 @@
 #define THERMAL_PROTECTION_HAND_LEFT	0.025
 #define THERMAL_PROTECTION_HAND_RIGHT	0.025
 
-//flags_1 for female outfits: How much the game can safely "take off" the uniform without it looking weird
+//flags for female outfits: How much the game can safely "take off" the uniform without it looking weird
 #define NO_FEMALE_UNIFORM			0
 #define FEMALE_UNIFORM_FULL			1
 #define FEMALE_UNIFORM_TOP			2
 
-//flags_1 for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
+//flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
 #define NORMAL_STYLE		0
 #define ALT_STYLE			1
 #define DIGITIGRADE_STYLE 	2
 
-//flags_1 for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
+//flags for outfits that have mutantrace variants (try not to use this): Currently only needed if you're trying to add tight fitting bootyshorts
 #define NO_MUTANTRACE_VARIATION		0
 #define MUTANTRACE_VARIATION		1
 
@@ -152,9 +152,9 @@
 #define FULL_DIGITIGRADE			1
 #define SQUISHED_DIGITIGRADE		2
 
-//flags_1 for covering body parts
+//flags for covering body parts
 #define GLASSESCOVERSEYES	1
-#define MASKCOVERSEYES		2		// get rid of some of the other retardation in these flags_1
+#define MASKCOVERSEYES		2		// get rid of some of the other retardation in these flags
 #define HEADCOVERSEYES		4		// feel free to realloc these numbers for other purposes
 #define MASKCOVERSMOUTH		8		// on other items, these are just for mask/head
 #define HEADCOVERSMOUTH		16
@@ -199,7 +199,8 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/storage/fancy/cigarettes,
-	/obj/item/tank/internals/emergency_oxygen)))
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
 
 GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -212,7 +213,8 @@ GLOBAL_LIST_INIT(security_vest_allowed, typecacheof(list(
 	/obj/item/melee/classic_baton/telescopic,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals/emergency_oxygen)))
+	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman)))
 
 GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/ammo_box,
@@ -227,4 +229,5 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, typecacheof(list(
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,
+	/obj/item/tank/internals/plasmaman,
 	/obj/item/toy)))

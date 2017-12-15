@@ -15,8 +15,8 @@
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
 	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
-/obj/item/drone_shell/New()
-	..()
+/obj/item/drone_shell/Initialize()
+	. = ..()
 	var/area/A = get_area(src)
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
@@ -67,7 +67,7 @@
 		L.dropItemToGround(src)
 
 	contents -= drone
-	drone.loc = get_turf(src)
+	drone.forceMove(drop_location())
 	drone.reset_perspective()
 	drone.setDir(SOUTH )//Looks better
 	drone.visible_message("<span class='warning'>[drone] uncurls!</span>")

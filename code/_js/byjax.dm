@@ -45,3 +45,4 @@ Be sure to include required js functions in your page, or it'll raise an excepti
 
 		receiver << output(argums,"[control_id]:replaceContent")
 	return
+

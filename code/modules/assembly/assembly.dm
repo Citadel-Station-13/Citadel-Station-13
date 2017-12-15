@@ -114,3 +114,4 @@
 
 /obj/item/device/assembly/interact(mob/user)
 	return //HTML MENU FOR WIRES GOES HERE
+

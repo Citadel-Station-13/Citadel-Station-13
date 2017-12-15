@@ -28,3 +28,5 @@
 
 	if(announceWhen >= 0)
 		command_alert("Artificial gravity arrays are now functioning within normal parameters. Please report any irregularities to your respective head of staff.")
+
+

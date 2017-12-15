@@ -126,7 +126,7 @@
 			return TRUE
 
 		if(!organs.len)
-			to_chat(user, "<span class='notice'>There are no removeable organs in [target]'s [parse_zone(target_zone)]!</span>")
+			to_chat(user, "<span class='notice'>There are no removable organs in [target]'s [parse_zone(target_zone)]!</span>")
 			return -1
 		else
 			for(var/obj/item/organ/O in organs)

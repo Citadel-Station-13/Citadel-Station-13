@@ -379,4 +379,3 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
-	

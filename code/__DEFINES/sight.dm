@@ -25,6 +25,6 @@
 //for clothing visor toggles, these determine which vars to toggle
 #define VISOR_FLASHPROTECT 1
 #define VISOR_TINT 2
-#define VISOR_VISIONFLAGS 4 //all following flags_1 only matter for glasses
+#define VISOR_VISIONFLAGS 4 //all following flags only matter for glasses
 #define VISOR_DARKNESSVIEW 8
 #define VISOR_INVISVIEW 16

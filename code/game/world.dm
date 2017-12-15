@@ -40,7 +40,6 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
-
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
@@ -128,6 +127,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
+
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)

@@ -230,14 +230,13 @@
 			msg += "[t_He] [t_is] plump and delicious looking - Like a fat little piggy. A tasty piggy.\n"
 		else
 			msg += "[t_He] [t_is] quite chubby.\n"
-
 	switch(disgust)
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			msg += "[t_He] looks a bit grossed out.\n"
+			msg += "[t_He] look[p_s()] a bit grossed out.\n"
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			msg += "[t_He] looks really grossed out.\n"
+			msg += "[t_He] look[p_s()] really grossed out.\n"
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			msg += "[t_He] looks disgusted.\n"
+			msg += "[t_He] look[p_s()] extremely disgusted.\n"
 
 	if(blood_volume < BLOOD_VOLUME_SAFE)
 		msg += "[t_He] [t_has] pale skin.\n"
@@ -342,6 +341,7 @@
 						R = find_record("name", perpname, GLOB.data_core.security)
 						if(R)
 							criminal = R.fields["criminal"]
+
 						msg += "<span class='deptradio'>Criminal status:</span> <a href='?src=[REF(src)];hud=s;status=1'>\[[criminal]\]</a>\n"
 						msg += "<span class='deptradio'>Security record:</span> <a href='?src=[REF(src)];hud=s;view=1'>\[View\]</a> "
 						msg += "<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a> "

@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
-	// species flags_1. these can be found in flags_1.dm
+	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
 
 	var/attack_verb = "punch"	// punch-specific attack verb
@@ -125,11 +125,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
-
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
@@ -1093,7 +1092,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/get_spans()
 	return list()
 
-/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return 0
 
 ////////
@@ -1476,7 +1475,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
-	H.damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
 

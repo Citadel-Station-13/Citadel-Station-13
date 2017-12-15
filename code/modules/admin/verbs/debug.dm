@@ -739,7 +739,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
-				Plasma.loc = Rad
+				Plasma.forceMove(Rad)
 
 			if(!Rad.active)
 				Rad.toggle_power()
@@ -802,7 +802,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	set category = "Debug"
 	set name = "Display overlay Log"
 	set desc = "Display SSoverlays log of everything that's passed through it."
-	
+
 	render_stats(SSoverlays.stats, src)
 
 /client/proc/cmd_display_init_log()

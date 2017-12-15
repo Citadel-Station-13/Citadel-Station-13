@@ -473,7 +473,7 @@ Proc for attack log creation, because really why not
 	if(extra_args)
 		new_args += extra_args
 
- 	for(var/j in 1 to amount)
+	for(var/j in 1 to amount)
 		var/atom/X = new spawn_type(arglist(new_args))
 		X.admin_spawned = admin_spawn
 

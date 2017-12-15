@@ -4,7 +4,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
 
@@ -14,7 +14,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
 
@@ -77,7 +77,7 @@
 	name = "insulated gloves"
 	desc = "These gloves will protect the wearer from electric shock."
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -148,7 +148,7 @@
 	item_state = "egloves"
 	item_color = "captain"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -162,7 +162,7 @@
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.3
-	permeability_coefficient = 0.1
+	permeability_coefficient = 0.01
 	item_color="white"
 	transfer_prints = TRUE
 	resistance_flags = NONE

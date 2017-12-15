@@ -1,3 +1,5 @@
+
+
 /proc/seedRuins(list/z_levels = null, budget = 0, whitelist = /area/space, list/potentialRuins)
 	if(!z_levels || !z_levels.len)
 		WARNING("No Z levels provided - Not generating ruins")

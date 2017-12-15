@@ -57,7 +57,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
-	if(!QDELETED(summoner))
+	if(summoner)
 		var/image/holder = hud_list[HEALTH_HUD]
 		holder.icon_state = "hud[RoundHealth(summoner)]"
 

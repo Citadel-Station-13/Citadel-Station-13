@@ -32,8 +32,7 @@
 		handle_arousal()
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -153,7 +152,7 @@
 //END FIRE CODE
 
 
-//This proc returns a number made up of the flags_1 for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
@@ -314,7 +313,7 @@
 			if(prob(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
-				I.loc = get_turf(src)
+				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
@@ -343,6 +342,9 @@
 
 	heart.beating = !status
 
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())

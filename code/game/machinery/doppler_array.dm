@@ -19,6 +19,10 @@ GLOBAL_LIST_EMPTY(doppler_arrays)
 	GLOB.doppler_arrays -= src
 	return ..()
 
+/obj/machinery/doppler_array/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'>Its dish is facing to the [dir2text(dir)].</span>")
+
 /obj/machinery/doppler_array/process()
 	return PROCESS_KILL
 

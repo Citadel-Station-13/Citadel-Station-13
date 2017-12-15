@@ -335,6 +335,7 @@ GAS ANALYZER
 	throw_speed = 3
 	throw_range = 7
 	materials = list(MAT_METAL=30, MAT_GLASS=20)
+	grind_results = list("mercury" = 5, "iron" = 5, "silicon" = 5)
 
 /obj/item/device/analyzer/attack_self(mob/user)
 
@@ -394,6 +395,7 @@ GAS ANALYZER
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
+
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"

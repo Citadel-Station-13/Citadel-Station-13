@@ -378,7 +378,7 @@
 		M = size_matrix*0.1
 	else
 		M = size_matrix*2
-	animate(src, alpha = 20, transform = M, time = duration, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 20, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/bleed/explode
 	icon_state = "bleed10"

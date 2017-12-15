@@ -12,6 +12,7 @@
 	throw_speed = 3
 	throw_range = 6
 	container_type = INJECTABLE_1
+	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
 
@@ -28,6 +29,10 @@
 /obj/item/slime_extract/Initialize()
 	. = ..()
 	create_reagents(100)
+
+/obj/item/slime_extract/on_grind()
+	if(Uses)
+		grind_results["slimejelly"] = 20
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -467,7 +472,7 @@
 	desc = "A golem's head."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = ABSTRACT_1 | NODROP_1
-	
+
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"

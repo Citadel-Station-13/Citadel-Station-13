@@ -260,7 +260,7 @@
 
 	if(href_list["eject_seed"] && !operation)
 		if (seed)
-			seed.loc = src.loc
+			seed.forceMove(drop_location())
 			seed.verb_pickup()
 			seed = null
 			update_genes()
@@ -275,7 +275,7 @@
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
-			disk.loc = src.loc
+			disk.forceMove(drop_location())
 			disk.verb_pickup()
 			disk = null
 			update_genes()
@@ -368,7 +368,7 @@
 /obj/machinery/plantgenes/proc/insert_seed(obj/item/seeds/S)
 	if(!istype(S) || seed)
 		return
-	S.loc = src
+	S.forceMove(src)
 	seed = S
 	update_genes()
 	update_icon()
@@ -422,8 +422,8 @@
 	var/read_only = 0 //Well, it's still a floppy disk
 	unique_rename = 1
 
-/obj/item/disk/plantgene/New()
-	..()
+/obj/item/disk/plantgene/Initialize()
+	. = ..()
 	add_overlay("datadisk_gene")
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)

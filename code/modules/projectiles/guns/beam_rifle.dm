@@ -63,8 +63,6 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
-	
-	var/lastprocess = 0
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
@@ -502,11 +500,11 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
+		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			loc = target
+			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target
@@ -522,7 +520,7 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				loc = get_turf(AM)
+				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE
