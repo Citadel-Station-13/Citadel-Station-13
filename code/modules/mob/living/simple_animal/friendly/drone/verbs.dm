@@ -12,6 +12,7 @@
 	to_chat(src, "<b>Drone Laws</b>")
 	to_chat(src, laws)
 
+<<<<<<< HEAD
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
@@ -28,6 +29,8 @@
 
 	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
 
+=======
+>>>>>>> c2c5e90... Removed drone light in favor of night vision (#33529)
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
 	set name = "Drone ping"
