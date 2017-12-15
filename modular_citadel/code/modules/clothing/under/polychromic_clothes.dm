@@ -1,16 +1,16 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//	Polychromic Clothes:																							  //
-//																													  //
-//		Polychromic clothes simply consist of 4 sprites: A base, unrecoloured sprite, and up to 3 greyscaled sprites. //
-//	In order to add more polychromic clothes, simply create a base sprite, and up to 3 recolourable overlays for it,  //
-//	and then name them as follows: [name], [name]-primary, [name]-secondary, [name]-tertiary. The sprites should	  //
-//	ideally be in 'haven/icons/polyclothes/item/uniform.dmi' and 'haven/icons/polyclothes/mob/uniform.dmi' for the	  //
-//	worn sprites. After that, copy paste the code from any of the example clothes beneath the giant mass of procs and //
-//	change the names around. [name] should go in BOTH icon_state and item_color. You can preset colors and disable	  //
-//	any overlays using the self-explainatory vars.																	  //
-//																													  //
-//																								-Tori				  //
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//	Polychromic Clothes:																							 						 //
+//																													  					     //
+//		Polychromic clothes simply consist of 4 sprites: A base, unrecoloured sprite, and up to 3 greyscaled sprites. 						 //
+//	In order to add more polychromic clothes, simply create a base sprite, and up to 3 recolourable overlays for it,  						 //
+//	and then name them as follows: [name], [name]-primary, [name]-secondary, [name]-tertiary. The sprites should	  						 //
+//	ideally be in 'modular_citadel/icons/polyclothes/item/uniform.dmi' and 'modular_citadel/icons/polyclothes/mob/uniform.dmi' for the	     //
+//	worn sprites. After that, copy paste the code from any of the example clothes beneath the giant mass of procs and 						 //
+//	change the names around. [name] should go in BOTH icon_state and item_color. You can preset colors and disable	  						 //
+//	any overlays using the self-explainatory vars.																	 						 //
+//																													 						 //
+//																								-Tori				  						 //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/clothing/under/polychromic	//This is the parent object. DO NOT copy paste this and its vars if you want to make something new.
 	name = "polychromic suit"
