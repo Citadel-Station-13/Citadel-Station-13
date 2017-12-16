@@ -54,7 +54,6 @@
 		return
 	if(!target)
 		add_overlay("pinon[alert ? "alert" : ""]null")
-		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(here.z != there.z)
@@ -111,8 +110,7 @@
 		var/crewmember_name = "Unknown"
 		if(H.wear_id)
 			var/obj/item/card/id/I = H.wear_id.GetID()
-			if(I && I.registered_name)
-				crewmember_name = I.registered_name
+			crewmember_name = I.registered_name
 
 		while(crewmember_name in name_counts)
 			name_counts[crewmember_name]++

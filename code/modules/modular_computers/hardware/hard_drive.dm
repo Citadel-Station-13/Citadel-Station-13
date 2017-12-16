@@ -120,9 +120,9 @@
 	stored_files = null
 	return ..()
 
-/obj/item/computer_hardware/hard_drive/Initialize()
-	. = ..()	
+/obj/item/computer_hardware/hard_drive/New()
 	install_default_programs()
+	..()
 
 
 /obj/item/computer_hardware/hard_drive/advanced

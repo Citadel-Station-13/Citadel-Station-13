@@ -25,13 +25,13 @@
 	armour_penetration = 50
 	var/active = 0
 
-/obj/item/holo/esword/green/Initialize()
-	. = ..()
+/obj/item/holo/esword/green/New()
+	..()
 	item_color = "green"
 
 
-/obj/item/holo/esword/red/Initialize()
-	. = ..()
+/obj/item/holo/esword/red/New()
+	..()
 	item_color = "red"
 
 /obj/item/holo/esword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -42,9 +42,9 @@
 /obj/item/holo/esword/attack(target as mob, mob/user as mob)
 	..()
 
-/obj/item/holo/esword/Initialize()
-	. = ..()
+/obj/item/holo/esword/New()
 	item_color = pick("red","blue","green","purple")
+	..()
 
 /obj/item/holo/esword/attack_self(mob/living/user as mob)
 	active = !active
@@ -113,7 +113,7 @@
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
-		L.forceMove(loc)
+		L.loc = src.loc
 		L.Knockdown(100)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()

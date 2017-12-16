@@ -13,7 +13,6 @@
 	var/obj/item/implant/imp = null
 	var/imp_type
 
-
 /obj/item/implantcase/update_icon()
 	if(imp)
 		icon_state = "implantcase-[imp.item_color]"
@@ -39,7 +38,7 @@
 		if(I.imp)
 			if(imp || I.imp.imp_in)
 				return
-			I.imp.forceMove(src)
+			I.imp.loc = src
 			imp = I.imp
 			I.imp = null
 			update_icon()
@@ -48,7 +47,7 @@
 			if(imp)
 				if(I.imp)
 					return
-				imp.forceMove(I)
+				imp.loc = I
 				I.imp = imp
 				imp = null
 				update_icon()

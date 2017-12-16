@@ -9,11 +9,12 @@
 	var/foodtype = NONE
 	var/last_check_time
 
-/obj/item/reagent_containers/food/Initialize(mapload)
-	. = ..()
+/obj/item/weapon/reagent_containers/food/Initialize(mapload)
+	..()
 	if(!mapload)
-		pixel_x = rand(-5, 5)
+		pixel_x = rand(-5, 5)	//Randomizes postion slightly.
 		pixel_y = rand(-5, 5)
+
 
 /obj/item/reagent_containers/food/proc/checkLiked(var/fraction, mob/M)
 	if(last_check_time + 50 < world.time)

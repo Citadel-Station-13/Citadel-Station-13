@@ -28,6 +28,7 @@
 	else
 		log_world(originmastercommit)
 
+
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
 		return ""

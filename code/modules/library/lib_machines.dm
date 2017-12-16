@@ -541,7 +541,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 		cache = null
 	if(href_list["eject"])
 		for(var/obj/item/book/B in contents)
-			B.forceMove(drop_location())
+			B.loc = src.loc
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
@@ -589,4 +589,4 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			B.icon_state = "book[rand(1,7)]"
 			qdel(P)
 		else
-			P.forceMove(drop_location())
+			P.loc = loc

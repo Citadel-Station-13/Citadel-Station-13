@@ -447,7 +447,7 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.forceMove(AM)
+		explosive.loc = AM
 		explosive.prime()
 		qdel(src)
 

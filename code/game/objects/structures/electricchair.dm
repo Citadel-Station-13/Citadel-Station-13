@@ -15,7 +15,7 @@
 		var/obj/structure/chair/C = new /obj/structure/chair(loc)
 		playsound(loc, W.usesound, 50, 1)
 		C.setDir(dir)
-		part.forceMove(loc)
+		part.loc = loc
 		part.master = null
 		part = null
 		qdel(src)

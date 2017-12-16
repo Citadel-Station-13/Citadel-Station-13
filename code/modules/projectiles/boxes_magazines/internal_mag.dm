@@ -51,10 +51,10 @@
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
 		if(!bullet || !bullet.BB) // found a spent ammo
 			stored_ammo[i] = R
-			R.forceMove(src)
+			R.loc = src
 
 			if(bullet)
-				bullet.forceMove(drop_location())
+				bullet.loc = get_turf(src.loc)
 			return 1
 
 	return 0
@@ -156,9 +156,9 @@
 	max_ammo = 6
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/rus357/Initialize()
+/obj/item/ammo_box/magazine/internal/rus357/New()
 	stored_ammo += new ammo_type(src)
-	. = ..()
+	..()
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"

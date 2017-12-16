@@ -18,7 +18,7 @@
 		if(notices > 4)
 			break
 		if(istype(I, /obj/item/paper))
-			I.forceMove(src)
+			I.loc = src
 			notices++
 	icon_state = "nboard0[notices]"
 
@@ -58,7 +58,7 @@
 			return
 		var/obj/item/I = locate(href_list["remove"]) in contents
 		if(istype(I) && I.loc == src)
-			I.forceMove(usr.loc)
+			I.loc = usr.loc
 			usr.put_in_hands(I)
 			notices--
 			icon_state = "nboard0[notices]"

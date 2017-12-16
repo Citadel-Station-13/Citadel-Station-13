@@ -15,6 +15,7 @@
 /mob/living/simple_animal/drone/verb/toggle_light()
 	set category = "Drone"
 	set name = "Toggle drone light"
+	
 	if(stat == DEAD)
 		to_chat(src, "<span class='warning'>There's no light in your life... by that I mean you're dead.</span>")
 		return
@@ -38,6 +39,7 @@
 	if(alert_s && A && stat != DEAD)
 		var/msg = "<span class='boldnotice'>DRONE PING: [name]: [alert_s] priority alert in [A.name]!</span>"
 		alert_drones(msg)
+
 
 /mob/living/simple_animal/drone/verb/toggle_statics()
 	set name = "Change Vision Filter"

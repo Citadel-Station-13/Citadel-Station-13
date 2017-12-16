@@ -157,15 +157,15 @@
 			if(istype(P, /obj/item/crowbar))
 				playsound(src.loc, P.usesound, 50, 1)
 				state = 2
-				circuit.forceMove(drop_location())
+				circuit.loc = src.loc
 				components.Remove(circuit)
 				circuit = null
 				if(components.len == 0)
 					to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				else
 					to_chat(user, "<span class='notice'>You remove the circuit board and other components.</span>")
-					for(var/atom/movable/AM in components)
-						AM.forceMove(drop_location())
+					for(var/atom/movable/A in components)
+						A.loc = src.loc
 				desc = initial(desc)
 				req_components = null
 				components = null
@@ -186,9 +186,9 @@
 						qdel(O)
 					new_machine.component_parts = list()
 					for(var/obj/O in src)
-						O.moveToNullspace()
+						O.loc = null
 						new_machine.component_parts += O
-					circuit.moveToNullspace()
+					circuit.loc = null
 					new_machine.RefreshParts()
 					qdel(src)
 				return
@@ -257,5 +257,4 @@
 		for(var/X in components)
 			var/obj/item/I = X
 			I.forceMove(loc)
-
 	..()

@@ -228,7 +228,7 @@
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")
 			if(panel_open && cell)
-				cell.forceMove(drop_location())
+				cell.loc = get_turf(src)
 				cell = null
 				. = TRUE
 

@@ -101,22 +101,22 @@
 	..()
 	ui_interact(user, state = GLOB.default_state)
 
-/obj/item/device/radio/intercom/can_receive(freq, level)
+/obj/item/device/radio/intercom/receive_range(freq, level)
 	if(!on)
-		return FALSE
+		return -1
 	if(wires.is_cut(WIRE_RX))
-		return FALSE
+		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(isnull(position) || !(position.z in level))
-			return FALSE
+			return -1
 	if(!src.listening)
-		return FALSE
-	if(freq == FREQ_SYNDICATE)
+		return -1
+	if(freq == GLOB.SYND_FREQ)
 		if(!(src.syndie))
-			return FALSE//Prevents broadcast of messages over devices lacking the encryption
+			return -1//Prevents broadcast of messages over devices lacking the encryption
 
-	return TRUE
+	return canhear_range
 
 
 /obj/item/device/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)

@@ -47,15 +47,8 @@
 /obj/singularity/narsie/large/cult/Initialize()
 	. = ..()
 	GLOB.cult_narsie = src
-	var/list/all_cults = list()
-	for(var/datum/antagonist/cult/C in GLOB.antagonists)
-		all_cults |= C.cult_team
-	for(var/datum/objective_team/cult/T in all_cults)
-		deltimer(T.blood_target_reset_timer)
-		T.blood_target = src
-		var/datum/objective/eldergod/summon_objective = locate() in T.objectives
-		if(summon_objective)
-			summon_objective.summoned = TRUE
+	deltimer(GLOB.blood_target_reset_timer)
+	GLOB.blood_target = src
 	for(var/datum/mind/cult_mind in SSticker.mode.cult)
 		if(isliving(cult_mind.current))
 			var/mob/living/L = cult_mind.current

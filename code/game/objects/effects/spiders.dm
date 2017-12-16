@@ -150,7 +150,7 @@
 				spawn(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
-						forceMove(entry_vent)
+						loc = entry_vent
 						entry_vent = null
 						return
 
@@ -162,7 +162,7 @@
 						forceMove(entry_vent)
 						entry_vent = null
 						return
-					forceMove(exit_vent.loc)
+					loc = exit_vent.loc
 					entry_vent = null
 					var/area/new_area = get_area(loc)
 					if(new_area)

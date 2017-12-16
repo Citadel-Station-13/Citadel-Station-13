@@ -1,7 +1,5 @@
-
-
 /obj/item/clothing/head/centhat
-	name = "\improper CentCom hat"
+	name = "\improper Centcom hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "that"
@@ -292,18 +290,6 @@
 	name = "scarecrow hat"
 	desc = "A simple straw hat."
 	icon_state = "scarecrow_hat"
-
-/obj/item/clothing/head/lobsterhat
-	name = "foam lobster head"
-	desc = "When everything's going to crab, protecting your head is the best choice."
-	icon_state = "lobster_hat"
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-
-/obj/item/clothing/head/drfreezehat
-	name = "doctor freeze's wig"
-	desc = "A cool wig for cool people."
-	icon_state = "drfreeze_hat"
-	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/pharoah
 	name = "pharoah hat"

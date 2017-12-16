@@ -16,6 +16,9 @@
 		if(stat != DEAD)
 			var/dmg = rand(1, 5)
 			apply_damage(dmg, BRUTE, affecting)
+			damage_clothes(dmg, BRUTE, "melee", affecting.body_zone)
+
+
 
 /mob/living/carbon/monkey/attack_larva(mob/living/carbon/alien/larva/L)
 	if(..()) //successful larva bite.
@@ -26,6 +29,7 @@
 			if(!affecting)
 				affecting = get_bodypart("chest")
 			apply_damage(damage, BRUTE, affecting)
+			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
@@ -54,6 +58,7 @@
 				if(!affecting)
 					affecting = get_bodypart("chest")
 				apply_damage(damage, BRUTE, affecting)
+				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 				add_logs(M, src, "attacked")
 
 			else
@@ -96,6 +101,7 @@
 				if(!dismembering_strike(M, affecting.body_zone)) //Dismemberment successful
 					return 1
 				apply_damage(damage, BRUTE, affecting)
+				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 			else
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
@@ -130,6 +136,9 @@
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		apply_damage(damage, M.melee_damage_type, affecting)
+		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
+
+
 
 /mob/living/carbon/monkey/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
@@ -143,6 +152,8 @@
 		if(!affecting)
 			affecting = get_bodypart("chest")
 		apply_damage(damage, BRUTE, affecting)
+		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
+
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1

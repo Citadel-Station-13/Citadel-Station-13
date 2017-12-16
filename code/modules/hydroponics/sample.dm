@@ -5,8 +5,8 @@
 	yield = -1
 	var/sample_color = "#FFFFFF"
 
-/obj/item/seeds/sample/Initialize()
-	. = ..()
+/obj/item/seeds/sample/New()
+	..()
 	if(sample_color)
 		var/mutable_appearance/filling = mutable_appearance(icon, "sample-filling")
 		filling.color = sample_color
