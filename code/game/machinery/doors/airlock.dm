@@ -209,27 +209,23 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
-	var/obj/machinery/door/airlock/cult/A
 	if(glass)
 		if(runed)
-			A = new/obj/machinery/door/airlock/cult/glass(T)
+			new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			new/obj/machinery/door/airlock/cult/unruned/glass(T)
 	else
 		if(runed)
-			A = new/obj/machinery/door/airlock/cult(T)
+			new/obj/machinery/door/airlock/cult(T)
 		else
-			A = new/obj/machinery/door/airlock/cult/unruned(T)
-	A.name = name
+			new/obj/machinery/door/airlock/cult/unruned(T)
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
-	var/obj/machinery/door/airlock/clockwork/A
 	if(glass)
-		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
 	else
-		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
-	A.name = name
+		new/obj/machinery/door/airlock/clockwork(get_turf(src))
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
@@ -1040,7 +1036,7 @@
 		panel_open = TRUE
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.forceMove(drop_location())
+		charge.loc = get_turf(src)
 		charge.ex_act(EXPLODE_DEVASTATE)
 		detonated = 1
 		charge = null
@@ -1344,7 +1340,7 @@
 			else
 				ae = electronics
 				electronics = null
-				ae.forceMove(drop_location())
+				ae.loc = src.loc
 	qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

@@ -17,7 +17,7 @@
 	var/active = 0
 	var/strength = 0
 	var/powered = 0
-	mouse_opacity = MOUSE_OPACITY_OPAQUE
+	mouse_opacity = 2
 
 /obj/machinery/particle_accelerator/control_box/Initialize()
 	. = ..()

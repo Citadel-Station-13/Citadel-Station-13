@@ -11,7 +11,8 @@
 
 /datum/wires/radio/interactable(mob/user)
 	var/obj/item/device/radio/R = holder
-	return R.unscrewed
+	if(R.b_stat)
+		return TRUE
 
 /datum/wires/radio/on_pulse(index)
 	var/obj/item/device/radio/R = holder

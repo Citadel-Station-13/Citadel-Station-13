@@ -1,4 +1,3 @@
-
 #define BUGMODE_LIST	0
 #define BUGMODE_MONITOR	1
 #define BUGMODE_TRACK	2

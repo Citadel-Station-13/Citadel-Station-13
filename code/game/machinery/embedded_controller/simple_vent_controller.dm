@@ -5,27 +5,34 @@
 /datum/computer/file/embedded_program/simple_vent_controller/receive_user_command(command)
 	switch(command)
 		if("vent_inactive")
-			post_signal(new /datum/signal(list(
+			var/datum/signal/signal = new
+			signal.data = list(
 				"tag" = airpump_tag,
-				"sigtype" = "command",
-				"power" = 0
-			)))
+				"sigtype"="command"
+			)
+			signal.data["power"] = 0
+			post_signal(signal)
 
 		if("vent_pump")
-			post_signal(new /datum/signal(list(
+			var/datum/signal/signal = new
+			signal.data = list(
 				"tag" = airpump_tag,
-				"sigtype" = "command",
-				"stabalize" = 1,
-				"power" = 1
-			)))
+				"sigtype"="command"
+			)
+			signal.data["stabalize"] = 1
+			signal.data["power"] = 1
+			post_signal(signal)
 
 		if("vent_clear")
-			post_signal(new /datum/signal(list(
+			var/datum/signal/signal = new
+			signal.transmission_method = 1 //radio signal
+			signal.data = list(
 				"tag" = airpump_tag,
-				"sigtype" = "command",
-				"purge" = 1,
-				"power" = 1
-			)))
+				"sigtype"="command"
+			)
+			signal.data["purge"] = 1
+			signal.data["power"] = 1
+			post_signal(signal)
 
 /datum/computer/file/embedded_program/simple_vent_controller/process()
 	return 0
@@ -38,7 +45,7 @@
 	name = "vent controller"
 	density = FALSE
 
-	frequency = FREQ_ATMOS_CONTROL
+	frequency = 1229
 	power_channel = ENVIRON
 
 	// Setup parameters only

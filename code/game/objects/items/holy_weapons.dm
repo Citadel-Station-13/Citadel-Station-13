@@ -9,8 +9,8 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	w_class = WEIGHT_CLASS_TINY
 	unique_rename = TRUE
+	w_class = WEIGHT_CLASS_TINY
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -353,11 +353,6 @@
 	flags_1 = ABSTRACT_1 | NODROP_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
-
-/obj/item/nullrod/armblade/tentacle
-	name = "unholy blessing"
-	icon_state = "tentacle"
-	item_state = "tentacle"
 
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"

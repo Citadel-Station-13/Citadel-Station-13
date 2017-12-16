@@ -117,7 +117,7 @@
 	job = "AI"
 
 	eyeobj.ai = src
-	eyeobj.forceMove(src.loc)
+	eyeobj.loc = src.loc
 	rename_self("ai")
 
 	holo_icon = getHologramIcon(icon('icons/mob/ai.dmi',"default"))

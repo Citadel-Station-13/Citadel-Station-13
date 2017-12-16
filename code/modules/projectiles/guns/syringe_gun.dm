@@ -42,7 +42,7 @@
 
 	if(!S)
 		return 0
-	S.forceMove(user.loc)
+	S.loc = user.loc
 
 	syringes.Remove(S)
 	to_chat(user, "<span class='notice'>You unload [S] from \the [src].</span>")

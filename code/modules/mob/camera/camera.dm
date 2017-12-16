@@ -13,6 +13,3 @@
 
 /mob/camera/experience_pressure_difference()
 	return
-
-/mob/camera/forceMove(atom/destination)
-	loc = destination

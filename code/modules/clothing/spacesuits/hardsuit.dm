@@ -136,7 +136,7 @@
 			return
 
 		jetpack.turn_off()
-		jetpack.forceMove(drop_location())
+		jetpack.loc = get_turf(src)
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 

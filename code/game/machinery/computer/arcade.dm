@@ -280,7 +280,7 @@
 		playsound(loc, 'sound/arcade/lose.ogg', 50, 1, extrarange = -3, falloff = 10)
 		if(emagged)
 			usr.gib()
-		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal")))
+		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (emagged ? "emagged":"normal"))) 
 
 	blocked = FALSE
 	return

@@ -219,8 +219,8 @@
 			return
 		var/turf/dropturf = get_turf(pick(view(1,src)))
 		if(!dropturf) //Failsafe to prevent the object being lost in the void forever.
-			dropturf = drop_location()
-		loaded_item.forceMove(dropturf)
+			dropturf = get_turf(src)
+		loaded_item.loc = dropturf
 		if(delete)
 			qdel(loaded_item)
 		loaded_item = null
@@ -510,7 +510,7 @@
 			throwSmoke(loc)
 			if(trackedRuntime)
 				throwSmoke(trackedRuntime.loc)
-				trackedRuntime.forceMove(drop_location())
+				trackedRuntime.loc = loc
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/simple_animal/pet/cat(loc)

@@ -14,6 +14,7 @@
 	icon_dead = "tea-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/tea/astra)
+	reagents_add = list("vitamin" = 0.04, "teapowder" = 0.1)
 
 /obj/item/reagent_containers/food/snacks/grown/tea
 	seed = /obj/item/seeds/tea
@@ -21,8 +22,6 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	filling_color = "#008000"
-	grind_results = list("teapowder" = 0)
-	dry_grind = TRUE
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -40,7 +39,6 @@
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
 	filling_color = "#4582B4"
-	grind_results = list("teapowder" = 0, "salglu_solution" = 0)
 
 
 // Coffee
@@ -69,8 +67,6 @@
 	icon_state = "coffee_arabica"
 	filling_color = "#DC143C"
 	bitesize_mod = 2
-	dry_grind = TRUE
-	grind_results = list("coffeepowder" = 0)
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta
@@ -89,4 +85,3 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
-	grind_results = list("coffeepowder" = 0, "morphine" = 0)

@@ -141,5 +141,3 @@
 	for (var/i=0;i<6;i++)
 		color = color+pick(colors)
 	return color
-
-

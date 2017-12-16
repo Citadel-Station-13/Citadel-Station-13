@@ -127,7 +127,7 @@
 
 /mob/living/simple_animal/parrot/death(gibbed)
 	if(held_item)
-		held_item.forceMove(drop_location())
+		held_item.loc = src.loc
 		held_item = null
 	walk(src,0)
 
@@ -702,7 +702,7 @@
 				continue
 
 			held_item = I
-			I.forceMove(src)
+			I.loc = src
 			visible_message("[src] grabs [held_item]!", "<span class='notice'>You grab [held_item]!</span>", "<span class='italics'>You hear the sounds of wings flapping furiously.</span>")
 			return held_item
 
@@ -777,7 +777,7 @@
 	if(!drop_gently)
 		if(istype(held_item, /obj/item/grenade))
 			var/obj/item/grenade/G = held_item
-			G.forceMove(drop_location())
+			G.loc = src.loc
 			G.prime()
 			to_chat(src, "You let go of [held_item]!")
 			held_item = null
@@ -785,7 +785,7 @@
 
 	to_chat(src, "You drop [held_item].")
 
-	held_item.forceMove(drop_location())
+	held_item.loc = src.loc
 	held_item = null
 	return 1
 
@@ -801,7 +801,7 @@
 		for(var/atom/movable/AM in view(src,1))
 			for(var/perch_path in desired_perches)
 				if(istype(AM, perch_path))
-					src.forceMove(AM.loc)
+					src.loc = AM.loc
 					icon_state = icon_sit
 					return
 	to_chat(src, "<span class='warning'>There is no perch nearby to sit on!</span>")
@@ -838,7 +838,7 @@
 /mob/living/simple_animal/parrot/proc/perch_on_human(mob/living/carbon/human/H)
 	if(!H)
 		return
-	forceMove(get_turf(H))
+	loc = get_turf(H)
 	H.buckle_mob(src, force=1)
 	pixel_y = 9
 	pixel_x = pick(-8,8) //pick left or right shoulder
@@ -996,11 +996,10 @@
 		return
 	var/datum/disease/parrot_possession/P = new
 	P.parrot = src
-	forceMove(H)
+	loc = H
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
-
 
 /mob/living/simple_animal/parrot/clock_hawk
 	name = "clock hawk"

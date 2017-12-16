@@ -261,29 +261,28 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
 
-#define PATH_FREEZER /obj/machinery/atmospherics/components/unary/thermomachine/freezer
-#define PATH_HEATER  /obj/machinery/atmospherics/components/unary/thermomachine/heater
-
 /obj/item/circuitboard/machine/thermomachine/Initialize()
 	. = ..()
-	if(!build_path)
-		if(prob(50))
-			name = "Freezer (Machine Board)"
-			build_path = PATH_FREEZER
-		else
-			name = "Heater (Machine Board)"
-			build_path = PATH_HEATER
+	if(prob(50))
+		name = "Freezer (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	else
+		name = "Heater (Machine Board)"
+		build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
+
+#define FREEZER /obj/item/circuitboard/machine/thermomachine/freezer
+#define HEATER /obj/item/circuitboard/machine/thermomachine/heater
 
 /obj/item/circuitboard/machine/thermomachine/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/screwdriver))
 		var/obj/item/circuitboard/new_type
 		var/new_setting
 		switch(build_path)
-			if(PATH_FREEZER)
-				new_type = /obj/item/circuitboard/machine/thermomachine/heater
+			if(FREEZER)
+				new_type = HEATER
 				new_setting = "Heater"
-			if(PATH_HEATER)
-				new_type = /obj/item/circuitboard/machine/thermomachine/freezer
+			if(HEATER)
+				new_type = FREEZER
 				new_setting = "Freezer"
 		name = initial(new_type.name)
 		build_path = initial(new_type.build_path)
@@ -292,16 +291,16 @@
 	else
 		return ..()
 
+#undef FREEZER
+#undef HEATER
+
 /obj/item/circuitboard/machine/thermomachine/heater
 	name = "Heater (Machine Board)"
-	build_path = PATH_HEATER
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/heater
 
 /obj/item/circuitboard/machine/thermomachine/freezer
 	name = "Freezer (Machine Board)"
-	build_path = PATH_FREEZER
-
-#undef PATH_FREEZER
-#undef PATH_HEATER
+	build_path = /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 
 /obj/item/circuitboard/machine/deep_fryer
 	name = "circuit board (Deep Fryer)"

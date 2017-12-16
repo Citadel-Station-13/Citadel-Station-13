@@ -51,7 +51,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)
-		uplinkholder.forceMove(drop_location())
+		uplinkholder.loc = get_turf(src.loc)
 		uplinkholder = null
 		update_icon()
 
@@ -154,8 +154,7 @@ GLOBAL_LIST_INIT(possible_uplinker_IDs, list("Alfa","Bravo","Charlie","Delta","E
 
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
-	var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
-	var/danger = GLOB.joined_player_list.len - nukeops.len
+	var/danger = GLOB.joined_player_list.len - SSticker.mode.syndicates.len
 	danger = Ceiling(danger, 10)
 	scaleTC(danger)
 

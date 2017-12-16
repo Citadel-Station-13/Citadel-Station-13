@@ -384,10 +384,9 @@
 			dat += "<BR><span class='userdanger'>[other_players] players in invalid state or the statistics code is bugged!</span>"
 		dat += "<BR>"
 
-		var/list/nukeops = get_antagonists(/datum/antagonist/nukeop)
-		if(nukeops.len)
+		if(SSticker.mode.syndicates.len)
 			dat += "<br><table cellspacing=5><tr><td><B>Syndicates</B></td><td></td></tr>"
-			for(var/datum/mind/N in nukeops)
+			for(var/datum/mind/N in SSticker.mode.syndicates)
 				var/mob/M = N.current
 				if(M)
 					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
@@ -611,20 +610,6 @@
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
-		
-		var/list/pirates = get_antagonists(/datum/antagonist/pirate)
-		if(pirates.len > 0)
-			dat += "<br><table cellspacing=5><tr><td><B>Pirates</B></td><td></td></tr>"
-			for(var/datum/mind/N in pirates)
-				var/mob/M = N.current
-				if(!M)
-					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>No body.</i></td>"
-					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
-				else
-					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
-			dat += "</table>"
 
 		if(istype(SSticker.mode, /datum/game_mode/monkey))
 			var/datum/game_mode/monkey/mode = SSticker.mode

@@ -64,14 +64,14 @@
 
 	if(default == VV_NUM)
 		var/dir_text = ""
-		if(var_value > 0 && var_value < 16)
-			if(var_value & 1)
+		if(dir < 0 && dir < 16)
+			if(dir & 1)
 				dir_text += "NORTH"
-			if(var_value & 2)
+			if(dir & 2)
 				dir_text += "SOUTH"
-			if(var_value & 4)
+			if(dir & 4)
 				dir_text += "EAST"
-			if(var_value & 8)
+			if(dir & 8)
 				dir_text += "WEST"
 
 		if(dir_text)

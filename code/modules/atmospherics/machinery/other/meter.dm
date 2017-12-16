@@ -77,12 +77,15 @@
 		if(!radio_connection)
 			return
 
-		var/datum/signal/signal = new(list(
+		var/datum/signal/signal = new
+		signal.source = src
+		signal.transmission_method = 1
+		signal.data = list(
 			"id_tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
 			"sigtype" = "status"
-		))
+		)
 		radio_connection.post_signal(src, signal)
 
 /obj/machinery/meter/proc/status()

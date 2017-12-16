@@ -123,8 +123,7 @@
 /obj/item/udder/gutlunch
 	name = "nutrient sac"
 
-/obj/item/udder/gutlunch/Initialize()
-	. = ..()
+/obj/item/udder/gutlunch/New()
 	reagents = new(50)
 	reagents.my_atom = src
 

@@ -8,7 +8,7 @@
 	GLOB.carbon_list += src
 
 /mob/living/carbon/Destroy()
-	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
 	QDEL_LIST(internal_organs)
@@ -38,7 +38,7 @@
 
 				if(prob(src.getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
-						A.forceMove(drop_location())
+						A.loc = loc
 						stomach_contents.Remove(A)
 					src.gib()
 
@@ -332,7 +332,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.forceMove(drop_location())
+			W.loc = loc
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -345,7 +345,7 @@
 		if (client)
 			client.screen -= W
 		if (W)
-			W.forceMove(drop_location())
+			W.loc = loc
 			W.dropped(src)
 			if (W)
 				W.layer = initial(W.layer)
@@ -372,7 +372,7 @@
 
 	else
 		if(I == handcuffed)
-			handcuffed.forceMove(drop_location())
+			handcuffed.loc = loc
 			handcuffed.dropped(src)
 			handcuffed = null
 			if(buckled && buckled.buckle_requires_restraints)
@@ -380,7 +380,7 @@
 			update_handcuffed()
 			return
 		if(I == legcuffed)
-			legcuffed.forceMove(drop_location())
+			legcuffed.loc = loc
 			legcuffed.dropped()
 			legcuffed = null
 			update_inv_legcuffed()
@@ -786,7 +786,7 @@
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)
-			O.forceMove(drop_location())
+			O.loc = get_turf(src)
 	if(organs_amt)
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 

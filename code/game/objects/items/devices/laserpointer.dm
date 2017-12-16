@@ -50,7 +50,7 @@
 	else if(istype(W, /obj/item/screwdriver))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
-			diode.forceMove(drop_location())
+			diode.loc = get_turf(src.loc)
 			diode = null
 	else
 		return ..()

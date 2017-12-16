@@ -117,12 +117,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
-	//Grinder vars
-	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
-	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
-
-	//CITADEL
-	var/icon_override
+	var/icon_override = null
 
 /obj/item/Initialize()
 	if (!materials)
@@ -203,39 +198,31 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(!user.research_scanner)
 		return
+	var/list/input = techweb_item_boost_check(src)
+	if(input)
+		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
+		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
+		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
+		for(var/datum/techweb_node/N in input)
+			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
+			if(SSresearch.science_tech.researched_nodes[N])
+				res += str
+			else if(SSresearch.science_tech.boosted_nodes[N])
+				boosted += str
+			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				output += str
+		var/list/combine = output + res + boosted
+		var/strout = combine.Join("<br>")
+		to_chat(user, strout)
 
-	// Research prospects, including boostable nodes and point values.
-	// Deliver to a console to know whether the boosts have already been used.
-	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
-	var/sep = ""
-	var/list/boostable_nodes = techweb_item_boost_check(src)
-	if (boostable_nodes)
-		for(var/id in boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
-			research_msg += sep
-			research_msg += node.display_name
-			sep = ", "
-	var/points = techweb_item_point_check(src)
-	if (points)
-		research_msg += sep
-		research_msg += "[points] points"
-		sep = ", "
-
-	if (!sep) // nothing was shown
-		research_msg += "None"
-
-	// Extractable materials. Only shows the names, not the amounts.
-	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
-	if (materials.len)
-		sep = ""
+	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
+	if(materials.len)
 		for(var/mat in materials)
-			research_msg += sep
-			research_msg += CallMaterialName(mat)
-			sep = ", "
+			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
 	else
-		research_msg += "None"
-	research_msg += "."
-	to_chat(user, research_msg.Join())
+		msg += "<span class='danger'>No extractable materials detected.</span>"
+	msg += "*--------*"
+	to_chat(user, msg.Join("<br>"))
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
@@ -691,15 +678,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
 
-/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
-	return TRUE
-
- //Called BEFORE the object is ground up - use this to change grind results based on conditions
- //Use "return -1" to prevent the grinding from occurring
-/obj/item/proc/on_grind()
-
-/obj/item/proc/on_juice()
-
 /obj/item/proc/set_force_string()
 	switch(force)
 		if(0 to 4)
@@ -735,3 +713,4 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
+

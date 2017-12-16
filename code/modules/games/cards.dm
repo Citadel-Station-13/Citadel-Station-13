@@ -16,7 +16,7 @@
 
 	var/list/cards = list()
 
-/obj/item/deck/Initialize()
+/obj/item/deck/New()
 	. = ..()
 
 	var/cardcolor
@@ -187,7 +187,7 @@
 	ASSERT(H)
 
 	usr.visible_message("\The [usr] plays \the [card.name].")
-	H.forceMove(get_step(usr,usr.dir))
+	H.loc = get_step(usr,usr.dir)
 
 	src.update_icon()
 

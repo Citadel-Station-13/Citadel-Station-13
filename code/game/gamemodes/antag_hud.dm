@@ -49,5 +49,3 @@
 
 /datum/mind/proc/leave_all_antag_huds()
 	for(var/datum/atom_hud/antag/hud in GLOB.huds)
-		if(hud.hudusers[current])
-			hud.leave_hud(current)

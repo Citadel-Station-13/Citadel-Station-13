@@ -157,7 +157,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		new_name = pick(possible_names)
 	brainmob.name = "[new_name]-[rand(100, 999)]"
 	brainmob.real_name = brainmob.name
-	brainmob.forceMove(src)
+	brainmob.loc = src
 	brainmob.container = src
 	if(autoping)
 		ping_ghosts("created", TRUE)

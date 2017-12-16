@@ -133,6 +133,7 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
+
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			return 1
 

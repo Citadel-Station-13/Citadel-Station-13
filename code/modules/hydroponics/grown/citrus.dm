@@ -30,7 +30,6 @@
 	desc = "It's so sour, your face will twist."
 	icon_state = "lime"
 	filling_color = "#00FF00"
-	juice_results = list("limejuice" = 0)
 
 // Orange
 /obj/item/seeds/orange
@@ -57,7 +56,6 @@
 	desc = "It's a tangy fruit."
 	icon_state = "orange"
 	filling_color = "#FFA500"
-	juice_results = list("orangejuice" = 0)
 
 // Lemon
 /obj/item/seeds/lemon
@@ -83,7 +81,6 @@
 	desc = "When life gives you lemons, make lemonade."
 	icon_state = "lemon"
 	filling_color = "#FFD700"
-	juice_results = list("lemonjuice" = 0)
 
 // Combustible lemon
 /obj/item/seeds/firelemon //combustible lemon is too long so firelemon

@@ -47,8 +47,10 @@
 			return
 		else
 			var/hotness = W.is_hot()
-			reagents.expose_temperature(hotness)
-			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
+			var/added_heat = (hotness / 100)
+			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
+			src.reagents.handle_reactions()
+			to_chat(user, "<span class='notice'>You heat [src] with [W]!</span>")
 	else
 		return ..()
 
@@ -60,7 +62,8 @@
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
-		reagents.expose_temperature(exposed_temperature)
+		reagents.chem_temp += 30
+		reagents.handle_reactions()
 	..()
 
 
