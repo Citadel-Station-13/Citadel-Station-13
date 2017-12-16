@@ -105,3 +105,4 @@
 	if(oogas >= rand(2,6))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 		oogas = 0
+

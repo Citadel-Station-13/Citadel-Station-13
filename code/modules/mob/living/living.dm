@@ -979,7 +979,6 @@
 			stop_pulling()
 	else if(has_legs || ignore_legs)
 		lying = 0
-
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)

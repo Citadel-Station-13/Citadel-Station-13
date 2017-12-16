@@ -15,7 +15,7 @@
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
-	var/min_health = 30
+	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
@@ -42,7 +42,7 @@
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) - (10*E)
+	min_health = initial(min_health) * E
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]

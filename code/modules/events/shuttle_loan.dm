@@ -135,7 +135,7 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/item/reagent_containers/glass/bottle/virus_type = pick(/obj/item/reagent_containers/glass/bottle/beesease, /obj/item/reagent_containers/glass/bottle/brainrot, /obj/item/reagent_containers/glass/bottle/fluspanish)
+				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
 				var/turf/T
 				for(var/i=0, i<10, i++)
 					if(prob(15))
@@ -145,7 +145,7 @@
 					else if(prob(25))
 						shuttle_spawns.Add(/obj/item/shard)
 					T = pick_n_take(empty_shuttle_turfs)
-					new virus_type(T)
+					new infected_assistant(T)
 				shuttle_spawns.Add(/obj/structure/closet/crate)
 				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/pierrot_throat)
 				shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle/magnitis)

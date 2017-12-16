@@ -76,6 +76,7 @@
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
@@ -195,13 +196,10 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	else
-		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	if(world.byond_version >= 511 && byond_version >= 511 && prefs.clientfps)
 		vars["fps"] = prefs.clientfps
-	sethotkeys(1)						//set hoykeys from preferences (from_pref = 1)
 
 	log_access("Login: [key_name(src)] from [address ? address : "localhost"]-[computer_id] || BYOND v[byond_version]")
 	var/alert_mob_dupe_login = FALSE
@@ -227,7 +225,16 @@ GLOBAL_LIST(external_rsc_urls)
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
 
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
+
 	. = ..()	//calls mob.Login()
+
+	set_macros()
 
 	chatOutput.start() // Starts the chat
 
@@ -364,6 +371,8 @@ GLOBAL_LIST(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
@@ -372,30 +381,18 @@ GLOBAL_LIST(external_rsc_urls)
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			var/cheesy_message = pick(
 				"I have no admins online!",\
-				"I'm all alone... :(",\
-				"I'm feeling lonely. :(",\
-				"I'm so lonely. :(",\
+				"I'm all alone :(",\
+				"I'm feeling lonely :(",\
+				"I'm so lonely :(",\
 				"Why does nobody love me? :(",\
-				"I want a man. :(",\
+				"I want a man :(",\
 				"Where has everyone gone?",\
-				"I need a hug. :(",\
-				"Someone come hold me. :(",\
+				"I need a hug :(",\
+				"Someone come hold me :(",\
 				"I need someone on me :(",\
 				"What happened? Where has everyone gone?",\
-				"My nipples are so stiff, but Zelda ain't here. :(",\
-				"Leon senpai, play more Spessmans. :(",\
-				"If only Serdy were here...",\
-				"Panic bunker can't keep my love for you out.",\
-				"Cebu needs to Awoo herself back into my heart.",\
-				"I don't even have a Turry to snuggle viciously here.",\
-				"MOM, WHERE ARE YOU??? D:",\
-				"It's a beautiful day outside. Birds are singing, flowers are blooming. On days like this...kids like you...SHOULD BE BURNING IN HELL.",\
-				"Sometimes when I have sex, I think about putting an entire peanut butter and jelly sandwich in the VCR.",\
-				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
-				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
-				"i shure hop dere are no PRED arund!!!!",\
-				"NO PRED CAN eVER CATCH MI"\
-				)
+				"Forever alone :("\
+			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
 

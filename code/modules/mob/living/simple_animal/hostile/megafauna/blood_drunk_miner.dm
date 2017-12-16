@@ -114,7 +114,7 @@ Difficulty: Medium
 		if(L.stat == DEAD)
 			visible_message("<span class='danger'>[src] butchers [L]!</span>",
 			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
-			if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
+			if(!(z in GLOB.station_z_levels) || client) //NPC monsters won't heal while on station
 				if(guidance)
 					adjustHealth(-L.maxHealth)
 				else
@@ -251,9 +251,9 @@ Difficulty: Medium
 
 	animate(src, transform = M, pixel_y = -6, dir = final_dir, time = 2, easing = EASE_IN|EASE_OUT)
 	sleep(5)
-	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags_1 = ANIMATION_PARALLEL)
+	animate(src, color = list("#A7A19E", "#A7A19E", "#A7A19E", list(0, 0, 0)), time = 10, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 	sleep(4)
-	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
 /obj/item/device/gps/internal/miner
 	icon_state = null

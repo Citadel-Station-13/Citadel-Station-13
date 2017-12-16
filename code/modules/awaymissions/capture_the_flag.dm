@@ -509,7 +509,7 @@
 /datum/outfit/ctf/red/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.REDTEAM_FREQ)
+	R.set_frequency(FREQ_CTF_RED)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
@@ -517,7 +517,7 @@
 /datum/outfit/ctf/blue/post_equip(mob/living/carbon/human/H)
 	..()
 	var/obj/item/device/radio/R = H.ears
-	R.set_frequency(GLOB.BLUETEAM_FREQ)
+	R.set_frequency(FREQ_CTF_BLUE)
 	R.freqlock = TRUE
 	R.independent = TRUE
 	H.dna.species.stunmod = 0
@@ -532,7 +532,6 @@
 	var/team = WHITE_TEAM
 	time_between_triggers = 1
 	anchored = TRUE
-	flags_2 = SLOWS_WHILE_IN_HAND_2
 	alpha = 255
 
 /obj/structure/trap/examine(mob/user)

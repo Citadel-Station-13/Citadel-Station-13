@@ -4,11 +4,11 @@
 
 /datum/antagonist/changeling
 	name = "Changeling"
+	roundend_category  = "changelings"
 	job_rank = ROLE_CHANGELING
 
 	var/you_are_greet = TRUE
 	var/give_objectives = TRUE
-	var/list/objectives = list()
 	var/team_mode = FALSE //Should assign team objectives ?
 
 	//Changeling Stuff
@@ -78,7 +78,7 @@
 	. = ..()
 
 /datum/antagonist/changeling/on_removal()
-	remove_changeling_powers(FALSE)
+	remove_changeling_powers()
 	owner.objectives -= objectives
 	. = ..()
 
@@ -100,11 +100,11 @@
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
 	mimicing = ""
 
-/datum/antagonist/changeling/proc/remove_changeling_powers(keep_free_powers=0)
+/datum/antagonist/changeling/proc/remove_changeling_powers()
 	if(ishuman(owner.current) || ismonkey(owner.current))
 		reset_properties()
 		for(var/obj/effect/proc_holder/changeling/p in purchasedpowers)
-			if((p.dna_cost == 0 && keep_free_powers) || p.always_keep)
+			if(p.always_keep)
 				continue
 			purchasedpowers -= p
 			p.on_refund(owner.current)
@@ -116,13 +116,13 @@
 
 /datum/antagonist/changeling/proc/reset_powers()
 	if(purchasedpowers)
-		remove_changeling_powers(TRUE)
-	//Purchase free powers.
+		remove_changeling_powers()
+	//Repurchase free powers.
 	for(var/path in all_powers)
 		var/obj/effect/proc_holder/changeling/S = new path()
 		if(!S.dna_cost)
 			if(!has_sting(S))
-				purchasedpowers+=S
+				purchasedpowers += S
 				S.on_purchase(owner.current,TRUE)
 
 /datum/antagonist/changeling/proc/has_sting(obj/effect/proc_holder/changeling/power)
@@ -478,4 +478,35 @@
 /datum/antagonist/changeling/xenobio
 	name = "Xenobio Changeling"
 	give_objectives = FALSE
+	show_in_roundend = FALSE //These are here for admin tracking purposes only
 	you_are_greet = FALSE
+
+/datum/antagonist/changeling/roundend_report()
+	var/list/parts = list()
+
+	var/changelingwin = 1
+	if(!owner.current)
+		changelingwin = 0
+
+	parts += printplayer(owner)
+
+	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+	parts += "<b>Changeling ID:</b> [changelingID]."
+	parts += "<b>Genomes Extracted:</b> [absorbedcount]"
+	parts += " "
+	if(objectives.len)
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			else
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				changelingwin = 0
+			count++
+
+	if(changelingwin)
+		parts += "<span class='greentext'>The changeling was successful!</span>"
+	else
+		parts += "<span class='redtext'>The changeling has failed.</span>"
+
+	return parts.Join("<br>")

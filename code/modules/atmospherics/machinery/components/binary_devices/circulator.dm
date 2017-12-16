@@ -15,6 +15,7 @@
 
 	anchored = TRUE
 	density = TRUE
+
 	var/global/const/CIRC_LEFT = 1
 	var/global/const/CIRC_RIGHT = 2
 
@@ -39,6 +40,8 @@
 		var/transfer_moles = pressure_delta*air1.volume/(air2.temperature * R_IDEAL_GAS_EQUATION)
 
 		last_pressure_delta = pressure_delta
+
+		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
 
 		update_parents()

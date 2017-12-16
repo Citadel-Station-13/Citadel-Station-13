@@ -65,8 +65,8 @@
 	var/matrix/M = transform
 	M.Turn(turnedness)
 	transform = M
-	animate(src, alpha = 255, time = duration, easing = BOUNCE_EASING, flags_1 = ANIMATION_PARALLEL)
-	animate(src, transform = oldtransform, time = duration, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 255, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = oldtransform, time = duration, flags = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/cult/rune_spawn/rune1
 	icon_state = "rune1words"

@@ -114,8 +114,8 @@
 /proc/_range(Dist, Center = usr)
 	return range(Dist, Center)
 
-/proc/_regex(pattern, flags_1)
-	return regex(pattern, flags_1)
+/proc/_regex(pattern, flags)
+	return regex(pattern, flags)
 
 /proc/_REGEX_QUOTE(text)
 	return REGEX_QUOTE(text)

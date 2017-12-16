@@ -26,6 +26,7 @@
 	item_color = "red"
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb = list("attacked", "coloured")
+	grind_results = list()
 	var/paint_color = "#FF0000" //RGB
 
 	var/drawtype
@@ -274,6 +275,7 @@
 		temp = "graffiti"
 	else if(drawing in numerals)
 		temp = "number"
+
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -615,9 +617,6 @@
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		add_overlay(spray_overlay)
-
-	pre_noise = FALSE
-	post_noise = TRUE
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

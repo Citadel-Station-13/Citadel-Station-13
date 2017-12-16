@@ -18,8 +18,8 @@
 #define HUSK		64
 #define NOCLONE		128
 #define CLUMSY		256
-#define DUMB		512
-#define MONKEYLIKE	1024 //sets IsAdvancedToolUser to FALSE
+#define DUMB        512
+#define MONKEYLIKE  1024 //sets IsAdvancedToolUser to FALSE
 
 // bitflags for machine stat variable
 #define BROKEN		1

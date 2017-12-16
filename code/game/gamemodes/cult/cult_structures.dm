@@ -100,10 +100,9 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cultitalic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/option = "Shielded Robe"
-	option = input(user, "You study the schematics etched into the forge...", "[src]", option) as null|anything in list("Shielded Robe", "Flagellant's Robe", "Bastard Sword", "Nar-Sien Hardsuit")
+	var/choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Bastard Sword")
 	var/pickedtype
-	switch(option)
+	switch(choice)
 		if("Shielded Robe")
 			pickedtype = /obj/item/clothing/suit/hooded/cultrobes/cult_shield
 		if("Flagellant's Robe")

@@ -91,12 +91,10 @@
 			addtimer(CALLBACK(reagents, /datum/reagents.proc/add_reagent, refill, trans), 600)
 
 /obj/item/reagent_containers/food/drinks/attackby(obj/item/I, mob/user, params)
-	if(I.is_hot())
-		var/added_heat = (I.is_hot() / 100) //ishot returns a temperature
-		if(reagents)
-			reagents.chem_temp += added_heat
-			to_chat(user, "<span class='notice'>You heat [src] with [I].</span>")
-			reagents.handle_reactions()
+	var/hotness = I.is_hot()
+	if(hotness && reagents)
+		reagents.expose_temperature(hotness)
+		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	..()
 
 /obj/item/reagent_containers/food/drinks/throw_impact(atom/target, mob/thrower)
@@ -393,6 +391,7 @@
 	container_type = NONE
 	spillable = FALSE
 	isGlass = FALSE
+	grind_results = list("aluminum" = 10)
 
 /obj/item/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
 	if(M == user && !src.reagents.total_volume && user.a_intent == INTENT_HARM && user.zone_selected == "head")

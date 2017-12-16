@@ -107,6 +107,7 @@
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -172,7 +173,7 @@
 				to_chat(M, "<span class='notice'>Your vision returns to normal.</span>")
 
 		wisp.stop_orbit()
-		wisp.loc = src
+		wisp.forceMove(src)
 		icon_state = "lantern-blue"
 		SSblackbox.record_feedback("tally", "wisp_lantern", 1, "Returned")
 
@@ -412,7 +413,7 @@
 
 /obj/item/device/shared_storage/attackby(obj/item/W, mob/user, params)
 	if(bag)
-		bag.loc = user
+		bag.forceMove(user)
 		bag.attackby(W, user, params)
 
 
@@ -421,7 +422,7 @@
 		return
 	if(loc == user && user.back && user.back == src)
 		if(bag)
-			bag.loc = user
+			bag.forceMove(user)
 			bag.attack_hand(user)
 	else
 		..()

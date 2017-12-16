@@ -6,7 +6,7 @@
 	var/can_cancel = 1										//Can cancel this surgery after step 1 with cautery
 	var/list/species = list(/mob/living/carbon/human)		//Acceptable Species
 	var/location = "chest"									//Surgery location
-	var/requires_bodypart_type = BODYPART_ORGANIC					//Prevents you from performing an operation on robotic limbs
+	var/requires_bodypart_type = BODYPART_ORGANIC			//Prevents you from performing an operation on incorrect limbs. 0 for any limb type
 	var/list/possible_locs = list() 						//Multiple locations
 	var/ignore_clothes = 0									//This surgery ignores clothes
 	var/mob/living/carbon/target							//Operation target mob

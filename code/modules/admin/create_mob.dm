@@ -1,3 +1,4 @@
+
 /datum/admins/proc/create_mob(mob/user)
 	var/static/create_mob_html
 	if (!create_mob_html)

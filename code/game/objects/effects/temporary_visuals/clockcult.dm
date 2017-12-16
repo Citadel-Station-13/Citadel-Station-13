@@ -86,8 +86,8 @@
 	transform = matrix()*2
 	var/matrix/M = transform
 	M.Turn(90)
-	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags_1 = ANIMATION_PARALLEL)
-	animate(src, transform = M, time = duration, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/ratvar/ocular_warden
 	name = "warden's gaze"

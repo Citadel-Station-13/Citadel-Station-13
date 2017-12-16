@@ -114,7 +114,6 @@ CONTINUOUS CHANGELING
 CONTINUOUS WIZARD
 CONTINUOUS BLOB
 CONTINUOUS ABDUCTION
-#CONTINUOUS RAGINMAGES
 #CONTINUOUS MONKEY
 
 ##Note: do not toggle continuous off for these modes, as they have no antagonists and would thus end immediately!
@@ -139,7 +138,6 @@ MIDROUND_ANTAG CHANGELING
 MIDROUND_ANTAG WIZARD
 MIDROUND_ANTAG BLOB
 MIDROUND_ANTAG ABDUCTION
-#MIDROUND_ANTAG  RAGINMAGES
 #MIDROUND_ANTAG  MONKEY
 
 ## Uncomment these for overrides of the minimum / maximum number of players in a round type. 

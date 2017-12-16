@@ -58,8 +58,8 @@
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
 		not even death can stop, you will rise again!</span>")
 	var/revive_time = rand(revive_time_min, revive_time_max)
-	var/flags_1 = TIMER_STOPPABLE
-	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags_1)
+	var/flags = TIMER_STOPPABLE
+	timer_id = addtimer(CALLBACK(src, .proc/zombify), revive_time, flags)
 
 /obj/item/organ/zombie_infection/proc/zombify()
 	timer_id = null

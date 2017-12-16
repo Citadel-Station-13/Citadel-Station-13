@@ -33,7 +33,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return
