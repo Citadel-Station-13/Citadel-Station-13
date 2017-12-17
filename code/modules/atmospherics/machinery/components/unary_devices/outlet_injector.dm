@@ -93,19 +93,22 @@
 	if(!radio_connection)
 		return
 
+<<<<<<< HEAD
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
 
 	signal.data = list(
+=======
+	var/datum/signal/signal = new(list(
+>>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		"tag" = id,
 		"device" = "AO",
 		"power" = on,
 		"volume_rate" = volume_rate,
 		//"timestamp" = world.time,
 		"sigtype" = "status"
-	 )
-
+	))
 	radio_connection.post_signal(src, signal)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmosinit()

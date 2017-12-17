@@ -182,13 +182,18 @@ GLOBAL_VAR_INIT(RADIO_AIRLOCK, "6")
 GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 /datum/radio_frequency
-
 	var/frequency as num
 	var/list/list/obj/devices = list()
+
+/datum/radio_frequency/New(freq)
+	frequency = freq
 
 //If range > 0, only post to devices on the same z_level and within range
 //Use range = -1, to restrain to the same z_level without limiting range
 /datum/radio_frequency/proc/post_signal(obj/source as obj|null, datum/signal/signal, filter = null as text|null, range = null as num|null)
+	// Ensure the signal's data is fully filled
+	signal.source = source
+	signal.frequency = frequency
 
 	//Apply filter to the signal. If none supply, broadcast to every devices
 	//_default channel is always checked
@@ -217,7 +222,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 					continue
 				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
 					continue
-			device.receive_signal(signal, TRANSMISSION_RADIO, frequency)
+			device.receive_signal(signal)
 
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
@@ -225,8 +230,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 
 	var/list/devices_line = devices[filter]
 	if(!devices_line)
-		devices_line = list()
-		devices[filter] = devices_line
+		devices[filter] = devices_line = list()
 	devices_line += device
 
 
@@ -239,71 +243,15 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 		if(!devices_line.len)
 			devices -= devices_filter
 
-
-
-
-
-/client/proc/print_pointers()
-	set name = "Debug Signals"
-	set category = "Debug"
-
-	if(!holder)
-		return
-
-	var/datum/signal/S
-	to_chat(src, "There are [S.pointers.len] pointers:")
-	for(var/p in S.pointers)
-		to_chat(src, p)
-		S = locate(p)
-		if(istype(S))
-			to_chat(src, S.debug_print())
-
-/obj/proc/receive_signal(datum/signal/signal, receive_method, receive_param)
+/obj/proc/receive_signal(datum/signal/signal)
 	return
 
 /datum/signal
 	var/obj/source
-
-	var/transmission_method = 0
-	//0 = wire
-	//1 = radio transmission
-	//2 = subspace transmission
-
-	var/data = list()
-	var/encryption
-
 	var/frequency = 0
-	var/static/list/pointers = list()
+	var/transmission_method
+	var/data
 
-/datum/signal/New()
-	..()
-	pointers += "[REF(src)]"
-
-/datum/signal/Destroy()
-	pointers -= "[REF(src)]"
-	return ..()
-
-/datum/signal/proc/copy_from(datum/signal/model)
-	source = model.source
-	transmission_method = model.transmission_method
-	data = model.data
-	encryption = model.encryption
-	frequency = model.frequency
-
-/datum/signal/proc/debug_print()
-	if (source)
-		. = "signal = {source = '[source]' [COORD(source)]\n"
-	else
-		. = "signal = {source = '[source]' ()\n"
-	for (var/i in data)
-		. += "data\[\"[i]\"\] = \"[data[i]]\"\n"
-		if(islist(data[i]))
-			var/list/L = data[i]
-			for(var/t in L)
-				. += "data\[\"[i]\"\] list has: [t]"
-
-/datum/signal/proc/sanitize_data()
-	for(var/d in data)
-		var/val = data[d]
-		if(istext(val))
-			data[d] = html_encode(val)
+/datum/signal/New(data, transmission_method = TRANSMISSION_RADIO)
+	src.data = data || list()
+	src.transmission_method = transmission_method
