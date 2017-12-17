@@ -4,11 +4,7 @@
 /datum/config_entry/string/comms_key/ValidateAndSet(str_val)
     return str_val != "default_pwd" && length(str_val) > 6 && ..()
 
-<<<<<<< HEAD
-CONFIG_DEF(string/cross_server_address)
-=======
 /datum/config_entry/keyed_string_list/cross_server
->>>>>>> 8c537ea... Adds config inclusion system (#33307)
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/string/cross_server_address/ValidateAndSet(str_val)
