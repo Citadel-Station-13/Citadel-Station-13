@@ -165,12 +165,9 @@ h1.alert, h2.alert		{color: #000000;}
 .monkey					{color: #975032;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
-<<<<<<< HEAD
 .love					{color: #FF69Bf;}
 .lovebold				{color: #FF69Bf;	font-weight: bold;}
-=======
 
 .monkeyhive				{color: #774704;}
 .monkeylead				{color: #774704;	font-size: 2;}
->>>>>>> d3aacc2... [READY] Monkey mode overhaul (#32916)
 </style>"}
