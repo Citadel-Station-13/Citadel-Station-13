@@ -1623,8 +1623,6 @@
 #include "code\modules\jobs\job_types\security.dm"
 #include "code\modules\jobs\job_types\silicon.dm"
 #include "code\modules\jobs\map_changes\map_changes.dm"
-<<<<<<< HEAD
-=======
 #include "code\modules\keybindings\bindings_admin.dm"
 #include "code\modules\keybindings\bindings_atom.dm"
 #include "code\modules\keybindings\bindings_carbon.dm"
@@ -1636,7 +1634,6 @@
 #include "code\modules\keybindings\focus.dm"
 #include "code\modules\keybindings\setup.dm"
 #include "code\modules\language\aphasia.dm"
->>>>>>> b5d9845... [Ready]Brain Trauma additions (#33405)
 #include "code\modules\language\beachbum.dm"
 #include "code\modules\language\codespeak.dm"
 #include "code\modules\language\common.dm"
