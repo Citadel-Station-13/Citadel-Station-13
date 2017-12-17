@@ -229,6 +229,12 @@ GLOBAL_LIST(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 
+<<<<<<< HEAD
+=======
+	if(SSinput.initialized)
+		set_macros()
+
+>>>>>>> 4ec09a0... Re-Support old hotkey mode behaviour (#33460)
 	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
