@@ -21,12 +21,7 @@
 	if(on)
 		var/datum/gas_mixture/air_sample = return_air()
 
-<<<<<<< HEAD
-		signal.transmission_method = 1 //radio signal
-		signal.data = list(
-=======
 		var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
@@ -197,14 +192,7 @@
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
-<<<<<<< HEAD
-	var/datum/signal/signal = new
-	signal.transmission_method = 1
-	signal.source = src
-	signal.data = list("sigtype" = "command")
-=======
 	var/datum/signal/signal = new(list("sigtype" = "command"))
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 	switch(action)
 		if("reconnect")
 			reconnect(usr)
