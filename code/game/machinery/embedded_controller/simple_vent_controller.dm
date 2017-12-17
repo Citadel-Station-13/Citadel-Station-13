@@ -20,13 +20,7 @@
 			)))
 
 		if("vent_clear")
-<<<<<<< HEAD
-			var/datum/signal/signal = new
-			signal.transmission_method = 1 //radio signal
-			signal.data = list(
-=======
 			post_signal(new /datum/signal(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 				"tag" = airpump_tag,
 				"sigtype" = "command",
 				"purge" = 1,
