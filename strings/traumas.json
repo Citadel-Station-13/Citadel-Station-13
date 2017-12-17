@@ -186,37 +186,6 @@
         "",
         ";",
         ".h"
-<<<<<<< HEAD:strings/brain_damage_lines.json
-	],
-		
-	"roles": [
-		"heds",
-		"ceptin",
-		"hop",
-		"arrdee",
-		"sek"
-	],
-	
-	"cargo": [
-		"GUNS",
-		"HATS",
-		"PIZEH",
-		"MEMES",
-		"GLOWY CYSTAL"
-	
-	],
-	
-	"s_roles": [
-	"ert",
-	"shadowlig",
-	"ninja",
-	"admen",
-	"mantor",
-	"bluh daymon",
-	"wizzerd"
-	
-	]
-=======
     ],
 
     "god_foe": [
@@ -268,6 +237,4 @@
 	"BE HEALED, PRIEST.",
 	"YOUR LIFE IS IMPORTANT. KEEP IT."
     ]
-
->>>>>>> b5d9845... [Ready]Brain Trauma additions (#33405):strings/traumas.json
 }
