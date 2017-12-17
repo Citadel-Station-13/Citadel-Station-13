@@ -218,21 +218,6 @@
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
-<<<<<<< HEAD
-
-			if(keyslot)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot.loc = T
-					keyslot = null
-
-
-
-			if(keyslot2)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot2.loc = T
-=======
 			var/turf/T = user.drop_location()
 			if(T)
 				if(keyslot)
@@ -240,7 +225,6 @@
 					keyslot = null
 				if(keyslot2)
 					keyslot2.forceMove(T)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 					keyslot2 = null
 
 			recalculateChannels()
