@@ -673,8 +673,6 @@ GLOBAL_LIST(external_rsc_urls)
 			return TRUE
 	. = ..()
 
-<<<<<<< HEAD
-=======
 /client/proc/rescale_view(change, min, max)
 	var/viewscale = getviewsize(view)
 	var/x = viewscale[1]
@@ -682,7 +680,6 @@ GLOBAL_LIST(external_rsc_urls)
 	x = CLAMP(x+change, min, max)
 	y = CLAMP(y+change, min,max)
 	change_view("[x]x[y]")
->>>>>>> 25080ff... defines math (#33498)
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
