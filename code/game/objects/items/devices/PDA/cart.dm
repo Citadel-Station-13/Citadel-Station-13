@@ -197,15 +197,7 @@
 	if(!frequency)
 		return
 
-<<<<<<< HEAD
-	var/datum/signal/status_signal = new
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-
-=======
 	var/datum/signal/status_signal = new(list("command" = command))
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 	switch(command)
 		if("message")
 			status_signal.data["msg1"] = data1
