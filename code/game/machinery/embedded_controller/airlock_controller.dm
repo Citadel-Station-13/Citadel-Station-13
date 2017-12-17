@@ -154,13 +154,7 @@
 					state = AIRLOCK_STATE_CLOSED
 					process_again = 1
 				else
-<<<<<<< HEAD
-					var/datum/signal/signal = new
-					signal.transmission_method = 1 //radio signal
-					signal.data = list(
-=======
 					var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 						"tag" = airpump_tag,
 						"sigtype" = "command"
 					))
