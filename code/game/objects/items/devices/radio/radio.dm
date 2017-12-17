@@ -5,31 +5,6 @@
 	item_state = "walkietalkie"
 	desc = "A basic handheld radio that communicates with local telecommunication networks."
 	dog_fashion = /datum/dog_fashion/back
-<<<<<<< HEAD
-	var/on = TRUE // 0 for off
-	var/last_transmission
-	var/frequency = 1459 //common chat
-	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
-	var/canhear_range = 3 // the range which mobs can hear this radio from
-	var/list/secure_radio_connections
-	var/prison_radio = 0
-	var/b_stat = 0
-	var/broadcasting = 0
-	var/listening = 1
-	var/translate_binary = 0
-	var/freerange = 0 // 0 - Sanitize frequencies, 1 - Full range
-	var/list/channels = list() //see communications.dm for full list. First channes is a "default" for :h
-	var/obj/item/device/encryptionkey/keyslot //To allow the radio to accept encryption keys.
-	var/subspace_switchable = 0
-	var/subspace_transmission = 0
-	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
-	var/independent = FALSE // If true, bypasses any tcomms machinery.
-	var/freqlock = 0 //Frequency lock to stop the user from untuning specialist radios.
-	var/emped = 0	//Highjacked to track the number of consecutive EMPs on the radio, allowing consecutive EMP's to stack properly.
-//			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
-=======
-
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 	flags_1 = CONDUCT_1 | HEAR_1
 	flags_2 = NO_EMP_WIRES_2
 	slot_flags = SLOT_BELT
@@ -488,19 +463,11 @@
 	if(!(0 in level))
 		var/turf/position = get_turf(src)
 		if(!position || !(position.z in level))
-<<<<<<< HEAD
-			return -1
-	if(freq == GLOB.SYND_FREQ)
-		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
-			return -1
-	if(freq == GLOB.CENTCOM_FREQ)
-=======
 			return FALSE
 	if(freq == FREQ_SYNDICATE)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
 			return FALSE
 	if(freq == FREQ_CENTCOM)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		if(!independent)
 			return FALSE
 	if (!on)
