@@ -49,27 +49,6 @@
 	if(..())
 		return
 	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
-<<<<<<< HEAD
-	status_alarm()
-	sleep(300)
-	revoke_maint_all_access() // Need to make this a timer at some point.
-
-/datum/weather/rad_storm/proc/status_alarm(command)	//Makes the status displays show the radiation warning for those who missed the announcement.
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(1435)
-
-	if(!frequency)
-		return
-
-	var/datum/signal/status_signal = new
-	var/atom/movable/virtualspeaker/virt = new /atom/movable/virtualspeaker(null)
-	status_signal.source = virt
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = "shuttle"
-
-	if(command == "alert")
-		status_signal.data["command"] = "alert"
-		status_signal.data["picture_state"] = "radiation"
-=======
 	status_alarm(FALSE)
 
 /datum/weather/rad_storm/proc/status_alarm(active)	//Makes the status displays show the radiation warning for those who missed the announcement.
@@ -83,7 +62,6 @@
 		signal.data["picture_state"] = "radiation"
 	else
 		signal.data["command"] = "shuttle"
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 	var/atom/movable/virtualspeaker/virt = new(null)
 	frequency.post_signal(virt, signal)
