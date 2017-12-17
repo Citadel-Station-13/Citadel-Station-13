@@ -22,16 +22,11 @@ GLOBAL_PROTECT(config_dir)
 	config = src
 	var/list/config_files = InitEntries()
 	LoadModes()
-<<<<<<< HEAD
-	for(var/I in config_files)
-		LoadEntries(I)
-=======
 	if(LoadEntries("config.txt") <= 1)
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
 		LoadEntries("game_options.txt")
 		LoadEntries("dbconfig.txt")
 		LoadEntries("comms.txt")
->>>>>>> 5cf2c42... Merge pull request #33562 from tgstation/Cyberboss-patch-1
 	loadmaplist(CONFIG_MAPS_FILE)
 
 /datum/controller/configuration/Destroy()
@@ -98,9 +93,6 @@ GLOBAL_PROTECT(config_dir)
 
 		if(!entry)
 			continue
-		
-<<<<<<< HEAD
-=======
 		if(entry == "$include")
 			if(!value)
 				log_config("Warning: Invalid $include directive: [value]")
@@ -109,7 +101,6 @@ GLOBAL_PROTECT(config_dir)
 				++.
 			continue
 		
->>>>>>> 5cf2c42... Merge pull request #33562 from tgstation/Cyberboss-patch-1
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
 			log_config("Unknown setting in configuration: '[entry]'")
@@ -130,11 +121,8 @@ GLOBAL_PROTECT(config_dir)
 		
 		if(validated)
 			E.modified = TRUE
-<<<<<<< HEAD
-=======
 	
 	++.
->>>>>>> 5cf2c42... Merge pull request #33562 from tgstation/Cyberboss-patch-1
 
 /datum/controller/configuration/can_vv_get(var_name)
 	return (var_name != "entries_by_type" || !hiding_entries_by_type) && ..()
