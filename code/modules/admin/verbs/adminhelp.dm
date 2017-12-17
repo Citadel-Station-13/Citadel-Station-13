@@ -615,6 +615,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 /proc/send2otherserver(source,msg,type = "Ahelp")
 	var/comms_key = CONFIG_GET(string/comms_key)
+<<<<<<< HEAD
 	if(comms_key)
 		var/list/message = list()
 		message["message_sender"] = source
@@ -624,6 +625,20 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		message["crossmessage"] = type
 
 		world.Export("[CONFIG_GET(string/cross_server_address)]?[list2params(message)]")
+=======
+	if(!comms_key)
+		return
+	var/list/message = list()
+	message["message_sender"] = source
+	message["message"] = msg
+	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+	message["key"] = comms_key
+	message += type
+
+	var/list/servers = CONFIG_GET(keyed_string_list/cross_server)
+	for(var/I in servers)
+		world.Export("[servers[I]]?[list2params(message)]")
+>>>>>>> 8e0caa6... Fixes cross comms (#33601)
 
 
 /proc/ircadminwho()
