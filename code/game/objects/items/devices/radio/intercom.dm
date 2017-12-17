@@ -111,13 +111,8 @@
 		if(isnull(position) || !(position.z in level))
 			return FALSE
 	if(!src.listening)
-<<<<<<< HEAD
-		return -1
-	if(freq == GLOB.SYND_FREQ)
-=======
 		return FALSE
 	if(freq == FREQ_SYNDICATE)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		if(!(src.syndie))
 			return FALSE//Prevents broadcast of messages over devices lacking the encryption
 
