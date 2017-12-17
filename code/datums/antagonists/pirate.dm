@@ -15,11 +15,12 @@
 	if(!new_team)
 		for(var/datum/antagonist/pirate/P in GLOB.antagonists)
 			if(P.crew)
-				new_team = P.crew
+				crew = P.crew
+				return
 		if(!new_team)
 			crew = new /datum/objective_team/pirate
 			crew.forge_objectives()
-		return
+			return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	crew = new_team
@@ -104,6 +105,7 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value
 
+<<<<<<< HEAD
 
 //These need removal ASAP as everything is converted to datum antags.
 /datum/game_mode/proc/auto_declare_completion_pirates()
@@ -133,3 +135,27 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 			else
 				text += "<br><span class='boldannounce'>The pirate crew has failed.</span>"
 	to_chat(world, text)
+=======
+/datum/objective_team/pirate/roundend_report()
+	var/list/parts = list()
+
+	parts += "<span class='header'>Space Pirates were:</span>"
+	
+	var/all_dead = TRUE
+	for(var/datum/mind/M in members)
+		if(considered_alive(M))
+			all_dead = FALSE
+	parts += printplayerlist(members)
+
+	parts += "Loot stolen: "
+	var/datum/objective/loot/L = locate() in objectives
+	parts += L.loot_listing()
+	parts += "Total loot value : [L.get_loot_value()]/[L.target_value] credits"
+
+	if(L.check_completion() && !all_dead)
+		parts += "<span class='greentext big'>The pirate crew was successful!</span>"
+	else
+		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
+	
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+>>>>>>> 5c553c0... Merge pull request #33602 from AnturK/piratecrewfix
