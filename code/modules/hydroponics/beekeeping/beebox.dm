@@ -257,10 +257,5 @@
 			B.forceMove(drop_location())
 	for(var/obj/item/honey_frame/HF in honey_frames)
 		if(HF.loc == src)
-<<<<<<< HEAD
-			HF.loc = get_turf(src)
-	qdel(src)
-=======
 			HF.forceMove(drop_location())
 	qdel(src)
->>>>>>> 5233ec1... Finishes the forceMove port (#33519)
