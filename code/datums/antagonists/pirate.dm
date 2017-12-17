@@ -105,37 +105,6 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 /datum/objective/loot/check_completion()
 	return ..() || get_loot_value() >= target_value
 
-<<<<<<< HEAD
-
-//These need removal ASAP as everything is converted to datum antags.
-/datum/game_mode/proc/auto_declare_completion_pirates()
-	var/list/datum/mind/pirates = get_antagonists(/datum/antagonist/pirate)
-	var/datum/objective_team/pirate/crew
-	var/text = ""
-	if(pirates.len)
-		text += "<br><b>Space Pirates were:</b>"
-		for(var/datum/mind/M in pirates)
-			text += printplayer(M)
-			if(!crew)
-				var/datum/antagonist/pirate/P = M.has_antag_datum(/datum/antagonist/pirate)
-				crew = P.crew
-		if(crew)
-			text += "<br>Loot stolen: "
-			var/datum/objective/loot/L = locate() in crew.objectives
-			text += L.loot_listing()
-			text += "<br>Total loot value : [L.get_loot_value()]/[L.target_value] credits"
-
-			var/all_dead = TRUE
-			for(var/datum/mind/M in crew.members)
-				if(considered_alive(M))
-					all_dead = FALSE
-					break
-			if(L.check_completion() && !all_dead)
-				text += "<br><font color='green'><b>The pirate crew was successful!</b></font>"
-			else
-				text += "<br><span class='boldannounce'>The pirate crew has failed.</span>"
-	to_chat(world, text)
-=======
 /datum/objective_team/pirate/roundend_report()
 	var/list/parts = list()
 
@@ -158,4 +127,3 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
 	
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
->>>>>>> 5c553c0... Merge pull request #33602 from AnturK/piratecrewfix
