@@ -469,14 +469,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/mob_name = "Guardian Spirit"
 	var/use_message = "<span class='holoparasite'>You shuffle the deck...</span>"
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
-<<<<<<< HEAD
-	var/failure_message = "<span class='holoparasitebold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
-	var/ling_failure = "<span class='holoparasitebold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/activation_message = "<span class='holoparasite'>The rest of the deck rapidly flashes to ash!</span>"
-=======
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
@@ -598,14 +592,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	mob_name = "Holoparasite"
 	use_message = "<span class='holoparasite'>You start to power on the injector...</span>"
 	used_message = "<span class='holoparasite'>The injector has already been used.</span>"
-<<<<<<< HEAD
-	failure_message = "<span class='holoparasitebold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
-	ling_failure = "<span class='holoparasitebold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
-	activation_message = "<span class='holoparasite'>The injector self destructs after you inject yourself with it.</span>"
-=======
 	failure_message = "<span class='holoparasite bold'>...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.</span>"
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 
 /obj/item/guardiancreator/tech/choose/traitor
 	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
@@ -687,14 +675,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	mob_name = "Holocarp"
 	use_message = "<span class='holoparasite'>You put the fishsticks in your mouth...</span>"
 	used_message = "<span class='holoparasite'>Someone's already taken a bite out of these fishsticks! Ew.</span>"
-<<<<<<< HEAD
-	failure_message = "<span class='holoparasitebold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
-	ling_failure = "<span class='holoparasitebold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
-	activation_message = "<span class='holoparasite'>You finish eating the fishsticks! Delicious!>"
-=======
 	failure_message = "<span class='holoparasite bold'>You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.</span>"
 	ling_failure = "<span class='holoparasite bold'>Carp'sie is fine with changelings, so you shouldn't be seeing this message.</span>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	allowmultiple = TRUE
 	allowling = TRUE
 	random = TRUE
