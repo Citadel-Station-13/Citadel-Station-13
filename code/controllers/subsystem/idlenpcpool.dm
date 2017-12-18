@@ -1,12 +1,7 @@
 SUBSYSTEM_DEF(idlenpcpool)
 	name = "Idling NPC Pool"
-<<<<<<< HEAD
-	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
-	priority = 10
-=======
 	flags = SS_POST_FIRE_TIMING|SS_BACKGROUND
 	priority = FIRE_PRIORITY_IDLE_NPC
->>>>>>> d03e4ef... Advanced mob laziness (#33574)
 	wait = 60
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
