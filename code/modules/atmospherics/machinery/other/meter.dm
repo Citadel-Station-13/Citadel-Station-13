@@ -76,15 +76,7 @@
 
 		if(!radio_connection)
 			return
-
-<<<<<<< HEAD
-		var/datum/signal/signal = new
-		signal.source = src
-		signal.transmission_method = 1
-		signal.data = list(
-=======
 		var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 			"id_tag" = id_tag,
 			"device" = "AM",
 			"pressure" = round(env_pressure),
