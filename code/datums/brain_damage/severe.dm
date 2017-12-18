@@ -165,8 +165,6 @@
 /datum/brain_trauma/severe/discoordination/on_lose()
 	owner.remove_disability(MONKEYLIKE, TRAUMA_DISABILITY)
 	..()
-<<<<<<< HEAD
-=======
 
 /datum/brain_trauma/severe/pacifism
 	name = "Traumatic Non-Violence"
@@ -182,4 +180,3 @@
 /datum/brain_trauma/severe/pacifism/on_lose()
 	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
 	..()
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
