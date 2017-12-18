@@ -43,12 +43,8 @@
 	death = FALSE
 	anchored = FALSE
 	density = FALSE
-<<<<<<< HEAD
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are an ash walker. Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest. You do not know how their magic works, nor where they come from, or the significance of their items.</b>"
-=======
 	flavour_text = "<span class='big bold'>You are an ash walker.</span><b> Your tribe worships <span class='danger'>the Necropolis</span>. The wastes are sacred ground, its monsters a blessed bounty. \
 	You have seen lights in the distance... they foreshadow the arrival of outsiders that seek to tear apart the Necropolis and its domain. Fresh sacrifices for your nest.</b>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	assignedrole = "Ash Walker"
 
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
@@ -480,11 +476,7 @@
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are a security officer working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
-<<<<<<< HEAD
-	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-=======
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	uniform = /obj/item/clothing/under/rank/security
 	shoes = /obj/item/clothing/shoes/jackboots
 	id = /obj/item/card/id/away/old/sec
@@ -508,11 +500,7 @@
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are an engineer working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
-<<<<<<< HEAD
-	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-=======
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	uniform = /obj/item/clothing/under/rank/engineer
 	shoes = /obj/item/clothing/shoes/workboots
 	id = /obj/item/card/id/away/old/eng
@@ -536,11 +524,7 @@
 	mob_species = /datum/species/human
 	flavour_text = "<span class='big bold'>You are a scientist working for Nanotrasen,</span><b> stationed onboard a state of the art research station. You vaguely recall rushing into a \
 	cryogenics pod due to an oncoming radiation storm. The last thing you remember is the station's Artifical Program telling you that you would only be asleep for eight hours. As you open \
-<<<<<<< HEAD
-	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-=======
 	your eyes, everything seems rusted and broken, a dark feeling sweels in your gut as you climb out of your pod.</b>"
->>>>>>> d79d92e... Standardizes deconversion message (#33547)
 	uniform = /obj/item/clothing/under/rank/scientist
 	shoes = /obj/item/clothing/shoes/laceup
 	id = /obj/item/card/id/away/old/sci
