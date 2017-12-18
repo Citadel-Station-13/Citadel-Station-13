@@ -14,13 +14,8 @@
 	L.implant(H, null, 1)
 
 	var/obj/item/device/radio/R = H.ears
-<<<<<<< HEAD
-	R.set_frequency(GLOB.CENTCOM_FREQ)
-	R.freqlock = 1
-=======
 	R.set_frequency(FREQ_CENTCOM)
 	R.freqlock = TRUE
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
