@@ -406,7 +406,6 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	disabilities = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -812,6 +811,12 @@
 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
+<<<<<<< HEAD
+=======
+	if(has_disability(PACIFISM))
+		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
+		return FALSE
+>>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 	return TRUE
 
 /mob/living/carbon/proc/update_stamina()

@@ -120,7 +120,14 @@
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
 	if(L == src)
+<<<<<<< HEAD
 		return 0
+=======
+		return FALSE
+
+	if(has_disability(PACIFISM))
+		return FALSE
+>>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 
 	if(enemies[L])
 		return 1
