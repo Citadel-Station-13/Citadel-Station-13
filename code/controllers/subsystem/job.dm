@@ -412,7 +412,7 @@ SUBSYSTEM_DEF(job)
 
 	if(job && H)
 		job.after_spawn(H, M)
-	handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role)
+
 	return H
 
 
