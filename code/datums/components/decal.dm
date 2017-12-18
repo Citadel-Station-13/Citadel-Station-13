@@ -48,8 +48,12 @@
 	if(old_dir == new_dir)
 		return
 	remove()
+<<<<<<< HEAD
 	var/rotation = SimplifyDegrees(dir2angle(new_dir)-dir2angle(old_dir))
 	pic.dir = turn(pic.dir, rotation)
+=======
+	pic.dir = turn(pic.dir, dir2angle(old_dir) - dir2angle(new_dir))
+>>>>>>> 3ce9bd7... decal rotation fix (#33614)
 	apply()
 
 /datum/component/decal/proc/clean_react(strength)
