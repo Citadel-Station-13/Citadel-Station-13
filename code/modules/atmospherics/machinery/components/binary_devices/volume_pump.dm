@@ -108,13 +108,10 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/ui_act(action, params)
 	if(..())
 		return
-	var/turf/T = get_turf(src)
-	var/area/A = get_area(src)
 	switch(action)
 		if("power")
 			on = !on
-			investigate_log("Volume Pump, [src.name], was turned [on ? "on" : "off"] by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-			message_admins("Volume Pump, [src.name], turned [on ? "on" : "off"] by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("rate")
 			var/rate = params["rate"]
@@ -129,7 +126,7 @@ Thus, the two variables affect pump operation are set in New():
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				transfer_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				transfer_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("Volume Pump, [src.name], was set to [transfer_rate] L/s by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
 				message_admins("Volume Pump, [src.name], was set to [transfer_rate] L/s by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
 	update_icon()
@@ -148,7 +145,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if("set_transfer_rate" in signal.data)
 		var/datum/gas_mixture/air1 = AIR1
-		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
+		transfer_rate = CLAMP(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
@@ -166,11 +163,6 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/volume_pump/can_unwrench(mob/user)
 	. = ..()
-	var/area/A = get_area(src)
 	if(. && on && is_operational())
 		to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
 		return FALSE
-	else
-		investigate_log("Volume Pump, [src.name], was unwrenched by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-		message_admins("Volume Pump, [src.name], was unwrenched by [ADMIN_LOOKUPFLW(usr)] at [A]")
-		return
