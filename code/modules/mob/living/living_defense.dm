@@ -134,16 +134,11 @@
 
 	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
-<<<<<<< HEAD
-		return 0
-=======
 		return FALSE
 
 	if(user.has_disability(PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -197,13 +192,9 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-<<<<<<< HEAD
-=======
 	if(has_disability(PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
-
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
@@ -217,13 +208,9 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return 0
 	else
-<<<<<<< HEAD
-=======
 		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -239,13 +226,9 @@
 		return 0
 
 	if (M.a_intent == INTENT_HARM)
-<<<<<<< HEAD
-=======
 		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return 0
@@ -268,13 +251,9 @@
 			return 0
 
 		else
-<<<<<<< HEAD
-=======
 			if(L.has_disability(PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
-
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
@@ -297,12 +276,9 @@
 			grabbedby(M)
 			return 0
 		if("harm")
-<<<<<<< HEAD
-=======
 			if(M.has_disability(PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 			M.do_attack_animation(src)
 			return 1
 		if("disarm")
