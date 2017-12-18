@@ -136,16 +136,7 @@ Acts like a normal vent, but has an input AND output.
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
-
-<<<<<<< HEAD
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
-=======
 	var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		"tag" = id,
 		"device" = "ADVP",
 		"power" = on,
@@ -155,13 +146,8 @@ Acts like a normal vent, but has an input AND output.
 		"output" = output_pressure_max,
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
-<<<<<<< HEAD
-	)
-	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
-=======
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/atmosinit()
 	..()
