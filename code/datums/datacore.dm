@@ -1,4 +1,3 @@
-
 /datum/datacore
 	var/medical[] = list()
 	var/medicalPrintCount = 0

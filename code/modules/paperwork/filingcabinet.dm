@@ -187,6 +187,7 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 /obj/structure/filingcabinet/employment/Initialize()
 	. = ..()
 	GLOB.employmentCabinets += src
+	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
 	GLOB.employmentCabinets -= src
@@ -198,9 +199,8 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		var/datum/data/record/G = record
 		if(!G)
 			continue
-		var/datum/mind/M = G.fields["mindref"]
-		if(M && ishuman(M.current))
-			addFile(M.current)
+		if(G.fields["reference"])
+			addFile(G.fields["reference"])
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)

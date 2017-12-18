@@ -199,8 +199,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
-				if("human")
-					newname = random_unique_name(gender)
 				if("clown")
 					newname = pick(GLOB.clown_names)
 				if("mime")
@@ -526,7 +524,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		processing_list.Cut(1, 2)
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents
+		processing_list += A.contents 
 		assembled += A
 	return assembled
 
@@ -1494,7 +1492,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_low = num2hex(world.time, 3)
 
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
-
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.

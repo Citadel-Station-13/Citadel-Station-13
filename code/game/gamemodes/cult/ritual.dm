@@ -179,13 +179,6 @@ This file contains the arcane tome files.
 	var/list/shields = list()
 	var/area/A = get_area(src)
 
-	var/datum/antagonist/cult/user_antag = user.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!user_antag)
-		return
-
-	var/datum/objective/eldergod/summon_objective = locate() in user_antag.cult_team.objectives
-	var/datum/objective/sacrifice/sac_objective = locate() in user_antag.cult_team.objectives
-
 	if(!check_rune_turf(Turf, user))
 		return
 	entered_rune_name = input(user, "Choose a rite to scribe.", "Sigils of Power") as null|anything in GLOB.rune_types
@@ -203,20 +196,18 @@ This file contains the arcane tome files.
 	A = get_area(src)
 	if(!src || QDELETED(src) || !Adjacent(user) || user.incapacitated() || !check_rune_turf(Turf, user))
 		return
-	
-	//AAAAAAAAAAAAAAAH, i'm rewriting enough for now so TODO: remove this shit
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
-		if(!summon_objective)
+		if(!("eldergod" in SSticker.mode.cult_objectives))
 			to_chat(user, "<span class='warning'>Nar-Sie does not wish to be summoned!</span>")
 			return
-		if(sac_objective && !sac_objective.check_completion())
+		if(!GLOB.sac_complete)
 			to_chat(user, "<span class='warning'>The sacrifice is not complete. The portal would lack the power to open if you tried!</span>")
 			return
-		if(summon_objective.check_completion())
+		if(!SSticker.mode.eldergod)
 			to_chat(user, "<span class='cultlarge'>\"I am already here. There is no need to try to summon me now.\"</span>")
 			return
-		if(!(A in summon_objective.summon_spots))
-			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+		if(!(A in GLOB.summon_spots))
+			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(GLOB.summon_spots)]!</span>")
 			return
 		var/confirm_final = alert(user, "This is the FINAL step to summon Nar-Sie; it is a long, painful ritual and the crew will be alerted to your presence", "Are you prepared for the final battle?", "My life for Nar-Sie!", "No")
 		if(confirm_final == "No")
@@ -224,8 +215,8 @@ This file contains the arcane tome files.
 			return
 		Turf = get_turf(user)
 		A = get_area(src)
-		if(!(A in summon_objective.summon_spots))  // Check again to make sure they didn't move
-			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(summon_objective.summon_spots)]!</span>")
+		if(!(A in GLOB.summon_spots))  // Check again to make sure they didn't move
+			to_chat(user, "<span class='cultlarge'>The Geometer can only be summoned where the veil is weak - in [english_list(GLOB.summon_spots)]!</span>")
 			return
 		priority_announce("Figments from an eldritch god are being summoned by [user] into [A.map_name] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", 'sound/ai/spanomalies.ogg')
 		for(var/B in spiral_range_turfs(1, user, 1))
@@ -266,10 +257,8 @@ This file contains the arcane tome files.
 		to_chat(user, "<span class='cult'>There is already a rune here.</span>")
 		return FALSE
 
-
 	if(!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_MINING)
 		to_chat(user, "<span class='warning'>The veil is not weak enough here.</span>")
-
 		return FALSE
 
 	return TRUE

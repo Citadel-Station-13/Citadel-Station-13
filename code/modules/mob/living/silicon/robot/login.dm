@@ -1,4 +1,3 @@
-
 /mob/living/silicon/robot/Login()
 	..()
 	regenerate_icons()

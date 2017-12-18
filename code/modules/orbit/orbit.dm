@@ -43,10 +43,6 @@
 	if (!orbiter.orbiting) //admin wants to stop the orbit.
 		orbiter.orbiting = src //set it back to us first
 		orbiter.stop_orbit()
-	var/atom/movable/AM = orbiting
-	if(istype(AM) && AM.orbiting && AM.orbiting.orbiting == orbiter)
-		orbiter.stop_orbit()
-		return
 	lastprocess = world.time
 	if (!targetloc)
 		targetloc = get_turf(orbiting)
@@ -58,7 +54,7 @@
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
-		if(OO == src || OO.orbiter == orbiting)
+		if(OO == src)
 			continue
 		OO.Check(targetloc)
 

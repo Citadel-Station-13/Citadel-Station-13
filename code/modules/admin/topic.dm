@@ -866,6 +866,12 @@
 		else
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=abductor;jobban4=[REF(M)]'>Abductor</a></td>"
 
+		//Borer
+		if(jobban_isbanned(M, "borer") || isbanned_dept)
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'><font color=red>Borer</font></a></td>"
+		else
+			dat += "<td width='20%'><a href='?src=\ref[src];jobban3=borer;jobban4=\ref[M]'>Borer</a></td>"
+
 		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
 			dat += "<td width='20%'><a href='?src=[REF(src)];[HrefToken()];jobban3=alien candidate;jobban4=[REF(M)]'><font color=red>Alien</font></a></td>"
@@ -1649,7 +1655,7 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if(CONSCIOUS)
+				if (CONSCIOUS)
 					status = "Alive"
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"

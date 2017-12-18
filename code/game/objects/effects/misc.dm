@@ -65,4 +65,3 @@
 
 /obj/effect/abstract/marker/at
 	name = "active turf marker"
-

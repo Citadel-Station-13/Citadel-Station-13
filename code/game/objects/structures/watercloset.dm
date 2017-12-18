@@ -572,6 +572,7 @@
 	qdel(src)
 
 
+
 //Shower Curtains//
 //Defines used are pre-existing in layers.dm//
 

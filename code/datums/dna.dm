@@ -1,4 +1,3 @@
-
 /////////////////////////// DNA DATUM
 /datum/dna
 	var/unique_enzymes

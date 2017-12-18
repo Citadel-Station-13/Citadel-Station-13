@@ -190,7 +190,6 @@
 		deconstruct()
 
 
-// Straight/bent pipe segment
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe"
 	initialize_dirs = DISP_DIR_FLIP

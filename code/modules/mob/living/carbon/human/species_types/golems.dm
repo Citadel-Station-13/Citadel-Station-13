@@ -595,7 +595,6 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
-
 /datum/species/golem/clockwork
 	name = "Clockwork Golem"
 	id = "clockwork golem"
@@ -647,7 +646,6 @@
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	random_eligible = FALSE
-
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"

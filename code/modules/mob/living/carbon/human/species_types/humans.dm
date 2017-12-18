@@ -12,7 +12,7 @@
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
-	return TRUE	//Pure humans are always allowed in all roles.
+	return TRUE
 
 //Curiosity killed the cat's wagging tail.
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)

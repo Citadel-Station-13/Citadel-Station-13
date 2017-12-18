@@ -23,6 +23,8 @@
 	actual_cost = research_cost
 
 /datum/techweb_node/proc/get_price(datum/techweb/host)
-	if(host)
-		actual_cost = research_cost - host.boosted_nodes[src]
+	if(!host)
+		return actual_cost
+	var/discount = boost_item_paths[host.boosted_nodes[src]]
+	actual_cost = research_cost - discount
 	return actual_cost

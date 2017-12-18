@@ -67,8 +67,8 @@
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/popcorn/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/popcorn/New()
+	..()
 	eatverb = pick("bite","crunch","nibble","gnaw","gobble","chomp")
 
 /obj/item/reagent_containers/food/snacks/loadedbakedpotato
@@ -448,8 +448,8 @@
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/lollipop/New()
+	..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
 
@@ -467,8 +467,8 @@
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/lollipop/cyborg/New()
+	..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
@@ -488,15 +488,15 @@
 	tastes = list("candy")
 	foodtype = JUNKFOOD
 
-/obj/item/reagent_containers/food/snacks/gumball/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/gumball/New()
+	..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
-	. = ..()
+/obj/item/reagent_containers/food/snacks/gumball/cyborg/New()
+	..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
 /obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)

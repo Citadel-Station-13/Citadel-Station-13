@@ -37,20 +37,19 @@
 				else if(M.assigned_role in GLOB.command_positions)
 					possible_targets[M] = 1						//good-guy
 
-	var/list/possible_objectives = list(1,2,3,4)
-	
-	while(objectives.len < quantity)
-		switch(pick_n_take(possible_objectives))
+	var/list/objectives = list(1,2,3,4)
+	while(owner.objectives.len < quantity)
+		switch(pick_n_take(objectives))
 			if(1)	//research
 				var/datum/objective/download/O = new /datum/objective/download()
 				O.owner = owner
 				O.gen_amount_goal()
-				objectives += O
+				owner.objectives += O
 
 			if(2)	//steal
 				var/datum/objective/steal/special/O = new /datum/objective/steal/special()
 				O.owner = owner
-				objectives += O
+				owner.objectives += O
 
 			if(3)	//protect/kill
 				if(!possible_targets.len)	continue
@@ -64,13 +63,13 @@
 					O.owner = owner
 					O.target = M
 					O.explanation_text = "Slay \the [M.current.real_name], the [M.assigned_role]."
-					objectives += O
+					owner.objectives += O
 				else										//protect
 					var/datum/objective/protect/O = new /datum/objective/protect()
 					O.owner = owner
 					O.target = M
 					O.explanation_text = "Protect \the [M.current.real_name], the [M.assigned_role], from harm."
-					objectives += O
+					owner.objectives += O
 			if(4)	//debrain/capture
 				if(!possible_targets.len)	continue
 				var/selected = rand(1,possible_targets.len)
@@ -83,17 +82,17 @@
 					O.owner = owner
 					O.target = M
 					O.explanation_text = "Steal the brain of [M.current.real_name]."
-					objectives += O
+					owner.objectives += O
 				else										//capture
 					var/datum/objective/capture/O = new /datum/objective/capture()
 					O.owner = owner
 					O.gen_amount_goal()
-					objectives += O
+					owner.objectives += O
 			else
 				break
 	var/datum/objective/O = new /datum/objective/survive()
 	O.owner = owner
-	owner.objectives |= objectives
+	owner.objectives += O
 
 
 /proc/remove_ninja(mob/living/L)

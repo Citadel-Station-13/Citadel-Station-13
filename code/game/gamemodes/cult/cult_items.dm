@@ -163,7 +163,7 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled)
+	if(dash_toggled && jaunt.IsAvailable())
 		jaunt.Teleport(user, target)
 		return
 	if(!proximity)

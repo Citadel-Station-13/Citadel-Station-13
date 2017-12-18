@@ -170,30 +170,30 @@
 	var/obj/item/I = target
 	var/mob/living/M = owner
 
-	var/flags = I.slot_flags
-	if(flags & SLOT_OCLOTHING)
+	var/flags_1 = I.slot_flags
+	if(flags_1 & SLOT_OCLOTHING)
 		M.update_inv_wear_suit()
-	if(flags & SLOT_ICLOTHING)
+	if(flags_1 & SLOT_ICLOTHING)
 		M.update_inv_w_uniform()
-	if(flags & SLOT_GLOVES)
+	if(flags_1 & SLOT_GLOVES)
 		M.update_inv_gloves()
-	if(flags & SLOT_EYES)
+	if(flags_1 & SLOT_EYES)
 		M.update_inv_glasses()
-	if(flags & SLOT_EARS)
+	if(flags_1 & SLOT_EARS)
 		M.update_inv_ears()
-	if(flags & SLOT_MASK)
+	if(flags_1 & SLOT_MASK)
 		M.update_inv_wear_mask()
-	if(flags & SLOT_HEAD)
+	if(flags_1 & SLOT_HEAD)
 		M.update_inv_head()
-	if(flags & SLOT_FEET)
+	if(flags_1 & SLOT_FEET)
 		M.update_inv_shoes()
-	if(flags & SLOT_ID)
+	if(flags_1 & SLOT_ID)
 		M.update_inv_wear_id()
-	if(flags & SLOT_BELT)
+	if(flags_1 & SLOT_BELT)
 		M.update_inv_belt()
-	if(flags & SLOT_BACK)
+	if(flags_1 & SLOT_BACK)
 		M.update_inv_back()
-	if(flags & SLOT_NECK)
+	if(flags_1 & SLOT_NECK)
 		M.update_inv_neck()
 
 /obj/item/clothing/under/chameleon

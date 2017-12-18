@@ -24,7 +24,7 @@
 	var/can_suppress = FALSE
 	var/can_unsuppress = TRUE
 	var/recoil = 0						//boom boom shake the room
-	var/clumsy_check = TRUE
+	var/clumsy_check = 1
 	var/obj/item/ammo_casing/chambered = null
 	trigger_guard = TRIGGER_GUARD_NORMAL	//trigger guard on the weapon, hulks can't fire them with their big meaty fingers
 	var/sawn_desc = null				//description change if weapon is sawn-off
@@ -91,17 +91,19 @@
 
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
-	if(zoomed && user.get_active_held_item() != src)
-		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
+	if(zoomable && user.get_active_held_item() != src)
+		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
-	return FALSE
+	return 0
+
 
 //check if there's enough ammo/energy/whatever to shoot one time
 //i.e if clicking would make it shoot
 /obj/item/gun/proc/can_shoot()
-	return TRUE
+	return 1
+
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
@@ -192,13 +194,13 @@
 /obj/item/gun/proc/handle_pins(mob/living/user)
 	if(pin)
 		if(pin.pin_auth(user) || pin.emagged)
-			return TRUE
+			return 1
 		else
 			pin.auth_fail(user)
-			return FALSE
+			return 0
 	else
 		to_chat(user, "<span class='warning'>[src]'s trigger is locked. This weapon doesn't have a firing pin installed!</span>")
-	return FALSE
+	return 0
 
 /obj/item/gun/proc/recharge_newshot()
 	return
@@ -418,7 +420,7 @@
 		target.visible_message("<span class='warning'>[user] points [src] at [target]'s head, ready to pull the trigger...</span>", \
 			"<span class='userdanger'>[user] points [src] at your head, ready to pull the trigger...</span>")
 
-	semicd = TRUE
+	semicd = 1
 
 	if(!do_mob(user, target, 120) || user.zone_selected != "mouth")
 		if(user)
@@ -426,10 +428,10 @@
 				user.visible_message("<span class='notice'>[user] decided not to shoot.</span>")
 			else if(target && target.Adjacent(user))
 				target.visible_message("<span class='notice'>[user] has decided to spare [target]</span>", "<span class='notice'>[user] has decided to spare your life!</span>")
-		semicd = FALSE
+		semicd = 0
 		return
 
-	semicd = FALSE
+	semicd = 0
 
 	target.visible_message("<span class='warning'>[user] pulls the trigger!</span>", "<span class='userdanger'>[user] pulls the trigger!</span>")
 

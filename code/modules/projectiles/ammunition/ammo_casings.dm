@@ -284,8 +284,8 @@
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 
-/obj/item/ammo_casing/shotgun/dart/Initialize()
-	. = ..()
+/obj/item/ammo_casing/shotgun/dart/New()
+	..()
 	container_type |= OPENCONTAINER_1
 	create_reagents(30)
 	reagents.set_reacting(TRUE)
@@ -296,8 +296,8 @@
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."
 
-/obj/item/ammo_casing/shotgun/dart/bioterror/Initialize()
-	. = ..()
+/obj/item/ammo_casing/shotgun/dart/bioterror/New()
+	..()
 	reagents.add_reagent("neurotoxin", 6)
 	reagents.add_reagent("spore", 6)
 	reagents.add_reagent("mutetoxin", 6) //;HELP OPS IN MAINT

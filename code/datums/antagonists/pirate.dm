@@ -1,7 +1,6 @@
 /datum/antagonist/pirate
 	name = "Space Pirate"
 	job_rank = ROLE_TRAITOR
-	roundend_category = "space pirates"
 	var/datum/objective_team/pirate/crew
 
 /datum/antagonist/pirate/greet()
@@ -38,6 +37,7 @@
 
 /datum/objective_team/pirate
 	name = "Pirate crew"
+	var/list/objectives = list()
 
 /datum/objective_team/pirate/proc/forge_objectives()
 	var/datum/objective/loot/getbooty = new()
@@ -85,11 +85,11 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 				loot_table[lootname] = count
 			else
 				loot_table[lootname] += count
-	var/list/loot_texts = list()
+	var/text = ""
 	for(var/key in loot_table)
 		var/amount = loot_table[key]
-		loot_texts += "[amount] [key][amount > 1 ? "s":""]"
-	return loot_texts.Join(", ")
+		text += "[amount] [key][amount > 1 ? "s":""], "
+	return text
 
 /datum/objective/loot/proc/get_loot_value()
 	if(!storage_area)
@@ -127,3 +127,4 @@ GLOBAL_LIST_INIT(pirate_loot_cache, typecacheof(list(
 		parts += "<span class='redtext big'>The pirate crew has failed.</span>"
 	
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+

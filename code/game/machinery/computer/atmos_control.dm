@@ -11,7 +11,7 @@
 	var/on = TRUE
 
 	var/id_tag
-	var/frequency = FREQ_ATMOS_STORAGE
+	var/frequency = 1441
 	var/datum/radio_frequency/radio_connection
 
 /obj/machinery/air_sensor/update_icon()
@@ -19,29 +19,31 @@
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
+		var/datum/signal/signal = new
 		var/datum/gas_mixture/air_sample = return_air()
 
-		var/datum/signal/signal = new(list(
+		signal.transmission_method = 1 //radio signal
+		signal.data = list(
 			"sigtype" = "status",
 			"id_tag" = id_tag,
 			"timestamp" = world.time,
 			"pressure" = air_sample.return_pressure(),
 			"temperature" = air_sample.temperature,
 			"gases" = list()
-		))
+		)
 		var/total_moles = air_sample.total_moles()
 		if(total_moles)
 			for(var/gas_id in air_sample.gases)
 				var/gas_name = air_sample.gases[gas_id][GAS_META][META_GAS_NAME]
 				signal.data["gases"][gas_name] = air_sample.gases[gas_id][MOLES] / total_moles * 100
 
-		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+		radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 
 /obj/machinery/air_sensor/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/Initialize()
 	. = ..()
@@ -64,7 +66,7 @@
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
 
-	var/frequency = FREQ_ATMOS_STORAGE
+	var/frequency = 1441
 	var/list/sensors = list(
 		"n2_sensor" = "Nitrogen Tank",
 		"o2_sensor" = "Oxygen Tank",
@@ -115,7 +117,7 @@
 	return data
 
 /obj/machinery/computer/atmos_control/receive_signal(datum/signal/signal)
-	if(!signal)
+	if(!signal || signal.encryption)
 		return
 
 	var/id_tag = signal.data["id_tag"]
@@ -127,7 +129,7 @@
 /obj/machinery/computer/atmos_control/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
+	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_ATMOSIA)
 
 /////////////////////////////////////////////////////////////
 // LARGE TANK CONTROL
@@ -136,7 +138,7 @@
 /obj/machinery/computer/atmos_control/tank
 	var/input_tag
 	var/output_tag
-	frequency = FREQ_ATMOS_STORAGE
+	frequency = 1441
 	circuit = /obj/item/circuitboard/computer/atmos_control/tank
 
 	var/list/input_info
@@ -145,7 +147,7 @@
 // This hacky madness is the evidence of the fact that a lot of machines were never meant to be constructable, im so sorry you had to see this
 /obj/machinery/computer/atmos_control/tank/proc/reconnect(mob/user)
 	var/list/IO = list()
-	var/datum/radio_frequency/freq = SSradio.return_frequency(FREQ_ATMOS_STORAGE)
+	var/datum/radio_frequency/freq = SSradio.return_frequency(1441)
 	var/list/devices = freq.devices["_default"]
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in devices)
 		var/list/text = splittext(U.id_tag, "_")
@@ -192,7 +194,10 @@
 /obj/machinery/computer/atmos_control/tank/ui_act(action, params)
 	if(..() || !radio_connection)
 		return
-	var/datum/signal/signal = new(list("sigtype" = "command"))
+	var/datum/signal/signal = new
+	signal.transmission_method = 1
+	signal.source = src
+	signal.data = list("sigtype" = "command")
 	switch(action)
 		if("reconnect")
 			reconnect(usr)
@@ -209,10 +214,10 @@
 				target =  CLAMP(target, 0, 50 * ONE_ATMOSPHERE)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
-	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
+	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
 
 /obj/machinery/computer/atmos_control/tank/receive_signal(datum/signal/signal)
-	if(!signal)
+	if(!signal || signal.encryption)
 		return
 
 	var/id_tag = signal.data["tag"]

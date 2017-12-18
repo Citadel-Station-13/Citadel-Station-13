@@ -73,6 +73,26 @@
 	popup.open(0)
 	return
 
+/mob/dead/new_player/Stat()
+	..()
+
+	if(statpanel("Lobby"))
+		stat("Game Mode:", (SSticker.hide_mode) ? "Secret" : "[GLOB.master_mode]")
+		stat("Map:", SSmapping.config.map_name)
+
+		if(SSticker.current_state == GAME_STATE_PREGAME)
+			var/time_remaining = SSticker.GetTimeLeft()
+			if(time_remaining > 0)
+				stat("Time To Start:", "[round(time_remaining/10)]s")
+			else if(time_remaining == -10)
+				stat("Time To Start:", "DELAYED")
+			else
+				stat("Time To Start:", "SOON")
+
+			stat("Players:", "[SSticker.totalPlayers]")
+			if(client.holder)
+				stat("Players Ready:", "[SSticker.totalPlayersReady]")
+
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -297,13 +317,15 @@
 		return 0
 	if(job.required_playtime_remaining(client))
 		return 0
+	if(CONFIG_GET(flag/enforce_human_authority) && !client.prefs.pref_species.qualifies_for_rank(rank, client.prefs.features))
+		return 0
 	return 1
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	if(!IsJobAvailable(rank))
 		alert(src, "[rank] is not available. Please try another.")
-		return FALSE
+		return 0
 
 	if(SSticker.late_join_disabled)
 		alert(src, "An administrator has disabled late join spawning.")

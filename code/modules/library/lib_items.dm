@@ -144,8 +144,8 @@
 /obj/structure/bookcase/manuals/medical
 	name = "medical manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/Initialize()
-	. = ..()
+/obj/structure/bookcase/manuals/medical/New()
+	..()
 	new /obj/item/book/manual/medical_cloning(src)
 	update_icon()
 
@@ -153,8 +153,8 @@
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/Initialize()
-	. = ..()
+/obj/structure/bookcase/manuals/engineering/New()
+	..()
 	new /obj/item/book/manual/wiki/engineering_construction(src)
 	new /obj/item/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/book/manual/wiki/engineering_hacking(src)
@@ -167,8 +167,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/Initialize()
-	. = ..()
+/obj/structure/bookcase/manuals/research_and_development/New()
+	..()
 	new /obj/item/book/manual/research_and_development(src)
 	update_icon()
 
