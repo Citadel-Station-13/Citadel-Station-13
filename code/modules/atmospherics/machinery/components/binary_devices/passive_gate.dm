@@ -78,28 +78,14 @@ Passive gate is similar to the regular pump except:
 	if(!radio_connection)
 		return
 
-<<<<<<< HEAD
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
-=======
 	var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		"tag" = id,
 		"device" = "AGP",
 		"power" = on,
 		"target_output" = target_pressure,
 		"sigtype" = "status"
-<<<<<<< HEAD
-	)
-
-	radio_connection.post_signal(src, signal, filter = GLOB.RADIO_ATMOSIA)
-=======
 	))
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
