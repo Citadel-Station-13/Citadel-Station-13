@@ -137,12 +137,9 @@
 		eye_blurry = max(eye_blurry-1, 0)
 		if(client && !eye_blurry)
 			clear_fullscreen("blurry")
-<<<<<<< HEAD
-=======
 	if(has_disability(PACIFISM) && a_intent == INTENT_HARM)
 		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
 		a_intent_change(INTENT_HELP)
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 
 /mob/living/proc/update_damage_hud()
 	return
