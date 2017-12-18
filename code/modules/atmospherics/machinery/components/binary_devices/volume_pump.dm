@@ -76,16 +76,7 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return
-
-<<<<<<< HEAD
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-	signal.data = list(
-=======
 	var/datum/signal/signal = new(list(
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 		"tag" = id,
 		"device" = "APV",
 		"power" = on,
