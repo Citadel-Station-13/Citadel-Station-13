@@ -275,7 +275,7 @@
 						else
 							ae = electronics
 							electronics = null
-							ae.loc = src.loc
+							ae.forceMove(drop_location())
 
 						qdel(src)
 				return
