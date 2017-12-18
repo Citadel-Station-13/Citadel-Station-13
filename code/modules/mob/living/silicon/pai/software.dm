@@ -173,14 +173,8 @@
 				audible_message("[icon2html(src, world)] *beep* *beep*")
 
 			if(href_list["freq"])
-<<<<<<< HEAD
-
-				var/new_frequency = (sradio.frequency + text2num(href_list["freq"]))
-				if(new_frequency < 1200 || new_frequency > 1600)
-=======
 				var/new_frequency = (signaler.frequency + text2num(href_list["freq"]))
 				if(new_frequency < MIN_FREE_FREQ || new_frequency > MAX_FREE_FREQ)
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 					new_frequency = sanitize_frequency(new_frequency)
 				signaler.set_frequency(new_frequency)
 
