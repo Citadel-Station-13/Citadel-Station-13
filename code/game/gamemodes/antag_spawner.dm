@@ -127,7 +127,7 @@
 			return
 		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg", user)
+		spawn_antag(theghost.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -213,7 +213,7 @@
 			return
 		used = 1
 		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
+		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -222,7 +222,7 @@
 		to_chat(user, "<span class='notice'>You can't seem to work up the nerve to shatter the bottle. Perhaps you should try again later.</span>")
 
 
-/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "")
+/obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, type = "", datum/mind/user)
 
 	var/obj/effect/dummy/slaughter/holder = new /obj/effect/dummy/slaughter(T)
 	var/mob/living/simple_animal/slaughter/S = new demon_type(holder)
@@ -232,15 +232,15 @@
 	S.mind.special_role = S.name
 	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
-	if(usr)
+	if(user)
 		new_objective = new /datum/objective/assassinate
 		new_objective.owner = S.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "[objective_verb] [usr.real_name], the one who summoned you."
+		new_objective.target = user
+		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
 		S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[usr ? " else while you're at it":""]."
+	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
 	S.mind.objectives += new_objective2
 	to_chat(S, S.playstyle_string)
 	to_chat(S, "<B>You are currently not currently in the same plane of existence as the station. \
