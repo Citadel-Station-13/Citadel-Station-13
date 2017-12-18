@@ -41,16 +41,6 @@
 			continue
 
 		var/datum/disease/D
-<<<<<<< HEAD
-		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-			if(!H.dna || (H.disabilities & BLIND))	//A blindness disease would be the worst.
-				continue
-			D = new virus_type()
-			var/datum/disease/dnaspread/DS = D
-			DS.strain_data["name"] = H.real_name
-			DS.strain_data["UI"] = H.dna.uni_identity
-			DS.strain_data["SE"] = H.dna.struc_enzymes
-=======
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
 				if(!H.dna || (H.has_disability(BLIND)))	//A blindness disease would be the worst.
@@ -62,7 +52,6 @@
 				DS.strain_data["SE"] = H.dna.struc_enzymes
 			else
 				D = new virus_type()
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 		else
 			D = new virus_type()
 		D.carrier = TRUE
