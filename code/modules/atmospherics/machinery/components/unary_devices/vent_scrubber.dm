@@ -97,14 +97,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
-
-<<<<<<< HEAD
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
-	signal.source = src
-
-=======
->>>>>>> 71659b1... Tidy non-telecomms radio code (#33381)
 	var/list/f_types = list()
 	for(var/path in GLOB.meta_gas_info)
 		var/list/gas = GLOB.meta_gas_info[path]
