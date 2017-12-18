@@ -10,18 +10,6 @@
 
 //mob disabilities stat
 
-<<<<<<< HEAD
-#define BLIND 		1
-#define MUTE		2
-#define DEAF		4
-#define NEARSIGHT	8
-#define FAT			32
-#define HUSK		64
-#define NOCLONE		128
-#define CLUMSY		256
-#define DUMB		512
-#define MONKEYLIKE	1024 //sets IsAdvancedToolUser to FALSE
-=======
 #define BLIND 		"blind"
 #define MUTE		"mute"
 #define DEAF		"deaf"
@@ -44,7 +32,6 @@
 #define STASIS_MUTE "stasis"
 #define GENETICS_SPELL "genetics_spell"
 #define TRAUMA_DISABILITY "trauma"
->>>>>>> 146d167... [Ready Again]Refactors disabilities into lists, allowing for independent disability sources (#33055)
 
 // bitflags for machine stat variable
 #define BROKEN		1
