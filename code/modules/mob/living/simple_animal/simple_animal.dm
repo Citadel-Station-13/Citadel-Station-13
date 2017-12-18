@@ -88,12 +88,8 @@
 
 	//domestication
 	var/tame = 0
-
-<<<<<<< HEAD
 	no_vore = TRUE
-=======
 	var/my_z // I don't want to confuse this with client registered_z 
->>>>>>> d03e4ef... Advanced mob laziness (#33574)
 
 /mob/living/simple_animal/Initialize()
 	. = ..()
