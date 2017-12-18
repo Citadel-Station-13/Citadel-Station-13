@@ -190,7 +190,6 @@
 #include "code\citadel\cit_spawners.dm"
 #include "code\citadel\cit_uniforms.dm"
 #include "code\citadel\cit_vendors.dm"
-#include "code\citadel\cit_weapons.dm"
 #include "code\citadel\dogborgstuff.dm"
 #include "code\citadel\plasmacases.dm"
 #include "code\citadel\crew_objectives\cit_crewobjectives_cargo.dm"
@@ -2449,8 +2448,9 @@
 #include "modular_citadel\cit_screenshake.dm"
 #include "modular_citadel\citadel_ghostrole_spawners.dm"
 #include "modular_citadel\cydonian_armor.dm"
-#include "modular_citadel\hypereutactic_blade.dm"
 #include "modular_citadel\polychromic_clothes.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
+#include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
+#include "modular_citadel\code\modules\crafting\recipes.dm"
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 // END_INCLUDE
