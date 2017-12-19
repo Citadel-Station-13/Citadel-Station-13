@@ -71,8 +71,7 @@
 		..()
 
 /obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
-	reagents.chem_temp += 30
-	reagents.handle_reactions()
+	reagents.expose_temperature(exposed_temperature)
 	..()
 
 /obj/item/reagent_containers/throw_impact(atom/target)
@@ -120,3 +119,6 @@
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
 	reagents.expose_temperature(1000)
 	..()
+	
+/obj/item/reagent_containers/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	reagents.expose_temperature(exposed_temperature) 
