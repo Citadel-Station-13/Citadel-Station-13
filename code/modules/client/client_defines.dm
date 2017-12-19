@@ -68,9 +68,6 @@
 
 	var/datum/chatOutput/chatOutput
 
-<<<<<<< HEAD
-=======
 	var/list/credits //lazy list of all credit object bound to this client
 
 	var/datum/player_details/player_details //these persist between logins/logouts during the same round.
->>>>>>> 3d81385... Roundend report refactor (#33246)
