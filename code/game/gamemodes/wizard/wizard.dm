@@ -64,54 +64,9 @@
 		SSticker.mode_result = "loss - wizard killed"
 		SSticker.news_report = WIZARD_KILLED
 
-<<<<<<< HEAD
-		for(var/datum/mind/wizard in wizards)
-
-			text += "<br><b>[wizard.key]</b> was <b>[wizard.name]</b> ("
-			if(wizard.current)
-				if(wizard.current.stat == DEAD)
-					text += "died"
-				else
-					text += "survived"
-				if(wizard.current.real_name != wizard.name)
-					text += " as <b>[wizard.current.real_name]</b>"
-			else
-				text += "body destroyed"
-			text += ")"
-
-			var/count = 1
-			var/wizardwin = 1
-			for(var/datum/objective/objective in wizard.objectives)
-				if(objective.check_completion())
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "SUCCESS"))
-				else
-					text += "<br><B>Objective #[count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-					SSblackbox.record_feedback("nested tally", "wizard_objective", 1, list("[objective.type]", "FAIL"))
-					if(!(istype(objective, /datum/objective/crew)))
-						wizardwin = 0
-				count++
-
-			if(wizard.current && wizardwin)
-				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
-				SSblackbox.record_feedback("tally", "wizard_success", 1, "SUCCESS")
-			else
-				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
-				SSblackbox.record_feedback("tally", "wizard_success", 1, "FAIL")
-			if(wizard.spell_list.len>0)
-				text += "<br><B>[wizard.name] used the following spells: </B>"
-				var/i = 1
-				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
-					text += "[S.name]"
-					if(wizard.spell_list.len > i)
-						text += ", "
-					i++
-			text += "<br>"
-=======
 /datum/game_mode/wizard/special_report()
 	if(finished)
 		return "<span class='redtext big'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
->>>>>>> 3d81385... Roundend report refactor (#33246)
 
 //returns whether the mob is a wizard (or apprentice)
 /proc/iswizard(mob/living/M)
