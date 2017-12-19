@@ -523,7 +523,7 @@
 
 		if(SSticker.mode.brother_teams.len > 0)
 			dat += "<br><table cellspacing=5><tr><td><B>Brothers</B></td><td></td><td></td></tr>"
-			for(var/datum/objective_team/brother_team/team in SSticker.mode.brother_teams)
+			for(var/datum/team/brother_team/team in SSticker.mode.brother_teams)
 				for(var/datum/mind/brother in team.members)
 					var/mob/M = brother.current
 					if(M)
@@ -610,6 +610,23 @@
 					dat += "<td><A href='?priv_msg=[blob.key]'>PM</A></td></tr>"
 			dat += "</table>"
 
+<<<<<<< HEAD
+=======
+
+		var/list/pirates = get_antagonists(/datum/antagonist/pirate)
+		if(pirates.len > 0)
+			dat += "<br><table cellspacing=5><tr><td><B>Pirates</B></td><td></td></tr>"
+			for(var/datum/mind/N in pirates)
+				var/mob/M = N.current
+				if(!M)
+					dat += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=\ref[N]'>[N.name]([N.key])</a><i>No body.</i></td>"
+					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+			dat += "</table>"
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 		if(istype(SSticker.mode, /datum/game_mode/monkey))
 			var/datum/game_mode/monkey/mode = SSticker.mode

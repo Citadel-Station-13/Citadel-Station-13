@@ -21,6 +21,12 @@
 
 	var/players_per_carrier = 30
 
+<<<<<<< HEAD
+=======
+	var/datum/team/monkey/monkey_team
+
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 /datum/game_mode/monkey/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)

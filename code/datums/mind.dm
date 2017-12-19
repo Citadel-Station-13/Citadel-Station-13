@@ -149,7 +149,7 @@
 		return
 	LAZYADD(antag_datums, A)
 	A.create_team(team)
-	var/datum/objective_team/antag_team = A.get_team()
+	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
 	A.on_gain()
@@ -336,7 +336,16 @@
 		add_servant_of_ratvar(current)
 
 	else if(is_nuclear_operative(creator))
+<<<<<<< HEAD
 		make_Nuke(null, null, 0, FALSE)
+=======
+		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
+		var/datum/antagonist/nukeop/N = new(src)
+		N.send_to_spawnpoint = FALSE
+		N.nukeop_outfit = null
+		add_antag_datum(N,converter.nuke_team)
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 	enslaved_to = creator
 
@@ -773,7 +782,20 @@
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
+<<<<<<< HEAD
 			objective_pos = objectives.Find(objective)
+=======
+
+			for(var/datum/antagonist/A in antag_datums)
+				if(objective in A.objectives)
+					target_antag = A
+					objective_pos = A.objectives.Find(objective)
+					break
+
+			if(!target_antag) //Shouldn't happen
+				stack_trace("objective without antagonist found")
+				objective_pos = objectives.Find(objective)
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 			//Text strings are easy to manipulate. Revised for simplicity.
 			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
@@ -914,6 +936,14 @@
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
+<<<<<<< HEAD
+=======
+
+		for(var/datum/antagonist/A in antag_datums)
+			if(objective in A.objectives)
+				A.objectives -= objective
+				break
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 		objectives -= objective
 		message_admins("[key_name_admin(usr)] removed an objective for [current]: [objective.explanation_text]")
 		log_admin("[key_name(usr)] removed an objective for [current]: [objective.explanation_text]")

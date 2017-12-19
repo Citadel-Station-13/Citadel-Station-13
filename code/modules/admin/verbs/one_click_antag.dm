@@ -246,8 +246,12 @@
 
 		//Let's find the spawn locations
 		var/leader_chosen = FALSE
+<<<<<<< HEAD
 		var/spawnpos = 1 //Decides where they'll spawn. 1=leader.
 
+=======
+		var/datum/team/nuclear/nuke_team
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 		for(var/mob/c in chosen)
 			if(spawnpos > GLOB.nukeop_start.len)
 				spawnpos = 1 //Ran out of spawns. Let's loop back to the first non-leader position
@@ -317,11 +321,20 @@
 			//Assign antag status and the mission
 			SSticker.mode.traitors += Commando.mind
 			Commando.mind.special_role = "deathsquad"
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 			var/datum/objective/missionobj = new
 			missionobj.owner = Commando.mind
 			missionobj.explanation_text = mission
 			missionobj.completed = 1
 			Commando.mind.objectives += missionobj
+<<<<<<< HEAD
+=======
+
+			Commando.mind.add_antag_datum(/datum/antagonist/auto_custom)
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 			//Greet the commando
 			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
@@ -369,11 +382,20 @@
 		//Assign antag status and the mission
 		SSticker.mode.traitors += newmob.mind
 		newmob.mind.special_role = "official"
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 		var/datum/objective/missionobj = new
 		missionobj.owner = newmob.mind
 		missionobj.explanation_text = mission
 		missionobj.completed = 1
 		newmob.mind.objectives += missionobj
+<<<<<<< HEAD
+=======
+
+		newmob.mind.add_antag_datum(/datum/antagonist/auto_custom)
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 		if(CONFIG_GET(flag/enforce_human_authority))
 			newmob.set_species(/datum/species/human)
@@ -474,6 +496,10 @@
 			//Assign antag status and the mission
 			SSticker.mode.traitors += ERTOperative.mind
 			ERTOperative.mind.special_role = "ERT"
+<<<<<<< HEAD
+=======
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 			var/datum/objective/missionobj = new
 			missionobj.owner = ERTOperative.mind
 			missionobj.explanation_text = mission
