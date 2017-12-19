@@ -159,9 +159,9 @@
 /obj/docking_port/stationary
 	name = "dock"
 
-	turf_type = /turf/open/space
-	baseturf_type = /turf/open/space
-	area_type = /area/space
+	turf_type = SHUTTLE_DEFAULT_TURF_TYPE
+	baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
+	area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 
 	var/list/baseturf_cache
 
@@ -203,7 +203,7 @@
 	for(var/i in 1 to assigned_turfs.len)
 		var/turf/T = assigned_turfs[i]
 		if(T.type == turf_type)
-			T.ChangeTurf(/turf/open/space,/turf/open/space)
+			T.ChangeTurf(SHUTTLE_DEFAULT_TURF_TYPE, SHUTTLE_DEFAULT_BASETURF_TYPE)
 			T.flags_1 |= UNUSED_TRANSIT_TURF_1
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
@@ -224,9 +224,9 @@
 	name = "shuttle"
 	icon_state = "pinonclose"
 
-	area_type = /area/shuttle
+	area_type = SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE
 
-	var/list/area/shuttle/shuttle_areas
+	var/list/shuttle_areas
 
 	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
 	var/last_timer_length
@@ -400,7 +400,7 @@
 	var/obj/docking_port/stationary/S0 = get_docked()
 	var/obj/docking_port/stationary/S1 = assigned_transit
 	if(S1)
-		if(dock(S1) != DOCKING_SUCCESS)
+		if(initiate_docking(S1) != DOCKING_SUCCESS)
 			WARNING("shuttle \"[id]\" could not enter transit space. Docked at [S0 ? S0.id : "null"]. Transit dock [S1 ? S1.id : "null"].")
 		else
 			previous = S0
@@ -413,9 +413,9 @@
 	// Not in a fancy way, it just ceases.
 	var/obj/docking_port/stationary/current_dock = get_docked()
 
-	var/turf_type = /turf/open/space
-	var/baseturf_type = /turf/open/space
-	var/underlying_area_type = /area/space
+	var/turf_type = SHUTTLE_DEFAULT_TURF_TYPE
+	var/baseturf_type = SHUTTLE_DEFAULT_BASETURF_TYPE
+	var/underlying_area_type = SHUTTLE_DEFAULT_UNDERLYING_AREA
 	// If the shuttle is docked to a stationary port, restore its normal
 	// "empty" area and turf
 	if(current_dock)
@@ -474,6 +474,7 @@
 	for(var/obj/machinery/door/poddoor/shuttledock/pod in GLOB.airlocks)
 		pod.check()
 
+<<<<<<< HEAD
 //this is the main proc. It instantly moves our mobile port to stationary port new_dock
 /obj/docking_port/mobile/proc/dock(obj/docking_port/stationary/new_dock, movement_direction, force=FALSE)
 	// Crashing this ship with NO SURVIVORS
@@ -665,6 +666,8 @@
 
 	return DOCKING_SUCCESS
 
+=======
+>>>>>>> ca603a6... a new file for dock and its new fractured existence (#33627)
 /obj/docking_port/mobile/proc/findRoundstartDock()
 	return SSshuttle.getDock(roundstart_move)
 
@@ -674,7 +677,7 @@
 /obj/docking_port/mobile/proc/dock_id(id)
 	var/port = SSshuttle.getDock(id)
 	if(port)
-		. = dock(port)
+		. = initiate_docking(port)
 	else
 		. = null
 
@@ -694,9 +697,9 @@
 	// then try again
 	switch(mode)
 		if(SHUTTLE_CALL)
-			var/error = dock(destination, preferred_direction)
+			var/error = initiate_docking(destination, preferred_direction)
 			if(error && error & (DOCKING_NULL_DESTINATION | DOCKING_NULL_SOURCE))
-				var/msg = "A mobile dock in transit exited dock() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
+				var/msg = "A mobile dock in transit exited initiate_docking() with an error. This is most likely a mapping problem: Error: [error],  ([src]) ([previous])"
 				WARNING(msg)
 				message_admins(msg)
 				mode = SHUTTLE_IDLE
@@ -705,7 +708,7 @@
 				setTimer(20)
 				return
 		if(SHUTTLE_RECALL)
-			if(dock(previous) != DOCKING_SUCCESS)
+			if(initiate_docking(previous) != DOCKING_SUCCESS)
 				setTimer(20)
 				return
 		if(SHUTTLE_IGNITING)
@@ -933,10 +936,8 @@
 
 /obj/docking_port/mobile/pod/on_emergency_dock()
 	if(launch_status == ENDGAME_LAUNCHED)
-		dock(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
+		initiate_docking(SSshuttle.getDock("[id]_away")) //Escape pods dock at centcom
 		mode = SHUTTLE_ENDGAME
 
 /obj/docking_port/mobile/emergency/on_emergency_dock()
 	return
-
-#undef DOCKING_PORT_HIGHLIGHT
