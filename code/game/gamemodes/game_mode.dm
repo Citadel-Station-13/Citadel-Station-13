@@ -450,8 +450,6 @@
 /datum/game_mode/proc/OnNukeExplosion(off_station)
 	if(off_station < 2)
 		station_was_nuked = TRUE //Will end the round on next check.
-<<<<<<< HEAD
-=======
 
 //Additional report section in roundend report
 /datum/game_mode/proc/special_report()
@@ -466,4 +464,3 @@
 		SSticker.news_report = STATION_EVACUATED
 		if(SSshuttle.emergency.is_hijacked())
 			SSticker.news_report = SHUTTLE_HIJACK
->>>>>>> 3d81385... Roundend report refactor (#33246)
