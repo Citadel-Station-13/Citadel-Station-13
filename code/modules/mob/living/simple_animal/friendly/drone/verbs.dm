@@ -11,7 +11,7 @@
 
 	to_chat(src, "<b>Drone Laws</b>")
 	to_chat(src, laws)
-	
+
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
 	set name = "Drone ping"

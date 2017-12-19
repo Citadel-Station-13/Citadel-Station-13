@@ -18,7 +18,12 @@
 	announceWhen = rand(15, 30)
 
 /datum/round_event/disease_outbreak/start()
-	if(!virus_type)
+	var/advanced_virus = FALSE
+	max_severity = 3 + max(FLOOR((world.time - control.earliest_start)/6000, 1),0) //3 symptoms at 20 minutes, plus 1 per 10 minutes
+	if(prob(20 + (10 * max_severity)))
+		advanced_virus = TRUE
+
+	if(!virus_type && !advanced_virus)
 		virus_type = pick(/datum/disease/dnaspread, /datum/disease/advance/flu, /datum/disease/advance/cold, /datum/disease/brainrot, /datum/disease/magnitis)
 
 	for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
