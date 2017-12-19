@@ -118,11 +118,5 @@
 	reagents.clear_reagents()
 
 /obj/item/reagent_containers/microwave_act(obj/machinery/microwave/M)
-<<<<<<< HEAD
-	if(is_open_container())
-		reagents.chem_temp = max(reagents.chem_temp, 1000)
-		reagents.handle_reactions()
-=======
 	reagents.expose_temperature(1000)
->>>>>>> 40699a8... [READY]Refactors reagent container types (#33470)
 	..()
