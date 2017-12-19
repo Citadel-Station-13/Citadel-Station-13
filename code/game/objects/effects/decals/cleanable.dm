@@ -46,6 +46,7 @@
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			return
 		else
+			var/hotness = W.is_hot()
 			reagents.expose_temperature(hotness)
 			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
 	else
