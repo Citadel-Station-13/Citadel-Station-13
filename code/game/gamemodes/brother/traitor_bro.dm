@@ -62,41 +62,6 @@
 /datum/game_mode/traitor/bros/generate_report()
 	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
 
-<<<<<<< HEAD
-/datum/game_mode/proc/auto_declare_completion_brother()
-	if(!LAZYLEN(brother_teams))
-		return
-	var/text = "<br><font size=4><b>The blood brothers were:</b></font>"
-	var/teamnumber = 1
-	for(var/datum/objective_team/brother_team/team in brother_teams)
-		if(!team.members.len)
-			continue
-		text += "<br><font size=3><b>Team #[teamnumber++]</b></font>"
-		for(var/datum/mind/M in team.members)
-			text += printplayer(M)
-		var/win = TRUE
-		var/objective_count = 1
-		for(var/datum/objective/objective in team.objectives)
-			if(objective.check_completion())
-				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='green'><B>Success!</B></font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "SUCCESS"))
-			else
-				text += "<br><B>Objective #[objective_count]</B>: [objective.explanation_text] <font color='red'>Fail.</font> [istype(objective, /datum/objective/crew) ? "<font color='grey'>(Optional)</font>" : ""]"
-				SSblackbox.record_feedback("nested tally", "traitor_objective", 1, list("[objective.type]", "FAIL"))
-				if(!(istype(objective, /datum/objective/crew)))
-					win = FALSE
-			objective_count++
-		if(win)
-			text += "<br><font color='green'><B>The blood brothers were successful!</B></font>"
-			SSblackbox.record_feedback("tally", "brother_success", 1, "SUCCESS")
-		else
-			text += "<br><font color='red'><B>The blood brothers have failed!</B></font>"
-			SSblackbox.record_feedback("tally", "brother_success", 1, "FAIL")
-		text += "<br>"
-	to_chat(world, text)
-
-=======
->>>>>>> 3d81385... Roundend report refactor (#33246)
 /datum/game_mode/proc/update_brother_icons_added(datum/mind/brother_mind)
 	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]
 	brotherhud.join_hud(brother_mind.current)
