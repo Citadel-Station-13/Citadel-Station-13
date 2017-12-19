@@ -15,9 +15,7 @@
 /datum/antagonist/clockcult/Destroy()
 	qdel(hierophant_network)
 	return ..()
-
-<<<<<<< HEAD
-=======
+	
 /datum/antagonist/clockcult/get_team()
 	return clock_team
 
@@ -33,8 +31,7 @@
 	if(make_team && !istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	clock_team = new_team
-
->>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
+	
 /datum/antagonist/clockcult/can_be_owned(datum/mind/new_owner)
 	. = ..()
 	if(.)
