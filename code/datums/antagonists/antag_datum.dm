@@ -101,9 +101,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	. = list()
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!specific && istype(A,antag_type) || specific && A.type == antag_type)
-<<<<<<< HEAD
-			. += A.owner
-=======
 			. += A.owner
 
 
@@ -126,4 +123,3 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //This one is created by admin tools for custom objectives
 /datum/antagonist/custom
->>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
