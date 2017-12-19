@@ -70,9 +70,6 @@
 	var/mob/living/carbon/human/H = owner.current
 	var/datum/species/abductor/A = H.dna.species
 	A.scientist = TRUE
-<<<<<<< HEAD
-=======
-
 
 /datum/team/abductor_team
 	member_name = "abductor"
@@ -134,4 +131,3 @@
 
 /datum/antagonist/abductee/remove_innate_effects(mob/living/mob_override)
 	SSticker.mode.update_abductor_icons_removed(mob_override ? mob_override.mind : owner)
->>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
