@@ -284,9 +284,15 @@
 	icon_state = "cshell"
 	projectile_type = /obj/item/projectile/bullet/dart
 
+<<<<<<< HEAD
 /obj/item/ammo_casing/shotgun/dart/New()
 	..()
 	container_type |= OPENCONTAINER_1
+=======
+/obj/item/ammo_casing/shotgun/dart/Initialize()
+	. = ..()
+	container_type |= OPENCONTAINER
+>>>>>>> 40699a8... [READY]Refactors reagent container types (#33470)
 	create_reagents(30)
 	reagents.set_reacting(TRUE)
 
