@@ -24,6 +24,11 @@
 	var/syndies_didnt_escape = 0 //Used for tracking if the syndies got the shuttle off of the z-level
 	var/list/pre_nukeops = list()
 
+<<<<<<< HEAD
+=======
+	var/datum/team/nuclear/nuke_team
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 /datum/game_mode/nuclear/pre_setup()
 	var/n_agents = min(round(num_players() / 10), antag_candidates.len, agents_possible)
 	for(var/i = 0, i < n_agents, ++i)

@@ -95,7 +95,11 @@
 /datum/action/innate/cult/mastervote/Activate()
 	pollCultists(owner)
 
+<<<<<<< HEAD
 /proc/pollCultists(var/mob/living/Nominee) //Cult Master Poll
+=======
+/proc/pollCultists(var/mob/living/Nominee,datum/team/cult/team) //Cult Master Poll
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 	if(world.time < CULT_POLL_WAIT)
 		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
@@ -269,6 +273,12 @@
 	var/turf/T = get_turf(ranged_ability_user)
 	if(!isturf(T))
 		return FALSE
+<<<<<<< HEAD
+=======
+
+	var/datum/antagonist/cult/C = caller.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 	if(target in view(7, get_turf(ranged_ability_user)))
 		GLOB.blood_target = target
 		var/area/A = get_area(target)
@@ -289,8 +299,13 @@
 		return TRUE
 	return FALSE
 
+<<<<<<< HEAD
 /proc/reset_blood_target()
 	for(var/datum/mind/B in SSticker.mode.cult)
+=======
+/proc/reset_blood_target(datum/team/cult/team)
+	for(var/datum/mind/B in team.members)
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 		if(B.current && B.current.stat != DEAD && B.current.client)
 			if(GLOB.blood_target)
 				to_chat(B.current,"<span class='cultlarge'><b>The blood mark has expired!</b></span>")

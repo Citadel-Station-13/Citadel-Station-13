@@ -8,12 +8,22 @@
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && M.mind.has_antag_datum(ANTAG_DATUM_CULT)
 
+<<<<<<< HEAD
 /proc/is_sacrifice_target(datum/mind/mind)
 	if(mind == GLOB.sac_mind)
 		return TRUE
 	return FALSE
 
 /proc/is_convertable_to_cult(mob/living/M)
+=======
+/datum/team/cult/proc/is_sacrifice_target(datum/mind/mind)
+	for(var/datum/objective/sacrifice/sac_objective in objectives)
+		if(mind == sac_objective.target)
+			return TRUE
+	return FALSE
+
+/proc/is_convertable_to_cult(mob/living/M,datum/team/cult/specific_cult)
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
@@ -55,6 +65,11 @@
 
 	var/list/cultists_to_cult = list() //the cultists we'll convert
 
+<<<<<<< HEAD
+=======
+	var/datum/team/cult/main_cult
+
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 /datum/game_mode/cult/pre_setup()
 	cult_objectives += "sacrifice"
@@ -158,10 +173,17 @@
 			B.show_to(mob)
 		return 1
 
+<<<<<<< HEAD
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind, stun) //BASE
 	if (!istype(cult_mind))
 		return 0
 	if(cult_mind.add_antag_datum(ANTAG_DATUM_CULT))
+=======
+	var/datum/antagonist/cult/new_cultist = new(cult_mind)
+	new_cultist.give_equipment = equip
+
+	if(cult_mind.add_antag_datum(new_cultist))
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 		if(stun)
 			cult_mind.current.Unconscious(100)
 		return 1

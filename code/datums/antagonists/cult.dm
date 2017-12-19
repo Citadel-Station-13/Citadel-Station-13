@@ -6,6 +6,36 @@
 	var/datum/action/innate/cult/mastervote/vote = new
 	job_rank = ROLE_CULTIST
 	var/ignore_implant = FALSE
+<<<<<<< HEAD
+=======
+	var/give_equipment = FALSE
+
+	var/datum/team/cult/cult_team
+
+/datum/antagonist/cult/get_team()
+	return cult_team
+
+/datum/antagonist/cult/create_team(datum/team/cult/new_team)
+	if(!new_team)
+		//todo remove this and allow admin buttons to create more than one cult
+		for(var/datum/antagonist/cult/H in GLOB.antagonists)
+			if(H.cult_team)
+				cult_team = H.cult_team
+				return
+		cult_team = new /datum/team/cult
+		cult_team.setup_objectives()
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	cult_team = new_team
+
+/datum/antagonist/cult/proc/add_objectives()
+	objectives |= cult_team.objectives
+	owner.objectives |= objectives
+
+/datum/antagonist/cult/proc/remove_objectives()
+	owner.objectives -= objectives
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 /datum/antagonist/cult/Destroy()
 	QDEL_NULL(communion)
@@ -78,8 +108,51 @@
 	cult_memorization(owner)
 	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("<font color=#960000>Has been converted to the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
+<<<<<<< HEAD
 	if(GLOB.blood_target && GLOB.blood_target_image && current.client)
 		current.client.images += GLOB.blood_target_image
+=======
+
+	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
+		current.client.images += cult_team.blood_target_image
+
+
+/datum/antagonist/cult/proc/equip_cultist(tome=FALSE)
+	var/mob/living/carbon/H = owner.current
+	if(!istype(H))
+		return
+	if (owner.assigned_role == "Clown")
+		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
+		H.dna.remove_mutation(CLOWNMUT)
+
+	if(tome)
+		. += cult_give_item(/obj/item/tome, H)
+	else
+		. += cult_give_item(/obj/item/paper/talisman/supply, H)
+	to_chat(owner, "These will help you start the cult on this station. Use them well, and remember - you are not the only one.</span>")
+
+
+/datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
+	var/list/slots = list(
+		"backpack" = slot_in_backpack,
+		"left pocket" = slot_l_store,
+		"right pocket" = slot_r_store
+	)
+
+	var/T = new item_path(mob)
+	var/item_name = initial(item_path.name)
+	var/where = mob.equip_in_one_of_slots(T, slots)
+	if(!where)
+		to_chat(mob, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
+		return 0
+	else
+		to_chat(mob, "<span class='danger'>You have a [item_name] in your [where].</span>")
+		if(where == "backpack")
+			var/obj/item/storage/B = mob.back
+			B.orient2hud(mob)
+			B.show_to(mob)
+		return 1
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
 
 /datum/antagonist/cult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -162,3 +235,121 @@
 	throwing.Remove(current)
 	current.update_action_buttons_icon()
 	current.remove_status_effect(/datum/status_effect/cult_master)
+<<<<<<< HEAD
+=======
+
+/datum/team/cult
+	name = "Cult"
+
+	var/blood_target
+	var/image/blood_target_image
+	var/blood_target_reset_timer
+
+	var/cult_vote_called = FALSE
+	var/cult_mastered = FALSE
+	var/reckoning_complete = FALSE
+
+
+/datum/team/cult/proc/setup_objectives()
+	//SAC OBJECTIVE , todo: move this to objective internals
+	var/list/target_candidates = list()
+	var/datum/objective/sacrifice/sac_objective = new
+	sac_objective.team = src
+
+	for(var/mob/living/carbon/human/player in GLOB.player_list)
+		if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && !is_convertable_to_cult(player) && player.stat != DEAD)
+			target_candidates += player.mind
+
+	if(target_candidates.len == 0)
+		message_admins("Cult Sacrifice: Could not find unconvertable target, checking for convertable target.")
+		for(var/mob/living/carbon/human/player in GLOB.player_list)
+			if(player.mind && !player.mind.has_antag_datum(ANTAG_DATUM_CULT) && player.stat != DEAD)
+				target_candidates += player.mind
+	listclearnulls(target_candidates)
+	if(LAZYLEN(target_candidates))
+		sac_objective.target = pick(target_candidates)
+		sac_objective.update_explanation_text()
+
+		var/datum/job/sacjob = SSjob.GetJob(sac_objective.target.assigned_role)
+		var/datum/preferences/sacface = sac_objective.target.current.client.prefs
+		var/icon/reshape = get_flat_human_icon(null, sacjob, sacface)
+		reshape.Shift(SOUTH, 4)
+		reshape.Shift(EAST, 1)
+		reshape.Crop(7,4,26,31)
+		reshape.Crop(-5,-3,26,30)
+		sac_objective.sac_image = reshape
+
+		objectives += sac_objective
+	else
+		message_admins("Cult Sacrifice: Could not find unconvertable or convertable target. WELP!")
+
+
+	//SUMMON OBJECTIVE
+
+	var/datum/objective/eldergod/summon_objective = new()
+	summon_objective.team = src
+	objectives += summon_objective
+
+/datum/objective/sacrifice
+	var/sacced = FALSE
+	var/sac_image
+
+/datum/objective/sacrifice/check_completion()
+	return sacced || completed
+
+/datum/objective/sacrifice/update_explanation_text()
+	if(target && !sacced)
+		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
+	else
+		explanation_text = "The veil has already been weakened here, proceed to the final objective."
+
+/datum/objective/eldergod
+	var/summoned = FALSE
+	var/list/summon_spots = list()
+
+/datum/objective/eldergod/New()
+	..()
+	var/sanity = 0
+	while(summon_spots.len < SUMMON_POSSIBILITIES && sanity < 100)
+		var/area/summon = pick(GLOB.sortedAreas - summon_spots)
+		if(summon && (summon.z in GLOB.station_z_levels) && summon.valid_territory)
+			summon_spots += summon
+		sanity++
+	update_explanation_text()
+
+/datum/objective/eldergod/update_explanation_text()
+	explanation_text = "Summon Nar-Sie by invoking the rune 'Summon Nar-Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
+
+/datum/objective/eldergod/check_completion()
+	return summoned || completed
+
+/datum/team/cult/proc/check_cult_victory()
+	for(var/datum/objective/O in objectives)
+		if(!O.check_completion())
+			return FALSE
+	return TRUE
+
+/datum/team/cult/roundend_report()
+	var/list/parts = list()
+
+	if(check_cult_victory())
+		parts += "<span class='greentext big'>The cult has succeeded! Nar-sie has snuffed out another torch in the void!</span>"
+	else
+		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"
+
+	if(objectives.len)
+		parts += "<b>The cultists' objectives were:</b>"
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</span>"
+			else
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+			count++
+
+	if(members.len)
+		parts += "<span class='header'>The cultists were:</span>"
+		parts += printplayerlist(members)
+
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+>>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
