@@ -55,9 +55,6 @@
 
 /datum/antagonist/brother/proc/finalize_brother()
 	SSticker.mode.update_brother_icons_added(owner)
-<<<<<<< HEAD
-=======
-
 
 /datum/team/brother_team
 	name = "brotherhood"
@@ -125,4 +122,3 @@
 			add_objective(new/datum/objective/assassinate, TRUE)
 	else
 		add_objective(new/datum/objective/steal, TRUE)
->>>>>>> ae03d43... Merge pull request #33652 from MoreRobustThanYou/teemwork
