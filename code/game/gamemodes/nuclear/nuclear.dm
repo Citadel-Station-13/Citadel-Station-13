@@ -171,88 +171,6 @@
 			return FALSE	//its a static var btw
 	..()
 
-<<<<<<< HEAD
-/datum/game_mode/nuclear/declare_completion()
-	var/disk_rescued = 1
-	for(var/obj/item/disk/nuclear/D in GLOB.poi_list)
-		if(!D.onCentCom())
-			disk_rescued = 0
-			break
-	var/crew_evacuated = (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)
-
-	if(nuke_off_station == NUKE_SYNDICATE_BASE)
-		SSticker.mode_result = "loss - syndicate nuked - disk secured"
-		to_chat(world, "<FONT size = 3><B>Humiliating Syndicate Defeat</B></FONT>")
-		to_chat(world, "<B>The crew of [station_name()] gave [syndicate_name()] operatives back their bomb! The syndicate base was destroyed!</B> Next time, don't lose the nuke!")
-
-		SSticker.news_report = NUKE_SYNDICATE_BASE
-
-	else if(!disk_rescued &&  station_was_nuked && !syndies_didnt_escape)
-		SSticker.mode_result = "win - syndicate nuke"
-		to_chat(world, "<FONT size = 3><B>Syndicate Major Victory!</B></FONT>")
-		to_chat(world, "<B>[syndicate_name()] operatives have destroyed [station_name()]!</B>")
-
-		SSticker.news_report = STATION_NUKED
-
-	else if (!disk_rescued &&  station_was_nuked && syndies_didnt_escape)
-		SSticker.mode_result = "halfwin - syndicate nuke - did not evacuate in time"
-		to_chat(world, "<FONT size = 3><B>Total Annihilation</B></FONT>")
-		to_chat(world, "<B>[syndicate_name()] operatives destroyed [station_name()] but did not leave the area in time and got caught in the explosion.</B> Next time, don't lose the disk!")
-
-		SSticker.news_report = STATION_NUKED
-
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && !syndies_didnt_escape)
-		SSticker.mode_result = "halfwin - blew wrong station"
-		to_chat(world, "<FONT size = 3><B>Crew Minor Victory</B></FONT>")
-		to_chat(world, "<B>[syndicate_name()] operatives secured the authentication disk but blew up something that wasn't [station_name()].</B> Next time, don't do that!")
-
-		SSticker.news_report = NUKE_MISS
-
-	else if (!disk_rescued && !station_was_nuked && nuke_off_station && syndies_didnt_escape)
-		SSticker.mode_result = "halfwin - blew wrong station - did not evacuate in time"
-		to_chat(world, "<FONT size = 3><B>[syndicate_name()] operatives have earned Darwin Award!</B></FONT>")
-		to_chat(world, "<B>[syndicate_name()] operatives blew up something that wasn't [station_name()] and got caught in the explosion.</B> Next time, don't do that!")
-
-		SSticker.news_report = NUKE_MISS
-
-	else if ((disk_rescued || SSshuttle.emergency.mode != SHUTTLE_ENDGAME) && are_operatives_dead())
-		SSticker.mode_result = "loss - evacuation - disk secured - syndi team dead"
-		to_chat(world, "<FONT size = 3><B>Crew Major Victory!</B></FONT>")
-		to_chat(world, "<B>The Research Staff has saved the disk and killed the [syndicate_name()] Operatives</B>")
-
-		SSticker.news_report = OPERATIVES_KILLED
-
-	else if (disk_rescued)
-		SSticker.mode_result = "loss - evacuation - disk secured"
-		to_chat(world, "<FONT size = 3><B>Crew Major Victory</B></FONT>")
-		to_chat(world, "<B>The Research Staff has saved the disk and stopped the [syndicate_name()] Operatives!</B>")
-
-		SSticker.news_report = OPERATIVES_KILLED
-
-	else if (!disk_rescued && are_operatives_dead())
-		SSticker.mode_result = "halfwin - evacuation - disk not secured"
-		to_chat(world, "<FONT size = 3><B>Neutral Victory!</B></FONT>")
-		to_chat(world, "<B>The Research Staff failed to secure the authentication disk but did manage to kill most of the [syndicate_name()] Operatives!</B>")
-
-		SSticker.news_report = OPERATIVE_SKIRMISH
-
-	else if (!disk_rescued &&  crew_evacuated)
-		SSticker.mode_result = "halfwin - detonation averted"
-		to_chat(world, "<FONT size = 3><B>Syndicate Minor Victory!</B></FONT>")
-		to_chat(world, "<B>[syndicate_name()] operatives survived the assault but did not achieve the destruction of [station_name()].</B> Next time, don't lose the disk!")
-
-		SSticker.news_report = OPERATIVE_SKIRMISH
-
-	else if (!disk_rescued && !crew_evacuated)
-		SSticker.mode_result = "halfwin - interrupted"
-		to_chat(world, "<FONT size = 3><B>Neutral Victory</B></FONT>")
-		to_chat(world, "<B>Round was mysteriously interrupted!</B>")
-
-		SSticker.news_report = OPERATIVE_SKIRMISH
-
-	..()
-	return
-=======
 /datum/game_mode/nuclear/set_round_result()
 	var result = nuke_team.get_result()
 	switch(result)
@@ -287,57 +205,12 @@
 			SSticker.mode_result = "halfwin - interrupted"
 			SSticker.news_report = OPERATIVE_SKIRMISH
 	return ..()
->>>>>>> 3d81385... Roundend report refactor (#33246)
 
 /datum/game_mode/nuclear/generate_report()
 	return "One of Central Command's trading routes was recently disrupted by a raid carried out by the Gorlex Marauders. They seemed to only be after one ship - a highly-sensitive \
 			transport containing a nuclear fission explosive, although it is useless without the proper code and authorization disk. While the code was likely found in minutes, the only disk that \
 			can activate this explosive is on your station. Ensure that it is protected at all times, and remain alert for possible intruders."
 
-<<<<<<< HEAD
-/datum/game_mode/proc/auto_declare_completion_nuclear()
-	if( syndicates.len || (SSticker && istype(SSticker.mode, /datum/game_mode/nuclear)) )
-		var/text = "<br><FONT size=3><B>The syndicate operatives were:</B></FONT>"
-		var/purchases = ""
-		var/TC_uses = 0
-		for(var/datum/mind/syndicate in syndicates)
-			text += printplayer(syndicate)
-			for(var/datum/component/uplink/H in GLOB.uplinks)
-				if(H.purchase_log)
-					purchases += H.purchase_log.generate_render()
-				else
-					stack_trace("WARNING: Uplink with no purchase_log in nuclear mode! Owner: [H.owner]")
-		text += "<br>"
-		text += "(Syndicates used [TC_uses] TC) [purchases]"
-		if(TC_uses == 0 && station_was_nuked && !are_operatives_dead())
-			text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
-		to_chat(world, text)
-	return TRUE
-
-
-/proc/nukelastname(mob/M) //--All praise goes to NEO|Phyte, all blame goes to DH, and it was Cindi-Kate's idea. Also praise Urist for copypasta ho.
-	var/randomname = pick(GLOB.last_names)
-	var/newname = copytext(sanitize(input(M,"You are the nuke operative [pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")]. Please choose a last name for your family.", "Name change",randomname)),1,MAX_NAME_LEN)
-
-	if (!newname)
-		newname = randomname
-
-	else
-		if (newname == "Unknown" || newname == "floor" || newname == "wall" || newname == "rwall" || newname == "_")
-			to_chat(M, "That name is reserved.")
-			return nukelastname(M)
-
-	return capitalize(newname)
-
-/proc/NukeNameAssign(lastname,list/syndicates)
-	for(var/datum/mind/synd_mind in syndicates)
-		var/mob/living/carbon/human/H = synd_mind.current
-		synd_mind.name = H.dna.species.random_name(H.gender,0,lastname)
-		synd_mind.current.real_name = synd_mind.name
-	return
-
-=======
->>>>>>> 3d81385... Roundend report refactor (#33246)
 /proc/is_nuclear_operative(mob/M)
 	return M && istype(M) && M.mind && SSticker && SSticker.mode && M.mind in SSticker.mode.syndicates
 
