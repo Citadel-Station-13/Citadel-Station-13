@@ -1077,10 +1077,10 @@
 			if("nuclear")
 				if(!has_antag_datum(/datum/antagonist/nukeop,TRUE))
 					add_antag_datum(/datum/antagonist/nukeop)
- 					special_role = "Syndicate"
- 					assigned_role = "Syndicate"
- 					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
- 					log_admin("[key_name(usr)] has nuke op'ed [current].")
+					special_role = "Syndicate"
+					assigned_role = "Syndicate"
+					message_admins("[key_name_admin(usr)] has nuke op'ed [current].")
+					log_admin("[key_name(usr)] has nuke op'ed [current].")
 			if("lair")
 				current.forceMove(pick(GLOB.nukeop_start))
 			if("tellcode")
