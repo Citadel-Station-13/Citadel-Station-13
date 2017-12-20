@@ -17,9 +17,9 @@
 	name = "Kiara's Cloak"
 	desc = "The design on this seems a little too familiar."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "infcloak-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "infcloak-w"
+	icon_state = "infcloak"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "infcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -27,9 +27,9 @@
 	name = "Kiara's Collar"
 	desc = "A soft black collar that seems to stretch to fit whoever wears it."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "infcollar-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "infcollar-w"
+	icon_state = "infcollar"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "infcollar"
 	item_color = null
 	tagname = null
 
@@ -62,19 +62,19 @@
 /obj/item/clothing/neck/scarf/zomb //Default white color, same functionality as beanies.
 	name = "A special scarf"
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "zombscarf-i"
+	icon_state = "zombscarf"
 	desc = "A fashionable collar"
-	icon_override = 'icons/obj/custom.dmi'
-	item_color = "zombscarf-w"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_color = "zombscarf"
 	dog_fashion = /datum/dog_fashion/head
 
 /obj/item/clothing/suit/toggle/labcoat/mad/red
 	name = "\improper The Mad's labcoat"
 	desc = "An oddly special looking coat."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "labred-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "labred-w"
+	icon_state = "labred"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "labred"
 
 
 /*PLACEHOLDER*/
@@ -94,9 +94,9 @@
 	name = "carrot cloak"
 	desc = "A cloak in the shape and color of a carrot!"
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/obj/custom.dmi'
-	icon_state = "carrotcloak-i"
-	item_state = "carrotcloak-w"
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "carrotcloak"
+	item_state = "carrotcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -115,9 +115,9 @@
 	name = "Celebratory Cloak of Morozko"
 	desc = " It probably will protect from snow, charcoal or elves."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "festive-i"
-	item_state = "festive-w"
-	icon_override = 'icons/obj/custom.dmi'
+	icon_state = "festive"
+	item_state = "festive"
+	icon_override = 'icons/mob/custom_w.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 
@@ -127,9 +127,9 @@
 /obj/item/clothing/mask/luchador/zigfie
 	name = "Alboroto Rosa mask"
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "lucharzigfie-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "lucharzigfie-w"
+	icon_state = "lucharzigfie"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "lucharzigfie"
 
 
 /*PLACEHOLDER*/
@@ -168,9 +168,9 @@
 	name = "Reece's Great Coat"
 	desc = "You would swear this was in your nightmares after eating too many veggies."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "hos-g-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "hos-g-w"
+	icon_state = "hos-g"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "hos-g"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 
@@ -186,9 +186,9 @@
 	name = "S.T.A.L.K.E.R. mask"
 	desc = "Smells like reactor four."
 	icon = 'icons/obj/custom.dmi'
-	item_state = "stalker-w"
-	icon_override = 'icons/obj/custom.dmi'
-	icon_state = "stalker-i"
+	item_state = "stalker"
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "stalker"
 
 
 /*Sylas*/
@@ -196,9 +196,9 @@
 	name = "collar"
 	desc = "It's a collar..."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "petcollar-stripe-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "petcollar-stripe-w"
+	icon_state = "petcollar-stripe"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "petcollar-stripe"
 	tagname = null
 
 
@@ -207,10 +207,10 @@
 	name = "bluish performer's outfit"
 	desc = "Just looking at this makes you want to sing."
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "singer-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "singer-w"
-	item_color = "singer-i"
+	icon_state = "singer"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "singer"
+	item_color = "singer"
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = ABOVE_SHOES_LAYER
 	can_adjust = 0
@@ -218,9 +218,9 @@
 
 /obj/item/clothing/shoes/sneakers/pink
 	icon = 'icons/obj/custom.dmi'
-	icon_state = "pink-i"
-	icon_override = 'icons/obj/custom.dmi'
-	item_state = "pink-w"
+	icon_state = "pink"
+	icon_override = 'icons/mob/custom_w.dmi'
+	item_state = "pink"
 
 
 /*Fractious*/
@@ -228,8 +228,8 @@
 /obj/item/clothing/suit/vermillion
 	name = "vermillion clothing"
 	desc = "Some clothing."
-	icon_state = "vermillion-i"
-	item_state = "vermillion-w"
+	icon_state = "vermillion"
+	item_state = "vermillion"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	icon = 'icons/obj/custom.dmi'
-	icon_override = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'

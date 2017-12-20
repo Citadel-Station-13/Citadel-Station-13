@@ -2,12 +2,15 @@
 	set invisibility = 0
 	set background = BACKGROUND_ENABLED
 
-	if (notransform)
+	if(notransform)
 		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
+
+	if(stat != DEAD) //Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
 	if(..()) //not dead
 		handle_blood()
@@ -23,10 +26,6 @@
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
-
-	if(stat != DEAD)
-		handle_liver()
-
 
 	if(stat != DEAD)
 		return 1
@@ -54,6 +53,7 @@
 		return
 	if(ismob(loc))
 		return
+
 	var/datum/gas_mixture/environment
 	if(loc)
 		environment = loc.return_air()
@@ -66,7 +66,6 @@
 
 		else if(health <= HEALTH_THRESHOLD_CRIT)
 			losebreath += 0.25 //You're having trouble breathing in soft crit, so you'll miss a breath one in four times
-
 
 	//Suffocate
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
@@ -121,6 +120,7 @@
 		if(reagents.has_reagent("epinephrine") && lungs)
 			return
 		adjustOxyLoss(1)
+
 		failed_last_breath = 1
 		throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
 		return 0
@@ -182,7 +182,7 @@
 	//TOXINS/PLASMA
 	if(Toxins_partialpressure > safe_tox_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_tox_max) * 10
-		adjustToxLoss(Clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
+		adjustToxLoss(CLAMP(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 	else
 		clear_alert("too_much_tox")
@@ -243,6 +243,11 @@
 
 /mob/living/carbon/proc/handle_blood()
 	return
+
+/mob/living/carbon/proc/handle_organs()
+	for(var/V in internal_organs)
+		var/obj/item/organ/O = V
+		O.on_life()
 
 /mob/living/carbon/handle_diseases()
 	for(var/thing in viruses)

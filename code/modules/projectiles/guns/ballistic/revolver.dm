@@ -3,7 +3,6 @@
 	desc = "A suspicious revolver. Uses .357 ammo." //usually used by syndicates
 	icon_state = "revolver"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder
-	origin_tech = "combat=3;materials=2"
 	casing_ejector = FALSE
 
 /obj/item/gun/ballistic/revolver/Initialize()
@@ -40,13 +39,13 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		if(CB)
-			CB.loc = get_turf(src.loc)
+			CB.forceMove(drop_location())
 			CB.SpinAnimation(10, 1)
 			CB.update_icon()
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, CB, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
 			num_unloaded++
 	if (num_unloaded)
 		to_chat(user, "<span class='notice'>You unload [num_unloaded] shell\s from [src].</span>")
-		playsound(user, 'sound/weapons/bulletremove.ogg', 60, 1)
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
@@ -158,8 +157,8 @@
 	name = "nagant revolver"
 	desc = "An old model of revolver that originated in Russia. Able to be suppressed. Uses 7.62x38mmR ammo."
 	icon_state = "nagant"
-	origin_tech = "combat=3"
 	can_suppress = TRUE
+
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rev762
 
 
@@ -169,7 +168,6 @@
 /obj/item/gun/ballistic/revolver/russian
 	name = "\improper russian revolver"
 	desc = "A Russian-made revolver for drinking games. Uses .357 ammo, and has a mechanism requiring you to spin the chamber before each trigger pull."
-	origin_tech = "combat=2;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = FALSE
 
@@ -231,7 +229,7 @@
 				return
 
 		user.visible_message("<span class='danger'>*click*</span>")
-		playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+		playsound(src, "gun_dry_fire", 60, 1)
 
 /obj/item/gun/ballistic/revolver/russian/proc/shoot_self(mob/living/carbon/human/user, affecting = "head")
 	user.apply_damage(300, BRUTE, affecting)
@@ -291,7 +289,7 @@
 		var/obj/item/ammo_casing/CB
 		CB = magazine.get_round(0)
 		chambered = null
-		CB.loc = get_turf(src.loc)
+		CB.forceMove(drop_location())
 		CB.update_icon()
 		num_unloaded++
 	if (num_unloaded)

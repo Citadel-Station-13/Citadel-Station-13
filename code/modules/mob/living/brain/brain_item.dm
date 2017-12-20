@@ -8,7 +8,6 @@
 	zone = "head"
 	slot = ORGAN_SLOT_BRAIN
 	vital = TRUE
-	origin_tech = "biotech=5"
 	attack_verb = list("attacked", "slapped", "whacked")
 	var/mob/living/brain/brainmob = null
 	var/damaged_brain = FALSE //whether the brain organ is damaged.
@@ -28,7 +27,7 @@
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer)	//congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (C.status_flags & FAKEDEATH)))
 			to_chat(brainmob, "<span class = danger>You can't feel your body! You're still just a brain!</span>")
-		loc = C
+		forceMove(C)
 		C.update_hair()
 		return
 
@@ -155,7 +154,7 @@
 	var/adjusted_amount
 	if(amount >= 0 && maximum)
 		var/brainloss = get_brain_damage()
-		var/new_brainloss = Clamp(brainloss + amount, 0, maximum)
+		var/new_brainloss = CLAMP(brainloss + amount, 0, maximum)
 		if(brainloss > new_brainloss) //brainloss is over the cap already
 			return 0
 		adjusted_amount = new_brainloss - brainloss
@@ -180,7 +179,6 @@
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
 	icon_state = "brain-x"
-	origin_tech = "biotech=6"
 
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////

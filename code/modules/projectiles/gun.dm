@@ -15,9 +15,8 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
-	origin_tech = "combat=1"
-	needs_permit = 1
-	unique_rename = 0
+	needs_permit = TRUE
+	unique_rename = FALSE
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
@@ -78,9 +77,8 @@
 	..()
 	var/obj/item/gun/G = locate(/obj/item/gun) in contents
 	if(G)
-		G.loc = loc
-		qdel(G.pin)
-		G.pin = null
+		G.forceMove(loc)
+		QDEL_NULL(G.pin)
 		visible_message("[G] can now fit a new pin, but the old one was destroyed in the process.", null, null, 3)
 		qdel(src)
 
@@ -109,7 +107,7 @@
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	to_chat(user, "<span class='danger'>*click*</span>")
-	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
+	playsound(src, "gun_dry_fire", 60, 1)
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)

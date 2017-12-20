@@ -1,7 +1,6 @@
 /obj/item/integrated_circuit/reagent
 	category_text = "Reagent"
 	resistance_flags = UNACIDABLE | FIRE_PROOF
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/volume = 0
 
 /obj/item/integrated_circuit/reagent/Initialize()
@@ -33,7 +32,6 @@
 		"on smoked" = IC_PINTYPE_PULSE_OUT
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_BIO = 3)
 	power_draw_per_use = 20
 	var/smoke_radius = 5
 	var/notified = FALSE
@@ -113,7 +111,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, volume)
+		new_amount = CLAMP(new_amount, 0, volume)
 		transfer_amount = new_amount
 
 // Hydroponics trays have no reagents holder and handle reagents in their own snowflakey way.
@@ -186,7 +184,7 @@
 			activate_pin(3)
 			return
 
-		var/tramount = Clamp(transfer_amount, 0, reagents.total_volume)
+		var/tramount = CLAMP(transfer_amount, 0, reagents.total_volume)
 
 		if(isliving(AM))
 			var/mob/living/L = AM
@@ -225,7 +223,6 @@
 	outputs = list()
 	activators = list("transfer reagents" = IC_PINTYPE_PULSE_IN, "on transfer" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
 	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10
@@ -238,7 +235,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/pump/do_work()
@@ -290,8 +287,6 @@
 		)
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
-
 
 /obj/item/integrated_circuit/reagent/storage/interact(mob/user)
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
@@ -310,7 +305,6 @@
 
 	complexity = 8
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 4, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/cryo/Initialize()
 	. = ..()
@@ -326,7 +320,6 @@
 
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 3, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
@@ -344,7 +337,6 @@
 		"scan" = IC_PINTYPE_PULSE_IN
 		)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_MATERIALS = 3, TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 
 /obj/item/integrated_circuit/reagent/storage/scan/do_work()
 	var/cont[0]
@@ -379,7 +371,6 @@
 		"on transfer" = IC_PINTYPE_PULSE_OUT
 		)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 2, TECH_DATA = 2, TECH_BIO = 2)
 	var/transfer_amount = 10
 	var/direction_mode = SYRINGE_INJECT
 	power_draw_per_use = 10
@@ -392,7 +383,7 @@
 	else
 		direction_mode = SYRINGE_INJECT
 	if(isnum(new_amount))
-		new_amount = Clamp(new_amount, 0, 50)
+		new_amount = CLAMP(new_amount, 0, 50)
 		transfer_amount = new_amount
 
 /obj/item/integrated_circuit/reagent/filter/do_work()
