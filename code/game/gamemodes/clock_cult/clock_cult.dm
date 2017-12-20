@@ -112,8 +112,8 @@ Credit where due:
 	var/servants_to_serve = list()
 	var/roundstart_player_count
 	var/ark_time //In minutes, how long the Ark waits before activation; this is equal to 30 + (number of players / 5) (max 40 mins.)
-	
-	var/datum/objective_team/clockcult/main_clockcult
+
+	var/datum/team/clockcult/main_clockcult
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
@@ -189,10 +189,9 @@ Credit where due:
 	return FALSE
 
 /datum/game_mode/clockwork_cult/check_finished()
-	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
+	if(GLOB.ark_of_the_clockwork_justiciar && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
 		return FALSE
-	. = ..()
+	return ..()
 
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	return main_clockcult.check_clockwork_victory()

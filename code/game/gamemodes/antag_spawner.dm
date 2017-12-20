@@ -73,7 +73,7 @@
 	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
-	
+
 	var/datum/antagonist/wizard/apprentice/app = new(app_mind)
 	app.master = user
 	app.school = kind
@@ -165,7 +165,7 @@
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(!creator_op)
 		return
-	
+
 	switch(borg_to_spawn)
 		if("Medical")
 			R = new /mob/living/silicon/robot/modules/syndicate/medical(T)
@@ -187,7 +187,7 @@
 	R.real_name = R.name
 
 	R.key = C.key
-	
+
 	var/datum/antagonist/nukeop/new_borg = new(R.mind)
 	new_borg.send_to_spawnpoint = FALSE
 	R.mind.add_antag_datum(new_borg,creator_op.nuke_team)

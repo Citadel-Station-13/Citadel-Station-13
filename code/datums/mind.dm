@@ -149,7 +149,7 @@
 		return
 	LAZYADD(antag_datums, A)
 	A.create_team(team)
-	var/datum/objective_team/antag_team = A.get_team()
+	var/datum/team/antag_team = A.get_team()
 	if(antag_team)
 		antag_team.add_member(src)
 	A.on_gain()
@@ -206,7 +206,7 @@
 	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(nuke)
 		remove_antag_datum(nuke.type)
-special_role = null
+		special_role = null
 
 /datum/mind/proc/remove_wizard()
 	remove_antag_datum(/datum/antagonist/wizard)
@@ -333,7 +333,7 @@ special_role = null
 		N.send_to_spawnpoint = FALSE
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
-		
+
 
 	enslaved_to = creator
 
@@ -775,13 +775,13 @@ special_role = null
 			objective = locate(href_list["obj_edit"])
 			if (!objective)
 				return
-			
+
 			for(var/datum/antagonist/A in antag_datums)
 				if(objective in A.objectives)
 					target_antag = A
 					objective_pos = A.objectives.Find(objective)
 					break
-			
+
 			if(!target_antag) //Shouldn't happen
 				stack_trace("objective without antagonist found")
 				objective_pos = objectives.Find(objective)
@@ -943,7 +943,7 @@ special_role = null
 		var/datum/objective/objective = locate(href_list["obj_delete"])
 		if(!istype(objective))
 			return
-		
+
 		for(var/datum/antagonist/A in antag_datums)
 			if(objective in A.objectives)
 				A.objectives -= objective
