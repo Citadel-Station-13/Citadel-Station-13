@@ -527,7 +527,8 @@
 /datum/game_mode/proc/generate_report() //Generates a small text blurb for the gamemode in centcom report
 	return "Gamemode report for [name] not set.  Contact a coder."
 
- /datum/game_mode/proc/OnNukeExplosion(off_station)
+//By default nuke just ends the round
+/datum/game_mode/proc/OnNukeExplosion(off_station)
 	nuke_off_station = off_station
- 	if(off_station < 2).
-		station_was_nuked = TRUE //Will end the round on next check. 
+	if(off_station < 2)
+station_was_nuked = TRUE //Will end the round on next check.
