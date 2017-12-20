@@ -26,8 +26,9 @@
 	aSignal = new(src)
 	aSignal.name = "[name] core"
 	aSignal.code = rand(1,100)
-	aSignal.frequency = rand(MIN_FREE_FREQ, MAX_FREE_FREQ)
-	if(ISMULTIPLE(aSignal.frequency, 2))//signaller frequencies are always uneven!
+
+	aSignal.frequency = rand(1200, 1599)
+	if(IsMultiple(aSignal.frequency, 2))//signaller frequencies are always uneven!
 		aSignal.frequency++
 
 	if(new_lifespan)

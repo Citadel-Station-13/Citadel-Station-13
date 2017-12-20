@@ -47,9 +47,7 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	var/res = IrcPm(target, all_params.Join(" "), sender)
-	if(res != "Message Successful")
-		return res
+	return IrcPm(target, all_params.Join(" "), sender)
 
 /datum/server_tools_command/namecheck
 	name = "namecheck"

@@ -62,14 +62,14 @@
 /mob/living/proc/adjustArousalLoss(amount, updating_arousal=1)
 	if(status_flags & GODMODE || !canbearoused)
 		return 0
-	arousalloss = CLAMP(arousalloss + amount, min_arousal, max_arousal)
+	arousalloss = Clamp(arousalloss + amount, min_arousal, max_arousal)
 	if(updating_arousal)
 		updatearousal()
 
 /mob/living/proc/setArousalLoss(amount, updating_arousal=1)
 	if(status_flags & GODMODE || !canbearoused)
 		return 0
-	arousalloss = CLAMP(amount, min_arousal, max_arousal)
+	arousalloss = Clamp(amount, min_arousal, max_arousal)
 	if(updating_arousal)
 		updatearousal()
 

@@ -1,5 +1,3 @@
-#define REAGENTS_BASE_VOLUME 100 // actual volume is REAGENTS_BASE_VOLUME plus REAGENTS_BASE_VOLUME * rating for each matterbin
-
 /obj/machinery/smoke_machine
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
@@ -13,13 +11,14 @@
 	var/cooldown = 0
 	var/screen = "home"
 	var/useramount = 30 // Last used amount
-	var/setting = 1 // displayed range is 3 * setting
-	var/max_range = 3 // displayed max range is 3 * max range
+	var/volume = 300
+	var/setting = 3
+	var/list/possible_settings = list(3,6,9)
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc)
-	amount = setting * 3
+/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting = 3, efficiency = 10, loc)
+	amount = setting
 	carry.copy_to(chemholder, 20)
-	carry.remove_any(amount * 16 / efficiency)
+	carry.remove_any(setting * 16 / efficiency)
 	location = loc
 
 /datum/effect_system/smoke_spread/chem/smoke_machine
@@ -29,11 +28,10 @@
 	opaque = FALSE
 	alpha = 100
 
+
 /obj/machinery/smoke_machine/Initialize()
 	. = ..()
-	create_reagents(REAGENTS_BASE_VOLUME)
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
+	create_reagents(volume)
 
 /obj/machinery/smoke_machine/update_icon()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
@@ -43,20 +41,13 @@
 	. = ..()
 
 /obj/machinery/smoke_machine/RefreshParts()
-	var/new_volume = REAGENTS_BASE_VOLUME
+	efficiency = 6
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		new_volume += REAGENTS_BASE_VOLUME * B.rating
-	reagents.maximum_volume = new_volume
-	if(new_volume < reagents.total_volume)
-		reagents.reaction(loc, TOUCH) // if someone manages to downgrade it without deconstructing
-		reagents.clear_reagents()
-	efficiency = 9
+		efficiency += B.rating
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
 		efficiency += C.rating
-	max_range = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		max_range += M.rating
-	max_range = max(3, max_range)
+		efficiency += M.rating
 
 /obj/machinery/smoke_machine/process()
 	..()
@@ -87,11 +78,6 @@
 		return
 	return ..()
 
-/obj/machinery/smoke_machine/deconstruct()
-	reagents.reaction(loc, TOUCH)
-	reagents.clear_reagents()
-	return ..()
-
 /obj/machinery/smoke_machine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -113,7 +99,6 @@
 	data["active"] = on
 	data["setting"] = setting
 	data["screen"] = screen
-	data["maxSetting"] = max_range
 	return data
 
 /obj/machinery/smoke_machine/ui_act(action, params)
@@ -125,7 +110,7 @@
 			. = TRUE
 		if("setting")
 			var/amount = text2num(params["amount"])
-			if(amount in 1 to max_range)
+			if (locate(amount) in possible_settings)
 				setting = amount
 				. = TRUE
 		if("power")
@@ -137,5 +122,3 @@
 		if("goScreen")
 			screen = params["screen"]
 			. = TRUE
-
-#undef REAGENTS_BASE_VOLUME

@@ -720,43 +720,41 @@
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
-	var/list/dat = list()
+	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
 	var/count = 0
 
-	if(!SSjob.initialized)
-		alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
+	if(!SSticker.HasRoundStarted())
+		alert(usr, "You cannot manage jobs before the round starts!")
 		return
 
-	dat += "<table>"
-
-	for(var/j in SSjob.occupations)
-		var/datum/job/job = j
+	for(var/datum/job/job in SSjob.occupations)
 		count++
 		var/J_title = html_encode(job.title)
 		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 		var/J_totPos = html_encode(job.total_positions)
-		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
+		if(job.total_positions < 0)
+			dat += "[J_title]: [J_opPos]   (unlimited)"
+		else
+			dat += "[J_title]: [J_opPos]/[J_totPos]"
 
 		if(job.title == "AI" || job.title == "Cyborg")
-			dat += " (Cannot Late Join)</td>"
+			dat += "   (Cannot Late Join)<br>"
 			continue
-		else
-			dat += "</td>"
-		dat += "<td>"
 		if(job.total_positions >= 0)
-			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A> | "
+			dat += "   <A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A>  |  "
 			if(job.total_positions > job.current_positions)
-				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
+				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A>  |  "
 			else
-				dat += "Remove | "
-			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A></td>"
+				dat += "Remove  |  "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A>"
 		else
-			dat += "<A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A></td>"
+			dat += "   <A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A>"
+		dat += "<br>"
 
-	browser.height = min(100 + count * 20, 650)
-	browser.set_content(dat.Join())
-	browser.open()
+	dat += "</body>"
+	var/winheight = 100 + (count * 20)
+	winheight = min(winheight, 690)
+	usr << browse(dat, "window=players;size=375x[winheight]")
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"
