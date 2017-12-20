@@ -192,41 +192,33 @@
 		spans = M.get_spans()
 	if(!language)
 		language = M.get_default_language()
-	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans, language)
+	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/device/radio/proc/talk_into_impl(atom/movable/M, message, channel, list/spans, datum/language/language)
 	if(!on)
 		return // the device has to be on
-	//  Fix for permacell radios, but kinda eh about actually fixing them.
 	if(!M || !message)
 		return
-
-	if(wires.is_cut(WIRE_TX))
+	if(wires.is_cut(WIRE_TX))  // Permacell and otherwise tampered-with radios
 		return
-
 	if(!M.IsVocal())
 		return
 
 	if(use_command)
 		spans |= SPAN_COMMAND
 
-	/* Quick introduction:
-		This new radio system uses a very robust FTL signaling technology unoriginally
-		dubbed "subspace" which is somewhat similar to 'blue-space' but can't
-		actually transmit large mass. Headsets are the only radio devices capable
-		of sending subspace transmissions to the Communications Satellite.
-
-		A headset sends a signal to a subspace listener/reciever elsewhere in space,
-		the signal gets processed and logged, and an audible transmission gets sent
-		to each individual headset.
-	*/
-
 	/*
-		be prepared to disregard any comments in all of tcomms code. i tried my best to keep them somewhat up-to-date, but eh
+	Roughly speaking, radios attempt to make a subspace transmittion (which
+	is received, processed, and rebroadcast by the telecomms satellite) and
+	if that fails, they send a mundane radio transmission.
+
+	Headsets cannot send/receive mundane transmissions, only subspace.
+	Syndicate radios can hear transmissions on all well-known frequencies.
+	CentCom radios can hear the CentCom frequency no matter what.
 	*/
 
-		//get the frequency you buttface. radios no longer use the SSradio. confusing for future generations, convenient for me.
+	// From the channel, determine the frequency and get a reference to it.
 	var/freq
 	if(channel && channels && channels.len > 0)
 		if(channel == "department")
@@ -238,66 +230,20 @@
 		freq = frequency
 		channel = null
 
-	var/freqnum = text2num(freq) //Why should we call text2num three times when we can just do it here?
+	// Nearby active jammers severely gibberish the message
 	var/turf/position = get_turf(src)
-
-	var/jammed = FALSE
 	for(var/obj/item/device/jammer/jammer in GLOB.active_jammers)
 		if(get_dist(position,get_turf(jammer)) < jammer.range)
-			jammed = TRUE
+			message = Gibberish(message,100)
 			break
 
-	//#### Tagging the signal with all appropriate identity values ####//
+	// Determine the identity information which will be attached to the signal.
+	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
 
-	// ||-- The mob's name identity --||
-	var/real_name = M.name // mob's real name
-	var/mobkey = "none" // player key associated with mob
-	var/voicemask = 0 // the speaker is wearing a voice mask
-	var/voice = M.GetVoice() // Why reinvent the wheel when there is a proc that does nice things already
-	if(ismob(M))
-		var/mob/speaker = M
-		real_name = speaker.real_name
-		if(speaker.client)
-			mobkey = speaker.key // assign the mob's key
+	// Construct the signal
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans)
 
-
-	var/jobname // the mob's "job"
-
-	if(jammed)
-		message = Gibberish(message,100)
-
-	// --- Human: use their job as seen on the crew manifest - makes it unneeded to carry an ID for an AI to see their job
-	if(ishuman(M))
-		var/datum/data/record/findjob = find_record("name", voice, GLOB.data_core.general)
-
-		if(voice != real_name)
-			voicemask = 1
-		if(findjob)
-			jobname = findjob.fields["rank"]
-		else
-			jobname = "Unknown"
-
-	// --- Carbon Nonhuman ---
-	else if(iscarbon(M)) // Nonhuman carbon mob
-		jobname = "No id"
-
-	// --- AI ---
-	else if(isAI(M))
-		jobname = "AI"
-
-	// --- Cyborg ---
-	else if(iscyborg(M))
-		var/mob/living/silicon/robot/B = M
-		jobname = "[B.designation] Cyborg"
-
-	// --- Personal AI (pAI) ---
-	else if(istype(M, /mob/living/silicon/pai))
-		jobname = "Personal AI"
-
-	// --- Cold, emotionless machines. ---
-	else if(isobj(M))
-		jobname = "Machine"
-
+<<<<<<< HEAD
 	// --- Unidentifiable mob ---
 	else
 		jobname = "Unknown"
@@ -389,9 +335,28 @@
 			R.receive_signal(signal)
 
 		// Receiving code can be located in Telecommunications.dm
+=======
+	// Independent radios, on the CentCom frequency, reach all independent radios
+	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE))
+		signal.data["compression"] = 0
+		signal.transmission_method = TRANSMISSION_SUPERSPACE
+		signal.levels = list(0)  // reaches all Z-levels
+		signal.broadcast()
 		return
 
+	// All radios make an attempt to use the subspace system first
+	signal.send_to_receivers()
 
+	// If the radio is subspace-only, that's all it can do
+	if (subspace_transmission)
+>>>>>>> 911cb97... Tidy telecomms radio code, make PDA server real telecomms machinery (#33647)
+		return
+
+	// Non-subspace radios will check in a couple of seconds, and if the signal
+	// was never received, send a mundane broadcast (no headsets).
+	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
+
+<<<<<<< HEAD
 	 /* ###### Intercoms and station-bounced radios ###### */
 
 	var/filter_type = 2
@@ -440,23 +405,24 @@
 		if(signal.data["done"] && position.z in signal.data["level"])
 			// we're done here.
 			return
+=======
+/obj/item/device/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
+	var/turf/T = get_turf(src)
+	if (signal.data["done"] && (T.z in signal.levels))
+		return
+>>>>>>> 911cb97... Tidy telecomms radio code, make PDA server real telecomms machinery (#33647)
 
-		// Oh my god; the comms are down or something because the signal hasn't been broadcasted yet in our level.
-		// Send a mundane broadcast with limited targets:
-		Broadcast_Message(M, voicemask,
-						  src, message, voice, jobname, real_name,
-						  filter_type, signal.data["compression"], list(position.z), freq, spans,
-						  verb_say, verb_ask, verb_exclaim, verb_yell, language)
+	// Okay, the signal was never processed, send a mundane broadcast.
+	signal.data["compression"] = 0
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.levels = list(T.z)
+	signal.broadcast()
 
 /obj/item/device/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(radio_freq)
+	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
-	if(broadcasting)
-		if(get_dist(src, speaker) <= canhear_range)
-			if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
-				raw_message = stars(raw_message)
-			talk_into(speaker, raw_message, , spans, language=message_language)
 
+<<<<<<< HEAD
 /obj/item/device/radio/proc/receive_range(freq, level)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
@@ -498,6 +464,45 @@
 	var/range = receive_range(freq, level)
 	if(range > -1)
 		return get_hearers_in_view(canhear_range, src)
+=======
+	if(message_mode == MODE_WHISPER || message_mode == MODE_WHISPER_CRIT)
+		// radios don't pick up whispers very well
+		raw_message = stars(raw_message)
+	else if(message_mode == MODE_L_HAND || message_mode == MODE_R_HAND)
+		// try to avoid being heard double
+		if (loc == speaker && ismob(speaker))
+			var/mob/M = speaker
+			var/idx = M.get_held_index_of_item(src)
+			// left hands are odd slots
+			if (idx && (idx % 2) == (message_mode == MODE_L_HAND))
+				return
+
+	talk_into(speaker, raw_message, , spans, language=message_language)
+
+// Checks if this radio can receive on the given frequency.
+/obj/item/device/radio/proc/can_receive(freq, level)
+	// deny checks
+	if (!on || !listening || wires.is_cut(WIRE_RX))
+		return FALSE
+	if (freq == FREQ_SYNDICATE && !syndie)
+		return FALSE
+	if (freq == FREQ_CENTCOM)
+		return independent  // hard-ignores the z-level check
+	if (!(0 in level))
+		var/turf/position = get_turf(src)
+		if(!position || !(position.z in level))
+			return FALSE
+
+	// allow checks: are we listening on that frequency?
+	if (freq == frequency)
+		return TRUE
+	for(var/ch_name in channels)
+		if(channels[ch_name] & FREQ_LISTENING)
+			//the GLOB.radiochannels list is located in communications.dm
+			if(GLOB.radiochannels[ch_name] == text2num(freq) || syndie)
+				return TRUE
+	return FALSE
+>>>>>>> 911cb97... Tidy telecomms radio code, make PDA server real telecomms machinery (#33647)
 
 
 /obj/item/device/radio/examine(mob/user)

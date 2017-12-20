@@ -273,6 +273,7 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 	var/encryption
 
 	var/frequency = 0
+<<<<<<< HEAD
 	var/static/list/pointers = list()
 
 /datum/signal/New()
@@ -301,6 +302,10 @@ GLOBAL_VAR_INIT(RADIO_MAGNETS, "9")
 			var/list/L = data[i]
 			for(var/t in L)
 				. += "data\[\"[i]\"\] list has: [t]"
+=======
+	var/transmission_method
+	var/list/data
+>>>>>>> 911cb97... Tidy telecomms radio code, make PDA server real telecomms machinery (#33647)
 
 /datum/signal/proc/sanitize_data()
 	for(var/d in data)
