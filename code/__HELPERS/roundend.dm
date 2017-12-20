@@ -71,10 +71,10 @@
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	for(var/client/C in GLOB.clients)
+	/*for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+		C.playtitlemusic(40)*/
 
 	display_report()
 
