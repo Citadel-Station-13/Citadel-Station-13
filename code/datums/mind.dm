@@ -202,12 +202,10 @@
 	SSticker.mode.update_brother_icons_removed(src)
 
 /datum/mind/proc/remove_nukeop()
-	if(src in SSticker.mode.syndicates)
-		SSticker.mode.syndicates -= src
-		SSticker.mode.update_synd_icons_removed(src)
-	special_role = null
-	remove_objectives()
-	remove_antag_equip()
+	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
+	if(nuke)
+		remove_antag_datum(nuke.type)
+special_role = null
 
 /datum/mind/proc/remove_wizard()
 	remove_antag_datum(/datum/antagonist/wizard)
