@@ -493,11 +493,11 @@
 
 		/** NUCLEAR ***/
 		text = "nuclear"
-		var/datum/antagonist/nukeop/N = has_antag_datum(/datum/antagonist/nukeop,TRUE)
-		if(N)
+		if (SSticker.mode.config_tag=="nuclear")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (src in SSticker.mode.syndicates)
+		var/datum/antagonist/nukeop/N = has_antag_datum(/datum/antagonist/nukeop,TRUE)
+		if(N)
 			text += "<b>OPERATIVE</b> | <a href='?src=[REF(src)];nuclear=clear'>nanotrasen</a>"
 			text += "<br><a href='?src=[REF(src)];nuclear=lair'>To shuttle</a>, <a href='?src=[REF(src)];common=undress'>undress</a>, <a href='?src=[REF(src)];nuclear=dressup'>dress up</a>."
 			var/code
