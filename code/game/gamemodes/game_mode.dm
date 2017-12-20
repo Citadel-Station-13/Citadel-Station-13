@@ -531,4 +531,4 @@
 /datum/game_mode/proc/OnNukeExplosion(off_station)
 	nuke_off_station = off_station
 	if(off_station < 2)
-station_was_nuked = TRUE //Will end the round on next check.
+		station_was_nuked = TRUE //Will end the round on next check.
