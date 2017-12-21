@@ -114,7 +114,7 @@
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
 	flags_1 = NOBLUDGEON_1
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	slot_flags = 0
 
 	var/obj/item/watertank/tank
@@ -327,7 +327,7 @@
 
 /obj/effect/resin_container/proc/Smoke()
 	var/obj/effect/particle_effect/foam/metal/resin/S = new /obj/effect/particle_effect/foam/metal/resin(get_turf(loc))
-	S.amount = 3
+	S.amount = 4
 	playsound(src,'sound/effects/bamf.ogg',100,1)
 	qdel(src)
 
@@ -351,7 +351,7 @@
 	var/usage_ratio = 5 //5 unit added per 1 removed
 	var/injection_amount = 1
 	amount_per_transfer_from_this = 5
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 	spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 

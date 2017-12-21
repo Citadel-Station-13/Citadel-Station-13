@@ -40,7 +40,6 @@ GLOBAL_PROTECT(security_mode)
 
 	Master.Initialize(10, FALSE)
 
-
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
 	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
@@ -62,15 +61,15 @@ GLOBAL_PROTECT(security_mode)
 				var/db_major = text2num(query_db_version.item[1])
 				var/db_minor = text2num(query_db_version.item[2])
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
-					var/which = "behind"
-					if(db_major < DB_MAJOR_VERSION || db_minor < DB_MINOR_VERSION)
-						which = "ahead of"
-					message_admins("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
-					log_sql("Database schema ([db_major].[db_minor]) is [which] the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					message_admins("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
+					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
 			else
 				message_admins("Could not get schema version from database")
+				log_sql("Could not get schema version from database")
 		else
-			log_world("Your server failed to establish a connection with the database.")
+			log_sql("Your server failed to establish a connection with the database.")
+	else
+		log_sql("Database is not enabled in configuration.")
 
 /world/proc/SetRoundID()
 	if(CONFIG_GET(flag/sql_enabled))
@@ -128,6 +127,7 @@ GLOBAL_PROTECT(security_mode)
 	SERVER_TOOLS_ON_TOPIC	//redirect to server tools if necessary
 
 	var/static/list/topic_handlers = TopicHandlers()
+
 	var/list/input = params2list(T)
 	var/datum/world_topic/handler
 	for(var/I in topic_handlers)

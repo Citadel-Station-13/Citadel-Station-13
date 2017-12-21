@@ -14,7 +14,6 @@
 	if(e_name)
 		name = e_name
 	desc = "A [name] vandalizing the station."
-
 	if(alt_icon)
 		icon = alt_icon
 	if(type)
@@ -28,3 +27,4 @@
 	if(main)
 		paint_colour = main
 	add_atom_colour(paint_colour, FIXED_COLOUR_PRIORITY)
+
