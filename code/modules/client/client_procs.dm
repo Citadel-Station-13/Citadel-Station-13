@@ -402,8 +402,7 @@ GLOBAL_LIST(external_rsc_urls)
 				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
 				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
 				"i shure hop dere are no PRED arund!!!!",\
-				"NO PRED CAN eVER CATCH MI"\
-				)
+				"NO PRED CAN eVER CATCH MI",\
 				"Forever alone :("\
 			)
 

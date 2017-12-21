@@ -144,7 +144,7 @@ Code:
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
-	
+
 /obj/item/device/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
@@ -168,7 +168,7 @@ Code:
 	..()
 
 /obj/item/device/electropack/shockcollar/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code)
+	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
