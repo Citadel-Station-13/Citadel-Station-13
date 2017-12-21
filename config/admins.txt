@@ -7,10 +7,7 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-<<<<<<< HEAD
-
 Jayehh = Host
-=======
 Optimumtact = Host
 NewSta = Game Master
 Expletives = Game Master
@@ -136,4 +133,3 @@ excessiveuseofcobby = Game Master
 Plizzard = Game Master
 octareenroon91 = Game Master
 Serpentarium = Game Master
->>>>>>> bdfbafd... [READY]integrated circuitry port+upgrade. (#32481)
