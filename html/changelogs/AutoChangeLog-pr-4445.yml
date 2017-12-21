@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Fixed captain's PDA showing unusable Toggle Remote Door menu option"

@@ -25,6 +25,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 5
 	w_class = WEIGHT_CLASS_TINY
 	heat = 1000
+	grind_results = list("phosphorus" = 2)
 
 /obj/item/match/process()
 	smoketime--
@@ -104,6 +105,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	container_type = INJECTABLE_1
 	w_class = WEIGHT_CLASS_TINY
 	body_parts_covered = null
+	grind_results = list()
 	var/lit = FALSE
 	var/starts_lit = FALSE
 	var/icon_on = "cigon"  //Note - these are in masks.dmi not in cigarette.dmi
@@ -127,6 +129,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
+	AddComponent(/datum/component/knockoff,90,list("mouth"),list(slot_wear_mask))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -363,6 +366,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cigbutt"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+	grind_results = list("carbon" = 2)
 
 /obj/item/cigbutt/cigarbutt
 	name = "cigar butt"
@@ -484,6 +488,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1500
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
+	grind_results = list("iron" = 1, "welding_fuel" = 5, "oil" = 5)
 
 /obj/item/lighter/update_icon()
 	if(lit)

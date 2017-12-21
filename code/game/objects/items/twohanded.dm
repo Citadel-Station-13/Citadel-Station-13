@@ -429,6 +429,10 @@
 	var/obj/item/grenade/explosive = null
 	var/war_cry = "AAAAARGH!!!"
 
+/obj/item/twohanded/spear/Initialize()
+	. = ..()
+	AddComponent(/datum/component/jousting)
+
 /obj/item/twohanded/spear/examine(mob/user)
 	..()
 	if(explosive)
@@ -447,7 +451,7 @@
 		return
 	if(explosive && wielded)
 		user.say("[war_cry]")
-		explosive.loc = AM
+		explosive.forceMove(AM)
 		explosive.prime()
 		qdel(src)
 
