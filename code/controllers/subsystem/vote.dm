@@ -113,13 +113,6 @@ SUBSYSTEM_DEF(vote)
 	var/restart = 0
 	if(.)
 		switch(mode)
-			if("roundtype")
-				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
-					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = .
-				SSticker.save_mode(.)
-				to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
-				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
@@ -178,8 +171,6 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
-			if("roundtype")
-				choices.Add("secret", "extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
@@ -206,6 +197,7 @@ SUBSYSTEM_DEF(vote)
 			var/datum/action/vote/V = new
 			if(question)
 				V.name = "Vote: [question]"
+			C.player_details.player_actions += V
 			V.Grant(C.mob)
 			generated_actions += V
 		return 1
@@ -299,6 +291,7 @@ SUBSYSTEM_DEF(vote)
 	for(var/v in generated_actions)
 		var/datum/action/vote/V = v
 		if(!QDELETED(V))
+			V.remove_from_client()
 			V.Remove(V.owner)
 	generated_actions = list()
 
@@ -318,7 +311,16 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote/Trigger()
 	if(owner)
 		owner.vote()
+		remove_from_client()
 		Remove(owner)
 
 /datum/action/vote/IsAvailable()
 	return 1
+
+/datum/action/vote/proc/remove_from_client()
+	if(owner.client)
+		owner.client.player_details.player_actions -= src
+	else if(owner.ckey)
+		var/datum/player_details/P = GLOB.player_details[owner.ckey]
+		if(P)
+			P.player_actions -= src

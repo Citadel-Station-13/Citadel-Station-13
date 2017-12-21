@@ -6,7 +6,7 @@
 SUBSYSTEM_DEF(npcpool)
 	name = "NPC Pool"
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
-	priority = 20
+	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/canBeUsed = list()
@@ -135,12 +135,12 @@ SUBSYSTEM_DEF(npcpool)
 
 		if(facCount == 1 && helpProb)
 			helpProb = 100
-
+	
 		if(prob(helpProb) && candidate.takeDelegate(check,FALSE))
 			--canBeUsed.len
 			candidate.eye_color = "yellow"
 			candidate.update_icons()
-
+			
 		if(!currentrun.len || MC_TICK_CHECK)	//don't change SS state if it isn't necessary
 			return
 
