@@ -478,8 +478,8 @@
 	power_draw_idle = 5
 	power_draw_per_use = 40
 
-	var/frequency = 1457
-	var/code = 30
+	var/frequency = FREQ_SIGNALER
+	var/code = DEFAULT_SIGNALER_CODE
 	var/datum/radio_frequency/radio_connection
 
 /obj/item/integrated_circuit/input/signaler/Initialize()
@@ -509,24 +509,16 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.source = src
-	signal.encryption = code
-	signal.data["message"] = "ACTIVATE"
+	var/datum/signal/signal = new(list("code" = code))
 	radio_connection.post_signal(src, signal)
-
 	activate_pin(2)
 
 /obj/item/integrated_circuit/input/signaler/proc/set_frequency(new_frequency)
 	if(!frequency)
 		return
-	if(!SSradio)
-		sleep(20)
-	if(!SSradio)
-		return
 	SSradio.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/integrated_circuit/input/signaler/receive_signal(datum/signal/signal)
 	var/new_code = get_pin_data(IC_INPUT, 2)
@@ -536,7 +528,7 @@
 		code = new_code
 	if(!signal)
 		return 0
-	if(signal.encryption != code)
+	if(signal.data["code"] != code)
 		return 0
 	if(signal.source == src) // Don't trigger ourselves.
 		return 0

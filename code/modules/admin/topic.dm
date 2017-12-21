@@ -1655,7 +1655,7 @@
 			var/mob/living/L = M
 			var/status
 			switch (M.stat)
-				if (CONSCIOUS)
+				if(CONSCIOUS)
 					status = "Alive"
 				if(SOFT_CRIT)
 					status = "<font color='orange'><b>Dying</b></font>"

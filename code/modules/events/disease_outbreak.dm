@@ -13,7 +13,7 @@
 	var/max_severity = 3
 
 
-/datum/round_event/disease_outbreak/announce()
+/datum/round_event/disease_outbreak/announce(fake)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", 'sound/ai/outbreak7.ogg')
 
 /datum/round_event/disease_outbreak/setup()
@@ -33,7 +33,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-		if(T.z != ZLEVEL_STATION_PRIMARY)
+		if(!(T.z in GLOB.station_z_levels))
 			continue
 		if(!H.client)
 			continue
@@ -51,7 +51,7 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-				if(!H.dna || (H.disabilities & BLIND))	//A blindness disease would be the worst.
+				if(!H.dna || (H.has_disability(BLIND)))	//A blindness disease would be the worst.
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D

@@ -91,7 +91,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/proc/spawn_item(turf/loc, datum/component/uplink/U, mob/user)
 	if(item)
-		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(name)]", "[cost]"))
 		return new item(loc)
 
 /datum/uplink_item/Destroy()
@@ -611,7 +610,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	name = "Sleepy Pen"
 	desc = "A syringe disguised as a functional pen, filled with a potent mix of drugs, including a \
 			strong anesthetic and a chemical that prevents the target from speaking. \
-			The pen holds one dose of the mixture, and cannot be refilled. Note that before the target \
+			The pen holds one dose of the mixture, and can be refilled. Note that before the target \
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
@@ -700,7 +699,6 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/stealthy_tools/chameleon/nuke
 	cost = 6
-	exclude_modes = list()
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/syndigaloshes
@@ -1096,16 +1094,9 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 
 /datum/uplink_item/device_tools/codespeak_manual
 	name = "Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. One use."
-	item = /obj/item/codespeak_manual
-	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear)
-
-/datum/uplink_item/device_tools/codespeak_manual_deluxe
-	name = "Deluxe Codespeak Manual"
-	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited uses."
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear)
+	desc = "Syndicate agents can be trained to use a series of codewords to convey complex information, which sounds like random concepts and drinks to anyone listening. This manual teaches you this Codespeak. You can also hit someone else with the manual in order to teach them. This is the deluxe edition, which has unlimited used."
+	item = /obj/item/codespeak_manual/unlimited
+	cost = 3
 
 // Implants
 /datum/uplink_item/implants
@@ -1392,7 +1383,7 @@ GLOBAL_LIST_EMPTY(uplink_items) // Global list so we only initialize this once.
 	if(possible_items.len)
 		var/datum/uplink_item/I = pick(possible_items)
 		U.telecrystals -= I.cost
-		U.spent_telecrystals += I.cost
+		U.purchase_log.total_spent += I.cost
 		SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(I.name)]", "[cost]"))
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(I.name))
 		return new I.item(loc)

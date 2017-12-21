@@ -107,6 +107,7 @@
 /datum/design/unique_modkit
 	category = list("Mining Designs", "Cyborg Upgrade Modules") //can't be normally obtained
 	build_type = PROTOLATHE | MECHFAB
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO
 
 /datum/design/unique_modkit/offensive_turf_aoe
 	name = "Kinetic Accelerator Offensive Mining Explosion Mod"
@@ -656,7 +657,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.has_disability(CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 

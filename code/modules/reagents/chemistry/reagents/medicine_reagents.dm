@@ -44,7 +44,7 @@
 	M.adjustToxLoss(-5, 0)
 	M.hallucination = 0
 	M.setBrainLoss(0)
-	M.disabilities = 0
+	M.remove_all_disabilities()
 	M.set_blurriness(0)
 	M.set_blindness(0)
 	M.SetKnockdown(0, 0)
@@ -129,31 +129,16 @@
 	taste_description = "sludge"
 
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/M)
-	switch(M.bodytemperature) // Low temperatures are required to take effect.
-		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-9, 0)
-			M.adjustBruteLoss(-5, 0)
-			M.adjustFireLoss(-5, 0)
-			M.adjustToxLoss(-5, 0)
-			. = 1
-		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-7, 0)
-			M.adjustBruteLoss(-3, 0)
-			M.adjustFireLoss(-3, 0)
-			M.adjustToxLoss(-3, 0)
-			. = 1
-		if(225 to T0C)
-			M.status_flags &= ~DISFIGURED
-			M.adjustCloneLoss(-1, 0)
-			M.adjustOxyLoss(-5, 0)
-			M.adjustBruteLoss(-1, 0)
-			M.adjustFireLoss(-1, 0)
-			M.adjustToxLoss(-1, 0)
-			. = 1
+	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
+	if(M.bodytemperature < T0C)
+		M.adjustOxyLoss(-3 * power, 0)
+		M.adjustBruteLoss(-power, 0)
+		M.adjustFireLoss(-power, 0)
+		M.adjustToxLoss(-power, 0)
+		M.adjustCloneLoss(-power, 0)
+		M.status_flags &= ~DISFIGURED
+		. = 1
+	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
 
 /datum/reagent/medicine/clonexadone
@@ -667,16 +652,16 @@
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
 	if (!eyes)
 		return
-	if(M.disabilities & BLIND)
+	if(M.has_disability(BLIND, EYE_DAMAGE))
 		if(prob(20))
 			to_chat(M, "<span class='warning'>Your vision slowly returns...</span>")
-			M.cure_blind()
-			M.cure_nearsighted()
+			M.cure_blind(EYE_DAMAGE)
+			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
 
-	else if(M.disabilities & NEARSIGHT)
+	else if(M.has_disability(NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
-		M.cure_nearsighted()
+		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
 	else if(M.eye_blind || M.eye_blurry)
 		M.set_blindness(0)
@@ -765,7 +750,7 @@
 			M.visible_message("<span class='warning'>[M]'s body convulses a bit, and then falls still once more.</span>")
 			return
 		M.visible_message("<span class='warning'>[M]'s body convulses a bit.</span>")
-		if(!M.suiciding && !(M.disabilities & NOCLONE) && !M.hellbound)
+		if(!M.suiciding && !(M.has_disability(NOCLONE)) && !M.hellbound)
 			if(!M)
 				return
 			if(M.notify_ghost_cloning(source = M))

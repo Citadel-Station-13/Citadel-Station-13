@@ -16,6 +16,7 @@
 	// 50% chance of being incremented by one
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	fakeable = TRUE
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
@@ -41,7 +42,7 @@
 		if(QDELETED(temp_vent))
 			continue
 		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
 			if(temp_vent_parent.other_atmosmch.len > 20)

@@ -11,7 +11,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	container_type = INJECTABLE_1
+	container_type = INJECTABLE | DRAWABLE
 	grind_results = list()
 	var/Uses = 1 // uses before it goes inert
 	var/qdel_timer = null // deletion timer, for delayed reactions
@@ -472,7 +472,7 @@
 	desc = "A golem's head."
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = ABSTRACT_1 | NODROP_1
-	
+
 /obj/item/stack/tile/bluespace
 	name = "bluespace floor tile"
 	singular_name = "floor tile"

@@ -290,7 +290,7 @@
 		if(SHUTTLE_CALL)
 			if(time_left <= 0)
 				//move emergency shuttle to station
-				if(dock(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
+				if(initiate_docking(SSshuttle.getDock("emergency_home")) != DOCKING_SUCCESS)
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
@@ -300,6 +300,7 @@
 				if(SSdbcore.Connect())
 					var/datum/DBQuery/query_round_shuttle_name = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shuttle_name = '[name]' WHERE id = [GLOB.round_id]")
 					query_round_shuttle_name.Execute()
+
 
 		if(SHUTTLE_DOCKED)
 			if(time_left <= ENGINES_START_TIME)

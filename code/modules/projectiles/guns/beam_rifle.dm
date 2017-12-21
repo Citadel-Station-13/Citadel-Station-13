@@ -63,8 +63,6 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
-	
-	var/lastprocess = 0
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0

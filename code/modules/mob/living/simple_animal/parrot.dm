@@ -1001,6 +1001,7 @@
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
 
+
 /mob/living/simple_animal/parrot/clock_hawk
 	name = "clock hawk"
 	desc = "Cbyl jnaan penpxre! Fdhnnnjx!"
