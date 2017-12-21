@@ -31,10 +31,10 @@
 	chem_desc = "Heals burn damage."
 	chem_message = "<span class='notice'>A stream of burn-healing kelotane spreads throughout your body.</span>"
 
-/datum/borer_chem/charcoal
-	chemname = "charcoal"
-	chem_desc = "Slowly heals toxin damage, will also slowly remove any other chemicals."
-	chem_message = "<span class='notice'>A measure of toxin-purging charcoal cleanses your bloodstream.</span>"
+/datum/borer_chem/inacusiate
+	chemname = "inacusiate"
+	chem_desc = "Heals ear damage."
+	chem_message = "<span class='notice'>You can hear more clearly now.</span>"
 
 /datum/borer_chem/methamphetamine
 	chemname = "methamphetamine"
@@ -42,11 +42,6 @@
 	chemuse = 50
 	quantity = 9
 	chem_message = "<span class='notice'>Your mind races, your heartrate skyrockets as methamphetamines enters your bloodstream!</span>"
-
-/datum/borer_chem/salbutamol
-	chemname = "salbutamol"
-	chem_desc = "Heals suffocation damage."
-	chem_message = "<span class='notice'>Your breathing becomes lighter, as oxygen fills your lungs from the inside.</span>"
 
 /datum/borer_chem/spacedrugs
 	chemname = "space_drugs"
@@ -65,11 +60,6 @@
 	chem_desc = "The most potent alcoholic 'beverage', with the fastest toxicity."
 	chemuse = 50
 	chem_message = "<span class='notice'>You feel like you've downed a shot of 200 proof vodka.</span>"
-
-/datum/borer_chem/rezadone
-	chemname = "rezadone"
-	chem_desc = "Heals cellular damage."
-	chem_message = "<span class='notice'>You feel a warmth spread throughout your body as rezadone repairs corrupted DNA.</span>"
 
 /datum/borer_chem/crocin
 	chemname = "aphro"
