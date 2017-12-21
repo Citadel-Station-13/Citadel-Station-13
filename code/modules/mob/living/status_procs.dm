@@ -137,8 +137,6 @@
 				to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 		priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
-<<<<<<< HEAD
-=======
 
 /////////////////////////////////// DISABILITIES ////////////////////////////////////
 
@@ -215,4 +213,3 @@
 		status_flags |= DISFIGURED	//makes them unknown
 		update_body()
 	add_disability(HUSK, source)
->>>>>>> 4af5b03... Merge pull request #33678 from ShizCalev/BRAIN-DRAIN
