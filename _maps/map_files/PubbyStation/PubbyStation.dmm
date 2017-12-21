@@ -2864,6 +2864,7 @@
 "aiY" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "aiZ" = (
@@ -3148,7 +3149,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ajB" = (
-/obj/item/storage/box/mousetraps,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajC" = (
@@ -47228,7 +47229,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "clm" = (
-/obj/structure/closet/crate/bin,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cln" = (
@@ -51356,6 +51357,18 @@
 /obj/machinery/vending/games,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"cCX" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"cCY" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
+"cCZ" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 
 (1,1,1) = {"
 aaa
@@ -73860,7 +73873,7 @@ bvb
 bDj
 bEo
 bva
-bva
+cCY
 bHQ
 bJg
 bKl
@@ -74116,7 +74129,7 @@ bnv
 bnv
 bDi
 bmf
-bsn
+bva
 bva
 bHS
 bJh
@@ -79015,7 +79028,7 @@ cCF
 cCH
 bTn
 bPB
-bDi
+cCZ
 bVC
 bQj
 bPA
@@ -88688,7 +88701,7 @@ aaa
 aaa
 aaa
 aiU
-ajv
+cCX
 aju
 ajt
 alQ
