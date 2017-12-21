@@ -414,7 +414,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct))
-			loc = buckled_mob.loc
+			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
@@ -516,7 +516,7 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
-	.["Get"] = "?_src=holder;[HrefToken()];admingetmovable=[REF(src)]"
+	.["Get"] = "?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

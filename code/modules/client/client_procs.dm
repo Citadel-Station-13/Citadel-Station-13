@@ -152,7 +152,7 @@ GLOBAL_LIST(external_rsc_urls)
 #if (PRELOAD_RSC == 0)
 	var/static/next_external_rsc = 0
 	if(external_rsc_urls && external_rsc_urls.len)
-		next_external_rsc = Wrap(next_external_rsc+1, 1, external_rsc_urls.len+1)
+		next_external_rsc = WRAP(next_external_rsc+1, 1, external_rsc_urls.len+1)
 		preload_rsc = external_rsc_urls[next_external_rsc]
 #endif
 
@@ -226,6 +226,13 @@ GLOBAL_LIST(external_rsc_urls)
 					else
 						message_admins("<font color='red'><B>Notice: </B><font color='blue'>[key_name_admin(src)] has the same [matches] as [key_name_admin(C)] (no longer logged in). </font>")
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(C)] (no longer logged in).")
+
+	if(GLOB.player_details[ckey])
+		player_details = GLOB.player_details[ckey]
+	else
+		player_details = new
+		GLOB.player_details[ckey] = player_details
+
 
 	. = ..()	//calls mob.Login()
 
@@ -673,6 +680,13 @@ GLOBAL_LIST(external_rsc_urls)
 			return TRUE
 	. = ..()
 
+/client/proc/rescale_view(change, min, max)
+	var/viewscale = getviewsize(view)
+	var/x = viewscale[1]
+	var/y = viewscale[2]
+	x = CLAMP(x+change, min, max)
+	y = CLAMP(y+change, min,max)
+	change_view("[x]x[y]")
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

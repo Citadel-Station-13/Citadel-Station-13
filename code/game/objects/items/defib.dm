@@ -69,7 +69,7 @@
 	if(powered) //so it doesn't show charge if it's unpowered
 		if(cell)
 			var/ratio = cell.charge / cell.maxcharge
-			ratio = Ceiling(ratio*4) * 25
+			ratio = CEILING(ratio*4, 1) * 25
 			add_overlay("[initial(icon_state)]-charge[ratio]")
 
 /obj/item/defibrillator/CheckParts(list/parts_list)
@@ -328,7 +328,7 @@
 			O.unwield()
 		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
 		defib.on = 0
-		loc = defib
+		forceMove(defib)
 		defib.update_icon()
 	return unwield(user)
 
