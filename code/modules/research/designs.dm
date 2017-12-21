@@ -42,7 +42,7 @@ other types of metals and chemistry for reagents).
 	var/maxstack = 1
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
-	var/departmental_flags = NONE			//bitflags for deplathes.
+	var/departmental_flags = ALL			//bitflags for deplathes.
 
 /datum/design/Destroy()
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
