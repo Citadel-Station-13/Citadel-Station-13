@@ -1,8 +1,0 @@
-author: "deathride58"
-delete-after: True
-changes: 
-  - bugfix: "The vault in boxstation now has power again."
-  - bugfix: "The gravity generator in boxstation now has power again."
-  - bugfix: "Various broken decals in boxstation have been fixed."
-  - bugfix: "The clown and mime offices no longer have APCs pointing to the wrong areas."
-  - rscadd: "Boxstation's secure cell has been readded to security."
