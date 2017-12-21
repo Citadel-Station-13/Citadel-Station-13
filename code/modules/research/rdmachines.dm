@@ -15,7 +15,8 @@
 	var/shocked = FALSE
 	var/obj/machinery/computer/rdconsole/linked_console
 	var/obj/item/loaded_item = null //the item loaded inside the machine (currently only used by experimentor and destructive analyzer)
-
+	var/allowed_department_flags = ALL
+	
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
