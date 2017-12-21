@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscdel: "Integrated circuit smoke circuits now require 10 units of reagents to fire."

@@ -201,6 +201,7 @@
 		remove_antag_datum(ANTAG_DATUM_BROTHER)
 	SSticker.mode.update_brother_icons_removed(src)
 
+
 /datum/mind/proc/remove_nukeop()
 	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(nuke)

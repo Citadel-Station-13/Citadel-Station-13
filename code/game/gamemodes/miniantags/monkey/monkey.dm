@@ -88,7 +88,6 @@
 	else
 		return FALSE
 
-
 /datum/game_mode/monkey/set_round_result()
 	..()
 	if(check_monkey_victory())
