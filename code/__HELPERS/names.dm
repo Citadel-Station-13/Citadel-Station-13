@@ -121,7 +121,6 @@ GLOBAL_VAR(command_name)
 	return new_station_name
 
 /proc/syndicate_name()
-
 	var/name = ""
 
 	// Prefix
@@ -143,7 +142,7 @@ GLOBAL_VAR(command_name)
 	else
 		name += pick("-", "*", "")
 		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
-		
+
 	return name
 
 
