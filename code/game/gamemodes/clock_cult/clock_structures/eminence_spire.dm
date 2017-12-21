@@ -34,7 +34,12 @@
 /obj/structure/destructible/clockwork/eminence_spire/attack_ghost(mob/user)
 	if(!IsAdminGhost(user))
 		return
+<<<<<<< HEAD
 	if(SSticker.mode.eminence)
+=======
+	var/datum/antagonist/clockcult/random_cultist = locate() in GLOB.antagonists //if theres no cultists new team without eminence will be created anyway.
+	if(random_cultist && random_cultist.clock_team && random_cultist.clock_team.eminence)
+>>>>>>> 3b37dae... (probably?) Fixes being able to create two Eminences at a time + other Eminence issues (#33634)
 		to_chat(user, "<span class='warning'>There's already an Eminence - too late!</span>")
 		return
 	if(!GLOB.servants_active)
