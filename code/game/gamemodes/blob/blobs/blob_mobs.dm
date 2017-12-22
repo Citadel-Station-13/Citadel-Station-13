@@ -42,7 +42,7 @@
 /mob/living/simple_animal/hostile/blob/fire_act(exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature)
-		adjustFireLoss(Clamp(0.01 * exposed_temperature, 1, 5))
+		adjustFireLoss(CLAMP(0.01 * exposed_temperature, 1, 5))
 	else
 		adjustFireLoss(5)
 
@@ -55,13 +55,6 @@
 	for(var/obj/structure/blob/B in range(1, src))
 		return 1
 	return ..()
-
-/mob/living/simple_animal/hostile/blob/handle_inherent_channels(message, message_mode)
-	if(message_mode == MODE_BINARY)
-		blob_chat(message)
-		return 1
-	else
-		..()
 
 /mob/living/simple_animal/hostile/blob/proc/blob_chat(msg)
 	var/spanned_message = say_quote(msg, get_spans())

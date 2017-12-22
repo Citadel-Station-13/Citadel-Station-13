@@ -12,6 +12,7 @@
 		new /obj/item/storage/backpack/satchel/cap(src)
 	new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
+	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/backpack/duffelbag/captain(src)
 	new /obj/item/clothing/head/crown/fancy(src)
 	new /obj/item/clothing/suit/captunic(src)
@@ -53,7 +54,9 @@
 	new /obj/item/restraints/handcuffs/cable/zipties(src)
 	new /obj/item/gun/energy/e_gun/cx(src)
 	new /obj/item/clothing/neck/petcollar(src)
+	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/civillian(src)
+	new /obj/item/circuitboard/machine/protolathe/department/service(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "\proper head of security's locker"
@@ -188,7 +191,6 @@
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/storage/belt/holster/full(src)
 	new /obj/item/pinpointer/crew(src)
-	new /obj/item/device/mass_spectrometer(src)
 
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

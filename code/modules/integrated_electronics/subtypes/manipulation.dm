@@ -6,8 +6,8 @@
 	desc = "This somewhat complicated system allows one to slot in a gun, direct it towards a position, and remotely fire it."
 	extended_desc = "The firing mechanism can slot in any energy weapon.  \
 	The first and second inputs need to be numbers.  They are coordinates for the gun to fire at, relative to the machine itself.  \
-	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between\
-	letal(TRUE) or stun(FALSE) modes.It uses internal battery of weapon."
+	The 'fire' activator will cause the mechanism to attempt to fire the weapon at the coordinates, if possible.  Mode is switch between  \
+	lethal (TRUE) or stun (FALSE) modes.It uses internal battery of weapon."
 	complexity = 20
 	w_class = WEIGHT_CLASS_SMALL
 	size = 3
@@ -23,7 +23,6 @@
 	)
 	var/obj/item/gun/energy/installed_gun = null
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 0
 	var/mode = FALSE
 
@@ -94,8 +93,8 @@
 			yo.data = round(yo.data, 1)
 
 		var/turf/T = get_turf(assembly)
-		var/target_x = Clamp(T.x + xo.data, 0, world.maxx)
-		var/target_y = Clamp(T.y + yo.data, 0, world.maxy)
+		var/target_x = CLAMP(T.x + xo.data, 0, world.maxx)
+		var/target_y = CLAMP(T.y + yo.data, 0, world.maxy)
 
 		shootAt(locate(target_x, target_y, T.z))
 
@@ -172,7 +171,6 @@
 	outputs = list()
 	activators = list("prime grenade" = IC_PINTYPE_PULSE_IN)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	var/obj/item/grenade/attached_grenade
 	var/pre_attached_grenade_type
 
@@ -212,7 +210,7 @@
 		var/datum/integrated_io/detonation_time = inputs[1]
 		var/dt
 		if(isnum(detonation_time.data) && detonation_time.data > 0)
-			dt = Clamp(detonation_time.data, 1, 12)*10
+			dt = CLAMP(detonation_time.data, 1, 12)*10
 		else
 			dt = 15
 		addtimer(CALLBACK(attached_grenade, /obj/item/grenade.proc/prime), dt)
@@ -302,15 +300,15 @@
 	var/max_items = 10
 
 /obj/item/integrated_circuit/manipulation/grabber/do_work()
-	var/turf/T = get_turf(src)
+	var/atom/movable/acting_object = get_object()
+	var/turf/T = get_turf(acting_object)
 	var/obj/item/AM = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
 	if(AM)
-		var/turf/P = get_turf(AM)
 		var/mode = get_pin_data(IC_INPUT, 2)
 
 		if(mode == 1)
-			if(P.Adjacent(T))
-				if((contents.len < max_items) && AM && (AM.w_class <= max_w_class))
+			if(check_target(AM, exclude_contents = TRUE))
+				if((contents.len < max_items) && (!max_w_class || AM.w_class <= max_w_class))
 					AM.forceMove(src)
 		if(mode == 0)
 			if(contents.len)
@@ -346,9 +344,9 @@
 
 /obj/item/integrated_circuit/manipulation/thrower
 	name = "thrower"
-	desc = "A compact launcher to throw things from inside or nearby tiles"
-	extended_desc = "The first and second inputs need to be numbers.  They are coordinates to throw thing at, relative to the machine itself.  \
-	The 'fire' activator will cause the mechanism to attempt to throw thing at the coordinates, if possible.  Note that the \
+	desc = "A compact launcher to throw things from inside or nearby tiles."
+	extended_desc = "The first and second inputs need to be numbers.  They are coordinates to throw thing at, relative to the machine itself. \
+	The 'fire' activator will cause the mechanism to attempt to throw thing at the coordinates, if possible. Note that the \
 	projectile need to be inside the machine, or to be on an adjacent tile, and to be up to medium size."
 	complexity = 15
 	w_class = WEIGHT_CLASS_SMALL
@@ -363,28 +361,37 @@
 		"fire" = IC_PINTYPE_PULSE_IN
 	)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 3, TECH_DATA = 3, TECH_COMBAT = 4)
 	power_draw_per_use = 50
+	var/max_w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/integrated_circuit/manipulation/thrower/do_work()
-	var/datum/integrated_io/target_x = inputs[1]
-	var/datum/integrated_io/target_y = inputs[2]
-	var/datum/integrated_io/projectile = inputs[3]
-	if(!isweakref(projectile.data))
-		return
-	var/obj/item/A = projectile.data.resolve()
-	if(A.anchored || (A.w_class > WEIGHT_CLASS_NORMAL))
-		return
-	var/turf/T = get_turf(assembly)
-	if(!(A.Adjacent(T) || (A in assembly.GetAllContents())))
-		return
-	if(assembly)
-		if(isnum(target_x.data))
-			target_x.data = round(target_x.data, 1)
-		if(isnum(target_y.data))
-			target_y.data = round(target_y.data, 1)
-		var/_x = Clamp(T.x + target_x.data, 0, world.maxx)
-		var/_y = Clamp(T.y + target_y.data, 0, world.maxy)
+	var/target_x_rel = round(get_pin_data(IC_INPUT, 1))
+	var/target_y_rel = round(get_pin_data(IC_INPUT, 2))
+	var/obj/item/A = get_pin_data_as_type(IC_INPUT, 3, /obj/item)
 
-		A.forceMove(drop_location())
-		A.throw_at(locate(_x, _y, T.z), round(Clamp(sqrt(target_x.data*target_x.data+target_y.data*target_y.data),0,8),1), 3)
+	if(!A || A.anchored || A.throwing)
+		return
+
+	if(max_w_class && (A.w_class > max_w_class))
+		return
+
+	// Is the target inside the assembly or close to it?
+	if(!check_target(A, exclude_components = TRUE))
+		return
+
+	var/turf/T = get_turf(get_object())
+	if(!T)
+		return
+
+	// If the item is in mob's inventory, try to remove it from there.
+	if(ismob(A.loc))
+		var/mob/living/M = A.loc
+		if(!M.temporarilyRemoveItemFromInventory(A))
+			return
+
+	var/x_abs = CLAMP(T.x + target_x_rel, 0, world.maxx)
+	var/y_abs = CLAMP(T.y + target_y_rel, 0, world.maxy)
+	var/range = round(CLAMP(sqrt(target_x_rel*target_x_rel+target_y_rel*target_y_rel),0,8),1)
+
+	A.forceMove(drop_location())
+	A.throw_at(locate(x_abs, y_abs, T.z), range, 3)

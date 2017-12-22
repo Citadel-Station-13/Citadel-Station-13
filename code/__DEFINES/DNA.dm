@@ -24,7 +24,7 @@
 #define MUT_MUTE	"Mute"
 #define SMILE		"Smile"
 #define STONER		"Stoner"
-#define UNINTELLIGABLE		"Unintelligable"
+#define UNINTELLIGIBLE		"Unintelligible"
 #define SWEDISH		"Swedish"
 #define CHAV		"Chav"
 #define ELVIS		"Elvis"
@@ -82,7 +82,7 @@
 #define DNA_MUTANTTAIL_BLOCK		17
 #define DNA_MUTANTWING_BLOCK		18
 #define DNA_WINGCOLOR_BLOCK			19
-#define DNA_STRUC_ENZYMES_BLOCKS	19
+#define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
 //Transformation proc stuff
@@ -127,15 +127,19 @@
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	26
-#define MUTCOLORS2		27
-#define MUTCOLORS3		28
-#define NOLIVER 		29
-#define NOSTOMACH		30
+#define NOLIVER 		27
+#define NOSTOMACH		28
+#define NO_DNA_COPY     29
+#define DRINKSBLOOD		30
+#define SPECIES_ORGANIC 31
+#define SPECIES_INORGANIC 32
+#define SPECIES_UNDEAD  33
+#define SPECIES_ROBOTIC 34
 //citadel code
-#define NOAROUSAL		29 //Stops all arousal effects
-#define NOGENITALS		30 //Cannot create, use, or otherwise have genitals
-#define NO_DNA_COPY     31
-#define DRINKSBLOOD		32
+#define MUTCOLORS2		35
+#define MUTCOLORS3		36
+#define NOAROUSAL		37 //Stops all arousal effects
+#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

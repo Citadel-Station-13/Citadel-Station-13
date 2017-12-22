@@ -1,0 +1,4 @@
+author: "ganglyalexander"
+delete-after: True
+changes: 
+  - bugfix: "module icons for dog borgs now reference to a existing icon"

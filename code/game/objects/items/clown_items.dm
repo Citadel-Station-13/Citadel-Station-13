@@ -21,6 +21,7 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
+	grind_results = list("lye" = 10)
 	var/cleanspeed = 50 //slower than mop
 	force_string = "robust... against germs"
 
@@ -123,7 +124,6 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-	origin_tech = "materials=4;engineering=4"
 
 /obj/item/bikehorn/airhorn/Initialize()
 	. = ..()

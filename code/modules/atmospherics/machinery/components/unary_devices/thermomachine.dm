@@ -1,7 +1,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine
 	name = "thermomachine"
 	desc = "Heats or cools gas in connected pipes."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/atmospherics/components/thermomachine.dmi'
 	icon_state = "freezer"
 	var/icon_state_on = "cold_on"
 	var/icon_state_open = "cold_off"
@@ -153,14 +153,13 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = Clamp(target, min_temperature, max_temperature)
+				target_temperature = CLAMP(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
 	name = "freezer"
-	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer"
 	icon_state_on = "freezer_1"
 	icon_state_open = "freezer-o"
@@ -177,7 +176,6 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
 	name = "heater"
-	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "heater"
 	icon_state_on = "heater_1"
 	icon_state_open = "heater-o"
