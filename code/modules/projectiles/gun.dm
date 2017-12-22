@@ -400,7 +400,8 @@
 
 /obj/item/gun/dropped(mob/user)
 	..()
-	zoom(user,FALSE)
+	if(zoomed)
+		zoom(user,FALSE)
 	if(azoom)
 		azoom.Remove(user)
 	if(alight)
