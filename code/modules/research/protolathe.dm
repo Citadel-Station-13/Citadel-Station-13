@@ -15,8 +15,6 @@ Note: Must be placed west/left of and R&D console to function.
 	circuit = /obj/item/circuitboard/machine/protolathe
 
 	var/efficiency_coeff
-	var/console_link = TRUE		//allow console link.
-	var/requires_console = TRUE
 	var/list/categories = list(
 								"Power Designs",
 								"Medical Designs",
@@ -31,7 +29,7 @@ Note: Must be placed west/left of and R&D console to function.
 								"Computer Parts"
 								)
 
-	var/datum/component/material_container/materials
+	var/datum/component/material_container/materials			//Store for hyper speed!
 
 /obj/machinery/rnd/protolathe/Initialize()
 	create_reagents(0)
@@ -39,6 +37,7 @@ Note: Must be placed west/left of and R&D console to function.
 		list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
 		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
 	materials.precise_insertion = TRUE
+	RefreshParts()
 	return ..()
 
 /obj/machinery/rnd/protolathe/RefreshParts()
@@ -74,6 +73,7 @@ Note: Must be placed west/left of and R&D console to function.
 	GET_COMPONENT(materials, /datum/component/material_container)
 	materials.retrieve_all()
 	..()
+
 
 /obj/machinery/rnd/protolathe/disconnect_console()
 	linked_console.linked_lathe = null
@@ -124,13 +124,11 @@ Note: Must be placed west/left of and R&D console to function.
 	return TRUE
 
 /obj/machinery/rnd/protolathe/proc/do_print(path, amount, list/matlist, notify_admins)
-	if(notify_admins)
-		if(usr)
-			usr.investigate_log("built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
-			var/turf/T = get_turf(usr)
-			message_admins("[key_name(usr)][ADMIN_JMP(T)] has built [amount] of [path] at a protolathe at [COORD(usr)]")
+	if(notify_admins && usr)
+		investigate_log("[key_name(usr)] built [amount] of [path] at a protolathe.", INVESTIGATE_RESEARCH)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has built [amount] of [path] at a protolathe")
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(!istype(I, /obj/item/stack/sheet) && !istype(I, /obj/item/ore/bluespace_crystal))
 			I.materials = matlist.Copy()
-	SSblackbox.record_feedback("nested_tally", "item_printed", amount, list("[type]", "[path]"))
+	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
