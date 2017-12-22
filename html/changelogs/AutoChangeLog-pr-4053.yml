@@ -1,6 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added recolourable clothes"
-  - tweak: "jumpsuits in mixed wardrobe replaced with recolourable clothes"
-  - imageadd: "greyscaled clothing sprites for colourable clothes"
