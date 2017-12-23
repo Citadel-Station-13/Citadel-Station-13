@@ -63,6 +63,36 @@
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
+<<<<<<< HEAD
+=======
+/datum/controller/subsystem/ticker/proc/gather_newscaster()
+	var/json_file = file("[GLOB.log_directory]/newscaster.json")
+	var/list/file_data = list()
+	var/pos = 1
+	for(var/V in GLOB.news_network.network_channels)
+		var/datum/newscaster/feed_channel/channel = V
+		if(!istype(channel))
+			stack_trace("Non-channel in newscaster channel list")
+			continue
+		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
+		for(var/M in channel.messages)
+			var/datum/newscaster/feed_message/message = M
+			if(!istype(message))
+				stack_trace("Non-message in newscaster channel messages list")
+				continue
+			var/list/comment_data = list()
+			for(var/C in message.comments)
+				var/datum/newscaster/feed_comment/comment = C
+				if(!istype(comment))
+					stack_trace("Non-message in newscaster message comments list")
+					continue
+				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
+			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
+		pos++
+	if(GLOB.news_network.wanted_issue.active)
+		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
+	WRITE_FILE(json_file, json_encode(file_data))
+>>>>>>> c75c2c5... Merge pull request #33751 from AnturK/newscastersfeedbacktakethree
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
