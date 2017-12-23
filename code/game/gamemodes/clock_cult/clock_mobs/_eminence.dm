@@ -30,6 +30,7 @@
 /mob/camera/eminence/Login()
 	..()
 	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+<<<<<<< HEAD
 	if(!C)
 		add_servant_of_ratvar(src, TRUE)
 		C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
@@ -39,6 +40,15 @@
 				qdel(src)
 			else
 				C.clock_team.eminence = src
+=======
+	if(C && C.clock_team)
+		if(C.clock_team.eminence && C.clock_team.eminence != src)
+			remove_servant_of_ratvar(src,TRUE)
+			qdel(src)
+			return
+		else
+			C.clock_team.eminence = src
+>>>>>>> 619a83f... Fixes eminence login (#33752)
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
