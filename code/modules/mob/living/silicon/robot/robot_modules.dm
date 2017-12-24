@@ -352,7 +352,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
-	moduleselect_icon = "k9"
+	moduleselect_icon = "security"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -387,7 +387,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
-	moduleselect_icon = "medihound"
+	moduleselect_icon = "medical"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -409,7 +409,7 @@
 		/obj/item/clockwork/slab/cyborg/janitor,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "scrubpup"
-	moduleselect_icon = "scrubpup"
+	moduleselect_icon = "janitor"
 	hat_offset = INFINITY
 	clean_on_move = TRUE
 

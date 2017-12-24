@@ -17,7 +17,11 @@
 		return
 	if(kingmaking)
 		return
-	if(SSticker.mode.eminence)
+
+	var/datum/antagonist/clockcult/C = user.mind.has_antag_datum(/datum/antagonist/clockcult)
+	if(!C || !C.clock_team)
+		return
+	if(C.clock_team.eminence)
 		to_chat(user, "<span class='warning'>There's already an Eminence!</span>")
 		return
 	if(!GLOB.servants_active)
