@@ -68,7 +68,11 @@
 							return
 
 /datum/brain_trauma/mild/phobia/on_hear(message, speaker, message_language, raw_message, radio_freq)
+<<<<<<< HEAD
 	if(owner.disabilities & DEAF || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+=======
+	if(owner.has_disability(DISABILITY_DEAF) || world.time < next_scare) //words can't trigger you if you can't hear them *taps head*
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return message
 	for(var/word in trigger_words)
 		if(findtext(message, word))

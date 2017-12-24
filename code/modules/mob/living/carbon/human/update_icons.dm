@@ -609,7 +609,11 @@ generate/load female uniform sprites matching all previously decided variables
 		if(BP.dmg_overlay_type)
 			. += "-[BP.dmg_overlay_type]"
 
+<<<<<<< HEAD
 	if(disabilities & HUSK)
+=======
+	if(has_disability(DISABILITY_HUSK))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		. += "-husk"
 
 /mob/living/carbon/human/load_limb_from_cache()

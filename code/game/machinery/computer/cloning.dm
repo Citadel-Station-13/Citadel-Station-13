@@ -449,7 +449,11 @@
 		scantemp = "<font class='bad'>Subject's brain is not responding to scanning stimuli.</font>"
 		playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 		return
+<<<<<<< HEAD
 	if((mob_occupant.disabilities & NOCLONE) && (src.scanner.scan_level < 2))
+=======
+	if((mob_occupant.has_disability(DISABILITY_NOCLONE)) && (src.scanner.scan_level < 2))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		scantemp = "<font class='bad'>Subject no longer contains the fundamental materials required to create a living clone.</font>"
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, 0)
 		return

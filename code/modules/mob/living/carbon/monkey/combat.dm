@@ -122,7 +122,11 @@
 	if(L == src)
 		return FALSE
 
+<<<<<<< HEAD
 	if(disabilities & PACIFISM)
+=======
+	if(has_disability(DISABILITY_PACIFISM))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return FALSE
 
 	if(enemies[L])

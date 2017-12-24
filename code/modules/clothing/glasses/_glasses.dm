@@ -41,7 +41,11 @@
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
 		var/mob/living/carbon/human/H = src.loc
+<<<<<<< HEAD
 		if(!(H.disabilities & BLIND))
+=======
+		if(!(H.has_disability(DISABILITY_BLIND)))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			if(H.glasses == src)
 				to_chat(H, "<span class='danger'>[src] overloads and blinds you!</span>")
 				H.flash_act(visual = 1)

@@ -51,7 +51,11 @@
 		var/datum/disease/D
 		if(!advanced_virus)
 			if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
+<<<<<<< HEAD
 				if(!H.dna || (H.disabilities & BLIND))	//A blindness disease would be the worst.
+=======
+				if(!H.dna || (H.has_disability(DISABILITY_BLIND)))	//A blindness disease would be the worst.
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 					continue
 				D = new virus_type()
 				var/datum/disease/dnaspread/DS = D

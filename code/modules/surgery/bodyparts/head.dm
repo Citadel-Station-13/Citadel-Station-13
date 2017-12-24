@@ -61,7 +61,11 @@
 		C = owner
 
 	real_name = C.real_name
+<<<<<<< HEAD
 	if(C.disabilities & HUSK)
+=======
+	if(C.has_disability(DISABILITY_HUSK))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		real_name = "Unknown"
 		hair_style = "Bald"
 		facial_hair_style = "Shaved"

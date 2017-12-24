@@ -192,7 +192,11 @@
 	return //no random switching
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_hear(message, speaker, message_language, raw_message, radio_freq)
+<<<<<<< HEAD
 	if(owner.disabilities & DEAF || owner == speaker)
+=======
+	if(owner.has_disability(DISABILITY_DEAF) || owner == speaker)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return message
 	if(findtext(message, codeword))
 		message = replacetext(message, codeword, "<span class='warning'>[codeword]</span>")

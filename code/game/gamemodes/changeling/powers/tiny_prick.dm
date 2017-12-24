@@ -90,7 +90,11 @@
 /obj/effect/proc_holder/changeling/sting/transformation/can_sting(mob/user, mob/living/carbon/target)
 	if(!..())
 		return
+<<<<<<< HEAD
 	if((target.disabilities & HUSK) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+=======
+	if((target.has_disability(DISABILITY_HUSK)) || !iscarbon(target) || (NOTRANSSTING in target.dna.species.species_traits))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
@@ -129,9 +133,17 @@
 /obj/effect/proc_holder/changeling/sting/false_armblade/can_sting(mob/user, mob/target)
 	if(!..())
 		return
+<<<<<<< HEAD
 	if((target.disabilities & HUSK) || !target.has_dna())
 		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
+=======
+	if(isliving(target))
+		var/mob/living/L = target
+		if((L.has_disability(DISABILITY_HUSK)) || !L.has_dna())
+			to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
+			return 0
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/false_armblade/sting_action(mob/user, mob/target)

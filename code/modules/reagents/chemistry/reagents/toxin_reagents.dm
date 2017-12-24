@@ -141,7 +141,11 @@
 	taste_description = "mint"
 
 /datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
+<<<<<<< HEAD
 	if(M.disabilities & FAT)
+=======
+	if(M.has_disability(DISABILITY_FAT))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		M.gib()
 	return ..()
 

@@ -75,7 +75,11 @@
 		return ..()
 	if(user.zone_selected != "eyes" && user.zone_selected != "head")
 		return ..()
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && prob(50))
+=======
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		M = user
 	return eyestab(M,user)
 

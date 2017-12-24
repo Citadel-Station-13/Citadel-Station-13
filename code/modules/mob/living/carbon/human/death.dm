@@ -48,7 +48,12 @@
 
 
 /mob/living/carbon/proc/Drain()
+<<<<<<< HEAD
 	become_husk()
 	disabilities |= NOCLONE
+=======
+	become_husk(CHANGELING_DRAIN)
+	add_disability(DISABILITY_NOCLONE, CHANGELING_DRAIN)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	blood_volume = 0
 	return 1

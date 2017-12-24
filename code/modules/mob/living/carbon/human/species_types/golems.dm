@@ -725,7 +725,11 @@
 /obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
+<<<<<<< HEAD
 	if(cloth_golem.suiciding || cloth_golem.disabilities & NOCLONE)
+=======
+	if(cloth_golem.suiciding || cloth_golem.has_disability(DISABILITY_NOCLONE))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		QDEL_NULL(cloth_golem)
 		return
 

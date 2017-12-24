@@ -65,7 +65,11 @@
 		update_icon()
 
 	else if(P.is_hot())
+<<<<<<< HEAD
 		if(user.disabilities & CLUMSY && prob(10))
+=======
+		if(user.has_disability(DISABILITY_CLUMSY) && prob(10))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

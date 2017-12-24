@@ -44,7 +44,11 @@
 		forkload = null
 
 	else if(user.zone_selected == "eyes")
+<<<<<<< HEAD
 		if(user.disabilities & CLUMSY && prob(50))
+=======
+		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			M = user
 		return eyestab(M,user)
 	else
@@ -70,7 +74,11 @@
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected == "eyes")
+<<<<<<< HEAD
 		if(user.disabilities & CLUMSY && prob(50))
+=======
+		if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			M = user
 		return eyestab(M,user)
 	else

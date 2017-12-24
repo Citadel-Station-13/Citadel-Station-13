@@ -58,7 +58,11 @@
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
+<<<<<<< HEAD
 	if(user.disabilities & PACIFISM)
+=======
+	if(user.has_disability(DISABILITY_PACIFISM))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return
 	if(!force)
 		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), 1, -1)

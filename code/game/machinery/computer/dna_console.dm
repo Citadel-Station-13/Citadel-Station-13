@@ -81,7 +81,11 @@
 	if(connected && connected.is_operational())
 		if(connected.occupant)	//set occupant_status message
 			viable_occupant = connected.occupant
+<<<<<<< HEAD
 			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.disabilities & NOCLONE) || (connected.scan_level == 3))) //occupant is viable for dna modification
+=======
+			if(viable_occupant.has_dna() && (!(RADIMMUNE in viable_occupant.dna.species.species_traits)) && (!(viable_occupant.has_disability(DISABILITY_NOCLONE)) || (connected.scan_level == 3))) //occupant is viable for dna modification
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				occupant_status += "[viable_occupant.name] => "
 				switch(viable_occupant.stat)
 					if(CONSCIOUS)
@@ -528,7 +532,11 @@
 	var/mob/living/carbon/viable_occupant = null
 	if(connected)
 		viable_occupant = connected.occupant
+<<<<<<< HEAD
 		if(!istype(viable_occupant) || !viable_occupant.dna || (viable_occupant.disabilities & NOCLONE))
+=======
+		if(!istype(viable_occupant) || !viable_occupant.dna || (viable_occupant.has_disability(DISABILITY_NOCLONE)))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			viable_occupant = null
 	return viable_occupant
 

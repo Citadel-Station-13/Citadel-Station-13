@@ -217,7 +217,11 @@
 		C = owner
 		no_update = 0
 
+<<<<<<< HEAD
 	if(C.disabilities & HUSK)
+=======
+	if(C.has_disability(DISABILITY_HUSK))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		species_id = "husk" //overrides species_id
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		should_draw_gender = FALSE

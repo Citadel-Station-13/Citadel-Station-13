@@ -539,9 +539,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
+<<<<<<< HEAD
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
 				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+=======
+		if(!(M.has_disability(DISABILITY_BLIND) || M.has_disability(DISABILITY_NEARSIGHT)))
+			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		M.become_nearsighted(EYE_DAMAGE)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_all_held_items())

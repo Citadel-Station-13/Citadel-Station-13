@@ -94,7 +94,11 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "bible",  
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
+<<<<<<< HEAD
 	if (user.disabilities & CLUMSY && prob(50))
+=======
+	if (user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='danger'>[src] slips out of your hand and hits your head.</span>")
 		user.take_bodypart_damage(10)
 		user.Unconscious(400)

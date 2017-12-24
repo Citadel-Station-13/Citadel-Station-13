@@ -187,7 +187,11 @@
 		if(G.tint)
 			update_tint()
 		if(G.vision_correction)
+<<<<<<< HEAD
 			if(disabilities & NEARSIGHT)
+=======
+			if(has_disability(DISABILITY_NEARSIGHT))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				overlay_fullscreen("nearsighted", /obj/screen/fullscreen/impaired, 1)
 			adjust_eye_damage(0)
 		if(G.vision_flags || G.darkness_view || G.invis_override || G.invis_view || !isnull(G.lighting_alpha))

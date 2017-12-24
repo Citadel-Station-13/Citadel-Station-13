@@ -302,7 +302,11 @@
 			unwield()
 			return
 	..()
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && (wielded) && prob(40))
+=======
+	if(user.has_disability(DISABILITY_CLUMSY) && (wielded) && prob(40))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		impale(user)
 		return
 	if((wielded) && prob(50))

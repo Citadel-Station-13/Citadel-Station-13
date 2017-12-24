@@ -285,7 +285,11 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
+<<<<<<< HEAD
 			if(disabilities & DUMB)
+=======
+			if(has_disability(DISABILITY_DUMB))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"

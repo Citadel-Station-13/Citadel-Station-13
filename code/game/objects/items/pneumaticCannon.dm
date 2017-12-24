@@ -147,9 +147,16 @@
 	if(tank && !tank.air_contents.remove(gasPerThrow * pressureSetting))
 		to_chat(user, "<span class='warning'>\The [src] lets out a weak hiss and doesn't react!</span>")
 		return
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && prob(75) && clumsyCheck)
 		user.visible_message("<span class='warning'>[user] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
 		user.dropItemToGround(src, TRUE)
+=======
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(75) && clumsyCheck && iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='warning'>[C] loses their grip on [src], causing it to go off!</span>", "<span class='userdanger'>[src] slips out of your hands and goes off!</span>")
+		C.dropItemToGround(src, TRUE)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		if(prob(10))
 			target = get_turf(user)
 		else

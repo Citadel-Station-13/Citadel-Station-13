@@ -93,7 +93,11 @@
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
+<<<<<<< HEAD
 		if(H.disabilities & CLUMSY && prob(25))
+=======
+		if(H.has_disability(DISABILITY_CLUMSY) && prob(25))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
@@ -317,7 +321,11 @@
 		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
 
 	if(P.is_hot())
+<<<<<<< HEAD
 		if(user.disabilities & CLUMSY && prob(10))
+=======
+		if(user.has_disability(DISABILITY_CLUMSY) && prob(10))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			user.visible_message("<span class='warning'>[user] accidentally ignites themselves!</span>", \
 								"<span class='userdanger'>You miss the paper and accidentally light yourself on fire!</span>")
 			user.dropItemToGround(P)

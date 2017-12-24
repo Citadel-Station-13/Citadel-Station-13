@@ -4,7 +4,11 @@
 	possible_locs = list("chest")
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
+<<<<<<< HEAD
 	if(target.disabilities & FAT)
+=======
+	if(target.has_disability(DISABILITY_FAT))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return 1
 	return 0
 

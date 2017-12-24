@@ -72,6 +72,10 @@
 		to_chat(user, "<span class='notice'>[src] [active ? "is now active":"can now be concealed"].</span>")
 
 /obj/item/melee/transforming/proc/clumsy_transform_effect(mob/living/user)
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && prob(50))
+=======
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(5,5)

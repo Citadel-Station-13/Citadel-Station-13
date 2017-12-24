@@ -12,6 +12,7 @@
 	lose_text = "<span class='notice'>You suddenly remember how to speak.</span>"
 
 /datum/brain_trauma/severe/mute/on_gain()
+<<<<<<< HEAD
 	owner.disabilities |= MUTE
 	..()
 
@@ -23,6 +24,13 @@
 
 /datum/brain_trauma/severe/mute/on_lose()
 	owner.disabilities &= ~MUTE
+=======
+	owner.add_disability(DISABILITY_MUTE, TRAUMA_DISABILITY)
+	..()
+
+/datum/brain_trauma/severe/mute/on_lose()
+	owner.remove_disability(DISABILITY_MUTE, TRAUMA_DISABILITY)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	..()
 
 /datum/brain_trauma/severe/aphasia
@@ -132,7 +140,11 @@
 		stress -= 4
 
 /datum/brain_trauma/severe/monophobia/proc/check_alone()
+<<<<<<< HEAD
 	if(owner.disabilities & BLIND)
+=======
+	if(owner.has_disability(DISABILITY_BLIND))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return TRUE
 	for(var/mob/M in oview(owner, 7))
 		if(!isliving(M)) //ghosts ain't people
@@ -194,11 +206,19 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
+<<<<<<< HEAD
 	owner.disabilities |= MONKEYLIKE
 	..()
 
 /datum/brain_trauma/severe/discoordination/on_lose()
 	owner.disabilities &= ~MONKEYLIKE
+=======
+	owner.add_disability(DISABILITY_MONKEYLIKE, TRAUMA_DISABILITY)
+	..()
+
+/datum/brain_trauma/severe/discoordination/on_lose()
+	owner.remove_disability(DISABILITY_MONKEYLIKE, TRAUMA_DISABILITY)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	..()
 
 /datum/brain_trauma/severe/pacifism
@@ -209,9 +229,17 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
+<<<<<<< HEAD
 	owner.disabilities |= PACIFISM
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
 	owner.disabilities &= ~PACIFISM
+=======
+	owner.add_disability(DISABILITY_PACIFISM, TRAUMA_DISABILITY)
+	..()
+
+/datum/brain_trauma/severe/pacifism/on_lose()
+	owner.remove_disability(DISABILITY_PACIFISM, TRAUMA_DISABILITY)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	..()

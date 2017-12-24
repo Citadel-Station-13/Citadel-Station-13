@@ -25,7 +25,11 @@
 		return
 	var/mob/living/carbon/C = owner
 	// genetic deafness prevents the body from using the ears, even if healthy
+<<<<<<< HEAD
 	if(C.disabilities & DEAF)
+=======
+	if(C.has_disability(DISABILITY_DEAF))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		deaf = max(deaf, 1)
 	else
 		if(C.ears && (C.ears.flags_2 & HEALS_EARS_2))
@@ -42,7 +46,11 @@
 
 	var/mob/living/carbon/C = owner
 
+<<<<<<< HEAD
 	if(iscarbon(owner) && C.disabilities & DEAF)
+=======
+	if(iscarbon(owner) && C.has_disability(DISABILITY_DEAF))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		deaf = 1
 
 /obj/item/organ/ears/proc/adjustEarDamage(ddmg, ddeaf)

@@ -30,7 +30,11 @@
 		holder.update_icon()
 
 /obj/item/device/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
+<<<<<<< HEAD
 	if(user.disabilities & CLUMSY && prob(50))
+=======
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		flash_carbon(user, user, 15, 0)
 		return 0
 	return 1

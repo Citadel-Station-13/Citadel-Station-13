@@ -140,8 +140,13 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
+<<<<<<< HEAD
 	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && isliving(pulling))
 		vore_attack(user, pulling)
+=======
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_disability(DISABILITY_FAT)) && ismonkey(pulling))
+		devour_mob(pulling)
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	else
 		..()
 

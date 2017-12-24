@@ -819,7 +819,11 @@
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
+<<<<<<< HEAD
 	if(disabilities & PACIFISM)
+=======
+	if(has_disability(DISABILITY_PACIFISM))
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE

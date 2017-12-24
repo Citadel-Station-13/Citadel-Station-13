@@ -214,7 +214,13 @@
 	target.bodytemperature -= 200
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
+<<<<<<< HEAD
 	target.adjust_blindness(-5)
+=======
+	if(isliving(target))
+		var/mob/living/L = target
+		L.cure_blind(DISABILITY_BLIND, "abyssal_gaze")
+>>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"
