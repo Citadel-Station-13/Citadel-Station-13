@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "Borgs will no longer have their metal/glass/etc stacks commit sudoku when it runs out of metal. They will also show the correct amount instead of a constant of \"1\" on menu interaction."
