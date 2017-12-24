@@ -296,12 +296,7 @@
 	activators = list("push ref" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
-<<<<<<< HEAD
-/obj/item/integrated_circuit/reagent/storage/interact(mob/user)
-=======
-
 /obj/item/integrated_circuit/reagent/storage/do_work()
->>>>>>> 95b9e19... [READY]Circuitry upgrades (#33579)
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
 
