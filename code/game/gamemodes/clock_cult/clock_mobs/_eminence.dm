@@ -47,8 +47,6 @@
 /mob/camera/eminence/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-<<<<<<< HEAD
-=======
 	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
 	if(C && C.clock_team)
 		if(C.clock_team.eminence)
@@ -57,7 +55,6 @@
 			return
 		else
 			C.clock_team.eminence = src
->>>>>>> 3b37dae... (probably?) Fixes being able to create two Eminences at a time + other Eminence issues (#33634)
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
