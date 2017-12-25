@@ -16,6 +16,7 @@
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/signal)
 
+<<<<<<< HEAD
 	if(!on) // has to be on to receive messages
 		return
 
@@ -53,6 +54,25 @@
 					  signal.data["realname"],, signal.data["compression"], list(0, z), signal.frequency, signal.data["spans"],
 					  signal.data["verb_say"], signal.data["verb_ask"], signal.data["verb_exclaim"], signal.data["verb_yell"],
 					  signal.data["language"])
+=======
+/obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/signal)
+	if(!istype(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)  // receives on subspace only
+		return
+	if(!on || !is_freq_listening(signal))  // has to be on to receive messages
+		return
+	if (!intercept && !(z in signal.levels) && !(0 in signal.levels))  // has to be syndicate or on the right level
+		return
+
+	// Decompress the signal and mark it done
+	if (intercept)
+		signal.levels += 0  // Signal is broadcast to agents anywhere
+
+	signal.data["compression"] = 0
+	signal.mark_done()
+	if(signal.data["slow"] > 0)
+		sleep(signal.data["slow"]) // simulate the network lag if necessary
+	signal.broadcast()
+>>>>>>> 0ef3072... Restore the Syndicate allinone to its full functionality (#33772)
 
 /obj/machinery/telecomms/allinone/attackby(obj/item/P, mob/user, params)
 
