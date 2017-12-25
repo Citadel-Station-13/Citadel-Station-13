@@ -92,7 +92,7 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-	if(disabilities & MONKEYLIKE)
+	if(has_disability(MONKEYLIKE))
 		return FALSE
 	return TRUE//Humans can use guns and such
 
