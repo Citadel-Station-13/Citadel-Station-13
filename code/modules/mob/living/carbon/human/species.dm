@@ -1320,9 +1320,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return FALSE
 	if(target.check_block())
 		target.visible_message("<span class='warning'>[target] blocks [user]'s attack!</span>")
-		return 0
+		return FALSE
 	if(attacker_style && attacker_style.harm_act(user,target))
-		return 1
+		return TRUE
 	else
 
 		var/atk_verb = user.dna.species.attack_verb
@@ -1347,7 +1347,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			playsound(target.loc, user.dna.species.miss_sound, 25, 1, -1)
 			target.visible_message("<span class='danger'>[user] has attempted to [atk_verb] [target]!</span>",\
 			"<span class='userdanger'>[user] has attempted to [atk_verb] [target]!</span>", null, COMBAT_MESSAGE_RANGE)
-			return 0
+			return FALSE
 
 
 		var/armor_block = target.run_armor_check(affecting, "melee")
@@ -1369,8 +1369,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		else if(target.lying)
 			target.forcesay(GLOB.hit_appends)
 
-
-
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
 	var/aim_for_mouth  = user.zone_selected == "mouth"
 	var/target_on_help_and_unarmed = target.a_intent == INTENT_HELP && !target.get_active_held_item()
@@ -1390,10 +1388,12 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-
+		
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/randomized_zone = ran_zone(user.zone_selected)
+		target.SendSignal(COMSIG_HUMAN_DISARM_HIT, user, user.zone_selected)
+		var/obj/item/bodypart/affecting = target.get_bodypart(randomized_zone)
 		var/randn = rand(1, 100)
 		if(randn <= 25)
 			playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -1514,8 +1514,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						H.confused = max(H.confused, 20)
 						H.adjustBrainLoss(20)
 						H.adjust_blurriness(10)
-						if(prob(20))
+						if(prob(10))
 							H.gain_trauma(/datum/brain_trauma/mild/concussion)
+					else
+						if(!I.is_sharp())
+							H.adjustBrainLoss(I.force / 5)
 
 					if(prob(I.force + ((100 - H.health)/2)) && H != user)
 						var/datum/antagonist/rev/rev = H.mind.has_antag_datum(/datum/antagonist/rev)
