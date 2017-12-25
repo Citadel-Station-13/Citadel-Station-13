@@ -251,3 +251,4 @@ GLOBAL_PROTECT(security_mode)
 		hub_password = "kMZy3U5jJHSiBQjr"
 	else
 		hub_password = "SORRYNOPASSWORD"
+

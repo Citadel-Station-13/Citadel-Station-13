@@ -6,9 +6,10 @@
 
 // How multiple components of the exact same type are handled in the same datum
 
-#define COMPONENT_DUPE_HIGHLANDER 0 //old component is deleted (default)
-#define COMPONENT_DUPE_ALLOWED 1    //duplicates allowed
-#define COMPONENT_DUPE_UNIQUE 2     //new component is deleted
+#define COMPONENT_DUPE_HIGHLANDER 0		//old component is deleted (default)
+#define COMPONENT_DUPE_ALLOWED 1		//duplicates allowed
+#define COMPONENT_DUPE_UNIQUE 2			//new component is deleted
+#define COMPONENT_DUPE_UNIQUE_PASSARGS 4	//old component is given the initialization args of the new
 
 // All signals. Format:
 // When the signal is called: (signal arguments)
@@ -82,6 +83,7 @@
 // /mob/living/carbon/human signals
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACK "human_melee_unarmed_attack"			//from mob/living/carbon/human/UnarmedAttack(): (atom/target)
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
+#define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 
 #define CALTROP_BYPASS_SHOES 1
 #define CALTROP_IGNORE_WALKERS 2

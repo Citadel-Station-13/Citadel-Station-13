@@ -1,4 +1,0 @@
-author: "EtheoBoxxman"
-delete-after: True
-changes: 
-  - rscdel: "Removed chasm that spawns on killing ash walker tendril"
