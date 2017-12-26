@@ -94,7 +94,6 @@
 	mode.set_round_result()
 
 	send2irc("Server", "Round just ended.")
-
 	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
@@ -153,12 +152,10 @@
 
 	//AI laws
 	parts += law_report()
-
 	CHECK_TICK
 
 	//Antagonists
 	parts += antag_report()
-
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -210,7 +207,6 @@
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)
 	var/list/report_parts = list()
-
 	report_parts += personal_report(C)
 	report_parts += common_report
 
@@ -220,7 +216,6 @@
 	roundend_report.set_content(report_parts.Join())
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C)
@@ -318,7 +313,6 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		all_teams |= A.get_team()
 		all_antagonists += A
-
 	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
@@ -344,7 +338,6 @@
 			previous_category = A
 		result += A.roundend_report()
 		result += "<br>"
-
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()

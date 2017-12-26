@@ -187,7 +187,7 @@ Credit where due:
 		to_chat(L, "<span class='alloy italics'>If you want more information, you can find a wiki link here!</span> https://tgstation13.org/wiki/Clockwork_Cult")
 		return TRUE
 	return FALSE
-
+  
 /datum/game_mode/clockwork_cult/check_finished()
 	if(GLOB.ark_of_the_clockwork_justiciar && !GLOB.ratvar_awakens) // Doesn't end until the Ark is destroyed or completed
 		return FALSE
@@ -196,7 +196,7 @@ Credit where due:
 /datum/game_mode/clockwork_cult/proc/check_clockwork_victory()
 	return main_clockcult.check_clockwork_victory()
 
-/datum/game_mode/clock_cult/set_round_result()
+/datum/game_mode/clockwork_cult/set_round_result()
 	..()
 	if(GLOB.clockwork_gateway_activated)
 		SSticker.news_report = CLOCK_SUMMON

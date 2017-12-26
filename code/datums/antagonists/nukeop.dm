@@ -39,7 +39,6 @@
 	if(!ishuman(owner.current))
 		return
 	var/mob/living/carbon/human/H = owner.current
-
 	H.set_species(/datum/species/human) //Plasamen burn up otherwise, and lizards are vulnerable to asimov AIs
 
 	H.equipOutfit(nukeop_outfit)
@@ -102,7 +101,6 @@
 
 /datum/antagonist/nukeop/leader/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.nukeop_leader_start))
-
 /datum/antagonist/nukeop/create_team(datum/team/nuclear/new_team)
 	if(!new_team)
 		if(!always_new_team)
@@ -157,7 +155,7 @@
 	if(!nuke_team)
 		return
 	nuke_team.rename_team(ask_name())
-
+  
 /datum/team/nuclear/proc/rename_team(new_name)
 	syndicate_name = new_name
 	name = "[syndicate_name] Team"
@@ -222,7 +220,7 @@
 		if(!D.onCentCom())
 			return FALSE
 	return TRUE
-
+  
 /datum/team/nuclear/proc/operatives_dead()
 	for(var/I in members)
 		var/datum/mind/operative_mind = I
@@ -261,11 +259,10 @@
 		return NUKE_RESULT_DISK_STOLEN
 	else
 		return	//Undefined result
-
+    
 /datum/team/nuclear/roundend_report()
 	var/list/parts = list()
 	parts += "<span class='header'>[syndicate_name] Operatives:</span>"
-
 	switch(get_result())
 		if(NUKE_RESULT_FLUKE)
 			parts += "<span class='redtext big'>Humiliating Syndicate Defeat</span>"
@@ -316,7 +313,6 @@
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && SSticker.mode.station_was_nuked && !operatives_dead())
 		text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
-
 	parts += text
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
