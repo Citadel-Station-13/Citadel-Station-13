@@ -132,43 +132,11 @@
 	if (orbiting)
 		orbiting.Check()
 
-	if(flags_1 & CLEAN_ON_MOVE_1)
-		clean_on_move()
-
 	var/datum/proximity_monitor/proximity_monitor = src.proximity_monitor
 	if(proximity_monitor)
 		proximity_monitor.HandleMove()
 
 	return 1
-
-/atom/movable/proc/clean_on_move()
-	var/turf/tile = loc
-	if(isturf(tile))
-		tile.clean_blood()
-		for(var/A in tile)
-			if(is_cleanable(A))
-				qdel(A)
-			else if(istype(A, /obj/item))
-				var/obj/item/cleaned_item = A
-				cleaned_item.clean_blood()
-			else if(ishuman(A))
-				var/mob/living/carbon/human/cleaned_human = A
-				if(cleaned_human.lying)
-					if(cleaned_human.head)
-						cleaned_human.head.clean_blood()
-						cleaned_human.update_inv_head()
-					if(cleaned_human.wear_suit)
-						cleaned_human.wear_suit.clean_blood()
-						cleaned_human.update_inv_wear_suit()
-					else if(cleaned_human.w_uniform)
-						cleaned_human.w_uniform.clean_blood()
-						cleaned_human.update_inv_w_uniform()
-					if(cleaned_human.shoes)
-						cleaned_human.shoes.clean_blood()
-						cleaned_human.update_inv_shoes()
-					cleaned_human.clean_blood()
-					cleaned_human.wash_cream()
-					to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 
 /atom/movable/Destroy(force)
 	var/inform_admins = (flags_2 & INFORM_ADMINS_ON_RELOCATE_2)
@@ -254,6 +222,12 @@
 		loc = destination
 
 		if(!same_loc)
+			var/turf/oldturf = get_turf(oldloc)
+			var/turf/destturf = get_turf(destination)
+			var/old_z = (oldturf ? oldturf.z : null)
+			var/dest_z = (destturf ? destturf.z : null)
+			if (old_z != dest_z)
+				onTransitZ(old_z, dest_z)
 			destination.Entered(src, oldloc)
 			if(destarea && old_area != destarea)
 				destarea.Entered(src, oldloc)
@@ -275,6 +249,11 @@
 			if(old_area)
 				old_area.Exited(src, null)
 		loc = null
+
+/atom/movable/proc/onTransitZ(old_z,new_z)
+	for (var/item in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
+		var/atom/movable/AM = item
+		AM.onTransitZ(old_z,new_z)
 
 //Called whenever an object moves and by mobs when they attempt to move themselves through space
 //And when an object or action applies a force on src, see newtonian_move() below
@@ -403,7 +382,7 @@
 	for(var/m in buckled_mobs)
 		var/mob/living/buckled_mob = m
 		if(!buckled_mob.Move(newloc, direct))
-			loc = buckled_mob.loc
+			forceMove(buckled_mob.loc)
 			last_move = buckled_mob.last_move
 			inertia_dir = last_move
 			buckled_mob.inertia_dir = last_move
@@ -505,7 +484,7 @@
 	. = ..()
 	. -= "Jump to"
 	.["Follow"] = "?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(src)]"
-	.["Get"] = "?_src=holder;[HrefToken()];admingetmovable=[REF(src)]"
+	.["Get"] = "?_src_=holder;[HrefToken()];admingetmovable=[REF(src)]"
 
 /atom/movable/proc/ex_check(ex_id)
 	if(!ex_id)

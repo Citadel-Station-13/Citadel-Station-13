@@ -47,7 +47,7 @@
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
 		antag_info["team"] = list()
-		var/datum/objective_team/T = A.get_team()
+		var/datum/team/T = A.get_team()
 		if(T)
 			antag_info["team"]["type"] = T.type
 			antag_info["team"]["name"] = T.name
@@ -62,6 +62,7 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
+
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
@@ -91,10 +92,10 @@
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	for(var/client/C in GLOB.clients)
+	/*for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+		C.playtitlemusic(40)*/
 
 	display_report()
 
@@ -102,12 +103,19 @@
 
 	CHECK_TICK
 
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in GLOB.huds)
+		for(var/m in GLOB.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
+
+	CHECK_TICK
 	//Set news report and mode result
 	mode.set_round_result()
 
 	send2irc("Server", "Round just ended.")
 
-	if(length(CONFIG_GET(keyed_string_list/cross_server)))
+	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
 	CHECK_TICK
@@ -331,7 +339,7 @@
 		all_teams |= A.get_team()
 		all_antagonists += A
 
-	for(var/datum/objective_team/T in all_teams)
+	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)
@@ -355,7 +363,7 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br><br>"
+		result += "<br>"
 
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
