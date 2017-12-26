@@ -75,7 +75,12 @@
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
+<<<<<<< HEAD
 		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+=======
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+
+>>>>>>> 0687e88... Merge pull request #33835 from kevinz000/patch-415
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
