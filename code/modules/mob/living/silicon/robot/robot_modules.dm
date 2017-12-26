@@ -352,7 +352,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "k9"
-	moduleselect_icon = "k9"
+	moduleselect_icon = "security"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -387,7 +387,7 @@
 	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
 		/obj/item/clockwork/weapon/ratvarian_spear)
 	cyborg_base_icon = "medihound"
-	moduleselect_icon = "medihound"
+	moduleselect_icon = "medical"
 	can_be_pushed = FALSE
 	hat_offset = INFINITY
 
@@ -409,7 +409,7 @@
 		/obj/item/clockwork/slab/cyborg/janitor,
 		/obj/item/clockwork/replica_fabricator/cyborg)
 	cyborg_base_icon = "scrubpup"
-	moduleselect_icon = "scrubpup"
+	moduleselect_icon = "janitor"
 	hat_offset = INFINITY
 	clean_on_move = TRUE
 
@@ -512,6 +512,37 @@
 	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(CL)
 		CL.reagents.add_reagent("lube", 2 * coeff)
+
+/obj/item/robot_module/clown
+	name = "Clown"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/device/instrument/bikehorn,
+		/obj/item/stamp/clown,
+		/obj/item/bikehorn,
+		/obj/item/bikehorn/airhorn,
+		/obj/item/paint/anycolor,
+		/obj/item/soap/nanotrasen,
+		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
+		/obj/item/razor,					//killbait material
+		/obj/item/lipstick/purple,
+		/obj/item/reagent_containers/spray/waterflower/cyborg,
+		/obj/item/borg/cyborghug/peacekeeper,
+		/obj/item/borg/lollipop/clown,
+		/obj/item/picket_sign/cyborg,
+		/obj/item/reagent_containers/borghypo/clown,
+		/obj/item/extinguisher/mini)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/clown/hacked,
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	moduleselect_icon = "service"
+	cyborg_base_icon = "clown"
+	hat_offset = -2
 
 /obj/item/robot_module/butler
 	name = "Service"

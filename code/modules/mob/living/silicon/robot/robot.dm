@@ -115,9 +115,7 @@
 	ident = rand(1, 999)
 
 	if(!cell)
-		cell = new /obj/item/stock_parts/cell(src)
-		cell.maxcharge = 7500
-		cell.charge = 7500
+		cell = new /obj/item/stock_parts/cell/high(src, 7500)
 
 	if(lawupdate)
 		make_laws()
@@ -829,6 +827,9 @@
 /mob/living/silicon/robot/modules/security
 	set_module = /obj/item/robot_module/security
 
+/mob/living/silicon/robot/modules/clown
+	set_module = /obj/item/robot_module/clown
+
 /mob/living/silicon/robot/modules/peacekeeper
 	set_module = /obj/item/robot_module/peacekeeper
 
@@ -854,8 +855,7 @@
 
 /mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
-	cell.maxcharge = 25000
-	cell.charge = 25000
+	cell = new /obj/item/stock_parts/cell/hyper(src, 25000)
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
@@ -1032,9 +1032,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		flags_1 |= CLEAN_ON_MOVE_1
+		AddComponent(/datum/component/cleaning)
 	else
-		flags_1 &= ~CLEAN_ON_MOVE_1
+		qdel(GetComponent(/datum/component/cleaning))
 
 	hat_offset = module.hat_offset
 

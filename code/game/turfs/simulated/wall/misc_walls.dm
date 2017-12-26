@@ -70,6 +70,10 @@
 	if(realappearence)
 		qdel(realappearence)
 		realappearence = null
+	if(heated)
+		var/mob/camera/eminence/E = get_eminence()
+		if(E)
+			E.superheated_walls--
 	return ..()
 
 /turf/closed/wall/clockwork/ReplaceWithLattice()
@@ -101,7 +105,7 @@
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
 		else
-			O.loc = src
+			O.forceMove(src)
 
 /turf/closed/wall/clockwork/devastate_wall()
 	for(var/i in 1 to 2)
