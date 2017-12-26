@@ -1,3 +1,13 @@
+/datum/emote/sound/carbon/snap
+	key = "snap"
+	key_third_person = "snaps"
+	message = "snaps their fingers."
+	muzzle_ignore = TRUE
+	restraint_check = TRUE
+	emote_type = EMOTE_AUDIBLE
+	sound = 'sound/effects/snap01.ogg'
+	mob_type_allowed_typecache = list(/mob/living/carbon/)
+
 /datum/emote/living/carbon
 	mob_type_allowed_typecache = list(/mob/living/carbon)
 
@@ -67,17 +77,6 @@
 	. = ..()
 	if(!isnum(text2num(params)))
 		return message
-
-/datum/emote/sound/carbon/snap
-	key = "snap"
-	key_third_person = "snaps"
-	message = "snaps their fingers."
-	muzzle_ignore = TRUE
-	restraint_check = TRUE
-	emote_type = EMOTE_AUDIBLE
-	sound = 'sound/effects/snap01.ogg'
-	mob_type_allowed_typecache = list(/mob/living/carbon/)
-
 
 /datum/emote/living/carbon/sign/signal
 	key = "signal"

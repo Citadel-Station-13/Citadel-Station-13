@@ -126,11 +126,6 @@ GAS ANALYZER
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
 
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.has_brain_worms())
-			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
-
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
 	// Damage descriptions
@@ -398,6 +393,7 @@ GAS ANALYZER
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
+
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"

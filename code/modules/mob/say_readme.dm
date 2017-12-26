@@ -11,7 +11,7 @@ This rewrite was needed, but is far from perfect. Report any bugs you come acros
 Radio code, while very much related to saycode, is not something I wanted to touch, so the code related to that may be messy.
 
 If you came here to see how to use saycode, all you will ever really need to call is say(message).
-To have things react when other things speak around them, add the HEAR_1 flag to their flags_1 variable and
+To have things react when other things speak around them, add the HEAR_1 flag to their flags variable and
 override their Hear() proc.
 
 =======================PROCS & VARIABLES=======================
@@ -43,7 +43,7 @@ global procs
 		Attaches span classes around input.
 
 /atom/movable
-	flags_1
+	flags
 		The HEAR_1 flag determines whether something is a hearer or not.
 		Hear() is only called on procs with this flag.
 

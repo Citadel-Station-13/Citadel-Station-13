@@ -1,3 +1,4 @@
+
 /mob
 	var/list/screens = list()
 
@@ -174,4 +175,3 @@
 	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 	show_when_dead = TRUE
-	

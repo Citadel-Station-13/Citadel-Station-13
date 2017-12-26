@@ -12,7 +12,7 @@
 	materials = list(MAT_METAL=10000, MAT_GLASS=2500)
 	var/on = TRUE
 	var/code = 2
-	var/frequency = 1449
+	var/frequency = FREQ_ELECTROPACK
 	var/shock_cooldown = 0
 
 /obj/item/device/electropack/suicide_act(mob/user)
@@ -21,7 +21,7 @@
 
 /obj/item/device/electropack/Initialize()
 	. = ..()
-	SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
 /obj/item/device/electropack/Destroy()
 	SSradio.remove_object(src, frequency)
@@ -67,7 +67,7 @@
 		if(href_list["freq"])
 			SSradio.remove_object(src, frequency)
 			frequency = sanitize_frequency(frequency + text2num(href_list["freq"]))
-			SSradio.add_object(src, frequency, GLOB.RADIO_CHAT)
+			SSradio.add_object(src, frequency, RADIO_SIGNALER)
 		else
 			if(href_list["code"])
 				code += text2num(href_list["code"])
@@ -98,7 +98,7 @@
 	return
 
 /obj/item/device/electropack/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code)
+	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
@@ -144,7 +144,7 @@ Code:
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
-	
+
 /obj/item/device/electropack/shockcollar
 	name = "shock collar"
 	desc = "A reinforced metal collar. It seems to have some form of wiring near the front. Strange.."
@@ -168,7 +168,7 @@ Code:
 	..()
 
 /obj/item/device/electropack/shockcollar/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code)
+	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)

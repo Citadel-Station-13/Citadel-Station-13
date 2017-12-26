@@ -14,7 +14,7 @@
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
-	//	flags_1 = CONDUCT_1
+	//	flags = CONDUCT_1
 
 /obj/structure/lattice/examine(mob/user)
 	..()

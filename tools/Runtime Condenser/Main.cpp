@@ -1,4 +1,6 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 /* Runtime Condenser by Nodrak
  * Cleaned up and refactored by MrStonedOne
  * This will sum up identical runtimes into one, giving a total of how many times it occured. The first occurance
@@ -389,6 +391,7 @@ int main() {
 	return 0;
 }
 =======
+>>>>>>> master
 /* Runtime Condenser by Nodrak
  * Cleaned up and refactored by MrStonedOne
  * This will sum up identical runtimes into one, giving a total of how many times it occured. The first occurance
@@ -425,7 +428,11 @@ int main() {
 
 #define PROGRESS_FPS 10
 #define PROGRESS_BAR_INNER_WIDTH 50
+<<<<<<< HEAD
+#define LINEBUFFER (512*1024) //512KiB
+=======
 #define LINEBUFFER (32*1024) //32KiB
+>>>>>>> master
 
 using namespace std;
 
@@ -523,6 +530,23 @@ inline void string_send(string * &from, string * &to) {
 inline void printprogressbar(unsigned short progress /*as percent*/) {
 	double const modifer = 100.0L/(double)PROGRESS_BAR_INNER_WIDTH;
 	size_t bars = (double)progress/modifer;
+<<<<<<< HEAD
+	cout << "\r[" << string(bars, '=') << ((progress < 100) ? ">" : "") << string(PROGRESS_BAR_INNER_WIDTH-(bars+((progress < 100) ? 1 : 0)), ' ') << "] " << progress << "%";
+	cout.flush();
+}
+
+bool readFromFile() {
+	//Open file to read
+	FILE * inputFile = fopen("Input.txt", "r");
+
+	if (ferror(inputFile))
+		return false;
+
+	fseek(inputFile, 0, SEEK_END);
+	long long fileLength = ftell(inputFile);
+	fseek(inputFile, 0, SEEK_SET);
+	clock_t nextupdate = clock();
+=======
 	cerr << "\r[" << string(bars, '=') << ((progress < 100) ? ">" : "") << string(PROGRESS_BAR_INNER_WIDTH-(bars+((progress < 100) ? 1 : 0)), ' ') << "] " << progress << "%";
 	cerr.flush();
 }
@@ -544,14 +568,19 @@ bool readFromFile(bool isstdin) {
 		nextupdate = clock();
 	}
 	
+>>>>>>> master
 	if (feof(inputFile))
 		return false; //empty file
 	do {
 		//Update our lines
 		forward_progress(inputFile);
 		//progress bar
+<<<<<<< HEAD
+		if (clock() >= nextupdate) {
+=======
 		
 		if (!isstdin && clock() >= nextupdate) {
+>>>>>>> master
 			int dProgress = (int)(((long double)ftell(inputFile) / (long double)fileLength) * 100.0L);
 			printprogressbar(dProgress);
 			nextupdate = clock() + (CLOCKS_PER_SEC/PROGRESS_FPS);
@@ -649,12 +678,19 @@ bool readFromFile(bool isstdin) {
 			}
 		}
 	} while (!feof(inputFile) || !endofbuffer); //Until end of file
+<<<<<<< HEAD
+	printprogressbar(100);
+	cout << endl;
+	return true;
+}
+=======
 	if (!isstdin)
 		printprogressbar(100);
 	cerr << endl;
 	return true;
 }
 
+>>>>>>> master
 bool runtimeComp(const runtime &a, const runtime &b) {
     return a.count > b.count;
 }
@@ -662,6 +698,27 @@ bool runtimeComp(const runtime &a, const runtime &b) {
 bool hardDelComp(const harddel &a, const harddel &b) {
     return a.count > b.count;
 }
+<<<<<<< HEAD
+bool writeToFile() {
+	//Open and clear the file
+	ofstream outputFile("Output.txt", ios::trunc);
+	
+	if(outputFile.is_open()) {
+		outputFile << "Note: The source file, src and usr are all from the FIRST of the identical runtimes. Everything else is cropped.\n\n";
+		if(storedInfiniteLoop.size() > 0)
+			outputFile << "Total unique infinite loops: " << storedInfiniteLoop.size() << endl;
+
+		if(totalInfiniteLoops > 0) 
+			outputFile << "Total infinite loops: " << totalInfiniteLoops << endl << endl;
+
+		outputFile << "Total unique runtimes: " << storedRuntime.size() << endl;
+		outputFile << "Total runtimes: " << totalRuntimes << endl << endl;
+		if(storedHardDel.size() > 0)
+			outputFile << "Total unique hard deletions: " << storedHardDel.size() << endl;
+
+		if(totalHardDels > 0)
+			outputFile << "Total hard deletions: " << totalHardDels << endl << endl;
+=======
 
 bool writeToFile(bool usestdio) {
 	//Open and clear the file
@@ -686,6 +743,7 @@ bool writeToFile(bool usestdio) {
 
 		if(totalHardDels > 0)
 			*output << "Total hard deletions: " << totalHardDels << endl << endl;
+>>>>>>> master
 
 
 		//If we have infinite loops, display them first.
@@ -696,6 +754,25 @@ bool writeToFile(bool usestdio) {
 				infiniteLoops.push_back(it->second);
 			storedInfiniteLoop.clear();
 			sort(infiniteLoops.begin(), infiniteLoops.end(), runtimeComp);
+<<<<<<< HEAD
+			outputFile << "** Infinite loops **";
+			for (int i=0; i < infiniteLoops.size(); i++) {
+				runtime* R = &infiniteLoops[i];
+				outputFile << endl << endl << "The following infinite loop has occurred " << R->count << " time(s).\n"; 
+				outputFile << R->text << endl;
+				if(R->proc.length()) 
+					outputFile << R->proc << endl;
+				if(R->source.length()) 
+					outputFile << R->source << endl;
+				if(R->usr.length()) 
+					outputFile << R->usr << endl;
+				if(R->src.length()) 
+					outputFile << R->src << endl;
+				if(R->loc.length()) 
+					outputFile << R->loc << endl;
+			}
+			outputFile << endl << endl; //For spacing
+=======
 			*output << "** Infinite loops **";
 			for (int i=0; i < infiniteLoops.size(); i++) {
 				runtime* R = &infiniteLoops[i];
@@ -713,11 +790,16 @@ bool writeToFile(bool usestdio) {
 					*output << R->loc << endl;
 			}
 			*output << endl << endl; //For spacing
+>>>>>>> master
 		}
 
 
 		//Do runtimes next
+<<<<<<< HEAD
+		outputFile << "** Runtimes **";
+=======
 		*output << "** Runtimes **";
+>>>>>>> master
 		vector<runtime> runtimes;
 		runtimes.reserve(storedRuntime.size());
 		for (unordered_map<string,runtime>::iterator it=storedRuntime.begin(); it != storedRuntime.end(); it++)
@@ -726,6 +808,26 @@ bool writeToFile(bool usestdio) {
 		sort(runtimes.begin(), runtimes.end(), runtimeComp);
 		for (int i=0; i < runtimes.size(); i++) {
 			runtime* R = &runtimes[i];
+<<<<<<< HEAD
+			outputFile << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n"; 
+			outputFile << R->text << endl;
+			if(R->proc.length()) 
+				outputFile << R->proc << endl;
+			if(R->source.length()) 
+				outputFile << R->source << endl;
+			if(R->usr.length()) 
+				outputFile << R->usr << endl;
+			if(R->src.length()) 
+				outputFile << R->src << endl;
+			if(R->loc.length()) 
+				outputFile << R->loc << endl;
+		}
+		outputFile << endl << endl; //For spacing
+		
+		//and finally, hard deletes
+		if(totalHardDels > 0) {
+			outputFile << endl << "** Hard deletions **";
+=======
 			*output << endl << endl << "The following runtime has occurred " << R->count << " time(s).\n"; 
 			*output << R->text << endl;
 			if(R->proc.length()) 
@@ -744,6 +846,7 @@ bool writeToFile(bool usestdio) {
 		//and finally, hard deletes
 		if(totalHardDels > 0) {
 			*output << endl << "** Hard deletions **";
+>>>>>>> master
 			vector<harddel> hardDels;
 			hardDels.reserve(storedHardDel.size());
 			for (unordered_map<string,harddel>::iterator it=storedHardDel.begin(); it != storedHardDel.end(); it++)
@@ -752,6 +855,12 @@ bool writeToFile(bool usestdio) {
 			sort(hardDels.begin(), hardDels.end(), hardDelComp);
 			for(int i=0; i < hardDels.size(); i++) {
 				harddel* D = &hardDels[i];
+<<<<<<< HEAD
+				outputFile << endl << D->type << " - " << D->count << " time(s).\n";
+			}
+		}
+		outputFile.close();
+=======
 				*output << endl << D->type << " - " << D->count << " time(s).\n";
 			}
 		}
@@ -759,12 +868,26 @@ bool writeToFile(bool usestdio) {
 			outputFile->close();
 			delete outputFile;
 		}
+>>>>>>> master
 	} else {
 		return false;
 	}
 	return true;
 }
 
+<<<<<<< HEAD
+int main() {
+	ios_base::sync_with_stdio(false);
+	ios::sync_with_stdio(false);
+	char exit; //Used to stop the program from immediately exiting
+	cout << "Reading input.\n";
+	if(readFromFile()) {
+		cout << "Input read successfully!\n";
+	} else {
+		cout << "Input failed to open, shutting down.\n";
+		cout << "\nEnter any letter to quit.\n";
+		exit = cin.get();
+=======
 int main(int argc, const char * argv[]) {
 	ios_base::sync_with_stdio(false);
 	ios::sync_with_stdio(false);
@@ -782,10 +905,24 @@ int main(int argc, const char * argv[]) {
 			cerr << "\nEnter any letter to quit.\n";
 			exit = cin.get();
 		}
+>>>>>>> master
 		return 1;
 	}
 
 
+<<<<<<< HEAD
+	cout << "Writing output.\n";
+	if(writeToFile()) {
+		cout << "Output was successful!\n";
+		cout << "\nEnter any letter to quit.\n";
+		exit = cin.get();
+		return 0;
+	} else {
+		cout << "The output file could not be opened, shutting down.\n";
+		cout << "\nEnter any letter to quit.\n";
+		exit = cin.get();
+		return 0;
+=======
 	cerr << "Writing output.\n";
 	if(writeToFile(usestdio)) {
 		cerr << "Output was successful!\n";
@@ -801,8 +938,12 @@ int main(int argc, const char * argv[]) {
 			exit = cin.get();
 		}
 		return 1;
+>>>>>>> master
 	}
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
 >>>>>>> dbccf52... Merge pull request #33702 from MrStonedOne/rc-the-unix-way
+>>>>>>> master

@@ -113,13 +113,6 @@ SUBSYSTEM_DEF(vote)
 	var/restart = 0
 	if(.)
 		switch(mode)
-			if("roundtype")
-				if(SSticker.current_state > GAME_STATE_PREGAME)//Don't change the mode if the round already started.
-					return message_admins("A vote has tried to change the gamemode, but the game has already started. Aborting.")
-				GLOB.master_mode = .
-				SSticker.save_mode(.)
-				to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
-				log_admin("Gamemode has been voted for and switched to: [GLOB.master_mode].")
 			if("restart")
 				if(. == "Restart Round")
 					restart = 1
@@ -178,8 +171,6 @@ SUBSYSTEM_DEF(vote)
 				choices.Add("Restart Round","Continue Playing")
 			if("gamemode")
 				choices.Add(config.votable_modes)
-			if("roundtype")
-				choices.Add("secret", "extended")
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)

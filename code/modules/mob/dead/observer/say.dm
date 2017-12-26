@@ -4,6 +4,7 @@
 	if (!message)
 		return
 
+
 	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
 
 	if(check_emote(message))

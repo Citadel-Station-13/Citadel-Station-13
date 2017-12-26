@@ -374,4 +374,3 @@
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"
-

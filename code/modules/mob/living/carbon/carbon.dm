@@ -8,7 +8,7 @@
 	GLOB.carbon_list += src
 
 /mob/living/carbon/Destroy()
-//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
 	QDEL_LIST(internal_organs)

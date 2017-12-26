@@ -110,6 +110,7 @@ GLOBAL_PROTECT(config_dir)
 				log_config("Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
+				++.
 			continue
 		
 		var/datum/config_entry/E = _entries[entry]

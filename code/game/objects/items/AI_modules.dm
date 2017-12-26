@@ -173,16 +173,16 @@ AI MODULES
 /******************** OneHuman ********************/
 
 /obj/item/aiModule/zeroth/oneHuman
-	name = "'OneCrew' AI Module"
+	name = "'OneHuman' AI Module"
 	var/targetName = ""
-	laws = list("Only SUBJECT is crew.")
+	laws = list("Only SUBJECT is human.")
 
 /obj/item/aiModule/zeroth/oneHuman/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject who is the only crew.", "Who?", user.real_name,MAX_NAME_LEN)
+	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is crew"
+	laws[1] = "Only [targetName] is human"
 	..()
 
 /obj/item/aiModule/zeroth/oneHuman/install(datum/ai_laws/law_datum, mob/user)
