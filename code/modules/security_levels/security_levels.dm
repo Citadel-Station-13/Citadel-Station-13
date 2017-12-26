@@ -76,7 +76,16 @@ GLOBAL_VAR_INIT(security_level, 0)
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
+<<<<<<< HEAD
 		SSblackbox.record_feedback("tally", "security_level_changes", 1, level)
+=======
+		if(level >= SEC_LEVEL_RED)
+			for(var/obj/machinery/door/D in GLOB.machines)
+				if(D.red_alert_access)
+					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
+					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
+>>>>>>> c4a4959... Locks up Medical Storage a bit more tightly and adds framework for doors to ignore access reqs during red alert (#33686)
 	else
 		return
 
