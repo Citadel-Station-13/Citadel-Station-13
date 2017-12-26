@@ -365,8 +365,4 @@ obj/docking_port/stationary/public_mining_dock
 #undef BAD_ZLEVEL
 #undef BAD_AREA
 #undef BAD_COORDS
-<<<<<<< HEAD
-#undef ZONE_SET
-=======
 #undef BAD_TURF
->>>>>>> 19e2a76... minor set_landing_zone() refactor (#33780)
