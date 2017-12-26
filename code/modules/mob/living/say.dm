@@ -293,6 +293,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return 0
 
 	return 1
+	
+/mob/living/proc/check_emote(message)
+	if(copytext(message, 1, 2) == "*")
+		emote(copytext(message, 2))
+		return 1
 
 /mob/living/proc/get_message_mode(message)
 	var/key = copytext(message, 1, 2)
