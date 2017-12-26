@@ -187,7 +187,6 @@
 
 /datum/brain_trauma/severe/discoordination/on_lose()
 	owner.remove_disability(MONKEYLIKE, TRAUMA_DISABILITY)
-	..()
 
 /datum/brain_trauma/severe/pacifism
 	name = "Traumatic Non-Violence"
@@ -197,9 +196,9 @@
 	lose_text = "<span class='notice'>You no longer feel compelled to not harm.</span>"
 
 /datum/brain_trauma/severe/pacifism/on_gain()
-	owner.add_disability(PACIFISM, TRAUMA_DISABILITY)
+	owner.add_disability(DISABILITY_PACIFISM, TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
-	owner.remove_disability(PACIFISM, TRAUMA_DISABILITY)
-	..()
+	owner.remove_disability(DISABILITY_PACIFISM, TRAUMA_DISABILITY)
+..()

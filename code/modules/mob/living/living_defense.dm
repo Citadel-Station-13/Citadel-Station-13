@@ -135,11 +135,9 @@
 	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
-
 	if(user.has_disability(PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -196,7 +194,6 @@
 	if(has_disability(PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
-
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
@@ -213,7 +210,6 @@
 		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -232,7 +228,6 @@
 		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
@@ -258,7 +253,6 @@
 			if(L.has_disability(PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
-
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
