@@ -146,13 +146,13 @@
 	var/y0 = bounds[2]
 	var/x1 = bounds[3]
 	var/y1 = bounds[4]
-	if(x0 <= x1 && !IsInRange(T.x, x0, x1))
+	if(x0 <= x1 && !ISINRANGE(T.x, x0, x1))
 		return FALSE
-	else if(!IsInRange(T.x, x1, x0))
+	else if(!ISINRANGE(T.x, x1, x0))
 		return FALSE
-	if(y0 <= y1 && !IsInRange(T.y, y0, y1))
+	if(y0 <= y1 && !ISINRANGE(T.y, y0, y1))
 		return FALSE
-	else if(!IsInRange(T.y, y1, y0))
+	else if(!ISINRANGE(T.y, y1, y0))
 		return FALSE
 	return TRUE
 
@@ -433,7 +433,7 @@
 
 	for(var/i in 1 to old_turfs.len)
 		var/turf/oldT = old_turfs[i]
-		if(!oldT || !istype(oldT, area_type))
+		if(!oldT || !istype(oldT.loc, area_type))
 			continue
 		var/area/old_area = oldT.loc
 		underlying_area.contents += oldT
@@ -460,7 +460,7 @@
 
 	for(var/i in 1 to L0.len)
 		var/turf/T0 = L0[i]
-		if(!T0 || !istype(T0, area_type))
+		if(!T0 || !istype(T0.loc, area_type))
 			continue
 		var/turf/T1 = L1[i]
 		if(!T1)
@@ -534,7 +534,7 @@
 		rotation = dir2angle(new_dock.dir)-dir2angle(dir)
 		if ((rotation % 90) != 0)
 			rotation += (rotation % 90) //diagonal rotations not allowed, round up
-		rotation = SimplifyDegrees(rotation)
+		rotation = SIMPLIFY_DEGREES(rotation)
 
 	if(!movement_direction)
 		movement_direction = turn(preferred_direction, 180)
@@ -745,7 +745,7 @@
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
-		if(!T || !istype(T, area_type))
+		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/thing2 in T)
 			var/atom/movable/AM = thing2
@@ -888,13 +888,13 @@
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
 		if(initial_engines > 0)
 			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
-		return Clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return CLAMP(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 	if(new_value < initial_engines)
 		var/delta = initial_engines - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
-		return Clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return CLAMP(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 
 
 /obj/docking_port/mobile/proc/in_flight()

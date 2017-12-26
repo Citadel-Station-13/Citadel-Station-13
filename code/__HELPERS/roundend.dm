@@ -47,7 +47,7 @@
 		antag_info["antagonist_name"] = A.name //For auto and custom roles
 		antag_info["objectives"] = list()
 		antag_info["team"] = list()
-		var/datum/objective_team/T = A.get_team()
+		var/datum/team/T = A.get_team()
 		if(T)
 			antag_info["team"]["type"] = T.type
 			antag_info["team"]["name"] = T.name
@@ -71,10 +71,10 @@
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	for(var/client/C in GLOB.clients)
+	/*for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+		C.playtitlemusic(40)*/
 
 	display_report()
 
@@ -82,12 +82,20 @@
 
 	CHECK_TICK
 
+	// Add AntagHUD to everyone, see who was really evil the whole time!
+	for(var/datum/atom_hud/antag/H in GLOB.huds)
+		for(var/m in GLOB.player_list)
+			var/mob/M = m
+			H.add_hud_to(M)
+
+	CHECK_TICK
+
 	//Set news report and mode result
 	mode.set_round_result()
-	
+
 	send2irc("Server", "Round just ended.")
-	
-	if(length(CONFIG_GET(keyed_string_list/cross_server)))
+
+	if(CONFIG_GET(string/cross_server_address))
 		send_news_report()
 
 	CHECK_TICK
@@ -142,15 +150,13 @@
 	parts += mode.special_report()
 
 	CHECK_TICK
-	
+
 	//AI laws
 	parts += law_report()
-	
 	CHECK_TICK
 
 	//Antagonists
 	parts += antag_report()
-	
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -202,7 +208,6 @@
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)
 	var/list/report_parts = list()
-	
 	report_parts += personal_report(C)
 	report_parts += common_report
 
@@ -212,7 +217,6 @@
 	roundend_report.set_content(report_parts.Join())
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend",'html/browser/roundend.css')
-	
 	roundend_report.open(0)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C)
@@ -310,8 +314,7 @@
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		all_teams |= A.get_team()
 		all_antagonists += A
-
-	for(var/datum/objective_team/T in all_teams)
+	for(var/datum/team/T in all_teams)
 		result += T.roundend_report()
 		for(var/datum/antagonist/X in all_antagonists)
 			if(X.get_team() == T)
@@ -335,8 +338,7 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br><br>"
-	
+		result += "<br>"
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
 		result += last.roundend_report_footer()
