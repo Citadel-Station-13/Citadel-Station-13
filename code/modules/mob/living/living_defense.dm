@@ -135,11 +135,9 @@
 	if(!(status_flags & CANPUSH))
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
-
-	if(user.disabilities & PACIFISM)
+	if(user.has_disability(PACIFISM))
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
-
 	grippedby(user)
 
 //proc to upgrade a simple pull into a more aggressive grab.
@@ -193,10 +191,9 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-	if(disabilities & PACIFISM)
+	if(has_disability(PACIFISM))
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
-
 	if (stat != DEAD)
 		add_logs(M, src, "attacked")
 		M.do_attack_animation(src)
@@ -210,10 +207,9 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-		if(M.disabilities & PACIFISM)
+		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		M.do_attack_animation(src)
@@ -229,10 +225,9 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-		if(M.disabilities & PACIFISM)
+		if(M.has_disability(PACIFISM))
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
-
 		if(M.is_muzzled() || (M.wear_mask && M.wear_mask.flags_cover & MASKCOVERSMOUTH))
 			to_chat(M, "<span class='warning'>You can't bite with your mouth covered!</span>")
 			return FALSE
@@ -255,10 +250,9 @@
 			return FALSE
 
 		else
-			if(L.disabilities & PACIFISM)
+			if(L.has_disability(PACIFISM))
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
-
 			L.do_attack_animation(src)
 			if(prob(90))
 				add_logs(L, src, "attacked")
@@ -280,7 +274,7 @@
 			grabbedby(M)
 			return FALSE
 		if("harm")
-			if(M.disabilities & PACIFISM)
+			if(M.has_disability(PACIFISM))
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
@@ -370,7 +364,7 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
+	if(get_eye_protection() < intensity && (override_blindness_check || !(has_disability(BLIND))))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return 1
