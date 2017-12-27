@@ -43,10 +43,16 @@ other types of metals and chemistry for reagents).
 	var/lathe_time_factor = 1			//How many times faster than normal is this to build on the protolathe
 	var/dangerous_construction = FALSE	//notify and log for admin investigations if this is printed.
 	var/departmental_flags = ALL			//bitflags for deplathes.
+	var/list/datum/techweb_node/unlocked_by = list()
+	var/icon_cache
 
 /datum/design/Destroy()
 	CRASH("DESIGN DATUMS SHOULD NOT EVER BE DESTROYED AS THEY ARE ONLY MEANT TO BE IN A GLOBAL LIST AND REFERENCED FOR US.")
 	return ..()
+
+/datum/design/proc/icon_html(client/user)
+	send_asset(user, "design_[id].png", FALSE)
+	return "<img class='icon' src=\"design_[id].png\">"
 
 ////////////////////////////////////////
 //Disks for transporting design datums//

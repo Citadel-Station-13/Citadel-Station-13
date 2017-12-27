@@ -1,6 +1,0 @@
-author: "SpiderPsycho"
-delete-after: True
-changes: 
-  - rscadd: "Added insects without fuzz"
-  - rscdel: "Removed fuzz"
-  - tweak: "changed the name of the fuzzless sprites to insects so the character creation can call them properly."
