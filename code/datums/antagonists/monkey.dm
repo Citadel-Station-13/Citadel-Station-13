@@ -167,4 +167,4 @@
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_infectees)
-return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
