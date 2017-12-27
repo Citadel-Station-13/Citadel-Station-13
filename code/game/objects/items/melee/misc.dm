@@ -99,11 +99,7 @@
 		return ..()
 
 	add_fingerprint(user)
-<<<<<<< HEAD
-	if((CLUMSY in user.disabilities) && prob(50))
-=======
 	if((user.has_disability(DISABILITY_CLUMSY)) && prob(50))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class ='danger'>You club yourself over the head.</span>")
 		user.Knockdown(60 * force)
 		if(ishuman(user))

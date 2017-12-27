@@ -42,11 +42,7 @@
 	lose_text = "<span class='notice'>You feel smart again.</span>"
 
 /datum/brain_trauma/mild/dumbness/on_gain()
-<<<<<<< HEAD
-	owner.disabilities |= DUMB
-=======
 	owner.add_disability(DISABILITY_DUMB, TRAUMA_DISABILITY)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_life()
@@ -58,11 +54,7 @@
 	..()
 
 /datum/brain_trauma/mild/dumbness/on_lose()
-<<<<<<< HEAD
-	owner.disabilities &= ~DUMB
-=======
 	owner.remove_disability(DISABILITY_DUMB, TRAUMA_DISABILITY)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 	owner.derpspeech = 0
 	..()
 

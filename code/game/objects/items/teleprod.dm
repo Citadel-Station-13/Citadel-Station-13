@@ -8,11 +8,7 @@
 
 /obj/item/melee/baton/cattleprod/teleprod/attack(mob/living/carbon/M, mob/living/carbon/user)//handles making things teleport when hit
 	..()
-<<<<<<< HEAD
-	if(status && user.disabilities & CLUMSY && prob(50))
-=======
 	if(status && user.has_disability(DISABILITY_CLUMSY) && prob(50))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		user.visible_message("<span class='danger'>[user] accidentally hits themself with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50))//honk honk

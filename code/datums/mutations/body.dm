@@ -85,20 +85,12 @@
 /datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities |= CLUMSY
-=======
 	owner.add_disability(DISABILITY_CLUMSY, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 /datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities &= ~CLUMSY
-=======
 	owner.remove_disability(DISABILITY_CLUMSY, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 
 //Tourettes causes you to randomly stand in place and shout.
@@ -132,20 +124,12 @@
 /datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities |= DEAF
-=======
 	owner.add_disability(DISABILITY_DEAF, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 /datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities &= ~DEAF
-=======
 	owner.remove_disability(DISABILITY_DEAF, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 
 //Monified turns you into a monkey.

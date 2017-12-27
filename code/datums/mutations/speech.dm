@@ -30,20 +30,12 @@
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities |= MUTE
-=======
 	owner.add_disability(DISABILITY_MUTE, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 /datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-<<<<<<< HEAD
-	owner.disabilities &= ~MUTE
-=======
 	owner.remove_disability(DISABILITY_MUTE, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 
 /datum/mutation/human/smile
