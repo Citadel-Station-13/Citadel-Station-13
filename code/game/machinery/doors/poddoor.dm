@@ -8,6 +8,7 @@
 	explosion_block = 3
 	heat_proof = TRUE
 	safe = FALSE
+<<<<<<< HEAD
 	max_integrity = 600
 	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
 	resistance_flags = FIRE_PROOF
@@ -15,6 +16,15 @@
 
 /obj/machinery/door/poddoor/preopen
 	icon_state = "open"
+=======
+	max_integrity = 600
+	armor = list(melee = 50, bullet = 100, laser = 100, energy = 100, bomb = 50, bio = 100, rad = 100, fire = 100, acid = 70)
+	resistance_flags = FIRE_PROOF
+	damage_deflection = 70
+	
+/obj/machinery/door/poddoor/preopen
+	icon_state = "open"
+>>>>>>> 97881b6... Merge pull request #33858 from nero1024/blastdoor-sound
 	density = FALSE
 	opacity = 0
 
@@ -34,6 +44,7 @@
 		INVOKE_ASYNC(src, .proc/close)
 
 /obj/machinery/door/poddoor/CollidedWith(atom/movable/AM)
+<<<<<<< HEAD
 	if(density)
 		return 0
 	else
@@ -64,3 +75,37 @@
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
 	if(stat & NOPOWER)
 		open(1)
+=======
+	if(density)
+		return 0
+	else
+		return ..()
+
+//"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
+/obj/machinery/door/poddoor/ex_act(severity, target)
+	if(severity == 3)
+		return
+	..()
+
+/obj/machinery/door/poddoor/do_animate(animation)
+	switch(animation)
+		if("opening")
+			flick("opening", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
+		if("closing")
+			flick("closing", src)
+			playsound(src, 'sound/machines/blastdoor.ogg', 30, 1)
+
+/obj/machinery/door/poddoor/update_icon()
+	if(density)
+		icon_state = "closed"
+	else
+		icon_state = "open"
+
+/obj/machinery/door/poddoor/try_to_activate_door(mob/user)
+ 	return
+
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+	if(stat & NOPOWER)
+		open(1)
+>>>>>>> 97881b6... Merge pull request #33858 from nero1024/blastdoor-sound
