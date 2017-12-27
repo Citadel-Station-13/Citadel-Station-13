@@ -13,7 +13,7 @@
 	. = ..()
 	SSticker.mode.ape_infectees += owner
 	owner.special_role = "Infected Monkey"
-
+  
 	var/datum/disease/D = new /datum/disease/transformation/jungle_fever/monkeymode
 	if(!owner.current.HasDisease(D))
 		D.affected_mob = owner
@@ -143,7 +143,7 @@
 		return DISEASE_LIVED
 	return MONKEYS_DIED
 
-/datum/objective_team/monkey/roundend_report()
+/datum/team/monkey/roundend_report()
 	var/list/parts = list()
 	switch(get_result())
 		if(MONKEYS_ESCAPED)
@@ -167,4 +167,4 @@
 	if(LAZYLEN(monkeys))
 		parts += "<span class='header'>The monkeys were:</span>"
 		parts += printplayerlist(SSticker.mode.ape_infectees)
-	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
+return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

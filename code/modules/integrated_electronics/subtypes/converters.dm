@@ -160,10 +160,10 @@
 
 /obj/item/integrated_circuit/converter/concatenator/do_work()
 	var/result = null
-	for(var/datum/integrated_io/I in inputs)
-		I.pull_data()
-		if(!isnull(I.data))
-			result = result + I.data
+	for(var/k in 1 to inputs.len)
+		var/I = get_pin_data(IC_INPUT, k)
+		if(!isnull(I))
+			result = result + I
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -265,7 +265,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToDegrees(incoming)
+		result = TODEGREES(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()
@@ -283,7 +283,7 @@
 	pull_data()
 	var/incoming = get_pin_data(IC_INPUT, 1)
 	if(!isnull(incoming))
-		result = ToRadians(incoming)
+		result = TORADIANS(incoming)
 
 	set_pin_data(IC_OUTPUT, 1, result)
 	push_data()

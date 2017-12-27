@@ -1,0 +1,4 @@
+author: "Xhuis"
+delete-after: True
+changes: 
+  - rscadd: "Maintenance drones and cogscarabs can now spawn with holiday-related hats on some holidays!"
