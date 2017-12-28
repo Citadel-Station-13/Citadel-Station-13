@@ -44,9 +44,7 @@
 		C.forceMove(src)
 		cell = C
 		return
-	cell = new(src)
-	cell.charge = 30000
-	cell.maxcharge = 30000
+	cell = new /obj/item/stock_parts/cell/hyper(src)
 
 
 /obj/mecha/combat/gygax/GrantActions(mob/living/user, human_occupant = 0)
@@ -65,4 +63,3 @@
 /obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
-

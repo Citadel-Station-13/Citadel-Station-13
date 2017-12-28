@@ -705,56 +705,60 @@
 
 /datum/admins/proc/output_all_devil_info()
 	var/devil_number = 0
-	for(var/D in SSticker.mode.devils)
+	for(var/datum/mind/D in SSticker.mode.devils)
 		devil_number++
-		to_chat(usr, "Devil #[devil_number]:<br><br>" + SSticker.mode.printdevilinfo(D))
+		var/datum/antagonist/devil/devil = D.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, "Devil #[devil_number]:<br><br>" + devil.printdevilinfo())
 	if(!devil_number)
 		to_chat(usr, "<b>No Devils located</b>" )
 
 /datum/admins/proc/output_devil_info(mob/living/M)
 	if(is_devil(M))
-		to_chat(usr, SSticker.mode.printdevilinfo(M))
+		var/datum/antagonist/devil/devil = M.mind.has_antag_datum(/datum/antagonist/devil)
+		to_chat(usr, devil.printdevilinfo())
 	else
 		to_chat(usr, "<b>[M] is not a devil.")
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
 		return
-	var/dat = "<html><head><title>Manage Free Slots</title></head><body>"
+	var/datum/browser/browser = new(usr, "jobmanagement", "Manage Free Slots", 520)
+	var/list/dat = list()
 	var/count = 0
 
-	if(!SSticker.HasRoundStarted())
-		alert(usr, "You cannot manage jobs before the round starts!")
+	if(!SSjob.initialized)
+		alert(usr, "You cannot manage jobs before the job subsystem is initialized!")
 		return
 
-	for(var/datum/job/job in SSjob.occupations)
+	dat += "<table>"
+
+	for(var/j in SSjob.occupations)
+		var/datum/job/job = j
 		count++
 		var/J_title = html_encode(job.title)
 		var/J_opPos = html_encode(job.total_positions - (job.total_positions - job.current_positions))
 		var/J_totPos = html_encode(job.total_positions)
-		if(job.total_positions < 0)
-			dat += "[J_title]: [J_opPos]   (unlimited)"
-		else
-			dat += "[J_title]: [J_opPos]/[J_totPos]"
+		dat += "<tr><td>[J_title]:</td> <td>[J_opPos]/[job.total_positions < 0 ? " (unlimited)" : J_totPos]"
 
 		if(job.title == "AI" || job.title == "Cyborg")
-			dat += "   (Cannot Late Join)<br>"
+			dat += " (Cannot Late Join)</td>"
 			continue
-		if(job.total_positions >= 0)
-			dat += "   <A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A>  |  "
-			if(job.total_positions > job.current_positions)
-				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A>  |  "
-			else
-				dat += "Remove  |  "
-			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A>"
 		else
-			dat += "   <A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A>"
-		dat += "<br>"
+			dat += "</td>"
+		dat += "<td>"
+		if(job.total_positions >= 0)
+			dat += "<A href='?src=[REF(src)];[HrefToken()];addjobslot=[job.title]'>Add</A> | "
+			if(job.total_positions > job.current_positions)
+				dat += "<A href='?src=[REF(src)];[HrefToken()];removejobslot=[job.title]'>Remove</A> | "
+			else
+				dat += "Remove | "
+			dat += "<A href='?src=[REF(src)];[HrefToken()];unlimitjobslot=[job.title]'>Unlimit</A></td>"
+		else
+			dat += "<A href='?src=[REF(src)];[HrefToken()];limitjobslot=[job.title]'>Limit</A></td>"
 
-	dat += "</body>"
-	var/winheight = 100 + (count * 20)
-	winheight = min(winheight, 690)
-	usr << browse(dat, "window=players;size=375x[winheight]")
+	browser.height = min(100 + count * 20, 650)
+	browser.set_content(dat.Join())
+	browser.open()
 
 /datum/admins/proc/create_or_modify_area()
 	set category = "Debug"

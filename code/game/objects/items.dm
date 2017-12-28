@@ -63,7 +63,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/breakouttime = 0
 	var/being_removed = FALSE
 	var/list/materials
-	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 	var/emagged = FALSE
 
@@ -119,6 +118,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
 	var/icon_override = null
+
+	//Grinder vars
+	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/Initialize()
 	if (!materials)
@@ -197,28 +200,35 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/size = weightclass2text(src.w_class)
 	to_chat(user, "[pronoun] a [size] item." )
 
-	if(user.research_scanner) //Mob has a research scanner active.
-		var/msg = "*--------* <BR>"
+	if(!user.research_scanner)
+		return
+	var/list/input = techweb_item_boost_check(src)
+	if(input)
+		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
+		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
+		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
+		for(var/datum/techweb_node/N in input)
+			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
+			if(SSresearch.science_tech.researched_nodes[N])
+				res += str
+			else if(SSresearch.science_tech.boosted_nodes[N])
+				boosted += str
+			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
+				output += str
+		var/list/combine = output + res + boosted
+		var/strout = combine.Join("<br>")
+		to_chat(user, strout)
 
-		if(origin_tech)
-			msg += "<span class='notice'>Testing potentials:</span><BR>"
-			var/list/techlvls = params2list(origin_tech)
-			for(var/T in techlvls) //This needs to use the better names.
-				msg += "Tech: [CallTechName(T)] | magnitude: [techlvls[T]] <BR>"
-		else
-			msg += "<span class='danger'>No tech origins detected.</span><BR>"
+	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
+	if(materials.len)
+		for(var/mat in materials)
+			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+	else
+		msg += "<span class='danger'>No extractable materials detected.</span>"
+	msg += "*--------*"
+	to_chat(user, msg.Join("<br>"))
 
-
-		if(materials.len)
-			msg += "<span class='notice'>Extractable materials:<BR>"
-			for(var/mat in materials)
-				msg += "[CallMaterialName(mat)]<BR>" //Capitize first word, remove the "$"
-		else
-			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
-		msg += "*--------*"
-		to_chat(user, msg)
-
-/obj/item/proc/speechModification(message)		//For speech modification by mask slot items.
+/obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
 
 /obj/item/interact(mob/user)
@@ -275,7 +285,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	add_fingerprint(user)
 	if(!user.put_in_active_hand(src))
 		dropped(user)
-
 
 /obj/item/attack_paw(mob/user)
 	if(!user)
@@ -375,6 +384,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	progress.update(progress.goal - things.len)
 	return FALSE
 
+/obj/item/proc/GetDeconstructableContents()
+	return GetAllContents() - src
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
@@ -387,12 +399,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return ITALICS | REDUCE_RANGE
 
 /obj/item/proc/dropped(mob/user)
+	SendSignal(COMSIG_ITEM_DROPPED, user)
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.Remove(user)
 	if(DROPDEL_1 & flags_1)
 		qdel(src)
 	in_inventory = FALSE
+	SendSignal(COMSIG_ITEM_DROPPED,user)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -418,10 +432,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // for items that can be placed in multiple slots
 // note this isn't called during the initial dressing of a player
 /obj/item/proc/equipped(mob/user, slot)
+	SendSignal(COMSIG_ITEM_EQUIPPED, user, slot)
 	for(var/X in actions)
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	SendSignal(COMSIG_ITEM_EQUIPPED,user,slot)
 	in_inventory = TRUE
 
 //sometimes we only want to grant the item's action if it's equipped in a specific slot.
@@ -523,9 +539,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.disabilities & (NEARSIGHT | BLIND)))
-			if(M.become_nearsighted())
-				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		if(!(M.has_disability(BLIND) || M.has_disability(NEARSIGHT)))
+			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_all_held_items())
@@ -534,8 +550,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.Unconscious(20)
 			M.Knockdown(40)
 		if (prob(eyes.eye_damage - 10 + 1))
-			if(M.become_blind())
-				to_chat(M, "<span class='danger'>You go blind!</span>")
+			M.become_blind(EYE_DAMAGE)
+			to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/clean_blood()
 	. = ..()
@@ -669,6 +685,15 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/on_mob_death(mob/living/L, gibbed)
 
+/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+	return TRUE
+
+ //Called BEFORE the object is ground up - use this to change grind results based on conditions
+ //Use "return -1" to prevent the grinding from occurring
+/obj/item/proc/on_grind()
+
+/obj/item/proc/on_juice()
+
 /obj/item/proc/set_force_string()
 	switch(force)
 		if(0 to 4)
@@ -704,4 +729,3 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/MouseExited()
 	deltimer(tip_timer)//delete any in-progress timer if the mouse is moved off the item before it finishes
 	closeToolTip(usr)
-

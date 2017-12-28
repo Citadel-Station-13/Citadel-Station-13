@@ -1,0 +1,5 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Emagged cleanbots can acid people again"
+  - bugfix: "Headgear worn by monkeys can be affected by acid"

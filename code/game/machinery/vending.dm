@@ -79,6 +79,7 @@
 	last_slogan = world.time + rand(0, slogan_delay)
 	power_change()
 
+
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
@@ -174,7 +175,7 @@
 		for(var/datum/data/vending_product/machine_content in machine)
 			if(refill.charges[charge_type] == 0)
 				break
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = CEILING(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges, 1)
 			if(restock > refill.charges[charge_type])
 				restock = refill.charges[charge_type]
 			machine_content.amount += restock
@@ -1174,6 +1175,23 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	armor = list(melee = 100, bullet = 100, laser = 100, energy = 100, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/donksoft
+
+/obj/machinery/vending/games
+	name = "\improper Good Clean Fun"
+	desc = "Vends things that the Captain and Head of Personnel are probably not going to appreciate you fiddling with instead of your job..."
+	product_ads = "Escape to a fantasy world!;Fuel your gambling addiction!;Ruin your friendships!;Roll for initative!;Elves and dwarves!;Paranoid computers!;Totally not satanic!;Fun times forever!"
+	icon_state = "games"
+	products = list(
+		/obj/item/toy/cards/deck = 5,
+		/obj/item/storage/pill_bottle/dice = 10,
+		/obj/item/toy/cards/deck/cas = 3,
+		/obj/item/toy/cards/deck/cas/black = 3)
+	contraband = list(/obj/item/dice/fudge = 9)
+	refill_canister = /obj/item/vending_refill/games
+
+
+/obj/machinery/vending/onTransitZ()
+	return
 
 #undef STANDARD_CHARGE
 #undef CONTRABAND_CHARGE

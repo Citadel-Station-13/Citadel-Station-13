@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - code_imp: "The R&D console has been made more responsive by tweaking how design icons are loaded."

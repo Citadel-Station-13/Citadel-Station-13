@@ -600,14 +600,6 @@
 	build_path = /obj/item/device/electropack
 	category = list("hacked", "Tools")
 
-/datum/design/shock_collar
-	name = "Shock Collar"
-	id = "shock_collar"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2000)
-	build_path = /obj/item/device/electropack/shockcollar
-	category = list("hacked", "Security")
-
 /datum/design/large_welding_tool
 	name = "Industrial Welding Tool"
 	id = "large_welding_tool"
@@ -681,7 +673,7 @@
 	category = list("hacked", "Security")
 
 /datum/design/a357
-	name = "Ammo Box (.357)"
+	name = "Speed Loader (.357)"
 	id = "a357"
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 30000)
@@ -822,3 +814,12 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
+
+//CITADEL
+/datum/design/shock_collar
+	name = "Shock Collar"
+	id = "shock_collar"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 2000)
+	build_path = /obj/item/device/electropack/shockcollar
+	category = list("hacked", "Security")

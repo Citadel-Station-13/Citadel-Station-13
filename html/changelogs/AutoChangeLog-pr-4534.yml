@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "The auxiliary mining base can no longer be placed on top of lava, indestructible turfs, or inside particularly large ruins."

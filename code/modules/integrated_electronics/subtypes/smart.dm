@@ -12,7 +12,6 @@
 	outputs = list("dir" = IC_PINTYPE_DIR)
 	activators = list("calculate dir" = IC_PINTYPE_PULSE_IN, "on calculated" = IC_PINTYPE_PULSE_OUT)
 	spawn_flags = IC_SPAWN_RESEARCH
-	origin_tech = list(TECH_ENGINEERING = 4, TECH_DATA = 5)
 	power_draw_per_use = 40
 
 /obj/item/integrated_circuit/smart/basic_pathfinder/do_work()
@@ -28,6 +27,6 @@
 		push_data()
 		return // Can't see the target.
 
-	set_pin_data(IC_OUTPUT, 1, get_dir(get_turf(src), get_turf(A)))
+	set_pin_data(IC_OUTPUT, 1, get_dir(get_turf(src), get_step_towards2(get_turf(src),A)))
 	push_data()
 	activate_pin(2)

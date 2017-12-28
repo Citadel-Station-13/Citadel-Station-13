@@ -15,7 +15,6 @@ GLOBAL_LIST_EMPTY(PDAs)
 	flags_1 = NOBLUDGEON_1
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = SLOT_ID | SLOT_BELT
-	origin_tech = "programming=2"
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0, fire = 100, acid = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -544,7 +543,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 					if("2")		// Eject pAI device
 						var/turf/T = get_turf(src.loc)
 						if(T)
-							pai.loc = T
+							pai.forceMove(T)
 
 //LINK FUNCTIONS===================================
 
@@ -579,7 +578,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 			M.put_in_hands(id)
 			to_chat(usr, "<span class='notice'>You remove the ID from the [name].</span>")
 		else
-			id.loc = get_turf(src)
+			id.forceMove(drop_location())
 		id = null
 		update_icon()
 

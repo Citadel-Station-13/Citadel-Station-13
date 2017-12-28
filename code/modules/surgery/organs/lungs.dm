@@ -111,7 +111,7 @@
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max)
 			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES]/safe_oxygen_max) * 10
-			H.apply_damage_type(Clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
+			H.apply_damage_type(CLAMP(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
 		else
 			H.clear_alert("too_much_oxy")
@@ -139,7 +139,7 @@
 	if(safe_nitro_max)
 		if(N2_pp > safe_nitro_max)
 			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
-			H.apply_damage_type(Clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
+			H.apply_damage_type(CLAMP(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
 			H.throw_alert("too_much_nitro", /obj/screen/alert/too_much_nitro)
 		else
 			H.clear_alert("too_much_nitro")
@@ -205,7 +205,7 @@
 	if(safe_toxins_max)
 		if(Toxins_pp > safe_toxins_max)
 			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_toxins_max) * 10
-			H.apply_damage_type(Clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
+			H.apply_damage_type(CLAMP(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
 			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
 		else
 			H.clear_alert("too_much_tox")
@@ -356,7 +356,6 @@
 	name = "cybernetic lungs"
 	desc = "A cybernetic version of the lungs found in traditional humanoid entities. It functions the same as an organic lung and is merely meant as a replacement."
 	icon_state = "lungs-c"
-	origin_tech = "biotech=4"
 
 /obj/item/organ/lungs/cybernetic/emp_act()
 	owner.losebreath = 20
@@ -366,8 +365,6 @@
 	name = "upgraded cybernetic lungs"
 	desc = "A more advanced version of the stock cybernetic lungs. They are capable of filtering out lower levels of toxins and carbon dioxide."
 	icon_state = "lungs-c-u"
-	origin_tech = "biotech=5"
-
 	safe_toxins_max = 20
 	safe_co2_max = 20
 

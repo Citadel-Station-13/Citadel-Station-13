@@ -20,7 +20,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/list/arguments = args.Copy(2)
 	new type(arglist(arguments))
 
-
 /datum/atom_hud/alternate_appearance
 	var/appearance_key
 
@@ -79,6 +78,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		QDEL_NULL(ghost_appearance)
 
 /datum/atom_hud/alternate_appearance/basic/add_to_hud(atom/A)
+	LAZYINITLIST(A.hud_list)
 	A.hud_list[appearance_key] = theImage
 	. = ..()
 
