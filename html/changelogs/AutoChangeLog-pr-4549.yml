@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - bugfix: "Praise the lord! The shift+scroll hotkey to zoom in/out as a ghost works properly again!"
