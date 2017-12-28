@@ -11,6 +11,7 @@
 	var/icon/cyborg_icon_override
 	var/has_snowflake_deadsprite
 	var/cyborg_pixel_offset
+	var/moduleselect_alternate_icon
 
 /obj/item/robot_module/k9
 	name = "Security K-9 Unit module"
