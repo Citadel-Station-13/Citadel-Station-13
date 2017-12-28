@@ -1,5 +1,6 @@
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
 	var/clients = GLOB.player_list.len
+<<<<<<< HEAD
 	var/surviving_humans = 0
 	var/surviving_total = 0
 	var/ghosts = 0
@@ -36,6 +37,22 @@
 	gather_antag_success_rate()
 
 /datum/controller/subsystem/ticker/proc/gather_antag_success_rate()
+=======
+	var/popcount = count_survivors()
+	SSblackbox.record_feedback("nested tally", "round_end_stats", clients, list("clients"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_GHOSTS], list("ghosts"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_HUMAN_SURVIVORS], list("survivors", "human"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_SURVIVORS], list("survivors", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_HUMAN_ESCAPEES], list("escapees", "human"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_ESCAPEES], list("escapees", "total"))
+	//Antag information
+	gather_antag_data()
+
+	//Nuke disk
+	record_nuke_disk_location()
+
+/datum/controller/subsystem/ticker/proc/gather_antag_data()
+>>>>>>> d863eb4... Adds roundend nuke disk location tracking to feedback. (#33660)
 	var/team_gid = 1
 	var/list/team_ids = list()
 
@@ -63,6 +80,27 @@
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
+<<<<<<< HEAD
+=======
+/datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
+	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+	if(N)
+		var/list/data = list()
+		var/turf/T = get_turf(N)
+		if(T)
+			data["x"] = T.x
+			data["y"] = T.y
+			data["z"] = T.z
+		var/atom/outer = get_atom_on_turf(N,/mob/living)
+		if(outer != N)
+			if(isliving(outer))
+				var/mob/living/L = outer
+				data["holder"] = L.real_name
+			else
+				data["holder"] = outer.name
+
+		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
+>>>>>>> d863eb4... Adds roundend nuke disk location tracking to feedback. (#33660)
 
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
