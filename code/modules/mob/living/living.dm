@@ -1064,8 +1064,6 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
-<<<<<<< HEAD
-=======
 
 /mob/living/MouseDrop(mob/over)
 	. = ..()
@@ -1094,4 +1092,3 @@
 		return FALSE
 	mob_pickup(user)
 	return TRUE
->>>>>>> e3d69de... [READY]Adds picking up corgis and pAIs! (#33442)
