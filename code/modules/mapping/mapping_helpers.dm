@@ -63,7 +63,6 @@ GLOBAL_LIST_EMPTY(z_is_planet)
 /obj/effect/mapping_helpers/planet_z/Initialize()
 	. = ..()
 	var/turf/T = get_turf(src)
-	if(!turf_z_is_planet(T))
-		GLOB.z_is_planet["[T.z]"] = list()
+	GLOB.z_is_planet["[T.z]"] = TRUE
 	return INITIALIZE_HINT_QDEL
 

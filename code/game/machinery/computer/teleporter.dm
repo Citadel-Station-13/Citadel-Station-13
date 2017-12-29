@@ -209,4 +209,19 @@
 				trg.teleporter_hub.update_icon()
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
+<<<<<<< HEAD
 				trg.teleporter_console.update_icon()
+=======
+				trg.teleporter_console.update_icon()
+
+/obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
+	var/turf/T = get_turf(AM)
+	if(!T)
+		return FALSE
+	if(is_centcom_level(T.z) || is_away_level(T.z))
+		return FALSE
+	var/area/A = get_area(T)
+	if(!A || A.noteleport)
+		return FALSE
+	return TRUE
+>>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)

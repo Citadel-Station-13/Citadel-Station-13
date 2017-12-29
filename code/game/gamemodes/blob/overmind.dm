@@ -53,7 +53,18 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	SSshuttle.registerHostileEnvironment(src)
 
+<<<<<<< HEAD
 	.= ..()
+=======
+/mob/camera/blob/proc/validate_location()
+	var/turf/T = get_turf(src)
+	var/area/A = get_area(T)
+	if(((A && !A.blob_allowed) || !T || !is_station_level(T.z)) && LAZYLEN(GLOB.blobstart))
+		T = get_turf(pick(GLOB.blobstart))
+	if(!T)
+		CRASH("No blobspawnpoints and blob spawned in nullspace.")
+	forceMove(T)
+>>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 
 /mob/camera/blob/Life()
 	if(!blob_core)
@@ -73,6 +84,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		max_blob_points = INFINITY
 		blob_points = INFINITY
 		addtimer(CALLBACK(src, .proc/victory), 450)
+<<<<<<< HEAD
+=======
+
+	if(!victory_in_progress && max_count < blobs_legit.len)
+		max_count = blobs_legit.len
+>>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 	..()
 
 
@@ -82,7 +99,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
 		var/turf/T = get_turf(L)
-		if(!T || !(T.z in GLOB.station_z_levels))
+		if(!T || !is_station_level(T.z))
 			continue
 
 		if(L in GLOB.overminds || (L.pass_flags & PASSBLOB))

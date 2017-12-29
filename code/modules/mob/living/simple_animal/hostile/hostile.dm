@@ -479,6 +479,25 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 
 /mob/living/simple_animal/hostile/consider_wakeup()
 	..()
+<<<<<<< HEAD
 	if(AIStatus == AI_IDLE && FindTarget(ListTargets(), 1))
+=======
+	var/list/tlist
+	var/turf/T = get_turf(src)
+
+	if (!T)
+		return
+
+	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
+		toggle_ai(AI_Z_OFF)
+		return
+
+	if (isturf(T) && !is_station_level(T.z))
+		tlist = ListTargetsLazy(T.z)
+	else
+		tlist = ListTargets()
+
+	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
+>>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 		toggle_ai(AI_ON)
 
