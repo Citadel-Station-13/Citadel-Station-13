@@ -103,11 +103,7 @@
 
 
 /mob/living/carbon/human/IsAdvancedToolUser()
-<<<<<<< HEAD
-	if(disabilities & MONKEYLIKE)
-=======
 	if(has_disability(DISABILITY_MONKEYLIKE))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return FALSE
 	return TRUE//Humans can use guns and such
 

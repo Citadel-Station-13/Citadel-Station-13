@@ -79,13 +79,8 @@
 		if(!brainmob.stored_dna)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		C.dna.copy_dna(brainmob.stored_dna)
-<<<<<<< HEAD
-		if(L.disabilities & NOCLONE)
-			brainmob.disabilities |= NOCLONE	//This is so you can't just decapitate a husked guy and clone them without needing to get a new body
-=======
 		if(L.has_disability(DISABILITY_NOCLONE))
 			brainmob.disabilities[DISABILITY_NOCLONE] = L.disabilities[DISABILITY_NOCLONE]
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
 		if(ZI)
 			brainmob.set_species(ZI.old_species)	//For if the brain is cloned

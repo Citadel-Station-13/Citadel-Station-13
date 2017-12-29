@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
@@ -312,11 +312,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 
-<<<<<<< HEAD
-	if(H.disabilities & HUSK)
-=======
 	if(H.has_disability(DISABILITY_HUSK))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -456,12 +452,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/standing = list()
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
-
-<<<<<<< HEAD
-	if(HD && !(H.disabilities & HUSK))
-=======
 	if(HD && !(H.has_disability(DISABILITY_HUSK)))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -732,11 +723,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-<<<<<<< HEAD
-			if(!(H.disabilities & HUSK))
-=======
 			if(!(H.has_disability(DISABILITY_HUSK)))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
@@ -1113,30 +1100,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	////////
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
-
-<<<<<<< HEAD
-	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.disabilities & FAT)//I share your pain, past coder.
-		if(H.overeatduration < 100)
-			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.disabilities &= ~FAT
-=======
 	//The fucking DISABILITY_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.has_disability(DISABILITY_FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
 			H.remove_disability(DISABILITY_FAT, OBESITY)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
-<<<<<<< HEAD
-			H.disabilities |= FAT
-=======
 			H.add_disability(DISABILITY_FAT, OBESITY)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1293,11 +1267,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 25)
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
-<<<<<<< HEAD
-		if(H.disabilities & FAT)
-=======
 		if(H.has_disability(DISABILITY_FAT))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
@@ -1343,11 +1313,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-<<<<<<< HEAD
-	if(user.disabilities & PACIFISM)
-=======
 	if(user.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(target.check_block())

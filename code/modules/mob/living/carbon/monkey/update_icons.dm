@@ -19,11 +19,7 @@
 	if(!HD) //Decapitated
 		return
 
-<<<<<<< HEAD
-	if(disabilities & HUSK)
-=======
 	if(has_disability(DISABILITY_HUSK))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return
 
 	var/hair_hidden = 0

@@ -136,11 +136,7 @@
 		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
 		return FALSE
 
-<<<<<<< HEAD
-	if(user.disabilities & PACIFISM)
-=======
 	if(user.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='notice'>You don't want to risk hurting [src]!</span>")
 		return FALSE
 
@@ -197,11 +193,7 @@
 			M.Feedstop()
 		return // can't attack while eating!
 
-<<<<<<< HEAD
-	if(disabilities & PACIFISM)
-=======
 	if(has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 		return FALSE
 
@@ -218,11 +210,7 @@
 		M.visible_message("<span class='notice'>\The [M] [M.friendly] [src]!</span>")
 		return FALSE
 	else
-<<<<<<< HEAD
-		if(M.disabilities & PACIFISM)
-=======
 		if(M.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -241,11 +229,7 @@
 		return FALSE
 
 	if (M.a_intent == INTENT_HARM)
-<<<<<<< HEAD
-		if(M.disabilities & PACIFISM)
-=======
 		if(M.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 			return FALSE
 
@@ -271,11 +255,7 @@
 			return FALSE
 
 		else
-<<<<<<< HEAD
-			if(L.disabilities & PACIFISM)
-=======
 			if(L.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				to_chat(L, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return
 
@@ -300,11 +280,7 @@
 			grabbedby(M)
 			return FALSE
 		if("harm")
-<<<<<<< HEAD
-			if(M.disabilities & PACIFISM)
-=======
 			if(M.has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 				to_chat(M, "<span class='notice'>You don't want to hurt anyone!</span>")
 				return FALSE
 			M.do_attack_animation(src)
@@ -394,11 +370,7 @@
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
-<<<<<<< HEAD
-	if(get_eye_protection() < intensity && (override_blindness_check || !(disabilities & BLIND)))
-=======
 	if(get_eye_protection() < intensity && (override_blindness_check || !(has_disability(DISABILITY_BLIND))))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return 1

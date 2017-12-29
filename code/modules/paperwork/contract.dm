@@ -202,11 +202,7 @@
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='notice'>You do not possess a soul.</span>")
 		return 0
-<<<<<<< HEAD
-	if(user.disabilities & DUMB)
-=======
 	if(user.has_disability(DISABILITY_DUMB))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='notice'>You quickly scrawl 'your name' on the contract.</span>")
 		signIncorrectly()
 		return 0

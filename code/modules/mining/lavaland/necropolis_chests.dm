@@ -656,11 +656,7 @@
 	playsound(user, 'sound/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 
 /obj/item/melee/transforming/cleaving_saw/clumsy_transform_effect(mob/living/user)
-<<<<<<< HEAD
-	if(user.disabilities & CLUMSY && prob(50))
-=======
 	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
 

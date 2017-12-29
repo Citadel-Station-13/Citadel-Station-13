@@ -70,11 +70,7 @@
 			else
 				msg += "<b>[t_He] [t_is] severely deformed!</b>\n"
 
-<<<<<<< HEAD
-	if(disabilities & DUMB)
-=======
 	if(has_disability(DISABILITY_DUMB))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
 	if(fire_stacks > 0)

@@ -135,17 +135,9 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	// AIs use inherent channels for the holopad. Most inherent channels
 	// ignore the language argument however.
 
-<<<<<<< HEAD
-	var/datum/saymode/SM = SSradio.saymodes[key]
-	if(key && SM)
-		if(!SM.handle_message(src, message, language) && !message_mode)
-			return
-
-=======
 	var/datum/saymode/SM = SSradio.saymodes[talk_key]
 	if(SM && !SM.handle_message(src, message, language))
 		return
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 
 	if(!can_speak_vocal(message))
 		to_chat(src, "<span class='warning'>You find yourself unable to speak!</span>")
@@ -291,11 +283,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	return 1
 
 /mob/living/proc/can_speak_vocal(message) //Check AFTER handling of xeno and ling channels
-<<<<<<< HEAD
-	if(disabilities & MUTE)
-=======
 	if(has_disability(DISABILITY_MUTE))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		return 0
 
 	if(is_muzzled())

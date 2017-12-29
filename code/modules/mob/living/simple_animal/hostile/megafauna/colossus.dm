@@ -558,11 +558,7 @@ Difficulty: Very Hard
 					H.regenerate_limbs()
 					H.regenerate_organs()
 					H.revive(1,0)
-<<<<<<< HEAD
-					H.disabilities |= NOCLONE //Free revives, but significantly limits your options for reviving except via the crystal
-=======
 					H.add_disability(DISABILITY_NOCLONE, MAGIC_DISABILITY) //Free revives, but significantly limits your options for reviving except via the crystal
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 					H.grab_ghost(force = TRUE)
 
 /obj/machinery/anomalous_crystal/helpers //Lets ghost spawn as helpful creatures that can only heal people slightly. Incredibly fragile and they can't converse with humans
@@ -723,11 +719,7 @@ Difficulty: Very Hard
 	if(isliving(A) && holder_animal)
 		var/mob/living/L = A
 		L.notransform = 1
-<<<<<<< HEAD
-		L.disabilities |= MUTE
-=======
 		L.add_disability(DISABILITY_MUTE, STASIS_MUTE)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		L.status_flags |= GODMODE
 		L.mind.transfer_to(holder_animal)
 		var/obj/effect/proc_holder/spell/targeted/exit_possession/P = new /obj/effect/proc_holder/spell/targeted/exit_possession
@@ -737,11 +729,7 @@ Difficulty: Very Hard
 /obj/structure/closet/stasis/dump_contents(var/kill = 1)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/L in src)
-<<<<<<< HEAD
-		L.disabilities &= ~MUTE
-=======
 		L.remove_disability(DISABILITY_MUTE, STASIS_MUTE)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		L.status_flags &= ~GODMODE
 		L.notransform = 0
 		if(holder_animal)

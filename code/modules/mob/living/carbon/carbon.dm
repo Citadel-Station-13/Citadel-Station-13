@@ -157,11 +157,7 @@
 			if(!throwable_mob.buckled)
 				thrown_thing = throwable_mob
 				stop_pulling()
-<<<<<<< HEAD
-				if(disabilities & PACIFISM)
-=======
 				if(has_disability(DISABILITY_PACIFISM))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 					to_chat(src, "<span class='notice'>You gently let go of [throwable_mob].</span>")
 				var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
 				var/turf/end_T = get_turf(target)
@@ -174,11 +170,7 @@
 		thrown_thing = I
 		dropItemToGround(I)
 
-<<<<<<< HEAD
-		if(disabilities & PACIFISM && I.throwforce)
-=======
 		if(has_disability(DISABILITY_PACIFISM) && I.throwforce)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 			to_chat(src, "<span class='notice'>You set [I] down gently on the ground.</span>")
 			return
 
@@ -417,11 +409,7 @@
 	dropItemToGround(I)
 
 	var/modifier = 0
-<<<<<<< HEAD
-	if(disabilities & CLUMSY)
-=======
 	if(has_disability(DISABILITY_CLUMSY))
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		modifier -= 40 //Clumsy people are more likely to hit themselves -Honk!
 
 	switch(rand(1,100)+modifier) //91-100=Nothing special happens

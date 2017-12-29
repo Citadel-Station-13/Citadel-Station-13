@@ -162,13 +162,10 @@
 		var/blind_minimum = 0
 		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
 			blind_minimum = 1
-<<<<<<< HEAD
-=======
 		if(isliving(src))
 			var/mob/living/L = src
 			if(L.has_disability(DISABILITY_BLIND))
 				blind_minimum = 1
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		eye_blind = max(eye_blind+amount, blind_minimum)
 		if(!eye_blind)
 			clear_alert("blind")
@@ -186,13 +183,10 @@
 		var/blind_minimum = 0
 		if((stat != CONSCIOUS && stat != SOFT_CRIT) || (disabilities & BLIND))
 			blind_minimum = 1
-<<<<<<< HEAD
-=======
 		if(isliving(src))
 			var/mob/living/L = src
 			if(L.has_disability(DISABILITY_BLIND))
 				blind_minimum = 1
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		eye_blind = blind_minimum
 		if(!eye_blind)
 			clear_alert("blind")

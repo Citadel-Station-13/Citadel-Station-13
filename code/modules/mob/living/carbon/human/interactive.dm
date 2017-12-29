@@ -339,11 +339,7 @@
 	if(TRAITS & TRAIT_SMART)
 		smartness = 75
 	else if(TRAITS & TRAIT_DUMB)
-<<<<<<< HEAD
-		disabilities |= CLUMSY
-=======
 		add_disability(DISABILITY_CLUMSY, GENETIC_MUTATION)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
 		smartness = 25
 
 	if(TRAITS & TRAIT_MEAN)

@@ -137,8 +137,6 @@
 				to_chat(src, "<span class='boldwarning'>[priority_absorb_key["self_message"]]</span>")
 		priority_absorb_key["stuns_absorbed"] += amount
 		return TRUE
-<<<<<<< HEAD
-=======
 
 /////////////////////////////////// DISABILITIES ////////////////////////////////////
 
@@ -215,4 +213,3 @@
 		status_flags |= DISFIGURED	//makes them unknown
 		update_body()
 	add_disability(DISABILITY_HUSK, source)
->>>>>>> bc20a75... Merge pull request #33783 from Cruix/fix_blind
