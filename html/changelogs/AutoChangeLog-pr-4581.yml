@@ -1,0 +1,4 @@
+author: "CosmicScientist"
+delete-after: True
+changes: 
+  - rscadd: "timestop now inverts the colours of those frozen in time!"
