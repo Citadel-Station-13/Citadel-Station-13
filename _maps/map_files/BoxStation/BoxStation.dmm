@@ -33842,6 +33842,12 @@
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/machinery/requests_console{
+	department = "Medbay";
+	departmentType = 1;
+	name = "Medbay RC";
+	pixel_w = 30
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bFB" = (
@@ -34999,13 +35005,6 @@
 /area/medical/sleeper)
 "bIk" = (
 /obj/structure/table,
-/obj/machinery/requests_console{
-	announcementConsole = 0;
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay RC";
-	pixel_y = -30
-	},
 /obj/item/storage/firstaid/fire{
 	pixel_x = 3;
 	pixel_y = 3
@@ -35019,14 +35018,6 @@
 /area/medical/sleeper)
 "bIl" = (
 /obj/structure/table,
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	freerange = 0;
-	frequency = 1485;
-	listening = 1;
-	name = "Station Intercom (Medbay)";
-	pixel_y = -30
-	},
 /obj/item/storage/firstaid/toxin{
 	pixel_x = 3;
 	pixel_y = 3
@@ -57845,6 +57836,7 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
+<<<<<<< HEAD
 /obj/item/clothing/head/helmet/riot{
 	pixel_x = -3;
 	pixel_y = 3
@@ -60433,6 +60425,26 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+=======
+/obj/item/device/radio/intercom{
+	freerange = 0;
+	frequency = 1485;
+	listening = 1;
+	name = "Station Intercom (Medbay)";
+	pixel_x = 30
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+"QoZ" = (
+/obj/machinery/requests_console{
+	department = "Medbay";
+	departmentType = 1;
+	name = "Medbay RC";
+	pixel_y = -30
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+>>>>>>> 7ed96f1... Unblocks things on the walls in medbay and also removes an additional Radiation Collector (#33906)
 
 (1,1,1) = {"
 aaa

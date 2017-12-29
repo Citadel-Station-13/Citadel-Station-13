@@ -51012,6 +51012,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 8
 	},
@@ -51020,6 +51023,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cbL" = (
@@ -51027,11 +51033,17 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 2
 	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
 "cbM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/structure/cable/yellow{
+	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -51040,6 +51052,9 @@
 /obj/effect/landmark/start/medical_doctor,
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -51761,6 +51776,13 @@
 	dir = 8
 	},
 /obj/structure/closet/l3closet,
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "Medbay Storage APC";
+	areastring = "/area/medical/storage";
+	pixel_y = -24
+	},
+/obj/structure/cable/yellow,
 /turf/open/floor/plasteel/whiteblue/side{
 	dir = 10
 	},
@@ -52948,15 +52970,6 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Medbay Storage APC";
-	areastring = "/area/medical/storage";
-	pixel_y = -24
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
-	},
 /obj/machinery/light_switch{
 	pixel_x = -26
 	},
@@ -52967,9 +52980,6 @@
 	},
 /area/medical/storage)
 "cfM" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -52978,9 +52988,6 @@
 	},
 /area/medical/storage)
 "cfN" = (
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
 	},
