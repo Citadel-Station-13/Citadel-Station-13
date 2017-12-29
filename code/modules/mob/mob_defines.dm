@@ -32,6 +32,7 @@
 
 	var/obj/machinery/machine = null
 	var/other_mobs = null
+	var/disabilities = 0	//Carbon
 
 	var/atom/movable/pulling = null
 	var/grab_state = 0
