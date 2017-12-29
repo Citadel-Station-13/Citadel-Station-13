@@ -35,7 +35,7 @@ GLOBAL_LIST_EMPTY(z_levels_list)
 				neigbours[TEXT_WEST] = P.spl
 				P.spl.neigbours[TEXT_EAST] = src
 
-/datum/point          //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
+/datum/space_transition         //this is explicitly utilitarian datum type made specially for the space map generation and are absolutely unusable for anything else
 	var/list/neigbours = list()
 	var/x
 	var/y

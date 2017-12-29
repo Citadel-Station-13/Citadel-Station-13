@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - rscadd: "you can now pick up corgi's and pAIs, how disgustingly cute"
