@@ -2468,4 +2468,5 @@
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
+#include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 // END_INCLUDE
