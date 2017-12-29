@@ -1,0 +1,4 @@
+author: "Nero1024"
+delete-after: True
+changes: 
+  - soundadd: "blast doors and shutters will now play a sound when they open and close."
