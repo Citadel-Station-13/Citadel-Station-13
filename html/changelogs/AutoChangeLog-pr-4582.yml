@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "The action button for spells should now accurately reflect when the spell is on cooldown"
-  - bugfix: "You can now reliably use the button for \"touch\" spells to \"recall\" the spell"

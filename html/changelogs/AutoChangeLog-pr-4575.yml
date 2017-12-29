@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Ghost lights will follow the ghost while orbiting"

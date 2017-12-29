@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - tweak: "Objects that can have materials inserted into them only will do so on help intent"

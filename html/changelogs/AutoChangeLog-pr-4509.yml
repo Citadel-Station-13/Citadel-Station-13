@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - tweak: "The EMP door shocking effect has a new formula. Heavy EMP's will no longer shock doors while light EMP's have a 10% chance (down from 13.33%)."

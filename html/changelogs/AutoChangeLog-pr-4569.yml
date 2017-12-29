@@ -1,4 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Splashing a book with ethanol should no longer produce errant messages."
