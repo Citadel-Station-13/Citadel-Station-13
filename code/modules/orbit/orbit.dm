@@ -51,6 +51,7 @@
 		return
 	orbiter.loc = targetloc
 	orbiter.update_parallax_contents()
+	orbiter.update_light()
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
