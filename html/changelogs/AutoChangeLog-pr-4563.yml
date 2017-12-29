@@ -1,0 +1,11 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Mediborgs now have an alternate sprite taken from Paradise, featuring heavy modifications from Vivi."
+  - rscadd: "Standard security borgs now has two alternative sprites that were previously unused in TG's files!"
+  - rscadd: "Engineering borgs now have an alternative sprite that was previously unused in TG's files."
+  - rscadd: "Mining borgs are now able to choose between the current lavaland paintjob or the old asteroid paintjob."
+  - code_imp: "Dogborgs are now modularized."
+  - code_imp: "All of the copypasta brought by the new borg icons has been removed. Custom borg sprites are now modular."
+  - code_imp: "The additional modules in the borg module select menu have been modularized."
+  - code_imp: "The module select icon file is now able to be modular. This does not yet restore the regressed dogborg module select icons."
