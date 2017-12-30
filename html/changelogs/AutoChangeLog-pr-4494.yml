@@ -1,6 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Projectiles that pierce objects will no longer be thrown off course when doing so!"
-  - code_imp: "Projectiles now use /datum/point/vectors for trajectory calculations."
-  - bugfix: "Beam rifle reflections will no longer glitch out."

@@ -6,10 +6,7 @@
 
 	log_talk(src,"Ghost/[src.key] : [message]", LOGSAY)
 
-	if(check_emote(message))
-		return
-
-	. = say_dead(message)
+	. = src.say_dead(message)
 
 /mob/dead/observer/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
 	var/atom/movable/to_follow = speaker
@@ -25,3 +22,4 @@
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	to_chat(src, "[link] [message]")
+
