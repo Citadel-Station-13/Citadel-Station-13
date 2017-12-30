@@ -1,4 +1,3 @@
-
 // You might be wondering why this isn't client level. If focus is null, we don't want you to move.
 // Only way to do that is to tie the behavior into the focus's keyLoop().
 
@@ -6,7 +5,7 @@
 	if(!user.keys_held["Ctrl"])
 		var/movement_dir = NONE
 		for(var/_key in user.keys_held)
-			movement_dir = movement_dir | GLOB.movement_keys[_key]
+			movement_dir |= GLOB.movement_keys[_key]
 		if(user.next_move_dir_add)
 			movement_dir |= user.next_move_dir_add
 		if(user.next_move_dir_sub)
@@ -16,4 +15,4 @@
 			movement_dir &= ~(NORTH|SOUTH)
 		if((movement_dir & EAST) && (movement_dir & WEST))
 			movement_dir &= ~(EAST|WEST)
-user.Move(get_step(src, movement_dir), movement_dir)
+		user.Move(get_step(src, movement_dir), movement_dir)
