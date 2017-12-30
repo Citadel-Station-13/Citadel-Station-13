@@ -348,12 +348,7 @@
 		else
 			data["occupant"]["temperaturestatus"] = "bad"
 
-<<<<<<< HEAD
-
-	var/datum/gas_mixture/air1 = AIR1
-=======
 	var/datum/gas_mixture/air1 = airs[1]
->>>>>>> 6a7dbaa... removes silly garbage defines (#33621)
 	data["cellTemperature"] = round(air1.temperature, 1)
 
 	data["isBeakerLoaded"] = beaker ? TRUE : FALSE
