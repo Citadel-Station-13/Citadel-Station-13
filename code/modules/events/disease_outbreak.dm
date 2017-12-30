@@ -33,11 +33,7 @@
 		var/turf/T = get_turf(H)
 		if(!T)
 			continue
-<<<<<<< HEAD
-		if(T.z != ZLEVEL_STATION_PRIMARY)
-=======
 		if(!is_station_level(T.z))
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 			continue
 		if(!H.client)
 			continue
