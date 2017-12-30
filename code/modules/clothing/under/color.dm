@@ -6,13 +6,6 @@
 
 /obj/item/clothing/under/color/random/New()
 	..()
-<<<<<<< HEAD
-	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random)
-	name = initial(C.name)
-	icon_state = initial(C.icon_state)
-	item_state = initial(C.item_state)
-	item_color = initial(C.item_color)
-=======
 	var/obj/item/clothing/under/color/C = pick(subtypesof(/obj/item/clothing/under/color) - /obj/item/clothing/under/color/random - /obj/item/clothing/under/color/grey/glorf - /obj/item/clothing/under/color/black/ghost)
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
@@ -20,7 +13,6 @@
 	else
 		new C(loc)
 	return INITIALIZE_HINT_QDEL
->>>>>>> c063902... Merge pull request #33930 from ShizCalev/undersuit-fix
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
