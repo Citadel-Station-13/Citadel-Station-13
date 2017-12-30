@@ -34986,6 +34986,12 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIj" = (
@@ -35015,6 +35021,11 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/machinery/door/window/northright{
+	name = "First-Aid Supplies";
+	red_alert_access = 1;
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIl" = (
@@ -35036,28 +35047,16 @@
 	pixel_x = -3;
 	pixel_y = -3
 	},
+/obj/machinery/door/window/northleft{
+	name = "First-Aid Supplies";
+	red_alert_access = 1;
+	req_access_txt = "5"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIm" = (
+/obj/machinery/rnd/protolathe/department/medical,
 /obj/machinery/light,
-/obj/structure/table,
-/obj/item/storage/box/beakers{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/storage/box/syringes,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/glass/bottle/morphine{
-	pixel_x = 8;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/syringe{
-	pixel_x = 6;
-	pixel_y = -3
-	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bIn" = (
@@ -35070,6 +35069,12 @@
 /obj/item/storage/firstaid/regular{
 	pixel_x = -3;
 	pixel_y = -3
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
@@ -60431,8 +60436,44 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
+<<<<<<< HEAD
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
+=======
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoW" = (
+/obj/machinery/droneDispenser,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoX" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/turf/open/floor/plating,
+/area/maintenance/department/medical/morgue)
+"QoY" = (
+/obj/structure/table,
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/storage/box/syringes,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/glass/bottle/morphine{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
+>>>>>>> c4a4959... Locks up Medical Storage a bit more tightly and adds framework for doors to ignore access reqs during red alert (#33686)
 
 (1,1,1) = {"
 aaa
@@ -98104,8 +98145,8 @@ bAu
 bvj
 bCN
 bEa
+QoY
 bFA
-QoQ
 bIm
 bJD
 bKK
