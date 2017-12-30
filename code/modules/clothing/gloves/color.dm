@@ -205,18 +205,9 @@
 		/obj/item/clothing/gloves/color/brown = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-<<<<<<< HEAD
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	item_state = initial(selected.item_state)
-	item_color = initial(selected.item_color)
-=======
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.equip_to_slot_or_del(new selected(H), slot_gloves)
 	else
 		new selected(loc)
 	return INITIALIZE_HINT_QDEL
->>>>>>> c063902... Merge pull request #33930 from ShizCalev/undersuit-fix
