@@ -8973,14 +8973,14 @@
 /area/maintenance/port/fore)
 "avT" = (
 /obj/docking_port/stationary{
-	dheight = 1;
-	dir = 8;
-	dwidth = 12;
-	height = 17;
+	dheight = 9;
+	dir = 2;
+	dwidth = 5;
+	height = 24;
 	id = "syndicate_ne";
 	name = "northeast of station";
 	turf_type = /turf/open/space;
-	width = 23
+	width = 18
 	},
 /turf/open/space,
 /area/space/nearstation)

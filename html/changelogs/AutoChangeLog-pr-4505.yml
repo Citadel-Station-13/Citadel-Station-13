@@ -1,6 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - balance: "The kitchen gibber must be anchored in order to use."
-  - balance: "The gibber requires bodies to have no external items or
-equipment."

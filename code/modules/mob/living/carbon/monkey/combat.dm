@@ -121,8 +121,10 @@
 
 	if(L == src)
 		return FALSE
-	if(has_disability(PACIFISM))
+
+	if(has_disability(DISABILITY_PACIFISM))
 		return FALSE
+
 	if(enemies[L])
 		return TRUE
 

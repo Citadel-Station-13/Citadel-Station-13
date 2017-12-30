@@ -631,7 +631,6 @@ SUBSYSTEM_DEF(ticker)
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
-	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
