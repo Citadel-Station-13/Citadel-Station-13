@@ -57,12 +57,8 @@
 	lastloc = orbiter.loc
 	for(var/other_orbit in orbiter.orbiters)
 		var/datum/orbit/OO = other_orbit
-<<<<<<< HEAD
-		if(OO == src)
-=======
 		//Skip if checked already
 		if(checked_already[OO])
->>>>>>> 23d33a3... Merge pull request #33914 from optimumtact/thegreatestshow
 			continue
 		OO.Check(targetloc, checked_already)
 
