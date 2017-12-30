@@ -277,14 +277,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		return
 
-<<<<<<< HEAD
-	if(user.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
-=======
 	var/turf/T = get_turf(src)
 	if(is_away_level(T.z))
 		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 		log_game("Teleport rune failed - user in away mission")
 		fail_invoke()
 		return
@@ -820,13 +815,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target was deconverted")
 		return
-<<<<<<< HEAD
-	if(cultist_to_summon.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>[cultist_to_summon] is not in our dimension!</span>")
-=======
 	if(is_away_level(cultist_to_summon.z))
 		to_chat(user, "<span class='cult italic'>[cultist_to_summon] is not in our dimension!</span>")
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 		fail_invoke()
 		log_game("Summon Cultist rune failed - target in away mission")
 		return
