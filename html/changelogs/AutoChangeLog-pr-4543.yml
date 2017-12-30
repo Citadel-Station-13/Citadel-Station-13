@@ -1,8 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - balance: "Rebalanced healing symptoms."
-  - balance: "Cellular Molding was replaced by Nocturnal Regeneration, which only works in darkness."
-  - balance: "All healing symptoms now heal both brute and burn damage, although the basic ones will still be more effective on one damage type."
-  - balance: "Plasma Fixation and Radioactive Metabolism heal toxin damage, offsetting the damage done by their healing sources."
-  - balance: "Changed healing symptoms' stats, generally making them less punishing."

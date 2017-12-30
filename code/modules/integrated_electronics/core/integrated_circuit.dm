@@ -58,12 +58,6 @@ a creative player the means to solve many problems.  Circuits are held inside an
 /obj/item/integrated_circuit/proc/any_examine(mob/user)
 	return
 
-/obj/item/integrated_circuit/proc/attackby_react(var/atom/movable/A,mob/user)
-	return
-
-/obj/item/integrated_circuit/proc/sense(var/atom/movable/A,mob/user,prox)
-	return
-
 /obj/item/integrated_circuit/proc/check_interactivity(mob/user)
 	if(assembly)
 		return assembly.check_interactivity(user)
@@ -297,18 +291,17 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE // Battery has enough.
 	return FALSE // Not enough power.
 
-/obj/item/integrated_circuit/proc/check_then_do_work(ord,var/ignore_power = FALSE)
+/obj/item/integrated_circuit/proc/check_then_do_work(var/ignore_power = FALSE)
 	if(world.time < next_use) 	// All intergrated circuits have an internal cooldown, to protect from spam.
-		return FALSE
+		return
 	if(power_draw_per_use && !ignore_power)
 		if(!check_power())
 			power_fail()
-			return FALSE
+			return
 	next_use = world.time + cooldown_per_use
-	do_work(ord)
-	return TRUE
+	do_work()
 
-/obj/item/integrated_circuit/proc/do_work(ord)
+/obj/item/integrated_circuit/proc/do_work()
 	return
 
 /obj/item/integrated_circuit/proc/disconnect_all()
@@ -376,3 +369,4 @@ a creative player the means to solve many problems.  Circuits are held inside an
 		return TRUE
 
 	return FALSE
+

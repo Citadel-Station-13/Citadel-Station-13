@@ -260,13 +260,13 @@
 			client.perspective = EYE_PERSPECTIVE
 			client.eye = A
 		else
-			if(isturf(loc))
+			if(isturf(loc) && (!A || loc == A))
 				client.eye = client.mob
 				client.perspective = MOB_PERSPECTIVE
 			else
 				client.perspective = EYE_PERSPECTIVE
-				client.eye = loc
-		return 1
+				client.eye = A
+		return 1 
 
 /mob/living/reset_perspective(atom/A)
 	if(..())
@@ -362,7 +362,7 @@
 
 		add_logs(src, M, "grabbed", addition="passive grab")
 		if(!supress_message)
-			visible_message("<span class='warning'>[src] has grabbed [M] passively!</span>")
+			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else

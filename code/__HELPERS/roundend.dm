@@ -1,41 +1,24 @@
+#define POPCOUNT_SURVIVORS "survivors"					//Not dead at roundend
+#define POPCOUNT_ESCAPEES "escapees"					//Not dead and on centcomm/shuttles marked as escaped
+#define POPCOUNT_GHOSTS "ghosts"						//Ghosts on roundend
+#define POPCOUNT_HUMAN_ESCAPEES "human_escapees"		//Same as escapees but human only
+#define POPCOUNT_HUMAN_SURVIVORS "human_survivors"		//Same as survivors but human only
+#define POPCOUNT_SHUTTLE_ESCAPEES "shuttle_escapees" 	//Emergency shuttle only.
+
 /datum/controller/subsystem/ticker/proc/gather_roundend_feedback()
+	//Survivor numbers
 	var/clients = GLOB.player_list.len
-	var/surviving_humans = 0
-	var/surviving_total = 0
-	var/ghosts = 0
-	var/escaped_humans = 0
-	var/escaped_total = 0
+	var/popcount = count_survivors()
+	SSblackbox.record_feedback("nested tally", "round_end_stats", clients, list("clients"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_GHOSTS], list("ghosts"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_HUMAN_SURVIVORS], list("survivors", "human"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_SURVIVORS], list("survivors", "total"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_HUMAN_ESCAPEES], list("escapees", "human"))
+	SSblackbox.record_feedback("nested tally", "round_end_stats", popcount[POPCOUNT_ESCAPEES], list("escapees", "total"))
+	//Antag information
+	gather_antag_data()
 
-	for(var/mob/M in GLOB.player_list)
-		if(ishuman(M))
-			if(!M.stat)
-				surviving_humans++
-				if(M.z == ZLEVEL_CENTCOM)
-					escaped_humans++
-		if(!M.stat)
-			surviving_total++
-			if(M.z == ZLEVEL_CENTCOM)
-				escaped_total++
-
-		if(isobserver(M))
-			ghosts++
-
-	if(clients)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", clients, list("clients"))
-	if(ghosts)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", ghosts, list("ghosts"))
-	if(surviving_humans)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", surviving_humans, list("survivors", "human"))
-	if(surviving_total)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", surviving_total, list("survivors", "total"))
-	if(escaped_humans)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", escaped_humans, list("escapees", "human"))
-	if(escaped_total)
-		SSblackbox.record_feedback("nested tally", "round_end_stats", escaped_total, list("escapees", "total"))
-
-	gather_antag_success_rate()
-
-/datum/controller/subsystem/ticker/proc/gather_antag_success_rate()
+/datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
 	var/list/team_ids = list()
 
@@ -64,27 +47,6 @@
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
 
 
-/datum/controller/subsystem/ticker/proc/gather_newscaster()
-	var/json_file = file("[GLOB.log_directory]/newscaster.json")
-	var/list/file_data = list()
-	var/pos = 1
-	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
-		if(!GLOB.news_network.network_channels.len)
-			break
-		file_data["[pos]"] = list("channel name" = "[channel.channel_name]", "author" = "[channel.author]", "censored" = channel.censored ? 1 : 0, "author censored" = channel.authorCensor ? 1 : 0, "messages" = list())
-		if(!channel.messages.len)
-			continue
-		for(var/datum/newscaster/feed_message/message in channel.messages)
-			file_data["[pos]"]["messages"] |= list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list())
-			if(!message.comments.len)
-				continue
-			for(var/datum/newscaster/feed_comment/comment in message.comments)
-				file_data["[pos]"]["messages"]["comments"] = list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]")
-		pos++
-	if(GLOB.news_network.wanted_issue.active)
-		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
-	WRITE_FILE(json_file, json_encode(file_data))
-
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
@@ -110,6 +72,7 @@
 			H.add_hud_to(M)
 
 	CHECK_TICK
+
 	//Set news report and mode result
 	mode.set_round_result()
 
@@ -189,29 +152,49 @@
 
 	return parts.Join()
 
-
-/datum/controller/subsystem/ticker/proc/survivor_report()
-	var/list/parts = list()
+/datum/controller/subsystem/ticker/proc/count_survivors()
+	. = list()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/num_survivors = 0
 	var/num_escapees = 0
 	var/num_shuttle_escapees = 0
+	var/num_ghosts = 0
+	var/num_human_survivors = 0
+	var/num_human_escapees = 0
 
 	//Player status report
 	for(var/i in GLOB.mob_list)
 		var/mob/Player = i
 		if(Player.mind && !isnewplayer(Player))
+			if(isobserver(Player))
+				num_ghosts++
 			if(Player.stat != DEAD && !isbrain(Player))
 				num_survivors++
+				if(ishuman(Player))
+					num_human_survivors++
 				if(station_evacuated) //If the shuttle has already left the station
 					var/list/area/shuttle_areas
 					if(SSshuttle && SSshuttle.emergency)
 						shuttle_areas = SSshuttle.emergency.shuttle_areas
 					if(Player.onCentCom() || Player.onSyndieBase())
 						num_escapees++
+						if(ishuman(Player))
+							num_human_escapees++
 						if(shuttle_areas[get_area(Player)])
 							num_shuttle_escapees++
+	
+	.[POPCOUNT_SURVIVORS] = num_survivors
+	.[POPCOUNT_ESCAPEES] = num_escapees
+	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
+	.[POPCOUNT_HUMAN_SURVIVORS] = num_human_survivors
+	.[POPCOUNT_HUMAN_ESCAPEES] = num_human_escapees
+	.[POPCOUNT_GHOSTS] = num_ghosts
 
+/datum/controller/subsystem/ticker/proc/survivor_report()
+	var/list/parts = list()
+	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
+	var/popcount = count_survivors()
+	
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
@@ -223,9 +206,9 @@
 	if(total_players)
 		parts+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[num_escapees] ([PERCENT(num_escapees/total_players)]%)</B>"
-			parts += "[GLOB.TAB](on emergency shuttle): <B>[num_shuttle_escapees] ([PERCENT(num_shuttle_escapees/total_players)]%)</B>"
-		parts += "[GLOB.TAB]Survival Rate: <B>[num_survivors] ([PERCENT(num_survivors/total_players)]%)</B>"
+			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
+			parts += "[GLOB.TAB](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+		parts += "[GLOB.TAB]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
 	return parts.Join("<br>")
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C,common_report)

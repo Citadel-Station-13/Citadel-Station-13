@@ -1710,6 +1710,7 @@
 #include "code\modules\mob\login.dm"
 #include "code\modules\mob\logout.dm"
 #include "code\modules\mob\mob.dm"
+#include "code\modules\mob\mob_cleanup.dm"
 #include "code\modules\mob\mob_defines.dm"
 #include "code\modules\mob\mob_helpers.dm"
 #include "code\modules\mob\mob_movement.dm"
@@ -1737,6 +1738,7 @@
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\death.dm"
 #include "code\modules\mob\living\emote.dm"
+#include "code\modules\mob\living\inhand_holder.dm"
 #include "code\modules\mob\living\life.dm"
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\living_defense.dm"
@@ -2471,4 +2473,5 @@
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
+#include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 // END_INCLUDE

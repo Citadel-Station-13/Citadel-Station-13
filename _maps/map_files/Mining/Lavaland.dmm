@@ -111,7 +111,6 @@
 /obj/item/pickaxe,
 /obj/item/device/flashlight,
 /obj/item/clothing/glasses/meson,
-/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "av" = (
@@ -120,7 +119,6 @@
 /obj/item/device/flashlight,
 /obj/item/pickaxe,
 /obj/item/clothing/glasses/meson,
-/obj/item/device/mining_scanner,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "aw" = (
@@ -21565,7 +21563,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -22072,7 +22070,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ai
@@ -22856,7 +22854,7 @@ ab
 ab
 ab
 ab
-ai
+ao
 ab
 ab
 ab
@@ -24646,7 +24644,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -24903,7 +24901,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -25180,7 +25178,7 @@ ab
 ab
 ab
 ab
-ai
+ao
 am
 am
 ai
@@ -25424,7 +25422,7 @@ ab
 ab
 ab
 ai
-ai
+ao
 ab
 ab
 ab
@@ -25674,7 +25672,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -25958,7 +25956,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -26201,7 +26199,7 @@ ab
 ab
 ab
 ab
-ai
+ao
 am
 am
 am
@@ -26215,7 +26213,7 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
@@ -26974,7 +26972,7 @@ ab
 ab
 ab
 ab
-ai
+ao
 am
 am
 am
@@ -28513,7 +28511,7 @@ ab
 ab
 ab
 ai
-ai
+ao
 ab
 ab
 ab
@@ -29023,7 +29021,7 @@ ab
 ab
 ab
 ab
-ai
+ao
 ab
 ab
 ai
@@ -29032,13 +29030,13 @@ am
 am
 am
 am
-ai
+ao
 ab
 ab
 ab
 ab
-ai
-ai
+ao
+ao
 ab
 ab
 ab
@@ -29280,8 +29278,8 @@ ab
 ab
 ab
 ab
-ai
-ai
+ao
+ao
 ab
 ai
 am
@@ -30062,8 +30060,8 @@ ab
 ab
 ab
 ab
-ai
-ai
+ao
+ao
 ab
 ab
 ab
@@ -30575,7 +30573,7 @@ ai
 ai
 ab
 ab
-ai
+ao
 am
 am
 am
