@@ -151,13 +151,8 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_transfer_rate" in signal.data)
-<<<<<<< HEAD
-		var/datum/gas_mixture/air1 = AIR1
-		transfer_rate = Clamp(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
-=======
 		var/datum/gas_mixture/air1 = airs[1]
 		transfer_rate = CLAMP(text2num(signal.data["set_transfer_rate"]),0,air1.volume)
->>>>>>> 6a7dbaa... removes silly garbage defines (#33621)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)
