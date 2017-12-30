@@ -18,8 +18,7 @@
 /turf/closed/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
-	else
-		..()
+	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
@@ -58,21 +57,6 @@
 		switch(var_name)
 			if("icon")
 				SStitle.icon = icon
-
-/turf/closed/indestructible/reebe
-	name = "void"
-	icon_state = "reebe"
-	opacity = FALSE
-	baseturf = /turf/closed/indestructible/reebe
-
-/turf/closed/indestructible/reebe/ratvar_act()
-	return
-
-/turf/closed/indestructible/reebe/narsie_act()
-	return
-
-/turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
-	playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
