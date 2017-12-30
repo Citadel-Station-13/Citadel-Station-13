@@ -130,13 +130,8 @@
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
-<<<<<<< HEAD
-		var/datum/gas_mixture/air_contents = AIR1
-		volume_rate = Clamp(number, 0, air_contents.volume)
-=======
 		var/datum/gas_mixture/air_contents = airs[1]
 		volume_rate = CLAMP(number, 0, air_contents.volume)
->>>>>>> 6a7dbaa... removes silly garbage defines (#33621)
 
 	if("status" in signal.data)
 		spawn(2)
