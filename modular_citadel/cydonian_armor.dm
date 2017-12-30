@@ -36,12 +36,12 @@
 		A.UpdateButtonIcon()
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/helm_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/head.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/helm_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/head.dmi', "knight_cydonia_overlay", BRIGHTMAP_LAYER)
 
 	if(energy_color)
 		helm_overlay.color = energy_color
 
-	helm_overlay.plane = LIGHTING_PLANE + 1	//Magic number is used here because we have no ABOVE_LIGHTING_PLANE plane defined. Lighting plane is 15, HUD is 18
+	helm_overlay.plane = BRIGHTMAP_PLANE
 
 	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
 
@@ -59,9 +59,9 @@
 	emissivelightsoff()
 
 /obj/item/clothing/head/helmet/space/hardsuit/lavaknight/proc/emissivelights(mob/user = usr)
-	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/head.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/head.dmi', "knight_cydonia_overlay", BRIGHTMAP_LAYER)
 	energy_overlay.color = energy_color
-	energy_overlay.plane = LIGHTING_PLANE + 1
+	energy_overlay.plane = BRIGHTMAP_PLANE
 	user.cut_overlay(energy_overlay)	//honk
 	user.add_overlay(energy_overlay)	//honk
 
@@ -100,12 +100,12 @@
 	update_icon()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/update_icon()
-	var/mutable_appearance/suit_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/suit_overlay = mutable_appearance('modular_citadel/icons/lavaknight/item/suit.dmi', "knight_cydonia_overlay", BRIGHTMAP_LAYER)
 
 	if(energy_color)
 		suit_overlay.color = energy_color
 
-	suit_overlay.plane = LIGHTING_PLANE + 1		//Magic number is used here because we have no ABOVE_LIGHTING_PLANE plane defined. Lighting plane is 15.
+	suit_overlay.plane = BRIGHTMAP_PLANE
 
 	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
 
@@ -121,9 +121,9 @@
 	emissivelightsoff()
 
 /obj/item/clothing/suit/space/hardsuit/lavaknight/proc/emissivelights(mob/user = usr)
-	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/suit.dmi', "knight_cydonia_overlay", LIGHTING_LAYER + 1)
+	var/mutable_appearance/energy_overlay = mutable_appearance('modular_citadel/icons/lavaknight/mob/suit.dmi', "knight_cydonia_overlay", BRIGHTMAP_LAYER)
 	energy_overlay.color = energy_color
-	energy_overlay.plane = LIGHTING_PLANE + 1
+	energy_overlay.plane = BRIGHTMAP_PLANE
 	user.cut_overlay(energy_overlay)	//honk
 	user.add_overlay(energy_overlay)	//honk
 
