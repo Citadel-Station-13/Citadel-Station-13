@@ -114,11 +114,7 @@ Difficulty: Medium
 		if(L.stat == DEAD)
 			visible_message("<span class='danger'>[src] butchers [L]!</span>",
 			"<span class='userdanger'>You butcher [L], restoring your health!</span>")
-<<<<<<< HEAD
-			if(!(z in GLOB.station_z_levels && !client)) //NPC monsters won't heal while on station
-=======
 			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 				if(guidance)
 					adjustHealth(-L.maxHealth)
 				else
