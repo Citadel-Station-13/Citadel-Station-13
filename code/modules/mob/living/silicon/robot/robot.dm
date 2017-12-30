@@ -812,9 +812,6 @@
 /mob/living/silicon/robot/modules/security
 	set_module = /obj/item/robot_module/security
 
-/mob/living/silicon/robot/modules/clown
-	set_module = /obj/item/robot_module/clown
-
 /mob/living/silicon/robot/modules/peacekeeper
 	set_module = /obj/item/robot_module/peacekeeper
 
@@ -1018,9 +1015,9 @@
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		AddComponent(/datum/component/cleaning)
+		flags_1 |= CLEAN_ON_MOVE_1
 	else
-		qdel(GetComponent(/datum/component/cleaning))
+		flags_1 &= ~CLEAN_ON_MOVE_1
 
 	hat_offset = module.hat_offset
 
