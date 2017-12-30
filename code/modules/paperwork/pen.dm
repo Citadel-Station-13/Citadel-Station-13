@@ -23,6 +23,7 @@
 	throw_range = 7
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
+	grind_results = list("iron" = 2, "iodine" = 1)
 	var/colour = "black"	//what colour the ink is!
 	var/traitor_unlock_degrees = 0
 	var/degrees = 0
@@ -161,8 +162,7 @@
  * Sleepypens
  */
 /obj/item/pen/sleepy
-	origin_tech = "engineering=4;syndicate=2"
-	container_type = OPENCONTAINER_1
+	container_type = OPENCONTAINER
 
 
 /obj/item/pen/sleepy/attack(mob/living/M, mob/user)
@@ -175,7 +175,8 @@
 				reagents.trans_to(M, reagents.total_volume)
 
 
-/obj/item/pen/sleepy/New()
+/obj/item/pen/sleepy/Initialize()
+	. = ..()
 	create_reagents(45)
 	reagents.add_reagent("chloralhydrate2", 20)
 	reagents.add_reagent("mutetoxin", 15)
@@ -186,7 +187,6 @@
  * (Alan) Edaggers
  */
 /obj/item/pen/edagger
-	origin_tech = "combat=3;syndicate=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
 	var/on = FALSE
 

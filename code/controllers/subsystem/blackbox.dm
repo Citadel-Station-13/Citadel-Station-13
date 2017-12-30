@@ -10,11 +10,13 @@ SUBSYSTEM_DEF(blackbox)
 	var/sealed = FALSE	//time to stop tracking stats?
 	var/list/research_levels = list() //list of highest tech levels attained that isn't lost lost by destruction of RD computers
 	var/list/versions = list("time_dilation_current" = 2,
-							"science_techweb_unlock" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
+							"science_techweb_unlock" = 2,
+							"antagonists" = 3) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
 
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
+	record_feedback("amount", "random_seed", Master.random_seed)
 	. = ..()
 
 //poll population
@@ -39,13 +41,20 @@ SUBSYSTEM_DEF(blackbox)
 	sealed = SSblackbox.sealed
 
 //no touchie
-/datum/controller/subsystem/blackbox/can_vv_get(var_name)
+/datum/controller/subsystem/blackbox/vv_get_var(var_name)
 	if(var_name == "feedback")
-		return FALSE
+		return debug_variable(var_name, deepCopyList(feedback), 0, src)
 	return ..()
 
 /datum/controller/subsystem/blackbox/vv_edit_var(var_name, var_value)
-	return FALSE
+	switch(var_name)
+		if("feedback")
+			return FALSE
+		if("sealed")
+			if(var_value)
+				return Seal()
+			return FALSE
+	return ..()
 
 /datum/controller/subsystem/blackbox/Shutdown()
 	sealed = FALSE
@@ -76,11 +85,12 @@ SUBSYSTEM_DEF(blackbox)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)
-		return
+		return FALSE
 	if(IsAdminAdvancedProcCall())
 		message_admins("[key_name_admin(usr)] sealed the blackbox!")
 	log_game("Blackbox sealed[IsAdminAdvancedProcCall() ? " by [key_name(usr)]" : ""].")
 	sealed = TRUE
+	return TRUE
 
 /datum/controller/subsystem/blackbox/proc/log_research(tech, level)
 	if(!(tech in research_levels) || research_levels[tech] < level)
@@ -217,7 +227,12 @@ Versioning
 			var/pos = length(FV.json["data"]) + 1
 			FV.json["data"]["[pos]"] = list() //in 512 "pos" can be replaced with "[FV.json["data"].len+1]"
 			for(var/i in data)
-				FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" //and here with "[FV.json["data"].len]"
+				if(islist(data[i]))
+					FV.json["data"]["[pos]"]["[i]"] = data[i] //and here with "[FV.json["data"].len]"
+				else
+					FV.json["data"]["[pos]"]["[i]"] = "[data[i]]" 
+		else
+			CRASH("Invalid feedback key_type: [key_type]")
 
 /datum/controller/subsystem/blackbox/proc/record_feedback_recurse_list(list/L, list/key_list, increment, depth = 1)
 	if(depth == key_list.len)

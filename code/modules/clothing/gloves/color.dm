@@ -142,7 +142,7 @@
 	item_color = "cargo"					//Exists for washing machines. Is not different from brown gloves in any way.
 
 /obj/item/clothing/gloves/color/captain
-	desc = "Regal blue gloves, with a nice gold trim. Swanky."
+	desc = "Regal blue gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky."
 	name = "captain's gloves"
 	icon_state = "captain"
 	item_state = "egloves"
@@ -188,11 +188,11 @@
 /obj/item/clothing/gloves/color/random
 	name = "random gloves"
 	desc = "These gloves are supposed to be a random color..."
-	icon_state = "white"
+	icon_state = "random_gloves"
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
@@ -205,9 +205,5 @@
 		/obj/item/clothing/gloves/color/brown = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	item_state = initial(selected.item_state)
-	item_color = initial(selected.item_color)
+	new selected(loc)
+	return INITIALIZE_HINT_QDEL

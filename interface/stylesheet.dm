@@ -36,6 +36,9 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #5c00e6;}
+.binarysay    			{color: #20c20e; background-color: #000000; display: block;}
+.binarysay a  			{color: #00ff00;}
+.binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #008000;}
 .sciradio				{color: #993399;}
 .comradio				{color: #948f02;}
@@ -131,6 +134,7 @@ h1.alert, h2.alert		{color: #000000;}
 .ghostalert				{color: #5c00e6;	font-style: italic; font-weight: bold;}
 
 .alien					{color: #543354;}
+.alienbold				{color: #543354;	font-weight: bold;}
 .noticealien			{color: #00c000;}
 .alertalien				{color: #00c000;	font-weight: bold;}
 .borer					{color: #543354;	font-style: italic;}
@@ -156,6 +160,7 @@ h1.alert, h2.alert		{color: #000000;}
 .memo					{color: #638500;	text-align: center;}
 .memoedit				{text-align: center;	font-size: 2;}
 .abductor				{color: #800080; font-style: italic;}
+.mind_control			{color: #A00D6F; font-size: 3; font-weight: bold; font-style: italic;}
 .slime					{color: #00CED1;}
 .drone					{color: #848482;}
 .monkey					{color: #975032;}

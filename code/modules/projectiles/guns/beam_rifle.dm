@@ -23,7 +23,6 @@
 	slot_flags = SLOT_BACK
 	force = 15
 	materials = list()
-	origin_tech = ""
 	recoil = 4
 	ammo_x_offset = 3
 	ammo_y_offset = 3
@@ -64,7 +63,7 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
-	
+
 	var/lastprocess = 0
 
 	//ZOOMING
@@ -179,7 +178,7 @@
 	zoom_animating = 0
 	animate(current_user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
 	zoom_current_view_increase = 0
-	current_user.client.change_view(world.view)
+	current_user.client.change_view(CONFIG_GET(string/default_view))
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0
@@ -358,15 +357,15 @@
 	if(lastfire > world.time + delay)
 		return
 	lastfire = world.time
+	. = ..()
 	stop_aiming()
-	return ..()
 
 /obj/item/gun/energy/beam_rifle/proc/sync_ammo()
 	for(var/obj/item/ammo_casing/energy/beam_rifle/AC in contents)
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = Clamp(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -417,11 +416,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = Clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = Clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -503,11 +502,11 @@
 	if(!do_pierce)
 		return FALSE
 	if(pierced[target])		//we already pierced them go away
-		loc = get_turf(target)
+		forceMove(get_turf(target))
 		return TRUE
 	if(isclosedturf(target))
 		if(wall_pierce++ < wall_pierce_amount)
-			loc = target
+			forceMove(target)
 			if(prob(wall_devastate))
 				if(iswallturf(target))
 					var/turf/closed/wall/W = target
@@ -523,7 +522,7 @@
 					var/obj/O = AM
 					O.take_damage((impact_structure_damage + aoe_structure_damage) * structure_bleed_coeff * get_damage_coeff(AM), BURN, "energy", FALSE)
 				pierced[AM] = TRUE
-				loc = get_turf(AM)
+				forceMove(AM.drop_location())
 				structure_pierce++
 				return TRUE
 	return FALSE
@@ -716,44 +715,6 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	flags_1 = ABSTRACT_1
 	appearance_flags = 0
-
-/obj/effect/projectile_beam/proc/scale_to(nx,ny,override=TRUE)
-	var/matrix/M
-	if(!override)
-		M = transform
-	else
-		M = new
-	M.Scale(nx,ny)
-	transform = M
-
-/obj/effect/projectile_beam/proc/turn_to(angle,override=TRUE)
-	var/matrix/M
-	if(!override)
-		M = transform
-	else
-		M = new
-	M.Turn(angle)
-	transform = M
-
-/obj/effect/projectile_beam/New(angle_override, p_x, p_y, color_override, scaling = 1)
-	if(angle_override && p_x && p_y && color_override && scaling)
-		apply_vars(angle_override, p_x, p_y, color_override, scaling)
-	return ..()
-
-/obj/effect/projectile_beam/proc/apply_vars(angle_override, p_x, p_y, color_override, scaling = 1, new_loc, increment = 0)
-	var/mutable_appearance/look = new(src)
-	look.pixel_x = p_x
-	look.pixel_y = p_y
-	if(color_override)
-		look.color = color_override
-	appearance = look
-	scale_to(1,scaling, FALSE)
-	turn_to(angle_override, FALSE)
-	if(!isnull(new_loc))	//If you want to null it just delete it...
-		forceMove(new_loc)
-	for(var/i in 1 to increment)
-		pixel_x += round((sin(angle_override)+16*sin(angle_override)*2), 1)
-		pixel_y += round((cos(angle_override)+16*cos(angle_override)*2), 1)
 
 /obj/effect/projectile_beam/tracer
 	icon_state = "tracer_beam"

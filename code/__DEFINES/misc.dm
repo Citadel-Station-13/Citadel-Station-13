@@ -334,9 +334,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #endif
 #endif
 
- // Consider these images/atoms as part of the UI/HUD
+// Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI								RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -444,6 +444,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
+
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
@@ -451,8 +452,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
-
-#define BEAT_CHANNEL 150
 
 //http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0
@@ -490,3 +489,10 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define FRIENDLY_SPAWN 2
 
 #define RIDING_OFFSET_ALL "ALL"
+
+//text files
+#define BRAIN_DAMAGE_FILE "traumas.json"
+
+//Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

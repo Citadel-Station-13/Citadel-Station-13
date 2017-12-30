@@ -9,7 +9,6 @@
 	slot_flags = SLOT_BELT
 	materials = list(MAT_METAL=500, MAT_GLASS=500)
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=1;magnets=2"
 	var/turf/pointer_loc
 	var/energy = 5
 	var/max_energy = 5
@@ -51,7 +50,7 @@
 	else if(istype(W, /obj/item/screwdriver))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
-			diode.loc = get_turf(src.loc)
+			diode.forceMove(drop_location())
 			diode = null
 	else
 		return ..()

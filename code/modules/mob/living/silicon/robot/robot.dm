@@ -113,9 +113,7 @@
 	ident = rand(1, 999)
 
 	if(!cell)
-		cell = new /obj/item/stock_parts/cell(src)
-		cell.maxcharge = 7500
-		cell.charge = 7500
+		cell = new /obj/item/stock_parts/cell/high(src, 7500)
 
 	if(lawupdate)
 		make_laws()
@@ -205,14 +203,13 @@
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
-	"Service" = /obj/item/robot_module/butler, \
-	"MediHound" = /obj/item/robot_module/medihound, \
-	"Security K9" = /obj/item/robot_module/k9, \
-	"Scrub Puppy" = /obj/item/robot_module/scrubpup)
+	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
+
+	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -582,39 +579,25 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(module.cyborg_base_icon == "medihound")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(sleeper_g == 1)
-			add_overlay("msleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("msleeper_r")
-		if(stat == DEAD)
-			icon_state = "medihound-wreck"
 
-	if(module.cyborg_base_icon == "k9")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(laser == 1)
-			add_overlay("laser")
-		if(disabler == 1)
-			add_overlay("disabler")
-		if(sleeper_g == 1)
-			add_overlay("ksleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("ksleeper_r")
-		if(stat == DEAD)
-			icon_state = "k9-wreck"
+	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
+	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 
-	if(module.cyborg_base_icon == "scrubpup")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(sleeper_g == 1)
-			add_overlay("jsleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("jsleeper_r")
-		if(stat == DEAD)
-			icon_state = "scrubpup-wreck"
+	if(laser)
+		add_overlay("laser")//Is this even used???
+	if(disabler)
+		add_overlay("disabler")//ditto
+
+	if(sleeper_g && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_g")
+	if(sleeper_r && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_r")
+	if(stat == DEAD && module.has_snowflake_deadsprite)
+		icon_state = "[module.cyborg_base_icon]-wreck"
+
+	if(module.cyborg_pixel_offset)
+		pixel_x = module.cyborg_pixel_offset
+	//End of citadel changes
 
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
@@ -841,8 +824,7 @@
 
 /mob/living/silicon/robot/modules/syndicate/Initialize()
 	. = ..()
-	cell.maxcharge = 25000
-	cell.charge = 25000
+	cell = new /obj/item/stock_parts/cell/hyper(src, 25000)
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	laws = new /datum/ai_laws/syndicate_override()
 	addtimer(CALLBACK(src, .proc/show_playstyle), 5)
@@ -1013,6 +995,7 @@
 	designation = module.name
 	if(hands)
 		hands.icon_state = module.moduleselect_icon
+		hands.icon = (module.moduleselect_alternate_icon ? module.moduleselect_alternate_icon : initial(hands.icon)) //CITADEL CHANGE - allows module select icons to use a different icon file
 	if(module.can_be_pushed)
 		status_flags |= CANPUSH
 	else
