@@ -209,9 +209,6 @@
 				trg.teleporter_hub.update_icon()
 			if(trg.teleporter_console)
 				trg.teleporter_console.stat &= ~NOPOWER
-<<<<<<< HEAD
-				trg.teleporter_console.update_icon()
-=======
 				trg.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)
@@ -224,4 +221,3 @@
 	if(!A || A.noteleport)
 		return FALSE
 	return TRUE
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
