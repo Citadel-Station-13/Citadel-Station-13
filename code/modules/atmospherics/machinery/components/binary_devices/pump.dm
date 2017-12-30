@@ -133,9 +133,8 @@ Thus, the two variables affect pump operation are set in New():
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
-				investigate_log("Pump, [src.name], was set to [target_pressure] kPa by [key_name(usr)] at [x], [y], [z], [A]", INVESTIGATE_ATMOS)
-				message_admins("Pump, [src.name], was set to [target_pressure] kPa by [ADMIN_LOOKUPFLW(usr)] at [ADMIN_COORDJMP(T)], [A]")
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
 /obj/machinery/atmospherics/components/binary/pump/atmosinit()
@@ -156,7 +155,7 @@ Thus, the two variables affect pump operation are set in New():
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = Clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

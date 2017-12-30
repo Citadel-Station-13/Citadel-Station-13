@@ -103,7 +103,7 @@
 			var/datum/gas_mixture/filtered_out = new
 
 			filtered_out.temperature = removed.temperature
-			ASSERT_GAS(filter_type, filtered_out)
+			filtered_out.add_gas(filter_type)
 			filtered_out.gases[filter_type][MOLES] = removed.gases[filter_type][MOLES]
 
 			removed.gases[filter_type][MOLES] = 0
@@ -162,7 +162,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = Clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("filter")
 			filter_type = null

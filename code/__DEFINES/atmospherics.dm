@@ -12,6 +12,12 @@
 
 //ATMOS
 //stuff you should probably leave well alone!
+#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
+#define ONE_ATMOSPHERE			101.325	//kPa
+#define T0C						273.15	// 0degC
+#define T20C					293.15	// 20degC
+#define TCMB					2.7		// -270.3degC
+
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005) //compared against for superconductivity
 #define O2STANDARD				0.21	//percentage of oxygen in a normal mixture of air
@@ -170,6 +176,4 @@
 #define ADD_GAS(gas_id, out_list)\
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
-//ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-//Must be used before adding to a gas. May be used before reading from a gas.
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };

@@ -9,7 +9,7 @@
 	var/value
 	var/default	//read-only, just set value directly
 	
-	var/resident_file	//the file which this belongs to, must be set
+	var/resident_file	//the file which this was loaded from, if any
 	var/modified = FALSE	//set to TRUE if the default has been overridden by a config entry
 
 	var/protection = NONE
@@ -18,8 +18,6 @@
 	var/dupes_allowed = FALSE
 
 /datum/config_entry/New()
-	if(!resident_file)
-		CRASH("Config entry [type] has no resident_file set")
 	if(type == abstract_type)
 		CRASH("Abstract config entry [type] instatiated!")	
 	name = lowertext(type2top(type))
@@ -110,7 +108,7 @@
 /datum/config_entry/number/ValidateAndSet(str_val)
 	var/temp = text2num(trim(str_val))
 	if(!isnull(temp))
-		value = Clamp(integer ? round(temp) : temp, min_val, max_val)
+		value = CLAMP(integer ? round(temp) : temp, min_val, max_val)
 		if(value != temp && !var_edited)
 			log_config("Changing [name] from [temp] to [value]!")
 		return TRUE

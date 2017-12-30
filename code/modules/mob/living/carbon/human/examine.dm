@@ -187,31 +187,32 @@
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
-	if(temp)
-		if(temp < 25)
-			msg += "[t_He] [t_has] minor bruising.\n"
-		else if(temp < 50)
-			msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
-		else
-			msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
+	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
+		if(temp)
+			if(temp < 25)
+				msg += "[t_He] [t_has] minor bruising.\n"
+			else if(temp < 50)
+				msg += "[t_He] [t_has] <b>moderate</b> bruising!\n"
+			else
+				msg += "<B>[t_He] [t_has] severe bruising!</B>\n"
 
-	temp = getFireLoss()
-	if(temp)
-		if(temp < 25)
-			msg += "[t_He] [t_has] minor burns.\n"
-		else if (temp < 50)
-			msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
-		else
-			msg += "<B>[t_He] [t_has] severe burns!</B>\n"
+		temp = getFireLoss()
+		if(temp)
+			if(temp < 25)
+				msg += "[t_He] [t_has] minor burns.\n"
+			else if (temp < 50)
+				msg += "[t_He] [t_has] <b>moderate</b> burns!\n"
+			else
+				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
-	temp = getCloneLoss()
-	if(temp)
-		if(temp < 25)
-			msg += "[t_He] [t_has] minor cellular damage.\n"
-		else if(temp < 50)
-			msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
-		else
-			msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
+		temp = getCloneLoss()
+		if(temp)
+			if(temp < 25)
+				msg += "[t_He] [t_has] minor cellular damage.\n"
+			else if(temp < 50)
+				msg += "[t_He] [t_has] <b>moderate</b> cellular damage!\n"
+			else
+				msg += "<b>[t_He] [t_has] severe cellular damage!</b>\n"
 
 
 	if(fire_stacks > 0)
@@ -272,7 +273,7 @@
 				msg += "[t_He] look[p_s()] like a drunken mess.\n"
 			if(91.01 to INFINITY)
 				msg += "[t_He] [t_is] a shitfaced, slobbering wreck.\n"
-				
+
 	for (var/I in src.vore_organs)
 		var/datum/belly/B = vore_organs[I]
 		msg += B.get_examine_msg()
@@ -284,7 +285,7 @@
 		if(stat == UNCONSCIOUS)
 			msg += "[t_He] [t_is]n't responding to anything around [t_him] and seem[p_s()] to be asleep.\n"
 		else
-			if(disabilities & DUMB)
+			if(has_disability(DISABILITY_DUMB))
 				msg += "[t_He] [t_has] a stupid expression on [t_his] face.\n"
 			if(InCritical())
 				msg += "[t_He] [t_is] barely conscious.\n"
@@ -349,7 +350,7 @@
 						msg += "<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>\n"
 	if(print_flavor_text() && get_visible_name() != "Unknown")//Are we sure we know who this is? Don't show flavor text unless we can recognize them. Prevents certain metagaming with impersonation.
 		msg += "[print_flavor_text()]\n"
-		
+
 	msg += "*---------*</span>"
 
 	to_chat(user, msg)

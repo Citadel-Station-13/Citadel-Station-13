@@ -180,7 +180,7 @@
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = Clamp(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()
