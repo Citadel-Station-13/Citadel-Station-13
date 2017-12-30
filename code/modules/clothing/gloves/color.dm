@@ -192,7 +192,7 @@
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
