@@ -387,12 +387,23 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/xmas
 	name = CHRISTMAS
-	begin_day = 23
+	begin_day = 22
 	begin_month = DECEMBER
-	end_day = 25
+	end_day = 27
 
 /datum/holiday/xmas/greet()
 	return "Have a merry Christmas!"
+
+/datum/holiday/xmas/celebrate()
+	SSticker.OnRoundstart(CALLBACK(src, .proc/roundstart_celebrate))
+
+/datum/holiday/xmas/proc/roundstart_celebrate()
+	for(var/obj/machinery/computer/security/telescreen/entertainment/Monitor in GLOB.machines)
+		Monitor.icon_state = "entertainment_xmas"
+
+	for(var/mob/living/simple_animal/pet/dog/corgi/Ian/Ian in GLOB.mob_living_list)
+		Ian.place_on_head(new /obj/item/clothing/head/helmet/space/santahat(Ian))
+
 
 /datum/holiday/festive_season
 	name = FESTIVE_SEASON

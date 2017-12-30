@@ -88,7 +88,7 @@
 /turf/open/indestructible/clock_spawn_room/proc/port_servants()
 	. = FALSE
 	for(var/mob/living/L in src)
-		if(is_servant_of_ratvar(L))
+		if(is_servant_of_ratvar(L) && L.stat != DEAD)
 			. = TRUE
 			L.forceMove(get_turf(pick(GLOB.servant_spawns)))
 			visible_message("<span class='warning'>[L] vanishes in a flash of red!</span>")
@@ -355,6 +355,6 @@
 	if (air.gases[/datum/gas/carbon_dioxide] && air.gases[/datum/gas/oxygen])
 		air.gases[/datum/gas/carbon_dioxide][MOLES]=max(air.gases[/datum/gas/carbon_dioxide][MOLES]-(pulse_strength/1000),0)
 		air.gases[/datum/gas/oxygen][MOLES]=max(air.gases[/datum/gas/oxygen][MOLES]-(pulse_strength/2000),0)
-		ASSERT_GAS(/datum/gas/pluoxium,air)
+		air.assert_gas(/datum/gas/pluoxium)
 		air.gases[/datum/gas/pluoxium][MOLES]+=(pulse_strength/4000)
 		air.garbage_collect()
