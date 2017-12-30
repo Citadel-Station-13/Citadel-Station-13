@@ -38,6 +38,7 @@
 	item = /obj/item/gun/ballistic/automatic/pistol/antitank/syndicate
 	cost = 14
 	surplus = 25
+	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
 
 /*		Commented out due to introduction of reskinnable stetchkins. May still have a niche if people decide it somehow has value.
