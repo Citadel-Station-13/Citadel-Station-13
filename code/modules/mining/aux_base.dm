@@ -140,9 +140,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 		to_chat(user, "<span class='warning'>This station is not equipped with an auxillary base. Please contact your Nanotrasen contractor.</span>")
 		return
 	if(!no_restrictions)
-<<<<<<< HEAD
-		if(T.z != ZLEVEL_MINING)
-=======
 		var/static/list/disallowed_turf_types = typecacheof(list(
 			/turf/open/lava,
 			/turf/closed/indestructible,
@@ -150,7 +147,6 @@ interface with the mining shuttle at the landing site if a mobile beacon is also
 			))
 
 		if(!is_mining_level(T.z))
->>>>>>> f2dbe5c... Replace explicit z-level checks with defines (#33829)
 			return BAD_ZLEVEL
 		var/colony_radius = max(base_dock.width, base_dock.height)*0.5
 		if(T.x - colony_radius < 1 || T.x + colony_radius >= world.maxx || T.y - colony_radius < 1 || T.y + colony_radius >= world.maxx)
