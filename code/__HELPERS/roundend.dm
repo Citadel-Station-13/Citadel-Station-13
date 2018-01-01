@@ -103,10 +103,10 @@
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
-	for(var/client/C in GLOB.clients)
+	/*for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
-		C.playtitlemusic(40)
+		C.playtitlemusic(40)*/
 
 	display_report()
 
@@ -434,10 +434,7 @@
 
 
 /proc/printplayer(datum/mind/ply, fleecheck)
-	var/jobtext = ""
-	if(ply.assigned_role)
-		jobtext = " the <b>[ply.assigned_role]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " <span class='redtext'>died</span>"
@@ -445,7 +442,7 @@
 			text += " <span class='greentext'>survived</span>"
 		if(fleecheck)
 			var/turf/T = get_turf(ply.current)
-			if(!T || !is_station_level(T.z))
+			if(!T || !(T.z in GLOB.station_z_levels))
 				text += " while <span class='redtext'>fleeing the station</span>"
 		if(ply.current.real_name != ply.name)
 			text += " as <b>[ply.current.real_name]</b>"
