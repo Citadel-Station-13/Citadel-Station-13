@@ -306,10 +306,10 @@
 
 			if(eyes.eye_damage > 20)
 				if(prob(eyes.eye_damage - 20))
-					if(become_nearsighted())
+					if(!has_disability(DISABILITY_NEARSIGHT))
 						to_chat(src, "<span class='warning'>Your eyes start to burn badly!</span>")
 				else if(prob(eyes.eye_damage - 25))
-					if(become_blind())
+					if(!has_disability(DISABILITY_BLIND))
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 			else
 				to_chat(src, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
