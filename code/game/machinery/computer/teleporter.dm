@@ -189,18 +189,9 @@
 			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
-<<<<<<< HEAD
-			var/turf/T = get_turf(R)
-			if(!T || !R.teleporter_hub || !R.teleporter_console)
-				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
-=======
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
->>>>>>> 646672e... Merge pull request #33917 from AutomaticFrenzy/patch/beacon-name
 		var/desc = input("Please select a station to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]
 		if(target)
