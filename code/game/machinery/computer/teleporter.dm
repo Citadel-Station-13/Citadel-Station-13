@@ -161,18 +161,9 @@
 	var/list/areaindex = list()
 	if(regime_set == "Teleporter")
 		for(var/obj/item/device/radio/beacon/R in GLOB.teleportbeacons)
-<<<<<<< HEAD
-			var/turf/T = get_turf(R)
-			if(!T)
-				continue
-			if(T.z == ZLEVEL_CENTCOM || T.z > ZLEVEL_SPACEMAX)
-				continue
-			L[avoid_assoc_duplicate_keys(T.loc.name, areaindex)] = R
-=======
 			if(is_eligible(R))
 				var/area/A = get_area(R)
 				L[avoid_assoc_duplicate_keys(A.name, areaindex)] = R
->>>>>>> 646672e... Merge pull request #33917 from AutomaticFrenzy/patch/beacon-name
 
 		for(var/obj/item/implant/tracking/I in GLOB.tracked_implants)
 			if(!I.imp_in || !ismob(I.loc))
