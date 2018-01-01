@@ -18,6 +18,9 @@
 	//Antag information
 	gather_antag_data()
 
+	//Nuke disk
+	record_nuke_disk_location()
+
 /datum/controller/subsystem/ticker/proc/gather_antag_data()
 	var/team_gid = 1
 	var/list/team_ids = list()
@@ -45,7 +48,26 @@
 				var/result = O.check_completion() ? "SUCCESS" : "FAIL"
 				antag_info["objectives"] += list(list("objective_type"=O.type,"text"=O.explanation_text,"result"=result))
 		SSblackbox.record_feedback("associative", "antagonists", 1, antag_info)
-		
+
+/datum/controller/subsystem/ticker/proc/record_nuke_disk_location()
+	var/obj/item/disk/nuclear/N = locate() in GLOB.poi_list
+	if(N)
+		var/list/data = list()
+		var/turf/T = get_turf(N)
+		if(T)
+			data["x"] = T.x
+			data["y"] = T.y
+			data["z"] = T.z
+		var/atom/outer = get_atom_on_turf(N,/mob/living)
+		if(outer != N)
+			if(isliving(outer))
+				var/mob/living/L = outer
+				data["holder"] = L.real_name
+			else
+				data["holder"] = outer.name
+
+		SSblackbox.record_feedback("associative", "roundend_nukedisk", 1 , data)
+
 /datum/controller/subsystem/ticker/proc/gather_newscaster()
 	var/json_file = file("[GLOB.log_directory]/newscaster.json")
 	var/list/file_data = list()
@@ -61,13 +83,14 @@
 			if(!istype(message))
 				stack_trace("Non-message in newscaster channel messages list")
 				continue
-			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = list()))
+			var/list/comment_data = list()
 			for(var/C in message.comments)
 				var/datum/newscaster/feed_comment/comment = C
 				if(!istype(comment))
 					stack_trace("Non-message in newscaster message comments list")
 					continue
-				file_data["[pos]"]["messages"]["comments"] += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
+				comment_data += list(list("author" = "[comment.author]", "time stamp" = "[comment.time_stamp]", "body" = "[comment.body]"))
+			file_data["[pos]"]["messages"] += list(list("author" = "[message.author]", "time stamp" = "[message.time_stamp]", "censored" = message.bodyCensor ? 1 : 0, "author censored" = message.authorCensor ? 1 : 0, "photo file" = "[message.photo_file]", "photo caption" = "[message.caption]", "body" = "[message.body]", "comments" = comment_data))
 		pos++
 	if(GLOB.news_network.wanted_issue.active)
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
@@ -76,7 +99,7 @@
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
-	to_chat(world, "<BR><BR><BR><FONT size=3><B>The round has ended.</B></FONT>")
+	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	if(LAZYLEN(GLOB.round_end_notifiees))
 		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
@@ -104,7 +127,7 @@
 
 	send2irc("Server", "Round just ended.")
 
-	if(CONFIG_GET(string/cross_server_address))
+	if(length(CONFIG_GET(keyed_string_list/cross_server)))
 		send_news_report()
 
 	CHECK_TICK
@@ -208,7 +231,7 @@
 							num_human_escapees++
 						if(shuttle_areas[get_area(Player)])
 							num_shuttle_escapees++
-	
+
 	.[POPCOUNT_SURVIVORS] = num_survivors
 	.[POPCOUNT_ESCAPEES] = num_escapees
 	.[POPCOUNT_SHUTTLE_ESCAPEES] = num_shuttle_escapees
@@ -220,7 +243,7 @@
 	var/list/parts = list()
 	var/station_evacuated = EMERGENCY_ESCAPED_OR_ENDGAMED
 	var/popcount = count_survivors()
-	
+
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
@@ -372,7 +395,7 @@
 			currrent_category = A.roundend_category
 			previous_category = A
 		result += A.roundend_report()
-		result += "<br>"
+		result += "<br><br>"
 
 	if(all_antagonists.len)
 		var/datum/antagonist/last = all_antagonists[all_antagonists.len]
@@ -411,10 +434,7 @@
 
 
 /proc/printplayer(datum/mind/ply, fleecheck)
-	var/jobtext = ""
-	if(ply.assigned_role)
-		jobtext = " the <b>[ply.assigned_role]</b>"
-	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b>[jobtext] and"
+	var/text = "<b>[ply.key]</b> was <b>[ply.name]</b> the <b>[ply.assigned_role]</b> and"
 	if(ply.current)
 		if(ply.current.stat == DEAD)
 			text += " <span class='redtext'>died</span>"
