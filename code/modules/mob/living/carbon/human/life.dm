@@ -72,6 +72,10 @@
 	else if(eye_blurry)			//blurry eyes heal slowly
 		adjust_blurriness(-1)
 
+	if(has_disability(DISABILITY_PACIFISM) && a_intent == INTENT_HARM)
+		to_chat(src, "<span class='notice'>You don't feel like harming anybody.</span>")
+		a_intent_change(INTENT_HELP)
+
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
 		..()
@@ -314,7 +318,7 @@
 			if(prob(I.embedded_fall_chance))
 				BP.receive_damage(I.w_class*I.embedded_fall_pain_multiplier)
 				BP.embedded_objects -= I
-				I.loc = get_turf(src)
+				I.forceMove(drop_location())
 				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
 				if(!has_embedded_objects())
 					clear_alert("embeddedobject")
