@@ -2,9 +2,8 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
-	earliest_start = 24000 //40 min
 
-	min_players = 20 //Avoid lowpop rounds
+	min_players = 10
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/alien_infestation
@@ -16,6 +15,7 @@
 	// 50% chance of being incremented by one
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	fakeable = TRUE
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
@@ -74,3 +74,4 @@
 	else
 		// Like how did we get here?
 		return FALSE
+

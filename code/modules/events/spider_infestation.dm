@@ -35,3 +35,4 @@
 		spawn_atom_to_turf(spawn_type, vent, 1, FALSE)
 		vents -= vent
 		spawncount--
+

@@ -27,7 +27,7 @@
 		if(QDELETED(temp_vent))
 			continue
 		if(temp_vent.loc.z == ZLEVEL_STATION_PRIMARY && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			if(temp_vent_parent.other_atmosmch.len > 20)
 				vents += temp_vent
 
