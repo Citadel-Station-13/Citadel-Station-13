@@ -58,8 +58,6 @@
 				C.cure_trauma_type(BRAIN_TRAUMA_SPECIAL)
 			if(prob(10) && C.has_trauma_type(BRAIN_TRAUMA_MILD))
 				C.cure_trauma_type(BRAIN_TRAUMA_MILD)
-<<<<<<< HEAD
-=======
 			if(trauma_heal_severe && prob(10) && C.has_trauma_type(BRAIN_TRAUMA_SEVERE))
 				C.cure_trauma_type(BRAIN_TRAUMA_SEVERE)
 
@@ -108,4 +106,3 @@
 		else
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.","You feel like your eyes can focus more clearly.", "You don't feel the need to blink.","Your ears feel great.","Your healing feels more acute.")]</span>")
->>>>>>> 52668a6... Makes some virology symptoms more worth using (#33986)
