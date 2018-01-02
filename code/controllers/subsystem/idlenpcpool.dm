@@ -41,3 +41,4 @@ SUBSYSTEM_DEF(idlenpcpool)
 				SA.consider_wakeup()
 		if (MC_TICK_CHECK)
 			return
+
