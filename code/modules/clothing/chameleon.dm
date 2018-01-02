@@ -128,7 +128,8 @@
 			return
 
 		update_item(picked_item)
-		update_item_icon()
+		var/obj/item/thing = target
+		thing.update_slot_icon()
 	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
@@ -166,6 +167,7 @@
 		return
 	random_look(owner)
 
+<<<<<<< HEAD
 /datum/action/item_action/chameleon/change/proc/update_item_icon()
 	var/obj/item/I = target
 	var/mob/living/M = owner
@@ -196,6 +198,8 @@
 	if(flags_1 & SLOT_NECK)
 		M.update_inv_neck()
 
+=======
+>>>>>>> 8309296... makes the decal component handle updating inventory icons (#33967)
 /obj/item/clothing/under/chameleon
 //starts off as black
 	name = "black jumpsuit"
