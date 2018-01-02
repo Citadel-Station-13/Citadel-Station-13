@@ -144,27 +144,27 @@
 /atom/movable/proc/clean_on_move()
 	var/turf/tile = loc
 	if(isturf(tile))
-		tile.clean_blood()
+		tile.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		for(var/A in tile)
 			if(is_cleanable(A))
 				qdel(A)
 			else if(istype(A, /obj/item))
 				var/obj/item/cleaned_item = A
-				cleaned_item.clean_blood()
+				cleaned_item.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			else if(ishuman(A))
 				var/mob/living/carbon/human/cleaned_human = A
 				if(cleaned_human.lying)
 					if(cleaned_human.head)
-						cleaned_human.head.clean_blood()
+						cleaned_human.head.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 						cleaned_human.update_inv_head()
 					if(cleaned_human.wear_suit)
-						cleaned_human.wear_suit.clean_blood()
+						cleaned_human.wear_suit.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 						cleaned_human.update_inv_wear_suit()
 					else if(cleaned_human.w_uniform)
-						cleaned_human.w_uniform.clean_blood()
+						cleaned_human.w_uniform.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 						cleaned_human.update_inv_w_uniform()
 					if(cleaned_human.shoes)
-						cleaned_human.shoes.clean_blood()
+						cleaned_human.shoes.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 						cleaned_human.update_inv_shoes()
 					cleaned_human.clean_blood()
 					cleaned_human.wash_cream()
@@ -611,8 +611,8 @@
 
 /atom/movable/proc/in_bounds()
 	. = FALSE
-	var/turf/currentturf = get_turf(src)
-	if(currentturf && (currentturf.z == ZLEVEL_CENTCOM || (currentturf.z in GLOB.station_z_levels) || currentturf.z == ZLEVEL_TRANSIT))
+	var/turf/T = get_turf(src)
+	if (T && (is_centcom_level(T.z) || is_station_level(T.z) || is_transit_level(T.z)))
 		. = TRUE
 
 

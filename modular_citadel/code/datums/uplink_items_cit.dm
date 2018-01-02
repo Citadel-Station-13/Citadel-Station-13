@@ -16,6 +16,7 @@
 			NOTE: The precise nature of the symbiosis required by the parasites renders them incompatible with changelings" //updated to actually describe what they do and warn traitorchans not to buy it
 	item = /obj/item/storage/box/syndie_kit/holoparasite
 	refundable = TRUE
+	cant_discount = TRUE
 	cost = 15
 	surplus = 20 //Nobody needs a ton of parasites
 	exclude_modes = list(/datum/game_mode/nuclear)
