@@ -112,6 +112,23 @@ SUBSYSTEM_DEF(ticker)
 	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
 	if(music.len > 1)
 		music -= old_login_music
+<<<<<<< HEAD
+=======
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
+>>>>>>> 1ed5ffe... Merge pull request #33908 from Cyberboss/RevertSounds
 
 	for(var/S in music)
 		var/list/L = splittext(S,".")
@@ -631,6 +648,10 @@ SUBSYSTEM_DEF(ticker)
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
+<<<<<<< HEAD
+=======
+	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+>>>>>>> 1ed5ffe... Merge pull request #33908 from Cyberboss/RevertSounds
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',

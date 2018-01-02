@@ -1,6 +1,7 @@
 sound/ambience/title1.ogg
 sound/ambience/title2.ogg
 sound/ambience/title3.ogg
+<<<<<<< HEAD
 sound/ambience/title4.ogg
 sound/misc/i_did_not_grief_them.ogg
 sound/ambience/clown.ogg
@@ -21,3 +22,6 @@ sound/music/indeep.ogg
 sound/music/goodbyemoonmen.ogg
 sound/music/flytothemoon_otomatone.ogg
 sound/music/milkyway.ogg
+=======
+sound/ambience/clown.ogg
+>>>>>>> 1ed5ffe... Merge pull request #33908 from Cyberboss/RevertSounds
