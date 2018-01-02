@@ -68,6 +68,7 @@ Bonus
 						eyes.Remove(M)
 						eyes.forceMove(get_turf(M))
 				else
+<<<<<<< HEAD
 					to_chat(M, "<span class='userdanger'>Your eyes burn horrifically!</span>")
 
 
@@ -130,3 +131,6 @@ Bonus
 			if(prob(base_message_chance))
 				to_chat(M, "<span class='notice'>[pick("Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")]</span>")
 	return
+=======
+					to_chat(M, "<span class='userdanger'>Your eyes burn horrifically!</span>")
+>>>>>>> 52668a6... Makes some virology symptoms more worth using (#33986)
