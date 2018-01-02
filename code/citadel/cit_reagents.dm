@@ -21,7 +21,7 @@
 		S = new(T)
 	S.reagents.add_reagent("semen", reac_volume)
 	if(data["blood_DNA"])
-		S.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /obj/effect/decal/cleanable/semen
 	name = "semen"
@@ -62,17 +62,16 @@
 	icon = 'code/citadel/icons/effects.dmi'
 	icon_state = "fem1"
 	random_icon_states = list("fem1", "fem2", "fem3", "fem4")
-	blood_DNA = list()
 	blood_state = null
 	bloodiness = null
 
 /obj/effect/decal/cleanable/femcum/New()
 	..()
 	dir = pick(1,2,4,8)
+	add_blood_DNA(list("Non-human DNA" = "A+"))
 
 /obj/effect/decal/cleanable/femcum/replace_decal(obj/effect/decal/cleanable/femcum/F)
-	if (F.blood_DNA)
-		blood_DNA |= F.blood_DNA.Copy()
+	F.add_blood_DNA(return_blood_DNA())
 	..()
 
 /datum/reagent/consumable/femcum/reaction_turf(turf/T, reac_volume)
@@ -86,7 +85,7 @@
 		S = new(T)
 	S.reagents.add_reagent("femcum", reac_volume)
 	if(data["blood_DNA"])
-		S.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		S.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 //aphrodisiac & anaphrodisiac
 
