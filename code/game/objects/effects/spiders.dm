@@ -133,7 +133,7 @@
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
 			var/list/vents = list()
-			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			var/datum/pipeline/entry_vent_parent = entry_vent.parents[1]
 			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
 				vents.Add(temp_vent)
 			if(!vents.len)
@@ -150,7 +150,7 @@
 				spawn(travel_time)
 
 					if(!exit_vent || exit_vent.welded)
-						loc = entry_vent
+						forceMove(entry_vent)
 						entry_vent = null
 						return
 
@@ -162,7 +162,7 @@
 						forceMove(entry_vent)
 						entry_vent = null
 						return
-					loc = exit_vent.loc
+					forceMove(exit_vent.loc)
 					entry_vent = null
 					var/area/new_area = get_area(loc)
 					if(new_area)

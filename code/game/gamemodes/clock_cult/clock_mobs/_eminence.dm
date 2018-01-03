@@ -14,16 +14,6 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/static/superheated_walls = 0
 
-/mob/camera/eminence/Initialize()
-	if(SSticker.mode.eminence)
-		return INITIALIZE_HINT_QDEL
-	. = ..()
-
-/mob/camera/eminence/Destroy(force)
-	if(!force && mind && SSticker.mode.eminence == mind)
-		return QDEL_HINT_LETMELIVE
-	return ..()
-
 /mob/camera/eminence/CanPass(atom/movable/mover, turf/target)
 	return TRUE
 
@@ -39,12 +29,20 @@
 
 /mob/camera/eminence/Login()
 	..()
-	add_servant_of_ratvar(src, TRUE)
+	var/datum/antagonist/clockcult/C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+	if(!C)
+		add_servant_of_ratvar(src, TRUE)
+		C = mind.has_antag_datum(/datum/antagonist/clockcult,TRUE)
+		if(C && C.clock_team)
+			if(C.clock_team.eminence)
+				remove_servant_of_ratvar(src,TRUE)
+				qdel(src)
+			else
+				C.clock_team.eminence = src
 	to_chat(src, "<span class='bold large_brass'>You have been selected as the Eminence!</span>")
 	to_chat(src, "<span class='brass'>As the Eminence, you lead the servants. Anything you say will be heard by the entire cult.</span>")
 	to_chat(src, "<span class='brass'>Though you can move through walls, you're also incorporeal, and largely can't interact with the world except for a few ways.</span>")
 	to_chat(src, "<span class='brass'>Additionally, unless the herald's beacon is activated, you can't understand any speech while away from Reebe.</span>")
-	SSticker.mode.eminence = mind
 	eminence_help()
 	for(var/V in actions)
 		var/datum/action/A = V
@@ -65,7 +63,7 @@
 	hierophant_message("<span class='large_brass'><b>The Eminence:</b> \"[message]\"</span>")
 
 /mob/camera/eminence/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode)
-	if(z == ZLEVEL_CITYOFCOGS || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything
+	if(is_reebe(z) || is_servant_of_ratvar(speaker) || GLOB.ratvar_approaches || GLOB.ratvar_awakens) //Away from Reebe, the Eminence can't hear anything
 		to_chat(src, message)
 		return
 	to_chat(src, "<i>[speaker] says something, but you can't understand any of it...</i>")
@@ -235,7 +233,7 @@
 	button_icon_state = "warp_down"
 
 /datum/action/innate/eminence/station_jump/Activate()
-	if(owner.z == ZLEVEL_CITYOFCOGS)
+	if(is_reebe(owner.z))
 		owner.forceMove(get_turf(pick(GLOB.generic_event_spawns)))
 		owner.playsound_local(owner, 'sound/magic/magic_missile.ogg', 50, TRUE)
 		flash_color(owner, flash_color = "#AF0AAF", flash_time = 25)

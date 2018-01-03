@@ -521,7 +521,7 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	for(var/area/A in world)
 		if(on_station)
 			var/turf/picked = safepick(get_area_turfs(A.type))
-			if(picked && (picked.z in GLOB.station_z_levels))
+			if(picked && is_station_level(picked.z))
 				if(!(A.type in areas_all) && !is_type_in_typecache(A, station_areas_blacklist))
 					areas_all.Add(A.type)
 		else if(!(A.type in areas_all))
@@ -735,11 +735,11 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 		if(Rad.anchored)
 			if(!Rad.loaded_tank)
 				var/obj/item/tank/internals/plasma/Plasma = new/obj/item/tank/internals/plasma(Rad)
-				ASSERT_GAS(/datum/gas/plasma, Plasma.air_contents)
+				Plasma.air_contents.assert_gas(/datum/gas/plasma)
 				Plasma.air_contents.gases[/datum/gas/plasma][MOLES] = 70
 				Rad.drainratio = 0
 				Rad.loaded_tank = Plasma
-				Plasma.loc = Rad
+				Plasma.forceMove(Rad)
 
 			if(!Rad.active)
 				Rad.toggle_power()
