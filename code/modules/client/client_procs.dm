@@ -237,6 +237,8 @@ GLOBAL_LIST(external_rsc_urls)
 
 	. = ..()	//calls mob.Login()
 
+	if(SSinput.initialized)
+		set_macros()
 	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
