@@ -10,6 +10,14 @@
 	w_class = WEIGHT_CLASS_TINY
 	flags_1 = NOBLUDGEON_1
 
+/obj/item/soap/cebu //real versions, for admin shenanigans. Adminspawn only
+	desc = "A bright blue bar of soap that smells of wolves"
+	icon = 'icons/obj/custom.dmi'
+	icon_state = "cebu"
+
+/obj/item/soap/cebu/fast //speedyquick cleaning version. Still not as fast as Syndiesoap. Adminspawn only.
+	cleanspeed = 15
+
 
 /*Inferno707*/
 

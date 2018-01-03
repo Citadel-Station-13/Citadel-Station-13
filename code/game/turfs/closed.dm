@@ -18,8 +18,7 @@
 /turf/closed/CanPass(atom/movable/mover, turf/target)
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
-	else
-		..()
+	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
@@ -58,21 +57,6 @@
 		switch(var_name)
 			if("icon")
 				SStitle.icon = icon
-
-/turf/closed/indestructible/reebe
-	name = "void"
-	icon_state = "reebe"
-	opacity = FALSE
-	baseturf = /turf/closed/indestructible/reebe
-
-/turf/closed/indestructible/reebe/ratvar_act()
-	return
-
-/turf/closed/indestructible/reebe/narsie_act()
-	return
-
-/turf/closed/indestructible/reebe/CollidedWith(atom/movable/AM)
-	playsound(src, 'sound/effects/bamf.ogg', 25, TRUE)
 
 /turf/closed/indestructible/riveted
 	icon = 'icons/turf/walls/riveted.dmi'
@@ -137,7 +121,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "necro"
 	explosion_block = 50
-	baseturf = /turf/closed/indestructible/necropolis
+	baseturfs = /turf/closed/indestructible/necropolis
 
 /turf/closed/indestructible/necropolis/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -151,7 +135,7 @@
 	icon_state = "wall"
 	canSmoothWith = list(/turf/closed/indestructible/riveted/boss, /turf/closed/indestructible/riveted/boss/see_through)
 	explosion_block = 50
-	baseturf = /turf/closed/indestructible/riveted/boss
+	baseturfs = /turf/closed/indestructible/riveted/boss
 
 /turf/closed/indestructible/riveted/boss/see_through
 	opacity = FALSE

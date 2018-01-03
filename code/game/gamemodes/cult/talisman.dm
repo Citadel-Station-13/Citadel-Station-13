@@ -65,8 +65,8 @@
 		log_game("Teleport talisman failed - no other teleport runes")
 		return ..(user, 0)
 
-	if(user.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+	if(is_away_level(user.z))
+		to_chat(user, "<span class='cult italic'>You are not in the right dimension!</span>")
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 

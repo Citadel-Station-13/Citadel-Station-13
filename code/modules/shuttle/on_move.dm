@@ -7,8 +7,15 @@ All ShuttleMove procs go here
 // Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
 // returns the new move_mode (based on the old)
 /turf/proc/fromShuttleMove(turf/newT, turf_type, list/baseturf_cache, move_mode)
-	if(!(move_mode & MOVE_AREA) || (istype(src, turf_type) && baseturf_cache[baseturf]))
+	if(!(move_mode & MOVE_AREA))
 		return move_mode
+	if(istype(src, turf_type))
+		if(length(baseturfs))
+			if(baseturf_cache[baseturfs[1]])
+				return move_mode
+		else if(baseturf_cache[baseturfs])
+			return move_mode
+
 	return move_mode | MOVE_TURF | MOVE_CONTENTS
 
 // Called from the new turf before anything has been moved
@@ -45,9 +52,7 @@ All ShuttleMove procs go here
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
 	//Destination turf changes
-	var/destination_turf_type = newT.type
-	newT = copyTurf(newT)
-	newT.baseturf = destination_turf_type
+	newT.CopyOnTop(src, 1, 0) // We only want a surface copy
 	//Air stuff
 	newT.blocks_air = TRUE
 	newT.air_update_turf(TRUE)
@@ -63,9 +68,8 @@ All ShuttleMove procs go here
 /turf/proc/afterShuttleMove(turf/oldT, turf_type, baseturf_type, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
-	oldT.ChangeTurf(turf_type, baseturf_type, FALSE, TRUE)
+	oldT.ChangeTurf(turf_type, baseturf_type, CHANGETURF_IGNORE_AIR) // TODO: make this oldT.ScrapeAway() which requires templating all shuttles
 
-	// Rotate and let the air move again
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
 
@@ -187,7 +191,7 @@ All ShuttleMove procs go here
 
 /obj/machinery/computer/auxillary_base/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	if(z == ZLEVEL_MINING) //Avoids double logging and landing on other Z-levels due to badminnery
+	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
 /obj/machinery/gravity_generator/main/beforeShuttleMove(turf/newT, rotation, move_mode)
@@ -209,9 +213,9 @@ All ShuttleMove procs go here
 /obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	var/missing_nodes = FALSE
-	for(DEVICE_TYPE_LOOP)
-		if(src.nodes[I])
-			var/obj/machinery/atmospherics/node = src.nodes[I]
+	for(var/i in 1 to device_type)
+		if(nodes[i])
+			var/obj/machinery/atmospherics/node = nodes[i]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
 				if(node in get_step(src, D))
@@ -219,9 +223,9 @@ All ShuttleMove procs go here
 					break
 
 			if(!connected)
-				nullifyNode(I)
+				nullifyNode(i)
 
-		if(!src.nodes[I])
+		if(!nodes[i])
 			missing_nodes = TRUE
 
 	if(missing_nodes)
