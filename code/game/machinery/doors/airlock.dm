@@ -135,7 +135,7 @@
 				for(var/turf/closed/T in range(2, src))
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
-				here.ChangeTurf(/turf/closed/wall)
+				here.PlaceOnTop(/turf/closed/wall)
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -680,7 +680,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if((H.disabilities & DUMB) && Adjacent(user))
+		if((H.has_disability(DISABILITY_DUMB)) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1036,7 +1036,7 @@
 		panel_open = TRUE
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.loc = get_turf(src)
+		charge.forceMove(drop_location())
 		charge.ex_act(EXPLODE_DEVASTATE)
 		detonated = 1
 		charge = null
@@ -1340,7 +1340,7 @@
 			else
 				ae = electronics
 				electronics = null
-				ae.loc = src.loc
+				ae.forceMove(drop_location())
 	qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

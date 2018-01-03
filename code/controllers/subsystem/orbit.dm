@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(orbit)
 	name = "Orbits"
-	priority = 35
+	priority = FIRE_PRIORITY_ORBIT
 	wait = 2
 	flags = SS_NO_INIT|SS_TICKER
 
@@ -40,5 +40,3 @@ SUBSYSTEM_DEF(orbit)
 			O.Check(targetloc)
 		if (MC_TICK_CHECK)
 			return
-
-
