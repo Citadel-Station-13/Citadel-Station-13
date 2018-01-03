@@ -202,8 +202,14 @@
 		/obj/item/clothing/gloves/color/green = 1,
 		/obj/item/clothing/gloves/color/grey = 1,
 		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1)
+		/obj/item/clothing/gloves/color/brown = 1,
+		/obj/item/clothing/gloves/color/white = 1,
+		/obj/item/clothing/gloves/color/rainbow = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-	new selected(loc)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new selected(H), slot_gloves)
+	else
+		new selected(loc)
 	return INITIALIZE_HINT_QDEL
