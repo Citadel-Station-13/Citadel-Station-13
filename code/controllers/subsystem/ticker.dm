@@ -88,6 +88,47 @@ SUBSYSTEM_DEF(ticker)
 		"wma"  = TRUE,
 		"aiff" = TRUE
 	)
+<<<<<<< HEAD
+=======
+
+	var/list/provisional_title_music = flist("config/title_music/sounds/")
+	var/list/music = list()
+	var/use_rare_music = prob(1)
+
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
+		var/list/L = splittext(lower,"+")
+		switch(L.len)
+			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
+				if(use_rare_music)
+					if(L[1] == "rare" && L[2] == SSmapping.config.map_name)
+						music += S
+					else if(L[2] == "rare" && L[1] == SSmapping.config.map_name)
+						music += S
+			if(2) //rare+sound.ogg or MAP+sound.ogg -- Rare sounds or Map-specific sounds
+				if((use_rare_music && L[1] == "rare") || (L[1] == SSmapping.config.map_name))
+					music += S
+			if(1) //sound.ogg -- common sound
+				music += S
+
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
+
+	for(var/S in music)
+		var/list/L = splittext(S,".")
+		if(L.len >= 2)
+			var/ext = lowertext(L[L.len]) //pick the real extension, no 'honk.ogg.exe' nonsense here
+			if(byond_sound_formats[ext])
+				continue
+		music -= S
+
+	if(isemptylist(music))
+		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+		login_music = pick(music)
+	else
+		login_music = "config/title_music/sounds/[pick(music)]"
+>>>>>>> 63471ca... Revert "Easy hosting of roundend sounds" (#33617)
 
 	var/list/provisional_title_music = flist("config/title_music/sounds/")
 	var/list/music = list()
@@ -631,6 +672,10 @@ SUBSYSTEM_DEF(ticker)
 	world.Reboot()
 
 /datum/controller/subsystem/ticker/Shutdown()
+<<<<<<< HEAD
+=======
+	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
+>>>>>>> 63471ca... Revert "Easy hosting of roundend sounds" (#33617)
 	if(!round_end_sound)
 		round_end_sound = pick(\
 		'sound/roundend/newroundsexy.ogg',
