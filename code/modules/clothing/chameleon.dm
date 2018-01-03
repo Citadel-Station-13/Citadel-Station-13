@@ -128,7 +128,8 @@
 			return
 
 		update_item(picked_item)
-		update_item_icon()
+		var/obj/item/thing = target
+		thing.update_slot_icon()
 	UpdateButtonIcon()
 
 /datum/action/item_action/chameleon/change/proc/update_item(obj/item/picked_item)
@@ -165,36 +166,6 @@
 		STOP_PROCESSING(SSprocessing, src)
 		return
 	random_look(owner)
-
-/datum/action/item_action/chameleon/change/proc/update_item_icon()
-	var/obj/item/I = target
-	var/mob/living/M = owner
-
-	var/flags_1 = I.slot_flags
-	if(flags_1 & SLOT_OCLOTHING)
-		M.update_inv_wear_suit()
-	if(flags_1 & SLOT_ICLOTHING)
-		M.update_inv_w_uniform()
-	if(flags_1 & SLOT_GLOVES)
-		M.update_inv_gloves()
-	if(flags_1 & SLOT_EYES)
-		M.update_inv_glasses()
-	if(flags_1 & SLOT_EARS)
-		M.update_inv_ears()
-	if(flags_1 & SLOT_MASK)
-		M.update_inv_wear_mask()
-	if(flags_1 & SLOT_HEAD)
-		M.update_inv_head()
-	if(flags_1 & SLOT_FEET)
-		M.update_inv_shoes()
-	if(flags_1 & SLOT_ID)
-		M.update_inv_wear_id()
-	if(flags_1 & SLOT_BELT)
-		M.update_inv_belt()
-	if(flags_1 & SLOT_BACK)
-		M.update_inv_back()
-	if(flags_1 & SLOT_NECK)
-		M.update_inv_neck()
 
 /obj/item/clothing/under/chameleon
 //starts off as black
