@@ -280,10 +280,11 @@
 	healths = new /obj/screen/healths()
 	infodisplay += healths
 
-	//citadel code
+	//CIT CHANGE - adds arousal to hud
 	arousal = new /obj/screen/arousal()
 	arousal.icon_state = (owner.canbearoused == 1 ? "arousal0" : "")
 	infodisplay += arousal
+	//END OF CIT CHANGES
 
 	healthdoll = new /obj/screen/healthdoll()
 	infodisplay += healthdoll
