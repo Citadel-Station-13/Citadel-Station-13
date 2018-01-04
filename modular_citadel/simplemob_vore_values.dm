@@ -70,3 +70,9 @@
 
 /mob/living/simple_animal
 	no_vore = TRUE
+
+/mob/living/carbon/alien
+	devourable = TRUE
+
+/mob/living/carbon/monkey
+	devourable = TRUE
