@@ -2478,6 +2478,7 @@
 #include "modular_citadel\citadel_ghostrole_spawners.dm"
 #include "modular_citadel\cydonian_armor.dm"
 #include "modular_citadel\polychromic_clothes.dm"
+#include "modular_citadel\simplemob_vore_values.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
 #include "modular_citadel\code\game\objects\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"

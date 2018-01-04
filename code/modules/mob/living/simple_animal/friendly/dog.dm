@@ -12,8 +12,6 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	devourable = TRUE
-	no_vore = FALSE
 
 //Corgis and pugs are now under one dog subtype
 

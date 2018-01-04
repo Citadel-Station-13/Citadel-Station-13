@@ -21,7 +21,7 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
-	devourable = TRUE
+
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

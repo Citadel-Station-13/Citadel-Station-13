@@ -31,7 +31,6 @@
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
-	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/goliath/Life()
 	. = ..()
