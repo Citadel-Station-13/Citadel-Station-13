@@ -27,6 +27,7 @@
 	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
+
 	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 
 		//Blood regeneration if there is some space
