@@ -113,7 +113,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"ovi_color" = "fff",
 							"has_eggsack" = FALSE,
 							"eggsack_internal" = TRUE,
-							"eggsack_color = "fff",
+							"eggsack_color" = "fff",
 							"eggsack_size" = BALLS_SACK_SIZE_DEF,
 							"eggsack_egg_color" = "fff",
 							"eggsack_egg_size" = EGG_GIRTH_DEF,
