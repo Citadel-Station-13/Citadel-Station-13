@@ -22,6 +22,10 @@ All ShuttleMove procs go here
 // Only gets called if fromShuttleMove returns true first
 // returns the new move_mode (based on the old)
 /turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
+	. = move_mode
+	if(!(. & MOVE_TURF))
+		return
+
 	var/shuttle_dir = shuttle.dir
 	for(var/i in contents)
 		var/atom/movable/thing = i
@@ -44,8 +48,6 @@ All ShuttleMove procs go here
 				step(thing, shuttle_dir)
 			else
 				qdel(thing)
-
-	return move_mode
 
 // Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
@@ -175,10 +177,6 @@ All ShuttleMove procs go here
 /obj/machinery/camera/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	GLOB.cameranet.addCamera(src)
-
-/obj/machinery/telecomms/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
-	. = ..()
-	listening_level = z // Update listening Z, just in case you have telecomm relay on a shuttle
 
 /obj/machinery/mech_bay_recharge_port/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir)
 	. = ..()
