@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
-	var/icon_override = null
+	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
 
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
@@ -202,31 +202,39 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(!user.research_scanner)
 		return
-	var/list/input = techweb_item_boost_check(src)
-	if(input)
-		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
-		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
-		for(var/datum/techweb_node/N in input)
-			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
-			if(SSresearch.science_tech.researched_nodes[N])
-				res += str
-			else if(SSresearch.science_tech.boosted_nodes[N])
-				boosted += str
-			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
-				output += str
-		var/list/combine = output + res + boosted
-		var/strout = combine.Join("<br>")
-		to_chat(user, strout)
 
-	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
-	if(materials.len)
+	// Research prospects, including boostable nodes and point values.
+	// Deliver to a console to know whether the boosts have already been used.
+	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
+	var/sep = ""
+	var/list/boostable_nodes = techweb_item_boost_check(src)
+	if (boostable_nodes)
+		for(var/id in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			research_msg += sep
+			research_msg += node.display_name
+			sep = ", "
+	var/points = techweb_item_point_check(src)
+	if (points)
+		research_msg += sep
+		research_msg += "[points] points"
+		sep = ", "
+
+	if (!sep) // nothing was shown
+		research_msg += "None"
+
+	// Extractable materials. Only shows the names, not the amounts.
+	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
+	if (materials.len)
+		sep = ""
 		for(var/mat in materials)
-			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+			research_msg += sep
+			research_msg += CallMaterialName(mat)
+			sep = ", "
 	else
-		msg += "<span class='danger'>No extractable materials detected.</span>"
-	msg += "*--------*"
-	to_chat(user, msg.Join("<br>"))
+		research_msg += "None"
+	research_msg += "."
+	to_chat(user, research_msg.Join())
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
@@ -550,8 +558,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.Unconscious(20)
 			M.Knockdown(40)
 		if (prob(eyes.eye_damage - 10 + 1))
-			if(M.become_blind())
-				to_chat(M, "<span class='danger'>You go blind!</span>")
+			M.become_blind(EYE_DAMAGE)
+			to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/singularity_pull(S, current_size)
 	..()

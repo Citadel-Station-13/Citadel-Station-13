@@ -304,7 +304,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	sleep(30)
 	if(!owner || QDELETED(owner))
 		return
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/AI/aimalf.ogg')
+	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
 	set_security_level("delta")
 	var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
 	owner_AI.nuking = TRUE
@@ -367,12 +367,12 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 	var/sec_left = seconds_remaining()
 	if(!sec_left)
 		timing = FALSE
-		detonate(T.z)
+		detonate()
 	else if(world.time >= next_announce)
 		minor_announce("[sec_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		next_announce += DOOMSDAY_ANNOUNCE_INTERVAL
 
-/obj/machinery/doomsday_device/proc/detonate(z_level = ZLEVEL_STATION_PRIMARY)
+/obj/machinery/doomsday_device/proc/detonate()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	for(var/i in GLOB.mob_living_list)

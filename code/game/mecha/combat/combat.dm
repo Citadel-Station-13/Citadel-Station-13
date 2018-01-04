@@ -24,3 +24,5 @@
 	if(occupant && occupant.client && occupant.client.mouse_pointer_icon == 'icons/mecha/mecha_mouse.dmi')
 		occupant.client.mouse_pointer_icon = initial(occupant.client.mouse_pointer_icon)
 	..()
+
+
