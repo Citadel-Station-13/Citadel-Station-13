@@ -2480,6 +2480,8 @@
 #include "modular_citadel\polychromic_clothes.dm"
 #include "modular_citadel\simplemob_vore_values.dm"
 #include "modular_citadel\code\datums\uplink_items_cit.dm"
+#include "modular_citadel\code\datums\mutations\hulk.dm"
+#include "modular_citadel\code\game\gamemodes\miniantags\bot_swarm\swarmer_event.dm"
 #include "modular_citadel\code\game\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
