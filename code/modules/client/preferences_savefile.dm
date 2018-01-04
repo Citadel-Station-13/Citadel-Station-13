@@ -141,6 +141,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 	if(current_version < 19)
 		pda_style = "mono"
+	if(current_version < 20)
+		pda_color = "#808000"
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -196,6 +198,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
 	S["pda_style"]			>> pda_style
+	S["pda_color"]			>> pda_color 
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -223,6 +226,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	screenshake			= sanitize_integer(screenshake, 0, 200, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
 
 	return 1
 
@@ -267,6 +271,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
 	WRITE_FILE(S["pda_style"], pda_style)
+	WRITE_FILE(S["pda_color"], pda_color)
 
 	return 1
 
