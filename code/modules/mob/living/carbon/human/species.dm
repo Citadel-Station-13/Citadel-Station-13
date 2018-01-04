@@ -634,7 +634,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/image/I
 
-	for(var/layer in relevent_layers)
+	for(var/layer in relevant_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
 
 		for(var/bodypart in bodyparts_to_add)

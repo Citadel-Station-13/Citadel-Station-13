@@ -21,7 +21,7 @@
 	..()
 
 /obj/item/device/electropack/shockcollar/receive_signal(datum/signal/signal)
-	if(!signal || signal.encryption != code)
+	if(!signal || signal.data["code"] != code)
 		return
 
 	if(isliving(loc) && on)
