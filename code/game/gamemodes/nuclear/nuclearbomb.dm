@@ -573,11 +573,8 @@ This is here to make the tiles around the station mininuke change when it's arme
 	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
 	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 	return MANUAL_SUICIDE
-<<<<<<< HEAD
-=======
 
 /obj/item/disk/fakenucleardisk/examine(mob/user)
 	..()
 	if(Adjacent(user))
 		to_chat(user, "<span class='warning'>Wait, this is a fake!</span>")
->>>>>>> 32a205b... You now have to stand next to the decoy nuke disk and examine it to know it's fake (#34059)
