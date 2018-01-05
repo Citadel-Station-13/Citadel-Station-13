@@ -141,6 +141,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 	if(current_version < 19)
 		pda_style = "mono"
+	if(current_version < 20)
+		pda_color = "#808000"
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
@@ -192,6 +194,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
 	S["pda_style"]			>> pda_style
+	S["pda_color"]			>> pda_color
+
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
@@ -221,6 +225,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
+
 	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
 	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 
@@ -263,6 +269,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
 	WRITE_FILE(S["pda_style"], pda_style)
+	WRITE_FILE(S["pda_color"], pda_color)
+
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
