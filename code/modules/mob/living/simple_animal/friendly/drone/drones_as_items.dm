@@ -19,6 +19,20 @@
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
 	GLOB.poi_list |= src
+<<<<<<< HEAD
+=======
+	if(isnull(possible_seasonal_hats))
+		build_seasonal_hats()
+
+/obj/item/drone_shell/proc/build_seasonal_hats()
+	possible_seasonal_hats = list()
+	if(!length(SSevents.holidays))
+		return //no holidays, no hats; we'll keep the empty list so we never call this proc again
+	for(var/V in SSevents.holidays)
+		var/datum/holiday/holiday = SSevents.holidays[V]
+		if(holiday.drone_hat)
+			possible_seasonal_hats += holiday.drone_hat
+>>>>>>> 629c674... Fix drone shells runtiming if no holidays are active (#34085)
 
 /obj/item/drone_shell/Destroy()
 	GLOB.poi_list -= src
