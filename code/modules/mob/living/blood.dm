@@ -16,7 +16,7 @@
 
 
 /mob/living/carbon/monkey/handle_blood()
-	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature >= TCRYO && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL)
 			blood_volume += 0.1 // regenerate blood VERY slowly
@@ -27,7 +27,12 @@
 	if(NOBLOOD in dna.species.species_traits)
 		bleed_rate = 0
 		return
+<<<<<<< HEAD
 	if(bodytemperature >= 225 && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+=======
+
+	if(bodytemperature >= TCRYO && !(has_disability(DISABILITY_NOCLONE))) //cryosleep or husked people do not pump the blood.
+>>>>>>> 18892a0... Corrects inconsistent usage of 310.055, 310.15, & 310 as body temp (#34134)
 
 		//Blood regeneration if there is some space
 		if(blood_volume < BLOOD_VOLUME_NORMAL && !(NOHUNGER in dna.species.species_traits))
