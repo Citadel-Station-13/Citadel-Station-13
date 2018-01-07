@@ -14,8 +14,8 @@
 	name = "smoke generator"
 	desc = "Unlike most electronics, creating smoke is completely intentional."
 	icon_state = "smoke"
-	extended_desc = "This smoke generator creates clouds of smoke on command.  It can also hold liquids inside, which will go \
-	into the smoke clouds when activated.  The reagents are consumed when smoke is made."
+	extended_desc = "This smoke generator creates clouds of smoke on command. It can also hold liquids inside, which will go \
+	into the smoke clouds when activated. The reagents are consumed when smoke is made."
 
 	container_type = OPENCONTAINER
 	volume = 100
@@ -63,7 +63,7 @@
 	name = "integrated hypo-injector"
 	desc = "This scary looking thing is able to pump liquids into whatever it's pointed at."
 	icon_state = "injector"
-	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine.  The target \
+	extended_desc = "This autoinjector can push reagents into another container or someone else outside of the machine. The target \
 	must be adjacent to the machine, and if it is a person, they cannot be wearing thick clothing. Negative given amount makes injector suck out reagents."
 
 	container_type = OPENCONTAINER
@@ -210,7 +210,7 @@
 	name = "reagent pump"
 	desc = "Moves liquids safely inside a machine, or even nearby it."
 	icon_state = "reagent_pump"
-	extended_desc = "This is a pump, which will move liquids from the source ref to the target ref. The third pin determines \
+	extended_desc = "This is a pump which will move liquids from the source ref to the target ref. The third pin determines \
 	how much liquid is moved per pulse, between 0 and 50. The pump can move reagents to any open container inside the machine, or \
 	outside the machine if it is next to the machine."
 
@@ -268,7 +268,7 @@
 
 /obj/item/integrated_circuit/reagent/storage
 	name = "reagent storage"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u."
 	icon_state = "reagent_storage"
 	extended_desc = "This is effectively an internal beaker."
 
@@ -284,7 +284,13 @@
 	activators = list()
 	spawn_flags = IC_SPAWN_DEFAULT|IC_SPAWN_RESEARCH
 
+<<<<<<< HEAD
 /obj/item/integrated_circuit/reagent/storage/interact(mob/user)
+=======
+
+
+/obj/item/integrated_circuit/reagent/storage/do_work()
+>>>>>>> 6a14af3... grammars circuits (#33974)
 	set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
 	push_data()
 	..()
@@ -293,9 +299,19 @@
 	set_pin_data(IC_OUTPUT, 1, reagents.total_volume)
 	push_data()
 
+/obj/item/integrated_circuit/reagent/storage/big
+	name = "big reagent storage"
+	icon_state = "reagent_storage_big"
+	desc = "Stores liquid inside the device away from electrical components. Can store up to 180u."
+
+	volume = 180
+
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
 /obj/item/integrated_circuit/reagent/storage/cryo
 	name = "cryo reagent storage"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. This will also suppress reactions."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. This will also suppress reactions."
 	icon_state = "reagent_storage_cryo"
 	extended_desc = "This is effectively an internal cryo beaker."
 
@@ -306,6 +322,7 @@
 	. = ..()
 	reagents.set_reacting(FALSE)
 
+<<<<<<< HEAD
 /obj/item/integrated_circuit/reagent/storage/big
 	name = "big reagent storage"
 	desc = "Stores liquid inside, and away from electrical components. Can store up to 180u."
@@ -317,9 +334,104 @@
 	complexity = 16
 	spawn_flags = IC_SPAWN_RESEARCH
 
+=======
+/obj/item/integrated_circuit/reagent/storage/grinder
+	name = "reagent grinder"
+	desc = "This is reagent grinder. It accepts a ref to something and refines it into reagents. It can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"grind" = IC_PINTYPE_PULSE_IN,
+		"on grind" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+
+/obj/item/integrated_circuit/reagent/storage/grinder/do_work(ord)
+	switch(ord)
+		if(1)
+			grind()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/grinder/proc/grind()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I)&&(I.grind_results)&&check_target(I)&&(I.on_grind(src) != -1))
+		reagents.add_reagent_list(I.grind_results)
+		if(I.reagents)
+			I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
+	activate_pin(3)
+	return FALSE
+
+obj/item/integrated_circuit/reagent/storage/juicer
+	name = "reagent juicer"
+	desc = "This is reagent juicer. It accepts a ref to something and refines it into reagents. It can store up to 100u."
+	icon_state = "blender"
+	extended_desc = ""
+	inputs = list(
+		"target" = IC_PINTYPE_REF,
+		)
+	outputs = list(
+		"volume used" = IC_PINTYPE_NUMBER,
+		"self reference" = IC_PINTYPE_REF
+		)
+	activators = list(
+		"juice" = IC_PINTYPE_PULSE_IN,
+		"on juice" = IC_PINTYPE_PULSE_OUT,
+		"on fail" = IC_PINTYPE_PULSE_OUT,
+		"push ref" = IC_PINTYPE_PULSE_IN
+		)
+	volume = 100
+	power_draw_per_use = 150
+	complexity = 16
+	spawn_flags = IC_SPAWN_RESEARCH
+
+/obj/item/integrated_circuit/reagent/storage/juicer/do_work(ord)
+	switch(ord)
+		if(1)
+			juice()
+		if(4)
+			set_pin_data(IC_OUTPUT, 2, WEAKREF(src))
+			push_data()
+
+/obj/item/integrated_circuit/reagent/storage/juicer/proc/juice()
+	if(reagents.total_volume >= reagents.maximum_volume)
+		activate_pin(3)
+		return FALSE
+	var/obj/item/I = get_pin_data_as_type(IC_INPUT, 1, /obj/item)
+	if(istype(I)&&check_target(I)&&(I.juice_results)&&(I.on_juice() != -1))
+		reagents.add_reagent_list(I.juice_results)
+		qdel(I)
+		activate_pin(2)
+		return TRUE
+	activate_pin(3)
+	return FALSE
+
+
+
+>>>>>>> 6a14af3... grammars circuits (#33974)
 /obj/item/integrated_circuit/reagent/storage/scan
 	name = "reagent scanner"
-	desc = "Stores liquid inside, and away from electrical components. Can store up to 60u. On pulse this beaker will send list of contained reagents."
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. On pulse this beaker will send list of contained reagents."
 	icon_state = "reagent_scan"
 	extended_desc = "Mostly useful for reagent filter."
 
@@ -346,9 +458,9 @@
 	name = "reagent filter"
 	desc = "Filtering liquids by list of desired or unwanted reagents."
 	icon_state = "reagent_filter"
-	extended_desc = "This is a filter, which will move liquids from the source to the target. \
-	It will move all reagents, except list, given in fourth pin if amount value is positive.\
-	Or it will move only desired reagents if amount is negative, The third pin determines \
+	extended_desc = "This is a filter which will move liquids from the source to the target. \
+	It will move all reagents, except those in the unwanted list, given the fourth pin if amount value is positive, \
+	or it will move only desired reagents if amount is negative. The third pin determines \
 	how much reagent is moved per pulse, between 0 and 50. Amount is given for each separate reagent."
 
 	complexity = 8
@@ -410,3 +522,48 @@
 	activate_pin(2)
 	push_data()
 
+<<<<<<< HEAD
+=======
+/obj/item/integrated_circuit/reagent/storage/heater
+	name = "chemical heater"
+	desc = "Stores liquid inside the device away from electrical components. It can store up to 60u. It will heat or cool the reagents \
+	to the target temperature when turned on."
+	icon_state = "heater"
+	container_type = OPENCONTAINER
+	complexity = 8
+	inputs = list(
+		"target temperature" = IC_PINTYPE_NUMBER,
+		"on" = IC_PINTYPE_BOOLEAN
+		)
+	inputs_default = list("1" = 300)
+	outputs = list("volume used" = IC_PINTYPE_NUMBER,"self reference" = IC_PINTYPE_REF,"temperature" = IC_PINTYPE_NUMBER)
+	spawn_flags = IC_SPAWN_RESEARCH
+	var/heater_coefficient = 0.1
+
+/obj/item/integrated_circuit/reagent/storage/heater/on_data_written()
+	if(get_pin_data(IC_INPUT, 2))
+		power_draw_idle = 30
+	else
+		power_draw_idle = 0
+
+/obj/item/integrated_circuit/reagent/storage/heater/Initialize()
+	.=..()
+	START_PROCESSING(SScircuit, src)
+
+/obj/item/integrated_circuit/reagent/storage/heater/Destroy()
+	STOP_PROCESSING(SScircuit, src)
+	return ..()
+
+/obj/item/integrated_circuit/reagent/storage/heater/process()
+	if(power_draw_idle)
+		var/target_temperature = get_pin_data(IC_INPUT, 1)
+		if(reagents.chem_temp > target_temperature)
+			reagents.chem_temp += min(-1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+		if(reagents.chem_temp < target_temperature)
+			reagents.chem_temp += max(1, (target_temperature - reagents.chem_temp) * heater_coefficient)
+
+		reagents.chem_temp = round(reagents.chem_temp)
+		reagents.handle_reactions()
+		set_pin_data(IC_OUTPUT, 3, reagents.chem_temp)
+		push_data()
+>>>>>>> 6a14af3... grammars circuits (#33974)
