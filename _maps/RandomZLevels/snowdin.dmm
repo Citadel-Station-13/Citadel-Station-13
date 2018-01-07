@@ -160,7 +160,7 @@
 /area/awaymission/snowdin/base)
 "aC" = (
 /obj/structure/barricade/wooden,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -2181,7 +2181,7 @@
 /area/awaymission/snowdin/post)
 "ha" = (
 /obj/structure/barricade/wooden,
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -2570,7 +2570,7 @@
 /turf/open/floor/plasteel/darkred,
 /area/awaymission/snowdin/post)
 "is" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
@@ -3306,7 +3306,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/sekret)
 "kJ" = (
-/obj/machinery/door/airlock/glass_security{
+/obj/machinery/door/airlock/security/glass{
 	name = "Security Office";
 	req_access_txt = "63"
 	},
