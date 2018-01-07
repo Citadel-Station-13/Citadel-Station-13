@@ -362,6 +362,10 @@
 	if(targloc || !params)
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
+<<<<<<< HEAD
+=======
+		setAngle(Get_Angle(src, targloc))
+>>>>>>> e1e10ca... Merge pull request #34140 from kevinz000/quickfix-1
 
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
