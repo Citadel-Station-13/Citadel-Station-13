@@ -3148,7 +3148,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ajB" = (
-/obj/item/storage/box/mousetraps,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajC" = (
@@ -3536,6 +3536,7 @@
 /area/maintenance/department/security/brig)
 "aks" = (
 /obj/machinery/light/small,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "akt" = (
@@ -36008,11 +36009,10 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHS" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHT" = (
@@ -36562,6 +36562,8 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bJi" = (
@@ -47242,7 +47244,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "clm" = (
-/obj/structure/closet/crate/bin,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cln" = (
@@ -51370,6 +51372,20 @@
 /obj/machinery/vending/games,
 /turf/open/floor/plasteel/dark,
 /area/library)
+"cCX" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"cCY" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/department/cargo)
+"cCZ" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 
 (1,1,1) = {"
 aaa
@@ -79029,7 +79045,7 @@ cCF
 cCH
 bTn
 bPB
-bDi
+cCZ
 bVC
 bQj
 bPA
@@ -88702,7 +88718,7 @@ aaa
 aaa
 aaa
 aiU
-ajv
+cCX
 aju
 ajt
 alQ
@@ -100071,7 +100087,7 @@ aaa
 aaa
 aEj
 bkO
-bgO
+cCY
 bnn
 bom
 aEj
