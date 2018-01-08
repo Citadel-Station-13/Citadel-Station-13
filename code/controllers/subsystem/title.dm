@@ -26,20 +26,6 @@ SUBSYSTEM_DEF(title)
 		if((L.len == 1 && L[1] != "blank.png")|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
 			title_screens += S
 
-<<<<<<< HEAD
-	if(!isemptylist(title_screens))
-		if(length(title_screens) > 1)
-			for(var/S in title_screens)
-				var/list/L = splittext(S,".")
-				if(L.len != 2 || L[1] != "default")
-					continue
-				title_screens -= S
-				break
-
-		file_path = "config/title_screens/images/[pick(title_screens)]"
-
-		icon = new(fcopy_rsc(file_path))
-=======
 	for(var/S in title_screens)
 		var/list/L = splittext(S,".")
 		if(L.len != 2)
@@ -56,7 +42,6 @@ SUBSYSTEM_DEF(title)
 	ASSERT(fexists(file_path))
 
 	icon = new(fcopy_rsc(file_path))
->>>>>>> 2d34f37... Removes standard resources from config tree (#34067)
 
 	if(splash_turf)
 		splash_turf.icon = icon
