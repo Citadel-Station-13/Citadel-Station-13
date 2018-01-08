@@ -20,8 +20,8 @@ SUBSYSTEM_DEF(nightshift)
 	flags = SS_BACKGROUND
 
 	var/nightshift = FALSE
-	var/nightshift_light_power = 0.4
-	var/nightshift_light_color = "#FFCCBB"
+	var/nightshift_light_power = 0.45
+	var/nightshift_light_color = "#FFDDCC"
 	var/nightshift_override = FALSE
 
 	var/list/nightlights = list()
@@ -39,9 +39,11 @@ SUBSYSTEM_DEF(nightshift)
 		if(!nightshift && GLOB.security_level < SEC_LEVEL_RED && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
 			nightshift = TRUE
 			updatenightlights()
+			minor_announce("Good afternoon, crew. To save on power costs and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", "Automated Lighting System Announcement", FALSE)
 		else if(nightshift)
 			nightshift = FALSE
 			updatenightlights()
+			minor_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", "Automated Lighting System Announcement", FALSE)
 
 /datum/controller/subsystem/nightshift/proc/updatenightlights()
 	for(var/obj/machinery/light/nightlight in nightlights)
