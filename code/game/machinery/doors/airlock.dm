@@ -34,7 +34,7 @@
 
 #define AIRLOCK_INTEGRITY_N			 300 // Normal airlock integrity
 #define AIRLOCK_INTEGRITY_MULTIPLIER 1.5 // How much reinforced doors health increases
-#define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection
+#define AIRLOCK_DAMAGE_DEFLECTION_N  20  // Normal airlock damage deflection // CIT CHANGE - CHANGES DEFAULT AIRLOCK DEFLECTION FROM 21 TO 20
 #define AIRLOCK_DAMAGE_DEFLECTION_R  30  // Reinforced airlock damage deflection
 
 #define NOT_ELECTRIFIED 0
@@ -135,7 +135,7 @@
 				for(var/turf/closed/T in range(2, src))
 					here.ChangeTurf(T.type)
 					return INITIALIZE_HINT_QDEL
-				here.ChangeTurf(/turf/closed/wall)
+				here.PlaceOnTop(/turf/closed/wall)
 			if(9 to 11)
 				lights = FALSE
 				locked = TRUE
@@ -209,23 +209,27 @@
 /obj/machinery/door/airlock/narsie_act()
 	var/turf/T = get_turf(src)
 	var/runed = prob(20)
+	var/obj/machinery/door/airlock/cult/A
 	if(glass)
 		if(runed)
-			new/obj/machinery/door/airlock/cult/glass(T)
+			A = new/obj/machinery/door/airlock/cult/glass(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned/glass(T)
+			A = new/obj/machinery/door/airlock/cult/unruned/glass(T)
 	else
 		if(runed)
-			new/obj/machinery/door/airlock/cult(T)
+			A = new/obj/machinery/door/airlock/cult(T)
 		else
-			new/obj/machinery/door/airlock/cult/unruned(T)
+			A = new/obj/machinery/door/airlock/cult/unruned(T)
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/ratvar_act() //Airlocks become pinion airlocks that only allow servants
+	var/obj/machinery/door/airlock/clockwork/A
 	if(glass)
-		new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork/brass(get_turf(src))
 	else
-		new/obj/machinery/door/airlock/clockwork(get_turf(src))
+		A = new/obj/machinery/door/airlock/clockwork(get_turf(src))
+	A.name = name
 	qdel(src)
 
 /obj/machinery/door/airlock/Destroy()
@@ -251,16 +255,13 @@
 		note = null
 		update_icon()
 
-/obj/machinery/door/airlock/proc/unzap() //for addtimer
-	justzap = FALSE
-
 /obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(isElectrified())
 			if(!justzap)
 				if(shock(user, 100))
 					justzap = TRUE
-					addtimer(CALLBACK(src, .proc/unzap), 10)
+					addtimer(VARSET_CALLBACK(src, justzap, FALSE) , 10)
 					return
 			else
 				return
@@ -568,6 +569,8 @@
 
 /obj/machinery/door/airlock/examine(mob/user)
 	..()
+	if(emagged)
+		to_chat(user, "<span class='warning'>Its access panel is smoking slightly.</span>")
 	if(charge && !panel_open && in_range(user, src))
 		to_chat(user, "<span class='warning'>The maintenance panel seems haphazardly fastened.</span>")
 	if(charge && panel_open)
@@ -680,7 +683,7 @@
 
 	if(ishuman(user) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = user
-		if((H.disabilities & DUMB) && Adjacent(user))
+		if((H.has_disability(DISABILITY_DUMB)) && Adjacent(user))
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				H.visible_message("<span class='danger'>[user] headbutts the airlock.</span>", \
@@ -1036,7 +1039,7 @@
 		panel_open = TRUE
 		update_icon(AIRLOCK_OPENING)
 		visible_message("<span class='warning'>[src]'s panel is blown off in a spray of deadly shrapnel!</span>")
-		charge.loc = get_turf(src)
+		charge.forceMove(drop_location())
 		charge.ex_act(EXPLODE_DEVASTATE)
 		detonated = 1
 		charge = null
@@ -1231,7 +1234,6 @@
 		if(!open())
 			update_icon(AIRLOCK_CLOSED, 1)
 		emagged = TRUE
-		desc = "<span class='warning'>Its access panel is smoking slightly.</span>"
 		lights = FALSE
 		locked = TRUE
 		loseMainPower()
@@ -1340,7 +1342,7 @@
 			else
 				ae = electronics
 				electronics = null
-				ae.loc = src.loc
+				ae.forceMove(drop_location())
 	qdel(src)
 
 /obj/machinery/door/airlock/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)

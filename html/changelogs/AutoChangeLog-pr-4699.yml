@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "comms consoles no longer announce in deadchat announcements if they were cooling down and unsuccessful."

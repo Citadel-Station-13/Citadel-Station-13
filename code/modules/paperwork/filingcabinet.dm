@@ -36,7 +36,7 @@
 	if(mapload)
 		for(var/obj/item/I in loc)
 			if(istype(I, /obj/item/paper) || istype(I, /obj/item/folder) || istype(I, /obj/item/photo))
-				I.loc = src
+				I.forceMove(src)
 
 /obj/structure/filingcabinet/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -90,7 +90,7 @@
 	if(contents.len)
 		if(prob(40 + contents.len * 5))
 			var/obj/item/I = pick(contents)
-			I.loc = loc
+			I.forceMove(loc)
 			if(prob(25))
 				step_rand(I)
 			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
@@ -184,9 +184,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 	icon_state = "employmentcabinet"
 	var/virgin = 1
 
-/obj/structure/filingcabinet/employment/New()
+/obj/structure/filingcabinet/employment/Initialize()
+	. = ..()
 	GLOB.employmentCabinets += src
-	return ..()
 
 /obj/structure/filingcabinet/employment/Destroy()
 	GLOB.employmentCabinets -= src
@@ -198,8 +198,9 @@ GLOBAL_LIST_EMPTY(employmentCabinets)
 		var/datum/data/record/G = record
 		if(!G)
 			continue
-		if(G.fields["reference"])
-			addFile(G.fields["reference"])
+		var/datum/mind/M = G.fields["mindref"]
+		if(M && ishuman(M.current))
+			addFile(M.current)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)

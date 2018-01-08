@@ -49,7 +49,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-//citadel code
+//LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
 #define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
 #define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts
@@ -334,9 +334,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #endif
 #endif
 
- // Consider these images/atoms as part of the UI/HUD
+// Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI								RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -444,6 +444,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
+
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
@@ -451,8 +452,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
-
-#define BEAT_CHANNEL 150
 
 //http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0
@@ -484,9 +483,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define SYRINGE_DRAW 0
 #define SYRINGE_INJECT 1
 
-#define RESEARCH_MATERIAL_RECLAMATION_ID "0"
-
-
 //gold slime core spawning
 #define NO_SPAWN 0
 #define HOSTILE_SPAWN 1
@@ -495,7 +491,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define RIDING_OFFSET_ALL "ALL"
 
 //text files
-#define BRAIN_DAMAGE_FILE "brain_damage_lines.json"
+#define BRAIN_DAMAGE_FILE "traumas.json"
 
 //Fullscreen overlay resolution in tiles.
 #define FULLSCREEN_OVERLAY_RESOLUTION_X 15

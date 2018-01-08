@@ -1,6 +1,19 @@
 /obj/item/restraints
 	breakouttime = 600
 
+/obj/item/restraints/Destroy()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.handcuffed == src)
+			M.handcuffed = null
+			M.update_handcuffed()
+			if(M.buckled && M.buckled.buckle_requires_restraints)
+				M.buckled.unbuckle_mob(M)
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.update_inv_legcuffed()
+	return ..()
+
 //Handcuffs
 
 /obj/item/restraints/handcuffs
@@ -26,7 +39,7 @@
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(!istype(C))
 		return
-	if(user.disabilities & CLUMSY && prob(50))
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -167,11 +180,6 @@
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 10 //Deciseconds = 1s
 
-/obj/item/restraints/handcuffs/fake/kinky
-	name = "kinky handcuffs"
-	desc = "Fake handcuffs meant for erotic roleplay."
-	icon_state = "handcuffGag"
-
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
@@ -292,7 +300,7 @@
 					def_zone = pick("l_leg", "r_leg")
 					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
-						src.loc = C
+						forceMove(C)
 						C.update_inv_legcuffed()
 						SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 			else if(isanimal(L))
@@ -352,7 +360,7 @@
 	if(!C.legcuffed && C.get_num_legs() >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
-		src.loc = C
+		forceMove(C)
 		C.update_inv_legcuffed()
 		SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
@@ -379,4 +387,3 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
-	

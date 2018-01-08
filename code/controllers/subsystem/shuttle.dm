@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/lockdown = FALSE	//disallow transit after nuke goes off
 
-	var/auto_call = 99000 //time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
+	var/auto_call = 99000 //CIT CHANGE - time before in deciseconds in which the shuttle is auto called. Default is 2½ hours plus 15 for the shuttle. So total is 3.
 
 /datum/controller/subsystem/shuttle/Initialize(timeofday)
 	if(!arrivals)
@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(shuttle)
 			break
 
 /datum/controller/subsystem/shuttle/proc/CheckAutoEvac()
-	if(emergencyNoEscape || emergencyNoRecall || !emergency)
+	if(emergencyNoEscape || emergencyNoRecall || !emergency || !SSticker.HasRoundStarted())
 		return
 
 	var/threshold = CONFIG_GET(number/emergency_shuttle_autocall_threshold)
@@ -249,6 +249,7 @@ SUBSYSTEM_DEF(shuttle)
 			emergency.request(null, signal_origin, html_decode(emergency_reason), 0)
 
 	log_game("[key_name(user)] has called the shuttle.")
+	deadchat_broadcast("<span class='deadsay bold'>[user.name] has called the shuttle.</span>", user)
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_game("Shuttle call reason: [call_reason]")
@@ -261,7 +262,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
-	var/intercepttext = "<font size = 3><b>NanoTrasen Update</b>: Request For Shuttle.</font><hr>\
+	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
 						To whom it may concern:<br><br>\
 						We have taken note of the situation upon [station_name()] and have come to the \
 						conclusion that it does not warrant the abandonment of the station.<br>\
@@ -286,6 +287,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.cancel(get_area(user))
 		log_game("[key_name(user)] has recalled the shuttle.")
 		message_admins("[key_name_admin(user)] has recalled the shuttle.")
+		deadchat_broadcast("<span class='deadsay bold'>[user.name] has recalled the shuttle.</span>", user)
 		return 1
 
 /datum/controller/subsystem/shuttle/proc/canRecall()
@@ -307,6 +309,9 @@ SUBSYSTEM_DEF(shuttle)
 	return 1
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
+	if (!SSticker.IsRoundInProgress())
+		return
+
 	var/callShuttle = 1
 
 	for(var/thing in GLOB.shuttle_caller_list)
@@ -322,7 +327,7 @@ SUBSYSTEM_DEF(shuttle)
 				continue
 
 		var/turf/T = get_turf(thing)
-		if(T && (T.z in GLOB.station_z_levels))
+		if(T && is_station_level(T.z))
 			callShuttle = 0
 			break
 
@@ -382,7 +387,7 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.setTimer(emergencyDockTime)
 		priority_announce("Hostile environment resolved. \
 			You have 3 minutes to board the Emergency Shuttle.",
-			null, 'sound/AI/shuttledock.ogg', "Priority")
+			null, 'sound/ai/shuttledock.ogg', "Priority")
 
 //try to move/request to dockHome if possible, otherwise dockAway. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttleId, dockHome, dockAway, timed)
@@ -397,7 +402,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(getDock(destination)))
 			return 2
 	else
-		if(M.dock(getDock(destination)) != DOCKING_SUCCESS)
+		if(M.initiate_docking(getDock(destination)) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -412,7 +417,7 @@ SUBSYSTEM_DEF(shuttle)
 		if(M.request(D))
 			return 2
 	else
-		if(M.dock(D) != DOCKING_SUCCESS)
+		if(M.initiate_docking(D) != DOCKING_SUCCESS)
 			return 2
 	return 0	//dock successful
 
@@ -426,7 +431,8 @@ SUBSYSTEM_DEF(shuttle)
 		if(!(M in transit_requesters))
 			transit_requesters += M
 
-/datum/controller/subsystem/shuttle/proc/autoEnd()
+
+/datum/controller/subsystem/shuttle/proc/autoEnd() //CIT CHANGE - allows shift to end after 3 hours has passed.
 	if(world.time > auto_call && EMERGENCY_IDLE_OR_RECALLED) //3 hours
 		SSshuttle.emergency.request(null, 1.5)
 		priority_announce("The shift has come to an end and the shuttle called.")

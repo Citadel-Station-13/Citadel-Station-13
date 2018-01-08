@@ -34,15 +34,13 @@
 								"Misc"
 								)
 
-	var/datum/component/material_container/materials
-
 /obj/machinery/mecha_part_fabricator/Initialize()
-	materials = AddComponent(/datum/component/material_container,
-	list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
-		FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
-	materials.precise_insertion = TRUE
-	stored_research = new
-	return ..()
+    var/datum/component/material_container/materials = AddComponent(/datum/component/material_container,
+     list(MAT_METAL, MAT_GLASS, MAT_SILVER, MAT_GOLD, MAT_DIAMOND, MAT_PLASMA, MAT_URANIUM, MAT_BANANIUM, MAT_TITANIUM, MAT_BLUESPACE), 0,
+        FALSE, list(/obj/item/stack, /obj/item/ore/bluespace_crystal), CALLBACK(src, .proc/is_insertion_ready), CALLBACK(src, .proc/AfterMaterialInsert))
+    materials.precise_insertion = TRUE
+    stored_research = new
+    return ..()
 
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
@@ -188,7 +186,7 @@
 	return queue.len
 
 /obj/machinery/mecha_part_fabricator/proc/remove_from_queue(index)
-	if(!isnum(index) || !IsInteger(index) || !istype(queue) || (index<1 || index>queue.len))
+	if(!isnum(index) || !ISINTEGER(index) || !istype(queue) || (index<1 || index>queue.len))
 		return FALSE
 	queue.Cut(index,++index)
 	return TRUE
@@ -375,8 +373,8 @@
 	if(href_list["queue_move"] && href_list["index"])
 		var/index = afilter.getNum("index")
 		var/new_index = index + afilter.getNum("queue_move")
-		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
-			if(IsInRange(new_index,1,queue.len))
+		if(isnum(index) && isnum(new_index) && ISINTEGER(index) && ISINTEGER(new_index))
+			if(ISINRANGE(new_index,1,queue.len))
 				queue.Swap(index,new_index)
 		return update_queue_on_page()
 	if(href_list["clear_queue"])

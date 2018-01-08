@@ -24,7 +24,6 @@
 	var/body_color //brown, gray and white, leave blank for random
 	gold_core_spawnable = FRIENDLY_SPAWN
 	var/chew_probability = 1
-	devourable = TRUE
 
 /mob/living/simple_animal/mouse/Initialize()
 	. = ..()
@@ -110,3 +109,7 @@
 	eatverb = "devours"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
+	grind_results = list("blood" = 20, "liquidgibs" = 5)
+
+/obj/item/reagent_containers/food/snacks/deadmouse/on_grind()
+	reagents.clear_reagents()

@@ -1,8 +1,0 @@
-author: "deathride58 & TGstation contributors"
-delete-after: True
-changes: 
-  - bugfix: "Fixed various area issues in Boxstation. The theatre no longer has an air alarm for space, and Security no longer has a line of walls with broken lighting."
-  - tweak: "Added more lights to Boxstation's security"
-  - rscadd: "(Upstream) Added a new white ship to Deltastation"
-  - tweak: "(Upstream) Replaced the reinforced glass in Atmos' gas tanks with reinforced plasma glass"
-  - tweak: "(Upstream) Atmos can no longer burn itself down via the waste loop outlet"

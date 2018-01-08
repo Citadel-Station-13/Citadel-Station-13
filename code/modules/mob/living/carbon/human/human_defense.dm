@@ -44,7 +44,10 @@
 		if(mind.martial_art && mind.martial_art.deflection_chance) //Some martial arts users can deflect projectiles!
 			if(prob(mind.martial_art.deflection_chance))
 				if(!lying && dna && !dna.check_mutation(HULK)) //But only if they're not lying down, and hulks can't do it
-					visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					if(mind.martial_art.deflection_chance >= 100) //if they can NEVER be hit, lets clue sec in ;)
+						visible_message("<span class='danger'>[src] deflects the projectile; [p_they()] can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
+					else
+						visible_message("<span class='danger'>[src] deflects the projectile!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
 					playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, 1)
 					return 0
 
@@ -89,15 +92,15 @@
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (Clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 				return 1
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (Clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (Clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return 1
 	return 0
@@ -131,7 +134,7 @@
 					var/obj/item/bodypart/L = pick(bodyparts)
 					L.embedded_objects |= I
 					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-					I.loc = src
+					I.forceMove(src)
 					L.receive_damage(I.w_class*I.embedded_impact_pain_multiplier)
 					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
 					hitpush = FALSE
@@ -140,8 +143,8 @@
 	return ..()
 
 /mob/living/carbon/human/grabbedby(mob/living/carbon/user, supress_message = 0)
-	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && isliving(pulling))
-		vore_attack(user, pulling)
+	if(user == src && pulling && !pulling.anchored && grab_state >= GRAB_AGGRESSIVE && (has_disability(DISABILITY_FAT)) && ismonkey(pulling))
+		devour_mob(pulling)
 	else
 		..()
 
@@ -180,7 +183,6 @@
 		visible_message("<span class='danger'>[message]</span>", \
 								"<span class='userdanger'>[message]</span>")
 		adjustBruteLoss(15)
-		damage_clothes(15, BRUTE, "melee")
 		return 1
 
 /mob/living/carbon/human/attack_hand(mob/user)
@@ -200,7 +202,8 @@
 		return 0
 
 	if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
-		if(dropItemToGround(get_active_held_item()))
+		var/obj/item/I = get_active_held_item()
+		if(I && dropItemToGround(I))
 			playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 			visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 					"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -221,7 +224,6 @@
 				return 0
 			if(stat != DEAD)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
-				damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 		return 1
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
@@ -251,10 +253,10 @@
 			if(!dismembering_strike(M, M.zone_selected)) //Dismemberment successful
 				return 1
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 		if(M.a_intent == INTENT_DISARM) //Always drop item in hand, if no item, get stun instead.
-			if(dropItemToGround(get_active_held_item()))
+			var/obj/item/I = get_active_held_item()
+			if(I && dropItemToGround(I))
 				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] disarmed [src]!</span>", \
 						"<span class='userdanger'>[M] disarmed [src]!</span>")
@@ -279,7 +281,6 @@
 				affecting = get_bodypart("chest")
 			var/armor_block = run_armor_check(affecting, "melee")
 			apply_damage(damage, BRUTE, affecting, armor_block)
-			damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
@@ -296,7 +297,6 @@
 			affecting = get_bodypart("chest")
 		var/armor = run_armor_check(affecting, "melee", armour_penetration = M.armour_penetration)
 		apply_damage(damage, M.melee_damage_type, affecting, armor)
-		damage_clothes(damage, M.melee_damage_type, "melee", affecting.body_zone)
 
 
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
@@ -317,7 +317,6 @@
 			affecting = get_bodypart("chest")
 		var/armor_block = run_armor_check(affecting, "melee")
 		apply_damage(damage, BRUTE, affecting, armor_block)
-		damage_clothes(damage, BRUTE, "melee", affecting.body_zone)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
@@ -335,11 +334,9 @@
 						Unconscious(20)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, 1)
-					damage_clothes(dmg, BRUTE, "melee", temp.body_zone)
 				if("fire")
 					update |= temp.receive_damage(0, dmg)
 					playsound(src, 'sound/items/welder.ogg', 50, 1)
-					damage_clothes(dmg, BURN, "melee", temp.body_zone)
 				if("tox")
 					M.mech_toxin_damage(src)
 				else
@@ -374,6 +371,9 @@
 				throw_at(throw_target, 200, 4)
 				damage_clothes(400 - bomb_armor, BRUTE, "bomb")
 			else
+				for(var/I in contents)
+					var/atom/A = I
+					A.ex_act(severity)
 				gib()
 				return
 

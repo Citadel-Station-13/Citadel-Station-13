@@ -10,10 +10,11 @@
 	volume = 10
 	amount_per_transfer_from_this = 0
 	list_reagents = list("honey" = 5)
+	grind_results = list()
 	var/honey_color = ""
 
-/obj/item/reagent_containers/honeycomb/New()
-	..()
+/obj/item/reagent_containers/honeycomb/Initialize()
+	. = ..()
 	pixel_x = rand(8,-8)
 	pixel_y = rand(8,-8)
 	update_icon()

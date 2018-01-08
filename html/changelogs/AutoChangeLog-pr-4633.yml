@@ -1,0 +1,4 @@
+author: "ninjanomnom"
+delete-after: True
+changes: 
+  - bugfix: "Turfs are construct-able again"

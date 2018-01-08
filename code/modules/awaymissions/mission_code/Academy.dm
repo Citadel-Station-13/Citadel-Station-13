@@ -139,7 +139,7 @@
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
 	var/turf/T = src.loc
 	var/mob/living/carbon/human/wizbody = new(T)
-	wizbody.fully_replace_character_name("Academy Teacher")
+	wizbody.fully_replace_character_name(wizbody.real_name, "Academy Teacher")
 	wizbody.mind_initialize()
 	var/datum/mind/wizmind = wizbody.mind
 	wizmind.special_role = "Academy Defender"
@@ -207,7 +207,7 @@
 			//Swarm of creatures
 			for(var/direction in GLOB.alldirs)
 				var/turf/T = get_turf(src)
-				new /mob/living/simple_animal/hostile/creature(get_step(T,direction))
+				new /mob/living/simple_animal/hostile/netherworld(get_step(T,direction))
 		if(4)
 			//Destroy Equipment
 			for (var/obj/item/I in user)

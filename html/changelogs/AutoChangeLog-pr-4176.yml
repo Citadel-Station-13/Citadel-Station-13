@@ -1,8 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - rscadd: "Added Lavaknights, a new ghost role of cat people in knight armor."
-  - rscadd: "Added Hypereutactic blades, NEBs on steroids."
-  - tweak: "Made NEBs alt click to recolor
-wip: Added lavaknight spawners. Someone else needs to add it in to a map or ruin properly."
-  - imageadd: "added sprites for hypereutactic blades"

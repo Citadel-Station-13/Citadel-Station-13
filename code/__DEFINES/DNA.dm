@@ -61,7 +61,7 @@
 //DNA - Because fuck you and your magic numbers being all over the codebase.
 #define DNA_BLOCK_SIZE				3
 
-#define DNA_UNI_IDENTITY_BLOCKS		19
+#define DNA_UNI_IDENTITY_BLOCKS		19 //CIT CHANGE - adds more DNA blocks for cit's mutant bodyparts. Update citadel_defines.dm if this gets changed.
 #define DNA_HAIR_COLOR_BLOCK		1
 #define DNA_FACIAL_HAIR_COLOR_BLOCK	2
 #define DNA_SKIN_TONE_BLOCK			3
@@ -69,19 +69,7 @@
 #define DNA_GENDER_BLOCK			5
 #define DNA_FACIAL_HAIR_STYLE_BLOCK	6
 #define DNA_HAIR_STYLE_BLOCK		7
-#define DNA_EYE_COLOR_TWO_BLOCK		8
-#define DNA_EYE_COLOR_SWITCH_BLOCK	9
-#define DNA_EYE_COLOR_BLOCK			10
-#define DNA_COLOR_ONE_BLOCK			11
-#define DNA_COLOR_TWO_BLOCK			12
-#define DNA_COLOR_THR_BLOCK			13
-#define DNA_COLOR_SWITCH_BLOCK		14
-#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
-#define DNA_COCK_BLOCK				15
-#define DNA_MUTANTRACE_BLOCK		16
-#define DNA_MUTANTTAIL_BLOCK		17
-#define DNA_MUTANTWING_BLOCK		18
-#define DNA_WINGCOLOR_BLOCK			19
+
 #define DNA_STRUC_ENZYMES_BLOCKS	18
 #define DNA_UNIQUE_ENZYMES_LEN		32
 
@@ -127,7 +115,7 @@
 #define TOXINLOVER		24
 #define DIGITIGRADE		25	//Uses weird leg sprites. Optional for Lizards, required for ashwalkers. Don't give it to other races unless you make sprites for this (see human_parts_greyscale.dmi)
 #define NO_UNDERWEAR	26
-#define NOLIVER 		27
+#define NOLIVER			27
 #define NOSTOMACH		28
 #define NO_DNA_COPY     29
 #define DRINKSBLOOD		30
@@ -135,11 +123,6 @@
 #define SPECIES_INORGANIC 32
 #define SPECIES_UNDEAD  33
 #define SPECIES_ROBOTIC 34
-//citadel code
-#define MUTCOLORS2		35
-#define MUTCOLORS3		36
-#define NOAROUSAL		37 //Stops all arousal effects
-#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
 
 #define ORGAN_SLOT_BRAIN "brain"
 #define ORGAN_SLOT_APPENDIX "appendix"

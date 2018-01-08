@@ -98,12 +98,12 @@
 	if(severity == 1 && uses)
 		uses = 0
 		visible_message("<span class='warning'>[src] is disrupted!</span>")
-		animate(src, alpha = 0, transform = matrix()*2, time = 10, flags_1 = ANIMATION_END_NOW)
+		animate(src, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(timerid)
 		timerid = QDEL_IN(src, 10)
 		linked_gateway.uses = 0
 		linked_gateway.visible_message("<span class='warning'>[linked_gateway] is disrupted!</span>")
-		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10, flags_1 = ANIMATION_END_NOW)
+		animate(linked_gateway, alpha = 0, transform = matrix()*2, time = 10, flags = ANIMATION_END_NOW)
 		deltimer(linked_gateway.timerid)
 		linked_gateway.timerid = QDEL_IN(linked_gateway, 10)
 		return TRUE
@@ -144,13 +144,13 @@
 		uses = max(0, uses - 1)
 		linked_gateway.uses = max(0, linked_gateway.uses - 1)
 	if(!uses)
-		animate(src, transform = matrix() * 0.1, time = 10, flags_1 = ANIMATION_END_NOW)
-		animate(linked_gateway, transform = matrix() * 0.1, time = 10, flags_1 = ANIMATION_END_NOW)
+		animate(src, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() * 0.1, time = 10, flags = ANIMATION_END_NOW)
 		density = FALSE
 		linked_gateway.density = FALSE
 	else
-		animate(src, transform = matrix() / 1.5, time = 10, flags_1 = ANIMATION_END_NOW)
-		animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags_1 = ANIMATION_END_NOW)
+		animate(src, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
+		animate(linked_gateway, transform = matrix() / 1.5, time = 10, flags = ANIMATION_END_NOW)
 	addtimer(CALLBACK(src, .proc/check_uses), 10)
 	return TRUE
 
@@ -165,13 +165,13 @@
 	var/list/teleportnames = list()
 
 	for(var/obj/structure/destructible/clockwork/powered/clockwork_obelisk/O in GLOB.all_clockwork_objects)
-		if(!O.Adjacent(invoker) && O != src && (O.z <= ZLEVEL_SPACEMAX) && O.anchored) //don't list obelisks that we're next to
+		if(!O.Adjacent(invoker) && O != src && !is_away_level(O.z) && O.anchored) //don't list obelisks that we're next to
 			var/area/A = get_area(O)
 			var/locname = initial(A.name)
 			possible_targets[avoid_assoc_duplicate_keys("[locname] [O.name]", teleportnames)] = O
 
 	for(var/mob/living/L in GLOB.alive_mob_list)
-		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && (L.z <= ZLEVEL_SPACEMAX)) //People right next to the invoker can't be portaled to, for obvious reasons
+		if(!L.stat && is_servant_of_ratvar(L) && !L.Adjacent(invoker) && !is_away_level(L.z)) //People right next to the invoker can't be portaled to, for obvious reasons
 			possible_targets[avoid_assoc_duplicate_keys("[L.name] ([L.real_name])", teleportnames)] = L
 
 	if(!possible_targets.len)

@@ -30,7 +30,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	
-	//citadel code
+//CIT CHANGES START HERE, ADDS SNOWFLAKE BODYPARTS AND MORE
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_tails, GLOB.mam_tails_list)
@@ -56,7 +56,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
 	GLOB.breasts_size_list = list("a","b","c","d","e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-
+//END OF CIT CHANGES
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))

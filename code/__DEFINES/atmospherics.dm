@@ -12,6 +12,13 @@
 
 //ATMOS
 //stuff you should probably leave well alone!
+#define R_IDEAL_GAS_EQUATION	8.31	//kPa*L/(K*mol)
+#define ONE_ATMOSPHERE			101.325	//kPa
+#define TCMB					2.7		// -270.3degC
+#define TCRYO					225		// -48.15degC
+#define T0C						273.15	// 0degC
+#define T20C					293.15	// 20degC
+
 #define MOLES_CELLSTANDARD		(ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
 #define M_CELL_WITH_RATIO		(MOLES_CELLSTANDARD * 0.005) //compared against for superconductivity
 #define O2STANDARD				0.21	//percentage of oxygen in a normal mixture of air
@@ -81,6 +88,7 @@
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5		//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 #define BODYTEMP_AUTORECOVERY_DIVISOR		12		//This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		10		//Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
+#define BODYTEMP_NORMAL						310.15	//98.6F, or 37C, the normal temprature of the human body.
 #define BODYTEMP_COLD_DIVISOR				6		//Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR				6		//Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
 #define BODYTEMP_COOLING_MAX				30		//The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
@@ -123,37 +131,11 @@
 #define MAX_OUTPUT_PRESSURE					4500 // (kPa) What pressure pumps and powered equipment max out at.
 #define MAX_TRANSFER_RATE					200 // (L/s) Maximum speed powered equipment can work at.
 
-//used for device_type vars; used by DEVICE_TYPE_LOOP
+//used for device_type vars
 #define UNARY		1
 #define BINARY 		2
 #define TRINARY		3
 #define QUATERNARY	4
-
-//TODO: finally remove this bullshit
-//this is the standard for loop used by all sorts of atmos machinery procs
-#define DEVICE_TYPE_LOOP	var/I in 1 to device_type
-
-//defines for the various machinery lists
-//NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
-
-//nodes list - all atmos machinery
-#define NODE1	nodes[1]
-#define	NODE2	nodes[2]
-#define NODE3	nodes[3]
-#define NODE4	nodes[4]
-#define NODE_I	nodes[I]
-
-//airs list - components only
-#define AIR1	airs[1]
-#define AIR2	airs[2]
-#define AIR3	airs[3]
-#define AIR_I	airs[I]
-
-//parents list - components only
-#define PARENT1		parents[1]
-#define PARENT2		parents[2]
-#define PARENT3		parents[3]
-#define PARENT_I	parents[I]
 
 //TANKS
 #define TANK_MELT_TEMPERATURE				1000000	//temperature in kelvins at which a tank will start to melt
@@ -196,6 +178,4 @@
 #define ADD_GAS(gas_id, out_list)\
 	var/list/tmp_gaslist = GLOB.gaslist_cache[gas_id]; out_list[gas_id] = tmp_gaslist.Copy();
 
-//ASSERT_GAS(gas_id, gas_mixture) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
-//Must be used before adding to a gas. May be used before reading from a gas.
 #define ASSERT_GAS(gas_id, gas_mixture) if (!gas_mixture.gases[gas_id]) { ADD_GAS(gas_id, gas_mixture.gases) };

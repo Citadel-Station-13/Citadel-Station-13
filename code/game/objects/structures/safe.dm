@@ -33,7 +33,7 @@ FLOOR SAFES
 
 
 /obj/structure/safe/Initialize(mapload)
-	..()
+	. = ..()
 
 	if(!mapload)
 		return
@@ -43,7 +43,7 @@ FLOOR SAFES
 			return
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
-			I.loc = src
+			I.forceMove(src)
 
 
 /obj/structure/safe/proc/check_unlocked(mob/user, canhear)
@@ -55,8 +55,8 @@ FLOOR SAFES
 	if(tumbler_1_pos == tumbler_1_open && tumbler_2_pos == tumbler_2_open)
 		if(user)
 			visible_message("<i><b>[pick("Spring", "Sprang", "Sproing", "Clunk", "Krunk")]!</b></i>")
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /obj/structure/safe/proc/decrement(num)
@@ -83,7 +83,7 @@ FLOOR SAFES
 /obj/structure/safe/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat = "<center>"
-	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial * 5] <a href='?src=[REF(src)];increment=1'>+</a>"
+	dat += "<a href='?src=[REF(src)];open=1'>[open ? "Close" : "Open"] [src]</a> | <a href='?src=[REF(src)];decrement=1'>-</a> [dial] <a href='?src=[REF(src)];increment=1'>+</a>"
 	if(open)
 		dat += "<table>"
 		for(var/i = contents.len, i>=1, i--)
@@ -97,13 +97,13 @@ FLOOR SAFES
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/user = usr
-	
+
 	if(!user.canUseTopic(src))
 		return
-	
-	var/canhear = 0
+
+	var/canhear = FALSE
 	if(user.is_holding_item_of_type(/obj/item/clothing/neck/stethoscope))
-		canhear = 1
+		canhear = TRUE
 
 	if(href_list["open"])
 		if(check_unlocked())

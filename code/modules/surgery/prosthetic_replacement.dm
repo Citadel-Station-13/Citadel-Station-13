@@ -85,3 +85,4 @@
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == "r_arm" ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return 1
+

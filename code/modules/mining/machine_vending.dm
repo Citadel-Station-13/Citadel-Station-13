@@ -110,7 +110,7 @@
 		if(istype(inserted_id))
 			if(href_list["choice"] == "eject")
 				to_chat(usr, "<span class='notice'>You eject the ID from [src]'s card slot.</span>")
-				inserted_id.loc = loc
+				inserted_id.forceMove(loc)
 				inserted_id.verb_pickup()
 				inserted_id = null
 		else if(href_list["choice"] == "insert")
@@ -276,8 +276,8 @@
 	name = "mining conscription kit"
 	desc = "A kit containing everything a crewmember needs to support a shaft miner in the field."
 
-/obj/item/storage/backpack/duffelbag/mining_conscript/New()
-	..()
+/obj/item/storage/backpack/duffelbag/mining_conscript/Initialize()
+	. = ..()
 	new /obj/item/pickaxe/mini(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/device/t_scanner/adv_mining_scanner/lesser(src)
