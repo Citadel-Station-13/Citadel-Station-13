@@ -274,6 +274,7 @@
 	icon_state = "burial"
 	item_state = "burial"
 	item_color = "burial"
+	has_sensor = NO_SENSORS
 
 /obj/item/clothing/under/skirt/black
 	name = "black skirt"
@@ -646,6 +647,7 @@
 	return 0
 
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
+	..()
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
 			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")

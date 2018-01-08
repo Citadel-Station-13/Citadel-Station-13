@@ -232,8 +232,8 @@
 	icon_state = "absinthebottle"
 	list_reagents = list("absinthe" = 100)
 
-/obj/item/reagent_containers/food/drinks/bottle/absinthe/New()
-	..()
+/obj/item/reagent_containers/food/drinks/bottle/absinthe/Initialize()
+	. = ..()
 	redact()
 
 /obj/item/reagent_containers/food/drinks/bottle/absinthe/proc/redact()
@@ -367,7 +367,7 @@
 			isGlass = FALSE
 	return
 
-/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,mob/thrower)
+/obj/item/reagent_containers/food/drinks/bottle/molotov/throw_impact(atom/target,datum/thrownthing/throwdata)
 	var/firestarter = 0
 	for(var/datum/reagent/R in reagents.reagent_list)
 		for(var/A in accelerants)

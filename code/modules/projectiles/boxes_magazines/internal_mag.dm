@@ -2,6 +2,7 @@
 
 /obj/item/ammo_box/magazine/internal
 	desc = "Oh god, this shouldn't be here"
+	flags_1 = CONDUCT_1|ABSTRACT_1
 
 //internals magazines are accessible, so replace spent ammo if full when trying to put a live one in
 /obj/item/ammo_box/magazine/internal/give_round(obj/item/ammo_casing/R)
@@ -156,9 +157,9 @@
 	max_ammo = 6
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/rus357/New()
+/obj/item/ammo_box/magazine/internal/rus357/Initialize()
 	stored_ammo += new ammo_type(src)
-	..()
+	. = ..()
 
 /obj/item/ammo_box/magazine/internal/boltaction
 	name = "bolt action rifle internal magazine"

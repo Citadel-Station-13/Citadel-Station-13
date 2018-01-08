@@ -117,7 +117,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	var/trigger_guard = TRIGGER_GUARD_NONE
 
-	var/icon_override = null
+	var/icon_override //CIT CHANGE - adds icon_override var. Will be removed with #4322
 
 	//Grinder vars
 	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
@@ -202,31 +202,39 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	if(!user.research_scanner)
 		return
-	var/list/input = techweb_item_boost_check(src)
-	if(input)
-		var/list/output = list("<b><font color='purple'>Research Boost Data:</font></b>")
-		var/list/res = list("<b><font color='blue'>Already researched:</font></b>")
-		var/list/boosted = list("<b><font color='red'>Already boosted:</font></b>")
-		for(var/datum/techweb_node/N in input)
-			var/str = "<b>[N.display_name]</b>: [input[N]] points.</b>"
-			if(SSresearch.science_tech.researched_nodes[N])
-				res += str
-			else if(SSresearch.science_tech.boosted_nodes[N])
-				boosted += str
-			if(SSresearch.science_tech.visible_nodes[N])	//JOY OF DISCOVERY!
-				output += str
-		var/list/combine = output + res + boosted
-		var/strout = combine.Join("<br>")
-		to_chat(user, strout)
 
-	var/list/msg = list("<span class='notice'>*--------*<BR>Extractable materials:")
-	if(materials.len)
+	// Research prospects, including boostable nodes and point values.
+	// Deliver to a console to know whether the boosts have already been used.
+	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
+	var/sep = ""
+	var/list/boostable_nodes = techweb_item_boost_check(src)
+	if (boostable_nodes)
+		for(var/id in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[id]
+			research_msg += sep
+			research_msg += node.display_name
+			sep = ", "
+	var/points = techweb_item_point_check(src)
+	if (points)
+		research_msg += sep
+		research_msg += "[points] points"
+		sep = ", "
+
+	if (!sep) // nothing was shown
+		research_msg += "None"
+
+	// Extractable materials. Only shows the names, not the amounts.
+	research_msg += ".<br><font color='purple'>Extractable materials:</font> "
+	if (materials.len)
+		sep = ""
 		for(var/mat in materials)
-			msg += "[CallMaterialName(mat)]" //Capitize first word, remove the "$"
+			research_msg += sep
+			research_msg += CallMaterialName(mat)
+			sep = ", "
 	else
-		msg += "<span class='danger'>No extractable materials detected.</span>"
-	msg += "*--------*"
-	to_chat(user, msg.Join("<br>"))
+		research_msg += "None"
+	research_msg += "."
+	to_chat(user, research_msg.Join())
 
 /obj/item/proc/speechModification(message)			//for message modding by mask slot.
 	return message
@@ -539,9 +547,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(M.disabilities & (NEARSIGHT | BLIND)))
-			if(M.become_nearsighted())
-				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		if(!(M.has_disability(DISABILITY_BLIND) || M.has_disability(DISABILITY_NEARSIGHT)))
+			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_all_held_items())
@@ -550,22 +558,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			M.Unconscious(20)
 			M.Knockdown(40)
 		if (prob(eyes.eye_damage - 10 + 1))
-			if(M.become_blind())
-				to_chat(M, "<span class='danger'>You go blind!</span>")
-
-/obj/item/clean_blood()
-	. = ..()
-	if(.)
-		if(initial(icon) && initial(icon_state))
-			var/index = blood_splatter_index()
-			var/icon/blood_splatter_icon = GLOB.blood_splatter_icons[index]
-			if(blood_splatter_icon)
-				cut_overlay(blood_splatter_icon)
-
-/obj/item/clothing/gloves/clean_blood()
-	. = ..()
-	if(.)
-		transfer_blood = 0
+			M.become_blind(EYE_DAMAGE)
+			to_chat(M, "<span class='danger'>You go blind!</span>")
 
 /obj/item/singularity_pull(S, current_size)
 	..()
@@ -607,6 +601,36 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/proc/get_belt_overlay() //Returns the icon used for overlaying the object on a belt
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', icon_state)
+
+/obj/item/proc/update_slot_icon()
+	if(!ismob(loc))
+		return
+	var/mob/owner = loc
+	var/flags = slot_flags
+	if(flags & SLOT_OCLOTHING)
+		owner.update_inv_wear_suit()
+	if(flags & SLOT_ICLOTHING)
+		owner.update_inv_w_uniform()
+	if(flags & SLOT_GLOVES)
+		owner.update_inv_gloves()
+	if(flags & SLOT_EYES)
+		owner.update_inv_glasses()
+	if(flags & SLOT_EARS)
+		owner.update_inv_ears()
+	if(flags & SLOT_MASK)
+		owner.update_inv_wear_mask()
+	if(flags & SLOT_HEAD)
+		owner.update_inv_head()
+	if(flags & SLOT_FEET)
+		owner.update_inv_shoes()
+	if(flags & SLOT_ID)
+		owner.update_inv_wear_id()
+	if(flags & SLOT_BELT)
+		owner.update_inv_belt()
+	if(flags & SLOT_BACK)
+		owner.update_inv_back()
+	if(flags & SLOT_NECK)
+		owner.update_inv_neck()
 
 /obj/item/proc/is_hot()
 	return heat

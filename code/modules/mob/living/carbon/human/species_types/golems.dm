@@ -595,6 +595,7 @@
 		H.adjustFireLoss(-4)
 		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM)
 
+
 /datum/species/golem/clockwork
 	name = "Clockwork Golem"
 	id = "clockwork golem"
@@ -646,6 +647,7 @@
 	blacklisted = TRUE
 	dangerous_existence = TRUE
 	random_eligible = FALSE
+
 
 /datum/species/golem/cloth
 	name = "Cloth Golem"
@@ -725,7 +727,7 @@
 /obj/structure/cloth_pile/proc/revive()
 	if(QDELETED(src) || QDELETED(cloth_golem)) //QDELETED also checks for null, so if no cloth golem is set this won't runtime
 		return
-	if(cloth_golem.suiciding || cloth_golem.disabilities & NOCLONE)
+	if(cloth_golem.suiciding || cloth_golem.has_disability(DISABILITY_NOCLONE))
 		QDEL_NULL(cloth_golem)
 		return
 

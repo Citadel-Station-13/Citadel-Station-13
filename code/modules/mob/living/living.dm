@@ -406,14 +406,13 @@
 	SetSleeping(0, FALSE)
 	radiation = 0
 	nutrition = NUTRITION_LEVEL_FED + 50
-	bodytemperature = 310
+	bodytemperature = BODYTEMP_NORMAL
 	set_blindness(0)
 	set_blurriness(0)
 	set_eye_damage(0)
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	disabilities = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -745,15 +744,6 @@
 		var/obj_temp = oloc.return_temperature()
 		if(obj_temp != null)
 			loc_temp = obj_temp
-/*	if(ismob(loc))
-		var/mob/living/mloc = loc
-		var/mob_temp = mloc.return_temperature()
-		if(mloc == DEAD)
-			loc_temp = get_turf(loc) //wew
-		else
-			loc_temp = mob_temp
-*/
-//just gunna ommit this for now, it's on the 'to figgur out' list.
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
@@ -774,9 +764,9 @@
 	var/turf/T = get_turf(src)
 	if(!T)
 		return 0
-	if(T.z == ZLEVEL_CENTCOM) //dont detect mobs on centcom
+	if(is_centcom_level(T.z)) //dont detect mobs on centcom
 		return 0
-	if(T.z >= ZLEVEL_SPACEMAX)
+	if(is_away_level(T.z))
 		return 0
 	if(user != null && src == user)
 		return 0
@@ -819,7 +809,7 @@
 	if(G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
 		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return FALSE
-	if(disabilities & PACIFISM)
+	if(has_disability(DISABILITY_PACIFISM))
 		to_chat(src, "<span class='notice'>You don't want to risk harming anyone!</span>")
 		return FALSE
 	return TRUE
@@ -989,7 +979,6 @@
 			stop_pulling()
 	else if(has_legs || ignore_legs)
 		lying = 0
-
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)
@@ -1058,6 +1047,13 @@
 		if (client)
 			if (new_z)
 				SSmobs.clients_by_zlevel[new_z] += src
+				for (var/I in length(SSidlenpcpool.idle_mobs_by_zlevel[new_z]) to 1 step -1) //Backwards loop because we're removing (guarantees optimal rather than worst-case performance), it's fine to use .len here but doesn't compile on 511
+					var/mob/living/simple_animal/SA = SSidlenpcpool.idle_mobs_by_zlevel[new_z][I]
+					if (SA)
+						SA.toggle_ai(AI_ON) // Guarantees responsiveness for when appearing right next to mobs
+					else
+						SSidlenpcpool.idle_mobs_by_zlevel[new_z] -= SA
+
 			registered_z = new_z
 		else
 			registered_z = null
@@ -1065,3 +1061,31 @@
 /mob/living/onTransitZ(old_z,new_z)
 	..()
 	update_z(new_z)
+
+/mob/living/MouseDrop(mob/over)
+	. = ..()
+	var/mob/living/user = usr
+	if(!istype(over) || !istype(user))
+		return
+	if(!over.Adjacent(src) || (user != src) || !canUseTopic(over))
+		return
+	if(can_be_held)
+		mob_try_pickup(over)
+
+/mob/living/proc/mob_pickup(mob/living/L)
+	return
+
+/mob/living/proc/mob_try_pickup(mob/living/user)
+	if(!ishuman(user))
+		return
+	if(user.get_active_held_item())
+		to_chat(user, "<span class='warning'>Your hands are full!</span>")
+		return FALSE
+	if(buckled)
+		to_chat(user, "<span class='warning'>[src] is buckled to something!</span>")
+		return FALSE
+	user.visible_message("<span class='notice'>[user] starts trying to scoop up [src]!</span>")
+	if(!do_after(user, 20, target = src))
+		return FALSE
+	mob_pickup(user)
+	return TRUE
