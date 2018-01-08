@@ -73,7 +73,7 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 
 /mob/living/Move(atom/newloc, direct)
 	. = ..()
-	if(makesfootstepsounds)
+	if(. && makesfootstepsounds)
 		CitFootstep(newloc)
 
 //Baystation-styled tile dirtification.
