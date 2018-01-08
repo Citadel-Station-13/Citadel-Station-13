@@ -85,7 +85,7 @@ GAS ANALYZER
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 
 	// Clumsiness/brain damage check
-	if ((user.has_disability(CLUMSY) || user.has_disability(DUMB)) && prob(50))
+	if ((user.has_disability(DISABILITY_CLUMSY) || user.has_disability(DISABILITY_DUMB)) && prob(50))
 		to_chat(user, "<span class='notice'>You stupidly try to analyze the floor's vitals!</span>")
 		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>")
 		to_chat(user, "<span class='info'>Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")
@@ -125,11 +125,6 @@ GAS ANALYZER
 			to_chat(user, "<span class='danger'>Subject suffering from heart attack: apply defibrillator immediately!</span>")
 		if(H.undergoing_liver_failure() && H.stat != DEAD)
 			to_chat(user, "<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
-
-	if(iscarbon(M))
-		var/mob/living/carbon/C = M
-		if(C.has_brain_worms())
-			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
 
 	to_chat(user, "<span class='info'>Analyzing results for [M]:\n\tOverall status: [mob_status]</span>")
 
@@ -181,10 +176,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EAR STATUS==</b></span>")
 			if(istype(ears))
 				var/healthy = TRUE
-				if(C.has_disability(DEAF, GENETIC_MUTATION))
+				if(C.has_disability(DISABILITY_DEAF, GENETIC_MUTATION))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is genetically deaf.</span>")
-				else if(C.has_disability(DEAF))
+				else if(C.has_disability(DISABILITY_DEAF))
 					healthy = FALSE
 					to_chat(user, "\t<span class='alert'>Subject is deaf.</span>")
 				else
@@ -202,10 +197,10 @@ GAS ANALYZER
 			to_chat(user, "\t<span class='info'><b>==EYE STATUS==</b></span>")
 			if(istype(eyes))
 				var/healthy = TRUE
-				if(C.has_disability(BLIND))
+				if(C.has_disability(DISABILITY_BLIND))
 					to_chat(user, "\t<span class='alert'>Subject is blind.</span>")
 					healthy = FALSE
-				if(C.has_disability(NEARSIGHT))
+				if(C.has_disability(DISABILITY_NEARSIGHT))
 					to_chat(user, "\t<span class='alert'>Subject is nearsighted.</span>")
 					healthy = FALSE
 				if(eyes.eye_damage > 30)
@@ -398,6 +393,7 @@ GAS ANALYZER
 			var/gas_concentration = env_gases[id][MOLES]/total_moles
 			to_chat(user, "<span class='alert'>[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 		to_chat(user, "<span class='info'>Temperature: [round(environment.temperature-T0C)] &deg;C</span>")
+
 
 /obj/item/device/slime_scanner
 	name = "slime scanner"

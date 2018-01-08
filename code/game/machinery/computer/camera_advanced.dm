@@ -283,6 +283,9 @@
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
+		return
 	. = ..()
 
 /datum/action/innate/servant_warp
@@ -303,7 +306,7 @@
 	var/mob/camera/aiEye/remote/remote_eye = user.remote_control
 	var/obj/machinery/computer/camera_advanced/ratvar/R  = target
 	var/turf/T = get_turf(remote_eye)
-	if(user.z != ZLEVEL_CITYOFCOGS || !(T.z in GLOB.station_z_levels))
+	if(!is_reebe(user.z) || !is_station_level(T.z))
 		return
 	if(isclosedturf(T))
 		to_chat(user, "<span class='sevtug_small'>You can't teleport into a wall.</span>")

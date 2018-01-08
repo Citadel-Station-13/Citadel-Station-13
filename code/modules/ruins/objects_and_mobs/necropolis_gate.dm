@@ -399,7 +399,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 	name = "burnt stone surrounding tile"
 	icon_state = "burnt_surrounding_tile1"
 	tile_key = "burnt_surrounding_tile"
-	
+
 #undef STABLE
 #undef COLLAPSE_ON_CROSS
 #undef DESTROY_ON_CROSS

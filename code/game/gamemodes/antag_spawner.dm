@@ -108,7 +108,7 @@
 	if(!user.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE))
 		to_chat(user, "<span class='danger'>AUTHENTICATION FAILURE. ACCESS DENIED.</span>")
 		return FALSE
-	if(user.z != ZLEVEL_CENTCOM)
+	if(!user.onSyndieBase())
 		to_chat(user, "<span class='warning'>[src] is out of range! It can only be used at your base!</span>")
 		return FALSE
 	return TRUE
@@ -125,7 +125,7 @@
 			return
 		used = TRUE
 		var/mob/dead/observer/theghost = pick(nuke_candidates)
-		spawn_antag(theghost.client, get_turf(src), "syndieborg")
+		spawn_antag(theghost.client, get_turf(src), "syndieborg", user.mind)
 		do_sparks(4, TRUE, src)
 		qdel(src)
 	else
@@ -208,7 +208,7 @@
 
 
 /obj/item/antag_spawner/slaughter_demon/attack_self(mob/user)
-	if(!(user.z in GLOB.station_z_levels))
+	if(!is_station_level(user.z))
 		to_chat(user, "<span class='notice'>You should probably wait until you reach the station.</span>")
 		return
 	if(used)
@@ -219,7 +219,7 @@
 			return
 		used = 1
 		var/mob/dead/observer/theghost = pick(demon_candidates)
-		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name))
+		spawn_antag(theghost.client, get_turf(src), initial(demon_type.name),user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, 1)
@@ -237,15 +237,15 @@
 	S.mind.special_role = S.name
 	SSticker.mode.traitors += S.mind
 	var/datum/objective/assassinate/new_objective
-	if(usr)
+	if(user)
 		new_objective = new /datum/objective/assassinate
 		new_objective.owner = S.mind
-		new_objective.target = usr.mind
-		new_objective.explanation_text = "[objective_verb] [usr.real_name], the one who summoned you."
+		new_objective.target = user
+		new_objective.explanation_text = "[objective_verb] [user.name], the one who summoned you."
 		S.mind.objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = S.mind
-	new_objective2.explanation_text = "[objective_verb] everyone[usr ? " else while you're at it":""]."
+	new_objective2.explanation_text = "[objective_verb] everyone[user ? " else while you're at it":""]."
 	S.mind.objectives += new_objective2
 	S.mind.add_antag_datum(/datum/antagonist/auto_custom)
 	to_chat(S, S.playstyle_string)

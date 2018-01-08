@@ -29,8 +29,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/meat = /obj/item/reagent_containers/food/snacks/meat/slab/human //What the species drops on gibbing
 	var/skinned_type
 	var/liked_food = NONE
-	var/disliked_food = NONE
-	var/toxic_food = NONE
+	var/disliked_food = GROSS
+	var/toxic_food = TOXIC
 	var/list/no_equip = list()	// slots the race can't equip stuff to
 	var/nojumpsuit = 0	// this is sorta... weird. it basically lets you equip stuff that usually needs jumpsuits without one, like belts and pockets and ids
 	var/blacklisted = 0 //Flag to exclude from green slime core species.
@@ -53,7 +53,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/damage_overlay_type = "human" //what kind of damage overlays (if any) appear on our species when wounded?
 	var/fixed_mut_color = "" //to use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
 
-	// species flags_1. these can be found in flags_1.dm
+	// species flags. these can be found in flags.dm
 	var/list/species_traits = list()
 
 	var/attack_verb = "punch"	// punch-specific attack verb
@@ -125,11 +125,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 //Called when cloning, copies some vars that should be kept
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
-
 
 //Please override this locally if you want to define when what species qualifies for what rank if human authority is enforced.
 /datum/species/proc/qualifies_for_rank(rank, list/features)
@@ -312,7 +311,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 
-	if(H.has_disability(HUSK))
+	if(H.has_disability(DISABILITY_HUSK))
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -453,7 +452,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart("head")
 
-	if(HD && !(H.has_disability(HUSK)))
+	if(HD && !(H.has_disability(DISABILITY_HUSK)))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -724,7 +723,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			if(!(H.has_disability(HUSK)))
+			if(!(H.has_disability(DISABILITY_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
@@ -1093,7 +1092,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/get_spans()
 	return list()
 
-/datum/species/proc/check_weakness(obj/item/weapon, mob/living/attacker)
+/datum/species/proc/check_weakness(obj/item, mob/living/attacker)
 	return 0
 
 ////////
@@ -1102,17 +1101,17 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
-	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
-	if(H.has_disability(FAT))//I share your pain, past coder.
+	//The fucking DISABILITY_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
+	if(H.has_disability(DISABILITY_FAT))//I share your pain, past coder.
 		if(H.overeatduration < 100)
 			to_chat(H, "<span class='notice'>You feel fit again!</span>")
-			H.remove_disability(FAT, OBESITY)
+			H.remove_disability(DISABILITY_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
 			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
-			H.add_disability(FAT, OBESITY)
+			H.add_disability(DISABILITY_FAT, OBESITY)
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
@@ -1269,7 +1268,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				. += (health_deficiency / 25)
 		if((hungry >= 70) && !flight)		//Being hungry won't stop you from using flightpack controls/flapping your wings although it probably will in the wing case but who cares.
 			. += hungry / 50
-		if(H.has_disability(FAT))
+		if(H.has_disability(DISABILITY_FAT))
 			. += (1.5 - flight)
 		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
 			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
@@ -1315,7 +1314,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 
 /datum/species/proc/harm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
-	if(user.has_disability(PACIFISM))
+	if(user.has_disability(DISABILITY_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm [target]!</span>")
 		return FALSE
 	if(target.check_block())
@@ -1388,7 +1387,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return 1
 	else
 		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
-		
+
 		if(target.w_uniform)
 			target.w_uniform.add_fingerprint(user)
 		var/randomized_zone = ran_zone(user.zone_selected)
@@ -1479,7 +1478,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/weakness = H.check_weakness(I, user)
 	apply_damage(I.force * weakness, I.damtype, def_zone, armor_block, H)
-	H.damage_clothes(I.force, I.damtype, "melee", affecting.body_zone)
 
 	H.send_item_attack_message(I, user, hit_area)
 

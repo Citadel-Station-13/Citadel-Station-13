@@ -33,8 +33,8 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/robot_module/New()
-	..()
+/obj/item/robot_module/Initialize()
+	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
 		basic_modules += I
@@ -335,95 +335,6 @@
 	moduleselect_icon = "security"
 	can_be_pushed = FALSE
 	hat_offset = 3
-
-/obj/item/robot_module/k9
-	name = "Security K-9 Unit module"
-	basic_modules = list(
-		/obj/item/restraints/handcuffs/cable/zipties/cyborg/dog,
-		/obj/item/dogborg/jaws/big,
-		/obj/item/dogborg/pounce,
-		/obj/item/clothing/mask/gas/sechailer/cyborg,
-		/obj/item/soap/tongue,
-		/obj/item/device/analyzer/nose,
-		/obj/item/device/dogborg/sleeper/K9,
-		/obj/item/gun/energy/disabler/cyborg,
-		/obj/item/pinpointer/crew)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/security,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "k9"
-	moduleselect_icon = "security"
-	can_be_pushed = FALSE
-	hat_offset = INFINITY
-
-/obj/item/robot_module/k9/do_transform_animation()
-	..()
-	to_chat(loc,"<span class='userdanger'>While you have picked the security-k9 module, you still have to follow your laws, NOT Space Law. \
-	For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
-
-/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
-
-/obj/item/robot_module/medihound
-	name = "MediHound module"
-	basic_modules = list(
-		/obj/item/dogborg/jaws/small,
-		/obj/item/device/analyzer/nose,
-		/obj/item/soap/tongue,
-		/obj/item/device/healthanalyzer,
-		/obj/item/device/dogborg/sleeper/medihound,
-		/obj/item/twohanded/shockpaddles/hound,
-		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/device/sensor_device)
-	emag_modules = list(/obj/item/dogborg/pounce)
-	ratvar_modules = list(/obj/item/clockwork/slab/cyborg/medical,
-		/obj/item/clockwork/weapon/ratvarian_spear)
-	cyborg_base_icon = "medihound"
-	moduleselect_icon = "medical"
-	can_be_pushed = FALSE
-	hat_offset = INFINITY
-
-/obj/item/robot_module/medihound/do_transform_animation()
-	..()
-	to_chat(loc, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. \
-	You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
-
-/obj/item/robot_module/scrubpup
-	name = "Janitor"
-	basic_modules = list(
-		/obj/item/dogborg/jaws/small,
-		/obj/item/device/analyzer/nose,
-		/obj/item/soap/tongue/scrubpup,
-		/obj/item/device/lightreplacer/cyborg,
-		/obj/item/device/dogborg/sleeper/compactor)
-	emag_modules = list(/obj/item/dogborg/pounce)
-	ratvar_modules = list(
-		/obj/item/clockwork/slab/cyborg/janitor,
-		/obj/item/clockwork/replica_fabricator/cyborg)
-	cyborg_base_icon = "scrubpup"
-	moduleselect_icon = "janitor"
-	hat_offset = INFINITY
-	clean_on_move = TRUE
-
-/obj/item/robot_module/scrubpup/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/device/lightreplacer/LR = locate(/obj/item/device/lightreplacer) in basic_modules
-	if(LR)
-		for(var/i in 1 to coeff)
-			LR.Charge(R)
-
-/obj/item/robot_module/scrubpup/do_transform_animation()
-	..()
-	to_chat(loc,"<span class='userdanger'>As tempting as it might be, do not begin binging on important items. Eat your garbage responsibly. People are not included under Garbage.</span>")
-
 
 /obj/item/robot_module/security/do_transform_animation()
 	..()

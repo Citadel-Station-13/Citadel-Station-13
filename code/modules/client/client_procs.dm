@@ -75,7 +75,8 @@
 
 	//Logs all hrefs, except chat pings
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
-		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+		WRITE_FILE(GLOB.world_href_log, "<small>[time_stamp(show_ds = TRUE)] [src] (usr:[usr]\[[COORD(usr)]\])</small> || [hsrc ? "[hsrc] " : ""][href]<br>")
+
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
@@ -195,8 +196,6 @@ GLOBAL_LIST(external_rsc_urls)
 	if(!prefs)
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-	else
-		prefs.parent = src
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
@@ -233,6 +232,9 @@ GLOBAL_LIST(external_rsc_urls)
 
 
 	. = ..()	//calls mob.Login()
+
+	if(SSinput.initialized)
+		set_macros()
 
 	chatOutput.start() // Starts the chat
 
@@ -361,7 +363,8 @@ GLOBAL_LIST(external_rsc_urls)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	hook_vr("client_new",list(src))
+	hook_vr("client_new",list(src)) // CIT CHANGE - hook for client/New() changes
+
 	Master.UpdateTickRate()
 
 //////////////
@@ -369,6 +372,8 @@ GLOBAL_LIST(external_rsc_urls)
 //////////////
 
 /client/Del()
+	if(credits)
+		QDEL_LIST(credits)
 	log_access("Logout: [key_name(src)]")
 	if(holder)
 		adminGreet(1)
@@ -377,16 +382,17 @@ GLOBAL_LIST(external_rsc_urls)
 		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
 			var/cheesy_message = pick(
 				"I have no admins online!",\
-				"I'm all alone... :(",\
-				"I'm feeling lonely. :(",\
-				"I'm so lonely. :(",\
+				"I'm all alone :(",\
+				"I'm feeling lonely :(",\
+				"I'm so lonely :(",\
 				"Why does nobody love me? :(",\
-				"I want a man. :(",\
+				"I want a man :(",\
 				"Where has everyone gone?",\
-				"I need a hug. :(",\
-				"Someone come hold me. :(",\
+				"I need a hug :(",\
+				"Someone come hold me :(",\
 				"I need someone on me :(",\
 				"What happened? Where has everyone gone?",\
+				"Forever alone :(",\
 				"My nipples are so stiff, but Zelda ain't here. :(",\
 				"Leon senpai, play more Spessmans. :(",\
 				"If only Serdy were here...",\
@@ -399,8 +405,9 @@ GLOBAL_LIST(external_rsc_urls)
 				"Oh good, no-one around to watch me lick Goofball's nipples. :D",\
 				"I've replaced Beepsky with a fidget spinner, glory be autism abuse.",\
 				"i shure hop dere are no PRED arund!!!!",\
-				"NO PRED CAN eVER CATCH MI"\
-				)
+				"NO PRED CAN eVER CATCH MI",\
+				"help, the clown is honking his horn in front of dorms and its interrupting everyones erp"\
+			)
 
 			send2irc("Server", "[cheesy_message] (No admins online)")
 

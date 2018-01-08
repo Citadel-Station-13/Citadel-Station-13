@@ -110,6 +110,7 @@
 	var/mob/living/old_current = current
 	current = new_character								//associate ourself with our new body
 	new_character.mind = src							//and associate our new body with ourself
+	old_current.transfer_observers_to(current)			//transfer anyone observing the old character to the new one
 	for(var/a in antag_datums)	//Makes sure all antag datums effects are applied in the new body
 		var/datum/antagonist/A = a
 		A.on_body_transfer(old_current, current)
@@ -121,6 +122,8 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+
+//CIT CHANGE - makes arousal update when transfering bodies
 	if(isliving(new_character)) //New humans and such are by default enabled arousal. Let's always use the new mind's prefs.
 		var/mob/living/L = new_character
 		if(L.client && L.client.prefs)
@@ -201,7 +204,6 @@
 		remove_antag_datum(ANTAG_DATUM_BROTHER)
 	SSticker.mode.update_brother_icons_removed(src)
 
-
 /datum/mind/proc/remove_nukeop()
 	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
 	if(nuke)
@@ -223,6 +225,7 @@
 	if(rev)
 		remove_antag_datum(rev.type)
 		special_role = null
+
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -552,7 +555,7 @@
 				if(I == src)
 					continue
 				var/mob/M = I.current
-				if(M && (M.z in GLOB.station_z_levels) && !M.stat)
+				if(M && is_station_level(M.z) && !M.stat)
 					last_healthy_headrev = FALSE
 					break
 			text += "head | not mindshielded | <a href='?src=[REF(src)];revolution=clear'>employee</a> | <b>[last_healthy_headrev ? "<font color='red'>LAST </font> " : ""]HEADREV</b> | <a href='?src=[REF(src)];revolution=rev'>rev</a>"
@@ -585,8 +588,8 @@
 
 		sections["revolution"] = text
 
-		/** Abductors **/
-		text = "Abductor"
+		/** ABDUCTION **/
+		text = "abductor"
 		if(SSticker.mode.config_tag == "abductor")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
@@ -813,7 +816,7 @@
 					else
 						target_antag = target
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "late-assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "maroon", "debrain", "protect", "destroy", "prevent", "hijack", "escape", "survive", "martyr", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type)
 			return
 
@@ -847,12 +850,6 @@
 					new_objective.target = new_target.mind
 					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.update_explanation_text()
-
-			if ("late-assassinate")
-				new_objective = new /datum/objective/assassinate/late
-				new_objective.owner = src
-				new_objective.target = null
-				new_objective.find_target() //This will begin the "find-target" loop and update their explanation text
 
 			if ("destroy")
 				var/list/possible_targets = active_ais(1)
@@ -911,7 +908,7 @@
 				switch(new_obj_type)
 					if("download")
 						new_objective = new /datum/objective/download
-						new_objective.explanation_text = "Download [target_number] research levels."
+						new_objective.explanation_text = "Download [target_number] research node\s."
 					if("capture")
 						new_objective = new /datum/objective/capture
 						new_objective.explanation_text = "Capture [target_number] lifeforms with an energy net. Live, rare specimens are worth more."

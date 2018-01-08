@@ -1,3 +1,4 @@
+
 /proc/create_portal_pair(turf/source, turf/destination, _creator = null, _lifespan = 300, accuracy = 0, newtype = /obj/effect/portal)
 	if(!istype(source) || !istype(destination))
 		return
@@ -41,6 +42,7 @@
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
 	if(user && Adjacent(user))
 		user.forceMove(get_turf(src))
+		return TRUE
 
 /obj/effect/portal/Crossed(atom/movable/AM, oldloc)
 	if(isobserver(AM))
@@ -169,3 +171,4 @@
 	else
 		real_target = get_turf(linked)
 	return real_target
+

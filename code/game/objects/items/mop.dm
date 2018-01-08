@@ -3,6 +3,8 @@
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
+	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -23,7 +25,6 @@
 
 /obj/item/mop/proc/clean(turf/A)
 	if(reagents.has_reagent("water", 1) || reagents.has_reagent("holywater", 1) || reagents.has_reagent("vodka", 1) || reagents.has_reagent("cleaner", 1))
-		A.clean_blood()
 		A.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
 		for(var/obj/effect/O in A)
 			if(is_cleanable(O))

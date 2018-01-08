@@ -21,15 +21,11 @@
 	*/
 	var/zone_selected = null
 
-	var/macro_default = "default"
-	var/macro_hotkeys = "hotkeys"
-
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattackerckey = null
 	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
-
 	var/obj/machinery/machine = null
 	var/other_mobs = null
 
@@ -59,7 +55,7 @@
 	var/timeofdeath = 0//Living
 	var/cpr_time = 1//Carbon
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon

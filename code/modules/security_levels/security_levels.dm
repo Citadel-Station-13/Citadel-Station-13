@@ -29,7 +29,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 						SSshuttle.emergency.modTimer(2)
 				GLOB.security_level = SEC_LEVEL_GREEN
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_BLUE)
 				if(GLOB.security_level < SEC_LEVEL_BLUE)
@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(security_level, 0)
 				GLOB.security_level = SEC_LEVEL_BLUE
 				sound_to_playing_players('sound/misc/voybluealert.ogg') // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 			if(SEC_LEVEL_RED)
 				if(GLOB.security_level < SEC_LEVEL_RED)
@@ -58,16 +58,10 @@ GLOBAL_VAR_INIT(security_level, 0)
 				GLOB.security_level = SEC_LEVEL_RED
 				sound_to_playing_players('sound/misc/voyalert.ogg') // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
-				//Citadel change, makes red and delta alerts override nightshift lights
-				SSnightshift.nightshift_override = TRUE
-				if(SSnightshift.nightshift)
-					SSnightshift.nightshift = FALSE
-					SSnightshift.updatenightlights()
-				//End of citadel changes
 			if(SEC_LEVEL_DELTA)
 				minor_announce(CONFIG_GET(string/alert_delta), "Attention! Delta security level reached!",1)
 				if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL)
@@ -78,17 +72,22 @@ GLOBAL_VAR_INIT(security_level, 0)
 				GLOB.security_level = SEC_LEVEL_DELTA
 				sound_to_playing_players('sound/misc/deltakalaxon.ogg') // Citadel change - Makes alerts play a sound
 				for(var/obj/machinery/firealarm/FA in GLOB.machines)
-					if(FA.z in GLOB.station_z_levels)
+					if(is_station_level(FA.z))
 						FA.update_icon()
 				for(var/obj/machinery/computer/shuttle/pod/pod in GLOB.machines)
 					pod.admin_controlled = 0
-				//Citadel change, makes red and delta alerts override nightshift lights
-				SSnightshift.nightshift_override = TRUE
-				if(SSnightshift.nightshift)
-					SSnightshift.nightshift = FALSE
-					SSnightshift.updatenightlights()
-				//End of citadel changes
-		SSblackbox.record_feedback("tally", "security_level_changes", 1, level)
+		if(level >= SEC_LEVEL_RED)
+			for(var/obj/machinery/door/D in GLOB.machines)
+				if(D.red_alert_access)
+					D.visible_message("<span class='notice'>[D] whirrs as it automatically lifts access requirements!</span>")
+					playsound(D, 'sound/machines/boltsup.ogg', 50, TRUE)
+    //Citadel change, makes red and delta alerts override nightshift lights
+			SSnightshift.nightshift_override = TRUE
+			if(SSnightshift.nightshift)
+				SSnightshift.nightshift = FALSE
+				SSnightshift.updatenightlights()
+		//End of citadel changes
+		SSblackbox.record_feedback("tally", "security_level_changes", 1, get_security_level())
 	else
 		return
 

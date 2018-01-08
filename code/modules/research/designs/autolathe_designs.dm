@@ -807,6 +807,15 @@
 	build_path = /obj/item/stock_parts/cell/emergency_light
 	category = list("initial", "Electronics")
 
+/datum/design/packageWrap
+	name = "Package Wrapping"
+	id = "packagewrap"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 200, MAT_GLASS = 200)
+	build_path = /obj/item/stack/packageWrap
+	category = list("initial", "Misc")
+	maxstack = 30
+
 /datum/design/holodisk
 	name = "Holodisk"
 	id = "holodisk"
@@ -814,12 +823,3 @@
 	materials = list(MAT_METAL = 1000)
 	build_path = /obj/item/disk/holodisk
 	category = list("initial", "Misc")
-
-//CITADEL
-/datum/design/shock_collar
-	name = "Shock Collar"
-	id = "shock_collar"
-	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_GLASS = 2000)
-	build_path = /obj/item/device/electropack/shockcollar
-	category = list("hacked", "Security")

@@ -430,20 +430,17 @@
 
 
 /mob/living/silicon/ai/proc/switchCamera(obj/machinery/camera/C)
+	if(QDELETED(C))
+		return FALSE
 
 	if(!tracking)
 		cameraFollow = null
 
-	if (!C)
-		return FALSE
-
-	if(!src.eyeobj)
+	if(QDELETED(eyeobj))
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
 	eyeobj.setLoc(get_turf(C))
-	//machine = src
-
 	return TRUE
 
 /mob/living/silicon/ai/proc/botcall()
@@ -803,7 +800,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close = FALSE)
+/mob/living/silicon/ai/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(control_disabled || incapacitated())
 		return FALSE
 	if(be_close && !in_range(M, src))

@@ -71,9 +71,9 @@
 	var/impact_effect_type //what type of impact effect to show when hitting something
 	var/log_override = FALSE //is this type spammed enough to not log? (KAs)
 
-/obj/item/projectile/New()
+/obj/item/projectile/Initialize()
+	. = ..()
 	permutated = list()
-	return ..()
 
 /obj/item/projectile/proc/Range()
 	range--
@@ -391,7 +391,6 @@
 		yo = targloc.y - curloc.y
 		xo = targloc.x - curloc.x
 		setAngle(Get_Angle(src, targloc))
-		
 	if(isliving(source) && params)
 		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, params)
 		p_x = calculated[2]

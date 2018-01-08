@@ -60,8 +60,6 @@
 	var/projectile_setting_pierce = TRUE
 	var/delay = 65
 	var/lastfire = 0
-	
-	var/lastprocess = 0
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
@@ -385,8 +383,8 @@
 	structure_piercing = BR.structure_piercing
 	structure_bleed_coeff = BR.structure_bleed_coeff
 
-/obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override)
-	. = ..(target, user, quiet, zone_override)
+/obj/item/ammo_casing/energy/beam_rifle/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
+	. = ..()
 	var/obj/item/projectile/beam/beam_rifle/hitscan/HS_BB = BB
 	if(!istype(HS_BB))
 		return

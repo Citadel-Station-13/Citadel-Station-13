@@ -130,7 +130,6 @@
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
 	return ..()
 
-
 /obj/item/reagent_containers/spray/verb/empty()
 	set name = "Empty Spray Bottle"
 	set category = "Object"

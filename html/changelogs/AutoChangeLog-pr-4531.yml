@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "The backup shuttle has it's own area now and you should no longer occasionally be teleported there by the arena shuttle."

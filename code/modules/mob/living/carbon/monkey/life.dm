@@ -44,7 +44,7 @@
 	return ..()
 
 /mob/living/carbon/monkey/handle_breath_temperature(datum/gas_mixture/breath)
-	if(abs(310.15 - breath.temperature) > 50)
+	if(abs(BODYTEMP_NORMAL - breath.temperature) > 50)
 		switch(breath.temperature)
 			if(-INFINITY to 120)
 				adjustFireLoss(3)
@@ -133,7 +133,6 @@
 
 /mob/living/carbon/monkey/has_smoke_protection()
 	if(wear_mask)
-
 		if(wear_mask.flags_1 & BLOCK_GAS_SMOKE_EFFECT_1)
 			return 1
 

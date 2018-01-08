@@ -71,3 +71,31 @@
 #define ADMIN_MARKREAD(client) "(<a href='?_src_=holder;markedread=\ref[client]'>MARK READ</a>)"//marks an adminhelp as read and under investigation
 #define ADMIN_IC(client) "(<a href='?_src_=holder;icissue=\ref[client]'>IC</a>)"//marks and adminhelp as an IC issue
 #define ADMIN_REJECT(client) "(<a href='?_src_=holder;rejectadminhelp=\ref[client]'>REJT</a>)"//Rejects an adminhelp for being unclear or otherwise unhelpful. resets their adminhelp timer
+
+//Damage stuffs
+#define AROUSAL "arousal"
+
+//DNA stuffs. Remember to change this if upstream adds more snowflake options
+#define DNA_EYE_COLOR_TWO_BLOCK		8
+#define DNA_EYE_COLOR_SWITCH_BLOCK	9
+#define DNA_EYE_COLOR_BLOCK			10
+#define DNA_COLOR_ONE_BLOCK			11
+#define DNA_COLOR_TWO_BLOCK			12
+#define DNA_COLOR_THR_BLOCK			13
+#define DNA_COLOR_SWITCH_BLOCK		14
+#define DNA_COLOR_SWITCH_MAX			7 //must be (2^(n+1))-1
+#define DNA_COCK_BLOCK				15
+#define DNA_MUTANTRACE_BLOCK		16
+#define DNA_MUTANTTAIL_BLOCK		17
+#define DNA_MUTANTWING_BLOCK		18
+#define DNA_WINGCOLOR_BLOCK			19
+
+
+//Species stuffs. Remember to change this if upstream updates species flags
+#define MUTCOLORS2		35
+#define MUTCOLORS3		36
+#define NOAROUSAL		37 //Stops all arousal effects
+#define NOGENITALS		38 //Cannot create, use, or otherwise have genitals
+
+//Brainslugs
+#define isborer(A) (istype(A, /mob/living/simple_animal/borer))

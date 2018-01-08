@@ -1,6 +1,6 @@
 // The Squeak
 // because this is about placement of mice mobs, and nothing to do with
-// mice - the computer peripheral 
+// mice - the computer peripheral
 
 SUBSYSTEM_DEF(squeak)
 	name = "Squeak"

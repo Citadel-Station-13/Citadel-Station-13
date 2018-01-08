@@ -15,6 +15,7 @@
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
+
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -294,6 +295,7 @@
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
+
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
@@ -743,8 +745,7 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
-	
-	
+
 /datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
 	var/temp_delta = (temperature - chem_temp) * coeff
 	if(temp_delta > 0)

@@ -39,7 +39,7 @@
 /obj/item/restraints/handcuffs/attack(mob/living/carbon/C, mob/living/carbon/human/user)
 	if(!istype(C))
 		return
-	if(user.has_disability(CLUMSY) && prob(50))
+	if(user.has_disability(DISABILITY_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
 		apply_cuffs(user,user)
 		return
@@ -179,11 +179,6 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 10 //Deciseconds = 1s
-
-/obj/item/restraints/handcuffs/fake/kinky
-	name = "kinky handcuffs"
-	desc = "Fake handcuffs meant for erotic roleplay."
-	icon_state = "handcuffGag"
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
@@ -392,4 +387,3 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
-	
