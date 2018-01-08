@@ -39,7 +39,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("secborg", "paint")
+	var/list/graffiti_large_h = list("secborg", "paint") // CIT CHANGE - removes yiff in hell graffiti
 
 	var/list/all_drawables
 
@@ -275,6 +275,7 @@
 		temp = "graffiti"
 	else if(drawing in numerals)
 		temp = "number"
+
 
 	var/graf_rot
 	if(drawing in oriented)
@@ -626,9 +627,6 @@
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		add_overlay(spray_overlay)
-
-	pre_noise = FALSE
-	post_noise = TRUE
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

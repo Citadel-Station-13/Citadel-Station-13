@@ -283,6 +283,9 @@
 	if(!is_servant_of_ratvar(user))
 		to_chat(user, "<span class='warning'>[src]'s keys are in a language foreign to you, and you don't understand anything on its screen.</span>")
 		return
+	if(clockwork_ark_active())
+		to_chat(user, "<span class='warning'>The Ark is active, and [src] has shut down.</span>")
+		return
 	. = ..()
 
 /datum/action/innate/servant_warp
@@ -310,6 +313,9 @@
 		return
 	else if(isspaceturf(T))
 		to_chat(user, "<span class='sevtug_small'>[prob(1) ? "Servant cannot into space." : "You can't teleport into space."]</span>")
+		return
+	else if(T.flags_1 & NOJAUNT_1)
+		to_chat(user, "<span class='sevtug_small'>This tile is blessed by holy water and deflects the warp.</span>")
 		return
 	var/area/AR = get_area(T)
 	if(!AR.clockwork_warp_allowed)

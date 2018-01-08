@@ -127,6 +127,7 @@
 
 	if(prob(30))
 		objective_count += forge_single_objective()
+
 	for(var/i = objective_count, i < CONFIG_GET(number/traitor_objectives_amount), i++)
 		var/datum/objective/assassinate/kill_objective = new
 		kill_objective.owner = owner
@@ -152,11 +153,6 @@
 			maroon_objective.owner = owner
 			maroon_objective.find_target()
 			add_objective(maroon_objective)
-		else if(prob(50))
-			var/datum/objective/assassinate/late/late_objective = new
-			late_objective.owner = owner
-			late_objective.find_target()
-			add_objective(late_objective)
 		else
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = owner

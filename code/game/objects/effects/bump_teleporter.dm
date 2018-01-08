@@ -19,6 +19,7 @@
 	LAZYREMOVE(AllTeleporters, src)
 	return ..()
 
+
 /obj/effect/bump_teleporter/singularity_act()
 	return
 

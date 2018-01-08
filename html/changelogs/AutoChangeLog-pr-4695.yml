@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - config: "The default config for head of staff exp override is closer to the actual default with no override."

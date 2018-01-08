@@ -173,12 +173,8 @@
 				if(M.stat == DEAD)
 					if(M.timeofdeath + 6000 < world.time)
 						continue
-				var/turf/T = get_turf(M)
-				if(!T)
-					continue
-				if(T.z == ZLEVEL_CENTCOM)
-					continue
-				L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
+				if(is_eligible(I))
+					L[avoid_assoc_duplicate_keys(M.real_name, areaindex)] = I
 
 		var/desc = input("Please select a location to lock in.", "Locking Computer") as null|anything in L
 		target = L[desc]

@@ -74,4 +74,3 @@
 	else
 		// Like how did we get here?
 		return FALSE
-

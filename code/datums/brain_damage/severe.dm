@@ -50,17 +50,11 @@
 	lose_text = "<span class='notice'>Your vision returns.</span>"
 
 /datum/brain_trauma/severe/blindness/on_gain()
-	owner.become_blind()
-	..()
-
-//no fiddling with genetics to get out of this one
-/datum/brain_trauma/severe/blindness/on_life()
-	if(!(owner.disabilities & BLIND))
-		on_gain()
+	owner.become_blind(TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
-	owner.cure_blind()
+	owner.cure_blind(TRAUMA_DISABILITY)
 	..()
 
 /datum/brain_trauma/severe/paralysis

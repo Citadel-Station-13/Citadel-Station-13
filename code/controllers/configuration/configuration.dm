@@ -97,19 +97,13 @@ GLOBAL_PROTECT(config_dir)
 
 		if(!entry)
 			continue
-		if(entry == "$include")
-			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
-			else
-				LoadEntries(value, stack)
-				++.
-			continue
 		
 		if(entry == "$include")
 			if(!value)
 				log_config("Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
+				++.
 			continue
 		
 		var/datum/config_entry/E = _entries[entry]
