@@ -5,8 +5,6 @@
 	icon_state = "robot"
 	maxHealth = 100
 	health = 100
-	macro_default = "robot-default"
-	macro_hotkeys = "robot-hotkeys"
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current module of cyborg
 	has_limbs = 1
@@ -205,14 +203,13 @@
 	"Medical" = /obj/item/robot_module/medical, \
 	"Miner" = /obj/item/robot_module/miner, \
 	"Janitor" = /obj/item/robot_module/janitor, \
-	"Service" = /obj/item/robot_module/butler, \
-	"MediHound" = /obj/item/robot_module/medihound, \
-	"Security K9" = /obj/item/robot_module/k9, \
-	"Scrub Puppy" = /obj/item/robot_module/scrubpup)
+	"Service" = /obj/item/robot_module/butler)
 	if(!CONFIG_GET(flag/disable_peaceborg))
 		modulelist["Peacekeeper"] = /obj/item/robot_module/peacekeeper
 	if(!CONFIG_GET(flag/disable_secborg))
 		modulelist["Security"] = /obj/item/robot_module/security
+
+	modulelist += get_cit_modules() //Citadel change - adds Citadel's borg modules.
 
 	var/input_module = input("Please, select a module!", "Robot", null, null) as null|anything in modulelist
 	if(!input_module || module.type != /obj/item/robot_module)
@@ -247,17 +244,6 @@
 		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
 		return //won't work if dead
 	robot_alerts()
-
-//for borg hotkeys, here module refers to borg inv slot, not core module
-/mob/living/silicon/robot/verb/cmd_toggle_module(module as num)
-	set name = "Toggle Module"
-	set hidden = 1
-	toggle_module(module)
-
-/mob/living/silicon/robot/verb/cmd_unequip_module()
-	set name = "Unequip Module"
-	set hidden = 1
-	uneq_active()
 
 /mob/living/silicon/robot/proc/robot_alerts()
 	var/dat = ""
@@ -537,6 +523,19 @@
 			toner = tonermax
 			qdel(W)
 			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
+
+	else if(istype(W, /obj/item/device/flashlight))
+		if(!opened)
+			to_chat(user, "<span class='warning'>You need to open the panel to repair the headlamp!</span>")
+		if(lamp_cooldown <= world.time)
+			to_chat(user, "<span class='warning'>The headlamp is already functional!</span>")
+		else
+			if(!user.temporarilyRemoveItemFromInventory(W))
+				to_chat(user, "<span class='warning'>[W] seems to be stuck to your hand. You'll have to find a different light.</span>")
+				return
+			lamp_cooldown = 0
+			qdel(W)
+			to_chat(user, "<span class='notice'>You replace the headlamp bulbs.</span>")
 	else
 		return ..()
 
@@ -593,39 +592,25 @@
 /mob/living/silicon/robot/update_icons()
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
-	if(module.cyborg_base_icon == "medihound")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(sleeper_g == 1)
-			add_overlay("msleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("msleeper_r")
-		if(stat == DEAD)
-			icon_state = "medihound-wreck"
 
-	if(module.cyborg_base_icon == "k9")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(laser == 1)
-			add_overlay("laser")
-		if(disabler == 1)
-			add_overlay("disabler")
-		if(sleeper_g == 1)
-			add_overlay("ksleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("ksleeper_r")
-		if(stat == DEAD)
-			icon_state = "k9-wreck"
+	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
+	icon = (module.cyborg_icon_override ? module.cyborg_icon_override : initial(icon))
 
-	if(module.cyborg_base_icon == "scrubpup")
-		icon = 'icons/mob/widerobot.dmi'
-		pixel_x = -16
-		if(sleeper_g == 1)
-			add_overlay("jsleeper_g")
-		if(sleeper_r == 1)
-			add_overlay("jsleeper_r")
-		if(stat == DEAD)
-			icon_state = "scrubpup-wreck"
+	if(laser)
+		add_overlay("laser")//Is this even used???
+	if(disabler)
+		add_overlay("disabler")//ditto
+
+	if(sleeper_g && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_g")
+	if(sleeper_r && module.sleeper_overlay)
+		add_overlay("[module.sleeper_overlay]_r")
+	if(stat == DEAD && module.has_snowflake_deadsprite)
+		icon_state = "[module.cyborg_base_icon]-wreck"
+
+	if(module.cyborg_pixel_offset)
+		pixel_x = module.cyborg_pixel_offset
+	//End of citadel changes
 
 	if(module.cyborg_base_icon == "robot")
 		icon = 'icons/mob/robots.dmi'
@@ -827,6 +812,9 @@
 /mob/living/silicon/robot/modules/security
 	set_module = /obj/item/robot_module/security
 
+/mob/living/silicon/robot/modules/clown
+	set_module = /obj/item/robot_module/clown
+
 /mob/living/silicon/robot/modules/peacekeeper
 	set_module = /obj/item/robot_module/peacekeeper
 
@@ -844,7 +832,7 @@
 	lawupdate = FALSE
 	scrambledcodes = TRUE // These are rogue borgs.
 	ionpulse = TRUE
-	var/playstyle_string = "<span class='userdanger'>You are a Syndicate assault cyborg!</span><br>\
+	var/playstyle_string = "<span class='big bold'>You are a Syndicate assault cyborg!</span><br>\
 							<b>You are armed with powerful offensive tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 							Your cyborg LMG will slowly produce ammunition from your power supply, and your operative pinpointer will find and locate fellow nuclear operatives. \
 							<i>Help the operatives secure the disk at all costs!</i></b>"
@@ -866,7 +854,7 @@
 
 /mob/living/silicon/robot/modules/syndicate/medical
 	icon_state = "syndi-medi"
-	playstyle_string = "<span class='userdanger'>You are a Syndicate medical cyborg!</span><br>\
+	playstyle_string = "<span class='big bold'>You are a Syndicate medical cyborg!</span><br>\
 						<b>You are armed with powerful medical tools to aid you in your mission: help the operatives secure the nuclear authentication disk. \
 						Your hypospray will produce Restorative Nanites, a wonder-drug that will heal most types of bodily damages, including clone and brain damage. It also produces morphine for offense. \
 						Your defibrillator paddles can revive operatives through their hardsuits, or can be used on harm intent to shock enemies! \
@@ -889,7 +877,7 @@
 		if(DISCONNECT) //Tampering with the wires
 			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Remote telemetry lost with [name].</span><br>")
 
-/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
+/mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE)
 	if(stat || lockcharge || low_power_mode)
 		return
 	if(be_close && !in_range(M, src))
@@ -1023,15 +1011,16 @@
 	designation = module.name
 	if(hands)
 		hands.icon_state = module.moduleselect_icon
+		hands.icon = (module.moduleselect_alternate_icon ? module.moduleselect_alternate_icon : initial(hands.icon)) //CITADEL CHANGE - allows module select icons to use a different icon file
 	if(module.can_be_pushed)
 		status_flags |= CANPUSH
 	else
 		status_flags &= ~CANPUSH
 
 	if(module.clean_on_move)
-		flags_1 |= CLEAN_ON_MOVE_1
+		AddComponent(/datum/component/cleaning)
 	else
-		flags_1 &= ~CLEAN_ON_MOVE_1
+		qdel(GetComponent(/datum/component/cleaning))
 
 	hat_offset = module.hat_offset
 
@@ -1169,7 +1158,7 @@
 		return
 	. = ..(M, force, check_loc)
 
-/mob/living/silicon/robot/unbuckle_mob(mob/user)
+/mob/living/silicon/robot/unbuckle_mob(mob/user, force=FALSE)
 	if(iscarbon(user))
 		GET_COMPONENT(riding_datum, /datum/component/riding)
 		if(istype(riding_datum))

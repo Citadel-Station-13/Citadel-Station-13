@@ -1,6 +1,0 @@
-author: "Toriate"
-delete-after: True
-changes: 
-  - tweak: "Mag Pistol and Mag Rifle no longer spawn with magazines when built in protolathe"
-  - balance: "Nerf guns no longer max out science in five seconds flat"
-  - bugfix: "Nerf gun magazines no longer give infinite metal and glass"

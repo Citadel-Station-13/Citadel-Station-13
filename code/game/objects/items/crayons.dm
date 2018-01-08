@@ -39,7 +39,7 @@
 	var/list/runes = list("rune1","rune2","rune3","rune4","rune5","rune6")
 	var/list/randoms = list(RANDOM_ANY, RANDOM_RUNE, RANDOM_ORIENTED,
 		RANDOM_NUMBER, RANDOM_GRAFFITI, RANDOM_LETTER)
-	var/list/graffiti_large_h = list("secborg", "paint")
+	var/list/graffiti_large_h = list("secborg", "paint") // CIT CHANGE - removes yiff in hell graffiti
 
 	var/list/all_drawables
 
@@ -240,7 +240,7 @@
 			out += a
 	return jointext(out,"")
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !check_allowed_items(target))
 		return
 
@@ -276,6 +276,7 @@
 	else if(drawing in numerals)
 		temp = "number"
 
+
 	var/graf_rot
 	if(drawing in oriented)
 		switch(user.dir)
@@ -287,6 +288,14 @@
 				graf_rot = 270
 			else
 				graf_rot = 0
+
+	var/list/click_params = params2list(params)
+	var/clickx
+	var/clicky
+
+	if(click_params && click_params["icon-x"] && click_params["icon-y"])
+		clickx = CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 
 	if(!instant)
 		to_chat(user, "<span class='notice'>You start drawing a [temp] on the	[target.name]...</span>")
@@ -316,6 +325,8 @@
 			if(PAINT_NORMAL)
 				var/obj/effect/decal/cleanable/crayon/C = new(target, paint_color, drawing, temp, graf_rot)
 				C.add_hiddenprint(user)
+				C.pixel_x = clickx
+				C.pixel_y = clicky
 				affected_turfs += target
 			if(PAINT_LARGE_HORIZONTAL)
 				var/turf/left = locate(target.x-1,target.y,target.z)
@@ -616,9 +627,6 @@
 		var/mutable_appearance/spray_overlay = mutable_appearance('icons/obj/crayons.dmi', "[is_capped ? "spraycan_cap_colors" : "spraycan_colors"]")
 		spray_overlay.color = paint_color
 		add_overlay(spray_overlay)
-
-	pre_noise = FALSE
-	post_noise = TRUE
 
 /obj/item/toy/crayon/spraycan/borg
 	name = "cyborg spraycan"

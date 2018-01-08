@@ -170,14 +170,15 @@
 		..(current_button)
 	else if(target && current_button.appearance_cache != target.appearance) //replace with /ref comparison if this is not valid.
 		var/obj/item/I = target
-		current_button.appearance_cache = I.appearance
 		var/old_layer = I.layer
 		var/old_plane = I.plane
 		I.layer = FLOAT_LAYER //AAAH
 		I.plane = FLOAT_PLANE //^ what that guy said
-		current_button.overlays = list(I)
+		current_button.cut_overlays()
+		current_button.add_overlay(I)
 		I.layer = old_layer
 		I.plane = old_plane
+		current_button.appearance_cache = I.appearance
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -344,6 +345,19 @@
 /datum/action/item_action/change
 	name = "Change"
 
+/datum/action/item_action/nano_picket_sign
+	name = "Retext Nano Picket Sign"
+	var/obj/item/picket_sign/S
+
+/datum/action/item_action/nano_picket_sign/New(Target)
+	..()
+	if(istype(Target, /obj/item/picket_sign))
+		S = Target
+
+/datum/action/item_action/nano_picket_sign/Trigger()
+	if(istype(S))
+		S.retext(owner)
+
 /datum/action/item_action/adjust
 
 /datum/action/item_action/adjust/New(Target)
@@ -476,6 +490,8 @@
 	if(!target)
 		return FALSE
 	return TRUE
+
+/datum/action/spell_action/spell
 
 /datum/action/spell_action/spell/IsAvailable()
 	if(!target)

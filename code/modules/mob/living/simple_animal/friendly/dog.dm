@@ -12,8 +12,6 @@
 	see_in_dark = 5
 	speak_chance = 1
 	turns_per_move = 10
-	devourable = TRUE
-	no_vore = FALSE
 
 //Corgis and pugs are now under one dog subtype
 
@@ -32,6 +30,7 @@
 	var/obj/item/inventory_back
 	var/nofur = 0 		//Corgis that have risen past the material plane of existence.
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -121,7 +120,12 @@
 	..()
 	update_corgi_fluff()
 
-
+/mob/living/simple_animal/pet/dog/corgi/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, "corgi", null, 'icons/mob/pets_held_lh.dmi', 'icons/mob/pets_held_rh.dmi', FALSE)
+	if(!L.put_in_hands(holder))
+		qdel(holder)
+	else
+		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/simple_animal/pet/dog/corgi/Topic(href, href_list)
 	if(usr.stat)

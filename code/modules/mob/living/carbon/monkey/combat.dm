@@ -77,7 +77,7 @@
 		return FALSE
 
 	// WEAPONS
-	if(istype(I, /obj/item/weapon))
+	if(istype(I, /obj/item))
 		var/obj/item/W = I
 		if(W.force >= best_force)
 			put_in_hands(W)
@@ -120,16 +120,19 @@
 /mob/living/carbon/monkey/proc/should_target(var/mob/living/L)
 
 	if(L == src)
-		return 0
+		return FALSE
+
+	if(has_disability(DISABILITY_PACIFISM))
+		return FALSE
 
 	if(enemies[L])
-		return 1
+		return TRUE
 
 	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
 	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /mob/living/carbon/monkey/proc/handle_combat()
 	// Don't do any AI if inside another mob (devoured)
@@ -150,7 +153,7 @@
 		return TRUE
 
 	// have we been disarmed
-	if(!locate(/obj/item/weapon) in held_items)
+	if(!locate(/obj/item) in held_items)
 		best_force = 0
 
 	if(restrained() || blacklistItems[pickupTarget] || (pickupTarget && (pickupTarget.flags_1 & NODROP_1)))
@@ -388,7 +391,7 @@
 
 // attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /mob/living/carbon/monkey/proc/monkey_attack(mob/living/L)
-	var/obj/item/Weapon = locate(/obj/item/weapon) in held_items
+	var/obj/item/Weapon = locate(/obj/item) in held_items
 
 	// attack with weapon if we have one
 	if(Weapon)

@@ -15,6 +15,7 @@
 /datum/reagents/New(maximum=100)
 	maximum_volume = maximum
 
+
 	//I dislike having these here but map-objects are initialised before world/New() is called. >_>
 	if(!GLOB.chemical_reagents_list)
 		//Chemical Reagents - Initialises all /datum/reagent into a list indexed by reagent id
@@ -58,6 +59,19 @@
 	cached_reagents = null
 	if(my_atom && my_atom.reagents == src)
 		my_atom.reagents = null
+
+
+// Used in attack logs for reagents in pills and such
+/datum/reagents/proc/log_list()
+	if(!length(reagent_list))
+		return "no reagents"
+
+	var/list/data = list()
+	for(var/r in reagent_list) //no reagents will be left behind
+		var/datum/reagent/R = r
+		data += "[R.id] ([round(R.volume, 0.1)]u)"
+		//Using IDs because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+	return english_list(data)
 
 /datum/reagents/proc/remove_any(amount = 1)
 	var/list/cached_reagents = reagent_list
@@ -228,8 +242,7 @@
 	var/list/cached_reagents = reagent_list
 	var/list/cached_addictions = addiction_list
 	if(C)
-		chem_temp = C.bodytemperature
-		handle_reactions()
+		expose_temperature(C.bodytemperature, 0.25)
 	var/need_mob_update = 0
 	for(var/reagent in cached_reagents)
 		var/datum/reagent/R = reagent
@@ -282,6 +295,7 @@
 		C.update_canmove()
 		C.update_stamina()
 	update_total()
+
 
 /datum/reagents/proc/set_reacting(react = TRUE)
 	if(react)
@@ -731,6 +745,15 @@
 					out += "[taste_desc]"
 
 	return english_list(out, "something indescribable")
+
+/datum/reagents/proc/expose_temperature(var/temperature, var/coeff=0.02)
+	var/temp_delta = (temperature - chem_temp) * coeff
+	if(temp_delta > 0)
+		chem_temp = min(chem_temp + max(temp_delta, 1), temperature)
+	else
+		chem_temp = max(chem_temp + min(temp_delta, -1), temperature)
+	chem_temp = round(chem_temp)
+	handle_reactions()
 
 ///////////////////////////////////////////////////////////////////////////////////
 

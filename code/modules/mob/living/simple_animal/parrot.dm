@@ -60,8 +60,6 @@
 	mob_size = MOB_SIZE_SMALL
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
-	devourable = TRUE
-	no_vore = FALSE
 
 	var/parrot_damage_upper = 10
 	var/parrot_state = PARROT_WANDER //Hunt for a perch when created
@@ -1000,6 +998,7 @@
 	H.ForceContractDisease(P)
 	parrot_interest = null
 	H.visible_message("<span class='danger'>[src] dive bombs into [H]'s chest and vanishes!</span>", "<span class='userdanger'>[src] dive bombs into your chest, vanishing! This can't be good!</span>")
+
 
 /mob/living/simple_animal/parrot/clock_hawk
 	name = "clock hawk"

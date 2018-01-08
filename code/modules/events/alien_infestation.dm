@@ -2,9 +2,8 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
-	earliest_start = 24000 //40 min
 
-	min_players = 20 //Avoid lowpop rounds
+	min_players = 10
 	max_occurrences = 1
 
 /datum/round_event/ghost_role/alien_infestation
@@ -16,6 +15,7 @@
 	// 50% chance of being incremented by one
 	var/spawncount = 1
 	var/successSpawn = 0	//So we don't make a command report if nothing gets spawned.
+	fakeable = TRUE
 
 
 /datum/round_event/ghost_role/alien_infestation/setup()
@@ -40,8 +40,8 @@
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in GLOB.machines)
 		if(QDELETED(temp_vent))
 			continue
-		if((temp_vent.loc.z in GLOB.station_z_levels) && !temp_vent.welded)
-			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+		if(is_station_level(temp_vent.loc.z) && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.parents[1]
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
 			if(temp_vent_parent.other_atmosmch.len > 20)

@@ -4,7 +4,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
 
@@ -14,7 +14,7 @@
 	icon_state = "yellow"
 	item_state = "ygloves"
 	siemens_coefficient = 1			//Set to a default of 1, gets overridden in New()
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	item_color="yellow"
 	resistance_flags = NONE
 
@@ -77,7 +77,7 @@
 	name = "insulated gloves"
 	desc = "These gloves will protect the wearer from electric shock."
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/rainbow
@@ -148,7 +148,7 @@
 	item_state = "egloves"
 	item_color = "captain"
 	siemens_coefficient = 0
-	permeability_coefficient = 0.5
+	permeability_coefficient = 0.05
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	heat_protection = HANDS
@@ -162,7 +162,7 @@
 	icon_state = "latex"
 	item_state = "lgloves"
 	siemens_coefficient = 0.3
-	permeability_coefficient = 0.1
+	permeability_coefficient = 0.01
 	item_color="white"
 	transfer_prints = TRUE
 	resistance_flags = NONE
@@ -192,7 +192,7 @@
 	item_state = "wgloves"
 	item_color = "mime"
 
-/obj/item/clothing/gloves/color/random/New()
+/obj/item/clothing/gloves/color/random/Initialize()
 	..()
 	var/list/gloves = list(
 		/obj/item/clothing/gloves/color/orange = 1,
@@ -202,12 +202,14 @@
 		/obj/item/clothing/gloves/color/green = 1,
 		/obj/item/clothing/gloves/color/grey = 1,
 		/obj/item/clothing/gloves/color/light_brown = 1,
-		/obj/item/clothing/gloves/color/brown = 1)
+		/obj/item/clothing/gloves/color/brown = 1,
+		/obj/item/clothing/gloves/color/white = 1,
+		/obj/item/clothing/gloves/color/rainbow = 1)
 
 	var/obj/item/clothing/gloves/color/selected = pick(gloves)
-
-	name = initial(selected.name)
-	desc = initial(selected.desc)
-	icon_state = initial(selected.icon_state)
-	item_state = initial(selected.item_state)
-	item_color = initial(selected.item_color)
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.equip_to_slot_or_del(new selected(H), slot_gloves)
+	else
+		new selected(loc)
+	return INITIALIZE_HINT_QDEL

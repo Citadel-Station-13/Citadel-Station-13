@@ -24,7 +24,7 @@
 
 /obj/item/paper/fluff/ruins/listeningstation/reports/june
 	name = "june report"
-	info = "Nanotrasen communications have been noticably less frequent recently.  The pirate radio station I found last month has been transmitting pro-Nanotrasen propaganda. I will continue to monitor it."
+	info = "Nanotrasen communications have been noticeably less frequent recently.  The pirate radio station I found last month has been transmitting pro-Nanotrasen propaganda. I will continue to monitor it."
 
 /obj/item/paper/fluff/ruins/listeningstation/reports/may
 	name = "may report"

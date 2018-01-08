@@ -61,7 +61,6 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()
@@ -192,7 +191,7 @@ Difficulty: Medium
 			qdel(F)
 			if(stat == DEAD)
 				swooping &= ~SWOOP_DAMAGEABLE
-				animate(src, alpha = 255, transform = oldtransform, time = 0, flags_1 = ANIMATION_END_NOW) //reset immediately
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE

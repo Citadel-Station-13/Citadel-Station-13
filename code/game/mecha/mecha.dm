@@ -247,7 +247,7 @@
 	radio.name = "[src] radio"
 	radio.icon = icon
 	radio.icon_state = icon_state
-	radio.subspace_transmission = 1
+	radio.subspace_transmission = TRUE
 
 /obj/mecha/proc/can_use(mob/user)
 	if(user != occupant)
@@ -571,9 +571,9 @@
 		if(bumpsmash && occupant) //Need a pilot to push the PUNCH button.
 			if(nextsmash < world.time)
 				obstacle.mech_melee_attack(src)
-				if(!obstacle || !obstacle.density)
-					step(src,dir)
 				nextsmash = world.time + smashcooldown
+				if(!obstacle || obstacle.CanPass(src,get_step(src,dir)))
+					step(src,dir)
 		if(isobj(obstacle))
 			var/obj/O = obstacle
 			if(!O.anchored)

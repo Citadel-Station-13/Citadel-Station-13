@@ -1,0 +1,4 @@
+author: "Dax Dupont"
+delete-after: True
+changes: 
+  - bugfix: "The bank vault is no longer metagaming. It will now display the IC station name."

@@ -11,9 +11,6 @@
 #define STAMINA 	"stamina"
 #define BRAIN		"brain"
 
-//Citadel code
-#define AROUSAL		"arousal"
-
 //bitflag damage defines used for suicide_act
 #define BRUTELOSS 1
 #define FIRELOSS 2
@@ -21,9 +18,6 @@
 #define OXYLOSS 8
 #define SHAME 16
 #define MANUAL_SUICIDE 32	//suicide_act will do the actual killing.
-
-//Citadel code
-#define AROUSAL	32
 
 #define STUN		"stun"
 #define KNOCKDOWN		"knockdown"

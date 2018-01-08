@@ -217,7 +217,7 @@
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if(stat & BROKEN)
 		cut_overlays()
-		icon_state = "[initial(icon_state)]-1"
+		icon_state = "[icon_state]-1"
 		return
 
 	var/last_update = update
@@ -324,13 +324,13 @@
 		valve_open = !valve_open
 		timing = FALSE
 	if(!valve_open)
-		pump.AIR1 = null
-		pump.AIR2 = null
+		pump.airs[1] = null
+		pump.airs[2] = null
 		return
 
 	var/turf/T = get_turf(src)
-	pump.AIR1 = air_contents
-	pump.AIR2 = holding ? holding.air_contents : T.return_air()
+	pump.airs[1] = air_contents
+	pump.airs[2] = holding ? holding.air_contents : T.return_air()
 	pump.target_pressure = release_pressure
 
 	pump.process_atmos() // Pump gas.

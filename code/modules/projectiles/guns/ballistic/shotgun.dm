@@ -57,8 +57,7 @@
 /obj/item/gun/ballistic/shotgun/proc/pump_unload(mob/M)
 	if(chambered)//We have a shell in the chamber
 		chambered.forceMove(drop_location())//Eject casing
-		chambered.SpinAnimation(10, 1)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, chambered, 'sound/weapons/bulletremove.ogg', 60, 1), 3)
+		chambered.bounce_away()
 		chambered = null
 
 /obj/item/gun/ballistic/shotgun/proc/pump_reload(mob/M)
@@ -106,6 +105,9 @@
 	slot_flags = 0 //no SLOT_BACK sprite, alas
 	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
 	var/bolt_open = FALSE
+	can_bayonet = TRUE
+	knife_x_offset = 27
+	knife_y_offset = 13
 
 /obj/item/gun/ballistic/shotgun/boltaction/pump(mob/M)
 	playsound(M, 'sound/weapons/shotgunpump.ogg', 60, 1)
@@ -142,6 +144,7 @@
 	pin = /obj/item/device/firing_pin/magic
 	icon_state = "arcane_barrage"
 	item_state = "arcane_barrage"
+	can_bayonet = FALSE
 
 	flags_1 = DROPDEL_1
 

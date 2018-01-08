@@ -26,7 +26,7 @@
 	// INT_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	var/frequency = 1439
+	var/frequency = FREQ_ATMOS_CONTROL
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
@@ -81,7 +81,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
@@ -93,7 +93,7 @@
 		icon_state = "vent_welded"
 		return
 
-	if(!NODE1 || !on || !is_operational())
+	if(!nodes[1] || !on || !is_operational())
 		if(icon_state == "vent_welded")
 			icon_state = "vent_off"
 			return
@@ -122,12 +122,12 @@
 	..()
 	if(!is_operational())
 		return
-	if(!NODE1)
+	if(!nodes[1])
 		on = FALSE
 	if(!on || welded)
 		return
 
-	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
@@ -178,11 +178,7 @@
 	if(!radio_connection)
 		return
 
-	var/datum/signal/signal = new
-	signal.transmission_method = 1 // radio signal
-	signal.source = src
-
-	signal.data = list(
+	var/datum/signal/signal = new(list(
 		"tag" = id_tag,
 		"frequency" = frequency,
 		"device" = "VP",
@@ -193,7 +189,7 @@
 		"internal" = internal_pressure_bound,
 		"external" = external_pressure_bound,
 		"sigtype" = "status"
-	)
+	))
 
 	var/area/A = get_area(src)
 	if(!A.air_vent_names[id_tag])
@@ -206,8 +202,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atmosinit()
 	//some vents work his own spesial way
-	radio_filter_in = frequency==1439?(GLOB.RADIO_FROM_AIRALARM):null
-	radio_filter_out = frequency==1439?(GLOB.RADIO_TO_AIRALARM):null
+	radio_filter_in = frequency==FREQ_ATMOS_CONTROL?(RADIO_FROM_AIRALARM):null
+	radio_filter_out = frequency==FREQ_ATMOS_CONTROL?(RADIO_TO_AIRALARM):null
 	if(frequency)
 		set_frequency(frequency)
 	broadcast_status()

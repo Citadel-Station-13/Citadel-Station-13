@@ -63,3 +63,4 @@
 /obj/mecha/combat/gygax/dark/RemoveActions(mob/living/user, human_occupant = 0)
 	..()
 	thrusters_action.Remove(user)
+

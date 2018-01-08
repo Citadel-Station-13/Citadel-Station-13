@@ -199,6 +199,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 			newname = C.prefs.custom_names[role]
 		else
 			switch(role)
+				if("human")
+					newname = random_unique_name(gender)
 				if("clown")
 					newname = pick(GLOB.clown_names)
 				if("mime")
@@ -524,7 +526,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		processing_list.Cut(1, 2)
 		//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 		//This is also why we don't need to check against assembled as we go along
-		processing_list += A.contents 
+		processing_list += A.contents
 		assembled += A
 	return assembled
 
@@ -1434,11 +1436,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	temp = ((temp + (temp>>3))&29127) % 63	//070707
 	return temp
 
-//checks if a turf is in the planet z list.
-/proc/turf_z_is_planet(turf/T)
-	return GLOB.z_is_planet["[T.z]"]
-
-
 //same as do_mob except for movables and it allows both to drift and doesn't draw progressbar
 /proc/do_atom(atom/movable/user , atom/movable/target, time = 30, uninterruptible = 0,datum/callback/extra_checks = null)
 	if(!user || !target)
@@ -1492,6 +1489,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 	var/time_low = num2hex(world.time, 3)
 
 	var/time_clock = num2hex(TICK_DELTA_TO_MS(world.tick_usage), 3)
+
 	return "{[time_high]-[time_mid]-[GUID_VERSION][time_low]-[GUID_VARIANT][time_clock]-[node_id]}"
 
 // \ref behaviour got changed in 512 so this is necesary to replicate old behaviour.
