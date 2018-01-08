@@ -58,7 +58,7 @@
 	SendSignal(COMSIG_ITEM_ATTACK, M, user)
 	if(flags_1 & NOBLUDGEON_1)
 		return
-    
+
 	if(force && user.has_disability(DISABILITY_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return

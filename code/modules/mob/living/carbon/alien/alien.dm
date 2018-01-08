@@ -30,7 +30,6 @@
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
-	devourable = TRUE
 
 /mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep

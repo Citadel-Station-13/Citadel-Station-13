@@ -32,8 +32,7 @@
 		handle_arousal()
 
 	if(..()) //not dead
-		for(var/datum/mutation/human/HM in dna.mutations)
-			HM.on_life(src)
+		handle_active_genes()
 
 	if(stat != DEAD)
 		//heart attack stuff
@@ -97,19 +96,18 @@
 
 		failed_last_breath = 1
 
-		if(dna && dna.species)
-			var/datum/species/S = dna.species
+		var/datum/species/S = dna.species
 
-			if(S.breathid == "o2")
-				throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
-			else if(S.breathid == "tox")
-				throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
-			else if(S.breathid == "co2")
-				throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
-			else if(S.breathid == "n2")
-				throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
+		if(S.breathid == "o2")
+			throw_alert("not_enough_oxy", /obj/screen/alert/not_enough_oxy)
+		else if(S.breathid == "tox")
+			throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else if(S.breathid == "co2")
+			throw_alert("not_enough_co2", /obj/screen/alert/not_enough_co2)
+		else if(S.breathid == "n2")
+			throw_alert("not_enough_nitro", /obj/screen/alert/not_enough_nitro)
 
-		return 0
+		return FALSE
 	else
 		if(istype(L, /obj/item/organ/lungs))
 			var/obj/item/organ/lungs/lun = L
@@ -157,7 +155,7 @@
 //END FIRE CODE
 
 
-//This proc returns a number made up of the flags_1 for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
+//This proc returns a number made up of the flags for body parts which you are protected on. (such as HEAD, CHEST, GROIN, etc. See setup.dm for the full list)
 /mob/living/carbon/human/proc/get_heat_protection_flags(temperature) //Temperature is the temperature you're being exposed to.
 	var/thermal_protection_flags = 0
 	//Handle normal clothing
@@ -242,15 +240,14 @@
 /mob/living/carbon/human/proc/get_cold_protection(temperature)
 
 	if(dna.check_mutation(COLDRES))
-		return 1 //Fully protected from the cold.
-
-	if(dna && (RESISTCOLD in dna.species.species_traits))
-		return 1
+		return TRUE //Fully protected from the cold.
 
 	if(istype(loc, /obj/item/device/dogborg/sleeper))
 		return 1 //freezing to death in sleepers ruins fun.
 	if(ismob(loc))
 		return 1 //because lazy and being inside somemone insulates you from space
+	if(RESISTCOLD in dna.species.species_traits)
+		return TRUE
 
 	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
@@ -347,6 +344,9 @@
 
 	heart.beating = !status
 
+/mob/living/carbon/human/proc/handle_active_genes()
+	for(var/datum/mutation/human/HM in dna.mutations)
+		HM.on_life(src)
 
 /mob/living/carbon/human/proc/handle_heart()
 	if(!can_heartattack())

@@ -1,6 +1,19 @@
 /obj/item/restraints
 	breakouttime = 600
 
+/obj/item/restraints/Destroy()
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		if(M.handcuffed == src)
+			M.handcuffed = null
+			M.update_handcuffed()
+			if(M.buckled && M.buckled.buckle_requires_restraints)
+				M.buckled.unbuckle_mob(M)
+		if(M.legcuffed == src)
+			M.legcuffed = null
+			M.update_inv_legcuffed()
+	return ..()
+
 //Handcuffs
 
 /obj/item/restraints/handcuffs
@@ -166,11 +179,6 @@
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 10 //Deciseconds = 1s
-
-/obj/item/restraints/handcuffs/fake/kinky
-	name = "kinky handcuffs"
-	desc = "Fake handcuffs meant for erotic roleplay."
-	icon_state = "handcuffGag"
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
@@ -379,4 +387,3 @@
 		B.Crossed(hit_atom)
 		qdel(src)
 	..()
-

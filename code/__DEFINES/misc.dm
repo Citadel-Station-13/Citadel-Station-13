@@ -49,7 +49,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-//citadel code
+//LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
 #define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
 #define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts

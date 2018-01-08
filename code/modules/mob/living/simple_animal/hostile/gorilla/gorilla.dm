@@ -35,8 +35,6 @@
 	unique_name = TRUE
 	var/list/gorilla_overlays[GORILLA_TOTAL_LAYERS]
 	var/oogas = 0
-	devourable = TRUE
-	no_vore = FALSE
 
 // Gorillas like to dismember limbs from unconcious mobs.
 // Returns null when the target is not an unconcious carbon mob; a list of limbs (possibly empty) otherwise.
@@ -105,3 +103,4 @@
 	if(oogas >= rand(2,6))
 		playsound(src, "sound/creatures/gorilla.ogg", 200)
 		oogas = 0
+

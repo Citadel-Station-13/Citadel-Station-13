@@ -158,4 +158,4 @@
 	desc = "An omni-technological interface."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "multitool"
-	toolspeed = 0.1
+	toolspeed = 0.1

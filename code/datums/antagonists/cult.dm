@@ -131,7 +131,7 @@
 	SSticker.mode.cult -= owner
 	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
-		owner.current.visible_message("<span class='big'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", ignored_mob = owner.current)
+		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_they()] just reverted to their old faith!</span>", ignored_mob = owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
 		owner.current.log_message("<font color=#960000>Has renounced the cult of Nar'Sie!</font>", INDIVIDUAL_ATTACK_LOG)
 	if(cult_team.blood_target && cult_team.blood_target_image && owner.current.client)
@@ -243,7 +243,7 @@
 	return sacced || completed
 
 /datum/objective/sacrifice/update_explanation_text()
-	if(target && !sacced)
+	if(target)
 		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with them on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."

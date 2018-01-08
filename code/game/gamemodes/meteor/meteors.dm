@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
 		qdel(src)
-		return
+		return FALSE
 
 	. = ..() //process movement...
 
@@ -317,7 +317,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/New()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	meteordrop -= /obj/item/organ/alien/eggsac
 	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)

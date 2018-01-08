@@ -47,4 +47,3 @@
 			while(cockroaches)
 				new /mob/living/simple_animal/cockroach(get_turf(vent))
 				cockroaches--
-

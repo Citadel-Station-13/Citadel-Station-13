@@ -413,7 +413,6 @@
 	cure_nearsighted()
 	cure_blind()
 	cure_husk()
-	disabilities = 0
 	hallucination = 0
 	heal_overall_damage(100000, 100000, 0, 0, 1) //heal brute and burn dmg on both organic and robotic limbs, and update health right away.
 	ExtinguishMob()
@@ -745,15 +744,6 @@
 		var/obj_temp = oloc.return_temperature()
 		if(obj_temp != null)
 			loc_temp = obj_temp
-/*	if(ismob(loc))
-		var/mob/living/mloc = loc
-		var/mob_temp = mloc.return_temperature()
-		if(mloc == DEAD)
-			loc_temp = get_turf(loc) //wew
-		else
-			loc_temp = mob_temp
-*/
-//just gunna ommit this for now, it's on the 'to figgur out' list.
 	else if(isspaceturf(get_turf(src)))
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
@@ -989,7 +979,6 @@
 			stop_pulling()
 	else if(has_legs || ignore_legs)
 		lying = 0
-
 	if(buckled)
 		lying = 90*buckle_lying
 	else if(!lying)
