@@ -26,12 +26,10 @@
 	var/datum/preferences/A = new
 	A.copy_to(operative)
 	operative.dna.update_dna_identity()
-
 	var/datum/mind/Mind = new /datum/mind(selected.key)
 	Mind.assigned_role = "Lone Operative"
 	Mind.special_role = "Lone Operative"
 	Mind.active = 1
-
 	Mind.transfer_to(operative)
 	Mind.add_antag_datum(/datum/antagonist/nukeop/lone)
 

@@ -173,7 +173,7 @@ AI MODULES
 /******************** OneHuman ********************/
 
 /obj/item/aiModule/zeroth/oneHuman
-	name = "'OneCrew' AI Module"
+	name = "'OneCrew' AI Module"//CIT CHANGE - changes onehuman to onecrew
 	var/targetName = ""
 	laws = list("Only SUBJECT is crew.")
 
@@ -554,3 +554,16 @@ AI MODULES
 /obj/item/aiModule/core/full/peacekeeper
 	name = "'Peacekeeper' Core AI Module"
 	law_id = "peacekeeper"
+
+// Bad times ahead
+
+/obj/item/aiModule/core/full/damaged
+		name = "damaged Core AI Module"
+		desc = "An AI Module for programming laws to an AI. It looks slightly damaged."
+
+/obj/item/aiModule/core/full/damaged/install(datum/ai_laws/law_datum, mob/user)
+	laws += generate_ion_law()
+	while (prob(75))
+		laws += generate_ion_law()
+	..()
+	laws = list()

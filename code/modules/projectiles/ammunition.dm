@@ -20,8 +20,8 @@
 	var/heavy_metal = TRUE
 
 
-/obj/item/ammo_casing/New()
-	..()
+/obj/item/ammo_casing/Initialize()
+	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
 	pixel_x = rand(-10, 10)

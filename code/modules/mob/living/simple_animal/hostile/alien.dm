@@ -35,8 +35,6 @@
 	gold_core_spawnable = NO_SPAWN
 	death_sound = 'sound/voice/hiss6.ogg'
 	deathmessage = "lets out a waning guttural screech, green blood bubbling from its maw..."
-	devourable = TRUE
-	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/alien/drone
 	name = "alien drone"

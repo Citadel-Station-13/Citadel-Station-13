@@ -33,8 +33,8 @@
 	var/ride_allow_incapacitated = FALSE
 	var/allow_riding = TRUE
 
-/obj/item/robot_module/New()
-	..()
+/obj/item/robot_module/Initialize()
+	. = ..()
 	for(var/i in basic_modules)
 		var/obj/item/I = new i(src)
 		basic_modules += I
@@ -336,17 +336,6 @@
 	can_be_pushed = FALSE
 	hat_offset = 3
 
-/obj/item/robot_module/security/respawn_consumable(mob/living/silicon/robot/R, coeff = 1)
-	..()
-	var/obj/item/gun/energy/e_gun/advtaser/cyborg/T = locate(/obj/item/gun/energy/e_gun/advtaser/cyborg) in basic_modules
-	if(T)
-		if(T.cell.charge < T.cell.maxcharge)
-			var/obj/item/ammo_casing/energy/S = T.ammo_type[T.select]
-			T.cell.give(S.e_cost * coeff)
-			T.update_icon()
-		else
-			T.charge_tick = 0
-
 /obj/item/robot_module/security/do_transform_animation()
 	..()
 	to_chat(loc, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. \
@@ -434,6 +423,37 @@
 	var/obj/item/reagent_containers/spray/cyborg_lube/CL = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(CL)
 		CL.reagents.add_reagent("lube", 2 * coeff)
+
+/obj/item/robot_module/clown
+	name = "Clown"
+	basic_modules = list(
+		/obj/item/device/assembly/flash/cyborg,
+		/obj/item/toy/crayon/rainbow,
+		/obj/item/device/instrument/bikehorn,
+		/obj/item/stamp/clown,
+		/obj/item/bikehorn,
+		/obj/item/bikehorn/airhorn,
+		/obj/item/paint/anycolor,
+		/obj/item/soap/nanotrasen,
+		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
+		/obj/item/razor,					//killbait material
+		/obj/item/lipstick/purple,
+		/obj/item/reagent_containers/spray/waterflower/cyborg,
+		/obj/item/borg/cyborghug/peacekeeper,
+		/obj/item/borg/lollipop/clown,
+		/obj/item/picket_sign/cyborg,
+		/obj/item/reagent_containers/borghypo/clown,
+		/obj/item/extinguisher/mini)
+	emag_modules = list(
+		/obj/item/reagent_containers/borghypo/clown/hacked,
+		/obj/item/reagent_containers/spray/waterflower/cyborg/hacked)
+	ratvar_modules = list(
+		/obj/item/clockwork/slab/cyborg,
+		/obj/item/clockwork/weapon/ratvarian_spear,
+		/obj/item/clockwork/replica_fabricator/cyborg)
+	moduleselect_icon = "service"
+	cyborg_base_icon = "clown"
+	hat_offset = -2
 
 /obj/item/robot_module/butler
 	name = "Service"

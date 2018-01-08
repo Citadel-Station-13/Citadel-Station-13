@@ -1,3 +1,4 @@
+
 /datum/mapGenerator/lavaland
 	var/start_z = ZLEVEL_LAVALAND
 	var/min_x = 0

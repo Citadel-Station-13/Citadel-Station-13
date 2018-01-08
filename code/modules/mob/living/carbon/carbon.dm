@@ -8,7 +8,7 @@
 	GLOB.carbon_list += src
 
 /mob/living/carbon/Destroy()
-//This must be done first, so the mob ghosts correctly before DNA etc is nulled
+	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. =  ..()
 
 	QDEL_LIST(internal_organs)
@@ -365,16 +365,9 @@
 	to_chat(src, "<span class='notice'>You successfully [cuff_break ? "break" : "remove"] [I].</span>")
 
 	if(cuff_break)
+		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
-		if(I == handcuffed)
-			handcuffed = null
-			update_handcuffed()
-			return
-		else if(I == legcuffed)
-			legcuffed = null
-			update_inv_legcuffed()
-			return
-		return TRUE
+		return
 
 	else
 		if(I == handcuffed)
@@ -518,7 +511,7 @@
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
 	update_stat()
 	if(((maxHealth - total_burn) < HEALTH_THRESHOLD_DEAD) && stat == DEAD )
-		become_husk()
+		become_husk("burn")
 	med_hud_set_health()
 
 /mob/living/carbon/update_sight()

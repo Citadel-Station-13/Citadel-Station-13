@@ -72,7 +72,7 @@
 	var/nearest_beacon			// the nearest beacon's tag
 	var/turf/nearest_beacon_loc	// the nearest beacon's location
 
-	var/beacon_freq = 1445		// navigation beacon frequency
+	var/beacon_freq = FREQ_NAV_BEACON
 	var/model = "" //The type of bot it is.
 	var/bot_type = 0 //The type of bot it is, for radio control.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC //The type of data HUD the bot uses. Diagnostic by default.
@@ -108,6 +108,7 @@
 	if(stat)
 		return FALSE
 	on = TRUE
+	canmove = TRUE
 	set_light(initial(light_range))
 	update_icon()
 	diag_hud_set_botstat()
@@ -115,6 +116,7 @@
 
 /mob/living/simple_animal/bot/proc/turn_off()
 	on = FALSE
+	canmove = FALSE
 	set_light(0)
 	bot_reset() //Resets an AI's call, should it exist.
 	update_icon()
@@ -129,7 +131,7 @@
 	Radio = new/obj/item/device/radio(src)
 	if(radio_key)
 		Radio.keyslot = new radio_key
-	Radio.subspace_transmission = 1
+	Radio.subspace_transmission = TRUE
 	Radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
 	Radio.recalculateChannels()
 

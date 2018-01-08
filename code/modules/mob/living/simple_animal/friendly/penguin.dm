@@ -13,7 +13,6 @@
 	speak_chance = 1
 	turns_per_move = 10
 	icon = 'icons/mob/penguins.dmi'
-	no_vore = FALSE
 
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"
