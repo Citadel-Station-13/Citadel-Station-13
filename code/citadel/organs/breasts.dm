@@ -45,13 +45,11 @@
 		else
 			desc = "You see some breasts, they seem to be quite exotic."
 	if (size)
-		desc += " You estimate they're about [size]-cup size."
+		desc += " You estimate that they're [uppertext(size)]-cups."
 	else
 		desc += " You wouldn't measure them in cup sizes."
-	if(producing)
+	if(producing && aroused_state)
 		desc += " They're leaking [fluid_id]."
-	else
-		desc += " They do not seem to be producing liquids."
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
