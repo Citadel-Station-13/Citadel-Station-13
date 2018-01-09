@@ -36,14 +36,15 @@ SUBSYSTEM_DEF(nightshift)
 /datum/controller/subsystem/nightshift/fire(resumed = 0)
 	if(CONFIG_GET(flag/nightshift_enabled) && !nightshift_override)
 		var/nighttime = text2num(time2text(world.timeofday,"hh"))
-		if(!nightshift && GLOB.security_level < SEC_LEVEL_RED && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
-			nightshift = TRUE
-			updatenightlights()
-			minor_announce("Good afternoon, crew. To save on power costs and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", "Automated Lighting System Announcement", FALSE)
+		if(GLOB.security_level < SEC_LEVEL_RED && ((nighttime >= CONFIG_GET(number/nightshift_start)) || (nighttime <= CONFIG_GET(number/nightshift_finish))))
+			if(!nightshift)
+				nightshift = TRUE
+				updatenightlights()
+				priority_announce("Good afternoon, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", 'sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 		else if(nightshift)
 			nightshift = FALSE
 			updatenightlights()
-			minor_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", "Automated Lighting System Announcement", FALSE)
+			priority_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", 'sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 
 /datum/controller/subsystem/nightshift/proc/updatenightlights()
 	for(var/obj/machinery/light/nightlight in nightlights)
