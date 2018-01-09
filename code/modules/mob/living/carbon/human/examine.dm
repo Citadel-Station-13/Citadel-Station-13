@@ -85,6 +85,13 @@
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [wear_id.get_examine_string(user)].\n"
 
+//CIT CHANGES START HERE - adds genital details to examine text
+	if(LAZYLEN(internal_organs))
+		for(var/obj/item/organ/genital/dicc in internal_organs)
+			if(istype(dicc) && dicc.is_exposed())
+				msg += "[dicc.desc]\n"
+//END OF CIT CHANGES
+
 	//Status effects
 	msg += status_effect_examines()
 

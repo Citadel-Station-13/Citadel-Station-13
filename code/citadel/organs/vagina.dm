@@ -28,24 +28,23 @@
 
 	switch(lowershape)
 		if("tentacle")
-			details = "\nIts opening is lined with several tentacles and "
+			details = " Its opening is lined with several tentacles and "
 		if("dentata")
-			details = "\nThere's teeth inside it and it is "
+			details = " There's teeth inside it and it is "
 		if("hairy")
-			details = "\nIt has quite a bit of hair growing on it and is "
+			details = " It has quite a bit of hair growing on it and is "
 		if("human")
-			details = "\nIt is taut with smooth skin, though without much hair and "
+			details = " It is taut with smooth skin, though without much hair and "
 		if("gaping")
-			details = "\nIt is gaping slightly open, though without much hair and "
+			details = " It is gaping slightly open, though without much hair and "
 		else
-			details = "\nIt has an exotic shape and is "
+			details = " It has an exotic shape and is "
 	if(aroused_state)
 		details += "slick with female arousal."
 	else
 		details += "not very wet."
 
-	desc = "That's a [lowershape] vagina. You estimate it to be around [round(cap_length, 0.5)] inch[cap_length > 1 ? "es" : ""] deep and could stretch around something [round(cap_girth, 0.5)] inch[cap_girth > 1 ? "es" : ""] in girth. \
-	It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter.[details]"
+	desc = "You see a [lowershape] vagina. You estimate it to be around [round(cap_length, 0.5)] inch[cap_length > 1 ? "es" : ""] deep and could stretch around something [round(cap_girth, 0.5)] inch[cap_girth > 1 ? "es" : ""] in girth. It has [clits > 1 ? "[clits] clits" : "a clit"] about [round(clit_len,0.25)] inch[clit_len > 1 ? "es" : ""] long and [round(clit_diam, 0.25)] inch[clit_diam > 1 ? "es" : ""] in diameter.[details]"
 
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])

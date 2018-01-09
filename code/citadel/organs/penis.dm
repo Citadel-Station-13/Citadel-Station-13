@@ -43,10 +43,9 @@
 	if(lowershape in knotted_types)
 		if(lowershape == "barbknot")
 			lowershape = "barbed, knotted"
-		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long, [round(girth, 0.25)] inch[girth > 1 ? "es" : ""] around the shaft \
-		and [round(length * knot_girth_ratio, 0.25)] inch[length > 1 ? "es" : ""] around the knot."
+		desc = "You see a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long, [round(girth, 0.25)] inch[girth > 1 ? "es" : ""] around the shaft, and [round(length * knot_girth_ratio, 0.25)] inch[length > 1 ? "es" : ""] around the knot."
 	else
-		desc = "That's a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
+		desc = "You see a [lowershape] penis. You estimate it's about [round(length, 0.25)] inch[length > 1 ? "es" : ""] long and [round(girth, 0.25)] inch[length > 1 ? "es" : ""] around."
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
