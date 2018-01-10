@@ -412,7 +412,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(2)
 			dat += "<table><tr><td width='340px' height='300px' valign='top'>"
 			dat += "<div class='statusDisplay'><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></div><br>"
-			dat += "<a href='byond://?src=\ref[user];preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
+			dat += "<a href='?_src_=prefs;preference=flavor_text;task=input'><b>Set Flavor Text</b></a><br>"
 			if(lentext(features["flavor_text"]) <= 40)
 				if(!lentext(features["flavor_text"]))
 					dat += "\[...\]"
@@ -1379,7 +1379,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						else
 							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
 
-				
+
 
 		else
 			switch(href_list["preference"])
