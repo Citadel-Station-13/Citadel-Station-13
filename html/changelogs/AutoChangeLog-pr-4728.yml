@@ -1,0 +1,6 @@
+author: "coiax"
+delete-after: True
+changes: 
+  - rscadd: "If you have the (mis)fortune of late joining a shift where a crazy
+wizard has given magical items or firearms to the crew, you will find
+yourself also carrying such equipment."
