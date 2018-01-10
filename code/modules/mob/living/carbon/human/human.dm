@@ -264,7 +264,7 @@
 				// Display a warning if the user mocks up
 				to_chat(src, "<span class='warning'>You feel your [pocket_side] pocket being fumbled with!</span>")
 
-		..()
+	..()
 
 
 ///////HUDs///////
