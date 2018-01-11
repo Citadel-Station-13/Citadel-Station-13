@@ -22,7 +22,11 @@ GLOBAL_PROTECT(config_dir)
 	config = src
 	InitEntries()
 	LoadModes()
+<<<<<<< HEAD
 	if(LoadEntries("config.txt") <= 1)
+=======
+	if(fexists("config/config.txt") && LoadEntries("config.txt") <= 1)
+>>>>>>> f860a0f... Merge pull request #34290 from tgstation/Cyberboss-patch-2
 		log_config("No $include directives found in config.txt! Loading legacy game_options/dbconfig/comms files...")
 		LoadEntries("game_options.txt")
 		LoadEntries("dbconfig.txt")
