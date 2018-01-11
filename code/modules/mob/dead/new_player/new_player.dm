@@ -362,6 +362,11 @@
 			if(CONFIG_GET(flag/allow_crew_objectives))
 				SSticker.generate_individual_objectives(humanc.mind)
 
+		if(GLOB.summon_guns_triggered)
+			give_guns(humanc)
+		if(GLOB.summon_magic_triggered)
+			give_magic(humanc)
+
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
 

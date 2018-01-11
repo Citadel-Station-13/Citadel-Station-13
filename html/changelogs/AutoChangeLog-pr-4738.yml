@@ -1,0 +1,4 @@
+author: "ShizCalev"
+delete-after: True
+changes: 
+  - bugfix: "Ghosts possessing the chaplain's blade will no longer be spammed with the buckled movement message."
