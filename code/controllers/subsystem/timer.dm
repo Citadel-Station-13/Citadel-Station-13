@@ -412,10 +412,6 @@ SUBSYSTEM_DEF(timer)
 
 
 #undef BUCKET_LEN
-<<<<<<< HEAD
-#undef BUCKET_POS
-=======
 #undef BUCKET_POS
 #undef TIMER_MAX
 #undef TIMER_ID_MAX
->>>>>>> e31b2f7... Makes stoppable timers faster. (#34208)
