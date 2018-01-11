@@ -11662,9 +11662,6 @@
 /area/security/brig)
 "ayx" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/structure/cable/yellow{
@@ -11688,9 +11685,6 @@
 /area/security/brig)
 "ayz" = (
 /obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
 /obj/structure/cable/yellow{
@@ -11703,9 +11697,6 @@
 /turf/open/floor/plasteel/red/side,
 /area/security/brig)
 "ayA" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /obj/structure/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -12204,9 +12195,6 @@
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azE" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "azF" = (
@@ -13016,14 +13004,17 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/cable/yellow{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
 "aBh" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -13637,19 +13628,8 @@
 	},
 /area/security/brig)
 "aCq" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Desk";
-	req_access_txt = "63"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel/dark,
+/turf/closed/wall,
 /area/security/brig)
 "aCr" = (
 /obj/machinery/door/airlock/security{
@@ -14133,12 +14113,6 @@
 	},
 /area/hallway/primary/fore)
 "aDz" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'HIGH VOLTAGE'";
-	icon_state = "shock";
-	name = "HIGH VOLTAGE";
-	pixel_y = 32
-	},
 /obj/machinery/camera{
 	c_tag = "Fore Primary Hallway Cells";
 	dir = 2;
@@ -14189,7 +14163,6 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "aDF" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/button/flasher{
 	id = "secentranceflasher";
 	name = "Brig Entrance Flash Control";
@@ -14237,16 +14210,13 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aDG" = (
-/obj/structure/filingcabinet/chestdrawer{
-	pixel_y = 3
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/dark,
-/area/security/brig)
-"aDH" = (
 /obj/structure/cable/yellow{
 	icon_state = "1-2"
 	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
+"aDH" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
@@ -14268,6 +14238,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 29;
 	pixel_y = -2
+	},
+/obj/structure/filingcabinet/chestdrawer{
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -14933,18 +14906,15 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aEX" = (
-/obj/structure/cable/yellow{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "1-8"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aEY" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-8"
-	},
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
@@ -14952,6 +14922,15 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/folder/red{
+	pixel_x = 3
+	},
+/obj/item/folder/white{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/restraints/handcuffs,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aEZ" = (
@@ -15655,14 +15634,6 @@
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aGr" = (
-/obj/structure/table,
-/obj/item/folder/red{
-	pixel_x = 3
-	},
-/obj/item/folder/white{
-	pixel_x = -4;
-	pixel_y = 2
-	},
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching Prison Wing holding areas.";
 	dir = 1;
@@ -15670,7 +15641,9 @@
 	network = list("Prison");
 	pixel_y = -30
 	},
-/obj/item/restraints/handcuffs,
+/obj/machinery/computer/secure_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aGs" = (
@@ -26305,7 +26278,7 @@
 	},
 /area/security/checkpoint/engineering)
 "bcO" = (
-/obj/structure/easel,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -59623,10 +59596,10 @@
 /turf/open/space,
 /area/space/nearstation)
 "ctn" = (
-/obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cto" = (
@@ -75649,7 +75622,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "dbl" = (
-/obj/structure/easel,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dbm" = (
@@ -79829,12 +79802,16 @@
 /turf/open/floor/plating,
 /area/security/brig)
 "dBH" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "0-4"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Desk";
+	req_access_txt = "63"
 	},
-/turf/open/floor/plating,
+/obj/structure/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plasteel/dark,
 /area/security/brig)
 "dBI" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -79979,9 +79956,6 @@
 	},
 /area/maintenance/starboard/fore)
 "dCj" = (
-/obj/structure/cable/yellow{
-	icon_state = "1-2"
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/floorgrime,
 /area/security/brig)
@@ -105397,7 +105371,7 @@ awZ
 ayw
 azD
 aAY
-aCk
+ajm
 aDw
 aDC
 aGb
@@ -105654,7 +105628,7 @@ axa
 ayx
 azE
 azE
-aCl
+ajm
 aDx
 aEK
 aGc
@@ -105911,7 +105885,7 @@ axb
 ayy
 azF
 aAZ
-aCm
+ajm
 aDw
 aEL
 aGd
@@ -106169,7 +106143,7 @@ ahx
 ahx
 ahx
 ajm
-aDy
+aDw
 aEM
 aGe
 aHx
@@ -106425,7 +106399,7 @@ axd
 ayw
 azG
 aAY
-aCk
+ajm
 aDw
 aEN
 aGf
@@ -106682,7 +106656,7 @@ axe
 ayz
 dCj
 azE
-aCl
+ajm
 aDx
 dCo
 aGg
@@ -106939,7 +106913,7 @@ axb
 ayy
 azF
 aBa
-aCm
+ajm
 aDw
 aEO
 aGh
@@ -107453,7 +107427,7 @@ axd
 ayw
 azH
 aAY
-aCk
+ajm
 aDw
 aEO
 aGg
@@ -107710,7 +107684,7 @@ axa
 ayA
 azE
 azE
-aCl
+ajm
 aDx
 aEQ
 aGj
@@ -107967,7 +107941,7 @@ axg
 ayy
 azF
 aBb
-aCm
+ajm
 aDw
 aEN
 aGk
@@ -109509,7 +109483,7 @@ axm
 aiq
 azL
 aBf
-ajm
+ahx
 aDF
 aEW
 aGq
