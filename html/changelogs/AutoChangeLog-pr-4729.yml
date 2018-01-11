@@ -1,0 +1,4 @@
+author: "MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "Added the Bluespace Drop Pod, a Nanotrasen delivery system designed for maximum delivery speed. Supplies can be ordered at an Express Supply Console **(researchable from RnD)** for twice the cost, but at ~1/40th of the delivery time! Please note, the Drop Pods move pretty fast. It might be smart to stand back from their landing zone."
