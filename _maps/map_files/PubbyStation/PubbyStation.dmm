@@ -14591,6 +14591,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKl" = (
@@ -14868,6 +14871,9 @@
 	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aLi" = (
@@ -15320,27 +15326,27 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMq" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMr" = (
 /obj/structure/closet/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15349,7 +15355,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMt" = (
 /obj/structure/closet/cardboard,
 /obj/structure/disposalpipe/segment{
@@ -15363,20 +15369,27 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMu" = (
 /obj/item/cigbutt/cigarbutt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/quartermaster/warehouse";
+	dir = 4;
+	name = "Cargo Warehouse APC";
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -15953,20 +15966,20 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNO" = (
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNP" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNQ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNR" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -16499,33 +16512,33 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aOZ" = (
 /obj/item/stack/sheet/cardboard,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPa" = (
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16905,16 +16918,16 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQd" = (
 /obj/item/device/flashlight,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQe" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQf" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -16922,11 +16935,11 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQg" = (
 /obj/structure/closet/crate/medical,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQh" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
@@ -17447,7 +17460,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRo" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -17456,7 +17469,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRp" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -17464,11 +17477,11 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRq" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRr" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
@@ -48293,7 +48306,7 @@
 "coL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "coN" = (
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/exit/departure_lounge)
@@ -51386,6 +51399,76 @@
 /obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"cDa" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"cDb" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"cDc" = (
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"cDd" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDe" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDf" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDg" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDh" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDi" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDj" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDk" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDl" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDm" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDn" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDo" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDp" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDq" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 
 (1,1,1) = {"
 aaa
@@ -90809,12 +90892,12 @@ aEd
 aIj
 aJm
 aKg
-aLg
+cDd
 aMo
-aLg
-aLg
-aLg
-aLg
+cDg
+cDi
+cDj
+cDk
 aLg
 aTj
 aUu
@@ -91842,8 +91925,8 @@ aMs
 aNO
 aPb
 aQe
-aLg
-aLg
+cDl
+cDm
 aTn
 aUx
 aVA
@@ -92100,7 +92183,7 @@ aNP
 aPb
 aNO
 aNP
-aLg
+cDn
 aTo
 aSk
 aTm
@@ -92357,7 +92440,7 @@ aNO
 aPc
 aQf
 aRq
-aLg
+cDo
 aTp
 aSk
 aTm
@@ -92614,7 +92697,7 @@ aNQ
 aNO
 aQg
 aNP
-aLg
+cDp
 aTq
 aSk
 aVB
@@ -92864,14 +92947,14 @@ aEd
 aEd
 aEd
 aEd
-aKl
-aLg
-aLg
-aLg
+cDa
+cDe
+cDf
+cDh
 coL
 coL
 coL
-aLg
+cDq
 aTr
 aUy
 aPd
@@ -93121,7 +93204,7 @@ aGI
 aHr
 aEd
 aJp
-aKm
+cDb
 aLi
 aMw
 aEj
@@ -93378,7 +93461,7 @@ aGJ
 aGJ
 aDl
 aEk
-aEk
+cDc
 aLj
 aMx
 aEj
