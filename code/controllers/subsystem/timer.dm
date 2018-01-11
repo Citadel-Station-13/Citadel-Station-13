@@ -237,21 +237,12 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE)
 		SStimer.hashes[hash] = src
 	if (flags & TIMER_STOPPABLE)
-<<<<<<< HEAD
-		do
-			if (nextid >= TIMER_ID_MAX)
-				nextid = 1
-			id = nextid++
-		while(SStimer.timer_id_dict["timerid" + num2text(id, 8)])
-		SStimer.timer_id_dict["timerid" + num2text(id, 8)] = src
-=======
 		id = num2text(nextid, 100)
 		if (nextid >= SHORT_REAL_LIMIT)
 			nextid += min(1, 2**round(nextid/SHORT_REAL_LIMIT))
 		else
 			nextid++
 		SStimer.timer_id_dict[id] = src
->>>>>>> e31b2f7... Makes stoppable timers faster. (#34208)
 
 	name = "Timer: " + num2text(id, 8) + ", TTR: [timeToRun], Flags: [jointext(bitfield2list(flags, list("TIMER_UNIQUE", "TIMER_OVERRIDE", "TIMER_CLIENT_TIME", "TIMER_STOPPABLE", "TIMER_NO_HASH_WAIT")), ", ")], callBack: [REF(callBack)], callBack.object: [callBack.object][REF(callBack.object)]([getcallingtype()]), callBack.delegate:[callBack.delegate]([callBack.arguments ? callBack.arguments.Join(", ") : ""])"
 
