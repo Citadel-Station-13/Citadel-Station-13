@@ -169,7 +169,8 @@
 	slowdown = 0
 
 /obj/item/clothing/mask/sexymime
-	name = "mask"
+	name = "The Hollow heart"
+	desc = "Sometimes things are too much to hide."
 	icon = 'icons/obj/custom.dmi'
 	icon_override = 'icons/mob/custom_w.dmi'
 	icon_state = "sexymime"
