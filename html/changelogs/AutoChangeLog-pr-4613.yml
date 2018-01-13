@@ -1,5 +1,0 @@
-author: "Naksu"
-delete-after: True
-changes: 
-  - code_imp: "loot drop spawners now assign their pixel offsets to the items they spawn, also have a \"fanout\" setting to distribute items in a neat fashion like in omega/delta's core and some tech storages."
-  - tweak: "replaced several law boards in uploads with spawners, the net result being one more board in uploads that may be a duplicate asimov (but hopefully isn't)"

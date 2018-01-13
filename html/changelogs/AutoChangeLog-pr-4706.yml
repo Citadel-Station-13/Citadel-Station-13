@@ -1,4 +1,0 @@
-author: "JohnGinnane"
-delete-after: True
-changes: 
-  - rscadd: "Newly crafted stacks are merged with held stacks of the same type."

@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "The teleporter computer now always shows the area name of a beacon rather than the turf name in some situations."

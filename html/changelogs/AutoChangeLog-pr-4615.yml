@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - rscadd: "Explosions now cause camera shake based on intensity and distance"

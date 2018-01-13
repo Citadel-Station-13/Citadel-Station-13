@@ -1,9 +1,0 @@
-author: "coiax"
-delete-after: True
-changes: 
-  - rscadd: "Adds an internal radio implant, allowing the use of the radio if
-you expect to have your headset removed. Or if you don't have any ears
-or hands. It can be purchased for 4 TC from any Syndicate uplink."
-  - rscadd: "Nuke ops now buy special \"syndicate intelligence potions\" that automatically
-insert an internal radio implant when used successfully. Cayenne can now
-participate in your high level discussions."

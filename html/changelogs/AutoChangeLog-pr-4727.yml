@@ -1,5 +1,0 @@
-author: "Robustin"
-delete-after: True
-changes: 
-  - bugfix: "Projectile reflections are fixed and will now properly reflect back in the general direction of the projectile's origination point."
-  - bugfix: "Energy shield description updated to remove misleading information and reflect (heh) its true properties."
