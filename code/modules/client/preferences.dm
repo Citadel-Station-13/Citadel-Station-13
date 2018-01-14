@@ -1608,11 +1608,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("changeslot")
-					attempt_vr(parent.prefs_vr,"load_vore","")
 					if(!load_character(text2num(href_list["num"])))
 						random_character()
 						real_name = random_unique_name(gender)
 						save_character()
+					attempt_vr(parent.prefs_vr,"load_vore","")
 
 				if("tab")
 					if (href_list["tab"])
