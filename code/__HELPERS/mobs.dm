@@ -20,32 +20,35 @@
 		else
 			return "000"
 
-/proc/random_underwear(gender)
+/proc/random_underwear(gender)//Cit change - makes random underwear always return nude
 	if(!GLOB.underwear_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	switch(gender)
+	return "Nude"
+	/*switch(gender)
 		if(MALE)
 			return pick(GLOB.underwear_m)
 		if(FEMALE)
 			return pick(GLOB.underwear_f)
 		else
-			return pick(GLOB.underwear_list)
+			return pick(GLOB.underwear_list)*/
 
-/proc/random_undershirt(gender)
+/proc/random_undershirt(gender)//Cit change - makes random underwear always return nude
 	if(!GLOB.undershirt_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	switch(gender)
+	return "Nude"
+	/*switch(gender)
 		if(MALE)
 			return pick(GLOB.undershirt_m)
 		if(FEMALE)
 			return pick(GLOB.undershirt_f)
 		else
-			return pick(GLOB.undershirt_list)
+			return pick(GLOB.undershirt_list)*/
 
-/proc/random_socks()
+/proc/random_socks()//Cit change - makes random underwear always return nude
 	if(!GLOB.socks_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	return pick(GLOB.socks_list)
+	return "Nude"
+	//return pick(GLOB.socks_list)
 
 /proc/random_features()
 	if(!GLOB.tails_list_human.len)
