@@ -1,7 +1,7 @@
 /mob/living/simple_animal/banana_spider
 	icon = 'icons/mob/BananaSpider20.dmi'
 	name = "banana spider"
-	desc = "What the fuck is this?"
+	desc = "What the fuck is this abomination?"
 	icon_state = "banana"
 	icon_dead = "banana_peel"
 	health = 1
@@ -32,33 +32,33 @@
 		return
 	..()
 
+/mob/living/simple_animal/banana_spider/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
+
+
+
 /mob/living/simple_animal/banana_spider/Crossed(var/atom/movable/AM)
+	. = ..()
 	if(ismob(AM))
 		if(isliving(AM))
 			var/mob/living/A = AM
 			if(A.mob_size > MOB_SIZE_SMALL && !(A.movement_type & FLYING))
 				if(prob(squish_chance))
-					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src].</span>")
+					A.visible_message("<span class='notice'>[A] squashed [src].</span>", "<span class='notice'>You squashed [src] under your weight as you fell.</span>")
 					adjustBruteLoss(1) //kills a normal cockroach
 				else
 					visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 	else
 		if(isstructure(AM))
 			if(prob(squish_chance))
-				AM.visible_message("<span class='notice'>[src] was crushed under [AM].</span>")
+				AM.visible_message("<span class='notice'>[src] was crushed under [AM]'s weight as they fell.</span>")
 				adjustBruteLoss(1)
 			else
 				visible_message("<span class='notice'>[src] avoids getting crushed.</span>")
 
-/mob/living/simple_animal/banana_spider/ex_act() //Explosions are a terrible way to handle a cockroach.
+/mob/living/simple_animal/banana_spider/ex_act()
 	return
-
-/obj/effect/decal/cleanable/deadbanana_spiderT
-	name = "dead banana spider guts"
-	desc = "One bug squashed. Four more will rise in its place."
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider
 	name = "dead banana spider"
@@ -70,3 +70,7 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list("blood" = 20, "liquidgibs" = 5)
+
+/obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
