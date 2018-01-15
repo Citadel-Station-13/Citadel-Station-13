@@ -547,28 +547,28 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		if(3)
 			if(!gear_tab)
 				gear_tab = GLOB.loadout_items[1]
-			. += "<table align='center' width='100%'>"
-			. += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
-			. += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
-			. += "<tr><td colspan=4><center><b>"
+			dat += "<table align='center' width='100%'>"
+			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
 			var/firstcat = TRUE
 			for(var/i in GLOB.loadout_items)
 				if(firstcat)
 					firstcat = FALSE
 				else
-						. += " |"
+					dat += " |"
 				if(i == gear_tab)
-					. += " <span class='linkOn'>[i]</span> "
+					dat += " <span class='linkOn'>[i]</span> "
 				else
-					. += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
-			. += "</b></center></td></tr>"
-			. += "<tr><td colspan=4><hr></td></tr>"
-			. += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
-			. += "<tr><td colspan=4><hr></td></tr>"
-			. += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
-			. += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
-			. += "<td><font size=2><b>Restrictions</b></font></td>"
-			. += "<td><font size=2><b>Description</b></font></td></tr>"
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+			dat += "</b></center></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
 				var/class_link = ""
@@ -578,15 +578,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					class_link = "class='linkOff'"
 				else
 					class_link = "href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
-				. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [class_link]>[j]</a></td>"
-				. += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+				dat += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [class_link]>[j]</a></td>"
+				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
 					if(gear.restricted_roles.len)
-						. += "<font size=2>"
-						. += gear.restricted_roles.Join(";")
-						. += "</font>"
-				. += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
-			. += "</table>"
+						dat += "<font size=2>"
+						dat += gear.restricted_roles.Join(";")
+						dat += "</font>"
+				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+			dat += "</table>"
 	dat += "<hr><center>"
 
 	if(!IsGuestKey(user.key))

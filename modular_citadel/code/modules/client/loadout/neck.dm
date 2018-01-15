@@ -13,6 +13,11 @@
 	category = slot_neck
 	path = /obj/item/clothing/neck/tie/black
 
+/datum/gear/collar
+	name = "Collar"
+	category = slot_neck
+	path = /obj/item/clothing/neck/petcollar
+
 /datum/gear/stethoscope
 	name = "Stethoscope"
 	category = slot_neck

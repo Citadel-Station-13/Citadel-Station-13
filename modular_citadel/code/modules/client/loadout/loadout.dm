@@ -22,6 +22,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	var/path //item-to-spawn path
 	var/cost = 1 //normally, each loadout costs a single point.
 	var/list/restricted_roles
+	var/list/ckeywhitelist
 
 /datum/gear/New()
 	..()
