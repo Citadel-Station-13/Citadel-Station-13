@@ -1,3 +1,52 @@
+/obj/item/seeds/banana/Initialize()
+    . = ..()
+    mutatelist += /obj/item/seeds/banana/exotic_banana
+
+/obj/item/seeds/banana/exotic_banana
+	name = "pack of exotic banana seeds"
+	desc = "They're seeds that grow into banana trees. However, those bananas might be alive."
+	icon = 'modular_citadel/icons/obj/seeds_Exoticbanana.dmi'
+	icon_state = "seed_ExoticBanana"
+	species = "banana"
+	plantname = "Exotic Banana Tree"
+	product = /obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
+	lifespan = 50
+	endurance = 30
+	//harvest_icon = 'modular_citadel/icons/obj/exoticbanana-harvest.dmi'
+	growing_icon = 'modular_citadel/icons/obj/exoticbanana-harvest.dmi'
+	icon_dead = "banana-dead"
+//	icon_harvest = "banana-harvest"
+	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/repeated_harvest)
+	reagents_add = list("banana" = 0.1, "potassium" = 0.1, "vitamin" = 0.04, "nutriment" = 0.02)
+
+/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable
+	seed = /obj/item/seeds/banana/exotic_banana
+	name = "banana spider"
+	desc = "You do not know what it is, but you can bet the clown would love it."
+	icon = 'modular_citadel/icons/obj/inactive-banana.dmi'
+	icon_state = "banana"
+	item_state = "banana"
+	filling_color = "#FFFF00"
+	bitesize = 5
+	list_reagents = list("nutriment" = 3, "vitamin" = 2)
+	foodtype = GROSS | MEAT | RAW
+	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	juice_results = list("banana" = 0)
+	var awakening = 0
+
+/obj/item/reagent_containers/food/snacks/grown/banana/banana_spider_spawnable/attack_self(mob/user)
+	if(awakening || isspaceturf(user.loc))
+		return
+	to_chat(user, "<span class='notice'>You decide to wake up the banana spider...</span>")
+	awakening = 1
+
+	spawn(30)
+		if(!QDELETED(src))
+			var/mob/living/simple_animal/banana_spider/K = new /mob/living/simple_animal/banana_spider(get_turf(src.loc))
+			K.speed += round(10 / seed.potency)
+			K.visible_message("<span class='notice'>The banana spider chitters as it stretches its legs.</span>")
+			qdel(src)
+
 /mob/living/simple_animal/banana_spider
 	icon = 'icons/mob/BananaSpider20.dmi'
 	name = "banana spider"
@@ -70,6 +119,7 @@
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW
 	grind_results = list("blood" = 20, "liquidgibs" = 5)
+	juice_results = list("banana" = 0)
 
 /obj/item/reagent_containers/food/snacks/deadbanana_spider/Initialize()
 	. = ..()
