@@ -55,7 +55,7 @@
 
 /obj/item/projectile/bullet/srmrocket
 	name ="SRM-8 Rocket"
-	desc = "Boom"
+	desc = "Boom."
 	icon_state = "missile"
 	damage = 30
 	ricochets_max = 0 //it's a MISSILE
@@ -100,7 +100,7 @@
 
 /obj/item/projectile/meteor/Collide(atom/A)
 	if(A == firer)
-		loc = A.loc
+		forceMove(A.loc)
 		return
 	A.ex_act(EXPLODE_HEAVY)
 	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
@@ -612,4 +612,3 @@
 		knockdown = 0
 		nodamage = TRUE
 	return ..()
-

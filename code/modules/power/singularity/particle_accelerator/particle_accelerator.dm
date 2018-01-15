@@ -89,7 +89,7 @@
 	if (anchored)
 		to_chat(usr, "It is fastened to the floor!")
 		return 0
-	setDir(turn(dir, 90))
+	setDir(turn(dir, -90))
 	return 1
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user, params)
@@ -152,7 +152,7 @@
 	qdel(src)
 
 /obj/structure/particle_accelerator/Move()
-	..()
+	. = ..()
 	if(master && master.active)
 		master.toggle_power()
 		investigate_log("was moved whilst active; it <font color='red'>powered down</font>.", INVESTIGATE_SINGULO)
@@ -187,13 +187,13 @@
 
 /obj/structure/particle_accelerator/end_cap
 	name = "Alpha Particle Generation Array"
-	desc = "This is where Alpha particles are generated from \[REDACTED\]"
+	desc = "This is where Alpha particles are generated from \[REDACTED\]."
 	icon_state = "end_cap"
 	reference = "end_cap"
 
 /obj/structure/particle_accelerator/power_box
 	name = "Particle Focusing EM Lens"
-	desc = "This uses electromagnetic waves to focus the Alpha-Particles."
+	desc = "This uses electromagnetic waves to focus the Alpha particles."
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "power_box"
 	reference = "power_box"

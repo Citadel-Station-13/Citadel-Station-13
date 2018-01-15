@@ -12,7 +12,6 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
-	origin_tech = "engineering=4;materials=2"
 	var/max_amount = 90
 	var/active = FALSE
 	actions_types = list(/datum/action/item_action/rcl)
@@ -170,13 +169,18 @@
 		loaded.item_color	 = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
+	update_icon()
 
 
-/obj/item/twohanded/rcl/pre_loaded/Initialize () //Comes preloaded with cable, for testing stuff
+/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
 	. = ..()
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
+	update_icon()
+
+/obj/item/twohanded/rcl/Initialize()
+	. = ..()
 	update_icon()
 
 /obj/item/twohanded/rcl/ui_action_click(mob/user, action)

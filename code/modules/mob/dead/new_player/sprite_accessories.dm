@@ -240,6 +240,10 @@
 	name = "Devil Lock"
 	icon_state = "hair_devilock"
 
+/datum/sprite_accessory/hair/drillhairextended
+	name = "Extended Drill Hair"
+	icon_state = "hair_drillhairextended"
+
 /datum/sprite_accessory/hair/dreadlocks
 	name = "Dreadlocks"
 	icon_state = "hair_dreads"
@@ -476,6 +480,10 @@
 	name = "Long Hair 2"
 	icon_state = "hair_long2"
 
+/datum/sprite_accessory/hair/long3
+	name = "Long Hair 3"
+	icon_state = "hair_long3"
+
 /datum/sprite_accessory/hair/pixie
 	name = "Pixie Cut"
 	icon_state = "hair_pixie"
@@ -503,7 +511,7 @@
 /datum/sprite_accessory/hair/largebun
 	name = "Large Bun"
 	icon_state = "hair_largebun"
-	
+
 /////////////////////////////
 // Facial Hair Definitions //
 /////////////////////////////
@@ -1040,7 +1048,15 @@
 	icon_state = "shirt_alien"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra
+	name = "Sports Bra"
+	icon_state = "sports_bra"
+	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/sports_bra2
+	name = "Alt Sports Bra"
+	icon_state = "sports_bra_alt"
+	gender = NEUTER
 
 ///////////////////////
 // Socks Definitions //

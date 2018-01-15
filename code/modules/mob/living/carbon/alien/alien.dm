@@ -30,7 +30,6 @@
 	unique_name = 1
 
 	var/static/regex/alien_name_regex = new("alien (larva|sentinel|drone|hunter|praetorian|queen)( \\(\\d+\\))?")
-	devourable = TRUE
 
 /mob/living/carbon/alien/Initialize()
 	verbs += /mob/living/proc/mob_sleep
@@ -71,7 +70,7 @@
 		else
 			bodytemperature += 1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
-	if(bodytemperature > 360.15)
+	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
 		throw_alert("alien_fire", /obj/screen/alert/alien_fire)
 		switch(bodytemperature)
@@ -110,11 +109,12 @@ Des: Gives the client of the alien an image on each infected mob.
 ----------------------------------------*/
 /mob/living/carbon/alien/proc/AddInfectionImages()
 	if (client)
-		for (var/mob/living/C in GLOB.mob_list)
-			if(C.status_flags & XENO_HOST)
-				var/obj/item/organ/body_egg/alien_embryo/A = C.getorgan(/obj/item/organ/body_egg/alien_embryo)
+		for (var/i in GLOB.mob_living_list)
+			var/mob/living/L = i
+			if(L.status_flags & XENO_HOST)
+				var/obj/item/organ/body_egg/alien_embryo/A = L.getorgan(/obj/item/organ/body_egg/alien_embryo)
 				if(A)
-					var/I = image('icons/mob/alien.dmi', loc = C, icon_state = "infected[A.stage]")
+					var/I = image('icons/mob/alien.dmi', loc = L, icon_state = "infected[A.stage]")
 					client.images += I
 	return
 
@@ -146,8 +146,6 @@ Des: Removes all infected images from the alien.
 	if(mind)
 		mind.transfer_to(new_xeno)
 	qdel(src)
-
-	// TODO make orbiters orbit the new xeno, or make xenos species rather than types
 
 #undef HEAT_DAMAGE_LEVEL_1
 #undef HEAT_DAMAGE_LEVEL_2

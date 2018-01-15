@@ -47,7 +47,7 @@
 
 /obj/structure/windoor_assembly/Move()
 	var/turf/T = loc
-	..()
+	. = ..()
 	setDir(ini_dir)
 	move_update_air(T)
 
@@ -55,7 +55,7 @@
 	icon_state = "[facing]_[secure ? "secure_" : ""]windoor_assembly[state]"
 
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
 		return !density
@@ -78,7 +78,7 @@
 		return 1
 
 /obj/structure/windoor_assembly/CheckExit(atom/movable/mover as mob|obj, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGLASS))
+	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return 1
 	if(get_dir(loc, target) == dir)
 		return !density
@@ -98,7 +98,8 @@
 					playsound(loc, 'sound/items/welder2.ogg', 50, 1)
 
 					if(do_after(user, 40*W.toolspeed, target = src))
-						if(!src || !WT.isOn()) return
+						if(!src || !WT.isOn())
+							return
 						to_chat(user, "<span class='notice'>You disassemble the windoor assembly.</span>")
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 						RG.add_fingerprint(user)
@@ -215,13 +216,13 @@
 
 				if(do_after(user, 40, target = src))
 					if(!src || electronics)
-						W.loc = src.loc
+						W.forceMove(drop_location())
 						return
 					to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 					name = "near finished windoor assembly"
 					electronics = W
 				else
-					W.loc = loc
+					W.forceMove(drop_location())
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/screwdriver))
@@ -239,7 +240,7 @@
 					var/obj/item/electronics/airlock/ae
 					ae = electronics
 					electronics = null
-					ae.loc = loc
+					ae.forceMove(drop_location())
 
 			else if(istype(W, /obj/item/pen))
 				var/t = stripped_input(user, "Enter the name for the door.", name, created_name,MAX_NAME_LEN)
@@ -284,7 +285,7 @@
 							else
 								windoor.req_access = electronics.accesses
 							windoor.electronics = electronics
-							electronics.loc = windoor
+							electronics.forceMove(windoor)
 							if(created_name)
 								windoor.name = created_name
 							qdel(src)

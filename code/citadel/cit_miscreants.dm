@@ -7,7 +7,7 @@
 		return
 	if(!crewMind.assigned_role)
 		return
-	if(ROLE_MISCREANT in crewMind.current.client.prefs.be_special)
+	if(!(ROLE_MISCREANT in crewMind.current.client.prefs.be_special))
 		return
 	if(jobban_isbanned(crewMind, "Syndicate"))
 		return

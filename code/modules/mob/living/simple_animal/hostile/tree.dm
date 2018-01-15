@@ -36,7 +36,7 @@
 	faction = list("hostile")
 	deathmessage = "is hacked into pieces!"
 	loot = list(/obj/item/stack/sheet/mineral/wood)
-	gold_core_spawnable = 1
+	gold_core_spawnable = HOSTILE_SPAWN
 	del_on_death = 1
 
 /mob/living/simple_animal/hostile/tree/Life()
@@ -62,7 +62,7 @@
 
 /mob/living/simple_animal/hostile/tree/festivus
 	name = "festivus pole"
-	desc = "serenity now... SERENITY NOW!"
+	desc = "Serenity now... SERENITY NOW!"
 	icon_state = "festivus_pole"
 	icon_living = "festivus_pole"
 	icon_dead = "festivus_pole"

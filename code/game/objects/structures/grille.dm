@@ -21,6 +21,24 @@
 	. = ..()
 	AddComponent(/datum/component/rad_insulation, RAD_NO_INSULATION)
 
+/obj/structure/grille/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_icon()
+
+/obj/structure/grille/update_icon()
+	if(QDELETED(src) || broken)
+		return
+
+	var/ratio = obj_integrity / max_integrity
+	ratio = CEILING(ratio*4, 1) * 25
+
+	if(smooth)
+		queue_smooth(src)
+
+	if(ratio > 50)
+		return
+	icon_state = "grille50_[rand(0,3)]"
+
 /obj/structure/grille/examine(mob/user)
 	..()
 	if(anchored)
@@ -35,7 +53,8 @@
 		if(RCD_WINDOWGRILLE)
 			if(the_rcd.window_type == /obj/structure/window/reinforced/fulltile)
 				return list("mode" = RCD_WINDOWGRILLE, "delay" = 40, "cost" = 12)
-			else return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
+			else
+				return list("mode" = RCD_WINDOWGRILLE, "delay" = 20, "cost" = 8)
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, var/obj/item/construction/rcd/the_rcd, passed_mode)
@@ -99,7 +118,7 @@
 
 
 /obj/structure/grille/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && mover.checkpass(PASSGRILLE))
+	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
 		return TRUE
 	else
 		if(istype(mover, /obj/item/projectile) && density)
@@ -111,7 +130,7 @@
 	. = !density
 	if(ismovableatom(caller))
 		var/atom/movable/mover = caller
-		. = . || mover.checkpass(PASSGRILLE)
+		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)

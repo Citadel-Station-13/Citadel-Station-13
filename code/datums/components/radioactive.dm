@@ -4,7 +4,7 @@
 #define RAD_AMOUNT_EXTREME 1000
 
 /datum/component/radioactive
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	var/source
 
@@ -27,6 +27,9 @@
 		CRASH("Something that wasn't an atom was given /datum/component/radioactive")
 		return
 
+	if(strength > RAD_MINIMUM_CONTAMINATION)
+		SSradiation.warn(src)
+
 	START_PROCESSING(SSradiation, src)
 
 /datum/component/radioactive/Destroy()
@@ -34,21 +37,26 @@
 	return ..()
 
 /datum/component/radioactive/process()
-	radiation_pulse(parent,strength,1,FALSE,can_contaminate)
+	if(!prob(50))
+		return
+	radiation_pulse(parent, strength, RAD_DISTANCE_COEFFICIENT*2, FALSE, can_contaminate)
 
-	if(hl3_release_date && prob(50))
-		strength -= strength / hl3_release_date
-		if(strength <= RAD_BACKGROUND_RADIATION)
-			qdel(src)
+	if(!hl3_release_date)
+		return
+	strength -= strength / hl3_release_date
+	if(strength <= RAD_BACKGROUND_RADIATION)
+		return PROCESS_KILL
 
-/datum/component/radioactive/InheritComponent(datum/component/C, i_am_original)
+/datum/component/radioactive/InheritComponent(datum/component/C, i_am_original, list/arguments)
 	if(!i_am_original)
 		return
 	if(!hl3_release_date) // Permanently radioactive things don't get to grow stronger
 		return
-	var/datum/component/radioactive/other = C
-	strength = max(strength, other.strength)
-	return
+	if(C)
+		var/datum/component/radioactive/other = C
+		strength = max(strength, other.strength)
+	else
+		strength = max(strength, arguments[1])
 
 /datum/component/radioactive/proc/rad_examine(mob/user, atom/thing)
 	var/atom/master = parent
@@ -69,6 +77,7 @@
 /datum/component/radioactive/proc/rad_attack(atom/movable/target, mob/living/user)
 	radiation_pulse(parent, strength/20)
 	target.rad_act(strength/2)
+	strength -= strength / hl3_release_date
 
 #undef RAD_AMOUNT_LOW
 #undef RAD_AMOUNT_MEDIUM

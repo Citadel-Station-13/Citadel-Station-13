@@ -33,7 +33,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
 	name = "Summon Cult Floor"
-	desc = "This spell constructs a cult floor"
+	desc = "This spell constructs a cult floor."
 
 	school = "conjuration"
 	charge_max = 20
@@ -49,7 +49,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
 	name = "Summon Cult Wall"
-	desc = "This spell constructs a cult wall"
+	desc = "This spell constructs a cult wall."
 
 	school = "conjuration"
 	charge_max = 100
@@ -66,7 +66,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced
 	name = "Greater Construction"
-	desc = "This spell constructs a reinforced metal wall"
+	desc = "This spell constructs a reinforced metal wall."
 
 	school = "conjuration"
 	charge_max = 300
@@ -79,7 +79,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone
 	name = "Summon Soulstone"
-	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space"
+	desc = "This spell reaches into Nar-Sie's realm, summoning one of the legendary fragments across time and space."
 
 	school = "conjuration"
 	charge_max = 3000
@@ -104,7 +104,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall
 	name = "Shield"
-	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 
 	school = "transmutation"
 	charge_max = 300
@@ -121,7 +121,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
 	name = "Phase Shift"
-	desc = "This spell allows you to pass through walls"
+	desc = "This spell allows you to pass through walls."
 
 	school = "transmutation"
 	charge_max = 250
@@ -209,12 +209,14 @@
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
-	target.adjust_blindness(5)
+	target.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, target), 40)
 	target.bodytemperature -= 200
 
 /obj/effect/proc_holder/spell/targeted/abyssal_gaze/proc/cure_blindness(mob/target)
-	target.adjust_blindness(-5)
+	if(isliving(target))
+		var/mob/living/L = target
+		L.cure_blind(ABYSSAL_GAZE_BLIND)
 
 /obj/effect/proc_holder/spell/targeted/dominate
 	name = "Dominate"

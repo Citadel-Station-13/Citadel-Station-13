@@ -4,7 +4,6 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "lasernew"
 	item_state = "laser"
-	origin_tech = "combat=4;magnets=4"
 	force = 10
 	throwforce = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun)
@@ -22,7 +21,6 @@
 	name = "Laser Carbine"
 	desc = "Beefed up version of a standard laser gun."
 	id = "lasercarbine"
-	req_tech = list("combat" = 5, "magnets" = 5, "powerstorage" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 2500, MAT_METAL = 5000, MAT_GLASS = 5000)
 	build_path = /obj/item/gun/energy/laser/carbine/nopin
@@ -40,7 +38,6 @@
 	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
 	fire_delay = 50
 	burst_size = 1
-	origin_tech = "combat=7"
 	can_suppress = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list()
@@ -60,7 +57,6 @@
 	name = "Syndicate Anti Tank Pistol"
 	desc = "A massively impractical and silly monstrosity of a pistol that fires .50 calliber rounds. The recoil is likely to dislocate a variety of joints without proper bracing."
 	pin = /obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=7;syndicate=6"
 
 /////////////spinfusor stuff////////////////
 
@@ -111,11 +107,10 @@
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = 0
 	burst_size = 1
-	fire_delay = 20
+	fire_delay = 40
 	select = 0
 	actions_types = list()
 	casing_ejector = 0
-	origin_tech = "combat=6;magnets=6"
 
 /obj/item/gun/ballistic/automatic/spinfusor/attackby(obj/item/A, mob/user, params)
 	var/num_loaded = magazine.attackby(A, user, params, 1)
@@ -140,14 +135,14 @@
 
 /datum/supply_pack/security/armory/spinfusor
 	name = "Stormhammer Spinfusor Crate"
-	cost = 7000
+	cost = 14000
 	contains = list(/obj/item/gun/ballistic/automatic/spinfusor,
 					/obj/item/gun/ballistic/automatic/spinfusor)
 	crate_name = "spinfusor crate"
 
 /datum/supply_pack/security/armory/spinfusorammo
 	name = "Spinfusor Disk Crate"
-	cost = 4000
+	cost = 7000
 	contains = list(/obj/item/ammo_box/aspinfusor,
 					/obj/item/ammo_box/aspinfusor,
 					/obj/item/ammo_box/aspinfusor,
@@ -163,7 +158,6 @@
 	icon_state = "x9"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=7;engineering=7"
 	mag_type = /obj/item/ammo_box/magazine/m556	//Uses the m90gl's magazine, just like the NT-ARG
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
@@ -180,6 +174,7 @@
 	icon_state = "toy9magazine"
 	max_ammo = 30
 	multiple_sprites = 2
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/x9/toy
 	name = "\improper Foam Force X9"
@@ -190,13 +185,15 @@
 	needs_permit = 0
 	mag_type = /obj/item/ammo_box/magazine/toy/x9
 	casing_ejector = 0
-	spread = 45		//MAXIMUM XCOM MEMES (actually that'd be 90 spread)
+	spread = 90		//MAXIMUM XCOM MEMES (actually that'd be 180 spread)
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 
 /datum/design/foam_x9
 	name = "Foam Force X9 Rifle"
 	id = "foam_x9"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 20000, MAT_GLASS = 10000)
+	materials = list(MAT_METAL = 24000, MAT_GLASS = 14000)
 	build_path = /obj/item/gun/ballistic/automatic/x9/toy
 	category = list("hacked", "Misc")
 
@@ -208,19 +205,23 @@
 /obj/item/projectile/bullet/mags
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile"
-	damage = 25
+	damage = 15
 	armour_penetration = 10
 	light_range = 2
+	speed = 0.6
+	range = 25
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmags //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-nl"
-	damage = 2
-	knockdown = 15
-	stamina = 50
+	damage = 1
+	knockdown = 0
+	stamina = 25
 	armour_penetration = -10
 	light_range = 2
+	speed = 0.7
+	range = 25
 	light_color = LIGHT_COLOR_BLUE
 
 
@@ -246,17 +247,15 @@
 	name = "magpistol magazine (non-lethal disabler)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "nlmagmag"
-	origin_tech = "magnets=5"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmags
 	caliber = "mags"
-	max_ammo = 7
+	max_ammo = 15
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/small/lethal
 	name = "magpistol magazine (lethal)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "smallmagmag"
-	origin_tech = "combat=5"
 	ammo_type = /obj/item/ammo_casing/caseless/amags
 
 //////the gun itself//////
@@ -271,8 +270,7 @@
 	mag_type = /obj/item/ammo_box/magazine/mmag/small
 	can_suppress = 0
 	casing_ejector = 0
-	fire_delay = 5
-	origin_tech = "combat=4;magnets=4"
+	fire_delay = 2
 
 /obj/item/gun/ballistic/automatic/pistol/mag/update_icon()
 	..()
@@ -287,12 +285,12 @@
 
 /obj/item/gun/ballistic/automatic/pistol/mag/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magpistol
 	name = "Magpistol"
 	desc = "A weapon which fires ferromagnetic slugs."
 	id = "magpisol"
-	req_tech = list("combat" = 5, "magnets" = 6, "powerstorage" = 5)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000, MAT_URANIUM = 1000, MAT_TITANIUM = 5000, MAT_SILVER = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/pistol/mag/nopin
@@ -302,7 +300,6 @@
 	name = "Magpistol Magazine"
 	desc = "A 7 round magazine for the Magpistol."
 	id = "mag_magpistol"
-	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5, "syndicate" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_SILVER = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag/small/lethal
@@ -312,7 +309,6 @@
 	name = "Magpistol Magazine (Non-Lethal)"
 	desc = "A 7 round non-lethal magazine for the Magpistol."
 	id = "mag_magpistol_nl"
-	req_tech = list("combat" = 5, "magnets" = 6, "materials" = 5)
 	materials = list(MAT_METAL = 3000, MAT_SILVER = 250, MAT_TITANIUM = 250)
 	build_path = /obj/item/ammo_box/magazine/mmag/small
 
@@ -376,19 +372,23 @@
 /obj/item/projectile/bullet/magrifle
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large"
-	damage = 30
+	damage = 20
 	armour_penetration = 25
 	light_range = 3
+	speed = 0.7
+	range = 35
 	light_color = LIGHT_COLOR_RED
 
 /obj/item/projectile/bullet/nlmagrifle //non-lethal boolets
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "magjectile-large-nl"
-	damage = 5
-	knockdown = 30
-	stamina = 75
-	armour_penetration = 0
+	damage = 0
+	knockdown = 0
+	stamina = 20
+	armour_penetration = -10
 	light_range = 3
+	speed = 0.65
+	range = 35
 	light_color = LIGHT_COLOR_BLUE
 
 ///ammo casings///
@@ -413,18 +413,17 @@
 	name = "magrifle magazine (non-lethal disabler)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	origin_tech = "magnets=6"
 	ammo_type = /obj/item/ammo_casing/caseless/anlmagm
 	caliber = "magm"
-	max_ammo = 15
+	max_ammo = 27
 	multiple_sprites = 2
 
 /obj/item/ammo_box/magazine/mmag/lethal
 	name = "magrifle magazine (lethal)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "mediummagmag"
-	origin_tech = "combat=6"
 	ammo_type = /obj/item/ammo_casing/caseless/amagm
+	max_ammo = 21
 
 ///the gun itself///
 
@@ -435,13 +434,12 @@
 	icon_state = "magrifle"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=6;magnets=6"
 	mag_type = /obj/item/ammo_box/magazine/mmag
 	fire_sound = 'sound/weapons/magrifle.ogg'
 	can_suppress = 0
 	burst_size = 3
 	fire_delay = 2
-	spread = 15
+	spread = 20
 	recoil = 1
 	casing_ejector = 0
 
@@ -449,12 +447,12 @@
 
 /obj/item/gun/ballistic/automatic/magrifle/nopin
 	pin = null
+	spawnwithmagazine = FALSE
 
 /datum/design/magrifle
 	name = "Magrifle"
 	desc = "An upscaled Magpistol in rifle form."
 	id = "magrifle"
-	req_tech = list("combat" = 7, "magnets" = 7, "powerstorage" = 7)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 2000, MAT_URANIUM = 2000, MAT_TITANIUM = 10000, MAT_SILVER = 4000, MAT_GOLD = 2000)
 	build_path = /obj/item/gun/ballistic/automatic/magrifle/nopin
@@ -464,7 +462,6 @@
 	name = "Magrifle Magazine (Lethal)"
 	desc = "A 15 round magazine for the Magrifle."
 	id = "mag_magrifle"
-	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5, "syndicate" = 4)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 1000)
 	build_path = /obj/item/ammo_box/magazine/mmag/lethal
@@ -474,7 +471,6 @@
 	name = "Magrifle Magazine (Non-Lethal)"
 	desc = "A 15 round non-lethal magazine for the Magrifle."
 	id = "mag_magrifle_nl"
-	req_tech = list("combat" = 7, "magnets" = 7, "materials" = 5)
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500, MAT_TITANIUM = 500)
 	build_path = /obj/item/ammo_box/magazine/mmag
 
@@ -487,15 +483,18 @@
 	max_ammo = 15
 	multiple_sprites = 2
 	ammo_type = /obj/item/ammo_casing/caseless/foam_dart/mag
+	materials = list(MAT_METAL = 200)
 
 /obj/item/gun/ballistic/automatic/magrifle/toy
 	name = "foamag rifle"
 	desc = "A foam launching magnetic rifle. Ages 8 and up."
 	icon_state = "foamagrifle"
-	needs_permit = 0
+	needs_permit = FALSE
 	mag_type = /obj/item/ammo_box/magazine/toy/foamag
 	casing_ejector = FALSE
-	origin_tech = "combat=2;engineering=2;magnets=2"
+	spread = 60
+	w_class = WEIGHT_CLASS_BULKY
+	weapon_weight = WEAPON_HEAVY
 
 /datum/design/foam_magrifle
 	name = "Foam Force MagRifle"
@@ -578,7 +577,6 @@
 	icon_state = "hyperburst"
 	item_state = "arg"
 	slot_flags = 0
-	origin_tech = "combat=6;engineering=6;magnets=6;syndicate=6"
 	mag_type = /obj/item/ammo_box/magazine/mhyper
 	fire_sound = 'sound/weapons/magburst.ogg'
 	can_suppress = 0
@@ -635,7 +633,7 @@
 	name = "MagTag Hyper Rifle"
 	id = "foam_hyperburst"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 35000, MAT_GLASS = 15000)
+	materials = list(MAT_METAL = 35000, MAT_GLASS = 25000)
 	build_path = /obj/item/gun/energy/laser/practice/hyperburst
 	category = list("hacked", "Misc")
 
@@ -648,7 +646,6 @@
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "stealthpistol"
 	w_class = WEIGHT_CLASS_SMALL
-	origin_tech = "combat=3;materials=3;syndicate=4"
 	mag_type = /obj/item/ammo_box/magazine/m10mm
 	can_suppress = 0
 	fire_sound = 'sound/weapons/gunshot_silenced.ogg'
@@ -680,6 +677,7 @@
 	suppressed = TRUE
 	burst_size = 1
 	fire_delay = 0
+	spread = 60
 	actions_types = list()
 
 /obj/item/gun/ballistic/automatic/toy/pistol/stealth/update_icon()
@@ -695,7 +693,7 @@
 	name = "Foam Force Stealth Pistol"
 	id = "foam_sp"
 	build_type = AUTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 1000)
+	materials = list(MAT_METAL = 30000, MAT_GLASS = 15000)
 	build_path = /obj/item/gun/ballistic/automatic/toy/pistol/stealth
 	category = list("hacked", "Misc")
 
@@ -713,8 +711,8 @@ obj/item/projectile/bullet/c10mm/soporific
 	if((blocked != 100) && isliving(target))
 		var/mob/living/L = target
 		L.blur_eyes(6)
-		if(L.staminaloss >= 60)
-			L.Sleeping(250)
+		if(L.getStaminaLoss() >= 60)
+			L.Sleeping(300)
 		else
 			L.adjustStaminaLoss(25)
 	return 1
@@ -747,7 +745,7 @@ obj/item/projectile/bullet/c10mm/soporific
 
 /obj/item/projectile/bullet/cflechettes		//shreds flesh and forces bleeding
 	name = "flechette (serrated)"
-	damage = 8
+	damage = 15
 	dismemberment = 10
 	armour_penetration = -80
 
@@ -782,7 +780,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	name = "flechette magazine (armor piercing)"
 	icon = 'icons/obj/guns/cit_guns.dmi'
 	icon_state = "flechettemag"
-	origin_tech = "combat=5;syndicate=1"
 	ammo_type = /obj/item/ammo_casing/caseless/flechetteap
 	caliber = "flechette"
 	max_ammo = 40
@@ -803,7 +800,6 @@ obj/item/projectile/bullet/c10mm/soporific
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = 0
 	/obj/item/device/firing_pin/implant/pindicate
-	origin_tech = "combat=6;materials=2;syndicate=5"
 	mag_type = /obj/item/ammo_box/magazine/flechette/
 	fire_sound = 'sound/weapons/gunshot_smg.ogg'
 	can_suppress = 0
@@ -915,3 +911,309 @@ obj/item/projectile/bullet/c10mm/soporific
 	materials = list(MAT_METAL = 7500, MAT_GLASS = 1000)
 	build_path = /obj/item/gun/energy/laser/practice/raygun
 	category = list("hacked", "Misc")
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////
+							The Recolourable Gun
+*//////////////////////////////////////////////////////////////////////////////////////////////
+
+/obj/item/gun/ballistic/automatic/pistol/p37
+	name = "\improper CX Mk.37P"
+	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. \
+			This model is coated with a special polychromic material. \
+			Has a small warning on the receiver that boldly states 'WARNING: WILL DETONATE UPON UNAUTHORIZED USE'. \
+			Uses 9mm bullets loaded into proprietary magazines."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "p37"
+	w_class = WEIGHT_CLASS_NORMAL
+	spawnwithmagazine = FALSE
+	mag_type = /obj/item/ammo_box/magazine/m9mm/p37
+	can_suppress = FALSE
+	pin = /obj/item/device/firing_pin/dna/dredd		//goes boom if whoever isn't DNA locked to it tries to use it
+	actions_types = list(/datum/action/item_action/pick_color)
+
+	var/frame_color = "#808080" //RGB
+	var/receiver_color = "#808080"
+	var/body_color = "#0098FF"
+	var/barrel_color = "#808080"
+	var/tip_color = "#808080"
+	var/arm_color = "#808080"
+	var/grip_color = "#00FFCB"	//Does not actually colour the grip, just the lights surrounding it
+	var/energy_color = "#00FFCB"
+
+///Defining all the colourable bits and displaying them///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/update_icon()
+	var/mutable_appearance/frame_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_frame")
+	var/mutable_appearance/receiver_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_receiver")
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_body")
+	var/mutable_appearance/barrel_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_barrel")
+	var/mutable_appearance/tip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_tip")
+	var/mutable_appearance/grip_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_grip")
+	var/mutable_appearance/energy_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_light")
+	var/mutable_appearance/arm_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm")
+	var/mutable_appearance/arm_overlay_e = mutable_appearance('icons/obj/guns/cit_guns.dmi', "p37_arm-e")
+
+	if(frame_color)
+		frame_overlay.color = frame_color
+	if(receiver_color)
+		receiver_overlay.color = receiver_color
+	if(body_color)
+		body_overlay.color = body_color
+	if(barrel_color)
+		barrel_overlay.color = barrel_color
+	if(tip_color)
+		tip_overlay.color = tip_color
+	if(grip_color)
+		grip_overlay.color = grip_color
+	if(energy_color)
+		energy_overlay.color = energy_color
+	if(arm_color)
+		arm_overlay.color = arm_color
+	if(arm_color)
+		arm_overlay_e.color = arm_color
+
+	cut_overlays()		//So that it doesn't keep stacking overlays non-stop on top of each other
+
+	add_overlay(frame_overlay)
+	add_overlay(receiver_overlay)
+	add_overlay(body_overlay)
+	add_overlay(barrel_overlay)
+	add_overlay(tip_overlay)
+	add_overlay(grip_overlay)
+	add_overlay(energy_overlay)
+
+	if(magazine)	//does not need a cut_overlays proc call here because it's already called further up
+		add_overlay("p37_mag")
+
+	if(chambered)
+		cut_overlay(arm_overlay_e)
+		add_overlay(arm_overlay)
+	else
+		cut_overlay(arm_overlay)
+		add_overlay(arm_overlay_e)
+
+///letting you actually recolor things///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+
+		var/choice = input(user,"Mk.37P polychrome options", "Gun Recolor") in list("Frame Color","Receiver Color","Body Color",
+																"Barrel Color", "Barrel Tip Color", "Grip Light Color",
+																"Light Color", "Arm Color", "*CANCEL*")
+
+		switch(choice)
+
+			if("Frame Color")
+				var/frame_color_input = input(usr,"Choose Frame Color") as color|null
+				if(frame_color_input)
+					frame_color = sanitize_hexcolor(frame_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Receiver Color")
+				var/receiver_color_input = input(usr,"Choose Receiver Color") as color|null
+				if(receiver_color_input)
+					receiver_color = sanitize_hexcolor(receiver_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Body Color")
+				var/body_color_input = input(usr,"Choose Body Color") as color|null
+				if(body_color_input)
+					body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Barrel Color")
+				var/barrel_color_input = input(usr,"Choose Barrel Color") as color|null
+				if(barrel_color_input)
+					barrel_color = sanitize_hexcolor(barrel_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Barrel Tip Color")
+				var/tip_color_input = input(usr,"Choose Barrel Tip Color") as color|null
+				if(tip_color_input)
+					tip_color = sanitize_hexcolor(tip_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Grip Light Color")
+				var/grip_color_input = input(usr,"Choose Grip Light Color") as color|null
+				if(grip_color_input)
+					grip_color = sanitize_hexcolor(grip_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Light Color")
+				var/energy_color_input = input(usr,"Choose Light Color") as color|null
+				if(energy_color_input)
+					energy_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+
+			if("Arm Color")
+				var/arm_color_input = input(usr,"Choose Arm Color") as color|null
+				if(arm_color_input)
+					arm_color = sanitize_hexcolor(arm_color_input, desired_format=6, include_crunch=1)
+				update_icon()
+				A.UpdateButtonIcon()
+
+	else
+		..()
+
+///boolets///
+
+/obj/item/projectile/bullet/c9mm/frangible
+	name = "9mm frangible bullet"
+	damage = 15
+	stamina = 0
+	speed = 1.0
+	range = 20
+	armour_penetration = -25
+
+/obj/item/projectile/bullet/c9mm/rubber
+	name = "9mm rubber bullet"
+	damage = 5
+	stamina = 30
+	speed = 1.2
+	range = 14
+	knockdown = 0
+
+/obj/item/ammo_casing/c9mm/frangible
+	name = "9mm frangible bullet casing"
+	desc = "A 9mm frangible bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c9mm/frangible
+
+/obj/item/ammo_casing/c9mm/rubber
+	name = "9mm rubber bullet casing"
+	desc = "A 9mm rubber bullet casing."
+	projectile_type = /obj/item/projectile/bullet/c9mm/rubber
+
+/obj/item/ammo_box/magazine/m9mm/p37
+	name = "\improper P37 magazine (9mm frangible)"
+	desc = "A gun magazine. Loaded with plastic composite rounds which fragment upon impact to minimize collateral damage."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "11mm"		//topkek
+	ammo_type = /obj/item/ammo_casing/c9mm/frangible
+	caliber = "9mm"
+	max_ammo = 11
+	multiple_sprites = 1
+
+/obj/item/ammo_box/magazine/m9mm/p37/fmj
+	name = "\improper P37 magazine (9mm)"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	desc = "A gun magazine. Loaded with conventional full metal jacket rounds."
+
+/obj/item/ammo_box/magazine/m9mm/p37/rubber
+	name = "\improper P37 magazine (9mm Non-Lethal Rubbershot)"
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+	desc = "A gun magazine. Loaded with less-than-lethal rubber bullets."
+
+/obj/item/ammo_box/c9mm/frangible
+	name = "ammo box (9mm frangible)"
+	ammo_type = /obj/item/ammo_casing/c9mm/frangible
+
+/obj/item/ammo_box/c9mm/rubber
+	name = "ammo box (9mm non-lethal rubbershot)"
+	ammo_type = /obj/item/ammo_casing/c9mm/rubber
+
+/datum/design/c9mmfrag
+	name = "Box of 9mm Frangible Bullets"
+	id = "9mm_frag"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 25000)
+	build_path = /obj/item/ammo_box/c9mm/frangible
+	category = list("hacked", "Security")
+
+/datum/design/c9mmrubber
+	name = "Box of 9mm Rubber Bullets"
+	id = "9mm_rubber"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 30000)
+	build_path = /obj/item/ammo_box/c9mm/rubber
+	category = list("initial", "Security")
+
+
+///Security Variant///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/sec
+	name = "\improper CX Mk.37S"
+	desc = "A modern reimagining of an old legendary gun, the Mk.37 is a handgun with a toggle-locking mechanism manufactured by CX Armories. Uses 9mm bullets loaded into proprietary magazines."
+	spawnwithmagazine = FALSE
+	pin = /obj/item/device/firing_pin/implant/mindshield
+	actions_types = list()	//so you can't recolor it
+
+	frame_color = "#808080" //RGB
+	receiver_color = "#808080"
+	body_color = "#282828"
+	barrel_color = "#808080"
+	tip_color = "#808080"
+	arm_color = "#800000"
+	grip_color = "#FFFF00"	//Does not actually colour the grip, just the lights surrounding it
+	energy_color = "#FFFF00"
+
+///Foam Variant because WE NEED MEMES///
+
+/obj/item/gun/ballistic/automatic/pistol/p37/foam
+	name = "\improper Foam Force Mk.37F"
+	desc = "A licensed foam-firing reproduction of a handgun with a toggle-locking mechanism manufactured by CX Armories. This model is coated with a special polychromic material. Uses standard foam pistol magazines."
+	icon_state = "p37_foam"
+	pin = /obj/item/device/firing_pin
+	spawnwithmagazine = TRUE
+	needs_permit = FALSE
+	mag_type = /obj/item/ammo_box/magazine/toy/pistol
+	can_suppress = FALSE
+	actions_types = list(/datum/action/item_action/pick_color)
+
+/datum/design/foam_p37
+	name = "Foam Force Mk.37F"
+	id = "foam_p37"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 10000)
+	build_path = /obj/item/gun/ballistic/automatic/pistol/p37/foam
+	category = list("hacked", "Misc")
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////
+							The Recolourable Energy Gun
+*//////////////////////////////////////////////////////////////////////////////////////////////
+
+obj/item/gun/energy/e_gun/cx
+	name = "\improper CX Model D Energy Gun"
+	desc = "An overpriced hybrid energy gun with two settings: disable, and kill. Manufactured by CX Armories. Has a polychromic coating."
+	icon = 'icons/obj/guns/cit_guns.dmi'
+	icon_state = "cxe"
+	lefthand_file = 'icons/mob/citadel/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/citadel/guns_righthand.dmi'
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+	flight_x_offset = 15
+	flight_y_offset = 10
+	actions_types = list(/datum/action/item_action/pick_color)
+	var/body_color = "#252528"
+
+obj/item/gun/energy/e_gun/cx/update_icon()
+	..()
+	var/mutable_appearance/body_overlay = mutable_appearance('icons/obj/guns/cit_guns.dmi', "cxegun_body")
+	if(body_color)
+		body_overlay.color = body_color
+	add_overlay(body_overlay)
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+obj/item/gun/energy/e_gun/cx/ui_action_click(mob/user, var/datum/action/A)
+	if(istype(A, /datum/action/item_action/pick_color))
+		if(alert("Are you sure you want to repaint your gun?", "Confirm Repaint", "Yes", "No") == "Yes")
+			var/body_color_input = input(usr,"Choose Body Color") as color|null
+			if(body_color_input)
+				body_color = sanitize_hexcolor(body_color_input, desired_format=6, include_crunch=1)
+		update_icon()
+		A.UpdateButtonIcon()
+	else
+		..()
+
+obj/item/gun/energy/e_gun/cx/worn_overlays(isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		var/mutable_appearance/body_inhand = mutable_appearance(icon_file, "cxe_body")
+		body_inhand.color = body_color
+		. += body_inhand
+
+/obj/item/ammo_box/magazine/toy/pistol	//forcing this might be a bad idea, but it'll fix the foam gun infinite material exploit
+	..()
+	materials = list(MAT_METAL = 200)

@@ -12,7 +12,7 @@ Doesn't work on other aliens/AI.*/
 	var/plasma_cost = 0
 	var/check_turf = FALSE
 	has_action = TRUE
-	datum/action/spell_action/alien/action
+	base_action = /datum/action/spell_action/alien
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "spell_default"
 	action_background_icon_state = "bg_alien"
@@ -59,9 +59,17 @@ Doesn't work on other aliens/AI.*/
 		return 0
 	return 1
 
+/obj/effect/proc_holder/alien/proc/check_vent_block(mob/living/user)
+	var/obj/machinery/atmospherics/components/unary/atmos_thing = locate() in user.loc
+	if(atmos_thing)
+		var/rusure = alert(user, "Laying eggs and shaping resin here would block access to [atmos_thing]. Do you want to continue?", "Blocking Atmospheric Component", "Yes", "No")
+		if(rusure != "No")
+			return FALSE
+	return TRUE
+
 /obj/effect/proc_holder/alien/plant
 	name = "Plant Weeds"
-	desc = "Plants some alien weeds"
+	desc = "Plants some alien weeds."
 	plasma_cost = 50
 	check_turf = 1
 	action_icon_state = "alien_plant"
@@ -76,7 +84,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/whisper
 	name = "Whisper"
-	desc = "Whisper to someone"
+	desc = "Whisper to someone."
 	plasma_cost = 10
 	action_icon_state = "alien_whisper"
 
@@ -104,7 +112,7 @@ Doesn't work on other aliens/AI.*/
 
 /obj/effect/proc_holder/alien/transfer
 	name = "Transfer Plasma"
-	desc = "Transfer Plasma to another alien"
+	desc = "Transfer Plasma to another alien."
 	plasma_cost = 0
 	action_icon_state = "alien_transfer"
 
@@ -169,7 +177,8 @@ Doesn't work on other aliens/AI.*/
 		return
 	var/mob/living/carbon/user = usr
 	var/obj/effect/proc_holder/alien/acid/A = locate() in user.abilities
-	if(!A) return
+	if(!A)
+		return
 	if(user.getPlasma() > A.plasma_cost && A.corrode(O))
 		user.adjustPlasma(-A.plasma_cost)
 
@@ -242,7 +251,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Secrete Resin"
 	desc = "Secrete tough malleable resin."
 	plasma_cost = 55
-	check_turf = 1
+	check_turf = TRUE
 	var/list/structures = list(
 		"resin wall" = /obj/structure/alien/resin/wall,
 		"resin membrane" = /obj/structure/alien/resin/membrane,
@@ -253,22 +262,26 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
 		to_chat(user, "<span class='danger'>There is already a resin structure there.</span>")
-		return 0
+		return FALSE
+
+	if(!check_vent_block(user))
+		return FALSE
+
 	var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in structures
 	if(!choice)
-		return 0
+		return FALSE
 	if (!cost_check(check_turf,user))
-		return 0
+		return FALSE
 	to_chat(user, "<span class='notice'>You shape a [choice].</span>")
 	user.visible_message("<span class='notice'>[user] vomits up a thick purple substance and begins to shape it.</span>")
 
 	choice = structures[choice]
 	new choice(user.loc)
-	return 1
+	return TRUE
 
 /obj/effect/proc_holder/alien/regurgitate
 	name = "Regurgitate"
-	desc = "Empties the contents of your stomach"
+	desc = "Empties the contents of your stomach."
 	plasma_cost = 0
 	action_icon_state = "alien_barf"
 
@@ -276,7 +289,7 @@ Doesn't work on other aliens/AI.*/
 	if(user.stomach_contents.len)
 		for(var/atom/movable/A in user.stomach_contents)
 			user.stomach_contents.Remove(A)
-			A.loc = user.loc
+			A.forceMove(user.drop_location())
 			if(isliving(A))
 				var/mob/M = A
 				M.reset_perspective()
@@ -305,13 +318,15 @@ Doesn't work on other aliens/AI.*/
 
 /mob/living/carbon/proc/getPlasma()
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel) return 0
+	if(!vessel)
+		return 0
 	return vessel.storedPlasma
 
 
 /mob/living/carbon/proc/adjustPlasma(amount)
 	var/obj/item/organ/alien/plasmavessel/vessel = getorgan(/obj/item/organ/alien/plasmavessel)
-	if(!vessel) return 0
+	if(!vessel)
+		return 0
 	vessel.storedPlasma = max(vessel.storedPlasma + amount,0)
 	vessel.storedPlasma = min(vessel.storedPlasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/X in abilities)

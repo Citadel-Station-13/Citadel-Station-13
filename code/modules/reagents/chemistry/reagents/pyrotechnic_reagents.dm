@@ -8,14 +8,8 @@
 	taste_description = "sweet tasting metal"
 
 /datum/reagent/thermite/reaction_turf(turf/T, reac_volume)
-	if(reac_volume >= 1 && iswallturf(T))
-		var/turf/closed/wall/Wall = T
-		if(istype(Wall, /turf/closed/wall/r_wall))
-			Wall.thermite = Wall.thermite+(reac_volume*2.5)
-		else
-			Wall.thermite = Wall.thermite+(reac_volume*10)
-		Wall.overlays = list()
-		Wall.add_overlay(mutable_appearance('icons/effects/effects.dmi', "thermite"))
+	if(reac_volume >= 1)
+		T.AddComponent(/datum/component/thermite, reac_volume)
 
 /datum/reagent/thermite/on_mob_life(mob/living/M)
 	M.adjustFireLoss(1, 0)
@@ -57,7 +51,7 @@
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ChangeTurf(F.baseturf)
+			F.ScrapeAway()
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -71,7 +65,7 @@
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		if(prob(reac_volume))
-			W.ChangeTurf(/turf/open/floor/plating)
+			W.ScrapeAway()
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))

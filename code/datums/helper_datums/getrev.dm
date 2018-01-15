@@ -23,11 +23,10 @@
 			if(line)
 				var/tmcommit = testmerge[line]["commit"]
 				log_world("Test merge active of PR #[line] commit [tmcommit]")
-				SSblackbox.add_details("testmerged_prs","[line]|[tmcommit]")
+				SSblackbox.record_feedback("nested tally", "testmerged_prs", 1, list("[line]", "[tmcommit]"))
 		log_world("Based off origin/master commit [originmastercommit]")
 	else
 		log_world(originmastercommit)
-
 
 /datum/getrev/proc/GetTestMergeInfo(header = TRUE)
 	if(!testmerge.len)
@@ -45,6 +44,8 @@
 	set name = "Show Server Revision"
 	set desc = "Check the current server code revision"
 
+	if(GLOB.round_id)
+		to_chat(src, "<b>Round ID:</b> [GLOB.round_id]")
 	if(GLOB.revdata.originmastercommit)
 		to_chat(src, "<b>Server revision compiled on:</b> [GLOB.revdata.date]")
 		var/prefix = ""
@@ -55,6 +56,9 @@
 		to_chat(src, "[prefix]<a href=\"[CONFIG_GET(string/githuburl)]/commit/[pc]\">[copytext(pc, 1, min(length(pc), 7))]</a>")
 	else
 		to_chat(src, "Revision unknown")
+	if(SERVER_TOOLS_PRESENT)
+		to_chat(src, "Server tools version: [SERVER_TOOLS_VERSION]")
+		to_chat(src, "Server tools API version: [SERVER_TOOLS_API_VERSION]")
 	to_chat(src, "<b>Current Informational Settings:</b>")
 	to_chat(src, "Protect Authority Roles From Traitor: [CONFIG_GET(flag/protect_roles_from_antagonist)]")
 	to_chat(src, "Protect Assistant Role From Traitor: [CONFIG_GET(flag/protect_assistant_from_antagonist)]")

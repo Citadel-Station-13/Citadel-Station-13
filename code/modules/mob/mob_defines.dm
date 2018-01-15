@@ -5,6 +5,7 @@
 	flags_1 = HEAR_1
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
+	use_tag = TRUE
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
 	var/list/datum/action/actions = list()
@@ -21,21 +22,14 @@
 	*/
 	var/zone_selected = null
 
-	var/macro_default = "default"
-	var/macro_hotkeys = "hotkeys"
-
 	var/damageoverlaytemp = 0
 	var/computer_id = null
 	var/lastattacker = null
-	var/lastattacked = null
-	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG, INDIVIDUAL_LOOC_LOG)
+	var/lastattackerckey = null
+	var/list/logging = list(INDIVIDUAL_ATTACK_LOG, INDIVIDUAL_SAY_LOG, INDIVIDUAL_EMOTE_LOG, INDIVIDUAL_OOC_LOG)
 	var/obj/machinery/machine = null
 	var/other_mobs = null
-	var/disabilities = 0	//Carbon
-	var/movement_type = GROUND		//Incase you have multiple types, you automatically use the most useful one. IE: Skating on ice, flippers on water, flying over chasm/space, etc.
 
-	var/atom/movable/pulling = null
-	var/grab_state = 0
 
 	var/next_move = null
 	var/notransform = null	//Carbon
@@ -44,7 +38,9 @@
 	var/stuttering = 0		//Carbon
 	var/slurring = 0		//Carbon
 	var/cultslurring = 0	//Carbon
+	var/derpspeech = 0      //Carbon
 	var/real_name = null
+	var/spacewalk = FALSE
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/resting = 0			//Carbon
@@ -58,7 +54,7 @@
 	var/timeofdeath = 0//Living
 	var/cpr_time = 1//Carbon
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//310.15K / 98.6F
 	var/drowsyness = 0//Carbon
 	var/dizziness = 0//Carbon
 	var/jitteriness = 0//Carbon
@@ -108,9 +104,6 @@
 
 	var/list/mob_spell_list = list() //construct spells and mime spells. Spells that do not transfer from one mob to another and can not be lost in mindswap.
 
-//Changlings, but can be used in other modes
-//	var/obj/effect/proc_holder/changpower/list/power_list = list()
-
 //List of active diseases
 
 	var/list/viruses = list() // list of all diseases in a mob
@@ -133,14 +126,11 @@
 
 	var/turf/listed_turf = null	//the current turf being examined in the stat panel
 
-	var/list/permanent_huds = list()
-
 	var/resize = 1 //Badminnery resize
 
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
-	var/list/can_ride_typecache = list()
 
 	var/list/mousemove_intercept_objects
 

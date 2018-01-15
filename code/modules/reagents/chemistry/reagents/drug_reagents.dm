@@ -15,7 +15,8 @@
 	M.set_drugginess(15)
 	if(isturf(M.loc) && !isspaceturf(M.loc))
 		if(M.canmove)
-			if(prob(10)) step(M, pick(GLOB.cardinals))
+			if(prob(10))
+				step(M, pick(GLOB.cardinals))
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 	..()
@@ -98,7 +99,7 @@
 	. = 1
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
-	M.adjustBrainLoss(5*REM)
+	M.adjustBrainLoss(3*REM)
 	M.adjustToxLoss(5*REM, 0)
 	M.adjustBruteLoss(5*REM, 0)
 	..()

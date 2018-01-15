@@ -225,16 +225,16 @@ LINEN BINS
 
 
 /obj/item/bedsheet/random
-	icon_state = "sheetrainbow"
+	icon_state = "random_bedsheet"
 	item_color = "rainbow"
 	name = "random bedsheet"
 	desc = "If you're reading this description ingame, something has gone wrong! Honk!"
 
 /obj/item/bedsheet/random/Initialize()
-	. = INITIALIZE_HINT_QDEL
 	..()
 	var/type = pick(typesof(/obj/item/bedsheet) - /obj/item/bedsheet/random)
 	new type(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/bedsheetbin
 	name = "linen bin"
@@ -309,13 +309,13 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.loc = user.loc
+		B.forceMove(drop_location())
 		user.put_in_hands(B)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.loc = user.loc
+			hidden.forceMove(drop_location())
 			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
 			hidden = null
 
@@ -333,12 +333,12 @@ LINEN BINS
 		else
 			B = new /obj/item/bedsheet(loc)
 
-		B.loc = loc
+		B.forceMove(drop_location())
 		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
 		update_icon()
 
 		if(hidden)
-			hidden.loc = loc
+			hidden.forceMove(drop_location())
 			hidden = null
 
 

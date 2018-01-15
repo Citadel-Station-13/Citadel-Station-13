@@ -45,7 +45,7 @@
 	name = "meat spike"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "spike"
-	desc = "A spike for collecting meat from animals"
+	desc = "A spike for collecting meat from animals."
 	density = TRUE
 	anchored = TRUE
 	buckle_lying = 0
@@ -81,7 +81,7 @@
 				return
 			playsound(src.loc, 'sound/effects/splat.ogg', 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			L.loc = src.loc
+			L.forceMove(drop_location())
 			L.emote("scream")
 			L.add_splatter_floor()
 			L.adjustBruteLoss(30)

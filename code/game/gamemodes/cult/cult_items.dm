@@ -123,6 +123,7 @@
 			to_chat(user, "<span class='cultlarge'>\"I wouldn't advise that.\"</span>")
 			to_chat(user, "<span class='warning'>An overwhelming sense of nausea overpowers you!</span>")
 			user.Dizzy(80)
+			user.dropItemToGround(src, TRUE)
 			user.Knockdown(30)
 			return
 		else
@@ -130,6 +131,7 @@
 			to_chat(user, "<span class='userdanger'>A horrible force yanks at your arm!</span>")
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, pick("l_arm", "r_arm"))
+			user.dropItemToGround(src, TRUE)
 			user.Knockdown(50)
 			return
 	jaunt.Grant(user, src)
@@ -163,7 +165,7 @@
 
 /obj/item/twohanded/required/cult_bastard/afterattack(atom/target, mob/user, proximity, click_parameters)
 	. = ..()
-	if(dash_toggled && jaunt.IsAvailable())
+	if(dash_toggled)
 		jaunt.Teleport(user, target)
 		return
 	if(!proximity)
@@ -302,7 +304,7 @@
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar-Sie"
+	desc = "A set of armored robes worn by the followers of Nar-Sie."
 	icon_state = "magusred"
 	item_state = "magusred"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -324,7 +326,7 @@
 	icon_state = "cult_armor"
 	item_state = "cult_armor"
 	desc = "A heavily-armored exosuit worn by warriors of the Nar-Sien cult. It can withstand hard vacuum."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_BULKY
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals/)
 	armor = list(melee = 70, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30, fire = 40, acid = 75)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cult
@@ -577,21 +579,21 @@
 		if(!Adjacent(user) || !src || QDELETED(src) || user.incapacitated())
 			return
 		if(!cultist_to_receive)
-			to_chat(user, "<span class='cultitalic'>You require a destination!</span>")
+			to_chat(user, "<span class='cult italic'>You require a destination!</span>")
 			log_game("Void torch failed - no target")
 			return
 		if(cultist_to_receive.stat == DEAD)
-			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] has died!</span>")
+			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
 			log_game("Void torch failed  - target died")
 			return
 		if(!iscultist(cultist_to_receive))
-			to_chat(user, "<span class='cultitalic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
+			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
 			log_game("Void torch failed - target was deconverted")
 			return
 		if(A in user.GetAllContents())
-			to_chat(user, "<span class='cultitalic'>[A] must be on a surface in order to teleport it!</span>")
+			to_chat(user, "<span class='cult italic'>[A] must be on a surface in order to teleport it!</span>")
 			return
-		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		to_chat(user, "<span class='cult italic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
 		cultist_to_receive.put_in_hands(A)
 		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")

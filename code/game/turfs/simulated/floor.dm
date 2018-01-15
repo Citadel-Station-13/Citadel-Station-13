@@ -51,27 +51,29 @@
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		src.ChangeTurf(src.baseturf)
+		ScrapeAway()
 	if(target != null)
 		severity = 3
 
 	switch(severity)
 		if(1)
-			src.ChangeTurf(src.baseturf)
+			ScrapeAway()
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
 					src.ReplaceWithLattice()
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(src.baseturf)
+					ScrapeAway()
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-					if(prob(33)) new /obj/item/stack/sheet/metal(src)
+					if(prob(33))
+						new /obj/item/stack/sheet/metal(src)
 		if(3)
 			if (prob(50))
 				src.break_tile()
@@ -117,7 +119,7 @@
 /turf/open/floor/proc/make_plating()
 	return ChangeTurf(/turf/open/floor/plating)
 
-/turf/open/floor/ChangeTurf(path, new_baseturf, defer_change = FALSE, ignore_air = FALSE, forceop = FALSE)
+/turf/open/floor/ChangeTurf(path, new_baseturf, flags)
 	if(!isfloorturf(src))
 		return ..() //fucking turfs switch the fucking src of the fucking running procs
 	if(!ispath(path, /turf/open/floor))
@@ -200,7 +202,7 @@
 		ChangeTurf(/turf/open/floor/clockwork)
 
 /turf/open/floor/acid_melt()
-	ChangeTurf(baseturf)
+	ScrapeAway()
 
 /turf/open/floor/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -209,7 +211,8 @@
 		if(RCD_AIRLOCK)
 			if(the_rcd.airlock_glass)
 				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 20)
-			else return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
+			else
+				return list("mode" = RCD_AIRLOCK, "delay" = 50, "cost" = 16)
 		if(RCD_DECONSTRUCT)
 			return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 33)
 		if(RCD_WINDOWGRILLE)
@@ -220,7 +223,7 @@
 	switch(passed_mode)
 		if(RCD_FLOORWALL)
 			to_chat(user, "<span class='notice'>You build a wall.</span>")
-			ChangeTurf(/turf/closed/wall)
+			PlaceOnTop(/turf/closed/wall)
 			return TRUE
 		if(RCD_AIRLOCK)
 			if(locate(/obj/machinery/door/airlock) in src)
@@ -241,10 +244,9 @@
 			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)
-			if(istype(src, baseturf))
+			if(ScrapeAway() == src)
 				return FALSE
 			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
-			ChangeTurf(baseturf)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			if(locate(/obj/structure/grille) in src)

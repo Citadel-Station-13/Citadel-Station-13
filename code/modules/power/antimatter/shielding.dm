@@ -3,7 +3,8 @@
 	var/list/things = list()
 	for(var/direction in GLOB.cardinals)
 		var/turf/T = get_step(center, direction)
-		if(!T) continue
+		if(!T)
+			continue
 		things += T.contents
 	return things
 
@@ -179,7 +180,6 @@
 	for(var/direction in GLOB.alldirs)
 		var/found_am_device=0
 		for(var/obj/machinery/machine in get_step(loc, direction))
-		//var/machine = locate(/obj/machinery, get_step(loc, direction))
 			if(!machine)
 				continue//Need all for a core
 			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))

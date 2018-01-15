@@ -4,7 +4,6 @@
 	item_state = "flashbang"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	origin_tech = "materials=2;combat=3"
 
 /obj/item/grenade/flashbang/prime()
 	update_mob()
@@ -14,10 +13,13 @@
 	for(var/mob/living/M in get_hearers_in_view(7, flashbang_turf))
 		bang(get_turf(M), M)
 
+	//START OF CIT CHANGES - makes flashbangs damage blobs
 	for(var/obj/structure/blob/B in get_hear(8,flashbang_turf))     		//Blob damage here
 		var/distance = get_dist(B, get_turf(src))
 		var/damage = round(100/(distance*distance)+1)
 		B.take_damage(damage, BURN, "energy")
+	//END OF CIT CHANGES
+
 	qdel(src)
 
 /obj/item/grenade/flashbang/proc/bang(turf/T , mob/living/M)

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/max_i = 10//number of tries to spawn meteor.
 	while(!isspaceturf(pickedstart))
 		var/startSide = pick(GLOB.cardinals)
-		var/startZ = pick(GLOB.station_z_levels)
+		var/startZ = pick(SSmapping.levels_by_trait(ZTRAIT_STATION))
 		pickedstart = spaceDebrisStartLoc(startSide, startZ)
 		pickedgoal = spaceDebrisFinishLoc(startSide, startZ)
 		max_i--
@@ -40,7 +40,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	var/Me = pickweight(meteortypes)
 	var/obj/effect/meteor/M = new Me(pickedstart, pickedgoal)
 	M.dest = pickedgoal
-	M.z_original = M.z
 
 /proc/spaceDebrisStartLoc(startSide, Z)
 	var/starty
@@ -95,17 +94,17 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	pass_flags = PASSTABLE
 	var/heavy = 0
 	var/meteorsound = 'sound/effects/meteorimpact.ogg'
-	var/z_original = ZLEVEL_STATION_PRIMARY
+	var/z_original
 	var/threat = 0 // used for determining which meteors are most interesting
 	var/lifetime = DEFAULT_METEOR_LIFETIME
-
+	var/timerid = null
 	var/list/meteordrop = list(/obj/item/ore/iron)
 	var/dropamt = 2
 
 /obj/effect/meteor/Move()
 	if(z != z_original || loc == dest)
 		qdel(src)
-		return
+		return FALSE
 
 	. = ..() //process movement...
 
@@ -117,6 +116,8 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 			get_hit()
 
 /obj/effect/meteor/Destroy()
+	if (timerid)
+		deltimer(timerid)
 	GLOB.meteor_list -= src
 	SSaugury.unregister_doom(src)
 	walk(src,0) //this cancels the walk_towards() proc
@@ -124,10 +125,11 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/Initialize(mapload, target)
 	. = ..()
+	z_original = z
 	GLOB.meteor_list += src
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
-	QDEL_IN(src, lifetime)
+	timerid = QDEL_IN(src, lifetime)
 	chase_target(target)
 
 /obj/effect/meteor/Collide(atom/A)
@@ -315,7 +317,6 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 
 /obj/effect/meteor/meaty/xeno/New()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	meteordrop -= /obj/item/organ/alien/eggsac
 	..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)

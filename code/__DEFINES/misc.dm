@@ -4,6 +4,11 @@
 // #define EAST 4
 // #define WEST 8
 
+#define TEXT_NORTH			"[NORTH]"
+#define TEXT_SOUTH			"[SOUTH]"
+#define TEXT_EAST			"[EAST]"
+#define TEXT_WEST			"[WEST]"
+
 //These get to go at the top, because they're special
 //You can use these defines to get the typepath of the currently running proc/verb (yes procs + verbs are objects)
 /* eg:
@@ -44,7 +49,7 @@ Will print: "/mob/living/carbon/human/death" (you can optionally embed it in a s
 #define FRIDAY_13TH				"Friday the 13th"
 
 //Human Overlays Indexes/////////
-//citadel code
+//LOTS OF CIT CHANGES HERE. BE CAREFUL WHEN UPSTREAM ADDS MORE LAYERS
 #define MUTATIONS_LAYER			30		//mutations. Tk headglows, cold resistance glow, etc
 #define GENITALS_BEHIND_LAYER	29		//Some genitalia needs to be behind everything, such as with taurs (Taurs use body_behind_layer
 #define BODY_BEHIND_LAYER		28		//certain mutantrace features (tail when looking south) that must appear behind the body parts
@@ -204,6 +209,7 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 #define BLOODY_FOOTPRINT_BASE_ALPHA	150
 #define BLOOD_GAIN_PER_STEP			100
 #define BLOOD_LOSS_PER_STEP			5
+#define BLOOD_LOSS_IN_SPREAD		20
 #define BLOOD_FADEOUT_TIME			2
 
 //Bloody shoe blood states
@@ -328,9 +334,9 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #endif
 #endif
 
- // Consider these images/atoms as part of the UI/HUD
+// Consider these images/atoms as part of the UI/HUD
 #define APPEARANCE_UI_IGNORE_ALPHA			RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE
-#define APPEARANCE_UI								RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR
+#define APPEARANCE_UI						RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE
 
 //Just space
 #define SPACE_ICON_STATE	"[((x + y) ^ ~(x * y) + z) % 25]"
@@ -438,6 +444,7 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define GIBTONITE_ACTIVE 1
 #define GIBTONITE_STABLE 2
 #define GIBTONITE_DETONATE 3
+
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
@@ -445,8 +452,6 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
 #define BEAT_NONE 0
-
-#define BEAT_CHANNEL 150
 
 //http://www.byond.com/docs/ref/info.html#/atom/var/mouse_opacity
 #define MOUSE_OPACITY_TRANSPARENT 0
@@ -465,7 +470,32 @@ GLOBAL_LIST_INIT(ghost_others_options, list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 
 //Dummy mob reserve slots
 #define DUMMY_HUMAN_SLOT_PREFERENCES "dummy_preference_preview"
+
 #define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 #define PR_ANNOUNCEMENTS_PER_ROUND 5 //The number of unique PR announcements allowed per round
 									//This makes sure that a single person can only spam 3 reopens and 3 closes before being ignored
+
+#define MAX_PROC_DEPTH 195 // 200 proc calls deep and shit breaks, this is a bit lower to give some safety room
+
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
+
+#define SYRINGE_DRAW 0
+#define SYRINGE_INJECT 1
+
+//gold slime core spawning
+#define NO_SPAWN 0
+#define HOSTILE_SPAWN 1
+#define FRIENDLY_SPAWN 2
+
+#define RIDING_OFFSET_ALL "ALL"
+
+//text files
+#define BRAIN_DAMAGE_FILE "traumas.json"
+
+//Fullscreen overlay resolution in tiles.
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15
+
+#define SUMMON_GUNS "guns"
+#define SUMMON_MAGIC "magic"

@@ -24,9 +24,9 @@
 			else //ingest, patch or inject
 				M.ForceContractDisease(D)
 
-	if(method == INJECT && iscarbon(M))
+	if(iscarbon(M))
 		var/mob/living/carbon/C = M
-		if(C.get_blood_id() == "blood")
+		if(C.get_blood_id() == "blood" && (method == INJECT || (method == INGEST && C.dna && C.dna.species && (DRINKSBLOOD in C.dna.species.species_traits))))
 			if(!data || !(data["blood_type"] in get_safe_blood(C.dna.blood_type)))
 				C.reagents.add_reagent("toxin", reac_volume * 0.5)
 			else
@@ -79,8 +79,7 @@
 	if(!B)
 		B = new(T)
 	if(data["blood_DNA"])
-		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
-
+		B.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
 /datum/reagent/liquidgibs
 	name = "Liquid gibs"
@@ -117,7 +116,7 @@
 	taste_description = "water"
 	var/cooling_temperature = 2
 	glass_icon_state = "glass_clear"
-	glass_name = "glass of Water"
+	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
@@ -188,7 +187,7 @@
 	description = "Water blessed by some deity."
 	color = "#E0E8EF" // rgb: 224, 232, 239
 	glass_icon_state  = "glass_clear"
-	glass_name = "glass of Holy Water"
+	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -197,7 +196,8 @@
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
-	if(!data) data = 1
+	if(!data)
+		data = 1
 	data++
 	M.jitteriness = min(M.jitteriness+4,10)
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
@@ -230,7 +230,8 @@
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
-	if(!istype(T)) return
+	if(!istype(T))
+		return
 	if(reac_volume>=10)
 		for(var/obj/effect/rune/R in T)
 			qdel(R)
@@ -259,7 +260,7 @@
 		M.adjustBruteLoss(-2, 0)
 		M.adjustFireLoss(-2, 0)
 	else
-		M.adjustBrainLoss(3)
+		M.adjustBrainLoss(3, 150)
 		M.adjustToxLoss(1, 0)
 		M.adjustFireLoss(2, 0)
 		M.adjustOxyLoss(2, 0)
@@ -278,7 +279,7 @@
 	M.IgniteMob()			//Only problem with igniting people is currently the commonly availible fire suits make you immune to being on fire
 	M.adjustToxLoss(1, 0)
 	M.adjustFireLoss(1, 0)		//Hence the other damages... ain't I a bastard?
-	M.adjustBrainLoss(5)
+	M.adjustBrainLoss(5, 150)
 	holder.remove_reagent(src.id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
@@ -367,8 +368,6 @@
 		if(method == INGEST)
 			if(show_message)
 				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
-			M.AdjustStun(40)
-			M.AdjustKnockdown(40)
 	..()
 
 
@@ -676,7 +675,7 @@
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
-	M.adjustBrainLoss(2)
+	M.adjustBrainLoss(1)
 	..()
 
 /datum/reagent/sulfur
@@ -941,12 +940,12 @@
 	else
 		if(O)
 			O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			O.clean_blood()
+			O.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/reaction_turf(turf/T, reac_volume)
 	if(reac_volume >= 1)
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		T.clean_blood()
+		T.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 		for(var/obj/effect/decal/cleanable/C in T)
 			qdel(C)
 
@@ -964,26 +963,26 @@
 					H.lip_style = null
 					H.update_body()
 			for(var/obj/item/I in C.held_items)
-				I.clean_blood()
+				I.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 			if(C.wear_mask)
-				if(C.wear_mask.clean_blood())
+				if(C.wear_mask.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 					C.update_inv_wear_mask()
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = C
 				if(H.head)
-					if(H.head.clean_blood())
+					if(H.head.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_head()
 				if(H.wear_suit)
-					if(H.wear_suit.clean_blood())
+					if(H.wear_suit.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_wear_suit()
 				else if(H.w_uniform)
-					if(H.w_uniform.clean_blood())
+					if(H.w_uniform.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_w_uniform()
 				if(H.shoes)
-					if(H.shoes.clean_blood())
+					if(H.shoes.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD))
 						H.update_inv_shoes()
 				H.wash_cream()
-			M.clean_blood()
+			M.SendSignal(COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
 
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
@@ -1029,7 +1028,7 @@
 /datum/reagent/impedrezene/on_mob_life(mob/living/M)
 	M.jitteriness = max(M.jitteriness-5,0)
 	if(prob(80))
-		M.adjustBrainLoss(1*REM)
+		M.adjustBrainLoss(2*REM)
 	if(prob(50))
 		M.drowsyness = max(M.drowsyness, 3)
 	if(prob(10))
@@ -1157,6 +1156,38 @@
 	if(prob(20))
 		M.losebreath += 2
 		M.confused = min(M.confused + 2, 5)
+	..()
+
+/datum/reagent/stimulum
+	name = "Stimulum"
+	id = "stimulum"
+	description = "An unstable experimental gas that greatly increases the energy of those that inhale it"
+	reagent_state = GAS
+	metabolization_rate = 1.5 * REAGENTS_METABOLISM
+	color = "E1A116"
+	taste_description = "sourness"
+
+/datum/reagent/stimulum/on_mob_life(mob/living/M) // Has a speedup, and the anti-stun effects of nicotine.
+	M.status_flags |= GOTTAGOFAST
+	M.AdjustStun(-20, 0)
+	M.AdjustKnockdown(-20, 0)
+	M.AdjustUnconscious(-20, 0)
+	M.adjustStaminaLoss(-0.5*REM, 0)
+	current_cycle++
+	holder.remove_reagent(id, 0.99)		//Gives time for the next tick of life().
+	. = TRUE //Update status effects.
+
+/datum/reagent/nitryl
+	name = "Nitryl"
+	id = "no2"
+	description = "A highly reactive gas that makes you feel faster"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM
+	color = "90560B"
+	taste_description = "burning"
+
+/datum/reagent/nitryl/on_mob_life(mob/living/M) //Has just a speedup
+	M.status_flags |= GOTTAGOFAST
 	..()
 
 /////////////////////////Coloured Crayon Powder////////////////////////////
@@ -1568,7 +1599,7 @@
 
 /datum/reagent/romerol/on_mob_life(mob/living/carbon/human/H)
 	// Silently add the zombie infection organ to be activated upon death
-	if(!H.getorganslot("zombie_infection"))
+	if(!H.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(H)
 	..()
@@ -1657,3 +1688,23 @@
 	description = "blue sparkles that get everywhere"
 	color = "#4040FF" //A blueish color
 	glitter_type = /obj/effect/decal/cleanable/glitter/blue
+
+/datum/reagent/pax
+	name = "pax"
+	id = "pax"
+	description = "A colorless liquid that suppresses violence on the subjects."
+	color = "#AAAAAA55"
+	taste_description = "water"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM
+
+/datum/reagent/pax/on_mob_add(mob/M)
+	..()
+	if(isliving(M))
+		var/mob/living/L = M
+		L.add_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
+
+/datum/reagent/pax/on_mob_delete(mob/M)
+	if(isliving(M))
+		var/mob/living/L = M
+		L.remove_disability(DISABILITY_PACIFISM, CHEMICAL_DISABILITY)
+	..()

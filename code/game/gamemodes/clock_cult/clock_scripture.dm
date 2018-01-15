@@ -53,6 +53,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		if(slab.busy)
 			to_chat(invoker, "<span class='warning'>[slab] refuses to work, displaying the message: \"[slab.busy]!\"</span>")
 			return FALSE
+		pre_recital()
 		slab.busy = "Invocation ([name]) in progress"
 		if(GLOB.ratvar_awakens)
 			channel_time *= 0.5 //if ratvar has awoken, half channel time and no cost
@@ -65,7 +66,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		else
 			successful = TRUE
 			if(slab && !slab.no_cost && !GLOB.ratvar_awakens) //if the slab exists and isn't debug and ratvar isn't up, log the scripture as being used
-				SSblackbox.add_details("clockcult_scripture_recited", name)
+				SSblackbox.record_feedback("tally", "clockcult_scripture_recited", 1, name)
 	if(slab)
 		slab.busy = null
 	post_recital()
@@ -125,7 +126,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 /datum/clockwork_scripture/proc/check_offstation_penalty()
 	var/turf/T = get_turf(invoker)
-	if(!T || (!(T.z in GLOB.station_z_levels) && T.z != ZLEVEL_CENTCOM && T.z != ZLEVEL_MINING && T.z != ZLEVEL_LAVALAND && T.z != ZLEVEL_CITYOFCOGS))
+	if(!T || (!is_centcom_level(T.z) && !is_station_level(T.z) && !is_mining_level(T.z) && !is_reebe(T.z)))
 		channel_time *= 2
 		power_cost *= 2
 		return TRUE
@@ -174,6 +175,9 @@ Applications: 8 servants, 3 caches, and 100 CV
 
 
 /datum/clockwork_scripture/proc/scripture_fail() //Called if the scripture fails to invoke.
+
+
+/datum/clockwork_scripture/proc/pre_recital() //Called before the scripture is recited
 
 
 /datum/clockwork_scripture/proc/post_recital() //Called after the scripture is recited
@@ -258,7 +262,7 @@ Applications: 8 servants, 3 caches, and 100 CV
 		to_chat(invoker, "<span class='warning'>There are too many constructs of this type ([constructs])! You may only have [round(construct_limit)] at once.</span>")
 		return
 	var/obj/structure/destructible/clockwork/massive/celestial_gateway/G = GLOB.ark_of_the_clockwork_justiciar
-	if(G && !G.active && combat_construct && invoker.z == ZLEVEL_CITYOFCOGS && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
+	if(G && !G.active && combat_construct && is_reebe(invoker.z) && !confirmed) //Putting marauders on the base during the prep phase is a bad idea mmkay
 		if(alert(invoker, "This is a combat construct, and you cannot easily get it to the station. Are you sure you want to make one here?", "Construct Alert", "Yes", "Cancel") == "Cancel")
 			return
 		if(!is_servant_of_ratvar(invoker) || !invoker.canUseTopic(slab))

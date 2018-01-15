@@ -15,7 +15,7 @@
 
 /datum/objective/crew/cyborgs/check_completion()
 	var/borgcount = target_amount
-	for(var/mob/living/silicon/robot/R in GLOB.living_mob_list)
+	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
 		if(!(R.stat == DEAD))
 			borgcount--
 	if(borgcount <= 0)
@@ -38,8 +38,8 @@
 	explanation_text = "Make sure the research required to produce a [initial(targetdesign.name)] is available on the R&D server by the end of the shift."
 
 /datum/objective/crew/research/check_completion()
-	for(var/obj/machinery/r_n_d/server/S in GLOB.machines)
-		if(S && S.files && S.files.known_designs)
-			if(targetdesign in S.files.known_designs)
+	for(var/obj/machinery/rnd/server/S in GLOB.machines)
+		if(S && S.stored_research)
+			if(S.stored_research.researched_designs[initial(targetdesign.id)])
 				return TRUE
 	return FALSE

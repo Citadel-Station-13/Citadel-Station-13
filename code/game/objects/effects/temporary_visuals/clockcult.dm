@@ -86,8 +86,8 @@
 	transform = matrix()*2
 	var/matrix/M = transform
 	M.Turn(90)
-	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags_1 = ANIMATION_PARALLEL)
-	animate(src, transform = M, time = duration, flags_1 = ANIMATION_PARALLEL)
+	animate(src, alpha = 20, time = duration, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = M, time = duration, flags = ANIMATION_PARALLEL)
 
 /obj/effect/temp_visual/ratvar/ocular_warden
 	name = "warden's gaze"
@@ -253,3 +253,17 @@
 	. = ..()
 	animate(src, alpha = 255, time = 50)
 
+//Used by the Eminence to coordinate the cult
+/obj/effect/temp_visual/ratvar/command_point
+	name = "command marker"
+	desc = "An area of importance marked by the Eminence."
+	icon = 'icons/mob/actions/actions_clockcult.dmi'
+	icon_state = "eminence"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	resistance_flags = INDESTRUCTIBLE
+	layer = MASSIVE_OBJ_LAYER
+	duration = 300
+
+/obj/effect/temp_visual/ratvar/command_point/Initialize(mapload, appearance)
+	. = ..()
+	icon_state = appearance

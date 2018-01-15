@@ -1,4 +1,4 @@
-// DISCO DANCE MACHINE - For engineering power optimization incentive nurturing test system (POINTS)
+// DISCO DANCE MACHINE - For admin, engineering and shuttle memes/abuse.
 
 /obj/machinery/disco
 	name = "radiant dance machine mark IV"
@@ -22,6 +22,14 @@
 		new /datum/track("Engineering's Ultimate High-Energy Hustle",	'sound/misc/boogie2.ogg',	1770, 	5),
 		)
 	var/datum/track/selection = null
+
+/obj/machinery/disco/indestructible
+	name = "radiant dance machine mark V"
+	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
+	req_access = null
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	flags_1 = NODECONSTRUCT_1
 
 /datum/track
 	var/song_name = "generic"
@@ -59,7 +67,7 @@
 	return ..()
 
 /obj/machinery/disco/attackby(obj/item/O, mob/user, params)
-	if(!active)
+	if(!active && !(flags_1 & NODECONSTRUCT_1))
 		if(istype(O, /obj/item/wrench))
 			if(!anchored && !isinspace())
 				to_chat(user,"<span class='notice'>You secure [src] to the floor.</span>")
@@ -92,21 +100,21 @@
 	user.set_machine(src)
 	var/list/dat = list()
 	dat +="<div class='statusDisplay' style='text-align:center'>"
-	dat += "<b><A href='?src=\ref[src];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
+	dat += "<b><A href='?src=[REF(src)];action=toggle'>[!active ? "BREAK IT DOWN" : "SHUT IT DOWN"]<b></A><br>"
 	dat += "</div><br>"
-	dat += "<A href='?src=\ref[src];action=select'> Select Track</A><br>"
+	dat += "<A href='?src=[REF(src)];action=select'> Select Track</A><br>"
 	dat += "Track Selected: [selection.song_name]<br>"
 	dat += "Track Length: [DisplayTimeText(selection.song_length)]<br><br>"
 	dat += "<br>DJ's Soundboard:<b><br>"
 	dat +="<div class='statusDisplay'><div style='text-align:center'>"
-	dat += "<A href='?src=\ref[src];action=horn'>Air Horn</A>  "
-	dat += "<A href='?src=\ref[src];action=alert'>Station Alert</A>  "
-	dat += "<A href='?src=\ref[src];action=siren'>Warning Siren</A>  "
-	dat += "<A href='?src=\ref[src];action=honk'>Honk</A><br>"
-	dat += "<A href='?src=\ref[src];action=pump'>Shotgun Pump</A>"
-	dat += "<A href='?src=\ref[src];action=pop'>Gunshot</A>"
-	dat += "<A href='?src=\ref[src];action=saber'>Esword</A>"
-	dat += "<A href='?src=\ref[src];action=harm'>Harm Alarm</A>"
+	dat += "<A href='?src=[REF(src)];action=horn'>Air Horn</A>  "
+	dat += "<A href='?src=[REF(src)];action=alert'>Station Alert</A>  "
+	dat += "<A href='?src=[REF(src)];action=siren'>Warning Siren</A>  "
+	dat += "<A href='?src=[REF(src)];action=honk'>Honk</A><br>"
+	dat += "<A href='?src=[REF(src)];action=pump'>Shotgun Pump</A>"
+	dat += "<A href='?src=[REF(src)];action=pop'>Gunshot</A>"
+	dat += "<A href='?src=[REF(src)];action=saber'>Esword</A>"
+	dat += "<A href='?src=[REF(src)];action=harm'>Harm Alarm</A>"
 	var/datum/browser/popup = new(user, "vending", "Radiance Dance Machine - Mark IV", 400, 350)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -459,6 +467,8 @@
 		var/sound/song_played = sound(selection.song_path)
 
 		for(var/mob/M in range(10,src))
+			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
 				M.playsound_local(get_turf(M), null, 100, channel = CHANNEL_JUKEBOX, S = song_played)

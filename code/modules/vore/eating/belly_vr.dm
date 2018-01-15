@@ -137,6 +137,7 @@
 	M.forceMove(owner.loc)  // Move the belly contents into the same location as belly's owner.
 	M << sound(null, repeat = 0, wait = 0, volume = 80, channel = CHANNEL_PREYLOOP)
 	src.internal_contents.Remove(M)  // Remove from the belly contents
+
 	var/datum/belly/B = check_belly(owner)
 	if(B)
 		B.internal_contents.Add(M)
@@ -394,6 +395,19 @@
 	if(!silent)
 		for(var/mob/hearer in range(1,owner))
 			hearer << sound(target.vore_sound,volume=80)
+/*
+//Handles creation of temporary 'vore chest' upon digestion
+/datum/belly/proc/slimy_mass(var/obj/item/content, var/mob/living/M)
+	if(!content in internal_contents)
+		return
+	internal_contents += new /obj/structure/closet/crate/vore(src)
+	internal_contents.Remove(content)
+	M.transferItemToLoc(content, /obj/structure/closet/crate/vore)
+	if(!M.transferItemToLoc(W))
+		qdel(W)
+
+/datum/belly/proc/regurgitate_items(var/obj/structure/closet/crate/vore/C)
+	*/
 
 // Belly copies and then returns the copy
 // Needs to be updated for any var changes

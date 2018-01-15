@@ -1,6 +1,6 @@
 /obj/machinery/sleep_console
 	name = "sleeper console"
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "console"
 	density = FALSE
 	anchored = TRUE
@@ -8,14 +8,14 @@
 /obj/machinery/sleeper
 	name = "sleeper"
 	desc = "An enclosed machine used to stabilize and heal patients."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
 	density = FALSE
 	anchored = TRUE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
 	var/efficiency = 1
-	var/min_health = 30
+	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
@@ -42,7 +42,7 @@
 		I += M.rating
 
 	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) - (10*E)
+	min_health = initial(min_health) - (10*(E-1)) // CIT CHANGE - changes min health equation to be min_health - (matterbin rating * 10)
 	available_chems = list()
 	for(var/i in 1 to I)
 		available_chems |= possible_chems[i]

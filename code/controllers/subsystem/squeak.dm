@@ -1,6 +1,6 @@
 // The Squeak
 // because this is about placement of mice mobs, and nothing to do with
-// mice - the computer peripheral 
+// mice - the computer peripheral
 
 SUBSYSTEM_DEF(squeak)
 	name = "Squeak"
@@ -34,7 +34,7 @@ SUBSYSTEM_DEF(squeak)
 /datum/controller/subsystem/squeak/proc/find_exposed_wires()
 	exposed_wires.Cut()
 	var/list/all_turfs
-	for (var/z in GLOB.station_z_levels)
+	for (var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
 		all_turfs += block(locate(1,1,z), locate(world.maxx,world.maxy,z))
 	for(var/turf/open/floor/plating/T in all_turfs)
 		if(is_blocked_turf(T))

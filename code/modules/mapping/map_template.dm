@@ -49,8 +49,8 @@
 	SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load_new_z()
-	var/x = round(world.maxx/2)
-	var/y = round(world.maxy/2)
+	var/x = round((world.maxx - width)/2)
+	var/y = round((world.maxy - height)/2)
 
 	var/list/bounds = maploader.load_map(file(mappath), x, y)
 	if(!bounds)
@@ -74,7 +74,7 @@
 	if(T.y+height > world.maxy)
 		return
 
-	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE)
+	var/list/bounds = maploader.load_map(file(mappath), T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS))
 	if(!bounds)
 		return
 

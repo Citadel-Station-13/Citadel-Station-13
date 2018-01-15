@@ -9,8 +9,8 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	unique_rename = TRUE
 	w_class = WEIGHT_CLASS_TINY
+	unique_rename = TRUE
 	var/reskinned = FALSE
 
 /obj/item/nullrod/suicide_act(mob/user)
@@ -42,7 +42,7 @@
 
 	SSreligion.holy_weapon_type = holy_weapon.type
 
-	SSblackbox.set_details("chaplain_weapon","[choice]")
+	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
 
 	if(holy_weapon)
 		holy_weapon.reskinned = TRUE
@@ -229,6 +229,9 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
+/obj/item/nullrod/scythe/talking/relaymove(mob/user)
+	return //stops buckled message spam for the ghost.
+
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
@@ -353,6 +356,11 @@
 	flags_1 = ABSTRACT_1 | NODROP_1
 	w_class = WEIGHT_CLASS_HUGE
 	sharpness = IS_SHARP
+
+/obj/item/nullrod/armblade/tentacle
+	name = "unholy blessing"
+	icon_state = "tentacle"
+	item_state = "tentacle"
 
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"

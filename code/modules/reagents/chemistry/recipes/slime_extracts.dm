@@ -3,7 +3,7 @@
 	var/deletes_extract = TRUE
 
 /datum/chemical_reaction/slime/on_reaction(datum/reagents/holder)
-	SSblackbox.add_details("slime_cores_used","[type]")
+	SSblackbox.record_feedback("tally", "slime_cores_used", 1, "type")
 	if(deletes_extract)
 		delete_extract(holder)
 
@@ -152,11 +152,10 @@
 		var/chosen = pick(borks)
 		var/obj/B = new chosen(T)
 		if(prob(5))//Fry it!
-			var/obj/item/reagent_containers/food/snacks/deepfryholder/D = new(T)
-			var/datum/reagents/reagents = new(25)
-			reagents.add_reagent("nutriment", 25)
-			D.fry(B, reagents)
-			B = D
+			var/obj/item/reagent_containers/food/snacks/deepfryholder/fried
+			fried = new(T, B)
+			fried.fry() // actually set the name and colour it
+			B = fried
 		if(prob(50))
 			for(var/j in 1 to rand(1, 3))
 				step(B, pick(NORTH,SOUTH,EAST,WEST))
@@ -243,7 +242,7 @@
 	if(holder && holder.my_atom)
 		var/turf/open/T = get_turf(holder.my_atom)
 		if(istype(T))
-			T.atmos_spawn_air("freon=50;TEMP=120")
+			T.atmos_spawn_air("nitrogen=50;TEMP=2.7")
 
 /datum/chemical_reaction/slime/slimefireproof
 	name = "Slime Fireproof"
@@ -553,10 +552,9 @@
 	required_other = 1
 
 /datum/chemical_reaction/slime/slimestop/on_reaction(datum/reagents/holder)
-	var/obj/effect/timestop/T = new /obj/effect/timestop
-	T.forceMove(get_turf(holder.my_atom))
-	T.immune += get_mob_by_key(holder.my_atom.fingerprintslast)
-	T.timestop()
+	var/turf/T = get_turf(holder.my_atom)
+	var/list/M = list(get_mob_by_key(holder.my_atom.fingerprintslast))
+	new /obj/effect/timestop(T, null, null, M)
 	..()
 
 /datum/chemical_reaction/slime/slimecamera
@@ -641,4 +639,3 @@
 /datum/chemical_reaction/slime/flight_potion/on_reaction(datum/reagents/holder)
 	new /obj/item/reagent_containers/glass/bottle/potion/flight(get_turf(holder.my_atom))
 	..()
-

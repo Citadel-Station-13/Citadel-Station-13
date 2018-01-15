@@ -14,7 +14,6 @@
 	magboot_state = "DS-magboots"
 	icon = 'icons/obj/clothing/vg_clothes.dmi'
 	icon_override = 'icons/mob/citadel/head.dmi'
-	origin_tech = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/magboots/atmos

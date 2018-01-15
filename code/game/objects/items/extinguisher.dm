@@ -1,4 +1,3 @@
-
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	desc = "A traditional red fire extinguisher."
@@ -16,6 +15,7 @@
 	attack_verb = list("slammed", "whacked", "bashed", "thunked", "battered", "bludgeoned", "thrashed")
 	dog_fashion = /datum/dog_fashion/back
 	resistance_flags = FIRE_PROOF
+	container_type = AMOUNT_VISIBLE
 	var/max_water = 50
 	var/last_use = 1
 	var/safety = TRUE
@@ -48,7 +48,6 @@
 /obj/item/extinguisher/attack_self(mob/user)
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
-	src.desc = "The safety is [safety ? "on" : "off"]."
 	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
@@ -67,11 +66,10 @@
 
 /obj/item/extinguisher/examine(mob/user)
 	..()
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
+
 	if(reagents.total_volume)
-		to_chat(user, "It contains [round(reagents.total_volume)] unit\s.")
 		to_chat(user, "<span class='notice'>Alt-click to empty it.</span>")
-	else
-		to_chat(user, "It is empty.")
 
 /obj/item/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
@@ -157,19 +155,24 @@
 				if(precision)
 					the_targets -= my_target
 				var/datum/reagents/R = new/datum/reagents(5)
-				if(!W) return
+				if(!W)
+					return
 				W.reagents = R
 				R.my_atom = W
-				if(!W || !src) return
+				if(!W || !src)
+					return
 				src.reagents.trans_to(W,1)
 				for(var/b=0, b<power, b++)
 					step_towards(W,my_target)
-					if(!W || !W.reagents) return
+					if(!W || !W.reagents)
+						return
 					W.reagents.reaction(get_turf(W))
 					for(var/A in get_turf(W))
-						if(!W) return
+						if(!W)
+							return
 						W.reagents.reaction(A)
-					if(W.loc == my_target) break
+					if(W.loc == my_target)
+						break
 					sleep(2)
 
 	else

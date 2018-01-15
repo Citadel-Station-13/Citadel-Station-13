@@ -39,7 +39,7 @@
 	name = "Bear"
 	icon_state = "bear"
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	
+
 /datum/sprite_accessory/tails/human/bear
 	name = "Bear"
 	icon_state = "bear"
@@ -65,7 +65,7 @@
 	icon_state = "cow"
 	icon = 'icons/mob/mam_bodyparts.dmi'
 	gender_specific = 1
-	
+
 /datum/sprite_accessory/tails/human/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -175,21 +175,24 @@
 	name = "Otusian"
 	icon_state = "otie"
 	hasinner= 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/otie
 	name = "Otusian"
 	icon_state = "otie"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails_animated/human/otie
 	name = "Otusian"
 	icon_state = "otie"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/ears/human/rabbit
     name = "Rabbit"
     icon_state = "rabbit"
     hasinner= 1
     icon = 'icons/mob/mam_bodyparts.dmi'
-	
+
 /datum/sprite_accessory/tails/human/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"
@@ -201,10 +204,11 @@
 	icon_state = "rabbit"
 	color_src = 0
 	icon = 'icons/mob/mam_bodyparts.dmi'
-	
+
 /datum/sprite_accessory/ears/human/skunk
 	name = "skunk"
 	icon_state = "skunk"
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/skunk
 	name = "skunk"
@@ -248,6 +252,7 @@
 	name = "Wolf"
 	icon_state = "wolf"
 	hasinner = 1
+	icon = 'icons/mob/mam_bodyparts.dmi'
 
 /datum/sprite_accessory/tails/human/wolf
 	name = "Wolf"
@@ -341,7 +346,7 @@
 /datum/sprite_accessory/mam_ears/bear
 	name = "Bear"
 	icon_state = "bear"
-	
+
 /datum/sprite_accessory/mam_tails/bear
 	name = "Bear"
 	icon_state = "bear"
@@ -352,9 +357,9 @@
 
 /datum/sprite_accessory/mam_ears/catbig
 	name = "Cat, Big"
-	icon_state = "cat"
+	icon_state = "catbig"
 	hasinner = 1
-	
+
 /datum/sprite_accessory/mam_tails/catbig
 	name = "Cat, Big"
 	icon_state = "catbig"
@@ -367,7 +372,7 @@
 	name = "Cow"
 	icon_state = "cow"
 	gender_specific = 1
-	
+
 /datum/sprite_accessory/mam_tail/cow
 	name = "Cow"
 	icon_state = "cow"
@@ -522,7 +527,7 @@
     name = "Rabbit"
     icon_state = "rabbit"
     hasinner= 1
-	
+
 /datum/sprite_accessory/mam_tails/rabbit
 	name = "Rabbit"
 	icon_state = "rabbit"

@@ -11,7 +11,6 @@
 	slot_flags = SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
-	origin_tech = "engineering=1;magnets=1"
 
 /obj/item/device/mining_scanner/attack_self(mob/user)
 	if(!user.client)
@@ -42,7 +41,6 @@
 	var/cooldown = 35
 	var/current_cooldown = 0
 	var/range = 7
-	origin_tech = "engineering=3;magnets=3"
 
 /obj/item/device/t_scanner/adv_mining_scanner/lesser
 	name = "automatic mining scanner"
@@ -73,7 +71,7 @@
 	plane = FULLSCREEN_PLANE
 	layer = FLASH_LAYER
 	icon = 'icons/effects/ore_visuals.dmi'
-	appearance_flags = 0 //to avoid having TILE_BOUND in the flags_1, so that the 480x480 icon states let you see it no matter where you are
+	appearance_flags = 0 //to avoid having TILE_BOUND in the flags, so that the 480x480 icon states let you see it no matter where you are
 	duration = 35
 	pixel_x = -224
 	pixel_y = -224

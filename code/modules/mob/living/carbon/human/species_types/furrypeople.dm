@@ -2,13 +2,12 @@
 	name = "Mammal"
 	id = "mammal"
 	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings", "snout", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "body_markings" = "None", "mam_tail" = "None", "mam_ears" = "None", "mam_body_markings" = "None", "taur" = "None")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRIED
 	disliked_food = TOXIC
 
@@ -25,13 +24,12 @@
 	id = "avian"
 	say_mod = "chirps"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("snout", "wings", "taur", "mam_tail", "mam_body_markings", "taur")
 	default_features = list("snout" = "Sharp", "wings" = "None", "taur" = "None", "mam_body_markings" = "Hawk")
 	attack_verb = "peck"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 
@@ -47,13 +45,12 @@
 	name = "Aquatic"
 	id = "aquatic"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings", "mam_ears", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF","mam_tail" = "shark", "mam_body_markings" = "None", "mam_ears" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT
 	disliked_food = TOXIC
 
@@ -69,13 +66,12 @@
 	name = "Insect"
 	id = "insect"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_body_markings", "mam_ears", "mam_tail", "taur")
 	default_features = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_body_markings" = "moth", "mam_tail" = "None", "mam_ears" = "None")
 	attack_verb = "flutter" //wat?
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1
 	liked_food = MEAT | FRUIT
 	disliked_food = TOXIC
 
@@ -94,10 +90,9 @@
 	id = "xeno"
 	say_mod = "hisses"
 	default_color = "00FF00"
-	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,PIERCEIMMUNE)
+	species_traits = list(MUTCOLORS,LIPS,DIGITIGRADE,SPECIES_ORGANIC)
 	mutant_bodyparts = list("xenotail", "xenohead", "xenodorsal", "taur","mam_body_markings")
 	default_features = list("xenotail"="xeno","xenohead"="standard","xenodorsal"="standard","mcolor" = "0F0","mcolor2" = "0F0","mcolor3" = "0F0","taur" = "None","mam_body_markings" = "xeno")
-	heatmod = 1.3
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -105,7 +100,6 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 	exotic_bloodtype = "L"
 	damage_overlay_type = "xeno"
-	roundstart = 1
 	liked_food = MEAT
 
 //Praise the Omnissiah, A challange worthy of my skills - HS
@@ -138,7 +132,6 @@
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	skinned_type = /obj/item/stack/sheet/animalhide/xeno
 //	safe_toxins_max = 32 //Too much of anything is bad.
-	roundstart = 0
 //	whitelisted = 1
 //	whitelist = list("talkingcactus") //testing whitelisting
 
@@ -182,7 +175,6 @@
 	punchdamagehigh = 14
 	punchstunthreshold = 13
 	blacklisted = 1
-	roundstart = 0
 	whitelist = 1
 	whitelist = list("talkingcactus")
 
@@ -227,13 +219,12 @@
 	name = "DataShark"
 	id = "datashark"
 	default_color = "BCAC9B"
-	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS_PARTSONLY,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_body_markings")
 	default_features = list("mam_tail" = "datashark", "mam_body_markings" = "None")
 	attack_verb = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-//	roundstart = 1
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
@@ -242,10 +233,9 @@
 	name = "Guilmon"
 	id = "guilmon"
 	default_color = "4B4B4B"
-	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR)
+	species_traits = list(MUTCOLORS,EYECOLOR,LIPS,HAIR,SPECIES_ORGANIC)
 	mutant_bodyparts = list("mam_tail", "mam_ears", "mam_body_markings")
 	default_features = list("mcolor" = "FFF", "mcolor2" = "FFF", "mcolor3" = "FFF", "mam_tail" = "guilmon", "mam_ears" = "guilmon", "mam_body_markings" = "guilmon")
 	attack_verb = "claw"
 	attack_sound = 'sound/weapons/slash.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
-	roundstart = 1

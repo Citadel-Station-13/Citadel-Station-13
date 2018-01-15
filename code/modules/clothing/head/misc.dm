@@ -1,5 +1,7 @@
+
+
 /obj/item/clothing/head/centhat
-	name = "\improper Centcom hat"
+	name = "\improper CentCom hat"
 	icon_state = "centcom"
 	desc = "It's good to be emperor."
 	item_state = "that"
@@ -23,7 +25,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = "it smells like fresh donut holes / <i>il sent comme des trous de beignets frais</i>"
+	desc = "It smells like fresh donut holes. / <i>Il sent comme des trous de beignets frais.</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -234,7 +236,7 @@
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
 	attack_verb = list("warned", "cautioned", "smashed")
-	resistance_flags = 0
+	resistance_flags = NONE
 
 /obj/item/clothing/head/santa
 	name = "santa hat"
@@ -290,6 +292,18 @@
 	name = "scarecrow hat"
 	desc = "A simple straw hat."
 	icon_state = "scarecrow_hat"
+
+/obj/item/clothing/head/lobsterhat
+	name = "foam lobster head"
+	desc = "When everything's going to crab, protecting your head is the best choice."
+	icon_state = "lobster_hat"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/drfreezehat
+	name = "doctor freeze's wig"
+	desc = "A cool wig for cool people."
+	icon_state = "drfreeze_hat"
+	flags_inv = HIDEHAIR
 
 /obj/item/clothing/head/pharoah
 	name = "pharoah hat"

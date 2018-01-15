@@ -1,0 +1,4 @@
+author: "Poojawa"
+delete-after: True
+changes: 
+  - bugfix: "re-adds AK-47s button for admins"

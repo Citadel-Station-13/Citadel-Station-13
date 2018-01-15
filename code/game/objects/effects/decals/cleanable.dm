@@ -4,7 +4,7 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
-	var/mergeable_decal = 1 //when two of these are on a same tile or do we need to merge them into just one?
+	var/mergeable_decal = TRUE //when two of these are on a same tile or do we need to merge them into just one?
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	if (random_icon_states && length(src.random_icon_states) > 0)
@@ -47,10 +47,8 @@
 			return
 		else
 			var/hotness = W.is_hot()
-			var/added_heat = (hotness / 100)
-			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
-			src.reagents.handle_reactions()
-			to_chat(user, "<span class='notice'>You heat [src] with [W]!</span>")
+			reagents.expose_temperature(hotness)
+			to_chat(user, "<span class='notice'>You heat [name] with [W]!</span>")
 	else
 		return ..()
 
@@ -62,8 +60,7 @@
 
 /obj/effect/decal/cleanable/fire_act(exposed_temperature, exposed_volume)
 	if(reagents)
-		reagents.chem_temp += 30
-		reagents.handle_reactions()
+		reagents.expose_temperature(exposed_temperature)
 	..()
 
 
@@ -82,13 +79,10 @@
 				add_blood = bloodiness
 			bloodiness -= add_blood
 			S.bloody_shoes[blood_state] = min(MAX_SHOE_BLOODINESS,S.bloody_shoes[blood_state]+add_blood)
-			if(blood_DNA && blood_DNA.len)
-				S.add_blood(blood_DNA)
+			S.add_blood_DNA(return_blood_DNA())
 			S.blood_state = blood_state
 			update_icon()
 			H.update_inv_shoes()
-
-
 
 /obj/effect/decal/cleanable/proc/can_bloodcrawl_in()
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))

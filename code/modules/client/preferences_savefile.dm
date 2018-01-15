@@ -141,6 +141,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		features["has_womb"]			= sanitize_integer(features["has_womb"], 0, 1, 0)
 	if(current_version < 19)
 		pda_style = "mono"
+	if(current_version < 20)
+		pda_color = "#808000"
+
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
@@ -186,16 +189,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["inquisitive_ghost"]	>> inquisitive_ghost
 	S["uses_glasses_colour"]>> uses_glasses_colour
 	S["clientfps"]			>> clientfps
+	S["parallax"]			>> parallax
 	S["menuoptions"]		>> menuoptions
 	S["enable_tips"]		>> enable_tips
 	S["tip_delay"]			>> tip_delay
-	S["parallax"]			>> parallax
-	S["menuoptions"]			>> menuoptions
+	S["pda_style"]			>> pda_style
+	S["pda_color"]			>> pda_color
+
 	//citadel code
 	S["arousable"]			>> arousable
 	S["screenshake"]		>> screenshake
 	S["damagescreenshake"]		>> damagescreenshake
-	S["pda_style"]			>> pda_style
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -220,9 +224,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	ghost_others	= sanitize_inlist(ghost_others, GLOB.ghost_others_options, GHOST_OTHERS_DEFAULT_OPTION)
 	menuoptions		= SANITIZE_LIST(menuoptions)
 	be_special		= SANITIZE_LIST(be_special)
-	screenshake			= sanitize_integer(screenshake, 0, 200, initial(screenshake))
-	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 	pda_style		= sanitize_inlist(MONO, VT, SHARE, ORBITRON)
+	pda_color		= sanitize_hexcolor(pda_color, 6, 1, initial(pda_color))
+
+	screenshake			= sanitize_integer(screenshake, 0, 800, initial(screenshake))
+	damagescreenshake	= sanitize_integer(damagescreenshake, 0, 2, initial(damagescreenshake))
 
 	return 1
 
@@ -234,7 +240,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/"
 
-	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)			//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
+	WRITE_FILE(S["version"] , SAVEFILE_VERSION_MAX)		//updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	//general preferences
 	WRITE_FILE(S["ooccolor"], ooccolor)
@@ -262,11 +268,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["menuoptions"], menuoptions)
 	WRITE_FILE(S["enable_tips"], enable_tips)
 	WRITE_FILE(S["tip_delay"], tip_delay)
+	WRITE_FILE(S["pda_style"], pda_style)
+	WRITE_FILE(S["pda_color"], pda_color)
+
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
 	WRITE_FILE(S["damagescreenshake"], damagescreenshake)
 	WRITE_FILE(S["arousable"], arousable)
-	WRITE_FILE(S["pda_style"], pda_style)
 
 	return 1
 
@@ -294,14 +302,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Species
 	var/species_id
 	S["species"]			>> species_id
-	var/list/roundstart_races = CONFIG_GET(keyed_flag_list/roundstart_races)
-	if(species_id && (species_id in roundstart_races) && CONFIG_GET(flag/join_with_mutant_race))
+	if(species_id)
 		var/newtype = GLOB.species_list[species_id]
 		pref_species = new newtype()
-	else if (roundstart_races.len)
-		var/rando_race = pick(roundstart_races)
-		if (rando_race)
-			pref_species = new rando_race()
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
@@ -338,6 +341,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["feature_human_tail"]				>> features["tail_human"]
 		S["feature_human_ears"]				>> features["ears"]
+	S["human_name"]         >> custom_names["human"]
 	S["clown_name"]			>> custom_names["clown"]
 	S["mime_name"]			>> custom_names["mime"]
 	S["ai_name"]			>> custom_names["ai"]
@@ -408,7 +412,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
-
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
 		update_character(needs_update, S)		//needs_update == savefile_version if we need an update (positive integer)
@@ -426,14 +429,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(gender == MALE)
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_male_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_male_list)
-//		underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
-//		undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
+		//underwear		= sanitize_inlist(underwear, GLOB.underwear_m)
+		//undershirt 		= sanitize_inlist(undershirt, GLOB.undershirt_m)
 	else
 		hair_style			= sanitize_inlist(hair_style, GLOB.hair_styles_female_list)
 		facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_female_list)
-//		underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
-//		undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
-//	socks			= sanitize_inlist(socks, GLOB.socks_list)
+		//underwear		= sanitize_inlist(underwear, GLOB.underwear_f)
+		//undershirt		= sanitize_inlist(undershirt, GLOB.undershirt_f)
+	//socks			= sanitize_inlist(socks, GLOB.socks_list)
 	underwear		= "Nude"
 	undershirt		= "Nude"
 	socks			= "Nude"
@@ -484,56 +487,57 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		return 0
 	S.cd = "/character[default_slot]"
 
-	S["version"]			<< SAVEFILE_VERSION_MAX	//load_character will sanitize any bad data, so assume up-to-date.
+	WRITE_FILE(S["version"]			, SAVEFILE_VERSION_MAX)	//load_character will sanitize any bad data, so assume up-to-date.)
 
 	//Character
-	WRITE_FILE(S["OOC_Notes"], metadata)
-	WRITE_FILE(S["real_name"], real_name)
+	WRITE_FILE(S["OOC_Notes"]			, metadata)
+	WRITE_FILE(S["real_name"]			, real_name)
 	WRITE_FILE(S["name_is_always_random"] , be_random_name)
 	WRITE_FILE(S["body_is_always_random"] , be_random_body)
-	WRITE_FILE(S["gender"], gender)
-	WRITE_FILE(S["age"], age)
-	WRITE_FILE(S["hair_color"], hair_color)
-	WRITE_FILE(S["facial_hair_color"], facial_hair_color)
-	WRITE_FILE(S["eye_color"], eye_color)
-	WRITE_FILE(S["skin_tone"], skin_tone)
-	WRITE_FILE(S["hair_style_name"], hair_style)
-	WRITE_FILE(S["facial_style_name"], facial_hair_style)
-	WRITE_FILE(S["underwear"], underwear)
-	WRITE_FILE(S["undershirt"], undershirt)
-	WRITE_FILE(S["socks"], socks)
-	WRITE_FILE(S["backbag"], backbag)
-	WRITE_FILE(S["uplink_loc"], uplink_spawn_loc)
-	WRITE_FILE(S["species"], pref_species.id)
-	WRITE_FILE(S["feature_mcolor"], features["mcolor"])
-	WRITE_FILE(S["feature_lizard_tail"], features["tail_lizard"])
-	WRITE_FILE(S["feature_human_tail"], features["tail_human"])
-	WRITE_FILE(S["feature_lizard_snout"], features["snout"])
-	WRITE_FILE(S["feature_lizard_horns"], features["horns"])
-	WRITE_FILE(S["feature_human_ears"], features["ears"])
-	WRITE_FILE(S["feature_lizard_frills"], features["frills"])
-	WRITE_FILE(S["feature_lizard_spines"], features["spines"])
-	WRITE_FILE(S["feature_lizard_body_markings"], features["body_markings"])
-	WRITE_FILE(S["feature_lizard_legs"]	, features["legs"])
-	WRITE_FILE(S["clown_name"], custom_names["clown"])
-	WRITE_FILE(S["mime_name"], custom_names["mime"])
-	WRITE_FILE(S["ai_name"]	, custom_names["ai"])
-	WRITE_FILE(S["cyborg_name"], custom_names["cyborg"])
-	WRITE_FILE(S["religion_name"], custom_names["religion"])
-	WRITE_FILE(S["deity_name"], custom_names["deity"])
-	WRITE_FILE(S["prefered_security_department"], prefered_security_department)
+	WRITE_FILE(S["gender"]				, gender)
+	WRITE_FILE(S["age"]				, age)
+	WRITE_FILE(S["hair_color"]			, hair_color)
+	WRITE_FILE(S["facial_hair_color"]	, facial_hair_color)
+	WRITE_FILE(S["eye_color"]			, eye_color)
+	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["hair_style_name"]	, hair_style)
+	WRITE_FILE(S["facial_style_name"]	, facial_hair_style)
+	WRITE_FILE(S["underwear"]			, underwear)
+	WRITE_FILE(S["undershirt"]			, undershirt)
+	WRITE_FILE(S["socks"]				, socks)
+	WRITE_FILE(S["backbag"]			, backbag)
+	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
+	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
+	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])
+	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
+	WRITE_FILE(S["feature_lizard_snout"]			, features["snout"])
+	WRITE_FILE(S["feature_lizard_horns"]			, features["horns"])
+	WRITE_FILE(S["feature_human_ears"]				, features["ears"])
+	WRITE_FILE(S["feature_lizard_frills"]			, features["frills"])
+	WRITE_FILE(S["feature_lizard_spines"]			, features["spines"])
+	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
+	WRITE_FILE(S["feature_lizard_legs"]			, features["legs"])
+	WRITE_FILE(S["human_name"]			, custom_names["human"])
+	WRITE_FILE(S["clown_name"]			, custom_names["clown"])
+	WRITE_FILE(S["mime_name"]			, custom_names["mime"])
+	WRITE_FILE(S["ai_name"]			, custom_names["ai"])
+	WRITE_FILE(S["cyborg_name"]		, custom_names["cyborg"])
+	WRITE_FILE(S["religion_name"]		, custom_names["religion"])
+	WRITE_FILE(S["deity_name"]			, custom_names["deity"])
+	WRITE_FILE(S["prefered_security_department"] , prefered_security_department)
 
 	//Jobs
-	WRITE_FILE(S["joblessrole"], joblessrole)
-	WRITE_FILE(S["job_civilian_high"], job_civilian_high)
-	WRITE_FILE(S["job_civilian_med"], job_civilian_med)
-	WRITE_FILE(S["job_civilian_low"], job_civilian_low)
-	WRITE_FILE(S["job_medsci_high"], job_medsci_high)
-	WRITE_FILE(S["job_medsci_med"], job_medsci_med)
-	WRITE_FILE(S["job_medsci_low"], job_medsci_low)
-	WRITE_FILE(S["job_engsec_high"], job_engsec_high)
-	WRITE_FILE(S["job_engsec_med"], job_engsec_med)
-	WRITE_FILE(S["job_engsec_low"], job_engsec_low)
+	WRITE_FILE(S["joblessrole"]		, joblessrole)
+	WRITE_FILE(S["job_civilian_high"]	, job_civilian_high)
+	WRITE_FILE(S["job_civilian_med"]	, job_civilian_med)
+	WRITE_FILE(S["job_civilian_low"]	, job_civilian_low)
+	WRITE_FILE(S["job_medsci_high"]	, job_medsci_high)
+	WRITE_FILE(S["job_medsci_med"]		, job_medsci_med)
+	WRITE_FILE(S["job_medsci_low"]		, job_medsci_low)
+	WRITE_FILE(S["job_engsec_high"]	, job_engsec_high)
+	WRITE_FILE(S["job_engsec_med"]		, job_engsec_med)
+	WRITE_FILE(S["job_engsec_low"]		, job_engsec_low)
 
 	//Citadel
 	WRITE_FILE(S["feature_genitals_use_skintone"], features["genitals_use_skintone"])
@@ -576,7 +580,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_has_womb"], features["has_womb"])
 	//flavor text
 	WRITE_FILE(S["feature_flavor_text"], features["flavor_text"])
+
 	return 1
+
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN

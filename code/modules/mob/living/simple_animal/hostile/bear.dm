@@ -20,6 +20,7 @@
 	response_harm   = "hits"
 	maxHealth = 60
 	health = 60
+	spacewalk = TRUE
 	var/armored = FALSE
 
 	obj_damage = 60
@@ -35,9 +36,7 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
-	gold_core_spawnable = 1
-	devourable = TRUE
-	no_vore = FALSE
+	gold_core_spawnable = HOSTILE_SPAWN
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -66,9 +65,6 @@
 	health = 120
 	maxHealth = 120
 	armored = TRUE
-
-/mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/update_icons()
 	..()

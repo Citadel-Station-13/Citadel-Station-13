@@ -5,14 +5,13 @@
 	item_state = "ttv"
 	lefthand_file = 'icons/mob/inhands/weapons/bombs_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/bombs_righthand.dmi'
-	desc = "Regulates the transfer of air between two tanks"
+	desc = "Regulates the transfer of air between two tanks."
 	var/obj/item/tank/tank_one
 	var/obj/item/tank/tank_two
 	var/obj/item/device/assembly/attached_device
 	var/mob/attacher = null
 	var/valve_open = FALSE
 	var/toggle = 1
-	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -57,17 +56,17 @@
 
 		GLOB.bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve.")
-		log_game("[key_name_admin(user)] attached a [item] to a transfer valve.")
+		log_game("[key_name(user)] attached a [item] to a transfer valve.")
 		attacher = user
 	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)
 	user.set_machine(src)
 	var/dat = {"<B> Valve properties: </B>
-	<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
-	<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=\ref[src];tanktwo=1'>Remove</A>" : ""]
-	<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=\ref[src];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=\ref[src];rem_device=1'>Remove</A>" : ""]
-	<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=\ref[src];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];open=1'>Open</A>"]"}
+	<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=[REF(src)];tankone=1'>Remove</A>" : ""]
+	<BR> <B> Attachment two:</B> [tank_two] [tank_two ? "<A href='?src=[REF(src)];tanktwo=1'>Remove</A>" : ""]
+	<BR> <B> Valve attachment:</B> [attached_device ? "<A href='?src=[REF(src)];device=1'>[attached_device]</A>" : "None"] [attached_device ? "<A href='?src=[REF(src)];rem_device=1'>Remove</A>" : ""]
+	<BR> <B> Valve status: </B> [ valve_open ? "<A href='?src=[REF(src)];open=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=[REF(src)];open=1'>Open</A>"]"}
 
 	var/datum/browser/popup = new(user, "trans_valve", name)
 	popup.set_content(dat)

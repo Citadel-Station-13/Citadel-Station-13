@@ -11,6 +11,8 @@
 	volume = 260
 	var/list/front_nodes
 	var/list/back_nodes
+	construction_type = /obj/item/pipe/binary
+	pipe_state = "layer_manifold"
 
 /obj/machinery/atmospherics/pipe/layer_manifold/Initialize()
 	front_nodes = list()
@@ -31,17 +33,7 @@
 		A.build_network()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_all_connected_nodes()
-	var/list/obj/machinery/atmospherics/all_connected = list()
-	for(var/obj/machinery/atmospherics/I in front_nodes)
-		all_connected[I] = I
-	for(var/obj/machinery/atmospherics/I in back_nodes)
-		all_connected[I] = I
-	for(var/obj/machinery/atmospherics/I in nodes)
-		all_connected[I] = I
-	var/list/obj/machinery/atmospherics/returnlist = list()
-	for(var/obj/machinery/atmospherics/A in all_connected)
-		returnlist += all_connected[A]
-	return returnlist
+	return front_nodes + back_nodes + nodes
 
 /obj/machinery/atmospherics/pipe/layer_manifold/update_icon()	//HEAVILY WIP FOR UPDATE ICONS!!
 	layer = (initial(layer) + (PIPING_LAYER_MAX * PIPING_LAYER_LCHANGE))	//This is above everything else.
@@ -115,21 +107,21 @@
 		P.destroy_network()
 	while(reference in get_all_connected_nodes())
 		if(reference in nodes)
-			var/I = nodes.Find(reference)
-			NODE_I = null
+			var/i = nodes.Find(reference)
+			nodes[i] = null
 		if(reference in front_nodes)
-			var/I = front_nodes.Find(reference)
-			front_nodes[I] = null
+			var/i = front_nodes.Find(reference)
+			front_nodes[i] = null
 		if(reference in back_nodes)
-			var/I = back_nodes.Find(reference)
-			back_nodes[I] = null
+			var/i = back_nodes.Find(reference)
+			back_nodes[i] = null
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/layer_manifold/relaymove(mob/living/user, dir)
 	if(initialize_directions & dir)
 		return ..()
 	if((NORTH|EAST) & dir)
-		user.ventcrawl_layer = Clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if((SOUTH|WEST) & dir)
-		user.ventcrawl_layer = Clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")

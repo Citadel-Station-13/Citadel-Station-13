@@ -36,6 +36,7 @@ Difficulty: Medium
 	desc = "Guardians of the necropolis."
 	health = 2500
 	maxHealth = 2500
+	spacewalk = TRUE
 	attacktext = "chomps"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	icon_state = "dragon"
@@ -60,7 +61,6 @@ Difficulty: Medium
 	score_type = DRAKE_SCORE
 	deathmessage = "collapses into a pile of bones, its flesh sloughing away."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	no_vore = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/dragon/Initialize()
 	. = ..()
@@ -97,13 +97,10 @@ Difficulty: Medium
 	if(!swooping)
 		..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/Process_Spacemove(movement_dir = 0)
-	return 1
-
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
 		return
-	anger_modifier = Clamp(((maxHealth - health)/50),0,20)
+	anger_modifier = CLAMP(((maxHealth - health)/50),0,20)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 	if(prob(15 + anger_modifier) && !client)
@@ -194,7 +191,7 @@ Difficulty: Medium
 			qdel(F)
 			if(stat == DEAD)
 				swooping &= ~SWOOP_DAMAGEABLE
-				animate(src, alpha = 255, transform = oldtransform, time = 0, flags_1 = ANIMATION_END_NOW) //reset immediately
+				animate(src, alpha = 255, transform = oldtransform, time = 0, flags = ANIMATION_END_NOW) //reset immediately
 			return
 	animate(src, alpha = 100, transform = matrix()*0.7, time = 7)
 	swooping |= SWOOP_INVULNERABLE
@@ -229,10 +226,10 @@ Difficulty: Medium
 
 	//ensure swoop direction continuity.
 	if(negative)
-		if(IsInRange(x, initial_x + 1, initial_x + DRAKE_SWOOP_DIRECTION_CHANGE_RANGE))
+		if(ISINRANGE(x, initial_x + 1, initial_x + DRAKE_SWOOP_DIRECTION_CHANGE_RANGE))
 			negative = FALSE
 	else
-		if(IsInRange(x, initial_x - DRAKE_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
+		if(ISINRANGE(x, initial_x - DRAKE_SWOOP_DIRECTION_CHANGE_RANGE, initial_x - 1))
 			negative = TRUE
 	new /obj/effect/temp_visual/dragon_flight/end(loc, negative)
 	new /obj/effect/temp_visual/dragon_swoop(loc)
@@ -385,6 +382,7 @@ Difficulty: Medium
 	melee_damage_lower = 30
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	loot = list()
+	crusher_loot = list()
 	butcher_results = list(/obj/item/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/lesser/grant_achievement(medaltype,scoretype)
