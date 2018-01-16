@@ -1,0 +1,4 @@
+author: "CitadelStationBot"
+delete-after: True
+changes: 
+  - bugfix: "Ash storms aren't at ear-rapey volumes inside shielded areas."
