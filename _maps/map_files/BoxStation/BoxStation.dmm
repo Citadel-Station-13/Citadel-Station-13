@@ -37537,9 +37537,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 2
-	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "bOl" = (
@@ -37671,9 +37668,9 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 9
 	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/science/misc_lab)
 "bOC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -37927,8 +37924,20 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+<<<<<<< HEAD
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/plasteel/white,
+/area/science/circuit)
+>>>>>>> f43c946... Minor map fixes
 "bPc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
@@ -38059,10 +38068,23 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+=======
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+>>>>>>> f43c946... Minor map fixes
 /area/science/misc_lab)
 "bPt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -41799,9 +41821,15 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
+<<<<<<< HEAD
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+=======
+	dir = 10
+	},
+/turf/open/floor/plasteel/white,
+>>>>>>> f43c946... Minor map fixes
 /area/science/misc_lab)
 "bYp" = (
 /obj/structure/sign/securearea{
@@ -60491,6 +60519,7 @@
 	pixel_x = 24
 	},
 /turf/open/floor/plating,
+<<<<<<< HEAD
 /area/maintenance/port)
 "QAC" = (
 /turf/closed/wall,
@@ -60510,6 +60539,14 @@
 "QAH" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+=======
+/area/maintenance/starboard/aft)
+"Qqv" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/plasteel,
+/area/science/circuit)
+>>>>>>> f43c946... Minor map fixes
 
 (1,1,1) = {"
 aaa
@@ -108983,6 +109020,7 @@ bEC
 bMv
 bNv
 bMv
+<<<<<<< HEAD
 bEC
 bPN
 bPK
@@ -108997,6 +109035,22 @@ bPN
 bPN
 bPN
 bQZ
+=======
+Qpo
+Qpp
+Qpp
+Qpp
+Qpp
+Qpp
+QpS
+QpY
+bPb
+bQG
+QpS
+Qpp
+Qpp
+Qpo
+>>>>>>> f43c946... Minor map fixes
 bQZ
 bQZ
 bQZ
@@ -109245,15 +109299,25 @@ bQY
 bQX
 bTo
 bUp
+<<<<<<< HEAD
 bUp
 bUp
 bXs
+=======
+QpP
+QpT
+QpE
+>>>>>>> f43c946... Minor map fixes
 bPL
 bQI
 bPN
 bWr
 cbZ
+<<<<<<< HEAD
 bQZ
+=======
+Qpo
+>>>>>>> f43c946... Minor map fixes
 cmo
 cNW
 cOx
@@ -109497,6 +109561,7 @@ bFU
 bMy
 bNx
 bOG
+<<<<<<< HEAD
 bEs
 bQX
 bSk
@@ -109511,6 +109576,22 @@ bWr
 bWr
 cbY
 bQZ
+=======
+Qpp
+Qpx
+bSk
+QpE
+QpE
+QpQ
+QpU
+QpU
+bPF
+bQI
+QpE
+Qqm
+cbY
+Qpo
+>>>>>>> f43c946... Minor map fixes
 cOe
 cNW
 cNW
@@ -109754,12 +109835,17 @@ bFU
 bMA
 bNz
 bOI
+<<<<<<< HEAD
 bEs
+=======
+Qpp
+>>>>>>> f43c946... Minor map fixes
 bRa
 bQX
 bTp
 bUp
 bVs
+<<<<<<< HEAD
 bUp
 bXt
 bPM
@@ -109768,6 +109854,16 @@ bPN
 cbe
 cbY
 bQZ
+=======
+Qqv
+bXt
+bPM
+bZh
+Qqh
+QpD
+Qqp
+Qpo
+>>>>>>> f43c946... Minor map fixes
 cOe
 ceS
 cae
@@ -110011,6 +110107,7 @@ bEC
 bEC
 bEC
 bEC
+<<<<<<< HEAD
 bEC
 bQZ
 bQZ
@@ -110025,6 +110122,22 @@ bQZ
 bQZ
 bQZ
 bQZ
+=======
+Qpo
+Qpy
+QpE
+QpE
+QpE
+QpR
+QpW
+Qqa
+Qqc
+QpE
+QpE
+QpE
+QpE
+Qpo
+>>>>>>> f43c946... Minor map fixes
 cOe
 ceR
 cOe
@@ -110268,12 +110381,17 @@ cNW
 bMB
 bNA
 cOe
+<<<<<<< HEAD
 cOe
+=======
+Qpo
+>>>>>>> f43c946... Minor map fixes
 bRb
 cOx
 bPN
 bUq
 bVt
+<<<<<<< HEAD
 bVt
 bUp
 bUp
@@ -110283,6 +110401,16 @@ cOx
 cmo
 cNW
 cOx
+=======
+QpX
+Qqb
+Qqd
+Qqe
+Qqi
+Qqn
+Qqq
+Qpo
+>>>>>>> f43c946... Minor map fixes
 cOx
 ckS
 cNW
@@ -110524,6 +110652,7 @@ bKb
 cNX
 cNZ
 cNZ
+<<<<<<< HEAD
 cNZ
 cNZ
 cNZ
@@ -110543,6 +110672,27 @@ ccU
 ccU
 ccU
 ccU
+=======
+Qpj
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+Qpo
+cNW
+cgr
+cNW
+cNW
+>>>>>>> f43c946... Minor map fixes
 ccr
 cdr
 cjF
@@ -111819,12 +111969,21 @@ aaa
 aaf
 cNW
 bYs
+<<<<<<< HEAD
 cOe
 cae
 cOe
 cOe
 cOe
 cOe
+=======
+Qpm
+ciJ
+cbf
+cbf
+cbf
+cbf
+>>>>>>> f43c946... Minor map fixes
 ceT
 cNW
 cOe
