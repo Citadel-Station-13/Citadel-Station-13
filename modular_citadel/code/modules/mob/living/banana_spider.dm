@@ -76,6 +76,28 @@
 	var/squish_chance = 50
 	del_on_death = 1
 
+/mob/living/simple_animal/banana_spider/Initialize()
+	. = ..()
+	var/area/A = get_area(src)
+	if(A)
+		notify_ghosts("A banana spider has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE)
+	GLOB.poi_list |= src
+
+/mob/living/simple_animal/banana_spider/attack_ghost(mob/user)
+	if(src.key)
+		return
+	if(CONFIG_GET(flag/use_age_restriction_for_jobs))
+		if(!isnum(user.client.player_age)) //apparently what happens when there's no DB connected. just don't let anybody be a drone without admin intervention
+			return
+	if(!SSticker.mode)
+		to_chat(user, "Can't become a banana spider before the game has started.")
+		return
+	var/be_spider = alert("Become a banana spider? (Warning, You can no longer be cloned!)",,"Yes","No")
+	if(be_spider == "No" || QDELETED(src) || !isobserver(user))
+		return
+	src.sentience_act()
+	src.key = user.key
+
 /mob/living/simple_animal/banana_spider/death(gibbed)
 	if(SSticker.mode && SSticker.mode.station_was_nuked) //If the nuke is going off, then cockroaches are invincible. Keeps the nuke from killing them, cause cockroaches are immune to nukes.
 		return
