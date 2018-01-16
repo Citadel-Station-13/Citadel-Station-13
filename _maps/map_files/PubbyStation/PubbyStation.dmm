@@ -38334,9 +38334,7 @@
 "bNs" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bNt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -38747,9 +38745,7 @@
 /area/space/nearstation)
 "bOw" = (
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bOx" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -39328,24 +39324,18 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQd" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQe" = (
 /obj/item/device/flashlight/lantern{
 	on = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQf" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -39353,16 +39343,12 @@
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQg" = (
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQh" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Staboard";
@@ -39370,9 +39356,7 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQi" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -40313,9 +40297,7 @@
 "bSm" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bSn" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -41289,9 +41271,7 @@
 "bUC" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bUD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -42044,9 +42024,7 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bWj" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating{
@@ -42665,25 +42643,19 @@
 	cyclelinkeddir = 4
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXN" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXS" = (
 /obj/structure/grille/broken,
 /obj/machinery/disposal/bin,
@@ -44013,9 +43985,7 @@
 /area/maintenance/disposal/incinerator)
 "caS" = (
 /turf/closed/wall,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "caT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
@@ -44538,9 +44508,7 @@
 "ccu" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccv" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -44583,15 +44551,11 @@
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccM" = (
 /obj/structure/chair,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccN" = (
 /obj/structure/closet/crate/medical,
 /obj/item/stack/medical/gauze,
@@ -44855,9 +44819,7 @@
 /obj/item/trash/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cdE" = (
 /obj/structure/chair,
 /obj/item/cigbutt,
@@ -45123,9 +45085,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cep" = (
 /obj/machinery/light{
 	dir = 1
@@ -45597,9 +45557,7 @@
 /area/chapel/main/monastery)
 "cfK" = (
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfL" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/camera{
@@ -45608,20 +45566,14 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfM" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfN" = (
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfO" = (
 /obj/structure/transit_tube,
 /obj/effect/turf_decal/stripes/line{
@@ -46257,9 +46209,7 @@
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "chU" = (
 /obj/structure/sink{
 	dir = 4;
@@ -46701,14 +46651,10 @@
 /area/engine/engineering)
 "cju" = (
 /turf/closed/mineral,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjv" = (
 /turf/closed/wall,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjw" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'BOMB RANGE";
@@ -46719,14 +46665,10 @@
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjx" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjy" = (
 /obj/structure/chair{
 	dir = 4
@@ -46852,9 +46794,7 @@
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjW" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -47009,9 +46949,7 @@
 "ckt" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cku" = (
 /obj/structure/chair/wood/normal,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -47115,16 +47053,12 @@
 /area/engine/engineering)
 "ckK" = (
 /turf/closed/mineral/random/low_chance,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "ckL" = (
 /obj/item/device/radio/beacon,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "ckM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -47246,9 +47180,7 @@
 	on = 1
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clk" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -47272,9 +47204,7 @@
 "cls" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/closed/mineral,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clt" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -47299,9 +47229,7 @@
 /area/space/nearstation)
 "clv" = (
 /turf/closed/mineral/iron,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clw" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -47359,9 +47287,7 @@
 "clF" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/closed/mineral/random/low_chance,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -47930,18 +47856,14 @@
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cnr" = (
 /obj/structure/table,
 /obj/item/stock_parts/subspace/amplifier,
@@ -48853,9 +48775,7 @@
 "cqW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cqX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice,
@@ -48907,9 +48827,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "crm" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
@@ -49089,9 +49007,7 @@
 "crV" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "crX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
@@ -50556,15 +50472,11 @@
 /obj/structure/lattice,
 /obj/structure/lattice,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cyM" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cyP" = (
 /obj/structure/bookcase/random/nonfiction,
 /obj/machinery/light/small{
