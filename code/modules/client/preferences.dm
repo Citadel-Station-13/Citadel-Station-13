@@ -571,14 +571,21 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<td><font size=2><b>Description</b></font></td></tr>"
 			for(var/j in GLOB.loadout_items[gear_tab])
 				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
+				var/donoritem
+				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+					donoritem = TRUE
+					if(!(user.ckey in gear.ckeywhitelist))
+						continue
 				var/class_link = ""
 				if(gear.type in chosen_gear)
-					class_link = "class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=0'"
+					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=0'"
 				else if(gear_points <= 0)
-					class_link = "class='linkOff'"
+					class_link = "style='white-space:normal;' class='linkOff'"
+				else if(donoritem)
+					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
 				else
-					class_link = "href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
-				dat += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [class_link]>[j]</a></td>"
+					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
+				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
 				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
 					if(gear.restricted_roles.len)
@@ -1689,6 +1696,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
 				if(!is_loadout_slot_available(G.category))
 					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
+					return
+				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
 					return
 				if(gear_points >= initial(G.cost))
 					LAZYADD(chosen_gear, G.type)

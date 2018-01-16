@@ -3,7 +3,7 @@
 #define BACKPACK_SLOT_AMT	3
 
 /datum/preferences
-	var/gear_points = 5
+	var/gear_points = 10
 	var/list/gear_categories
 	var/list/chosen_gear
 	var/gear_tab

@@ -13,11 +13,6 @@
 	category = slot_hands
 	path = /obj/item/storage/pill_bottle/dice
 
-/datum/gear/flyswatter
-	name = "Flyswatter"
-	category = slot_hands
-	path = /obj/item/melee/flyswatter
-
 /datum/gear/eightball
 	name = "Magic eightball"
 	category = slot_hands

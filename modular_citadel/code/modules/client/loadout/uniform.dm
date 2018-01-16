@@ -1,39 +1,39 @@
-/datum/gear/suit
+/datum/gear/suitblack
 	name = "Black suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket
 
-/datum/gear/greensuit
+/datum/gear/suitgreen
 	name = "Green suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/green
 
-/datum/gear/redsuit
+/datum/gear/suitred
 	name = "Red suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/red
 
-/datum/gear/charcoalsuit
+/datum/gear/suitcharcoal
 	name = "Charcoal suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/charcoal
 
-/datum/gear/navysuit
+/datum/gear/suitnavy
 	name = "Navy suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/navy
 
-/datum/gear/burgundysuit
+/datum/gear/suitburgundy
 	name = "Burgundy suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/burgundy
 
-/datum/gear/tansuit
+/datum/gear/suittan
 	name = "Tan suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/tan
 
-/datum/gear/whitesuit
+/datum/gear/suitwhite
 	name = "White suit"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/suit_jacket/white
@@ -47,3 +47,33 @@
 	name = "Maid costume"
 	category = slot_w_uniform
 	path = /obj/item/clothing/under/maid
+
+/datum/gear/mailmanuniform
+	name = "Mailman's jumpsuit"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/rank/mailman
+
+/datum/gear/skirtblack
+	name = "Black skirt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/skirt/black
+
+/datum/gear/skirtblue
+	name = "Blue skirt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/skirt/blue
+
+/datum/gear/skirtred
+	name = "Red skirt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/skirt/red
+
+/datum/gear/skirtpurple
+	name = "Purple skirt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/skirt/purple
+
+/datum/gear/kilt
+	name = "Kilt"
+	category = slot_w_uniform
+	path = /obj/item/clothing/under/kilt

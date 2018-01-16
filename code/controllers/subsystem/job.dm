@@ -416,6 +416,7 @@ SUBSYSTEM_DEF(job)
 		if(job.dresscodecompliant)// CIT CHANGE - dress code compliance
 			equip_loadout(N, H) // CIT CHANGE - allows players to spawn with loadout items
 		job.after_spawn(H, M)
+		equip_loadout(N, H, TRUE)//CIT CHANGE - makes players spawn with in-backpack loadout items properly. A little hacky but it works
 
 	handle_roundstart_items(H, M.ckey, H.mind.assigned_role, H.mind.special_role) //CIT CHANGE - makes donators spawn with their items. This can safely be commented out when all of the donator items are migrated to the loadout system
 
