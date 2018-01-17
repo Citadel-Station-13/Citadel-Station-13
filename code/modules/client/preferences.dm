@@ -578,13 +578,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						continue
 				var/class_link = ""
 				if(gear.type in chosen_gear)
-					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=0'"
+					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
 				else if(gear_points <= 0)
 					class_link = "style='white-space:normal;' class='linkOff'"
 				else if(donoritem)
-					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
+					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
 				else
-					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[j];toggle_gear=1'"
+					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
 				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
 				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
 				if(islist(gear.restricted_roles))
@@ -1686,7 +1686,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if(i == href_list["select_category"])
 					gear_tab = i
 		if(href_list["toggle_gear_path"])
-			var/datum/gear/G = GLOB.loadout_items[gear_tab][href_list["toggle_gear_path"]]
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
 			if(!G)
 				return
 			var/toggle = text2num(href_list["toggle_gear"])
