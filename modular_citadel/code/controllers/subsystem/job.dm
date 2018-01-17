@@ -11,17 +11,17 @@
 			if(!G)
 				continue
 			var/permitted = TRUE
-			if(G.restricted_roles && G.restricted_roles.len && !(M.job in G.restricted_roles))
+			if(G.restricted_roles && G.restricted_roles.len && !(M.mind.assigned_role in G.restricted_roles))
 				permitted = FALSE
 			if(G.ckeywhitelist && G.ckeywhitelist.len && !(the_mob.client.ckey in G.ckeywhitelist))
 				permitted = FALSE
 			if(!equipbackpackstuff && G.category == slot_in_backpack)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
 				permitted = FALSE
-			if(equipbackpackstuff && G.category != slot_in_backpack)//snowflake check since plopping stuff in the backpack doesnt work for pre-job equip loadout stuffs
+			if(equipbackpackstuff && G.category != slot_in_backpack)//ditto
 				permitted = FALSE
 			if(!permitted)
 				continue
 			var/obj/item/I = new G.path
 			if(!M.equip_to_slot_if_possible(I, G.category, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // If the job's dresscode compliant, try to put it in its slot, first
 				if(!M.equip_to_slot_if_possible(I, slot_in_backpack, disable_warning = TRUE, bypass_equip_delay_self = TRUE)) // Otherwise, try to put it in the backpack
-					I.forceMove(get_turf(M)) // If everything fails, just put it on the floor under the mob.
+					I.forceMove(get_turf(the_mob)) // If everything fails, just put it on the floor under the mob.

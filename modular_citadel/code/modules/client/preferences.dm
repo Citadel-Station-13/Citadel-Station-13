@@ -1,6 +1,6 @@
-#define DEFAULT_SLOT_AMT	1
+#define DEFAULT_SLOT_AMT	2
 #define HANDS_SLOT_AMT		2
-#define BACKPACK_SLOT_AMT	3
+#define BACKPACK_SLOT_AMT	4
 
 /datum/preferences
 	var/gear_points = 10
