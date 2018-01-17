@@ -40,11 +40,11 @@ SUBSYSTEM_DEF(nightshift)
 			if(!nightshift)
 				nightshift = TRUE
 				updatenightlights()
-				priority_announce("Good afternoon, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", 'sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
+				priority_announce("Good afternoon, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.", sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 		else if(nightshift)
 			nightshift = FALSE
 			updatenightlights()
-			priority_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", 'sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
+			priority_announce("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.", sound='sound/misc/notice2.ogg', sender_override="Automated Lighting System Announcement")
 
 /datum/controller/subsystem/nightshift/proc/updatenightlights()
 	for(var/obj/machinery/light/nightlight in nightlights)
