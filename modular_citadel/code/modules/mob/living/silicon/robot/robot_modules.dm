@@ -149,7 +149,7 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Asteroid")
+	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in list("Lavaland", "Asteroid", "Droid")
 	if(!borg_icon)
 		return FALSE
 	switch(borg_icon)
@@ -158,4 +158,8 @@
 		if("Asteroid")
 			cyborg_base_icon = "minerOLD"
 			special_light_key = "miner"
+		if("Droid")
+			cyborg_base_icon = "miner"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
+			hat_offset = 4
 	return ..()
