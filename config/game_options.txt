@@ -402,6 +402,7 @@ ROUNDSTART_RACES insect
 ROUNDSTART_RACES xeno
 ROUNDSTART_RACES datashark
 ROUNDSTART_RACES guilmon
+ROUNDSTART_RACES ipc
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
