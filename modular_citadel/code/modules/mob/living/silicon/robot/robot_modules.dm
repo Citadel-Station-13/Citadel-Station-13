@@ -128,6 +128,7 @@
 		if("Default - Treads")
 			cyborg_base_icon = "sec-tread"
 			special_light_key = "sec"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 		if("Droid")
 			cyborg_base_icon = "Security"
 			special_light_key = "service"
@@ -145,6 +146,7 @@
 		if("Default - Treads")
 			cyborg_base_icon = "engi-tread"
 			special_light_key = "engineer"
+			cyborg_icon_override = 'modular_citadel/icons/mob/robots.dmi'
 	return ..()
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
