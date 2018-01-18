@@ -2496,6 +2496,7 @@
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
 #include "modular_citadel\code\modules\crafting\recipes.dm"
 #include "modular_citadel\code\modules\mining\mine_items.dm"
+#include "modular_citadel\code\modules\mob\living\banana_spider.dm"
 #include "modular_citadel\code\modules\mob\living\carbon\human\human_defense.dm"
 #include "modular_citadel\code\modules\mob\living\silicon\robot\robot_modules.dm"
 // END_INCLUDE
