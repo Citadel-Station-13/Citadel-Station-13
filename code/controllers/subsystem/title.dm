@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(title)
 			previous_icon = new(previous_icon)
 	fdel("data/previous_title.dat")
 
-	var/list/provisional_title_screens = flist("config/title_screens/images/")
+	var/list/provisional_title_screens = flist("[global.config.directory]/title_screens/images/")
 	var/list/title_screens = list()
 	var/use_rare_screens = prob(1)
 
@@ -34,7 +34,11 @@ SUBSYSTEM_DEF(title)
 		break
 		
 	if(length(title_screens))
+<<<<<<< HEAD
 		file_path = "config/title_screens/images/[pick(title_screens)]"
+=======
+		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
+>>>>>>> 7be3d32... Fix config_dir usage (#34469)
 	
 	if(!file_path)
 		file_path = "icons/default_title.dmi"
