@@ -2482,6 +2482,7 @@
 #include "interface\skin.dmf"
 #include "modular_citadel\cit_medkits.dm"
 #include "modular_citadel\cit_screenshake.dm"
+#include "modular_citadel\cit_turfs.dm"
 #include "modular_citadel\citadel_ghostrole_spawners.dm"
 #include "modular_citadel\cydonian_armor.dm"
 #include "modular_citadel\polychromic_clothes.dm"
