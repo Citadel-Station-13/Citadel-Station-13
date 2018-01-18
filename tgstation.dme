@@ -2490,6 +2490,7 @@
 #include "modular_citadel\code\game\gamemodes\miniantags\bot_swarm\swarmer_event.dm"
 #include "modular_citadel\code\game\machinery\Sleeper.dm"
 #include "modular_citadel\code\game\objects\items\handcuffs.dm"
+#include "modular_citadel\code\game\objects\items\devices\aicard.dm"
 #include "modular_citadel\code\game\objects\items\devices\PDA\PDA.dm"
 #include "modular_citadel\code\game\objects\items\devices\radio\shockcollar.dm"
 #include "modular_citadel\code\game\objects\items\melee\eutactic_blades.dm"
