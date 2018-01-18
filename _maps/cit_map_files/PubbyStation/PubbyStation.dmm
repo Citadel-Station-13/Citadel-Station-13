@@ -3148,7 +3148,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ajB" = (
-/obj/item/storage/box/mousetraps,
+/obj/machinery/vending/kink,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajC" = (
@@ -3536,6 +3536,7 @@
 /area/maintenance/department/security/brig)
 "aks" = (
 /obj/machinery/light/small,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "akt" = (
@@ -47187,7 +47188,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "clm" = (
-/obj/structure/closet/crate/bin,
+/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cln" = (
@@ -51365,6 +51366,14 @@
 "cDn" = (
 /turf/closed/wall,
 /area/quartermaster/warehouse)
+"cDo" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
+"cDp" = (
+/obj/machinery/vending/kink,
+/turf/open/floor/plating,
+/area/maintenance/department/engine)
 
 (1,1,1) = {"
 aaa
@@ -79024,7 +79033,7 @@ cCF
 cCH
 bTn
 bPB
-bDi
+cDp
 bVC
 bQj
 bPA
@@ -88697,7 +88706,7 @@ aaa
 aaa
 aaa
 aiU
-ajv
+cDo
 aju
 ajt
 alQ
@@ -90790,10 +90799,10 @@ aJm
 aKg
 cDa
 aMo
-cDd
-cDf
-cDg
-cDh
+cDa
+cDa
+cDa
+cDa
 aLg
 aTj
 aUu
@@ -91821,8 +91830,8 @@ aMs
 aNO
 aPb
 aQe
-cDi
-cDj
+cDa
+cDa
 aTn
 aUx
 aVA
@@ -92079,7 +92088,7 @@ aNP
 aPb
 aNO
 aNP
-cDk
+cDa
 aTo
 aSk
 aTm
@@ -92336,7 +92345,7 @@ aNO
 aPc
 aQf
 aRq
-cDl
+cDa
 aTp
 aSk
 aTm
@@ -92593,7 +92602,7 @@ aNQ
 aNO
 aQg
 aNP
-cDm
+cDa
 aTq
 aSk
 aVB
@@ -92844,13 +92853,13 @@ aEd
 aEd
 aEd
 cCX
-cDb
-cDc
-cDe
+cDa
+cDa
+cDa
 coL
 coL
 coL
-cDn
+cDa
 aTr
 aUy
 aPd
