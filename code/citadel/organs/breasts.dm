@@ -41,17 +41,15 @@
 	var/lowershape = lowertext(shape)
 	switch(lowershape)
 		if("pair")
-			desc = "That's a pair of breasts."
+			desc = "You see a pair of breasts."
 		else
-			desc = "That's breasts, they seem to be quite exotic."
+			desc = "You see some breasts, they seem to be quite exotic."
 	if (size)
-		desc += " You estimate they're about [size]-cup size."
+		desc += " You estimate that they're [uppertext(size)]-cups."
 	else
 		desc += " You wouldn't measure them in cup sizes."
-	if(producing)
-		desc += "\nThey're leaking [fluid_id]."
-	else
-		desc += "\nThey do not seem to be producing liquids."
+	if(producing && aroused_state)
+		desc += " They're leaking [fluid_id]."
 	if(owner)
 		if(owner.dna.species.use_skintones && owner.dna.features["genitals_use_skintone"])
 			if(ishuman(owner)) // Check before recasting type, although someone fucked up if you're not human AND have use_skintones somehow...
