@@ -398,8 +398,8 @@ AI MODULES
 /obj/item/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
-/obj/item/aiModule/core/full/custom/New()
-	..()
+/obj/item/aiModule/core/full/custom/Initialize()
+	. = ..()
 	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue

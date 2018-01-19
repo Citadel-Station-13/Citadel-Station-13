@@ -127,7 +127,6 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "config/title_music/sounds/[pick(music)]"
 
-
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
 	for(var/hoorayhackyshit in crewobjlist) //taken from old Hippie's "job2obj" proc with adjustments.
