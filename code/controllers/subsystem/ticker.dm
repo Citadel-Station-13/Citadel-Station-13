@@ -126,10 +126,6 @@ SUBSYSTEM_DEF(ticker)
 		login_music = pick(music)
 	else
 		login_music = "config/title_music/sounds/[pick(music)]"
-<<<<<<< HEAD
-
-=======
->>>>>>> 1bc398c... Merge pull request #34603 from optimumtact/pigfuck
 
 	crewobjlist = typesof(/datum/objective/crew)
 	miscreantobjlist = (typesof(/datum/objective/miscreant) - /datum/objective/miscreant)
