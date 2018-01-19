@@ -36,13 +36,8 @@ GLOBAL_PROTECT(security_mode)
 	if(fexists(RESTART_COUNTER_PATH))
 		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
 		fdel(RESTART_COUNTER_PATH)
-<<<<<<< HEAD
-
-	if("no-init" in params)
-=======
 	
 	if(NO_INIT_PARAMETER in params)
->>>>>>> bf7938c... Adds test run mode. Fails travis if it fails (#34198)
 		return
 
 	cit_initialize()
