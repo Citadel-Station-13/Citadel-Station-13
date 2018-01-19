@@ -459,8 +459,4 @@
 		death()
 		var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
 		if(B)
-<<<<<<< HEAD
 			B.damaged_brain = TRUE
-=======
-			B.damaged_brain = TRUE
->>>>>>> 15864dc... Temperature Refactor and Fixes (#34133)
