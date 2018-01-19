@@ -398,8 +398,13 @@ AI MODULES
 /obj/item/aiModule/core/full/custom
 	name = "Default Core AI Module"
 
+<<<<<<< HEAD
 /obj/item/aiModule/core/full/custom/New()
 	..()
+=======
+/obj/item/aiModule/core/full/custom/Initialize()
+	. = ..()
+>>>>>>> 1bc398c... Merge pull request #34603 from optimumtact/pigfuck
 	for(var/line in world.file2list("config/silicon_laws.txt"))
 		if(!line)
 			continue

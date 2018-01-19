@@ -35,7 +35,11 @@ SUBSYSTEM_DEF(title)
 		
 	if(length(title_screens))
 		file_path = "config/title_screens/images/[pick(title_screens)]"
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 1bc398c... Merge pull request #34603 from optimumtact/pigfuck
 	if(!file_path)
 		file_path = "icons/default_title.dmi"
 	
