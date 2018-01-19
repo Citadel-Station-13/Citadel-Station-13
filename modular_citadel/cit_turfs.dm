@@ -67,9 +67,10 @@ GLOBAL_LIST_INIT(turf_footstep_sounds, list(
 /obj/structure/table/wood
 	footstepsoundoverride = "wood"
 
+/*
 /turf/open/floor/Entered(atom/obj, atom/oldloc)
 	. = ..()
-	CitDirtify(obj, oldloc)
+	CitDirtify(obj, oldloc)*/
 
 /mob/living/Move(atom/newloc, direct)
 	. = ..()
