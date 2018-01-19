@@ -1,4 +1,0 @@
-author: "DaxDupont"
-delete-after: True
-changes: 
-  - bugfix: "Solar control consoles are no longer pointing to the wrong direction, you can now turn tracking off again and manual positioning of solar panels have been fixed."

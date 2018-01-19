@@ -8,14 +8,10 @@
 /area/space)
 "aac" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aad" = (
 /turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aae" = (
 /obj/structure/lattice,
 /turf/open/space,
@@ -33,9 +29,7 @@
 "aah" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aai" = (
 /obj/structure/cable/white{
 	icon_state = "0-4"
@@ -466,15 +460,11 @@
 "aaV" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aaW" = (
 /obj/item/ore/iron,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aaX" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
@@ -626,14 +616,10 @@
 "abi" = (
 /obj/structure/girder,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abj" = (
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -752,9 +738,7 @@
 /area/hallway/primary/central)
 "abu" = (
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abv" = (
 /turf/closed/wall,
 /area/security/detectives_office)
@@ -942,20 +926,14 @@
 "abR" = (
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abS" = (
 /obj/item/ore/glass,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abT" = (
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "abU" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -1324,23 +1302,17 @@
 "acD" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acE" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg1"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acF" = (
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acG" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
 /obj/effect/turf_decal/stripes/line{
@@ -1350,15 +1322,11 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acH" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "acI" = (
 /obj/structure/dresser,
 /obj/structure/sign/vacuum{
@@ -1760,31 +1728,23 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adw" = (
 /turf/open/floor/plating{
 	burnt = 1;
 	icon_state = "panelscorched"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adx" = (
 /obj/item/clothing/suit/space/orange,
 /obj/item/clothing/head/helmet/space/orange,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adz" = (
 /obj/structure/sign/vacuum,
 /turf/closed/wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "adA" = (
 /obj/structure/closet/secure_closet/detective,
 /turf/open/floor/plasteel/vault{
@@ -2141,17 +2101,13 @@
 	name = "2maintenance loot spawner"
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aem" = (
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg3"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aeo" = (
 /obj/structure/table,
 /obj/item/extinguisher/mini,
@@ -2161,18 +2117,14 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aep" = (
 /turf/open/floor/plating,
 /turf/open/floor/plating{
 	broken = 1;
 	icon_state = "platingdmg2"
 	},
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aeq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/nanotrasen{
@@ -2524,9 +2476,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afd" = (
 /obj/structure/table/wood,
 /obj/item/device/taperecorder,
@@ -2947,22 +2897,16 @@
 "afL" = (
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afM" = (
 /obj/item/ore/iron,
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afN" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "afP" = (
 /obj/structure/table/wood,
 /obj/item/book/manual/wiki/security_space_law,
@@ -3380,26 +3324,20 @@
 /obj/item/ore/silver,
 /obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agF" = (
 /turf/closed/wall/r_wall,
 /area/security/brig)
 "agG" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agH" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "agI" = (
 /obj/structure/rack,
 /obj/item/storage/briefcase{
@@ -3868,9 +3806,7 @@
 /area/shuttle/supply)
 "ahu" = (
 /turf/closed/wall/r_wall,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahv" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/structure/extinguisher_cabinet{
@@ -3930,9 +3866,7 @@
 	dir = 10
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahA" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
@@ -3942,9 +3876,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ahB" = (
 /obj/machinery/photocopier,
 /obj/machinery/firealarm{
@@ -4256,9 +4188,7 @@
 "aik" = (
 /obj/structure/barricade/wooden,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aim" = (
 /obj/structure/rack,
 /obj/item/storage/box/rubbershot,
@@ -5158,9 +5088,7 @@
 "ajQ" = (
 /obj/item/ore/iron,
 /turf/open/floor/plating/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "ajR" = (
 /obj/structure/rack,
 /obj/item/gun/energy/e_gun{
@@ -6255,9 +6183,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "alH" = (
 /obj/item/grenade/barrier{
 	pixel_x = -3;
@@ -6761,9 +6687,7 @@
 	},
 /obj/item/device/flashlight,
 /turf/open/floor/plating,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "amH" = (
 /obj/item/storage/box/chemimp{
 	pixel_x = 6
@@ -9252,7 +9176,10 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 8;
+	heat_capacity = 1e+006
+	},
 /area/hallway/primary/central)
 "arj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -9896,27 +9823,27 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "asf" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "asg" = (
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "ash" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "asi" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "asj" = (
 /obj/machinery/vending/cola/random,
@@ -10897,16 +10824,16 @@
 	},
 /obj/structure/table/wood,
 /obj/item/kitchen/fork,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aud" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aue" = (
 /obj/structure/chair/stool/bar,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "auf" = (
 /obj/structure/table/reinforced,
@@ -11408,7 +11335,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "avg" = (
 /obj/structure/table/wood,
@@ -11416,7 +11343,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "avh" = (
 /obj/structure/chair/stool,
@@ -11424,20 +11351,20 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "avi" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "avj" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "avk" = (
 /obj/structure/table/reinforced,
@@ -11968,32 +11895,32 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awl" = (
 /obj/structure/table/wood,
 /obj/item/storage/bag/tray,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awm" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awn" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awo" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awp" = (
 /obj/structure/table/reinforced,
@@ -12314,7 +12241,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awU" = (
 /obj/structure/chair/stool,
@@ -12325,7 +12252,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awV" = (
 /obj/structure/table/wood,
@@ -12333,13 +12260,13 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awW" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "awX" = (
 /obj/structure/table/reinforced,
@@ -12637,7 +12564,9 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/neutral/corner{
+	dir = 1
+	},
 /area/hallway/primary/central)
 "axC" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -12763,20 +12692,20 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "axP" = (
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "axQ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "axR" = (
 /obj/structure/cable/white{
@@ -13086,13 +13015,6 @@
 	pixel_x = 32
 	},
 /obj/item/bedsheet/blue,
-/obj/machinery/button/door{
-	id = "Dorm3";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -25;
-	specialfunctions = 4
-	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "ayB" = (
@@ -13104,13 +13026,6 @@
 	pixel_x = 32
 	},
 /obj/item/bedsheet/red,
-/obj/machinery/button/door{
-	id = "Dorm4";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = -25;
-	specialfunctions = 4
-	},
 /turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "ayE" = (
@@ -13164,24 +13079,24 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "ayK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "ayL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "ayM" = (
 /obj/machinery/holopad,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "ayN" = (
 /obj/item/storage/fancy/cigarettes/cigars{
@@ -13571,7 +13486,6 @@
 "azD" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	id_tag = "Dorm3";
 	name = "Cabin"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -13644,7 +13558,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "azK" = (
 /obj/structure/table/wood,
@@ -13652,7 +13566,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "azL" = (
 /obj/structure/closet/crate/bin,
@@ -13662,7 +13576,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "azM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -14140,7 +14054,7 @@
 /obj/structure/cable/white{
 	icon_state = "0-4"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -14159,7 +14073,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-4"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAP" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -14175,7 +14089,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAQ" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -14184,7 +14098,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -14193,7 +14107,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAS" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -14202,7 +14116,7 @@
 /obj/structure/cable/white{
 	icon_state = "4-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aAT" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -14760,12 +14674,12 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aBZ" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/cheesiehonkers,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aCa" = (
 /obj/machinery/light{
@@ -14774,7 +14688,7 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aCb" = (
 /obj/machinery/status_display,
@@ -15270,7 +15184,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aCV" = (
 /obj/structure/table/reinforced,
@@ -15591,13 +15505,6 @@
 	pixel_x = 32
 	},
 /obj/item/bedsheet/brown,
-/obj/machinery/button/door{
-	id = "Dorm1";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = 25;
-	specialfunctions = 4
-	},
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "aDI" = (
@@ -15606,13 +15513,6 @@
 	pixel_x = 32
 	},
 /obj/item/bedsheet/black,
-/obj/machinery/button/door{
-	id = "Dorm2";
-	name = "Cabin Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_y = 25;
-	specialfunctions = 4
-	},
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/dorms)
 "aDJ" = (
@@ -15697,21 +15597,21 @@
 /obj/structure/cable/white{
 	icon_state = "1-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aDP" = (
 /obj/effect/landmark/xmastree,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aDQ" = (
 /obj/structure/chair/stool/bar,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aDR" = (
 /obj/structure/table/reinforced,
@@ -16174,29 +16074,31 @@
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "aEK" = (
+/obj/machinery/vending/clothing,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/crew_quarters/dorms)
 "aEL" = (
+/obj/item/twohanded/required/kirbyplants{
+	icon_state = "plant-21"
+	},
 /obj/machinery/status_display{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
 /area/crew_quarters/dorms)
 "aEM" = (
+/obj/structure/closet/crate/bin,
 /obj/effect/turf_decal/bot,
-/obj/machinery/vending/clothing,
 /turf/open/floor/plasteel/vault{
 	dir = 5
 	},
@@ -16321,12 +16223,12 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aEX" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/chips,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aEY" = (
 /obj/structure/table/reinforced,
@@ -16766,7 +16668,7 @@
 	dir = 4;
 	network = list("MINE")
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aFO" = (
 /obj/structure/table/wood,
@@ -16774,14 +16676,14 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aFP" = (
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aFQ" = (
 /obj/structure/table/reinforced,
@@ -17221,7 +17123,7 @@
 /obj/structure/cable/white{
 	icon_state = "2-8"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aGO" = (
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -17236,7 +17138,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aGP" = (
 /obj/structure/chair/stool,
@@ -17244,7 +17146,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aGQ" = (
 /obj/machinery/holopad,
@@ -17252,7 +17154,7 @@
 	name = "Station Intercom";
 	pixel_x = 28
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aGR" = (
 /obj/machinery/vending/dinnerware,
@@ -17816,7 +17718,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aHS" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -17825,12 +17727,12 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aHT" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/coffee,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aHU" = (
 /obj/item/twohanded/required/kirbyplants{
@@ -17839,7 +17741,7 @@
 /obj/structure/sign/poster/random{
 	pixel_x = 32
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aHV" = (
 /obj/machinery/status_display,
@@ -18913,7 +18815,7 @@
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aJX" = (
 /obj/machinery/vending/cola/random,
@@ -19529,7 +19431,7 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aLg" = (
 /obj/machinery/vending/snack/random,
@@ -20056,7 +19958,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aMu" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -20066,7 +19968,7 @@
 /obj/structure/cable/white{
 	icon_state = "2-4"
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "aMx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -20965,27 +20867,37 @@
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-21"
 	},
-/turf/open/floor/plasteel/yellowsiding,
+/turf/open/floor/plasteel/redyellow/side{
+	dir = 9
+	},
 /area/hallway/primary/central)
 "aOn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable/white{
 	icon_state = "1-2"
 	},
-/turf/open/floor/plasteel/stairs/left,
+/turf/open/floor/plasteel/redyellow/side{
+	dir = 1
+	},
 /area/hallway/primary/central)
 "aOo" = (
-/turf/open/floor/plasteel/stairs/medium,
+/turf/open/floor/plasteel/redyellow/side{
+	dir = 1
+	},
 /area/hallway/primary/central)
 "aOp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/stairs/right,
+/turf/open/floor/plasteel/redyellow/side{
+	dir = 1
+	},
 /area/hallway/primary/central)
 "aOq" = (
 /obj/item/twohanded/required/kirbyplants{
 	icon_state = "plant-22"
 	},
-/turf/open/floor/plasteel/yellowsiding,
+/turf/open/floor/plasteel/redyellow/side{
+	dir = 5
+	},
 /area/hallway/primary/central)
 "aOr" = (
 /obj/structure/sign/directions/engineering{
@@ -24001,43 +23913,33 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUR" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUS" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUT" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUU" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aUV" = (
 /obj/machinery/light{
 	dir = 8
@@ -24397,18 +24299,14 @@
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aVL" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aVM" = (
 /obj/structure/cable/white{
 	icon_state = "1-2"
@@ -24773,9 +24671,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aWA" = (
 /obj/machinery/libraryscanner,
 /obj/machinery/newscaster{
@@ -25051,9 +24947,7 @@
 "aXc" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "aXe" = (
 /obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
@@ -27445,7 +27339,6 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "bbQ" = (
-/obj/machinery/vending/kink,
 /turf/open/floor/wood{
 	broken = 1;
 	icon_state = "wood-broken5"
@@ -32042,7 +31935,7 @@
 	dir = 8;
 	network = list("SS13")
 	},
-/turf/open/floor/plasteel/stairs/right,
+/turf/open/floor/plasteel/neutral/corner,
 /area/hallway/primary/central)
 "bli" = (
 /obj/structure/closet/firecloset,
@@ -32067,7 +31960,7 @@
 	c_tag = "Central Diner 4";
 	dir = 1
 	},
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "blk" = (
 /obj/machinery/camera{
@@ -32935,9 +32828,7 @@
 /area/engine/supermatter)
 "bvg" = (
 /turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvh" = (
 /obj/structure/closet/emcloset{
 	anchored = 1
@@ -32951,15 +32842,11 @@
 "bvo" = (
 /obj/structure/girder,
 /turf/open/floor/plating/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvI" = (
 /obj/item/pickaxe/emergency,
 /turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bvO" = (
 /obj/machinery/light{
 	dir = 1
@@ -33161,9 +33048,7 @@
 	dir = 4
 	},
 /turf/closed/mineral/random/labormineral,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "bxj" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 1
@@ -33305,7 +33190,7 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "bxH" = (
 /obj/effect/landmark/event_spawn,
@@ -33333,7 +33218,7 @@
 /area/crew_quarters/dorms)
 "bxL" = (
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel/bar,
+/turf/open/floor/plasteel/redyellow,
 /area/crew_quarters/bar/atrium)
 "bxM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -33567,9 +33452,7 @@
 "swF" = (
 /obj/structure/sign/securearea,
 /turf/closed/wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "swG" = (
 /turf/closed/wall/rust,
 /area/security/detectives_office)
@@ -33607,17 +33490,13 @@
 /area/quartermaster/storage)
 "swN" = (
 /turf/closed/wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "swZ" = (
 /turf/closed/wall/r_wall/rust,
 /area/security/brig)
 "sxc" = (
 /turf/closed/wall/r_wall/rust,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "sxC" = (
 /turf/closed/wall/r_wall/rust,
 /area/ai_monitored/turret_protected/ai)
@@ -35433,7 +35312,6 @@
 /obj/machinery/turretid{
 	control_area = "/area/ai_monitored/turret_protected/aisat_interior";
 	name = "AI Satellite turret control";
-	pixel_x = 0;
 	pixel_y = -24
 	},
 /obj/machinery/door/airlock/hatch{
@@ -35689,9 +35567,7 @@
 "sNT" = (
 /obj/item/stack/sheet/metal,
 /obj/item/stack/sheet/glass{
-	amount = 20;
-	pixel_x = 0;
-	pixel_y = 0
+	amount = 20
 	},
 /obj/item/device/assembly/flash/handheld,
 /obj/item/device/assembly/flash/handheld,
@@ -35847,9 +35723,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plating/airless/astplate,
-/area/ruin/unpowered{
-	name = "Asteroid"
-	})
+/area/asteroid/nearstation)
 "sOK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -35986,52 +35860,6 @@
 "sPY" = (
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"sPZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel/stairs/right,
-/area/hallway/primary/central)
-"sQa" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm4";
-	name = "Cabin"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
-"sQb" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm1";
-	name = "Cabin"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
-"sQc" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock{
-	id_tag = "Dorm2";
-	name = "Cabin"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/dorms)
 
 (1,1,1) = {"
 aaa
@@ -71860,7 +71688,7 @@ agF
 auP
 avU
 anH
-sPZ
+axC
 axC
 axC
 aAC
@@ -73664,7 +73492,7 @@ ayz
 azD
 aAH
 aBQ
-sQb
+azD
 aDG
 aEO
 sDl
@@ -74432,10 +74260,10 @@ apI
 awQ
 axJ
 ayB
-sQa
+azD
 aAH
 aBS
-sQc
+azD
 ayz
 aEQ
 sDl

@@ -229,6 +229,9 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	var/possessed = FALSE
 
+/obj/item/nullrod/scythe/talking/relaymove(mob/user)
+	return //stops buckled message spam for the ghost.
+
 /obj/item/nullrod/scythe/talking/attack_self(mob/living/user)
 	if(possessed)
 		return
@@ -345,7 +348,7 @@
 
 /obj/item/nullrod/armblade
 	name = "dark blessing"
-	desc = "Particularly twisted dieties grant gifts of dubious value."
+	desc = "Particularly twisted deities grant gifts of dubious value."
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'

@@ -1,4 +1,0 @@
-author: "ninjanomnom"
-delete-after: True
-changes: 
-  - bugfix: "Some changes to turfs like shuttles would result in un-initialized space tiles being created. This has been fixed."

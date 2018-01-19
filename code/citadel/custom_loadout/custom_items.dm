@@ -168,6 +168,14 @@
 	item_state = "santa"
 	slowdown = 0
 
+/obj/item/clothing/mask/sexymime
+	name = "The Hollow heart"
+	desc = "Sometimes things are too much to hide."
+	icon = 'icons/obj/custom.dmi'
+	icon_override = 'icons/mob/custom_w.dmi'
+	icon_state = "sexymime"
+	item_state = "sexymime"
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 
 /*Brian*/

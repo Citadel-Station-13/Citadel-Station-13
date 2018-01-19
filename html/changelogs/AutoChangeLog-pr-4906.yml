@@ -1,0 +1,4 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - code_imp: "Citadel's modified maps are now separate from upstream's map files. This will result in less bugs with upstream map edits, and pave the way for more reliable map editing."

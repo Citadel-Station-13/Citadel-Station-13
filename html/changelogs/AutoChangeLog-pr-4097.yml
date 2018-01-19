@@ -1,0 +1,6 @@
+author: "deathride58"
+delete-after: True
+changes: 
+  - rscadd: "Walking on tiles will now slowly make them dirty."
+  - rscadd: "Objects moving around will also slowly make tiles dirty."
+  - rscadd: "Walking around will now emit footstep sounds. These sounds are from CEV Eris."

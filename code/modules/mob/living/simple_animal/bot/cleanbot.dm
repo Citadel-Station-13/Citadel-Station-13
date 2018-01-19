@@ -181,7 +181,7 @@
 		/obj/effect/decal/cleanable/flour,
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/greenglow,
-		/obj/effect/decal/cleanable/dirt,
+		///obj/effect/decal/cleanable/dirt, Cit change - removes dirt from the cleanbot target list to compensate for the mass amount of dirt decals present with footdirt
 		/obj/effect/decal/cleanable/deadcockroach,
 		/obj/effect/decal/remains
 		)
@@ -265,7 +265,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 
 	if(prob(50))
-		new /obj/item/bodypart/l_arm/robot(Tsec)
+		drop_part(robot_arm, Tsec)
 
 	do_sparks(3, TRUE, src)
 	..()

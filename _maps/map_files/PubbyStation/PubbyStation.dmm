@@ -3148,7 +3148,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "ajB" = (
-/obj/machinery/vending/kink,
+/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "ajC" = (
@@ -3536,7 +3536,6 @@
 /area/maintenance/department/security/brig)
 "aks" = (
 /obj/machinery/light/small,
-/obj/item/storage/box/mousetraps,
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "akt" = (
@@ -14591,6 +14590,9 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/oil,
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aKl" = (
@@ -14868,6 +14870,9 @@
 	req_access_txt = "31"
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "aLi" = (
@@ -15320,27 +15325,27 @@
 	dir = 4
 	},
 /turf/closed/wall,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMp" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMq" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMr" = (
 /obj/structure/closet/crate,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -15349,7 +15354,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMt" = (
 /obj/structure/closet/cardboard,
 /obj/structure/disposalpipe/segment{
@@ -15363,20 +15368,27 @@
 	dir = 2
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMu" = (
 /obj/item/cigbutt/cigarbutt,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMv" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/power/apc{
+	dir = 4;
+	name = "Cargo Warehouse APC";
+	areastring = "/area/quartermaster/warehouse";
+	pixel_x = 26
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aMw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -15953,20 +15965,20 @@
 	pixel_x = -32
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNO" = (
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNP" = (
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNQ" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aNR" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -16499,33 +16511,33 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aOZ" = (
 /obj/item/stack/sheet/cardboard,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPa" = (
 /obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aPd" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -16905,16 +16917,16 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQd" = (
 /obj/item/device/flashlight,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQe" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQf" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
@@ -16922,11 +16934,11 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQg" = (
 /obj/structure/closet/crate/medical,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aQh" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/supply)
@@ -17447,7 +17459,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRo" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -17456,7 +17468,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRp" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "qm_warehouse";
@@ -17464,11 +17476,11 @@
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRq" = (
 /obj/structure/closet/crate/internals,
 /turf/open/floor/plasteel/floorgrime,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "aRr" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/supply)
@@ -36009,10 +36021,11 @@
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHS" = (
+/obj/structure/table,
+/obj/item/device/flashlight/lamp,
 /obj/effect/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/vending/kink,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bHT" = (
@@ -36562,8 +36575,6 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_x = 32
 	},
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/department/engine)
 "bJi" = (
@@ -38321,9 +38332,7 @@
 "bNs" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bNt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -38734,9 +38743,7 @@
 /area/space/nearstation)
 "bOw" = (
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bOx" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -39315,24 +39322,18 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQd" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQe" = (
 /obj/item/device/flashlight/lantern{
 	on = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQf" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -39340,16 +39341,12 @@
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQg" = (
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQh" = (
 /obj/machinery/camera{
 	c_tag = "Monastery Asteroid Dock Staboard";
@@ -39357,9 +39354,7 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bQi" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -40300,9 +40295,7 @@
 "bSm" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bSn" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -41276,9 +41269,7 @@
 "bUC" = (
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bUD" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
@@ -42031,9 +42022,7 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bWj" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating{
@@ -42652,25 +42641,19 @@
 	cyclelinkeddir = 4
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXM" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXN" = (
 /obj/machinery/door/airlock/external{
 	cyclelinkeddir = 8
 	},
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "bXS" = (
 /obj/structure/grille/broken,
 /obj/machinery/disposal/bin,
@@ -44000,9 +43983,7 @@
 /area/maintenance/disposal/incinerator)
 "caS" = (
 /turf/closed/wall,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "caT" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/tinted/fulltile,
@@ -44525,9 +44506,7 @@
 "ccu" = (
 /obj/structure/flora/ausbushes/leafybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccv" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -44570,15 +44549,11 @@
 /turf/open/floor/plasteel/asteroid{
 	icon_plating = "asteroid"
 	},
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccM" = (
 /obj/structure/chair,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "ccN" = (
 /obj/structure/closet/crate/medical,
 /obj/item/stack/medical/gauze,
@@ -44842,9 +44817,7 @@
 /obj/item/trash/plate,
 /obj/item/kitchen/fork,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cdE" = (
 /obj/structure/chair,
 /obj/item/cigbutt,
@@ -45110,9 +45083,7 @@
 	dir = 1
 	},
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cep" = (
 /obj/machinery/light{
 	dir = 1
@@ -45584,9 +45555,7 @@
 /area/chapel/main/monastery)
 "cfK" = (
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfL" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/camera{
@@ -45595,20 +45564,14 @@
 	network = list("SS13","Monastery")
 	},
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfM" = (
 /obj/structure/flora/ausbushes,
 /turf/open/floor/plasteel/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfN" = (
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cfO" = (
 /obj/structure/transit_tube,
 /obj/effect/turf_decal/stripes/line{
@@ -46244,9 +46207,7 @@
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/plating/asteroid,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "chU" = (
 /obj/structure/sink{
 	dir = 4;
@@ -46688,14 +46649,10 @@
 /area/engine/engineering)
 "cju" = (
 /turf/closed/mineral,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjv" = (
 /turf/closed/wall,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjw" = (
 /obj/structure/sign/securearea{
 	desc = "A warning sign which reads 'BOMB RANGE";
@@ -46706,14 +46663,10 @@
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjx" = (
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjy" = (
 /obj/structure/chair{
 	dir = 4
@@ -46839,9 +46792,7 @@
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cjW" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -46996,9 +46947,7 @@
 "ckt" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cku" = (
 /obj/structure/chair/wood/normal,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -47102,16 +47051,12 @@
 /area/engine/engineering)
 "ckK" = (
 /turf/closed/mineral/random/low_chance,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "ckL" = (
 /obj/item/device/radio/beacon,
 /obj/effect/landmark/revenantspawn,
 /turf/open/floor/plating/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "ckM" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -47233,9 +47178,7 @@
 	on = 1
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clk" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -47244,7 +47187,7 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "clm" = (
-/obj/machinery/vending/kink,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cln" = (
@@ -47259,9 +47202,7 @@
 "cls" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/closed/mineral,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clt" = (
 /obj/docking_port/stationary{
 	dheight = 9;
@@ -47286,9 +47227,7 @@
 /area/space/nearstation)
 "clv" = (
 /turf/closed/mineral/iron,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clw" = (
 /turf/closed/wall/r_wall,
 /area/tcommsat/computer)
@@ -47346,9 +47285,7 @@
 "clF" = (
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/closed/mineral/random/low_chance,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "clG" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -47917,18 +47854,14 @@
 	use_power = 0
 	},
 /turf/open/floor/plating/asteroid/airless,
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cnq" = (
 /turf/closed/indestructible{
 	desc = "A wall impregnated with Fixium, able to withstand massive explosions with ease";
 	icon_state = "riveted";
 	name = "hyper-reinforced wall"
 	},
-/area/mine/explored{
-	name = "Bomb Testing Asteroid"
-	})
+/area/asteroid/nearstation/bomb_site)
 "cnr" = (
 /obj/structure/table,
 /obj/item/stock_parts/subspace/amplifier,
@@ -48293,7 +48226,7 @@
 "coL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating/airless,
-/area/quartermaster/storage)
+/area/quartermaster/warehouse)
 "coN" = (
 /turf/open/floor/plasteel/neutral/corner,
 /area/hallway/secondary/exit/departure_lounge)
@@ -48840,9 +48773,7 @@
 "cqW" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cqX" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/lattice,
@@ -48894,9 +48825,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "crm" = (
 /obj/structure/lattice,
 /obj/structure/disposalpipe/segment,
@@ -49076,9 +49005,7 @@
 "crV" = (
 /obj/structure/flora/ausbushes/pointybush,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "crX" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/dark,
@@ -50543,15 +50470,11 @@
 /obj/structure/lattice,
 /obj/structure/lattice,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cyM" = (
 /obj/structure/lattice,
 /turf/closed/mineral,
-/area/chapel/asteroid{
-	name = "Monastery Asteroid"
-	})
+/area/chapel/asteroid/monastery)
 "cyP" = (
 /obj/structure/bookcase/random/nonfiction,
 /obj/machinery/light/small{
@@ -51373,19 +51296,75 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "cCX" = (
-/obj/machinery/vending/kink,
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
-"cCY" = (
-/obj/machinery/vending/kink,
-/turf/open/floor/plating{
-	icon_state = "platingdmg3"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"cCY" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating,
 /area/maintenance/department/cargo)
 "cCZ" = (
-/obj/machinery/vending/kink,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable{
+	icon_state = "2-8"
+	},
 /turf/open/floor/plating,
-/area/maintenance/department/engine)
+/area/maintenance/department/cargo)
+"cDa" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDb" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDc" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDd" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDe" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDf" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDg" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDh" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDi" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDj" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDk" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDl" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDm" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
+"cDn" = (
+/turf/closed/wall,
+/area/quartermaster/warehouse)
 
 (1,1,1) = {"
 aaa
@@ -79045,7 +79024,7 @@ cCF
 cCH
 bTn
 bPB
-cCZ
+bDi
 bVC
 bQj
 bPA
@@ -88718,7 +88697,7 @@ aaa
 aaa
 aaa
 aiU
-cCX
+ajv
 aju
 ajt
 alQ
@@ -90809,12 +90788,12 @@ aEd
 aIj
 aJm
 aKg
-aLg
+cDa
 aMo
-aLg
-aLg
-aLg
-aLg
+cDd
+cDf
+cDg
+cDh
 aLg
 aTj
 aUu
@@ -91842,8 +91821,8 @@ aMs
 aNO
 aPb
 aQe
-aLg
-aLg
+cDi
+cDj
 aTn
 aUx
 aVA
@@ -92100,7 +92079,7 @@ aNP
 aPb
 aNO
 aNP
-aLg
+cDk
 aTo
 aSk
 aTm
@@ -92357,7 +92336,7 @@ aNO
 aPc
 aQf
 aRq
-aLg
+cDl
 aTp
 aSk
 aTm
@@ -92614,7 +92593,7 @@ aNQ
 aNO
 aQg
 aNP
-aLg
+cDm
 aTq
 aSk
 aVB
@@ -92864,14 +92843,14 @@ aEd
 aEd
 aEd
 aEd
-aKl
-aLg
-aLg
-aLg
+cCX
+cDb
+cDc
+cDe
 coL
 coL
 coL
-aLg
+cDn
 aTr
 aUy
 aPd
@@ -93121,7 +93100,7 @@ aGI
 aHr
 aEd
 aJp
-aKm
+cCY
 aLi
 aMw
 aEj
@@ -93378,7 +93357,7 @@ aGJ
 aGJ
 aDl
 aEk
-aEk
+cCZ
 aLj
 aMx
 aEj
@@ -100087,7 +100066,7 @@ aaa
 aaa
 aEj
 bkO
-cCY
+bgO
 bnn
 bom
 aEj

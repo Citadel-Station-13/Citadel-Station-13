@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Decals will no longer spawn where they don't belong"

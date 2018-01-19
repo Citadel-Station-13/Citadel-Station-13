@@ -24,7 +24,6 @@ GLOBAL_PROTECT(security_mode)
 
 	SERVER_TOOLS_ON_NEW
 
-	load_motd()
 	load_admins()
 	LoadVerbs(/datum/verbs/menu)
 	if(CONFIG_GET(flag/usewhitelist))
@@ -41,17 +40,19 @@ GLOBAL_PROTECT(security_mode)
 	if("no-init" in params)
 		return
 
+	cit_initialize()
+
 	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
-	external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
+	GLOB.external_rsc_urls = world.file2list("config/external_rsc_urls.txt","\n")
 	var/i=1
-	while(i<=external_rsc_urls.len)
-		if(external_rsc_urls[i])
+	while(i<=GLOB.external_rsc_urls.len)
+		if(GLOB.external_rsc_urls[i])
 			i++
 		else
-			external_rsc_urls.Cut(i,i+1)
+			GLOB.external_rsc_urls.Cut(i,i+1)
 #endif
 
 /world/proc/CheckSchemaVersion()
@@ -194,9 +195,6 @@ GLOBAL_PROTECT(security_mode)
 
 	log_world("World rebooted at [time_stamp()]")
 	..()
-
-/world/proc/load_motd()
-	GLOB.join_motd = file2text("config/motd.txt") + "<br>" + GLOB.revdata.GetTestMergeInfo()
 
 /world/proc/update_status()
 

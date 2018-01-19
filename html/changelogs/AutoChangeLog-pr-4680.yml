@@ -1,4 +1,0 @@
-author: "CitadelStationBot"
-delete-after: True
-changes: 
-  - bugfix: "Interacting with objects at the same X and Y but a different Z is no longer possible."
