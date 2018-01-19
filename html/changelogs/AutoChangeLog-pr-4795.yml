@@ -1,4 +1,0 @@
-author: "Jay"
-delete-after: True
-changes: 
-  - tweak: "Changes the panic bunker message when new people connect to reflect more helpful info"

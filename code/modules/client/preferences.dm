@@ -1,4 +1,11 @@
-
+		/* CAUTION! CAUTION! CAUTION! CAUTION! CAUTION! *\
+		|		THIS FILE CONTAINS A SHITTON OF			 |
+		|		CHANGES SPECIFIC TO CITADEL. IF			 |
+		|		 YOU'RE FIXING A MERGE CONFLICT			 |
+		|		HERE, PLEASE ASK FOR REVIEW FROM		 |
+		|		ANOTHER MAINTAINER TO ENSURE YOU		 |
+		|		  DON'T INTRODUCE REGRESSIONS.			 |
+		\*												*/
 
 GLOBAL_LIST_EMPTY(preferences_datums)
 
@@ -220,6 +227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	dat += "<a href='?_src_=prefs;preference=tab;tab=0' [current_tab == 0 ? "class='linkOn'" : ""]>Character Settings</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=2' [current_tab == 2 ? "class='linkOn'" : ""]>Character Appearance</a>"
+	dat += "<a href='?_src_=prefs;preference=tab;tab=3' [current_tab == 3 ? "class='linkOn'" : ""]>Loadout</a>"
 	dat += "<a href='?_src_=prefs;preference=tab;tab=1' [current_tab == 1 ? "class='linkOn'" : ""]>Game Preferences</a>"
 
 	if(!path)
@@ -536,6 +544,56 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				*/
 
 			dat += "</td></tr></table>"
+		if(3)
+			if(!gear_tab)
+				gear_tab = GLOB.loadout_items[1]
+			dat += "<table align='center' width='100%'>"
+			dat += "<tr><td colspan=4><center><b><font color='[gear_points == 0 ? "#E62100" : "#CCDDFF"]'>[gear_points]</font> loadout points remaining.</b> \[<a href='?_src_=prefs;preference=gear;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+			dat += "<tr><td colspan=4><center>You can only choose one item per category, unless it's an item that spawns in your backpack or hands.</center></td></tr>"
+			dat += "<tr><td colspan=4><center><b>"
+			var/firstcat = TRUE
+			for(var/i in GLOB.loadout_items)
+				if(firstcat)
+					firstcat = FALSE
+				else
+					dat += " |"
+				if(i == gear_tab)
+					dat += " <span class='linkOn'>[i]</span> "
+				else
+					dat += " <a href='?_src_=prefs;preference=gear;select_category=[i]'>[i]</a> "
+			dat += "</b></center></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr><td colspan=4><b><center>[gear_tab]</center></b></td></tr>"
+			dat += "<tr><td colspan=4><hr></td></tr>"
+			dat += "<tr style='vertical-align:top;'><td width=15%><b>Name</b></td>"
+			dat += "<td width=5% style='vertical-align:top'><b>Cost</b></td>"
+			dat += "<td><font size=2><b>Restrictions</b></font></td>"
+			dat += "<td><font size=2><b>Description</b></font></td></tr>"
+			for(var/j in GLOB.loadout_items[gear_tab])
+				var/datum/gear/gear = GLOB.loadout_items[gear_tab][j]
+				var/donoritem
+				if(gear.ckeywhitelist && gear.ckeywhitelist.len)
+					donoritem = TRUE
+					if(!(user.ckey in gear.ckeywhitelist))
+						continue
+				var/class_link = ""
+				if(gear.type in chosen_gear)
+					class_link = "style='white-space:normal;' class='linkOn' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=0'"
+				else if(gear_points <= 0)
+					class_link = "style='white-space:normal;' class='linkOff'"
+				else if(donoritem)
+					class_link = "style='white-space:normal;background:#ebc42e;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				else
+					class_link = "style='white-space:normal;' href='?_src_=prefs;preference=gear;toggle_gear_path=[html_encode(j)];toggle_gear=1'"
+				dat += "<tr style='vertical-align:top;'><td width=15%><a [class_link]>[j]</a></td>"
+				dat += "<td width = 5% style='vertical-align:top'>[gear.cost]</td><td>"
+				if(islist(gear.restricted_roles))
+					if(gear.restricted_roles.len)
+						dat += "<font size=2>"
+						dat += gear.restricted_roles.Join(";")
+						dat += "</font>"
+				dat += "</td><td><font size=2><i>[gear.description]</i></font></td></tr>"
+			dat += "</table>"
 	dat += "<hr><center>"
 
 	if(!IsGuestKey(user.key))
@@ -1617,6 +1675,34 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				if("tab")
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
+
+	if(href_list["preference"] == "gear")
+		if(href_list["clear_loadout"])
+			LAZYCLEARLIST(chosen_gear)
+			gear_points = initial(gear_points)
+			save_preferences()
+		if(href_list["select_category"])
+			for(var/i in GLOB.loadout_items)
+				if(i == href_list["select_category"])
+					gear_tab = i
+		if(href_list["toggle_gear_path"])
+			var/datum/gear/G = GLOB.loadout_items[gear_tab][html_decode(href_list["toggle_gear_path"])]
+			if(!G)
+				return
+			var/toggle = text2num(href_list["toggle_gear"])
+			if(!toggle && (G.type in chosen_gear))//toggling off and the item effectively is in chosen gear)
+				LAZYREMOVE(chosen_gear, G.type)
+				gear_points += initial(G.cost)
+			else if(toggle && (!(is_type_in_ref_list(G, chosen_gear))))
+				if(!is_loadout_slot_available(G.category))
+					to_chat(user, "<span class='danger'>You cannot take this loadout, as you've already chosen too many of the same category!</span>")
+					return
+				if(G.ckeywhitelist && G.ckeywhitelist.len && !(user.ckey in G.ckeywhitelist))
+					to_chat(user, "<span class='danger'>This is an item intended for donator use only. You are not authorized to use this item.</span>")
+					return
+				if(gear_points >= initial(G.cost))
+					LAZYADD(chosen_gear, G.type)
+					gear_points -= initial(G.cost)
 
 	ShowChoices(user)
 	return 1

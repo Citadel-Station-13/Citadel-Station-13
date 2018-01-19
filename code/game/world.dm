@@ -40,6 +40,8 @@ GLOBAL_PROTECT(security_mode)
 	if("no-init" in params)
 		return
 
+	cit_initialize()
+
 	Master.Initialize(10, FALSE)
 
 /world/proc/SetupExternalRSC()
