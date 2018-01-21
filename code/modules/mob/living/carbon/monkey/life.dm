@@ -72,12 +72,7 @@
 		if(loc_temp < bodytemperature)
 			bodytemperature += max((loc_temp - bodytemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX)
 		else
-<<<<<<< HEAD
-			bodytemperature += min(((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR), BODYTEMP_HEATING_MAX)
-=======
 			bodytemperature += min((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR, BODYTEMP_HEATING_MAX)
-
->>>>>>> b1adcc0... Ends the great monkey freezing epidemic (#34686)
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		switch(bodytemperature)
