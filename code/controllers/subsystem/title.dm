@@ -34,11 +34,7 @@ SUBSYSTEM_DEF(title)
 		break
 		
 	if(length(title_screens))
-<<<<<<< HEAD
-		file_path = "config/title_screens/images/[pick(title_screens)]"
-=======
 		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
->>>>>>> 015258d... Config dir again except this time it works (#34606)
 	
 	if(!file_path)
 		file_path = "icons/default_title.dmi"
