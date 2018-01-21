@@ -11,6 +11,25 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
 	//undershirt
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	//socks
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
+	//lizard bodyparts (blizzard intensifies)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/lizard, GLOB.animated_tails_list_lizard)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails_animated/human, GLOB.animated_tails_list_human)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns,GLOB.horns_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, GLOB.wings_open_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
+	
 //CIT CHANGES START HERE, ADDS SNOWFLAKE BODYPARTS AND MORE
 	//mammal bodyparts (fucking furries)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/mam_body_markings, GLOB.mam_body_markings_list)
@@ -29,15 +48,6 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/xeno_dorsal, GLOB.xeno_dorsal_list)
 	//genitals
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/penis, GLOB.cock_shapes_list)
-
-	for(var/K in GLOB.cock_shapes_list)
-		var/datum/sprite_accessory/penis/value = GLOB.cock_shapes_list[K]
-		GLOB.cock_shapes_icons[K] = value.icon_state
-
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/vagina, GLOB.vagina_shapes_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/breasts, GLOB.breasts_shapes_list)
-	GLOB.breasts_size_list = list("a","b","c","d","e") //We need the list to choose from initialized, but it's no longer a sprite_accessory thing.
-//END OF CIT CHANGES
 	//moffs
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
