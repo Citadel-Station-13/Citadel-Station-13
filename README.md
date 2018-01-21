@@ -130,8 +130,6 @@ To enable an away mission open `config/awaymissionconfig.txt` and uncomment one 
 
 The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://www.tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
-<<<<<<< HEAD
-=======
 ## WEB/CDN RESOURCE DELIVERY 
 
 Web delivery of game resources makes it quicker for players to join and reduces some of the stress on the game server.
@@ -141,7 +139,6 @@ Web delivery of game resources makes it quicker for players to join and reduces 
     * If you keep up to date with /tg/ you could reuse /tg/'s rsc cdn at http://tgstation13.download/byond/tgstation.zip. Otherwise you can use cdn services like CDN77 or cloudflare (requires adding a page rule to enable caching of the zip), or roll your own cdn using route 53 and vps providers.
 	* Regardless even offloading the rsc to a website without a CDN will be a massive improvement over the in game system for transferring files.
 
->>>>>>> 34d51dc... Adds nightlies and cdn info
 ## IRC BOT SETUP
 
 Included in the repository is a python3 compatible IRC bot capable of relaying adminhelps to a specified
