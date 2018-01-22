@@ -16,7 +16,11 @@
 		/datum/language/narsie,
 		/datum/language/beachbum,
 		/datum/language/ratvar,
+<<<<<<< HEAD
 		/datum/language/aphasia
+=======
+		/datum/language/aphasia,
+>>>>>>> 5c23deb... removes moth language (#34745)
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
