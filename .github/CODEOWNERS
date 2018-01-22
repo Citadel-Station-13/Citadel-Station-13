@@ -61,6 +61,16 @@
 
 # ShizCalev
 
+<<<<<<< HEAD
 /_maps/* @ShizCalev
 /icons/* @ShizCalev
 /sound/* @ShizCalev
+=======
+/_maps/ @ShizCalev
+/icons/ @ShizCalev
+/sound/ @ShizCalev
+
+# WJohnston
+
+/icons/ @WJohn
+>>>>>>> 0363132... Adds the art director as /icons folder codeowner (#34803)
