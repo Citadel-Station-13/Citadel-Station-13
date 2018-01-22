@@ -45,6 +45,20 @@
 	W.registered_name = H.real_name
 	W.update_label(H.real_name)
 
+/datum/outfit/lavaknight/captain
+	name ="Cydonian Knight Captain"
+	l_pocket = /obj/item/twohanded/hypereutactic
+
+/datum/outfit/lavaknight/captain/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/knight/W = H.wear_id
+	W.assignment = "Knight Captain"
+	W.registered_name = H.real_name
+	W.update_label(H.real_name)
+
+
 /obj/effect/mob_spawn/human/lavaknight/captain
 	name = "odd gilded cryogenics pod"
 	desc = "A humming cryo pod that appears to be gilded. You can barely recognise a faint glow underneath the built up ice. The machine is attempting to wake up its occupant."
@@ -52,4 +66,4 @@
 	You cannot remember where you came from. However, a few things remain burnt into your mind, most prominently a vow to never harm another sapient being under any circumstances unless it is hellbent on ending your life. \
 	Remember: hostile creatures and such are fair game for attacking, but <span class='danger'>under no circumstances are you to attack anything capable of thought and/or speech</span> unless it has made it its life's calling to chase you to the ends of the earth. \
 	You feel a natural instict to lead, and as such, you should strive to lead your comrades to safety, and hopefully home. You also feel a burning determination to uphold your vow, as well as your fellow comrade's."
-	l_pocket = /obj/item/twohanded/hypereutactic
+	outfit = /datum/outfit/lavaknight/captain
