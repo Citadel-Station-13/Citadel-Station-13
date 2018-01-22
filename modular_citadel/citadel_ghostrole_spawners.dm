@@ -32,6 +32,16 @@
 	r_pocket = /obj/item/melee/transforming/energy/sword/cx
 	suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 	suit_store = /obj/item/tank/internals/oxygen
+	id = /obj/item/card/id
+
+/datum/outfit/lavaknight/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.assignment = "Knight"
+	W.registered_name = H.real_name
+	W.update_label(H.real_name)
 
 /obj/effect/mob_spawn/human/lavaknight/captain
 	name = "odd gilded cryogenics pod"
