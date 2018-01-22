@@ -452,7 +452,19 @@
 	race = /datum/species/fly
 	mutationtext = "<span class='danger'>The pain subsides. You feel... buzzy.</span>"
 
+<<<<<<< HEAD
 /datum/reagent/stableslimetoxin/pod
+=======
+/datum/reagent/mutationtoxin/moth
+	name = "Moth Mutation Toxin"
+	id = "mothmutationtoxin"
+	description = "A glowing toxin."
+	color = "#5EFF3B" //RGB: 94, 255, 59
+	race = /datum/species/moth
+	mutationtext = "<span class='danger'>The pain subsides. You feel... attracted to light.</span>"
+
+/datum/reagent/mutationtoxin/pod
+>>>>>>> b30e293... Moths, except I have stolen them and they no longer conflict (#34498)
 	name = "Podperson Mutation Toxin"
 	id = "podmutationtoxin"
 	description = "A vegetalizing toxin produced by slimes."
