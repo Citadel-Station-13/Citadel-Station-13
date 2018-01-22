@@ -24,6 +24,8 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
+/obj/item/card/id/knight //currently IDentical to normal IDs, but this is so we can swap sprites with something more thematic later
+
 /datum/outfit/lavaknight
 	name = "Cydonian Knight"
 	uniform = /obj/item/clothing/under/assistantformal
@@ -32,13 +34,13 @@
 	r_pocket = /obj/item/melee/transforming/energy/sword/cx
 	suit = /obj/item/clothing/suit/space/hardsuit/lavaknight
 	suit_store = /obj/item/tank/internals/oxygen
-	id = /obj/item/card/id
+	id = /obj/item/card/id/knight
 
 /datum/outfit/lavaknight/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
-	var/obj/item/card/id/W = H.wear_id
+	var/obj/item/card/id/knight/W = H.wear_id
 	W.assignment = "Knight"
 	W.registered_name = H.real_name
 	W.update_label(H.real_name)
