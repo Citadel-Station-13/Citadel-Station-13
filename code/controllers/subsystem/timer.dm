@@ -353,7 +353,18 @@ SUBSYSTEM_DEF(timer)
 
 /proc/addtimer(datum/callback/callback, wait, flags)
 	if (!callback)
+<<<<<<< HEAD
 		return
+=======
+		CRASH("addtimer called without a callback")
+
+	if (wait < 0)
+		stack_trace("addtimer called with a negative wait. Converting to 0")
+
+	//alot of things add short timers on themselves in their destroy, we ignore those cases
+	if (wait >= 1 && callback && callback.object && callback.object != GLOBAL_PROC && QDELETED(callback.object))
+		stack_trace("addtimer called with a callback assigned to a qdeleted object")
+>>>>>>> f3b771b... Merge pull request #34774 from ShizCalev/addtimer-stack-track-typo
 
 	wait = max(wait, 0)
 
