@@ -582,23 +582,5 @@ This is here to make the tiles around the station mininuke change when it's arme
 	user.adjustOxyLoss(200)
 	user.death(0)
 
-<<<<<<< HEAD
-/obj/item/disk/fakenucleardisk
-	name = "nuclear authentication disk"
-	desc = "Better keep this safe."
-	icon_state = "nucleardisk"
-
-/obj/item/disk/fakenucleardisk/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is pretending to go delta! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(src, 'sound/machines/alarm.ogg', 30, -1, 1)
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
-	return MANUAL_SUICIDE
-
-/obj/item/disk/fakenucleardisk/examine(mob/user)
-	..()
-	if(Adjacent(user))
-		to_chat(user, "<span class='warning'>Wait, this is a fake!</span>")
-=======
 /obj/item/disk/nuclear/fake
 	fake = TRUE
->>>>>>> cbd5aec... Fake nuclear disks are even more convincing (#34466)
