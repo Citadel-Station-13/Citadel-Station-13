@@ -552,8 +552,6 @@
 		possible_morphs += S
 	race = pick(possible_morphs)
 	..()
-<<<<<<< HEAD
-=======
 	if(!istype(H))
 		return
 	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
@@ -580,7 +578,6 @@
 			H.set_species(species_type)
 			H.reagents.del_reagent(id)
 			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
->>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"
