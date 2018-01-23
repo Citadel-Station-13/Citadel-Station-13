@@ -60,7 +60,10 @@
 /code/modules/shuttle/* @ninjanomnom
 
 # ShizCalev
+/_maps/ @ShizCalev
+/icons/ @ShizCalev
+/sound/ @ShizCalev
 
-/_maps/* @ShizCalev
-/icons/* @ShizCalev
-/sound/* @ShizCalev
+# WJohnston
+
+/icons/ @WJohn
