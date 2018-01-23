@@ -54,8 +54,6 @@
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
 
-<<<<<<< HEAD
-=======
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -68,8 +66,7 @@
 			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
 			user.reagents.add_reagent("regen_jelly",10)
 			return 600
-
->>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
+			
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
@@ -94,8 +91,6 @@
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
 
-<<<<<<< HEAD
-=======
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -113,7 +108,6 @@
 			to_chat(user, "<span class='warning'>You activate [src], and icy air bursts out of your skin!</span>")
 			return 900
 
->>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
