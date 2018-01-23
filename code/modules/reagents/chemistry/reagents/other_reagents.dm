@@ -552,6 +552,35 @@
 		possible_morphs += S
 	race = pick(possible_morphs)
 	..()
+<<<<<<< HEAD
+=======
+	if(!istype(H))
+		return
+	if(!H.dna || !H.dna.species || !(H.dna.species.species_traits & SPECIES_ORGANIC))
+		return
+
+	if(isjellyperson(H))
+		to_chat(H, "<span class='warning'>Your jelly shifts and morphs, turning you into another subspecies!</span>")
+		var/species_type = pick(subtypesof(/datum/species/jelly))
+		H.set_species(species_type)
+		H.reagents.del_reagent(id)
+
+	switch(current_cycle)
+		if(1 to 6)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("You don't feel very well.", "Your skin feels a little slimy.")]</span>")
+		if(7 to 12)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("Your appendages are melting away.", "Your limbs begin to lose their shape.")]</span>")
+		if(13 to 19)
+			if(prob(10))
+				to_chat(H, "<span class='warning'>[pick("You feel your internal organs turning into slime.", "You feel very slimelike.")]</span>")
+		if(20 to INFINITY)
+			var/species_type = pick(subtypesof(/datum/species/jelly))
+			H.set_species(species_type)
+			H.reagents.del_reagent(id)
+			to_chat(H, "<span class='warning'>You've become \a jellyperson!</span>")
+>>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
 
 /datum/reagent/mulligan
 	name = "Mulligan Toxin"

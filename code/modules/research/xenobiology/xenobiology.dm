@@ -54,6 +54,22 @@
 	name = "purple slime extract"
 	icon_state = "purple slime extract"
 
+<<<<<<< HEAD
+=======
+/obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
+	switch(activation_type)
+		if(SLIME_ACTIVATE_MINOR)
+			user.nutrition += 50
+			user.blood_volume += 50
+			to_chat(user, "<span class='notice'>You activate [src], and your body is refilled with fresh slime jelly!</span>")
+			return 150
+
+		if(SLIME_ACTIVATE_MAJOR)
+			to_chat(user, "<span class='notice'>You activate [src], and it releases regenerative chemicals!</span>")
+			user.reagents.add_reagent("regen_jelly",10)
+			return 600
+
+>>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
 /obj/item/slime_extract/darkpurple
 	name = "dark purple slime extract"
 	icon_state = "dark purple slime extract"
@@ -78,6 +94,26 @@
 	name = "dark blue slime extract"
 	icon_state = "dark blue slime extract"
 
+<<<<<<< HEAD
+=======
+/obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
+	switch(activation_type)
+		if(SLIME_ACTIVATE_MINOR)
+			to_chat(user, "<span class='notice'>You activate [src]. You start feeling colder!</span>")
+			user.ExtinguishMob()
+			user.adjust_fire_stacks(-20)
+			user.reagents.add_reagent("frostoil",4)
+			user.reagents.add_reagent("cryoxadone",5)
+			return 100
+
+		if(SLIME_ACTIVATE_MAJOR)
+			var/turf/open/T = get_turf(user)
+			if(istype(T))
+				T.atmos_spawn_air("nitrogen=40;TEMP=2.7")
+			to_chat(user, "<span class='warning'>You activate [src], and icy air bursts out of your skin!</span>")
+			return 900
+
+>>>>>>> 13cc69e... Adds a few jelly reagents, small chem adjustments for slimepeople (#34524)
 /obj/item/slime_extract/pink
 	name = "pink slime extract"
 	icon_state = "pink slime extract"
