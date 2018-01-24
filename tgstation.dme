@@ -13,7 +13,7 @@
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
-#include "_maps\basemap.dm"
+#include "_maps\_basemap.dm"
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DATASTRUCTURES\globals.dm"
@@ -24,7 +24,6 @@
 #include "code\__DEFINES\_tick.dm"
 #include "code\__DEFINES\access.dm"
 #include "code\__DEFINES\admin.dm"
-#include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\callbacks.dm"
@@ -367,6 +366,7 @@
 #include "code\datums\components\rad_insulation.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\riding.dm"
+#include "code\datums\components\rotation.dm"
 #include "code\datums\components\signal_redirect.dm"
 #include "code\datums\components\slippery.dm"
 #include "code\datums\components\spooky.dm"
@@ -820,6 +820,7 @@
 #include "code\game\objects\structures.dm"
 #include "code\game\objects\effects\alien_acid.dm"
 #include "code\game\objects\effects\anomalies.dm"
+#include "code\game\objects\effects\blessing.dm"
 #include "code\game\objects\effects\bump_teleporter.dm"
 #include "code\game\objects\effects\contraband.dm"
 #include "code\game\objects\effects\countdown.dm"
@@ -1112,7 +1113,6 @@
 #include "code\game\objects\structures\crates_lockers\closets\utility_closets.dm"
 #include "code\game\objects\structures\crates_lockers\closets\wardrobe.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\bar.dm"
-#include "code\game\objects\structures\crates_lockers\closets\secure\bsdroppod.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\cargo.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\engineering.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\freezer.dm"
@@ -1123,6 +1123,7 @@
 #include "code\game\objects\structures\crates_lockers\closets\secure\scientist.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\secure_closets.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\security.dm"
+#include "code\game\objects\structures\crates_lockers\closets\secure\supplypod.dm"
 #include "code\game\objects\structures\crates_lockers\crates\bins.dm"
 #include "code\game\objects\structures\crates_lockers\crates\critter.dm"
 #include "code\game\objects\structures\crates_lockers\crates\large.dm"

@@ -214,7 +214,7 @@
 	default_features = list("slimecoontail" = "Slimecoon Tail", "slimecoonears" = "Slimecoon Ears", "slimecoonsnout" = "Slimecoon Snout")*/
 
 // Fat Shark <3
-
+/*
 /datum/species/shark/datashark
 	name = "DataShark"
 	id = "datashark"
@@ -228,6 +228,7 @@
 	whitelisted = 1
 	whitelist = list("rubyflamewing")
 	blacklisted = 0
+	*/
 
 /datum/species/guilmon
 	name = "Guilmon"
