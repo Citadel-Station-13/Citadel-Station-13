@@ -14,10 +14,13 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	C.remove_language(/datum/language/slime, TRUE)
+	C.faction -= "slime"
 	..()
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
+	C.grant_language(/datum/language/slime, TRUE)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -101,7 +104,7 @@
 	name = "Slimeperson"
 	id = "slime"
 	default_color = "00FFFF"
-	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,VIRUSIMMUNE, TOXINLOVER)
+	species_traits = list(SPECIES_ORGANIC,MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD,TOXINLOVER)
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
@@ -137,8 +140,24 @@
 			bodies = list(C)
 		else
 			bodies |= C
+<<<<<<< HEAD
 
 	C.faction |= "slime"
+=======
+      
+/datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
+	if(slime_split)
+		var/datum/mind/M
+		for(var/mob/living/L in bodies)
+			if(L.mind && L.mind.active)
+				M = L.mind
+		if(!M || M != H.mind)
+			return
+		var/list/available_bodies = (bodies - H)
+		if(!LAZYLEN(available_bodies))
+			return
+		swap_body.swap_to_dupe(M, pick(available_bodies))
+>>>>>>> f4847c2... [Ready]Minor Slime Update: slimepeople get the slime language, slimes speak slime instead of common (#33773)
 
 //If you're cloned you get your body pool back
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
