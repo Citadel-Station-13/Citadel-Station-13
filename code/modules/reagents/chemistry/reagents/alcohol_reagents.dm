@@ -1281,9 +1281,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "glass_yellow"
 	glass_name = "eggnog"
 	glass_desc = "For enjoying the most wonderful time of the year."
-<<<<<<< HEAD
-=======
-
 
 /datum/reagent/consumable/ethanol/narsour
 	name = "Nar'Sour"
@@ -1300,4 +1297,3 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	M.cultslurring = min(M.cultslurring + 3, 3)
 	M.stuttering = min(M.stuttering + 3, 3)
 	..()
->>>>>>> b7c5747... Adds stutter to narsour
