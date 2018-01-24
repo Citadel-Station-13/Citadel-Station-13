@@ -88,6 +88,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"xenodorsal" = "None",
 							"xenohead" = "None",
 							"xenotail" = "None",
+							"moth_wings" = "Plain",
 							"taur" = "None",
 							"exhibitionist" = FALSE,
 							"genitals_use_skintone" = FALSE,
@@ -438,7 +439,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 				dat += "<b>Facial Hair Style: </b><a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
 				dat += "<b>Facial Hair Color: </b><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
-			if(EYECOLOR in pref_species.species_traits)
+			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 				dat += "<b>Eye Color: </b><span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 			if("tail_lizard" in pref_species.mutant_bodyparts)
 				dat += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
