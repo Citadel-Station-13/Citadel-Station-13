@@ -86,6 +86,7 @@
 #include "code\__DEFINES\tgui.dm"
 #include "code\__DEFINES\time.dm"
 #include "code\__DEFINES\tools.dm"
+#include "code\__DEFINES\traits.dm"
 #include "code\__DEFINES\turf_flags.dm"
 #include "code\__DEFINES\typeids.dm"
 #include "code\__DEFINES\voreconstants.dm"
