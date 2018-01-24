@@ -140,10 +140,6 @@
 			bodies = list(C)
 		else
 			bodies |= C
-<<<<<<< HEAD
-
-	C.faction |= "slime"
-=======
       
 /datum/species/jelly/slime/spec_death(gibbed, mob/living/carbon/human/H)
 	if(slime_split)
@@ -157,7 +153,6 @@
 		if(!LAZYLEN(available_bodies))
 			return
 		swap_body.swap_to_dupe(M, pick(available_bodies))
->>>>>>> f4847c2... [Ready]Minor Slime Update: slimepeople get the slime language, slimes speak slime instead of common (#33773)
 
 //If you're cloned you get your body pool back
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
