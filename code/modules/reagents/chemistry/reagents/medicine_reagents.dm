@@ -152,9 +152,6 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
-<<<<<<< HEAD
-		M.status_flags &= ~DISFIGURED
-=======
 		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
@@ -186,7 +183,6 @@
 		M.adjustToxLoss(-power, 0, TRUE)
 		M.adjustCloneLoss(-power, 0)
 		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
->>>>>>> 3b7230a... Merge pull request #34894 from optimumtact/fixmaster
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
@@ -1139,8 +1135,6 @@
 	id = "corazone"
 	description = "A medication used to treat pain, fever, and inflammation, along with heart attacks."
 	color = "#F5F5F5"
-<<<<<<< HEAD
-=======
 
 /datum/reagent/medicine/ketrazine
 	name = "Ketrazine"
@@ -1249,4 +1243,4 @@
 		M.Dizzy(7)
 		M.Jitter(7)
 	..()
->>>>>>> 3b7230a... Merge pull request #34894 from optimumtact/fixmaster
+	
