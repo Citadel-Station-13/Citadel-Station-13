@@ -24,9 +24,17 @@
 	new/obj/structure/showcase/machinery/oldpod/used(drop_location())
 	return ..()
 
-/obj/item/card/id/knight //currently IDentical to normal IDs, but this is so we can swap sprites with something more thematic later
+/obj/item/card/id/knight
 	icon = 'modular_citadel/icons/obj/id.dmi'
 	icon_state = "knight"
+
+/obj/item/card/id/knight/update_label(newname, newjob)
+	. = ..()
+	if(newname || newjob)
+		name = "[(!newname)	? "identification card"	: "[newname]'s Knight Badge"][(!newjob) ? "" : " ([newjob])"]"
+		return
+
+	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s Knight Badge"][(!assignment) ? "" : " ([assignment])"]"
 
 
 /datum/outfit/lavaknight
