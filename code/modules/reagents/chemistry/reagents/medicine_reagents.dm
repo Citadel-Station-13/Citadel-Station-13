@@ -152,37 +152,7 @@
 /datum/reagent/medicine/clonexadone/on_mob_life(mob/living/M)
 	if(M.bodytemperature < T0C)
 		M.adjustCloneLoss(0.00006 * (M.bodytemperature ** 2) - 6, 0)
-		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
-		. = 1
-	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
-	..()
-
-/datum/reagent/medicine/pyroxadone
-	name = "Pyroxadone"
-	id = "pyroxadone"
-	description = "A mixture of cryoxadone and slime jelly, that apparently inverses the requirement for its activation."
-	color = "#f7832a"
-	taste_description = "spicy jelly"
-
-/datum/reagent/medicine/pyroxadone/on_mob_life(mob/living/M)
-	if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		var/power = 0
-		switch(M.bodytemperature)
-			if(BODYTEMP_HEAT_DAMAGE_LIMIT to 400)
-				power = 2
-			if(400 to 460)
-				power = 3
-			else
-				power = 5
-		if(M.on_fire)
-			power *= 2
-
-		M.adjustOxyLoss(-2 * power, 0)
-		M.adjustBruteLoss(-power, 0)
-		M.adjustFireLoss(-1.5 * power, 0)
-		M.adjustToxLoss(-power, 0, TRUE)
-		M.adjustCloneLoss(-power, 0)
-		M.remove_trait(TRAIT_DISFIGURED, TRAIT_GENERIC)
+		M.status_flags &= ~DISFIGURED
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.000015 * (M.bodytemperature ** 2) + 0.75)
 	..()
@@ -1196,14 +1166,6 @@
 
 
 	..()
-
-/datum/reagent/medicine/ketrazine/on_mob_add(mob/living/M)
-	M.add_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.add_trait(TRAIT_GOTTAGOFAST, id)
-
-/datum/reagent/medicine/ketrazine/on_mob_delete(mob/living/M)
-	M.remove_trait(TRAIT_IGNORESLOWDOWN, id)
-	M.remove_trait(TRAIT_GOTTAGOFAST, id)
 
 /datum/reagent/medicine/ketrazine/overdose_process(mob/living/M)
 	if(prob(66))
