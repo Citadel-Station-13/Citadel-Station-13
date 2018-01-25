@@ -1147,6 +1147,8 @@
 	addiction_threshold = 5
 
 /datum/reagent/medicine/ketrazine/on_mob_life(mob/living/M)
+	M.status_flags |= IGNORESLOWDOWN
+	M.status_flags |= GOTTAGOFAST
 	M.adjustToxLoss(-3*REM, 0)
 	M.adjustBruteLoss(-5*REM, 0)
 	M.adjustFireLoss(-5*REM, 0)
@@ -1243,4 +1245,3 @@
 		M.Dizzy(7)
 		M.Jitter(7)
 	..()
-	
