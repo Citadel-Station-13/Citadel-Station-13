@@ -25,8 +25,10 @@
 	return ..()
 
 /obj/item/card/id/knight
+	var/id_color = "#00FF00" //defaults to green
 	icon = 'modular_citadel/icons/obj/id.dmi'
 	icon_state = "knight"
+
 
 /obj/item/card/id/knight/update_label(newname, newjob)
 	. = ..()
@@ -36,6 +38,30 @@
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s Knight Badge"][(!assignment) ? "" : " ([assignment])"]"
 
+/obj/item/card/id/knight/update_icon()
+	var/mutable_appearance/id_overlay = mutable_appearance('modular_citadel/icons/obj/id.dmi', "knight_overlay")
+
+	if(id_color)
+		id_overlay.color = id_color
+	cut_overlays()
+
+	add_overlay(id_overlay)
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/card/id/knight/AltClick(mob/living/user)
+	if(!in_range(src, user))	//Basic checks to prevent abuse
+		return
+	if(user.incapacitated() || !istype(user))
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		return
+	if(alert("Are you sure you want to recolor your id?", "Confirm Repaint", "Yes", "No") == "Yes")
+		var/energy_color_input = input(usr,"Choose Energy Color") as color|null
+		if(energy_color_input)
+			id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
+		update_icon()
 
 /datum/outfit/lavaknight
 	name = "Cydonian Knight"
@@ -54,7 +80,9 @@
 	var/obj/item/card/id/knight/W = H.wear_id
 	W.assignment = "Knight"
 	W.registered_name = H.real_name
+	W.id_color = "#0000FF" //Regular knights get simple blue. Doesn't matter much because it's variable anyway
 	W.update_label(H.real_name)
+
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
@@ -67,6 +95,7 @@
 	var/obj/item/card/id/knight/W = H.wear_id
 	W.assignment = "Knight Captain"
 	W.registered_name = H.real_name
+	W.id_color = "#FF0000" //Captains get fancy red. Doesn't matter because it's variable anyway
 	W.update_label(H.real_name)
 
 
