@@ -45,9 +45,6 @@ GLOBAL_PROTECT(security_mode)
 
 	cit_initialize()
 
-<<<<<<< HEAD
-	Master.Initialize(10, FALSE)
-=======
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
 	Master.sleep_offline_after_initializations = FALSE
@@ -58,7 +55,6 @@ GLOBAL_PROTECT(security_mode)
 #else
 	SSticker.force_ending = TRUE
 #endif
->>>>>>> b70740c... Merge pull request #34642 from Cyberboss/UnitTests
 
 /world/proc/SetupExternalRSC()
 #if (PRELOAD_RSC == 0)
