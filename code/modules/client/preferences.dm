@@ -1097,11 +1097,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							features["mcolor3"] = pref_species.default_color
 
 				if("mutant_color")
-<<<<<<< HEAD
-					var/new_mutantcolor = input(user, "Choose your character's primary alien/mutant color:", "Character Preference") as color|null
-=======
 					var/new_mutantcolor = input(user, "Choose your character's alien/mutant color:", "Character Preference","#"+features["mcolor"]) as color|null
->>>>>>> f98a4e6... Merge pull request #34755 from ChuckTheSheep/Current-Color-as-Default-Color-in-Inputs
 					if(new_mutantcolor)
 						var/temp_hsv = RGBtoHSV(new_mutantcolor)
 						if(new_mutantcolor == "#000000")
