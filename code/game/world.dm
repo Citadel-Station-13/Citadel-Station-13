@@ -147,9 +147,7 @@ GLOBAL_PROTECT(security_mode)
 	var/final_composed = "<span class='announce'>PR: [announcement]</span>"
 	for(var/client/C in GLOB.clients)
 		C.AnnouncePR(final_composed)
-
-<<<<<<< HEAD
-=======
+		
 /world/proc/FinishTestRun()
 	set waitfor = FALSE
 	var/list/fail_reasons
@@ -171,7 +169,6 @@ GLOBAL_PROTECT(security_mode)
 	sleep(0)	//yes, 0, this'll let Reboot finish and prevent byond memes
 	qdel(src)	//shut it down
 
->>>>>>> b70740c... Merge pull request #34642 from Cyberboss/UnitTests
 /world/Reboot(reason = 0, fast_track = FALSE)
 	SERVER_TOOLS_ON_REBOOT
 	if (reason || fast_track) //special reboot, do none of the normal stuff
