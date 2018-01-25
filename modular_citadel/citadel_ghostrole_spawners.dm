@@ -25,6 +25,9 @@
 	return ..()
 
 /obj/item/card/id/knight //currently IDentical to normal IDs, but this is so we can swap sprites with something more thematic later
+	icon = 'modular_citadel/icons/obj/id.dmi'
+	icon_state = "knight"
+
 
 /datum/outfit/lavaknight
 	name = "Cydonian Knight"
