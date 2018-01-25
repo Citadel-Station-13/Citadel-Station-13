@@ -28,7 +28,7 @@
 	var/id_color = "#00FF00" //defaults to green
 	icon = 'modular_citadel/icons/obj/id.dmi'
 	icon_state = "knight"
-
+	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
 
 /obj/item/card/id/knight/update_label(newname, newjob)
 	. = ..()
@@ -63,6 +63,10 @@
 			id_color = sanitize_hexcolor(energy_color_input, desired_format=6, include_crunch=1)
 		update_icon()
 
+/obj/item/card/id/knight/Initialize()
+	. = ..()
+	update_icon()
+
 /datum/outfit/lavaknight
 	name = "Cydonian Knight"
 	uniform = /obj/item/clothing/under/assistantformal
@@ -82,7 +86,7 @@
 	W.registered_name = H.real_name
 	W.id_color = "#0000FF" //Regular knights get simple blue. Doesn't matter much because it's variable anyway
 	W.update_label(H.real_name)
-
+	W.update_icon()
 
 /datum/outfit/lavaknight/captain
 	name ="Cydonian Knight Captain"
@@ -95,8 +99,9 @@
 	var/obj/item/card/id/knight/W = H.wear_id
 	W.assignment = "Knight Captain"
 	W.registered_name = H.real_name
-	W.id_color = "#FF0000" //Captains get fancy red. Doesn't matter because it's variable anyway
+	W.id_color = "#FFD700" //Captains get gold, duh. Doesn't matter because it's variable anyway
 	W.update_label(H.real_name)
+	W.update_icon()
 
 
 /obj/effect/mob_spawn/human/lavaknight/captain
