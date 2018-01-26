@@ -19,6 +19,7 @@
 	icon_screen = "request"
 	circuit = /obj/item/circuitboard/computer/cargo/request
 	requestonly = TRUE
+	req_access = list()
 
 /obj/machinery/computer/cargo/Initialize()
 	. = ..()
@@ -34,6 +35,7 @@
 
 	emagged = TRUE
 	contraband = TRUE
+	req_access = list()
 
 	// This also permamently sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit
@@ -100,6 +102,9 @@
 
 /obj/machinery/computer/cargo/ui_act(action, params, datum/tgui/ui)
 	if(..())
+		return
+	if(!allowed(usr))
+		to_chat(usr, "<span class='notice'>Access denied.</span>")
 		return
 	if(action != "add" && requestonly)
 		return
