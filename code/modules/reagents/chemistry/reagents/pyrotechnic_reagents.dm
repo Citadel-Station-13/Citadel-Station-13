@@ -226,8 +226,6 @@
 		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
 		playsound(M, "sparks", 50, 1)
 	..()
-<<<<<<< HEAD
-=======
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"
@@ -288,4 +286,3 @@
 		M.adjust_fire_stacks(-reac_volume)
 		M.ExtinguishMob()
 	..()
->>>>>>> 740c4a0... Adds firefighting foam, a better alternative to water for fighting fires. (#34788)
