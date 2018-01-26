@@ -839,6 +839,13 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+<<<<<<< HEAD
+=======
+/obj/structure/closet/secure_closet/medical1{
+	req_access = null;
+	req_access_txt = "150"
+	},
+>>>>>>> fb1868d... Merge pull request #34919 from AutomaticFrenzy/patch/listeningpost-medicine
 /turf/open/floor/plasteel/white,
 /area/ruin/space/has_grav/listeningstation)
 "bv" = (
