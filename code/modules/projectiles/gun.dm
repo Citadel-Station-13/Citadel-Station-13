@@ -15,8 +15,12 @@
 	throw_speed = 3
 	throw_range = 5
 	force = 5
+<<<<<<< HEAD
 	needs_permit = TRUE
 	unique_rename = FALSE
+=======
+	item_flags = NEEDS_PERMIT
+>>>>>>> 2871b70... /obj/item var cleanup (#34909)
 	attack_verb = list("struck", "hit", "bashed")
 
 	var/fire_sound = "gunshot"
