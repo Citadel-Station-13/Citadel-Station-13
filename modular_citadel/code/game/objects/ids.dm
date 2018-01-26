@@ -3,6 +3,7 @@
 
 /obj/item/card/id/knight
 	var/id_color = "#00FF00" //defaults to green
+	name = "knight badge"
 	icon = 'modular_citadel/icons/obj/id.dmi'
 	icon_state = "knight"
 	desc = "A badge denoting the owner as a knight! It has a strip for swiping like an ID"
