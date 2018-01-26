@@ -25,14 +25,8 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/alternate_worn_layer = null//If this is set, update_icons() will force the on mob state (WORN, NOT INHANDS) onto this layer, instead of it's default
 
 	max_integrity = 200
-
-<<<<<<< HEAD
-	can_be_hit = FALSE
-=======
 	obj_flags = NONE
 	var/item_flags = NONE
->>>>>>> 2871b70... /obj/item var cleanup (#34909)
-
 	var/hitsound = null
 	var/usesound = null
 	var/throwhitsound = null
@@ -67,11 +61,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	var/strip_delay = 40 //In deciseconds, how long an item takes to remove from another person
 	var/breakouttime = 0
 	var/list/materials
-<<<<<<< HEAD
-	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
-	var/emagged = FALSE
-=======
->>>>>>> 2871b70... /obj/item var cleanup (#34909)
 
 	var/list/attack_verb //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/species_exception = null	// list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
