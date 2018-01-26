@@ -24,10 +24,6 @@
 
 	add_overlay(id_overlay)
 
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-
 /obj/item/card/id/knight/AltClick(mob/living/user)
 	if(!in_range(src, user))	//Basic checks to prevent abuse
 		return
