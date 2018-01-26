@@ -9,7 +9,7 @@
 		cannot transport live organisms, classified nuclear weaponry or \
 		homing beacons."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
-	req_access = list(ACCESS_QM)
+	req_access = list(ACCESS_CARGO)
 
 	light_color = "#E2853D"//orange
 
