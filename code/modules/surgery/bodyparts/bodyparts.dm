@@ -297,6 +297,7 @@
 				. += image('icons/mob/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, image_dir)
 
 	var/image/limb = image(layer = -BODYPARTS_LAYER, dir = image_dir)
+	var/image/aux
 	. += limb
 
 	if(animal_origin)
@@ -331,6 +332,9 @@
 				limb.icon_state = "[species_id]_[body_zone]_[icon_gender]"
 			else
 				limb.icon_state = "[species_id]_[body_zone]"
+		if(aux_zone)
+			aux = image(limb.icon, "[species_id]_[aux_zone]", -aux_layer, image_dir)
+			. += aux
 
 	else
 		limb.icon = icon
@@ -345,6 +349,8 @@
 		var/draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 		if(draw_color)
 			limb.color = "#[draw_color]"
+			if(aux_zone)
+				aux.color = "#[draw_color]"
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()
@@ -407,6 +413,11 @@
 	max_damage = 50
 	body_zone ="l_arm"
 	body_part = ARM_LEFT
+<<<<<<< HEAD
+=======
+	aux_zone = "l_hand"
+	aux_layer = HANDS_PART_LAYER
+>>>>>>> 9be14c0... Fixes hands missing (#34973)
 	held_index = 1
 	px_x = -6
 	px_y = 0
@@ -441,6 +452,11 @@
 	max_damage = 50
 	body_zone = "r_arm"
 	body_part = ARM_RIGHT
+<<<<<<< HEAD
+=======
+	aux_zone = "r_hand"
+	aux_layer = HANDS_PART_LAYER
+>>>>>>> 9be14c0... Fixes hands missing (#34973)
 	held_index = 2
 	px_x = 6
 	px_y = 0
