@@ -17,9 +17,6 @@ GLOBAL_LIST_EMPTY(powernets)
 
 GLOBAL_VAR_INIT(bsa_unlock, FALSE)	//BSA unlocked by head ID swipes
 
-<<<<<<< HEAD
-GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
-=======
 GLOBAL_LIST_EMPTY(player_details)	// ckey -> /datum/player_details
 
 GLOBAL_LIST_INIT(bitfields, list(
@@ -27,4 +24,3 @@ GLOBAL_LIST_INIT(bitfields, list(
 	"datum_flags" = list("DF_USE_TAG" = DF_USE_TAG, "DF_VAR_EDITED" = DF_VAR_EDITED),
 	"item_flags" = list("BEING_REMOVED" = BEING_REMOVED, "IN_INVENTORY" = IN_INVENTORY, "FORCE_STRING_OVERRIDE" = FORCE_STRING_OVERRIDE, "NEEDS_PERMIT" = NEEDS_PERMIT)
 	))
->>>>>>> 2871b70... /obj/item var cleanup (#34909)
