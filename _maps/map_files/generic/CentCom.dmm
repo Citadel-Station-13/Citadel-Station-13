@@ -4389,6 +4389,10 @@
 /obj/structure/flora/grass/both,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
+"mB" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/rock/snow,
+/area/syndicate_mothership)
 "mC" = (
 /obj/item/disk/data,
 /obj/effect/light_emitter{
@@ -4609,6 +4613,10 @@
 	icon_state = "alien5"
 	},
 /area/abductor_ship)
+"ng" = (
+/obj/effect/baseturf_helper/asteroid/snow,
+/turf/closed/indestructible/riveted,
+/area/syndicate_mothership/control)
 "nh" = (
 /obj/item/toy/figure/syndie,
 /obj/effect/light_emitter{
@@ -24259,7 +24267,7 @@ aa
 aa
 aa
 aa
-hh
+mB
 hh
 hh
 hh
@@ -31780,7 +31788,7 @@ hl
 hl
 oW
 ku
-ku
+ng
 qJ
 re
 se
