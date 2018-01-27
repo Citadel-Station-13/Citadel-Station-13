@@ -71,6 +71,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
 	if(!GLOB.wings_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
+	if(!GLOB.moth_wings_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
 
 	//CIT CHANGES - genitals and such
 	if(!GLOB.cock_shapes_list.len)
@@ -183,27 +185,34 @@
 			return pick(GLOB.facial_hair_styles_list)
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		if(gender==FEMALE)
 			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
 		else
 			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(lizard_name(gender))
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
 			break
 
 /proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
-	for(var/i=1, i<=attempts_to_find_unique_name, i++)
+	for(var/i in 1 to attempts_to_find_unique_name)
 		. = capitalize(plasmaman_name())
 
-		if(i != attempts_to_find_unique_name && !findname(.))
+		if(!findname(.))
+			break
+
+/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = capitalize(moth_name())
+
+		if(!findname(.))
 			break
 
 /proc/random_skin_tone()
@@ -580,3 +589,24 @@ Proc for attack log creation, because really why not
 			warning("Invalid speech logging type detected. [logtype]. Defaulting to say")
 			log_say(logmessage)
 
+//Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
+/proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
+	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
+	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
+
+	if(mob_spawn_meancritters.len <= 0 || mob_spawn_nicecritters.len <= 0)
+		for(var/T in typesof(/mob/living/simple_animal))
+			var/mob/living/simple_animal/SA = T
+			switch(initial(SA.gold_core_spawnable))
+				if(HOSTILE_SPAWN)
+					mob_spawn_meancritters += T
+				if(FRIENDLY_SPAWN)
+					mob_spawn_nicecritters += T
+
+	var/chosen
+	if(mob_class == FRIENDLY_SPAWN)
+		chosen = pick(mob_spawn_nicecritters)
+	else
+		chosen = pick(mob_spawn_meancritters)
+	var/mob/living/simple_animal/C = new chosen(spawn_location)
+	return C

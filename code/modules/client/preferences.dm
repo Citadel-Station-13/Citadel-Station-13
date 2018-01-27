@@ -95,6 +95,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							"xenodorsal" = "None",
 							"xenohead" = "None",
 							"xenotail" = "None",
+							"moth_wings" = "Plain",
 							"taur" = "None",
 							"exhibitionist" = FALSE,
 							"genitals_use_skintone" = FALSE,
@@ -446,7 +447,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<b>Hair Color: </b><span style='border:1px solid #161616; background-color: #[hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=hair;task=input'>Change</a><BR>"
 				dat += "<b>Facial Hair Style: </b><a href='?_src_=prefs;preference=facial_hair_style;task=input'>[facial_hair_style]</a><BR>"
 				dat += "<b>Facial Hair Color: </b><span style='border: 1px solid #161616; background-color: #[facial_hair_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=facial;task=input'>Change</a><BR>"
-			if(EYECOLOR in pref_species.species_traits)
+			if((EYECOLOR in pref_species.species_traits) && !(NOEYES in pref_species.species_traits))
 				dat += "<b>Eye Color: </b><span style='border: 1px solid #161616; background-color: #[eye_color];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=eyes;task=input'>Change</a><BR>"
 			if("tail_lizard" in pref_species.mutant_bodyparts)
 				dat += "<b>Tail: </b><a href='?_src_=prefs;preference=tail_lizard;task=input'>[features["tail_lizard"]]</a><BR>"
@@ -473,6 +474,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if("legs" in pref_species.mutant_bodyparts)
 				dat += "<b>Legs: </b><a href='?_src_=prefs;preference=legs;task=input'>[features["legs"]]</a><BR>"
 			if("taur" in pref_species.mutant_bodyparts)
+				dat += "</td>"
+			if("moth_wings" in pref_species.mutant_bodyparts)
+				dat += "<td valign='top' width='7%'>"
+				dat += "<h3>Moth wings</h3>"
+				dat += "<a href='?_src_=prefs;preference=moth_wings;task=input'>[features["moth_wings"]]</a><BR>"
 				dat += "<b>Taur: </b><a href='?_src_=prefs;preference=taur;task=input'>[features["taur"]]</a><BR>"
 			if("wings" in pref_species.mutant_bodyparts && GLOB.r_wings_list.len >1)
 				dat += "<b>Wings: </b><a href='?_src_=prefs;preference=wings;task=input'>[features["wings"]]</a><BR>"
@@ -1240,6 +1246,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					new_legs = input(user, "Choose your character's legs:", "Character Preference") as null|anything in GLOB.legs_list
 					if(new_legs)
 						features["legs"] = new_legs
+
+				if("moth_wings")
+					var/new_moth_wings
+					new_moth_wings = input(user, "Choose your character's wings:", "Character Preference") as null|anything in GLOB.moth_wings_list
+					if(new_moth_wings)
+						features["moth_wings"] = new_moth_wings
+
 
 				if("s_tone")
 					var/new_s_tone = input(user, "Choose your character's skin-tone:", "Character Preference")  as null|anything in GLOB.skin_tones
