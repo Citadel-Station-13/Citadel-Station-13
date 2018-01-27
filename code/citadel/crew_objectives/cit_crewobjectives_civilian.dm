@@ -107,7 +107,8 @@
 /datum/objective/crew/clean/check_completion()
 	for(var/area/A in areas)
 		for(var/obj/effect/decal/cleanable/C in area_contents(A))
-			return FALSE
+			if(C && C.alpha >= 150)
+				return FALSE
 	return TRUE
 
 /datum/objective/crew/slipster //ported from old Hippie with adjustments
