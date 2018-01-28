@@ -1535,8 +1535,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		D.vv_edit_var(var_name, var_value)	//same result generally, unless badmemes
 	else
 		D.vars[var_name] = var_value
-<<<<<<< HEAD
-=======
 
 /proc/get_random_food()
 	var/list/blocked = list(/obj/item/reagent_containers/food/snacks,
@@ -1563,4 +1561,3 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 
 /proc/get_random_drink()
 	return pick(subtypesof(/obj/item/reagent_containers/food/drinks))
->>>>>>> 1a45d35... Merge pull request #34875 from tgstation/Cyberboss-patch-5
